@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -37,6 +35,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * Artron energy is to normal energy what movements within the deeps of the sea are to the waves on the surface.
@@ -59,7 +60,7 @@ public class TARDISJettisonSeeder implements Listener {
      * @param event a player clicking a block
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onSeedBlockInteract(PlayerInteractEvent event) {
+    public void onRoomSeedBlockInteract(PlayerInteractEvent event) {
         if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
@@ -81,7 +82,7 @@ public class TARDISJettisonSeeder implements Listener {
             } else {
                 key = plugin.getConfig().getString("preferences.key");
             }
-            // only proceed if they are clicking a seed block with the TARDIS key!
+            // only proceed if they are clicking a room seed block with the TARDIS key!
             if (blockType.equals(Material.getMaterial(plugin.getArtronConfig().getString("jettison_seed"))) && inhand.equals(Material.getMaterial(key))) {
                 String r = plugin.getTrackerKeeper().getJettison().get(uuid);
                 // get jettison direction

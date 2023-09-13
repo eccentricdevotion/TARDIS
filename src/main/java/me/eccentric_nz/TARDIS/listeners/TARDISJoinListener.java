@@ -137,10 +137,6 @@ public class TARDISJoinListener implements Listener {
                     }
                 }
             }
-            // TODO not sure we should be doing this anymore...
-            if (plugin.getConfig().getBoolean("creation.keep_night")) {
-                player.setPlayerTime(18000, false);
-            }
         }
         // load and remember the players Police Box chunk
         HashMap<String, Object> wherep = new HashMap<>();

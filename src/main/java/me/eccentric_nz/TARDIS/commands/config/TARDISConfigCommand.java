@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -31,6 +27,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Command /tardisadmin [arguments].
@@ -109,7 +110,6 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("handles", "allow");
         firstsBool.put("include_default_world", "travel");
         firstsBool.put("invisibility", "allow");
-        firstsBool.put("keep_night", "creation");
         firstsBool.put("land_on_water", "travel");
         firstsBool.put("load_shells", "police_box");
         firstsBool.put("materialise", "police_box");
@@ -161,7 +161,6 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsInt.put("border_radius", "creation");
         firstsInt.put("chameleon_uses", "circuits.uses");
         firstsInt.put("chat_width", "preferences");
-        firstsInt.put("confirm_timeout", "police_box");
         firstsInt.put("count", "creation");
         firstsInt.put("delay_factor", "growth");
         firstsInt.put("force_field", "allow.force_field");

@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISEnterEvent;
@@ -36,6 +33,10 @@ import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -184,10 +185,6 @@ public class TARDISDoorListener {
             plugin.getTrackerKeeper().getEjecting().remove(uuid);
         } else {
             plugin.getPM().callEvent(new TARDISEnterEvent(player, from));
-            if (plugin.getConfig().getBoolean("creation.keep_night")) {
-                // set the player's time to midnight
-                setTemporalLocation(player, 18000, false);
-            }
             TARDISSounds.playTARDISHum(player);
         }
         // give a key

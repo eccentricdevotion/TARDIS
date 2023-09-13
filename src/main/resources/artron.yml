@@ -1,28 +1,33 @@
 # artron energy
 player: 25
+# travel costs
 random: 75
 random_circuit: 150
 travel: 100
 comehere: 400
 hide: 500
+autonomous: 100
+# inter-dimensional travel minimum charge levels
 nether_min: 4250
 the_end_min: 5500
+# recharging
 recharge_distance: 20
 lightning_recharge: 300
 creeper_recharge: 150
 full_charge: 5000
 full_charge_item: NETHER_STAR
-autonomous: 100
-backdoor: 100
+# siege mode
 siege_transfer: 10
 siege_deplete: 100
 siege_creeper: 150
 siege_ticks: 1500
+# standby
 standby: 5
 standby_time: 6000
 # jettison is a percentage of original room cost
 jettison: 75
 jettison_seed: TNT
+# room charges
 render: 250
 zero: 250
 # upgrades
@@ -88,5 +93,7 @@ sonic_generator:
   arrow: 10
   knockback: 10
   brush: 10
+# other charges
 shell: 500
 custard_cream: 25
+backdoor: 100

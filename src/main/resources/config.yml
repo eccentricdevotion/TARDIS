@@ -34,7 +34,6 @@ creation:
   default_world_name: TARDIS_TimeVortex
   tips_limit: 400
   border_radius: 256
-  keep_night: true
   inventory_group: 0
   add_perms: true
   enable_legacy: true
@@ -52,7 +51,6 @@ police_box:
   view_interior: false
   view_interior_uses_console_size: false
   materialise: true
-  confirm_timeout: 15
   sign_colour: WHITE
   rebuild_cooldown: 10000
   load_shells: false
