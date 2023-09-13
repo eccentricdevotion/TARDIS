@@ -1,13 +1,14 @@
 package me.eccentric_nz.tardisshop.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.UUID;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
 public class DeleteShopItem {
 
@@ -26,7 +27,7 @@ public class DeleteShopItem {
      * query string from the parameters supplied and then executes the delete.
      *
      * @param table the database table name to insert the data into.
-     * @param where a HashMap<String, Object> of table fields and values to
+     * @param where a HashMap&lt;String, Object&gt; of table fields and values to
      * select the records to delete.
      */
     public void removeRecord(String table, HashMap<String, Object> where) {

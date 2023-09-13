@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardischunkgenerator.worldgen;
 
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischunkgenerator.worldgen.biomeproviders.SiluriaBiomeProvider;
 import me.eccentric_nz.tardischunkgenerator.worldgen.populators.SiluriaStructurePopulator;
@@ -25,6 +24,8 @@ import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.WorldInfo;
+
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -76,7 +77,7 @@ public class SiluriaGenerator extends ChunkGenerator {
     }
 
     /**
-     * Sets the entire world to the BAMBOO_ & SPARSE_ JUNGLE biome
+     * Sets the entire world to the BAMBOO_ &amp; SPARSE_ JUNGLE biome
      *
      * @param worldInfo the information about this world
      * @return the Siluria biome provider

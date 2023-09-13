@@ -1,8 +1,9 @@
 package me.eccentric_nz.tardischunkgenerator.logging;
 
-import java.io.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
+
+import java.io.*;
 
 /**
  * This class provides various  methods for retrieving Exception stacktrace as a String in full or shortened version.
@@ -12,7 +13,7 @@ import org.apache.logging.log4j.core.Logger;
  * class while retaining important parts of the stacktrace relating to user's packages. Also the same utility (starting
  * from version 1.5.0.3) allows to filter and shorten stacktrace as a string the same way as the stacktrace extracted
  * from exception. So, essentially stack traces could be filtered "on the fly" at run time or later on from any text
- * source such as log.</p>
+ * source such as log.
  *
  * @author Michael Gantman
  */

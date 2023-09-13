@@ -23,12 +23,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
-import org.bukkit.entity.Display;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Interaction;
-import org.bukkit.entity.ItemDisplay;
-import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -242,7 +237,7 @@ public class TARDISDisplayItemUtils {
     }
 
     /**
-     * Remove item display, interaction & item frame entities in a chunk
+     * Remove item display, interaction &amp; item frame entities in a chunk
      *
      * @param chunk the chunk to search for entities
      * @param lower a lower y value to limit which entities will be removed

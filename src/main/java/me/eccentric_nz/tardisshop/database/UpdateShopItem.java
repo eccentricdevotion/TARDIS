@@ -1,13 +1,14 @@
 package me.eccentric_nz.tardisshop.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
 public class UpdateShopItem {
 
@@ -25,8 +26,8 @@ public class UpdateShopItem {
      * Updates data in the items table. This method builds an SQL query string
      * from the parameters supplied and then executes the update.
      *
-     * @param data a HashMap<String, Object> of table fields and values update.
-     * @param where a HashMap<String, Object> of table fields and values to
+     * @param data a HashMap&lt;String, Object&gt; of table fields and values update.
+     * @param where a HashMap&lt;String, Object&gt; of table fields and values to
      * select the records to update.
      */
     public void alterRecord(HashMap<String, Object> data, HashMap<String, Object> where) {
