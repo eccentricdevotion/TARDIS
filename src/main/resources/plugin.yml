@@ -144,7 +144,7 @@ permissions:
     description: Allow players to create a TARDIS.
     default: op
   tardis.create_world:
-    description: Allow players to create a TARDIS in it's own world. This is only used in conjuction with the create_worlds_with_perms config option.
+    description: Allow players to create a TARDIS in it's own world. This is only used in conjunction with the create_worlds_with_perms config option.
     default: op
   tardis.exterminate:
     description: Allow players to delete their own TARDIS.
@@ -197,7 +197,7 @@ permissions:
   tardis.prefs.*:
     description: Allow players to use /tardisprefs commands.
     children:
-      tardis.prefs.annouce_repeaters: true
+      tardis.prefs.announce_repeaters: true
       tardis.prefs.auto: true
       tardis.prefs.auto_powerup: true
       tardis.prefs.auto_rescue: true
@@ -1076,7 +1076,7 @@ commands:
       description: Check or set a player's TARDIS count.
       usage: /<command> playercount [player] [count]
     assemble:
-      description: Clear HADS dispersal trackers or list dispered TARDISes.
+      description: Clear HADS dispersal trackers or list dispersed TARDISes.
       usage: /<command> assemble [clear|list]
     convert_database:
       description: Convert an SQLite database to MySQL.
@@ -1404,7 +1404,7 @@ commands:
     usage: /<command> [list|book name] [get|start]
   tardistexture:
     aliases: ttexture
-    description: Set texure pack preferences.
+    description: Set texture pack preferences.
     permission-message: You don't have the permission <permission> to use this command
     permission: tardis.texture
     usage: /<command> [on|off|in|out] [url]
@@ -1415,10 +1415,10 @@ commands:
       description: Turns resource pack switching off.
       usage: /<command> off
     in:
-      description: Set resource pack that is switched to inside the TARDIS.
+      description: Set the resource pack that is switched to inside the TARDIS.
       usage: /<command> in [url]
     out:
-      description: Set resource pack that is switched to in the outside world.
+      description: Set the resource pack that is switched to in the outside world.
       usage: /<command> out [url]
   tardisrecipe:
     aliases: trecipe
@@ -1524,7 +1524,7 @@ commands:
     description: Open a Chemistry creative GUI or show a chemical formula.
     permission: tardis.chemistry
     permission-message: You don't have the permission <permission> to use this command
-    usage: /<command> [gui|formula] [which]
+    usage: /<command> [gui|formula|recipe] [which]
     gui:
       description: Show a chemistry GUI.
       permission: tardis.chemistry.command
@@ -1643,7 +1643,7 @@ commands:
       usage: /<command> remove
   # vortex manipulator
   vm:
-    aliases: [vortexmainpulator,tvm]
+    aliases: [vortexmainpulator, tvm]
     description: Cheap and nasty time travel. Very bad for you.
     usage: /<command> [go|gui|help|message|save|remove|lifesigns|beacon|activate|give]
     permission: vm.teleport
@@ -1712,9 +1712,9 @@ commands:
       permission-message: You don't have the permission <permission> to use this command
   # weeping angels
   twa:
-    aliases: [ tardisweepingangels ]
+    aliases: tardisweepingangels
     description: Manipulate TARDISWeepingAngels monsters with various arguments (spawn, kill, remove, count, disguise, equip, etc).
-    usage: /<command> [subcommand] <monster type> <world> <max>
+    usage: /<command> [subcommand] <args...>
     spawn:
       description: Spawns a monster on the block you are targeting.
       usage: /<command> spawn [monster type]
@@ -1772,9 +1772,11 @@ commands:
       permission-message: You don't have the permission <permission> to use this command
   # shop
   tardisshop:
-    aliases: [tshop]
+    aliases: tshop
     description: Add and remove TARDISShop items.
     usage: /<command> [add|remove|update] [item_name]
+    permission: tardis.admin
+    permission-message: You don't have the permission <permission> to use this command
     add:
       description: Add a new shop item block.
       usage: /<command> add [item]
@@ -1790,5 +1792,3 @@ commands:
       usage: /<command> update
       permission: tardis.admin
       permission-message: You don't have the permission <permission> to use this command
-    permission: tardis.admin
-    permission-message: You don't have the permission <permission> to use this command
