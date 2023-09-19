@@ -1102,15 +1102,86 @@ commands:
   tardisdev:
     aliases: tdev
     description: Commands used by eccentric_nz to help with coding and documenting the TARDIS plugin.
+    usage: /<command> [subcommand] [options]...
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
-    usage: /<command> [add_regions|advancements|chunky|list|plurals|stats|tree|snapshot|displayitem|frame] [preset_perms|perms|recipes|blueprints|commands|block_colours] [html|all]
+    add_regions:
+      description: Add missing WorldGuard regions for Bedrock players.
+      usage: /<command> add_regions
+    advancements:
+      description: Checks whether a TARDIS advancement is valid.
+      usage: /<command> advancements [advancement]
+    biome:
+      description: Get the biome the player is looking at.
+      usage: /<command> biome
+    list:
+      description: Lists various options to aid documentation - possible listings are: preset_perms, perms, recipes, blueprints, commands.
+      usage: /<command> list [which] [html|all]
+    stats:
+      description: Display ARS room counts.
+      usage: /<command> stats
+    tree:
+      description: Grows a Huge Fungus Tree on the block the player is targeting. If no further arguments are specified, random blocks are used to grow the tree. You can also specify a block for the stem, hat and decor.
+      usage: /<command> tree [stem] [hat] [decor]
+    plurals:
+      description: Displays a list of block and item names in plural form.
+      usage: /<command> plurals
+    chunky:
+      description: Pre-generates chunks using the Chunky plugin
+      usage: /<command> chunky [world]
+    snapshot:
+      description: Creates a TARDIS Monitor map snapshot. Using the c arguments clears the player's inventory of filled maps. Use in or out to determine which view (interior/exterior) to capture.
+      usage: /<command> snapshot [in|out|c]
+    frame:
+      description: Lock and unlock TARDIS item frames.
+      usage: /<command> frame [lock|unlock]
+    brushable:
+      description: Adds a suspicious sand block to the player's inventory.
+      usage: /<command> brushable
+    box:
+      description: Set the state of the armour stand police box between open/closed/stained/glass/flying.
+      usage: /<command> box [open|closed|stained|glass|flying]
+    nms:
+      description: Spawn a custom NMS monster.
+      usage: /<command> nms [monster]
+    circuit:
+      description: Give a player a random used TARDIS circuit.
+      usage: /<command> circuit
+    tis:
+      description: Checks and lists TARDIS Information System entries.
+      usage: /<command> tis
+    displayitem:
+      description: Various commands to test Item Display custom blocks and lights - sub-commands are: add, remove, place, break, convert, chunk
   tardisgive:
     aliases: tgive
-    description: Give TARDIS items, Artron energy, Seed blocks, kits, knowledge books, recipe discoveries or mushroom blocks to a player.
+    description: Give TARDIS items, Artron energy, Seed blocks, kits, knowledge books, or recipe discoveries to a player.
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
-    usage: /<command> [player] [item|artron|kit|seed|knowledge|recipe|mushroom] [amount|recipe|...]
+    usage: /<command> [player] [subcommand] [options]...
+    item:
+      description: Gives TARDIS item(s) to a player.
+      usage: /<command> [player] item [amount]
+    artron:
+      description: Gives a player's TARDIS Artron energy.
+      usage: /<command> [player] artron [full|empty|amount]
+    tachyon:
+      description: Give Tachyon energy to a player's Vortex Manipulator.
+      usage: /<command> [player] artron [full|empty|amount]
+    kit:
+      description: Gives a TARDIS kit to a player. Kits can be configured in kits.yml
+      usage: /<command> [player] kit [kit]
+    seed:
+      description: Gives a TARDIS Seed block to a player.
+      usage: /<command> [player] seed [tardis type] [wall black] [floor block]
+    knowledge:
+      description: Grants knowledge of a TARDIS crafting recipe to a player.
+      usage: /<command> [player] knowledge [recipe|all]
+    recipes:
+      description: Grants a TARDIS recipe to a player.
+      usage: /<command> [player] recipe [recipe|all]
+    blueprint:
+      description: Gives a TARDIS Blueprint Disk to a player.
+      usage: /<command> [player] artron [full|empty|amount]
   tardissudo:
     aliases: tsudo
     description: Used by TARDIS admins to run commands as another Time Lord or fix players' TARDISes.

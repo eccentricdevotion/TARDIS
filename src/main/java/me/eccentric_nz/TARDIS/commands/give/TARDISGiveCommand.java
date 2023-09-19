@@ -437,7 +437,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(player);
         if (offlinePlayer.getName() != null) {
             UUID uuid = offlinePlayer.getUniqueId();
-            plugin.getServer().dispatchCommand(sender, "vmg " + uuid + " " + amount);
+            plugin.getServer().dispatchCommand(sender, "vm give " + uuid + " " + amount);
         } else {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NOT_FOUND");
         }
