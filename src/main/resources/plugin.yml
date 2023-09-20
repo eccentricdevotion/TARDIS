@@ -1115,7 +1115,7 @@ commands:
       description: Get the biome the player is looking at.
       usage: /<command> biome
     list:
-      description: Lists various options to aid documentation - possible listings are: preset_perms, perms, recipes, blueprints, commands.
+      description: Lists various options to aid documentation - possible listings are preset_perms, perms, recipes, blueprints, commands.
       usage: /<command> list [which] [html|all]
     stats:
       description: Display ARS room counts.
@@ -1151,7 +1151,7 @@ commands:
       description: Checks and lists TARDIS Information System entries.
       usage: /<command> tis
     displayitem:
-      description: Various commands to test Item Display custom blocks and lights - sub-commands are: add, remove, place, break, convert, chunk
+      description: Various commands to test Item Display custom blocks and lights - sub-commands are add, remove, place, break, convert, chunk
   tardisgive:
     aliases: tgive
     description: Give TARDIS items, Artron energy, Seed blocks, kits, knowledge books, or recipe discoveries to a player.
