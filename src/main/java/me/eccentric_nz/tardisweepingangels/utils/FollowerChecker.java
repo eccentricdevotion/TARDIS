@@ -22,7 +22,7 @@ import me.eccentric_nz.tardisweepingangels.monsters.ood.OodColour;
 import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import me.eccentric_nz.tardisweepingangels.nms.TWAJudoon;
 import me.eccentric_nz.tardisweepingangels.nms.TWAOod;
-import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R2.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.persistence.PersistentDataContainer;

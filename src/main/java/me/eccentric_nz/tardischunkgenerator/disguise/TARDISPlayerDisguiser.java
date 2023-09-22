@@ -22,19 +22,19 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import com.mojang.util.UUIDTypeAdapter;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.minecraft.server.level.ServerPlayer;
+import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_20_R2.entity.CraftPlayer;
+import org.bukkit.entity.Player;
+
+import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.UUID;
-import javax.net.ssl.HttpsURLConnection;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.minecraft.server.level.ServerPlayer;
-import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
-import org.bukkit.entity.Player;
 
 public class TARDISPlayerDisguiser {
 
@@ -62,7 +62,7 @@ public class TARDISPlayerDisguiser {
 
     private boolean setSkin(GameProfile profile, UUID uuid) {
         try {
-            URL url = new URL(String.format("https://sessionserver.mojang.com/session/minecraft/profile/%s?unsigned=false", UUIDTypeAdapter.fromUUID(uuid)));
+            URL url = new URL(String.format("https://sessionserver.mojang.com/session/minecraft/profile/%s?unsigned=false", fromUUID(uuid)));
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.connect();
             if (connection.getResponseCode() == HttpsURLConnection.HTTP_OK) {
@@ -93,5 +93,9 @@ public class TARDISPlayerDisguiser {
                 p.showPlayer(player);
             }
         }
+    }
+
+    private String fromUUID(final UUID value) {
+        return value.toString().replace("-", "");
     }
 }

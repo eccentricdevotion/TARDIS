@@ -24,7 +24,7 @@ import me.eccentric_nz.tardisweepingangels.nms.TWAJudoon;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.ShulkerBox;
-import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R2.entity.CraftEntity;
 import org.bukkit.entity.Husk;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

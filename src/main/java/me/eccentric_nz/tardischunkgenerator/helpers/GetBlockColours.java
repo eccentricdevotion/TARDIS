@@ -6,7 +6,7 @@ import net.minecraft.world.level.material.MapColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_20_R1.util.CraftMagicNumbers;
+import org.bukkit.craftbukkit.v1_20_R2.util.CraftMagicNumbers;
 
 public class GetBlockColours {
 

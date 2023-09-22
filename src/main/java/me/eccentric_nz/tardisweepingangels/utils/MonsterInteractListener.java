@@ -25,7 +25,7 @@ import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R2.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
