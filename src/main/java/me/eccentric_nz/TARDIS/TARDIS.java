@@ -290,7 +290,7 @@ public class TARDIS extends JavaPlugin {
         persistentDataTypeUUID = new TARDISUUIDDataType();
         console = getServer().getConsoleSender();
         ModuleDescriptor.Version serverVersion = getServerVersion(getServer().getVersion());
-        ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse("1.20.1");
+        ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse("1.20.2");
         // check server version
         if (serverVersion.compareTo(minVersion) >= 0) {
             if (!PaperLib.isPaper() && !PaperLib.isSpigot()) {
