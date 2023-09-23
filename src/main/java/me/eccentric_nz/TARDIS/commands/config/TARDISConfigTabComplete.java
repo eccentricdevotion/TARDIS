@@ -17,8 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.config;
 
 import com.google.common.collect.ImmutableList;
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -29,6 +27,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * TabCompleter for /tardisadmin
  */
@@ -38,7 +39,7 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
     private final ImmutableList<String> ROOT_SUBS;
     private final ImmutableList<String> BOOL_SUBS = ImmutableList.of("true", "false");
     private final ImmutableList<String> COLOURS = ImmutableList.of("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
-    private final ImmutableList<String> CONFIG_SUBS = ImmutableList.of("abandon", "allow", "arch", "archive", "autonomous_areas", "blueprints", "circuits", "conversions", "creation", "desktop", "dynmap", "growth", "junk", "police_box", "preferences", "rechargers", "siege", "storage", "travel");
+    private final List<String> CONFIG_SUBS = new ArrayList<>();
     private final ImmutableList<String> DB_SUBS = ImmutableList.of("mysql", "sqlite");
     private final ImmutableList<String> DIFFICULTY_SUBS = ImmutableList.of("easy", "medium", "hard");
     private final List<String> FILE_SUBS = new ArrayList<>();
@@ -71,6 +72,8 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
             FILE_SUBS.add(c.toString());
         }
         plugin.getServer().getWorlds().forEach((w) -> WORLD_SUBS.add(w.getName()));
+        CONFIG_SUBS.addAll(this.plugin.getConfig().getDefaultSection().getKeys(false));
+        CONFIG_SUBS.remove("debug");
     }
 
     @Override

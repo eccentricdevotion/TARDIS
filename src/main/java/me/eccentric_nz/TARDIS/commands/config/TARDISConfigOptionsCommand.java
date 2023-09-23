@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.command.CommandSender;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.command.CommandSender;
 
 /**
  * @author eccentric_nz
@@ -34,25 +35,8 @@ class TARDISConfigOptionsCommand {
 
     TARDISConfigOptionsCommand(TARDIS plugin) {
         this.plugin = plugin;
-        sections.add("abandon");
-        sections.add("allow");
-        sections.add("arch");
-        sections.add("archive");
-        sections.add("autonomous_areas");
-        sections.add("blueprints");
-        sections.add("circuits");
-        sections.add("conversions");
-        sections.add("creation");
-        sections.add("desktop");
-        sections.add("dynmap");
-        sections.add("growth");
-        sections.add("junk");
-        sections.add("police_box");
-        sections.add("preferences");
-        sections.add("rechargers");
-        sections.add("siege");
-        sections.add("storage");
-        sections.add("travel");
+        sections.addAll(this.plugin.getConfig().getDefaultSection().getKeys(false));
+        sections.remove("debug");
     }
 
     boolean showConfigOptions(CommandSender sender, String[] args) {

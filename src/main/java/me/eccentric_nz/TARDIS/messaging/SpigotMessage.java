@@ -107,9 +107,9 @@ public class SpigotMessage implements TARDISMessage {
     public void send(Player player, String key, boolean handbrake) {
         String local = TARDIS.plugin.getLanguage().getString(key);
         if (handbrake) {
-            sendJoinedStatus(player, local ,"HANDBRAKE_RELEASE");
+            sendJoinedStatus(player, local, "HANDBRAKE_RELEASE");
         } else {
-            sendJoinedStatus(player, local ,"LEAVING_VORTEX");
+            sendJoinedStatus(player, local, "LEAVING_VORTEX");
         }
     }
 
@@ -136,12 +136,7 @@ public class SpigotMessage implements TARDISMessage {
     @Override
     public void messageWithColour(CommandSender cs, String message, String hex) {
         message = ChatColor.of(hex) + message;
-        if (message.length() > TARDISChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) {
-            String[] multiline = TARDISChatPaginator.wordWrap(message);
-            cs.sendMessage(multiline);
-        } else {
-            cs.sendMessage(message);
-        }
+        cs.sendMessage(message);
     }
 
     @Override
