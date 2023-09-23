@@ -102,7 +102,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
             ArgumentParser parser = new ArgumentParser();
             String command = parser.join(args);
             Arguments arguments = parser.parse(command);
-            if (args[0].equalsIgnoreCase("update")) {
+            if (args[0].equalsIgnoreCase("update_name")) {
                 String world = arguments.getArguments().get(1).toLowerCase(Locale.ROOT);
                 if (!PLANET_SUBS.contains(world)) {
                     plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld load", plugin);
@@ -302,8 +302,6 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
         return false;
     }
 
-//    Function<String, Boolean> hasUpperCase = s -> s.chars().filter(c -> Character.isUpperCase(c)).count() > 0;
-
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         String lastArg = args[args.length - 1];
@@ -311,7 +309,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
             List<String> part = partial(args[0], ROOT_SUBS);
             return (!part.isEmpty()) ? part : null;
         } else if (args.length == 2) {
-            if (args[0].equalsIgnoreCase("enable") || args[0].equalsIgnoreCase("disable") || args[0].equalsIgnoreCase("update")) {
+            if (args[0].equalsIgnoreCase("enable") || args[0].equalsIgnoreCase("disable") || args[0].equalsIgnoreCase("update_name")) {
                 return partial(lastArg, PLANET_SUBS);
             } else {
                 return partial(lastArg, WORLD_SUBS);
