@@ -17,8 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import com.google.common.collect.ImmutableList;
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
@@ -35,6 +33,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Command /tardisprefs [arguments].
@@ -65,7 +66,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
             "renderer",
             "sfx", "siege_floor", "siege_wall", "sign", "sonic", "submarine",
             "telepathy", "translate", "travelbar",
-            "wall", "wool_lights"
+            "wall"
     );
     private final TARDIS plugin;
 
