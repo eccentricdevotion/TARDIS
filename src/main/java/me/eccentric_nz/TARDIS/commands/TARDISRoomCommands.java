@@ -16,15 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -36,6 +27,16 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * The Sub-Wave Network was a piece of sentient software programmed to find anyone who could help to contact the Tenth
@@ -70,27 +71,29 @@ public class TARDISRoomCommands implements CommandExecutor {
                             return false;
                         }
                         rooms.forEach((r) -> {
-                            HashMap<String, Integer> blockIDs = plugin.getBuildKeeper().getRoomBlockCounts().get(r);
-                            String file = plugin.getDataFolder() + File.separator + r + "_block_list.txt";
-                            int cost = 0;
-                            try {
-                                try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))) {
-                                    for (Map.Entry<String, Integer> entry : blockIDs.entrySet()) {
-                                        String line = entry.getKey() + ", " + entry.getValue();
-                                        bw.write(line);
-                                        bw.newLine();
-                                        if (plugin.getCondensables().containsKey(entry.getKey())) {
-                                            int value = entry.getValue() * plugin.getCondensables().get(entry.getKey());
-                                            cost += value;
+                            if (plugin.getRoomsConfig().getBoolean("rooms." + name + ".enabled")) {
+                                HashMap<String, Integer> blockIDs = plugin.getBuildKeeper().getRoomBlockCounts().get(r);
+                                String file = plugin.getDataFolder() + File.separator + r + "_block_list.txt";
+                                int cost = 0;
+                                try {
+                                    try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))) {
+                                        for (Map.Entry<String, Integer> entry : blockIDs.entrySet()) {
+                                            String line = entry.getKey() + ", " + entry.getValue();
+                                            bw.write(line);
+                                            bw.newLine();
+                                            if (plugin.getCondensables().containsKey(entry.getKey())) {
+                                                int value = entry.getValue() * plugin.getCondensables().get(entry.getKey());
+                                                cost += value;
+                                            }
                                         }
+                                        bw.write("Actual room cost: " + Math.round(cost / 2.0F));
+                                        bw.newLine();
                                     }
-                                    bw.write("Actual room cost: " + Math.round(cost / 2.0F));
-                                    bw.newLine();
+                                } catch (IOException e) {
+                                    plugin.debug("Could not create and write to " + r + "_block_list.txt! " + e.getMessage());
                                 }
-                            } catch (IOException e) {
-                                plugin.debug("Could not create and write to " + r + "_block_list.txt! " + e.getMessage());
+                                plugin.getMessenger().send(sender, TardisModule.TARDIS, "ROOM_FILE_SAVED", r);
                             }
-                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "ROOM_FILE_SAVED", r);
                         });
                     } else {
                         if (!rooms.contains(name)) {
