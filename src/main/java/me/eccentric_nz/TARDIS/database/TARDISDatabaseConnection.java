@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * Singleton class to get the database connection.
@@ -41,6 +42,10 @@ public class TARDISDatabaseConnection {
 
     void setIsMySQL(boolean isMySQL) {
         this.isMySQL = isMySQL;
+    }
+
+    public boolean isMySQL() {
+        return isMySQL;
     }
 
     public void setConnection() {

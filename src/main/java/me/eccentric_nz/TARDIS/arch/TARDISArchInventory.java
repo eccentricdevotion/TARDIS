@@ -65,7 +65,7 @@ public class TARDISArchInventory {
             } else {
                 // they haven't got an inventory saved yet so make one with their current inventory
                 String insertQuery = "INSERT INTO " + prefix + "inventories (uuid, player, arch, inventory, armour, attributes, armour_attributes) VALUES (?, ?, ?, ?, ?, ?, ?)";
-                ps = connection.prepareStatement(insertQuery, PreparedStatement.RETURN_GENERATED_KEYS);
+                ps = connection.prepareStatement(insertQuery);
                 ps.setString(1, uuid);
                 ps.setString(2, name);
                 ps.setInt(3, arch);

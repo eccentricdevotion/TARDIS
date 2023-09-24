@@ -16,15 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
-import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import org.bukkit.entity.Player;
+
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Do basic SQL INSERT, UPDATE and DELETE queries.
@@ -64,6 +65,7 @@ public class QueryFactory {
      */
     public int doSyncInsert(String table, HashMap<String, Object> data) {
         PreparedStatement ps = null;
+        Statement statement = null;
         ResultSet idRS = null;
         String fields;
         String questions;
@@ -77,7 +79,7 @@ public class QueryFactory {
         questions = sbq.substring(0, sbq.length() - 1);
         try {
             service.testConnection(connection);
-            ps = connection.prepareStatement("INSERT INTO " + prefix + table + " (" + fields + ") VALUES (" + questions + ")", PreparedStatement.RETURN_GENERATED_KEYS);
+            ps = connection.prepareStatement("INSERT INTO " + prefix + table + " (" + fields + ") VALUES (" + questions + ")");
             int i = 1;
             for (Map.Entry<String, Object> entry : data.entrySet()) {
                 if (entry.getValue() instanceof String || entry.getValue() instanceof UUID) {
@@ -97,7 +99,9 @@ public class QueryFactory {
             }
             data.clear();
             ps.executeUpdate();
-            idRS = ps.getGeneratedKeys();
+            String lid = (service.isMySQL()) ? "SELECT last_insert_id()" : "SELECT last_insert_rowid()";
+            statement = connection.createStatement();
+            idRS = statement.executeQuery(lid);
             return (idRS.next()) ? idRS.getInt(1) : -1;
         } catch (SQLException e) {
             plugin.debug("Insert error for " + table + "! " + e.getMessage());
@@ -106,6 +110,9 @@ public class QueryFactory {
             try {
                 if (idRS != null) {
                     idRS.close();
+                }
+                if (statement != null) {
+                    statement.close();
                 }
                 if (ps != null) {
                     ps.close();
