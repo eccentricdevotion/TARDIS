@@ -79,6 +79,7 @@ public class QueryFactory {
         questions = sbq.substring(0, sbq.length() - 1);
         try {
             service.testConnection(connection);
+            connection.setAutoCommit(false);
             ps = connection.prepareStatement("INSERT INTO " + prefix + table + " (" + fields + ") VALUES (" + questions + ")");
             int i = 1;
             for (Map.Entry<String, Object> entry : data.entrySet()) {
@@ -102,6 +103,7 @@ public class QueryFactory {
             String lid = (service.isMySQL()) ? "SELECT last_insert_id()" : "SELECT last_insert_rowid()";
             statement = connection.createStatement();
             idRS = statement.executeQuery(lid);
+            connection.commit();
             return (idRS.next()) ? idRS.getInt(1) : -1;
         } catch (SQLException e) {
             plugin.debug("Insert error for " + table + "! " + e.getMessage());

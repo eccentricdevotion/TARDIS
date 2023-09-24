@@ -29,6 +29,7 @@ public class InsertShopItem {
         Statement statement = null;
         ResultSet idRS = null;
         try {
+            connection.setAutoCommit(false);
             ps = connection.prepareStatement("INSERT INTO " + prefix + "items (item, cost) VALUES (?, ?)");
             ps.setString(1, item);
             ps.setDouble(2, cost);
@@ -37,6 +38,7 @@ public class InsertShopItem {
             statement = connection.createStatement();
             idRS = statement.executeQuery(lid);
             int id = (idRS.next()) ? idRS.getInt(1) : -1;
+            connection.commit();
             return new TARDISShopItem(id, item, null, cost);
         } catch (SQLException e) {
             plugin.debug("Insert error for items! " + e.getMessage());
