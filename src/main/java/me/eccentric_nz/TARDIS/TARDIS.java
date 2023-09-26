@@ -239,40 +239,46 @@ public class TARDIS extends JavaPlugin {
             for (int id : getTrackerKeeper().getMaterialising()) {
                 getTrackerKeeper().getDestinationVortex().put(id, -2);
             }
-            // persist any room growing
-            new TARDISRoomPersister(this).saveProgress();
-            TARDISPerceptionFilter.removePerceptionFilter();
-            debug("Perception Filters removed");
-            if (getConfig().getBoolean("preferences.walk_in_tardis")) {
-                new TARDISPortalPersister(this).save();
+            // only try to persist data if the plugin was enabled properly
+            boolean hasDatabase = TARDISDatabaseConnection.getINSTANCE().connection != null;
+            if (hasDatabase) {
+                // persist any room growing
+                new TARDISRoomPersister(this).saveProgress();
+                TARDISPerceptionFilter.removePerceptionFilter();
+                debug("Perception Filters removed");
+                if (getConfig().getBoolean("preferences.walk_in_tardis")) {
+                    new TARDISPortalPersister(this).save();
+                }
+                if (disguisesOnServer && getConfig().getBoolean("arch.enabled")) {
+                    new TARDISArchPersister(this).saveAll();
+                }
+                if (getConfig().getBoolean("siege.enabled")) {
+                    new TARDISSiegePersister(this).saveCubes();
+                }
+                if (getConfig().getBoolean("allow.hads")) {
+                    new TARDISHadsPersister(this).save();
+                }
+                new TARDISVortexPersister(this).save();
+                new FlightPersister(this).save();
+                new CameraPersister(this).save();
+                if (getConfig().getInt("allow.force_field") > 0) {
+                    new TARDISForceFieldPersister(this).save();
+                }
+                new TARDISSeedBlockPersister(this).save();
+                if (getConfig().getBoolean("modules.weeping_angels")) {
+                    new FollowerSaver(this).persist();
+                }
             }
-            if (disguisesOnServer && getConfig().getBoolean("arch.enabled")) {
-                new TARDISArchPersister(this).saveAll();
-            }
-            if (getConfig().getBoolean("siege.enabled")) {
-                new TARDISSiegePersister(this).saveCubes();
-            }
-            if (getConfig().getBoolean("allow.hads")) {
-                new TARDISHadsPersister(this).save();
-            }
-            new TARDISVortexPersister(this).save();
-            new FlightPersister(this).save();
-            new CameraPersister(this).save();
-            if (getConfig().getInt("allow.force_field") > 0) {
-                new TARDISForceFieldPersister(this).save();
-            }
-            new TARDISSeedBlockPersister(this).save();
-            if (getConfig().getBoolean("modules.weeping_angels")) {
-                new FollowerSaver(this).persist();
-            }
-            updateTagStats();
-            debug("Updated Tag stats");
             getServer().getScheduler().cancelTasks(this);
             debug("Cancelling all scheduled tasks");
             resetTime();
             debug("Resetting player time(s)");
-            closeDatabase();
-            debug("Closing database");
+            if (hasDatabase) {
+                updateTagStats();
+                debug("Updated Tag stats");
+                closeDatabase();
+                debug("Closing database");
+            }
             debug("TARDIS disabled successfully!");
         }
     }
