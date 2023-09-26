@@ -2,7 +2,8 @@
 
 ## Current version `5.1.0`
 
-1. ?
+1. Add custom model data to companion GUIs
+2. ?
 
 ## Next version `5.2.0`
 
