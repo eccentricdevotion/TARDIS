@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.rooms.smelter;
 
-import java.util.HashMap;
-import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class TARDISSmelterFuel {
 
@@ -41,23 +42,25 @@ public class TARDISSmelterFuel {
         }
         // process fuels
         int fsize = fuelChests.size();
-        fuels.forEach((key, value) -> {
-            int remainder = value % fsize;
-            if (remainder > 0) {
-                remainders.put(key, remainder);
-            }
-            int distrib = value / fsize;
-            fuelChests.forEach((fc) -> {
-                HashMap<Integer, ItemStack> leftoverfuel = fc.getInventory().addItem(new ItemStack(key, distrib));
-                if (!leftoverfuel.isEmpty()) {
-                    for (ItemStack f : leftoverfuel.values()) {
-                        Material fm = f.getType();
-                        int amount = (remainders.containsKey(fm)) ? remainders.get(fm) + f.getAmount() : f.getAmount();
-                        remainders.put(fm, amount);
-                    }
+        if (fsize > 0) {
+            fuels.forEach((key, value) -> {
+                int remainder = value % fsize;
+                if (remainder > 0) {
+                    remainders.put(key, remainder);
                 }
+                int distrib = value / fsize;
+                fuelChests.forEach((fc) -> {
+                    HashMap<Integer, ItemStack> leftoverfuel = fc.getInventory().addItem(new ItemStack(key, distrib));
+                    if (!leftoverfuel.isEmpty()) {
+                        for (ItemStack f : leftoverfuel.values()) {
+                            Material fm = f.getType();
+                            int amount = (remainders.containsKey(fm)) ? remainders.get(fm) + f.getAmount() : f.getAmount();
+                            remainders.put(fm, amount);
+                        }
+                    }
+                });
             });
-        });
+        }
         // return remainder to fuel chest
         remainders.forEach((key, value) -> {
             int max = key.getMaxStackSize();
