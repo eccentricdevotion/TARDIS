@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
+import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionInventory;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -313,7 +314,14 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 String comps = tardis.getCompanions();
                 if (comps == null || comps.isEmpty()) {
                     close(player, true);
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_NONE");
+                    // open the add companions inventory
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        ItemStack[] items = new TARDISCompanionAddInventory(plugin, player).getPlayers();
+                        Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Add Companion");
+                        presetinv.setContents(items);
+                        player.openInventory(presetinv);
+                    }, 2L);
+//                    plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_NONE");
                     return;
                 }
                 String[] companionData = comps.split(":");

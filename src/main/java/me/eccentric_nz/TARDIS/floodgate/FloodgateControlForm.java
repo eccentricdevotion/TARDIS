@@ -351,7 +351,9 @@ public class FloodgateControlForm {
                     case 23 -> { // companions
                         String comps = tardis.getCompanions();
                         if (comps == null || comps.isEmpty()) {
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_NONE");
+                            // open companions add gui
+                            new FloodgateAddCompanionsForm(plugin, uuid).send();
+//                            plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_NONE");
                             return;
                         }
                         String[] companionData = comps.split(":");
