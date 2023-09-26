@@ -27,22 +27,22 @@ import java.util.List;
 public class TARDISSmelterFuel {
 
     public void processItems(Inventory inv, List<Chest> fuelChests) {
-        // process fuel chest contents
-        HashMap<Material, Integer> fuels = new HashMap<>();
-        HashMap<Material, Integer> remainders = new HashMap<>();
-        for (ItemStack is : inv.getContents()) {
-            if (is != null) {
-                Material m = is.getType();
-                if (m.isFuel()) {
-                    int amount = (fuels.containsKey(m)) ? fuels.get(m) + is.getAmount() : is.getAmount();
-                    fuels.put(m, amount);
-                    inv.remove(is);
-                }
-            }
-        }
-        // process fuels
         int fsize = fuelChests.size();
         if (fsize > 0) {
+            // process fuel chest contents
+            HashMap<Material, Integer> fuels = new HashMap<>();
+            HashMap<Material, Integer> remainders = new HashMap<>();
+            for (ItemStack is : inv.getContents()) {
+                if (is != null) {
+                    Material m = is.getType();
+                    if (m.isFuel()) {
+                        int amount = (fuels.containsKey(m)) ? fuels.get(m) + is.getAmount() : is.getAmount();
+                        fuels.put(m, amount);
+                        inv.remove(is);
+                    }
+                }
+            }
+            // process fuels
             fuels.forEach((key, value) -> {
                 int remainder = value % fsize;
                 if (remainder > 0) {
@@ -60,21 +60,21 @@ public class TARDISSmelterFuel {
                     }
                 });
             });
+            // return remainder to fuel chest
+            remainders.forEach((key, value) -> {
+                int max = key.getMaxStackSize();
+                if (value > max) {
+                    int remainder = value % max;
+                    for (int i = 0; i < value / max; i++) {
+                        inv.addItem(new ItemStack(key, max));
+                    }
+                    if (remainder > 0) {
+                        inv.addItem(new ItemStack(key, remainder));
+                    }
+                } else {
+                    inv.addItem(new ItemStack(key, value));
+                }
+            });
         }
-        // return remainder to fuel chest
-        remainders.forEach((key, value) -> {
-            int max = key.getMaxStackSize();
-            if (value > max) {
-                int remainder = value % max;
-                for (int i = 0; i < value / max; i++) {
-                    inv.addItem(new ItemStack(key, max));
-                }
-                if (remainder > 0) {
-                    inv.addItem(new ItemStack(key, remainder));
-                }
-            } else {
-                inv.addItem(new ItemStack(key, value));
-            }
-        });
     }
 }
