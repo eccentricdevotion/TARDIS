@@ -24,6 +24,7 @@
 
 ## Wiki Documentation
 
+* Smelter room page
 * ?
 
 ## Resource Pack / Monsters
