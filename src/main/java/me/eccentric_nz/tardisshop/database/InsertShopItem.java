@@ -4,7 +4,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.tardisshop.TARDISShopItem;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class InsertShopItem {
 
@@ -26,19 +29,23 @@ public class InsertShopItem {
 
     public TARDISShopItem addNamedItem(String item, double cost) {
         PreparedStatement ps = null;
-        Statement statement = null;
         ResultSet idRS = null;
+        String query = "INSERT INTO " + prefix + "items (item, cost) VALUES (?, ?)";
         try {
-            connection.setAutoCommit(false);
-            ps = connection.prepareStatement("INSERT INTO " + prefix + "items (item, cost) VALUES (?, ?)");
+            if (service.isMySQL()) {
+                ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            } else {
+                ps = connection.prepareStatement(query + " RETURNING item_id");
+            }
             ps.setString(1, item);
             ps.setDouble(2, cost);
-            ps.executeUpdate();
-            String lid = (service.isMySQL()) ? "SELECT last_insert_id()" : "SELECT last_insert_rowid()";
-            statement = connection.createStatement();
-            idRS = statement.executeQuery(lid);
+            if (service.isMySQL()) {
+                ps.executeUpdate();
+                idRS = ps.getGeneratedKeys();
+            } else {
+                idRS = ps.executeQuery();
+            }
             int id = (idRS.next()) ? idRS.getInt(1) : -1;
-            connection.commit();
             return new TARDISShopItem(id, item, null, cost);
         } catch (SQLException e) {
             plugin.debug("Insert error for items! " + e.getMessage());
@@ -46,9 +53,6 @@ public class InsertShopItem {
             try {
                 if (idRS != null) {
                     idRS.close();
-                }
-                if (statement != null) {
-                    statement.close();
                 }
                 if (ps != null) {
                     ps.close();

@@ -19,63 +19,78 @@ package me.eccentric_nz.TARDIS.database.tool;
 public enum Table {
 
     // tardis
-    achievements,
-    arched,
+    achievements("a_id"),
+    arched("uuid"),
     archive,
     areas,
     area_locations,
     ars,
     back,
-    bind,
-    blocks,
-    blueprint,
-    camera,
+    bind("b_id"),
+    blocks("b_id"),
+    blueprint("bp_id"),
+    camera("c_id"),
     chameleon,
     colour,
     chunks,
-    condenser,
-    controls,
+    condenser("c_id"),
+    controls("c_id"),
     current,
-    destinations,
-    dispersed,
+    destinations("dest_id"),
+    dispersed("d_id"),
     doors,
-    farming,
-    flight,
-    forcefield,
-    gravity_well,
+    farming("farm_id"),
+    flight("f_id"),
+    forcefield("uuid"),
+    gravity_well("g_id"),
     homes,
-    inventories,
-    junk,
-    lamps,
-    movers,
+    inventories("id"),
+    junk("id"),
+    lamps("l_id"),
+    movers("uuid"),
     next,
     paper_bag,
-    player_prefs,
+    player_prefs("pp_id"),
     portals,
     programs,
     reminders,
-    room_progress,
+    room_progress("progress_id"),
     seeds,
     siege,
     sonic,
     storage,
-    t_count,
+    t_count("t_id"),
     tag,
-    tardis,
+    tardis("tardis_id"),
     transmats,
-    travel_stats,
-    traveled_to,
+    travel_stats("travel_stats_id"),
+    traveled_to("uuid"),
     travellers,
-    vaults,
-    thevoid,
-    vortex,
+    vaults("v_id"),
+    thevoid("tardis_id"),
+    vortex("tardis_id"),
     // shop
     items,
     // vortex manipulator
     beacons,
-    manipulator,
+    manipulator("uuid"),
     messages,
     saves,
     // weeping angels
-    followers
+    followers("uuid");
+
+    private final String rowId;
+
+    Table(String rowId) {
+        this.rowId = rowId;
+    }
+
+    Table() {
+        String name = this.toString();
+        this.rowId = name.endsWith("s") ? name.substring(0, name.length() - 1) + "_id" : name + "_id";
+    }
+
+    public String getRowId() {
+        return rowId;
+    }
 }
