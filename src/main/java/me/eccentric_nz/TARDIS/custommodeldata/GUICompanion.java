@@ -24,7 +24,10 @@ public enum GUICompanion {
 
     // Add Companion
     INFO(1, 45, Material.BOOK),
-    LIST_COMPANIONS(1, 47, Material.WRITABLE_BOOK),
+    LIST_COMPANIONS(2, 47, Material.WRITABLE_BOOK),
+    ALL_COMPANIONS(3, 47, Material.WRITABLE_BOOK),
+    ADD_COMPANION(3, 47, Material.NETHER_STAR),
+    DELETE_COMPANION(1, 47, Material.BUCKET),
     BUTTON_CLOSE(1, 53, Material.BOWL);
 
     private final int customModelData;

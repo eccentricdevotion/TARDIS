@@ -2,8 +2,7 @@
 
 ## Current version `5.1.0`
 
-1. Add custom model data to companion GUIs
-2. ?
+1. ?
 
 ## Next version `5.2.0`
 
@@ -24,7 +23,8 @@
 
 ## Wiki Documentation
 
-* Smelter room page
+* Make all images tabbed
+* Vanilla/TARDIS screenshots for TabbedImage views
 * ?
 
 ## Resource Pack / Monsters

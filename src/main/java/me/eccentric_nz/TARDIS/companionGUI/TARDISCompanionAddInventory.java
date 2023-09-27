@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.companionGUI;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUICompanion;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
@@ -28,6 +24,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -82,16 +83,19 @@ public class TARDISCompanionAddInventory {
         info_lore.add("Click a player head to");
         info_lore.add("add them as a companion.");
         ii.setLore(info_lore);
+        ii.setCustomModelData(GUICompanion.INFO.getCustomModelData());
         info.setItemMeta(ii);
         heads[45] = info;
         ItemStack list = new ItemStack(Material.WRITABLE_BOOK, 1);
         ItemMeta ll = list.getItemMeta();
         ll.setDisplayName("List companions");
+        ll.setCustomModelData(GUICompanion.LIST_COMPANIONS.getCustomModelData());
         list.setItemMeta(ll);
         heads[47] = list;
         ItemStack every = new ItemStack(Material.WRITABLE_BOOK, 1);
         ItemMeta one = every.getItemMeta();
         one.setDisplayName("Add all online players");
+        one.setCustomModelData(GUICompanion.ALL_COMPANIONS.getCustomModelData());
         every.setItemMeta(one);
         heads[49] = every;
         // Cancel / close

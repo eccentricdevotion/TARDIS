@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.companionGUI;
 
-import java.util.ArrayList;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUICompanion;
 import org.bukkit.Material;
@@ -25,6 +23,9 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+
+import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -72,16 +73,19 @@ public class TARDISCompanionInventory {
         info_lore.add("click the Add button");
         info_lore.add("(nether star).");
         ii.setLore(info_lore);
+        ii.setCustomModelData(GUICompanion.INFO.getCustomModelData());
         info.setItemMeta(ii);
         heads[45] = info;
         ItemStack add = new ItemStack(Material.NETHER_STAR, 1);
         ItemMeta aa = add.getItemMeta();
         aa.setDisplayName("Add");
+        aa.setCustomModelData(GUICompanion.ADD_COMPANION.getCustomModelData());
         add.setItemMeta(aa);
         heads[48] = add;
         ItemStack del = new ItemStack(Material.BUCKET, 1);
         ItemMeta dd = del.getItemMeta();
         dd.setDisplayName("Remove");
+        dd.setCustomModelData(GUICompanion.DELETE_COMPANION.getCustomModelData());
         del.setItemMeta(dd);
         heads[51] = del;
         // Cancel / close
