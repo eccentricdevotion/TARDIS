@@ -133,6 +133,7 @@ public class TARDIS extends JavaPlugin {
     private final HashMap<String, String> versions = new HashMap<>();
     private final String versionRegex = "(\\d+[.])+\\d+";
     private final Pattern versionPattern = Pattern.compile(versionRegex);
+    private final String serverStr = "1.20.2";
     private TARDISChatGUI jsonKeeper;
     private TARDISUpdateChatGUI updateChatGUI;
     //    public TARDISFurnaceRecipe fornacis;
@@ -296,7 +297,7 @@ public class TARDIS extends JavaPlugin {
         persistentDataTypeUUID = new TARDISUUIDDataType();
         console = getServer().getConsoleSender();
         ModuleDescriptor.Version serverVersion = getServerVersion(getServer().getVersion());
-        ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse("1.20.2");
+        ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse(serverStr);
         // check server version
         if (serverVersion.compareTo(minVersion) >= 0) {
             if (!PaperLib.isPaper() && !PaperLib.isSpigot()) {
@@ -1913,5 +1914,9 @@ public class TARDIS extends JavaPlugin {
         int recorder_tick_delay = 5;
         // we schedule it once, it will reschedule itself
         recordingTask = getServer().getScheduler().runTaskLaterAsynchronously(this, new TARDISRecordingTask(this), recorder_tick_delay);
+    }
+
+    public String getServerStr() {
+        return serverStr;
     }
 }

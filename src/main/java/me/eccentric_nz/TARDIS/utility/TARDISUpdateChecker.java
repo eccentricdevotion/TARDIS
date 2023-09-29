@@ -19,14 +19,22 @@ package me.eccentric_nz.TARDIS.utility;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.command.CommandSender;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.lang.module.ModuleDescriptor;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.command.CommandSender;
 
 public class TARDISUpdateChecker implements Runnable {
 
@@ -84,6 +92,21 @@ public class TARDISUpdateChecker implements Runnable {
             }
             return;
         }
+        // check if server version matches tardis version
+        String currentServer = getLastestServerVersion();
+        if (!currentServer.isEmpty()) {
+            ModuleDescriptor.Version updateVersion = ModuleDescriptor.Version.parse(currentServer);
+            ModuleDescriptor.Version serverVersion = ModuleDescriptor.Version.parse(plugin.getServerStr());
+            if (updateVersion.compareTo(serverVersion) > 0) {
+                String message = "A new version is available, but requires a server update to " + currentServer;
+                if (sender == null) {
+                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, message);
+                } else {
+                    plugin.getMessenger().message(sender, TardisModule.TARDIS, message);
+                }
+                return;
+            }
+        }
         plugin.setUpdateFound(true);
         plugin.setBuildNumber(buildNumber);
         plugin.setUpdateNumber(newBuildNumber);
@@ -114,11 +137,41 @@ public class TARDISUpdateChecker implements Runnable {
                     .header("User-Agent", "TARDISPlugin")
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            JsonElement root = JsonParser.parseString((String) response.body());
+            JsonElement root = JsonParser.parseString(response.body());
             return root.getAsJsonObject();
         } catch (Exception ex) {
             plugin.debug("Failed to check for a snapshot update on TARDIS Jenkins.");
         }
         return null;
+    }
+
+    private String getLastestServerVersion() {
+        try {
+            // We're connecting to GitHub
+            // parse the XML document and grab the spigot version
+            DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            Document doc = db.parse("https://raw.githubusercontent.com/eccentricdevotion/TARDIS/master/pom.xml");
+            /*
+            <project>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.spigotmc</groupId>
+                        <artifactId>spigot</artifactId>
+                        <version>1.20.2-R0.1-SNAPSHOT</version>
+             */
+            NodeList list = doc.getElementsByTagName("dependencies");
+            Node root = list.item(0); // there's only one node
+            if (root.getNodeType() == Node.ELEMENT_NODE) {
+                NodeList depends = ((Element) root).getElementsByTagName("dependency");
+                Node spigot = depends.item(1); // spigot is the second listed dependency
+                if (spigot.getNodeType() == Node.ELEMENT_NODE) {
+                    String version = ((Element) spigot).getElementsByTagName("version").item(0).getTextContent();
+                    return version.split("-")[0];
+                }
+            }
+        } catch (Exception ex) {
+            plugin.debug("Failed to check for api-version from pom.xml on GitHub.");
+        }
+        return "";
     }
 }
