@@ -20,6 +20,7 @@ import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
+import me.eccentric_nz.TARDIS.commands.tardis.TARDISSaveIconCommand;
 import me.eccentric_nz.TARDIS.database.converters.TARDISWorldNameConverter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.*;
@@ -44,7 +45,7 @@ import java.util.*;
 public class TARDISWorldCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
-    private final List<String> ROOT_SUBS = Arrays.asList("load", "unload", "enable", "disable", "gm", "rename", "update_name", "info");
+    private final List<String> ROOT_SUBS = Arrays.asList("load", "unload", "enable", "disable", "gm", "rename", "update_name", "info", "dimensionicon");
     private final List<String> WORLD_SUBS = new ArrayList<>();
     private final List<String> TYPE_SUBS = new ArrayList<>();
     private final List<String> ENV_SUBS = new ArrayList<>();
@@ -75,6 +76,10 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
             if (args.length < 1 || !ROOT_SUBS.contains(args[0])) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_LOAD_UNLOAD");
                 return false;
+            }
+            // icon
+            if (args[0].equalsIgnoreCase("dimensionicon")) {
+                return new TARDISSaveIconCommand(plugin).changeIcon(sender, args);
             }
             // info
             if (args[0].equalsIgnoreCase("info") && sender instanceof Player player) {

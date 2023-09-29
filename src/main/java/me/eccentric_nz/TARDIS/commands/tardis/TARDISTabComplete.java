@@ -153,7 +153,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
             if (args[0].equals("update")) {
                 return partial(lastArg, EXTRA_SUBS);
             }
-            if (args[0].equals("saveicon") || args[0].equals("dimensionicon")) {
+            if (args[0].equals("saveicon")) {
                 return partial(lastArg, MAT_SUBS);
             }
         } else if (args.length == 4) {

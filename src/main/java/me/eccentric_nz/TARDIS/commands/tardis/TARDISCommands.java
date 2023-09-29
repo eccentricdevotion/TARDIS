@@ -281,7 +281,7 @@ public class TARDISCommands implements CommandExecutor {
                         }
                     }
                 }
-                case saveicon, dimensionicon -> {
+                case saveicon -> {
                     return new TARDISSaveIconCommand(plugin).changeIcon(player, args);
                 }
                 default -> {

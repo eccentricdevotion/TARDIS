@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -31,42 +32,46 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 
-class TARDISSaveIconCommand {
+public class TARDISSaveIconCommand {
 
     private final TARDIS plugin;
 
-    TARDISSaveIconCommand(TARDIS plugin) {
+    public TARDISSaveIconCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
-    boolean changeIcon(Player player, String[] args) {
-        if (TARDISPermission.hasPermission(player, "tardis.save")) {
-            if (args.length < 3) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+    public boolean changeIcon(CommandSender sender, String[] args) {
+        if (args.length < 3) {
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
+            return false;
+        }
+        Material material;
+        try {
+            material = Material.valueOf(args[2].toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException e) {
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "MATERIAL_NOT_VALID");
+            return false;
+        }
+        String m = material.toString();
+        if (args[0].equalsIgnoreCase("dimensionicon")) {
+            if (!TARDISPermission.hasPermission(sender, "tardis.admin")) {
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
+                return true;
+            }
+            World world = TARDISAliasResolver.getWorldFromAlias(args[1]);
+            if (world == null) {
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_WORLD");
                 return false;
             }
-            Material material;
+            plugin.getPlanetsConfig().set("planets." + world.getName() + ".icon", m);
             try {
-                material = Material.valueOf(args[2].toUpperCase(Locale.ROOT));
-            } catch (IllegalArgumentException e) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "MATERIAL_NOT_VALID");
-                return false;
+                plugin.getPlanetsConfig().save(new File(plugin.getDataFolder(), "planets.yml"));
+            } catch (IOException ex) {
+                plugin.debug("Could not save planets.yml, " + ex.getMessage());
             }
-            String m = material.toString();
-            if (args[0].equalsIgnoreCase("dimensionicon")) {
-                World world = TARDISAliasResolver.getWorldFromAlias(args[1]);
-                if (world == null) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "COULD_NOT_FIND_WORLD");
-                    return false;
-                }
-                plugin.getPlanetsConfig().set("planets." + world.getName() + ".icon", m);
-                try {
-                    plugin.getPlanetsConfig().save(new File(plugin.getDataFolder(), "planets.yml"));
-                } catch (IOException ex) {
-                    plugin.debug("Could not save planets.yml, " + ex.getMessage());
-                }
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "DIMENSION_ICON", m);
-            } else {
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "DIMENSION_ICON", m);
+        } else {
+            if (sender instanceof Player player && TARDISPermission.hasPermission(player, "tardis.save")) {
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                 if (!rs.fromUUID(player.getUniqueId().toString())) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
@@ -89,7 +94,6 @@ class TARDISSaveIconCommand {
                 plugin.getQueryFactory().doUpdate("destinations", set, did);
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_ICON", m);
             }
-            return true;
         }
         return true;
     }

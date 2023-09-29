@@ -1731,6 +1731,10 @@ commands:
     rename:
       description: Renames a world
       usage: /<command> rename [old name] [new name]
+    dimensionicon:
+      description: Change the icon for a world in the TARDIS Saves GUI.
+      permission-message: You don't have the permission <permission> to use this command
+      usage: /<command> dimensionicon [world] [material]
   tardisgamemode:
     aliases: [ tgm, tgms, tgmc, tgma, tgmsp ]
     description: Set a player's gamemode

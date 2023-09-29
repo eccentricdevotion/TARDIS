@@ -35,7 +35,6 @@ public enum TardisCommand {
     construct,
     cube,
     desktop,
-    dimensionicon,
     direction,
     door,
     egg,
