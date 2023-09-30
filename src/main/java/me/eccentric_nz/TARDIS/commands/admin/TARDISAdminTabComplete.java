@@ -17,9 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import com.google.common.collect.ImmutableList;
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.BlueprintType;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
@@ -31,6 +30,9 @@ import org.bukkit.entity.Creature;
 import org.bukkit.entity.EntityType;
 import org.bukkit.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TabCompleter for /tardisadmin
@@ -46,6 +48,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
     private final ImmutableList<String> SEED_SUBS = ImmutableList.copyOf(Consoles.getBY_NAMES().keySet());
     private final ImmutableList<String> WORLD_SUBS;
     private final List<String> BLUEPRINT_SUBS = new ArrayList<>();
+    private final List<String> BLUEPRINT_TYPE_SUBS = new ArrayList<>();
     private final List<String> MAT_SUBS = new ArrayList<>();
 
     public TARDISAdminTabComplete(TARDIS plugin) {
@@ -66,6 +69,9 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
         ENTITY_SUBS = ImmutableList.copyOf(tmpEntities);
         for (Permission b : plugin.getDescription().getPermissions()) {
             BLUEPRINT_SUBS.add(b.getName());
+        }
+        for (BlueprintType type : BlueprintType.values()) {
+            BLUEPRINT_TYPE_SUBS.add(type.toString());
         }
         TARDISWalls.BLOCKS.forEach((m) -> MAT_SUBS.add(m.toString()));
     }
@@ -102,6 +108,9 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             }
             if (args[0].equalsIgnoreCase("revoke")) {
                 return partial(lastArg, BLUEPRINT_SUBS);
+            }
+            if (args[0].equalsIgnoreCase("list") && args[1].equalsIgnoreCase("blueprints")) {
+                return partial(lastArg, BLUEPRINT_TYPE_SUBS);
             }
         } else if (args.length == 4) {
             if (args[0].equalsIgnoreCase("create")) {

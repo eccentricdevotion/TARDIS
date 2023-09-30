@@ -74,10 +74,13 @@ class TARDISListCommand {
             } else if (args[1].equalsIgnoreCase("portals")) {
                 plugin.getTrackerKeeper().getPortals().forEach((key, value) -> sender.sendMessage("TARDIS id: " + value.getTardisId() + " has a portal open at: " + key.toString()));
                 return true;
-            } else { // abandoned
+            } else if (args[1].equalsIgnoreCase("abandoned")) { // abandoned
                 new TARDISAbandonLister(plugin).list(sender);
                 return true;
             }
+        } else if (args.length > 2 && args[1].equalsIgnoreCase("blueprints")) {
+            new TARDISBlueprintLister(plugin).list(sender, args[2]);
+            return true;
         } else {
             // get all tardis positions - max 18
             int start = 0, end = 18;
@@ -114,5 +117,6 @@ class TARDISListCommand {
             }
             return true;
         }
+        return false;
     }
 }
