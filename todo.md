@@ -1,10 +1,10 @@
 # TODO
 
-## Current version `5.1.0`
+## Current version `5.2.0`
 
 1. ?
 
-## Next version `5.2.0`
+## Next version `5.3.0`
 
 1. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
