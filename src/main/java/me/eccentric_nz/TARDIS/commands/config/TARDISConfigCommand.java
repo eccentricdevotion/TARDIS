@@ -163,7 +163,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsInt.put("chat_width", "preferences");
         firstsInt.put("count", "creation");
         firstsInt.put("delay_factor", "growth");
-        firstsInt.put("force_field", "allow.force_field");
+        firstsInt.put("force_field", "allow");
         firstsInt.put("grace_period", "travel");
         firstsInt.put("gravity_max_distance", "growth");
         firstsInt.put("gravity_max_velocity", "growth");

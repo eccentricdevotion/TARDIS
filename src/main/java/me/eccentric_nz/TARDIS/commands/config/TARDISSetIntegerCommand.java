@@ -70,6 +70,9 @@ class TARDISSetIntegerCommand {
         plugin.getConfig().set(first, val);
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", first);
+        if (first.equals("allow.force_field")) {
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "RESTART");
+        }
         return true;
     }
 
