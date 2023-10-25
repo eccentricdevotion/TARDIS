@@ -357,9 +357,12 @@ public class TARDISConfiguration {
             i++;
         }
         // switch chemistry to a module
-        if (!config.contains("allow.chemistry")) {
+        if (config.contains("allow.chemistry")) {
             boolean tf = config.getBoolean("allow.chemistry");
-            plugin.getConfig().set("modules.chemistry", tf);
+            if (!config.contains("modules.chemistry") || config.getBoolean("modules.chemistry") != tf) {
+                plugin.getConfig().set("modules.chemistry", tf);
+            }
+            plugin.getConfig().set("allow.chemistry", null);
             i++;
         }
         if (i > 0) {
