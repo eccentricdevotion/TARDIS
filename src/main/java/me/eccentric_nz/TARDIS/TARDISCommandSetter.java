@@ -43,6 +43,7 @@ import me.eccentric_nz.TARDIS.commands.travel.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.commands.travel.TARDISTravelTabComplete;
 import me.eccentric_nz.TARDIS.commands.utils.*;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayCommand;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkCommands;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkTabComplete;
@@ -50,6 +51,10 @@ import me.eccentric_nz.TARDIS.schematic.TARDISSchematicCommand;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicTabComplete;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayCommand;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayTabComplete;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
@@ -146,6 +151,8 @@ class TARDISCommandSetter {
         if (plugin.getConfig().getBoolean("modules.chemistry")) {
             plugin.getCommand("tardischemistry").setExecutor(new TARDISChemistryCommand(plugin));
             plugin.getCommand("tardischemistry").setTabCompleter(new TARDISChemistryTabComplete());
+        } else {
+            plugin.getCommand("tardischemistry").setExecutor(new FallbackCommandHandler("Chemistry", TardisModule.CHEMISTRY));
         }
         TARDISWeatherCommand tardisWeatherCommand = new TARDISWeatherCommand(plugin);
         plugin.getCommand("tardisweather").setExecutor(tardisWeatherCommand);
@@ -153,5 +160,21 @@ class TARDISCommandSetter {
         TARDISTimeCommand tardisTimeCommand = new TARDISTimeCommand(plugin);
         plugin.getCommand("tardistime").setExecutor(tardisTimeCommand);
         plugin.getCommand("tardistime").setTabCompleter(tardisTimeCommand);
+    }
+
+    public class FallbackCommandHandler implements CommandExecutor {
+        private final String moduleName;
+        private final TardisModule module;
+
+        public FallbackCommandHandler(String moduleName, TardisModule module) {
+            this.moduleName = moduleName;
+            this.module = module;
+        }
+
+        @Override
+        public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+            plugin.getMessenger().send(commandSender, module, "MODULE_NOT_ENABLED", moduleName);
+            return true;
+        }
     }
 }
