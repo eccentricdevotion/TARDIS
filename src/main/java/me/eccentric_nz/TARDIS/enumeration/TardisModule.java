@@ -4,6 +4,7 @@ public enum TardisModule {
 
     BLASTER("Sonic Blaster", "#00AA00"),
     BLUEPRINTS("TARDIS Blueprints", "#5555FF"),
+    CHEMISTRY("TARDIS Chemistry", "#FF55FF"),
     DEBUG("TARDIS", "#FF55FF"),
     DYNMAP("TARDIS Dynmap", "#55FF55"),
     EMERGENCY_PROGRAM("Emergency Program One", "#C70039"),
