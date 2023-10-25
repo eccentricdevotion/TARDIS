@@ -8,7 +8,7 @@ title: Installation
 # Installation
 
 Get the latest TARDIS plugin file
-from: [http://tardisjenkins.duckdns.org:8080/view/TARDIS/](http://tardisjenkins.duckdns.org:8080/view/TARDIS/)
+from: [http://tardisjenkins.duckdns.org:8080/job/TARDIS/](http://tardisjenkins.duckdns.org:8080/job/TARDIS/)
 
 * * *
 
