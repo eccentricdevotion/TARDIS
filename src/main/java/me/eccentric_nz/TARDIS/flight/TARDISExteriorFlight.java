@@ -148,8 +148,8 @@ public class TARDISExteriorFlight {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(stand, pandorica), 5L, 3L);
                     int sound = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-                        TARDISSounds.playTARDISSound(player.getLocation(), "time_rotor", 100f);
-                    }, 5L, 280L);
+                        TARDISSounds.playTARDISSound(player.getLocation(), "time_rotor_flying", 4f);
+                    }, 5L, 33L);
                     // save player's current location, so we can teleport them back to it when they finish flying
                     plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(id, playerLocation, sound, animation));
                     // spawn a chicken
