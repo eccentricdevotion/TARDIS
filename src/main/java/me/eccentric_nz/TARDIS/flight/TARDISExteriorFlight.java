@@ -19,8 +19,10 @@ package me.eccentric_nz.TARDIS.flight;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
@@ -165,6 +167,14 @@ public class TARDISExteriorFlight {
                 }, 2L);
                 break;
             }
+        }
+        // check protected blocks - if block has data stored then put the block back!
+        HashMap<String, Object> tid = new HashMap<>();
+        tid.put("tardis_id", id);
+        tid.put("police_box", 1);
+        ResultSetBlocks rsb = new ResultSetBlocks(plugin, tid, true);
+        if (rsb.resultSet()) {
+            rsb.getData().forEach((rb) -> TARDISBlockSetters.setBlock(rb.getLocation(), rb.getBlockData()));
         }
     }
 }
