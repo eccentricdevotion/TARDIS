@@ -52,9 +52,13 @@ public class VillagerSpawnListener implements Listener {
         if (!plugin.getMonstersConfig().getBoolean("ood.worlds." + world.getName())) {
             return;
         }
+        // not from spawners
+        if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER) {
+            return;
+        }
         if (TARDISConstants.RANDOM.nextInt(100) < plugin.getMonstersConfig().getInt("ood.spawn_from_villager")) {
             TWAFollower follower = new MonsterSpawner().createFollower(entity.getLocation(), new Follower(UUID.randomUUID(), TARDISWeepingAngels.UNCLAIMED, Monster.OOD));
-            LivingEntity ood = (LivingEntity) follower;
+            LivingEntity ood = (LivingEntity) follower.getBukkitEntity();
             OodEquipment.set(null, ood, false, true);
             plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(ood, EntityType.HUSK, Monster.OOD, entity.getLocation()));
             entity.remove();
