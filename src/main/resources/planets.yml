@@ -91,3 +91,7 @@ planets:
     allow_portals: false
     alias: Gallifrey
     icon: RED_SAND
+    villager_blueprints:
+      enabled: true
+      uses: 1
+      chance: 20

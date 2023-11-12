@@ -319,6 +319,7 @@ class TARDISListenerRegisterer {
         if (plugin.getPlanetsConfig().getBoolean("planets.gallifrey.enabled")) {
             plugin.debug("Gallifrey enabled, registering planet event listeners");
             plugin.getPM().registerEvents(new TARDISGallifreySpawnListener(plugin), plugin);
+            plugin.getPM().registerEvents(new GallifreyTradeSelectListener(plugin), plugin);
         }
         if (plugin.getPlanetsConfig().getBoolean("switch_resource_packs")) {
             plugin.getPM().registerEvents(new TARDISResourcePackSwitcher(plugin), plugin);
