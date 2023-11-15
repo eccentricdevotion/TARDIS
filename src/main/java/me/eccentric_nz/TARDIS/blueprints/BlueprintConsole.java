@@ -24,7 +24,6 @@ public enum BlueprintConsole {
     CAVE("tardis.cave"),
     COPPER("tardis.copper"),
     CORAL("tardis.coral"),
-    CUSTOM("tardis.custom"),
     DELTA("tardis.delta"),
     DELUXE("tardis.deluxe"),
     DIVISION("tardis.division"),
@@ -49,7 +48,8 @@ public enum BlueprintConsole {
     TOM("tardis.tom"),
     TWELFTH("tardis.twelfth"),
     WAR("tardis.war"),
-    WEATHERED("tardis.weathered");
+    WEATHERED("tardis.weathered"),
+    CUSTOM("tardis.custom");
 
     private final String permission;
 

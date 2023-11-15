@@ -18,6 +18,9 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.blueprints.BlueprintConsole;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 
@@ -33,17 +36,7 @@ class TARDISDevListCommand {
     }
 
     boolean listStuff(CommandSender sender, String[] args) {
-        if (args.length > 1 &&
-            (
-                args[1].equalsIgnoreCase("preset_perms")
-                || args[1].equalsIgnoreCase("perms")
-                || args[1].equalsIgnoreCase("recipes")
-                || args[1].equalsIgnoreCase("blueprints")
-                || args[1].equalsIgnoreCase("commands")
-                || args[1].equalsIgnoreCase("block_colours")
-                || args[1].equalsIgnoreCase("change")
-            )
-        ) {
+        if (args.length > 1 && (args[1].equalsIgnoreCase("preset_perms") || args[1].equalsIgnoreCase("perms") || args[1].equalsIgnoreCase("recipes") || args[1].equalsIgnoreCase("blueprints") || args[1].equalsIgnoreCase("commands") || args[1].equalsIgnoreCase("block_colours") || args[1].equalsIgnoreCase("change") || args[1].equalsIgnoreCase("consoles"))) {
             if (args[1].equalsIgnoreCase("perms")) {
                 if (args.length > 2) {
                     new TARDISPermissionLister(plugin).listPermsHtml(sender);
@@ -70,6 +63,17 @@ class TARDISDevListCommand {
             } else if (args[1].equalsIgnoreCase("change")) {
                 for (Material m : TARDISConstants.CHAMELEON_BLOCKS_CHANGE) {
                     TARDISConstants.changeToMaterial(m);
+                }
+                return true;
+            } else if (args[1].equalsIgnoreCase("consoles")) {
+                for (BlueprintConsole bpc : BlueprintConsole.values()) {
+                    String perm = bpc.getPermission().split("\\.")[1];
+                    Schematic console = Consoles.getBY_PERMS().get(perm);
+                    if (console == null) {
+                        plugin.debug("Schematic by perm {" + perm + "} was null");
+                    } else {
+                        plugin.debug("Schematic by perm {" + perm + "} has material " + console.getSeedMaterial());
+                    }
                 }
                 return true;
             } else {

@@ -93,5 +93,6 @@ planets:
     icon: RED_SAND
     villager_blueprints:
       enabled: true
+      # max usage is 16
       uses: 1
       chance: 20

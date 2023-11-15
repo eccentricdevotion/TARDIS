@@ -27,7 +27,8 @@ public class GallifreyBlueprintTrade {
 
     public GallifreyBlueprintTrade(TARDIS plugin) {
         this.plugin = plugin;
-        this.uses = this.plugin.getPlanetsConfig().getInt("planets.gallifrey.villager_blueprints.uses");
+        // minecraft limits max uses to 16 - see https://minecraft.wiki/w/Trading#Java_Edition_offers
+        this.uses = Math.min(this.plugin.getPlanetsConfig().getInt("planets.gallifrey.villager_blueprints.uses"), 16);
     }
 
     public void setTrades(Merchant villager) {
@@ -35,7 +36,7 @@ public class GallifreyBlueprintTrade {
         villager.setRecipes(recipes);
     }
 
-    private List<MerchantRecipe> getRandomRecipes() {
+    public MerchantRecipe getRoom() {
         // room blueprint index 0 and 1 are not rooms, and the last index is the zero room which can't be grown with ARS
         BlueprintRoom bpr = BlueprintRoom.values()[TARDISConstants.RANDOM.nextInt(2, BlueprintRoom.values().length - 1)];
         // get the blueprint item stack
@@ -47,7 +48,12 @@ public class GallifreyBlueprintTrade {
         // determine the stack size of the ingredient
         int roomAmount = plugin.getRoomsConfig().getInt("rooms." + bpr.toString() + ".cost") / 20;
         roomRecipe.addIngredient(new ItemStack(roomMaterial, roomAmount));
-        BlueprintConsole bpc = BlueprintConsole.values()[TARDISConstants.RANDOM.nextInt(BlueprintConsole.values().length)];
+        return roomRecipe;
+    }
+
+    public MerchantRecipe getConsole() {
+        // don't include the custom console
+        BlueprintConsole bpc = BlueprintConsole.values()[TARDISConstants.RANDOM.nextInt(BlueprintConsole.values().length - 1)];
         // get the blueprint item stack
         ItemStack cis = buildResult(bpc.getPermission(), bpc.toString());
         // single use?
@@ -59,6 +65,12 @@ public class GallifreyBlueprintTrade {
         int consoleAmount = plugin.getArtronConfig().getInt("upgrades." + perm) / 250;
         // add the ingredient
         consoleRecipe.addIngredient(new ItemStack(consoleMaterial, consoleAmount));
+        return consoleRecipe;
+    }
+
+    private List<MerchantRecipe> getRandomRecipes() {
+        MerchantRecipe roomRecipe = getRoom();
+        MerchantRecipe consoleRecipe = getConsole();
         return List.of(roomRecipe, consoleRecipe);
     }
 
