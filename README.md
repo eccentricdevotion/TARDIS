@@ -32,6 +32,8 @@ Jenkins CI builds can be found here:
 ![Spigot size](https://img.shields.io/spiget/download-size/45729?label=Spigot%20size&style=for-the-badge)
 ![bStats Servers](https://img.shields.io/bstats/servers/11698?style=for-the-badge)
 
+![1.20.2 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.20.2/total?style=for-the-badge)
+![1.20.1 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.20.1/total?style=for-the-badge)
 ![1.19.4 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.19.4/total?style=for-the-badge)
 ![1.19.3 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.19.3/total?style=for-the-badge)
 ![1.19.2 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.19.2/total?style=for-the-badge)
