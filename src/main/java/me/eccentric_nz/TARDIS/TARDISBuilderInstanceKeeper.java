@@ -83,6 +83,7 @@ public class TARDISBuilderInstanceKeeper {
         conversions.put("BEETROOTS", "BEETROOT");
         conversions.put("BIG_DRIPLEAF_STEM", "BIG_DRIPLEAF");
         conversions.put("BROWN_MUSHROOM_BLOCK", "BROWN_MUSHROOM");
+        conversions.put("BUDDING_AMETHYST", "AMETHYST_BLOCK");
         conversions.put("CAKE", "LEVER");
         conversions.put("CARROTS", "CARROT");
         conversions.put("CAVE_VINES", "GLOW_BERRIES");
