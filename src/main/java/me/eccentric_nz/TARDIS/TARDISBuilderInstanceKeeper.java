@@ -83,6 +83,7 @@ public class TARDISBuilderInstanceKeeper {
         conversions.put("BEETROOTS", "BEETROOT");
         conversions.put("BIG_DRIPLEAF_STEM", "BIG_DRIPLEAF");
         conversions.put("BROWN_MUSHROOM_BLOCK", "BROWN_MUSHROOM");
+        conversions.put("BUDDING_AMETHYST", "AMETHYST_BLOCK");
         conversions.put("CAKE", "LEVER");
         conversions.put("CARROTS", "CARROT");
         conversions.put("CAVE_VINES", "GLOW_BERRIES");
@@ -94,6 +95,7 @@ public class TARDISBuilderInstanceKeeper {
         conversions.put("GRASS", "WHEAT_SEEDS");
         conversions.put("GRASS_BLOCK", "DIRT");
         conversions.put("LARGE_AMETHYST_BUD", "AMETHYST_SHARD");
+        conversions.put("LAVA_CAULDRON", "CAULDRON");
         conversions.put("LIGHT", "TORCH");
         conversions.put("MEDIUM_AMETHYST_BUD", "AMETHYST_SHARD");
         conversions.put("MELON_STEM", "MELON_SEEDS");
@@ -101,6 +103,7 @@ public class TARDISBuilderInstanceKeeper {
         conversions.put("PITCHER_CROP", "PITCHER_PLANT");
         conversions.put("POTATOES", "POTATO");
         conversions.put("POWDER_SNOW", "SNOW_BLOCK");
+        conversions.put("POWDER_SNOW_CAULDRON", "CAULDRON");
         conversions.put("PUMPKIN_STEM", "PUMPKIN_SEEDS");
         conversions.put("REDSTONE_WALL_TORCH", "REDSTONE_TORCH");
         conversions.put("REDSTONE_WIRE", "REDSTONE");
@@ -113,6 +116,7 @@ public class TARDISBuilderInstanceKeeper {
         conversions.put("TORCHFLOWER_CROP", "TORCHFLOWER");
         conversions.put("TWISTING_VINES_PLANT", "TWISTING_VINES");
         conversions.put("WALL_TORCH", "TORCH");
+        conversions.put("WATER_CAULDRON", "CAULDRON");
         conversions.put("WEEPING_VINES_PLANT", "WEEPING_VINES");
         conversions.put("WHEAT", "WHEAT_SEEDS");
         // add all potted plants

@@ -26,6 +26,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+import org.bukkit.persistence.PersistentDataType;
 
 /**
  * @author eccentric_nz
@@ -61,6 +62,12 @@ public final class TARDISGallifreySpawnListener implements Listener {
                 villager.setVillagerLevel(1); // minimum level is 1
                 villager.setVillagerExperience(1); // should be greater than 0 so villager doesn't lose its profession
                 villager.setVillagerType(Villager.Type.values()[TARDISConstants.RANDOM.nextInt(Villager.Type.values().length)]);
+                // set trades
+                if (plugin.getPlanetsConfig().getBoolean("planets.gallifrey.villager_blueprints.enabled") && TARDISConstants.RANDOM.nextInt(100) < plugin.getPlanetsConfig().getInt("planets.gallifrey.villager_blueprints.chance")) {
+                    // set a PDC value so we can identify it later and open a custom merchant inventory for the clicking player
+                    villager.getPersistentDataContainer().set(plugin.getBlueprintKey(), PersistentDataType.BOOLEAN, true);
+                    new GallifreyBlueprintTrade(plugin).setTrades(villager);
+                }
             }, 2L);
         }
     }

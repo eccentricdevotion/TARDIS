@@ -208,6 +208,12 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.gallifrey.alias", "Gallifrey");
             save++;
         }
+        if (!planets_config.contains("planets.gallifrey.villager_blueprints")) {
+            planets_config.set("planets.gallifrey.villager_blueprints.enabled", true);
+            planets_config.set("planets.gallifrey.villager_blueprints.uses", 1);
+            planets_config.set("planets.gallifrey.villager_blueprints.chance", 20);
+            save++;
+        }
         if (planets_config.getString("planets.skaro.generator").equalsIgnoreCase("DEFAULT")) {
             planets_config.set("planets.gallifrey.generator", "TARDIS:gallifrey");
             planets_config.set("planets.siluria.generator", "TARDIS:siluria");

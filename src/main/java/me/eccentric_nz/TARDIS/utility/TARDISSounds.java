@@ -33,7 +33,7 @@ public class TARDISSounds {
     private static float VOLUME = TARDIS.plugin.getConfig().getInt("preferences.sfx_volume") / 10.0F;
 
     /**
-     * Plays the interior hum sound upon TARDIS entry.
+     * Plays the interior hum sound upon TARDIS entry. As it is a player preference, only play the sound for the specific player, as preferences may differ.
      *
      * @param p the player to play the sound to
      */
@@ -49,7 +49,7 @@ public class TARDISSounds {
             hum = "tardis_hum";
         }
         if (userSFX) {
-            playTARDISSound(p.getLocation(), hum);
+            p.playSound(p.getLocation(), hum, VOLUME, 1.0f);
         }
     }
 
