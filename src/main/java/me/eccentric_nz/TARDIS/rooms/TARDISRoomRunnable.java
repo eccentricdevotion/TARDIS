@@ -622,12 +622,19 @@ public class TARDISRoomRunnable implements Runnable {
                     plugin.getQueryFactory().insertControl(tardis_id, 19, plate, 0);
                 }
                 // set stable
-                if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("MANGROVE") || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE"))) {
+                if (type.equals(Material.SOUL_SAND) &&
+                        (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") ||
+                         room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH") ||
+                         room.equals("IGLOO") || room.equals("MANGROVE") || room.equals("STALL") ||
+                         room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE") || room.equals("GARDEN"))) {
                     HashMap<String, Object> sets = new HashMap<>();
                     sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                     HashMap<String, Object> wheres = new HashMap<>();
                     wheres.put("tardis_id", tardis_id);
                     switch (room) {
+                        case "GARDEN" -> {
+                            // do nothing here
+                        }
                         case "RENDERER", "ZERO" -> plugin.getQueryFactory().doUpdate("tardis", sets, wheres);
                         case "MAZE" -> {
                             String loc_str = TARDISStaticLocationGetters.makeLocationStr(world, startx, starty + 1, startz);
@@ -653,6 +660,19 @@ public class TARDISRoomRunnable implements Runnable {
                         case IGLOO -> data = Material.PACKED_ICE.createBlockData();
                         case MANGROVE -> data = TARDISConstants.WATER;
                         case ZERO -> data = Material.PINK_CARPET.createBlockData();
+                        case GARDEN -> {
+                            data = Material.GRASS_BLOCK.createBlockData();
+                            // save garden coords
+                            HashMap<String, Object> setG = new HashMap<>();
+                            setG.put("tardis_id", tardis_id);
+                            setG.put("world", world.getName());
+                            setG.put("minx", startx - 6);
+                            setG.put("maxx", startx + 6);
+                            setG.put("y", starty);
+                            setG.put("minz", startz - 6);
+                            setG.put("maxz", startz + 6);
+                            plugin.getQueryFactory().doInsert("gardens", setG);
+                        }
                         default -> {
                             data = TARDISConstants.BLACK;
                             // add WorldGuard region
@@ -674,7 +694,7 @@ public class TARDISRoomRunnable implements Runnable {
                             }
                         }
                     }
-                    if (!room.equals("ZERO") && !room.equals("RENDERER") && !room.equals("MAZE")) {
+                    if (!room.equals("ZERO") && !room.equals("RENDERER") && !room.equals("MAZE") && !room.equals("GARDEN")) {
                         // update player prefs - turn on mob farming
                         if (player != null) {
                             turnOnFarming(player);

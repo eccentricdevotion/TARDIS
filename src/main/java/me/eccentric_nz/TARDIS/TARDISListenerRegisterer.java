@@ -118,6 +118,7 @@ class TARDISListenerRegisterer {
      * TARDIS.
      */
     TARDISInformationSystemListener registerListeners() {
+        plugin.getPM().registerEvents(new TARDISBonemealListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISEditAreasGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockBreakListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockPlaceListener(plugin), plugin);

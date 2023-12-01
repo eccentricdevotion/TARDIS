@@ -146,6 +146,10 @@ public class TARDISSQLiteDatabase {
             String queryForce = "CREATE TABLE IF NOT EXISTS " + prefix + "forcefield (uuid TEXT DEFAULT '', location TEXT DEFAULT '')";
             statement.executeUpdate(queryForce);
 
+            // Table structure for table 'gardens'
+            String queryGardens = "CREATE TABLE IF NOT EXISTS " + prefix + "gardens (garden_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, world TEXT COLLATE NOCASE DEFAULT '', minx INTEGER, maxx INTEGER, y INTEGER, minz INTEGER, maxz INTEGER)";
+            statement.executeUpdate(queryGardens);
+
             // Table structure for table 'gravity_well'
             String queryGravity = "CREATE TABLE IF NOT EXISTS " + prefix + "gravity_well (g_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '', direction INTEGER, distance INTEGER DEFAULT 11, velocity REAL DEFAULT 0.5)";
             statement.executeUpdate(queryGravity);

@@ -38,7 +38,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class TARDISSchematicTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("load", "paste", "save", "clear", "replace", "convert", "remove");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("load", "paste", "save", "clear", "replace", "convert", "remove", "flowers");
     private final List<String> LOAD_SUBS = ImmutableList.of("console", "room", "structure", "user");
     private final List<String> CONSOLE_SUBS = new ArrayList<>(Consoles.getBY_PERMS().keySet());
     private final List<String> ROOM_SUBS = new ArrayList<>();

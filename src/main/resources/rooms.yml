@@ -150,6 +150,12 @@ rooms:
     offset: -4
     seed: MELON
     user: false
+  GARDEN:
+    enabled: true
+    cost: 450
+    offset: -4
+    seed: CHERRY_LEAVES
+    user: false
   HUTCH:
     enabled: true
     cost: 450

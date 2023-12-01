@@ -78,6 +78,9 @@ public class TARDISSchematicCommand implements CommandExecutor {
             if (args[0].equalsIgnoreCase("remove")) {
                 return new SchematicRemoveLights().act(plugin, player);
             }
+            if (args[0].equalsIgnoreCase("flowers")) {
+                return new SchematicFlowers().act(plugin, player);
+            }
             if (args.length < 2) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NAME");

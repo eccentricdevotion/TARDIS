@@ -185,6 +185,10 @@ public class Converter implements Runnable {
                                         str = String.format(SQL.VALUES.get(i), rs.getString("uuid"), rs.getString("location")) + end;
                                         sb.append(str);
                                     }
+                                    case gardens -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("garden_id"), rs.getInt("tardis_id"), rs.getString("world"), rs.getInt("minx"), rs.getInt("maxx"), rs.getInt("y"), rs.getInt("minz"), rs.getInt("maxz")) + end;
+                                        sb.append(str);
+                                    }
                                     case gravity_well -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("g_id"), rs.getInt("tardis_id"), rs.getString("location"), rs.getString("direction"), rs.getInt("distance"), rs.getFloat("velocity")) + end;
                                         sb.append(str);
