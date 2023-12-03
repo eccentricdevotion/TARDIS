@@ -6,10 +6,15 @@
 
 ## Next version `5.3.0`
 
-1. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
+1. Update to 1.20.3
+2. Add new 60th anniversary console
+3. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
-2. Animated models for player disguises
-3. Sonic Blaster
+4. Updated Shell room [#741](https://github.com/eccentricdevotion/TARDIS/issues/741)
+5. Deep space [#748](https://github.com/eccentricdevotion/TARDIS/issues/748)
+6. Animated models for player disguises
+7. Sonic Blaster
+8. New sonic screwdriver and functionality?
 
 ## Future versions
 
