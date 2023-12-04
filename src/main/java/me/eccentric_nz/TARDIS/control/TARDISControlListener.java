@@ -595,7 +595,7 @@ public class TARDISControlListener implements Listener {
                                     }, 20L);
                                 case 41 -> // NORTH
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        // has player moved out of the maze  in a westerly direction
+                                        // has player moved out of the maze in a westerly direction
                                         Location playerLocation = player.getLocation();
                                         if (playerLocation.getBlockZ() < blockLocation.getBlockZ()) {
                                             // reconfigure maze
@@ -604,7 +604,7 @@ public class TARDISControlListener implements Listener {
                                     }, 20L);
                                 case 42 -> // SOUTH
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        // has player moved out of the maze  in an easterly direction
+                                        // has player moved out of the maze in an easterly direction
                                         Location playerLocation = player.getLocation();
                                         if (playerLocation.getBlockZ() > blockLocation.getBlockZ()) {
                                             // reconfigure maze
@@ -613,7 +613,7 @@ public class TARDISControlListener implements Listener {
                                     }, 20L);
                                 case 43 -> // EAST
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        // has player moved out of the maze  in a southerly direction
+                                        // has player moved out of the maze in a southerly direction
                                         Location playerLocation = player.getLocation();
                                         if (playerLocation.getBlockX() > blockLocation.getBlockX()) {
                                             // reconfigure maze

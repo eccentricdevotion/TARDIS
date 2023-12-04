@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
@@ -50,7 +51,7 @@ public class ResultSetTardisChunk {
     }
 
     /**
-     * Gets to the chunk of a TARDIS. This method builds an SQL query string from the parameters supplied and then
+     * Gets the chunk of a TARDIS. This method builds an SQL query string from the parameters supplied and then
      * executes the query.
      *
      * @param id the Tardis ID to check
