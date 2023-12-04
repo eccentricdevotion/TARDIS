@@ -56,6 +56,8 @@ public interface TARDISMessage {
 
     void send(Player player, String key, boolean handbrake);
 
+    void sendJoined(Player player, String key, String sub, boolean handbrake);
+
     void broadcast(TardisModule module, String message);
 
     void sendWithColour(CommandSender cs, TardisModule module, String message, String hex);

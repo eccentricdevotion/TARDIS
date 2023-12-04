@@ -115,6 +115,14 @@ public class AdventureMessage implements TARDISMessage {
     }
 
     @Override
+    public void sendJoined(Player player, String key, String sub, boolean handbrake) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        String other = (handbrake) ? TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE") : TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX");
+        TextComponent actionBar = AdventureComponents.getModule(TardisModule.TARDIS).append(Component.text(String.format(local, sub) + " " + other, NamedTextColor.WHITE));
+        player.sendActionBar(actionBar);
+    }
+
+    @Override
     public void broadcast(TardisModule module, String message) {
         message(TARDIS.plugin.getServer(), module, message);
     }

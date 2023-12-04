@@ -114,6 +114,17 @@ public class SpigotMessage implements TARDISMessage {
     }
 
     @Override
+    public void sendJoined(Player player, String key, String sub, boolean handbrake) {
+        String local = TARDIS.plugin.getLanguage().getString(key);
+        String other = (handbrake) ? TARDIS.plugin.getLanguage().getString("HANDBRAKE_RELEASE") : TARDIS.plugin.getLanguage().getString("LEAVING_VORTEX");
+        TextComponent actionBar = SpigotComponents.getModule(TardisModule.TARDIS);
+        TextComponent m = new TextComponent(String.format(local, sub) + " " + other);
+        m.setColor(ChatColor.WHITE);
+        actionBar.addExtra(m);
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, actionBar);
+    }
+
+    @Override
     public void broadcast(TardisModule module, String message) {
         TextComponent textComponent = SpigotComponents.getModule(module);
         TextComponent m = new TextComponent(message);
