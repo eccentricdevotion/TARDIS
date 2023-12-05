@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.camera.TARDISDismountListener;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISChameleonConstructorListener;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISChameleonConstructorOpenCloseListener;
 import me.eccentric_nz.TARDIS.chameleon.gui.*;
+import me.eccentric_nz.TARDIS.chameleon.shell.TARDISPlayerShellListener;
 import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellLoaderListener;
 import me.eccentric_nz.TARDIS.commands.areas.TARDISEditAreasGUIListener;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigMenuListener;
@@ -300,6 +301,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISDirectionFrameListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISHandlesFrameListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISMonitorFrameListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISPlayerShellListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("allow.wg_flag_set") && plugin.getPM().isPluginEnabled("WorldGuard")) {
             plugin.getPM().registerEvents(new TARDISAntiBuildListener(plugin), plugin);
         }

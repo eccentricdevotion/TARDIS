@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
@@ -98,6 +99,7 @@ public class TARDISShellLoaderListener extends TARDISMenuListener {
         } else {
             TARDISChameleonColumn chameleonColumn = null;
             ChameleonPreset preset;
+            int cid = -1;
             if (slot == 50) {
                 // load current preset
                 preset = rs.getTardis().getPreset();
@@ -128,6 +130,7 @@ public class TARDISShellLoaderListener extends TARDISMenuListener {
                             }
                         }
                         chameleonColumn = TARDISChameleonPreset.buildTARDISChameleonColumn(COMPASS.EAST, strings);
+                        cid = TARDISNumberParsers.parseInt(rsc.getData().get("chameleon_id"));
                     }
                 }
             } else {
@@ -170,7 +173,7 @@ public class TARDISShellLoaderListener extends TARDISMenuListener {
             }
             // build shell in the shell room
             Location centre = button.clone().add(3, 1, 0);
-            new TARDISShellBuilder(plugin, preset, chameleonColumn, centre).buildPreset();
+            new TARDISShellBuilder(plugin, preset, chameleonColumn, centre, cid).buildPreset();
             // close
             close(player);
         }

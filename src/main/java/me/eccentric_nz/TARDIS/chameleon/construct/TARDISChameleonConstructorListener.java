@@ -20,21 +20,18 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonHelpGUI;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
-import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetChameleon;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.*;
+import me.eccentric_nz.TARDIS.enumeration.Adaption;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -142,6 +139,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener {
                         }, 2L);
                 case 5 -> close(player); // abort
                 case 7 -> {
+                    // build
                     HashMap<String, Object> wherecl = new HashMap<>();
                     wherecl.put("tardis_id", id);
                     ResultSetChameleon rscl = new ResultSetChameleon(plugin, wherecl);
@@ -149,7 +147,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_NO_SAVE");
                         return;
                     }
-                    buildConstruct(tardis.getPreset().toString(), id, player);
+                    new ConstructBuilder(plugin).build(tardis.getPreset().toString(), id, player);
                 }
                 case 8 -> {
                     String air = TARDISConstants.AIR.getAsString();
@@ -259,7 +257,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener {
                         set.put("tardis_id", id);
                         plugin.getQueryFactory().doInsert("chameleon", set);
                     }
-                    buildConstruct(tardis.getPreset().toString(), id, player);
+                    new ConstructBuilder(plugin).build(tardis.getPreset().toString(), id, player);
                 }
                 case 26 -> {
                     // set lamp
@@ -309,44 +307,5 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener {
         currentDoor.put(uuid, d);
     }
 
-    private void buildConstruct(String preset, int id, Player player) {
-        // update tardis table
-        HashMap<String, Object> sett = new HashMap<>();
-        sett.put("chameleon_preset", "CONSTRUCT");
-        sett.put("chameleon_demat", preset);
-        sett.put("adapti_on", 0);
-        HashMap<String, Object> wheret = new HashMap<>();
-        wheret.put("tardis_id", id);
-        plugin.getQueryFactory().doUpdate("tardis", sett, wheret);
-        // update the Chameleon Circuit sign(s)
-        HashMap<String, Object> wherec = new HashMap<>();
-        wherec.put("tardis_id", id);
-        wherec.put("type", Control.CHAMELEON.getId());
-        ResultSetControls rsc = new ResultSetControls(plugin, wherec, true);
-        if (rsc.resultSet()) {
-            for (HashMap<String, String> map : rsc.getData()) {
-                TARDISStaticUtils.setSign(map.get("location"), 3, "CONSTRUCT", player);
-            }
-        }
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        where.put("type", Control.FRAME.getId());
-        ResultSetControls rsf = new ResultSetControls(plugin, where, false);
-        if (rsf.resultSet()) {
-            new TARDISChameleonFrame().updateChameleonFrame(ChameleonPreset.CONSTRUCT, rsf.getLocation());
-        }
-        plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", "Construct", plugin);
-        // rebuild
-        player.performCommand("tardis rebuild");
-        plugin.getTrackerKeeper().getConstructors().remove(player.getUniqueId());
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> close(player), 2L);
-        // damage the circuit if configured
-        if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
-            TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
-            tcc.getCircuits();
-            // decrement uses
-            int uses_left = tcc.getChameleonUses();
-            new TARDISCircuitDamager(plugin, DiskCircuit.CHAMELEON, uses_left, id, player).damage();
-        }
-    }
+
 }

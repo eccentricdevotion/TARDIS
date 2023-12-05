@@ -16,16 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.shell;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetChameleon;
-import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetShells;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * A TARDIS with a functioning chameleon circuit can appear as almost anything desired. The owner can program the
@@ -39,17 +42,15 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISShellInventory {
 
-    private final ItemStack[] terminal;
+    private final ItemStack[] shells;
     private final TARDIS plugin;
-    private final Player player;
     private final int id;
 
 
-    public TARDISShellInventory(TARDIS plugin, Player player, int id) {
+    public TARDISShellInventory(TARDIS plugin, int id) {
         this.plugin = plugin;
-        this.player = player;
         this.id = id;
-        terminal = getItemStack();
+        shells = getItemStack();
     }
 
     /**
@@ -60,36 +61,73 @@ public class TARDISShellInventory {
     private ItemStack[] getItemStack() {
         ItemStack[] stacks = new ItemStack[54];
 
-        for (ChameleonPreset preset : ChameleonPreset.values()) {
-            if (!ChameleonPreset.NOT_THESE.contains(preset.getCraftMaterial()) && !preset.usesArmourStand()) {
-                if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase())) {
-                    ItemStack is = new ItemStack(preset.getGuiDisplay(), 1);
-                    ItemMeta im = is.getItemMeta();
-                    im.setDisplayName(preset.getDisplayName());
-                    is.setItemMeta(im);
-                    stacks[preset.getSlot()] = is;
-                }
-            }
-        }
-        // load current preset
-        ItemStack current = new ItemStack(Material.BOWL, 1);
-        ItemMeta pre = current.getItemMeta();
-        pre.setDisplayName("Current Chameleon preset");
-        pre.setCustomModelData(GUIChameleonPresets.CURRENT.getCustomModelData());
-        current.setItemMeta(pre);
-        stacks[50] = current;
         // saved construct
         HashMap<String, Object> wherec = new HashMap<>();
         wherec.put("tardis_id", id);
-        ResultSetChameleon rsc = new ResultSetChameleon(plugin, wherec);
-        if (rsc.resultSet()) {
-            ItemStack saved = new ItemStack(Material.BOWL, 1);
-            ItemMeta con = saved.getItemMeta();
-            con.setDisplayName("Saved Construct");
-            con.setCustomModelData(GUIChameleonPresets.SAVED.getCustomModelData());
-            saved.setItemMeta(con);
-            stacks[51] = saved;
+        ResultSetShells rss = new ResultSetShells(plugin, wherec);
+        if (rss.resultSet()) {
+            int i = 0;
+            ArrayList<HashMap<String, String>> data = rss.getData();
+            for (HashMap<String, String> map : data) {
+                ItemStack saved = new ItemStack(Material.BOWL, 1);
+                ItemMeta con = saved.getItemMeta();
+                con.setDisplayName("Saved Construct");
+                List<String> lore = new ArrayList<>();
+                lore.add(map.get("line1"));
+                lore.add(map.get("line2"));
+                lore.add(map.get("line3"));
+                lore.add(map.get("line4"));
+                if (map.get("active").equals("1")) {
+                    lore.add(ChatColor.AQUA + "Active shell");
+                }
+                con.setLore(lore);
+                con.setCustomModelData(GUIChameleonPresets.SAVED.getCustomModelData());
+                con.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, TARDISNumberParsers.parseInt(map.get("chameleon_id")));
+                saved.setItemMeta(con);
+                stacks[i] = saved;
+                i++;
+                // only first 5 rows
+                if (i > 44) {
+                    break;
+                }
+            }
         }
+        // use selected shell
+        ItemStack use = new ItemStack(Material.BOWL, 1);
+        ItemMeta uim = use.getItemMeta();
+        uim.setDisplayName("Use selected shell");
+        uim.setCustomModelData(GUIChameleonPresets.USE_SELECTED.getCustomModelData());
+        use.setItemMeta(uim);
+        stacks[45] = use;
+        // delete selected shell
+        ItemStack delete = new ItemStack(Material.BUCKET, 1);
+        ItemMeta dim = delete.getItemMeta();
+        dim.setDisplayName("Delete selected shell");
+        dim.setCustomModelData(GUIChameleonPresets.DELETE_SELECTED.getCustomModelData());
+        delete.setItemMeta(dim);
+        stacks[46] = delete;
+        // update selected shell
+        ItemStack update = new ItemStack(Material.BUCKET, 1);
+        ItemMeta upim = update.getItemMeta();
+        upim.setDisplayName("Update selected shell");
+        upim.setCustomModelData(GUIChameleonPresets.UPDATE_SELECTED.getCustomModelData());
+        update.setItemMeta(upim);
+        stacks[47] = update;
+        // clear shell on platform
+        ItemStack newShell = new ItemStack(Material.BOWL, 1);
+        ItemMeta ns = newShell.getItemMeta();
+        ns.setDisplayName("New Chameleon shell");
+        ns.setLore(List.of("Will clear the shell platform", "ready for building."));
+        ns.setCustomModelData(GUIChameleonPresets.NEW.getCustomModelData());
+        newShell.setItemMeta(ns);
+        stacks[49] = newShell;
+        // Save current shell on platform
+        ItemStack save = new ItemStack(Material.BOWL, 1);
+        ItemMeta pre = save.getItemMeta();
+        pre.setDisplayName("Save Chameleon shell");
+        pre.setCustomModelData(GUIChameleonPresets.CURRENT.getCustomModelData());
+        save.setItemMeta(pre);
+        stacks[50] = save;
         // Cancel / close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
@@ -101,7 +139,7 @@ public class TARDISShellInventory {
         return stacks;
     }
 
-    public ItemStack[] getShells() {
-        return terminal;
+    public ItemStack[] getPlayerShells() {
+        return shells;
     }
 }

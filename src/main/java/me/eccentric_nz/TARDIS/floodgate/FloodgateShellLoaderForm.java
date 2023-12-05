@@ -2,9 +2,6 @@ package me.eccentric_nz.TARDIS.floodgate;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -32,13 +29,17 @@ import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.UUID;
+
 public class FloodgateShellLoaderForm {
 
     private final TARDIS plugin;
     private final UUID uuid;
     private final Player player;
 
-    public FloodgateShellLoaderForm(TARDIS plugin, UUID uuid, int id) {
+    public FloodgateShellLoaderForm(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.player = this.plugin.getServer().getPlayer(this.uuid);
@@ -145,7 +146,7 @@ public class FloodgateShellLoaderForm {
                         }
                         // build shell in the shell room
                         Location centre = button.clone().add(3, 1, 0);
-                        new TARDISShellBuilder(plugin, preset, chameleonColumn, centre).buildPreset();
+                        new TARDISShellBuilder(plugin, preset, chameleonColumn, centre, -1).buildPreset();
                     }
                 }
             }

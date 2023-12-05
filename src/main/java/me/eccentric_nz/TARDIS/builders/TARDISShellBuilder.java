@@ -16,20 +16,27 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetShells;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World;
+import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Lightable;
 import org.bukkit.block.data.Rotatable;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * A police box is a telephone kiosk that can be used by members of the public wishing to get help from the police.
@@ -44,14 +51,17 @@ public class TARDISShellBuilder {
     private final TARDISChameleonColumn column;
     private final Location centre;
     private final ChameleonPreset preset;
+
+    private final int cid;
     private final Material random_colour;
     private final List<TARDISInstantPreset.ProblemBlock> do_at_end = new ArrayList<>();
 
-    public TARDISShellBuilder(TARDIS plugin, ChameleonPreset preset, TARDISChameleonColumn column, Location centre) {
+    public TARDISShellBuilder(TARDIS plugin, ChameleonPreset preset, TARDISChameleonColumn column, Location centre, int cid) {
         this.plugin = plugin;
         this.preset = preset;
         this.column = column;
         this.centre = centre;
+        this.cid = cid;
         Material[] colours = new Material[]{Material.WHITE_WOOL, Material.ORANGE_WOOL, Material.MAGENTA_WOOL, Material.LIGHT_BLUE_WOOL, Material.YELLOW_WOOL, Material.LIME_WOOL, Material.PINK_WOOL, Material.CYAN_WOOL, Material.PURPLE_WOOL, Material.BLUE_WOOL, Material.BROWN_WOOL, Material.GREEN_WOOL, Material.RED_WOOL};
         random_colour = colours[TARDISConstants.RANDOM.nextInt(13)];
     }
@@ -153,6 +163,22 @@ public class TARDISShellBuilder {
                             do_at_end.add(new TARDISInstantPreset.ProblemBlock(new Location(world, xx, (y + yy), zz), colData[yy]));
                         } else {
                             TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
+                            if (cid != -1 && Tag.ALL_SIGNS.isTagged(mat) && xx == signx && zz == signz) {
+                                // get the sign data and write the sign
+                                HashMap<String, Object> where = new HashMap<>();
+                                where.put("chameleon_id", cid);
+                                ResultSetShells rss = new ResultSetShells(plugin, where);
+                                if (rss.resultSet()) {
+                                    HashMap<String, String> map = rss.getData().get(0);
+                                    Sign sign = (Sign) world.getBlockAt(xx, (y + yy), zz).getState();
+                                    SignSide front = sign.getSide(Side.FRONT);
+                                    front.setLine(0, map.get("line1"));
+                                    front.setLine(1, map.get("line2"));
+                                    front.setLine(2, map.get("line3"));
+                                    front.setLine(3, map.get("line4"));
+                                    sign.update();
+                                }
+                            }
                         }
                     }
                 }

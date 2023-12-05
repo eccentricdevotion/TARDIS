@@ -144,6 +144,7 @@ class TARDISSQLiteDatabaseUpdater {
         chameleonupdates.add("line2 TEXT DEFAULT ''");
         chameleonupdates.add("line3 TEXT DEFAULT ''");
         chameleonupdates.add("line4 TEXT DEFAULT ''");
+        chameleonupdates.add("active INTEGER DEFAULT 0");
         farmingupdates.add("apiary TEXT DEFAULT ''");
         farmingupdates.add("bamboo TEXT DEFAULT ''");
         farmingupdates.add("geode TEXT DEFAULT ''");

@@ -1,53 +1,26 @@
-/*
- * Copyright (C) 2023 eccentric_nz
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
 package me.eccentric_nz.TARDIS.database.resultset;
 
-import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
-/**
- * Many facts, figures, and formulas are contained within the Matrix, including... the chameleon location of the TARDIS
- * interior.
- *
- * @author eccentric_nz
- */
-public class ResultSetChameleon {
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class ResultSetShells {
+    public ResultSetShells(TARDIS plugin, HashMap<String, Object> where) {
+        this.plugin = plugin;
+        this.where = where;
+        prefix = this.plugin.getPrefix();
+    }
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
-    private final HashMap<String, String> data = new HashMap<>();
+    private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
     private final String prefix;
-
-    /**
-     * Creates a class instance that can be used to retrieve an SQL ResultSet from the chameleon table.
-     *
-     * @param plugin an instance of the main class.
-     * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
-     */
-    public ResultSetChameleon(TARDIS plugin, HashMap<String, Object> where) {
-        this.plugin = plugin;
-        this.where = where;
-        prefix = this.plugin.getPrefix();
-    }
 
     /**
      * Retrieves an SQL ResultSet from the chameleon table. This method builds an SQL query string from the parameters
@@ -62,7 +35,7 @@ public class ResultSetChameleon {
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
             where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
-            wheres = " WHERE " + sbw.substring(0, sbw.length() - 5) + " AND active = 1";
+            wheres = " WHERE " + sbw.substring(0, sbw.length() - 5);
         }
         String query = "SELECT * FROM " + prefix + "chameleon" + wheres;
         try {
@@ -83,11 +56,13 @@ public class ResultSetChameleon {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
+                    HashMap<String, String> row = new HashMap<>();
                     ResultSetMetaData rsmd = rs.getMetaData();
                     int columns = rsmd.getColumnCount();
-                    for (int i = 1; i <= columns; i++) {
-                        data.put(rsmd.getColumnName(i), rs.getString(i));
+                    for (int i = 1; i < columns + 1; i++) {
+                        row.put(rsmd.getColumnName(i), rs.getString(i));
                     }
+                    data.add(row);
                 }
             } else {
                 return false;
@@ -110,7 +85,7 @@ public class ResultSetChameleon {
         return true;
     }
 
-    public HashMap<String, String> getData() {
+    public ArrayList<HashMap<String, String>> getData() {
         return data;
     }
 }

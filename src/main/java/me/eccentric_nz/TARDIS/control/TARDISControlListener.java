@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomExitEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellInventory;
-import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellRoomConstructor;
+import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellPresetInventory;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISWeatherInventory;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
@@ -299,9 +299,9 @@ public class TARDISControlListener implements Listener {
                                     }
                                 }
                                 case 12 -> // Control room light switch
-                                    new TARDISLightSwitch(plugin, id, lights, player, tardis.getSchematic().getLights()).flickSwitch();
+                                        new TARDISLightSwitch(plugin, id, lights, player, tardis.getSchematic().getLights()).flickSwitch();
                                 case 13 -> // TIS
-                                    new TARDISInfoMenuButton(plugin, player).clickButton();
+                                        new TARDISInfoMenuButton(plugin, player).clickButton();
                                 case 14 -> { // Disk Storage
                                     if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(playerUUID)) {
                                         return;
@@ -380,7 +380,7 @@ public class TARDISControlListener implements Listener {
                                     }
                                 }
                                 case 16 -> // enter zero room
-                                    doZero(level, player, tardis.getZero(), id);
+                                        doZero(level, player, tardis.getZero(), id);
                                 case 17 -> {
                                     // exit zero room
                                     plugin.getTrackerKeeper().getZeroRoomOccupants().remove(player.getUniqueId());
@@ -389,7 +389,7 @@ public class TARDISControlListener implements Listener {
                                 }
                                 case 20 ->
                                     // toggle black wool blocks behind door
-                                    new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
+                                        new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
                                 case 21 -> {
                                     // siege lever
                                     if (tcc != null && !tcc.hasMaterialisation()) {
@@ -423,15 +423,19 @@ public class TARDISControlListener implements Listener {
                                         }
                                         // Chameleon load GUI
                                         if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
-                                            new FloodgateShellLoaderForm(plugin, playerUUID, id).send();
+                                            new FloodgateShellLoaderForm(plugin, playerUUID).send();
                                         } else {
-                                            ItemStack[] shells = new TARDISShellInventory(plugin, player, id).getShells();
+                                            ItemStack[] shells = new TARDISShellPresetInventory(plugin, player, id).getShells();
                                             Inventory sgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Shell Loader");
                                             sgui.setContents(shells);
                                             player.openInventory(sgui);
                                         }
                                     } else {
-                                        new TARDISShellRoomConstructor(plugin).createShell(player, id, block);
+                                        // load player shells GUI
+                                        ItemStack[] shellStacks = new TARDISShellInventory(plugin, id).getPlayerShells();
+                                        Inventory playerShells = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Shells");
+                                        playerShells.setContents(shellStacks);
+                                        player.openInventory(playerShells);
                                     }
                                 }
                                 case 26 -> {
@@ -537,7 +541,7 @@ public class TARDISControlListener implements Listener {
                                 }
                                 case 33 ->
                                     // scanner
-                                    new TARDISScanner(plugin).scan(player, id, tardis.getRenderer(), level);
+                                        new TARDISScanner(plugin).scan(player, id, tardis.getRenderer(), level);
                                 case 35 -> {
                                     // cloister bell
                                     if (plugin.getTrackerKeeper().getCloisterBells().containsKey(id)) {
@@ -582,44 +586,43 @@ public class TARDISControlListener implements Listener {
                             }
                         } else if (action.equals(Action.PHYSICAL)) {
                             switch (type) {
-                                case 16 ->
-                                    doZero(level, player, tardis.getZero(), id);
+                                case 16 -> doZero(level, player, tardis.getZero(), id);
                                 case 40 -> // WEST
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        // has player moved out of the maze in a northerly direction
-                                        Location playerLocation = player.getLocation();
-                                        if (playerLocation.getBlockX() < blockLocation.getBlockX()) {
-                                            // reconfigure maze
-                                            reconfigureMaze(id);
-                                        }
-                                    }, 20L);
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                            // has player moved out of the maze in a northerly direction
+                                            Location playerLocation = player.getLocation();
+                                            if (playerLocation.getBlockX() < blockLocation.getBlockX()) {
+                                                // reconfigure maze
+                                                reconfigureMaze(id);
+                                            }
+                                        }, 20L);
                                 case 41 -> // NORTH
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        // has player moved out of the maze in a westerly direction
-                                        Location playerLocation = player.getLocation();
-                                        if (playerLocation.getBlockZ() < blockLocation.getBlockZ()) {
-                                            // reconfigure maze
-                                            reconfigureMaze(id);
-                                        }
-                                    }, 20L);
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                            // has player moved out of the maze in a westerly direction
+                                            Location playerLocation = player.getLocation();
+                                            if (playerLocation.getBlockZ() < blockLocation.getBlockZ()) {
+                                                // reconfigure maze
+                                                reconfigureMaze(id);
+                                            }
+                                        }, 20L);
                                 case 42 -> // SOUTH
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        // has player moved out of the maze in an easterly direction
-                                        Location playerLocation = player.getLocation();
-                                        if (playerLocation.getBlockZ() > blockLocation.getBlockZ()) {
-                                            // reconfigure maze
-                                            reconfigureMaze(id);
-                                        }
-                                    }, 20L);
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                            // has player moved out of the maze in an easterly direction
+                                            Location playerLocation = player.getLocation();
+                                            if (playerLocation.getBlockZ() > blockLocation.getBlockZ()) {
+                                                // reconfigure maze
+                                                reconfigureMaze(id);
+                                            }
+                                        }, 20L);
                                 case 43 -> // EAST
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                        // has player moved out of the maze in a southerly direction
-                                        Location playerLocation = player.getLocation();
-                                        if (playerLocation.getBlockX() > blockLocation.getBlockX()) {
-                                            // reconfigure maze
-                                            reconfigureMaze(id);
-                                        }
-                                    }, 20L);
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                            // has player moved out of the maze in a southerly direction
+                                            Location playerLocation = player.getLocation();
+                                            if (playerLocation.getBlockX() > blockLocation.getBlockX()) {
+                                                // reconfigure maze
+                                                reconfigureMaze(id);
+                                            }
+                                        }, 20L);
                                 default -> {
                                 }
                             }

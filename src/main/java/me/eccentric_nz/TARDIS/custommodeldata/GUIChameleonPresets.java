@@ -23,6 +23,10 @@ public enum GUIChameleonPresets {
 
     // Chameleon Presets
     GO_TO_PAGE_2(12, 52, Material.ARROW),
+    NEW(151, 49, Material.BOWL),
+    USE_SELECTED(152, 45, Material.BOWL),
+    UPDATE_SELECTED(153, 45, Material.BOWL),
+    DELETE_SELECTED(1, 46, Material.BUCKET),
     CURRENT(17, 50, Material.BOWL),
     SAVED(18, 51, Material.BOWL),
     BACK(8, 51, Material.BOWL),

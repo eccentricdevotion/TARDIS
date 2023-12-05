@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetChameleon;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -61,7 +60,7 @@ public class TARDISShellRoomConstructor {
         return "\"" + s + "\"";
     }
 
-    public void createShell(Player player, int id, Block block) {
+    public void createShell(Player player, int id, Block block, int cid) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -146,10 +145,7 @@ public class TARDISShellRoomConstructor {
             String jsonBlue = sb_blue_data.toString();
             String jsonStain = sb_stain_data.toString();
             String jsonGlass = sb_glass_data.toString();
-            // save chameleon construct
-            HashMap<String, Object> wherec = new HashMap<>();
-            wherec.put("tardis_id", id);
-            ResultSetChameleon rsc = new ResultSetChameleon(plugin, wherec);
+            // save or update the chameleon construct
             HashMap<String, Object> set = new HashMap<>();
             set.put("blueprintData", jsonBlue);
             set.put("stainData", jsonStain);
@@ -167,14 +163,13 @@ public class TARDISShellRoomConstructor {
                 set.put("line3", s3);
                 set.put("line4", s4);
             }
-            if (rsc.resultSet()) {
-                // update
-                HashMap<String, Object> whereu = new HashMap<>();
-                whereu.put("tardis_id", id);
-                plugin.getQueryFactory().doUpdate("chameleon", set, whereu);
+            set.put("active", 1);
+            set.put("tardis_id", id);
+            if (cid != -1) {
+                HashMap<String, Object> wherec = new HashMap<>();
+                wherec.put("chameleon_id", cid);
+                plugin.getQueryFactory().doUpdate("chameleon", set, wherec);
             } else {
-                // insert
-                set.put("tardis_id", id);
                 plugin.getQueryFactory().doInsert("chameleon", set);
             }
             buildConstruct(tardis.getPreset().toString(), id, player);
