@@ -102,24 +102,21 @@ public class TARDISPlayerShellListener extends TARDISMenuListener {
         }
         TARDISChameleonColumn chameleonColumn = null;
         ChameleonPreset preset;
+        // get the Shell room button
+        Location button = getButton(id);
+        if (button == null) {
+            return;
+        }
         switch (slot) {
             case 53 -> close(player); // close
             case 50 -> {
                 // save
-                Location button = getButton(id);
-                if (button == null) {
-                    return;
-                }
                 new TARDISShellRoomConstructor(plugin).createShell(player, id, button.getBlock(), -1);
                 // close
                 close(player);
             }
             case 49 -> {
                 // new
-                Location button = getButton(id);
-                if (button == null) {
-                    return;
-                }
                 clear(button, false, id);
                 // close
                 close(player);
@@ -129,10 +126,6 @@ public class TARDISPlayerShellListener extends TARDISMenuListener {
                 if (selected.containsKey(uuid)) {
                     int cid = getChameleonId(view, selected.get(uuid));
                     // scan
-                    Location button = getButton(id);
-                    if (button == null) {
-                        return;
-                    }
                     new TARDISShellRoomConstructor(plugin).createShell(player, id, button.getBlock(), cid);
                     // close
                     close(player);
@@ -141,20 +134,20 @@ public class TARDISPlayerShellListener extends TARDISMenuListener {
                 }
             }
             case 46 -> {
-                // if active set chameleon circuit to FACTORY
-                if (isActive(view, selected.get(uuid))) {
-                    // set preset
-                    HashMap<String, Object> setf = new HashMap<>();
-                    setf.put("chameleon_preset", "FACTORY");
-                    setf.put("adapti_on", 0);
-                    HashMap<String, Object> wheref = new HashMap<>();
-                    wheref.put("tardis_id", id);
-                    plugin.getQueryFactory().doSyncUpdate("tardis", setf, wheref);
-                    // rebuild
-                    new TARDISRebuildCommand(plugin).rebuildPreset(player);
-                }
                 // delete selected shell
                 if (selected.containsKey(uuid)) {
+                    // if active set chameleon circuit to FACTORY
+                    if (isActive(view, selected.get(uuid))) {
+                        // set preset
+                        HashMap<String, Object> setf = new HashMap<>();
+                        setf.put("chameleon_preset", "FACTORY");
+                        setf.put("adapti_on", 0);
+                        HashMap<String, Object> wheref = new HashMap<>();
+                        wheref.put("tardis_id", id);
+                        plugin.getQueryFactory().doSyncUpdate("tardis", setf, wheref);
+                        // rebuild
+                        new TARDISRebuildCommand(plugin).rebuildPreset(player);
+                    }
                     int cid = getChameleonId(view, selected.get(uuid));
                     HashMap<String, Object> whered = new HashMap<>();
                     whered.put("chameleon_id", cid);
@@ -219,11 +212,6 @@ public class TARDISPlayerShellListener extends TARDISMenuListener {
                     }
                 }
                 if (chameleonColumn == null) {
-                    return;
-                }
-                // get the Shell room button
-                Location button = getButton(id);
-                if (button == null) {
                     return;
                 }
                 clear(button, true, id);
