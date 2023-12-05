@@ -16,20 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISRecipeTabComplete;
 import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTeleportCommand;
 import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTransmatCommand;
-import me.eccentric_nz.TARDIS.control.TARDISLightSwitch;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.control.TARDISRandomButton;
+import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -43,6 +37,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TARDISHandlesRequest {
 
@@ -210,7 +211,7 @@ public class TARDISHandlesRequest {
                             if (rst.resultSet()) {
                                 Tardis tardis = rst.getTardis();
                                 if ((onoff && !tardis.isLights_on()) || (!onoff && tardis.isLights_on())) {
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISLightSwitch(plugin, id, tardis.isLights_on(), player, tardis.getSchematic().getLights()).flickSwitch(), 1L);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new LightSwitchAction(plugin, id, tardis.isLights_on(), player, tardis.getSchematic().getLights()).flickSwitch(), 1L);
                                 }
                             }
                         }

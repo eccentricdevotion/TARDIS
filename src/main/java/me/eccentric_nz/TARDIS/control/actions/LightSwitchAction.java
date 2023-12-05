@@ -14,18 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.control;
+package me.eccentric_nz.TARDIS.control.actions;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 /**
  * @author eccentric_nz
  */
-public class TARDISLightSwitch {
+public class LightSwitchAction {
 
     private final TARDIS plugin;
     private final int id;
@@ -33,7 +34,7 @@ public class TARDISLightSwitch {
     private final Player player;
     private final TardisLight light;
 
-    public TARDISLightSwitch(TARDIS plugin, int id, boolean on, Player player, TardisLight light) {
+    public LightSwitchAction(TARDIS plugin, int id, boolean on, Player player, TardisLight light) {
         this.plugin = plugin;
         this.id = id;
         this.on = on;

@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.control.actions;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomEnterEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomExitEvent;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
@@ -20,14 +21,14 @@ public class ZeroRoomAction {
         this.plugin = plugin;
     }
 
-    public void doEntry(int level, Player player, String z, int id) {
+    public void doEntry(Player player, Tardis tardis, int id) {
         // enter zero room
         int zero_amount = plugin.getArtronConfig().getInt("zero");
-        if (level < zero_amount) {
+        if (tardis.getArtron_level() < zero_amount) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ZERO_ENERGY");
             return;
         }
-        Location zero = TARDISStaticLocationGetters.getLocationFromDB(z);
+        Location zero = TARDISStaticLocationGetters.getLocationFromDB(tardis.getZero());
         if (zero != null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ZERO_READY");
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

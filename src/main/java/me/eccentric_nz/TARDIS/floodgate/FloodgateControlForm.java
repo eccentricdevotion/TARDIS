@@ -8,6 +8,9 @@ import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
 import me.eccentric_nz.TARDIS.control.*;
+import me.eccentric_nz.TARDIS.control.actions.FastReturnAction;
+import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
+import me.eccentric_nz.TARDIS.control.actions.SiegeAction;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -154,7 +157,7 @@ public class FloodgateControlForm {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "INPUT_MISSING");
                             return;
                         }
-                        new TARDISFastReturnButton(plugin, player, id, level).clickButton();
+                        new FastReturnAction(plugin).clickButton(player, id, tardis);
                     }
                     case 3 -> { // areas gui
                         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
@@ -244,7 +247,7 @@ public class FloodgateControlForm {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                             return;
                         }
-                        new TARDISLightSwitch(plugin, id, lights, player, tardis.getSchematic().getLights()).flickSwitch();
+                        new LightSwitchAction(plugin, id, lights, player, tardis.getSchematic().getLights()).flickSwitch();
                     }
                     case 9 -> { // door toggle
                         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
@@ -270,11 +273,7 @@ public class FloodgateControlForm {
                         new FloodgateChameleonCircuitForm(plugin, uuid, id, tardis.getPreset()).send();
                     }
                     case 12 -> { // siege mode
-                        if (tcc != null && !tcc.hasMaterialisation()) {
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
-                            return;
-                        }
-                        new TARDISSiegeButton(plugin, player, tardis.isPowered_on(), id).clickButton();
+                        new SiegeAction(plugin).clickButton(tcc, player, tardis.isPowered_on(), id);
                     }
                     case 13 -> { // hide
                         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {

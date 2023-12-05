@@ -14,34 +14,34 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.control;
+package me.eccentric_nz.TARDIS.control.actions;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeMode;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
  * @author eccentric_nz
  */
-public class TARDISSiegeButton {
+public class SiegeAction {
 
     private final TARDIS plugin;
-    private final Player player;
-    private final boolean powered;
-    private final int id;
 
-    public TARDISSiegeButton(TARDIS plugin, Player player, boolean powered, int id) {
+    public SiegeAction(TARDIS plugin) {
         this.plugin = plugin;
-        this.player = player;
-        this.powered = powered;
-        this.id = id;
     }
 
-    public void clickButton() {
+    public void clickButton(TARDISCircuitChecker tcc, Player player, boolean powered, int id) {
+        if (tcc != null && !tcc.hasMaterialisation()) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
+            return;
+        }
         if (!plugin.getConfig().getBoolean("siege.enabled")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_DISABLED");
             return;

@@ -28,6 +28,9 @@ import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionInventory;
+import me.eccentric_nz.TARDIS.control.actions.FastReturnAction;
+import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
+import me.eccentric_nz.TARDIS.control.actions.SiegeAction;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -268,12 +271,8 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             }
             case 13 -> {
                 // siege
-                if (tcc != null && !tcc.hasMaterialisation()) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
-                    return;
-                }
                 close(player, true);
-                new TARDISSiegeButton(plugin, player, tardis.isPowered_on(), id).clickButton();
+                new SiegeAction(plugin).clickButton(tcc, player, tardis.isPowered_on(), id);
             }
             case 15 -> {
                 // scanner
@@ -341,7 +340,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                     return;
                 }
                 close(player, false);
-                new TARDISFastReturnButton(plugin, player, id, level).clickButton();
+                new FastReturnAction(plugin).clickButton(player, id, tardis);
             }
             case 29 -> {
                 // light switch
@@ -354,7 +353,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                     return;
                 }
                 close(player, true);
-                new TARDISLightSwitch(plugin, id, lights, player, tardis.getSchematic().getLights()).flickSwitch();
+                new LightSwitchAction(plugin, id, lights, player, tardis.getSchematic().getLights()).flickSwitch();
             }
             case 31 -> {
                 // rebuild

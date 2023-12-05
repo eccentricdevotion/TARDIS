@@ -14,9 +14,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.TARDIS.control.actions;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -29,14 +28,16 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
-public class TARDISCustardCreamDispenser {
+import java.util.HashMap;
+
+public class CustardCreamAction {
 
     private final TARDIS plugin;
     private final Player player;
     private final Block block;
     private final int id;
 
-    public TARDISCustardCreamDispenser(TARDIS plugin, Player player, Block block, int id) {
+    public CustardCreamAction(TARDIS plugin, Player player, Block block, int id) {
         this.plugin = plugin;
         this.player = player;
         this.block = block;

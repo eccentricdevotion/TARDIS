@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.control;
+package me.eccentric_nz.TARDIS.control.actions;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -27,26 +27,29 @@ import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 /**
  * @author eccentric_nz
  */
-public class TARDISFastReturnButton {
+public class FastReturnAction {
 
     private final TARDIS plugin;
-    private final Player player;
-    private final int id;
-    private final int level;
 
-    public TARDISFastReturnButton(TARDIS plugin, Player player, int id, int level) {
+    public FastReturnAction(TARDIS plugin) {
         this.plugin = plugin;
-        this.player = player;
-        this.id = id;
-        this.level = level;
     }
 
-    public void clickButton() {
+    public void clickButton(Player player, int id, Tardis tardis) {
+        if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id) || (!tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) || plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
+            return;
+        }
+        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+            plugin.getTrackerKeeper().getHasRandomised().add(id);
+        }
         int cost = plugin.getArtronConfig().getInt("travel");
-        if (level < cost) {
+        if (tardis.getArtron_level() < cost) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
             return;
         }
