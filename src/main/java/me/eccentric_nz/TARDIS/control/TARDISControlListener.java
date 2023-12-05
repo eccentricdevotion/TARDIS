@@ -21,29 +21,24 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
-import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomEnterEvent;
-import me.eccentric_nz.TARDIS.api.event.TARDISZeroRoomExitEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellInventory;
-import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellPresetInventory;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISWeatherInventory;
+import me.eccentric_nz.TARDIS.control.actions.*;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.floodgate.*;
-import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
-import me.eccentric_nz.TARDIS.handles.TARDISHandlesProcessor;
-import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramInventory;
 import me.eccentric_nz.TARDIS.maze.TARDISMazeBuilder;
 import me.eccentric_nz.TARDIS.maze.TARDISMazeGenerator;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
-import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
-import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.TARDIS.utility.TARDISCustardCreamDispenser;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -379,17 +374,12 @@ public class TARDISControlListener implements Listener {
                                         }
                                     }
                                 }
-                                case 16 -> // enter zero room
-                                        doZero(level, player, tardis.getZero(), id);
-                                case 17 -> {
-                                    // exit zero room
-                                    plugin.getTrackerKeeper().getZeroRoomOccupants().remove(player.getUniqueId());
-                                    plugin.getGeneralKeeper().getRendererListener().transmat(player);
-                                    plugin.getPM().callEvent(new TARDISZeroRoomExitEvent(player, id));
-                                }
-                                case 20 ->
-                                    // toggle black wool blocks behind door
-                                        new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
+                                // enter zero room
+                                case 16 -> new ZeroRoomAction(plugin).doEntry(level, player, tardis.getZero(), id);
+                                // exit zero room
+                                case 17 -> new ZeroRoomAction(plugin).doExit(player, id);
+                                // toggle black wool blocks behind door
+                                case 20 -> new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
                                 case 21 -> {
                                     // siege lever
                                     if (tcc != null && !tcc.hasMaterialisation()) {
@@ -398,139 +388,23 @@ public class TARDISControlListener implements Listener {
                                     }
                                     new TARDISSiegeButton(plugin, player, tardis.isPowered_on(), id).clickButton();
                                 }
-                                case 22 -> {
-                                    if (player.isSneaking()) {
-                                        return;
-                                        // keyboard
-                                    } else {
-                                        // controls GUI
-                                        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
-                                            TARDISFloodgate.sendControlForm(playerUUID);
-                                        } else {
-                                            ItemStack[] controls = new TARDISControlInventory(plugin, id).getControls();
-                                            Inventory cgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Control Menu");
-                                            cgui.setContents(controls);
-                                            player.openInventory(cgui);
-                                        }
-                                    }
-                                }
-                                case 25 -> {
-                                    // shell room button
-                                    if (plugin.getConfig().getBoolean("police_box.load_shells") && player.isSneaking()) {
-                                        if (!TARDISPermission.hasPermission(player, "tardis.load_shells")) {
-                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-                                            return;
-                                        }
-                                        // Chameleon load GUI
-                                        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
-                                            new FloodgateShellLoaderForm(plugin, playerUUID).send();
-                                        } else {
-                                            ItemStack[] shells = new TARDISShellPresetInventory(plugin, player, id).getShells();
-                                            Inventory sgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Shell Loader");
-                                            sgui.setContents(shells);
-                                            player.openInventory(sgui);
-                                        }
-                                    } else {
-                                        // load player shells GUI
-                                        ItemStack[] shellStacks = new TARDISShellInventory(plugin, id).getPlayerShells();
-                                        Inventory playerShells = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Shells");
-                                        playerShells.setContents(shellStacks);
-                                        player.openInventory(playerShells);
-                                    }
-                                }
-                                case 26 -> {
-                                    // Handles
-                                    if (!TARDISPermission.hasPermission(player, "tardis.handles.use")) {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-                                        return;
-                                    }
-                                    TARDISSounds.playTARDISSound(player, "handles", 5L);
-                                    if (!TARDISPermission.hasPermission(player, "tardis.handles.program")) {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
-                                        return;
-                                    }
-                                    if (player.isSneaking()) {
-                                        // open programming GUI
-                                        ItemStack[] handles = new TARDISHandlesProgramInventory(plugin, 0).getHandles();
-                                        Inventory hgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Handles Program");
-                                        hgui.setContents(handles);
-                                        player.openInventory(hgui);
-                                    } else {
-                                        // check if item in hand is a Handles program disk
-                                        ItemStack disk = player.getInventory().getItemInMainHand();
-                                        if (disk != null && disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
-                                            ItemMeta dim = disk.getItemMeta();
-                                            if (dim.hasDisplayName() && ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
-                                                // get the program_id from the disk
-                                                int pid = TARDISNumberParsers.parseInt(dim.getLore().get(1));
-                                                // query the database
-                                                ResultSetProgram rsp = new ResultSetProgram(plugin, pid);
-                                                if (rsp.resultSet()) {
-                                                    // send program to processor
-                                                    new TARDISHandlesProcessor(plugin, rsp.getProgram(), player, pid).processDisk();
-                                                    // check in the disk
-                                                    HashMap<String, Object> set = new HashMap<>();
-                                                    set.put("checked", 0);
-                                                    HashMap<String, Object> wherep = new HashMap<>();
-                                                    wherep.put("program_id", pid);
-                                                    plugin.getQueryFactory().doUpdate("programs", set, wherep);
-                                                    player.getInventory().setItemInMainHand(null);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+                                // open control menu GUI
+                                case 22 -> new ControlMenuAction(plugin).openGUI(player, id);
+                                // shell room button
+                                case 25 -> new ShellRoomAction(plugin).openGUI(player, id);
+                                // Handles
+                                case 26 -> new HandlesAction(plugin).cyberIt(player);
                                 case 28 -> {
                                     // Custard Cream Dispenser
                                     event.setCancelled(true);
                                     new TARDISCustardCreamDispenser(plugin, player, block, id).dispense();
                                 }
-                                case 29 -> {
-                                    // force field
-                                    if (TARDISPermission.hasPermission(player, "tardis.forcefield")) {
-                                        if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(player.getUniqueId())) {
-                                            plugin.getTrackerKeeper().getActiveForceFields().remove(player.getUniqueId());
-                                            TARDISSounds.playTARDISSound(blockLocation, "tardis_force_field_down");
-                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "FORCE_FIELD", "OFF");
-                                        } else {
-                                            // check there is enough artron
-                                            if (level <= plugin.getArtronConfig().getInt("standby")) {
-                                                plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_LOW");
-                                                return;
-                                            }
-                                            if (TARDISForceField.addToTracker(player)) {
-                                                TARDISSounds.playTARDISSound(blockLocation, "tardis_force_field_up");
-                                                plugin.getMessenger().send(player, TardisModule.TARDIS, "FORCE_FIELD", "ON");
-                                            }
-                                        }
-                                    }
-                                }
-                                case 30 -> {
-                                    // flight mode button
-                                    // get current flight mode
-                                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, ownerUUID.toString());
-                                    if (rsp.resultSet()) {
-                                        int mode = rsp.getFlightMode() + 1;
-                                        if (mode > 3) {
-                                            mode = 1;
-                                        }
-                                        // set flight mode
-                                        HashMap<String, Object> setf = new HashMap<>();
-                                        setf.put("flying_mode", mode);
-                                        HashMap<String, Object> wheref = new HashMap<>();
-                                        wheref.put("uuid", player.getUniqueId().toString());
-                                        plugin.getQueryFactory().doUpdate("player_prefs", setf, wheref);
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_TOGGLED", FlightMode.getByMode().get(mode).toString());
-                                    }
-                                }
-                                case 31 -> {
-                                    // chameleon sign
-                                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
-                                        new FloodgateChameleonCircuitForm(plugin, playerUUID, id, rs.getTardis().getPreset()).send();
-                                    } else {
-                                        new TARDISChameleonControl(plugin).openGUI(player, id, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset());
-                                    }
-                                }
+                                // force field
+                                case 29 -> new ForceFieldAction(plugin).toggleSheilds(player, blockLocation, level);
+                                // flight mode button
+                                case 30 -> new FlightModeAction(plugin).setMode(ownerUUID.toString(), player);
+                                // chameleon sign
+                                case 31 -> new ChameleonSignAction(plugin).openGUI(player, tardis, id);
                                 case 32 -> {
                                     // save_sign
                                     if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
@@ -586,7 +460,7 @@ public class TARDISControlListener implements Listener {
                             }
                         } else if (action.equals(Action.PHYSICAL)) {
                             switch (type) {
-                                case 16 -> doZero(level, player, tardis.getZero(), id);
+                                case 16 -> new ZeroRoomAction(plugin).doEntry(level, player, tardis.getZero(), id);
                                 case 40 -> // WEST
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                             // has player moved out of the maze in a northerly direction
@@ -641,28 +515,6 @@ public class TARDISControlListener implements Listener {
                     }
                 }
             }
-        }
-    }
-
-    private void doZero(int level, Player player, String z, int id) {
-        int zero_amount = plugin.getArtronConfig().getInt("zero");
-        if (level < zero_amount) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ZERO_ENERGY");
-            return;
-        }
-        Location zero = TARDISStaticLocationGetters.getLocationFromDB(z);
-        if (zero != null) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "ZERO_READY");
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                new TARDISExteriorRenderer(plugin).transmat(player, COMPASS.SOUTH, zero);
-                plugin.getPM().callEvent(new TARDISZeroRoomEnterEvent(player, id));
-            }, 20L);
-            plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
-            HashMap<String, Object> wherez = new HashMap<>();
-            wherez.put("tardis_id", id);
-            plugin.getQueryFactory().alterEnergyLevel("tardis", -zero_amount, wherez, player);
-        } else {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_ZERO");
         }
     }
 

@@ -43,7 +43,7 @@ public class TARDISControlInventory {
     private final int id;
     private final ItemStack[] controls;
 
-    TARDISControlInventory(TARDIS plugin, int id) {
+    public TARDISControlInventory(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
         controls = getItemStack();
