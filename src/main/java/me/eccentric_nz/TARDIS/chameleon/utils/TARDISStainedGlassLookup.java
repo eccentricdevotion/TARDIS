@@ -21,8 +21,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.MapColor;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_20_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_20_R2.util.CraftMagicNumbers;
+import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R3.util.CraftMagicNumbers;
 
 /**
  * Lookup for Chameleon preset block materialisation.
@@ -37,7 +37,7 @@ public class TARDISStainedGlassLookup {
         if (world == null) {
             world = Bukkit.getWorlds().get(0);
         }
-        ServerLevel level = ((CraftWorld)world).getHandle();
+        ServerLevel level = ((CraftWorld) world).getHandle();
         Block nmsBlock = CraftMagicNumbers.getBlock(material);
         MapColor mapColor = nmsBlock.defaultBlockState().getMapColor(level, new BlockPos(0, 75, 0));
         Color colorRGB = Color.fromRGB(mapColor.col);

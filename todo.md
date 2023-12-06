@@ -7,6 +7,7 @@
 ## Next version `5.3.0`
 
 1. Update to 1.20.3
+    * Fix shaped recipes
 2. Add new 60th anniversary console
 3. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)

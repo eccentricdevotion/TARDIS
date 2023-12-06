@@ -109,7 +109,7 @@ public class TARDISExteriorFlight {
         }
         Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
             COMPASS compass = COMPASS.valueOf(direction);
-            stand.teleport(new Location(location.getWorld(), location.getBlockX() + 0.5d, location.blockY(), location.getBlockZ() + 0.5d, compass.getYaw(), 0.0f));
+            stand.teleport(new Location(location.getWorld(), location.getBlockX() + 0.5d, location.getBlockY(), location.getBlockZ() + 0.5d, compass.getYaw(), 0.0f));
         });
     }
 

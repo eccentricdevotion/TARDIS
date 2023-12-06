@@ -449,8 +449,8 @@ shaped:
     hard_shape: -B-,LRL,-L-
     hard_ingredients:
       B: BUCKET
-      L: LIME_STAINED_GLASS
       R: REDSTONE_BLOCK
+      L: LIME_STAINED_GLASS
     result: BUCKET
     amount: 1
     lore: Charge Level~0
@@ -876,13 +876,13 @@ shaped:
     amount: 1
     lore: Smaller on the outside
   Time Rotor Early:
-    easy_shape: 'CRC,GWG,GRG'
+    easy_shape: CRC,GWG,GRG
     easy_ingredients:
       C: GRAY_DYE
       R: REDSTONE
       W: CLOCK
       G: GLASS_PANE
-    hard_shape: 'CRC,GWG,GRG'
+    hard_shape: CRC,GWG,GRG
     hard_ingredients:
       C: GRAY_DYE
       R: REDSTONE_BLOCK
@@ -892,13 +892,13 @@ shaped:
     amount: 1
     lore: ''
   Time Rotor Delta:
-    easy_shape: 'CRC,GWG,GRG'
+    easy_shape: CRC,GWG,GRG
     easy_ingredients:
       C: PURPLE_DYE
       R: REDSTONE
       W: CLOCK
       G: GLASS_PANE
-    hard_shape: 'CRC,GWG,GRG'
+    hard_shape: CRC,GWG,GRG
     hard_ingredients:
       C: PURPLE_DYE
       R: REDSTONE_BLOCK
@@ -908,13 +908,13 @@ shaped:
     amount: 1
     lore: ''
   Time Rotor Hospital:
-    easy_shape: 'CRC,GWG,GRG'
+    easy_shape: CRC,GWG,GRG
     easy_ingredients:
       C: WHITE_DYE
       R: REDSTONE
       W: CLOCK
       G: GLASS_PANE
-    hard_shape: 'CRC,GWG,GRG'
+    hard_shape: CRC,GWG,GRG
     hard_ingredients:
       C: WHITE_DYE
       R: REDSTONE_BLOCK
@@ -924,13 +924,13 @@ shaped:
     amount: 1
     lore: ''
   Time Rotor Tenth:
-    easy_shape: 'CRC,GWG,GRG'
+    easy_shape: CRC,GWG,GRG
     easy_ingredients:
       C: CYAN_DYE
       R: REDSTONE
       W: CLOCK
       G: GLASS_PANE
-    hard_shape: 'CRC,GWG,GRG'
+    hard_shape: CRC,GWG,GRG
     hard_ingredients:
       C: CYAN_DYE
       R: REDSTONE_BLOCK
@@ -940,13 +940,13 @@ shaped:
     amount: 1
     lore: ''
   Time Rotor Eleventh:
-    easy_shape: 'CRC,GWG,GRG'
+    easy_shape: CRC,GWG,GRG
     easy_ingredients:
       C: BROWN_DYE
       R: REDSTONE
       W: CLOCK
       G: GLASS_PANE
-    hard_shape: 'CRC,GWG,GRG'
+    hard_shape: CRC,GWG,GRG
     hard_ingredients:
       C: BROWN_DYE
       R: REDSTONE_BLOCK
@@ -956,13 +956,13 @@ shaped:
     amount: 1
     lore: ''
   Time Rotor Twelfth:
-    easy_shape: 'CRC,GWG,GRG'
+    easy_shape: CRC,GWG,GRG
     easy_ingredients:
       C: ORANGE_DYE
       R: REDSTONE
       W: CLOCK
       G: GLASS_PANE
-    hard_shape: 'CRC,GWG,GRG'
+    hard_shape: CRC,GWG,GRG
     hard_ingredients:
       C: ORANGE_DYE
       R: REDSTONE_BLOCK
@@ -972,13 +972,13 @@ shaped:
     amount: 1
     lore: ''
   Time Rotor Engine:
-    easy_shape: 'BRB,GWG,GRG'
+    easy_shape: BRB,GWG,GRG
     easy_ingredients:
       B: BLUE_DYE
       R: REDSTONE
       W: CLOCK
       G: GLASS_PANE
-    hard_shape: 'CRC,GWG,GRG'
+    hard_shape: BRB,GWG,GRG
     hard_ingredients:
       B: BLUE_DYE
       R: REDSTONE_BLOCK
@@ -988,13 +988,13 @@ shaped:
     amount: 1
     lore: ''
   Time Engine:
-    easy_shape: 'LRL,GAG,GRG'
+    easy_shape: LRL,GAG,GRG
     easy_ingredients:
       L: LIGHT_BLUE_DYE
       R: REDSTONE
       A: ANVIL
       G: GLASS_PANE
-    hard_shape: 'CRC,GWG,GRG'
+    hard_shape: LRL,GAG,GRG
     hard_ingredients:
       L: LIGHT_BLUE_DYE
       R: REDSTONE_BLOCK
@@ -1004,12 +1004,12 @@ shaped:
     amount: 1
     lore: ''
   TARDIS Monitor:
-    easy_shape: 'MRM,RGR,MRM'
+    easy_shape: MRM,RGR,MRM
     easy_ingredients:
       M: MAP
       G: GLASS_PANE
       R: REDSTONE
-    hard_shape: 'MRM,RGR,MRM'
+    hard_shape: MRM,RGR,MRM
     hard_ingredients:
       M: MAP
       G: TINTED_GLASS
@@ -1018,26 +1018,26 @@ shaped:
     amount: 1
     lore: ''
   Monitor Frame:
-    easy_shape: 'BBB,BGB,BRB'
+    easy_shape: BBB,BGB,BRB
     easy_ingredients:
       B: BLACKSTONE
       G: GLASS_PANE
       R: REDSTONE
-    hard_shape: 'BBB,BGB,BRB'
+    hard_shape: BBB,BGB,BRB
     hard_ingredients:
       B: BLACKSTONE
       G: TINTED_GLASS
       R: REDSTONE_BLOCK
     result: GLASS
     amount: 1
-    lore: 'Place in an upwards~facing item frame'
+    lore: Place in an upwards~facing item frame
   Knockback Circuit:
-    easy_shape: '-K-,RSR,-R-'
+    easy_shape: -K-,RSR,-R-
     easy_ingredients:
       K: GOLDEN_SWORD
       R: REDSTONE
       S: SHIELD
-    hard_shape: '-K-,RSR,-R-'
+    hard_shape: -K-,RSR,-R-
     hard_ingredients:
       K: ENCHANTED_BOOK≈KNOCKBACK
       R: REDSTONE
@@ -1046,12 +1046,12 @@ shaped:
     amount: 1
     lore: ''
   Brush Circuit:
-    easy_shape: '-K-,RSR,-R-'
+    easy_shape: -K-,RSR,-R-
     easy_ingredients:
       K: FEATHER
       R: REDSTONE
       S: COPPER_INGOT
-    hard_shape: '-K-,RSR,-R-'
+    hard_shape: -K-,RSR,-R-
     hard_ingredients:
       K: BRUSH
       R: REDSTONE
@@ -1060,12 +1060,12 @@ shaped:
     amount: 1
     lore: ''
   Authorised Control Disk:
-    easy_shape: 'QRQ,RLR,QRQ'
+    easy_shape: QRQ,RLR,QRQ
     easy_ingredients:
       Q: QUARTZ
       R: REDSTONE
       L: GLASS_PANE
-    hard_shape: 'QRQ,RGR,QRQ'
+    hard_shape: QRQ,RGR,QRQ
     hard_ingredients:
       Q: QUARTZ
       R: REDSTONE
@@ -1282,7 +1282,7 @@ smithing:
     addition: GLOWSTONE_DUST=Brush Circuit
     result: BLAZE_ROD
 # -------------------
-## furnace recipes are not used yet...
+# furnace recipes are not used yet...
 # -------------------
 furnace:
   Nuclear Wool:

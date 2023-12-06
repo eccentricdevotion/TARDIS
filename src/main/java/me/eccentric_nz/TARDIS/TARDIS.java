@@ -133,7 +133,7 @@ public class TARDIS extends JavaPlugin {
     private final HashMap<String, String> versions = new HashMap<>();
     private final String versionRegex = "(\\d+[.])+\\d+";
     private final Pattern versionPattern = Pattern.compile(versionRegex);
-    private final String serverStr = "1.20.2";
+    private final String serverStr = "1.20.3";
     private TARDISChatGUI jsonKeeper;
     private TARDISUpdateChatGUI updateChatGUI;
     //    public TARDISFurnaceRecipe fornacis;

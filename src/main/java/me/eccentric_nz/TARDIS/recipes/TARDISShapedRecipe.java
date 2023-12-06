@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
@@ -36,6 +35,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
+
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -88,7 +89,14 @@ public class TARDISShapedRecipe {
         keyModel = keyModelLookup.get(plugin.getConfig().getString("preferences.default_key").toLowerCase(Locale.ENGLISH));
         sonicModel = sonicModelLookup.get(plugin.getConfig().getString("preferences.default_sonic").toLowerCase(Locale.ENGLISH));
         Set<String> shaped = plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false);
-        shaped.forEach((s) -> plugin.getServer().addRecipe(makeRecipe(s)));
+        shaped.forEach((s) -> {
+            try {
+                plugin.getServer().addRecipe(makeRecipe(s));
+            } catch (IllegalArgumentException e) {
+                plugin.debug("Invalid Recipe: " + ChatColor.RED + s);
+//                e.printStackTrace();
+            }
+        });
     }
 
     private ShapedRecipe makeRecipe(String s) {

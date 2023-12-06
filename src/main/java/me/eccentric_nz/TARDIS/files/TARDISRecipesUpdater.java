@@ -467,6 +467,14 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Time Rotor Twelfth.lore", "");
             i++;
         }
+        if (recipes_config.contains("shaped.Time Rotor Engine") && recipes_config.getString("shaped.Time Rotor Engine.hard_shape").equals("CRC,GWG,GRG")) {
+            recipes_config.set("shaped.Time Rotor Engine.hard_shape", "BRB,GWG,GRG");
+            i++;
+        }
+        if (recipes_config.contains("shaped.Time Engine") && recipes_config.getString("shaped.Time Engine.hard_shape").equals("CRC,GWG,GRG")) {
+            recipes_config.set("shaped.Time Engine.hard_shape", "LRL,GAG,GRG");
+            i++;
+        }
         if (!recipes_config.contains("shaped.Time Rotor Engine")) {
             // rotor engine
             recipes_config.set("shaped.Time Rotor Engine.easy_shape", "BRB,GWG,GRG");
@@ -474,7 +482,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Time Rotor Engine.easy_ingredients.R", "REDSTONE");
             recipes_config.set("shaped.Time Rotor Engine.easy_ingredients.W", "CLOCK");
             recipes_config.set("shaped.Time Rotor Engine.easy_ingredients.G", "GLASS_PANE");
-            recipes_config.set("shaped.Time Rotor Engine.hard_shape", "CRC,GWG,GRG");
+            recipes_config.set("shaped.Time Rotor Engine.hard_shape", "BRB,GWG,GRG");
             recipes_config.set("shaped.Time Rotor Engine.hard_ingredients.B", "BLUE_DYE");
             recipes_config.set("shaped.Time Rotor Engine.hard_ingredients.R", "REDSTONE_BLOCK");
             recipes_config.set("shaped.Time Rotor Engine.hard_ingredients.W", "CLOCK");
@@ -488,7 +496,7 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Time Engine.easy_ingredients.R", "REDSTONE");
             recipes_config.set("shaped.Time Engine.easy_ingredients.A", "ANVIL");
             recipes_config.set("shaped.Time Engine.easy_ingredients.G", "GLASS_PANE");
-            recipes_config.set("shaped.Time Engine.hard_shape", "CRC,GWG,GRG");
+            recipes_config.set("shaped.Time Engine.hard_shape", "LRL,GAG,GRG");
             recipes_config.set("shaped.Time Engine.hard_ingredients.L", "LIGHT_BLUE_DYE");
             recipes_config.set("shaped.Time Engine.hard_ingredients.R", "REDSTONE_BLOCK");
             recipes_config.set("shaped.Time Engine.hard_ingredients.A", "ANVIL");

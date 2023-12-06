@@ -28,7 +28,7 @@ import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_20_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -59,7 +59,7 @@ public class TARDISChameleonArchDisguiser {
             GameProfile arch = new GameProfile(player.getUniqueId(), name);
             arch.getProperties().removeAll("textures");
             arch.getProperties().put("textures", new Property("textures", archSkin, archSignature));
-            Field gpField = Player.class.getDeclaredField("cr"); // cr = GameProfile
+            Field gpField = Player.class.getDeclaredField("cq"); // cr = GameProfile
             gpField.setAccessible(true);
             gpField.set(entityPlayer, arch);
             gpField.setAccessible(false);
@@ -103,7 +103,7 @@ public class TARDISChameleonArchDisguiser {
             nameField.set(arch, oldName);
             nameField.setAccessible(false);
             arch.getProperties().putAll(properties);
-            Field gpField = Player.class.getDeclaredField("cr"); // cr = GameProfile
+            Field gpField = Player.class.getDeclaredField("cq"); // cr = GameProfile
             gpField.setAccessible(true);
             gpField.set(entityPlayer, arch);
             gpField.setAccessible(false);

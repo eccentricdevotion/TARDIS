@@ -7,7 +7,7 @@ import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_20_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
@@ -16,7 +16,7 @@ public class MonsterSpawner {
     public LivingEntity create(Location location, Monster monster) {
         ServerLevel world = ((CraftWorld) location.getWorld()).getHandle();
         net.minecraft.world.entity.Entity entity;
-        switch(monster.getEntityType()) {
+        switch (monster.getEntityType()) {
             case ZOMBIE -> entity = new TWAZombie(EntityType.ZOMBIE, world);
             case ZOMBIFIED_PIGLIN -> entity = new TWAZombifiedPiglin(EntityType.ZOMBIFIED_PIGLIN, world);
             case DROWNED -> entity = new TWADrowned(EntityType.DROWNED, world);

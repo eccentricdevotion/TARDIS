@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_20_R2.event.CraftEventFactory;
+import org.bukkit.craftbukkit.v1_20_R3.event.CraftEventFactory;
 import org.bukkit.event.entity.EntityTeleportEvent;
 
 import java.util.EnumSet;

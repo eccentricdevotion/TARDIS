@@ -31,9 +31,9 @@ import me.eccentric_nz.tardischunkgenerator.worldgen.feature.TARDISTree;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtIo;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.contents.LiteralContents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.gossip.GossipContainer;
 import net.minecraft.world.entity.ai.gossip.GossipType;
@@ -48,9 +48,9 @@ import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
-import org.bukkit.craftbukkit.v1_20_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_20_R2.block.CraftBlock;
-import org.bukkit.craftbukkit.v1_20_R2.entity.CraftVillager;
+import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R3.block.CraftBlock;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftVillager;
 import org.bukkit.entity.*;
 import org.bukkit.map.MapView;
 import org.bukkit.util.Vector;
@@ -106,7 +106,7 @@ public class TARDISHelper {
             BlockPos bp = new BlockPos(block.getX(), block.getY(), block.getZ());
             BlockEntity tile = ws.getBlockEntity(bp);
             if (tile instanceof FurnaceBlockEntity furnace) {
-                furnace.setCustomName(MutableComponent.create(new LiteralContents((name))));
+                furnace.setCustomName(Component.literal(name));
             }
         }
     }
@@ -130,7 +130,7 @@ public class TARDISHelper {
                 CompoundTag tagCompound;
                 CompoundTag data;
                 try (FileInputStream fileinputstream = new FileInputStream(file)) {
-                    tagCompound = NbtIo.readCompressed(fileinputstream);
+                    tagCompound = NbtIo.readCompressed(fileinputstream, NbtAccounter.unlimitedHeap());
                     data = tagCompound.getCompound("Data");
                     long random = TARDISConstants.RANDOM.nextLong();
                     // set RandomSeed tag
@@ -153,7 +153,7 @@ public class TARDISHelper {
                 CompoundTag tagCompound;
                 CompoundTag data;
                 try (FileInputStream fileinputstream = new FileInputStream(file)) {
-                    tagCompound = NbtIo.readCompressed(fileinputstream);
+                    tagCompound = NbtIo.readCompressed(fileinputstream, NbtAccounter.unlimitedHeap());
                     data = tagCompound.getCompound("Data");
                     // set LevelName tag
                     data.putString("LevelName", newName);
@@ -182,7 +182,7 @@ public class TARDISHelper {
                 CompoundTag tagCompound;
                 CompoundTag data;
                 try (FileInputStream fileinputstream = new FileInputStream(file)) {
-                    tagCompound = NbtIo.readCompressed(fileinputstream);
+                    tagCompound = NbtIo.readCompressed(fileinputstream, NbtAccounter.unlimitedHeap());
                     data = tagCompound.getCompound("Data");
                     int mode = switch (gm) {
                         case CREATIVE -> 1;
@@ -208,7 +208,7 @@ public class TARDISHelper {
         if (file.exists()) {
             try {
                 FileInputStream fileinputstream = new FileInputStream(file);
-                CompoundTag tagCompound = NbtIo.readCompressed(fileinputstream);
+                CompoundTag tagCompound = NbtIo.readCompressed(fileinputstream, NbtAccounter.unlimitedHeap());
                 fileinputstream.close();
                 CompoundTag data = tagCompound.getCompound("Data");
                 // get GameType tag
@@ -245,7 +245,8 @@ public class TARDISHelper {
                     case 0 -> difficulty = Difficulty.PEACEFUL;
                     case 1 -> difficulty = Difficulty.EASY;
                     case 3 -> difficulty = Difficulty.HARD;
-                    default -> { }
+                    default -> {
+                    }
                 }
                 return new TARDISPlanetData(gameMode, environment, worldType, difficulty);
             } catch (IOException ex) {

@@ -57,7 +57,7 @@ public class TARDISForestPreset extends TARDISPreset {
         blueprintData[6][0] = "minecraft:dirt";
         blueprintData[6][1] = "minecraft:dirt";
         blueprintData[6][2] = "minecraft:grass_block";
-        blueprintData[6][3] = "minecraft:grass";
+        blueprintData[6][3] = "minecraft:short_grass";
         blueprintData[7][0] = "minecraft:oak_door[half=lower,hinge=right,facing=east,open=false]";
         blueprintData[7][1] = "minecraft:oak_door[half=upper,hinge=right,facing=east,open=false]";
         blueprintData[7][2] = "minecraft:oak_leaves";
@@ -65,7 +65,7 @@ public class TARDISForestPreset extends TARDISPreset {
         blueprintData[8][0] = "minecraft:air";
         blueprintData[8][1] = "minecraft:air";
         blueprintData[8][2] = "minecraft:grass_block";
-        blueprintData[8][3] = "minecraft:grass";
+        blueprintData[8][3] = "minecraft:short_grass";
         blueprintData[9][0] = "minecraft:air";
         blueprintData[9][1] = "minecraft:air";
         blueprintData[9][2] = "minecraft:air";

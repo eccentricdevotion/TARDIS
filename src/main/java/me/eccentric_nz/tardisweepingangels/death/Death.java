@@ -28,7 +28,7 @@ import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import net.citizensnpcs.api.CitizensAPI;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_20_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -347,7 +347,7 @@ public class Death implements Listener {
                     }
                     if (pdc.has(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                         uuid = pdc.get(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID);
-                        if (((CraftEntity)event.getEntity()).getHandle() instanceof TWAJudoon judoon) {
+                        if (((CraftEntity) event.getEntity()).getHandle() instanceof TWAJudoon judoon) {
                             if (judoon.isGuard()) {
                                 // remove guard trackers
                                 TARDISWeepingAngels.getGuards().remove(event.getEntity().getUniqueId());
@@ -367,7 +367,8 @@ public class Death implements Listener {
                     }
                 }
             }
-            default -> { }
+            default -> {
+            }
         }
     }
 }

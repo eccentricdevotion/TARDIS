@@ -20,8 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.contents.LiteralContents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -36,9 +35,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_20_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_20_R2.inventory.CraftItemStack;
-import org.bukkit.craftbukkit.v1_20_R2.util.CraftNamespacedKey;
+import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_20_R3.util.CraftNamespacedKey;
 import org.bukkit.entity.Axolotl;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Frog;
@@ -272,7 +271,7 @@ public class TARDISDisguise {
                             }
                             case SHEEP -> {
                                 if (bool) {
-                                    entity.setCustomName(MutableComponent.create(new LiteralContents(("jeb_"))));
+                                    entity.setCustomName(Component.literal(("jeb_")));
                                     entity.setCustomNameVisible(true);
                                 }
                             }

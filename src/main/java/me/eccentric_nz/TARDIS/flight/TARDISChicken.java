@@ -16,11 +16,6 @@ public class TARDISChicken extends Chicken {
     }
 
     @Override
-    public boolean canBreatheUnderwater() {
-        return true;
-    }
-
-    @Override
     public boolean isSensitiveToWater() {
         return false;
     }

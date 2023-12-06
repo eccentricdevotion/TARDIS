@@ -16,8 +16,7 @@
  */
 package me.eccentric_nz.tardischunkgenerator.disguise;
 
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.contents.LiteralContents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
 import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
@@ -27,7 +26,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_20_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
@@ -107,7 +106,7 @@ public class TARDISDisguiser {
         entity.setPos(location.getX(), location.getY(), location.getZ());
         entity.setId(player.getEntityId());
         if (TARDISDisguiser.nameVisible) {
-            entity.setCustomName(MutableComponent.create(new LiteralContents(player.getDisplayName())));
+            entity.setCustomName(Component.literal(player.getDisplayName()));
             entity.setCustomNameVisible(true);
         }
         entity.setYRot(fixYaw(location.getYaw()));

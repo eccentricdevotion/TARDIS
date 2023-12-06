@@ -24,7 +24,7 @@ import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.craftbukkit.v1_20_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -156,7 +156,7 @@ public class ToclafaneListener implements Listener {
             if (!(golem.getTarget() instanceof Husk husk)) {
                 return;
             }
-            if (((CraftEntity)husk).getHandle() instanceof TWAFollower) {
+            if (((CraftEntity) husk).getHandle() instanceof TWAFollower) {
                 event.setCancelled(true);
             }
         }

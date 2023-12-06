@@ -33,7 +33,7 @@ import me.eccentric_nz.tardisweepingangels.nms.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.craftbukkit.v1_20_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -159,7 +159,7 @@ public class MonsterLoadUnloadListener implements Listener {
         if (monster.isFollower()) {
             switch (monster) {
                 case K9 -> K9Equipment.set(player, a, false);
-                case JUDOON ->  JudoonEquipment.set(player, a, false);
+                case JUDOON -> JudoonEquipment.set(player, a, false);
                 default -> OodEquipment.set(player, a, false, false);
             }
         } else {

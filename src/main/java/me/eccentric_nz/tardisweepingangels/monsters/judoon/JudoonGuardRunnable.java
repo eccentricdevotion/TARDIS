@@ -21,7 +21,7 @@ import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import me.eccentric_nz.tardisweepingangels.nms.TWAJudoon;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_20_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.util.Vector;
 
