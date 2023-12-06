@@ -228,6 +228,7 @@ display:
   all: '&6X&7%X% &6Y&7%Y% &6Z&7%Z% &6F&7%FACING% (%FACING_XZ%) %TARGET_BLOCK%'
 # don't touch
 conversions:
+  short_grass: true
   archive_wall_data: true
   ars_materials: true
   condenser_materials: true

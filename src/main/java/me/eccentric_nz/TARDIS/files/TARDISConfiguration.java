@@ -93,6 +93,7 @@ public class TARDISConfiguration {
         booleanOptions.put("conversions.legacy_budget", false);
         booleanOptions.put("conversions.player_prefs_materials", false);
         booleanOptions.put("conversions.restore_biomes", false);
+        booleanOptions.put("conversions.short_grass", false);
         booleanOptions.put("creation.add_perms", true);
         booleanOptions.put("creation.check_for_home", true);
         booleanOptions.put("creation.create_worlds", false);
