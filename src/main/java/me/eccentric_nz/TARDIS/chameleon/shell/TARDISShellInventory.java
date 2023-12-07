@@ -16,12 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.shell;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetShells;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -69,7 +72,27 @@ public class TARDISShellInventory {
             int i = 0;
             ArrayList<HashMap<String, String>> data = rss.getData();
             for (HashMap<String, String> map : data) {
-                ItemStack saved = new ItemStack(Material.BOWL, 1);
+                // get the first non-air block of the shell
+                Material material = null;
+                String blueprint = map.get("blueprintData");
+                JsonArray json = JsonParser.parseString(blueprint).getAsJsonArray();
+                outer:
+                for (int k = 0; k < 10; k++) {
+                    JsonArray inner = json.get(k).getAsJsonArray();
+                    for (int j = 0; j < 4; j++) {
+                        String block = inner.get(j).getAsString();
+                        plugin.debug(block);
+                        if (!block.equals("minecraft:air")) {
+                            BlockData blockData = plugin.getServer().createBlockData(block);
+                            material = blockData.getMaterial();
+                            break outer;
+                        }
+                    }
+                }
+                if (material == null) {
+                    material = Material.BOWL;
+                }
+                ItemStack saved = new ItemStack(material, 1);
                 ItemMeta con = saved.getItemMeta();
                 con.setDisplayName("Saved Construct");
                 List<String> lore = new ArrayList<>();
@@ -81,7 +104,9 @@ public class TARDISShellInventory {
                     lore.add(ChatColor.AQUA + "Active shell");
                 }
                 con.setLore(lore);
-                con.setCustomModelData(GUIChameleonPresets.SAVED.getCustomModelData());
+                if (material == Material.BOWL) {
+                    con.setCustomModelData(GUIChameleonPresets.SAVED.getCustomModelData());
+                }
                 con.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, TARDISNumberParsers.parseInt(map.get("chameleon_id")));
                 saved.setItemMeta(con);
                 stacks[i] = saved;
@@ -96,6 +121,7 @@ public class TARDISShellInventory {
         ItemStack use = new ItemStack(Material.BOWL, 1);
         ItemMeta uim = use.getItemMeta();
         uim.setDisplayName("Use selected shell");
+        uim.setLore(List.of("Will apply shell to", "the Chameleon Circuit", "and rebuild the exterior."));
         uim.setCustomModelData(GUIChameleonPresets.USE_SELECTED.getCustomModelData());
         use.setItemMeta(uim);
         stacks[45] = use;
@@ -107,7 +133,7 @@ public class TARDISShellInventory {
         delete.setItemMeta(dim);
         stacks[46] = delete;
         // update selected shell
-        ItemStack update = new ItemStack(Material.BUCKET, 1);
+        ItemStack update = new ItemStack(Material.BOWL, 1);
         ItemMeta upim = update.getItemMeta();
         upim.setDisplayName("Update selected shell");
         upim.setCustomModelData(GUIChameleonPresets.UPDATE_SELECTED.getCustomModelData());
@@ -125,7 +151,8 @@ public class TARDISShellInventory {
         ItemStack save = new ItemStack(Material.BOWL, 1);
         ItemMeta pre = save.getItemMeta();
         pre.setDisplayName("Save Chameleon shell");
-        pre.setCustomModelData(GUIChameleonPresets.CURRENT.getCustomModelData());
+        ns.setLore(List.of("Will save shell and", "rebuild the exterior."));
+        pre.setCustomModelData(GUIChameleonPresets.SAVE.getCustomModelData());
         save.setItemMeta(pre);
         stacks[50] = save;
         // Cancel / close

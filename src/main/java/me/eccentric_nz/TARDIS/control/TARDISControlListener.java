@@ -157,8 +157,7 @@ public class TARDISControlListener implements Listener {
                         if (action == Action.RIGHT_CLICK_BLOCK) {
                             switch (type) {
                                 // random location button
-                                case 1 ->
-                                        new RandomAction(plugin).process(cooldown, player, id, tardis, rsc.getSecondary());
+                                case 1 -> new RandomAction(plugin).process(cooldown, player, id, tardis, rsc.getSecondary());
                                 // console repeaters
                                 case 2, 3, 4, 5 -> new RepeaterAction(plugin).announce(player, block, type);
                                 // fast return button
@@ -170,8 +169,7 @@ public class TARDISControlListener implements Listener {
                                 // Temporal Locator sign
                                 case 11 -> new TemporarlLocatorAction(plugin).openGUI(player, tcc);
                                 // Control room light switch
-                                case 12 ->
-                                        new LightSwitchAction(plugin, id, lights, player, tardis.getSchematic().getLights()).flickSwitch();
+                                case 12 -> new LightSwitchAction(plugin, id, lights, player, tardis.getSchematic().getLights()).flickSwitch();
                                 // TIS
                                 case 13 -> new TARDISInfoMenuButton(plugin, player).clickButton();
                                 // Disk Storage
@@ -196,8 +194,7 @@ public class TARDISControlListener implements Listener {
                                     new CustardCreamAction(plugin, player, block, id).dispense();
                                 }
                                 // force field
-                                case 29 ->
-                                        new ForceFieldAction(plugin).toggleSheilds(player, blockLocation, tardis.getArtron_level());
+                                case 29 -> new ForceFieldAction(plugin).toggleSheilds(player, blockLocation, tardis.getArtron_level());
                                 // flight mode button
                                 case 30 -> new FlightModeAction(plugin).setMode(ownerUUID.toString(), player);
                                 // chameleon sign
@@ -211,8 +208,7 @@ public class TARDISControlListener implements Listener {
                                     }
                                 }
                                 // scanner
-                                case 33 ->
-                                        new TARDISScanner(plugin).scan(player, id, tardis.getRenderer(), tardis.getArtron_level());
+                                case 33 -> new TARDISScanner(plugin).scan(player, id, tardis.getRenderer(), tardis.getArtron_level());
                                 // cloister bell
                                 case 35 -> new CloisterBellAction(plugin).ring(id, tardis);
                                 // weather menu
@@ -227,8 +223,7 @@ public class TARDISControlListener implements Listener {
                                 // zero room entry
                                 case 16 -> new ZeroRoomAction(plugin).doEntry(player, tardis, id);
                                 // maze exits
-                                case 40, 41, 42, 43 ->
-                                        new MazeAction(plugin).reconfigure(type, player, id, blockLocation);
+                                case 40, 41, 42, 43 -> new MazeAction(plugin).reconfigure(type, player, id, blockLocation);
                                 default -> {
                                 }
                             }

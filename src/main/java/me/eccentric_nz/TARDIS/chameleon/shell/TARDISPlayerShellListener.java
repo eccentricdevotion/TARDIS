@@ -246,7 +246,7 @@ public class TARDISPlayerShellListener extends TARDISMenuListener {
         ItemStack shell = view.getItem(slot);
         ItemMeta im = shell.getItemMeta();
         PersistentDataContainer pdc = im.getPersistentDataContainer();
-        if (!pdc.has(plugin.getCustomBlockKey())) {
+        if (!pdc.has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
             return -1;
         }
         return pdc.get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);

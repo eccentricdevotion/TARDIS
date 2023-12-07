@@ -489,6 +489,10 @@ public class TARDIS extends JavaPlugin {
                 new TARDISWallSignConverter(this).convertSignBlocks();
                 getConfig().set("conversions.block_wall_signs", true);
             }
+            if (!getConfig().getBoolean("conversions.short_grass")) {
+                new TARDISGrassConverter(this).checkBlockData();
+                getConfig().set("conversions.short_grass", true);
+            }
             TARDISBlockLoader bl = new TARDISBlockLoader(this);
             bl.loadGravityWells();
             bl.loadProtectedBlocks();
