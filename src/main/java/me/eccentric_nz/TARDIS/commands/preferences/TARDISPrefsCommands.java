@@ -106,7 +106,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                 if (pref.equals("sonic")) {
                     // open sonic prefs menu
                     ItemStack[] sonics = new TARDISSonicMenuInventory(plugin).getMenu();
-                    Inventory sim = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Sonic Prefs Menu");
+                    Inventory sim = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "Sonic Prefs Menu");
                     sim.setContents(sonics);
                     player.openInventory(sim);
                     return true;
@@ -188,12 +188,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
                             return true;
                         }
                         return switch (pref) {
-                            case "build" ->
-                                new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
-                            case "junk" ->
-                                new TARDISJunkPreference(plugin).toggle(player, args[1]);
-                            default ->
-                                new TARDISToggleOnOffCommand(plugin).toggle(player, args);
+                            case "build" -> new TARDISBuildCommand(plugin).toggleCompanionBuilding(player, args);
+                            case "junk" -> new TARDISJunkPreference(plugin).toggle(player, args[1]);
+                            default -> new TARDISToggleOnOffCommand(plugin).toggle(player, args);
                         };
                     }
                 }

@@ -50,7 +50,7 @@ public class TARDISSonicMenuInventory {
 
     private ItemStack[] getItemStack() {
 
-        ItemStack[] stack = new ItemStack[27];
+        ItemStack[] stack = new ItemStack[36];
         for (GUISonicPreferences sonic : GUISonicPreferences.values()) {
             if (sonic.getMaterial() == Material.BLAZE_ROD) {
                 ItemStack is = new ItemStack(sonic.getMaterial(), 1);
@@ -68,7 +68,7 @@ public class TARDISSonicMenuInventory {
         wool_im.setDisplayName("Display name colour");
         wool_im.setLore(List.of("Click to select"));
         wool.setItemMeta(wool_im);
-        stack[19] = wool;
+        stack[28] = wool;
         // info
         ItemStack info = new ItemStack(Material.BOOK, 1);
         ItemMeta info_im = info.getItemMeta();
@@ -77,7 +77,7 @@ public class TARDISSonicMenuInventory {
         info_im.setLore(lore);
         info_im.setCustomModelData(GUISonicPreferences.INSTRUCTIONS.getCustomModelData());
         info.setItemMeta(info_im);
-        stack[22] = info;
+        stack[31] = info;
         // info 2
         ItemStack name = new ItemStack(Material.BOOK, 1);
         ItemMeta name_im = name.getItemMeta();
@@ -86,14 +86,14 @@ public class TARDISSonicMenuInventory {
         name_im.setLore(display);
         name_im.setCustomModelData(GUISonicPreferences.INSTRUCTIONS.getCustomModelData());
         name.setItemMeta(name_im);
-        stack[23] = name;
+        stack[32] = name;
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close_im.setCustomModelData(GUISonicPreferences.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
-        stack[26] = close;
+        stack[35] = close;
 
         return stack;
     }

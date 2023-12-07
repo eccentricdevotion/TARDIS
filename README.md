@@ -14,7 +14,9 @@ locations. It adds a Whovian twist to the typical /sethome and /home commands.
 * And so much more...
 
 Plugin documentation can be found here:
-[http://eccentricdevotion.github.io/TARDIS/site-map.html](http://eccentricdevotion.github.io/TARDIS/site-map.html)
+[https://tardis.pages.dev/](https://tardis.pages.dev/)
+
+[Join the TARDIS Community Discord server](https://discord.gg/sfuPVHh)
 
 Jenkins CI builds can be found here:
 [http://tardisjenkins.duckdns.org:8080/job/TARDIS/](http://tardisjenkins.duckdns.org:8080/job/TARDIS/)
@@ -32,6 +34,7 @@ Jenkins CI builds can be found here:
 ![Spigot size](https://img.shields.io/spiget/download-size/45729?label=Spigot%20size&style=for-the-badge)
 ![bStats Servers](https://img.shields.io/bstats/servers/11698?style=for-the-badge)
 
+![1.20.3 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.20.3/total?style=for-the-badge)
 ![1.20.2 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.20.2/total?style=for-the-badge)
 ![1.20.1 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.20.1/total?style=for-the-badge)
 ![1.19.4 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.19.4/total?style=for-the-badge)

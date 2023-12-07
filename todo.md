@@ -6,16 +6,14 @@
 
 ## Next version `5.3.0`
 
-1. Update to 1.20.3
-    * Fix shaped recipes
-2. Add new 60th anniversary console
-3. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
+1. Add new 60th anniversary console
+2. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
-4. Updated Shell room [#741](https://github.com/eccentricdevotion/TARDIS/issues/741)
-5. Deep space [#748](https://github.com/eccentricdevotion/TARDIS/issues/748)
-6. Animated models for player disguises
-7. Sonic Blaster
-8. New sonic screwdriver and functionality?
+3. Updated Shell room [#741](https://github.com/eccentricdevotion/TARDIS/issues/741)
+4. Deep space [#748](https://github.com/eccentricdevotion/TARDIS/issues/748)
+5. Animated models for player disguises
+6. Sonic Blaster
+7. New sonic screwdriver functionality?
 
 ## Future versions
 
@@ -31,6 +29,7 @@
 
 * Make all images tabbed
 * Vanilla/TARDIS screenshots for TabbedImage views
+* Update shell room GUI info
 * ?
 
 ## Resource Pack / Monsters
@@ -43,13 +42,3 @@
     * Slimes -> Adipose
     * Husk -> Sycorax
     * Stray -> Scarecrows
-
-## Minecraft Bedrock Edition?
-
-1. Recreate everything :)
-2. Create custom blocks for the TARDIS and console
-3. Custom TARDIS items and crafting recipes for the same
-4. A Sonic Screwdriver and a crafting recipe for it
-5. GUIs
-6. Make the TARDIS Police Box an entity
-7. Custom monsters

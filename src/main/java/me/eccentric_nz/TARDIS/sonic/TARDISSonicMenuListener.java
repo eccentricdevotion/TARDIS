@@ -52,7 +52,7 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
         }
         Player p = (Player) event.getWhoClicked();
         int slot = event.getRawSlot();
-        if (slot < 0 || slot > 26) {
+        if (slot < 0 || slot > 35) {
             ClickType click = event.getClick();
             if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
                 event.setCancelled(true);
@@ -60,10 +60,10 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
             return;
         }
         switch (slot) {
-            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17 -> {
+            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 18, 19, 20, 21 -> {
                 event.setCancelled(true);
-                // set custom model data of sonic in slot 18
-                ItemStack sonic = view.getItem(18);
+                // set custom model data of sonic in slot 27
+                ItemStack sonic = view.getItem(27);
                 if (sonic == null || !sonic.getType().equals(Material.BLAZE_ROD) || !sonic.hasItemMeta()) {
                     return;
                 }
@@ -73,7 +73,7 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
                 sonic_im.setCustomModelData(choice_im.getCustomModelData());
                 sonic.setItemMeta(sonic_im);
             }
-            case 18 -> {
+            case 27 -> {
                 // get item on cursor
                 ItemStack cursor = event.getCursor();
                 if (cursor == null || !cursor.getType().equals(Material.BLAZE_ROD) || !cursor.hasItemMeta()) {
@@ -86,18 +86,18 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
                 // set wool colour from display name of placed sonic
                 ChatColor color = TARDISStaticUtils.getColor(meta.getDisplayName());
                 Material material = TARDISKeyMenuListener.REVERSE_LOOKUP.get(color);
-                ItemStack choice = view.getItem(19);
+                ItemStack choice = view.getItem(28);
                 choice.setType(material);
             }
-            case 19 -> {
+            case 28 -> {
                 event.setCancelled(true);
-                // set display name colour of sonic in slot 18
-                ItemStack sonic = view.getItem(18);
+                // set display name colour of sonic in slot 27
+                ItemStack sonic = view.getItem(27);
                 if (sonic == null || !sonic.getType().equals(Material.BLAZE_ROD) || !sonic.hasItemMeta()) {
                     return;
                 }
                 // get current colour of wool
-                ItemStack choice = view.getItem(19);
+                ItemStack choice = view.getItem(28);
                 Material wool = getNextWool(choice.getType());
                 // set wool colour to next in line
                 choice.setType(wool);
@@ -110,7 +110,7 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
                 }
                 sonic.setItemMeta(sonic_im);
             }
-            case 26 -> {
+            case 35 -> {
                 // close
                 event.setCancelled(true);
                 close(p);
@@ -130,13 +130,13 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
         if (!view.getTitle().equals(ChatColor.DARK_RED + "Sonic Prefs Menu")) {
             return;
         }
-        ItemStack sonic = view.getItem(18);
+        ItemStack sonic = view.getItem(27);
         if (sonic == null) {
             return;
         }
         Player p = (Player) event.getPlayer();
         Location loc = p.getLocation();
         loc.getWorld().dropItemNaturally(loc, sonic);
-        view.setItem(18, new ItemStack(Material.AIR));
+        view.setItem(27, new ItemStack(Material.AIR));
     }
 }
