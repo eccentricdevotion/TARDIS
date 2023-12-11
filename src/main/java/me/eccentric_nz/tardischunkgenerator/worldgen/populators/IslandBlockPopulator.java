@@ -1,10 +1,6 @@
 package me.eccentric_nz.tardischunkgenerator.worldgen.populators;
 
 import com.mojang.datafixers.util.Pair;
-import java.util.NavigableMap;
-import java.util.Random;
-import java.util.TreeMap;
-import java.util.concurrent.ThreadLocalRandom;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.IslandSpiral;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.WaterCircle;
 import org.bukkit.Location;
@@ -14,11 +10,16 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
 
+import java.util.NavigableMap;
+import java.util.Random;
+import java.util.TreeMap;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class IslandBlockPopulator extends BlockPopulator {
 
     private final WeightedChoice<Material> stones = new WeightedChoice<Material>().add(60, Material.STONE).add(10, Material.ANDESITE).add(10, Material.DIORITE).add(10, Material.GRANITE).add(10, Material.COAL_ORE);
     private final WeightedChoice<Material> dirts = new WeightedChoice<Material>().add(70, Material.DIRT).add(10, Material.GRAVEL).add(20, Material.COARSE_DIRT);
-    private final WeightedChoice<Material> flora = new WeightedChoice<Material>().add(70, Material.GRASS).add(10, Material.RED_TULIP).add(10, Material.OXEYE_DAISY).add(10, Material.CORNFLOWER);
+    private final WeightedChoice<Material> flora = new WeightedChoice<Material>().add(70, Material.SHORT_GRASS).add(10, Material.RED_TULIP).add(10, Material.OXEYE_DAISY).add(10, Material.CORNFLOWER);
 
     @Override
     public void populate(WorldInfo worldInfo, Random random, int x, int z, LimitedRegion limitedRegion) {

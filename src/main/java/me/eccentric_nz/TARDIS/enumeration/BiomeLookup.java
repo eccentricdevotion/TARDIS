@@ -46,7 +46,7 @@ public class BiomeLookup {
         MATERIALS.put(Material.DEAD_FIRE_CORAL_BLOCK, Biome.DEEP_LUKEWARM_OCEAN);
         MATERIALS.put(Material.DEAD_HORN_CORAL_BLOCK, Biome.DEEP_OCEAN);
         MATERIALS.put(Material.DIRT, Biome.WINDSWEPT_HILLS);
-        MATERIALS.put(Material.GRASS, Biome.PLAINS);
+        MATERIALS.put(Material.SHORT_GRASS, Biome.PLAINS);
         MATERIALS.put(Material.GRAVEL, Biome.WINDSWEPT_GRAVELLY_HILLS);
         MATERIALS.put(Material.GRAY_GLAZED_TERRACOTTA, Biome.JAGGED_PEAKS);
         MATERIALS.put(Material.ICE, Biome.FROZEN_OCEAN);

@@ -23,7 +23,6 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ import java.util.UUID;
 
 public class SchematicFlowers {
     private final List<Material> smallFlowers;
-    private final Material from = Material.GRASS;
+    private final Material from = Material.SHORT_GRASS;
 
     public SchematicFlowers() {
         smallFlowers = new ArrayList<>(Tag.SMALL_FLOWERS.getValues());

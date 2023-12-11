@@ -48,7 +48,7 @@ public class TVMEquipListener implements Listener {
         transparent.add(Material.DANDELION);
         transparent.add(Material.DEAD_BUSH);
         transparent.add(Material.FERN);
-        transparent.add(Material.GRASS);
+        transparent.add(Material.SHORT_GRASS);
         transparent.add(Material.LARGE_FERN);
         transparent.add(Material.LILAC);
         transparent.add(Material.ORANGE_TULIP);

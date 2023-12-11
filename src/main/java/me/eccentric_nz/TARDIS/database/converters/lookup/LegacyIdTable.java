@@ -40,7 +40,7 @@ public class LegacyIdTable {
         LOOKUP.put(28, Material.DETECTOR_RAIL);
         LOOKUP.put(29, Material.STICKY_PISTON);
         LOOKUP.put(30, Material.COBWEB);
-        LOOKUP.put(31, Material.GRASS);
+        LOOKUP.put(31, Material.SHORT_GRASS);
         LOOKUP.put(32, Material.DEAD_BUSH);
         LOOKUP.put(33, Material.PISTON);
         LOOKUP.put(34, Material.PISTON_HEAD);
