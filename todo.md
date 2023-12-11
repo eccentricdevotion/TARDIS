@@ -14,6 +14,7 @@
 5. Animated models for player disguises
 6. Sonic Blaster
 7. New sonic screwdriver functionality?
+8. Amy Pond's Sonic Probe + Missy's Sonic Umbrella
 
 ## Future versions
 
