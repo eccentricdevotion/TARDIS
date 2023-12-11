@@ -140,11 +140,13 @@ public class TARDISBuilderInstanceKeeper {
         for (Material pot : Tag.FLOWER_POTS.getValues()) {
             conversions.put(pot.toString(), pot.toString().replace("POTTED_", ""));
         }
-        // add all leaves
+        /*
+        // DON"T add all leaves as they are a trivial item to obtain with shears
         for (Material leaf : Tag.LEAVES.getValues()) {
             conversions.put(leaf.toString(), leaf.toString().replace("_LEAVES", "_SAPLING"));
         }
         conversions.put("MANGROVE_LEAVES", "MANGROVE_PROPAGULE");
+         */
         // all wall signs
         for (Material sign : Tag.WALL_SIGNS.getValues()) {
             conversions.put(sign.toString(), sign.toString().replace("_WALL", ""));
