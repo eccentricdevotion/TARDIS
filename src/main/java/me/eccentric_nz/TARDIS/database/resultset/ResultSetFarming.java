@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.data.Farm;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.Farm;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... everything about the construction of
@@ -79,7 +80,9 @@ public class ResultSetFarming {
                         rs.getString("geode"),
                         rs.getString("hutch"),
                         rs.getString("igloo"),
+                        rs.getString("iistubil"),
                         rs.getString("mangrove"),
+                        rs.getString("pen"),
                         rs.getString("stable"),
                         rs.getString("stall"),
                         rs.getString("village")

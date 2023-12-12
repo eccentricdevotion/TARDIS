@@ -94,6 +94,7 @@ public class TARDISFarmer {
             TARDISFish fish = null;
             List<TARDISMooshroom> mooshrooms = new ArrayList<>();
             List<TARDISMob> sheep = new ArrayList<>();
+            List<TARDISMob> sniffers = new ArrayList<>();
             List<TARDISPet> parrots = new ArrayList<>();
             List<TARDISPig> pigs = new ArrayList<>();
             List<TARDISMob> polarbears = new ArrayList<>();
@@ -102,6 +103,7 @@ public class TARDISFarmer {
             List<TARDISVillager> villagers = new ArrayList<>();
             List<TARDISPanda> pandas = new ArrayList<>();
             List<TARDISFrog> frogs = new ArrayList<>();
+            List<TARDISHorse> camels = new ArrayList<>();
             // are we doing an achievement?
             TARDISAchievementFactory taf = null;
             if (plugin.getAchievementConfig().getBoolean("farm.enabled")) {
@@ -125,6 +127,8 @@ public class TARDISFarmer {
                 String stall = farming.getStall();
                 String village = farming.getVillage();
                 String mangrove = farming.getMangrove();
+                String iistubil = farming.getIistubil();
+                String pen = farming.getPen();
                 // collate the mobs
                 for (Entity entity : mobs) {
                     switch (entity.getType()) {
@@ -168,6 +172,22 @@ public class TARDISFarmer {
                             }
                             if (taf != null) {
                                 taf.doAchievement("BEE");
+                            }
+                        }
+                        case CAMEL -> {
+                            Camel camel = (Camel) entity;
+                            TARDISHorse hump = new TARDISHorse();
+                            hump.setAge(camel.getAge());
+                            hump.setBaby(!camel.isAdult());
+                            hump.setHorseInventory(camel.getInventory().getContents());
+                            hump.setName(camel.getCustomName());
+                            hump.setDomesticity(camel.getDomestication());
+                            camels.add(hump);
+                            if (!iistubil.isEmpty() || (iistubil.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+                                entity.remove();
+                            }
+                            if (taf != null) {
+                                taf.doAchievement("CAMEL");
                             }
                         }
                         case CHICKEN -> {
@@ -427,6 +447,21 @@ public class TARDISFarmer {
                             }
                             if (taf != null) {
                                 taf.doAchievement("SHEEP");
+                            }
+                            farmtotal++;
+                        }
+                        case SNIFFER -> {
+                            Sniffer sniffer = (Sniffer) entity;
+                            TARDISMob tmsniffer = new TARDISMob();
+                            tmsniffer.setAge(sniffer.getAge());
+                            tmsniffer.setBaby(!sniffer.isAdult());
+                            tmsniffer.setName(entity.getCustomName());
+                            sniffers.add(tmsniffer);
+                            if (!pen.isEmpty() || (pen.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+                                entity.remove();
+                            }
+                            if (taf != null) {
+                                taf.doAchievement("SNIFFER");
                             }
                             farmtotal++;
                         }
@@ -977,6 +1012,66 @@ public class TARDISFarmer {
                     p.updateInventory();
                 } else if (!polarbears.isEmpty()) {
                     plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_IGLOO");
+                }
+                if (!pen.isEmpty() && !sniffers.isEmpty()) {
+                    // get location of sniffer pen room
+                    World world = TARDISStaticLocationGetters.getWorldFromSplitString(pen);
+                    Location p_room = TARDISStaticLocationGetters.getSpawnLocationFromDB(pen);
+                    while (!world.getChunkAt(p_room).isLoaded()) {
+                        world.getChunkAt(p_room).load();
+                    }
+                    sniffers.forEach((e) -> {
+                        plugin.setTardisSpawn(true);
+                        Entity sniff = world.spawnEntity(p_room, EntityType.SNIFFER);
+                        Sniffer let = (Sniffer) sniff;
+                        let.setAge(e.getAge());
+                        if (e.isBaby()) {
+                            let.setBaby();
+                        }
+                        String name = e.getName();
+                        if (name != null && !name.isEmpty()) {
+                            let.setCustomName(name);
+                        }
+                        let.setRemoveWhenFarAway(false);
+                    });
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && !sniffers.isEmpty()) {
+                    Inventory inv = p.getInventory();
+                    ItemStack is = new ItemStack(Material.SNIFFER_EGG, sniffers.size());
+                    inv.addItem(is);
+                    p.updateInventory();
+                } else if (!sniffers.isEmpty()) {
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_PEN");
+                }
+                if (!iistubil.isEmpty() && !camels.isEmpty()) {
+                    // get location of camel iistubil room
+                    World world = TARDISStaticLocationGetters.getWorldFromSplitString(iistubil);
+                    Location i_room = TARDISStaticLocationGetters.getSpawnLocationFromDB(iistubil);
+                    while (!world.getChunkAt(i_room).isLoaded()) {
+                        world.getChunkAt(i_room).load();
+                    }
+                    camels.forEach((e) -> {
+                        plugin.setTardisSpawn(true);
+                        Entity camel = world.spawnEntity(i_room, EntityType.CAMEL);
+                        Camel hump = (Camel) camel;
+                        hump.setAge(e.getAge());
+                        if (e.isBaby()) {
+                            hump.setBaby();
+                        }
+                        String name = e.getName();
+                        if (name != null && !name.isEmpty()) {
+                            hump.setCustomName(name);
+                        }
+                        hump.setDomestication(e.getDomesticity());
+                        hump.getInventory().setContents(e.getHorseinventory());
+                        hump.setRemoveWhenFarAway(false);
+                    });
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && !camels.isEmpty()) {
+                    Inventory inv = p.getInventory();
+                    ItemStack is = new ItemStack(Material.CAMEL_SPAWN_EGG, camels.size());
+                    inv.addItem(is);
+                    p.updateInventory();
+                } else if (!camels.isEmpty()) {
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_IISTUBIL");
                 }
                 if (!birdcage.isEmpty() && !parrots.isEmpty()) {
                     // get location of birdcage room

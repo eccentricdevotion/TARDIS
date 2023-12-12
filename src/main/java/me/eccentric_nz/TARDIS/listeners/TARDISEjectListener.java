@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -35,6 +33,9 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.LlamaInventory;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -135,6 +136,21 @@ public class TARDISEjectListener implements Listener {
                 }
                 ent.remove();
             }
+            case CAMEL -> {
+                Camel camel = (Camel) ent;
+                Camel hump = (Camel) l.getWorld().spawnEntity(l, EntityType.CAMEL);
+                hump.setAge(camel.getAge());
+                if (!camel.isAdult()) {
+                    hump.setBaby();
+                }
+                hump.getInventory().setContents(camel.getInventory().getContents());
+                String camelname = ent.getCustomName();
+                if (camelname != null && !camelname.isEmpty()) {
+                    hump.setCustomName(camelname);
+                }
+                hump.setDomestication(camel.getDomestication());
+                ent.remove();
+            }
             case COW -> {
                 Cow c = (Cow) ent;
                 Cow cow = (Cow) l.getWorld().spawnEntity(l, EntityType.COW);
@@ -148,7 +164,8 @@ public class TARDISEjectListener implements Listener {
                 }
                 ent.remove();
             }
-            case DONKEY, HORSE, MULE, SKELETON_HORSE, ZOMBIE_HORSE -> plugin.getMessenger().send(player, TardisModule.TARDIS, "EJECT_HORSE");
+            case DONKEY, HORSE, MULE, SKELETON_HORSE, ZOMBIE_HORSE ->
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "EJECT_HORSE");
             case LLAMA -> {
                 event.setCancelled(true);
                 Llama ll = (Llama) ent;
@@ -298,6 +315,19 @@ public class TARDISEjectListener implements Listener {
                     sheep.setCustomName(sheepname);
                 }
                 sheep.setColor(s.getColor());
+                ent.remove();
+            }
+            case SNIFFER -> {
+                Sniffer s = (Sniffer) ent;
+                Sniffer sniffer = (Sniffer) l.getWorld().spawnEntity(l, EntityType.SNIFFER);
+                sniffer.setTicksLived(s.getTicksLived());
+                if ((!s.isAdult())) {
+                    sniffer.setBaby();
+                }
+                String sniffername = ent.getCustomName();
+                if (sniffername != null && !sniffername.isEmpty()) {
+                    sniffer.setCustomName(sniffername);
+                }
                 ent.remove();
             }
             case RABBIT -> {

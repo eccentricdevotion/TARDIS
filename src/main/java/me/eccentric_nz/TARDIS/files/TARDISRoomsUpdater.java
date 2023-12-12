@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.configuration.file.FileConfiguration;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.configuration.file.FileConfiguration;
 
 /**
  * @author eccentric_nz
@@ -75,6 +76,8 @@ public class TARDISRoomsUpdater {
         booleanOptions.put("rooms.HUTCH.user", false);
         booleanOptions.put("rooms.IGLOO.enabled", true);
         booleanOptions.put("rooms.IGLOO.user", false);
+        booleanOptions.put("rooms.IISTUBIL.enabled", true);
+        booleanOptions.put("rooms.IISTUBIL.user", false);
         booleanOptions.put("rooms.KITCHEN.enabled", true);
         booleanOptions.put("rooms.KITCHEN.user", false);
         booleanOptions.put("rooms.LAZARUS.enabled", true);
@@ -83,6 +86,8 @@ public class TARDISRoomsUpdater {
         booleanOptions.put("rooms.LIBRARY.user", false);
         booleanOptions.put("rooms.MANGROVE.enabled", true);
         booleanOptions.put("rooms.MANGROVE.user", false);
+        booleanOptions.put("rooms.PEN.enabled", true);
+        booleanOptions.put("rooms.PEN.user", false);
         booleanOptions.put("rooms.MAZE.enabled", true);
         booleanOptions.put("rooms.MAZE.user", false);
         booleanOptions.put("rooms.MUSHROOM.enabled", true);
@@ -156,6 +161,8 @@ public class TARDISRoomsUpdater {
         integerOptions.put("rooms.HUTCH.offset", -4);
         integerOptions.put("rooms.IGLOO.cost", 650);
         integerOptions.put("rooms.IGLOO.offset", -4);
+        integerOptions.put("rooms.IISTUBIL.cost", 550);
+        integerOptions.put("rooms.IISTUBIL.offset", -4);
         integerOptions.put("rooms.KITCHEN.cost", 450);
         integerOptions.put("rooms.KITCHEN.offset", -4);
         integerOptions.put("rooms.LAZARUS.cost", 750);
@@ -164,6 +171,8 @@ public class TARDISRoomsUpdater {
         integerOptions.put("rooms.LIBRARY.offset", -4);
         integerOptions.put("rooms.MANGROVE.cost", 450);
         integerOptions.put("rooms.MANGROVE.offset", -4);
+        integerOptions.put("rooms.PEN.cost", 550);
+        integerOptions.put("rooms.PEN.offset", -4);
         integerOptions.put("rooms.MAZE.cost", 650);
         integerOptions.put("rooms.MAZE.offset", -4);
         integerOptions.put("rooms.MUSHROOM.cost", 350);
@@ -219,10 +228,12 @@ public class TARDISRoomsUpdater {
         stringOptions.put("rooms.HARMONY.seed", "BRICK_STAIRS");
         stringOptions.put("rooms.HUTCH.seed", "ACACIA_LOG");
         stringOptions.put("rooms.IGLOO.seed", "PACKED_ICE");
+        stringOptions.put("rooms.IISTUBIL.seed", "WHITE_GLAZED_TERRACOTTA");
         stringOptions.put("rooms.KITCHEN.seed", "PUMPKIN");
         stringOptions.put("rooms.LAZARUS.seed", "FURNACE");
         stringOptions.put("rooms.LIBRARY.seed", "ENCHANTMENT_TABLE");
         stringOptions.put("rooms.MANGROVE.seed", "MUDDY_MANGROVE_ROOTS");
+        stringOptions.put("rooms.PEN.seed", "MOSS_BLOCK");
         stringOptions.put("rooms.MAZE.seed", "LODESTONE");
         stringOptions.put("rooms.MUSHROOM.seed", "GRAVEL");
         stringOptions.put("rooms.NETHER.seed", "BLACKSTONE");

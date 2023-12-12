@@ -29,9 +29,7 @@ import java.sql.Statement;
  * <p>
  * Many facts, figures, and formulas are contained within the Matrix - a
  * supercomputer and micro-universe used by the High Council of the Time Lords
- * as a storehouse of knowledge to predict future events.
- *
- * @author eccentric_nz
+ * as a storehouse of knowle
  */
 public class TARDISSQLiteDatabase {
 
@@ -135,7 +133,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryDoors);
 
             // Table structure for table 'farming'
-            String queryFarming = "CREATE TABLE IF NOT EXISTS " + prefix + "farming (farm_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, apiary TEXT DEFAULT '', aquarium TEXT DEFAULT '', bamboo TEXT DEFAULT '', birdcage TEXT DEFAULT '', farm TEXT DEFAULT '', geode TEXT DEFAULT '', hutch TEXT DEFAULT '', igloo TEXT DEFAULT '', mangrove TEXT DEFAULT '', stable TEXT DEFAULT '', stall TEXT DEFAULT '', village TEXT DEFAULT '')";
+            String queryFarming = "CREATE TABLE IF NOT EXISTS " + prefix + "farming (farm_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, apiary TEXT DEFAULT '', aquarium TEXT DEFAULT '', bamboo TEXT DEFAULT '', birdcage TEXT DEFAULT '', farm TEXT DEFAULT '', geode TEXT DEFAULT '', hutch TEXT DEFAULT '', igloo TEXT DEFAULT '', iistubil TEXT DEFAULT '', mangrove TEXT DEFAULT '', pen TEXT DEFAULT '', stable TEXT DEFAULT '', stall TEXT DEFAULT '', village TEXT DEFAULT '')";
             statement.executeUpdate(queryFarming);
 
             // Table structure for table 'flight'

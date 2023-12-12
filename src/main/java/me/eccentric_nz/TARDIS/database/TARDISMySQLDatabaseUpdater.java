@@ -116,6 +116,8 @@ class TARDISMySQLDatabaseUpdater {
         farmingupdates.add("bamboo varchar(512) DEFAULT ''");
         farmingupdates.add("geode varchar(512) DEFAULT ''");
         farmingupdates.add("mangrove varchar(512) DEFAULT ''");
+        farmingupdates.add("iistubil varchar(512) DEFAULT ''");
+        farmingupdates.add("pen varchar(512) DEFAULT ''");
         sonicupdates.add("arrow int(1) DEFAULT '0'");
         sonicupdates.add("knockback int(1) DEFAULT '0'");
         sonicupdates.add("brush int(1) DEFAULT '0'");

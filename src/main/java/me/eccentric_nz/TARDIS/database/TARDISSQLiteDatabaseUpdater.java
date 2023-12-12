@@ -149,6 +149,8 @@ class TARDISSQLiteDatabaseUpdater {
         farmingupdates.add("bamboo TEXT DEFAULT ''");
         farmingupdates.add("geode TEXT DEFAULT ''");
         farmingupdates.add("mangrove TEXT DEFAULT ''");
+        farmingupdates.add("iistubil TEXT DEFAULT ''");
+        farmingupdates.add("pen TEXT DEFAULT ''");
         sonicupdates.add("arrow INTEGER DEFAULT 0");
         sonicupdates.add("knockback INTEGER DEFAULT 0");
         sonicupdates.add("brush INTEGER DEFAULT 0");

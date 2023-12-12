@@ -72,6 +72,12 @@ rooms:
     offset: -4
     seed: MUDDY_MANGROVE_ROOTS
     user: false
+  PEN:
+    enabled: true
+    cost: 550
+    offset: -4
+    seed: MOSS_BLOCK
+    user: false
   MAZE:
     enabled: true
     cost: 650
@@ -173,6 +179,12 @@ rooms:
     cost: 650
     offset: -4
     seed: PACKED_ICE
+    user: false
+  IISTUBIL:
+    enabled: true
+    cost: 550
+    offset: -4
+    seed: WHITE_GLAZED_TERRACOTTA
     user: false
   MUSHROOM:
     enabled: true

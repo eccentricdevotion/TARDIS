@@ -209,7 +209,7 @@ public class TARDISRoomRunnable implements Runnable {
                                 case IRON_TRAPDOOR -> trapdoorblocks.put(postBlock, postData);
                                 default -> {
                                     if (Tag.ALL_SIGNS.isTagged(postData.getMaterial())) {
-                                       signblocks.put(postBlock, postData);
+                                        signblocks.put(postBlock, postData);
                                     }
                                 }
                             }
@@ -624,9 +624,9 @@ public class TARDISRoomRunnable implements Runnable {
                 // set stable
                 if (type.equals(Material.SOUL_SAND) &&
                         (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") ||
-                         room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH") ||
-                         room.equals("IGLOO") || room.equals("MANGROVE") || room.equals("STALL") ||
-                         room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE") || room.equals("GARDEN"))) {
+                                room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO") ||
+                                room.equals("IISTUBIL") || room.equals("MANGROVE") || room.equals("PEN") || room.equals("STALL") ||
+                                room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE") || room.equals("GARDEN"))) {
                     HashMap<String, Object> sets = new HashMap<>();
                     sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                     HashMap<String, Object> wheres = new HashMap<>();
@@ -658,7 +658,9 @@ public class TARDISRoomRunnable implements Runnable {
                         case BAMBOO, BIRDCAGE -> data = Material.PODZOL.createBlockData();
                         case GEODE -> data = Material.CLAY.createBlockData();
                         case IGLOO -> data = Material.PACKED_ICE.createBlockData();
+                        case IISTUBIL -> data = Material.TERRACOTTA.createBlockData();
                         case MANGROVE -> data = TARDISConstants.WATER;
+                        case PEN -> data = Material.MOSS_BLOCK.createBlockData();
                         case ZERO -> data = Material.PINK_CARPET.createBlockData();
                         case GARDEN -> {
                             data = Material.GRASS_BLOCK.createBlockData();

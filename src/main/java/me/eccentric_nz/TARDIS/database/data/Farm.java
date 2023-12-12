@@ -30,12 +30,14 @@ public class Farm {
     private final String geode;
     private final String hutch;
     private final String igloo;
+    private final String iistubil;
     private final String mangrove;
+    private final String pen;
     private final String stable;
     private final String stall;
     private final String village;
 
-    public Farm(int tardis_id, String apiary, String aquarium, String bamboo, String birdcage, String farm, String geode, String hutch, String igloo, String mangrove, String stable, String stall, String village) {
+    public Farm(int tardis_id, String apiary, String aquarium, String bamboo, String birdcage, String farm, String geode, String hutch, String igloo, String iistubil, String mangrove, String pen, String stable, String stall, String village) {
         this.tardis_id = tardis_id;
         this.apiary = apiary;
         this.aquarium = aquarium;
@@ -45,7 +47,9 @@ public class Farm {
         this.geode = geode;
         this.hutch = hutch;
         this.igloo = igloo;
+        this.iistubil = iistubil;
         this.mangrove = mangrove;
+        this.pen = pen;
         this.stable = stable;
         this.stall = stall;
         this.village = village;
@@ -141,6 +145,16 @@ public class Farm {
     }
 
     /**
+     * Returns a String representation of the Iistubil room camel spawn location in this TARDIS. It is in the form of
+     * {@code World name:x:y:z}
+     *
+     * @return the Iistubil room camel spawn location string, or an empty string if the room does not exist
+     */
+    public String getIistubil() {
+        return iistubil;
+    }
+
+    /**
      * Returns a String representation of the Mangrove room frog spawn location in this TARDIS. It is in the form of
      * {@code World name:x:y:z}
      *
@@ -148,6 +162,16 @@ public class Farm {
      */
     public String getMangrove() {
         return mangrove;
+    }
+
+    /**
+     * Returns a String representation of the Pen room sniffer spawn location in this TARDIS. It is in the form of
+     * {@code World name:x:y:z}
+     *
+     * @return the Pen room sniffer spawn location string, or an empty string if the room does not exist
+     */
+    public String getPen() {
+        return pen;
     }
 
     /**
