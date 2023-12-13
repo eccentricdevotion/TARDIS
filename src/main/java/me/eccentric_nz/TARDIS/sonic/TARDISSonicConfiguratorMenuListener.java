@@ -57,24 +57,24 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
         }
         Player player = (Player) event.getWhoClicked();
         int slot = event.getRawSlot();
-        if (slot < 0 || slot > 44) {
+        if (slot < 0 || slot > 53) {
             ClickType click = event.getClick();
             if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
                 event.setCancelled(true);
             }
             return;
         }
-        event.setCancelled(slot != 36);
+        event.setCancelled(slot != 45);
         switch (slot) {
             // load configured sonic
-            case 36 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                loadSonic(view.getItem(36), player, view);
+            case 45 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                loadSonic(view.getItem(45), player, view);
                 setOptions(player, view);
             }, 1L);
             case 9, 10, 11, 12, 13, 14, 15, 16, 17, 27 ->
                     toggleOption(view.getItem(slot)); // toggle option enabled / disabled
-            case 43 -> saveConfiguredSonic(player, view); // save selected options
-            case 44 -> close(player);
+            case 52 -> saveConfiguredSonic(player, view); // save selected options
+            case 53 -> close(player);
             default -> event.setCancelled(true);
         }
     }
@@ -287,7 +287,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
         where.put("sonic_id", configuredSonic.getSonic_id());
         plugin.getQueryFactory().doUpdate("sonic", set, where);
         // set sonic lore
-        ItemStack sonic = view.getItem(18);
+        ItemStack sonic = view.getItem(45);
         if (TARDISStaticUtils.isSonic(sonic)) {
             ItemMeta im = sonic.getItemMeta();
             if (upgrades.size() > 1) {
@@ -309,8 +309,8 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
     }
 
     private ConfiguredSonic createConfiguredSonic(Player player, InventoryView view) {
-        // get sonic in slot 18
-        ItemStack is = view.getItem(18);
+        // get sonic in slot 45
+        ItemStack is = view.getItem(45);
         if (TARDISStaticUtils.isSonic(is)) {
             ItemMeta im = is.getItemMeta();
             // get the upgrades from the lore
@@ -359,12 +359,12 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
         if (!view.getTitle().equals(ChatColor.DARK_RED + "Sonic Configurator")) {
             return;
         }
-        ItemStack sonic = view.getItem(18);
+        ItemStack sonic = view.getItem(45);
         if (sonic != null) {
             Player p = (Player) event.getPlayer();
             Location loc = p.getLocation();
             loc.getWorld().dropItemNaturally(loc, sonic);
-            view.setItem(18, new ItemStack(Material.AIR));
+            view.setItem(45, new ItemStack(Material.AIR));
         }
     }
 }

@@ -37,7 +37,7 @@ public class TARDISSonicConfiguratorInventory {
      */
     private ItemStack[] getItemStack() {
 
-        ItemStack[] stack = new ItemStack[45];
+        ItemStack[] stack = new ItemStack[54];
         for (GUISonicConfigurator gui : GUISonicConfigurator.values()) {
             if (gui.getSlot() != -1) {
                 ItemStack is = new ItemStack(gui.getMaterial(), 1);
@@ -51,21 +51,21 @@ public class TARDISSonicConfiguratorInventory {
                 stack[gui.getSlot()] = is;
             }
         }
-        ItemStack place = new ItemStack(GUISonicConfigurator.PLACE_SONIC.getMaterial(), 1);
-        ItemMeta pim = place.getItemMeta();
-        pim.setDisplayName(GUISonicConfigurator.PLACE_SONIC.getName());
-        pim.setCustomModelData(GUISonicConfigurator.PLACE_SONIC.getCustomModelData());
-        place.setItemMeta(pim);
-        stack[9] = place;
         ItemStack wool = new ItemStack(GUISonicConfigurator.WAITING.getMaterial(), 1);
         ItemMeta wim = wool.getItemMeta();
         wim.setDisplayName(" ");
         wim.setCustomModelData(GUISonicConfigurator.WAITING.getCustomModelData());
         wool.setItemMeta(wim);
-        for (int i = 10; i < 18; i++) {
+        for (int i = 9; i < 18; i++) {
             stack[i] = wool;
         }
         stack[27] = wool;
+        ItemStack place = new ItemStack(GUISonicConfigurator.PLACE_SONIC.getMaterial(), 1);
+        ItemMeta pim = place.getItemMeta();
+        pim.setDisplayName(GUISonicConfigurator.PLACE_SONIC.getName());
+        pim.setCustomModelData(GUISonicConfigurator.PLACE_SONIC.getCustomModelData());
+        place.setItemMeta(pim);
+        stack[36] = place;
         return stack;
     }
 

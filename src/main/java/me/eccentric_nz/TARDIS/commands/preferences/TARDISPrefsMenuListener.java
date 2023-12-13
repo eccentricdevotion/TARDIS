@@ -260,7 +260,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         if (slot == GUIPlayerPreferences.SONIC_CONFIGURATOR.getSlot() && im.getDisplayName().equals("Sonic Configurator")) {
             // close this gui and load the Sonic Configurator
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                Inventory sonic_inv = plugin.getServer().createInventory(p, 45, ChatColor.DARK_RED + "Sonic Configurator");
+                Inventory sonic_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Sonic Configurator");
                 // close inventory
                 p.closeInventory();
                 // open new inventory

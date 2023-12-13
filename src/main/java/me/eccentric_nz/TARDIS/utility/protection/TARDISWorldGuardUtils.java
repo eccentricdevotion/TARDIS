@@ -32,7 +32,6 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.managers.storage.StorageException;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -41,6 +40,8 @@ import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+
+import java.util.*;
 
 /**
  * Before a TARDIS becomes fully functional, it must be primed with the biological imprint of a Time Lord, normally done
@@ -212,6 +213,7 @@ public class TARDISWorldGuardUtils {
      * Adds a WorldGuard protected region for a TIPS slot. This stops other players and mobs from griefing the TARDIS
      * :)
      *
+     * @param uuid  the UUID of the player we are assigning the region to
      * @param name  the player to assign as the owner of the region
      * @param data  a TIPS Data container
      * @param world the world we are creating the region in

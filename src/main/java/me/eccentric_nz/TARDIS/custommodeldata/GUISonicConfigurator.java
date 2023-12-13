@@ -32,15 +32,15 @@ public enum GUISonicConfigurator {
     KNOCKBACK_UPGRADE(134, 7, Material.BOWL, ""),
     BRUSH_UPGRADE(150, 8, Material.BOWL, ""),
     CONVERSION_UPGRADE(154, 18, Material.BOWL, ""),
-    INSTRUCTIONS_1_OF_2(1, 41, Material.BOOK, "Place your sonic screwdriver~in the bottom left slot.~Click on the upgrades you~want to enable/disable."),
-    INSTRUCTIONS_2_OF_2(1, 42, Material.BOOK, "Click the 'Save' button~to apply your selections.~Click 'Close' to exit~without saving."),
+    INSTRUCTIONS_1_OF_2(1, 50, Material.BOOK, "Place your sonic screwdriver~in the bottom left slot.~Click on the upgrades you~want to enable/disable."),
+    INSTRUCTIONS_2_OF_2(1, 51, Material.BOOK, "Click the 'Save' button~to apply your selections.~Click 'Close' to exit~without saving."),
     NOT_UPGRADED(1, -1, Material.GRAY_WOOL, ""),
     ENABLED(2, -1, Material.LIME_WOOL, ""),
     DISABLED(2, -1, Material.RED_WOOL, ""),
     PLACE_SONIC(2, -1, Material.GRAY_WOOL, ""),
     WAITING(3, -1, Material.GRAY_WOOL, ""),
-    SAVE(74, 43, Material.BOWL, "Click to save the current configuration."),
-    CLOSE(1, 44, Material.BOWL, "Close the menu~without saving.");
+    SAVE(74, 52, Material.BOWL, "Click to save the current configuration."),
+    CLOSE(1, 53, Material.BOWL, "Close the menu~without saving.");
 
     private final int customModelData;
     private final int slot;
