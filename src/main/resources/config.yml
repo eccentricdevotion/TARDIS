@@ -112,6 +112,7 @@ preferences:
   heal_speed: 200
   default_key: eleventh
   default_sonic: eleventh
+  sonic_radius: 1
   nerf_pistons:
     enabled: false
     only_tardis_worlds: true

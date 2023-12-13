@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISonicGenerator;
@@ -28,6 +24,11 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -64,6 +65,15 @@ class TARDISSonicGeneratorInventory {
                 is.setItemMeta(im);
                 stack[sonic.getSlot()] = is;
             }
+        }
+        // conversion upgrade
+        if (TARDISPermission.hasPermission(player, "tardis.sonic.conversion")) {
+            ItemStack conversion = new ItemStack(Material.BOWL, 1);
+            ItemMeta trans = conversion.getItemMeta();
+            trans.setDisplayName("Conversion Upgrade");
+            trans.setCustomModelData(GUISonicGenerator.CONVERSION_UPGRADE.getCustomModelData());
+            conversion.setItemMeta(trans);
+            stack[18] = conversion;
         }
         // brush upgrade
         if (TARDISPermission.hasPermission(player, "tardis.sonic.brush")) {
@@ -247,6 +257,10 @@ class TARDISSonicGeneratorInventory {
         if (data.hasBrush()) {
             upgrades.add("Brush Upgrade");
             artron += (int) (plugin.getArtronConfig().getDouble("sonic_generator.brush") * full);
+        }
+        if (data.hasConversion()) {
+            upgrades.add("Conversion Upgrade");
+            artron += (int) (plugin.getArtronConfig().getDouble("sonic_generator.conversion") * full);
         }
         // cost
         ItemStack cost = new ItemStack(Material.BOWL, 1);

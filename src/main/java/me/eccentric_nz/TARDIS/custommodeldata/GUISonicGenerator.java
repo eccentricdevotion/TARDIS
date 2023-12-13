@@ -49,6 +49,7 @@ public enum GUISonicGenerator {
     PICKUP_ARROWS_UPGRADE(68, 35, Material.BOWL, ""),
     KNOCKBACK_UPGRADE(134, 28, Material.BOWL, ""),
     BRUSH_UPGRADE(150, 27, Material.BOWL, ""),
+    CONVERSION_UPGRADE(154, 27, Material.BOWL, ""),
     INSTRUCTIONS_1_OF_3(1, 38, Material.BOOK, "Select your Sonic Screwdriver~type from the top two rows.~Click on the upgrades you~want to add to the sonic."),
     INSTRUCTIONS_2_OF_3(1, 39, Material.BOOK, "You can reset the upgrades~by clicking the 'Standard' button.~The Artron cost for the~sonic is shown bottom left."),
     INSTRUCTIONS_3_OF_3(1, 40, Material.BOOK, "The final sonic result~is shown in the middle~of the bottom row."),

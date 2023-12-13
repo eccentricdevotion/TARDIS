@@ -121,6 +121,7 @@ class TARDISMySQLDatabaseUpdater {
         sonicupdates.add("arrow int(1) DEFAULT '0'");
         sonicupdates.add("knockback int(1) DEFAULT '0'");
         sonicupdates.add("brush int(1) DEFAULT '0'");
+        sonicupdates.add("conversion int(1) DEFAULT '0'");
         sonicupdates.add("model int(11) DEFAULT '10000011'");
         sonicupdates.add("sonic_uuid varchar(48) DEFAULT ''");
     }

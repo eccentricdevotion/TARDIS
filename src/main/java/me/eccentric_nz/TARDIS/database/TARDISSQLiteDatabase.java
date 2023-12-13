@@ -209,7 +209,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(querySiege);
 
             // Table structure for table 'sonic'
-            String querySonic = "CREATE TABLE IF NOT EXISTS " + prefix + "sonic (sonic_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', activated INTEGER DEFAULT 0, bio INTEGER DEFAULT 0, diamond INTEGER DEFAULT 0, emerald INTEGER DEFAULT 0, redstone INTEGER DEFAULT 0, painter INTEGER DEFAULT 0, ignite INTEGER DEFAULT 0, arrow INTEGER DEFAULT 0, knockback INTEGER DEFAULT 0, brush INTEGER DEFAULT 0, model INTEGER DEFAULT 10000011, sonic_uuid TEXT DEFAULT '')";
+            String querySonic = "CREATE TABLE IF NOT EXISTS " + prefix + "sonic (sonic_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', activated INTEGER DEFAULT 0, bio INTEGER DEFAULT 0, diamond INTEGER DEFAULT 0, emerald INTEGER DEFAULT 0, redstone INTEGER DEFAULT 0, painter INTEGER DEFAULT 0, ignite INTEGER DEFAULT 0, arrow INTEGER DEFAULT 0, knockback INTEGER DEFAULT 0, brush INTEGER DEFAULT 0, conversion INTEGER DEFAULT 0, model INTEGER DEFAULT 10000011, sonic_uuid TEXT DEFAULT '')";
             statement.executeUpdate(querySonic);
 
             // reset storage table

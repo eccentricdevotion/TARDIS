@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.data.Sonic;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,9 +27,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.Sonic;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... a Time Lord's preferred sonic
@@ -100,7 +101,8 @@ public class ResultSetSonic {
                         rs.getBoolean("ignite"),
                         rs.getBoolean("arrow"),
                         rs.getBoolean("knockback"),
-                        rs.getBoolean("brush")
+                        rs.getBoolean("brush"),
+                        rs.getBoolean("conversion")
                 );
             } else {
                 return false;

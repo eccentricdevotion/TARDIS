@@ -170,6 +170,9 @@ public class TARDISCondenserListener implements Listener {
                         if (lore.contains("Brush Upgrade")) {
                             amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.brush") * full);
                         }
+                        if (lore.contains("Conversion Upgrade")) {
+                            amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.conversion") * full);
+                        }
                     }
                     inv.remove(is);
                     continue;

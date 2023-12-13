@@ -25,6 +25,7 @@ public enum ShopItem {
     BUDGET_SEED("Budget Seed", Material.IRON_BLOCK, 1, ShopItemRecipe.SEED),
     CAPPUCCINO_JELLY_BABY("Cappuccino Jelly Baby", Material.MELON_SLICE, 10000013, ShopItemRecipe.SHAPELESS),
     CAVE_SEED("Cave Seed", Material.DRIPSTONE_BLOCK, 1, ShopItemRecipe.SEED),
+    CONVERSION_CIRCUIT("Conversion Circuit", Material.GLOWSTONE_DUST, 10001988),
     COPPER_SEED("Copper Seed", Material.COPPER_BLOCK, 10001, ShopItemRecipe.SEED),
     CORAL_SEED("Coral Seed", Material.FIRE_CORAL_BLOCK, 10001, ShopItemRecipe.SEED),
     CUSTARD_CREAM("Custard Cream", Material.COOKIE, 10000002),

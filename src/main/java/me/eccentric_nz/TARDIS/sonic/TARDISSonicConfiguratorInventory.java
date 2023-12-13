@@ -37,7 +37,7 @@ public class TARDISSonicConfiguratorInventory {
      */
     private ItemStack[] getItemStack() {
 
-        ItemStack[] stack = new ItemStack[27];
+        ItemStack[] stack = new ItemStack[45];
         for (GUISonicConfigurator gui : GUISonicConfigurator.values()) {
             if (gui.getSlot() != -1) {
                 ItemStack is = new ItemStack(gui.getMaterial(), 1);
@@ -65,6 +65,7 @@ public class TARDISSonicConfiguratorInventory {
         for (int i = 10; i < 18; i++) {
             stack[i] = wool;
         }
+        stack[27] = wool;
         return stack;
     }
 

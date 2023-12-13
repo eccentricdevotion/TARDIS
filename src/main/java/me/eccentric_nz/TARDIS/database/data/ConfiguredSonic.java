@@ -16,8 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.database.data;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.enumeration.SonicConfig;
+
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -36,8 +37,9 @@ public class ConfiguredSonic {
     private SonicConfig arrow;
     private SonicConfig knockback;
     private SonicConfig brush;
+    private SonicConfig conversion;
 
-    public ConfiguredSonic(int sonic_id, UUID uuid, int bio, int diamond, int emerald, int redstone, int painter, int ignite, int arrow, int knockback, int brush, UUID sonic_uuid) {
+    public ConfiguredSonic(int sonic_id, UUID uuid, int bio, int diamond, int emerald, int redstone, int painter, int ignite, int arrow, int knockback, int brush, int conversion, UUID sonic_uuid) {
         this.sonic_id = sonic_id;
         this.uuid = uuid;
         this.bio = SonicConfig.values()[bio];
@@ -49,6 +51,7 @@ public class ConfiguredSonic {
         this.arrow = SonicConfig.values()[arrow];
         this.knockback = SonicConfig.values()[knockback];
         this.brush = SonicConfig.values()[brush];
+        this.conversion = SonicConfig.values()[conversion];
         this.sonic_uuid = sonic_uuid;
     }
 
@@ -130,6 +133,14 @@ public class ConfiguredSonic {
 
     public void setBrush(SonicConfig brush) {
         this.brush = brush;
+    }
+
+    public SonicConfig getConversion() {
+        return conversion;
+    }
+
+    public void setConversion(SonicConfig conversion) {
+        this.conversion = conversion;
     }
 
     public UUID getSonic_uuid() {

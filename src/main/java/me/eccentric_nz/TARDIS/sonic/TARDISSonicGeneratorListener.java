@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -48,6 +44,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -153,6 +154,10 @@ public class TARDISSonicGeneratorListener implements Listener {
             if (s.hasBrush()) {
                 upgrades.add("Brush Upgrade");
                 cost += (int) (plugin.getArtronConfig().getDouble("sonic_generator.brush") * full);
+            }
+            if (s.hasConversion()) {
+                upgrades.add("Conversion Upgrade");
+                cost += (int) (plugin.getArtronConfig().getDouble("sonic_generator.conversion") * full);
             }
             if (!upgrades.isEmpty()) {
                 List<String> finalUps = new ArrayList<>();

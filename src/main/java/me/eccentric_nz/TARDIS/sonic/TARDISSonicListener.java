@@ -56,6 +56,8 @@ public class TARDISSonicListener implements Listener {
     private final Set<Material> redstone = new HashSet<>();
     private final Set<Material> ignite = new HashSet<>();
     private final Set<Material> suspicious = new HashSet<>();
+    private final Set<Material> converts = new HashSet<>();
+
 
     public TARDISSonicListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -86,6 +88,11 @@ public class TARDISSonicListener implements Listener {
         ignite.add(Material.SOUL_SOIL);
         suspicious.add(Material.SUSPICIOUS_GRAVEL);
         suspicious.add(Material.SUSPICIOUS_SAND);
+        converts.addAll(Tag.CONCRETE_POWDER.getValues());
+        converts.add(Material.MUD);
+        converts.add(Material.DIRT);
+        converts.add(Material.COARSE_DIRT);
+        converts.add(Material.ROOTED_DIRT);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -164,6 +171,11 @@ public class TARDISSonicListener implements Listener {
                     if (redstone.contains(block.getType()) && TARDISPermission.hasPermission(player, "tardis.sonic.redstone") && lore != null && lore.contains("Redstone Upgrade")) {
                         // toggle powered state
                         TARDISSonicRedstone.togglePoweredState(plugin, player, block);
+                        return;
+                    }
+                    if (converts.contains(block.getType()) && TARDISPermission.hasPermission(player, "tardis.sonic.conversion") && lore != null && lore.contains("Conversion Upgrade")) {
+                        // convert to water added block i.e. CONCRETE_POWDER -> CONCRETE
+                        TARDISSonicBlockConverter.transform(plugin, block, player);
                         return;
                     }
                     if (suspicious.contains(block.getType()) && TARDISPermission.hasPermission(player, "tardis.sonic.brush") && lore != null && lore.contains("Brush Upgrade")) {

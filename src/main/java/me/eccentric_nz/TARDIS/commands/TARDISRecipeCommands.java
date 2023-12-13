@@ -397,6 +397,9 @@ public class TARDISRecipeCommands implements CommandExecutor {
             case "Brush Upgrade" -> {
                 return "Brush Circuit";
             }
+            case "Conversion Upgrade" -> {
+                return "Conversion Circuit";
+            }
             default -> {  // TARDIS Stattenheim Circuit"
                 if (quartzCount == 0) {
                     return "TARDIS Locator Circuit"; // 1965

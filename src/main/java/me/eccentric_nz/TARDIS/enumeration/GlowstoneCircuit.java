@@ -29,6 +29,7 @@ public enum GlowstoneCircuit {
     BRUSH("Brush Circuit", 10001987),
     CHAMELEON("TARDIS Chameleon Circuit", 10001966),
     CIRCUITS("Circuits", 10001985),
+    CONVERSION("Conversion Circuit", 10001988),
     DIAMOND("Diamond Disruptor Circuit", 10001971),
     EMERALD("Emerald Environment Circuit", 10001972),
     IGNITE("Ignite Circuit", 10001982),

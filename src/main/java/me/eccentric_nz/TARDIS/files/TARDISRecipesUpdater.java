@@ -949,6 +949,24 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.Pickup Arrows Circuit.lore", "");
             i++;
         }
+        if (!recipes_config.contains("shaped.Conversion Circuit")) {
+            recipes_config.set("shaped.Conversion Circuit.easy_shape", "RDR,LWL,RCR");
+            recipes_config.set("shaped.Conversion Circuit.easy_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.Conversion Circuit.easy_ingredients.D", "DISPENSER");
+            recipes_config.set("shaped.Conversion Circuit.easy_ingredients.L", "LEATHER");
+            recipes_config.set("shaped.Conversion Circuit.easy_ingredients.W", "WATER_BUCKET");
+            recipes_config.set("shaped.Conversion Circuit.easy_ingredients.C", "COMPARATOR");
+            recipes_config.set("shaped.Conversion Circuit.hard_shape", "RDR,PWP,RCR");
+            recipes_config.set("shaped.Conversion Circuit.hard_ingredients.R", "REDSTONE_BLOCK");
+            recipes_config.set("shaped.Conversion Circuit.hard_ingredients.D", "DISPENSER");
+            recipes_config.set("shaped.Conversion Circuit.hard_ingredients.W", "WATER_BUCKET");
+            recipes_config.set("shaped.Conversion Circuit.hard_ingredients.P", "PHANTOM_MEMBRANE");
+            recipes_config.set("shaped.Conversion Circuit.hard_ingredients.C", "COMPARATOR");
+            recipes_config.set("shaped.Conversion Circuit.result", "GLOWSTONE_DUST");
+            recipes_config.set("shaped.Conversion Circuit.amount", 1);
+            recipes_config.set("shaped.Conversion Circuit.lore", "");
+            i++;
+        }
         if (!recipes_config.contains("shapeless.Ignite Upgrade")) {
             recipes_config.set("shapeless.Ignite Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Ignite Circuit");
             recipes_config.set("shapeless.Ignite Upgrade.result", "BLAZE_ROD");
@@ -961,6 +979,13 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shapeless.Pickup Arrows Upgrade.result", "BLAZE_ROD");
             recipes_config.set("shapeless.Pickup Arrows Upgrade.amount", 1);
             recipes_config.set("shapeless.Pickup Arrows Upgrade.lore", "");
+            i++;
+        }
+        if (!recipes_config.contains("shapeless.Conversion Upgrade")) {
+            recipes_config.set("shapeless.Conversion Upgrade.recipe", "BLAZE_ROD,GLOWSTONE_DUST=Conversion Circuit");
+            recipes_config.set("shapeless.Conversion Upgrade.result", "BLAZE_ROD");
+            recipes_config.set("shapeless.Conversion Upgrade.amount", 1);
+            recipes_config.set("shapeless.Conversion Upgrade.lore", "");
             i++;
         }
         if (!recipes_config.contains("shaped.TARDIS Artron Furnace")) {
@@ -1010,6 +1035,11 @@ public class TARDISRecipesUpdater {
             recipes_config.set("smithing.Brush Repair.base", "BLAZE_ROD");
             recipes_config.set("smithing.Brush Repair.addition", "GLOWSTONE_DUST=Brush Circuit");
             recipes_config.set("smithing.Brush Repair.result", "BLAZE_ROD");
+        }
+        if (!recipes_config.contains("smithing.Conversion Repair")) {
+            recipes_config.set("smithing.Conversion Repair.base", "BLAZE_ROD");
+            recipes_config.set("smithing.Conversion Repair.addition", "GLOWSTONE_DUST=Conversion Circuit");
+            recipes_config.set("smithing.Conversion Repair.result", "BLAZE_ROD");
         }
         if (!recipes_config.contains("furnace.Nuclear Wool.experience")) {
             recipes_config.set("furnace.Nuclear Wool.experience", 0);

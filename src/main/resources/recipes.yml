@@ -440,6 +440,24 @@ shaped:
     result: GLOWSTONE_DUST
     amount: 1
     lore: ''
+  Conversion Circuit:
+    easy_shape: RDR,LWL,RCR
+    easy_ingredients:
+      R: REDSTONE
+      D: DISPENSER
+      L: LEATHER
+      W: WATER_BUCKET
+      C: COMPARATOR
+    hard_shape: RDR,PWP,RCR
+    hard_ingredients:
+      R: REDSTONE_BLOCK
+      D: DISPENSER
+      P: PHANTOM_MEMBRANE
+      W: WATER_BUCKET
+      C: COMPARATOR
+    result: GLOWSTONE_DUST
+    amount: 1
+    lore: ''
   Artron Storage Cell:
     easy_shape: -B-,-R-,-L-
     easy_ingredients:
@@ -1149,6 +1167,11 @@ shapeless:
     lore: ''
   Brush Upgrade:
     recipe: BLAZE_ROD,GLOWSTONE_DUST=Brush Circuit
+    result: BLAZE_ROD
+    amount: 1
+    lore: ''
+  Conversion Upgrade:
+    recipe: BLAZE_ROD,GLOWSTONE_DUST=Conversion Circuit
     result: BLAZE_ROD
     amount: 1
     lore: ''

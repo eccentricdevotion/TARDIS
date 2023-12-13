@@ -57,24 +57,24 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
         }
         Player player = (Player) event.getWhoClicked();
         int slot = event.getRawSlot();
-        if (slot < 0 || slot > 26) {
+        if (slot < 0 || slot > 44) {
             ClickType click = event.getClick();
             if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
                 event.setCancelled(true);
             }
             return;
         }
-        event.setCancelled(slot != 18);
+        event.setCancelled(slot != 36);
         switch (slot) {
             // load configured sonic
-            case 18 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                loadSonic(view.getItem(18), player, view);
+            case 36 -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                loadSonic(view.getItem(36), player, view);
                 setOptions(player, view);
             }, 1L);
-            case 9, 10, 11, 12, 13, 14, 15, 16, 17 ->
+            case 9, 10, 11, 12, 13, 14, 15, 16, 17, 27 ->
                     toggleOption(view.getItem(slot)); // toggle option enabled / disabled
-            case 25 -> saveConfiguredSonic(player, view); // save selected options
-            case 26 -> close(player);
+            case 43 -> saveConfiguredSonic(player, view); // save selected options
+            case 44 -> close(player);
             default -> event.setCancelled(true);
         }
     }
@@ -154,6 +154,12 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
         sh.setDisplayName(configuredSonic.getBrush().getName());
         sh.setCustomModelData(configuredSonic.getBrush().getCustomModelData());
         bru.setItemMeta(sh);
+        ItemStack con = view.getItem(27);
+        con.setType(configuredSonic.getConversion().getMaterial());
+        ItemMeta ver = con.getItemMeta();
+        ver.setDisplayName(configuredSonic.getConversion().getName());
+        ver.setCustomModelData(configuredSonic.getConversion().getCustomModelData());
+        con.setItemMeta(ver);
     }
 
     private void toggleOption(ItemStack option) {
@@ -196,6 +202,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
                         case "Pickup Arrows Upgrade" -> configuredSonic.setArrow(SonicConfig.ENABLED);
                         case "Knockback Upgrade" -> configuredSonic.setKnockback(SonicConfig.ENABLED);
                         case "Brush Upgrade" -> configuredSonic.setBrush(SonicConfig.ENABLED);
+                        case "Conversion Upgrade" -> configuredSonic.setConversion(SonicConfig.ENABLED);
                         default -> {
                         }
                     }
@@ -259,6 +266,11 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
             upgrades.add("Brush Upgrade");
         }
         configuredSonic.setBrush(SonicConfig.values()[bru]);
+        int con = getSonicConfig(27, view);
+        if (con == 1) {
+            upgrades.add("Conversion Upgrade");
+        }
+        configuredSonic.setBrush(SonicConfig.values()[bru]);
         sonics.put(player.getUniqueId(), configuredSonic);
         // prepare data for database insertion
         HashMap<String, Object> set = new HashMap<>();
@@ -313,6 +325,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
             int arrow = lore != null && lore.contains("Pickup Arrows Upgrade") ? 1 : 0;
             int knockback = lore != null && lore.contains("Knockback Upgrade") ? 1 : 0;
             int brush = lore != null && lore.contains("Brush Upgrade") ? 1 : 0;
+            int conversion = lore != null && lore.contains("Conversion Upgrade") ? 1 : 0;
             // create a new UUID
             UUID sonic_uuid = UUID.randomUUID();
             // set the UUID to the sonic
@@ -330,17 +343,18 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
             set.put("arrow", arrow);
             set.put("knockback", knockback);
             set.put("brush", brush);
+            set.put("conversion", conversion);
             set.put("sonic_uuid", sonic_uuid.toString());
             // insert into database
             int id = plugin.getQueryFactory().doSyncInsert("sonic", set);
-            // create  the configured sonic
-            return new ConfiguredSonic(id, uuid, bio, diamond, emerald, redstone, painter, ignite, arrow, knockback, brush, sonic_uuid);
+            // create the configured sonic
+            return new ConfiguredSonic(id, uuid, bio, diamond, emerald, redstone, painter, ignite, arrow, knockback, brush, conversion, sonic_uuid);
         }
         return null;
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onKeyMenuClose(InventoryCloseEvent event) {
+    public void onSonicConfiguratorMenuClose(InventoryCloseEvent event) {
         InventoryView view = event.getView();
         if (!view.getTitle().equals(ChatColor.DARK_RED + "Sonic Configurator")) {
             return;

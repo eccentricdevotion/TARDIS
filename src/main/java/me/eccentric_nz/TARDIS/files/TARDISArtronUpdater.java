@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.configuration.file.FileConfiguration;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.configuration.file.FileConfiguration;
 
 /**
  * @author eccentric_nz
@@ -69,6 +70,7 @@ public class TARDISArtronUpdater {
         integerOptions.put("sonic_generator.standard", 10);
         integerOptions.put("sonic_generator.bio", 10);
         integerOptions.put("sonic_generator.brush", 10);
+        integerOptions.put("sonic_generator.conversion", 10);
         integerOptions.put("sonic_generator.diamond", 10);
         integerOptions.put("sonic_generator.emerald", 10);
         integerOptions.put("sonic_generator.redstone", 10);
