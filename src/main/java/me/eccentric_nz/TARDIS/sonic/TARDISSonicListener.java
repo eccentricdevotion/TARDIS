@@ -176,6 +176,7 @@ public class TARDISSonicListener implements Listener {
                     if (converts.contains(block.getType()) && TARDISPermission.hasPermission(player, "tardis.sonic.conversion") && lore != null && lore.contains("Conversion Upgrade")) {
                         // convert to water added block i.e. CONCRETE_POWDER -> CONCRETE
                         TARDISSonicBlockConverter.transform(plugin, block, player);
+                        TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
                         return;
                     }
                     if (suspicious.contains(block.getType()) && TARDISPermission.hasPermission(player, "tardis.sonic.brush") && lore != null && lore.contains("Brush Upgrade")) {

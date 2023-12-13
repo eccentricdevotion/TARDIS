@@ -185,6 +185,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsInt.put("rooms_condenser_percent", "growth");
         firstsInt.put("scanner", "circuits.uses");
         firstsInt.put("sfx_volume", "preferences");
+        firstsInt.put("sonic_radius", "preferences");
         firstsInt.put("temporal", "circuits.uses");
         firstsInt.put("terminal_step", "travel");
         firstsInt.put("timeout", "travel");
