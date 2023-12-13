@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.schematic;
 
-import java.io.File;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.actions.*;
@@ -25,6 +24,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.io.File;
+import java.util.Locale;
 
 public class TARDISSchematicCommand implements CommandExecutor {
 
@@ -80,6 +82,9 @@ public class TARDISSchematicCommand implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("flowers")) {
                 return new SchematicFlowers().act(plugin, player);
+            }
+            if (args[0].equalsIgnoreCase("fixliquid")) {
+                return new SchematicLavaAndWater().act(plugin, player, "lava".equals(args[1].toLowerCase(Locale.ROOT)));
             }
             if (args.length < 2) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");

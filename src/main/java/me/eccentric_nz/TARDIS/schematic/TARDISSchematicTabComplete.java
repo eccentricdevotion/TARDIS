@@ -17,9 +17,6 @@
 package me.eccentric_nz.TARDIS.schematic;
 
 import com.google.common.collect.ImmutableList;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
@@ -33,13 +30,18 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * TabCompleter for /tardisschematic
  */
 public class TARDISSchematicTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("load", "paste", "save", "clear", "replace", "convert", "remove", "flowers");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("load", "paste", "save", "clear", "replace", "convert", "remove", "flowers", "fixliquid");
     private final List<String> LOAD_SUBS = ImmutableList.of("console", "room", "structure", "user");
+    private final List<String> LIQUID_SUBS = ImmutableList.of("water", "lava");
     private final List<String> CONSOLE_SUBS = new ArrayList<>(Consoles.getBY_PERMS().keySet());
     private final List<String> ROOM_SUBS = new ArrayList<>();
     private final List<String> STRUCTURE_SUBS = new ArrayList<>();
@@ -89,6 +91,8 @@ public class TARDISSchematicTabComplete extends TARDISCompleter implements TabCo
             return partial(args[1], MAT_SUBS);
         } else if (args.length == 2 && args[0].equalsIgnoreCase("convert")) {
             return partial(args[1], LIGHT_SUBS);
+        } else if (args.length == 2 && args[0].equalsIgnoreCase("liquid")) {
+            return partial(args[1], LIQUID_SUBS);
         } else if (args.length == 3 && args[0].equalsIgnoreCase("load")) {
             switch (args[1].toLowerCase()) {
                 case "console" -> {
