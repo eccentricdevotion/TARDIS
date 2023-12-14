@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -31,6 +29,9 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -123,11 +124,11 @@ class TARDISEnterCommand {
                 COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                 if (!innerD.equals(d)) {
                     switch (d) {
-                        case NORTH -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[0][innerD.ordinal()];
-                        case WEST -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[1][innerD.ordinal()];
-                        case SOUTH -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[2][innerD.ordinal()];
+                        case NORTH -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[0][innerD.ordinal() / 2];
+                        case WEST -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[1][innerD.ordinal() / 2];
+                        case SOUTH -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[2][innerD.ordinal() / 2];
                         // EAST
-                        default -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[3][innerD.ordinal()];
+                        default -> yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw[3][innerD.ordinal() / 2];
                     }
                 }
                 tardis_loc.setYaw(yaw);
