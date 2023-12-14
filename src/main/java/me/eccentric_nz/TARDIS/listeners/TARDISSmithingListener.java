@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.sonic.SonicUpgradeData;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -29,38 +30,9 @@ import org.bukkit.inventory.SmithingInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class TARDISSmithingListener implements Listener {
-
-    private final HashMap<String, String> upgrades = new HashMap<>();
-    private final HashMap<Integer, String> customModelData = new HashMap<>();
-
-    public TARDISSmithingListener() {
-        upgrades.put("Admin Upgrade", "admin");
-        upgrades.put("Bio-scanner Upgrade", "bio");
-        upgrades.put("Redstone Upgrade", "redstone");
-        upgrades.put("Diamond Upgrade", "diamond");
-        upgrades.put("Emerald Upgrade", "emerald");
-        upgrades.put("Painter Upgrade", "paint");
-        upgrades.put("Ignite Upgrade", "ignite");
-        upgrades.put("Pickup Arrows Upgrade", "arrow");
-        upgrades.put("Knockback Upgrade", "knockback");
-        upgrades.put("Brush Upgrade", "brush");
-        upgrades.put("Conversion Upgrade", "conversion");
-        customModelData.put(10001968, "Admin Upgrade");
-        customModelData.put(10001969, "Bio-scanner Upgrade");
-        customModelData.put(10001970, "Redstone Upgrade");
-        customModelData.put(10001971, "Diamond Upgrade");
-        customModelData.put(10001972, "Emerald Upgrade");
-        customModelData.put(10001979, "Painter Upgrade");
-        customModelData.put(10001982, "Ignite Upgrade");
-        customModelData.put(10001984, "Pickup Arrows Upgrade");
-        customModelData.put(10001986, "Knockback Upgrade");
-        customModelData.put(10001987, "Brush Upgrade");
-        customModelData.put(10001988, "Conversion Upgrade");
-    }
 
     /**
      * This event will check the smithing result to see if it is a sonic upgrade. If it is, then the current sonic
@@ -84,11 +56,11 @@ public class TARDISSmithingListener implements Listener {
                 ItemStack glowstone = inventory.getItem(2);
                 if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
                     ItemMeta rm = glowstone.getItemMeta();
-                    upgrade = customModelData.get(rm.getCustomModelData());
+                    upgrade = SonicUpgradeData.customModelData.get(rm.getCustomModelData());
                     found = true;
                 }
                 // is it a valid upgrade?
-                if (!found || !upgrades.containsKey(upgrade)) {
+                if (!found || !SonicUpgradeData.upgrades.containsKey(upgrade)) {
                     event.setResult(null);
                     return;
                 }
@@ -99,7 +71,7 @@ public class TARDISSmithingListener implements Listener {
                     p = (Player) human;
                 }
                 // make sure the player has permission
-                if (p == null || !TARDISPermission.hasPermission(p, "tardis.sonic." + upgrades.get(upgrade))) {
+                if (p == null || !TARDISPermission.hasPermission(p, "tardis.sonic." + SonicUpgradeData.upgrades.get(upgrade))) {
                     event.setResult(null);
                     return;
                 }
