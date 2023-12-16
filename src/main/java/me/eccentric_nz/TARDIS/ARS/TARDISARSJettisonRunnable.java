@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
@@ -28,6 +26,9 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Performs Architectural Reconfiguration System room jettisons.
@@ -146,7 +147,7 @@ class TARDISARSJettisonRunnable implements Runnable {
                 }
             }
             // remove mob farming locations
-            if (r.equals("FARM") || r.equals("APIARY") || r.equals("GEODE") || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("MANGROVE") || r.equals("RAIL") || r.equals("STABLE") || r.equals("STALL") || r.equals("VILLAGE") || r.equals("BIRDCAGE") || r.equals("AQUARIUM") || r.equals("BAMBOO")) {
+            if (r.equals("APIARY") || r.equals("AQUARIUM") || r.equals("BAMBOO") || r.equals("BIRDCAGE") || r.equals("FARM") || r.equals("GEODE") || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("IISTUBIL") || r.equals("LAVA") || r.equals("MANGROVE") || r.equals("PEN") || r.equals("STABLE") || r.equals("STALL") || r.equals("VILLAGE")) {
                 HashMap<String, Object> wheref = new HashMap<>();
                 wheref.put("tardis_id", id);
                 HashMap<String, Object> setf = new HashMap<>();

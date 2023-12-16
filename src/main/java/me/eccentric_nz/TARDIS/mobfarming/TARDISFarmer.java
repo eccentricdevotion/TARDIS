@@ -124,13 +124,13 @@ public class TARDISFarmer {
                 String geode = farming.getGeode();
                 String hutch = farming.getHutch();
                 String igloo = farming.getIgloo();
+                String iistubil = farming.getIistubil();
+                String lava = farming.getLava();
+                String mangrove = farming.getMangrove();
+                String pen = farming.getPen();
                 String stable = farming.getStable();
                 String stall = farming.getStall();
                 String village = farming.getVillage();
-                String mangrove = farming.getMangrove();
-                String iistubil = farming.getIistubil();
-                String pen = farming.getPen();
-                String lava = farming.getLava();
                 // collate the mobs
                 for (Entity entity : mobs) {
                     switch (entity.getType()) {
