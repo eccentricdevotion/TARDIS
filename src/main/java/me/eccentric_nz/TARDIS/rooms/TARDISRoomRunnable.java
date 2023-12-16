@@ -623,7 +623,7 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 // set stable
                 if (type.equals(Material.SOUL_SAND) &&
-                        (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") ||
+                        (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("LAVA") ||
                                 room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO") ||
                                 room.equals("IISTUBIL") || room.equals("MANGROVE") || room.equals("PEN") || room.equals("STALL") ||
                                 room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE") || room.equals("GARDEN"))) {
@@ -659,6 +659,7 @@ public class TARDISRoomRunnable implements Runnable {
                         case GEODE -> data = Material.CLAY.createBlockData();
                         case IGLOO -> data = Material.PACKED_ICE.createBlockData();
                         case IISTUBIL -> data = Material.TERRACOTTA.createBlockData();
+                        case LAVA -> data = Material.NETHERRACK.createBlockData();
                         case MANGROVE -> data = TARDISConstants.WATER;
                         case PEN -> data = Material.MOSS_BLOCK.createBlockData();
                         case ZERO -> data = Material.PINK_CARPET.createBlockData();

@@ -148,6 +148,7 @@ class TARDISSQLiteDatabaseUpdater {
         farmingupdates.add("apiary TEXT DEFAULT ''");
         farmingupdates.add("bamboo TEXT DEFAULT ''");
         farmingupdates.add("geode TEXT DEFAULT ''");
+        farmingupdates.add("lava TEXT DEFAULT ''");
         farmingupdates.add("mangrove TEXT DEFAULT ''");
         farmingupdates.add("iistubil TEXT DEFAULT ''");
         farmingupdates.add("pen TEXT DEFAULT ''");

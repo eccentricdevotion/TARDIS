@@ -95,6 +95,7 @@ public class TARDISFarmer {
             List<TARDISMooshroom> mooshrooms = new ArrayList<>();
             List<TARDISMob> sheep = new ArrayList<>();
             List<TARDISMob> sniffers = new ArrayList<>();
+            List<TARDISMob> striders = new ArrayList<>();
             List<TARDISPet> parrots = new ArrayList<>();
             List<TARDISPig> pigs = new ArrayList<>();
             List<TARDISMob> polarbears = new ArrayList<>();
@@ -129,6 +130,7 @@ public class TARDISFarmer {
                 String mangrove = farming.getMangrove();
                 String iistubil = farming.getIistubil();
                 String pen = farming.getPen();
+                String lava = farming.getLava();
                 // collate the mobs
                 for (Entity entity : mobs) {
                     switch (entity.getType()) {
@@ -462,6 +464,21 @@ public class TARDISFarmer {
                             }
                             if (taf != null) {
                                 taf.doAchievement("SNIFFER");
+                            }
+                            farmtotal++;
+                        }
+                        case STRIDER -> {
+                            Strider strider = (Strider) entity;
+                            TARDISMob tmsstrider = new TARDISMob();
+                            tmsstrider.setAge(strider.getAge());
+                            tmsstrider.setBaby(!strider.isAdult());
+                            tmsstrider.setName(entity.getCustomName());
+                            striders.add(tmsstrider);
+                            if (!lava.isEmpty() || (lava.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+                                entity.remove();
+                            }
+                            if (taf != null) {
+                                taf.doAchievement("STRIDER");
                             }
                             farmtotal++;
                         }
@@ -1041,6 +1058,35 @@ public class TARDISFarmer {
                     p.updateInventory();
                 } else if (!sniffers.isEmpty()) {
                     plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_PEN");
+                }
+                if (!lava.isEmpty() && !striders.isEmpty()) {
+                    // get location of strider lava room
+                    World world = TARDISStaticLocationGetters.getWorldFromSplitString(lava);
+                    Location l_room = TARDISStaticLocationGetters.getSpawnLocationFromDB(lava);
+                    while (!world.getChunkAt(l_room).isLoaded()) {
+                        world.getChunkAt(l_room).load();
+                    }
+                    striders.forEach((e) -> {
+                        plugin.setTardisSpawn(true);
+                        Entity stri = world.spawnEntity(l_room, EntityType.STRIDER);
+                        Strider der = (Strider) stri;
+                        der.setAge(e.getAge());
+                        if (e.isBaby()) {
+                            der.setBaby();
+                        }
+                        String name = e.getName();
+                        if (name != null && !name.isEmpty()) {
+                            der.setCustomName(name);
+                        }
+                        der.setRemoveWhenFarAway(false);
+                    });
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && !striders.isEmpty()) {
+                    Inventory inv = p.getInventory();
+                    ItemStack is = new ItemStack(Material.STRIDER_SPAWN_EGG, striders.size());
+                    inv.addItem(is);
+                    p.updateInventory();
+                } else if (!striders.isEmpty()) {
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_LAVA");
                 }
                 if (!iistubil.isEmpty() && !camels.isEmpty()) {
                     // get location of camel iistubil room

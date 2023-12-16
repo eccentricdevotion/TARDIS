@@ -80,6 +80,8 @@ public class TARDISRoomsUpdater {
         booleanOptions.put("rooms.IISTUBIL.user", false);
         booleanOptions.put("rooms.KITCHEN.enabled", true);
         booleanOptions.put("rooms.KITCHEN.user", false);
+        booleanOptions.put("rooms.LAVA.enabled", true);
+        booleanOptions.put("rooms.LAVA.user", false);
         booleanOptions.put("rooms.LAZARUS.enabled", true);
         booleanOptions.put("rooms.LAZARUS.user", false);
         booleanOptions.put("rooms.LIBRARY.enabled", true);
@@ -165,6 +167,8 @@ public class TARDISRoomsUpdater {
         integerOptions.put("rooms.IISTUBIL.offset", -4);
         integerOptions.put("rooms.KITCHEN.cost", 450);
         integerOptions.put("rooms.KITCHEN.offset", -4);
+        integerOptions.put("rooms.LAVA.cost", 550);
+        integerOptions.put("rooms.LAVA.offset", -4);
         integerOptions.put("rooms.LAZARUS.cost", 750);
         integerOptions.put("rooms.LAZARUS.offset", -4);
         integerOptions.put("rooms.LIBRARY.cost", 550);
@@ -230,6 +234,7 @@ public class TARDISRoomsUpdater {
         stringOptions.put("rooms.IGLOO.seed", "PACKED_ICE");
         stringOptions.put("rooms.IISTUBIL.seed", "WHITE_GLAZED_TERRACOTTA");
         stringOptions.put("rooms.KITCHEN.seed", "PUMPKIN");
+        stringOptions.put("rooms.LAVA.seed", "MAGMA_BLOCK");
         stringOptions.put("rooms.LAZARUS.seed", "FURNACE");
         stringOptions.put("rooms.LIBRARY.seed", "ENCHANTMENT_TABLE");
         stringOptions.put("rooms.MANGROVE.seed", "MUDDY_MANGROVE_ROOTS");

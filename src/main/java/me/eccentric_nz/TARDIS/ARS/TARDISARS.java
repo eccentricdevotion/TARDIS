@@ -45,6 +45,7 @@ public enum TARDISARS implements ARS {
     IGLOO("PACKED_ICE", "Igloo", 1),
     IISTUBIL("WHITE_GLAZED_TERRACOTTA", "Camel Stable", 1),
     KITCHEN("PUMPKIN", "Kitchen", 1),
+    LAVA("MAGMA_BLOCK", "Lava", 1),
     LAZARUS("FURNACE", "Genetic Manipulator", 1),
     LIBRARY("ENCHANTING_TABLE", "Library", 1),
     MANGROVE("MUDDY_MANGROVE_ROOTS", "Mangrove", 1),

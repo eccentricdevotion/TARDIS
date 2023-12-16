@@ -32,12 +32,13 @@ public class Farm {
     private final String igloo;
     private final String iistubil;
     private final String mangrove;
+    private final String lava;
     private final String pen;
     private final String stable;
     private final String stall;
     private final String village;
 
-    public Farm(int tardis_id, String apiary, String aquarium, String bamboo, String birdcage, String farm, String geode, String hutch, String igloo, String iistubil, String mangrove, String pen, String stable, String stall, String village) {
+    public Farm(int tardis_id, String apiary, String aquarium, String bamboo, String birdcage, String farm, String geode, String hutch, String igloo, String iistubil, String lava, String mangrove, String pen, String stable, String stall, String village) {
         this.tardis_id = tardis_id;
         this.apiary = apiary;
         this.aquarium = aquarium;
@@ -48,6 +49,7 @@ public class Farm {
         this.hutch = hutch;
         this.igloo = igloo;
         this.iistubil = iistubil;
+        this.lava = lava;
         this.mangrove = mangrove;
         this.pen = pen;
         this.stable = stable;
@@ -152,6 +154,16 @@ public class Farm {
      */
     public String getIistubil() {
         return iistubil;
+    }
+
+    /**
+     * Returns a String representation of the Lava room srtrider spawn location in this TARDIS. It is in the form of
+     * {@code World name:x:y:z}
+     *
+     * @return the Lava room strider spawn location string, or an empty string if the room does not exist
+     */
+    public String getLava() {
+        return lava;
     }
 
     /**

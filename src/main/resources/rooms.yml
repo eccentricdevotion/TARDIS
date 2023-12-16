@@ -72,11 +72,11 @@ rooms:
     offset: -4
     seed: MUDDY_MANGROVE_ROOTS
     user: false
-  PEN:
+  LAVA:
     enabled: true
     cost: 550
     offset: -4
-    seed: MOSS_BLOCK
+    seed: MAGMA_BLOCK
     user: false
   MAZE:
     enabled: true
@@ -89,6 +89,12 @@ rooms:
     cost: 450
     offset: -4
     seed: BLACKSTONE
+    user: false
+  PEN:
+    enabled: true
+    cost: 550
+    offset: -4
+    seed: MOSS_BLOCK
     user: false
   POOL:
     enabled: true

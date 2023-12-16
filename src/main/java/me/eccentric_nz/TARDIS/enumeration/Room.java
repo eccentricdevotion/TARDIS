@@ -42,6 +42,7 @@ public enum Room {
     IISTUBIL,
     KITCHEN,
     LAZARUS,
+    LAVA,
     LIBRARY,
     MANGROVE,
     MAZE,

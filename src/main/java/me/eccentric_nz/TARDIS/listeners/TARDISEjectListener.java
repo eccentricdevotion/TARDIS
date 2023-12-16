@@ -330,6 +330,19 @@ public class TARDISEjectListener implements Listener {
                 }
                 ent.remove();
             }
+            case STRIDER -> {
+                Strider s = (Strider) ent;
+                Strider strider = (Strider) l.getWorld().spawnEntity(l, EntityType.STRIDER);
+                strider.setTicksLived(s.getTicksLived());
+                if ((!s.isAdult())) {
+                    strider.setBaby();
+                }
+                String stridername = ent.getCustomName();
+                if (stridername != null && !stridername.isEmpty()) {
+                    strider.setCustomName(stridername);
+                }
+                ent.remove();
+            }
             case RABBIT -> {
                 Rabbit r = (Rabbit) ent;
                 Rabbit bunny = (Rabbit) l.getWorld().spawnEntity(l, EntityType.RABBIT);

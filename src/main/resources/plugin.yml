@@ -427,14 +427,17 @@ permissions:
       tardis.room.harmony: true
       tardis.room.hutch: true
       tardis.room.igloo: true
+      tardis.room.iistubil: true
       tardis.room.kitchen: true
       tardis.room.lazarus: true
       tardis.room.library: true
+      tardis.room.lava: true
       tardis.room.mangrove: true
       tardis.room.maze: true
       tardis.room.mushroom: true
       tardis.room.nether: true
       tardis.room.passage: true
+      tardis.room.pen: true
       tardis.room.pool: true
       tardis.room.rail: true
       tardis.room.renderer: true
