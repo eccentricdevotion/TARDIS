@@ -6,11 +6,12 @@
 2. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
 3. New Mob rooms [#760](https://github.com/eccentricdevotion/TARDIS/issues/760)
+   - add spawn locations to Updateable blocks
 4. Deep space [#748](https://github.com/eccentricdevotion/TARDIS/issues/748)
 5. Animated models for player disguises
 6. Sonic Blaster
 7. New sonic screwdriver functionality?
-    - Concrete powder -> Concrete [#765](https://github.com/eccentricdevotion/TARDIS/issues/765)
+    - ?
 8. Amy Pond's Sonic Probe + Missy's Sonic Umbrella
 9. Add allays as TARDIS pets
 

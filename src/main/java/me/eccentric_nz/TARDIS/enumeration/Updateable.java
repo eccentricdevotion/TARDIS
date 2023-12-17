@@ -73,7 +73,7 @@ public enum Updateable {
     TERMINAL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "Destination Terminal"),
     THROTTLE(true, true, new RecipeChoice.MaterialChoice(Material.REPEATER), TARDISUpdateableCategory.CONTROLS, "Space Time Throttle"),
     TOGGLE_WOOL(true, true, TARDISUpdateableCategory.OTHERS, "Toggle Black Wool behind door"),
-    VAULT(false, false, new RecipeChoice.MaterialChoice(Material.CHEST, Material.TRAPPED_CHEST), TARDISUpdateableCategory.LOCATIONS, "Vault room drop chest"),
+    VAULT(false, false, new RecipeChoice.MaterialChoice(Material.CHEST, Material.TRAPPED_CHEST, Material.BARREL), TARDISUpdateableCategory.LOCATIONS, "Vault room drop chest"),
     VILLAGE(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Village room"),
     WEATHER(true, true, TARDISUpdateableCategory.INTERFACES, "TARDIS Weather Menu"),
     WORLD_REPEATER(false, true, new RecipeChoice.MaterialChoice(Material.REPEATER), TARDISUpdateableCategory.CONTROLS, "World Type selector"),

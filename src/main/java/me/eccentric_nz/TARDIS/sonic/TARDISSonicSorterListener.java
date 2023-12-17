@@ -21,9 +21,6 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -31,6 +28,7 @@ import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISTownyChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -44,6 +42,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Borrowed from the SimpleSort plugin.
  * <a href="http://dev.bukkit.org/bukkit-plugins/simplesort/">...</a>
@@ -55,30 +57,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISSonicSorterListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Material> sortables = new ArrayList<>();
+    private final Set<Material> sortables = new HashSet<>();
 
     public TARDISSonicSorterListener(TARDIS plugin) {
         this.plugin = plugin;
         sortables.add(Material.BARREL);
-        sortables.add(Material.BLACK_SHULKER_BOX);
-        sortables.add(Material.BLUE_SHULKER_BOX);
-        sortables.add(Material.BROWN_SHULKER_BOX);
         sortables.add(Material.CHEST);
-        sortables.add(Material.CYAN_SHULKER_BOX);
-        sortables.add(Material.GRAY_SHULKER_BOX);
-        sortables.add(Material.GREEN_SHULKER_BOX);
-        sortables.add(Material.LIGHT_BLUE_SHULKER_BOX);
-        sortables.add(Material.LIGHT_GRAY_SHULKER_BOX);
-        sortables.add(Material.LIME_SHULKER_BOX);
-        sortables.add(Material.MAGENTA_SHULKER_BOX);
-        sortables.add(Material.ORANGE_SHULKER_BOX);
-        sortables.add(Material.PINK_SHULKER_BOX);
-        sortables.add(Material.PURPLE_SHULKER_BOX);
-        sortables.add(Material.RED_SHULKER_BOX);
-        sortables.add(Material.SHULKER_BOX);
         sortables.add(Material.TRAPPED_CHEST);
-        sortables.add(Material.WHITE_SHULKER_BOX);
-        sortables.add(Material.YELLOW_SHULKER_BOX);
+        sortables.addAll(Tag.SHULKER_BOXES.getValues());
     }
 
     private static ItemStack[] sortInventory(ItemStack[] items) {

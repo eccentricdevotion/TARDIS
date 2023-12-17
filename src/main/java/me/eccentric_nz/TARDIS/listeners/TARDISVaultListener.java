@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetVault;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicSorterListener;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.Container;
 import org.bukkit.block.data.type.Chest;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -35,12 +35,22 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class TARDISVaultListener implements Listener {
 
     private final TARDIS plugin;
+    private final Set<Material> containers = new HashSet<>();
 
     public TARDISVaultListener(TARDIS plugin) {
         this.plugin = plugin;
+        containers.add(Material.BARREL);
+        containers.add(Material.CHEST);
+        containers.add(Material.TRAPPED_CHEST);
+        containers.addAll(Tag.SHULKER_BOXES.getValues());
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -48,57 +58,62 @@ public class TARDISVaultListener implements Listener {
     public void onVaultDropChestClose(InventoryCloseEvent event) {
         Inventory inv = event.getInventory();
         InventoryHolder holder = inv.getHolder();
-        if (holder instanceof org.bukkit.block.Chest chest) {
-            Location l = chest.getLocation();
-            if (plugin.getUtils().inTARDISWorld(l)) {
-                String loc = l.toString();
-                // check is drop chest
-                ResultSetVault rs = new ResultSetVault(plugin, loc);
-                if (!rs.resultSet()) {
-                    return;
-                }
-                // make a list of chest locations
-                List<String> chestLocations = new ArrayList<>();
-                chestLocations.add(loc);
-                // sort contents
-                TARDISSonicSorterListener.sortInventory(inv);
-                World w = chest.getWorld();
-                // get vault dimensions
-                int sx = rs.getX();
-                int sy = rs.getY();
-                int sz = rs.getZ();
-                // loop through vault blocks
-                for (int y = sy; y < (sy + 16); y++) {
-                    for (int x = sx; x < (sx + 16); x++) {
-                        for (int z = sz; z < (sz + 16); z++) {
-                            // get the block
-                            Block b = w.getBlockAt(x, y, z);
-                            String blocation = b.getLocation().toString();
-                            // check if it is a chest (but not the drop chest)
-                            if ((b.getType().equals(Material.CHEST) || b.getType().equals(Material.TRAPPED_CHEST)) && !chestLocations.contains(blocation)) {
-                                org.bukkit.block.Chest c = (org.bukkit.block.Chest) b.getState();
-                                Chest chestdata = (Chest) c.getBlockData();
-                                Chest.Type chestType = chestdata.getType();
-                                // is it a double chest
-                                if (chestType.equals(Chest.Type.LEFT)) {
-                                    switch (chestdata.getFacing()) {
-                                        case WEST -> chestLocations.add(b.getRelative(BlockFace.NORTH).getLocation().toString());
-                                        case SOUTH -> chestLocations.add(b.getRelative(BlockFace.WEST).getLocation().toString());
-                                        case EAST -> chestLocations.add(b.getRelative(BlockFace.SOUTH).getLocation().toString());
-                                        // NORTH
-                                        default -> chestLocations.add(b.getRelative(BlockFace.EAST).getLocation().toString());
-                                    }
-                                } else if (chestType.equals(Chest.Type.RIGHT)) {
-                                    switch (chestdata.getFacing()) {
-                                        case WEST -> chestLocations.add(b.getRelative(BlockFace.SOUTH).getLocation().toString());
-                                        case SOUTH -> chestLocations.add(b.getRelative(BlockFace.EAST).getLocation().toString());
-                                        case EAST -> chestLocations.add(b.getRelative(BlockFace.NORTH).getLocation().toString());
-                                        // NORTH
-                                        default -> chestLocations.add(b.getRelative(BlockFace.WEST).getLocation().toString());
+        if (holder instanceof Container container) {
+            Location l = container.getLocation();
+            if (!plugin.getUtils().inTARDISWorld(l)) {
+                return;
+            }
+            String loc = l.toString();
+            // check is drop chest
+            ResultSetVault rs = new ResultSetVault(plugin, loc);
+            if (!rs.resultSet()) {
+                return;
+            }
+            // make a list of container locations
+            Set<String> containerLocations = new HashSet<>();
+            containerLocations.add(loc);
+            // sort contents
+            TARDISSonicSorterListener.sortInventory(inv);
+            World w = container.getWorld();
+            // get vault dimensions
+            int sx = rs.getX();
+            int sy = rs.getY();
+            int sz = rs.getZ();
+            // loop through vault blocks
+            for (int y = sy; y < (sy + 16); y++) {
+                for (int x = sx; x < (sx + 16); x++) {
+                    for (int z = sz; z < (sz + 16); z++) {
+                        // get the block
+                        Block b = w.getBlockAt(x, y, z);
+                        String blocation = b.getLocation().toString();
+                        // check if it is a container (but not the drop chest)
+                        if (!containerLocations.contains(blocation)) {
+                            if (containers.contains(b.getType())) {
+                                Container c = (Container) b.getState();
+                                if (b.getType().equals(Material.CHEST) || b.getType().equals(Material.TRAPPED_CHEST)) {
+                                    Chest chestdata = (Chest) b.getBlockData();
+                                    Chest.Type chestType = chestdata.getType();
+                                    // is it a double chest
+                                    if (chestType.equals(Chest.Type.LEFT)) {
+                                        switch (chestdata.getFacing()) {
+                                            case WEST -> containerLocations.add(b.getRelative(BlockFace.NORTH).getLocation().toString());
+                                            case SOUTH -> containerLocations.add(b.getRelative(BlockFace.WEST).getLocation().toString());
+                                            case EAST -> containerLocations.add(b.getRelative(BlockFace.SOUTH).getLocation().toString());
+                                            // NORTH
+                                            default -> containerLocations.add(b.getRelative(BlockFace.EAST).getLocation().toString());
+                                        }
+                                    } else if (chestType.equals(Chest.Type.RIGHT)) {
+                                        switch (chestdata.getFacing()) {
+                                            case WEST -> containerLocations.add(b.getRelative(BlockFace.SOUTH).getLocation().toString());
+                                            case SOUTH -> containerLocations.add(b.getRelative(BlockFace.EAST).getLocation().toString());
+                                            case EAST -> containerLocations.add(b.getRelative(BlockFace.NORTH).getLocation().toString());
+                                            // NORTH
+                                            default -> containerLocations.add(b.getRelative(BlockFace.WEST).getLocation().toString());
+                                        }
                                     }
                                 }
-                                chestLocations.add(blocation);
-                                // get chest contents
+                                containerLocations.add(blocation);
+                                // get container contents
                                 Inventory cinv = c.getInventory();
                                 // make sure there is a free slot
                                 if (cinv.firstEmpty() != -1) {
@@ -121,9 +136,9 @@ public class TARDISVaultListener implements Listener {
                                             ItemStack get = inv.getItem(slot);
                                             // remove the stack from the drop chest
                                             inv.setItem(slot, null);
-                                            // put it in the chest
+                                            // put it in the container
                                             cinv.setItem(cinv.firstEmpty(), get);
-                                            // sort the chest
+                                            // sort the container
                                             TARDISSonicSorterListener.sortInventory(cinv);
                                             // get any other stacks
                                             slot = inv.first(m);
