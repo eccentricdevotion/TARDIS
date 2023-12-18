@@ -623,7 +623,7 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 // set stable
                 if (type.equals(Material.SOUL_SAND) &&
-                        (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("LAVA") ||
+                        (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("LAVA") || room.equals("ALLAY") ||
                                 room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO") ||
                                 room.equals("IISTUBIL") || room.equals("MANGROVE") || room.equals("PEN") || room.equals("STALL") ||
                                 room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE") || room.equals("GARDEN"))) {
@@ -653,6 +653,7 @@ public class TARDISRoomRunnable implements Runnable {
                     }
                     // replace with correct block
                     switch (Room.valueOf(room)) {
+                        case ALLAY -> data = Material.LIGHT_GRAY_WOOL.createBlockData();
                         case VILLAGE -> data = Material.COBBLESTONE.createBlockData();
                         case HUTCH, STABLE, STALL, MAZE -> data = Material.GRASS_BLOCK.createBlockData();
                         case BAMBOO, BIRDCAGE -> data = Material.PODZOL.createBlockData();

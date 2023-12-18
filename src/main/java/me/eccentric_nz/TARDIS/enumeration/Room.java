@@ -21,6 +21,7 @@ package me.eccentric_nz.TARDIS.enumeration;
  */
 public enum Room {
 
+    ALLAY,
     ANTIGRAVITY,
     APIARY,
     AQUARIUM,

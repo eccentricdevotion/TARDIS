@@ -41,6 +41,7 @@ public class TARDISUpdateableChecker {
     private final String tardis_block;
 
     private final Set<Updateable> mustGrowRoom = Sets.newHashSet(
+            Updateable.ALLAY,
             Updateable.BAMBOO,
             Updateable.BIRDCAGE,
             Updateable.FARM,
@@ -94,6 +95,7 @@ public class TARDISUpdateableChecker {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_TEMPORAL");
             return false;
         }
+        boolean hasAllay = false;
         boolean hasBamboo = false;
         boolean hasBirdcage = false;
         boolean hasFarm = false;
@@ -119,6 +121,7 @@ public class TARDISUpdateableChecker {
                     for (String[] row : level) {
                         for (String col : row) {
                             switch (col) {
+                                case "LIGHT_BLUE_CONCRETE" -> hasAllay = true;
                                 case "BAMBOO" -> hasBamboo = true;
                                 case "YELLOW_GLAZED_TERRACOTTA" -> hasBirdcage = true;
                                 case "DIRT" -> hasFarm = true;
@@ -165,7 +168,7 @@ public class TARDISUpdateableChecker {
         if (updateable.equals(Updateable.FARM) || updateable.equals(Updateable.IGLOO) || updateable.equals(Updateable.STABLE)
                 || updateable.equals(Updateable.STALL) || updateable.equals(Updateable.VILLAGE) || updateable.equals(Updateable.IISTUBIL)
                 || updateable.equals(Updateable.HUTCH) || updateable.equals(Updateable.LAVA) || updateable.equals(Updateable.PEN)
-                || updateable.equals(Updateable.BAMBOO) || updateable.equals(Updateable.BIRDCAGE)) {
+                || updateable.equals(Updateable.BAMBOO) || updateable.equals(Updateable.BIRDCAGE) || updateable.equals(Updateable.ALLAY)) {
             if (!TARDISPermission.hasPermission(player, "tardis.farm")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_NO_PERM", tardis_block);
                 return false;
@@ -175,6 +178,10 @@ public class TARDISUpdateableChecker {
             if (rsf.resultSet()) {
                 Farm farming = rsf.getFarming();
                 if (updateable.equals(Updateable.FARM) && farming.getFarm().isEmpty() && !hasFarm) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
+                    return false;
+                }
+                if (updateable.equals(Updateable.ALLAY) && farming.getAllay().isEmpty() && !hasAllay) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }

@@ -28,6 +28,7 @@ import java.util.List;
 public enum Updateable {
 
     ADVANCED(true, true, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.JUKEBOX, Material.BARRIER), me.eccentric_nz.TARDIS.update.TARDISUpdateableCategory.INTERFACES, "TARDIS Advanced Console"),
+    ALLAY(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Allay room"),
     ARS(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), me.eccentric_nz.TARDIS.update.TARDISUpdateableCategory.INTERFACES, "Architectural Reconfiguration System"),
     ARTRON(true, true, TARDISUpdateableCategory.CONTROLS, "Artron Energy Capacitor button"),
     BACK(true, true, TARDISUpdateableCategory.CONTROLS, "Previous Location button"),

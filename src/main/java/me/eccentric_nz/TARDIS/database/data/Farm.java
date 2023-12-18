@@ -22,6 +22,7 @@ package me.eccentric_nz.TARDIS.database.data;
 public class Farm {
 
     private final int tardis_id;
+    private final String allay;
     private final String apiary;
     private final String aquarium;
     private final String bamboo;
@@ -38,9 +39,10 @@ public class Farm {
     private final String stall;
     private final String village;
 
-    public Farm(int tardis_id, String apiary, String aquarium, String bamboo, String birdcage, String farm, String geode, String hutch, String igloo, String iistubil, String lava, String mangrove, String pen, String stable, String stall, String village) {
+    public Farm(int tardis_id, String allay, String apiary, String aquarium, String bamboo, String birdcage, String farm, String geode, String hutch, String igloo, String iistubil, String lava, String mangrove, String pen, String stable, String stall, String village) {
         this.tardis_id = tardis_id;
         this.apiary = apiary;
+        this.allay = allay;
         this.aquarium = aquarium;
         this.bamboo = bamboo;
         this.birdcage = birdcage;
@@ -64,6 +66,16 @@ public class Farm {
      */
     public int getTardis_id() {
         return tardis_id;
+    }
+
+    /**
+     * Returns a String representation of the Allay room spawn location in this TARDIS. It is in the form of {@code
+     * World name:x:y:z}
+     *
+     * @return the Allay room spawn location string, or an empty string if the room does not exist
+     */
+    public String getAllay() {
+        return allay;
     }
 
     /**

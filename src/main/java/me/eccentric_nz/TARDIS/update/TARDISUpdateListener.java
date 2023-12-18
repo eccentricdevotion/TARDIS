@@ -176,7 +176,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("beacon", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
                 }
-                case BAMBOO, BIRDCAGE, FARM, IGLOO, IISTUBIL, HUTCH, LAVA, PEN, STABLE, STALL, VILLAGE -> {
+                case ALLAY, BAMBOO, BIRDCAGE, FARM, IGLOO, IISTUBIL, HUTCH, LAVA, PEN, STABLE, STALL, VILLAGE -> {
                     set.put(updateable.getName(), blockLocStr);
                     plugin.getQueryFactory().doUpdate("farming", set, tid);
                 }
@@ -320,7 +320,8 @@ public class TARDISUpdateListener implements Listener {
                 }
                 case SMELT, FUEL -> new TARDISSmelterCommand(plugin).addDropChest(player, updateable, id, block);
                 case VAULT -> new TARDISVaultCommand(plugin).addDropChest(player, id, block);
-                default -> plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
+                default ->
+                        plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
             }
             if (!updateable.equals(Updateable.FUEL) && !updateable.equals(Updateable.SMELT)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_SET", updateable.getName());

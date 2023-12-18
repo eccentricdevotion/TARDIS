@@ -211,7 +211,7 @@ public class Main {
                                         bw.write(str);
                                     }
                                     case farming -> {
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("farm_id"), rs.getInt("tardis_id"), rs.getString("apiary"), rs.getString("aquarium"), rs.getString("bamboo"), rs.getString("birdcage"), rs.getString("farm"), rs.getString("geode"), rs.getString("hutch"), rs.getString("igloo"), rs.getString("iistubil"), rs.getString("lava"), rs.getString("mangrove"), rs.getString("pen"), rs.getString("stable"), rs.getString("stall"), rs.getString("village")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("farm_id"), rs.getInt("tardis_id"), rs.getString("allay"), rs.getString("apiary"), rs.getString("aquarium"), rs.getString("bamboo"), rs.getString("birdcage"), rs.getString("farm"), rs.getString("geode"), rs.getString("hutch"), rs.getString("igloo"), rs.getString("iistubil"), rs.getString("lava"), rs.getString("mangrove"), rs.getString("pen"), rs.getString("stable"), rs.getString("stall"), rs.getString("village")) + end;
                                         bw.write(str);
                                     }
                                     case flight -> {

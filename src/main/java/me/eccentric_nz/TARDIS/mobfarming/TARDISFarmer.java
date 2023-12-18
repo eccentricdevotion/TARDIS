@@ -35,6 +35,7 @@ import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.*;
+import org.bukkit.entity.memory.MemoryKey;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.LlamaInventory;
@@ -86,6 +87,7 @@ public class TARDISFarmer {
         List<TARDISPet> pets = new ArrayList<>();
         List<Follower> followers = new ArrayList<>();
         if (!mobs.isEmpty()) {
+            List<TARDISAllay> allays = new ArrayList<>();
             List<TARDISAxolotl> axolotls = new ArrayList<>();
             List<TARDISHorse> horses = new ArrayList<>();
             List<TARDISLlama> llamas = new ArrayList<>();
@@ -116,6 +118,7 @@ public class TARDISFarmer {
             ResultSetFarming rs = new ResultSetFarming(plugin, id);
             if (rs.resultSet()) {
                 Farm farming = rs.getFarming();
+                String allay = farming.getAllay();
                 String apiary = farming.getApiary();
                 String aquarium = farming.getAquarium();
                 String bamboo = farming.getBamboo();
@@ -142,6 +145,22 @@ public class TARDISFarmer {
                                     followers.add(fc.getFollower());
                                     entity.remove();
                                 }
+                            }
+                        }
+                        case ALLAY -> {
+                            Allay a = (Allay) entity;
+                            TARDISAllay tma = new TARDISAllay();
+                            tma.setCanDuplicate(a.canDuplicate());
+                            tma.setDuplicationCooldown(a.getDuplicationCooldown());
+                            tma.setLikedPlayer(a.getMemory(MemoryKey.LIKED_PLAYER));
+                            tma.setInventory(a.getInventory().getContents());
+                            tma.setName(entity.getCustomName());
+                            allays.add(tma);
+                            if (!allay.isEmpty() || (allay.isEmpty() && plugin.getConfig().getBoolean("allow.spawn_eggs"))) {
+                                entity.remove();
+                            }
+                            if (taf != null) {
+                                taf.doAchievement("ALLAY");
                             }
                         }
                         case AXOLOTL -> {
@@ -191,6 +210,7 @@ public class TARDISFarmer {
                             if (taf != null) {
                                 taf.doAchievement("CAMEL");
                             }
+                            farmtotal++;
                         }
                         case CHICKEN -> {
                             Chicken chicken = (Chicken) entity;
@@ -561,7 +581,10 @@ public class TARDISFarmer {
                         fish.setPatternColour(fbim.getPatternColor());
                     }
                 }
-                if (!bees.isEmpty() || farmtotal > 0 || !horses.isEmpty() || !villagers.isEmpty() || !pets.isEmpty() || !polarbears.isEmpty() || !llamas.isEmpty() || !parrots.isEmpty() || !pandas.isEmpty() || !rabbits.isEmpty() || fish != null || !followers.isEmpty() || !axolotls.isEmpty() || !frogs.isEmpty()) {
+                if (!bees.isEmpty() || farmtotal > 0 || !horses.isEmpty() || !villagers.isEmpty() || !pets.isEmpty()
+                        || !polarbears.isEmpty() || !llamas.isEmpty() || !parrots.isEmpty() || !pandas.isEmpty()
+                        || !rabbits.isEmpty() || fish != null || !followers.isEmpty() || !axolotls.isEmpty()
+                        || !frogs.isEmpty() || !allays.isEmpty() || !sniffers.isEmpty() || !striders.isEmpty() || !camels.isEmpty()) {
                     boolean canfarm = switch (plugin.getInvManager()) {
                         case MULTIVERSE -> TARDISMultiverseInventoriesChecker.checkWorldsCanShare(from, to);
                         default -> true;
@@ -571,6 +594,39 @@ public class TARDISFarmer {
                         plugin.getTrackerKeeper().getFarming().remove(p.getUniqueId());
                         return null;
                     }
+                }
+                if (!allay.isEmpty()) {
+                    // get location of allay room
+                    World world = TARDISStaticLocationGetters.getWorldFromSplitString(allay);
+                    if (!allays.isEmpty()) {
+                        Location house = TARDISStaticLocationGetters.getSpawnLocationFromDB(allay);
+                        while (!world.getChunkAt(house).isLoaded()) {
+                            world.getChunkAt(house).load();
+                        }
+                        allays.forEach((e) -> {
+                            plugin.setTardisSpawn(true);
+                            Allay a = (Allay) world.spawnEntity(house, EntityType.ALLAY);
+                            a.setCanDuplicate(e.canDuplicate());
+                            a.setDuplicationCooldown(e.getDuplicationCooldown());
+                            a.getInventory().setContents(e.getInventory());
+                            if (e.getLikedPlayer() != null) {
+                                a.setMemory(MemoryKey.LIKED_PLAYER, e.getLikedPlayer());
+                            }
+                            String name = e.getName();
+                            if (name != null && !name.isEmpty()) {
+                                a.setCustomName(name);
+                            }
+                            a.setRemoveWhenFarAway(false);
+                        });
+                    }
+                } else if (plugin.getConfig().getBoolean("allow.spawn_eggs") && !allays.isEmpty()) {
+                    // give spawn eggs
+                    Inventory inv = p.getInventory();
+                    ItemStack is = new ItemStack(Material.ALLAY_SPAWN_EGG, allays.size());
+                    inv.addItem(is);
+                    p.updateInventory();
+                } else if (!allays.isEmpty()) {
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_ALLAY");
                 }
                 if (!apiary.isEmpty()) {
                     // get location of apiary room

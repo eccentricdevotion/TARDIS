@@ -27,6 +27,7 @@ public enum BlueprintRoom {
 //    FARM("tardis.farm"), // can farm mobs into TARDIS - must have appropriate room
 //    LAZARUS("tardis.lazarus"), // can use the genetic manipulator
 
+    ALLAY("tardis.room.allay", BlueprintFeature.FARM),
     ANTIGRAVITY("tardis.room.antigravity"),
     APIARY("tardis.room.apiary", BlueprintFeature.FARM),
     AQUARIUM("tardis.room.aquarium", BlueprintFeature.FARM),

@@ -410,6 +410,7 @@ permissions:
   tardis.room:
     description: Allow players to grow extra rooms.
     children:
+      tardis.room.allay: true
       tardis.room.antigravity: true
       tardis.room.apiary: true
       tardis.room.aquarium: true
@@ -432,7 +433,6 @@ permissions:
       tardis.room.lava: true
       tardis.room.lazarus: true
       tardis.room.library: true
-      tardis.room.lava: true
       tardis.room.mangrove: true
       tardis.room.maze: true
       tardis.room.mushroom: true

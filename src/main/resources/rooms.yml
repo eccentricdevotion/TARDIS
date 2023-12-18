@@ -6,6 +6,12 @@ rooms:
     offset: -4
     seed: CLAY
     user: false
+  ALLAY:
+    enabled: true
+    cost: 575
+    offset: -4
+    seed: LIGHT_BLUE_CONCRETE
+    user: false
   AQUARIUM:
     enabled: true
     cost: 450

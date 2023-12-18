@@ -40,6 +40,8 @@ public class TARDISRoomsUpdater {
         this.plugin = plugin;
         this.rooms_config = rooms_config;
         // boolean
+        booleanOptions.put("rooms.ALLAY.enabled", true);
+        booleanOptions.put("rooms.ALLAY.user", false);
         booleanOptions.put("rooms.ANTIGRAVITY.enabled", true);
         booleanOptions.put("rooms.ANTIGRAVITY.user", false);
         booleanOptions.put("rooms.APIARY.enabled", true);
@@ -127,6 +129,8 @@ public class TARDISRoomsUpdater {
         booleanOptions.put("rooms.ZERO.enabled", true);
         booleanOptions.put("rooms.ZERO.user", false);
         // integer
+        integerOptions.put("rooms.ALLAY.cost", 575);
+        integerOptions.put("rooms.ALLAY.offset", -4);
         integerOptions.put("rooms.ANTIGRAVITY.cost", 625);
         integerOptions.put("rooms.ANTIGRAVITY.offset", -4);
         integerOptions.put("rooms.APIARY.cost", 450);
@@ -214,6 +218,7 @@ public class TARDISRoomsUpdater {
         integerOptions.put("rooms.ZERO.cost", 650);
         integerOptions.put("rooms.ZERO.offset", -4);
         // string
+        stringOptions.put("rooms.ALLAY.seed", "LIGHT_BLUE_CONCRETE");
         stringOptions.put("rooms.ANTIGRAVITY.seed", "SANDSTONE");
         stringOptions.put("rooms.APIARY.seed", "BEE_NEST");
         stringOptions.put("rooms.AQUARIUM.seed", "TUBE_CORAL_BLOCK");

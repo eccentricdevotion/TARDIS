@@ -112,6 +112,7 @@ class TARDISMySQLDatabaseUpdater {
         chameleonupdates.add("line3 varchar(48) DEFAULT ''");
         chameleonupdates.add("line4 varchar(48) DEFAULT ''");
         chameleonupdates.add("active int(1) DEFAULT '0'");
+        farmingupdates.add("allay varchar(512) DEFAULT ''");
         farmingupdates.add("apiary varchar(512) DEFAULT ''");
         farmingupdates.add("bamboo varchar(512) DEFAULT ''");
         farmingupdates.add("geode varchar(512) DEFAULT ''");

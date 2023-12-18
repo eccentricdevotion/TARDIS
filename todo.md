@@ -9,15 +9,15 @@
    - add spawn locations to Updateable blocks
 4. Deep space [#748](https://github.com/eccentricdevotion/TARDIS/issues/748)
 5. Animated models for player disguises
-6. Sonic Blaster
-7. New sonic screwdriver functionality?
-    - ?
-8. Amy Pond's Sonic Probe + Missy's Sonic Umbrella
-9. Add allays as TARDIS pets
+6. Add allay room
+7. Use new `set` and `remove` resource pack methods
 
 ## Next version `5.4.0`
 
-1. ?
+1. Sonic Blaster
+2. New sonic screwdriver functionality
+   - ?
+3. ?
 
 ## Future versions
 

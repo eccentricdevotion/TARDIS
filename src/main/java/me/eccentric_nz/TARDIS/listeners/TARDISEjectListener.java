@@ -27,6 +27,7 @@ import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.*;
+import org.bukkit.entity.memory.MemoryKey;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -106,6 +107,22 @@ public class TARDISEjectListener implements Listener {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", p.getUniqueId().toString());
                 plugin.getQueryFactory().doDelete("travellers", where);
+            }
+            case ALLAY -> {
+                // cancel the event so the allay doesn't lose its held item
+                event.setCancelled(true);
+                Allay a = (Allay) ent;
+                Allay allay = (Allay) l.getWorld().spawnEntity(l, EntityType.ALLAY);
+                allay.setTicksLived(a.getTicksLived());
+                String allayname = ent.getCustomName();
+                if (allayname != null && !allayname.isEmpty()) {
+                    allay.setCustomName(allayname);
+                }
+                allay.setCanDuplicate(a.canDuplicate());
+                allay.setDuplicationCooldown(a.getDuplicationCooldown());
+                allay.setMemory(MemoryKey.LIKED_PLAYER, a.getMemory(MemoryKey.LIKED_PLAYER));
+                allay.getInventory().setContents(a.getInventory().getContents());
+                ent.remove();
             }
             case BEE -> {
                 Bee b = (Bee) ent;
