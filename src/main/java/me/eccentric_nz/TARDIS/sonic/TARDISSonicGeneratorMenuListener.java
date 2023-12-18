@@ -112,7 +112,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
         }
         event.setCancelled(true);
         switch (slot) {
-            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17 -> {
+            case 0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 18, 19, 20, 21, 22, 23, 24 -> {
                 // set display name of sonic in slot 49
                 sonic = view.getItem(49);
                 if (sonic == null) {
@@ -132,7 +132,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
                     setCost(view, costs.get("Standard Sonic"));
                 }
             }
-            case 18, 27, 28, 29, 30, 31, 32, 33, 34, 35 -> {
+            case 26, 27, 28, 29, 30, 31, 32, 33, 34, 35 -> {
                 ItemStack upgrade = view.getItem(slot);
                 ItemMeta upgrade_im = upgrade.getItemMeta();
                 String upgrade_name = upgrade_im.getDisplayName();
