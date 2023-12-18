@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.update;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
@@ -51,6 +49,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * The TARDIS interior goes through occasional metamorphoses, sometimes by
@@ -175,7 +176,7 @@ public class TARDISUpdateListener implements Listener {
                     set.put("beacon", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
                 }
-                case FARM, STABLE, STALL, VILLAGE -> {
+                case BAMBOO, BIRDCAGE, FARM, IGLOO, IISTUBIL, HUTCH, LAVA, PEN, STABLE, STALL, VILLAGE -> {
                     set.put(updateable.getName(), blockLocStr);
                     plugin.getQueryFactory().doUpdate("farming", set, tid);
                 }

@@ -429,6 +429,7 @@ permissions:
       tardis.room.igloo: true
       tardis.room.iistubil: true
       tardis.room.kitchen: true
+      tardis.room.lava: true
       tardis.room.lazarus: true
       tardis.room.library: true
       tardis.room.lava: true

@@ -17,8 +17,6 @@
 package me.eccentric_nz.TARDIS.update;
 
 import com.google.common.collect.Sets;
-import java.util.HashMap;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -31,6 +29,9 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.Set;
+
 public class TARDISUpdateableChecker {
 
     private final TARDIS plugin;
@@ -40,9 +41,15 @@ public class TARDISUpdateableChecker {
     private final String tardis_block;
 
     private final Set<Updateable> mustGrowRoom = Sets.newHashSet(
+            Updateable.BAMBOO,
+            Updateable.BIRDCAGE,
             Updateable.FARM,
             Updateable.FUEL,
+            Updateable.HUTCH,
             Updateable.IGLOO,
+            Updateable.IISTUBIL,
+            Updateable.LAVA,
+            Updateable.PEN,
             Updateable.SMELT,
             Updateable.STABLE,
             Updateable.STALL,
@@ -87,8 +94,14 @@ public class TARDISUpdateableChecker {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_TEMPORAL");
             return false;
         }
+        boolean hasBamboo = false;
+        boolean hasBirdcage = false;
         boolean hasFarm = false;
+        boolean hasHutch = false;
         boolean hasIgloo = false;
+        boolean hasIistubil = false;
+        boolean hasLava = false;
+        boolean hasPen = false;
         boolean hasSmelt = false;
         boolean hasStable = false;
         boolean hasStall = false;
@@ -105,26 +118,22 @@ public class TARDISUpdateableChecker {
                 for (String[][] level : json) {
                     for (String[] row : level) {
                         for (String col : row) {
-                            if (col.equals("DIRT")) {
-                                hasFarm = true;
-                            }
-                            if (col.equals("PACKED_ICE")) {
-                                hasIgloo = true;
-                            }
-                            if (col.equals("CHEST")) {
-                                hasSmelt = true;
-                            }
-                            if (col.equals("HAY_BLOCK")) {
-                                hasStable = true;
-                            }
-                            if (col.equals("NETHER_WART_BLOCK")) {
-                                hasStall = true;
-                            }
-                            if (col.equals("DISPENSER")) {
-                                hasVault = true;
-                            }
-                            if (col.equals("OAK_LOG")) {
-                                hasVillage = true;
+                            switch (col) {
+                                case "BAMBOO" -> hasBamboo = true;
+                                case "YELLOW_GLAZED_TERRACOTTA" -> hasBirdcage = true;
+                                case "DIRT" -> hasFarm = true;
+                                case "ACACIA_LOG" -> hasHutch = true;
+                                case "PACKED_ICE" -> hasIgloo = true;
+                                case "MOSS_BLOCK" -> hasPen = true;
+                                case "WHITE_GLAZED_TERRACOTTA" -> hasIistubil = true;
+                                case "MAGMA_BLOCK" -> hasLava = true;
+                                case "CHEST" -> hasSmelt = true;
+                                case "HAY_BLOCK" -> hasStable = true;
+                                case "NETHER_WART_BLOCK" -> hasStall = true;
+                                case "DISPENSER" -> hasVault = true;
+                                case "OAK_LOG" -> hasVillage = true;
+                                default -> {
+                                }
                             }
                         }
                     }
@@ -153,7 +162,10 @@ public class TARDISUpdateableChecker {
                 return false;
             }
         }
-        if (updateable.equals(Updateable.FARM) || updateable.equals(Updateable.IGLOO) || updateable.equals(Updateable.STABLE) || updateable.equals(Updateable.STALL) || updateable.equals(Updateable.VILLAGE)) {
+        if (updateable.equals(Updateable.FARM) || updateable.equals(Updateable.IGLOO) || updateable.equals(Updateable.STABLE)
+                || updateable.equals(Updateable.STALL) || updateable.equals(Updateable.VILLAGE) || updateable.equals(Updateable.IISTUBIL)
+                || updateable.equals(Updateable.HUTCH) || updateable.equals(Updateable.LAVA) || updateable.equals(Updateable.PEN)
+                || updateable.equals(Updateable.BAMBOO) || updateable.equals(Updateable.BIRDCAGE)) {
             if (!TARDISPermission.hasPermission(player, "tardis.farm")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_NO_PERM", tardis_block);
                 return false;
@@ -167,6 +179,30 @@ public class TARDISUpdateableChecker {
                     return false;
                 }
                 if (updateable.equals(Updateable.IGLOO) && farming.getIgloo().isEmpty() && !hasIgloo) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
+                    return false;
+                }
+                if (updateable.equals(Updateable.IISTUBIL) && farming.getIistubil().isEmpty() && !hasIistubil) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
+                    return false;
+                }
+                if (updateable.equals(Updateable.LAVA) && farming.getLava().isEmpty() && !hasLava) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
+                    return false;
+                }
+                if (updateable.equals(Updateable.PEN) && farming.getPen().isEmpty() && !hasPen) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
+                    return false;
+                }
+                if (updateable.equals(Updateable.HUTCH) && farming.getHutch().isEmpty() && !hasHutch) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
+                    return false;
+                }
+                if (updateable.equals(Updateable.BAMBOO) && farming.getBamboo().isEmpty() && !hasBamboo) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
+                    return false;
+                }
+                if (updateable.equals(Updateable.BIRDCAGE) && farming.getBirdcage().isEmpty() && !hasBirdcage) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
