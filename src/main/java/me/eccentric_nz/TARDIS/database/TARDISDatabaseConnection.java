@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Singleton class to get the database connection.
@@ -76,6 +77,9 @@ public class TARDISDatabaseConnection {
         Class.forName("org.sqlite.JDBC");
         connection = DriverManager.getConnection("jdbc:sqlite:" + path);
         connection.setAutoCommit(true);
+        final Statement statement = connection.createStatement();
+        statement.execute("PRAGMA auto_vacuum = FULL;");
+        statement.close();
     }
 
     /**
