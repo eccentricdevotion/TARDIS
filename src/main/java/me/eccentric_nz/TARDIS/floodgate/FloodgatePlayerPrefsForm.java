@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
@@ -8,6 +7,11 @@ import org.geysermc.cumulus.form.CustomForm;
 import org.geysermc.cumulus.response.CustomFormResponse;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class FloodgatePlayerPrefsForm {
 
@@ -49,7 +53,6 @@ public class FloodgatePlayerPrefsForm {
                 .toggle("Renderer", rsp.isRendererOn())
                 .toggle("Interior SFX", rsp.isSfxOn())
                 .toggle("Submarine", rsp.isSubmarineOn())
-                .toggle("Resource Pack Switching", rsp.isTextureOn())
                 .toggle("Build", rsp.isBuildOn())
                 .toggle("Exterior Sign", rsp.isSignOn())
                 .toggle("Travel Bar", rsp.isTravelbarOn())
@@ -79,15 +82,14 @@ public class FloodgatePlayerPrefsForm {
         set.put("renderer_on", (response.asToggle(10)) ? 1 : 0);
         set.put("sfx_on", (response.asToggle(11)) ? 1 : 0);
         set.put("submarine_on", (response.asToggle(12)) ? 1 : 0);
-        set.put("texture_on", (response.asToggle(13)) ? 1 : 0);
-        set.put("build_on", (response.asToggle(14)) ? 1 : 0);
-        set.put("sign_on", (response.asToggle(15)) ? 1 : 0);
-        set.put("travelbar_on", (response.asToggle(16)) ? 1 : 0);
-        set.put("farm_on", (response.asToggle(17)) ? 1 : 0);
-        set.put("telepathy_on", (response.asToggle(18)) ? 1 : 0);
-        set.put("flight_mode", response.asDropdown(19) + 1);
-        set.put("hum", hums.get(response.asDropdown(20)));
-        set.put("auto_default", automodes.get(response.asDropdown(21)));
+        set.put("build_on", (response.asToggle(13)) ? 1 : 0);
+        set.put("sign_on", (response.asToggle(14)) ? 1 : 0);
+        set.put("travelbar_on", (response.asToggle(15)) ? 1 : 0);
+        set.put("farm_on", (response.asToggle(16)) ? 1 : 0);
+        set.put("telepathy_on", (response.asToggle(17)) ? 1 : 0);
+        set.put("flight_mode", response.asDropdown(18) + 1);
+        set.put("hum", hums.get(response.asDropdown(19)));
+        set.put("auto_default", automodes.get(response.asDropdown(20)));
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         plugin.getQueryFactory().doUpdate("player_prefs", set, where);

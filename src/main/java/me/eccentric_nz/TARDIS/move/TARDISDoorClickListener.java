@@ -30,7 +30,6 @@ import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
-import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISRedProtectChecker;
@@ -111,11 +110,13 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                     boolean hasPrefs = false;
                     boolean willFarm = false;
                     boolean canPowerUp = false;
+                    boolean userQuotes = false;
                     if (rsp.resultSet()) {
                         hasPrefs = true;
                         key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
                         willFarm = rsp.isFarmOn();
                         canPowerUp = (rsp.isAutoPowerUp() && plugin.getConfig().getBoolean("allow.power_down"));
+                        userQuotes = rsp.isQuotesOn();
                     } else {
                         key = plugin.getConfig().getString("preferences.key");
                     }
@@ -262,13 +263,6 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                         return;
                                     }
                                     COMPASS d_backup = rsc.getDirection();
-                                    // get quotes player prefs
-                                    boolean userQuotes = true;
-                                    boolean userTP = false;
-                                    if (hasPrefs) {
-                                        userQuotes = rsp.isQuotesOn();
-                                        userTP = rsp.isTextureOn();
-                                    }
                                     // get players direction
                                     COMPASS pd = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                                     // get the other door direction
@@ -348,9 +342,6 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                         }
                                                     }
                                                 }
-                                                if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
-                                                    new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureOut());
-                                                }
                                                 // remove player from traveller table
                                                 removeTraveller(playerUUID);
                                             } else {
@@ -414,11 +405,6 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                         new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tardis_loc, player, d, true);
                                                     }
                                                 }
-                                                if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
-                                                    if (!rsp.getTextureIn().isEmpty()) {
-                                                        new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn());
-                                                    }
-                                                }
                                                 if (canPowerUp && po) {
                                                     // power up the TARDIS
                                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), artron, tardis.getSchematic().getLights()).clickButton(), 20L);
@@ -463,11 +449,6 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             inner_loc.setYaw(yaw);
                                             inner_loc.setPitch(pitch);
                                             movePlayer(player, inner_loc, false, playerWorld, userQuotes, 1, minecart, false);
-                                            if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
-                                                if (!rsp.getTextureIn().isEmpty()) {
-                                                    new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn());
-                                                }
-                                            }
                                             // put player into travellers table
                                             removeTraveller(playerUUID);
                                             HashMap<String, Object> set = new HashMap<>();
@@ -539,9 +520,6 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                             outer_loc.setYaw(yaw);
                                             outer_loc.setPitch(pitch);
                                             movePlayer(player, outer_loc, true, playerWorld, userQuotes, 2, minecart, false);
-                                            if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
-                                                new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureOut());
-                                            }
                                             // remove player from traveller table
                                             removeTraveller(playerUUID);
                                             // take energy

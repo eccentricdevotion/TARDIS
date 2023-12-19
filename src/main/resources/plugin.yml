@@ -51,7 +51,6 @@ permissions:
       tardis.rebuild: true
       tardis.book: true
       tardis.gravity: true
-      tardis.texture: true
       tardis.temporal: true
       tardis.architectural: true
       tardis.advanced: true
@@ -474,9 +473,6 @@ permissions:
     default: op
   tardis.backdoor:
     description: Allow players to add a TARDIS back door.
-    default: op
-  tardis.texture:
-    description: Allow players to switch texture packs.
     default: op
   tardis.temporal:
     description: Allow players to set their player time (Temporal Location).
@@ -1585,24 +1581,6 @@ commands:
     book_name:
       description: Gets the specified book or starts the specified TARDIS achievement
       usage: /<command> [book name] [get|start]
-  tardistexture:
-    aliases: ttexture
-    description: Set texture pack preferences.
-    permission-message: You don't have the permission <permission> to use this command
-    permission: tardis.texture
-    usage: /<command> [on|off|in|out] [url]
-    'on':
-      description: Turns resource pack switching on.
-      usage: /<command> on
-    'off':
-      description: Turns resource pack switching off.
-      usage: /<command> off
-    in:
-      description: Set the resource pack that is switched to inside the TARDIS.
-      usage: /<command> in [url]
-    out:
-      description: Set the resource pack that is switched to in the outside world.
-      usage: /<command> out [url]
   tardisrecipe:
     aliases: trecipe
     description: View TARDIS item recipes.

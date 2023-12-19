@@ -407,9 +407,6 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 if (chat.equalsIgnoreCase("o")) {
                     processKey(p, TARDISInfoMenu.TARDISROOM);
                 }
-                if (chat.equalsIgnoreCase("x")) {
-                    processKey(p, TARDISInfoMenu.TARDISTEXTURE);
-                }
                 if (chat.equalsIgnoreCase("v")) {
                     processKey(p, TARDISInfoMenu.TARDISTRAVEL);
                 }
@@ -1125,20 +1122,6 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 }
                 if (chat.equalsIgnoreCase("r")) {
                     showCommand(p, TARDISInfoMenu.TARDISBIND_REMOVE);
-                }
-            }
-            case TARDISTEXTURE -> {
-                if (chat.equalsIgnoreCase("o")) {
-                    showCommand(p, TARDISInfoMenu.TARDISTEXTURE_ON);
-                }
-                if (chat.equalsIgnoreCase("f")) {
-                    showCommand(p, TARDISInfoMenu.TARDISTEXTURE_OFF);
-                }
-                if (chat.equalsIgnoreCase("i")) {
-                    showCommand(p, TARDISInfoMenu.TARDISTEXTURE_IN);
-                }
-                if (chat.equalsIgnoreCase("u")) {
-                    showCommand(p, TARDISInfoMenu.TARDISTEXTURE_OUT);
                 }
             }
             case TARDISAREA -> {

@@ -141,7 +141,6 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("strike_lightning", "preferences");
         firstsBool.put("switch_resource_packs", "");
         firstsBool.put("the_end", "travel");
-        firstsBool.put("tp_switch", "allow");
         firstsBool.put("use_default_condensables", "preferences");
         firstsBool.put("use_nick", "police_box");
         firstsBool.put("use_worldguard", "preferences");

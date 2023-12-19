@@ -160,7 +160,6 @@ allow:
   guardians: false
   hads: true
   invisibility: true
-  tp_switch: true
   all_blocks: false
   sfx: true
   wg_flag_set: true

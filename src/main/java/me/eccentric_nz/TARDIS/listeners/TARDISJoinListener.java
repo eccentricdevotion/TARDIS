@@ -29,7 +29,6 @@ import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.flight.FlightReturnData;
 import me.eccentric_nz.TARDIS.flight.FlyingAnimation;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
@@ -121,21 +120,6 @@ public class TARDISJoinListener implements Listener {
                 setc.put("uuid", uuid);
                 setc.put("player", player.getName());
                 plugin.getQueryFactory().doInsert("t_count", setc);
-            }
-        }
-        // are they in the TARDIS?
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", uuid);
-        ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
-        if (rst.resultSet()) {
-            if (plugin.getConfig().getBoolean("allow.tp_switch") && TARDISPermission.hasPermission(player, "tardis.texture")) {
-                // is texture switching on?
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
-                if (rsp.resultSet()) {
-                    if (rsp.isTextureOn()) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn()), 50L);
-                    }
-                }
             }
         }
         // load and remember the players Police Box chunk

@@ -44,7 +44,6 @@ public enum RootCommand {
     tardisschematic("https://eccentricdevotion.github.io/TARDIS/schematic-commands.html"),
     tardissudo("https://eccentricdevotion.github.io/TARDIS/sudo-commands.html"),
     tardisteleport("https://eccentricdevotion.github.io/TARDIS/world-management.html"),
-    tardistexture("https://eccentricdevotion.github.io/TARDIS/texture-commands.htmla"),
     tardistime("https://eccentricdevotion.github.io/TARDIS/misc-commands.html#tardistime"),
     tardistravel("https://eccentricdevotion.github.io/TARDIS/travel-commands.html"),
     tardisweather("https://eccentricdevotion.github.io/TARDIS/misc-commands.html#tardisweather"),

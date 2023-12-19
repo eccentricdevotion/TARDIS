@@ -5,12 +5,9 @@
 1. Add new 60th anniversary console
 2. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
-3. New Mob rooms [#760](https://github.com/eccentricdevotion/TARDIS/issues/760)
-   - add spawn locations to Updateable blocks
-4. Deep space [#748](https://github.com/eccentricdevotion/TARDIS/issues/748)
-5. Animated models for player disguises
-6. Add allay room
-7. Use new `set` and `remove` resource pack methods
+3. Deep space [#748](https://github.com/eccentricdevotion/TARDIS/issues/748)
+4. Animated models for player disguises
+5. Remove resource pack switching
 
 ## Next version `5.4.0`
 

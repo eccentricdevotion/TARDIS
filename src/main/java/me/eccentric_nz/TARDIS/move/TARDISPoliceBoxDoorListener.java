@@ -34,7 +34,6 @@ import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
 import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicSound;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
@@ -164,11 +163,6 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                                         }
                                                         if (!petsAndFollowers.getFollowers().isEmpty()) {
                                                             new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tardis_loc, player, d, true);
-                                                        }
-                                                    }
-                                                    if (plugin.getConfig().getBoolean("allow.tp_switch") && rspref.isTextureOn()) {
-                                                        if (!rspref.getTextureIn().isEmpty()) {
-                                                            new TARDISResourcePackChanger(plugin).changeRP(player, rspref.getTextureIn());
                                                         }
                                                     }
                                                     if (canPowerUp && !tardis.isPowered_on() && !tardis.isAbandoned()) {

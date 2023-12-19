@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIPlayerPreferences;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -29,6 +28,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.*;
 
 /**
  * The Administrator of Solos is the Earth Empire's civilian overseer for that planet.
@@ -79,7 +80,6 @@ public class TARDISPrefsMenuInventory {
         values.add(rsp.isRendererOn());
         values.add(rsp.isSfxOn());
         values.add(rsp.isSubmarineOn());
-        values.add(rsp.isTextureOn());
         values.add(rsp.isBuildOn());
         values.add(rsp.isSignOn());
         values.add(rsp.isTravelbarOn());

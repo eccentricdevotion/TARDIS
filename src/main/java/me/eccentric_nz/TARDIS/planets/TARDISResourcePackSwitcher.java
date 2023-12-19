@@ -65,7 +65,7 @@ public class TARDISResourcePackSwitcher implements Listener {
 
     private void setResourcePack(Player player, String path) {
         if (path == null || path.equalsIgnoreCase("default")) {
-            path = plugin.getPlanetsConfig().getString("default_resource_pack");
+            player.removeResourcePacks();
         }
         if (player.isOnline()) {
             player.setResourcePack(path);

@@ -16,16 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.Autonomous;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.UUID;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... the personal preferences of the Time
@@ -65,7 +66,6 @@ public class ResultSetPlayerPrefs {
     private boolean signOn;
     private boolean submarineOn;
     private boolean telepathyOn;
-    private boolean textureOn;
     private boolean travelbarOn;
     private HADS hadsType;
     private int artronLevel;
@@ -78,8 +78,6 @@ public class ResultSetPlayerPrefs {
     private String language;
     private String siegeFloor;
     private String siegeWall;
-    private String textureIn;
-    private String textureOut;
     private String wall;
 
     /**
@@ -151,10 +149,6 @@ public class ResultSetPlayerPrefs {
                     } else {
                         epsMessage = rs.getString("eps_message");
                     }
-                    textureOn = rs.getBoolean("texture_on");
-                    textureIn = rs.getString("texture_in");
-                    String tp_out = rs.getString("texture_out");
-                    textureOut = (tp_out.equals("default")) ? plugin.getResourcePack() : tp_out;
                     DND = rs.getBoolean("dnd_on");
                     minecartOn = rs.getBoolean("minecart_on");
                     rendererOn = rs.getBoolean("renderer_on");
@@ -269,18 +263,6 @@ public class ResultSetPlayerPrefs {
 
     public String getEpsMessage() {
         return epsMessage;
-    }
-
-    public boolean isTextureOn() {
-        return textureOn;
-    }
-
-    public String getTextureIn() {
-        return textureIn;
-    }
-
-    public String getTextureOut() {
-        return textureOut;
     }
 
     public String getLanguage() {

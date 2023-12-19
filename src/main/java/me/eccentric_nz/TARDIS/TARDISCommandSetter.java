@@ -126,8 +126,6 @@ class TARDISCommandSetter {
         TARDISWorldCommand tardisWorldCommand = new TARDISWorldCommand(plugin);
         plugin.getCommand("tardisworld").setExecutor(tardisWorldCommand);
         plugin.getCommand("tardisworld").setTabCompleter(tardisWorldCommand);
-        plugin.getCommand("tardistexture").setExecutor(new TARDISTextureCommands(plugin));
-        plugin.getCommand("tardistexture").setTabCompleter(new TARDISTextureTabComplete());
         TARDISTravelCommands tardisTravelCommand = new TARDISTravelCommands(plugin);
         plugin.getCommand("tardistravel").setExecutor(tardisTravelCommand);
         plugin.getGeneralKeeper().setTardisTravelCommand(tardisTravelCommand);

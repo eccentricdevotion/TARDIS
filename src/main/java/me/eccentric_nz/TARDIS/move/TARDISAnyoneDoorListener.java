@@ -29,7 +29,6 @@ import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
-import me.eccentric_nz.TARDIS.utility.TARDISResourcePackChanger;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISRedProtectChecker;
@@ -138,10 +137,10 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                         boolean willFarm = false;
                         if (rsp.resultSet()) {
                             hasPrefs = true;
-                            key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
+                            key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key", "GOLD_NUGGET");
                             willFarm = rsp.isFarmOn();
                         } else {
-                            key = plugin.getConfig().getString("preferences.key");
+                            key = plugin.getConfig().getString("preferences.key", "GOLD_NUGGET");
                         }
                         boolean minecart = rsp.isMinecartOn();
                         Material m = Material.getMaterial(key);
@@ -314,12 +313,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                 }
                                 COMPASS d_backup = rsc.getDirection();
                                 // get quotes player prefs
-                                boolean userQuotes = true;
-                                boolean userTP = false;
-                                if (hasPrefs) {
-                                    userQuotes = rsp.isQuotesOn();
-                                    userTP = rsp.isTextureOn();
-                                }
+                                boolean userQuotes = (hasPrefs && rsp.isQuotesOn());
                                 // get players direction
                                 COMPASS pd = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                                 // get the other door direction
@@ -404,9 +398,6 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                                     }
                                                 }
                                             }
-                                            if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
-                                                new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureOut());
-                                            }
                                             // remove player from traveller table
                                             removeTraveller(playerUUID);
                                         } else {
@@ -470,11 +461,6 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                                     new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tardis_loc, player, d, true);
                                                 }
                                             }
-                                            if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
-                                                if (!rsp.getTextureIn().isEmpty()) {
-                                                    new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn());
-                                                }
-                                            }
                                             // put player into travellers table
                                             // remove them first as they may have exited incorrectly, and we only want them listed once
                                             removeTraveller(playerUUID);
@@ -514,11 +500,6 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         inner_loc.setYaw(yaw);
                                         inner_loc.setPitch(pitch);
                                         movePlayer(player, inner_loc, false, playerWorld, userQuotes, 1, minecart, false);
-                                        if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
-                                            if (!rsp.getTextureIn().isEmpty()) {
-                                                new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureIn());
-                                            }
-                                        }
                                         // put player into travellers table
                                         removeTraveller(playerUUID);
                                         HashMap<String, Object> set = new HashMap<>();
@@ -590,9 +571,6 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         outer_loc.setYaw(yaw);
                                         outer_loc.setPitch(pitch);
                                         movePlayer(player, outer_loc, true, playerWorld, userQuotes, 2, minecart, false);
-                                        if (plugin.getConfig().getBoolean("allow.tp_switch") && userTP) {
-                                            new TARDISResourcePackChanger(plugin).changeRP(player, rsp.getTextureOut());
-                                        }
                                         // remove player from traveller table
                                         removeTraveller(playerUUID);
                                         // take energy

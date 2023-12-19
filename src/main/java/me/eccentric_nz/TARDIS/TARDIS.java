@@ -97,7 +97,10 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.module.ModuleDescriptor;
 import java.sql.SQLException;
 import java.util.*;
@@ -165,7 +168,6 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration customModelConfig;
     private HashMap<String, Integer> condensables;
     private BukkitTask standbyTask;
-    private String resourcePack;
     private TARDISChameleonPreset presets;
     private TARDISPerceptionFilter filter;
     private TARDISPluginRespect pluginRespect;
@@ -501,7 +503,6 @@ public class TARDIS extends JavaPlugin {
             }
             loadPerms();
             loadBooks();
-            resourcePack = getServerTP();
             // copy advancements to tardis datapack
             new TARDISChecker(this).checkAdvancements();
             presets = new TARDISChameleonPreset();
@@ -1104,15 +1105,6 @@ public class TARDIS extends JavaPlugin {
      */
     public String getPluginName() {
         return "[" + TardisModule.TARDIS.getName() + "] ";
-    }
-
-    /**
-     * Gets the server's default resource pack URL
-     *
-     * @return the server's default resource pack URL
-     */
-    public String getResourcePack() {
-        return resourcePack;
     }
 
     /**
@@ -1818,40 +1810,6 @@ public class TARDIS extends JavaPlugin {
 
     private void cleanUpWorlds() {
         getCleanUpWorlds().forEach((w) -> new TARDISWorldRemover(plugin).cleanWorld(w));
-    }
-
-    /**
-     * Gets the server default resource pack. Will use the Minecraft default
-     * pack if none is specified. Until Minecraft/Bukkit lets us set the RP back
-     * to Default, we'll have to host it on DropBox
-     *
-     * @return The server specified texture pack.
-     */
-    private String getServerTP() {
-        String link = "https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1";
-        FileInputStream in = null;
-        try {
-            Properties properties = new Properties();
-            String path = "server.properties";
-            in = new FileInputStream(path);
-            properties.load(in);
-            String texture_pack = properties.getProperty("texture-pack");
-            return (texture_pack != null && texture_pack.isEmpty()) ? link : texture_pack;
-        } catch (FileNotFoundException ex) {
-            debug("Could not find server.properties!");
-            return link;
-        } catch (IOException ex) {
-            debug("Could not read server.properties!");
-            return link;
-        } finally {
-            try {
-                if (in != null) {
-                    in.close();
-                }
-            } catch (IOException ex) {
-                debug("Could not close server.properties!");
-            }
-        }
     }
 
     /**
