@@ -67,12 +67,14 @@ public class TARDISPrefsMenuInventory {
             rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             rsp.resultSet();
         }
+        values.add(rsp.isAnnounceRepeatersOn());
         values.add(rsp.isAutoOn());
         values.add(rsp.isAutoSiegeOn());
         values.add(rsp.isAutoRescueOn());
         values.add(rsp.isBeaconOn());
         values.add(rsp.isCloseGUIOn());
         values.add(rsp.isDND());
+        values.add(rsp.isDynamicLightsOn());
         values.add(rsp.isEpsOn());
         values.add(rsp.isHadsOn());
         values.add(rsp.getHadsType().equals(HADS.DISPERSAL));
@@ -109,7 +111,6 @@ public class TARDISPrefsMenuInventory {
         } else {
             values.add(false);
         }
-        values.add(rsp.isAnnounceRepeatersOn());
         // make a stack
         ItemStack[] stack = new ItemStack[36];
         for (GUIPlayerPreferences pref : GUIPlayerPreferences.values()) {

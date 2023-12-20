@@ -53,6 +53,7 @@ public class TARDISConfiguration {
         booleanOptions.put("allow.all_blocks", false);
         booleanOptions.put("allow.autonomous", true);
         booleanOptions.put("allow.emergency_npc", true);
+        booleanOptions.put("allow.dynamic_lamps", false);
         booleanOptions.put("allow.external_gravity", false);
         booleanOptions.put("allow.guardians", false);
         booleanOptions.put("allow.hads", true);

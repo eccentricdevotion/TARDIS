@@ -24,8 +24,10 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarming;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisTimeLordName;
 import me.eccentric_nz.TARDIS.enumeration.Room;
+import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
@@ -464,7 +466,18 @@ public class TARDISRoomRunnable implements Runnable {
                 if (player != null) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_POWER");
                 }
-                lampblocks.forEach((lamp) -> lamp.setBlockData(TARDISConstants.LAMP));
+                if(plugin.getConfig().getBoolean("allow.dynamic_lamps")) {
+                    // get lamp preference
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
+                    if (rsp.resultSet() && rsp.isDynamicLightsOn()) {
+                        TardisLight light = rsp.getLights();
+                        lampblocks.forEach((lamp) -> TARDISDisplayItemUtils.set(light.getOn(), lamp));
+                    } else {
+                        lampblocks.forEach((lamp) -> lamp.setBlockData(TARDISConstants.LAMP));
+                    }
+                } else {
+                    lampblocks.forEach((lamp) -> lamp.setBlockData(TARDISConstants.LAMP));
+                }
                 lampblocks.clear();
                 // put torches on
                 torchblocks.forEach((key, value) -> key.setBlockData(value, true));

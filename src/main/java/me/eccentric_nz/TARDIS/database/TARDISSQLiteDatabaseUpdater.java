@@ -87,6 +87,7 @@ class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("close_gui_on INTEGER DEFAULT 1");
         prefsupdates.add("difficulty INTEGER DEFAULT 0");
         prefsupdates.add("dnd_on INTEGER DEFAULT 0");
+        prefsupdates.add("dynamic_lamps_on INTEGER DEFAULT 0");
         prefsupdates.add("eps_message TEXT DEFAULT ''");
         prefsupdates.add("eps_on INTEGER DEFAULT 0");
         prefsupdates.add("farm_on INTEGER DEFAULT 0");

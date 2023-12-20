@@ -161,6 +161,7 @@ allow:
   hads: true
   invisibility: true
   all_blocks: false
+  dynamic_lamps: false
   sfx: true
   wg_flag_set: true
   zero_room: false

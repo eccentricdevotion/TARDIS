@@ -101,6 +101,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("debug", "");
         firstsBool.put("default_world", "creation");
         firstsBool.put("dynmap", "modules");
+        firstsBool.put("dynamic_lamps", "allow");
         firstsBool.put("emergency_npc", "allow");
         firstsBool.put("exile", "travel");
         firstsBool.put("external_gravity", "allow");

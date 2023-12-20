@@ -206,6 +206,7 @@ permissions:
       tardis.prefs.close_gui: true
       tardis.prefs.difficulty: true
       tardis.prefs.dnd: true
+      tardis.prefs.dynamic_lamps: true
       tardis.prefs.eps: true
       tardis.prefs.eps_message: true
       tardis.prefs.farm: true

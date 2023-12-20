@@ -53,7 +53,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
             "announce_repeaters", "auto", "auto_powerup", "auto_rescue", "auto_siege",
             "beacon", "build",
             "close_gui",
-            "difficulty", "dnd",
+            "difficulty", "dnd", "dynamic_lamps",
             "eps", "eps_message",
             "farm", "flight", "floor", "forcefield",
             "hads", "hads_type", "hum",

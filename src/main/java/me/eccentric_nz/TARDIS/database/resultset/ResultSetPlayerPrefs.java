@@ -55,6 +55,7 @@ public class ResultSetPlayerPrefs {
     private boolean closeGUIOn;
     private boolean DND;
     private boolean easyDifficulty;
+    private boolean dynamicLightsOn;
     private boolean epsOn;
     private boolean farmOn;
     private boolean hadsOn;
@@ -141,6 +142,7 @@ public class ResultSetPlayerPrefs {
                     siegeFloor = rs.getString("siege_floor");
                     buildOn = rs.getBoolean("build_on");
                     closeGUIOn = rs.getBoolean("close_gui_on");
+                    dynamicLightsOn = rs.getBoolean("dynamic_lamps_on");
                     epsOn = rs.getBoolean("eps_on");
                     // if empty use default
                     String message = rs.getString("eps_message");
@@ -257,6 +259,9 @@ public class ResultSetPlayerPrefs {
         return closeGUIOn;
     }
 
+    public boolean isDynamicLightsOn() {
+        return dynamicLightsOn;
+    }
     public boolean isEpsOn() {
         return epsOn;
     }
