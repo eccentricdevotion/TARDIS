@@ -225,6 +225,11 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.TARDIS_Zero_Room.generator", "TARDIS:void");
             save++;
         }
+        if (planets_config.contains("planets.TARDIS_TimeVortex.gamerules.doWardenSpawning")) {
+            planets_config.set("planets.TARDIS_TimeVortex.gamerules.doWardenSpawning", false);
+            planets_config.set("planets.TARDIS_Zero_Room.gamerules.doWardenSpawning", false);
+            save++;
+        }
         if (planets_config.getString("planets.TARDIS_TimeVortex.generator").equals("TARDISChunkGenerator:void")) {
             for (String key : planets_config.getConfigurationSection("planets").getKeys(false)) {
                 String gen = planets_config.getString("planets." + key + ".generator");

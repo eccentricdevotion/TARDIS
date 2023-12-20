@@ -15,6 +15,7 @@ planets:
     gamerules:
       doWeatherCycle: false
       doDaylightCycle: false
+      doWardenSpawning: false
     keep_spawn_in_memory: false
     allow_portals: false
     alias: TimeVortex
@@ -32,6 +33,7 @@ planets:
       doWeatherCycle: false
       doDaylightCycle: false
       announceAdvancements: false
+      doWardenSpawning: false
     keep_spawn_in_memory: false
     allow_portals: false
     alias: ZeroRoom
