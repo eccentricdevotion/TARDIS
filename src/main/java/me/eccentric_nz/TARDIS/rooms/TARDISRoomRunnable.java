@@ -880,6 +880,9 @@ public class TARDISRoomRunnable implements Runnable {
                             Block topdoorblock = bottomdoorblock.getRelative(BlockFace.UP);
                             bottomdoorblock.setBlockData(TARDISConstants.AIR);
                             topdoorblock.setBlockData(TARDISConstants.AIR);
+                            // remove display entities
+                            TARDISDisplayItemUtils.remove(bottomdoorblock);
+                            TARDISDisplayItemUtils.remove(topdoorblock);
                         }
                     }
                 }
