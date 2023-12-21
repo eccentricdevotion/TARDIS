@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.*;
 import org.bukkit.block.data.BlockData;
@@ -27,6 +26,8 @@ import org.bukkit.loot.LootTable;
 import org.bukkit.loot.LootTables;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
+
+import java.util.*;
 
 /**
  * One of the key features of a TARDIS is that the interior exists in a
@@ -419,6 +420,7 @@ public class TARDISConstants {
             case "END" -> changed = "END_STONE";
             case "FARMLAND" -> changed = "DIRT";
             case "GRASS" -> changed = "DIRT";
+            case "SHORT_GRASS" -> changed = "DIRT";
             case "GRAVEL" -> changed = "COARSE_DIRT";
             case "IRON" -> changed = "STONE";
             case "LADDER" -> changed = "BIRCH_PLANKS";

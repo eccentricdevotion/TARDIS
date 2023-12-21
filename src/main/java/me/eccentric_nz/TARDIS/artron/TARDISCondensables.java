@@ -16,9 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.util.HashMap;
 import java.util.Set;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * A TARDIS has fifteen Power Rooms that contain all of the machinery that powers and operates the ship. They are
@@ -366,7 +367,7 @@ public class TARDISCondensables {
             condensables.put("GRANITE_SLAB", 2);
             condensables.put("GRANITE_STAIRS", 2);
             condensables.put("GRANITE_WALL", 2);
-            condensables.put("GRASS", 1);
+            condensables.put("SHORT_GRASS", 1);
             condensables.put("GRASS_BLOCK", 1);
             condensables.put("GRAVEL", 1);
             condensables.put("GRAY_BANNER", 120);

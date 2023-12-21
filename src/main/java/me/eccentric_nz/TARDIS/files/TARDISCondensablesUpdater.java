@@ -16,14 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.files;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 /**
  * @author eccentric_nz
@@ -490,6 +491,8 @@ public class TARDISCondensablesUpdater {
             list.put("TORCHFLOWER", 20);
             list.put("TORCHFLOWER_SEEDS", 20);
             list.put("WARPED_HANGING_SIGN", 2);
+            // 1.20.4
+            list.put("SHORT_GRASS", 2);
             //
             List<String> remove = new ArrayList<>();
             remove.add("ACACIA_BARK");
@@ -513,6 +516,7 @@ public class TARDISCondensablesUpdater {
             remove.add("STONE_PLATE");
             remove.add("STORAGE_MINECART");
             remove.add("SULPHUR");
+            remove.add("GRASS");
 
             int i = 0;
             for (Map.Entry<String, Object> entry : list.entrySet()) {

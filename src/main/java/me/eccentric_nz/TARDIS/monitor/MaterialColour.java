@@ -16,8 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.monitor;
 
-import java.awt.Color;
 import org.bukkit.block.Block;
+
+import java.awt.*;
 
 public enum MaterialColour {
 
@@ -384,7 +385,7 @@ public enum MaterialColour {
     GRANITE_SLAB(new Color(151, 109, 77)),
     GRANITE_STAIRS(new Color(151, 109, 77)),
     GRANITE_WALL(new Color(151, 109, 77)),
-    GRASS(new Color(0, 124, 0)),
+    SHORT_GRASS(new Color(0, 124, 0)),
     GRASS_BLOCK(new Color(127, 178, 56)),
     GRAVEL(new Color(112, 112, 112)),
     GRAY_BANNER(new Color(143, 119, 72)),
