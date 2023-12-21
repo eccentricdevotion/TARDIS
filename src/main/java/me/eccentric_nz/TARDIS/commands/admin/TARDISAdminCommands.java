@@ -168,7 +168,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                         return new TARDISArchCommand(plugin).whois(sender, args);
                     }
                 }
-                if (first.equals("assemble")) {
+                if (first.equals("assemble") || first.equals("dispersed")) {
                     return new TARDISDispersedCommand(plugin).assemble(sender, args[1]);
                 }
                 if (first.equals("set_size")) {

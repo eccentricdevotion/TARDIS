@@ -39,7 +39,7 @@ import java.util.List;
  */
 public class TARDISAdminTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("arch", "condenser", "config", "convert_database", "create", "decharge", "delete", "disguise", "dispersed", "enter", "find", "list", "make_preset", "maze", "mvimport", "playercount", "prune", "prunelist", "purge", "purge_portals", "recharger", "region_flag", "reload", "repair", "revoke", "set_size", "spawn_abandoned", "undisguise", "update_plugins");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("arch", "assemble", "condenser", "config", "convert_database", "create", "decharge", "delete", "disguise", "dispersed", "enter", "find", "list", "make_preset", "maze", "mvimport", "playercount", "prune", "prunelist", "purge", "purge_portals", "recharger", "region_flag", "reload", "repair", "revoke", "set_size", "spawn_abandoned", "undisguise", "update_plugins");
     private final ImmutableList<String> ASS_SUBS = ImmutableList.of("clear", "list");
     private final ImmutableList<String> COMPASS_SUBS = ImmutableList.of("NORTH", "EAST", "SOUTH", "WEST");
     private final ImmutableList<String> ENTITY_SUBS;
@@ -83,7 +83,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
             String sub = args[0].toLowerCase();
-            if (sub.equals("dispersed")) {
+            if (sub.equals("assemble") || sub.equals("dispersed")) {
                 return partial(lastArg, ASS_SUBS);
             }
             if (sub.equals("disguise")) {
@@ -92,7 +92,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             if (sub.equals("list")) {
                 return partial(lastArg, LIST_SUBS);
             }
-            if (sub.equals("arch") || sub.equals("create")  || sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("repair") || sub.equals("revoke") || sub.equals("set_size") || sub.equals("undisguise")) {
+            if (sub.equals("arch") || sub.equals("create") || sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("repair") || sub.equals("revoke") || sub.equals("set_size") || sub.equals("undisguise")) {
                 // return null to default to online player name matching
                 return null;
             }
