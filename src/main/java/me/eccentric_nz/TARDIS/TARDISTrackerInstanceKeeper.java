@@ -60,6 +60,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<Integer, Integer> cloisterBells = new HashMap<>();
     private final HashMap<Integer, Integer> hadsDamage = new HashMap<>();
     private final HashMap<Integer, Integer> destinationVortex = new HashMap<>();
+    private final HashMap<Integer, Integer> shriekers = new HashMap<>();
     private final HashMap<Integer, TravelCostAndType> hasDestination = new HashMap<>();
     private final HashMap<Integer, String> renderer = new HashMap<>();
     private final HashMap<Integer, TARDISAntiBuild> antiBuild = new HashMap<>();
@@ -1082,5 +1083,9 @@ public class TARDISTrackerInstanceKeeper {
      */
     public Set<UUID> getZeroRoomOccupants() {
         return zeroRoomOccupants;
+    }
+
+    public HashMap<Integer, Integer> getShriekers() {
+        return shriekers;
     }
 }

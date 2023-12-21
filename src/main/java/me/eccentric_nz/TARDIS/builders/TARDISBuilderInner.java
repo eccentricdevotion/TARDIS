@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import com.google.gson.*;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -50,6 +49,8 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.*;
+
+import java.util.*;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted
@@ -110,22 +111,22 @@ public class TARDISBuilderInner implements Runnable {
     /**
      * Builds the inside of the TARDIS.
      *
-     * @param plugin an instance of the main TARDIS plugin class
-     * @param schm the name of the schematic file to use can be ANCIENT, ARS,
-     * BIGGER, BUDGET, CAVE, COPPER, CORAL, CUSTOM, DELTA, DELUXE, DIVISION,
-     * ELEVENTH, ENDER, FACTORY, FUGITIVE, HOSPITAL, MASTER, MECHANICAL,
-     * ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH, TOM,
-     * TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE,
-     * LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM name.
-     * @param world the world where the TARDIS is to be built.
-     * @param dbID the unique key of the record for this TARDIS in the database.
-     * @param player an instance of the player who owns the TARDIS.
-     * @param wall_type a material type determined from the TARDIS seed block,
-     * this material determines the makeup of the TARDIS walls.
+     * @param plugin     an instance of the main TARDIS plugin class
+     * @param schm       the name of the schematic file to use can be ANCIENT, ARS,
+     *                   BIGGER, BUDGET, CAVE, COPPER, CORAL, CUSTOM, DELTA, DELUXE, DIVISION,
+     *                   ELEVENTH, ENDER, FACTORY, FUGITIVE, HOSPITAL, MASTER, MECHANICAL,
+     *                   ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH, TOM,
+     *                   TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE,
+     *                   LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM name.
+     * @param world      the world where the TARDIS is to be built.
+     * @param dbID       the unique key of the record for this TARDIS in the database.
+     * @param player     an instance of the player who owns the TARDIS.
+     * @param wall_type  a material type determined from the TARDIS seed block,
+     *                   this material determines the makeup of the TARDIS walls.
      * @param floor_type a material type determined from the TARDIS seed block,
-     * this material determines the makeup of the TARDIS floors.
-     * @param tips an int determining where this TARDIS will be built ----
-     * -1:own world, > 0:default world ----
+     *                   this material determines the makeup of the TARDIS floors.
+     * @param tips       an int determining where this TARDIS will be built ----
+     *                   -1:own world, > 0:default world ----
      */
     public TARDISBuilderInner(TARDIS plugin, Schematic schm, World world, int dbID, Player player, Material wall_type, Material floor_type, int tips) {
         this.plugin = plugin;
@@ -372,6 +373,11 @@ public class TARDISBuilderInner implements Runnable {
             int z = startz + col;
             BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
             Material type = data.getMaterial();
+            if (type.equals(Material.SCULK_SHRIEKER)) {
+                // remember the location so we can make it shriek when flying
+                String shrieker = new Location(world, x, y, z).toString();
+                TARDISTimeRotor.updateRotorRecord(dbID, shrieker);
+            }
             if (type.equals(Material.NOTE_BLOCK)) {
                 // remember the location of this Disk Storage
                 String storage = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
@@ -406,12 +412,9 @@ public class TARDISBuilderInner implements Runnable {
                         if (!schm.getPermission().equals("eleventh")) {
                             if (floor_type == Material.LIGHT_GRAY_WOOL) {
                                 data = switch (use_clay) {
-                                    case TERRACOTTA ->
-                                        Material.LIGHT_GRAY_TERRACOTTA.createBlockData();
-                                    case CONCRETE ->
-                                        Material.LIGHT_GRAY_CONCRETE.createBlockData();
-                                    default ->
-                                        Material.LIGHT_GRAY_WOOL.createBlockData();
+                                    case TERRACOTTA -> Material.LIGHT_GRAY_TERRACOTTA.createBlockData();
+                                    case CONCRETE -> Material.LIGHT_GRAY_CONCRETE.createBlockData();
+                                    default -> Material.LIGHT_GRAY_WOOL.createBlockData();
                                 };
                             } else {
                                 data = floor_type.createBlockData();

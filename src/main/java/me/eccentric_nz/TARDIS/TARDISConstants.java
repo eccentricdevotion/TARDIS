@@ -265,6 +265,7 @@ public class TARDISConstants {
             Material.CYAN_DYE, Material.PURPLE_DYE, Material.BLUE_DYE, Material.BROWN_DYE, Material.GREEN_DYE, Material.RED_DYE, Material.BLACK_DYE,
             Material.LEATHER_HORSE_ARMOR, Material.ENDER_PEARL
     );
+    public static final UUID UUID_ZERO = new UUID(0, 0);
 
     private static Set<Material> getValidMaterials() {
         Set<Material> set = new HashSet<>();

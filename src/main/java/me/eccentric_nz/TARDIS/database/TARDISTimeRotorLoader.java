@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 /**
  * @author eccentric_nz
@@ -50,7 +51,7 @@ public class TARDISTimeRotorLoader {
                 while (rs.next()) {
                     String u = rs.getString("rotor");
                     // check for empty uuid
-                    if (!u.isEmpty()) {
+                    if (!u.isEmpty() && !u.contains("Location")) {
                         try {
                             UUID uuid = UUID.fromString(u);
                             plugin.getGeneralKeeper().getTimeRotors().add(uuid);

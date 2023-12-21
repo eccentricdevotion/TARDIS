@@ -17,10 +17,6 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import com.google.gson.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -49,6 +45,11 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted
@@ -105,14 +106,14 @@ class TARDISBuildAbandoned implements Runnable {
      * Builds the interior of an abandoned TARDIS.
      *
      * @param plugin an instance of the TARDIS plugin main class.
-     * @param schm the name of the schematic file to use can be ANCIENT, ARS,
-     * BIGGER, BUDGET, CAVE, COPPER, CORAL, CUSTOM, DELTA, DELUXE, DIVISION,
-     * ELEVENTH, ENDER, FACTORY, FUGITIVE, HOSPITAL, MASTER, MECHANICAL,
-     * ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH, TOM,
-     * TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE,
-     * LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM name.
-     * @param world the world where the TARDIS is to be built.
-     * @param dbID the unique key of the record for this TARDIS in the database.
+     * @param schm   the name of the schematic file to use can be ANCIENT, ARS,
+     *               BIGGER, BUDGET, CAVE, COPPER, CORAL, CUSTOM, DELTA, DELUXE, DIVISION,
+     *               ELEVENTH, ENDER, FACTORY, FUGITIVE, HOSPITAL, MASTER, MECHANICAL,
+     *               ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH, TOM,
+     *               TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE,
+     *               LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM name.
+     * @param world  the world where the TARDIS is to be built.
+     * @param dbID   the unique key of the record for this TARDIS in the database.
      * @param player the player to show the progress bar to, may be null.
      */
     TARDISBuildAbandoned(TARDIS plugin, Schematic schm, World world, int dbID, Player player) {
@@ -292,6 +293,11 @@ class TARDISBuildAbandoned implements Runnable {
             int z = startz + col;
             BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
             Material type = data.getMaterial();
+            if (type.equals(Material.SCULK_SHRIEKER)) {
+                // remember the location so we can make it shriek when flying
+                String shrieker = new Location(world, x, y, z).toString();
+                TARDISTimeRotor.updateRotorRecord(dbID, shrieker);
+            }
             if (type.equals(Material.NOTE_BLOCK)) {
                 // remember the location of this Disk Storage
                 String storage = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);

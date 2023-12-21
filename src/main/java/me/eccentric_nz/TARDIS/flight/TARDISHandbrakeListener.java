@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.builders.TARDISSculkShrieker;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -193,11 +194,16 @@ public class TARDISHandbrakeListener implements Listener {
                                     }
                                     // start time rotor?
                                     if (tardis.getRotor() != null) {
-                                        ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
-                                        if (itemFrame != null) {
-                                            // get the rotor type
-                                            Rotor rotor = Rotor.getByModelData(TARDISTimeRotor.getRotorModelData(itemFrame));
-                                            TARDISTimeRotor.setRotor(rotor, itemFrame);
+                                        if (tardis.getRotor() == TARDISConstants.UUID_ZERO) {
+                                            // get sculk shrieker and set shreiking
+                                            TARDISSculkShrieker.setRotor(id);
+                                        } else {
+                                            ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                                            if (itemFrame != null) {
+                                                // get the rotor type
+                                                Rotor rotor = Rotor.getByModelData(TARDISTimeRotor.getRotorModelData(itemFrame));
+                                                TARDISTimeRotor.setRotor(rotor, itemFrame);
+                                            }
                                         }
                                     }
                                 } else {
@@ -208,12 +214,16 @@ public class TARDISHandbrakeListener implements Listener {
                                 if (!tardis.isHandbrake_on()) {
                                     // stop time rotor?
                                     if (tardis.getRotor() != null) {
-                                        ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
-                                        if (itemFrame != null) {
-                                            // cancel the animation
-                                            int task = TARDISTimeRotor.ANIMATED_ROTORS.getOrDefault(itemFrame.getUniqueId(), -1);
-                                            plugin.getServer().getScheduler().cancelTask(task);
-                                            TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorOffModelData(itemFrame), itemFrame);
+                                        if (tardis.getRotor() == TARDISConstants.UUID_ZERO) {
+                                            TARDISSculkShrieker.stopRotor(id);
+                                        } else {
+                                            ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                                            if (itemFrame != null) {
+                                                // cancel the animation
+                                                int task = TARDISTimeRotor.ANIMATED_ROTORS.getOrDefault(itemFrame.getUniqueId(), -1);
+                                                plugin.getServer().getScheduler().cancelTask(task);
+                                                TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorOffModelData(itemFrame), itemFrame);
+                                            }
                                         }
                                     }
                                     // if player is flying TARDIS exterior stop sound loop

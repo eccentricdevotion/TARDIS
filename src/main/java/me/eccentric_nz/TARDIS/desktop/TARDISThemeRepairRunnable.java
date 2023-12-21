@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -51,6 +50,8 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
+
+import java.util.*;
 
 /**
  * There was also a safety mechanism for when TARDIS rooms were deleted,
@@ -417,6 +418,11 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     String bedrocloc = world.getName() + ":" + x + ":" + y + ":" + z;
                     set.put("beacon", bedrocloc);
                     postBedrock = world.getBlockAt(x, y, z);
+                }
+                if (type.equals(Material.SCULK_SHRIEKER)) {
+                    // remember the location so we can make it shriek when flying
+                    String shrieker = new Location(world, x, y, z).toString();
+                    TARDISTimeRotor.updateRotorRecord(id, shrieker);
                 }
                 if (type.equals(Material.NOTE_BLOCK)) {
                     // remember the location of this Disk Storage

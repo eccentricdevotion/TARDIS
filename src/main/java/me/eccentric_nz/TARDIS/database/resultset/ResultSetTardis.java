@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.database.resultset;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -52,14 +53,14 @@ public class ResultSetTardis {
      * Creates a class instance that can be used to retrieve an SQL ResultSet
      * from the tardis table.
      *
-     * @param plugin an instance of the main class.
-     * @param where a HashMap&lt;String, Object&gt; of table fields and values
-     * to refine the search.
-     * @param limit an SQL LIMIT statement
-     * @param multiple a boolean indicating whether multiple rows should be
-     * fetched
+     * @param plugin    an instance of the main class.
+     * @param where     a HashMap&lt;String, Object&gt; of table fields and values
+     *                  to refine the search.
+     * @param limit     an SQL LIMIT statement
+     * @param multiple  a boolean indicating whether multiple rows should be
+     *                  fetched
      * @param abandoned whether to select TARDISes that are abandoned (1) or not
-     * (0)
+     *                  (0)
      */
     public ResultSetTardis(TARDIS plugin, HashMap<String, Object> where, String limit, boolean multiple, int abandoned) {
         this.plugin = plugin;
@@ -128,7 +129,7 @@ public class ResultSetTardis {
                     UUID frame = null;
                     String rotor = rs.getString("rotor");
                     if (!rs.wasNull() && !rotor.isEmpty()) {
-                        frame = UUID.fromString(rotor);
+                        frame = rotor.contains("Location") ? TARDISConstants.UUID_ZERO : UUID.fromString(rotor);
                     }
                     ChameleonPreset preset;
                     ChameleonPreset demat;
