@@ -21,6 +21,9 @@ import com.earth2me.essentials.User;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.*;
@@ -34,6 +37,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -42,6 +46,31 @@ import java.util.UUID;
 public class TARDISStaticUtils {
 
     private static final UUID ZERO_UUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
+
+
+    /**
+     *
+     */
+    public static boolean isOwnerOnline(int id) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, where, "", false, 0);
+        if (rst.resultSet()) {
+            Tardis tardis = rst.getTardis();
+            if (!tardis.isTardis_init()) {
+                return false;
+            }
+            UUID ownerUUID = tardis.getUuid();
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, ownerUUID.toString());
+            boolean hads_on = true;
+            if (rsp.resultSet()) {
+                hads_on = rsp.isHadsOn();
+            }
+            return (TARDIS.plugin.getServer().getOfflinePlayer(ownerUUID).isOnline() && hads_on);
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Get the direction a player is facing.
@@ -72,7 +101,8 @@ public class TARDISStaticUtils {
      */
     public static boolean isOceanBiome(Biome b) {
         return switch (b) {
-            case OCEAN, COLD_OCEAN, DEEP_COLD_OCEAN, DEEP_FROZEN_OCEAN, DEEP_LUKEWARM_OCEAN, DEEP_OCEAN, FROZEN_OCEAN, LUKEWARM_OCEAN, WARM_OCEAN -> true;
+            case OCEAN, COLD_OCEAN, DEEP_COLD_OCEAN, DEEP_FROZEN_OCEAN, DEEP_LUKEWARM_OCEAN, DEEP_OCEAN, FROZEN_OCEAN, LUKEWARM_OCEAN, WARM_OCEAN ->
+                    true;
             default -> false;
         };
     }
@@ -176,7 +206,8 @@ public class TARDISStaticUtils {
 
     public static boolean isInfested(Material material) {
         return switch (material) {
-            case INFESTED_CHISELED_STONE_BRICKS, INFESTED_COBBLESTONE, INFESTED_CRACKED_STONE_BRICKS, INFESTED_MOSSY_STONE_BRICKS, INFESTED_STONE, INFESTED_STONE_BRICKS -> true;
+            case INFESTED_CHISELED_STONE_BRICKS, INFESTED_COBBLESTONE, INFESTED_CRACKED_STONE_BRICKS, INFESTED_MOSSY_STONE_BRICKS, INFESTED_STONE, INFESTED_STONE_BRICKS ->
+                    true;
             default -> false;
         };
     }
@@ -251,6 +282,7 @@ public class TARDISStaticUtils {
 
     /**
      * Gets the chat colour from a display name. Used by Key and Sonic preference GUIs.
+     *
      * @param input the display name of the item
      * @return a ChatColor
      */

@@ -67,7 +67,7 @@ class TARDISHostileDispersal {
         if (!rsc.resultSet()) {
             plugin.debug("Could not get current TARDIS location for HADS!");
         }
-        if (rsc.isSubmarine()) {
+        if (rsc.isSubmarine() || preset.usesArmourStand()) {
             // underwater use displacement
             new TARDISHostileDisplacement(plugin).moveTARDIS(id, uuid, hostile, preset);
             return;

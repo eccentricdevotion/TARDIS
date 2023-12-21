@@ -20,15 +20,14 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
-import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.hads.TARDISHostileAction;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -39,7 +38,6 @@ import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * The Judoon are a race of rhinocerid humanoids frequently employed as a mercenary police force.
@@ -84,7 +82,11 @@ public class TARDISBlockDamageListener implements Listener {
                 boolean m = false;
                 boolean isDoor = false;
                 int damage = plugin.getTrackerKeeper().getHadsDamage().getOrDefault(id, 0);
-                if (damage <= plugin.getConfig().getInt("preferences.hads_damage") && plugin.getConfig().getBoolean("allow.hads") && !plugin.getTrackerKeeper().getInVortex().contains(id) && isOwnerOnline(id) && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                if (damage <= plugin.getConfig().getInt("preferences.hads_damage")
+                        && plugin.getConfig().getBoolean("allow.hads")
+                        && !plugin.getTrackerKeeper().getInVortex().contains(id)
+                        && TARDISStaticUtils.isOwnerOnline(id)
+                        && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
                     if (TARDISMaterials.doors.contains(b.getType())) {
                         if (isOwner(id, p.getUniqueId().toString())) {
                             isDoor = true;
@@ -114,27 +116,6 @@ public class TARDISBlockDamageListener implements Listener {
         where.put("uuid", uuid);
         ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 0);
         return rst.resultSet();
-    }
-
-    private boolean isOwnerOnline(int id) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 0);
-        if (rst.resultSet()) {
-            Tardis tardis = rst.getTardis();
-            if (!tardis.isTardis_init()) {
-                return false;
-            }
-            UUID ownerUUID = tardis.getUuid();
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, ownerUUID.toString());
-            boolean hads_on = true;
-            if (rsp.resultSet()) {
-                hads_on = rsp.isHadsOn();
-            }
-            return (plugin.getServer().getOfflinePlayer(ownerUUID).isOnline() && hads_on);
-        } else {
-            return false;
-        }
     }
 
     private void unhide(int id, Player player) {

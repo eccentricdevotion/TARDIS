@@ -16,24 +16,27 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCreeper;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.hads.TARDISHostileAction;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.ItemFrame;
-import org.bukkit.entity.Player;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
+
+import java.util.HashMap;
 
 /**
  * Distronic explosives are powerful but unstable weapons, used on many worlds as components of explosive warheads
@@ -86,7 +89,33 @@ public class TARDISExplosionAndDamageListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(ignoreCancelled = true)
+    public void onProjectileHit(ProjectileHitEvent event) {
+        Entity entity = event.getHitEntity();
+        if (entity instanceof ArmorStand stand) {
+            String location = stand.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toString();
+            if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(location)) {
+                if (event.getEntity().getShooter() instanceof Player p) {
+                    int limit = plugin.getConfig().getInt("preferences.hads_damage");
+                    int id = plugin.getGeneralKeeper().getProtectBlockMap().get(location);
+                    int damage = plugin.getTrackerKeeper().getHadsDamage().getOrDefault(id, 0);
+                    // increment HADS count
+                    plugin.getTrackerKeeper().getHadsDamage().put(id, damage + 1);
+                    if (damage == limit
+                            && plugin.getConfig().getBoolean("allow.hads")
+                            && !plugin.getTrackerKeeper().getInVortex().contains(id)
+                            && TARDISStaticUtils.isOwnerOnline(id)
+                            && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                        new TARDISHostileAction(plugin).processAction(id, p);
+                    } else if ((limit - damage) >= 0) {
+                        plugin.getMessenger().send(p, TardisModule.TARDIS, "HADS_WARNING", String.format("%d", (limit - damage)));
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player player && plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {
             event.setCancelled(true);
@@ -99,6 +128,13 @@ public class TARDISExplosionAndDamageListener implements Listener {
             ResultSetControls rs = new ResultSetControls(plugin, where, false);
             if (rs.resultSet()) {
                 event.setCancelled(true);
+            }
+        } else if (event.getEntity() instanceof ArmorStand stand) {
+            // check if it is a TARDIS exterior
+            plugin.debug(stand.getLocation());
+            if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(stand.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toString())) {
+                // increment HADS count
+                plugin.debug("Armour Stand HADS");
             }
         }
         if (event.getCause() != DamageCause.ENTITY_EXPLOSION) {
