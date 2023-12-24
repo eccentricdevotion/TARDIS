@@ -56,7 +56,7 @@ public class TARDISConsoleLoader {
         Consoles.getBY_NAMES().put("DELTA", new Schematic("CRYING_OBSIDIAN", "delta", "Nether Delta Console", ConsoleSize.MEDIUM, false, TardisLight.LAMP, false));
         Consoles.getBY_NAMES().put("DELUXE", new Schematic("DIAMOND_BLOCK", "deluxe", "Supersized Deluxe Console", ConsoleSize.TALL, true, TardisLight.TENTH, false));
         Consoles.getBY_NAMES().put("DIVISION", new Schematic("PINK_GLAZED_TERRACOTTA", "division", "The Division Interuniverse Console", ConsoleSize.MEDIUM, false, TardisLight.LANTERN, false));
-        Consoles.getBY_NAMES().put("ELEVENTH", new Schematic("EMERALD_BLOCK", "eleventh", "11th Doctor's Console", ConsoleSize.TALL, true, TardisLight.ELEVENTH, false));
+        Consoles.getBY_NAMES().put("ELEVENTH", new Schematic("EMERALD_BLOCK", "eleventh", "11th Doctor's Console", ConsoleSize.TALL, true, TardisLight.TWELFTH, false));
         // ENDER schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
         Consoles.getBY_NAMES().put("ENDER", new Schematic("PURPUR_BLOCK", "ender", "Ender Console", ConsoleSize.SMALL, true, TardisLight.LANTERN, false));
         // FACTORY designed by Razihel
