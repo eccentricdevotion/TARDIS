@@ -52,10 +52,9 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * The TARDIS was prone to a number of technical faults, ranging from depleted
- * resources to malfunctioning controls to a simple inability to arrive at the
- * proper time or location. While the Doctor did not build the TARDIS from
- * scratch, he has substantially modified/rebuilt it.
+ * The TARDIS was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
+ * simple inability to arrive at the proper time or location. While the Doctor did not build the TARDIS from scratch, he
+ * has substantially modified/rebuilt it.
  *
  * @author eccentric_nz
  */
@@ -106,12 +105,11 @@ class TARDISBuildAbandoned implements Runnable {
      * Builds the interior of an abandoned TARDIS.
      *
      * @param plugin an instance of the TARDIS plugin main class.
-     * @param schm   the name of the schematic file to use can be ANCIENT, ARS,
-     *               BIGGER, BUDGET, CAVE, COPPER, CORAL, CUSTOM, DELTA, DELUXE, DIVISION,
-     *               ELEVENTH, ENDER, FACTORY, FUGITIVE, HOSPITAL, MASTER, MECHANICAL,
-     *               ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH, TOM,
-     *               TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE,
-     *               LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM name.
+     * @param schm   the name of the schematic file to use can be ANCIENT, ARS, BIGGER, BUDGET, CAVE, COPPER, CORAL,
+     *               CURSED, CUSTOM, DELTA, DELUXE, DIVISION, ELEVENTH, ENDER, FACTORY, FIFTEENTH, FUGITIVE, HOSPITAL,
+     *               MASTER, MECHANICAL, ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH, TOM, TWELFTH,
+     *               WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM
+     *               name.
      * @param world  the world where the TARDIS is to be built.
      * @param dbID   the unique key of the record for this TARDIS in the database.
      * @param player the player to show the progress bar to, may be null.
@@ -521,7 +519,7 @@ class TARDISBuildAbandoned implements Runnable {
                 if (type.equals(Material.COMMAND_BLOCK)) {
                     data = switch (schm.getPermission()) {
                         case "ender" -> Material.END_STONE_BRICKS.createBlockData();
-                        case "delta" -> Material.BLACKSTONE.createBlockData();
+                        case "delta", "cursed" -> Material.BLACKSTONE.createBlockData();
                         case "ancient", "fugitive" -> Material.GRAY_WOOL.createBlockData();
                         case "hospital" -> Material.LIGHT_GRAY_WOOL.createBlockData();
                         default -> Material.STONE_BRICKS.createBlockData();

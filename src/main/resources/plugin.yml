@@ -272,6 +272,7 @@ permissions:
       tardis.cave: true
       tardis.copper: true
       tardis.coral: true
+      tardis.cursed: true
       tardis.custom: true
       tardis.delta: true
       tardis.deluxe: true
@@ -280,6 +281,7 @@ permissions:
       tardis.ender: true
       tardis.factory: true
       tardis.fugitive: true
+      tardis.fifteenth: true
       tardis.hospital: true
       tardis.legacy_bigger: true
       tardis.legacy_deluxe: true
@@ -314,6 +316,9 @@ permissions:
   tardis.coral:
     description: Allow players to build the Tenth Doctor's coral TARDIS.
     default: op
+  tardis.cursed:
+    description: Allow players to build the cursed TARDIS.
+    default: op
   tardis.delta:
     description: Allow players to build the Nether TARDIS.
     default: op
@@ -331,6 +336,9 @@ permissions:
     default: op
   tardis.factory:
     description: Allow players to build the First Doctor's TARDIS.
+    default: op
+  tardis.fifteenth:
+    description: Allow players to build the Fourteenth/Fifteenth Doctor's TARDIS.
     default: op
   tardis.fugitive:
     description: Allow players to build Ruth (The Fugitive Doctor) Clayton's TARDIS.

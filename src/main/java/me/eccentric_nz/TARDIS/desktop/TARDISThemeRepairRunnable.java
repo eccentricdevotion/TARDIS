@@ -538,7 +538,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     if (type.equals(Material.COMMAND_BLOCK)) {
                         data = switch (tud.getSchematic().getPermission()) {
                             case "ender" -> Material.END_STONE_BRICKS.createBlockData();
-                            case "delta" -> Material.BLACKSTONE.createBlockData();
+                            case "delta", "cursed" -> Material.BLACKSTONE.createBlockData();
                             case "ancient", "fugitive" -> Material.GRAY_WOOL.createBlockData();
                             case "hospital" -> Material.LIGHT_GRAY_WOOL.createBlockData();
                             default -> Material.STONE_BRICKS.createBlockData();

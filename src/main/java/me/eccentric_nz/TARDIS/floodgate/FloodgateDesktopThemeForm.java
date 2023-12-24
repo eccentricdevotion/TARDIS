@@ -1,8 +1,5 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
@@ -17,6 +14,10 @@ import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class FloodgateDesktopThemeForm {
 
@@ -35,6 +36,7 @@ public class FloodgateDesktopThemeForm {
         blocks.put("CAVE", "cave");
         blocks.put("COPPER", "warped_planks");
         blocks.put("CORAL", "netherwart");
+        blocks.put("CURSED", "black_concrete");
         blocks.put("CUSTOM", "custom");
         blocks.put("DELTA", "crying_obsidian");
         blocks.put("DELUXE", "diamond");
@@ -42,6 +44,7 @@ public class FloodgateDesktopThemeForm {
         blocks.put("ELEVENTH", "emerald");
         blocks.put("ENDER", "purpur");
         blocks.put("FACTORY", "yellow_concrete_powder");
+        blocks.put("FIFTEENTH", "ochre_froglight");
         blocks.put("FUGITIVE", "polished_deepslate");
         blocks.put("HOSPITAL", "white_concrete");
         blocks.put("LEGACY_BIGGER", "orange_glazed");

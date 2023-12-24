@@ -53,10 +53,9 @@ import org.bukkit.entity.*;
 import java.util.*;
 
 /**
- * The TARDIS was prone to a number of technical faults, ranging from depleted
- * resources to malfunctioning controls to a simple inability to arrive at the
- * proper time or location. While the Doctor did not build the TARDIS from
- * scratch, he has substantially modified/rebuilt it.
+ * The TARDIS was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
+ * simple inability to arrive at the proper time or location. While the Doctor did not build the TARDIS from scratch, he
+ * has substantially modified/rebuilt it.
  *
  * @author eccentric_nz
  */
@@ -112,21 +111,19 @@ public class TARDISBuilderInner implements Runnable {
      * Builds the inside of the TARDIS.
      *
      * @param plugin     an instance of the main TARDIS plugin class
-     * @param schm       the name of the schematic file to use can be ANCIENT, ARS,
-     *                   BIGGER, BUDGET, CAVE, COPPER, CORAL, CUSTOM, DELTA, DELUXE, DIVISION,
-     *                   ELEVENTH, ENDER, FACTORY, FUGITIVE, HOSPITAL, MASTER, MECHANICAL,
-     *                   ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH, TOM,
-     *                   TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE,
-     *                   LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM name.
+     * @param schm       the name of the schematic file to use can be ANCIENT, ARS, BIGGER, BUDGET, CAVE, COPPER, CORAL,
+     *                   CURSED, CUSTOM, DELTA, DELUXE, DIVISION, ELEVENTH, ENDER, FACTORY, FIFTEENTH, FUGITIVE,
+     *                   HOSPITAL, MASTER, MECHANICAL, ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH,
+     *                   TOM, TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH,
+     *                   LEGACY_REDSTONE or a CUSTOM name.
      * @param world      the world where the TARDIS is to be built.
      * @param dbID       the unique key of the record for this TARDIS in the database.
      * @param player     an instance of the player who owns the TARDIS.
-     * @param wall_type  a material type determined from the TARDIS seed block,
-     *                   this material determines the makeup of the TARDIS walls.
-     * @param floor_type a material type determined from the TARDIS seed block,
-     *                   this material determines the makeup of the TARDIS floors.
-     * @param tips       an int determining where this TARDIS will be built ----
-     *                   -1:own world, > 0:default world ----
+     * @param wall_type  a material type determined from the TARDIS seed block, this material determines the makeup of
+     *                   the TARDIS walls.
+     * @param floor_type a material type determined from the TARDIS seed block, this material determines the makeup of
+     *                   the TARDIS floors.
+     * @param tips       an int determining where this TARDIS will be built ---- -1:own world, > 0:default world ----
      */
     public TARDISBuilderInner(TARDIS plugin, Schematic schm, World world, int dbID, Player player, Material wall_type, Material floor_type, int tips) {
         this.plugin = plugin;
@@ -619,7 +616,7 @@ public class TARDISBuilderInner implements Runnable {
                 if (type.equals(Material.COMMAND_BLOCK)) {
                     data = switch (schm.getPermission()) {
                         case "ender" -> Material.END_STONE_BRICKS.createBlockData();
-                        case "delta" -> Material.BLACKSTONE.createBlockData();
+                        case "delta", "cursed" -> Material.BLACKSTONE.createBlockData();
                         case "ancient", "fugitive" -> Material.GRAY_WOOL.createBlockData();
                         case "hospital" -> Material.LIGHT_GRAY_WOOL.createBlockData();
                         default -> Material.STONE_BRICKS.createBlockData();
