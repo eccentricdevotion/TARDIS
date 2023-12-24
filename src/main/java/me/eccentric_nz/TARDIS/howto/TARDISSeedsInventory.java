@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.howto;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
@@ -26,6 +24,9 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * By the time of his eleventh incarnation, the Doctor's console room had gone through at least twelve redesigns, though
@@ -53,7 +54,7 @@ public class TARDISSeedsInventory {
      * @return an Array of itemStacks (an inventory)
      */
     private ItemStack[] getItemStack() {
-        ItemStack[] stack = new ItemStack[27];
+        ItemStack[] stack = new ItemStack[36];
         int i = 0;
         // get consoles
         for (Schematic a : Consoles.getBY_NAMES().values()) {
@@ -77,7 +78,7 @@ public class TARDISSeedsInventory {
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close_im.setCustomModelData(1);
         close.setItemMeta(close_im);
-        stack[26] = close;
+        stack[35] = close;
         return stack;
     }
 

@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.Locale;
-import java.util.UUID;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISAcceptor;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -35,6 +32,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Locale;
+import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
  * In 21st century London, Rory has his father, Brian Williams, over to help fix a light bulb. After saying the fixture
@@ -107,7 +108,7 @@ public class TARDISChatListener implements Listener {
             // open how to GUI
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 ItemStack[] seeds = new TARDISSeedsInventory(plugin, p).getMenu();
-                Inventory wall = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Seeds Menu");
+                Inventory wall = plugin.getServer().createInventory(p, 36, ChatColor.DARK_RED + "TARDIS Seeds Menu");
                 wall.setContents(seeds);
                 p.openInventory(wall);
             }, 1L);
