@@ -7,7 +7,6 @@
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
 3. Deep space [#748](https://github.com/eccentricdevotion/TARDIS/issues/748)
 4. Animated models for player disguises
-5. Sculk shreiker time rotor
 
 ## Next version `5.4.0`
 

@@ -78,14 +78,14 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("CAVE", Material.DRIPSTONE_BLOCK); // dripstone cave
         t.put("COPPER", Material.WARPED_PLANKS); // copper schematic designed by vistaero
         t.put("CORAL", Material.NETHER_WART_BLOCK); // coral schematic designed by vistaero
-        t.put("CURSED", Material.BLACK_CONCRETE); // designed at thatsnotacreeper.com
+        t.put("CURSED", Material.BLACK_CONCRETE); // designed by airomis (player at thatsnotacreeper.com)
         t.put("DELTA", Material.CRYING_OBSIDIAN); // delta
         t.put("DELUXE", Material.DIAMOND_BLOCK); // deluxe
         t.put("DIVISION", Material.PINK_GLAZED_TERRACOTTA); // division
         t.put("ELEVENTH", Material.EMERALD_BLOCK); // eleventh
         t.put("ENDER", Material.PURPUR_BLOCK); // ender schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
         t.put("FACTORY", Material.YELLOW_CONCRETE_POWDER); // factory schematic designed by Razihel
-        t.put("FIFTEENTH", Material.OCHRE_FROGLIGHT); // designed at thatsnotacreeper.com
+        t.put("FIFTEENTH", Material.OCHRE_FROGLIGHT); // designed by airomis (player at thatsnotacreeper.com)
         t.put("FUGITIVE", Material.POLISHED_DEEPSLATE); // fugitive - based on TARDIS designed by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8
         t.put("HOSPITAL", Material.WHITE_CONCRETE); // hospital
         t.put("MASTER", Material.NETHER_BRICKS); // master schematic designed by ShadowAssociate

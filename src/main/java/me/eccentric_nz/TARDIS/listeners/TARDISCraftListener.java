@@ -52,7 +52,7 @@ public class TARDISCraftListener implements Listener {
     public TARDISCraftListener(TARDIS plugin) {
         this.plugin = plugin;
         // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
-        t.put(Material.BLACK_CONCRETE, "CURSED"); // cursed
+        t.put(Material.BLACK_CONCRETE, "CURSED"); // cursed schematic designed by airomis (player at thatsnotacreeper.com)
         t.put(Material.BOOKSHELF, "PLANK"); // plank
         t.put(Material.COAL_BLOCK, "STEAMPUNK"); // steampunk
         t.put(Material.CRYING_OBSIDIAN, "DELTA"); // delta
@@ -65,7 +65,7 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.LAPIS_BLOCK, "TOM"); // tom baker
         t.put(Material.NETHER_BRICKS, "MASTER"); // master schematic designed by ShadowAssociate
         t.put(Material.NETHER_WART_BLOCK, "CORAL"); // coral schematic designed by vistaero
-        t.put(Material.OCHRE_FROGLIGHT, "FIFTEENTH"); // fifteenth designed at mc.thatsnotacreeper.com
+        t.put(Material.OCHRE_FROGLIGHT, "FIFTEENTH"); // fifteenth schematic designed by airomis (player at thatsnotacreeper.com)
         t.put(Material.ORANGE_CONCRETE, "THIRTEENTH"); // thirteenth designed by Razihel
         t.put(Material.PACKED_MUD, "ORIGINAL"); // original
         t.put(Material.POLISHED_ANDESITE, "MECHANICAL"); // mechanical adapted from design by Plastic Straw https://www.planetminecraft.com/data-pack/new-tardis-mod-mechanical-interior-datapack/
