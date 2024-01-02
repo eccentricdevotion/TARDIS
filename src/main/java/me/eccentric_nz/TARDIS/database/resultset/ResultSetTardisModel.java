@@ -83,9 +83,9 @@ public class ResultSetTardisModel {
                 if (rs.getString("chameleon_demat").startsWith("ITEM:")) {
                     String[] split = rs.getString("chameleon_demat").split(":");
                     if (split.length > 1) {
-                        itemPreset = split[1];
+                        itemDemat = split[1];
                     } else {
-                        itemPreset = "Bad Wolf";
+                        itemDemat = "Bad Wolf";
                         TARDISStaticUtils.warnPreset(uuid);
                     }
                 }
