@@ -80,7 +80,7 @@ public class QueryFactory {
         try {
             service.testConnection(connection);
             String query = "INSERT INTO " + prefix + table + " (" + fields + ") VALUES (" + questions + ")";
-//            ps = connection.prepareStatement("INSERT INTO " + prefix + table + " (" + fields + ") VALUES (" + questions + ")");
+//            plugin.debug(query);
             if (service.isMySQL()) {
                 ps = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             } else {

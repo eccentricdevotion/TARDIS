@@ -26,7 +26,7 @@ public enum Table {
     area_locations,
     ars,
     back,
-    bind("b_id"),
+    bind("bind_id"),
     blocks("b_id"),
     blueprint("bp_id"),
     camera("c_id"),
