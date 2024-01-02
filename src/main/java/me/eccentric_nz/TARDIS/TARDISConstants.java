@@ -212,6 +212,10 @@ public class TARDISConstants {
      */
     public static final BlockData WATER = Material.WATER.createBlockData();
     /**
+     * BlockData for LAVA
+     */
+    public static final BlockData LAVA = Material.LAVA.createBlockData();
+    /**
      * BlockData for police box LIGHT
      */
     public static final Levelled LIGHT = (Levelled) Material.LIGHT.createBlockData();

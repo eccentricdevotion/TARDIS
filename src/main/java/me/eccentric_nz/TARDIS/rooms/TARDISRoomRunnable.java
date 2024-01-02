@@ -76,6 +76,7 @@ public class TARDISRoomRunnable implements Runnable {
     private final List<Block> carrotblocks = new ArrayList<>();
     private final List<Block> farmlandblocks = new ArrayList<>();
     private final List<Block> iceblocks = new ArrayList<>();
+    private final List<Block> lavablocks = new ArrayList<>();
     private final List<Block> lampblocks = new ArrayList<>();
     private final List<Block> melonblocks = new ArrayList<>();
     private final List<Block> potatoblocks = new ArrayList<>();
@@ -85,6 +86,7 @@ public class TARDISRoomRunnable implements Runnable {
     private final List<BlockData> flora = new ArrayList<>();
     private final HashMap<Block, BlockData> cocoablocks = new HashMap<>();
     private final HashMap<Block, BlockData> doorblocks = new HashMap<>();
+    private final HashMap<Block, BlockData> dripleafblocks = new HashMap<>();
     private final HashMap<Block, BlockData> leverblocks = new HashMap<>();
     private final HashMap<Block, BlockData> propagules = new HashMap<>();
     private final HashMap<Block, BlockData> redstoneTorchblocks = new HashMap<>();
@@ -134,6 +136,8 @@ public class TARDISRoomRunnable implements Runnable {
         repeaterOrder.put(3, 2);
         repeaterOrder.put(4, 5);
         repeaterOrder.put(5, 4);
+        notThese.add(Material.BIG_DRIPLEAF);
+        notThese.add(Material.BIG_DRIPLEAF_STEM);
         notThese.add(Material.CARROTS);
         notThese.add(Material.COCOA);
         notThese.add(Material.IRON_TRAPDOOR);
@@ -193,6 +197,8 @@ public class TARDISRoomRunnable implements Runnable {
                             BlockData postData = plugin.getServer().createBlockData(split[1]);
                             switch (postData.getMaterial()) {
                                 case ICE -> iceblocks.add(postBlock);
+                                case LAVA -> lavablocks.add(postBlock);
+                                case BIG_DRIPLEAF, BIG_DRIPLEAF_STEM -> dripleafblocks.put(postBlock, postData);
                                 case REDSTONE_LAMP -> lampblocks.add(postBlock);
                                 case TORCH -> torchblocks.put(postBlock, postData);
                                 case REDSTONE_TORCH -> redstoneTorchblocks.put(postBlock, postData);
@@ -242,11 +248,24 @@ public class TARDISRoomRunnable implements Runnable {
                     iceblocks.forEach((ice) -> ice.setBlockData(TARDISConstants.WATER));
                     iceblocks.clear();
                 }
+                if (!lavablocks.isEmpty()) {
+                    if (player != null) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "LAVA");
+                    }
+                    // set all the blocks to lava
+                    lavablocks.forEach((ice) -> ice.setBlockData(TARDISConstants.LAVA));
+                    lavablocks.clear();
+                }
                 if (!postSignBlocks.isEmpty()) {
                     TARDISSignSetter.setSigns(postSignBlocks, plugin, 0);
                 }
                 if (!propagules.isEmpty()) {
                     for (Map.Entry<Block, BlockData> prop : propagules.entrySet()) {
+                        prop.getKey().setBlockData(prop.getValue());
+                    }
+                }
+                if (!dripleafblocks.isEmpty()) {
+                    for (Map.Entry<Block, BlockData> prop : dripleafblocks.entrySet()) {
                         prop.getKey().setBlockData(prop.getValue());
                     }
                 }
@@ -794,6 +813,12 @@ public class TARDISRoomRunnable implements Runnable {
                     farmlandblocks.add(farmland);
                     rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + Material.FARMLAND.createBlockData().getAsString());
                 }
+                // remember lava
+                if (type.equals(Material.LAVA)) {
+                    Block lava = world.getBlockAt(startx, starty, startz);
+                    lavablocks.add(lava);
+                    rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + TARDISConstants.LAVA.getAsString());
+                }
                 if (room.equals("ARBORETUM") || room.equals("GREENHOUSE")) {
                     // remember sugar cane
                     if (type.equals(Material.SUGAR_CANE)) {
@@ -845,6 +870,10 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 if (type.equals(Material.MANGROVE_PROPAGULE)) {
                     propagules.put(world.getBlockAt(startx, starty, startz), data);
+                    rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
+                }
+                if (type.equals(Material.BIG_DRIPLEAF) || type.equals(Material.BIG_DRIPLEAF_STEM)) {
+                    dripleafblocks.put(world.getBlockAt(startx, starty, startz), data);
                     rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());
                 }
                 if (type.equals(Material.SEAGRASS) || type.equals(Material.TALL_SEAGRASS)) {
@@ -922,6 +951,8 @@ public class TARDISRoomRunnable implements Runnable {
                 if (!notThese.contains(type) && !type.equals(Material.MUSHROOM_STEM)) {
                     if (type.equals(Material.WATER)) {
                         TARDISBlockSetters.setBlock(world, startx, starty, startz, TARDISConstants.ICE);
+                    } else if (type.equals(Material.LAVA)) {
+                        TARDISBlockSetters.setBlock(world, startx, starty, startz, Material.ORANGE_STAINED_GLASS);
                     } else {
                         TARDISBlockSetters.setBlock(world, startx, starty, startz, data);
                     }
