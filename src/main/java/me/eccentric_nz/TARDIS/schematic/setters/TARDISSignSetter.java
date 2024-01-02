@@ -1,8 +1,6 @@
 package me.eccentric_nz.TARDIS.schematic.setters;
 
 import com.google.gson.JsonObject;
-import java.util.HashMap;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.DyeColor;
 import org.bukkit.block.Block;
@@ -10,6 +8,9 @@ import org.bukkit.block.Sign;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TARDISSignSetter {
 
@@ -36,7 +37,7 @@ public class TARDISSignSetter {
                 String controlLocation = block.getLocation().toString();
                 plugin.getQueryFactory().insertSyncControl(id, 22, controlLocation, 0);
                 signState.setWaxed(true);
-                signState.update();
+                signState.update(true);
             }
             front.setLine(0, json.get("line0").getAsString());
             front.setLine(1, line1);
