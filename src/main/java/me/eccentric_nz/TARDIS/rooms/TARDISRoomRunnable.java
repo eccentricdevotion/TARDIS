@@ -787,8 +787,8 @@ public class TARDISRoomRunnable implements Runnable {
                     Block lever = world.getBlockAt(startx, starty, startz);
                     leverblocks.put(lever, data);
                 }
-                // remember iron trap doors if SURGERY room
-                if (type.equals(Material.IRON_TRAPDOOR) && room.equals("SURGERY")) {
+                // remember iron trap doors
+                if (type.equals(Material.IRON_TRAPDOOR)) {
                     Block trap = world.getBlockAt(startx, starty, startz);
                     trapdoorblocks.put(trap, data);
                     rd.getPostBlocks().add(world.getName() + ":" + startx + ":" + starty + ":" + startz + "~" + data.getAsString());

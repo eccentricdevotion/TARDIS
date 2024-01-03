@@ -38,13 +38,13 @@ public class TARDISFrameCommand {
         this.plugin = plugin;
     }
 
-    public boolean toggle(Player player, boolean lock) {
+    public boolean toggle(Player player, boolean lock, boolean rotor) {
         // get the item frame the player is targeting
         ItemFrame frame = getItemFrame(player);
         if (frame != null) {
             frame.setFixed(lock);
             frame.setVisible(!lock);
-            if (lock) {
+            if (lock && !rotor) {
                 frame.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
             } else {
                 frame.getPersistentDataContainer().remove(plugin.getCustomBlockKey());
