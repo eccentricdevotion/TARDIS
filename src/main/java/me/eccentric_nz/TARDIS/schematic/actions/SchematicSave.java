@@ -18,13 +18,6 @@ package me.eccentric_nz.TARDIS.schematic.actions;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -34,17 +27,23 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.World;
-import org.bukkit.block.Banner;
-import org.bukkit.block.Block;
-import org.bukkit.block.Sign;
-import org.bukkit.block.Skull;
+import org.bukkit.block.*;
 import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class SchematicSave {
 
@@ -149,7 +148,8 @@ public class SchematicSave {
                                 frame.addProperty("facing", f.getFacing().toString());
                                 ItemStack item = f.getItem();
                                 if (item != null) {
-                                    frame.addProperty("item", f.getItem().getType().toString());
+                                    Material type = item.getType();
+                                    frame.addProperty("item", type.toString());
                                     if (item.hasItemMeta()) {
                                         ItemMeta im = item.getItemMeta();
                                         if (im.hasCustomModelData()) {
@@ -164,6 +164,10 @@ public class SchematicSave {
                                                 lore.add(s);
                                             });
                                             frame.add("lore", lore);
+                                        }
+                                        if ((Tag.ITEMS_BANNERS.isTagged(type) || type == Material.SHIELD) && im instanceof BlockStateMeta bsm) {
+                                            JsonObject state = SchematicSave.getBannerJson(bsm.getBlockState());
+                                            frame.add("banner", state);
                                         }
                                     }
                                 }
@@ -212,18 +216,7 @@ public class SchematicSave {
                     obj.addProperty("data", blockData);
                     // banners
                     if (TARDISStaticUtils.isBanner(b.getType())) {
-                        JsonObject state = new JsonObject();
-                        Banner banner = (Banner) b.getState();
-                        JsonArray patterns = new JsonArray();
-                        if (banner.numberOfPatterns() > 0) {
-                            banner.getPatterns().forEach((p) -> {
-                                JsonObject pattern = new JsonObject();
-                                pattern.addProperty("pattern", p.getPattern().toString());
-                                pattern.addProperty("pattern_colour", p.getColor().toString());
-                                patterns.add(pattern);
-                            });
-                        }
-                        state.add("patterns", patterns);
+                        JsonObject state = getBannerJson(b.getState());
                         obj.add("banner", state);
                     }
                     // player heads
@@ -271,16 +264,16 @@ public class SchematicSave {
         schematic.add("relative", relative);
         schematic.add("dimensions", dimensions);
         schematic.add("input", levels);
-        if (paintings.size() > 0) {
+        if (!paintings.isEmpty()) {
             schematic.add("paintings", paintings);
         }
-        if (itemFrames.size() > 0) {
+        if (!itemFrames.isEmpty()) {
             schematic.add("item_frames", itemFrames);
         }
-        if (itemDisplays.size() > 0) {
+        if (!itemDisplays.isEmpty()) {
             schematic.add("item_displays", itemDisplays);
         }
-        if (interactions.size() > 0) {
+        if (!interactions.isEmpty()) {
             schematic.add("interactions", interactions);
         }
         String output = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + which + ".json";
@@ -296,5 +289,22 @@ public class SchematicSave {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_ERROR");
         }
         return true;
+    }
+
+    public static JsonObject getBannerJson(BlockState b) {
+        JsonObject state = new JsonObject();
+        Banner banner = (Banner) b;
+        state.addProperty("base_colour", banner.getBaseColor().toString());
+        JsonArray patterns = new JsonArray();
+        if (banner.numberOfPatterns() > 0) {
+            banner.getPatterns().forEach((p) -> {
+                JsonObject pattern = new JsonObject();
+                pattern.addProperty("pattern", p.getPattern().toString());
+                pattern.addProperty("pattern_colour", p.getColor().toString());
+                patterns.add(pattern);
+            });
+        }
+        state.add("patterns", patterns);
+        return state;
     }
 }

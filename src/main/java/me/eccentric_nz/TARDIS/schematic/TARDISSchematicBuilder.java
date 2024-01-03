@@ -18,20 +18,18 @@ package me.eccentric_nz.TARDIS.schematic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.schematic.actions.SchematicSave;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World;
-import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Skull;
@@ -39,8 +37,13 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.MultipleFacing;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.BoundingBox;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -90,7 +93,8 @@ public class TARDISSchematicBuilder {
                     // x repeater
                     // z repeater
                     case 2, 3, 4, 5 -> map.put(c, location); // distance multiplier
-                    default -> h = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation()); // handbrake
+                    default ->
+                            h = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation()); // handbrake
                 }
             }
         }
@@ -184,7 +188,8 @@ public class TARDISSchematicBuilder {
                                 frame.addProperty("facing", fr.getFacing().toString());
                                 ItemStack item = fr.getItem();
                                 if (item != null) {
-                                    frame.addProperty("item", fr.getItem().getType().toString());
+                                    Material type = item.getType();
+                                    frame.addProperty("item", type.toString());
                                     if (item.hasItemMeta()) {
                                         ItemMeta im = item.getItemMeta();
                                         if (im.hasCustomModelData()) {
@@ -199,6 +204,10 @@ public class TARDISSchematicBuilder {
                                                 lore.add(s);
                                             }
                                             frame.add("lore", lore);
+                                        }
+                                        if ((Tag.ITEMS_BANNERS.isTagged(type) || type == Material.SHIELD) && im instanceof BlockStateMeta bsm) {
+                                            JsonObject state = SchematicSave.getBannerJson(bsm.getBlockState());
+                                            frame.add("banner", state);
                                         }
                                     }
                                 }
@@ -224,7 +233,7 @@ public class TARDISSchematicBuilder {
                                 stack.addProperty("type", material.toString());
                                 stack.addProperty("cmd", model);
                                 TARDISDisplayItem tdi = TARDISDisplayItem.getByMaterialAndData(material, model);
-                                if (tdi!=null) {
+                                if (tdi != null) {
                                     stack.addProperty("light", tdi.isLight());
                                     stack.addProperty("lit", tdi.isLit());
                                 }
@@ -296,19 +305,7 @@ public class TARDISSchematicBuilder {
                     obj.addProperty("data", data.getAsString());
                     // banners
                     if (TARDISStaticUtils.isBanner(m)) {
-                        JsonObject state = new JsonObject();
-                        Banner banner = (Banner) b.getState();
-                        state.addProperty("colour", banner.getBaseColor().toString());
-                        JsonArray patterns = new JsonArray();
-                        if (banner.numberOfPatterns() > 0) {
-                            banner.getPatterns().forEach((p) -> {
-                                JsonObject pattern = new JsonObject();
-                                pattern.addProperty("pattern", p.getPattern().toString());
-                                pattern.addProperty("pattern_colour", p.getColor().toString());
-                                patterns.add(pattern);
-                            });
-                        }
-                        state.add("patterns", patterns);
+                        JsonObject state = SchematicSave.getBannerJson(b.getState());
                         obj.add("banner", state);
                     }
                     // player heads
@@ -332,16 +329,16 @@ public class TARDISSchematicBuilder {
         schematic.add("relative", relative);
         schematic.add("dimensions", dimensions);
         schematic.add("input", levels);
-        if (paintings.size() > 0) {
+        if (!paintings.isEmpty()) {
             schematic.add("paintings", paintings);
         }
-        if (itemFrames.size() > 0) {
+        if (!itemFrames.isEmpty()) {
             schematic.add("item_frames", itemFrames);
         }
-        if (itemDisplays.size() > 0) {
+        if (!itemDisplays.isEmpty()) {
             schematic.add("item_displays", itemDisplays);
         }
-        if (interactions.size() > 0) {
+        if (!interactions.isEmpty()) {
             schematic.add("interactions", interactions);
         }
         return new ArchiveData(schematic, beacon);

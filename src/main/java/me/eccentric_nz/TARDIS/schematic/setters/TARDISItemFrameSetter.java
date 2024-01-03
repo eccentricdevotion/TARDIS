@@ -16,27 +16,33 @@
  */
 package me.eccentric_nz.TARDIS.schematic.setters;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Rotation;
+import org.bukkit.block.Banner;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.banner.Pattern;
+import org.bukkit.block.banner.PatternType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISItemFrameSetter {
@@ -69,10 +75,28 @@ public class TARDISItemFrameSetter {
                     }
                     im.setLore(lore);
                 }
+                if (json.has("banner")) {
+                    JsonObject banner = json.get("banner").getAsJsonObject();
+                    DyeColor baseColour = DyeColor.valueOf(banner.get("base_colour").getAsString());
+                    JsonArray patterns = banner.get("patterns").getAsJsonArray();
+                    List<Pattern> plist = new ArrayList<>();
+                    for (int j = 0; j < patterns.size(); j++) {
+                        JsonObject jo = patterns.get(j).getAsJsonObject();
+                        PatternType pt = PatternType.valueOf(jo.get("pattern").getAsString());
+                        DyeColor dc = DyeColor.valueOf(jo.get("pattern_colour").getAsString());
+                        Pattern p = new Pattern(dc, pt);
+                        plist.add(p);
+                    }
+                    BlockStateMeta bsm = (BlockStateMeta) im;
+                    Banner b = (Banner) bsm.getBlockState();
+                    b.setBaseColor(baseColour);
+                    b.setPatterns(plist);
+                    bsm.setBlockState(b);
+                }
                 is.setItemMeta(im);
                 frame.setItem(is, false);
             } catch (IllegalArgumentException e) {
-                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING,"Could not create item stack for schematic item frame!");
+                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Could not create item stack for schematic item frame!");
             }
         }
         if (json.has("rotor") && id != -1) {
