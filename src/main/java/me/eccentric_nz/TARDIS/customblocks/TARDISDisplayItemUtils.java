@@ -99,8 +99,8 @@ public class TARDISDisplayItemUtils {
      */
     public static void remove(Block block) {
         for (Entity e : block.getWorld().getNearbyEntities(block.getLocation().add(0.5d, 0.5d, 0.5d), 0.55d, 0.55d, 0.55d,
-                (d) -> d.getType() == EntityType.INTERACTION || d.getType() == EntityType.ITEM_DISPLAY)) {
-            if (e instanceof Interaction || e instanceof ItemDisplay) {
+                (d) -> d.getType() == EntityType.INTERACTION || d.getType() == EntityType.ITEM_DISPLAY || d.getType() == EntityType.ITEM_FRAME || d.getType() == EntityType.GLOW_ITEM_FRAME)) {
+            if (e instanceof Interaction || e instanceof ItemDisplay || e instanceof ItemFrame) {
                 e.remove();
             }
         }
