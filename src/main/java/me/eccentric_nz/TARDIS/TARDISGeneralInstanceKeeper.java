@@ -52,6 +52,7 @@ public class TARDISGeneralInstanceKeeper {
     private final HashMap<String, Double[]> gravitySouthList = new HashMap<>();
     private final HashMap<String, Double[]> gravityUpList = new HashMap<>();
     private final HashMap<String, Double[]> gravityWestList = new HashMap<>();
+    private final Set<String> gravityDownList = new HashSet<>();
     private final HashMap<String, Integer> protectBlockMap = new HashMap<>();
     private final HashMap<String, String> sign_lookup;
     private final HashMap<UUID, TARDISCondenserData> roomCondenserData = new HashMap<>();
@@ -71,7 +72,6 @@ public class TARDISGeneralInstanceKeeper {
             add(Material.NETHER_BRICK_STAIRS);
         }
     };
-    private final Set<String> gravityDownList = new HashSet<>();
     private final List<String> roomArgs;
     private final Set<String> sonicLamps = new HashSet<>();
     private final Set<String> sonicPistons = new HashSet<>();

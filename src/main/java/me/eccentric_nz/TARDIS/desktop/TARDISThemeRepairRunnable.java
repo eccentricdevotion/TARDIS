@@ -41,6 +41,7 @@ import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.schematic.setters.*;
 import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISProtectionRemover;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -235,11 +236,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             floor_type = Material.valueOf(floor[0]);
             // get input array
             arr = obj.get("input").getAsJsonArray();
-            // clear existing precious blocks
-            HashMap<String, Object> wherep = new HashMap<>();
-            wherep.put("tardis_id", id);
-            wherep.put("police_box", 0);
-            plugin.getQueryFactory().doDelete("blocks", wherep);
+            // clear existing precious blocks and remove the entries from the protection map
+            new TARDISProtectionRemover(plugin).cleanInteriorBlocks(id);
             // set running
             running = true;
             player = plugin.getServer().getPlayer(uuid);

@@ -61,7 +61,7 @@ public class TARDISBlockBreakListener implements Listener {
      * @param event a player breaking a block
      */
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void onSignBreak(BlockBreakEvent event) {
+    public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
         if (player.getGameMode().equals(GameMode.CREATIVE)) {
             // prevent TARDIS block breakage

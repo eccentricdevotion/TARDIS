@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import java.util.Collections;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISProtectionRemover;
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -57,13 +56,8 @@ public class TARDISDestroyerInner {
         }
         TARDISInteriorPostioning tips = new TARDISInteriorPostioning(plugin);
         tips.reclaimChunks(w, id, schematic);
-        // remove blocks saved to blocks table (iron/gold/diamond/emerald)
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        where.put("police_box", 0);
-        plugin.getQueryFactory().doDelete("blocks", where);
-        // remove from protectBlockMap - remove(id) would only remove the first one
-        plugin.getGeneralKeeper().getProtectBlockMap().values().removeAll(Collections.singleton(id));
+        // remove blocks saved to blocks table and remove the entries from the protection map
+        new TARDISProtectionRemover(plugin).cleanInteriorBlocks(id);
         if (plugin.isWorldGuardOnServer()) {
             TARDISTIPSData coords;
             if (schematic.getPermission().equals("junk")) {
