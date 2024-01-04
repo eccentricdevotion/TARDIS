@@ -183,7 +183,10 @@ public class TARDISControlListener implements Listener {
                                 // siege lever
                                 case 21 -> new SiegeAction(plugin).clickButton(tcc, player, tardis.isPowered_on(), id);
                                 // open control menu GUI
-                                case 22 -> new ControlMenuAction(plugin).openGUI(player, id);
+                                case 22 -> {
+                                    event.setCancelled(true);
+                                    new ControlMenuAction(plugin).openGUI(player, id);
+                                }
                                 // shell room button
                                 case 25 -> new ShellRoomAction(plugin).openGUI(player, id);
                                 // Handles
