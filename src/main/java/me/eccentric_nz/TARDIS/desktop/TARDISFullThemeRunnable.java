@@ -508,15 +508,17 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             HashMap<String, Object> wherec = new HashMap<>();
             wherec.put("tardis_id", id);
             plugin.getQueryFactory().doDelete("chunks", wherec);
-            // update chunks list in DB
-            chunks.forEach((hunk) -> {
-                HashMap<String, Object> setc = new HashMap<>();
-                setc.put("tardis_id", id);
-                setc.put("world", world.getName());
-                setc.put("x", hunk.getX());
-                setc.put("z", hunk.getZ());
-                plugin.getQueryFactory().doInsert("chunks", setc);
-            });
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                // update chunks list in DB
+                chunks.forEach((hunk) -> {
+                    HashMap<String, Object> setc = new HashMap<>();
+                    setc.put("tardis_id", id);
+                    setc.put("world", world.getName());
+                    setc.put("x", hunk.getX());
+                    setc.put("z", hunk.getZ());
+                    plugin.getQueryFactory().doInsert("chunks", setc);
+                });
+            }, 20L);
             // cancel the task
             plugin.getServer().getScheduler().cancelTask(taskID);
             taskID = 0;
