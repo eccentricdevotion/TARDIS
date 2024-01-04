@@ -56,7 +56,7 @@ public class TARDISDevCommand implements CommandExecutor {
     private final Set<String> firstsStr = Sets.newHashSet(
             "add_regions",
             "advancements",
-            "chunky",
+            "chunks", "chunky",
             "list",
             "plurals",
             "stats",
@@ -130,6 +130,9 @@ public class TARDISDevCommand implements CommandExecutor {
                         String str = m.toString().toLowerCase(Locale.ROOT).replace("_", " ");
                         plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, str + " --> " + Pluraliser.pluralise(str));
                     }
+                }
+                if (first.equals("chunks")) {
+                    return new TARDISChunksCommand(plugin).list(sender);
                 }
                 if (first.equals("chunky")) {
                     if (!plugin.getPM().isPluginEnabled("Chunky")) {

@@ -17,15 +17,13 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import com.google.gson.JsonObject;
-import java.util.ArrayList;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -35,6 +33,8 @@ import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  * The TARDIS scanner was the main method for the occupants of the vessel to
@@ -80,50 +80,45 @@ class TARDISLampsCommand {
                 wheredel.put("tardis_id", id);
                 plugin.getQueryFactory().doDelete("lamps", wheredel);
             }
-            // get the TARDIS console chunks
-            HashMap<String, Object> wherec = new HashMap<>();
-            wherec.put("tardis_id", id);
-            ResultSetChunks rsc = new ResultSetChunks(plugin, wherec, true);
-            if (rsc.resultSet()) {
-                int starty, endy;
-                Schematic schm = tardis.getSchematic();
-                // get JSON
-                JsonObject obj = TARDISSchematicGZip.getObject(plugin, "consoles", schm.getPermission(), schm.isCustom());
-                if (obj != null) {
-                    // get dimensions
-                    JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
-                    int h = dimensions.get("height").getAsInt();
-                    if (schm.getPermission().equals("mechanical")) {
-                        starty = 62;
-                    } else if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
-                        starty = 65;
-                    } else {
-                        starty = 64;
-                    }
-                    endy = starty + h;
-                    ArrayList<HashMap<String, String>> data = rsc.getData();
-                    // loop through the chunks
-                    for (HashMap<String, String> map : data) {
-                        String w = map.get("world");
-                        World world = TARDISAliasResolver.getWorldFromAlias(w);
-                        int x = TARDISNumberParsers.parseInt(map.get("x"));
-                        int z = TARDISNumberParsers.parseInt(map.get("z"));
-                        Chunk chunk = world.getChunkAt(x, z);
-                        // find the lamps in the chunks
-                        int bx = chunk.getX() << 4;
-                        int bz = chunk.getZ() << 4;
-                        for (int xx = bx; xx < bx + 16; xx++) {
-                            for (int zz = bz; zz < bz + 16; zz++) {
-                                for (int yy = starty; yy < endy; yy++) {
-                                    Material mat = world.getBlockAt(xx, yy, zz).getType();
-                                    if (mat.equals(Material.LIGHT)) {
-                                        String lamp = w + ":" + xx + ":" + yy + ":" + zz;
-                                        HashMap<String, Object> set = new HashMap<>();
-                                        set.put("tardis_id", id);
-                                        set.put("location", lamp);
-                                        plugin.getQueryFactory().doInsert("lamps", set);
-                                        plugin.getMessenger().send(owner, TardisModule.TARDIS, "LAMP_ADD", (xx + ":" + yy + ":" + zz));
-                                    }
+            // get the TARDIS console chunk
+            String[] tc = tardis.getChunk().split(":");
+            int cx = TARDISNumberParsers.parseInt(tc[1]);
+            int cz = TARDISNumberParsers.parseInt(tc[2]);
+            World world = TARDISAliasResolver.getWorldFromAlias(tc[0]);
+            Chunk startChunk = world.getChunkAt(cx, cz);
+            int starty, endy;
+            Schematic schm = tardis.getSchematic();
+            // get JSON
+            JsonObject obj = TARDISSchematicGZip.getObject(plugin, "consoles", schm.getPermission(), schm.isCustom());
+            if (obj != null) {
+                // get dimensions
+                JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
+                int h = dimensions.get("height").getAsInt();
+                if (schm.getPermission().equals("mechanical")) {
+                    starty = 62;
+                } else if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
+                    starty = 65;
+                } else {
+                    starty = 64;
+                }
+                endy = starty + h;
+                String w = world.getName();
+                // loop through the chunks
+                for (Chunk chunk : TARDISChunkUtils.getConsoleChunks(startChunk, tardis.getSchematic())) {
+                    // find the lamps in the chunks
+                    int bx = chunk.getX() << 4;
+                    int bz = chunk.getZ() << 4;
+                    for (int xx = bx; xx < bx + 16; xx++) {
+                        for (int zz = bz; zz < bz + 16; zz++) {
+                            for (int yy = starty; yy < endy; yy++) {
+                                Material mat = world.getBlockAt(xx, yy, zz).getType();
+                                if (mat.equals(Material.LIGHT)) {
+                                    String lamp = w + ":" + xx + ":" + yy + ":" + zz;
+                                    HashMap<String, Object> set = new HashMap<>();
+                                    set.put("tardis_id", id);
+                                    set.put("location", lamp);
+                                    plugin.getQueryFactory().doInsert("lamps", set);
+                                    plugin.getMessenger().send(owner, TardisModule.TARDIS, "LAMP_ADD", (xx + ":" + yy + ":" + zz));
                                 }
                             }
                         }
