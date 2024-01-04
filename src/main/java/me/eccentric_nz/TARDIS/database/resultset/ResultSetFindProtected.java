@@ -68,7 +68,7 @@ public class ResultSetFindProtected {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT b_id, location FROM " + prefix + "blocks WHERE location LIKE 'Location{world=CraftWorld{name="
-                + location.getWorld().getName() + "%' AND police_box = 1";
+                + location.getWorld().getName() + "%'";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
