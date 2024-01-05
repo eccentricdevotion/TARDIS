@@ -21,9 +21,9 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
+import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicLight;
 import me.eccentric_nz.TARDIS.update.UpdateDoor;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -198,26 +198,13 @@ public class TARDISDisplayBlockListener implements Listener {
                 Player player = event.getPlayer();
                 ItemStack inHand = player.getInventory().getItemInMainHand();
                 if (isRedstoneSonic(inHand)) {
-                    // toggle the lamp
-                    ItemStack lamp = display.getItemStack();
-                    Block light = interaction.getLocation().getBlock();
-                    TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
-                    // check the block is a chemistry lamp block
-                    if (tdi != null && tdi.isLight()) {
-                        TARDISDisplayItem toggled = TardisLight.getToggled(tdi);
-                        ItemMeta im = lamp.getItemMeta();
-                        ItemStack change = new ItemStack(toggled.getMaterial(), 1);
-                        if (toggled.isLit()) {
-                            // create light source
-                            LampToggler.setLightlevel(light, 15);
-                        } else {
-                            // delete light source - should eventually get rid of this...
-                            LampToggler.deleteLight(light);
-                            // set light level to zero
-                            LampToggler.setLightlevel(light, 0);
-                        }
-                        change.setItemMeta(im);
-                        display.setItemStack(change);
+                    TARDISSonicLight tsl = new TARDISSonicLight(plugin);
+                    if (player.isSneaking()) {
+                        // add the light to the lamps table
+                        tsl.addLamp(interaction.getLocation().getBlock(), player);
+                    } else {
+                        // toggle the lamp
+                        tsl.toggle(display, interaction.getLocation().getBlock());
                     }
                 } else if (Tag.ITEMS_PICKAXES.isTagged(inHand.getType())) {
                     Location l = interaction.getLocation();
@@ -375,6 +362,11 @@ public class TARDISDisplayBlockListener implements Listener {
                 interaction.remove();
             }
             block.setType(Material.AIR);
+            // remove lamp record if light
+            TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(fake);
+            if (tdi != null && tdi.isLight()) {
+                new TARDISSonicLight(plugin).removeLamp(block, player);
+            }
             return;
         }
         if (breaking != null && fake != null) {
@@ -390,6 +382,11 @@ public class TARDISDisplayBlockListener implements Listener {
                     interaction.remove();
                 }
                 block.setType(Material.AIR);
+                // remove lamp record if light
+                TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(fake);
+                if (tdi != null && tdi.isLight()) {
+                    new TARDISSonicLight(plugin).removeLamp(block, player);
+                }
             } else {
                 // update breaking item stack
                 ItemMeta im = is.getItemMeta();
