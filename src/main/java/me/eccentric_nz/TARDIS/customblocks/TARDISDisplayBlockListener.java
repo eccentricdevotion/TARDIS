@@ -199,7 +199,7 @@ public class TARDISDisplayBlockListener implements Listener {
                 ItemStack inHand = player.getInventory().getItemInMainHand();
                 if (isRedstoneSonic(inHand)) {
                     TARDISSonicLight tsl = new TARDISSonicLight(plugin);
-                    if (player.isSneaking()) {
+                    if (player.isSneaking() && plugin.getConfig().getBoolean("allow.add_lights")) {
                         // add the light to the lamps table
                         tsl.addLamp(interaction.getLocation().getBlock(), player);
                     } else {
