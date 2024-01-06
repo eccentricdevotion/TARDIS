@@ -34,6 +34,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftZombie;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -198,11 +199,15 @@ public class MonsterLoadUnloadListener implements Listener {
             if (e.getType() != EntityType.HUSK) {
                 return;
             }
-            PersistentDataContainer pdc = e.getPersistentDataContainer();
-            if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
-                TWAFollower follower = (TWAFollower) ((CraftEntity) e).getHandle();
-                // save entity in followers table
-                new FollowerPersister(plugin).save(follower);
+            try {
+                PersistentDataContainer pdc = e.getPersistentDataContainer();
+                if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
+                    TWAFollower follower = (TWAFollower) ((CraftZombie) e).getHandle();
+                    // save entity in followers table
+                    new FollowerPersister(plugin).save(follower);
+                }
+            } catch (Exception ex) {
+                plugin.debug("EntitiesUnloadEvent "+ ex);
             }
         }
     }
