@@ -115,11 +115,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
         }
         if (!tardis.isHandbrake_on()) {
             switch (slot) {
-                case 2 -> {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_NO_TRAVEL");
-                    return;
-                }
-                case 4, 11, 13, 15, 20, 22, 31, 40, 45 -> {
+                case 2, 4, 11, 13, 40 -> {
                     if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
                         return;
@@ -288,6 +284,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             case 20 -> {
                 // power up/down
                 if (plugin.getConfig().getBoolean("allow.power_down")) {
+                    if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                        plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_IN_VORTEX");
+                        return;
+                    }
                     close(player, true);
                     new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), level, tardis.getSchematic().getLights()).clickButton();
                 } else {

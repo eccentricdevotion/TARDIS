@@ -38,7 +38,6 @@ import me.eccentric_nz.TARDIS.universaltranslator.TranslateData;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -69,7 +68,6 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<Location, TARDISTeleportLocation> portals = new HashMap<>();
     private final HashMap<String, List<TARDISSiegeArea>> siegeBreedingAreas = new HashMap<>();
     private final HashMap<String, List<TARDISSiegeArea>> siegeGrowthAreas = new HashMap<>();
-    private final HashMap<String, Sign> sign = new HashMap<>();
     private final HashMap<UUID, Bind> bindRemoval = new HashMap<>();
     private final HashMap<UUID, Block> invisibleDoors = new HashMap<>();
     private final HashMap<UUID, Block> lazarus = new HashMap<>();

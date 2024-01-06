@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS;
 
-import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigCommand;
 import me.eccentric_nz.TARDIS.commands.travel.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -38,7 +37,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Keeps instances of various classes, maps and lists for easy access in other classes.
@@ -103,7 +101,7 @@ public class TARDISGeneralInstanceKeeper {
         try {
             pluginYAML.load(reader);
         } catch (IOException | InvalidConfigurationException ex) {
-            Logger.getLogger(TARDISCommandHelper.class.getName()).log(Level.SEVERE, null, ex);
+            plugin.getLogger().log(Level.SEVERE, null, ex);
         }
     }
 

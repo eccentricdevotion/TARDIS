@@ -154,7 +154,7 @@ public class TARDISSavesPlanetListener extends TARDISMenuListener {
                     plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(travel, travelType));
                     plugin.getTrackerKeeper().getRescue().remove(id);
                     close(player);
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_SET_TERMINAL", im.getDisplayName(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+                    plugin.getMessenger().sendJoined(player, "DEST_SET_TERMINAL", im.getDisplayName(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                         new TARDISLand(plugin, id, player).exitVortex();
                         plugin.getPM().callEvent(new TARDISTravelEvent(player, null, travelType, id));
