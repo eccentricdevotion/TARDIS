@@ -185,6 +185,10 @@ public class TARDISDoorListener {
             plugin.getTrackerKeeper().getEjecting().remove(uuid);
         } else {
             plugin.getPM().callEvent(new TARDISEnterEvent(player, from));
+            if (plugin.getConfig().getBoolean("creation.keep_night")) {
+                // set the player's time to midnight
+                setTemporalLocation(player, 18000, false);
+            }
             TARDISSounds.playTARDISHum(player);
         }
         // give a key

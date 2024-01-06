@@ -122,6 +122,16 @@ public class TARDISJoinListener implements Listener {
                 plugin.getQueryFactory().doInsert("t_count", setc);
             }
         }
+        if (plugin.getConfig().getBoolean("creation.keep_night")) {
+            // are they in the TARDIS?
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", uuid);
+            ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+            if (rst.resultSet()) {
+                // set the player's time to midnight
+                player.setPlayerTime(18000, false);
+            }
+        }
         // load and remember the players Police Box chunk
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", uuid);

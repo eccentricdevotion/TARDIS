@@ -101,6 +101,7 @@ public class TARDISConfiguration {
         booleanOptions.put("creation.create_worlds_with_perms", false);
         booleanOptions.put("creation.default_world", true);
         booleanOptions.put("creation.enable_legacy", true);
+        booleanOptions.put("creation.keep_night", true);
         booleanOptions.put("creation.seed_block_crafting", true);
         booleanOptions.put("debug", false);
         booleanOptions.put("desktop.check_blocks_before_upgrade", false);
