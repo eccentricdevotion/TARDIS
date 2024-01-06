@@ -139,8 +139,9 @@ public class TARDISDevCommand implements CommandExecutor {
                         plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, "Chunky plugin is not enabled!");
                         return true;
                     }
+                    String radius = args.length > 2 ? args[2] : "250";
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky world " + args[1]);
-                    plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky radius 250");
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky radius " + radius);
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky spawn");
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky start");
                     plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky confirm");
