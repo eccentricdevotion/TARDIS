@@ -226,6 +226,8 @@ public class TARDISWeepingAngels {
         new K9Recipe(plugin).addRecipe();
         // process worlds
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new WorldProcessor(plugin), 200L);
+        // reset followers
+        new FollowerReset(plugin).tame();
     }
 
     // TODO
