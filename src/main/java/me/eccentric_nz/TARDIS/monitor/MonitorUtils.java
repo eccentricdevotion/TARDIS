@@ -107,30 +107,30 @@ public class MonitorUtils {
             int getz = door.getBlockZ();
             float yaw = 0.05f;
             switch (d) {
-                case NORTH -> {
+                case SOUTH -> {
                     // z -ve
                     door.setX(getx + 0.5);
                     door.setZ(getz - 0.5);
-                    yaw = (in) ? 180.05f : 0.05f;
+                    yaw = (in) ? 0.05f : 180.05f;
                 }
-                case EAST -> {
+                case WEST -> {
                     // x +ve
                     door.setX(getx + 1.5);
                     door.setZ(getz + 0.5);
-                    yaw = (in) ? -90.05f : 90.05f;
+                    yaw = (in) ? 90.05f : -90.05f;
                 }
-                case SOUTH -> {
+                case NORTH -> {
                     // z +ve
                     door.setX(getx + 0.5);
                     door.setZ(getz + 1.5);
-                    yaw = (in) ? 0.05f : 180.05f;
+                    yaw = (in) ? 180.05f : 0.05f;
                 }
-                // WEST
+                // EAST
                 default -> {
                     // x -ve
                     door.setX(getx - 0.5);
                     door.setZ(getz + 0.5);
-                    yaw = (in) ? 90.05f : -90.05f;
+                    yaw = (in) ? -90.05f : 90.05f;
                 }
             }
             // set pitch to straight ahead
