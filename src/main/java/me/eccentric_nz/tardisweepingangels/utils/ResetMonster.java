@@ -43,7 +43,6 @@ public class ResetMonster {
         if (monster == null || !monster.isAnimated()) {
             return;
         }
-        plugin.debug("resetMonster "+ monster);
         Location location = entity.getLocation();
         PersistentDataContainer pdc = entity.getPersistentDataContainer();
         LivingEntity a = null;

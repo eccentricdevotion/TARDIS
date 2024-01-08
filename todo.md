@@ -2,8 +2,7 @@
 
 ## Current version `5.3.0`
 
-1. `/ttravel stop` throws an SQL update error + you shouldn't be able to use the command if the TARDIS isn't travelling
-2. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
+1. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
 2. Deep space [#748](https://github.com/eccentricdevotion/TARDIS/issues/748)
 3. Animated models for player disguises

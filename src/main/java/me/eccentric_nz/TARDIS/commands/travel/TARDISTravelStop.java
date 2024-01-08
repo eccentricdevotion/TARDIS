@@ -26,9 +26,11 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
+import me.eccentric_nz.TARDIS.flight.TARDISExteriorFlight;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.ItemFrame;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
+import org.bukkit.util.Vector;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -45,6 +47,10 @@ public class TARDISTravelStop {
     }
 
     public boolean action(Player player, int id) {
+        if (!plugin.getTrackerKeeper().getMaterialising().contains(id) && !plugin.getTrackerKeeper().getInVortex().contains(id) && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_TRAVELLING");
+            return true;
+        }
         // remove trackers
         plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(id));
         plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(id));
@@ -58,46 +64,72 @@ public class TARDISTravelStop {
             plugin.getServer().getScheduler().cancelTask(taskID);
             plugin.getTrackerKeeper().getDestinationVortex().remove(id);
         }
-        // get home location
-        HashMap<String, Object> wherehl = new HashMap<>();
-        wherehl.put("tardis_id", id);
-        ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
-        if (!rsh.resultSet()) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "HOME_NOT_FOUND");
-            return true;
+        // is player flying?
+        if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {
+            // land TARDIS
+            Entity stand = player.getVehicle();
+            if (stand != null && stand.getType() == EntityType.ARMOR_STAND) {
+                Entity chicken = stand.getVehicle();
+                if (chicken != null) {
+                    chicken.setVelocity(new Vector(0, 0, 0));
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
+                        // kill chicken
+                        chicken.removePassenger(stand);
+                        chicken.remove();
+                        // teleport player back to the TARDIS interior
+                        new TARDISExteriorFlight(TARDIS.plugin).stopFlying(player, (ArmorStand) stand);
+                    });
+                }
+            }
+        } else {
+            // get home location
+            HashMap<String, Object> wherehl = new HashMap<>();
+            wherehl.put("tardis_id", id);
+            ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, wherehl);
+            if (!rsh.resultSet()) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "HOME_NOT_FOUND");
+                return true;
+            }
+            // update current, next and back tables
+            HashMap<String, Object> setlocs = new HashMap<>();
+            setlocs.put("world", rsh.getWorld().getName());
+            setlocs.put("x", rsh.getX());
+            setlocs.put("y", rsh.getY());
+            setlocs.put("z", rsh.getZ());
+            setlocs.put("direction", rsh.getDirection().toString());
+            setlocs.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
+            Location l = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
+            plugin.getQueryFactory().updateLocations(setlocs, id);
+            // rebuild the exterior
+            BuildData bd = new BuildData(player.getUniqueId().toString());
+            bd.setDirection(rsh.getDirection());
+            bd.setLocation(l);
+            bd.setMalfunction(false);
+            bd.setOutside(true);
+            bd.setPlayer(player);
+            bd.setRebuild(true);
+            bd.setSubmarine(rsh.isSubmarine());
+            bd.setTardisID(id);
+            bd.setThrottle(SpaceTimeThrottle.REBUILD);
+            if (!rsh.getPreset().isEmpty()) {
+                // set the chameleon preset
+                HashMap<String, Object> wherep = new HashMap<>();
+                wherep.put("tardis_id", id);
+                HashMap<String, Object> setp = new HashMap<>();
+                setp.put("chameleon_preset", rsh.getPreset());
+                // set chameleon adaption to OFF
+                setp.put("adapti_on", 0);
+                plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
+            }
+            plugin.getPresetBuilder().buildPreset(bd);
+            // engage the handbrake!
+            HashMap<String, Object> seth = new HashMap<>();
+            seth.put("handbrake_on", 1);
+            HashMap<String, Object> whereh = new HashMap<>();
+            whereh.put("tardis_id", id);
+            plugin.getQueryFactory().doSyncUpdate("tardis", seth, whereh);
+            plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.STOP, id));
         }
-        // update current, next and back tables
-        HashMap<String, Object> setlocs = new HashMap<>();
-        setlocs.put("world", rsh.getWorld().getName());
-        setlocs.put("x", rsh.getX());
-        setlocs.put("y", rsh.getY());
-        setlocs.put("z", rsh.getZ());
-        setlocs.put("direction", rsh.getDirection().toString());
-        setlocs.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
-        Location l = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
-        plugin.getQueryFactory().updateLocations(setlocs, id);
-        // rebuild the exterior
-        BuildData bd = new BuildData(player.getUniqueId().toString());
-        bd.setDirection(rsh.getDirection());
-        bd.setLocation(l);
-        bd.setMalfunction(false);
-        bd.setOutside(true);
-        bd.setPlayer(player);
-        bd.setRebuild(true);
-        bd.setSubmarine(rsh.isSubmarine());
-        bd.setTardisID(id);
-        bd.setThrottle(SpaceTimeThrottle.REBUILD);
-        if (!rsh.getPreset().isEmpty()) {
-            // set the chameleon preset
-            HashMap<String, Object> wherep = new HashMap<>();
-            wherep.put("tardis_id", id);
-            HashMap<String, Object> setp = new HashMap<>();
-            setp.put("chameleon_preset", rsh.getPreset());
-            // set chameleon adaption to OFF
-            setp.put("adapti_on", 0);
-            plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
-        }
-        plugin.getPresetBuilder().buildPreset(bd);
         // stop time rotor?
         HashMap<String, Object> wherei = new HashMap<>();
         wherei.put("tardis_id", id);
@@ -114,13 +146,6 @@ public class TARDISTravelStop {
                 }
             }
         }
-        // engage the handbrake!
-        HashMap<String, Object> seth = new HashMap<>();
-        seth.put("handbrake_on", 1);
-        HashMap<String, Object> whereh = new HashMap<>();
-        wherei.put("tardis_id", id);
-        plugin.getQueryFactory().doSyncUpdate("tardis", seth, whereh);
-        plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.STOP, id));
         return true;
     }
 }
