@@ -57,6 +57,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "add_regions",
             "advancements",
             "chunks", "chunky",
+            "dismount",
             "list",
             "plurals",
             "stats",
@@ -115,6 +116,11 @@ public class TARDISDevCommand implements CommandExecutor {
                 }
                 if (first.equals("circuit")) {
                     return new TARDISDevCircuitCommand(plugin).give(sender);
+                }
+                if (first.equals("dismount") && sender instanceof Player player) {
+                    if (player.getVehicle() != null) {
+                        player.getVehicle().eject();
+                    }
                 }
                 if (first.equals("tis")) {
                     return new TARDISDevInfoCommand(plugin).test(sender);
