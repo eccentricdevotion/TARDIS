@@ -50,25 +50,26 @@ public class TARDISControlRunnable implements Runnable {
                     // get the location data
                     rsc.locationAsync((hasResult, resultSetConsole) -> {
                         if (hasResult) {
-                            if (Tag.SIGNS.isTagged(resultSetConsole.getSign().getType())) {
+                            if (Tag.ALL_SIGNS.isTagged(resultSetConsole.getSign().getType())) {
                                 // get the sign
                                 Sign sign = (Sign) resultSetConsole.getSign().getState();
                                 SignSide front = sign.getSide(Side.FRONT);
                                 // update the data
                                 if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                                    front.setLine(0, ChatColor.DARK_PURPLE + "Drifting in the");
-                                    front.setLine(1, ChatColor.DARK_PURPLE + "time vortex...");
-                                    front.setLine(2, "");
+                                    front.setLine(0, ChatColor.DARK_PURPLE + "Drifting");
+                                    front.setLine(1, ChatColor.DARK_PURPLE + "in the");
+                                    front.setLine(2, "time");
+                                    front.setLine(3, "vortex...");
                                 } else {
                                     String worldName = (resultSetConsole.getWorld() != null) ? TARDISAliasResolver.getWorldAlias(resultSetConsole.getWorld()) : "";
                                     if (!plugin.getPlanetsConfig().getBoolean("planets." + resultSetConsole.getWorld() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE) && !worldName.equals("")) {
                                         worldName = plugin.getMVHelper().getAlias(worldName);
                                     }
                                     front.setLine(0, ChatColor.DARK_PURPLE + worldName);
-                                    front.setLine(1, ChatColor.BLACK + resultSetConsole.getLocation());
-                                    front.setLine(2, ChatColor.BLACK + resultSetConsole.getBiome());
+                                    front.setLine(1, ChatColor.BLACK + resultSetConsole.getX());
+                                    front.setLine(2, ChatColor.BLACK + resultSetConsole.getY());
+                                    front.setLine(3, ChatColor.BLACK + resultSetConsole.getZ());
                                 }
-                                front.setLine(3, ChatColor.BLUE + resultSetConsole.getPreset().replace("ITEM:", ""));
                                 sign.update();
                             }
                         }
@@ -77,18 +78,22 @@ public class TARDISControlRunnable implements Runnable {
                     // get the artron data
                     rsc.artronAsync((hasResult, resultSetConsole) -> {
                         if (hasResult) {
-                            int fc = plugin.getArtronConfig().getInt("full_charge");
-                            int current_level = resultSetConsole.getArtronLevel();
-                            int percent = Math.round((current_level * 100.0f) / fc);
-                            if (Tag.SIGNS.isTagged(resultSetConsole.getSign().getType())) {
+                            if (Tag.ALL_SIGNS.isTagged(resultSetConsole.getSign().getType())) {
                                 // get the sign
                                 Sign sign = (Sign) resultSetConsole.getSign().getState();
                                 SignSide front = sign.getSide(Side.FRONT);
                                 // update the data
                                 front.setLine(0, ChatColor.BLACK + plugin.getLanguage().getString("ARTRON_DISPLAY"));
-                                front.setLine(1, ChatColor.AQUA + plugin.getLanguage().getString("ARTRON_MAX") + ":" + plugin.getArtronConfig().getInt("full_charge"));
-                                front.setLine(2, ChatColor.GREEN + plugin.getLanguage().getString("ARTRON_REMAINING") + ":" + current_level);
-                                front.setLine(3, ChatColor.LIGHT_PURPLE + plugin.getLanguage().getString("ARTRON_PERCENT") + ":" + percent + "%");
+                                front.setLine(1, ChatColor.AQUA + resultSetConsole.getArtronLevel());
+                                front.setLine(2, ChatColor.BLACK + plugin.getLanguage().getString("CHAM_DISPLAY"));
+                                String preset = "";
+                                if (resultSetConsole.getPreset().startsWith("POLICE_BOX_")) {
+                                    ChatColor colour = policeBoxToChatColor(resultSetConsole.getPreset());
+                                    preset = colour + "POLICE_BOX";
+                                } else {
+                                    preset = ChatColor.BLUE + resultSetConsole.getPreset().replace("ITEM:", "");
+                                }
+                                front.setLine(3, preset);
                                 sign.update();
                             }
                         }
@@ -100,5 +105,55 @@ public class TARDISControlRunnable implements Runnable {
                 modulo = 0;
             }
         });
+    }
+
+    private ChatColor policeBoxToChatColor(String preset) {
+        switch (preset) {
+            case "POLICE_BOX_WHITE" -> {
+                return ChatColor.WHITE;
+            }
+            case "POLICE_BOX_BROWN", "POLICE_BOX_ORANGE" -> {
+                return ChatColor.GOLD;
+            }
+            case "POLICE_BOX_BLACK" -> {
+                return ChatColor.BLACK;
+            }
+            case "POLICE_BOX_CYAN" -> {
+                return ChatColor.DARK_AQUA;
+            }
+            case "POLICE_BOX_LIGHT_BLUE" -> {
+                return ChatColor.BLUE;
+            }
+            case "POLICE_BOX_GRAY" -> {
+                return ChatColor.DARK_GRAY;
+            }
+            case "POLICE_BOX_GREEN" -> {
+                return ChatColor.DARK_GREEN;
+            }
+            case "POLICE_BOX_PURPLE" -> {
+                return ChatColor.DARK_PURPLE;
+            }
+            case "POLICE_BOX_RED" -> {
+                return ChatColor.DARK_RED;
+            }
+            case "POLICE_BOX_LIGHT_GRAY" -> {
+                return ChatColor.GRAY;
+            }
+            case "POLICE_BOX_LIME" -> {
+                return ChatColor.GREEN;
+            }
+            case "POLICE_BOX_PINK" -> {
+                return ChatColor.LIGHT_PURPLE;
+            }
+            case "POLICE_BOX_MAGENTA" -> {
+                return ChatColor.RED;
+            }
+            case "POLICE_BOX_YELLOW" -> {
+                return ChatColor.YELLOW;
+            }
+            default -> {
+                return ChatColor.DARK_BLUE;
+            }
+        }
     }
 }

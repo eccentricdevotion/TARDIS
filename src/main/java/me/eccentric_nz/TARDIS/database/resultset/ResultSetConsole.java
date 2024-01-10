@@ -27,7 +27,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Locale;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... the location of the TARDIS Police Box
@@ -46,8 +45,10 @@ public class ResultSetConsole {
     private String preset;
     private String world;
     private String location;
-    private String biome;
-    private int artronLevel;
+    private String x;
+    private String y;
+    private String z;
+    private String artronLevel;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the blocks table.
@@ -81,7 +82,7 @@ public class ResultSetConsole {
     public boolean locationData() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT " + prefix + "tardis.chameleon_preset, " + prefix + "current.*, " + prefix + "controls.location " + "FROM " + prefix + "tardis, " + prefix + "current, " + prefix + "controls " + "WHERE " + prefix + "controls.type = 22 AND " + prefix + "tardis.tardis_id = ? AND " + prefix + "tardis.abandoned = 0 " + "AND " + prefix + "tardis.tardis_id = " + prefix + "current.tardis_id " + "AND " + prefix + "tardis.tardis_id = " + prefix + "controls.tardis_id";
+        String query = "SELECT " + prefix + "current.*, " + prefix + "controls.location " + "FROM " + prefix + "tardis, " + prefix + "current, " + prefix + "controls " + "WHERE " + prefix + "controls.type = 22 AND " + prefix + "tardis.tardis_id = ? AND " + prefix + "tardis.abandoned = 0 " + "AND " + prefix + "tardis.tardis_id = " + prefix + "current.tardis_id " + "AND " + prefix + "tardis.tardis_id = " + prefix + "controls.tardis_id";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -95,16 +96,11 @@ public class ResultSetConsole {
                     return false;
                 }
                 sign = l.getBlock();
-                preset = rs.getString("chameleon_preset");
                 world = rs.getString("world");
-                location = rs.getString("x") + ", " + rs.getString("y") + ", " + rs.getString("z");
-                String key = rs.getString("biome");
-                if (key.contains(":")) {
-                    String[] split = key.split(":");
-                    biome = split[1].toUpperCase(Locale.ROOT);
-                } else {
-                    biome = key.toUpperCase(Locale.ROOT);
-                }
+                x = rs.getString("x");
+                y = rs.getString("y");
+                z = rs.getString("z");
+                location = x + ", " + y + ", " + z;
             } else {
                 return false;
             }
@@ -146,7 +142,7 @@ public class ResultSetConsole {
     public boolean artronData() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT " + prefix + "tardis.artron_level, " + prefix + "controls.location " + "FROM " + prefix + "tardis, " + prefix + "controls " + "WHERE " + prefix + "controls.type = 22 AND " + prefix + "tardis.tardis_id = ? AND " + prefix + "tardis.abandoned = 0 " + "AND " + prefix + "tardis.tardis_id = " + prefix + "controls.tardis_id";
+        String query = "SELECT " + prefix + "tardis.artron_level, " + prefix + "tardis.chameleon_preset, " + prefix + "controls.location " + "FROM " + prefix + "tardis, " + prefix + "controls " + "WHERE " + prefix + "controls.type = 22 AND " + prefix + "tardis.tardis_id = ? AND " + prefix + "tardis.abandoned = 0 " + "AND " + prefix + "tardis.tardis_id = " + prefix + "controls.tardis_id";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -159,7 +155,8 @@ public class ResultSetConsole {
                     return false;
                 }
                 sign = l.getBlock();
-                artronLevel = rs.getInt("artron_level");
+                artronLevel = rs.getString("artron_level");
+                preset = rs.getString("chameleon_preset");
             } else {
                 return false;
             }
@@ -201,11 +198,19 @@ public class ResultSetConsole {
         return location;
     }
 
-    public String getBiome() {
-        return biome;
+    public String getX() {
+        return x;
     }
 
-    public int getArtronLevel() {
+    public String getY() {
+        return y;
+    }
+
+    public String getZ() {
+        return z;
+    }
+
+    public String getArtronLevel() {
         return artronLevel;
     }
 

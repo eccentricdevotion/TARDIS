@@ -40,7 +40,7 @@ public enum Updateable {
     BUTTON(true, true, TARDISUpdateableCategory.CONTROLS, "Random Location button"),
     CHAMELEON(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "Chameleon Circuit"),
     CONDENSER(true, true, new RecipeChoice.MaterialChoice(Material.CHEST), TARDISUpdateableCategory.OTHERS, "Artron Energy Condenser"),
-    CONTROL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.CONTROLS, "TARDIS Control Centre Menu"),
+    CONTROL(true, true, new RecipeChoice.MaterialChoice(Tag.ALL_SIGNS), TARDISUpdateableCategory.CONTROLS, "TARDIS Control Centre Menu"),
     CREEPER(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Artron Charged Creeper"),
     DIRECTION(false, true, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TARDISUpdateableCategory.INTERFACES, "Direction item frame"),
     DISPENSER(true, true, new RecipeChoice.MaterialChoice(Material.DISPENSER), TARDISUpdateableCategory.OTHERS, "Custard Cream dispenser"),

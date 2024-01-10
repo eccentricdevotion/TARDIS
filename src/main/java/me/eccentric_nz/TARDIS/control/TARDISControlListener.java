@@ -69,7 +69,7 @@ public class TARDISControlListener implements Listener {
         validBlocks.add(Material.NOTE_BLOCK);
         validBlocks.add(Material.REPEATER);
         validBlocks.add(Material.STONE_PRESSURE_PLATE);
-        validBlocks.addAll(Tag.SIGNS.getValues());
+        validBlocks.addAll(Tag.ALL_SIGNS.getValues());
         validBlocks.addAll(Tag.BUTTONS.getValues());
         validBlocks.addAll(Tag.WOODEN_PRESSURE_PLATES.getValues());
     }

@@ -86,8 +86,6 @@ public class TARDISPacketListener {
                         if (chicken != null) {
                             float sideways = steerPacket.getXxa();
                             float forward = steerPacket.getZza();
-//                            boolean jump = steerPacket.isJumping();
-//                            boolean mount = steerPacket.isShiftKeyDown();
                             if (!steerPacket.isShiftKeyDown()) {
                                 // don't move if the chicken is on the ground
                                 if (chicken.isOnGround()) {
