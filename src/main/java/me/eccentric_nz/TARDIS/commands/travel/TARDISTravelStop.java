@@ -80,6 +80,20 @@ public class TARDISTravelStop {
                         new TARDISExteriorFlight(TARDIS.plugin).stopFlying(player, (ArmorStand) stand);
                     });
                 }
+            } else {
+                // scan for nearby chickens in case player teleport fails due to lag
+                for (Entity e : player.getLocation().getWorld().getNearbyEntities(player.getLocation(), 4, 4, 4, (s) -> s.getType() == EntityType.CHICKEN)) {
+                    if (!e.getPassengers().isEmpty() && e.getPassengers().get(0) instanceof ArmorStand armorStand) {
+                        e.setVelocity(new Vector(0, 0, 0));
+                        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
+                            // kill chicken
+                            e.removePassenger(armorStand);
+                            e.remove();
+                            // teleport player back to the TARDIS interior
+                            new TARDISExteriorFlight(TARDIS.plugin).stopFlying(player, armorStand);
+                        });
+                    }
+                }
             }
         } else {
             // get home location
