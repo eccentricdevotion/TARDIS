@@ -58,8 +58,8 @@ public class TARDISControlRunnable implements Runnable {
                                 if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                     front.setLine(0, ChatColor.DARK_PURPLE + "Drifting");
                                     front.setLine(1, ChatColor.DARK_PURPLE + "in the");
-                                    front.setLine(2, "time");
-                                    front.setLine(3, "vortex...");
+                                    front.setLine(2, ChatColor.DARK_PURPLE + "time");
+                                    front.setLine(3, ChatColor.DARK_PURPLE + "vortex...");
                                 } else {
                                     String worldName = (resultSetConsole.getWorld() != null) ? TARDISAliasResolver.getWorldAlias(resultSetConsole.getWorld()) : "";
                                     if (!plugin.getPlanetsConfig().getBoolean("planets." + resultSetConsole.getWorld() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE) && !worldName.equals("")) {
