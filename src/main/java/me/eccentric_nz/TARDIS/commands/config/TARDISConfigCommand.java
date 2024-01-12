@@ -83,6 +83,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("3d_doors", "allow");
         firstsBool.put("abandon", "");
         firstsBool.put("achievements", "allow");
+        firstsBool.put("add_lights", "allow");
         firstsBool.put("add_perms", "creation");
         firstsBool.put("admin_bypass", "allow");
         firstsBool.put("all_blocks", "allow");
