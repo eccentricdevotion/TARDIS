@@ -187,8 +187,23 @@ public class TARDISHandbrakeListener implements Listener {
                                         return;
                                     }
                                     if (player.isSneaking() && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand()) {
+                                        // check if TARDIS is underground
+                                        HashMap<String, Object> wherec = new HashMap<>();
+                                        wherec.put("tardis_id", id);
+                                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+                                        if (!rsc.resultSet()) {
+                                            plugin.debug("No current location");
+                                            return;
+                                        }
+                                        for (int y = rsc.getY() + 4; y < rsc.getY() + 8; y++) {
+                                            if (!rsc.getWorld().getBlockAt(rsc.getX(), y, rsc.getZ()).getType().isAir()) {
+                                                plugin.getMessenger().sendStatus(player, "FLIGHT_AIR");
+                                                return;
+                                            }
+                                        }
                                         // fly the TARDIS exterior
-                                        new TARDISExteriorFlight(plugin).startFlying(player, id, block, beac_on, beacon, preset.equals(ChameleonPreset.PANDORICA));
+                                        Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), player.getLocation().getYaw(), player.getLocation().getPitch());
+                                        new TARDISExteriorFlight(plugin).startFlying(player, id, block, current, beac_on, beacon, preset.equals(ChameleonPreset.PANDORICA));
                                     } else {
                                         new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, spaceTimeThrottle);
                                     }
