@@ -54,13 +54,18 @@ public class TARDISExteriorFlight {
     }
 
     public void stopFlying(Player player, ArmorStand stand) {
+        if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+            player.removePotionEffect(PotionEffectType.INVISIBILITY);
+        }
+        plugin.getTrackerKeeper().getHiddenFlight().remove(player.getUniqueId());
         UUID uuid = player.getUniqueId();
         Location location = stand.getLocation();
         String direction = player.getFacing().getOppositeFace().toString();
         FlightReturnData data = plugin.getTrackerKeeper().getFlyingReturnLocation().get(uuid);
         if (data != null) {
-            // stop animation runnable
+            // stop animation and sound runnables
             plugin.getServer().getScheduler().cancelTask(data.getAnimation());
+            plugin.getServer().getScheduler().cancelTask(data.getSound());
             // reset police box model
             EntityEquipment ee = stand.getEquipment();
             ItemStack is = ee.getHelmet();
@@ -113,7 +118,7 @@ public class TARDISExteriorFlight {
         });
     }
 
-    void startFlying(Player player, int id, Block block, boolean beac_on, String beacon, boolean pandorica) {
+    void startFlying(Player player, int id, Block block, Location current, boolean beac_on, String beacon, boolean pandorica) {
         // get the TARDIS's current location
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
@@ -122,6 +127,7 @@ public class TARDISExteriorFlight {
             plugin.debug("No current location");
             return;
         }
+        Location interior = player.getLocation();
         // set the handbrake
         TARDISHandbrake.setLevers(block, false, true, block.getLocation().toString(), id, plugin);
         if (plugin.getConfig().getBoolean("circuits.damage")) {
@@ -138,19 +144,15 @@ public class TARDISExteriorFlight {
         plugin.getQueryFactory().doUpdate("tardis", set, whereh);
         plugin.getMessenger().sendStatus(player, "HANDBRAKE_OFF");
         plugin.getTrackerKeeper().getInVortex().add(id);
-        Location playerLocation = player.getLocation();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             // teleport player to exterior
-            Location location = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), playerLocation.getYaw(), playerLocation.getPitch());
-            player.teleport(location);
+            player.teleport(current);
             // get the armour stand
-            for (Entity e : location.getWorld().getNearbyEntities(location, 1, 1, 1, (s) -> s.getType() == EntityType.ARMOR_STAND)) {
+            for (Entity e : current.getWorld().getNearbyEntities(current, 1, 1, 1, (s) -> s.getType() == EntityType.ARMOR_STAND)) {
                 if (e instanceof ArmorStand stand) {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(stand, pandorica), 5L, 3L);
                         int sound = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> TARDISSounds.playTARDISSound(player.getLocation(), "time_rotor_flying", 4f), 5L, 33L);
-                        // save player's current location, so we can teleport them back to it when they finish flying
-                        plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(id, playerLocation, sound, animation));
                         // spawn a chicken
                         LivingEntity chicken = new MonsterSpawner().create(stand.getLocation(), Monster.FLYER);
                         stand.addPassenger(player);
@@ -162,7 +164,9 @@ public class TARDISExteriorFlight {
                         chicken.setNoDamageTicks(Integer.MAX_VALUE);
                         chicken.setFireTicks(0);
                         // remove the light
-                        location.getBlock().getRelative(BlockFace.UP, 2).setBlockData(TARDISConstants.AIR);
+                        current.getBlock().getRelative(BlockFace.UP, 2).setBlockData(TARDISConstants.AIR);
+                        // save player's current location, so we can teleport them back to it when they finish flying
+                        plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(id, interior, sound, animation, chicken.getUniqueId()));
                     }, 2L);
                     break;
                 }

@@ -266,6 +266,14 @@ class TARDISMySQLDatabaseUpdater {
                 String bio_alter = "ALTER TABLE " + prefix + "current ADD biome varchar(64) DEFAULT ''";
                 statement.executeUpdate(bio_alter);
             }
+            // add chicken to flight persistence
+            String chi_query = "SHOW COLUMNS FROM " + prefix + "flight LIKE 'chicken'";
+            ResultSet rschi = statement.executeQuery(chi_query);
+            if (!rschi.next()) {
+                i++;
+                String chi_alter = "ALTER TABLE " + prefix + "flight ADD chicken varchar(48) DEFAULT ''";
+                statement.executeUpdate(chi_alter);
+            }
             // add preset to homes
             String preset_query = "SHOW COLUMNS FROM " + prefix + "homes LIKE 'biome'";
             ResultSet rspreset = statement.executeQuery(preset_query);

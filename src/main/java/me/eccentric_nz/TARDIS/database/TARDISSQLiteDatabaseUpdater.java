@@ -315,6 +315,14 @@ class TARDISSQLiteDatabaseUpdater {
                 String bio_alter = "ALTER TABLE " + prefix + "current ADD biome TEXT DEFAULT ''";
                 statement.executeUpdate(bio_alter);
             }
+            // add chicken to flight persistence
+            String chi_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "flight' AND sql LIKE '%chicken%'";
+            ResultSet rschi = statement.executeQuery(chi_query);
+            if (!rschi.next()) {
+                i++;
+                String chi_alter = "ALTER TABLE " + prefix + "flight ADD chicken TEXT DEFAULT ''";
+                statement.executeUpdate(chi_alter);
+            }
             // add preset to homes
             String preset_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "homes' AND sql LIKE '%preset%'";
             ResultSet rspreset = statement.executeQuery(preset_query);

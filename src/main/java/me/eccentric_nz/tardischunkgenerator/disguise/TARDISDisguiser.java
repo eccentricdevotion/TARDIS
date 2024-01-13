@@ -69,7 +69,7 @@ public class TARDISDisguiser {
                         // set location
                         setEntityLocationIdAndName(mob, p.getLocation(), p);
                         ClientboundRemoveEntitiesPacket packetPlayOutEntityDestroy = new ClientboundRemoveEntitiesPacket(p.getEntityId());
-                        ClientboundAddEntityPacket packetPlayOutSpawnLivingEntity = new ClientboundAddEntityPacket((LivingEntity) mob);
+                        ClientboundAddEntityPacket packetPlayOutSpawnLivingEntity = new ClientboundAddEntityPacket(mob);
                         ClientboundSetEntityDataPacket packetPlayOutEntityMetadata = new ClientboundSetEntityDataPacket(mob.getId(), mob.getEntityData().getNonDefaultValues());
                         ServerGamePacketListenerImpl connection = ((CraftPlayer) to).getHandle().connection;
                         connection.send(packetPlayOutEntityDestroy);

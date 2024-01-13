@@ -51,11 +51,12 @@ public class FlightPersister {
     public void save() {
         try {
             // save flying TARDISes
-            ps = connection.prepareStatement("INSERT INTO " + prefix + "flight (uuid, tardis_id, location) VALUES (?, ?, ?)");
+            ps = connection.prepareStatement("INSERT INTO " + prefix + "flight (uuid, tardis_id, location, chicken) VALUES (?, ?, ?, ?)");
             for (Map.Entry<UUID, FlightReturnData> map : plugin.getTrackerKeeper().getFlyingReturnLocation().entrySet()) {
                 ps.setString(1, map.getKey().toString());
                 ps.setInt(2, map.getValue().getId());
                 ps.setString(3, map.getValue().getLocation().toString());
+                ps.setString(4, map.getValue().getChicken().toString());
                 count += ps.executeUpdate();
             }
             if (count > 0) {
@@ -86,7 +87,8 @@ public class FlightPersister {
                 UUID uuid = UUID.fromString(rs.getString("uuid"));
                 int id = rs.getInt("tardis_id");
                 Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
-                plugin.getTrackerKeeper().getFlyingReturnLocation().put(uuid, new FlightReturnData(id, location, -1, -1));
+                UUID chicken = UUID.fromString(rs.getString("chicken"));
+                plugin.getTrackerKeeper().getFlyingReturnLocation().put(uuid, new FlightReturnData(id, location, -1, -1, chicken));
                 count++;
             }
             if (count > 0) {

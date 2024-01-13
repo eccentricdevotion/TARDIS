@@ -26,8 +26,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
+import me.eccentric_nz.TARDIS.flight.FlightReturnData;
 import me.eccentric_nz.TARDIS.flight.TARDISExteriorFlight;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.util.Vector;
@@ -67,30 +67,29 @@ public class TARDISTravelStop {
         // is player flying?
         if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {
             // land TARDIS
-            Entity stand = player.getVehicle();
-            if (stand != null && stand.getType() == EntityType.ARMOR_STAND) {
-                Entity chicken = stand.getVehicle();
-                if (chicken != null) {
-                    chicken.setVelocity(new Vector(0, 0, 0));
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
-                        // kill chicken
-                        chicken.removePassenger(stand);
-                        chicken.remove();
-                        // teleport player back to the TARDIS interior
-                        new TARDISExteriorFlight(TARDIS.plugin).stopFlying(player, (ArmorStand) stand);
-                    });
-                }
+            FlightReturnData frd = plugin.getTrackerKeeper().getFlyingReturnLocation().get(player.getUniqueId());
+            Entity chicken = plugin.getServer().getEntity(frd.getChicken());
+            if (chicken != null) {
+                chicken.setVelocity(new Vector(0, 0, 0));
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    // kill chicken
+                    Entity stand = chicken.getPassengers().get(0);
+                    chicken.removePassenger(stand);
+                    chicken.remove();
+                    // teleport player back to the TARDIS interior
+                    new TARDISExteriorFlight(plugin).stopFlying(player, (ArmorStand) stand);
+                });
             } else {
                 // scan for nearby chickens in case player teleport fails due to lag
                 for (Entity e : player.getLocation().getWorld().getNearbyEntities(player.getLocation(), 4, 4, 4, (s) -> s.getType() == EntityType.CHICKEN)) {
                     if (!e.getPassengers().isEmpty() && e.getPassengers().get(0) instanceof ArmorStand armorStand) {
                         e.setVelocity(new Vector(0, 0, 0));
-                        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             // kill chicken
                             e.removePassenger(armorStand);
                             e.remove();
                             // teleport player back to the TARDIS interior
-                            new TARDISExteriorFlight(TARDIS.plugin).stopFlying(player, armorStand);
+                            new TARDISExteriorFlight(plugin).stopFlying(player, armorStand);
                         });
                     }
                 }

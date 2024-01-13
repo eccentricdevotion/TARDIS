@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.flight;
 
 import org.bukkit.Location;
 
+import java.util.UUID;
+
 /**
  *
  * @author eccentric_nz
@@ -28,12 +30,14 @@ public class FlightReturnData {
     private final Location location;
     private final int sound;
     private final int animation;
+    private final UUID chicken;
 
-    public FlightReturnData(int id, Location location, int sound, int animation) {
+    public FlightReturnData(int id, Location location, int sound, int animation, UUID chicken) {
         this.id = id;
         this.location = location;
         this.sound = sound;
         this.animation = animation;
+        this.chicken = chicken;
     }
 
     public int getId() {
@@ -50,5 +54,9 @@ public class FlightReturnData {
 
     public int getAnimation() {
         return animation;
+    }
+
+    public UUID getChicken() {
+        return chicken;
     }
 }

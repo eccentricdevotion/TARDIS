@@ -178,7 +178,7 @@ public class Converter implements Runnable {
                                         sb.append(str);
                                     }
                                     case flight -> {
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("f_id"), rs.getString("uuid"), rs.getInt("tardis_id"), rs.getString("location")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("f_id"), rs.getString("uuid"), rs.getInt("tardis_id"), rs.getString("location"), rs.getString("chicken")) + end;
                                         sb.append(str);
                                     }
                                     case forcefield -> {

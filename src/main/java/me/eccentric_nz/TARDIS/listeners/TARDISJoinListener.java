@@ -215,8 +215,6 @@ public class TARDISJoinListener implements Listener {
                     int sound = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
                         TARDISSounds.playTARDISSound(player.getLocation(), "time_rotor", 100f);
                     }, 5L, 280L);
-                    // re-save flight data
-                    plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(data.getId(), data.getLocation(), sound, animation));
                     // spawn a new TARDISChicken
                     LivingEntity chicken = new MonsterSpawner().create(stand.getLocation(), Monster.FLYER);
                     stand.removePassenger(player);
@@ -229,6 +227,8 @@ public class TARDISJoinListener implements Listener {
                     chicken.setInvulnerable(true);
                     chicken.setNoDamageTicks(Integer.MAX_VALUE);
                     chicken.setFireTicks(0);
+                    // re-save flight data
+                    plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(data.getId(), data.getLocation(), sound, animation, chicken.getUniqueId()));
                 }
             }
         }
