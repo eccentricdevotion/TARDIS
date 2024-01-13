@@ -39,6 +39,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
@@ -143,6 +144,7 @@ public class TARDISTrackerInstanceKeeper {
     private final Set<UUID> geneticallyModified = new HashSet<>();
     private final Set<UUID> geneticManipulation = new HashSet<>();
     private final Set<UUID> hasTravelled = new HashSet<>();
+    private final HashMap<UUID, ItemStack> hiddenFlight = new HashMap<>();
     private final Set<UUID> howTo = new HashSet<>();
     private final Set<UUID> mover = new HashSet<>();
     private final Set<UUID> recipeViewers = new HashSet<>();
@@ -762,6 +764,15 @@ public class TARDISTrackerInstanceKeeper {
      */
     public HashMap<UUID, UUID> getTelepathicRescue() {
         return telepathicRescue;
+    }
+
+    /**
+     * Tracks players flying the TARDIS hidden
+     *
+     * @return a Map of player UUIDs and the UUID of the TARDIS armour stand
+     */
+    public HashMap<UUID, ItemStack> getHiddenFlight() {
+        return hiddenFlight;
     }
 
     /**

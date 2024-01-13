@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
-import java.util.Objects;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.flight.FlightVisibility;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -32,6 +33,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -76,6 +80,28 @@ public class TARDISHotbarListener implements Listener {
                     player.setCompassTarget(Objects.requireNonNullElseGet(bedspawn, () -> player.getWorld().getSpawnLocation()));
                 }
             }
+            if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {
+                // change behaviour of flight
+                switch (is.getType()) {
+                    case GLASS_BOTTLE -> {
+                        // hide the armour stand entity from the player
+                        Entity as = player.getVehicle();
+                        if (as != null && as instanceof ArmorStand stand) {
+                            new FlightVisibility(plugin).hide(stand, player);
+                        }
+                    }
+                    case ARROW -> {}
+                    default -> {
+                        if (plugin.getTrackerKeeper().getHiddenFlight().containsKey(player.getUniqueId())) {
+                            // remove entity hiding
+                            new FlightVisibility(plugin).show(player);
+                        }
+                    }
+                }
+            }
+        } else if (plugin.getTrackerKeeper().getHiddenFlight().containsKey(player.getUniqueId())) {
+            // remove entity hiding
+            new FlightVisibility(plugin).show(player);
         }
     }
 }
