@@ -107,13 +107,17 @@ public class TARDISPacketListener {
                                     if (!Double.isFinite(velocity.getZ())) {
                                         velocity.setZ(0);
                                     }
-                                    if (pitch < 0) {
-                                        // go up
-                                        double up = Math.abs(pitch / 100.0d);
-                                        velocity.setY(up);
+                                    if (!steerPacket.isJumping()) {
+                                        if (pitch < 0) {
+                                            // go up
+                                            double up = Math.abs(pitch / 100.0d);
+                                            velocity.setY(up);
+                                        } else {
+                                            double down = -Math.abs(pitch / 100.0d);
+                                            velocity.setY(down);
+                                        }
                                     } else {
-                                        double down = -Math.abs(pitch / 100.0d);
-                                        velocity.setY(down);
+                                        velocity.setY(0);
                                     }
                                     velocity.checkFinite();
                                     chicken.setVelocity(velocity);
