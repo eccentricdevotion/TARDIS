@@ -67,6 +67,7 @@ public enum Updateable {
     MONITOR_FRAME(false, false, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TARDISUpdateableCategory.OTHERS, "Monitor Frame"),
     PEN(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Sniffer Pen room"),
     RAIL(false, false, new RecipeChoice.MaterialChoice(Tag.FENCES), TARDISUpdateableCategory.LOCATIONS, "Rail room entry point"),
+    RELATIVITY_DIFFERENTIATOR(true, false, new RecipeChoice.MaterialChoice(Material.COMPARATOR), TARDISUpdateableCategory.CONTROLS, "Relativity Differentiator"),
     ROTOR(false, false, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TARDISUpdateableCategory.OTHERS, "Time Rotor item frame"),
     SAVE_SIGN(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "Saved locations and TARDIS areas"),
     SCANNER(true, true, TARDISUpdateableCategory.OTHERS, "Exterior Scanner button"),

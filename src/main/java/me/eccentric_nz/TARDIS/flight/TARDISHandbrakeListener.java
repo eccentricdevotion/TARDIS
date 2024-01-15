@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.type.Comparator;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -186,8 +187,8 @@ public class TARDISHandbrakeListener implements Listener {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id)), 600L);
                                         return;
                                     }
-                                    // TODO change player.isSneaking() to check the state of the Relativity Differentiator
-                                    if (player.isSneaking() && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand()) {
+                                    // check the state of the Relativity Differentiator
+                                    if (isRelativityDifferentiated(id) && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand()) {
                                         // check if TARDIS is underground
                                         HashMap<String, Object> wherec = new HashMap<>();
                                         wherec.put("tardis_id", id);
@@ -306,6 +307,19 @@ public class TARDISHandbrakeListener implements Listener {
         if (rs.resultSet()) {
             Block door = TARDISStaticLocationGetters.getLocationFromDB(rs.getDoor_location()).getBlock();
             return TARDISStaticUtils.isDoorOpen(door);
+        }
+        return false;
+    }
+
+    private boolean isRelativityDifferentiated(int id) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        where.put("type", 47);
+        ResultSetControls rsc = new ResultSetControls(plugin, where, false);
+        if (rsc.resultSet()) {
+            Block rd = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation()).getBlock();
+            Comparator comparator = (Comparator) rd.getBlockData();
+            return comparator.getMode().equals(Comparator.Mode.SUBTRACT);
         }
         return false;
     }

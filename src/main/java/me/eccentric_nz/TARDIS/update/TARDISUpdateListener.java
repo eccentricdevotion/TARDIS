@@ -163,15 +163,12 @@ public class TARDISUpdateListener implements Listener {
             }
             switch (updateable) {
                 case BACKDOOR, DOOR -> new UpdateDoor(plugin).process(updateable, block, secondary, id, player);
-                case GENERATOR -> plugin.getQueryFactory().insertControl(id, 24, blockLocStr, secondary ? 1 : 0);
-                case DISPENSER -> plugin.getQueryFactory().insertControl(id, 28, blockLocStr, secondary ? 1 : 0);
                 case TELEPATHIC -> {
                     plugin.getTrackerKeeper().getTelepathicPlacements().remove(playerUUID);
                     plugin.getQueryFactory().insertControl(id, 23, blockLocStr, secondary ? 1 : 0);
                     Block detector = block;
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> detector.setBlockData(TARDISConstants.DAYLIGHT), 3L);
                 }
-                case HANDBRAKE -> plugin.getQueryFactory().insertControl(id, 0, blockLocStr, secondary ? 1 : 0);
                 case BEACON -> {
                     set.put("beacon", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
@@ -307,7 +304,6 @@ public class TARDISUpdateListener implements Listener {
                     s.setWaxed(true);
                     s.update();
                 }
-                case ZERO -> plugin.getQueryFactory().insertControl(id, 16, blockLocStr, 0);
                 case THROTTLE -> {
                     plugin.getQueryFactory().insertControl(id, 39, blockLocStr, secondary ? 1 : 0);
                     Block rblock = block;
@@ -320,8 +316,8 @@ public class TARDISUpdateListener implements Listener {
                 }
                 case SMELT, FUEL -> new TARDISSmelterCommand(plugin).addDropChest(player, updateable, id, block);
                 case VAULT -> new TARDISVaultCommand(plugin).addDropChest(player, id, block);
-                default ->
-                        plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
+                // GENERATOR, DISPENSER, HANDBRAKE, ZERO, RELATIVITY_DIFFERENTIATOR
+                default -> plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
             }
             if (!updateable.equals(Updateable.FUEL) && !updateable.equals(Updateable.SMELT)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_SET", updateable.getName());
