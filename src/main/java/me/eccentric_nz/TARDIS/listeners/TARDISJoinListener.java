@@ -211,7 +211,7 @@ public class TARDISJoinListener implements Listener {
                     plugin.getServer().getScheduler().cancelTask(data.getAnimation());
                     plugin.getServer().getScheduler().cancelTask(data.getSound());
                     // restart animation and sound
-                    int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(stand, pandorica), 5L, 3L);
+                    int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(plugin, stand, player, pandorica), 5L, 3L);
                     int sound = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
                         TARDISSounds.playTARDISSound(player.getLocation(), "time_rotor", 100f);
                     }, 5L, 280L);

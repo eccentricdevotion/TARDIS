@@ -72,7 +72,7 @@ public class FlightVisibility {
                     if (rs.resultSet()) {
                         Tardis tardis = rs.getTardis();
                         // restart animation
-                        int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(stand, tardis.getPreset().equals(ChameleonPreset.PANDORICA)), 5L, 3L);
+                        int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(plugin, stand, player, tardis.getPreset().equals(ChameleonPreset.PANDORICA)), 5L, 3L);
                         // save flight data
                         plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(frd.getId(), frd.getLocation(), frd.getSound(), animation, chicken.getUniqueId()));
                         // remove tracker

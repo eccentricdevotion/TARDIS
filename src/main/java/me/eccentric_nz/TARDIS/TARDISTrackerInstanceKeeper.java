@@ -150,6 +150,7 @@ public class TARDISTrackerInstanceKeeper {
     private final Set<UUID> recipeViewers = new HashSet<>();
     private final Set<UUID> renderRoomOccupants = new HashSet<>();
     private final Set<UUID> sonicDoors = new HashSet<>();
+    private final Set<UUID> sonicDoorToggle = new HashSet<>();
     private final Set<UUID> spectacleWearers = new HashSet<>();
     private final Set<UUID> temporallyLocated = new HashSet<>();
     private final Set<UUID> zeroRoomOccupants = new HashSet<>();
@@ -1068,6 +1069,15 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
+     * Tracks players that are flying the TARDIS exterior with the door open
+     *
+     * @return a collection of player UUIDs
+     */
+    public Set<UUID> getSonicDoorToggle() {
+        return sonicDoorToggle;
+    }
+
+    /**
      * Tracks players that are wearing 3-D glasses
      *
      * @return a collection of player UUIDs
@@ -1097,4 +1107,5 @@ public class TARDISTrackerInstanceKeeper {
     public HashMap<Integer, Integer> getShriekers() {
         return shriekers;
     }
+
 }

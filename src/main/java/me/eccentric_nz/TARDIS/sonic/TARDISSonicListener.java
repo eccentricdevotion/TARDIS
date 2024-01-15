@@ -43,6 +43,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -109,8 +110,9 @@ public class TARDISSonicListener implements Listener {
                 List<String> lore = im.getLore();
                 Action action = event.getAction();
                 if (action.equals(Action.RIGHT_CLICK_AIR) && !player.isSneaking()) {
+                    UUID uuid = player.getUniqueId();
                     // rebuild Police Box if dispersed by HADS
-                    if (plugin.getTrackerKeeper().getDispersed().containsKey(player.getUniqueId())) {
+                    if (plugin.getTrackerKeeper().getDispersed().containsKey(uuid)) {
                         TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
                         TARDISSonicDispersed.assemble(plugin, player);
                     } else if (lore != null && (lore.contains("Bio-scanner Upgrade") || lore.contains("Knockback Upgrade"))) {
@@ -134,6 +136,14 @@ public class TARDISSonicListener implements Listener {
                     }
                     if (TARDISPermission.hasPermission(player, "tardis.sonic.standard")) {
                         TARDISSonic.standardSonic(plugin, player, now);
+                        if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(uuid)) {
+                            // toggle door open / closed
+                            if (plugin.getTrackerKeeper().getSonicDoorToggle().contains(uuid)) {
+                                plugin.getTrackerKeeper().getSonicDoorToggle().remove(uuid);
+                            } else {
+                                plugin.getTrackerKeeper().getSonicDoorToggle().add(uuid);
+                            }
+                        }
                         return;
                     }
                 }

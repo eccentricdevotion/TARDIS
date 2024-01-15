@@ -186,6 +186,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id)), 600L);
                                         return;
                                     }
+                                    // TODO change player.isSneaking() to check the state of the Relativity Differentiator
                                     if (player.isSneaking() && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand()) {
                                         // check if TARDIS is underground
                                         HashMap<String, Object> wherec = new HashMap<>();

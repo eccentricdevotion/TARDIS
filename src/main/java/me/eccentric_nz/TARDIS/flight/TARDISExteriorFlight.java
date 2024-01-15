@@ -43,6 +43,8 @@ import java.util.HashMap;
 import java.util.UUID;
 
 /**
+ * The relativity differentiator is a component inside the TARDIS that allows it to travel in space.
+ *
  * @author eccentric_nz
  */
 public class TARDISExteriorFlight {
@@ -151,7 +153,7 @@ public class TARDISExteriorFlight {
             for (Entity e : current.getWorld().getNearbyEntities(current, 1, 1, 1, (s) -> s.getType() == EntityType.ARMOR_STAND)) {
                 if (e instanceof ArmorStand stand) {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(stand, pandorica), 5L, 3L);
+                        int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(plugin, stand, player, pandorica), 5L, 3L);
                         int sound = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> TARDISSounds.playTARDISSound(player.getLocation(), "time_rotor_flying", 4f), 5L, 33L);
                         // spawn a chicken
                         LivingEntity chicken = new MonsterSpawner().create(stand.getLocation(), Monster.FLYER);
