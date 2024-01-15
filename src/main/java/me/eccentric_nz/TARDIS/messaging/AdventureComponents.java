@@ -204,9 +204,9 @@ public class AdventureComponents {
     }
 
     public static TextComponent getRoomGallery() {
-        TextComponent textComponent = Component.text("https://eccentricdevotion.github.io/TARDIS/room-gallery", NamedTextColor.AQUA)
+        TextComponent textComponent = Component.text("https://tardis.pages.dev/rooms/gallery", NamedTextColor.AQUA)
                 .hoverEvent(HoverEvent.showText(Component.text("Click me!")))
-                .clickEvent(ClickEvent.openUrl("https://eccentricdevotion.github.io/TARDIS/room-gallery"));
+                .clickEvent(ClickEvent.openUrl("https://tardis.pages.dev/rooms/gallery"));
         return textComponent;
     }
 
@@ -220,10 +220,10 @@ public class AdventureComponents {
 
     public static TextComponent getSign() {
         TextComponent textComponent = Component.text("Click the link to view the TARDIS wiki: ")
-                .append(Component.text("https://eccentricdevotion.github.io/TARDIS/site-map.html")
+                .append(Component.text("https://tardis.pages.dev/site-map")
                         .color(NamedTextColor.GREEN)
                         .hoverEvent(HoverEvent.showText(Component.text("Click me!")))
-                        .clickEvent(ClickEvent.openUrl("https://eccentricdevotion.github.io/TARDIS/site-map.html"))
+                        .clickEvent(ClickEvent.openUrl("https://tardis.pages.dev/site-map"))
                 );
         return textComponent;
     }

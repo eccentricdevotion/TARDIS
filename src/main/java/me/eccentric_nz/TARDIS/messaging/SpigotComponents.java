@@ -222,10 +222,10 @@ public class SpigotComponents {
     }
 
     public static TextComponent getRoomGallery() {
-        TextComponent textComponent = new TextComponent("https://eccentricdevotion.github.io/TARDIS/room-gallery");
+        TextComponent textComponent = new TextComponent("https://tardis.pages.dev/rooms/gallery");
         textComponent.setColor(ChatColor.AQUA);
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
-        textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://eccentricdevotion.github.io/TARDIS/room-gallery"));
+        textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://tardis.pages.dev/rooms/gallery"));
         return textComponent;
     }
 
@@ -242,10 +242,10 @@ public class SpigotComponents {
 
     public static TextComponent getSign() {
         TextComponent textComponent = new TextComponent("Click the link to view the TARDIS wiki: ");
-        TextComponent link = new TextComponent("https://eccentricdevotion.github.io/TARDIS/site-map.html");
+        TextComponent link = new TextComponent("https://tardis.pages.dev/site-map");
         link.setColor(ChatColor.GREEN);
         link.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
-        link.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://eccentricdevotion.github.io/TARDIS/site-map.html"));
+        link.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://tardis.pages.dev/site-map"));
         textComponent.addExtra(link);
         return textComponent;
     }

@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.RootCommand;
+import org.bukkit.command.CommandSender;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.RootCommand;
-import org.bukkit.command.CommandSender;
 
 /**
  * @author eccentric_nz
@@ -40,7 +41,7 @@ public class TARDISCommandHelper {
         if (c.isEmpty()) {
             sender.sendMessage("------");
             plugin.getMessenger().sendCommand(sender, "TARDIS", "/tardis? <command>");
-            plugin.getMessenger().sendWithColours(sender, "Online: ", "#AAAAAA", "https://eccentricdevotion.github.io/TARDIS/commands.html", "#FFFFFF");
+            plugin.getMessenger().sendWithColours(sender, "Online: ", "#AAAAAA", "https://tardis.pages.dev/commands", "#FFFFFF");
             plugin.getGeneralKeeper().getPluginYAML().getConfigurationSection("commands").getKeys(false).forEach((o) -> {
                 if (!o.equals("tardis?")) {
                     sender.sendMessage("/" + o);

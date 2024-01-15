@@ -25,14 +25,14 @@ public class HandlesWiki {
     public void getLinks(String query, Player player) {
         Pattern pattern = Pattern.compile(query, Pattern.CASE_INSENSITIVE);
         Set<WikiLink> results = new HashSet<>();
-        // <dd><a href="dev-commands.html" title="Dev commands">/tardisdev commands</a></dd>
+        // <a title="Dev commands" href="/commands/dev">Dev commands</a>
         Document doc = null;
         try {
-            doc = Jsoup.connect("https://eccentricdevotion.github.io/TARDIS/site-map.html").get();
-            Elements links = doc.select("dd a");
+            doc = Jsoup.connect("https://tardis.pages.dev/site-map").get();
+            Elements links = doc.select("a");
             for (Element e : links) {
-                String linkHref = e.attr("href"); // "dev-commands.html"
-                String linkText = e.text(); // "/tardisdev commands"
+                String linkHref = e.attr("href"); // "/commands/dev"
+                String linkText = e.text(); // "Dev commands"
                 Matcher mat = pattern.matcher(linkText);
                 if (mat.find()) {
                     results.add(new WikiLink(linkText, linkHref));

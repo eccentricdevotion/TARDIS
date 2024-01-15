@@ -6,7 +6,7 @@ public class WikiLink {
 
     public WikiLink(String title, String URL) {
         this.title = title;
-        this.URL = "https://eccentricdevotion.github.io/TARDIS/" + URL;
+        this.URL = "https://tardis.pages.dev" + URL;
     }
 
     public String getTitle() {

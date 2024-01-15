@@ -229,22 +229,22 @@ public class TARDISConfiguration {
         stringOptions.put("travel.terminal.nether", "world");
         stringOptions.put("travel.terminal.the_end", "world");
         // comments
-        comments.put("storage", Arrays.asList("how the plugin persists data", "https://eccentricdevotion.github.io/TARDIS/configuration-storage.html"));
-        comments.put("creation", Arrays.asList("inner TARDIS", "https://eccentricdevotion.github.io/TARDIS/configuration-creation.html"));
-        comments.put("police_box", Arrays.asList("outer TARDIS", "https://eccentricdevotion.github.io/TARDIS/configuration-preset.html"));
-        comments.put("travel", Arrays.asList("travel settings", "https://eccentricdevotion.github.io/TARDIS/configuration-travel.html"));
-        comments.put("preferences", Arrays.asList("general preferences", "https://eccentricdevotion.github.io/TARDIS/configuration-prefs.html"));
-        comments.put("dynmap", Arrays.asList("dynmap", "https://eccentricdevotion.github.io/TARDIS/dynmap-tardis.html#configuration-options"));
-        comments.put("desktop", Arrays.asList("desktop theme", "https://eccentricdevotion.github.io/TARDIS/desktop-theme.html#config-options"));
-        comments.put("circuits", Arrays.asList("circuits", "https://eccentricdevotion.github.io/TARDIS/circuit-use.html#configuration-options"));
-        comments.put("allow", Arrays.asList("restrictions", "https://eccentricdevotion.github.io/TARDIS/configuration-allow.html"));
-        comments.put("growth", Arrays.asList("room related", "https://eccentricdevotion.github.io/TARDIS/configuration-growth.html"));
-        comments.put("arch", Arrays.asList("chameleon arch", "https://eccentricdevotion.github.io/TARDIS/chameleon-arch.html#chameleon-arch-configuration"));
-        comments.put("siege", Arrays.asList("siege mode", "https://eccentricdevotion.github.io/TARDIS/siege-mode.html#configuration"));
-        comments.put("junk", Arrays.asList("junk TARDIS", "https://eccentricdevotion.github.io/TARDIS/junk-tardis.html#configuration-options"));
-        comments.put("abandon", Arrays.asList("abandoned TARDISes", "https://eccentricdevotion.github.io/TARDIS/abandon.html#config-options"));
-        comments.put("archive", Arrays.asList("console archives", "https://eccentricdevotion.github.io/TARDIS/archive.html#config-options"));
-        comments.put("blueprints", Arrays.asList("enable blueprints", "https://eccentricdevotion.github.io/TARDIS/blueprints.html"));
+        comments.put("storage", Arrays.asList("how the plugin persists data", "https://tardis.pages.dev/configuration/storage"));
+        comments.put("creation", Arrays.asList("inner TARDIS", "https://tardis.pages.dev/configuration/creation"));
+        comments.put("police_box", Arrays.asList("outer TARDIS", "https://tardis.pages.dev/configuration/preset"));
+        comments.put("travel", Arrays.asList("travel settings", "https://tardis.pages.dev/configuration/travel"));
+        comments.put("preferences", Arrays.asList("general preferences", "https://tardis.pages.dev/configuration/prefs"));
+        comments.put("dynmap", Arrays.asList("dynmap", "https://tardis.pages.dev/dynmap-tardis#configuration/options"));
+        comments.put("desktop", Arrays.asList("desktop theme", "https://tardis.pages.dev/desktop-theme#config-options"));
+        comments.put("circuits", Arrays.asList("circuits", "https://tardis.pages.dev/circuit-use#configuration/options"));
+        comments.put("allow", Arrays.asList("restrictions", "https://tardis.pages.dev/configuration/allow"));
+        comments.put("growth", Arrays.asList("room related", "https://tardis.pages.dev/configuration/growth"));
+        comments.put("arch", Arrays.asList("chameleon arch", "https://tardis.pages.dev/chameleon-arch#chameleon-arch-configuration"));
+        comments.put("siege", Arrays.asList("siege mode", "https://tardis.pages.dev/siege-mode#configuration"));
+        comments.put("junk", Arrays.asList("junk TARDIS", "https://tardis.pages.dev/junk-tardis#configuration/options"));
+        comments.put("abandon", Arrays.asList("abandoned TARDISes", "https://tardis.pages.dev/abandon#config-options"));
+        comments.put("archive", Arrays.asList("console archives", "https://tardis.pages.dev/archive#config-options"));
+        comments.put("blueprints", Arrays.asList("enable blueprints", "https://tardis.pages.dev/modules/blueprints"));
         comments.put("display", Collections.singletonList("HUD display"));
         comments.put("conversions", Collections.singletonList("don't touch!"));
     }
