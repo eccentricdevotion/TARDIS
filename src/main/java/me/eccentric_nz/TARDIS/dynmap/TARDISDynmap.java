@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.dynmap;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.TARDISData;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -33,6 +28,12 @@ import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 import org.dynmap.DynmapAPI;
 import org.dynmap.markers.*;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TARDISDynmap {
 
@@ -78,7 +79,7 @@ public class TARDISDynmap {
         api = (DynmapAPI) dynmap;
         plugin.getPM().registerEvents(new TARDISServerListener(), plugin);
         // if enabled, activate
-        if (dynmap.isEnabled()) {
+        if (dynmap != null && dynmap.isEnabled()) {
             activate();
             checkIcon();
         }
