@@ -2,18 +2,17 @@
 
 ## Current version `5.3.0`
 
-1. Fix flight - change from shift-clicking as it is the same key as dismount...
-2. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
-   [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
-2. Deep space [#748](https://github.com/eccentricdevotion/TARDIS/issues/748)
-3. Animated models for player disguises
+1. Sonic Docking / Charging Station [#774](https://github.com/eccentricdevotion/TARDIS/issues/774)
+2. BlueMap support [#783](https://github.com/eccentricdevotion/TARDIS/issues/783)
+3. Allow 3D Police Boxes to land on slabs [#777](https://github.com/eccentricdevotion/TARDIS/issues/777)
 
 ## Next version `5.4.0`
 
-1. Sonic Blaster
-2. New sonic screwdriver functionality
-    - ?
-3. ?
+1. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
+   [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
+2. Animated models for player disguises
+3. Sonic Blaster
+4. ?
 
 ## Future versions
 

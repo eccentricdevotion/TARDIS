@@ -324,6 +324,12 @@ public class SpigotMessage implements TARDISMessage {
         player.spigot().sendMessage(ChatMessageType.ACTION_BAR, actionBar);
     }
 
+    @Override
+    public void sendFind(Player player, String world, int x, int y, int z) {
+        String local = TARDIS.plugin.getLanguage().getString("TARDIS_FIND");
+        player.spigot().sendMessage(SpigotComponents.getFind(local.substring(0, local.length() - 2), world, x, y, z));
+    }
+
     public void sendJoinedStatus(Player player, String key, String otherKey) {
         String local = TARDIS.plugin.getLanguage().getString(key);
         String other = TARDIS.plugin.getLanguage().getString(otherKey);

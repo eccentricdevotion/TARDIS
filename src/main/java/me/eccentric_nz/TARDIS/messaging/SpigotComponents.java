@@ -471,4 +471,16 @@ public class SpigotComponents {
         }
         return indicator;
     }
+
+    public static TextComponent getFind(String local, String world, int x, int y, int z) {
+        TextComponent textComponent = getModule(TardisModule.TARDIS);
+        TextComponent l = new TextComponent(local);
+        l.setColor(ChatColor.WHITE);
+        textComponent.addExtra(l);
+        TextComponent f = new TextComponent(world + " at x: " + x + " y: " + y + " z: " + z);
+        f.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Teleport to TARDIS")));
+        f.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ttp " + world + " " + x + " " + y + " " + z + " not_for_players"));
+        textComponent.addExtra(f);
+        return textComponent;
+    }
 }

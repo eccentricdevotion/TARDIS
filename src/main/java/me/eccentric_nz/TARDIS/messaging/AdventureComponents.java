@@ -304,8 +304,8 @@ public class AdventureComponents {
 
     public static TextComponent getRemoveProtected(String xyz, String location, int id) {
         TextComponent textComponent = Component.text(xyz)
-            .hoverEvent(HoverEvent.showText(Component.text("Remove protection")))
-            .clickEvent(ClickEvent.runCommand("/tardisadmin remove_protection " + id + " " + location));
+                .hoverEvent(HoverEvent.showText(Component.text("Remove protection")))
+                .clickEvent(ClickEvent.runCommand("/tardisadmin remove_protection " + id + " " + location));
         return textComponent;
     }
 
@@ -369,5 +369,13 @@ public class AdventureComponents {
                 .append(Component.text(TARDIS.plugin.getLanguage().getString("ARTRON_TL") + ": " + data.getTimelord() + " ", NamedTextColor.YELLOW))
                 .append(data.getUsed() > 0 ? Component.text(TARDIS.plugin.getLanguage().getString("ARTRON_USED") + ": " + data.getUsed() + " ", NamedTextColor.RED) : Component.text())
                 .append(data.getCost() > 0 ? Component.text(TARDIS.plugin.getLanguage().getString("ARTRON_COST") + ": " + data.getCost(), NamedTextColor.RED) : Component.text());
+    }
+
+    public static Component getFind(String local, String world, int x, int y, int z) {
+        return getModule(TardisModule.TARDIS)
+                .append(Component.text(local, NamedTextColor.WHITE))
+                .append(Component.text(world + " at x: " + x + " y: " + y + " z: " + z)
+                        .hoverEvent(HoverEvent.showText(Component.text("Teleport to TARDIS")))
+                        .clickEvent(ClickEvent.runCommand("/ttp " + world + " " + x + " " + y + " " + z + " not_for_players")));
     }
 }

@@ -55,7 +55,11 @@ class TARDISFindCommand {
                     if (!plugin.getPlanetsConfig().getBoolean("planets." + rsc.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                         world = plugin.getMVHelper().getAlias(rsc.getWorld());
                     }
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
+                    if (player.isOp()) {
+                        plugin.getMessenger().sendFind(player, world, rsc.getX(), rsc.getY(), rsc.getZ());
+                    } else {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
+                    }
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 }

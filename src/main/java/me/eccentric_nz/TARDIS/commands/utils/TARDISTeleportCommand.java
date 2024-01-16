@@ -77,10 +77,11 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
             World world = TARDISAliasResolver.getWorldFromAlias(args[0]);
             if (world != null) {
                 Location spawn;
-                if (args.length == 4 && args[3].equals("not_for_players")) {
+                if (args[args.length-1].equals("not_for_players")) {
                     int x = TARDISNumberParsers.parseInt(args[1]);
-                    int z = TARDISNumberParsers.parseInt(args[2]);
-                    spawn = new Location(world, x, 64, z);
+                    int y = args.length == 5 ? TARDISNumberParsers.parseInt(args[2]) : 64;
+                    int z = TARDISNumberParsers.parseInt(args.length == 5 ? args[3] : args[2]);
+                    spawn = new Location(world, x, y, z);
                 } else {
                     spawn = world.getSpawnLocation();
                 }
