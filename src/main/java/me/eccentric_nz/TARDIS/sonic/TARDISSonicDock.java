@@ -25,6 +25,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -53,6 +54,8 @@ public class TARDISSonicDock {
         display.setInvulnerable(true);
         // remove item from hand
         player.getInventory().setItemInMainHand(null);
+        // change the dock model
+        updateModel(block, 1001);
         if (uuid != null) {
             // get last scan coordinates
             ResultSetSonicLocation rssc = new ResultSetSonicLocation(plugin, uuid);
@@ -213,6 +216,17 @@ public class TARDISSonicDock {
             player.getInventory().addItem(sonic);
         }
         display.remove();
+        // change the dock model
+        updateModel(block, 1000);
+    }
+
+    private void updateModel(Block block, int cmd) {
+        ItemFrame frame = (ItemFrame) block.getState();
+        ItemStack dock = frame.getItem();
+        ItemMeta im = dock.getItemMeta();
+        im.setCustomModelData(cmd);
+        dock.setItemMeta(im);
+        frame.setItem(dock);
     }
 
     private boolean isDoorOpen(int id) {
