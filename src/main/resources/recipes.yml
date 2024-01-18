@@ -291,6 +291,22 @@ shaped:
     result: MUSIC_DISC_STRAD
     amount: 1
     lore: ''
+  Sonic Dock:
+    easy_shape: RGR,GSG,BGB
+    easy_ingredients:
+      R: REDSTONE
+      G: GOLD_NUGGET
+      S: REPEATER
+      B: BLACKSTONE
+    hard_shape: RGR,GSG,BGB
+    hard_ingredients:
+      R: REDSTONE
+      G: GOLD_INGOT
+      S: GLOWSTONE_DUST=Sonic Oscillator
+      B: BLACKSTONE
+    result: FLOWER_POT
+    amount: 1
+    lore: ''
   Sonic Oscillator:
     easy_shape: RQR,R-R,RQR
     easy_ingredients:

@@ -34,6 +34,7 @@ public enum TravelType {
     RELATIVE_COORDINATES,
     RESCUE,
     SAVE,
+    SONIC_DOCK,
     STOP,
     TERMINAL,
     TIME,

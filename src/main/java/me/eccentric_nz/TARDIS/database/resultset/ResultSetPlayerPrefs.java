@@ -47,6 +47,7 @@ public class ResultSetPlayerPrefs {
     private boolean autoOn;
     private Autonomous autoType;
     private Autonomous.Default autoDefault;
+    private boolean autoHandbrakeOn;
     private boolean autoPowerUp;
     private boolean autoRescueOn;
     private boolean autoSiegeOn;
@@ -123,6 +124,7 @@ public class ResultSetPlayerPrefs {
                     } catch (IllegalArgumentException e) {
                         autoDefault = Autonomous.Default.HOME;
                     }
+                    autoHandbrakeOn = rs.getBoolean("auto_handbrake_on");
                     autoRescueOn = rs.getBoolean("auto_rescue_on");
                     autoSiegeOn = rs.getBoolean("auto_siege_on");
                     beaconOn = rs.getBoolean("beacon_on");
@@ -213,6 +215,10 @@ public class ResultSetPlayerPrefs {
 
     public Autonomous.Default getAutoDefault() {
         return autoDefault;
+    }
+
+    public boolean isAutoHandbrakeOn() {
+        return autoHandbrakeOn;
     }
 
     public boolean isAutoSiegeOn() {

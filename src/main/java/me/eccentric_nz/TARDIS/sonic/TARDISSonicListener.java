@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.sonic.actions.*;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -58,7 +59,6 @@ public class TARDISSonicListener implements Listener {
     private final Set<Material> ignite = new HashSet<>();
     private final Set<Material> suspicious = new HashSet<>();
     private final Set<Material> converts = new HashSet<>();
-
 
     public TARDISSonicListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -197,7 +197,12 @@ public class TARDISSonicListener implements Listener {
                     if (TARDISPermission.hasPermission(player, "tardis.sonic.emerald") && lore != null && lore.contains("Emerald Upgrade") && !block.getType().isInteractable()) {
                         TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
                         // scan environment
-                        TARDISSonicScanner.scan(plugin, block.getLocation(), player);
+                        Location scanned = block.getLocation();
+                        TARDISSonicScanner.scan(plugin, scanned, player);
+                        if (!plugin.getUtils().inTARDISWorld(player)) {
+                            // save scanned location to sonic table
+                            new TARDISSonicData().saveOrUpdate(plugin, scanned.add(0, 1, 0).toString(), 0, is, player);
+                        }
                     }
                 }
                 if (action.equals(Action.LEFT_CLICK_BLOCK)) {

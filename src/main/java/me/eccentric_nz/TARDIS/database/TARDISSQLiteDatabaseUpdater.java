@@ -80,6 +80,7 @@ class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("auto_on INTEGER DEFAULT 0");
         prefsupdates.add("auto_type TEXT DEFAULT 'CLOSEST'");
         prefsupdates.add("auto_default TEXT DEFAULT 'HOME'");
+        prefsupdates.add("auto_handbrake_on INTEGER DEFAULT 0");
         prefsupdates.add("auto_rescue_on INTEGER DEFAULT 0");
         prefsupdates.add("auto_siege_on INTEGER DEFAULT 0");
         prefsupdates.add("beacon_on INTEGER DEFAULT 1");
@@ -157,6 +158,8 @@ class TARDISSQLiteDatabaseUpdater {
         sonicupdates.add("conversion INTEGER DEFAULT 0");
         sonicupdates.add("model INTEGER DEFAULT 10000011");
         sonicupdates.add("sonic_uuid TEXT DEFAULT ''");
+        sonicupdates.add("last_scanned TEXT DEFAULT ''");
+        sonicupdates.add("scan_type INTEGER DEFAULT 0");
     }
 
     /**

@@ -16,15 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicSound;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -36,6 +37,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -53,17 +57,17 @@ public class TARDISSonicEntityListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onInteract(PlayerInteractEntityEvent event) {
-        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
         Player player = event.getPlayer();
         long now = System.currentTimeMillis();
         ItemStack is = player.getInventory().getItemInMainHand();
+        Entity ent = event.getRightClicked();
         if (is.getType().equals(sonic) && is.hasItemMeta()) {
             ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
             if (im.getDisplayName().endsWith("Sonic Screwdriver")) {
                 List<String> lore = im.getLore();
-                Entity ent = event.getRightClicked();
                 if (ent instanceof Player scanned) {
                     TARDISSonicSound.playSonicSound(plugin, player, now, 3050L, "sonic_screwdriver");
                     if (TARDISPermission.hasPermission(player, "tardis.sonic.admin") && lore != null && lore.contains("Admin Upgrade") && player.isSneaking()) {
@@ -76,6 +80,9 @@ public class TARDISSonicEntityListener implements Listener {
                             player.openInventory(menu);
                         }, 40L);
                     } else if (TARDISPermission.hasPermission(player, "tardis.sonic.bio") && lore != null && lore.contains("Bio-scanner Upgrade")) {
+                        // save scanned player to sonic table
+                        new TARDISSonicData().saveOrUpdate(plugin, scanned.getUniqueId().toString(), 1, is, player);
+                        // message player
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_PLAYER");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             // getHealth() / getMaxHealth() * getHealthScale()
@@ -88,9 +95,39 @@ public class TARDISSonicEntityListener implements Listener {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_HUNGER", String.format("%.2f", hunger));
                         }, 40L);
                     }
+                } else if (ent instanceof ItemFrame frame) {
+                    // get TARDIS id?
+                    int id = isDock(frame);
+                    if (id == -1) {
+                        return;
+                    }
+                    new TARDISSonicDock(plugin).dock(id, frame.getLocation().getBlock(), player, is);
                 }
             }
+        } else if (ent instanceof ItemFrame frame && is.getType() == Material.AIR) {
+            // get TARDIS id?
+            int id = isDock(frame);
+            if (id == -1) {
+                return;
+            }
+            new TARDISSonicDock(plugin).undock(frame.getLocation().getBlock(), player);
         }
+    }
+
+    private int isDock(ItemFrame frame) {
+        ItemStack dock = frame.getItem();
+        if (dock.getType() != Material.FLOWER_POT || !dock.hasItemMeta()) {
+            return -1;
+        }
+        ItemMeta im = dock.getItemMeta();
+        if (!im.hasCustomModelData() || (im.getCustomModelData() != 1000 && im.getCustomModelData() != 1001)) {
+            return -1;
+        }
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("type", 48);
+        where.put("location", frame.getLocation().toString());
+        ResultSetControls rsc = new ResultSetControls(plugin, where, false);
+        return rsc.resultSet() ? rsc.getTardis_id() : -1;
     }
 
     private String convertTicksToTime(int time) {

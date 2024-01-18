@@ -70,7 +70,8 @@ public enum Control {
     MAZE_SPAWN(44, "", false, false),
     MONITOR(45, "monitor", false, false),
     MONITOR_FRAME(46, "monitor-frame", true, false),
-    RELATIVITY_DIFFERENTIATOR(47, "relativity-differentiator", false, true);
+    RELATIVITY_DIFFERENTIATOR(47, "relativity-differentiator", false, true),
+    SONIC_DOCK(48, "sonic-dock", false, true);
 
 
     private static final HashMap<String, Integer> UPDATE_CONTROLS = new HashMap<>();
