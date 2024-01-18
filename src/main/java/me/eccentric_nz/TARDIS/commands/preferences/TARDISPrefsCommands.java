@@ -50,7 +50,7 @@ import java.util.Locale;
 public class TARDISPrefsCommands implements CommandExecutor {
 
     private static final ImmutableList<String> firstArgs = ImmutableList.of(
-            "announce_repeaters", "auto", "auto_handbrake", "auto_powerup", "auto_rescue", "auto_siege",
+            "announce_repeaters", "auto", "auto_powerup", "auto_rescue", "auto_siege",
             "beacon", "build",
             "close_gui",
             "difficulty", "dnd", "dynamic_lamps",

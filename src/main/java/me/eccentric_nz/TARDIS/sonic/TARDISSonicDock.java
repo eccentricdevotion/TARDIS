@@ -14,6 +14,7 @@ import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
+import me.eccentric_nz.TARDIS.utility.Handbrake;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
@@ -112,21 +113,9 @@ public class TARDISSonicDock {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
                         return;
                     }
-                    boolean hidden = tardis.isHidden();
-                    // get TARDIS's current location
-                    HashMap<String, Object> wherecl = new HashMap<>();
-                    wherecl.put("tardis_id", id);
-                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
-                    if (!rsc.resultSet()) {
-                        hidden = true;
-                    }
-                    COMPASS d = rsc.getDirection();
                     COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
-                    TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-                    int count;
                     int[] start_loc = TARDISTimeTravel.getStartLocation(dest, player_d);
-                    // safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS player_d)
-                    count = TARDISTimeTravel.safeLocation(start_loc[0], dest.getBlockY(), start_loc[2], start_loc[1], start_loc[3], dest.getWorld(), player_d);
+                    int count = TARDISTimeTravel.safeLocation(start_loc[0], dest.getBlockY(), start_loc[2], start_loc[1], start_loc[3], dest.getWorld(), player_d);
                     Block under = dest.getBlock().getRelative(BlockFace.DOWN);
                     if (plugin.getPM().isPluginEnabled("BlockLocker") && (BlockLockerAPIv2.isProtected(dest.getBlock()) || BlockLockerAPIv2.isProtected(under))) {
                         count = 1;
@@ -158,8 +147,7 @@ public class TARDISSonicDock {
                     plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.RANDOM));
                     plugin.getTrackerKeeper().getRescue().remove(id);
                     // get player prefs
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
-                    if (rsp.resultSet() && rsp.isAutoHandbrakeOn()) {
+                    if (new Handbrake(plugin).isRelativityDifferentiated(id)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_DEST");
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDBRAKE_OFF");
                         // get handbrake location
@@ -178,20 +166,23 @@ public class TARDISSonicDock {
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id)), 600L);
                                 return;
                             }
-                            Location handbrake_loc = TARDISStaticLocationGetters.getLocationFromBukkitString(rsh.getLocation());
-                            // take off
-                            new TARDISTakeoff(plugin).run(id, handbrake_loc.getBlock(), handbrake_loc, player, rsp.isBeaconOn(), tardis.getBeacon(), rsp.isTravelbarOn(), spaceTimeThrottle);
-                            // start time rotor?
-                            if (tardis.getRotor() != null) {
-                                if (tardis.getRotor() == TARDISConstants.UUID_ZERO) {
-                                    // get sculk shrieker and set shreiking
-                                    TARDISSculkShrieker.setRotor(id);
-                                } else {
-                                    ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
-                                    if (itemFrame != null) {
-                                        // get the rotor type
-                                        Rotor rotor = Rotor.getByModelData(TARDISTimeRotor.getRotorModelData(itemFrame));
-                                        TARDISTimeRotor.setRotor(rotor, itemFrame);
+                            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
+                            if (rsp.resultSet()) {
+                                Location handbrake_loc = TARDISStaticLocationGetters.getLocationFromBukkitString(rsh.getLocation());
+                                // take off
+                                new TARDISTakeoff(plugin).run(id, handbrake_loc.getBlock(), handbrake_loc, player, rsp.isBeaconOn(), tardis.getBeacon(), rsp.isTravelbarOn(), spaceTimeThrottle);
+                                // start time rotor?
+                                if (tardis.getRotor() != null) {
+                                    if (tardis.getRotor() == TARDISConstants.UUID_ZERO) {
+                                        // get sculk shrieker and set shreiking
+                                        TARDISSculkShrieker.setRotor(id);
+                                    } else {
+                                        ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                                        if (itemFrame != null) {
+                                            // get the rotor type
+                                            Rotor rotor = Rotor.getByModelData(TARDISTimeRotor.getRotorModelData(itemFrame));
+                                            TARDISTimeRotor.setRotor(rotor, itemFrame);
+                                        }
                                     }
                                 }
                             }
