@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,24 +38,6 @@ public class TARDISFrameCommand {
         this.plugin = plugin;
     }
 
-    public boolean toggle(Player player, boolean lock, boolean rotor) {
-        // get the item frame the player is targeting
-        ItemFrame frame = getItemFrame(player);
-        if (frame != null) {
-            frame.setFixed(lock);
-            frame.setVisible(!lock);
-            if (lock && !rotor) {
-                frame.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
-            } else {
-                frame.getPersistentDataContainer().remove(plugin.getCustomBlockKey());
-            }
-            plugin.getMessenger().message(player, "ItemFrame " + ((lock) ? "locked" : "unlocked") + "!");
-        } else {
-            plugin.getMessenger().message(player, "You are not looking at an ItemFrame!");
-        }
-        return true;
-    }
-
     public static ItemFrame getItemFrame(Player player) {
         ItemFrame frame = null;
         // get the armour stand player is looking at
@@ -76,5 +58,23 @@ public class TARDISFrameCommand {
             }
         }
         return null;
+    }
+
+    public boolean toggle(Player player, boolean lock, boolean rotor) {
+        // get the item frame the player is targeting
+        ItemFrame frame = getItemFrame(player);
+        if (frame != null) {
+            frame.setFixed(lock);
+            frame.setVisible(!lock);
+            if (lock && !rotor) {
+                frame.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
+            } else {
+                frame.getPersistentDataContainer().remove(plugin.getCustomBlockKey());
+            }
+            plugin.getMessenger().message(player, "ItemFrame " + ((lock) ? "locked" : "unlocked") + "!");
+        } else {
+            plugin.getMessenger().message(player, "You are not looking at an ItemFrame!");
+        }
+        return true;
     }
 }

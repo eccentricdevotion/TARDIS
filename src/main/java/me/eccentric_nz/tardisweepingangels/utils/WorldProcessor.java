@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,6 +34,10 @@ public class WorldProcessor implements Runnable {
     public WorldProcessor(TARDIS plugin) {
         this.plugin = plugin;
         config = this.plugin.getMonstersConfig();
+    }
+
+    public static String sanitiseName(String name) {
+        return name.replaceAll("\\.", "_");
     }
 
     @Override
@@ -151,9 +155,5 @@ public class WorldProcessor implements Runnable {
                 plugin.debug("Could not save monsters.yml, " + io.getMessage());
             }
         }
-    }
-
-    public static String sanitiseName(String name) {
-        return name.replaceAll("\\.", "_");
     }
 }

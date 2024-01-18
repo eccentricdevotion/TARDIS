@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,10 +44,10 @@ class TARDISLampsRunnable implements Runnable {
     private final long end;
     private final TardisLight light;
     private final boolean lights_on;
-    private int task;
-    private Location handbrake_loc;
     int i = 0;
     Levelled levelled = TARDISConstants.LIGHT;
+    private int task;
+    private Location handbrake_loc;
 
     TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long end, TardisLight light, boolean lights_on) {
         this.plugin = plugin;
