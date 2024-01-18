@@ -174,7 +174,7 @@ public class TARDISAuthorisedControlDisk {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     // dematerialise
-                    new TARDISDematerialiseToVortex(plugin, id, player, handbrake).run();
+                    new TARDISDematerialiseToVortex(plugin, id, player, handbrake, SpaceTimeThrottle.NORMAL).run();
                     // materialise
                     new TARDISMaterialseFromVortex(plugin, id, player, handbrake, SpaceTimeThrottle.NORMAL).run();
                 }, 60L);

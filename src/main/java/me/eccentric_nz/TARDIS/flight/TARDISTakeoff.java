@@ -72,7 +72,7 @@ public class TARDISTakeoff {
             plugin.getTrackerKeeper().getMalfunction().put(id, malfunction);
         }
         // dematerialise
-        new TARDISDematerialiseToVortex(plugin, id, player, handbrake).run();
+        new TARDISDematerialiseToVortex(plugin, id, player, handbrake, spaceTimeThrottle).run();
         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, plugin.getTrackerKeeper().getHasDestination().get(id).getTravelType(), id));
             // materialise
@@ -126,7 +126,7 @@ public class TARDISTakeoff {
             boolean malfunction = new TARDISMalfunction(plugin).isMalfunction();
             plugin.getTrackerKeeper().getMalfunction().put(id, malfunction);
             // dematerialise
-            new TARDISDematerialiseToVortex(plugin, id, player, handbrake).run();
+            new TARDISDematerialiseToVortex(plugin, id, player, handbrake, spaceTimeThrottle).run();
             if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                 // materialise
                 new TARDISMaterialseFromVortex(plugin, id, player, handbrake, spaceTimeThrottle).run();

@@ -1,9 +1,12 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.builders.TARDISSculkShrieker;
+import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -19,10 +22,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Display;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.ItemDisplay;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;
@@ -138,7 +138,7 @@ public class TARDISSonicDock {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "WOULD_GRIEF_BLOCKS");
                         return;
                     }
-                    SpaceTimeThrottle spaceTimeThrottle = new ResultSetThrottle(plugin).getSpeed(uuid.toString());
+                    SpaceTimeThrottle spaceTimeThrottle = new ResultSetThrottle(plugin).getSpeed(player.getUniqueId().toString());
                     int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * spaceTimeThrottle.getArtronMultiplier());
                     if (tardis.getArtron_level() < ch) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
@@ -179,10 +179,22 @@ public class TARDISSonicDock {
                                 return;
                             }
                             Location handbrake_loc = TARDISStaticLocationGetters.getLocationFromBukkitString(rsh.getLocation());
-                            // TODO start time rotor & fix timings & handbrake to exit message
+                            // take off
                             new TARDISTakeoff(plugin).run(id, handbrake_loc.getBlock(), handbrake_loc, player, rsp.isBeaconOn(), tardis.getBeacon(), rsp.isTravelbarOn(), spaceTimeThrottle);
-                        } else {
-                            plugin.debug("no handbrake");
+                            // start time rotor?
+                            if (tardis.getRotor() != null) {
+                                if (tardis.getRotor() == TARDISConstants.UUID_ZERO) {
+                                    // get sculk shrieker and set shreiking
+                                    TARDISSculkShrieker.setRotor(id);
+                                } else {
+                                    ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
+                                    if (itemFrame != null) {
+                                        // get the rotor type
+                                        Rotor rotor = Rotor.getByModelData(TARDISTimeRotor.getRotorModelData(itemFrame));
+                                        TARDISTimeRotor.setRotor(rotor, itemFrame);
+                                    }
+                                }
+                            }
                         }
                     } else {
                         // need to release the handbrake
