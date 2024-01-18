@@ -35,6 +35,7 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -155,6 +156,7 @@ public class TARDISExteriorFlight {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(plugin, stand, player, pandorica), 5L, 3L);
                         int sound = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> TARDISSounds.playTARDISSound(player.getLocation(), "time_rotor_flying", 4f), 5L, 33L);
+                        player.getPersistentDataContainer().set(plugin.getLoopKey(), PersistentDataType.INTEGER, sound);
                         // spawn a chicken
                         LivingEntity chicken = new MonsterSpawner().create(stand.getLocation(), Monster.FLYER);
                         stand.addPassenger(player);

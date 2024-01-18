@@ -101,6 +101,9 @@ public class TARDISCommands implements CommandExecutor {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
                 return false;
             }
+            if (args[0].equalsIgnoreCase("stop_sound")) {
+                return new TARDISStopSoundCommand(plugin).mute(player);
+            }
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");

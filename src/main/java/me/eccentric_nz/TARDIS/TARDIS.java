@@ -193,6 +193,7 @@ public class TARDIS extends JavaPlugin {
     private NamespacedKey oldBlockKey;
     private NamespacedKey customBlockKey;
     private NamespacedKey destroyKey;
+    private NamespacedKey loopKey;
     private NamespacedKey timeLordUuidKey;
     private NamespacedKey blueprintKey;
     private NamespacedKey sonicUuidKey;
@@ -293,6 +294,7 @@ public class TARDIS extends JavaPlugin {
         oldBlockKey = new NamespacedKey(this, "customBlock");
         customBlockKey = new NamespacedKey(this, "custom_block");
         destroyKey = new NamespacedKey(this, "destroy");
+        loopKey = new NamespacedKey(this, "loop");
         timeLordUuidKey = new NamespacedKey(this, "timelord_uuid");
         blueprintKey = new NamespacedKey(this, "blueprint");
         sonicUuidKey = new NamespacedKey(this, "sonic_uuid");
@@ -1250,6 +1252,15 @@ public class TARDIS extends JavaPlugin {
      */
     public NamespacedKey getDestroyKey() {
         return destroyKey;
+    }
+
+    /**
+     * Gets the TARDIS Loop NamespacedKey
+     *
+     * @return the TARDIS Loop NamespacedKey
+     */
+    public NamespacedKey getLoopKey() {
+        return loopKey;
     }
 
     /**

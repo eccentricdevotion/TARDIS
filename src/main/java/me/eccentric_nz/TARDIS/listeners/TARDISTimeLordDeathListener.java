@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
@@ -38,6 +34,7 @@ import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.desktop.TARDISWallFloorRunnable;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
+import me.eccentric_nz.TARDIS.flight.FlightReturnData;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
@@ -52,6 +49,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.persistence.PersistentDataType;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Several events can trigger an Automatic Emergency Landing. Under these
@@ -404,6 +407,15 @@ public class TARDISTimeLordDeathListener implements Listener {
                 // clear inventories
                 new TARDISArchInventory().clear(uuid);
             }
+        }
+        // stop looping sounds
+        if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(uuid)) {
+            FlightReturnData frd = plugin.getTrackerKeeper().getFlyingReturnLocation().get(player.getUniqueId());
+            plugin.getServer().getScheduler().cancelTask(frd.getSound());
+        } else if (player.getPersistentDataContainer().has(plugin.getLoopKey(), PersistentDataType.INTEGER)) {
+            int task = player.getPersistentDataContainer().get(plugin.getLoopKey(), PersistentDataType.INTEGER);
+            plugin.getServer().getScheduler().cancelTask(task);
+            player.getPersistentDataContainer().remove(plugin.getLoopKey());
         }
     }
 

@@ -71,6 +71,7 @@ public enum TardisCommand {
     section,
     setdest,
     sethome,
+    stop_sound,
     tagtheood,
     theme,
     transmat,
