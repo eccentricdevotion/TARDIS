@@ -144,29 +144,6 @@ public class TARDISSonicDock {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
                         return;
                     }
-//                    Location oldSave = null;
-//                    HashMap<String, Object> bid = new HashMap<>();
-//                    bid.put("tardis_id", id);
-//                    HashMap<String, Object> bset = new HashMap<>();
-//                    if (rsc.getWorld() != null) {
-//                        oldSave = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-//                        // set fast return location
-//                        bset.put("world", rsc.getWorld().getName());
-//                        bset.put("x", rsc.getX());
-//                        bset.put("y", rsc.getY());
-//                        bset.put("z", rsc.getZ());
-//                        bset.put("direction", d.toString());
-//                        bset.put("submarine", rsc.isSubmarine());
-//                    } else {
-//                        hidden = true;
-//                        // set fast return location
-//                        bset.put("world", dest.getWorld().getName());
-//                        bset.put("x", dest.getX());
-//                        bset.put("y", dest.getY());
-//                        bset.put("z", dest.getZ());
-//                        bset.put("submarine", 0);
-//                    }
-//                    plugin.getQueryFactory().doUpdate("back", bset, bid);
                     // set next location
                     HashMap<String, Object> tid = new HashMap<>();
                     tid.put("tardis_id", id);
@@ -190,7 +167,7 @@ public class TARDISSonicDock {
                         whereh.put("tardis_id", id);
                         whereh.put("type", 0);
                         whereh.put("secondary", 0);
-                        ResultSetControls rsh = new ResultSetControls(plugin, where, false);
+                        ResultSetControls rsh = new ResultSetControls(plugin, whereh, false);
                         if (rsh.resultSet()) {
                             // check if door is open
                             if (isDoorOpen(id)) {
@@ -202,54 +179,8 @@ public class TARDISSonicDock {
                                 return;
                             }
                             Location handbrake_loc = TARDISStaticLocationGetters.getLocationFromBukkitString(rsh.getLocation());
-                            new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, rsp.isBeaconOn(), tardis.getBeacon(), rsp.isTravelbarOn(), spaceTimeThrottle);
-//                        // update tardis
-//                        if (hidden) {
-//                            HashMap<String, Object> wid = new HashMap<>();
-//                            HashMap<String, Object> seth = new HashMap<>();
-//                            seth.put("hidden", 0);
-//                            wid.put("tardis_id", id);
-//                            plugin.getQueryFactory().doUpdate("tardis", seth, wid);
-//                        }
-//                        long delay = 10L;
-//                        plugin.getTrackerKeeper().getInVortex().add(id);
-//                        boolean hid = hidden;
-//                        if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-//                            DestroyData dd = new DestroyData();
-//                            dd.setDirection(d);
-//                            dd.setLocation(oldSave);
-//                            dd.setPlayer(player);
-//                            dd.setHide(false);
-//                            dd.setOutside(true);
-//                            dd.setSubmarine(rsc.isSubmarine());
-//                            dd.setTardisID(id);
-//                            dd.setThrottle(spaceTimeThrottle);
-//                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-//                                if (!hid) {
-//                                    plugin.getTrackerKeeper().getDematerialising().add(id);
-//                                    plugin.getPresetDestroyer().destroyPreset(dd);
-//                                } else {
-//                                    plugin.getPresetDestroyer().removeBlockProtection(id);
-//                                }
-//                            }, delay);
-//                        }
-//                        BuildData bd = new BuildData(uuid.toString());
-//                        bd.setDirection(player_d);
-//                        bd.setLocation(dest);
-//                        bd.setMalfunction(false);
-//                        bd.setOutside(true);
-//                        bd.setPlayer(player);
-//                        bd.setRebuild(false);
-//                        bd.setSubmarine(false);
-//                        bd.setTardisID(id);
-//                        bd.setThrottle(spaceTimeThrottle);
-//                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
-//                        // remove energy from TARDIS
-//                        HashMap<String, Object> wheret = new HashMap<>();
-//                        wheret.put("tardis_id", id);
-//                        plugin.getQueryFactory().alterEnergyLevel("tardis", -ch, wheret, player);
-//                        plugin.getTrackerKeeper().getHasDestination().remove(id);
-//                        plugin.getTrackerKeeper().getRescue().remove(id);
+                            // TODO start time rotor & fix timings & handbrake to exit message
+                            new TARDISTakeoff(plugin).run(id, handbrake_loc.getBlock(), handbrake_loc, player, rsp.isBeaconOn(), tardis.getBeacon(), rsp.isTravelbarOn(), spaceTimeThrottle);
                         } else {
                             plugin.debug("no handbrake");
                         }
