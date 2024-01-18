@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISSculkShrieker;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
+import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -196,6 +197,10 @@ public class TARDISHandbrakeListener implements Listener {
                                                 plugin.getMessenger().sendStatus(player, "FLIGHT_AIR");
                                                 return;
                                             }
+                                        }
+                                        if (TARDISCameraTracker.CAMERA_IN_USE.contains(id)) {
+                                            plugin.getMessenger().sendStatus(player, "FLIGHT_CAMERA");
+                                            return;
                                         }
                                         // fly the TARDIS exterior
                                         Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), player.getLocation().getYaw(), player.getLocation().getPitch());

@@ -27,6 +27,7 @@ public class TARDISCamera {
     public void viewExterior(Player player, int id, boolean pandorica) {
         Location playerLocation = player.getLocation();
         TARDISCameraTracker.SPECTATING.put(player.getUniqueId(), new CameraLocation(playerLocation, id, playerLocation.getChunk().isForceLoaded()));
+        TARDISCameraTracker.CAMERA_IN_USE.add(id);
         playerLocation.getChunk().setForceLoaded(true);
         // get the TARDIS's current location
         HashMap<String, Object> where = new HashMap<>();
@@ -85,6 +86,7 @@ public class TARDISCamera {
             sett.put("uuid", uuid.toString());
             plugin.getQueryFactory().doSyncInsert("travellers", sett);
             TARDISCameraTracker.SPECTATING.remove(uuid);
+            TARDISCameraTracker.CAMERA_IN_USE.remove(data.getId());
             interior.getChunk().setForceLoaded(data.isForceLoaded());
         }
     }
