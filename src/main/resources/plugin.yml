@@ -3,7 +3,7 @@ description: A plugin for all Doctor Who fans - create and use a TARDIS! Telepor
 main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
 load: POSTWORLD
-softdepend: [ Blocklocker,CoreProtect,dynmap,Essentials,Factions,floodgate,GriefPrevention,LibsDisguises,LWC,Multiverse-Core,Multiverse-Inventories,PlaceholderAPI,RedProtect,Towny,WorldBorder,WorldGuard,Vault ]
+softdepend: [ Blocklocker,BlueMap,CoreProtect,dynmap,Essentials,Factions,floodgate,GriefPrevention,LibsDisguises,LWC,Multiverse-Core,Multiverse-Inventories,PlaceholderAPI,RedProtect,Towny,WorldBorder,WorldGuard,Vault ]
 website: http://tardis.pages.dev/
 dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://tardis.pages.dev/

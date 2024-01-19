@@ -110,7 +110,7 @@ public class TARDISConfiguration {
         booleanOptions.put("junk.enabled", true);
         booleanOptions.put("junk.particles", true);
         booleanOptions.put("modules.blueprints", false);
-        booleanOptions.put("modules.dynmap", false);
+        booleanOptions.put("modules.mapping", false);
         booleanOptions.put("modules.weeping_angels", false);
         booleanOptions.put("modules.vortex_manipulator", false);
         booleanOptions.put("modules.shop", false);
@@ -171,8 +171,8 @@ public class TARDISConfiguration {
         integerOptions.put("creation.inventory_group", 0);
         integerOptions.put("creation.tips_limit", 400);
         integerOptions.put("desktop.block_change_percent", 25);
-        integerOptions.put("dynmap.update_period", 30);
-        integerOptions.put("dynmap.updates_per_tick", 10);
+        integerOptions.put("mapping.update_period", 30);
+        integerOptions.put("mapping.updates_per_tick", 10);
         integerOptions.put("growth.ars_limit", 1);
         integerOptions.put("growth.gravity_max_distance", 15);
         integerOptions.put("growth.gravity_max_velocity", 5);
@@ -234,14 +234,14 @@ public class TARDISConfiguration {
         comments.put("police_box", Arrays.asList("outer TARDIS", "https://tardis.pages.dev/configuration/preset"));
         comments.put("travel", Arrays.asList("travel settings", "https://tardis.pages.dev/configuration/travel"));
         comments.put("preferences", Arrays.asList("general preferences", "https://tardis.pages.dev/configuration/prefs"));
-        comments.put("dynmap", Arrays.asList("dynmap", "https://tardis.pages.dev/dynmap-tardis#configuration/options"));
+        comments.put("mapping", Arrays.asList("mapping", "https://tardis.pages.dev/modules/mapping#configuration-options"));
         comments.put("desktop", Arrays.asList("desktop theme", "https://tardis.pages.dev/desktop-theme#config-options"));
-        comments.put("circuits", Arrays.asList("circuits", "https://tardis.pages.dev/circuit-use#configuration/options"));
+        comments.put("circuits", Arrays.asList("circuits", "https://tardis.pages.dev/circuit-use#configuration-options"));
         comments.put("allow", Arrays.asList("restrictions", "https://tardis.pages.dev/configuration/allow"));
         comments.put("growth", Arrays.asList("room related", "https://tardis.pages.dev/configuration/growth"));
         comments.put("arch", Arrays.asList("chameleon arch", "https://tardis.pages.dev/chameleon-arch#chameleon-arch-configuration"));
         comments.put("siege", Arrays.asList("siege mode", "https://tardis.pages.dev/siege-mode#configuration"));
-        comments.put("junk", Arrays.asList("junk TARDIS", "https://tardis.pages.dev/junk-tardis#configuration/options"));
+        comments.put("junk", Arrays.asList("junk TARDIS", "https://tardis.pages.dev/junk-tardis#configuration-options"));
         comments.put("abandon", Arrays.asList("abandoned TARDISes", "https://tardis.pages.dev/abandon#config-options"));
         comments.put("archive", Arrays.asList("console archives", "https://tardis.pages.dev/archive#config-options"));
         comments.put("blueprints", Arrays.asList("enable blueprints", "https://tardis.pages.dev/modules/blueprints"));
@@ -338,15 +338,28 @@ public class TARDISConfiguration {
         }
         // check / transfer dynmap settings
         if (config.contains("preferences.enable_dynmap")) {
-            plugin.getConfig().set("modules.dynmap", config.getBoolean("preferences.enable_dynmap"));
+            plugin.getConfig().set("modules.mapping", config.getBoolean("preferences.enable_dynmap"));
+            plugin.getConfig().set("mapping.provider", "dynmap");
             plugin.getConfig().set("preferences.enable_dynmap", null);
+            i++;
         }
-        if (config.contains("dynmap.update_period") && config.getInt("dynmap.update_period") == 10) {
-            plugin.getConfig().set("dynmap.update_period", 30);
+        if (config.contains("dynmap.update_period")) {
+            plugin.getConfig().set("mapping.provider", "dynmap");
+            plugin.getConfig().set("mapping.update_period", plugin.getConfig().getInt("dynmap.update_period"));
+            plugin.getConfig().set("mapping.updates_per_tick", plugin.getConfig().getInt("dynmap.updates_per_tick"));
+            plugin.getConfig().set("dynmap.update_period", null);
+            plugin.getConfig().set("dynmap.updates_per_tick", null);
+            i++;
         }
         if (config.contains("dynmap.enabled")) {
-            plugin.getConfig().set("modules.dynmap", config.getBoolean("dynmap.enabled"));
+            plugin.getConfig().set("modules.mapping", config.getBoolean("dynmap.enabled"));
+            plugin.getConfig().set("mapping.provider", "dynmap");
+            plugin.getConfig().set("mapping.update_period", plugin.getConfig().getInt("dynmap.update_period"));
+            plugin.getConfig().set("mapping.updates_per_tick", plugin.getConfig().getInt("dynmap.updates_per_tick"));
             plugin.getConfig().set("dynmap.enabled", null);
+            plugin.getConfig().set("dynmap.update_period", null);
+            plugin.getConfig().set("dynmap.updates_per_tick", null);
+            i++;
         }
         if (config.contains("blueprints.enabled")) {
             plugin.getConfig().set("modules.blueprints", config.getBoolean("blueprints.enabled"));

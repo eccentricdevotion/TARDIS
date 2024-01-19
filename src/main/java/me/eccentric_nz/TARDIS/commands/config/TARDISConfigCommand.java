@@ -70,6 +70,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsStr.put("key", "preferences");
         firstsStr.put("language", "preferences");
         firstsStr.put("options", "");
+        firstsStr.put("provider", "mapping");
         firstsStr.put("reload", "");
         firstsStr.put("respect_towny", "preferences");
         firstsStr.put("respect_worldguard", "preferences");
@@ -101,7 +102,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("damage", "circuits");
         firstsBool.put("debug", "");
         firstsBool.put("default_world", "creation");
-        firstsBool.put("dynmap", "modules");
+        firstsBool.put("mapping", "modules");
         firstsBool.put("dynamic_lamps", "allow");
         firstsBool.put("emergency_npc", "allow");
         firstsBool.put("exile", "travel");
@@ -194,8 +195,8 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsInt.put("timeout_height", "travel");
         firstsInt.put("tips_limit", "creation");
         firstsInt.put("tp_radius", "travel");
-        firstsInt.put("update_period", "dynmap");
-        firstsInt.put("updates_per_tick", "dynmap");
+        firstsInt.put("update_period", "mapping");
+        firstsInt.put("updates_per_tick", "mapping");
         firstsInt.put("wall_data", "police_box");
         firstsInt.put("wall_id", "police_box");
         firstsIntArtron.add("autonomous");
@@ -253,6 +254,14 @@ public class TARDISConfigCommand implements CommandExecutor {
                     }
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_OPTION_SET", first);
                     return true;
+                }
+                if (first.equals("provider")) {
+                    String provider = args[1];
+                    if (!provider.equals("dynmap") && !provider.equals("BlueMap")) {
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_PROVIDER");
+                        return true;
+                    }
+                    plugin.getConfig().set("mapping.provider", provider);
                 }
                 if (first.equals("reload")) {
                     return new TARDISReloadCommand(plugin).reloadOtherConfig(sender, args);

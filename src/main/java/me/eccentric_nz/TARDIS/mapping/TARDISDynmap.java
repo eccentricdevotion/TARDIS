@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.dynmap;
+package me.eccentric_nz.TARDIS.mapping;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.TARDISData;
@@ -22,9 +22,6 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.files.TARDISFileCopier;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 import org.dynmap.DynmapAPI;
 import org.dynmap.markers.*;
@@ -35,21 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TARDISDynmap {
-
-    private static final String INFO = """
-            <div class="regioninfo">
-                <div class="infowindow">
-                    <span style="font-weight:bold;">Time Lord:</span> %owner%<br/>
-                    <span style="font-weight:bold;">Console type:</span> %console%<br/>
-                    <span style="font-weight:bold;">Chameleon circuit:</span> %chameleon%<br/>
-                    <span style="font-weight:bold;">Location:</span> %location%<br/>
-                    <span style="font-weight:bold;">Door:</span> %door%<br/>
-                    <span style="font-weight:bold;">Powered on:</span> %powered%<br/>
-                    <span style="font-weight:bold;">Siege mode:</span> %siege%<br/>
-                    <span style="font-weight:bold;">Occupants:</span> %occupants%
-                </div>
-            </div>""";
+public class TARDISDynmap implements TARDISMapper {
     private final TARDIS plugin;
     private MarkerSet markerSet;
     private Map<String, Marker> markers = new HashMap<>();
@@ -64,6 +47,7 @@ public class TARDISDynmap {
         this.plugin = plugin;
     }
 
+    @Override
     public void disable() {
         if (tardisLayer != null) {
             tardisLayer.cleanup();
@@ -72,12 +56,13 @@ public class TARDISDynmap {
         stop = true;
     }
 
+    @Override
     public void enable() {
         // get dynmap
         dynmap = plugin.getPM().getPlugin("dynmap");
         // get API
         api = (DynmapAPI) dynmap;
-        plugin.getPM().registerEvents(new TARDISServerListener(), plugin);
+        plugin.getPM().registerEvents(new TARDISServerListener("dynmap", this), plugin);
         // if enabled, activate
         if (dynmap != null && dynmap.isEnabled()) {
             activate();
@@ -85,33 +70,41 @@ public class TARDISDynmap {
         }
     }
 
-    private void activate() {
-        // get markers API
-        markerapi = api.getMarkerAPI();
-        if (markerapi == null) {
-            plugin.debug("Error loading Dynmap marker API!");
-            return;
-        }
-        // load configuration
-        if (reload) {
-            if (tardisLayer != null) {
-                if (markerSet != null) {
-                    markerSet.deleteMarkerSet();
-                    markerSet = null;
-                }
-                tardisLayer = null;
+    @Override
+    public void activate() {
+        if (dynmap.isEnabled()) {
+            // get markers API
+            markerapi = api.getMarkerAPI();
+            if (markerapi == null) {
+                plugin.debug("Error loading Dynmap marker API!");
+                return;
             }
-        } else {
-            reload = true;
+            // load configuration
+            if (reload) {
+                if (tardisLayer != null) {
+                    if (markerSet != null) {
+                        markerSet.deleteMarkerSet();
+                        markerSet = null;
+                    }
+                    tardisLayer = null;
+                }
+            } else {
+                reload = true;
+            }
+            // add TARDIS marker set
+            tardisLayer = new TARDISLayer();
+            // potentially laggy on first run...
+            tardisLayer.updateMarkerSet();
+            // set up update job - based on period
+            stop = false;
+            // this marker update is limited by `plugin.getConfig().getInt("mapping.updates_per_tick")`
+            updateMarkerSet((plugin.getConfig().getLong("mapping.update_period") * 20) / 3);
         }
-        // add TARDIS marker set
-        tardisLayer = new TARDISLayer();
-        // potentially laggy on first run...
-        tardisLayer.updateMarkerSet();
-        // set up update job - based on period
-        stop = false;
-        // this marker update is limited by `plugin.getConfig().getInt("dynmap.updates_per_tick")`
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISMarkerUpdate(), (plugin.getConfig().getLong("dynmap.update_period") * 20) / 3);
+    }
+
+    @Override
+    public void updateMarkerSet(long period) {
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new DynmapMarkerUpdate(), period);
     }
 
     private void checkIcon() {
@@ -121,28 +114,6 @@ public class TARDISDynmap {
             TARDISFileCopier.copy(path, plugin.getResource("tardis.png"), true);
             plugin.getServer().dispatchCommand(plugin.getConsole(), "dmarker addicon id:tardis newlabel:tardis file:plugins/dynmap/web/tiles/_markers_/tardis.png");
         }
-    }
-
-    private String formatInfoWindow(TARDISData data) {
-        String window = INFO;
-        window = window.replace("%owner%", data.getOwner());
-        window = window.replace("%console%", data.getConsole());
-        window = window.replace("%chameleon%", data.getChameleon());
-        String l = "x: " + data.getLocation().getBlockX() + ", y: " + data.getLocation().getBlockY() + ", z: " + data.getLocation().getBlockZ();
-        window = window.replace("%location%", l);
-        window = window.replace("%powered%", data.getPowered());
-        window = window.replace("%door%", data.getDoor());
-        window = window.replace("%siege%", data.getSiege());
-        StringBuilder travellers = new StringBuilder();
-        if (!data.getOccupants().isEmpty()) {
-            for (String o : data.getOccupants()) {
-                travellers.append(o).append("<br />");
-            }
-        } else {
-            travellers = new StringBuilder("Empty");
-        }
-        window = window.replace("%occupants%", travellers.toString());
-        return window;
     }
 
     private class TARDISLayer {
@@ -179,7 +150,7 @@ public class TARDISDynmap {
          * Get current markers with relevant TARDIS data
          * only on first run - markers are updated thereafter
          */
-        void updateMarkerSet() {
+        public void updateMarkerSet() {
             Map<String, Marker> newMarkerMap = new HashMap<>();
             // build new map
             TARDISGetter getter = new TARDISGetter(plugin, null);
@@ -218,21 +189,7 @@ public class TARDISDynmap {
         }
     }
 
-    private class TARDISServerListener implements Listener {
-
-        @EventHandler
-        public void onPluginEnable(PluginEnableEvent event) {
-            Plugin p = event.getPlugin();
-            String name = p.getDescription().getName();
-            if (name.equals("dynmap")) {
-                if (dynmap.isEnabled()) {
-                    activate();
-                }
-            }
-        }
-    }
-
-    private class TARDISMarkerUpdate implements Runnable {
+    private class DynmapMarkerUpdate implements Runnable {
         // build new map
         Map<String, Marker> newmap = new HashMap<>();
         ArrayList<World> worldsToDo = null;
@@ -267,8 +224,8 @@ public class TARDISDynmap {
                     // replace with new map
                     markers = newmap;
                     // Schedule next run
-                    long delay = plugin.getConfig().getLong("dynmap.update_period", 30) * 20L;
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISMarkerUpdate(), delay);
+                    long delay = plugin.getConfig().getLong("mapping.update_period", 30) * 20L;
+                    updateMarkerSet(delay);
                     break;
                 } else {
                     // get next world
@@ -282,7 +239,7 @@ public class TARDISDynmap {
                             toDo = null;
                         } else {
                             // process up to limit per tick
-                            int limit = plugin.getConfig().getInt("dynmap.updates_per_tick", 10);
+                            int limit = plugin.getConfig().getInt("mapping.updates_per_tick", 10);
                             for (int cnt = 0; cnt < limit; cnt++) {
                                 if (tardisIndex >= toDo.size()) {
                                     toDo = null;

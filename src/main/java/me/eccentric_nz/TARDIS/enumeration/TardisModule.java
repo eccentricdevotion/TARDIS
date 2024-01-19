@@ -6,7 +6,7 @@ public enum TardisModule {
     BLUEPRINTS("TARDIS Blueprints", "#5555FF"),
     CHEMISTRY("TARDIS Chemistry", "#FF55FF"),
     DEBUG("TARDIS", "#FF55FF"),
-    DYNMAP("TARDIS Dynmap", "#55FF55"),
+    MAPPING("TARDIS Mapping", "#55FF55"),
     EMERGENCY_PROGRAM("Emergency Program One", "#C70039"),
     HANDLES("Handles", "#00AAAA"),
     HELPER("TARDIS Helper", "#55FFFF"),

@@ -6,7 +6,7 @@ debug: false
 modules:
   weeping_angels: false
   vortex_manipulator: false
-  dynmap: false
+  mapping: false
   chemistry: false
   shop: false
   sonic_blaster: false
@@ -125,9 +125,10 @@ preferences:
   no_enchanted_condense: true
   vortex_fall: kill
   chat_width: 55
-# dynmap
-# https://tardis.pages.dev/dynmap-tardis#configuration-options
-dynmap:
+# mapping - dynamp or BlueMap supported
+# https://tardis.pages.dev/modules/mapping#configuration-options
+mapping:
+  provider: dynmap
   update_period: 30
   updates_per_tick: 10
 # desktop theme

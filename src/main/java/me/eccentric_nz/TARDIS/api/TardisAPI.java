@@ -85,8 +85,8 @@ interface TardisAPI {
     Location getTARDISNextLocation(int id);
 
     /**
-     * Retries the Current TARDIS location, chameleon preset, powered and siege
-     * status for the Dynmap-TARDIS plugin.
+     * Retrieves the Current TARDIS location, chameleon preset, powered and siege
+     * status for the TARDIS mapping provider plugin.
      *
      * @param id the TARDIS id to retrieve the data for
      * @return the current TARDIS data or null if not found

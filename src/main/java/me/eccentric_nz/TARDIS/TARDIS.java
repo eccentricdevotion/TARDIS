@@ -37,7 +37,6 @@ import me.eccentric_nz.TARDIS.database.converters.*;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTIPS;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
-import me.eccentric_nz.TARDIS.dynmap.TARDISDynmap;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.files.*;
 import me.eccentric_nz.TARDIS.flight.FlightPersister;
@@ -49,6 +48,9 @@ import me.eccentric_nz.TARDIS.handles.TARDISHandlesRunnable;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesUpdater;
 import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkReturnRunnable;
+import me.eccentric_nz.TARDIS.mapping.TARDISBlueMap;
+import me.eccentric_nz.TARDIS.mapping.TARDISDynmap;
+import me.eccentric_nz.TARDIS.mapping.TARDISMapper;
 import me.eccentric_nz.TARDIS.messaging.AdventureMessage;
 import me.eccentric_nz.TARDIS.messaging.SpigotMessage;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -202,7 +204,7 @@ public class TARDIS extends JavaPlugin {
     private int buildNumber = 0;
     private int updateNumber = 0;
     private TARDISBlockLogger blockLogger;
-    private TARDISDynmap tardisDynmap;
+    private TARDISMapper tardisMapper;
     private ShopSettings shopSettings;
     private TVMSettings tvmSettings;
     private BlasterSettings blasterSettings;
@@ -230,8 +232,8 @@ public class TARDIS extends JavaPlugin {
     @Override
     public void onDisable() {
         if (hasVersion) {
-            if (tardisDynmap != null) {
-                tardisDynmap.disable();
+            if (tardisMapper != null) {
+                tardisMapper.disable();
             }
             // force TARDISes to materialise (next restart) if interrupted
             for (int id : getTrackerKeeper().getDematerialising()) {
@@ -426,10 +428,15 @@ public class TARDIS extends JavaPlugin {
             loadPluginRespect();
             startZeroHealing();
             startSiegeTicks();
-            if (pm.isPluginEnabled("dynmap") && getConfig().getBoolean("modules.dynmap")) {
-                getMessenger().message(console, TardisModule.TARDIS, "Loading DynMap Module");
-                tardisDynmap = new TARDISDynmap(this);
-                tardisDynmap.enable();
+            String mapper = getConfig().getString("mapping.provider");
+            if (pm.isPluginEnabled(mapper) && getConfig().getBoolean("modules.mapping")) {
+                getMessenger().message(console, TardisModule.TARDIS, "Loading Mapping Module");
+                if (mapper.equals("dynmap")) {
+                    tardisMapper = new TARDISDynmap(this);
+                } else {
+                    tardisMapper = new TARDISBlueMap(this);
+                }
+                tardisMapper.enable();
             }
             if (getConfig().getBoolean("modules.weeping_angels")) {
                 if (PaperLib.isPaper()) {
@@ -1372,12 +1379,12 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
-    public TARDISDynmap getTardisDynmap() {
-        return tardisDynmap;
+    public TARDISMapper getTardisMapper() {
+        return tardisMapper;
     }
 
-    public void setTardisDynmap(TARDISDynmap tardisDynmap) {
-        this.tardisDynmap = tardisDynmap;
+    public void setTardisMapper(TARDISMapper tardisMapper) {
+        this.tardisMapper = tardisMapper;
     }
 
     public ShopSettings getShopSettings() {

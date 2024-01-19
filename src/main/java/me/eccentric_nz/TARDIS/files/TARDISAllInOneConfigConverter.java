@@ -1,12 +1,13 @@
 package me.eccentric_nz.TARDIS.files;
 
-import java.io.File;
-import java.io.IOException;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.io.File;
+import java.io.IOException;
 
 public class TARDISAllInOneConfigConverter {
 
@@ -53,7 +54,7 @@ public class TARDISAllInOneConfigConverter {
                         plugin.getVortexConfig().load(vf);
                     }
                 }
-                case DYNMAP -> {
+                case MONSTERS -> {
                     // weeping angels
                     String twaPath = basePath + "TARDISWeepingAngels" + File.separator + "config.yml";
                     File twaFile = new File(twaPath);

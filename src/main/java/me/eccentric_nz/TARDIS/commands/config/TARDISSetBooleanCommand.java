@@ -16,21 +16,24 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellLoaderListener;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.listeners.TARDISAntiBuildListener;
+import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomChatListener;
+import me.eccentric_nz.TARDIS.mapping.TARDISBlueMap;
+import me.eccentric_nz.TARDIS.mapping.TARDISDynmap;
+import me.eccentric_nz.TARDIS.mapping.TARDISMapper;
+import me.eccentric_nz.TARDIS.planets.TARDISResourcePackSwitcher;
+import org.bukkit.command.CommandSender;
+import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.RegisteredListener;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellLoaderListener;
-import me.eccentric_nz.TARDIS.dynmap.TARDISDynmap;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.listeners.TARDISAntiBuildListener;
-import me.eccentric_nz.TARDIS.listeners.TARDISZeroRoomChatListener;
-import me.eccentric_nz.TARDIS.planets.TARDISResourcePackSwitcher;
-import org.bukkit.command.CommandSender;
-import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.RegisteredListener;
 
 /**
  * @author eccentric_nz
@@ -39,7 +42,7 @@ class TARDISSetBooleanCommand {
 
     private final TARDIS plugin;
     private final List<String> require_restart = Arrays.asList("use_default_condensables", "use_worldguard", "walk_in_tardis", "open_door_policy", "handles", "weather_set", "chemistry", "seed_block_crafting");
-    private final List<String> register = Arrays.asList("wg_flag_set", "zero_room", "switch_resource_packs", "load_shells", "dynmap");
+    private final List<String> register = Arrays.asList("wg_flag_set", "zero_room", "switch_resource_packs", "load_shells", "mapping");
 
     TARDISSetBooleanCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -77,7 +80,7 @@ class TARDISSetBooleanCommand {
                     return true;
                 }
                 plugin.getConfig().set("abandon.enabled", bool);
-            } else if (first.equals("archive") || first.equals("blueprints") || first.equals("dynmap")) {
+            } else if (first.equals("archive")) {
                 plugin.getConfig().set(first + ".enabled", bool);
             } else {
                 plugin.getConfig().set(first, bool);
@@ -119,14 +122,19 @@ class TARDISSetBooleanCommand {
                             plugin.getPM().registerEvents(new TARDISShellLoaderListener(plugin), plugin);
                         }
                     }
-                    case "dynmap" -> {
-                        if (plugin.getTardisDynmap() == null) {
-                            TARDISDynmap tardisDynmap = new TARDISDynmap(plugin);
-                            tardisDynmap.enable();
-                            plugin.setTardisDynmap(tardisDynmap);
+                    case "mapping" -> {
+                        if (plugin.getTardisMapper() == null) {
+                            TARDISMapper tardisMapper;
+                            if (plugin.getConfig().getString("mapping.provider", "").equals("dynmap")) {
+                                tardisMapper = new TARDISDynmap(plugin);
+                            } else {
+                                tardisMapper = new TARDISBlueMap(plugin);
+                            }
+                            tardisMapper.enable();
+                            plugin.setTardisMapper(tardisMapper);
                         } else {
-                            plugin.getTardisDynmap().disable();
-                            plugin.setTardisDynmap(null);
+                            plugin.getTardisMapper().disable();
+                            plugin.setTardisMapper(null);
                         }
                     }
                     default -> {

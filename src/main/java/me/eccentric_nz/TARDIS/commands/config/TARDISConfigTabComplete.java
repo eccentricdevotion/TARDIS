@@ -41,6 +41,7 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
     private final ImmutableList<String> COLOURS = ImmutableList.of("AQUA", "BLACK", "BLUE", "DARK_AQUA", "DARK_BLUE", "DARK_GRAY", "DARK_GREEN", "DARK_PURPLE", "DARK_RED", "GOLD", "GRAY", "GREEN", "LIGHT_PURPLE", "RED", "WHITE", "YELLOW");
     private final List<String> CONFIG_SUBS = new ArrayList<>();
     private final ImmutableList<String> DB_SUBS = ImmutableList.of("mysql", "sqlite");
+    private final ImmutableList<String> MAPPING_SUBS = ImmutableList.of("dynmap", "BlueMap");
     private final ImmutableList<String> DIFFICULTY_SUBS = ImmutableList.of("easy", "medium", "hard");
     private final List<String> FILE_SUBS = new ArrayList<>();
     private final ImmutableList<String> FLAG_SUBS;
@@ -91,6 +92,9 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
             }
             if (sub.equals("difficulty")) {
                 return partial(lastArg, DIFFICULTY_SUBS);
+            }
+            if (sub.equals("provider")) {
+                return partial(lastArg, MAPPING_SUBS);
             }
             if (sub.equals("respect_towny")) {
                 return partial(lastArg, TOWNY_SUBS);
