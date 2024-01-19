@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -28,11 +25,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -43,6 +36,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.scheduler.BukkitScheduler;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * The Scanner consists of a collection of thousands of instruments designed to
@@ -76,7 +73,7 @@ public class TARDISScanner {
         return radiusEntities;
     }
 
-    public TARDISScannerData scan(Player player, int id, BukkitScheduler bsched) {
+    public TARDISScannerData getScannerData(Player player, int id, BukkitScheduler bsched) {
         TARDISScannerData data = new TARDISScannerData();
         TARDISSounds.playTARDISSound(player.getLocation(), "tardis_scanner");
         Location scan_loc;
@@ -289,46 +286,39 @@ public class TARDISScanner {
         return data;
     }
 
-    public void scan(Player player, int id, String renderer, int level) {
-        // get tardis from saved scanner location
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        where.put("type", 33);
-        ResultSetControls rs = new ResultSetControls(plugin, where, true);
-        if (rs.resultSet()) {
-            TARDISCircuitChecker tcc = null;
-            if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
-                tcc = new TARDISCircuitChecker(plugin, id);
-                tcc.getCircuits();
+    public void scan(int id, Player player, String renderer, int level) {
+        TARDISCircuitChecker tcc = null;
+        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
+            tcc = new TARDISCircuitChecker(plugin, id);
+            tcc.getCircuits();
+        }
+        if (tcc != null && !tcc.hasScanner()) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_MISSING");
+            return;
+        }
+        if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_NO_RANDOM");
+            return;
+        }
+        BukkitScheduler scheduler = plugin.getServer().getScheduler();
+        TARDISScannerData data = getScannerData(player, id, scheduler);
+        if (data != null) {
+            boolean extrend = true;
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
+            if (rsp.resultSet()) {
+                extrend = rsp.isRendererOn();
             }
-            if (tcc != null && !tcc.hasScanner()) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_MISSING");
-                return;
-            }
-            if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_NO_RANDOM");
-                return;
-            }
-            BukkitScheduler bsched = plugin.getServer().getScheduler();
-            TARDISScannerData data = scan(player, id, bsched);
-            if (data != null) {
-                boolean extrend = true;
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
-                if (rsp.resultSet()) {
-                    extrend = rsp.isRendererOn();
-                }
-                if (!renderer.isEmpty() && extrend) {
-                    int required = plugin.getArtronConfig().getInt("render");
-                    if (level > required) {
-                        bsched.scheduleSyncDelayedTask(plugin, () -> {
-                            if (player.isOnline() && plugin.getUtils().inTARDISWorld(player)) {
-                                TARDISExteriorRenderer ter = new TARDISExteriorRenderer(plugin);
-                                ter.render(renderer, data.getScanLocation(), id, player, data.getTardisDirection(), data.getTime(), data.getScannedBiome());
-                            }
-                        }, 160L);
-                    } else {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_RENDER");
-                    }
+            if (!renderer.isEmpty() && extrend) {
+                int required = plugin.getArtronConfig().getInt("render");
+                if (level > required) {
+                    scheduler.scheduleSyncDelayedTask(plugin, () -> {
+                        if (player.isOnline() && plugin.getUtils().inTARDISWorld(player)) {
+                            TARDISExteriorRenderer ter = new TARDISExteriorRenderer(plugin);
+                            ter.render(renderer, data.getScanLocation(), id, player, data.getTardisDirection(), data.getTime(), data.getScannedBiome());
+                        }
+                    }, 160L);
+                } else {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_RENDER");
                 }
             }
         }

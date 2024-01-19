@@ -970,6 +970,10 @@ commands:
       permission: tardis.save
       permission-message: You don't have the permission <permission> to use this command
       usage: /<command> setdest [name]
+    stop_sound:
+      description: Stops looping sounds!
+      permission: tardis.fly
+      usage: /<command> stop_sound
     tagtheood:
       description: Display the 'Tag the Ood' game statistics.
       permission: tardis.tag

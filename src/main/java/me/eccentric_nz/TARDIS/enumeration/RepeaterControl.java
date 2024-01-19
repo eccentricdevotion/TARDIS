@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,14 +38,6 @@ private int control;
         this.descriptions = descriptions;
     }
 
-    public int getControl() {
-        return control;
-    }
-
-    public List<String> getDescriptions() {
-        return descriptions;
-    }
-
     public static RepeaterControl getControl(int c) {
         return switch (c) {
             case 2 -> WORLD;
@@ -53,5 +45,13 @@ private int control;
             case 4 -> Z;
             default -> MULTIPLIER;
         };
+    }
+
+    public int getControl() {
+        return control;
+    }
+
+    public List<String> getDescriptions() {
+        return descriptions;
     }
 }

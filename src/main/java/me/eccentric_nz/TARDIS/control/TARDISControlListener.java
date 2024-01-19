@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ public class TARDISControlListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> validBlocks = new ArrayList<>();
-    private final List<Integer> onlythese = Arrays.asList(1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 25, 26, 28, 29, 30, 31, 32, 33, 35, 38, 39, 40, 41, 42, 43);
+    private final List<Integer> onlythese = Arrays.asList(1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 13, 14, 16, 17, 20, 21, 22, 25, 26, 28, 29, 30, 31, 32, 33, 35, 38, 39, 40, 41, 42, 43, 47);
     private final Set<UUID> cooldown = new HashSet<>();
 
     public TARDISControlListener(TARDIS plugin) {
@@ -211,13 +211,15 @@ public class TARDISControlListener implements Listener {
                                     }
                                 }
                                 // scanner
-                                case 33 -> new TARDISScanner(plugin).scan(player, id, tardis.getRenderer(), tardis.getArtron_level());
+                                case 33 -> new TARDISScanner(plugin).scan(id, player, tardis.getRenderer(), tardis.getArtron_level());
                                 // cloister bell
                                 case 35 -> new CloisterBellAction(plugin).ring(id, tardis);
                                 // weather menu
                                 case 38 -> new WeatherAction(plugin).openGUI(player);
                                 // space/time throttle
                                 case 39 -> new ThrottleAction(plugin).setSpaceTime(block, player);
+                                // relativity differentiator
+                                case 47 -> new DifferentiatorAction(plugin).bleep(block);
                                 default -> {
                                 }
                             }

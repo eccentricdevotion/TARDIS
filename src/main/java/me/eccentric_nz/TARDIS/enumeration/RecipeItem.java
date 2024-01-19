@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,7 @@ public enum RecipeItem {
     RIFT_MANIPULATOR(10000001, RecipeCategory.ACCESSORIES),
     RUST_PLAGUE_SWORD(10000001, RecipeCategory.MISC),
     SERVER_ADMIN_CIRCUIT(10001968, RecipeCategory.SONIC_CIRCUITS),
+    SONIC_DOCK(1000, RecipeCategory.SONIC_CIRCUITS),
     SONIC_GENERATOR(10000001, RecipeCategory.ITEM_CIRCUITS),
     SONIC_OSCILLATOR(10001967, RecipeCategory.ITEM_CIRCUITS),
     SONIC_SCREWDRIVER(10000011, RecipeCategory.ITEMS),

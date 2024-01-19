@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,12 +35,11 @@ import org.bukkit.entity.Player;
 public class TARDISMushroomFixerCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
+    private final List<String> SUBS = Arrays.asList("red", "brown", "stem");
 
     public TARDISMushroomFixerCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
-
-    private final List<String> SUBS = Arrays.asList("red", "brown", "stem");
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

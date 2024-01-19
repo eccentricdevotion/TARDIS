@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_BAD_CLICK", plugin.getTrackerKeeper().getUpdatePlayers().get(uuid));
                     return;
                 }
-                if (control.equals(Control.DIRECTION) || control.equals(Control.FRAME) || control.equals(Control.ROTOR) || control.equals(Control.MAP) || control.equals(Control.MONITOR) || control.equals(Control.MONITOR_FRAME)) {
+                if (control.equals(Control.DIRECTION) || control.equals(Control.FRAME) || control.equals(Control.ROTOR) || control.equals(Control.MAP) || control.equals(Control.MONITOR) || control.equals(Control.MONITOR_FRAME) || control.equals(Control.SONIC_DOCK)) {
                     // check they have a TARDIS
                     ResultSetTardisID rst = new ResultSetTardisID(plugin);
                     if (!rst.fromUUID(uuid.toString())) {
@@ -77,7 +77,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                     }
                     int id = rst.getTardis_id();
                     switch (control) {
-                        case DIRECTION, FRAME, MAP, MONITOR, MONITOR_FRAME -> {
+                        case DIRECTION, FRAME, MAP, MONITOR, MONITOR_FRAME, SONIC_DOCK -> {
                             if (control.equals(Control.MAP) && !TARDISPermission.hasPermission(player, "tardis.scanner.map")) {
                                 plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_MAP");
@@ -135,7 +135,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                     frame.setVisible(false);
                                     which = "TARDIS Monitor";
                                 }
-                                default -> { // MONITOR_FRAME
+                                case MONITOR_FRAME -> {
                                     ItemStack glass = frame.getItem();
                                     Rotation rotation = frame.getRotation();
                                     // does it have a Monitor frame?
@@ -184,6 +184,18 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                     }
                                     which = "Monitor Frame";
                                 }
+                                default -> { // SONIC_DOCK
+                                    if (!isDock(frame)) {
+                                        // they haven't placed a dock in the frame first
+                                        plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
+                                        plugin.getMessenger().sendColouredCommand(player, "DOCK_PLACE_FRAME", "/trecipe sonic-dock", plugin);
+                                        return;
+                                    }
+                                    frame.setFixed(true);
+                                    frame.setVisible(false);
+                                    plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
+                                    which = "Sonic Dock";
+                                }
                             }
                             // check whether they have an item frame control of this type already
                             HashMap<String, Object> where = new HashMap<>();
@@ -219,5 +231,14 @@ public class TARDISItemFrameUpdateListener implements Listener {
                 }
             }
         }
+    }
+
+    private boolean isDock(ItemFrame frame) {
+        ItemStack dock = frame.getItem();
+        if (dock.getType() != Material.FLOWER_POT || !dock.hasItemMeta()) {
+            return false;
+        }
+        ItemMeta im = dock.getItemMeta();
+        return im.hasCustomModelData() && (im.getCustomModelData() == 1000 || im.getCustomModelData() == 1001);
     }
 }

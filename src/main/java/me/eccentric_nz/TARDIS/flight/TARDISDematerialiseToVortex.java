@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDematerialisationEvent;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -35,6 +33,9 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 /**
  * @author eccentric_nz
  */
@@ -44,12 +45,14 @@ public class TARDISDematerialiseToVortex implements Runnable {
     private final int id;
     private final Player player;
     private final Location handbrake;
+    private final SpaceTimeThrottle spaceTimeThrottle;
 
-    public TARDISDematerialiseToVortex(TARDIS plugin, int id, Player player, Location handbrake) {
+    public TARDISDematerialiseToVortex(TARDIS plugin, int id, Player player, Location handbrake, SpaceTimeThrottle spaceTimeThrottle) {
         this.plugin = plugin;
         this.id = id;
         this.player = player;
         this.handbrake = handbrake;
+        this.spaceTimeThrottle = spaceTimeThrottle;
     }
 
     @Override
@@ -88,12 +91,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
             COMPASS cd = rscl.getDirection();
             boolean sub = rscl.isSubmarine();
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
-            boolean minecart = false;
-            SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
-            if (rsp.resultSet()) {
-                minecart = rsp.isMinecartOn();
-                spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
-            }
+            boolean minecart = rsp.resultSet() && rsp.isMinecartOn();
             DestroyData dd = new DestroyData();
             dd.setDirection(cd);
             dd.setLocation(l);
@@ -129,8 +127,8 @@ public class TARDISDematerialiseToVortex implements Runnable {
                                 case WARP -> "tardis_takeoff_warp";
                                 case RAPID -> "tardis_takeoff_rapid";
                                 case FASTER -> "tardis_takeoff_faster";
-                                default -> // NORMAL
-                                        "tardis_takeoff";
+                                // NORMAL
+                                default -> "tardis_takeoff";
                             };
                         }
                         TARDISSounds.playTARDISSound(handbrake, sound);

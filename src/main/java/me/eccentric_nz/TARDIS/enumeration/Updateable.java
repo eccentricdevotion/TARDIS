@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,6 +72,7 @@ public enum Updateable {
     SAVE_SIGN(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "Saved locations and TARDIS areas"),
     SCANNER(true, true, TARDISUpdateableCategory.OTHERS, "Exterior Scanner button"),
     SIEGE(true, false, TARDISUpdateableCategory.INTERFACES, "Siege Mode button"),
+    SONIC_DOCK(false, false, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TARDISUpdateableCategory.OTHERS, "Sonic Screwdriver Dock"),
     SMELT(false, false, new RecipeChoice.MaterialChoice(Material.CHEST, Material.TRAPPED_CHEST), TARDISUpdateableCategory.LOCATIONS, "Smelter room drop chest"),
     STABLE(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Horse Stable room"),
     STALL(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Llama Stall room"),

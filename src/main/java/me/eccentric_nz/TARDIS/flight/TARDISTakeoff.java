@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ public class TARDISTakeoff {
             plugin.getTrackerKeeper().getMalfunction().put(id, malfunction);
         }
         // dematerialise
-        new TARDISDematerialiseToVortex(plugin, id, player, handbrake).run();
+        new TARDISDematerialiseToVortex(plugin, id, player, handbrake, spaceTimeThrottle).run();
         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, plugin.getTrackerKeeper().getHasDestination().get(id).getTravelType(), id));
             // materialise
@@ -126,7 +126,7 @@ public class TARDISTakeoff {
             boolean malfunction = new TARDISMalfunction(plugin).isMalfunction();
             plugin.getTrackerKeeper().getMalfunction().put(id, malfunction);
             // dematerialise
-            new TARDISDematerialiseToVortex(plugin, id, player, handbrake).run();
+            new TARDISDematerialiseToVortex(plugin, id, player, handbrake, spaceTimeThrottle).run();
             if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                 // materialise
                 new TARDISMaterialseFromVortex(plugin, id, player, handbrake, spaceTimeThrottle).run();

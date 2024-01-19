@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,16 +24,15 @@ import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISSculkShrieker;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
+import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
+import me.eccentric_nz.TARDIS.utility.Handbrake;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.type.Comparator;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -61,11 +60,6 @@ public class TARDISHandbrakeListener implements Listener {
 
     public TARDISHandbrakeListener(TARDIS plugin) {
         this.plugin = plugin;
-    }
-
-    public static void toggleBeacon(String str, boolean on) {
-        Block b = TARDISStaticLocationGetters.getLocationFromDB(str).getBlock();
-        b.setBlockData((on) ? TARDISConstants.GLASS : TARDISConstants.POWER);
     }
 
     /**
@@ -178,8 +172,9 @@ public class TARDISHandbrakeListener implements Listener {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NOT_ENOUGH");
                                         return;
                                     }
+                                    Handbrake check = new Handbrake(plugin);
                                     // check if door is open
-                                    if (isDoorOpen(id)) {
+                                    if (check.isDoorOpen(id)) {
                                         plugin.getMessenger().sendStatus(player, "DOOR_CLOSE");
                                         // track handbrake clicked for takeoff when door closed
                                         plugin.getTrackerKeeper().getHasClickedHandbrake().add(id);
@@ -188,7 +183,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         return;
                                     }
                                     // check the state of the Relativity Differentiator
-                                    if (isRelativityDifferentiated(id) && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand()) {
+                                    if (check.isRelativityDifferentiated(id) && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand()) {
                                         // check if TARDIS is underground
                                         HashMap<String, Object> wherec = new HashMap<>();
                                         wherec.put("tardis_id", id);
@@ -202,6 +197,10 @@ public class TARDISHandbrakeListener implements Listener {
                                                 plugin.getMessenger().sendStatus(player, "FLIGHT_AIR");
                                                 return;
                                             }
+                                        }
+                                        if (TARDISCameraTracker.CAMERA_IN_USE.contains(id)) {
+                                            plugin.getMessenger().sendStatus(player, "FLIGHT_CAMERA");
+                                            return;
                                         }
                                         // fly the TARDIS exterior
                                         Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), player.getLocation().getYaw(), player.getLocation().getPitch());
@@ -257,7 +256,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     // Check if it's at a recharge point
                                     new TARDISArtronLevels(plugin).recharge(id);
                                     if (!beac_on && !beacon.isEmpty()) {
-                                        toggleBeacon(beacon, false);
+                                        new Handbrake(plugin).toggleBeacon(beacon, false);
                                     }
                                     // Remove energy from TARDIS and sets database
                                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ON");
@@ -297,30 +296,5 @@ public class TARDISHandbrakeListener implements Listener {
                 }
             }
         }
-    }
-
-    private boolean isDoorOpen(int id) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        where.put("door_type", 1);
-        ResultSetDoors rs = new ResultSetDoors(plugin, where, false);
-        if (rs.resultSet()) {
-            Block door = TARDISStaticLocationGetters.getLocationFromDB(rs.getDoor_location()).getBlock();
-            return TARDISStaticUtils.isDoorOpen(door);
-        }
-        return false;
-    }
-
-    private boolean isRelativityDifferentiated(int id) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        where.put("type", 47);
-        ResultSetControls rsc = new ResultSetControls(plugin, where, false);
-        if (rsc.resultSet()) {
-            Block rd = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation()).getBlock();
-            Comparator comparator = (Comparator) rd.getBlockData();
-            return comparator.getMode().equals(Comparator.Mode.SUBTRACT);
-        }
-        return false;
     }
 }

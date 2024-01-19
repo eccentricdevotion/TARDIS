@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -340,6 +340,23 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Monitor.lore", "");
             i++;
         }
+        if (!recipes_config.contains("shaped.Sonic Dock")) {
+            recipes_config.set("shaped.Sonic Dock.easy_shape", "RGR,GSG,BGB");
+            recipes_config.set("shaped.Sonic Dock.easy_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.Sonic Dock.easy_ingredients.G", "GOLD_NUGGET");
+            recipes_config.set("shaped.Sonic Dock.easy_ingredients.S", "REPEATER");
+            recipes_config.set("shaped.Sonic Dock.easy_ingredients.B", "BLACKSTONE");
+            recipes_config.set("shaped.Sonic Dock.hard_shape", "RGR,GSG,BGB");
+            recipes_config.set("shaped.Sonic Dock.hard_ingredients.R", "REDSTONE");
+            recipes_config.set("shaped.Sonic Dock.hard_ingredients.G", "GOLD_INGOT");
+            recipes_config.set("shaped.Sonic Dock.hard_ingredients.S", "GLOWSTONE_DUST=Sonic Oscillator");
+            recipes_config.set("shaped.Sonic Dock.hard_ingredients.B", "BLACKSTONE");
+            recipes_config.set("shaped.Sonic Dock.result", "FLOWER_POT");
+            recipes_config.set("shaped.Sonic Dock.amount", 1);
+            recipes_config.set("shaped.Sonic Dock.lore", "");
+            i++;
+        }
+
         if (!recipes_config.contains("shaped.Monitor Frame")) {
             recipes_config.set("shaped.Monitor Frame.easy_shape", "BBB,BGB,BRB");
             recipes_config.set("shaped.Monitor Frame.easy_ingredients.B", "BLACKSTONE");

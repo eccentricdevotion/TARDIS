@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,6 +46,23 @@ import java.util.List;
 import java.util.UUID;
 
 public class SchematicSave {
+
+    public static JsonObject getBannerJson(BlockState b) {
+        JsonObject state = new JsonObject();
+        Banner banner = (Banner) b;
+        state.addProperty("base_colour", banner.getBaseColor().toString());
+        JsonArray patterns = new JsonArray();
+        if (banner.numberOfPatterns() > 0) {
+            banner.getPatterns().forEach((p) -> {
+                JsonObject pattern = new JsonObject();
+                pattern.addProperty("pattern", p.getPattern().toString());
+                pattern.addProperty("pattern_colour", p.getColor().toString());
+                patterns.add(pattern);
+            });
+        }
+        state.add("patterns", patterns);
+        return state;
+    }
 
     public boolean act(TARDIS plugin, Player player, String which) {
         UUID uuid = player.getUniqueId();
@@ -289,22 +306,5 @@ public class SchematicSave {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_ERROR");
         }
         return true;
-    }
-
-    public static JsonObject getBannerJson(BlockState b) {
-        JsonObject state = new JsonObject();
-        Banner banner = (Banner) b;
-        state.addProperty("base_colour", banner.getBaseColor().toString());
-        JsonArray patterns = new JsonArray();
-        if (banner.numberOfPatterns() > 0) {
-            banner.getPatterns().forEach((p) -> {
-                JsonObject pattern = new JsonObject();
-                pattern.addProperty("pattern", p.getPattern().toString());
-                pattern.addProperty("pattern_colour", p.getColor().toString());
-                patterns.add(pattern);
-            });
-        }
-        state.add("patterns", patterns);
-        return state;
     }
 }

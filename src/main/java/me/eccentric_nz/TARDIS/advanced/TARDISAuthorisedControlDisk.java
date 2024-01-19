@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -174,7 +174,7 @@ public class TARDISAuthorisedControlDisk {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     // dematerialise
-                    new TARDISDematerialiseToVortex(plugin, id, player, handbrake).run();
+                    new TARDISDematerialiseToVortex(plugin, id, player, handbrake, SpaceTimeThrottle.NORMAL).run();
                     // materialise
                     new TARDISMaterialseFromVortex(plugin, id, player, handbrake, SpaceTimeThrottle.NORMAL).run();
                 }, 60L);

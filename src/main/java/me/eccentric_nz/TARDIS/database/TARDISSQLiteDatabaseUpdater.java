@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -157,6 +157,8 @@ class TARDISSQLiteDatabaseUpdater {
         sonicupdates.add("conversion INTEGER DEFAULT 0");
         sonicupdates.add("model INTEGER DEFAULT 10000011");
         sonicupdates.add("sonic_uuid TEXT DEFAULT ''");
+        sonicupdates.add("last_scanned TEXT DEFAULT ''");
+        sonicupdates.add("scan_type INTEGER DEFAULT 0");
     }
 
     /**

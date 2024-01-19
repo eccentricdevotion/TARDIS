@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -127,6 +127,8 @@ class TARDISMySQLDatabaseUpdater {
         sonicupdates.add("conversion int(1) DEFAULT '0'");
         sonicupdates.add("model int(11) DEFAULT '10000011'");
         sonicupdates.add("sonic_uuid varchar(48) DEFAULT ''");
+        sonicupdates.add("last_scanned varchar(512) DEFAULT ''");
+        sonicupdates.add("scan_type int(1) DEFAULT '0'");
     }
 
     /**

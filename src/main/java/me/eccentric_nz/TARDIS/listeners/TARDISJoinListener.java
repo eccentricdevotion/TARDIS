@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.camera.CameraLocation;
 import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -257,7 +258,11 @@ public class TARDISJoinListener implements Listener {
                 wherei.put("tardis_id", id);
                 wherei.put("uuid", player.getUniqueId().toString());
                 plugin.getQueryFactory().doInsert("travellers", wherei);
-                TARDISCameraTracker.SPECTATING.remove(player.getUniqueId());
+                CameraLocation cl = TARDISCameraTracker.SPECTATING.get(player.getUniqueId());
+                if (cl != null) {
+                    TARDISCameraTracker.CAMERA_IN_USE.remove(cl.getId());
+                    TARDISCameraTracker.SPECTATING.remove(player.getUniqueId());
+                }
             }, 2L);
         }
         // notify updates

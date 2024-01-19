@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 eccentric_nz
+ * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -123,7 +123,7 @@ public class TARDISConsoleSwitchListener implements Listener {
                     stack = new TARDISTerminalInventory(plugin).getTerminal();
                 }
                 // scanner circuit
-                default -> new TARDISScanner(plugin).scan(p, tardis.getTardis_id(), plugin.getServer().getScheduler());
+                default -> new TARDISScanner(plugin).scan(tardis.getTardis_id(), p, tardis.getRenderer(), tardis.getArtron_level());
             }
             // close inventory
             p.closeInventory();
