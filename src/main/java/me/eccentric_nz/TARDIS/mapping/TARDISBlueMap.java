@@ -36,6 +36,7 @@ import java.util.Map;
 public class TARDISBlueMap implements TARDISMapper {
 
     private final TARDIS plugin;
+
     public TARDISBlueMap(TARDIS plugin) {
         this.plugin = plugin;
     }
@@ -110,13 +111,6 @@ public class TARDISBlueMap implements TARDISMapper {
                         TARDISGetter getter = new TARDISGetter(plugin, curWorld);
                         getter.resultSetAsync(results -> {
                             MarkerSet markerSet = new MarkerSet("TARDIS");
-                            // get markerset
-                            for (BlueMapMap map : w.getMaps()) {
-                                if (map.getMarkerSets().containsKey("TARDIS")) {
-                                    markerSet = map.getMarkerSets().get("TARDIS");
-                                    break;
-                                }
-                            }
                             toDo = results;
                             tardisIndex = 0;
                             if (toDo != null && toDo.isEmpty()) {
@@ -137,17 +131,10 @@ public class TARDISBlueMap implements TARDISMapper {
                                     Location loc = data.getLocation();
                                     String label = String.format("%s (TARDIS)", data.getOwner());
                                     String desc = formatInfoWindow(data);
-                                    POIMarker marker;
-                                    if (markerSet != null && markerSet.getMarkers().containsKey(id)) {
-                                        marker = (POIMarker) markerSet.getMarkers().get(id);
-                                        marker.setPosition(new Vector3d(loc.getX(), loc.getY(), loc.getZ()));
-                                        marker.setDetail(desc);
-                                    } else {
-                                        marker = new POIMarker(label, new Vector3d(loc.getX(), loc.getY(), loc.getZ()));
-                                        marker.setIcon("https://raw.githubusercontent.com/eccentricdevotion/TARDIS/master/src/main/resources/tardis.png", 0, 0);
-                                        marker.setDetail(desc);
-                                        markerSet.put(id, marker);
-                                    }
+                                    POIMarker marker = new POIMarker(label, new Vector3d(loc.getX(), loc.getY(), loc.getZ()));
+                                    marker.setIcon("https://raw.githubusercontent.com/eccentricdevotion/TARDIS/master/src/main/resources/tardis.png", 0, 0);
+                                    marker.setDetail(desc);
+                                    markerSet.put(id, marker);
                                 }
                             }
                             // put markerset back
