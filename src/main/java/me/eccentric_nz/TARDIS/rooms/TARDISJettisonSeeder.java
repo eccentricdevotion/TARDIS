@@ -84,7 +84,7 @@ public class TARDISJettisonSeeder implements Listener {
             }
             // only proceed if they are clicking a room seed block with the TARDIS key!
             if (blockType.equals(Material.getMaterial(plugin.getArtronConfig().getString("jettison_seed"))) && inhand.equals(Material.getMaterial(key))) {
-                String r = plugin.getTrackerKeeper().getJettison().get(uuid);
+                String room = plugin.getTrackerKeeper().getJettison().get(uuid);
                 // get jettison direction
                 TARDISRoomDirection trd = new TARDISRoomDirection(block);
                 trd.getDirection();
@@ -100,33 +100,20 @@ public class TARDISJettisonSeeder implements Listener {
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                 if (rs.fromUUID(player.getUniqueId().toString())) {
                     int id = rs.getTardis_id();
-                    TARDISRoomRemover remover = new TARDISRoomRemover(plugin, r, l, d, id);
+                    TARDISRoomRemover remover = new TARDISRoomRemover(plugin, room, l, d, id);
                     if (remover.remove()) {
                         plugin.getTrackerKeeper().getJettison().remove(uuid);
                         block.setBlockData(TARDISConstants.AIR);
                         l.getWorld().playEffect(l, Effect.POTION_BREAK, 9);
                         // ok they clicked it, so give them their energy!
-                        int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + r + ".cost"));
+                        int amount = Math.round((plugin.getArtronConfig().getInt("jettison") / 100F) * plugin.getRoomsConfig().getInt("rooms." + room + ".cost"));
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("uuid", player.getUniqueId().toString());
                         plugin.getQueryFactory().alterEnergyLevel("tardis", amount, set, player);
-                        // if it is a secondary console room remove the controls
-                        if (r.equals("BAKER") || r.equals("WOOD")) {
-                            int secondary = (r.equals("BAKER")) ? 1 : 2;
-                            HashMap<String, Object> del = new HashMap<>();
-                            del.put("tardis_id", id);
-                            del.put("secondary", secondary);
-                            plugin.getQueryFactory().doDelete("controls", del);
-                        }
-                        if (r.equals("RENDERER")) {
-                            if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                                // remove WorldGuard protection
-                                plugin.getWorldGuardUtils().removeRoomRegion(l.getWorld(), playerNameStr, "renderer");
-                            }
-                        }
+                        new RoomCleaner(plugin).removeRecords(room, id, block.getWorld(), player);
                         if (plugin.getConfig().getBoolean("growth.return_room_seed")) {
                             // give the player back the room seed block
-                            ItemStack is = new ItemStack(Material.getMaterial(plugin.getRoomsConfig().getString("rooms." + r + ".seed")));
+                            ItemStack is = new ItemStack(Material.getMaterial(plugin.getRoomsConfig().getString("rooms." + room + ".seed")));
                             Inventory inv = player.getInventory();
                             inv.addItem(is);
                             player.updateInventory();
