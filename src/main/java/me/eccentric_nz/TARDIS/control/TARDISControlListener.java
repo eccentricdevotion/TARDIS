@@ -211,7 +211,7 @@ public class TARDISControlListener implements Listener {
                                     }
                                 }
                                 // scanner
-                                case 33 -> new TARDISScanner(plugin).scan(player, id, tardis.getRenderer(), tardis.getArtron_level());
+                                case 33 -> new TARDISScanner(plugin).scan(id, player, tardis.getRenderer(), tardis.getArtron_level());
                                 // cloister bell
                                 case 35 -> new CloisterBellAction(plugin).ring(id, tardis);
                                 // weather menu

@@ -321,7 +321,7 @@ public class FloodgateControlForm {
                         new FloodgateTemporalForm(plugin, uuid).send();
                     }
                     case 17 -> plugin.getMessenger().sendArtron(player, id, 0); // artron level
-                    case 18 -> new TARDISScanner(plugin).scan(player, id, plugin.getServer().getScheduler()); // scanner
+                    case 18 -> new TARDISScanner(plugin).scan(id, player, tardis.getRenderer(), level); // scanner
                     case 19 -> new TARDISInfoMenuButton(plugin, player).clickButton(); // TIS
                     case 20 -> new FloodgateTransmatForm(plugin, uuid, id).send(); // transmat
                     case 21 -> { // zero room

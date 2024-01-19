@@ -5,9 +5,6 @@
 1. Sonic Docking / Charging Station [#774](https://github.com/eccentricdevotion/TARDIS/issues/774)
 2. BlueMap support [#783](https://github.com/eccentricdevotion/TARDIS/issues/783)
 3. Allow 3D Police Boxes to land on slabs [#777](https://github.com/eccentricdevotion/TARDIS/issues/777)
-4. Disable flying if a player is using the camera feature
-5. Add command / on death event to cancel TARDIS sounds for a player
-6. Remove renderer and zero entries when jettisoning the room
 
 ## Next version `5.4.0`
 
