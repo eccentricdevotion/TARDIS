@@ -101,7 +101,7 @@ public class TARDISSonicEntityListener implements Listener {
                     if (id == -1) {
                         return;
                     }
-                    new TARDISSonicDock(plugin).dock(id, frame.getLocation().getBlock(), player, is);
+                    new TARDISSonicDock(plugin).dock(id, frame, player, is);
                 }
             }
         } else if (ent instanceof ItemFrame frame && is.getType() == Material.AIR) {
@@ -110,7 +110,7 @@ public class TARDISSonicEntityListener implements Listener {
             if (id == -1) {
                 return;
             }
-            new TARDISSonicDock(plugin).undock(frame.getLocation().getBlock(), player);
+            new TARDISSonicDock(plugin).undock(frame, player);
         }
     }
 

@@ -39,7 +39,8 @@ public class TARDISSonicDock {
         this.plugin = plugin;
     }
 
-    public void dock(int id, Block block, Player player, ItemStack sonic) {
+    public void dock(int id, ItemFrame frame, Player player, ItemStack sonic) {
+        Block block = frame.getLocation().getBlock();
         // check for existing display item
         if (TARDISDisplayItemUtils.get(block) != null) {
             return;
@@ -55,7 +56,7 @@ public class TARDISSonicDock {
         // remove item from hand
         player.getInventory().setItemInMainHand(null);
         // change the dock model
-        updateModel(block, 1001);
+        updateModel(frame, 1001);
         if (uuid != null) {
             // get last scan coordinates
             ResultSetSonicLocation rssc = new ResultSetSonicLocation(plugin, uuid);
@@ -202,9 +203,9 @@ public class TARDISSonicDock {
         }
     }
 
-    public void undock(Block block, Player player) {
+    public void undock(ItemFrame frame, Player player) {
         // check for existing display item
-        ItemDisplay display = TARDISDisplayItemUtils.getFromBoundingBox(block);
+        ItemDisplay display = TARDISDisplayItemUtils.getFromBoundingBox(frame.getLocation().getBlock());
         if (display == null) {
             return;
         }
@@ -217,11 +218,10 @@ public class TARDISSonicDock {
         }
         display.remove();
         // change the dock model
-        updateModel(block, 1000);
+        updateModel(frame, 1000);
     }
 
-    private void updateModel(Block block, int cmd) {
-        ItemFrame frame = (ItemFrame) block.getState();
+    private void updateModel(ItemFrame frame, int cmd) {
         ItemStack dock = frame.getItem();
         ItemMeta im = dock.getItemMeta();
         im.setCustomModelData(cmd);
