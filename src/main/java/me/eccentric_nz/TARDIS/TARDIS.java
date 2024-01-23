@@ -199,6 +199,7 @@ public class TARDIS extends JavaPlugin {
     private NamespacedKey timeLordUuidKey;
     private NamespacedKey blueprintKey;
     private NamespacedKey sonicUuidKey;
+    private NamespacedKey sonicChargeKey;
     private PersistentDataType<byte[], UUID> persistentDataTypeUUID;
     private QueryFactory queryFactory;
     private boolean updateFound = false;
@@ -300,6 +301,7 @@ public class TARDIS extends JavaPlugin {
         timeLordUuidKey = new NamespacedKey(this, "timelord_uuid");
         blueprintKey = new NamespacedKey(this, "blueprint");
         sonicUuidKey = new NamespacedKey(this, "sonic_uuid");
+        sonicChargeKey = new NamespacedKey(this, "sonic_charge");
         persistentDataTypeUUID = new TARDISUUIDDataType();
         console = getServer().getConsoleSender();
         ModuleDescriptor.Version serverVersion = getServerVersion(getServer().getVersion());
@@ -1295,6 +1297,15 @@ public class TARDIS extends JavaPlugin {
      */
     public NamespacedKey getSonicUuidKey() {
         return sonicUuidKey;
+    }
+
+    /**
+     * Gets the Sonic Screwdriver Charge NamespacedKey
+     *
+     * @return the Sonic Screwdriver Charge NamespacedKey
+     */
+    public NamespacedKey getSonicChargeKey() {
+        return sonicChargeKey;
     }
 
     /**

@@ -36,11 +36,9 @@ import java.util.Locale;
 /**
  * Command /tardisadmin [arguments].
  * <p>
- * The Lord President was the most powerful member of the Time Lord Council and
- * had near absolute authority, and used a link to the Matrix, a vast computer
- * network containing the knowledge and experiences of all past generations of
- * Time Lords, to set Time Lord policy and remain alert to potential threats
- * from lesser civilisations.
+ * The Lord President was the most powerful member of the Time Lord Council and had near absolute authority, and used a
+ * link to the Matrix, a vast computer network containing the knowledge and experiences of all past generations of Time
+ * Lords, to set Time Lord policy and remain alert to potential threats from lesser civilisations.
  *
  * @author eccentric_nz
  */
@@ -60,8 +58,8 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsStr.put("autonomous_area", "");
         firstsStr.put("database", "storage");
         firstsStr.put("default_key", "preferences");
+        firstsStr.put("default_model", "sonic");
         firstsStr.put("default_preset", "police_box");
-        firstsStr.put("default_sonic", "preferences");
         firstsStr.put("default_world_name", "creation");
         firstsStr.put("difficulty", "preferences");
         firstsStr.put("exclude", "");
@@ -95,6 +93,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("autonomous", "allow");
         firstsBool.put("blueprints", "modules");
         firstsBool.put("chameleon", "travel");
+        firstsBool.put("charge", "sonic");
         firstsBool.put("check_blocks_before_upgrade", "desktop");
         firstsBool.put("check_for_home", "creation");
         firstsBool.put("create_worlds", "creation");
@@ -102,7 +101,6 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("damage", "circuits");
         firstsBool.put("debug", "");
         firstsBool.put("default_world", "creation");
-        firstsBool.put("mapping", "modules");
         firstsBool.put("dynamic_lamps", "allow");
         firstsBool.put("emergency_npc", "allow");
         firstsBool.put("exile", "travel");
@@ -116,6 +114,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("keep_night", "creation");
         firstsBool.put("land_on_water", "travel");
         firstsBool.put("load_shells", "police_box");
+        firstsBool.put("mapping", "modules");
         firstsBool.put("materialise", "police_box");
         firstsBool.put("mob_farming", "allow");
         firstsBool.put("name_tardis", "police_box");
@@ -163,7 +162,10 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsInt.put("block_change_percent", "desktop");
         firstsInt.put("border_radius", "creation");
         firstsInt.put("chameleon_uses", "circuits.uses");
+        firstsInt.put("charge_interval", "sonic");
+        firstsInt.put("charge_level", "sonic");
         firstsInt.put("chat_width", "preferences");
+        firstsInt.put("conversion_radius", "sonic");
         firstsInt.put("count", "creation");
         firstsInt.put("delay_factor", "growth");
         firstsInt.put("force_field", "allow");
@@ -175,6 +177,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsInt.put("heal_speed", "preferences");
         firstsInt.put("input", "circuits.uses");
         firstsInt.put("invisibility_uses", "circuits.uses");
+        firstsInt.put("freeze_cooldown", "sonic");
         firstsInt.put("malfunction", "preferences");
         firstsInt.put("malfunction_end", "preferences");
         firstsInt.put("malfunction_nether", "preferences");
@@ -188,7 +191,6 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsInt.put("rooms_condenser_percent", "growth");
         firstsInt.put("scanner", "circuits.uses");
         firstsInt.put("sfx_volume", "preferences");
-        firstsInt.put("sonic_radius", "preferences");
         firstsInt.put("temporal", "circuits.uses");
         firstsInt.put("terminal_step", "travel");
         firstsInt.put("timeout", "travel");
@@ -197,6 +199,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsInt.put("tp_radius", "travel");
         firstsInt.put("update_period", "mapping");
         firstsInt.put("updates_per_tick", "mapping");
+        firstsInt.put("usage", "sonic");
         firstsInt.put("wall_data", "police_box");
         firstsInt.put("wall_id", "police_box");
         firstsIntArtron.add("autonomous");
@@ -304,7 +307,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                 if (first.equals("full_charge_item") || first.equals("jettison_seed")) {
                     return new TARDISSetMaterialCommand(plugin).setConfigMaterial(sender, args);
                 }
-                if (first.equals("default_key") || first.equals("default_sonic")) {
+                if (first.equals("default_key") || first.equals("default_model")) {
                     return new TARDISDefaultCommand(plugin).setDefaultItem(sender, args);
                 }
                 if (first.equals("default_world_name")) {

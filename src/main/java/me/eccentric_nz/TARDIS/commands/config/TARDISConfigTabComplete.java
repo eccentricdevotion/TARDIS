@@ -126,7 +126,7 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
             if (sub.equals("default_preset")) {
                 return partial(lastArg, PRESETS);
             }
-            if (sub.equals("default_sonic")) {
+            if (sub.equals("default_model")) {
                 return partial(lastArg, SONICS);
             }
             if (sub.equals("database")) {

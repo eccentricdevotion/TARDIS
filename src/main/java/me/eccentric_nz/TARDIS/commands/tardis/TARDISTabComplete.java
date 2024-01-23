@@ -130,7 +130,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
                 case "secondary" -> {
                     return partial(lastArg, SEC_SUBS);
                 }
-                case "update" -> {
+                case "update", "decommission" -> {
                     return partial(lastArg, UPD_SUBS);
                 }
                 case "dimensionicon" -> {

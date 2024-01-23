@@ -87,7 +87,7 @@ public class TARDISShapedRecipe {
 
     public void addShapedRecipes() {
         keyModel = keyModelLookup.get(plugin.getConfig().getString("preferences.default_key").toLowerCase(Locale.ENGLISH));
-        sonicModel = sonicModelLookup.get(plugin.getConfig().getString("preferences.default_sonic").toLowerCase(Locale.ENGLISH));
+        sonicModel = sonicModelLookup.get(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ENGLISH));
         Set<String> shaped = plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false);
         shaped.forEach((s) -> {
             try {

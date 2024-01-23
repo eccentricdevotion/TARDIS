@@ -158,6 +158,17 @@ public enum Updateable {
         return description;
     }
 
+    public boolean usesItemFrame() {
+        switch (this) {
+            case DIRECTION, FRAME, MAP, MONITOR, MONITOR_FRAME, SONIC_DOCK -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
     private List<Material> concat() {
         List<Material> choices = new ArrayList<>();
         choices.addAll(Tag.BUTTONS.getValues());

@@ -143,6 +143,7 @@ public class TARDISConfiguration {
         booleanOptions.put("siege.enabled", true);
         booleanOptions.put("siege.healing", false);
         booleanOptions.put("siege.texture", false);
+        booleanOptions.put("sonic.charge", false);
         booleanOptions.put("storage.mysql.useSSL", false);
         booleanOptions.put("travel.exile", false);
         booleanOptions.put("travel.give_key", false);
@@ -171,18 +172,17 @@ public class TARDISConfiguration {
         integerOptions.put("creation.inventory_group", 0);
         integerOptions.put("creation.tips_limit", 400);
         integerOptions.put("desktop.block_change_percent", 25);
-        integerOptions.put("mapping.update_period", 30);
-        integerOptions.put("mapping.updates_per_tick", 10);
         integerOptions.put("growth.ars_limit", 1);
+        integerOptions.put("growth.delay_factor", 1);
         integerOptions.put("growth.gravity_max_distance", 15);
         integerOptions.put("growth.gravity_max_velocity", 5);
         integerOptions.put("growth.room_speed", 4);
-        integerOptions.put("growth.delay_factor", 1);
         integerOptions.put("growth.rooms_condenser_percent", 100);
         integerOptions.put("junk.return", -1);
+        integerOptions.put("mapping.update_period", 30);
+        integerOptions.put("mapping.updates_per_tick", 10);
         integerOptions.put("police_box.rebuild_cooldown", 10000);
         integerOptions.put("preferences.chat_width", 55);
-        integerOptions.put("preferences.freeze_cooldown", 60);
         integerOptions.put("preferences.hads_damage", 10);
         integerOptions.put("preferences.hads_distance", 10);
         integerOptions.put("preferences.heal_speed", 200);
@@ -193,6 +193,11 @@ public class TARDISConfiguration {
         integerOptions.put("preferences.spawn_limit", 10);
         integerOptions.put("siege.breeding", 0);
         integerOptions.put("siege.growth", 0);
+        integerOptions.put("sonic.charge_interval", 60);
+        integerOptions.put("sonic.charge_level", 1000);
+        integerOptions.put("sonic.conversion_radius", 1);
+        integerOptions.put("sonic.freeze_cooldown", 60);
+        integerOptions.put("sonic.usage", 10);
         integerOptions.put("travel.grace_period", 10);
         integerOptions.put("travel.manual_flight_delay", 60);
         integerOptions.put("travel.max_distance", 29999983);
@@ -206,46 +211,47 @@ public class TARDISConfiguration {
         // string
         stringOptions.put("creation.area", "none");
         stringOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
-        stringOptions.put("creation.use_clay", "WOOL");
         stringOptions.put("creation.tips_next", "FREE");
+        stringOptions.put("creation.use_clay", "WOOL");
         stringOptions.put("display.all", "&6X&7%X% &6Y&7%Y% &6Z&7%Z% &6F&7%FACING% (%FACING_XZ%) %TARGET_BLOCK%");
         stringOptions.put("police_box.default_preset", "FACTORY");
         stringOptions.put("police_box.sign_colour", "WHITE");
         stringOptions.put("preferences.default_key", "eleventh");
-        stringOptions.put("preferences.default_sonic", "eleventh");
         stringOptions.put("preferences.difficulty", "hard");
         stringOptions.put("preferences.key", "GOLD_NUGGET");
         stringOptions.put("preferences.language", "en");
         stringOptions.put("preferences.respect_towny", "nation");
         stringOptions.put("preferences.respect_worldguard", "build");
         stringOptions.put("preferences.vortex_fall", "kill");
+        stringOptions.put("sonic.default_model", "eleventh");
         stringOptions.put("storage.database", "sqlite");
-        stringOptions.put("storage.mysql.host", "localhost");
-        stringOptions.put("storage.mysql.port", "3306");
         stringOptions.put("storage.mysql.database", "TARDIS");
-        stringOptions.put("storage.mysql.user", "bukkit");
+        stringOptions.put("storage.mysql.host", "localhost");
         stringOptions.put("storage.mysql.password", "mysecurepassword");
+        stringOptions.put("storage.mysql.port", "3306");
         stringOptions.put("storage.mysql.prefix", "");
+        stringOptions.put("storage.mysql.user", "bukkit");
         stringOptions.put("travel.terminal.nether", "world");
         stringOptions.put("travel.terminal.the_end", "world");
         // comments
-        comments.put("storage", Arrays.asList("how the plugin persists data", "https://tardis.pages.dev/configuration/storage"));
-        comments.put("creation", Arrays.asList("inner TARDIS", "https://tardis.pages.dev/configuration/creation"));
-        comments.put("police_box", Arrays.asList("outer TARDIS", "https://tardis.pages.dev/configuration/preset"));
-        comments.put("travel", Arrays.asList("travel settings", "https://tardis.pages.dev/configuration/travel"));
-        comments.put("preferences", Arrays.asList("general preferences", "https://tardis.pages.dev/configuration/prefs"));
-        comments.put("mapping", Arrays.asList("mapping", "https://tardis.pages.dev/modules/mapping#configuration-options"));
-        comments.put("desktop", Arrays.asList("desktop theme", "https://tardis.pages.dev/desktop-theme#config-options"));
-        comments.put("circuits", Arrays.asList("circuits", "https://tardis.pages.dev/circuit-use#configuration-options"));
-        comments.put("allow", Arrays.asList("restrictions", "https://tardis.pages.dev/configuration/allow"));
-        comments.put("growth", Arrays.asList("room related", "https://tardis.pages.dev/configuration/growth"));
-        comments.put("arch", Arrays.asList("chameleon arch", "https://tardis.pages.dev/chameleon-arch#chameleon-arch-configuration"));
-        comments.put("siege", Arrays.asList("siege mode", "https://tardis.pages.dev/siege-mode#configuration"));
-        comments.put("junk", Arrays.asList("junk TARDIS", "https://tardis.pages.dev/junk-tardis#configuration-options"));
         comments.put("abandon", Arrays.asList("abandoned TARDISes", "https://tardis.pages.dev/abandon#config-options"));
+        comments.put("allow", Arrays.asList("restrictions", "https://tardis.pages.dev/configuration/allow"));
+        comments.put("arch", Arrays.asList("chameleon arch", "https://tardis.pages.dev/chameleon-arch#chameleon-arch-configuration"));
         comments.put("archive", Arrays.asList("console archives", "https://tardis.pages.dev/archive#config-options"));
-        comments.put("blueprints", Arrays.asList("enable blueprints", "https://tardis.pages.dev/modules/blueprints"));
+        comments.put("circuits", Arrays.asList("circuits", "https://tardis.pages.dev/circuit-use#configuration-options"));
+        comments.put("creation", Arrays.asList("inner TARDIS", "https://tardis.pages.dev/configuration/creation"));
+        comments.put("desktop", Arrays.asList("desktop theme", "https://tardis.pages.dev/desktop-theme#config-options"));
         comments.put("display", Collections.singletonList("HUD display"));
+        comments.put("growth", Arrays.asList("room related", "https://tardis.pages.dev/configuration/growth"));
+        comments.put("junk", Arrays.asList("junk TARDIS", "https://tardis.pages.dev/junk-tardis#configuration-options"));
+        comments.put("mapping", Arrays.asList("mapping", "https://tardis.pages.dev/modules/mapping#configuration-options"));
+        comments.put("modules", Arrays.asList("modules are disabled by default", "https://tardis.pages.dev/modules"));
+        comments.put("police_box", Arrays.asList("outer TARDIS", "https://tardis.pages.dev/configuration/preset"));
+        comments.put("preferences", Arrays.asList("general preferences", "https://tardis.pages.dev/configuration/prefs"));
+        comments.put("siege", Arrays.asList("siege mode", "https://tardis.pages.dev/siege-mode#configuration"));
+        comments.put("sonic", Arrays.asList("sonic screwdriver preferences", "https://tardis.pages.dev/sonic-dock#configuration"));
+        comments.put("storage", Arrays.asList("how the plugin persists data", "https://tardis.pages.dev/configuration/storage"));
+        comments.put("travel", Arrays.asList("travel settings", "https://tardis.pages.dev/configuration/travel"));
         comments.put("conversions", Collections.singletonList("don't touch!"));
     }
 
@@ -292,12 +298,6 @@ public class TARDISConfiguration {
         if (config.contains("creation.use_block_stack")) {
             plugin.getConfig().set("creation.use_block_stack", null);
         }
-        // add comments
-        if (config.getComments("storage").isEmpty()) {
-            for (Map.Entry<String, List<String>> entry : comments.entrySet()) {
-                plugin.getConfig().setComments(entry.getKey(), entry.getValue());
-            }
-        }
         // boolean values
         for (Map.Entry<String, Boolean> entry : booleanOptions.entrySet()) {
             if (!config.contains(entry.getKey())) {
@@ -343,6 +343,16 @@ public class TARDISConfiguration {
             plugin.getConfig().set("preferences.enable_dynmap", null);
             i++;
         }
+        // check / transfer sonic settings
+        if (config.contains("preferences.freeze_cooldown")) {
+            plugin.getConfig().set("sonic.freeze_cooldown", config.getInt("preferences.freeze_cooldown"));
+            plugin.getConfig().set("sonic.default_model", config.getString("preferences.default_sonic"));
+            plugin.getConfig().set("sonic.conversion_radius", config.get("preferences.sonic_radius") != null ? config.get("preferences.sonic_radius") : 1);
+            plugin.getConfig().set("preferences.freeze_cooldown", null);
+            plugin.getConfig().set("preferences.default_sonic", null);
+            plugin.getConfig().set("preferences.sonic_radius", null);
+            i++;
+        }
         if (config.contains("dynmap.update_period")) {
             plugin.getConfig().set("mapping.provider", "dynmap");
             plugin.getConfig().set("mapping.update_period", plugin.getConfig().getInt("dynmap.update_period"));
@@ -380,6 +390,10 @@ public class TARDISConfiguration {
             }
             plugin.getConfig().set("allow.chemistry", null);
             i++;
+        }
+        // add comments
+        for (Map.Entry<String, List<String>> entry : comments.entrySet()) {
+            plugin.getConfig().setComments(entry.getKey(), entry.getValue());
         }
         if (i > 0) {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + i + " new items to config");

@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.sonic;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.sonic.actions.*;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import net.md_5.bungee.api.ChatColor;
@@ -40,11 +42,10 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -107,6 +108,39 @@ public class TARDISSonicListener implements Listener {
         if (is.getType().equals(sonic) && is.hasItemMeta()) {
             ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
             if (im.getDisplayName().endsWith("Sonic Screwdriver")) {
+                // check they have charge
+                if (plugin.getConfig().getBoolean("sonic.charge") || plugin.getDifficulty() == Difficulty.HARD) {
+                    // get sonic UUID
+                    PersistentDataContainer pdc = im.getPersistentDataContainer();
+                    int needs = plugin.getConfig().getInt("sonic.usage");
+                    int charge;
+                    if (pdc.has(plugin.getSonicChargeKey(), PersistentDataType.INTEGER)) {
+                        charge = pdc.get(plugin.getSonicChargeKey(), PersistentDataType.INTEGER);
+                        if (needs > charge) {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_RECHARGE");
+                            return;
+                        }
+                    } else {
+                        charge = 500;
+                        HashMap<String, Object> set = new HashMap<>();
+                        if (!pdc.has(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID())) {
+                            UUID sonic_uuid = UUID.randomUUID();
+                            pdc.set(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID(), sonic_uuid);
+                            set.put("sonic_uuid", sonic_uuid.toString());
+                            // get sonic data
+                            set.put("uuid", player.getUniqueId().toString());
+                            List<Integer> settings = TARDISSonicData.getSonicData(im.getLore());
+                            for (int i = 0; i < settings.size(); i++) {
+                                set.put(SonicUpgradeData.upgrades.get(i), settings.get(i));
+                            }
+                            // insert
+                            plugin.getQueryFactory().doInsert("sonic", set);
+                        }
+                    }
+                    pdc.set(plugin.getSonicChargeKey(), PersistentDataType.INTEGER, charge - needs);
+                    is.setItemMeta(im);
+                    SonicLore.setChargeLevel(is);
+                }
                 List<String> lore = im.getLore();
                 Action action = event.getAction();
                 if (action.equals(Action.RIGHT_CLICK_AIR) && !player.isSneaking()) {

@@ -36,7 +36,7 @@ public class TARDISSonicBlockConverter {
 
     public static void transform(TARDIS plugin, Block block, Player player) {
         // loop through a radius of blocks
-        int r = plugin.getConfig().getInt("preferences.sonic_radius");
+        int r = plugin.getConfig().getInt("sonic.conversion_radius");
         for (int x = block.getX() - r; x <= block.getX() + r; x++) {
             for (int z = block.getZ() - r; z <= block.getZ() + r; z++) {
                 Block b = block.getWorld().getBlockAt(x, block.getY(), z);

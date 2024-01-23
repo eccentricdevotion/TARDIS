@@ -117,13 +117,9 @@ public class TARDISSonicUpgradeListener implements Listener {
                     }
                     // if they don't already have the upgrade
                     if (!lore.contains(upgrade)) {
-                        im.setDisplayName(dn);
-                        im.setCustomModelData(cmd);
-                        lore.add(upgrade);
-                        im.setLore(lore);
-                        is.setItemMeta(im);
+                        ItemStack upgraded = SonicLore.addUpgrade(lore, dn, cmd, is, upgrade);
                         // change the crafting result
-                        ci.setResult(is);
+                        ci.setResult(upgraded);
                     } else {
                         ci.setResult(null);
                     }

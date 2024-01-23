@@ -38,8 +38,7 @@ public class TARDISDisplayItemUtils {
      * Get a TARDISDisplayItem from a display entity
      *
      * @param display the display entity to get the data from
-     * @return The TARDISDisplayItem that matches this entity or null if there
-     * isn't one
+     * @return The TARDISDisplayItem that matches this entity or null if there isn't one
      */
     public static TARDISDisplayItem get(ItemDisplay display) {
         ItemStack is = display.getItemStack();
@@ -53,12 +52,10 @@ public class TARDISDisplayItemUtils {
     }
 
     /**
-     * Get an item display entity from a block. Used for custom TARDIS blocks
-     * and lights.
+     * Get an item display entity from a block. Used for custom TARDIS blocks and lights.
      *
      * @param block the block to use as the search location
-     * @return The Item Display entity at the block's location or null if there
-     * isn't one
+     * @return The Item Display entity at the block's location or null if there isn't one
      */
     public static ItemDisplay get(Block block) {
         for (Entity e : block.getWorld().getNearbyEntities(block.getBoundingBox().expand(0.1d), (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
@@ -70,13 +67,11 @@ public class TARDISDisplayItemUtils {
     }
 
     /**
-     * Get an item display entity from a block. Used for custom TARDIS lights
-     * and double door. Light blocks don't have a bounding box, so we need to
-     * create our own from the block's location.
+     * Get an item display entity from a block. Used for custom TARDIS lights and double door. Light blocks don't have a
+     * bounding box, so we need to create our own from the block's location.
      *
      * @param block the block to use as the search location
-     * @return The Item Display entity at the block's location or null if there
-     * isn't one
+     * @return The Item Display entity at the block's location or null if there isn't one
      */
     public static ItemDisplay getFromBoundingBox(Block block) {
         int x = block.getLocation().getBlockX();
@@ -92,14 +87,12 @@ public class TARDISDisplayItemUtils {
     }
 
     /**
-     * Get an interaction entity from a block. Used for custom TARDIS blocks and
-     * lights.
+     * Removes interaction, item display and item frame entities from a block.
      *
      * @param block the block to use as the search location
      */
     public static void remove(Block block) {
-        for (Entity e : block.getWorld().getNearbyEntities(block.getLocation().add(0.5d, 0.5d, 0.5d), 0.55d, 0.55d, 0.55d,
-                (d) -> d.getType() == EntityType.INTERACTION || d.getType() == EntityType.ITEM_DISPLAY || d.getType() == EntityType.ITEM_FRAME || d.getType() == EntityType.GLOW_ITEM_FRAME)) {
+        for (Entity e : block.getWorld().getNearbyEntities(block.getLocation().add(0.5d, 0.5d, 0.5d), 0.55d, 0.55d, 0.55d, (d) -> d.getType() == EntityType.INTERACTION || d.getType() == EntityType.ITEM_DISPLAY || d.getType() == EntityType.ITEM_FRAME || d.getType() == EntityType.GLOW_ITEM_FRAME)) {
             if (e instanceof Interaction || e instanceof ItemDisplay || e instanceof ItemFrame) {
                 e.remove();
             }
@@ -107,12 +100,10 @@ public class TARDISDisplayItemUtils {
     }
 
     /**
-     * Get an item display entity from an Interaction entity. Used for Chemistry
-     * lamp blocks
+     * Get an item display entity from an Interaction entity. Used for Chemistry lamp blocks
      *
      * @param interaction the Interaction entity to use as the search location
-     * @return The Item Display entity at the Interaction location or null if
-     * there isn't one
+     * @return The Item Display entity at the Interaction location or null if there isn't one
      */
     public static ItemDisplay get(Interaction interaction) {
         for (Entity e : interaction.getWorld().getNearbyEntities(interaction.getBoundingBox().expand(0.1d), (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
@@ -126,11 +117,11 @@ public class TARDISDisplayItemUtils {
     /**
      * Spawn an Item Display entity
      *
-     * @param tdi the TARDISDisplayItem to determine the ItemStack to display
+     * @param tdi   the TARDISDisplayItem to determine the ItemStack to display
      * @param world the world to spawn the entity in
-     * @param x the x coordinate
-     * @param y the y coordinate
-     * @param z the z coordinate
+     * @param x     the x coordinate
+     * @param y     the y coordinate
+     * @param z     the z coordinate
      */
     public static void set(TARDISDisplayItem tdi, World world, int x, int y, int z) {
         // spawn an item display entity
@@ -151,7 +142,7 @@ public class TARDISDisplayItemUtils {
     /**
      * Spawn an Item Display entity
      *
-     * @param tdi the TARDISDisplayItem to determine the ItemStack to display
+     * @param tdi   the TARDISDisplayItem to determine the ItemStack to display
      * @param block the block location to spawn the entity at
      */
     public static void set(TARDISDisplayItem tdi, Block block) {
@@ -201,9 +192,9 @@ public class TARDISDisplayItemUtils {
     /**
      * Spawn an Item Display entity
      *
-     * @param tdi the TARDISDisplayItem to determine the ItemStack to display
+     * @param tdi   the TARDISDisplayItem to determine the ItemStack to display
      * @param block the block location to spawn the entity at
-     * @param im the ItemMeta to set on the display ItemStack
+     * @param im    the ItemMeta to set on the display ItemStack
      */
     public static void setSeed(TARDISDisplayItem tdi, Block block, ItemMeta im) {
         block.setBlockData(TARDISConstants.BARRIER);
@@ -219,8 +210,7 @@ public class TARDISDisplayItemUtils {
      * Spawn an Interaction entity
      *
      * @param location the location to spawn the entity at
-     * @param cmd the custom model data to set for the custom block key
-     * associated with the entity
+     * @param cmd      the custom model data to set for the custom block key associated with the entity
      */
     public static void set(Location location, int cmd, boolean isDoor) {
         // spawn an interaction entity
@@ -246,10 +236,9 @@ public class TARDISDisplayItemUtils {
     public static void removeDisplaysInChunk(Chunk chunk, int lower, int upper) {
         for (Entity entity : chunk.getEntities()) {
             if ( // TARDIS item display and interaction entities
-                    ((entity instanceof ItemDisplay || entity instanceof Interaction)
-                    && entity.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER))
-                    // and item frames
-                    || entity instanceof ItemFrame) {
+                    ((entity instanceof ItemDisplay || entity instanceof Interaction) && entity.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER))
+                            // and item frames
+                            || entity instanceof ItemFrame) {
                 int y = entity.getLocation().getBlockY();
                 if (y >= lower && y <= upper) {
                     entity.remove();

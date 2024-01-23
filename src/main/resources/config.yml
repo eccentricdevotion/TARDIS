@@ -1,7 +1,6 @@
 # config file
 debug: false
-# modules
-# are disabled by default
+# modules are disabled by default
 # https://tardis.pages.dev/modules
 modules:
   weeping_angels: false
@@ -10,8 +9,6 @@ modules:
   chemistry: false
   shop: false
   sonic_blaster: false
-  # blueprints
-  # https://tardis.pages.dev/blueprints
   blueprints: false
 # how the plugin persists data
 # https://tardis.pages.dev/configuration/storage
@@ -103,7 +100,6 @@ preferences:
   sfx_volume: 10
   difficulty: easy
   strike_lightning: true
-  freeze_cooldown: 60
   hads_damage: 10
   hads_distance: 10
   malfunction: 3
@@ -112,8 +108,6 @@ preferences:
   use_default_condensables: true
   heal_speed: 200
   default_key: eleventh
-  default_sonic: eleventh
-  sonic_radius: 1
   nerf_pistons:
     enabled: false
     only_tardis_worlds: true
@@ -230,6 +224,16 @@ autonomous_areas: { }
 # HUD display
 display:
   all: '&6X&7%X% &6Y&7%Y% &6Z&7%Z% &6F&7%FACING% (%FACING_XZ%) %TARGET_BLOCK%'
+# sonic screwdriver preferences
+# https://tardis.pages.dev/sonic-dock#configuration
+sonic:
+  default_model: eleventh
+  conversion_radius: 1
+  freeze_cooldown: 60
+  charge: false
+  charge_level: 1000
+  charge_interval: 60
+  usage: 10
 # don't touch
 conversions:
   short_grass: true

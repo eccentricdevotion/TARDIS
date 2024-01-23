@@ -988,6 +988,12 @@ commands:
       permission-message: You don't have the permission <permission> to use this command
       usage: |
         /<command> update [advanced|ars|artron|back|backdoor|beacon|bell|button|chameleon|condenser|control|creeper| direction|dispenser|door|eps|farm|flight|forcefield|frame|fuel|generator|handbrake|hinge|igloo|info|keyboard|light| map|monitor|monitor-frame|rail|rotor|save-sign|scanner|siege|smelt|stable|stall|storage|telepathic|temporal| terminal|throttle|toggle-wool|vault|village|weather|world-repeater|x-repeater|y-repeater|z-repeater|zero]
+    decommission:
+      description: Remove previously updated blocks from the TARDIS.
+      permission: tardis.update
+      permission-message: You don't have the permission <permission> to use this command
+      usage: |
+        /<command> decommission [TARDIS block name]
     version:
       description: Display the TARDIS plugin and CraftBukkit version.
       usage: /<command> version

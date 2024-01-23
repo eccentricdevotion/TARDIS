@@ -214,6 +214,9 @@ public class TARDISCommands implements CommandExecutor {
                 case occupy -> {
                     return new TARDISOccupyCommand(plugin).toggleOccupancy(player);
                 }
+                case decommission -> {
+                    return new TARDISDecommissionCommand(plugin).withdraw(player, args);
+                }
                 case rebuild -> {
                     return new TARDISRebuildCommand(plugin).rebuildPreset(player);
                 }

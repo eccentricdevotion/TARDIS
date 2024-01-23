@@ -2,8 +2,7 @@
 
 ## Current version `5.3.0`
 
-1. Sonic Docking / Charging Station [#774](https://github.com/eccentricdevotion/TARDIS/issues/774) - add sonic charging to hard mode
-2. Allow 3D Police Boxes to land on slabs [#777](https://github.com/eccentricdevotion/TARDIS/issues/777)
+1. Allow 3D Police Boxes to land on slabs [#777](https://github.com/eccentricdevotion/TARDIS/issues/777)
 
 ## Next version `5.4.0`
 

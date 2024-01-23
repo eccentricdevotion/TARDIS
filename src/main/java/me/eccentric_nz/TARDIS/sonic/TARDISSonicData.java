@@ -16,7 +16,7 @@ public class TARDISSonicData {
 
     private final List<String> upgrades = List.of("bio", "diamond", "emerald", "redstone", "painter", "ignite", "arrow", "knockback", "brush", "conversion");
 
-    private List<Integer> getSonicData(List<String> lore) {
+    public static List<Integer> getSonicData(List<String> lore) {
         return List.of(
                 lore.contains("Bio-scanner Upgrade") ? 1 : 0,
                 lore.contains("Diamond Upgrade") ? 1 : 0,
