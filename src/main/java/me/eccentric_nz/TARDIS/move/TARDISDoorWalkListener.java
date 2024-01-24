@@ -267,7 +267,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                     } else if (!rs.getTardis().getUuid().equals(playerUUID)) {
                                         plugin.getMessenger().sendStatus(player, "DOOR_DEADLOCKED");
                                     } else {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_UNLOCK");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_NEED_UNLOCK");
                                     }
                                 } else {
                                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_COMPANION");

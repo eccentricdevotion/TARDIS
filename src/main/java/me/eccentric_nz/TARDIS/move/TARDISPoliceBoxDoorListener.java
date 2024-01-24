@@ -247,7 +247,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                     } else if (!tardis.getUuid().equals(playerUUID)) {
                                         plugin.getMessenger().sendStatus(player, "DOOR_DEADLOCKED");
                                     } else {
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_UNLOCK");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_NEED_UNLOCK");
                                     }
                                 }
                             }

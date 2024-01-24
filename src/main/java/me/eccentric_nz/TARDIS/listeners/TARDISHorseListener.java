@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -34,6 +33,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.inventory.Inventory;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -65,7 +66,7 @@ public class TARDISHorseListener implements Listener {
                         whered.put("door_type", 1);
                         ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
                         if (rsd.resultSet() && rsd.isLocked()) {
-                            plugin.getMessenger().send(p, TardisModule.TARDIS, "DOOR_UNLOCK");
+                            plugin.getMessenger().send(p, TardisModule.TARDIS, "DOOR_NEED_UNLOCK");
                             return;
                         }
                         // get spawn location

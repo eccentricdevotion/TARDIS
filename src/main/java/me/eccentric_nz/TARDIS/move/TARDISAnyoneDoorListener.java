@@ -269,7 +269,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                 } else if (!rs.getTardis().getUuid().equals(playerUUID)) {
                                     plugin.getMessenger().sendStatus(player, "DOOR_DEADLOCKED");
                                 } else {
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_UNLOCK");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_NEED_UNLOCK");
                                 }
                             }
                         } else if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
