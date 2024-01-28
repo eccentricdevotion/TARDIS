@@ -4,7 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,9 +40,9 @@ public class ResultSetSonicLocation {
             if (rs.isBeforeFirst()) {
                 rs.next();
                 if (rs.getInt("scan_type") == 1) {
-                    Player player = plugin.getServer().getPlayer(UUID.fromString(rs.getString("last_scanned")));
+                    OfflinePlayer player = plugin.getServer().getOfflinePlayer(UUID.fromString(rs.getString("last_scanned")));
                     if (player.isOnline()) {
-                        location = player.getLocation();
+                        location = player.getPlayer().getLocation();
                     }
                 } else {
                     location = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("last_scanned"));
