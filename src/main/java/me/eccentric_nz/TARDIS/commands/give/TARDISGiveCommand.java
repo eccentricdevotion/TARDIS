@@ -187,7 +187,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
                         return true;
                     }
-                    if (args[1].equalsIgnoreCase("cell") && args.length == 4 && args[3].equalsIgnoreCase("full")) {
+                    if (args[1].equalsIgnoreCase("artron-storage-cell") && args.length == 4 && args[3].equalsIgnoreCase("full")) {
                         giveFullCell(sender, amount, player);
                         return true;
                     } else if (args[2].equals("knowledge")) {
