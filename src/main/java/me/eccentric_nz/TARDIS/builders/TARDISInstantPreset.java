@@ -30,7 +30,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -94,7 +93,12 @@ public class TARDISInstantPreset {
         if (preset.equals(ChameleonPreset.CONSTRUCT)) {
             column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprintData", bd.getDirection().forPreset()).getColumn();
             if (column == null) {
-                plugin.getMessenger().send(bd.getPlayer().getPlayer(), TardisModule.TARDIS, "INVALID_CONSTRUCT");
+                plugin.getMessenger().sendColouredCommand(bd.getPlayer().getPlayer(), "INVALID_CONSTRUCT", "/tardistravel stop", plugin);
+                // remove trackers
+                plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisID()));
+                plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(bd.getTardisID()));
+                plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(bd.getTardisID()));
+                plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisID());
                 return;
             }
         } else {

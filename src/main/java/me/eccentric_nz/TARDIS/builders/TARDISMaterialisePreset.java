@@ -125,7 +125,12 @@ class TARDISMaterialisePreset implements Runnable {
             if (column == null || stained_column == null || glass_column == null) {
                 plugin.getServer().getScheduler().cancelTask(task);
                 task = 0;
-                plugin.getMessenger().send(bd.getPlayer().getPlayer(), TardisModule.TARDIS, "INVALID_CONSTRUCT");
+                plugin.getMessenger().sendColouredCommand(bd.getPlayer().getPlayer(), "INVALID_CONSTRUCT", "/tardistravel stop", plugin);
+                // remove trackers
+                plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisID()));
+                plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(bd.getTardisID()));
+                plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(bd.getTardisID()));
+                plugin.getTrackerKeeper().getDestinationVortex().remove(bd.getTardisID());
             }
             BlockData[][] datas;
             // get relative locations

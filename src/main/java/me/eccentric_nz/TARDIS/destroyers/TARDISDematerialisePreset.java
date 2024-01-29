@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -38,6 +37,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -94,7 +94,10 @@ class TARDISDematerialisePreset implements Runnable {
         if (column == null || stained_column == null || glass_column == null) {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
-            plugin.getMessenger().send(dd.getPlayer().getPlayer(), TardisModule.TARDIS, "INVALID_CONSTRUCT");
+            plugin.getMessenger().sendColouredCommand(dd.getPlayer().getPlayer(), "INVALID_CONSTRUCT", "/tardistravel stop", plugin);
+            // remove trackers
+            plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(dd.getTardisID()));
+            plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(dd.getTardisID()));
         }
         BlockData[][] data;
         // get relative locations
