@@ -2,15 +2,16 @@
 
 ## Current version `5.3.0`
 
-1. Allow 3D Police Boxes to land on slabs [#777](https://github.com/eccentricdevotion/TARDIS/issues/777)
+1. Fix odd message when using random button and sonic is docked
 
 ## Next version `5.4.0`
 
-1. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
+1. Allow 3D Police Boxes to land on slabs [#777](https://github.com/eccentricdevotion/TARDIS/issues/777)
+2. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
-2. Animated models for player disguises
-3. Sonic Blaster
-4. ?
+3. Animated models for player disguises
+4. Sonic Blaster
+5. ?
 
 ## Future versions
 
