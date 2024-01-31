@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.silurians;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import me.eccentric_nz.TARDIS.travel.Check;
 import me.eccentric_nz.TARDIS.travel.TARDISCaveFinder;
 import org.bukkit.Location;
@@ -26,11 +23,15 @@ import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class CaveFinder {
 
     private static final List<BlockFace> directions = Arrays.asList(BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH);
 
-    public static Location searchSpawnPoint(Location playerLocation) {
+    public static Location searchSpawnPoint(Location playerLocation, boolean checkSlimeChunk) {
         World w = playerLocation.getWorld();
         int startx = playerLocation.getBlockX();
         int starty = playerLocation.getBlockY();
@@ -47,7 +48,7 @@ public class CaveFinder {
                         switch (directions.get(i)) {
                             case EAST -> {
                                 for (int east = plusx; east > startx; east -= step) {
-                                    Check chk = isThereRoom(w, east, startz, starty);
+                                    Check chk = isThereRoom(w, east, startz, starty, checkSlimeChunk);
                                     if (chk.isSafe()) {
                                         return new Location(w, east, chk.getY(), startz);
                                     }
@@ -55,7 +56,7 @@ public class CaveFinder {
                             }
                             case SOUTH -> {
                                 for (int south = plusz; south > startz; south -= step) {
-                                    Check chk = isThereRoom(w, startx, south, starty);
+                                    Check chk = isThereRoom(w, startx, south, starty, checkSlimeChunk);
                                     if (chk.isSafe()) {
                                         return new Location(w, startx, chk.getY(), south);
                                     }
@@ -63,7 +64,7 @@ public class CaveFinder {
                             }
                             case WEST -> {
                                 for (int west = minusx; west < startx; west += step) {
-                                    Check chk = isThereRoom(w, west, startz, starty);
+                                    Check chk = isThereRoom(w, west, startz, starty, checkSlimeChunk);
                                     if (chk.isSafe()) {
                                         return new Location(w, west, chk.getY(), startz);
                                     }
@@ -71,7 +72,7 @@ public class CaveFinder {
                             }
                             default -> { // NORTH
                                 for (int north = minusz; north < startz; north += step) {
-                                    Check chk = isThereRoom(w, startx, north, starty);
+                                    Check chk = isThereRoom(w, startx, north, starty, checkSlimeChunk);
                                     if (chk.isSafe()) {
                                         return new Location(w, startx, chk.getY(), north);
                                     }
@@ -83,7 +84,7 @@ public class CaveFinder {
         return null;
     }
 
-    private static Check isThereRoom(World w, int x, int z, int sy) {
+    private static Check isThereRoom(World w, int x, int z, int sy, boolean checkSlimeChunk) {
         Check ret = new Check();
         ret.setSafe(false);
         for (int y = sy + 8; y > sy - 8; y--) {
@@ -100,7 +101,7 @@ public class CaveFinder {
                             && w.getBlockAt(x + 1, yy, z - 1).getType().isAir()
                             && w.getBlockAt(x + 1, yy, z).getType().isAir()
                             && w.getBlockAt(x + 1, yy, z + 1).getType().isAir()) {
-                        ret.setSafe(true);
+                        ret.setSafe(!checkSlimeChunk || w.getBlockAt(x, yy, z).getChunk().isSlimeChunk());
                         ret.setY(yy);
                     }
                 }

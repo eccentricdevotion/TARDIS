@@ -110,6 +110,7 @@ silent:
   drops:
     - INK_SAC
     - FLOWER_POT
+  check_slime_chunk: false
 silurians:
   worlds:
     world: 10

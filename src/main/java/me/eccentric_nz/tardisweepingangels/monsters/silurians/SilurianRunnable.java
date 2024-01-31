@@ -81,7 +81,7 @@ public class SilurianRunnable implements Runnable {
             int y = playerLocation.getBlockY();
             // caves mostly occur between y = -56 and y = 44
             if (y > -55 && y < 48) {
-                Location cave = CaveFinder.searchSpawnPoint(playerLocation);
+                Location cave = CaveFinder.searchSpawnPoint(playerLocation, plugin.getMonstersConfig().getBoolean("silurians.check_slime_chunk"));
                 if (cave == null) {
                     continue;
                 }

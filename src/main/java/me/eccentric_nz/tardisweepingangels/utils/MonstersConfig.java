@@ -89,6 +89,7 @@ public class MonstersConfig {
         boolOptions.put("angels.spawn_from_chat.enabled", true);
         boolOptions.put("cybermen.can_upgrade", true);
         boolOptions.put("headless_monks.particles", true);
+        boolOptions.put("silurians.check_slime_chunk", false);
         boolOptions.put("sontarans.can_tame", true);
         boolOptions.put("judoon.guards", true);
         boolOptions.put("judoon.can_build", true);
