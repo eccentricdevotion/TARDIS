@@ -93,7 +93,9 @@ public class TARDISInstantPreset {
         if (preset.equals(ChameleonPreset.CONSTRUCT)) {
             column = new TARDISConstructColumn(plugin, bd.getTardisID(), "blueprintData", bd.getDirection().forPreset()).getColumn();
             if (column == null) {
-                plugin.getMessenger().sendColouredCommand(bd.getPlayer().getPlayer(), "INVALID_CONSTRUCT", "/tardistravel stop", plugin);
+                if (bd.getPlayer().getPlayer() != null) {
+                    plugin.getMessenger().sendColouredCommand(bd.getPlayer().getPlayer(), "INVALID_CONSTRUCT", "/tardistravel stop", plugin);
+                }
                 // remove trackers
                 plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisID()));
                 plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(bd.getTardisID()));
