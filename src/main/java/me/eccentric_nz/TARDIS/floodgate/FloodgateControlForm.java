@@ -300,8 +300,18 @@ public class FloodgateControlForm {
                         String direction = "EAST";
                         if (rsc.resultSet()) {
                             direction = rsc.getDirection().toString();
+                            if (!tardis.getPreset().usesArmourStand()) {
+                                // skip the angled rotations
+                                switch (rsc.getDirection()) {
+                                    case SOUTH -> direction = "SOUTH_WEST";
+                                    case EAST -> direction = "SOUTH_EAST";
+                                    case NORTH -> direction = "NORTH_EAST";
+                                    case WEST -> direction = "NORTH_WEST";
+                                    default -> {}
+                                }
+                            }
                             int ordinal = COMPASS.valueOf(direction).ordinal() + 1;
-                            if (ordinal == 4) {
+                            if (ordinal == 8) {
                                 ordinal = 0;
                             }
                             direction = COMPASS.values()[ordinal].toString();

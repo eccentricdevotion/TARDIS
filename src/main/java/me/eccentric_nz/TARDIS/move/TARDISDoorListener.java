@@ -43,7 +43,7 @@ import java.util.UUID;
  */
 public class TARDISDoorListener {
 
-    public final float[][] adjustYaw = new float[4][4];
+    public final float[][] adjustYaw = new float[4][8];
     final TARDIS plugin;
     private final int player_artron;
 
@@ -51,22 +51,42 @@ public class TARDISDoorListener {
         this.plugin = plugin;
         player_artron = this.plugin.getArtronConfig().getInt("player");
         // yaw adjustments if inner and outer door directions are different
+        // inner EAST
         adjustYaw[0][0] = 0;
-        adjustYaw[0][1] = 90;
-        adjustYaw[0][2] = 180;
-        adjustYaw[0][3] = -90;
+        adjustYaw[0][1] = 45;
+        adjustYaw[0][2] = 90;
+        adjustYaw[0][3] = 135;
+        adjustYaw[0][4] = 180;
+        adjustYaw[0][5] = -45;
+        adjustYaw[0][6] = -90;
+        adjustYaw[0][7] = -135;
+        // inner SOUTH
         adjustYaw[1][0] = -90;
-        adjustYaw[1][1] = 0;
-        adjustYaw[1][2] = 90;
-        adjustYaw[1][3] = 180;
-        adjustYaw[2][0] = 180;
-        adjustYaw[2][1] = -90;
-        adjustYaw[2][2] = 0;
-        adjustYaw[2][3] = 90;
+        adjustYaw[1][1] = -45;
+        adjustYaw[1][2] = 0;
+        adjustYaw[1][3] = 45;
+        adjustYaw[1][4] = 90;
+        adjustYaw[1][5] = 135;
+        adjustYaw[1][6] = 180;
+        adjustYaw[1][7] = -135;
+        // inner WEST
+        adjustYaw[2][0] = 135;
+        adjustYaw[2][1] = 180;
+        adjustYaw[2][2] = -90;
+        adjustYaw[2][3] = -45;
+        adjustYaw[2][4] = 0;
+        adjustYaw[2][5] = 45;
+        adjustYaw[2][6] = 90;
+        adjustYaw[2][7] = 135;
+        // inner NORTH
         adjustYaw[3][0] = 90;
-        adjustYaw[3][1] = 180;
-        adjustYaw[3][2] = -90;
-        adjustYaw[3][3] = 0;
+        adjustYaw[3][1] = 135;
+        adjustYaw[3][2] = 180;
+        adjustYaw[3][3] = -45;
+        adjustYaw[3][4] = -90;
+        adjustYaw[3][5] = -135;
+        adjustYaw[3][6] = 0;
+        adjustYaw[3][7] = 45;
     }
 
     /**
@@ -344,13 +364,13 @@ public class TARDISDoorListener {
     public float adjustYaw(COMPASS d1, COMPASS d2) {
         return switch (d1) {
             case EAST ->
-                adjustYaw[0][d2.ordinal() / 2];
+                adjustYaw[0][d2.ordinal()];
             case SOUTH ->
-                adjustYaw[1][d2.ordinal() / 2];
+                adjustYaw[1][d2.ordinal()];
             case WEST ->
-                adjustYaw[2][d2.ordinal() / 2];
+                adjustYaw[2][d2.ordinal()];
             default ->
-                adjustYaw[3][d2.ordinal() / 2];
+                adjustYaw[3][d2.ordinal()];
         };
     }
 

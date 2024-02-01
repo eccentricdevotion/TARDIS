@@ -322,7 +322,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                 other.put("tardis_id", id);
                                 other.put("door_type", end_doortype);
                                 ResultSetDoors rse = new ResultSetDoors(plugin, other, false);
-                                if (rse.resultSet()) {
+                                if (rse.resultSet() && !tardis.getPreset().usesArmourStand()) {
                                     d = rse.getDoor_direction();
                                 } else {
                                     d = d_backup;
@@ -365,17 +365,33 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                 exitLoc.setZ(ez + 0.5);
                                             } else {
                                                 switch (d) {
+                                                    case NORTH_WEST -> {
+                                                        exitLoc.setX(ex + 2);
+                                                        exitLoc.setZ(ez + 2);
+                                                    }
                                                     case NORTH -> {
                                                         exitLoc.setX(ex + 0.5);
                                                         exitLoc.setZ(ez + 2.5);
+                                                    }
+                                                    case NORTH_EAST -> {
+                                                        exitLoc.setX(ex - 1);
+                                                        exitLoc.setZ(ez + 2);
                                                     }
                                                     case EAST -> {
                                                         exitLoc.setX(ex - 1.5);
                                                         exitLoc.setZ(ez + 0.5);
                                                     }
+                                                    case SOUTH_EAST -> {
+                                                        exitLoc.setX(ex - 1);
+                                                        exitLoc.setZ(ez - 1);
+                                                    }
                                                     case SOUTH -> {
                                                         exitLoc.setX(ex + 0.5);
                                                         exitLoc.setZ(ez - 1.5);
+                                                    }
+                                                    case SOUTH_WEST -> {
+                                                        exitLoc.setX(ex + 2);
+                                                        exitLoc.setZ(ez - 1);
                                                     }
                                                     // WEST
                                                     default -> {
