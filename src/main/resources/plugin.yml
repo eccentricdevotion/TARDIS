@@ -1145,7 +1145,7 @@ commands:
     set_size:
       description: Set a player’s console size/type in the database.
       usage: /<command> set_size [player] [size]
-    spwan_abandoned:
+    spawn_abandoned:
       description: Spawn an abandoned TARDIS.
       usage: /<command> spawn_abandoned [SCHEMATIC] [PRESET] [DIRECTION] world x y z
     undisguise:
