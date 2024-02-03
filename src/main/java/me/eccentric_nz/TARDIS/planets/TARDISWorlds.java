@@ -26,6 +26,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.logging.Level;
 
 public class TARDISWorlds {
 
@@ -69,7 +70,12 @@ public class TARDISWorlds {
                 if (TARDIS.plugin.getPlanetsConfig().contains("planets." + world + ".gamerules")) {
                     for (String rule : TARDIS.plugin.getPlanetsConfig().getConfigurationSection("planets." + world + ".gamerules").getKeys(false)) {
                         GameRule gameRule = GameRule.getByName(rule);
-                        w.setGameRule(gameRule, TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".gamerules." + rule));
+                        if (gameRule != null) {
+                            w.setGameRule(gameRule, TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".gamerules." + rule));
+                        } else {
+                            TARDIS.plugin.getServer().getLogger().log(Level.WARNING, "Invalid game rule detected in planets.yml!");
+                            TARDIS.plugin.getServer().getLogger().log(Level.WARNING, "The rule was '" + rule + "' in world '" + world + "'.");
+                        }
                     }
                 }
                 boolean keepSpawnInMemory = TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".keep_spawn_in_memory");
