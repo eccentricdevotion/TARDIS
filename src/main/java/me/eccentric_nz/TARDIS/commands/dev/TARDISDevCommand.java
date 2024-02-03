@@ -58,6 +58,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "advancements",
             "chunks", "chunky",
             "dismount",
+            "furnace",
             "list",
             "plurals",
             "stats",
@@ -94,6 +95,9 @@ public class TARDISDevCommand implements CommandExecutor {
                 if (args.length == 1) {
                     if (first.equals("add_regions")) {
                         return new TARDISAddRegionsCommand(plugin).doCheck(sender);
+                    }
+                    if (first.equals("furnace")) {
+                        return new TARDISFurnaceCommand(plugin).list(sender);
                     }
                     if (first.equals("stats")) {
                         ARSRoomCounts arsRoomCounts = new ARSRoomCounts(plugin);
