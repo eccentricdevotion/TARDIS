@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.rooms.smelter;
 
-import java.util.HashMap;
-import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class TARDISSmelterDrop {
 
@@ -38,7 +39,7 @@ public class TARDISSmelterDrop {
                     fuels.put(m, amount);
                     inv.remove(is);
                 }
-                if (Smelter.isSmeltable(m)) {
+                if (Smelter.getSmeltables().contains(m)) {
                     int amount = (ores.containsKey(m)) ? ores.get(m) + is.getAmount() : is.getAmount();
                     ores.put(m, amount);
                     inv.remove(is);

@@ -16,11 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.rooms.smelter;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.inventory.FurnaceRecipe;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -29,6 +33,7 @@ public class Smelter {
 
     private static final List<Vector> FUEL_VECTORS = new ArrayList<>();
     private static final List<Vector> ORE_VECTORS = new ArrayList<>();
+    private static final Set<Material> SMELTABLES = iterateFurnaceRecipes();
 
     static {
         FUEL_VECTORS.add(new Vector(-6.0, 3.0, 4.0));
@@ -65,40 +70,41 @@ public class Smelter {
         ORE_VECTORS.add(new Vector(5.0, 4.0, -4.0));
     }
 
-    static boolean isSmeltable(Material material) {
-        return switch (material) {
-            case ACACIA_LOG, ACACIA_WOOD,
-                    BAMBOO_BLOCK, BAMBOO_MOSAIC, BAMBOO_PLANKS, BASALT, BEEF, BIRCH_LOG, BIRCH_WOOD, BLACK_TERRACOTTA, BLUE_TERRACOTTA, BROWN_TERRACOTTA,
-                    CACTUS, CHERRY_LOG, CHERRY_WOOD, CHICKEN, CHORUS_FRUIT, CLAY, CLAY_BALL, COBBLED_DEEPSLATE, COBBLESTONE, COD, COPPER_ORE, CYAN_TERRACOTTA,
-                    DARK_OAK_LOG, DARK_OAK_WOOD, DEEPSLATE_COPPER_ORE, DEEPSLATE_GOLD_ORE, DEEPSLATE_IRON_ORE,
-                    GOLD_ORE, GRAY_TERRACOTTA, GREEN_TERRACOTTA,
-                    IRON_ORE,
-                    JUNGLE_LOG, JUNGLE_WOOD,
-                    KELP,
-                    LIGHT_BLUE_TERRACOTTA, LIGHT_GRAY_TERRACOTTA, LIME_TERRACOTTA,
-                    MAGENTA_TERRACOTTA, MUTTON, MANGROVE_LOG, MANGROVE_WOOD,
-                    NETHERRACK,
-                    OAK_LOG, OAK_WOOD, ORANGE_TERRACOTTA,
-                    PINK_TERRACOTTA, PORKCHOP, POTATO, PURPLE_TERRACOTTA,
-                    QUARTZ_BLOCK,
-                    RABBIT, RAW_COPPER, RAW_GOLD, RAW_IRON, RED_SANDSTONE, RED_TERRACOTTA,
-                    SALMON, SAND, SANDSTONE, SEA_PICKLE, SPONGE, SPRUCE_LOG, SPRUCE_WOOD, STONE, STONE_BRICKS,
-                    STRIPPED_ACACIA_LOG, STRIPPED_ACACIA_WOOD, STRIPPED_BAMBOO_BLOCK, STRIPPED_BIRCH_LOG, STRIPPED_BIRCH_WOOD,
-                    STRIPPED_CHERRY_LOG, STRIPPED_CHERRY_WOOD, STRIPPED_DARK_OAK_LOG, STRIPPED_DARK_OAK_WOOD, STRIPPED_JUNGLE_LOG,
-                    STRIPPED_JUNGLE_WOOD, STRIPPED_MANGROVE_LOG, STRIPPED_MANGROVE_WOOD, STRIPPED_OAK_LOG, STRIPPED_OAK_WOOD,
-                    STRIPPED_SPRUCE_LOG, STRIPPED_SPRUCE_WOOD,
-                    WET_SPONGE, WHITE_TERRACOTTA,
-                    YELLOW_TERRACOTTA ->
-                    true;
-            default -> false;
-        };
-    }
-
     public static List<Vector> getFuelVectors() {
         return FUEL_VECTORS;
     }
 
     public static List<Vector> getOreVectors() {
         return ORE_VECTORS;
+    }
+
+    public static Set<Material> getSmeltables() {
+        return SMELTABLES;
+    }
+
+    /**
+     * Iterate through the Minecraft recipes and find all the input materials for furnace recipes
+     *
+     * @return a set of smeltable materials
+     */
+    private static Set<Material> iterateFurnaceRecipes() {
+        Set<Material> smeltables = new HashSet<>();
+        Iterator<Recipe> recipes = Bukkit.recipeIterator();
+        while (recipes.hasNext()) {
+            Recipe r = recipes.next();
+            if (r instanceof FurnaceRecipe f) {
+                RecipeChoice c = f.getInputChoice();
+                if (c instanceof RecipeChoice.MaterialChoice m) {
+                    smeltables.addAll(m.getChoices());
+                } else if (c instanceof RecipeChoice.ExactChoice e) {
+                    for (ItemStack i : e.getChoices()) {
+                        smeltables.add(i.getType());
+                    }
+                } else {
+                    smeltables.add(f.getInput().getType());
+                }
+            }
+        }
+        return smeltables;
     }
 }

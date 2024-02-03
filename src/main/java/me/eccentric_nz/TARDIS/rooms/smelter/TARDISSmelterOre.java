@@ -35,7 +35,7 @@ public class TARDISSmelterOre {
             for (ItemStack is : inv.getContents()) {
                 if (is != null) {
                     Material m = is.getType();
-                    if (Smelter.isSmeltable(m)) {
+                    if (Smelter.getSmeltables().contains(m)) {
                         int amount = (ores.containsKey(m)) ? ores.get(m) + is.getAmount() : is.getAmount();
                         ores.put(m, amount);
                         inv.remove(is);
