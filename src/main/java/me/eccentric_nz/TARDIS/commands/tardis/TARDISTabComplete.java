@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import me.eccentric_nz.TARDIS.update.TARDISUpdateableCategory;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -33,6 +34,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * TabCompleter for /tardis command
@@ -59,6 +61,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
     private final List<String> MAT_SUBS = new ArrayList<>();
     private final List<String> PRESET_SUBS = new ArrayList<>();
     private final List<String> DIM_SUBS = new ArrayList<>();
+    private final List<String> SECTION_SUBS = new ArrayList<>();
 
     public TARDISTabComplete(TARDIS plugin) {
         this.plugin = plugin;
@@ -79,6 +82,9 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
         TARDISWalls.BLOCKS.forEach((m) -> MAT_SUBS.add(m.toString()));
         for (World w : plugin.getServer().getWorlds()) {
             DIM_SUBS.add(TARDISAliasResolver.getWorldAlias(w));
+        }
+        for (TARDISUpdateableCategory c : TARDISUpdateableCategory.values()) {
+            SECTION_SUBS.add(c.getName().toLowerCase(Locale.ROOT));
         }
     }
 
@@ -135,6 +141,9 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
                 }
                 case "dimensionicon" -> {
                     return partial(lastArg, DIM_SUBS);
+                }
+                case "section" -> {
+                    return partial(lastArg, SECTION_SUBS);
                 }
                 default -> {
                 }

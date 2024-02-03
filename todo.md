@@ -2,16 +2,17 @@
 
 ## Current version `5.3.0`
 
-1. Fix odd message when using random button and sonic is docked
+1. Fix dem bugs
 
 ## Next version `5.4.0`
 
 1. Allow 3D Police Boxes to land on slabs [#777](https://github.com/eccentricdevotion/TARDIS/issues/777)
-2. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
+2. TARDIS Status blocks [#803](https://github.com/eccentricdevotion/TARDIS/issues/803)
+3. Controlled mob farming [#785](https://github.com/eccentricdevotion/TARDIS/issues/785)
+4. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
-3. Animated models for player disguises
-4. Sonic Blaster
-5. ?
+5. Animated models for player disguises
+6. ?
 
 ## Future versions
 
@@ -20,7 +21,7 @@
 3. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
 4. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
 5. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
-6. Add support for Pl3xMap and BlueMap?
+6. Sonic Blaster
 7. All the things...
 
 ## Wiki Documentation
