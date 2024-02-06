@@ -363,14 +363,10 @@ public class TARDISDoorListener {
      */
     public float adjustYaw(COMPASS d1, COMPASS d2) {
         return switch (d1) {
-            case EAST ->
-                adjustYaw[0][d2.ordinal()];
-            case SOUTH ->
-                adjustYaw[1][d2.ordinal()];
-            case WEST ->
-                adjustYaw[2][d2.ordinal()];
-            default ->
-                adjustYaw[3][d2.ordinal()];
+            case EAST -> adjustYaw[0][d2.ordinal()];
+            case SOUTH -> adjustYaw[1][d2.ordinal()];
+            case WEST -> adjustYaw[2][d2.ordinal()];
+            default -> adjustYaw[3][d2.ordinal()];
         };
     }
 

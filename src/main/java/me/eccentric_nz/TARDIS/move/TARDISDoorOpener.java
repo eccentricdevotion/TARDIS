@@ -124,7 +124,7 @@ public class TARDISDoorOpener {
             COMPASS indirection = COMPASS.SOUTH;
             // exterior teleport location
             Location exdoor = null;
-            COMPASS exdirection = COMPASS.SOUTH;
+            COMPASS exdirection = rsc.getDirection();
             // interior portal
             Location inportal = null;
             ResultSetPortals rsp = new ResultSetPortals(plugin, id);
@@ -165,13 +165,16 @@ public class TARDISDoorOpener {
                     indoor = tmp_loc;
                 } else {
                     exdoor = tmp_loc.clone();
-                    exdirection = COMPASS.valueOf(map.get("door_direction"));
                     // adjust for teleport
                     if (preset.usesArmourStand()) {
-                        switch (rsc.getDirection()) {
+                        switch (exdirection) {
+                            case NORTH_EAST -> exdoor.add(0, 0, 1);
                             case NORTH -> exdoor.add(0.5d, 0.0d, 1.0d);
+                            case NORTH_WEST -> exdoor.add(1, 0, 1);
                             case WEST -> exdoor.add(1.0d, 0.0d, 0.5d);
+                            case SOUTH_WEST -> exdoor.add(1, 0, -0.5);
                             case SOUTH -> exdoor.add(0.5d, 0.0d, -1.0d);
+                            case SOUTH_EAST -> exdoor.add(-0.5, 0, 0);
                             default -> exdoor.add(-1.0d, 0.0d, 0.5d);
                         }
                     } else {

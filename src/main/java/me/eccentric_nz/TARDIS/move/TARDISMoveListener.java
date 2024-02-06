@@ -152,6 +152,11 @@ public class TARDISMoveListener implements Listener {
                 }
                 // adjust player yaw for to
                 float yaw = (exit) ? loc.getYaw() + 180.0f : loc.getYaw();
+                switch (tpl.getDirection()) {
+                    case NORTH_WEST -> yaw += 90;
+                    case SOUTH_WEST -> yaw -= 90;
+                    default -> { }
+                }
                 COMPASS d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                 if (!tpl.getDirection().equals(d)) {
                     yaw += plugin.getGeneralKeeper().getDoorListener().adjustYaw(d, tpl.getDirection());
