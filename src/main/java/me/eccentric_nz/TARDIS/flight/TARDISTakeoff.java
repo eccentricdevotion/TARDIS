@@ -17,13 +17,13 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
+import me.eccentric_nz.TARDIS.utility.Handbrake;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -43,12 +43,6 @@ public class TARDISTakeoff {
         this.plugin = plugin;
     }
 
-    public static void toggleBeacon(String str) {
-        Location bl = TARDISStaticLocationGetters.getLocationFromDB(str);
-        Block b = bl.getBlock();
-        b.setBlockData(TARDISConstants.GLASS);
-    }
-
     public void run(int id, Block block, Location handbrake, Player player, boolean beac_on, String beacon, boolean bar, SpaceTimeThrottle spaceTimeThrottle) {
         // set the handbrake
         TARDISHandbrake.setLevers(block, false, true, handbrake.toString(), id, plugin);
@@ -56,9 +50,11 @@ public class TARDISTakeoff {
             plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
         }
         TARDISSounds.playTARDISSound(handbrake, "tardis_handbrake_release");
+        Handbrake hb = new Handbrake(plugin);
         if (!beac_on && !beacon.isEmpty()) {
-            toggleBeacon(beacon);
+            hb.toggleBeacon(beacon, true);
         }
+        hb.handleSensor(id);
         HashMap<String, Object> set = new HashMap<>();
         set.put("handbrake_on", 0);
         HashMap<String, Object> whereh = new HashMap<>();
@@ -84,7 +80,7 @@ public class TARDISTakeoff {
             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.VORTEX, id));
         }
         if (bar) {
-            new TARDISTravelBar(plugin).showTravelRemaining(player, spaceTimeThrottle.getFlightTime(), true);
+            new TARDISTravelBar(plugin, id).showTravelRemaining(player, spaceTimeThrottle.getFlightTime(), true);
         }
     }
 
@@ -112,9 +108,11 @@ public class TARDISTakeoff {
                 plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
             }
             TARDISSounds.playTARDISSound(handbrake, "tardis_handbrake_release");
+            Handbrake hb = new Handbrake(plugin);
             if (!beac_on && !beacon.isEmpty()) {
-                toggleBeacon(beacon);
+                hb.toggleBeacon(beacon, true);
             }
+            hb.handleSensor(id);
             HashMap<String, Object> set = new HashMap<>();
             set.put("handbrake_on", 0);
             HashMap<String, Object> whereh = new HashMap<>();
@@ -136,7 +134,7 @@ public class TARDISTakeoff {
                 }
             }
             if (bar) {
-                new TARDISTravelBar(plugin).showTravelRemaining(player, spaceTimeThrottle.getFlightTime(), true);
+                new TARDISTravelBar(plugin, id).showTravelRemaining(player, spaceTimeThrottle.getFlightTime(), true);
             }
         }
     }

@@ -16,27 +16,27 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.control.SensorToggle;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * The Dalek Asylum was a snowy and mountainous planet used by the Daleks as a prison and "dumping ground" for those
@@ -51,6 +51,17 @@ public class TARDISMalfunction {
 
     public TARDISMalfunction(TARDIS plugin) {
         this.plugin = plugin;
+    }
+
+    public static void handleSensor(int id) {
+        ResultSetSensors rss = new ResultSetSensors(TARDIS.plugin, id);
+        if (rss.resultSet()) {
+            SensorToggle toggle = new SensorToggle();
+            Block block = toggle.getBlock(rss.getSensors().getMalfunction());
+            if (block != null) {
+                toggle.setState(block);
+            }
+        }
     }
 
     public boolean isMalfunction() {
@@ -219,6 +230,8 @@ public class TARDISMalfunction {
                 int taskEx = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, explodeable, 10L, 30L);
                 explodeable.setTask(taskEx);
             }
+            // toggle the malfunction sensor
+            handleSensor(id);
         }
     }
 

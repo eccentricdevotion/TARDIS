@@ -26,33 +26,30 @@ import java.sql.Statement;
 /**
  * @author eccentric_nz
  */
-class TARDISSQLInsertControl implements Runnable {
+class TARDISSQLInsertSensor implements Runnable {
 
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final int id;
-    private final int type;
+    private final String type;
     private final String location;
-    private final int secondary;
     private final String prefix;
 
     /**
      * Updates data in an SQLite database table. This method builds an SQL query string from the parameters supplied and
      * then executes the update.
      *
-     * @param plugin    an instance of the main plugin class
-     * @param id        the unique TARDIS identifier
-     * @param type      the type of control to insert
-     * @param location  the location of the control
-     * @param secondary whether the control is a secondary control
+     * @param plugin   an instance of the main plugin class
+     * @param id       the unique TARDIS identifier
+     * @param type     the type of sensor to insert
+     * @param location the location of the sensor
      */
-    TARDISSQLInsertControl(TARDIS plugin, int id, int type, String location, int secondary) {
+    TARDISSQLInsertSensor(TARDIS plugin, int id, String type, String location) {
         this.plugin = plugin;
         this.id = id;
         this.type = type;
         this.location = location;
-        this.secondary = secondary;
         prefix = this.plugin.getPrefix();
     }
 
@@ -62,27 +59,27 @@ class TARDISSQLInsertControl implements Runnable {
         try {
             service.testConnection(connection);
             statement = connection.createStatement();
-            String select = "SELECT c_id FROM " + prefix + "controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + secondary;
+            String select = "SELECT sensor_id FROM " + prefix + "sensors WHERE tardis_id = " + id;
             ResultSet rs = statement.executeQuery(select);
             if (rs.isBeforeFirst()) {
                 rs.next();
                 // update
-                String update = "UPDATE " + prefix + "controls SET location = '" + location + "' WHERE c_id = " + rs.getInt("c_id");
+                String update = "UPDATE " + prefix + "sensors SET " + type + " = '" + location + "' WHERE sensor_id = " + rs.getInt("sensor_id");
                 statement.executeUpdate(update);
             } else {
                 // insert
-                String insert = "INSERT INTO " + prefix + "controls (tardis_id, type, location, secondary) VALUES (" + id + ", " + type + ", '" + location + "', " + secondary + ")";
+                String insert = "INSERT INTO " + prefix + "sensors (tardis_id, " + type + ") VALUES (" + id + ", '" + location + "')";
                 statement.executeUpdate(insert);
             }
         } catch (SQLException e) {
-            plugin.debug("Insert control error! " + e.getMessage());
+            plugin.debug("Insert sensor error! " + e.getMessage());
         } finally {
             try {
                 if (statement != null) {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing insert control statement! " + e.getMessage());
+                plugin.debug("Error closing insert sensor statement! " + e.getMessage());
             }
         }
     }

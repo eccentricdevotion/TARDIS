@@ -255,9 +255,11 @@ public class TARDISHandbrakeListener implements Listener {
                                     TARDISHandbrake.setLevers(block, true, inside, handbrake_loc.toString(), id, plugin);
                                     // Check if it's at a recharge point
                                     new TARDISArtronLevels(plugin).recharge(id);
+                                    Handbrake hb = new Handbrake(plugin);
                                     if (!beac_on && !beacon.isEmpty()) {
-                                        new Handbrake(plugin).toggleBeacon(beacon, false);
+                                        hb.toggleBeacon(beacon, false);
                                     }
+                                    hb.handleSensor(id);
                                     // Remove energy from TARDIS and sets database
                                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ON");
                                     if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {

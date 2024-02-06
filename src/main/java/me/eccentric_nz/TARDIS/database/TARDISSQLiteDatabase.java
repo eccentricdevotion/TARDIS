@@ -204,6 +204,10 @@ public class TARDISSQLiteDatabase {
             String querySeeds = "CREATE TABLE IF NOT EXISTS " + prefix + "seeds (seed_id INTEGER PRIMARY KEY NOT NULL, schematic TEXT DEFAULT '', wall TEXT DEFAULT 'ORANGE_WOOL', floor TEXT DEFAULT 'LIGHT_GRAY_WOOL', location TEXT DEFAULT '')";
             statement.executeUpdate(querySeeds);
 
+            // Table structure for table 'sensors'
+            String querySensors = "CREATE TABLE IF NOT EXISTS " + prefix + "sensors (sensor_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER DEFAULT 0, charging TEXT DEFAULT '', flight TEXT DEFAULT '', handbrake TEXT DEFAULT '', malfunction TEXT DEFAULT '', power TEXT DEFAULT '')";
+            statement.executeUpdate(querySensors);
+
             // Table structure for table 'siege'
             String querySiege = "CREATE TABLE IF NOT EXISTS " + prefix + "siege (siege_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', tardis_id INTEGER DEFAULT 0)";
             statement.executeUpdate(querySiege);

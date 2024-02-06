@@ -16,11 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  * Artron energy is used as a source of energy in the TARDIS. Visually, artron energy resembles a sort of blue
@@ -52,6 +53,8 @@ public class TARDISArtronLevels {
         TARDISArtronRunnable runnable = new TARDISArtronRunnable(plugin, id);
         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 480L, 480L);
         runnable.setTask(taskID);
+        // toggle charging sensor
+        new ChargingSensor(plugin, id).toggle();
     }
 
     /**

@@ -30,10 +30,11 @@ import org.bukkit.entity.Player;
 class TARDISTravelBar {
 
     private final TARDIS plugin;
+    private final int id;
     private int taskID;
-
-    TARDISTravelBar(TARDIS plugin) {
+    public TARDISTravelBar(TARDIS plugin, int id) {
         this.plugin = plugin;
+        this.id = id;
     }
 
     void showTravelRemaining(Player player, long duration, boolean takeoff) {
@@ -46,6 +47,10 @@ class TARDISTravelBar {
         double millis = duration * 50.0d;
         long start = System.currentTimeMillis();
         double end = start + millis;
+        // toggle flight sensor state on
+        if (takeoff) {
+            new FlightSensor(plugin, id).toggle();
+        }
         taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             long now = System.currentTimeMillis();
             if (now < end) {
@@ -57,6 +62,10 @@ class TARDISTravelBar {
                 bb.removeAll();
                 Bukkit.getScheduler().cancelTask(taskID);
                 taskID = 0;
+                // toggle flight sensor state off
+                if (!takeoff) {
+                    new FlightSensor(plugin, id).toggle();
+                }
             }
         }, 1L, 1L);
     }

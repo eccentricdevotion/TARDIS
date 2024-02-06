@@ -57,6 +57,7 @@ public enum Table {
     reminders,
     room_progress("progress_id"),
     seeds,
+    sensors,
     siege,
     sonic,
     storage,

@@ -282,6 +282,10 @@ public class Main {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("seed_id"), rs.getString("schematic"), rs.getString("wall"), rs.getString("floor"), rs.getString("location")) + end;
                                         bw.write(str);
                                     }
+                                    case sensors -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("sensor_id"), rs.getInt("tardis_id"), rs.getString("charging"), rs.getString("flight"), rs.getString("handbrake"), rs.getString("malfunction"), rs.getString("power")) + end;
+                                        bw.write(str);
+                                    }
                                     case siege -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("siege_id"), rs.getString("uuid"), rs.getInt("tardis_id")) + end;
                                         bw.write(str);

@@ -102,6 +102,8 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %sseeds (seed_id int(11) NOT NULL AUTO_INCREMENT, schematic varchar(32) DEFAULT '', wall varchar(64) DEFAULT 'ORANGE_WOOL', floor varchar(64) DEFAULT 'LIGHT_GRAY_WOOL', location varchar(512) DEFAULT '', PRIMARY KEY (seed_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
+            "CREATE TABLE IF NOT EXISTS %sensors (sensor_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', charging varchar(512) DEFAULT '', flight varchar(512) DEFAULT '', handbrake varchar(512) DEFAULT '', malfunction varchar(512) DEFAULT '', power varchar(512) DEFAULT '', PRIMARY KEY (sensor_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
             "CREATE TABLE IF NOT EXISTS %ssiege (siege_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', tardis_id int(11) DEFAULT '0', PRIMARY KEY (siege_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %ssonic (sonic_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', activated int(1) DEFAULT '0', model int(11) DEFAULT '10000011', bio int(1) DEFAULT '0', diamond int(1) DEFAULT '0', emerald int(1) DEFAULT '0', redstone int(1) DEFAULT '0', painter int(1) DEFAULT '0', ignite int(1) DEFAULT '0', arrow int(1) DEFAULT '0', knockback int(1) DEFAULT '0', brush int(1) DEFAULT '0', conversion int(1) DEFAULT '0', sonic_uuid varchar(48) DEFAULT '', last_scanned varchar(512) DEFAULT '', scan_type int(1) DEFAULT '0', PRIMARY KEY (sonic_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
@@ -220,6 +222,8 @@ public class SQL {
 
             "(%s, '%s', '%s', '%s', '%s')",
 
+            "(%s, %s, '%s', '%s', '%s', '%s', '%s')",
+
             "(%s, '%s', %s)",
 
             "(%s, '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, '%s', '%s', %s)",
@@ -337,6 +341,8 @@ public class SQL {
             "INSERT INTO `%sroom_progress` (`progress_id`, `direction`, `room`, `location`, `tardis_id`, `progress_row`, `progress_column`, `progress_level`, `middle_type`, `floor_type`, `post_blocks`) VALUES ",
 
             "INSERT INTO `%sseeds` (`seed_id`, `schematic`, `wall`, `floor`, `location`) VALUES ",
+
+            "INSERT INTO `%ssensors` (`sensor_id`, `tardis_id`, `charging`, `flight`, `handbrake`, `malfunction`, `power`) VALUES ",
 
             "INSERT INTO `%ssiege` (`siege_id`, `uuid`, `tardis_id`) VALUES ",
 

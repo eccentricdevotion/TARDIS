@@ -16,14 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.chatGUI;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateableCategory;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -34,6 +35,7 @@ public class TARDISChatGUIAdventure implements TARDISChatGUI<TextComponent> {
     private final List<TextComponent> controls = new ArrayList<>();
     private final List<TextComponent> interfaces = new ArrayList<>();
     private final List<TextComponent> locations = new ArrayList<>();
+    private final List<TextComponent> sensors = new ArrayList<>();
     private final List<TextComponent> others = new ArrayList<>();
 
     public TARDISChatGUIAdventure() {
@@ -41,6 +43,7 @@ public class TARDISChatGUIAdventure implements TARDISChatGUI<TextComponent> {
         int c = 1;
         int i = 1;
         int l = 1;
+        int e = 1;
         int o = 1;
         for (TARDISUpdateableCategory category : TARDISUpdateableCategory.values()) {
             sections.add(buildTextComponent(s, category.getName(), category.toString().toLowerCase(), "section"));
@@ -59,6 +62,10 @@ public class TARDISChatGUIAdventure implements TARDISChatGUI<TextComponent> {
             if (updateable.getCategory() == TARDISUpdateableCategory.LOCATIONS) {
                 locations.add(buildTextComponent(l, updateable.getDescription(), updateable.getName(), "update"));
                 l++;
+            }
+            if (updateable.getCategory() == TARDISUpdateableCategory.SENSORS) {
+                sensors.add(buildTextComponent(e, updateable.getDescription(), updateable.getName(), "update"));
+                e++;
             }
             if (updateable.getCategory() == TARDISUpdateableCategory.OTHERS) {
                 others.add(buildTextComponent(o, updateable.getDescription(), updateable.getName(), "update"));
@@ -92,6 +99,11 @@ public class TARDISChatGUIAdventure implements TARDISChatGUI<TextComponent> {
     @Override
     public List<TextComponent> getLocations() {
         return locations;
+    }
+
+    @Override
+    public List<TextComponent> getSensors() {
+        return sensors;
     }
 
     @Override

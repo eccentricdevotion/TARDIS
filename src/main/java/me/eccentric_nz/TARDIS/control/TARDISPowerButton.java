@@ -16,19 +16,22 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetSensors;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -125,10 +128,23 @@ public class TARDISPowerButton {
                 new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, true, preset);
             }
         }
+        // toggle the power sensor
+        handleSensor(id);
         plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
     }
 
     private boolean isTravelling(int id) {
         return (plugin.getTrackerKeeper().getDematerialising().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id));
+    }
+
+    private void handleSensor(int id) {
+        ResultSetSensors rss = new ResultSetSensors(plugin, id);
+        if (rss.resultSet()) {
+            SensorToggle toggle = new SensorToggle();
+            Block block = toggle.getBlock(rss.getSensors().getPower());
+            if (block != null) {
+                toggle.setState(block);
+            }
+        }
     }
 }

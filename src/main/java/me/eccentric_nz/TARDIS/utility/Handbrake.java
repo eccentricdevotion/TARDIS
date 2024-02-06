@@ -2,8 +2,10 @@ package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.control.SensorToggle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetSensors;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Comparator;
 
@@ -45,5 +47,16 @@ public class Handbrake {
             return TARDISStaticUtils.isDoorOpen(door);
         }
         return false;
+    }
+
+    public void handleSensor(int id) {
+        ResultSetSensors rss = new ResultSetSensors(plugin, id);
+        if (rss.resultSet()) {
+            SensorToggle toggle = new SensorToggle();
+            Block block = toggle.getBlock(rss.getSensors().getHandbrake());
+            if (block != null) {
+                toggle.setState(block);
+            }
+        }
     }
 }

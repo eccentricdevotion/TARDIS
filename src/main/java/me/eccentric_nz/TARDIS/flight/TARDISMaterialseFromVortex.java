@@ -210,7 +210,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     if (bar) {
                         long tt = travel_time;
                         // start travel bar
-                        scheduler.scheduleSyncDelayedTask(plugin, () -> new TARDISTravelBar(plugin).showTravelRemaining(player, tt, false), flight_mode_delay);
+                        scheduler.scheduleSyncDelayedTask(plugin, () -> new TARDISTravelBar(plugin, id).showTravelRemaining(player, tt, false), flight_mode_delay);
                     }
                     // cancel repeating sfx task
                     scheduler.scheduleSyncDelayedTask(plugin, () -> {

@@ -31,6 +31,7 @@ public interface TARDISChatGUI<T> {
     public List<T> getInterfaces();
 
     public List<T> getLocations();
+    public List<T> getSensors();
 
     public List<T> getOthers();
 }

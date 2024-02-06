@@ -59,6 +59,13 @@ public class TARDISUpdateChatGUIAdventure implements TARDISUpdateChatGUI {
             player.sendMessage("------");
             return true;
         }
+        if (args[1].equalsIgnoreCase("sensors")) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_SENSOR");
+            player.sendMessage("------");
+            plugin.getJsonKeeper().getSensors().forEach((s) -> player.sendMessage((TextComponent) s));
+            player.sendMessage("------");
+            return true;
+        }
         if (args[1].equalsIgnoreCase("others")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_OTHER");
             player.sendMessage("------");

@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.Handbrake;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
@@ -137,9 +138,11 @@ public class TARDISExteriorFlight {
             plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
         }
         TARDISSounds.playTARDISSound(block.getLocation(), "tardis_handbrake_release");
+        Handbrake hb = new Handbrake(plugin);
         if (!beac_on && !beacon.isEmpty()) {
-            TARDISTakeoff.toggleBeacon(beacon);
+            hb.toggleBeacon(beacon, true);
         }
+        hb.handleSensor(id);
         HashMap<String, Object> set = new HashMap<>();
         set.put("handbrake_on", 0);
         HashMap<String, Object> whereh = new HashMap<>();

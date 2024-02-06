@@ -231,39 +231,51 @@ public class QueryFactory {
     /**
      * Inserts or updates data in a database table. This method executes the SQL in a separate thread.
      *
-     * @param id   the database table name to insert the data into.
-     * @param type the type of control to insert.
-     * @param l    the string location of the control
-     * @param s    what level the control is (0 primary, 1 secondary (BAKER), 2 tertiary (WOOD))
+     * @param id       the TARDIS id.
+     * @param type     the type of sensor to insert.
+     * @param location the string location of the sensor
      */
-    public void insertControl(int id, int type, String l, int s) {
-        TARDISSQLInsertControl control = new TARDISSQLInsertControl(plugin, id, type, l, s);
+    public void insertSensor(int id, String type, String location) {
+        TARDISSQLInsertSensor sensor = new TARDISSQLInsertSensor(plugin, id, type, location);
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, sensor);
+    }
+
+    /**
+     * Inserts or updates data in a database table. This method executes the SQL in a separate thread.
+     *
+     * @param id        the TARDIS id.
+     * @param type      the type of control to insert.
+     * @param location  the string location of the control
+     * @param secondary what level the control is (0 primary, 1 secondary (BAKER), 2 tertiary (WOOD))
+     */
+    public void insertControl(int id, int type, String location, int secondary) {
+        TARDISSQLInsertControl control = new TARDISSQLInsertControl(plugin, id, type, location, secondary);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, control);
     }
 
     /**
      * Inserts or updates data in a database table. This method executes the SQL in a separate thread.
      *
-     * @param id   the database table name to insert the data into.
-     * @param type the type of control to insert.
-     * @param l    the string location of the control
-     * @param s    what level the control is (0 primary, 1 secondary (BAKER), 2 tertiary (WOOD))
+     * @param id        the TARDIS id.
+     * @param type      the type of control to insert.
+     * @param location  the string location of the control
+     * @param secondary what level the control is (0 primary, 1 secondary (BAKER), 2 tertiary (WOOD))
      */
-    public void insertSyncControl(int id, int type, String l, int s) {
+    public void insertSyncControl(int id, int type, String location, int secondary) {
         Statement statement = null;
         try {
             service.testConnection(connection);
             statement = connection.createStatement();
-            String select = "SELECT c_id FROM " + prefix + "controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + s;
+            String select = "SELECT c_id FROM " + prefix + "controls WHERE tardis_id = " + id + " AND type = " + type + " AND secondary = " + secondary;
             ResultSet rs = statement.executeQuery(select);
             if (rs.isBeforeFirst()) {
                 rs.next();
                 // update
-                String update = "UPDATE " + prefix + "controls SET location = '" + l + "' WHERE c_id = " + rs.getInt("c_id");
+                String update = "UPDATE " + prefix + "controls SET location = '" + location + "' WHERE c_id = " + rs.getInt("c_id");
                 statement.executeUpdate(update);
             } else {
                 // insert
-                String insert = "INSERT INTO " + prefix + "controls (tardis_id, type, location, secondary) VALUES (" + id + ", " + type + ", '" + l + "', " + s + ")";
+                String insert = "INSERT INTO " + prefix + "controls (tardis_id, type, location, secondary) VALUES (" + id + ", " + type + ", '" + location + "', " + secondary + ")";
                 statement.executeUpdate(insert);
             }
         } catch (SQLException e) {

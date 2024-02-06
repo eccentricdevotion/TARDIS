@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -25,6 +23,9 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISFirework;
 import org.bukkit.Location;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -68,6 +69,8 @@ public class TARDISMalfunctionExplosion implements Runnable {
         long time = System.currentTimeMillis();
         if (time > end) {
             plugin.getServer().getScheduler().cancelTask(task);
+            // toggle the malfunction sensor
+            TARDISMalfunction.handleSensor(id);
         } else {
             Location l = locations.get(TARDISConstants.RANDOM.nextInt(4));
             TARDISFirework.randomize().displayEffects(plugin, l.add(0.5, 0.5, 0.5));

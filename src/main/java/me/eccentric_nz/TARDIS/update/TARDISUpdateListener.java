@@ -51,6 +51,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -176,6 +177,16 @@ public class TARDISUpdateListener implements Listener {
                 case ALLAY, BAMBOO, BIRDCAGE, FARM, IGLOO, IISTUBIL, HUTCH, LAVA, PEN, STABLE, STALL, VILLAGE -> {
                     set.put(updateable.getName(), blockLocStr);
                     plugin.getQueryFactory().doUpdate("farming", set, tid);
+                }
+                case CHARGING_SENSOR, FLIGHT_SENSOR, HANDBRAKE_SENSOR, MALFUNCTION_SENSOR, POWER_SENSOR -> {
+                    String tmp =updateable.toString().toLowerCase(Locale.ROOT);
+                    String type = tmp.substring(0, tmp.length() -7);
+                    plugin.debug(tmp);
+                    plugin.getQueryFactory().insertSensor(tardis.getTardis_id(), type, blockLocStr);
+                    // set default state of handbrake sensor
+                    if (updateable == Updateable.HANDBRAKE_SENSOR && tardis.isHandbrake_on()) {
+                        block.setType(Material.STONE);
+                    }
                 }
                 case CREEPER -> {
                     blockLocStr = bw.getName() + ":" + bx + ".5:" + by + ":" + bz + ".5";
