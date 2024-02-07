@@ -1,18 +1,18 @@
 # TODO
 
-## Current version `5.3.0`
+## Current version `5.4.0`
 
 1. Fix dem bugs
+2. Updated Library room [#808](https://github.com/eccentricdevotion/TARDIS/issues/808)
+3. Controlled mob farming [#785](https://github.com/eccentricdevotion/TARDIS/issues/785)
 
-## Next version `5.4.0`
+## Next version `5.5.0`
 
 1. Allow 3D Police Boxes to land on slabs [#777](https://github.com/eccentricdevotion/TARDIS/issues/777)
-2. TARDIS Status blocks [#803](https://github.com/eccentricdevotion/TARDIS/issues/803)
-3. Controlled mob farming [#785](https://github.com/eccentricdevotion/TARDIS/issues/785)
-4. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
+2. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
-5. Animated models for player disguises
-6. ?
+3. Animated models for player disguises
+4. ?
 
 ## Future versions
 
