@@ -41,8 +41,8 @@ public class FollowerChecker {
         PersistentDataContainer pdc = entity.getPersistentDataContainer();
         if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
             UUID uuid = pdc.get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
-            TWAFollower twaf = (TWAFollower) ((CraftEntity) entity).getHandle();
-            if (twaf.isFollowing()) {
+            net.minecraft.world.entity.Entity entityHusk = ((CraftEntity) entity).getHandle();
+            if (entityHusk instanceof TWAFollower twaf && twaf.isFollowing()) {
                 Monster monster = Monster.OOD;
                 boolean option = false;
                 OodColour colour = OodColour.BLACK;
