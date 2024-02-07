@@ -671,8 +671,14 @@ permissions:
     description: Allow players to teleport to the block they are looking at
     default: op
   # weeping angels
+  tardisweepingangels.judoon:
+      description: Allow players to have a Judoon guard.
+      default: op
   tardisweepingangels.k9:
     description: Allow players to have a K9 companion.
+    default: op
+  tardisweepingangels.ood:
+    description: Allow players to claim an Ood and change their eye colour.
     default: op
   tardisweepingangels.spawn:
     description: Allow players to spawn a monster.
