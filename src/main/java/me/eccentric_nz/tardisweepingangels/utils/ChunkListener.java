@@ -22,7 +22,10 @@ import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.empty_child.EmptyChildEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessFlameRunnable;
+import me.eccentric_nz.tardisweepingangels.nms.FollowerPersister;
+import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftZombie;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -100,6 +103,8 @@ public class ChunkListener implements Listener {
                 // restart flame runnable
                 int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(stand), 1, 20);
                 pdc.set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
+            } else if (d instanceof Husk husk) {
+                new ResetMonster(plugin, husk).reset();
             }
         }
     }
@@ -107,14 +112,20 @@ public class ChunkListener implements Listener {
     @EventHandler
     public void onChunkUnload(ChunkUnloadEvent event) {
         for (Entity monk : event.getChunk().getEntities()) {
+            PersistentDataContainer pdc = monk.getPersistentDataContainer();
             if (monk instanceof Skeleton || monk instanceof ArmorStand) {
-                PersistentDataContainer pdc = monk.getPersistentDataContainer();
                 if (pdc.has(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER)) {
                     // stop flame runnable?
                     int f = pdc.getOrDefault(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, -1);
                     if (f != -1) {
                         plugin.getServer().getScheduler().cancelTask(f);
                     }
+                }
+            } else if (monk instanceof Husk) {
+                if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
+                    // save or update this follower
+                    TWAFollower follower = (TWAFollower) ((CraftZombie) monk).getHandle();
+                    new FollowerPersister(plugin).save(follower);
                 }
             }
         }

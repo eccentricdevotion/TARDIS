@@ -38,6 +38,7 @@ public class MonsterSpawner {
             default -> entity = new TWAK9(world, follower.getOwner());
         }
         entity.setPosRaw(location.getX(), location.getY() + 1.25d, location.getZ());
+        entity.setPersistenceRequired();
         world.addFreshEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         new FollowerPersister(TARDIS.plugin).save(follower, entity.getUUID());
         return entity;
