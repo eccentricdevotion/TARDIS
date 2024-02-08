@@ -35,6 +35,8 @@ class TARDISArtronRunnable implements Runnable {
     private final int id;
     private int task;
 
+    private boolean sensor = true;
+
     TARDISArtronRunnable(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
@@ -48,16 +50,22 @@ class TARDISArtronRunnable implements Runnable {
         int level = isFull(id);
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
-        boolean near = isNearCharger(id);
-        if (!near || level > (plugin.getArtronConfig().getInt("full_charge") - 1)) {
+        boolean charged =  level > (plugin.getArtronConfig().getInt("full_charge") - 1);
+        if (!isNearCharger(id) || charged) {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             HashMap<String, Object> set = new HashMap<>();
             set.put("recharging", 0);
             plugin.getQueryFactory().doUpdate("tardis", set, where);
-            // toggle charging sensor
-            new ChargingSensor(plugin, id).toggle();
+            if (charged) {
+                // toggle charging sensor
+                new ChargingSensor(plugin, id).toggle();
+            }
         } else {
+            if (sensor) {
+                new ChargingSensor(plugin, id).toggle();
+                sensor = false;
+            }
             // calculate percentage
             int onepercent = Math.round(plugin.getArtronConfig().getInt("full_charge") / 100.0F);
             // update TARDIS artron_level

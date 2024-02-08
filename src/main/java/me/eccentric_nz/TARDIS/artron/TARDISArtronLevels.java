@@ -53,8 +53,6 @@ public class TARDISArtronLevels {
         TARDISArtronRunnable runnable = new TARDISArtronRunnable(plugin, id);
         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 480L, 480L);
         runnable.setTask(taskID);
-        // toggle charging sensor
-        new ChargingSensor(plugin, id).toggle();
     }
 
     /**

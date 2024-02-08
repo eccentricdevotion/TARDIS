@@ -179,12 +179,14 @@ public class TARDISUpdateListener implements Listener {
                     plugin.getQueryFactory().doUpdate("farming", set, tid);
                 }
                 case CHARGING_SENSOR, FLIGHT_SENSOR, HANDBRAKE_SENSOR, MALFUNCTION_SENSOR, POWER_SENSOR -> {
-                    String tmp =updateable.toString().toLowerCase(Locale.ROOT);
-                    String type = tmp.substring(0, tmp.length() -7);
-                    plugin.debug(tmp);
+                    String tmp = updateable.toString().toLowerCase(Locale.ROOT);
+                    String type = tmp.substring(0, tmp.length() - 7);
                     plugin.getQueryFactory().insertSensor(tardis.getTardis_id(), type, blockLocStr);
-                    // set default state of handbrake sensor
-                    if (updateable == Updateable.HANDBRAKE_SENSOR && tardis.isHandbrake_on()) {
+                    // set default state of sensor - OFF
+                    if ((updateable == Updateable.HANDBRAKE_SENSOR && !tardis.isHandbrake_on())
+                            || (updateable == Updateable.POWER_SENSOR && tardis.isPowered_on())) {
+                        block.setType(Material.REDSTONE_BLOCK);
+                    } else {
                         block.setType(Material.STONE);
                     }
                 }

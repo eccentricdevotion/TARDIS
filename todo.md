@@ -5,7 +5,6 @@
 1. Fix dem bugs
 2. Updated Library room [#808](https://github.com/eccentricdevotion/TARDIS/issues/808)
 3. Controlled mob farming [#785](https://github.com/eccentricdevotion/TARDIS/issues/785)
-4. Update follower record when claimed
 
 ## Next version `5.5.0`
 

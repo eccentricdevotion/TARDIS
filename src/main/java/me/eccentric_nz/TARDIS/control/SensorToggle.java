@@ -8,10 +8,10 @@ import org.bukkit.block.Block;
 public class SensorToggle {
 
     public Block getBlock(String str) {
-        if (str == null || !str.startsWith("Location")) {
+        if (str == null || str.isEmpty()) {
             return null;
         }
-        Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(str);
+        Location location = TARDISStaticLocationGetters.getLocationFromDB(str);
         if (location != null) {
             return location.getBlock();
         }
