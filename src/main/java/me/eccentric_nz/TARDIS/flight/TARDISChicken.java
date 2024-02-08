@@ -16,12 +16,17 @@ public class TARDISChicken extends Chicken {
     }
 
     @Override
-    public boolean isSensitiveToWater() {
+    public boolean dismountsUnderwater() {
         return false;
     }
 
     @Override
-    public boolean dismountsUnderwater() {
+    protected boolean isAffectedByFluids() {
+        return false;
+    }
+
+    @Override
+    public boolean isSensitiveToWater() {
         return false;
     }
 }

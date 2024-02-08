@@ -1,5 +1,8 @@
 package me.eccentric_nz.tardisweepingangels.nms;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.MappedRegistry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -16,6 +19,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Field;
+import java.util.IdentityHashMap;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,6 +38,15 @@ public class TWAFollower extends Husk implements OwnableEntity {
         super(EntityType.HUSK, world);
         this.uuid = owner;
         setOwnerUUID(this.uuid);
+    }
+
+    public static void unfreezeEntityRegistry() throws NoSuchFieldException, IllegalAccessException {
+        Field intrusiveHolderCache = MappedRegistry.class.getDeclaredField("m");
+        intrusiveHolderCache.setAccessible(true);
+        intrusiveHolderCache.set(BuiltInRegistries.ENTITY_TYPE, new IdentityHashMap<EntityType<?>, Holder.Reference<EntityType<?>>>());
+        Field frozenField = MappedRegistry.class.getDeclaredField("l");
+        frozenField.setAccessible(true);
+        frozenField.set(BuiltInRegistries.ENTITY_TYPE, false);
     }
 
     @Override

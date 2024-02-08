@@ -105,6 +105,9 @@ public class ChunkListener implements Listener {
                 pdc.set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
             } else if (d instanceof Husk husk) {
                 new ResetMonster(plugin, husk).reset();
+                if (d.getWorld().getName().startsWith("TARDIS")) {
+                    plugin.debug("CHUNK load husk follower reset");
+                }
             }
         }
     }
@@ -126,6 +129,9 @@ public class ChunkListener implements Listener {
                     // save or update this follower
                     TWAFollower follower = (TWAFollower) ((CraftZombie) monk).getHandle();
                     new FollowerPersister(plugin).save(follower);
+                    if (monk.getWorld().getName().startsWith("TARDIS")) {
+                        plugin.debug("CHUNK unload husk follower reset");
+                    }
                 }
             }
         }

@@ -39,15 +39,18 @@ public class FollowerPersister {
                 TWAOod ood = (TWAOod) follower;
                 colour = ood.getColour().toString();
                 option = ood.isRedeye() ? 1 : 0;
+                uuid = pdc.getOrDefault(TARDISWeepingAngels.OOD, TARDISWeepingAngels.PersistentDataTypeUUID, follower.getUUID()).toString();
             }
             if (pdc.has(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 species = "JUDOON";
                 TWAJudoon judoon = (TWAJudoon) follower;
                 ammo = judoon.getAmmo();
                 option = judoon.isGuard() ? 1 : 0;
+                uuid = pdc.getOrDefault(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID, follower.getUUID()).toString();
             }
             if (pdc.has(TARDISWeepingAngels.K9, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 species = "K9";
+                uuid = pdc.getOrDefault(TARDISWeepingAngels.K9, TARDISWeepingAngels.PersistentDataTypeUUID, follower.getUUID()).toString();
             }
             // save custom follower
             ps = connection.prepareStatement("REPLACE INTO " + prefix + "followers (uuid, owner, species, following, option, colour, ammo) VALUES (?, ?, ?, ?, ?, ?, ?)");

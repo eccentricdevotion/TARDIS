@@ -3,6 +3,7 @@ package me.eccentric_nz.tardisweepingangels.nms;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Follower;
 import me.eccentric_nz.TARDIS.flight.TARDISChicken;
+import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
@@ -37,9 +38,10 @@ public class MonsterSpawner {
             case JUDOON -> entity = new TWAJudoon(world, follower.getOwner());
             default -> entity = new TWAK9(world, follower.getOwner());
         }
-        entity.setPosRaw(location.getX(), location.getY() + 1.25d, location.getZ());
+        entity.setPosRaw(location.getX(), location.getY() + 0.5d, location.getZ());
         entity.setPersistenceRequired();
         world.addFreshEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        entity.getBukkitEntity().getPersistentDataContainer().set(TARDISWeepingAngels.PDC_KEYS.get(follower.getSpecies()), TARDISWeepingAngels.PersistentDataTypeUUID, entity.getUUID());
         new FollowerPersister(TARDIS.plugin).save(follower, entity.getUUID());
         return entity;
     }
