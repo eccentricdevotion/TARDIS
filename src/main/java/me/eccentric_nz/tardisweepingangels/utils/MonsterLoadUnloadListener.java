@@ -60,9 +60,6 @@ public class MonsterLoadUnloadListener implements Listener {
                 return;
             }
             new ResetMonster(plugin, e).reset();
-            if (e.getWorld().getName().startsWith("TARDIS")) {
-                plugin.debug("ENTITY load husk follower reset");
-            }
         }
     }
 
@@ -77,9 +74,6 @@ public class MonsterLoadUnloadListener implements Listener {
                 TWAFollower follower = (TWAFollower) ((CraftZombie) e).getHandle();
                 // save entity in followers table
                 new FollowerPersister(plugin).save(follower);
-                if (e.getWorld().getName().startsWith("TARDIS")) {
-                    plugin.debug("ENTITY unload husk follower persisted");
-                }
             }
         }
     }
