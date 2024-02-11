@@ -59,7 +59,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "chunks", "chunky",
             "dismount",
             "furnace",
-            "list",
+            "label", "list",
             "plurals",
             "stats",
             "tree",
@@ -114,6 +114,9 @@ public class TARDISDevCommand implements CommandExecutor {
                 }
                 if (first.equals("box")) {
                     return new TARDISDevBoxCommand(plugin).setPreset(sender, args);
+                }
+                if (first.equals("label")) {
+                    return new TARDISDevLabelCommand(plugin).catalog(sender);
                 }
                 if (first.equals("nms")) {
                     return new TARDISDevNMSCommand(plugin).spawn(sender, args);
