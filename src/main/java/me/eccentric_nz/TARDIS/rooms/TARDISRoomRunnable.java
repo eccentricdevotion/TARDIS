@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
+import me.eccentric_nz.TARDIS.rooms.library.LibraryCatalogue;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemDisplaySetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemFrameSetter;
@@ -102,6 +103,7 @@ public class TARDISRoomRunnable implements Runnable {
     private final boolean wasResumed;
     private final List<String> postBlocks;
     private final boolean isLastTask;
+    private Location library;
     private int maze_count = 0;
     private int task, level, row, col, h, w, c, startx, starty, startz, resetx, resety, resetz;
     private boolean running;
@@ -471,6 +473,10 @@ public class TARDISRoomRunnable implements Runnable {
                     doorblocks.forEach((key, value) -> key.setBlockData(value, true));
                     doorblocks.clear();
                 }
+                if (room.equals("LIBRARY") && library != null) {
+                    // add shelf labels
+                    new LibraryCatalogue().label(library);
+                }
                 // water farmland
                 farmlandblocks.forEach((fl) -> {
                     BlockData farmData = Material.FARMLAND.createBlockData();
@@ -603,6 +609,16 @@ public class TARDISRoomRunnable implements Runnable {
                 // set condenser
                 if (type.equals(Material.CHEST) && room.equals("HARMONY")) {
                     plugin.getQueryFactory().insertControl(tardis_id, 34, new Location(world, startx, starty, startz).toString(), 1);
+                }
+                // set library
+                if (type.equals(Material.CHEST) && room.equals("LIBRARY")) {
+                    Location pos = new Location(world, startx, starty, startz);
+                    HashMap<String, Object> setl = new HashMap<>();
+                    setl.put("tardis_id", tardis_id);
+                    setl.put("location", pos.toString());
+                    setl.put("chest_type", "LIBRARY");
+                    plugin.getQueryFactory().doInsert("vaults", setl);
+                    library = pos.clone().add(-8,-4,-8);
                 }
                 // set drop chest
                 if (type.equals(Material.TRAPPED_CHEST) && room.equals("VAULT") && player != null && TARDISPermission.hasPermission(player, "tardis.vault")) {

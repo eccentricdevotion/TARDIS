@@ -20,5 +20,6 @@ public enum SmelterChest {
 
     DROP,
     FUEL,
-    SMELT
+    SMELT,
+    LIBRARY
 }

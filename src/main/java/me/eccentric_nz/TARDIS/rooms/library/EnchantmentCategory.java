@@ -6,5 +6,6 @@ public enum EnchantmentCategory {
     ARMOUR,
     MELEE_WEAPONS,
     RANGED_WEAPONS,
-    TOOLS;
+    TOOLS,
+    BOOKS;
 }
