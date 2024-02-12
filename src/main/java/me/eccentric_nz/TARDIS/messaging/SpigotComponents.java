@@ -230,7 +230,6 @@ public class SpigotComponents {
     }
 
     public static TextComponent getEyebrows() {
-        // TODO ?
         TextComponent textComponent = new TextComponent("[TARDIS] ");
         textComponent.setColor(ChatColor.GOLD);
         TextComponent tcl = new TextComponent("Look at these eyebrows. These are attack eyebrows! They could take off bottle caps!");
