@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.enumeration;
 
 public enum SmelterChest {
 
-    DROP,
-    FUEL,
-    SMELT,
+    DROP, // VAULT
+    FUEL, // SMELTER
+    SMELT, // SMELTER
     LIBRARY
 }
