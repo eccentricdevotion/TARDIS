@@ -9,6 +9,7 @@ import org.bukkit.block.ChiseledBookshelf;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,8 +30,9 @@ public class LibrarySorter {
             if (is == null) {
                 continue;
             }
-            if (is.getType() == Material.ENCHANTED_BOOK) {
-                Map<Enchantment, Integer> enchantments = is.getEnchantments();
+            if (is.getType() == Material.ENCHANTED_BOOK && is.hasItemMeta()) {
+                EnchantmentStorageMeta esm = (EnchantmentStorageMeta) is.getItemMeta();
+                Map<Enchantment, Integer> enchantments = esm.getStoredEnchants();
                 if (!enchantments.isEmpty()) {
                     // store the book on the outside shelves
                     Map.Entry<Enchantment, Integer> entry = enchantments.entrySet().iterator().next();
