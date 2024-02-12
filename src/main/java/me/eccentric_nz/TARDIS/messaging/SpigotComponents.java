@@ -86,7 +86,7 @@ public class SpigotComponents {
     public static TextComponent getBuildsBehind(int behind) {
         TextComponent textComponent = new TextComponent("[TARDIS] ");
         textComponent.setColor(ChatColor.GOLD);
-        TextComponent y = new TextComponent("You are %s builds behind! Type ");
+        TextComponent y = new TextComponent("You are " + behind + " builds behind! Type ");
         y.setColor(ChatColor.WHITE);
         TextComponent p = new TextComponent("/tadmin update_plugins");
         p.setColor(ChatColor.AQUA);
