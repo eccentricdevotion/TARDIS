@@ -46,22 +46,22 @@ public class TARDISFarmingInventory {
         // set farming status
         if (rs.resultSet()) {
             FarmPrefs farmPrefs = rs.getData();
-            stack[9] = farmPrefs.getAllay() ? on : off;
-            stack[10] = farmPrefs.getApiary() ? on : off;
-            stack[11] = farmPrefs.getAquarium() ? on : off;
-            stack[12] = farmPrefs.getBamboo() ? on : off;
-            stack[13] = farmPrefs.getBirdcage() ? on : off;
-            stack[14] = farmPrefs.getFarm() ? on : off;
-            stack[15] = farmPrefs.getGeode() ? on : off;
-            stack[16] = farmPrefs.getHutch() ? on : off;
-            stack[17] = farmPrefs.getIgloo() ? on : off;
-            stack[27] = farmPrefs.getIistubil() ? on : off;
-            stack[28] = farmPrefs.getLava() ? on : off;
-            stack[29] = farmPrefs.getMangrove() ? on : off;
-            stack[30] = farmPrefs.getPen() ? on : off;
-            stack[31] = farmPrefs.getStable() ? on : off;
-            stack[32] = farmPrefs.getStall() ? on : off;
-            stack[33] = farmPrefs.getVillage() ? on : off;
+            stack[9] = farmPrefs.shouldFarmAllay() ? on : off;
+            stack[10] = farmPrefs.shouldFarmBees() ? on : off;
+            stack[11] = farmPrefs.shouldFarmFish() ? on : off;
+            stack[12] = farmPrefs.shouldFarmPandas() ? on : off;
+            stack[13] = farmPrefs.shouldFarmParrots() ? on : off;
+            stack[14] = farmPrefs.shouldFarmLivestock() ? on : off;
+            stack[15] = farmPrefs.shouldFarmAxolotls() ? on : off;
+            stack[16] = farmPrefs.shouldFarmRabbits() ? on : off;
+            stack[17] = farmPrefs.shouldFarmPolarBears() ? on : off;
+            stack[27] = farmPrefs.shouldFarmCamels() ? on : off;
+            stack[28] = farmPrefs.shouldFarmStriders() ? on : off;
+            stack[29] = farmPrefs.shouldFarmFrogs() ? on : off;
+            stack[30] = farmPrefs.shouldFarmSniffers() ? on : off;
+            stack[31] = farmPrefs.shouldFarmHorses() ? on : off;
+            stack[32] = farmPrefs.shouldFarmLlamas() ? on : off;
+            stack[33] = farmPrefs.shouldFarmVillagers() ? on : off;
         } else {
             // insert a new record
             HashMap<String, Object> set = new HashMap<>();

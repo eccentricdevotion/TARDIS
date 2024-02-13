@@ -75,7 +75,7 @@ public class FarmPrefs {
      *
      * @return true or false
      */
-    public boolean getAllay() {
+    public boolean shouldFarmAllay() {
         return allay;
     }
 
@@ -84,7 +84,7 @@ public class FarmPrefs {
      *
      * @return true or false
      */
-    public boolean getApiary() {
+    public boolean shouldFarmBees() {
         return apiary;
     }
 
@@ -93,7 +93,7 @@ public class FarmPrefs {
      *
      * @return true or false
      */
-    public boolean getAquarium() {
+    public boolean shouldFarmFish() {
         return aquarium;
     }
 
@@ -102,7 +102,7 @@ public class FarmPrefs {
      *
      * @return true or false
      */
-    public boolean getBamboo() {
+    public boolean shouldFarmPandas() {
         return bamboo;
     }
 
@@ -111,7 +111,7 @@ public class FarmPrefs {
      *
      * @return true or false
      */
-    public boolean getBirdcage() {
+    public boolean shouldFarmParrots() {
         return birdcage;
     }
 
@@ -120,7 +120,7 @@ public class FarmPrefs {
      *
      * @return true or false
      */
-    public boolean getFarm() {
+    public boolean shouldFarmLivestock() {
         return farm;
     }
 
@@ -129,7 +129,7 @@ public class FarmPrefs {
      *
      * @return true or false
      */
-    public boolean getGeode() {
+    public boolean shouldFarmAxolotls() {
         return geode;
     }
 
@@ -138,7 +138,7 @@ public class FarmPrefs {
      *
      * @return true or false
      */
-    public boolean getHutch() {
+    public boolean shouldFarmRabbits() {
         return hutch;
     }
 
@@ -147,7 +147,7 @@ public class FarmPrefs {
      *
      * @return true or false
      */
-    public boolean getIgloo() {
+    public boolean shouldFarmPolarBears() {
         return igloo;
     }
 
@@ -156,7 +156,7 @@ public class FarmPrefs {
      *
      * @return true or false
      */
-    public boolean getIistubil() {
+    public boolean shouldFarmCamels() {
         return iistubil;
     }
 
@@ -165,7 +165,7 @@ public class FarmPrefs {
      *
      * @return true or false
      */
-    public boolean getLava() {
+    public boolean shouldFarmStriders() {
         return lava;
     }
 
@@ -174,7 +174,7 @@ public class FarmPrefs {
      *
      * @return true or false
      */
-    public boolean getMangrove() {
+    public boolean shouldFarmFrogs() {
         return mangrove;
     }
 
@@ -183,7 +183,7 @@ public class FarmPrefs {
      *
      * @return true or false
      */
-    public boolean getPen() {
+    public boolean shouldFarmSniffers() {
         return pen;
     }
 
@@ -192,7 +192,7 @@ public class FarmPrefs {
      *
      * @return true or false
      */
-    public boolean getStable() {
+    public boolean shouldFarmHorses() {
         return stable;
     }
 
@@ -201,7 +201,7 @@ public class FarmPrefs {
      *
      * @return true or false
      */
-    public boolean getStall() {
+    public boolean shouldFarmLlamas() {
         return stall;
     }
 
@@ -210,7 +210,7 @@ public class FarmPrefs {
      *
      * @return true or false
      */
-    public boolean getVillage() {
+    public boolean shouldFarmVillagers() {
         return village;
     }
 }

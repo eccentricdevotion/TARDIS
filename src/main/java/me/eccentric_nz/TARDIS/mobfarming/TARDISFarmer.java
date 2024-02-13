@@ -164,7 +164,7 @@ public class TARDISFarmer {
                             }
                         }
                         case ALLAY -> {
-                            if (farmPrefs.getAllay() && (!allay.isEmpty() || spawnEggs)) {
+                            if (farmPrefs.shouldFarmAllay() && (!allay.isEmpty() || spawnEggs)) {
                                 Allay a = (Allay) entity;
                                 TARDISAllay tma = new TARDISAllay();
                                 tma.setCanDuplicate(a.canDuplicate());
@@ -180,7 +180,7 @@ public class TARDISFarmer {
                             }
                         }
                         case AXOLOTL -> {
-                            if (farmPrefs.getGeode() && (!geode.isEmpty() || spawnEggs)) {
+                            if (farmPrefs.shouldFarmAxolotls() && (!geode.isEmpty() || spawnEggs)) {
                                 Axolotl axolotl = (Axolotl) entity;
                                 TARDISAxolotl tmaxl = new TARDISAxolotl();
                                 tmaxl.setAxolotlVariant(axolotl.getVariant());
@@ -195,7 +195,7 @@ public class TARDISFarmer {
                             }
                         }
                         case BEE -> {
-                            if (farmPrefs.getApiary() && (!apiary.isEmpty() || spawnEggs)) {
+                            if (farmPrefs.shouldFarmBees() && (!apiary.isEmpty() || spawnEggs)) {
                                 Bee bee = (Bee) entity;
                                 TARDISBee tmbee = new TARDISBee();
                                 tmbee.setHasNectar(bee.hasNectar());
@@ -212,7 +212,7 @@ public class TARDISFarmer {
                             }
                         }
                         case CAMEL -> {
-                            if (farmPrefs.getIistubil() && (!iistubil.isEmpty() || spawnEggs)) {
+                            if (farmPrefs.shouldFarmCamels() && (!iistubil.isEmpty() || spawnEggs)) {
                                 Camel camel = (Camel) entity;
                                 TARDISHorse hump = new TARDISHorse();
                                 hump.setAge(camel.getAge());
@@ -228,7 +228,7 @@ public class TARDISFarmer {
                             }
                         }
                         case CHICKEN -> {
-                            if (farmPrefs.getFarm() && (!farm.isEmpty() || spawnEggs)) {
+                            if (farmPrefs.shouldFarmLivestock() && (!farm.isEmpty() || spawnEggs)) {
                                 Chicken chicken = (Chicken) entity;
                                 TARDISMob tmchk = new TARDISMob();
                                 tmchk.setAge(chicken.getAge());
@@ -243,7 +243,7 @@ public class TARDISFarmer {
                             }
                         }
                         case COW -> {
-                            if (farmPrefs.getFarm() && (!farm.isEmpty() || spawnEggs)) {
+                            if (farmPrefs.shouldFarmLivestock() && (!farm.isEmpty() || spawnEggs)) {
                                 Cow cow = (Cow) entity;
                                 TARDISMob tmcow = new TARDISMob();
                                 tmcow.setAge(cow.getAge());
@@ -258,7 +258,7 @@ public class TARDISFarmer {
                             }
                         }
                         case DONKEY, MULE, HORSE -> {
-                            if (farmPrefs.getStable() && (!stable.isEmpty() || spawnEggs)) {
+                            if (farmPrefs.shouldFarmHorses() && (!stable.isEmpty() || spawnEggs)) {
                                 AbstractHorse horse = (AbstractHorse) entity;
                                 // if horse has a passenger, eject them!
                                 horse.eject();
@@ -310,7 +310,7 @@ public class TARDISFarmer {
                             }
                         }
                         case FROG -> {
-                            if (farmPrefs.getMangrove() && (!mangrove.isEmpty() || spawnEggs)) {
+                            if (farmPrefs.shouldFarmFrogs() && (!mangrove.isEmpty() || spawnEggs)) {
                                 Frog frog = (Frog) entity;
                                 TARDISFrog tmfrog = new TARDISFrog();
                                 tmfrog.setType(EntityType.FROG);
@@ -326,7 +326,7 @@ public class TARDISFarmer {
                             }
                         }
                         case LLAMA -> {
-                            if (farmPrefs.getStall() && (!stall.isEmpty() || spawnEggs)) {
+                            if (farmPrefs.shouldFarmLlamas() && (!stall.isEmpty() || spawnEggs)) {
                                 Llama llama = (Llama) entity;
                                 // if llama has a passenger, eject them!
                                 llama.eject();
@@ -374,7 +374,7 @@ public class TARDISFarmer {
                             }
                         }
                         case PARROT -> {
-                            if (farmPrefs.getBirdcage()) {
+                            if (farmPrefs.shouldFarmParrots()) {
                                 Parrot parrot = (Parrot) entity;
                                 AnimalTamer tamer = parrot.getOwner();
                                 boolean timeLordIsOwner = (tamer != null && tamer.getUniqueId().equals(uuid));
@@ -411,7 +411,7 @@ public class TARDISFarmer {
                             }
                         }
                         case PANDA -> {
-                            if (farmPrefs.getBamboo() && (!bamboo.isEmpty() || spawnEggs)) {
+                            if (farmPrefs.shouldFarmPandas() && (!bamboo.isEmpty() || spawnEggs)) {
                                 Panda panda = (Panda) entity;
                                 TARDISPanda tmpanda = new TARDISPanda();
                                 tmpanda.setAge(panda.getAge());
@@ -427,7 +427,7 @@ public class TARDISFarmer {
                             }
                         }
                         case PIG -> {
-                            if (farmPrefs.getFarm() && (!farm.isEmpty() || spawnEggs)) {
+                            if (farmPrefs.shouldFarmLivestock() && (!farm.isEmpty() || spawnEggs)) {
                                 Pig pig = (Pig) entity;
                                 TARDISPig tmpig = new TARDISPig();
                                 tmpig.setAge(pig.getAge());
@@ -445,7 +445,7 @@ public class TARDISFarmer {
                             }
                         }
                         case POLAR_BEAR -> {
-                            if (farmPrefs.getIgloo() && (!igloo.isEmpty() || spawnEggs)) {
+                            if (farmPrefs.shouldFarmPolarBears() && (!igloo.isEmpty() || spawnEggs)) {
                                 PolarBear polarBear = (PolarBear) entity;
                                 TARDISMob tmbear = new TARDISMob();
                                 tmbear.setAge(polarBear.getAge());
@@ -459,7 +459,7 @@ public class TARDISFarmer {
                             }
                         }
                         case RABBIT -> {
-                            if (farmPrefs.getHutch() && (!hutch.isEmpty() || spawnEggs)) {
+                            if (farmPrefs.shouldFarmRabbits() && (!hutch.isEmpty() || spawnEggs)) {
                                 Rabbit rabbit = (Rabbit) entity;
                                 TARDISRabbit tmrabbit = new TARDISRabbit();
                                 tmrabbit.setAge(rabbit.getAge());
@@ -474,7 +474,7 @@ public class TARDISFarmer {
                             }
                         }
                         case SHEEP -> {
-                            if (farmPrefs.getFarm() && (!farm.isEmpty() || spawnEggs)) {
+                            if (farmPrefs.shouldFarmLivestock() && (!farm.isEmpty() || spawnEggs)) {
                                 Sheep lamb = (Sheep) entity;
                                 TARDISMob tmshp = new TARDISMob();
                                 tmshp.setAge(lamb.getAge());
@@ -490,7 +490,7 @@ public class TARDISFarmer {
                             }
                         }
                         case SNIFFER -> {
-                            if (farmPrefs.getPen() && (!pen.isEmpty() || spawnEggs)) {
+                            if (farmPrefs.shouldFarmSniffers() && (!pen.isEmpty() || spawnEggs)) {
                                 Sniffer sniffer = (Sniffer) entity;
                                 TARDISMob tmsniffer = new TARDISMob();
                                 tmsniffer.setAge(sniffer.getAge());
@@ -504,7 +504,7 @@ public class TARDISFarmer {
                             }
                         }
                         case STRIDER -> {
-                            if (farmPrefs.getLava() && (!lava.isEmpty() || spawnEggs)) {
+                            if (farmPrefs.shouldFarmStriders() && (!lava.isEmpty() || spawnEggs)) {
                                 Strider strider = (Strider) entity;
                                 TARDISMob tmsstrider = new TARDISMob();
                                 tmsstrider.setAge(strider.getAge());
@@ -518,7 +518,7 @@ public class TARDISFarmer {
                             }
                         }
                         case MUSHROOM_COW -> {
-                            if (farmPrefs.getFarm() && (!farm.isEmpty() || spawnEggs)) {
+                            if (farmPrefs.shouldFarmLivestock() && (!farm.isEmpty() || spawnEggs)) {
                                 MushroomCow mushroomCow = (MushroomCow) entity;
                                 TARDISMooshroom tmshr = new TARDISMooshroom();
                                 tmshr.setAge(mushroomCow.getAge());
@@ -534,7 +534,7 @@ public class TARDISFarmer {
                             }
                         }
                         case VILLAGER -> {
-                            if (farmPrefs.getVillage() && (!village.isEmpty() || spawnEggs)) {
+                            if (farmPrefs.shouldFarmVillagers() && (!village.isEmpty() || spawnEggs)) {
                                 Villager v = (Villager) entity;
                                 TARDISVillager tv = new TARDISVillager();
                                 tv.setProfession(v.getProfession());
@@ -585,7 +585,7 @@ public class TARDISFarmer {
                         }
                     }
                 }
-                if (farmPrefs.getAquarium()) {
+                if (farmPrefs.shouldFarmFish()) {
                     ItemStack fishBucket = p.getInventory().getItemInOffHand();
                     if (fishBucket != null && TARDISMaterials.fish_buckets.contains(fishBucket.getType())) {
                         fish = new TARDISFish();
@@ -606,7 +606,7 @@ public class TARDISFarmer {
                         return null;
                     }
                 }
-                if (farmPrefs.getAllay() && !allays.isEmpty()) {
+                if (farmPrefs.shouldFarmAllay() && !allays.isEmpty()) {
                     if (!allay.isEmpty()) {
                         // get location of allay room
                         World world = TARDISStaticLocationGetters.getWorldFromSplitString(allay);
@@ -639,7 +639,7 @@ public class TARDISFarmer {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_ALLAY");
                     }
                 }
-                if (farmPrefs.getApiary() && !bees.isEmpty()) {
+                if (farmPrefs.shouldFarmBees() && !bees.isEmpty()) {
                     if (!apiary.isEmpty()) {
                         // get location of apiary room
                         World world = TARDISStaticLocationGetters.getWorldFromSplitString(apiary);
@@ -673,7 +673,7 @@ public class TARDISFarmer {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_APIARY");
                     }
                 }
-                if (farmPrefs.getAquarium() && !aquarium.isEmpty() && fish != null) {
+                if (farmPrefs.shouldFarmFish() && !aquarium.isEmpty() && fish != null) {
                     // get location of aquarium room
                     World world = TARDISStaticLocationGetters.getWorldFromSplitString(aquarium);
                     Location fish_tank = TARDISStaticLocationGetters.getSpawnLocationFromDB(aquarium);
@@ -699,7 +699,7 @@ public class TARDISFarmer {
                     p.getInventory().getItemInOffHand().setType(Material.BUCKET);
                     p.updateInventory();
                 }
-                if (farmPrefs.getBamboo() && !pandas.isEmpty()) {
+                if (farmPrefs.shouldFarmPandas() && !pandas.isEmpty()) {
                     if (!bamboo.isEmpty()) {
                         // get location of bamboo room
                         World world = TARDISStaticLocationGetters.getWorldFromSplitString(bamboo);
@@ -732,7 +732,7 @@ public class TARDISFarmer {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_BAMBOO");
                     }
                 }
-                if (farmPrefs.getFarm() && farmtotal > 0) {
+                if (farmPrefs.shouldFarmLivestock() && farmtotal > 0) {
                     if (!farm.isEmpty()) {
                         // get location of farm room
                         World world = TARDISStaticLocationGetters.getWorldFromSplitString(farm);
@@ -862,7 +862,7 @@ public class TARDISFarmer {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM");
                     }
                 }
-                if (farmPrefs.getGeode() && !axolotls.isEmpty()) {
+                if (farmPrefs.shouldFarmAxolotls() && !axolotls.isEmpty()) {
                     if (!geode.isEmpty()) {
                         // get location of geode room
                         World world = TARDISStaticLocationGetters.getWorldFromSplitString(geode);
@@ -894,7 +894,7 @@ public class TARDISFarmer {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_GEODE");
                     }
                 }
-                if (farmPrefs.getStable() && !horses.isEmpty()) {
+                if (farmPrefs.shouldFarmHorses() && !horses.isEmpty()) {
                     if (!stable.isEmpty()) {
                         // get location of stable room
                         World world = TARDISStaticLocationGetters.getWorldFromSplitString(stable);
@@ -952,7 +952,7 @@ public class TARDISFarmer {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_STABLE");
                     }
                 }
-                if (farmPrefs.getStall() && !llamas.isEmpty()) {
+                if (farmPrefs.shouldFarmLlamas() && !llamas.isEmpty()) {
                     if (!stall.isEmpty()) {
                         // get location of stable room
                         World world = TARDISStaticLocationGetters.getWorldFromSplitString(stall);
@@ -1008,7 +1008,7 @@ public class TARDISFarmer {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_STALL");
                     }
                 }
-                if (farmPrefs.getHutch() && !rabbits.isEmpty()) {
+                if (farmPrefs.shouldFarmRabbits() && !rabbits.isEmpty()) {
                     if (!hutch.isEmpty()) {
                         // get location of hutch room
                         World world = TARDISStaticLocationGetters.getWorldFromSplitString(hutch);
@@ -1040,7 +1040,7 @@ public class TARDISFarmer {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_HUTCH");
                     }
                 }
-                if (farmPrefs.getVillage() && !villagers.isEmpty()) {
+                if (farmPrefs.shouldFarmVillagers() && !villagers.isEmpty()) {
                     if (!village.isEmpty()) {
                         // get location of village room
                         World world = TARDISStaticLocationGetters.getWorldFromSplitString(village);
@@ -1078,7 +1078,7 @@ public class TARDISFarmer {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_VILLAGE");
                     }
                 }
-                if (farmPrefs.getIgloo() && !polarbears.isEmpty()) {
+                if (farmPrefs.shouldFarmPolarBears() && !polarbears.isEmpty()) {
                     if (!igloo.isEmpty()) {
                         // get location of igloo room
                         World world = TARDISStaticLocationGetters.getWorldFromSplitString(igloo);
@@ -1109,7 +1109,7 @@ public class TARDISFarmer {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_IGLOO");
                     }
                 }
-                if (farmPrefs.getPen() && !sniffers.isEmpty()) {
+                if (farmPrefs.shouldFarmSniffers() && !sniffers.isEmpty()) {
                     if (!pen.isEmpty()) {
                         // get location of sniffer pen room
                         World world = TARDISStaticLocationGetters.getWorldFromSplitString(pen);
@@ -1140,7 +1140,7 @@ public class TARDISFarmer {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_PEN");
                     }
                 }
-                if (farmPrefs.getLava() && !striders.isEmpty()) {
+                if (farmPrefs.shouldFarmStriders() && !striders.isEmpty()) {
                     if (!lava.isEmpty()) {
                         // get location of strider lava room
                         World world = TARDISStaticLocationGetters.getWorldFromSplitString(lava);
@@ -1171,7 +1171,7 @@ public class TARDISFarmer {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_LAVA");
                     }
                 }
-                if (farmPrefs.getIistubil() && !camels.isEmpty()) {
+                if (farmPrefs.shouldFarmCamels() && !camels.isEmpty()) {
                     if (!iistubil.isEmpty()) {
                         // get location of camel iistubil room
                         World world = TARDISStaticLocationGetters.getWorldFromSplitString(iistubil);
@@ -1204,7 +1204,7 @@ public class TARDISFarmer {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_IISTUBIL");
                     }
                 }
-                if (farmPrefs.getBirdcage() && !parrots.isEmpty()) {
+                if (farmPrefs.shouldFarmParrots() && !parrots.isEmpty()) {
                     if (!birdcage.isEmpty()) {
                         // get location of birdcage room
                         World world = TARDISStaticLocationGetters.getWorldFromSplitString(birdcage);
@@ -1238,7 +1238,7 @@ public class TARDISFarmer {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "FARM_BIRDCAGE");
                     }
                 }
-                if (farmPrefs.getMangrove() && !frogs.isEmpty()) {
+                if (farmPrefs.shouldFarmFrogs() && !frogs.isEmpty()) {
                     if (!mangrove.isEmpty()) {
                         // get location of mangrove room
                         Location swamp = TARDISStaticLocationGetters.getSpawnLocationFromDB(mangrove);
