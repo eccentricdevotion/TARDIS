@@ -64,6 +64,7 @@ import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusGUIListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusListener;
 import me.eccentric_nz.TARDIS.listeners.*;
 import me.eccentric_nz.TARDIS.listeners.controls.*;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmingMenuListener;
 import me.eccentric_nz.TARDIS.move.*;
 import me.eccentric_nz.TARDIS.planets.*;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryListener;
@@ -150,6 +151,7 @@ class TARDISListenerRegisterer {
         if (plugin.getConfig().getBoolean("allow.autonomous")) {
             plugin.getPM().registerEvents(new TARDISAutonomousGUIListener(plugin), plugin);
         }
+        plugin.getPM().registerEvents(new TARDISFarmingMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISConfigMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISAnvilListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISAreaListener(plugin), plugin);

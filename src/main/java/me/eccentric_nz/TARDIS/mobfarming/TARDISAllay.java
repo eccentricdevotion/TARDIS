@@ -35,7 +35,6 @@ class TARDISAllay extends TARDISMob {
     private long duplicationCooldown;
     private ItemStack[] inventory;
 
-
     public UUID getLikedPlayer() {
         return likedPlayer;
     }

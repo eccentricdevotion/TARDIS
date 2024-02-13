@@ -36,6 +36,7 @@ import me.eccentric_nz.TARDIS.floodgate.FloodgateMapForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmingInventory;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicConfiguratorInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.md_5.bungee.api.ChatColor;
@@ -253,6 +254,18 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                 // open new inventory
                 auto_inv.setContents(new TARDISAutonomousInventory(plugin, uuid).getGui());
                 p.openInventory(auto_inv);
+            }, 1L);
+            return;
+        }
+        if (slot == GUIPlayerPreferences.FARMING_PREFERENCES.getSlot() && im.getDisplayName().equals("Farming Preferences")) {
+            // close this gui and load the TARDIS Farming Menu
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                Inventory farm_inv = plugin.getServer().createInventory(p, 36, ChatColor.DARK_RED + "TARDIS Farming Menu");
+                // close inventory
+                p.closeInventory();
+                // open new inventory
+                farm_inv.setContents(new TARDISFarmingInventory(plugin, uuid).getGui());
+                p.openInventory(farm_inv);
             }, 1L);
             return;
         }

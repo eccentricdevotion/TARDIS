@@ -40,6 +40,7 @@ public enum Table {
     dispersed("d_id"),
     doors,
     farming("farm_id"),
+    farming_prefs("farm_id"),
     flight("f_id"),
     forcefield("uuid"),
     gardens("garden_id"),

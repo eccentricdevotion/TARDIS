@@ -178,6 +178,13 @@ public class TARDISPrefsMenuInventory {
         prefs.setCustomModelData(GUIPlayerPreferences.AUTONOMOUS_PREFERENCES.getCustomModelData());
         auto.setItemMeta(prefs);
         stack[GUIPlayerPreferences.AUTONOMOUS_PREFERENCES.getSlot()] = auto;
+        // farming prefs
+        ItemStack farm = new ItemStack(Material.BOWL, 1);
+        ItemMeta ing = farm.getItemMeta();
+        ing.setDisplayName("Farming Preferences");
+        ing.setCustomModelData(GUIPlayerPreferences.FARMING_PREFERENCES.getCustomModelData());
+        farm.setItemMeta(ing);
+        stack[GUIPlayerPreferences.FARMING_PREFERENCES.getSlot()] = farm;
         // sonic configurator
         ItemStack sonic = new ItemStack(Material.BOWL, 1);
         ItemMeta config = sonic.getItemMeta();
