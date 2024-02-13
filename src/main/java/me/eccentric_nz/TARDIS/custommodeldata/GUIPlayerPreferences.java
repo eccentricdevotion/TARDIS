@@ -53,7 +53,8 @@ public enum GUIPlayerPreferences {
     HANDBRAKE(1, 28, Material.LEVER),
     TARDIS_MAP(3, 29, Material.MAP),
     AUTONOMOUS_PREFERENCES(145, 30, Material.BOWL),
-    SONIC_CONFIGURATOR(135, 31, Material.BOWL),
+    FARMING_PREFERENCES(155, 31, Material.BOWL),
+    SONIC_CONFIGURATOR(135, 32, Material.BOWL),
     ADMIN_MENU(1, 35, Material.NETHER_STAR);
 
     private final int customModelData;

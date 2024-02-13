@@ -68,6 +68,8 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %sfarming (farm_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', allay varchar(512) DEFAULT '', apiary varchar(512) DEFAULT '', aquarium varchar(512) DEFAULT '', bamboo varchar(512) DEFAULT '', birdcage varchar(512) DEFAULT '', farm varchar(512) DEFAULT '', geode varchar(512) DEFAULT '', hutch varchar(512) DEFAULT '', igloo varchar(512) DEFAULT '', iistubil varchar(512) DEFAULT '', lava varchar(512) DEFAULT '', mangrove varchar(512) DEFAULT '', pen varchar(512) DEFAULT '', stable varchar(512) DEFAULT '', stall varchar(512) DEFAULT '', village varchar(512) DEFAULT '', PRIMARY KEY (farm_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
+            "CREATE TABLE IF NOT EXISTS %sfarming_prefs (farm_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', allay int(1) DEFAULT '1', apiary int(1) DEFAULT '1', aquarium int(1) DEFAULT '1', bamboo int(1) DEFAULT '1', birdcage int(1) DEFAULT '1', farm int(1) DEFAULT '1', geode int(1) DEFAULT '1', hutch int(1) DEFAULT '1', igloo int(1) DEFAULT '1', iistubil int(1) DEFAULT '1', lava int(1) DEFAULT '1', mangrove int(1) DEFAULT '1', pen int(1) DEFAULT '1', stable int(1) DEFAULT '1', stall int(1) DEFAULT '1', village int(1) DEFAULT '1', PRIMARY KEY (farm_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
             "CREATE TABLE IF NOT EXISTS %sflight (f_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', tardis_id int(11) DEFAULT '0', location varchar(512) DEFAULT '', chicken varchar(48) DEFAULT '', PRIMARY KEY (f_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %sforcefield (uuid varchar(48) NOT NULL DEFAULT '', location varchar(512) DEFAULT '', PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
@@ -188,6 +190,8 @@ public class SQL {
 
             "(%s, %s, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
 
+            "(%s, '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+
             "(%s, '%s', %s, '%s', '%s')",
 
             "('%s', '%s')",
@@ -307,6 +311,8 @@ public class SQL {
             "INSERT INTO `%sdoors` (`door_id`, `tardis_id`, `door_type`, `door_location`, `door_direction`, `locked`) VALUES ",
 
             "INSERT INTO `%sfarming` (`farm_id`, `tardis_id`, `allay`, `apiary`, `aquarium`, `bamboo`, `birdcage`, `farm`, `geode`, `hutch`, `igloo`, `iistubil`, `lava`, `mangrove`, `pen`, `stable`, `stall`, `village`) VALUES ",
+
+            "INSERT INTO `%sfarming_prefs` (`farm_id`, `uuid`, `allay`, `apiary`, `aquarium`, `bamboo`, `birdcage`, `farm`, `geode`, `hutch`, `igloo`, `iistubil`, `lava`, `mangrove`, `pen`, `stable`, `stall`, `village`) VALUES ",
 
             "INSERT INTO `%sflight` (`f_id`, `uuid`, `tardis_id`, `location`, `chicken`) VALUES ",
 

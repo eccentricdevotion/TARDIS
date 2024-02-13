@@ -420,4 +420,33 @@ public class QueryFactory {
             return false;
         }
     }
+
+    /**
+     * Update a players mob farming preference
+     *
+     * @param uuid  the players unique id
+     * @param room  the room to set the preference for
+     * @param onOff 1 for on, 0 for off
+     */
+    public void updateFarmingPref(UUID uuid, String room, int onOff) {
+        PreparedStatement ps = null;
+        String query = "UPDATE " + prefix + "farming_prefs SET " + room + " = ? WHERE uuid = ?";
+        try {
+            service.testConnection(connection);
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, onOff);
+            ps.setString(2, uuid.toString());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            plugin.debug("Update error for farming prefs! " + e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing farming prefs! " + e.getMessage());
+            }
+        }
+    }
 }
