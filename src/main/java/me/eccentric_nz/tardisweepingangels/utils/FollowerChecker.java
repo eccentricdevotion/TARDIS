@@ -41,6 +41,7 @@ public class FollowerChecker {
         PersistentDataContainer pdc = entity.getPersistentDataContainer();
         if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
             UUID uuid = pdc.get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
+            UUID eid = entity.getUniqueId();
             net.minecraft.world.entity.Entity entityHusk = ((CraftEntity) entity).getHandle();
             if (entityHusk instanceof TWAFollower twaf && twaf.isFollowing()) {
                 Monster monster = Monster.OOD;
@@ -49,18 +50,21 @@ public class FollowerChecker {
                 int ammo = 0;
                 if (playerUUID.equals(uuid)) {
                     if (pdc.has(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID)) {
+                        eid = pdc.get(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID);
                         monster = Monster.JUDOON;
                         TWAJudoon judoon = (TWAJudoon) ((CraftEntity) entity).getHandle();
                         option = judoon.isGuard();
                         ammo = judoon.getAmmo();
                     } else if (pdc.has(TARDISWeepingAngels.K9, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                         monster = Monster.K9;
+                        eid = pdc.get(TARDISWeepingAngels.K9, TARDISWeepingAngels.PersistentDataTypeUUID);
                     } else if (pdc.has(TARDISWeepingAngels.OOD, TARDISWeepingAngels.PersistentDataTypeUUID)) {
+                        eid = pdc.get(TARDISWeepingAngels.OOD, TARDISWeepingAngels.PersistentDataTypeUUID);
                         TWAOod ood = (TWAOod) ((CraftEntity) entity).getHandle();
                         option = ood.isRedeye();
                         colour = ood.getColour();
                     }
-                    follower = new Follower(entity.getUniqueId(), uuid, monster, twaf.isFollowing(), option, colour, ammo);
+                    follower = new Follower(eid, uuid, monster, twaf.isFollowing(), option, colour, ammo);
                     valid = true;
                 }
             }
