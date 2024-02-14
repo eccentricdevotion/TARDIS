@@ -78,9 +78,7 @@ public class TARDISMalfunction {
     public Location getMalfunction(int id, Player p, COMPASS dir, Location handbrake_loc, String eps, String creeper) {
         Location l;
         // get current TARDIS preset location
-        HashMap<String, Object> wherecl = new HashMap<>();
-        wherecl.put("tardis_id", id);
-        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
+        ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
         if (rscl.resultSet()) {
             Location cl = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
             int end = 100 - plugin.getConfig().getInt("preferences.malfunction_end");

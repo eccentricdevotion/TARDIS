@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
@@ -28,7 +28,6 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -78,9 +77,7 @@ public class TARDISCaveFinder {
 
     public Location searchCave(Player p, int id) {
         // get the current TARDIS location
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (rsc.resultSet()) {
             World w = rsc.getWorld();
             int startx = rsc.getX();

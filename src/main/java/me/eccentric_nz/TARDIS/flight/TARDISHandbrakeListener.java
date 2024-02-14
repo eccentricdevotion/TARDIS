@@ -185,9 +185,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     // check the state of the Relativity Differentiator
                                     if (check.isRelativityDifferentiated(id) && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand()) {
                                         // check if TARDIS is underground
-                                        HashMap<String, Object> wherec = new HashMap<>();
-                                        wherec.put("tardis_id", id);
-                                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+                                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                                         if (!rsc.resultSet()) {
                                             plugin.debug("No current location");
                                             return;

@@ -1,13 +1,11 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
@@ -19,6 +17,9 @@ import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class FloodgateAreasForm {
 
@@ -78,9 +79,7 @@ public class FloodgateAreasForm {
         if (rst.resultSet()) {
             int id = rst.getTardis_id();
             // get current location
-            HashMap<String, Object> wherecl = new HashMap<>();
-            wherecl.put("tardis_id", id);
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             if (!rsc.resultSet()) {
                 new TARDISEmergencyRelocation(plugin).relocate(id, player);
                 return;

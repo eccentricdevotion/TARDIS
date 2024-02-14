@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
@@ -30,7 +30,6 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class TARDISCustomModelDataChanger {
@@ -54,9 +53,7 @@ public class TARDISCustomModelDataChanger {
      */
     public void toggleOuterDoor() {
         UUID uuid = player.getUniqueId();
-        HashMap<String, Object> wherecl = new HashMap<>();
-        wherecl.put("tardis_id", id);
-        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (!rsc.resultSet()) {
             return;
         }

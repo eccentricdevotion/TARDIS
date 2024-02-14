@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -30,6 +29,8 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 public class TARDISSonicAtmospheric {
 

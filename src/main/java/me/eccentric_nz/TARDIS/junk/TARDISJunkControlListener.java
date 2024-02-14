@@ -16,15 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -45,6 +42,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -99,9 +100,7 @@ public class TARDISJunkControlListener implements Listener {
                         if (plugin.getGeneralKeeper().getJunkDestination() != null) {
                             // get the current location
                             Location junkloc = null;
-                            HashMap<String, Object> wherecl = new HashMap<>();
-                            wherecl.put("tardis_id", id);
-                            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                             if (rsc.resultSet()) {
                                 junkloc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                             }

@@ -16,14 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.ThreadLocalRandom;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -34,6 +29,11 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.structure.Structure;
 import org.bukkit.util.StructureSearchResult;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author eccentric_nz
@@ -70,9 +70,7 @@ public class TARDISStructureTravel {
 
     public TARDISStructureLocation getRandomVillage(Player p, int id, String[] args) {
         // get world the Police Box is in
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
+        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, id);
         if (rs.resultSet()) {
             World world = rs.getWorld();
             Environment env = world.getEnvironment();

@@ -65,9 +65,7 @@ public class TARDISRandomButton {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
             return;
         }
-        HashMap<String, Object> wherecl = new HashMap<>();
-        wherecl.put("tardis_id", id);
-        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
+        ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
         if (!rscl.resultSet()) {
             // emergency TARDIS relocation
             new TARDISEmergencyRelocation(plugin).relocate(id, player);

@@ -16,15 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPortals;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -40,6 +36,11 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -117,9 +118,7 @@ public class TARDISInnerDoorOpener {
             }
             // get locations
             // exterior portal (from current location)
-            HashMap<String, Object> where_exportal = new HashMap<>();
-            where_exportal.put("tardis_id", id);
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where_exportal);
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             rsc.resultSet();
             Location exportal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             // interior teleport location

@@ -16,10 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -38,9 +37,7 @@ public class TARDISAdaptiveBoxLampToggler {
     }
 
     public void toggleLamp(int id, boolean on, ChameleonPreset preset) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
+        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, id);
         if (rs.resultSet()) {
             Location location = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
             Block light = location.getBlock().getRelative(BlockFace.UP, 2);

@@ -303,9 +303,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                 float pitch = player.getLocation().getPitch();
                                 String companions = tardis.getCompanions();
                                 boolean hb = tardis.isHandbrake_on();
-                                HashMap<String, Object> wherecl = new HashMap<>();
-                                wherecl.put("tardis_id", tardis.getTardis_id());
-                                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardis_id());
                                 if (!rsc.resultSet()) {
                                     // emergency TARDIS relocation
                                     new TARDISEmergencyRelocation(plugin).relocate(id, player);

@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.flight;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDematerialisationEvent;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -66,9 +66,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             boolean hidden = tardis.isHidden();
-            HashMap<String, Object> wherecl = new HashMap<>();
-            wherecl.put("tardis_id", id);
-            ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
+            ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
             String resetw = "";
             Location l = null;
             if (!rscl.resultSet()) {

@@ -18,14 +18,12 @@ package me.eccentric_nz.TARDIS.junk;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.command.CommandSender;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -48,9 +46,7 @@ class TARDISJunkFind {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
             // get current location
-            HashMap<String, Object> wherec = new HashMap<>();
-            wherec.put("tardis_id", rs.getTardis_id());
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getTardis_id());
             if (rsc.resultSet()) {
                 String world = TARDISAliasResolver.getWorldAlias(rsc.getWorld());
                 if (!plugin.getPlanetsConfig().getBoolean("planets." + rsc.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
