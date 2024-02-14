@@ -31,7 +31,7 @@ body:
       description: "Paste your server log (_showing the whole server startup to when the error occurs_) on a website like paste.gg, and post a link here. Even if there are no errors in the log, it still contains useful information for troubleshooting."
       value: |
         ```
-        Paste configs or paste.gg link here!
+        Paste configs or pastebin.com link here!
         ```
       placeholder: Please don't remove the backticks; it makes your issue a lot harder to read!
     validations:
