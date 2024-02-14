@@ -87,7 +87,8 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     cmd = 1001;
                     // set a light block
                     Levelled levelled = TARDISConstants.LIGHT;
-                    levelled.setLevel(7);
+                    // set light level from exterior lamp control
+                    levelled.setLevel(bd.getExteriorLampLevel());
                     light.setBlockData(levelled);
                 }
             }

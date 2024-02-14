@@ -144,7 +144,8 @@ public class TARDISInstantPoliceBox {
         stand.setGravity(false);
         // set a light block
         Levelled levelled = TARDISConstants.LIGHT;
-        levelled.setLevel(7);
+        // set light level from exterior lamp control
+        levelled.setLevel(bd.getExteriorLampLevel());
         block.getRelative(BlockFace.UP, 2).setBlockData(levelled);
     }
 }
