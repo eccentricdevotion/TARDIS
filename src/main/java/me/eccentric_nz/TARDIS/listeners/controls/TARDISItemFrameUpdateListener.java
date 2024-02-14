@@ -68,7 +68,9 @@ public class TARDISItemFrameUpdateListener implements Listener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_BAD_CLICK", plugin.getTrackerKeeper().getUpdatePlayers().get(uuid));
                     return;
                 }
-                if (control.equals(Control.DIRECTION) || control.equals(Control.FRAME) || control.equals(Control.ROTOR) || control.equals(Control.MAP) || control.equals(Control.MONITOR) || control.equals(Control.MONITOR_FRAME) || control.equals(Control.SONIC_DOCK)) {
+                if (control.equals(Control.DIRECTION) || control.equals(Control.FRAME) || control.equals(Control.ROTOR)
+                        || control.equals(Control.MAP) || control.equals(Control.MONITOR) || control.equals(Control.MONITOR_FRAME)
+                        || control.equals(Control.SONIC_DOCK) || control.equals(Control.EXTERIOR_LAMP)) {
                     // check they have a TARDIS
                     ResultSetTardisID rst = new ResultSetTardisID(plugin);
                     if (!rst.fromUUID(uuid.toString())) {
@@ -77,7 +79,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                     }
                     int id = rst.getTardis_id();
                     switch (control) {
-                        case DIRECTION, FRAME, MAP, MONITOR, MONITOR_FRAME, SONIC_DOCK -> {
+                        case DIRECTION, FRAME, MAP, MONITOR, MONITOR_FRAME, SONIC_DOCK, EXTERIOR_LAMP, LIGHT_SWITCH -> {
                             if (control.equals(Control.MAP) && !TARDISPermission.hasPermission(player, "tardis.scanner.map")) {
                                 plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_MAP");
@@ -184,7 +186,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                     }
                                     which = "Monitor Frame";
                                 }
-                                default -> { // SONIC_DOCK
+                                case SONIC_DOCK -> {
                                     if (!isDock(frame)) {
                                         // they haven't placed a dock in the frame first
                                         plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
@@ -195,6 +197,18 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                     frame.setVisible(false);
                                     plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                                     which = "Sonic Dock";
+                                }
+                                default -> { // EXTERIOR_LAMP
+                                    if (!isLampSwitch(frame)) {
+                                        // they haven't placed a exterior lamp switch in the frame first
+                                        plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
+                                        plugin.getMessenger().sendColouredCommand(player, "LAMP_PLACE_FRAME", "/trecipe exterior-lamp", plugin);
+                                        return;
+                                    }
+                                    frame.setFixed(true);
+                                    frame.setVisible(false);
+                                    plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
+                                    which = "Exterior Lamp Light Level switch";
                                 }
                             }
                             // check whether they have an item frame control of this type already
@@ -239,6 +253,15 @@ public class TARDISItemFrameUpdateListener implements Listener {
             return false;
         }
         ItemMeta im = dock.getItemMeta();
+        return im.hasCustomModelData() && (im.getCustomModelData() == 1000 || im.getCustomModelData() == 1001);
+    }
+
+    private boolean isLampSwitch(ItemFrame frame) {
+        ItemStack lampSwitch = frame.getItem();
+        if (lampSwitch.getType() != Material.LEVER || !lampSwitch.hasItemMeta()) {
+            return false;
+        }
+        ItemMeta im = lampSwitch.getItemMeta();
         return im.hasCustomModelData() && (im.getCustomModelData() == 1000 || im.getCustomModelData() == 1001);
     }
 }

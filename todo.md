@@ -3,7 +3,6 @@
 ## Current version `5.4.0`
 
 1. Fix dem bugs
-2. Controlled mob farming [#785](https://github.com/eccentricdevotion/TARDIS/issues/785)
 
 ## Next version `5.5.0`
 

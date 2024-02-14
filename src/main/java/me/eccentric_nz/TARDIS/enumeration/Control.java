@@ -71,7 +71,9 @@ public enum Control {
     MONITOR(45, "monitor", false, false),
     MONITOR_FRAME(46, "monitor-frame", true, false),
     RELATIVITY_DIFFERENTIATOR(47, "relativity-differentiator", false, true),
-    SONIC_DOCK(48, "sonic-dock", false, true);
+    SONIC_DOCK(48, "sonic-dock", false, true),
+    EXTERIOR_LAMP(49, "exterior-lamp", false, true),
+    LIGHT_LEVEL(50, "light-level", false, true);
 
 
     private static final HashMap<String, Integer> UPDATE_CONTROLS = new HashMap<>();

@@ -305,6 +305,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISItemFrameUpdateListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISDirectionFrameListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISHandlesFrameListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISLightLevelFrameListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISMonitorFrameListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPlayerShellListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("allow.wg_flag_set") && plugin.getPM().isPluginEnabled("WorldGuard")) {
