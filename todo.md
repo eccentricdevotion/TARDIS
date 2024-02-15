@@ -24,7 +24,7 @@
 
 ## Wiki Documentation
 
-* Make _tardisjenkins.duckdns.org_ use `https://` for the issues page
+* When submitting an issue, provide a link to the newly created issue on GitHub
 * Make all images tabbed
 * Vanilla/TARDIS screenshots for TabbedImage views
 * Update shell room GUI info
