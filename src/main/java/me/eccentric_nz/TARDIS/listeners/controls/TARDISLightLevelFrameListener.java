@@ -25,7 +25,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.ItemFrame;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -50,7 +49,6 @@ public class TARDISLightLevelFrameListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onLightLevelClick(PlayerInteractEntityEvent event) {
         if (event.getRightClicked() instanceof ItemFrame frame) {
-            Player player = event.getPlayer();
             // check if it is a TARDIS monitor item frame
             Location l = frame.getLocation();
             ResultSetLightLevel rs = new ResultSetLightLevel(plugin, l.toString());
@@ -95,6 +93,9 @@ public class TARDISLightLevelFrameListener implements Listener {
                                 return;
                             }
                             Location location = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                            while (!location.getChunk().isLoaded()) {
+                                location.getChunk().load();
+                            }
                             Block light = location.getBlock().getRelative(BlockFace.UP, 2);
                             if (light.getBlockData() instanceof Levelled levelled) {
                                 levelled.setLevel(light_level);
@@ -105,9 +106,9 @@ public class TARDISLightLevelFrameListener implements Listener {
                         // interior
                         light_level = interior_level[setLevel];
                         // get TARDIS lights
-                        HashMap<String, Object> wherel = new HashMap<>();
-                        wherel.put("tardis_id", rs.getTardis_id());
-                        ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, true);
+                        HashMap<String, Object> whereLight = new HashMap<>();
+                        whereLight.put("tardis_id", rs.getTardis_id());
+                        ResultSetLamps rsl = new ResultSetLamps(plugin, whereLight, true);
                         if (rsl.resultSet()) {
                             for (Block block : rsl.getData()) {
                                 if (block.getBlockData() instanceof Levelled levelled) {
