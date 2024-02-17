@@ -63,8 +63,7 @@ public class TARDISDisplayBlockListener implements Listener {
     }
 
     /**
-     * Place an item display entity and a barrier block to simulate a custom
-     * TARDIS block.
+     * Place an item display entity and a barrier block to simulate a custom TARDIS block.
      *
      * @param event The TARDIS block placement event
      */
@@ -106,9 +105,7 @@ public class TARDISDisplayBlockListener implements Listener {
             data = TARDISConstants.BARRIER;
         }
         if (data != null) {
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                location.getBlock().setBlockData(data);
-            }, 1L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> location.getBlock().setBlockData(data), 1L);
         }
         double ay = (which == TARDISDisplayItem.DOOR) ? 0.0d : 0.5d;
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
@@ -130,8 +127,7 @@ public class TARDISDisplayBlockListener implements Listener {
     }
 
     /**
-     * Remove an item display / interaction entity when breaking a TARDIS block
-     * in creative gamemode.
+     * Remove an item display / interaction entity when breaking a TARDIS block in creative gamemode.
      *
      * @param event The TARDIS block break event
      */
@@ -168,12 +164,14 @@ public class TARDISDisplayBlockListener implements Listener {
                 for (Entity e : l.getWorld().getNearbyEntities(block.getBoundingBox().expand(0.1d), (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
                     if (e instanceof ItemDisplay display) {
                         ItemStack is = display.getItemStack();
-                        if (is.hasItemMeta()) {
-                            if (is.getItemMeta().getPersistentDataContainer().has(plugin.getDestroyKey(), PersistentDataType.INTEGER)) {
-                                breaking = display;
-                            }
-                            if (is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
-                                fake = display;
+                        if (is != null) {
+                            if (is.hasItemMeta()) {
+                                if (is.getItemMeta().getPersistentDataContainer().has(plugin.getDestroyKey(), PersistentDataType.INTEGER)) {
+                                    breaking = display;
+                                }
+                                if (is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+                                    fake = display;
+                                }
                             }
                         }
                     }
@@ -212,7 +210,7 @@ public class TARDISDisplayBlockListener implements Listener {
                     for (Entity e : l.getWorld().getNearbyEntities(l, 0.55d, 0.55d, 0.55d, (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
                         if (e instanceof ItemDisplay item) {
                             ItemStack stack = item.getItemStack();
-                            if (stack.hasItemMeta()) {
+                            if (stack != null && stack.hasItemMeta()) {
                                 if (stack.getItemMeta().getPersistentDataContainer().has(plugin.getDestroyKey(), PersistentDataType.INTEGER)) {
                                     breaking = item;
                                 }
@@ -223,109 +221,114 @@ public class TARDISDisplayBlockListener implements Listener {
                 } else if (inHand.getType() == Material.END_ROD && player.hasPermission("tardis.admin")) {
                     // toggle custom model data of item display's item stack
                     ItemStack itemStack = display.getItemStack();
-                    ItemMeta im = itemStack.getItemMeta();
-                    int cmd = im.getCustomModelData();
-                    switch (cmd) {
-                        case 10001 -> cmd = 10002;
-                        case 10002 -> cmd = 10003;
-                        case 10005 -> cmd = 10010;
-                        case 10010 -> cmd = 10005;
-                        default -> cmd = 10001;
+                    if (itemStack != null) {
+                        ItemMeta im = itemStack.getItemMeta();
+                        int cmd = im.getCustomModelData();
+                        switch (cmd) {
+                            case 10001 -> cmd = 10002;
+                            case 10002 -> cmd = 10003;
+                            case 10005 -> cmd = 10010;
+                            case 10010 -> cmd = 10005;
+                            default -> cmd = 10001;
+                        }
+                        im.setCustomModelData(cmd);
+                        itemStack.setItemMeta(im);
+                        display.setItemStack(itemStack);
                     }
-                    im.setCustomModelData(cmd);
-                    itemStack.setItemMeta(im);
-                    display.setItemStack(itemStack);
                 } else {
                     TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
-                    if (tdi != null && (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN)) {
-                        if (!plugin.getUtils().inTARDISWorld(player)) {
-                            return;
-                        }
-                        Block block = interaction.getLocation().getBlock();
-                        UUID playerUUID = player.getUniqueId();
-                        if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(player.getUniqueId())) {
-                            String uuid = (TARDISSudoTracker.SUDOERS.containsKey(playerUUID)) ? TARDISSudoTracker.SUDOERS.get(playerUUID).toString() : playerUUID.toString();
-                            HashMap<String, Object> where = new HashMap<>();
-                            where.put("uuid", uuid);
-                            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-                            if (!rs.resultSet()) {
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                                plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
+                    if (tdi != null) {
+                        if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN) {
+                            if (!plugin.getUtils().inTARDISWorld(player)) {
                                 return;
                             }
-                            Tardis tardis = rs.getTardis();
-                            int id = tardis.getTardis_id();
-                            new UpdateDoor(plugin).process(Updateable.DOOR, block, false, id, player);
-                            plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
-                            TARDISSudoTracker.SUDOERS.remove(playerUUID);
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_SET", "double door");
-                            return;
-                        }
-                        if (player.isSneaking()) {
-                            if (tdi == TARDISDisplayItem.DOOR) {
-                                // move to outside
-                                new DisplayItemDoorMover(plugin).exit(player, block);
+                            Block block = interaction.getLocation().getBlock();
+                            UUID playerUUID = player.getUniqueId();
+                            if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(player.getUniqueId())) {
+                                String uuid = (TARDISSudoTracker.SUDOERS.containsKey(playerUUID)) ? TARDISSudoTracker.SUDOERS.get(playerUUID).toString() : playerUUID.toString();
+                                HashMap<String, Object> where = new HashMap<>();
+                                where.put("uuid", uuid);
+                                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+                                if (!rs.resultSet()) {
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
+                                    plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
+                                    return;
+                                }
+                                Tardis tardis = rs.getTardis();
+                                int id = tardis.getTardis_id();
+                                new UpdateDoor(plugin).process(Updateable.DOOR, block, false, id, player);
+                                plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
+                                TARDISSudoTracker.SUDOERS.remove(playerUUID);
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_SET", "double door");
+                                return;
                             }
-                            if (tdi == TARDISDisplayItem.DOOR_OPEN) {
-                                // open right hand door as well
+                            if (player.isSneaking()) {
+                                if (tdi == TARDISDisplayItem.DOOR) {
+                                    // move to outside
+                                    new DisplayItemDoorMover(plugin).exit(player, block);
+                                }
+                                if (tdi == TARDISDisplayItem.DOOR_OPEN) {
+                                    // open right hand door as well
+                                    ItemStack itemStack = display.getItemStack();
+                                    if (itemStack != null) {
+                                        ItemMeta im = itemStack.getItemMeta();
+                                        im.setCustomModelData(10003);
+                                        itemStack.setItemMeta(im);
+                                        display.setItemStack(itemStack);
+                                        // close doors / decativate portal
+                                        new DisplayItemDoorToggler(plugin).openClose(player, block, true);
+                                    }
+                                }
+                            } else {
                                 ItemStack itemStack = display.getItemStack();
-                                ItemMeta im = itemStack.getItemMeta();
-                                im.setCustomModelData(10003);
-                                itemStack.setItemMeta(im);
-                                display.setItemStack(itemStack);
-                                // close doors / decativate portal
-                                new DisplayItemDoorToggler(plugin).openClose(player, block, true);
-                            }
-                        } else {
-                            ItemStack itemStack = display.getItemStack();
-                            ItemMeta im = itemStack.getItemMeta();
-                            switch (tdi) {
-                                case DOOR -> {
-                                    // open doors / activate portal
-                                    im.setCustomModelData(10002);
-                                    new DisplayItemDoorToggler(plugin).openClose(player, block, false);
-                                }
-                                case DOOR_OPEN -> {
-                                    // close doors / decativate portal
-                                    im.setCustomModelData(10001);
-                                    new DisplayItemDoorToggler(plugin).openClose(player, block, true);
-                                }
-                                default -> {
-                                    // just close doors
-                                    im.setCustomModelData(10001);
+                                if (itemStack != null) {
+                                    ItemMeta im = itemStack.getItemMeta();
+                                    switch (tdi) {
+                                        case DOOR -> {
+                                            // open doors / activate portal
+                                            im.setCustomModelData(10002);
+                                            new DisplayItemDoorToggler(plugin).openClose(player, block, false);
+                                        }
+                                        case DOOR_OPEN -> {
+                                            // close doors / decativate portal
+                                            im.setCustomModelData(10001);
+                                            new DisplayItemDoorToggler(plugin).openClose(player, block, true);
+                                        }
+                                        default -> im.setCustomModelData(10001); // just close doors
+                                    }
+                                    itemStack.setItemMeta(im);
+                                    display.setItemStack(itemStack);
                                 }
                             }
-                            itemStack.setItemMeta(im);
-                            display.setItemStack(itemStack);
-                        }
-                    } else if (player.isSneaking() && tdi.isLight()) {
-                        Material toPlace = inHand.getType();
-                        if (isPlaceable(toPlace)) {
-                            // place block in hand on top
-                            Block block = interaction.getLocation().getBlock().getRelative(BlockFace.UP);
-                            if (block.getType().isAir()) {
-                                block.setType(toPlace);
-                                // if directional block rotate based on player direction
-                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                    BlockData data = block.getBlockData();
-                                    if (data instanceof Directional directional) {
-                                        directional.setFacing(data instanceof Stairs ? player.getFacing() : player.getFacing().getOppositeFace());
-                                        block.setBlockData(data);
+                        } else if (player.isSneaking() && tdi.isLight()) {
+                            Material toPlace = inHand.getType();
+                            if (isPlaceable(toPlace)) {
+                                // place block in hand on top
+                                Block block = interaction.getLocation().getBlock().getRelative(BlockFace.UP);
+                                if (block.getType().isAir()) {
+                                    block.setType(toPlace);
+                                    // if directional block rotate based on player direction
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                        BlockData data = block.getBlockData();
+                                        if (data instanceof Directional directional) {
+                                            directional.setFacing(data instanceof Stairs ? player.getFacing() : player.getFacing().getOppositeFace());
+                                            block.setBlockData(data);
+                                        }
+                                        if (data instanceof Rotatable rotatable) {
+                                            rotatable.setRotation(player.getFacing().getOppositeFace());
+                                            block.setBlockData(data);
+                                        }
+                                    }, 1);
+                                    if (player.getGameMode() == GameMode.SURVIVAL) {
+                                        // remove a block from inventory
+                                        int amount = inHand.getAmount() - 1;
+                                        if (amount > 0) {
+                                            player.getInventory().getItemInMainHand().setAmount(amount);
+                                        } else {
+                                            player.getInventory().setItemInMainHand(null);
+                                        }
+                                        player.updateInventory();
                                     }
-                                    if (data instanceof Rotatable rotatable) {
-                                        rotatable.setRotation(player.getFacing().getOppositeFace());
-                                        block.setBlockData(data);
-                                    }
-                                }, 1);
-                                if (player.getGameMode() == GameMode.SURVIVAL) {
-                                    // remove a block from inventory
-                                    int amount = inHand.getAmount() - 1;
-                                    if (amount > 0) {
-                                        player.getInventory().getItemInMainHand().setAmount(amount);
-                                    } else {
-                                        player.getInventory().setItemInMainHand(null);
-                                    }
-                                    player.updateInventory();
                                 }
                             }
                         }
@@ -336,10 +339,7 @@ public class TARDISDisplayBlockListener implements Listener {
     }
 
     private boolean isPlaceable(Material material) {
-        if (!material.isSolid() || Tag.DOORS.isTagged(material) || material.hasGravity() || Tag.PRESSURE_PLATES.isTagged(material)) {
-            return false;
-        }
-        return true;
+        return material.isSolid() && !Tag.DOORS.isTagged(material) && !material.hasGravity() && !Tag.PRESSURE_PLATES.isTagged(material);
     }
 
     private boolean isRedstoneSonic(ItemStack is) {
@@ -371,33 +371,33 @@ public class TARDISDisplayBlockListener implements Listener {
         }
         if (breaking != null && fake != null) {
             ItemStack is = breaking.getItemStack();
-            int destroy = is.getItemMeta().getPersistentDataContainer().get(plugin.getDestroyKey(), PersistentDataType.INTEGER);
-            if (destroy == 9) {
-                if (player.getGameMode().equals(GameMode.SURVIVAL)) {
-                    l.getWorld().dropItemNaturally(l, fake.getItemStack());
-                }
-                breaking.remove();
-                fake.remove();
-                if (interaction != null) {
-                    interaction.remove();
-                }
-                block.setType(Material.AIR);
-                // remove lamp record if light
-                TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(fake);
-                if (tdi != null && tdi.isLight()) {
-                    new TARDISSonicLight(plugin).removeLamp(block, player);
-                }
-            } else {
-                // update breaking item stack
-                ItemMeta im = is.getItemMeta();
-                im.getPersistentDataContainer().set(plugin.getDestroyKey(), PersistentDataType.INTEGER, destroy + 1);
-                im.setCustomModelData(im.getCustomModelData() + 1);
-                is.setItemMeta(im);
-                breaking.setItemStack(is);
-                // set a delayed task to reset the breaking animation
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            if (is != null) {
+                int destroy = is.getItemMeta().getPersistentDataContainer().get(plugin.getDestroyKey(), PersistentDataType.INTEGER);
+                if (destroy == 9) {
+                    if (player.getGameMode().equals(GameMode.SURVIVAL) && fake.getItemStack() != null) {
+                        l.getWorld().dropItemNaturally(l, fake.getItemStack());
+                    }
                     breaking.remove();
-                }, 60);
+                    fake.remove();
+                    if (interaction != null) {
+                        interaction.remove();
+                    }
+                    block.setType(Material.AIR);
+                    // remove lamp record if light
+                    TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(fake);
+                    if (tdi != null && tdi.isLight()) {
+                        new TARDISSonicLight(plugin).removeLamp(block, player);
+                    }
+                } else {
+                    // update breaking item stack
+                    ItemMeta im = is.getItemMeta();
+                    im.getPersistentDataContainer().set(plugin.getDestroyKey(), PersistentDataType.INTEGER, destroy + 1);
+                    im.setCustomModelData(im.getCustomModelData() + 1);
+                    is.setItemMeta(im);
+                    breaking.setItemStack(is);
+                    // set a delayed task to reset the breaking animation
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> breaking.remove(), 60);
+                }
             }
         } else if (breaking == null) {
             // only one item display entity...
