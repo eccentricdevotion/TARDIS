@@ -5,12 +5,12 @@ import org.bukkit.Material;
 
 public enum TardisLight {
 
-    CLASSIC(TARDISDisplayItem.LIGHT_CLASSIC_ON, TARDISDisplayItem.LIGHT_CLASSIC),
-    CLASSIC_OFFSET(TARDISDisplayItem.LIGHT_CLASSIC_OFFSET_ON, TARDISDisplayItem.LIGHT_CLASSIC_OFFSET),
-    TENTH(Material.REDSTONE_LAMP, TARDISDisplayItem.LIGHT_TENTH_ON, TARDISDisplayItem.LIGHT_TENTH),
-    ELEVENTH(TARDISDisplayItem.LIGHT_ELEVENTH_ON, TARDISDisplayItem.LIGHT_ELEVENTH),
-    TWELFTH(TARDISDisplayItem.LIGHT_TWELFTH_ON, TARDISDisplayItem.LIGHT_TWELFTH),
-    THIRTEENTH(TARDISDisplayItem.LIGHT_THIRTEENTH_ON, TARDISDisplayItem.LIGHT_THIRTEENTH),
+    CLASSIC(TARDISDisplayItem.LIGHT_CLASSIC_ON, TARDISDisplayItem.LIGHT_CLASSIC, TARDISDisplayItem.LIGHT_CLASSIC_CLOISTER),
+    CLASSIC_OFFSET(TARDISDisplayItem.LIGHT_CLASSIC_OFFSET_ON, TARDISDisplayItem.LIGHT_CLASSIC_OFFSET, TARDISDisplayItem.LIGHT_CLASSIC_OFFSET_CLOISTER),
+    TENTH(Material.REDSTONE_LAMP, TARDISDisplayItem.LIGHT_TENTH_ON, TARDISDisplayItem.LIGHT_TENTH, TARDISDisplayItem.LIGHT_TENTH_CLOISTER),
+    ELEVENTH(TARDISDisplayItem.LIGHT_ELEVENTH_ON, TARDISDisplayItem.LIGHT_ELEVENTH, TARDISDisplayItem.LIGHT_ELEVENTH_CLOISTER),
+    TWELFTH(TARDISDisplayItem.LIGHT_TWELFTH_ON, TARDISDisplayItem.LIGHT_TWELFTH, TARDISDisplayItem.LIGHT_TWELFTH_CLOISTER),
+    THIRTEENTH(TARDISDisplayItem.LIGHT_THIRTEENTH_ON, TARDISDisplayItem.LIGHT_THIRTEENTH, TARDISDisplayItem.LIGHT_THIRTEENTH_CLOISTER),
     LAMP(Material.REDSTONE_LAMP, TARDISDisplayItem.LIGHT_LAMP_ON, TARDISDisplayItem.LIGHT_LAMP),
     LANTERN(TARDISDisplayItem.LIGHT_LANTERN_ON, TARDISDisplayItem.LIGHT_LANTERN),
     BLUE_LAMP(TARDISDisplayItem.BLUE_LAMP_ON, TARDISDisplayItem.BLUE_LAMP),
@@ -21,29 +21,34 @@ public enum TardisLight {
     private final Material material;
     private final TARDISDisplayItem on;
     private final TARDISDisplayItem off;
+    private final TARDISDisplayItem cloister;
+
+    TardisLight(TARDISDisplayItem on, TARDISDisplayItem off, TARDISDisplayItem cloister) {
+        this.material = Material.SEA_LANTERN;
+        this.on = on;
+        this.off = off;
+        this.cloister = cloister;
+    }
 
     TardisLight(TARDISDisplayItem on, TARDISDisplayItem off) {
         this.material = Material.SEA_LANTERN;
         this.on = on;
         this.off = off;
+        this.cloister = TARDISDisplayItem.NONE;
     }
 
     TardisLight(Material material, TARDISDisplayItem on, TARDISDisplayItem off) {
         this.material = material;
         this.on = on;
         this.off = off;
+        this.cloister = TARDISDisplayItem.NONE;
     }
 
-    public Material getMaterial() {
-        return material;
-    }
-
-    public TARDISDisplayItem getOn() {
-        return on;
-    }
-
-    public TARDISDisplayItem getOff() {
-        return off;
+    TardisLight(Material material, TARDISDisplayItem on, TARDISDisplayItem off, TARDISDisplayItem cloister) {
+        this.material = material;
+        this.on = on;
+        this.off = off;
+        this.cloister = cloister;
     }
 
     public static TARDISDisplayItem getToggled(TARDISDisplayItem tdi) {
@@ -67,5 +72,21 @@ public enum TardisLight {
             case LIGHT_CLASSIC_ON, LIGHT_CLASSIC_OFFSET_ON, LIGHT_TENTH_ON, LIGHT_ELEVENTH_ON, LIGHT_TWELFTH_ON, LIGHT_THIRTEENTH_ON, LIGHT_LAMP_ON, LIGHT_LANTERN_ON -> TardisLight.valueOf(s.substring(6, s.length() - 3));
             default -> TENTH;
         };
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public TARDISDisplayItem getOn() {
+        return on;
+    }
+
+    public TARDISDisplayItem getOff() {
+        return off;
+    }
+
+    public TARDISDisplayItem getCloister() {
+        return cloister;
     }
 }

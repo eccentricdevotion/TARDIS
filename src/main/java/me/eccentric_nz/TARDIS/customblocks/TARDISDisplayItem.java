@@ -126,13 +126,25 @@ public enum TARDISDisplayItem {
     LIGHT_THIRTEENTH_ON(10009, Material.SEA_LANTERN, null),
     LIGHT_LAMP_ON(10005, Material.REDSTONE_LAMP, null),
     LIGHT_LANTERN_ON(-1, Material.SEA_LANTERN, null),
+    // lights cloister
+    // lights on
+    LIGHT_CLASSIC_CLOISTER(20005, Material.SEA_LANTERN, null),
+    LIGHT_CLASSIC_OFFSET_CLOISTER(20010, Material.SEA_LANTERN, null),
+    LIGHT_TENTH_CLOISTER(20006, Material.REDSTONE_LAMP, null),
+    LIGHT_ELEVENTH_CLOISTER(20007, Material.REDSTONE_LAMP, null),
+    LIGHT_TWELFTH_CLOISTER(20008, Material.SEA_LANTERN, null),
+    LIGHT_THIRTEENTH_CLOISTER(20009, Material.SEA_LANTERN, null),
+    LIGHT_LAMP_CLOISTER(-1, Material.REDSTONE_LAMP, null),
+    LIGHT_LANTERN_CLOISTER(-1, Material.SEA_LANTERN, null),
     // console sides
     CONSOLE_1(1001, Material.AMETHYST_SHARD, null),
     CONSOLE_2(1002, Material.AMETHYST_SHARD, null),
     CONSOLE_3(1003, Material.AMETHYST_SHARD, null),
     CONSOLE_4(1004, Material.AMETHYST_SHARD, null),
     CONSOLE_5(1005, Material.AMETHYST_SHARD, null),
-    CONSOLE_6(1006, Material.AMETHYST_SHARD, null);
+    CONSOLE_6(1006, Material.AMETHYST_SHARD, null),
+    // dummy
+    NONE(-1, null, null);
 
     private static final HashMap<String, TARDISDisplayItem> BY_NAME = new HashMap<>();
     private static final HashMap<Integer, TARDISDisplayItem> BY_MUSHROOM_STEM = new HashMap<>() {
