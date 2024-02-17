@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -43,6 +42,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.FurnaceInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -154,6 +155,7 @@ public class TARDISArtronFurnaceListener implements Listener {
             event.setCancelled(true);
             // only in TARDIS
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
+            return;
         }
         if (TARDISPermission.hasPermission(player, "tardis.furnace")) {
             Block b = event.getBlock();
