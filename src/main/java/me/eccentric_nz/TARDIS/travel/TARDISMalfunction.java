@@ -78,9 +78,7 @@ public class TARDISMalfunction {
     public Location getMalfunction(int id, Player p, COMPASS dir, Location handbrake_loc, String eps, String creeper) {
         Location l;
         // get current TARDIS preset location
-        HashMap<String, Object> wherecl = new HashMap<>();
-        wherecl.put("tardis_id", id);
-        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
+        ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
         if (rscl.resultSet()) {
             Location cl = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
             int end = 100 - plugin.getConfig().getInt("preferences.malfunction_end");
@@ -219,9 +217,11 @@ public class TARDISMalfunction {
                     tdi = TARDISDisplayItem.getByItemDisplay(display);
                     light = TardisLight.getFromDisplayItem(tdi);
                 }
+                ResultSetInteriorLightLevel rs = new ResultSetInteriorLightLevel(plugin, id);
+                int level = rs.resultSet() ? rs.getLevel() : 15;
                 // flicker lights
                 long end = System.currentTimeMillis() + 10000;
-                TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, rsl.getData(), end, light, light.getOn() == tdi);
+                TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, rsl.getData(), end, light, light.getOn() == tdi, level);
                 runnable.setHandbrake(handbrake);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
                 runnable.setTask(taskID);

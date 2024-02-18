@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISMaterialisationEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -84,9 +84,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             // get current location for back
-            HashMap<String, Object> wherecu = new HashMap<>();
-            wherecu.put("tardis_id", id);
-            ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecu);
+            ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
             if (rscl.resultSet()) {
                 BukkitScheduler scheduler = plugin.getServer().getScheduler();
                 if (malfunction) {

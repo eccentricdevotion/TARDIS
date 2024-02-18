@@ -19,10 +19,7 @@ package me.eccentric_nz.TARDIS.travel.save;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -133,9 +130,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                 } else {
                     event.setCancelled(true);
                     if (slot >= 0 && slot < 45) {
-                        HashMap<String, Object> where = new HashMap<>();
-                        where.put("tardis_id", occupiedTardisId);
-                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
+                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, occupiedTardisId);
                         Location current = null;
                         if (rsc.resultSet()) {
                             current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());

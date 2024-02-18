@@ -16,12 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -31,6 +27,11 @@ import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -99,9 +100,7 @@ public class TARDISDoorCloser {
             }
             // get locations
             // exterior portal (from current location)
-            HashMap<String, Object> where_exportal = new HashMap<>();
-            where_exportal.put("tardis_id", id);
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where_exportal);
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             rsc.resultSet();
             Location exportal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             if (rs.getTardis().getPreset().equals(ChameleonPreset.SWAMP)) {

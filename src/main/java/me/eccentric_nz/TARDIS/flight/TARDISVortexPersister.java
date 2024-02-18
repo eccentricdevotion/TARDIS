@@ -16,13 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISInstantPoliceBox;
@@ -30,7 +23,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISInstantPreset;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstantPreset;
@@ -41,6 +34,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -130,9 +131,7 @@ public class TARDISVortexPersister {
                         // interrupted materialisation
                         // get next destination and land
                         // next location = 'current' table
-                        HashMap<String, Object> wherec = new HashMap<>();
-                        wherec.put("tardis_id", id);
-                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                         if (rsc.resultSet()) {
                             BuildData bd = new BuildData(uuid.toString());
                             bd.setTardisID(id);

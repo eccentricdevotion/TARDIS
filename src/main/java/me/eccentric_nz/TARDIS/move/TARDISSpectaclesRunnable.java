@@ -16,9 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Material;
@@ -26,6 +25,8 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -59,9 +60,7 @@ public class TARDISSpectaclesRunnable implements Runnable {
                 if (b.equals(value.toString())) {
                     ResultSetTardisID rs = new ResultSetTardisID(plugin);
                     if (rs.fromUUID(key.toString())) {
-                        HashMap<String, Object> wherec = new HashMap<>();
-                        wherec.put("tardis_id", rs.getTardis_id());
-                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getTardis_id());
                         if (rsc.resultSet()) {
                             p.sendBlockChange(value.getLocation(), lower.get(rsc.getDirection()));
                             p.sendBlockChange(value.getRelative(BlockFace.UP).getLocation(), upper);

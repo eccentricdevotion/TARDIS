@@ -305,9 +305,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                 String companions = tardis.getCompanions();
                                 boolean hb = tardis.isHandbrake_on();
                                 boolean po = !tardis.isPowered_on() && !tardis.isAbandoned();
-                                HashMap<String, Object> wherecl = new HashMap<>();
-                                wherecl.put("tardis_id", tardis.getTardis_id());
-                                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardis_id());
                                 if (!rsc.resultSet()) {
                                     // emergency TARDIS relocation
                                     new TARDISEmergencyRelocation(plugin).relocate(id, player);

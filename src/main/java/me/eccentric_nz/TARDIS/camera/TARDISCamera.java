@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.camera;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -30,9 +30,7 @@ public class TARDISCamera {
         TARDISCameraTracker.CAMERA_IN_USE.add(id);
         playerLocation.getChunk().setForceLoaded(true);
         // get the TARDIS's current location
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (!rsc.resultSet()) {
             plugin.debug("No current location");
             return;

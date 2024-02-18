@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import org.bukkit.Location;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -43,9 +44,7 @@ class TARDISJunkLocation {
         if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
             id = rs.getTardis_id();
             // get current location
-            HashMap<String, Object> wherec = new HashMap<>();
-            wherec.put("tardis_id", id);
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             if (rsc.resultSet()) {
                 // get home location
                 HashMap<String, Object> whereh = new HashMap<>();

@@ -117,9 +117,7 @@ public class TARDII implements TardisAPI {
 
     @Override
     public Location getTARDISCurrentLocation(int id) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetCurrentLocation rs = new ResultSetCurrentLocation(TARDIS.plugin, where);
+        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(TARDIS.plugin, id);
         if (rs.resultSet()) {
             return new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
         }
@@ -613,9 +611,7 @@ public class TARDII implements TardisAPI {
     @Override
     public boolean setDestination(int id, Location location, boolean travel) {
         // get current direction
-        HashMap<String, Object> wherec = new HashMap<>();
-        wherec.put("tardis_id", id);
-        ResultSetCurrentLocation rs = new ResultSetCurrentLocation(TARDIS.plugin, wherec);
+        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(TARDIS.plugin, id);
         if (rs.resultSet()) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
@@ -709,9 +705,7 @@ public class TARDII implements TardisAPI {
         TARDIS.plugin.getQueryFactory().doSyncUpdate("tardis", set, where);
         if (rebuild) {
             // rebuild exterior
-            HashMap<String, Object> wherecl = new HashMap<>();
-            wherecl.put("tardis_id", id);
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(TARDIS.plugin, wherecl);
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(TARDIS.plugin, id);
             if (!rsc.resultSet()) {
                 return false;
             }

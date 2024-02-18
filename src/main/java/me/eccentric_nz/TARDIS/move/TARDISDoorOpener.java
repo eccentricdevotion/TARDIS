@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPortals;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -111,9 +111,7 @@ public class TARDISDoorOpener {
             }
             // get locations
             // exterior portal (from current location)
-            HashMap<String, Object> where_exportal = new HashMap<>();
-            where_exportal.put("tardis_id", id);
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where_exportal);
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             rsc.resultSet();
             Location exportal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             if (preset != null && preset.equals(ChameleonPreset.SWAMP)) {

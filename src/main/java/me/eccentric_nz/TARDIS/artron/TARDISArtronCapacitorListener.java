@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.commands.tardis.TARDISAbandonCommand;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -306,9 +306,7 @@ public class TARDISArtronCapacitorListener implements Listener {
         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
             plugin.getWorldGuardUtils().updateRegionForClaim(block.getLocation(), player.getUniqueId());
         }
-        HashMap<String, Object> wherec = new HashMap<>();
-        wherec.put("tardis_id", id);
-        ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
+        ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
         if (rscl.resultSet()) {
             Location current = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
             if (pu) {

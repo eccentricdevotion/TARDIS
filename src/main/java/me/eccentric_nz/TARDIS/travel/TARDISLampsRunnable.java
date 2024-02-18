@@ -33,8 +33,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 /**
- * Phosphor lamps are used for lighting. They use electron excitation; when
- * shaken, they grow brighter.
+ * Phosphor lamps are used for lighting. They use electron excitation; when shaken, they grow brighter.
  *
  * @author eccentric_nz
  */
@@ -45,44 +44,34 @@ class TARDISLampsRunnable implements Runnable {
     private final long end;
     private final TardisLight light;
     private final boolean lights_on;
+    private final int level;
     int i = 0;
     Levelled levelled = TARDISConstants.LIGHT;
     private int task;
     private Location handbrake_loc;
 
-    TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long end, TardisLight light, boolean lights_on) {
+    TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long end, TardisLight light, boolean lights_on, int level) {
         this.plugin = plugin;
         this.lamps = lamps;
         this.end = end;
         this.light = light;
         this.lights_on = lights_on;
+        this.level = level;
     }
 
     @Override
     public void run() {
         if (System.currentTimeMillis() > end) {
             // set all lamps back to whatever they were when the malfunction happened
-            levelled.setLevel((lights_on) ? 15 : 0);
             lamps.forEach((b) -> {
-                b.setBlockData(levelled);
-            });
-            plugin.getServer().getScheduler().cancelTask(task);
-        } else {
-            // play smoke effect
-            for (int j = 0; j < 9; j++) {
-                handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.SMOKE, j);
-            }
-            lamps.forEach((b) -> {
-                boolean off = (i % 2 == 0);
-                levelled.setLevel(off ? 0 : 15);
-                if (i == 0 && b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP))) {
-                    // convert to light display item
-                    TARDISDisplayItemUtils.set(light.getOff(), b);
-                } else {
-                    ItemDisplay display = TARDISDisplayItemUtils.get(b);
-                    // switch the itemstack
-                    if (display != null) {
-                        TARDISDisplayItem tdi = (off) ? light.getOff(): light.getOn();
+                ItemDisplay display = TARDISDisplayItemUtils.get(b);
+                // switch the item stack
+                if (display != null) {
+                    if (light.getCloister() == TARDISDisplayItem.NONE) {
+                        levelled.setLevel((lights_on) ? level : 0);
+                        b.setBlockData(levelled);
+                    } else {
+                        TARDISDisplayItem tdi = (lights_on) ? light.getOn() : light.getOff();
                         ItemStack is = display.getItemStack();
                         ItemMeta im = is.getItemMeta();
                         if (tdi.getCustomModelData() == -1) {
@@ -95,7 +84,41 @@ class TARDISLampsRunnable implements Runnable {
                         display.setItemStack(is);
                     }
                 }
-                b.setBlockData(levelled);
+            });
+            plugin.getServer().getScheduler().cancelTask(task);
+        } else {
+            // play smoke effect
+            for (int j = 0; j < 9; j++) {
+                handbrake_loc.getWorld().playEffect(handbrake_loc, Effect.SMOKE, j);
+            }
+            lamps.forEach((b) -> {
+                if (i == 0 && (b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP)))) {
+                    // convert to light display item
+                    TARDISDisplayItemUtils.set(light.getCloister(), b);
+                } else {
+                    ItemDisplay display = TARDISDisplayItemUtils.get(b);
+                    if (display != null) {
+                        // switch the item stack
+                        TARDISDisplayItem tdi = light.getCloister();
+                        if (i == 0 && tdi != TARDISDisplayItem.NONE) {
+                            ItemStack is = display.getItemStack();
+                            ItemMeta im = is.getItemMeta();
+                            if (tdi.getCustomModelData() == -1) {
+                                im.setCustomModelData(null);
+                            } else {
+                                im.setCustomModelData(tdi.getCustomModelData());
+                            }
+                            is.setType(tdi.getMaterial());
+                            is.setItemMeta(im);
+                            display.setItemStack(is);
+                        } else if (tdi == TARDISDisplayItem.NONE) {
+                            // if tdi == TARDISDisplay.NONE, flash the lights instead
+                            boolean off = (i % 2 == 0);
+                            levelled.setLevel(off ? 0 : level);
+                            b.setBlockData(levelled);
+                        }
+                    }
+                }
             });
         }
         i++;

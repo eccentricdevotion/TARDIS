@@ -3,7 +3,6 @@
 ## Current version `5.4.0`
 
 1. Fix dem bugs
-2. Controlled mob farming [#785](https://github.com/eccentricdevotion/TARDIS/issues/785)
 
 ## Next version `5.5.0`
 
@@ -25,7 +24,7 @@
 
 ## Wiki Documentation
 
-* Make _tardisjenkins.duckdns.org_ use `https://` for the issues page
+* When submitting an issue, provide a link to the newly created issue on GitHub
 * Make all images tabbed
 * Vanilla/TARDIS screenshots for TabbedImage views
 * Update shell room GUI info

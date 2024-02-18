@@ -16,21 +16,23 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreaLocations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 /**
  * The control or console room of the Doctor's TARDIS is the space in which the
@@ -57,9 +59,7 @@ public class TARDISArea {
      */
     public boolean isInExistingArea(int id, int area) {
         // get TARDIS current location
-        HashMap<String, Object> wherec = new HashMap<>();
-        wherec.put("tardis_id", id);
-        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (rsc.resultSet()) {
             return isInExistingArea(rsc, area);
         }
@@ -73,7 +73,7 @@ public class TARDISArea {
      * @param area the area id to check against
      * @return true if the TARDIS is already in the area
      */
-    public boolean isInExistingArea(ResultSetCurrentLocation rsc, int area) {
+    public boolean isInExistingArea(ResultSetCurrentFromId rsc, int area) {
             HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("area_id", area);
             ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
