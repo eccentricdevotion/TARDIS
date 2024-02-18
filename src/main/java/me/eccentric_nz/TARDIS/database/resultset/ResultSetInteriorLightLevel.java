@@ -30,7 +30,7 @@ import java.sql.SQLException;
  *
  * @author eccentric_nz
  */
-public class ResultSetExteriorLightLevel {
+public class ResultSetInteriorLightLevel {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
@@ -45,7 +45,7 @@ public class ResultSetExteriorLightLevel {
      * @param plugin   an instance of the main class.
      * @param id the TARDIS id of the control
      */
-    public ResultSetExteriorLightLevel(TARDIS plugin, int id) {
+    public ResultSetInteriorLightLevel(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
         prefix = this.plugin.getPrefix();
@@ -60,7 +60,7 @@ public class ResultSetExteriorLightLevel {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT secondary FROM " + prefix + "controls WHERE `type` = 49 AND `tardis_id` = ";
+        String query = "SELECT secondary FROM " + prefix + "controls WHERE `type` = 50 AND `tardis_id` = ";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -73,7 +73,7 @@ public class ResultSetExteriorLightLevel {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for exterior light level control from id! " + e.getMessage());
+            plugin.debug("ResultSet error for interior light level control from id! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -84,7 +84,7 @@ public class ResultSetExteriorLightLevel {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing exterior light level control from id! " + e.getMessage());
+                plugin.debug("Error closing interior light level control from id! " + e.getMessage());
             }
         }
         return true;

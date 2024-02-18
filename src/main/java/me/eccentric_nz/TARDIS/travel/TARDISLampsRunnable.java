@@ -44,17 +44,19 @@ class TARDISLampsRunnable implements Runnable {
     private final long end;
     private final TardisLight light;
     private final boolean lights_on;
+    private final int level;
     int i = 0;
     Levelled levelled = TARDISConstants.LIGHT;
     private int task;
     private Location handbrake_loc;
 
-    TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long end, TardisLight light, boolean lights_on) {
+    TARDISLampsRunnable(TARDIS plugin, List<Block> lamps, long end, TardisLight light, boolean lights_on, int level) {
         this.plugin = plugin;
         this.lamps = lamps;
         this.end = end;
         this.light = light;
         this.lights_on = lights_on;
+        this.level = level;
     }
 
     @Override
@@ -66,7 +68,7 @@ class TARDISLampsRunnable implements Runnable {
                 // switch the item stack
                 if (display != null) {
                     if (light.getCloister() == TARDISDisplayItem.NONE) {
-                        levelled.setLevel((lights_on) ? 15 : 0);
+                        levelled.setLevel((lights_on) ? level : 0);
                         b.setBlockData(levelled);
                     } else {
                         TARDISDisplayItem tdi = (lights_on) ? light.getOn() : light.getOff();
@@ -112,7 +114,7 @@ class TARDISLampsRunnable implements Runnable {
                         } else if (tdi == TARDISDisplayItem.NONE) {
                             // if tdi == TARDISDisplay.NONE, flash the lights instead
                             boolean off = (i % 2 == 0);
-                            levelled.setLevel(off ? 0 : 15);
+                            levelled.setLevel(off ? 0 : level);
                             b.setBlockData(levelled);
                         }
                     }

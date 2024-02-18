@@ -217,9 +217,11 @@ public class TARDISMalfunction {
                     tdi = TARDISDisplayItem.getByItemDisplay(display);
                     light = TardisLight.getFromDisplayItem(tdi);
                 }
+                ResultSetInteriorLightLevel rs = new ResultSetInteriorLightLevel(plugin, id);
+                int level = rs.resultSet() ? rs.getLevel() : 15;
                 // flicker lights
                 long end = System.currentTimeMillis() + 10000;
-                TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, rsl.getData(), end, light, light.getOn() == tdi);
+                TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, rsl.getData(), end, light, light.getOn() == tdi, level);
                 runnable.setHandbrake(handbrake);
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
                 runnable.setTask(taskID);
