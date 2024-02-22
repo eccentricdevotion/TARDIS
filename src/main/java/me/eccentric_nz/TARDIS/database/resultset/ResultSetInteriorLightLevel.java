@@ -60,7 +60,7 @@ public class ResultSetInteriorLightLevel {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT secondary FROM " + prefix + "controls WHERE `type` = 50 AND `tardis_id` = ";
+        String query = "SELECT secondary FROM " + prefix + "controls WHERE `type` = 50 AND `tardis_id` = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
