@@ -357,7 +357,7 @@ public class TARDISPresetDestroyerFactory {
         Block lamp = l.getBlock().getRelative(BlockFace.UP, 3).getRelative(plugin.getPresetBuilder().getOppositeFace(d));
         plugin.getGeneralKeeper().getFaces().forEach((f) -> lamp.getRelative(f).setBlockData(TARDISConstants.AIR));
     }
-    
+
     public void destroyPistons(Location l) {
         Block piston = l.getBlock();
         Block piston_head = l.getBlock().getRelative(BlockFace.UP);

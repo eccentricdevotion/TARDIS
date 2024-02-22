@@ -16,24 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import java.io.File;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.enumeration.WorldManager;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+
+import java.io.File;
+import java.util.*;
 
 /**
  * The Daleks were a warlike race who waged war across whole civilisations and races all over the universe. Advance and
@@ -64,7 +61,7 @@ public class TARDISExterminator {
         return true;
     }
 
-    boolean exterminate(int id) {
+    boolean pruneExterminate(int id) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
@@ -115,7 +112,7 @@ public class TARDISExterminator {
                 }
                 cleanWorlds(cw, owner);
                 removeZeroRoom(tips, hasZero);
-                cleanDatabase(id);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> cleanDatabase(id), 40L);
                 return true;
             }
         } catch (Exception e) {
@@ -129,9 +126,9 @@ public class TARDISExterminator {
      * Deletes a TARDIS.
      *
      * @param player running the command.
-     * @return true or false depending on whether the TARIS could be deleted
+     * @return true or false depending on whether the TARDIS could be deleted
      */
-    public boolean exterminate(Player player) {
+    public boolean playerExterminate(Player player) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -167,7 +164,7 @@ public class TARDISExterminator {
             dd.setDirection(d);
             dd.setLocation(bb_loc);
             dd.setPlayer(player);
-            dd.setHide(true);
+            dd.setHide(false);
             dd.setOutside(false);
             dd.setSubmarine(rsc.isSubmarine());
             dd.setTardisID(id);
@@ -185,6 +182,7 @@ public class TARDISExterminator {
             if (!cw.getName().toUpperCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) {
                 plugin.getInteriorDestroyer().destroyInner(schm, id, cw, tips);
             }
+            cleanHashMaps(id);
             cleanWorlds(cw, owner);
             removeZeroRoom(tips, hasZero);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -228,7 +226,7 @@ public class TARDISExterminator {
     }
 
     public void cleanDatabase(int id) {
-        List<String> tables = Arrays.asList("ars", "back", "bind", "chameleon", "chunks", "condenser", "controls", "current", "destinations", "dispersed", "doors", "farming", "gravity_well", "homes", "junk", "lamps", "next", "room_progress", "tardis", "thevoid", "travellers", "vaults");
+        List<String> tables = Arrays.asList("ars", "back", "bind","chameleon", "chunks", "condenser", "controls", "current", "destinations", "dispersed", "doors", "farming", "gravity_well", "homes", "junk", "lamps", "next", "room_progress", "tardis", "thevoid", "travellers", "vaults");
         // remove record from database tables
         tables.forEach((table) -> {
             HashMap<String, Object> where = new HashMap<>();

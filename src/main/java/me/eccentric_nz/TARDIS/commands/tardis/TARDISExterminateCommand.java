@@ -46,7 +46,7 @@ class TARDISExterminateCommand {
                 }
                 return true;
             } else {
-                return new TARDISExterminator(plugin).exterminate(player);
+                return new TARDISExterminator(plugin).playerExterminate(player);
             }
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_DELETE");

@@ -16,17 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.command.CommandSender;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
 import java.util.HashMap;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.command.CommandSender;
 
 /**
  * Reesha was a rosebush-like plant who needed to keep herself pruned to prevent her consciousness from fading and
@@ -117,7 +118,7 @@ public class TARDISPruner {
                 Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
                 if (lastuse.before(prune)) {
                     // remove the TARDIS
-                    if (te.exterminate(rs.getInt("tardis_id"))) {
+                    if (te.pruneExterminate(rs.getInt("tardis_id"))) {
                         sender.sendMessage("Pruned " + rs.getString("owner") + "'s TARDIS");
                     }
                 }
