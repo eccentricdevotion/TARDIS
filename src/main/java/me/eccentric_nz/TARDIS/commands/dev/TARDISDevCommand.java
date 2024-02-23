@@ -56,21 +56,22 @@ public class TARDISDevCommand implements CommandExecutor {
     private final Set<String> firstsStr = Sets.newHashSet(
             "add_regions",
             "advancements",
+            "box",
+            "brushable",
             "chunks", "chunky",
+            "circuit",
             "dismount",
-            "furnace",
-            "label", "list",
-            "plurals",
-            "stats",
-            "tree",
-            "snapshot",
             "displayitem",
             "frame",
-            "brushable",
-            "box",
+            "furnace",
+            "label", "list",
             "nms",
-            "circuit",
-            "tis"
+            "plurals",
+            "recipe",
+            "snapshot",
+            "stats",
+            "tis",
+            "tree"
     );
     private final TARDIS plugin;
 
@@ -137,6 +138,9 @@ public class TARDISDevCommand implements CommandExecutor {
                 }
                 if (first.equals("tree")) {
                     return new TARDISTreeCommand(plugin).grow(sender, args);
+                }
+                if (first.equals("recipe")) {
+                    return new TARDISWikiRecipeCommand(plugin).write(sender, args);
                 }
                 if (first.equals("plurals")) {
                     for (Material m : Material.values()) {

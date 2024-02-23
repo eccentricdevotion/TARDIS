@@ -1229,6 +1229,12 @@ commands:
     tis:
       description: Checks and lists TARDIS Information System entries.
       usage: /<command> tis
+    label:
+      description: Generates Text displays for the Library room.
+      usage: /<command> label
+    recipe:
+      description: Generates TARDIS item pages with recipes.
+      usage: /<command> recipe [shaped|shapeless|item]
     displayitem:
       description: Various commands to test Item Display custom blocks and lights - subcommands are add, remove, place, break, convert, chunk, block, console
   tardisgive:

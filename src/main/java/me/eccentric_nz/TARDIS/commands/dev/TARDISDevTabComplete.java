@@ -30,14 +30,16 @@ import org.bukkit.entity.ItemDisplay;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * TabCompleter for /tardisdev
  */
 public class TARDISDevTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add_regions", "advancements", "chunks", "chunky", "dismount", "furnace", "list", "plurals", "stats", "tree", "snapshot", "displayitem", "frame", "brushable", "box", "nms", "circuit", "label");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add_regions", "advancements", "chunks", "chunky", "dismount", "furnace", "list", "plurals", "stats", "tree", "snapshot", "displayitem", "frame", "brushable", "box", "nms", "circuit", "label", "recipe");
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints", "commands", "block_colours", "change", "consoles");
     private final ImmutableList<String> SNAPSHOT_SUBS = ImmutableList.of("in", "out", "c");
     private final ImmutableList<String> STATE_SUBS = ImmutableList.of("closed", "open", "stained", "glass", "fly");
@@ -49,6 +51,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
     private final List<String> ITEM_SUBS = new ArrayList<>();
     private final List<String> PRESET_SUBS = new ArrayList<>();
     private final List<String> MONSTER_SUBS = new ArrayList<>();
+    private final Set<String> RECIPE_SUBS = new HashSet<>();
 
     public TARDISDevTabComplete(TARDIS plugin) {
         plugin.getTardisHelper().getTreeMatrials().forEach((m) -> MAT_SUBS.add(m.toString()));
@@ -71,6 +74,10 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
         for (Monster m : Monster.values()) {
             MONSTER_SUBS.add(m.toString());
         }
+        RECIPE_SUBS.add("shaped");
+        RECIPE_SUBS.add("shapeless");
+        RECIPE_SUBS.addAll(plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false));
+        RECIPE_SUBS.addAll(plugin.getRecipesConfig().getConfigurationSection("shapeless").getKeys(false));
     }
 
     @Override
@@ -102,6 +109,9 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
                 }
                 if (sub.equals("frame")) {
                     return partial(lastArg, FRAME_SUBS);
+                }
+                if (sub.equals("recipe")) {
+                    return partial(lastArg, RECIPE_SUBS);
                 }
             }
             case 3 -> {
