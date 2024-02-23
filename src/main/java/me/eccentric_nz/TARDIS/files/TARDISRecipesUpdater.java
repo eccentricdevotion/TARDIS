@@ -1049,6 +1049,11 @@ public class TARDISRecipesUpdater {
             recipes_config.set("shaped.TARDIS Artron Furnace.lore", "");
             i++;
         }
+        if (recipes_config.contains("shaped.TARDIS Materialisation Circuit.easy_shape")
+                && recipes_config.getString("shaped.TARDIS Materialisation Circuit.easy_shape").equals("IDI,-L-,QRQ")) {
+            recipes_config.set("shaped.TARDIS Materialisation Circuit.easy_shape", "IRI,-L-,QRQ");
+            i++;
+        }
         if (!recipes_config.contains("smithing.Admin Repair")) {
             recipes_config.set("smithing.Admin Repair.base", "BLAZE_ROD");
             recipes_config.set("smithing.Admin Repair.addition", "GLOWSTONE_DUST=Server Admin Circuit");
