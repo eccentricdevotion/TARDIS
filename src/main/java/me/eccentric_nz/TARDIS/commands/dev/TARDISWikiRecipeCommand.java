@@ -2,8 +2,17 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.info.TARDISDescription;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.Chest;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -27,7 +36,7 @@ public class TARDISWikiRecipeCommand {
             %s
             ===================
 
-            Description of the %s.
+            %s
 
             ## Crafting
 
@@ -46,6 +55,68 @@ public class TARDISWikiRecipeCommand {
     public boolean write(CommandSender sender, String[] args) {
         if (args.length < 2) {
             return false;
+        }
+        if (args[1].equalsIgnoreCase("chest")) {
+            if (!(sender instanceof Player player)) {
+                return true;
+            }
+            // fill chests with every TARDIS item
+            Set<String> shaped = plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false);
+            Set<String> shless = plugin.getRecipesConfig().getConfigurationSection("shapeless").getKeys(false);
+            Location location = player.getLocation().add(0, 2, 0);
+            int shapedChests = (shaped.size() / 27) + 1;
+            int shlessChests = (shless.size() / 27) + 1;
+            // place some chests
+            for (int i = 0; i < shapedChests; i++) {
+                location.getBlock().getRelative(BlockFace.EAST, i).setType(Material.CHEST);
+            }
+            for (int i = 1; i <= shlessChests; i++) {
+                location.getBlock().getRelative(BlockFace.WEST, i).setType(Material.CHEST);
+            }
+            int count = 0;
+            int chestNum = 0;
+            Chest chest = (Chest) location.getBlock().getState();
+            ItemStack is;
+            for (String s : shaped) {
+                if (count == 27) {
+                    // get next chest
+                    chestNum++;
+                    count = 0;
+                    chest = (Chest) location.getBlock().getRelative(BlockFace.EAST, chestNum).getState();
+                }
+                is = plugin.getFigura().getShapedRecipes().get(s).getResult();
+                is.setAmount(1);
+                if (is.getItemMeta() instanceof Damageable damageable) {
+                    damageable.setDamage(0);
+                    damageable.setUnbreakable(true);
+                    damageable.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
+                    is.setItemMeta(damageable);
+                }
+                chest.getBlockInventory().addItem(is);
+                count++;
+            }
+            count = 0;
+            chestNum = 0;
+            chest = (Chest) location.getBlock().getRelative(BlockFace.WEST).getState();
+            for (String s : shless) {
+                if (count == 27) {
+                    // get next chest
+                    chestNum++;
+                    count = 0;
+                    chest = (Chest) location.getBlock().getRelative(BlockFace.WEST, chestNum).getState();
+                }
+                is = plugin.getIncomposita().getShapelessRecipes().get(s).getResult();
+                is.setAmount(1);
+                if (is.getItemMeta() instanceof Damageable damageable) {
+                    damageable.setDamage(0);
+                    damageable.setUnbreakable(true);
+                    damageable.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
+                    is.setItemMeta(damageable);
+                }
+                chest.getBlockInventory().addItem(is);
+                count++;
+            }
+            return true;
         }
         String data;
         if (args[1].equalsIgnoreCase("shaped")) {
@@ -108,8 +179,15 @@ public class TARDISWikiRecipeCommand {
                 easyTable = getShapelessTable(item);
                 hardTable = "";
             }
+            String desc = String.format("The %s is used to ", item);
+            try {
+                String info = TARDISStringUtils.toEnumUppercase(item) + "_INFO";
+                TARDISDescription description = TARDISDescription.valueOf(info);
+                desc = description.getDesc();
+            } catch (IllegalArgumentException ignored) {
+            }
             // itemName, itemName, itemName, List.of(spacedIngredientName, scoredIngredientName), List.of(scoredIngredientName...) -> x2
-            return String.format(PAGE, item, item, item, easyIngredients, easyTable, hardIngredients, hardTable);
+            return String.format(PAGE, item, item, desc, easyIngredients, easyTable, hardIngredients, hardTable);
         }
         return "";
     }
