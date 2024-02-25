@@ -16,19 +16,21 @@
  */
 package me.eccentric_nz.tardissonicblaster;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Set;
 
 /**
  *
@@ -63,6 +65,7 @@ public class TARDISSonicBlasterRecipe {
             im.setLore(Arrays.asList(plugin.getBlasterConfig().getString("recipes." + s + ".lore").split("~")));
         }
         im.setCustomModelData(modelData.get(s));
+        im.addItemFlags(ItemFlag.values());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(TARDIS.plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
         ShapedRecipe r = new ShapedRecipe(key, is);
