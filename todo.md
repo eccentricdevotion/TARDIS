@@ -3,6 +3,9 @@
 ## Current version `5.4.0`
 
 1. Fix dem bugs
+2. Add chemistry and display items to `/tgive` command
+3. Add recipes for advanced console / storage etc
+4. Add new items (including Handles) to the TARDIS information system
 
 ## Next version `5.5.0`
 

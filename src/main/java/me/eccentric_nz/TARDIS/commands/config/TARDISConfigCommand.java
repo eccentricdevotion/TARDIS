@@ -96,6 +96,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("charge", "sonic");
         firstsBool.put("check_blocks_before_upgrade", "desktop");
         firstsBool.put("check_for_home", "creation");
+        firstsBool.put("chemistry", "modules");
         firstsBool.put("create_worlds", "creation");
         firstsBool.put("create_worlds_with_perms", "creation");
         firstsBool.put("damage", "circuits");
@@ -139,6 +140,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("seed_block_crafting", "creation");
         firstsBool.put("sfx", "allow");
         firstsBool.put("shop", "modules");
+        firstsBool.put("sonic_blaster", "modules");
         firstsBool.put("spawn_eggs", "allow");
         firstsBool.put("spawn_random_monsters", "preferences");
         firstsBool.put("strike_lightning", "preferences");
