@@ -474,38 +474,6 @@ shaped:
     result: GLOWSTONE_DUST
     amount: 1
     lore: ''
-  Exterior Lamp Level Switch:
-    easy_shape: ---,LBM,CCC
-    easy_ingredients:
-      L: LEVER
-      B: BAMBOO_BUTTON
-      M: MANGROVE_BUTTON
-      C: COPPER_INGOT
-    hard_shape: ---,LBM,CCC
-    hard_ingredients:
-      L: LEVER
-      B: BAMBOO_BUTTON
-      M: MANGROVE_BUTTON
-      C: COPPER_BLOCK
-    result: LEVER
-    amount: 1
-    lore: ''
-  Interior Light Level Switch:
-    easy_shape: ---,WLA,CCC
-    easy_ingredients:
-      W: WARPED_BUTTON
-      L: LEVER
-      A: ACACIA_BUTTON
-      C: COPPER_INGOT
-    hard_shape: ---,WLA,CCC
-    hard_ingredients:
-      W: WARPED_BUTTON
-      L: LEVER
-      A: ACACIA_BUTTON
-      C: COPPER_BLOCK
-    result: LEVER
-    amount: 1
-    lore: ''
   Artron Storage Cell:
     easy_shape: -B-,-R-,-L-
     easy_ingredients:

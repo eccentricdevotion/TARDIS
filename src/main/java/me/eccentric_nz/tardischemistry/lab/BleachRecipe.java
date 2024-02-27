@@ -69,6 +69,7 @@ public class BleachRecipe {
         RecipeChoice colouredBeds = new RecipeChoice.MaterialChoice(Material.BLACK_BED, Material.BLUE_BED, Material.BROWN_BED, Material.CYAN_BED, Material.GRAY_BED, Material.GREEN_BED, Material.LIGHT_BLUE_BED, Material.LIGHT_GRAY_BED, Material.LIME_BED, Material.MAGENTA_BED, Material.ORANGE_BED, Material.PINK_BED, Material.PURPLE_BED, Material.RED_BED, Material.YELLOW_BED);
         bedRecipe.addIngredient(colouredBeds);
         plugin.getServer().addRecipe(bedRecipe);
+        plugin.getIncomposita().getShapelessRecipes().put("Bleached Bed", bedRecipe);
         // wool
         ItemStack wool = new ItemStack(Material.WHITE_WOOL, 1);
         ShapelessRecipe woolRecipe = new ShapelessRecipe(woolKey, wool);
@@ -76,6 +77,7 @@ public class BleachRecipe {
         RecipeChoice colouredWool = new RecipeChoice.MaterialChoice(Material.BLACK_WOOL, Material.BLUE_WOOL, Material.BROWN_WOOL, Material.CYAN_WOOL, Material.GRAY_WOOL, Material.GREEN_WOOL, Material.LIGHT_BLUE_WOOL, Material.LIGHT_GRAY_WOOL, Material.LIME_WOOL, Material.MAGENTA_WOOL, Material.ORANGE_WOOL, Material.PINK_WOOL, Material.PURPLE_WOOL, Material.RED_WOOL, Material.YELLOW_WOOL);
         woolRecipe.addIngredient(colouredWool);
         plugin.getServer().addRecipe(woolRecipe);
+        plugin.getIncomposita().getShapelessRecipes().put("Bleached Wool", woolRecipe);
         // carpet
         ItemStack carpet = new ItemStack(Material.WHITE_CARPET, 1);
         ShapelessRecipe carpetRecipe = new ShapelessRecipe(carpetKey, carpet);
@@ -83,6 +85,7 @@ public class BleachRecipe {
         RecipeChoice colouredCarpet = new RecipeChoice.MaterialChoice(Material.BLACK_CARPET, Material.BLUE_CARPET, Material.BROWN_CARPET, Material.CYAN_CARPET, Material.GRAY_CARPET, Material.GREEN_CARPET, Material.LIGHT_BLUE_CARPET, Material.LIGHT_GRAY_CARPET, Material.LIME_CARPET, Material.MAGENTA_CARPET, Material.ORANGE_CARPET, Material.PINK_CARPET, Material.PURPLE_CARPET, Material.RED_CARPET, Material.YELLOW_CARPET);
         carpetRecipe.addIngredient(colouredCarpet);
         plugin.getServer().addRecipe(carpetRecipe);
+        plugin.getIncomposita().getShapelessRecipes().put("Bleached Carpet", carpetRecipe);
         // banners
         ItemStack banner = new ItemStack(Material.WHITE_BANNER, 1);
         ShapelessRecipe bannerRecipe = new ShapelessRecipe(bannerKey, banner);
@@ -90,6 +93,7 @@ public class BleachRecipe {
         RecipeChoice colouredBanners = new RecipeChoice.MaterialChoice(Material.BLACK_BANNER, Material.BLUE_BANNER, Material.BROWN_BANNER, Material.CYAN_BANNER, Material.GRAY_BANNER, Material.GREEN_BANNER, Material.LIGHT_BLUE_BANNER, Material.LIGHT_GRAY_BANNER, Material.LIME_BANNER, Material.MAGENTA_BANNER, Material.ORANGE_BANNER, Material.PINK_BANNER, Material.PURPLE_BANNER, Material.RED_BANNER, Material.YELLOW_BANNER);
         bannerRecipe.addIngredient(colouredBanners);
         plugin.getServer().addRecipe(bannerRecipe);
+        plugin.getIncomposita().getShapelessRecipes().put("Bleached Banner", bannerRecipe);
         // concrete powder
         ItemStack powder = new ItemStack(Material.WHITE_CONCRETE_POWDER, 1);
         ShapelessRecipe powderRecipe = new ShapelessRecipe(powderKey, powder);
@@ -97,6 +101,7 @@ public class BleachRecipe {
         RecipeChoice colouredPowder = new RecipeChoice.MaterialChoice(Material.BLACK_CONCRETE_POWDER, Material.BLUE_CONCRETE_POWDER, Material.BROWN_CONCRETE_POWDER, Material.CYAN_CONCRETE_POWDER, Material.GRAY_CONCRETE_POWDER, Material.GREEN_CONCRETE_POWDER, Material.LIGHT_BLUE_CONCRETE_POWDER, Material.LIGHT_GRAY_CONCRETE_POWDER, Material.LIME_CONCRETE_POWDER, Material.MAGENTA_CONCRETE_POWDER, Material.ORANGE_CONCRETE_POWDER, Material.PINK_CONCRETE_POWDER, Material.PURPLE_CONCRETE_POWDER, Material.RED_CONCRETE_POWDER, Material.YELLOW_CONCRETE_POWDER);
         powderRecipe.addIngredient(colouredPowder);
         plugin.getServer().addRecipe(powderRecipe);
+        plugin.getIncomposita().getShapelessRecipes().put("Bleached Concrete Powder", powderRecipe);
         // leather helmet
         ItemStack helmet = new ItemStack(Material.LEATHER_HELMET, 1);
         LeatherArmorMeta helmetItemMeta = (LeatherArmorMeta) helmet.getItemMeta();
@@ -107,6 +112,7 @@ public class BleachRecipe {
         RecipeChoice colouredHelmet = new RecipeChoice.MaterialChoice(Material.LEATHER_HELMET);
         helmetRecipe.addIngredient(colouredHelmet);
         plugin.getServer().addRecipe(helmetRecipe);
+        plugin.getIncomposita().getShapelessRecipes().put("Bleached Helmet", helmetRecipe);
         // leather chestplate
         ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
         LeatherArmorMeta chestplateItemMeta = (LeatherArmorMeta) chestplate.getItemMeta();
@@ -117,6 +123,7 @@ public class BleachRecipe {
         RecipeChoice colouredChestplate = new RecipeChoice.MaterialChoice(Material.LEATHER_CHESTPLATE);
         chestplateRecipe.addIngredient(colouredChestplate);
         plugin.getServer().addRecipe(chestplateRecipe);
+        plugin.getIncomposita().getShapelessRecipes().put("Bleached Chestplate", chestplateRecipe);
         // leather leggings
         ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS, 1);
         LeatherArmorMeta leggingsItemMeta = (LeatherArmorMeta) leggings.getItemMeta();
@@ -127,6 +134,7 @@ public class BleachRecipe {
         RecipeChoice colouredLeggings = new RecipeChoice.MaterialChoice(Material.LEATHER_LEGGINGS);
         leggingsRecipe.addIngredient(colouredLeggings);
         plugin.getServer().addRecipe(leggingsRecipe);
+        plugin.getIncomposita().getShapelessRecipes().put("Bleached Leggings", leggingsRecipe);
         // leather boots
         ItemStack boots = new ItemStack(Material.LEATHER_BOOTS, 1);
         LeatherArmorMeta bootsItemMeta = (LeatherArmorMeta) boots.getItemMeta();
@@ -137,5 +145,6 @@ public class BleachRecipe {
         RecipeChoice colouredBoots = new RecipeChoice.MaterialChoice(Material.LEATHER_BOOTS);
         bootsRecipe.addIngredient(colouredBoots);
         plugin.getServer().addRecipe(bootsRecipe);
+        plugin.getIncomposita().getShapelessRecipes().put("Bleached Boots", bootsRecipe);
     }
 }

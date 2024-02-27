@@ -95,6 +95,7 @@ public class TARDISSonicBlasterRecipe {
                     Material m = Material.valueOf(ingredient);
                     r.setIngredient(c, m);
                 }
+                plugin.getFigura().getShapedRecipes().put(s, r);
             }
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.BLASTER, "Recipe failed! Check the config file!");
