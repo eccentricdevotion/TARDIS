@@ -5,7 +5,15 @@
 1. Fix dem bugs
 2. Add chemistry and display items to `/tgive` command
 3. Add recipes for advanced console / storage etc
-4. Add new items (including Handles) to the TARDIS information system
+4. Add new items to the TARDIS information system
+   - handles
+   - light level switches
+   - monitor
+   - camera
+   - flying
+   - sonic dock
+   - vortex manipulator
+   - sonic blaster / battery / 
 
 ## Next version `5.5.0`
 

@@ -1243,6 +1243,9 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 if (chat.equalsIgnoreCase("g")) {
                     processKey(p, TARDISInfoMenu.SONIC_IGNITE);
                 }
+                if (chat.equalsIgnoreCase("o")) {
+                    processKey(p, TARDISInfoMenu.SONIC_CONVERSION);
+                }
             }
             // FIFTH level menus - I've a feeling this is too deep!
             case SONIC_STANDARD -> {
