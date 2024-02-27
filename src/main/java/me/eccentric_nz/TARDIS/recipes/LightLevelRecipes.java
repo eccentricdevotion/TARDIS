@@ -42,7 +42,7 @@ public class LightLevelRecipes {
         im_ex.setDisplayName("Exterior Light Level Switch");
         im_ex.setCustomModelData(1000);
         is_ex.setItemMeta(im_ex);
-        NamespacedKey key_ex = new NamespacedKey(plugin, "exterior_light_level_switch");
+        NamespacedKey key_ex = new NamespacedKey(plugin, "exterior_lamp_level_switch");
         ShapedRecipe r_ex = new ShapedRecipe(key_ex, is_ex);
         r_ex.shape("   ", "LBM", "CCC");
         r_ex.setIngredient('L', Material.LEVER);
@@ -54,6 +54,6 @@ public class LightLevelRecipes {
             r_ex.setIngredient('C', Material.COPPER_INGOT);
         }
         plugin.getServer().addRecipe(r_ex);
-        plugin.getFigura().getShapedRecipes().put("Exterior Light Level Switch", r_ex);
+        plugin.getFigura().getShapedRecipes().put("Exterior Lamp Level Switch", r_ex);
     }
 }
