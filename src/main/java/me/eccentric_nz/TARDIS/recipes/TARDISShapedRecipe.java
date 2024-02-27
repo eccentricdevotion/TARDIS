@@ -108,6 +108,7 @@ public class TARDISShapedRecipe {
          * lore: "The vorpal blade~goes snicker-snack!"
          */
         String result = plugin.getRecipesConfig().getString("shaped." + s + ".result");
+        plugin.debug(s + " => " + result);
         Material mat = Material.valueOf(result);
         int amount = plugin.getRecipesConfig().getInt("shaped." + s + ".amount");
         ItemStack is = new ItemStack(mat, amount);

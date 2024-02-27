@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS;
 
 import io.papermc.lib.PaperLib;
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import me.eccentric_nz.TARDIS.ARS.ARSConverter;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.TARDII;
@@ -86,11 +88,16 @@ import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
 import me.eccentric_nz.tardisvortexmanipulator.TVMSettings;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.nms.FollowerSaver;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.persistence.PersistentDataType;
@@ -414,14 +421,14 @@ public class TARDIS extends JavaPlugin {
                 difficulty = Difficulty.EASY;
             }
             // register recipes
-            if (getConfig().getBoolean("creation.seed_block_crafting")) {
-                obstructionum = new TARDISSeedRecipe(this);
-                obstructionum.addSeedRecipes();
-            }
             figura = new TARDISShapedRecipe(this);
             figura.addShapedRecipes();
             incomposita = new TARDISShapelessRecipe(this);
             incomposita.addShapelessRecipes();
+            if (getConfig().getBoolean("creation.seed_block_crafting")) {
+                obstructionum = new TARDISSeedRecipe(this);
+                obstructionum.addSeedRecipes();
+            }
             new TARDISSmithingRecipe(this).addSmithingRecipes();
             new TARDISDisplayItemRecipe(this).addDisplayItemRecipes();
             TARDISInformationSystemListener info = new TARDISListenerRegisterer(this).registerListeners();
@@ -612,6 +619,31 @@ public class TARDIS extends JavaPlugin {
             }
             // start bStats metrics
             new TARDISStats(this).startMetrics();
+            getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
+
+                net.minecraft.world.level.Level world = ((CraftWorld)getServer().getWorlds().getFirst()).getHandle();
+                // check recipes?
+                try {
+//                    for (ShapedRecipe recipe : getFigura().getShapedRecipes().values()) {
+//                        debug(recipe.getKey().asString() + " Result => " + recipe.getResult().getType());
+//                    }
+                    Set<Map.Entry<RecipeType<?>, Object2ObjectLinkedOpenHashMap<ResourceLocation, RecipeHolder<?>>>> recipes = MinecraftServer.getServer().getRecipeManager().recipes.entrySet();
+                    for (Map.Entry<RecipeType<?>, Object2ObjectLinkedOpenHashMap<ResourceLocation, RecipeHolder<?>>> recipe : recipes) {
+                        Object2ObjectLinkedOpenHashMap<ResourceLocation, RecipeHolder<?>> map = recipe.getValue();
+                        for (Object2ObjectMap.Entry<ResourceLocation, RecipeHolder<?>> r : map.object2ObjectEntrySet()) {
+                            Object obj = r.getValue().value();
+                            if (obj instanceof net.minecraft.world.item.crafting.ShapedRecipe shaped) {
+                                String key = r.getKey().getNamespace().toLowerCase();
+                                if (key.startsWith("tardis")) {
+                                    debug(r.getKey().getPath() + " => " + shaped.getResultItem(world.registryAccess()).toString());
+                                }
+                            }
+                        }
+                    }
+                } catch (IllegalArgumentException e) {
+                    debug("Skipping recipe...");
+                }
+            }, 600L);
         } else {
             getLogger().log(Level.SEVERE, "This plugin requires Spigot/Paper " + minVersion + " or higher, disabling...");
             pm.disablePlugin(this);

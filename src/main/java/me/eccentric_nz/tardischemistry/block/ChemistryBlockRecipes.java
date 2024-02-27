@@ -47,6 +47,7 @@ public class ChemistryBlockRecipes {
             recipe.setIngredient('A', data.getCraftMaterial());
             recipe.setIngredient('C', Material.CRAFTING_TABLE);
             plugin.getServer().addRecipe(recipe);
+            plugin.getFigura().getShapedRecipes().put(data.getDisplayName(), recipe);
         }
     }
 }

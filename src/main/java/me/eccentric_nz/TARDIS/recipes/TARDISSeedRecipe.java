@@ -16,15 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -33,6 +30,11 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 public class TARDISSeedRecipe {
 
@@ -48,7 +50,9 @@ public class TARDISSeedRecipe {
 
     public void addSeedRecipes() {
         for (Schematic schematic : Consoles.getBY_MATERIALS().values()) {
-            plugin.getServer().addRecipe(makeSeedRecipe(schematic));
+            ShapedRecipe recipe = makeSeedRecipe(schematic);
+            plugin.getServer().addRecipe(recipe);
+            plugin.getFigura().getShapedRecipes().put(TARDISStringUtils.capitalise(schematic.getPermission()), recipe);
         }
     }
 

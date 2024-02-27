@@ -24,7 +24,7 @@ public class TARDISVortexManipulator {
         registerCommand();
         ShapedRecipe recipe = new TVMRecipe(plugin).makeRecipe();
         plugin.getServer().addRecipe(recipe);
-        plugin.getFigura().getShapedRecipes().put("vortex-manipulator", recipe);
+        plugin.getFigura().getShapedRecipes().put("Vortex Manipulator", recipe);
         startRecharger();
     }
 
