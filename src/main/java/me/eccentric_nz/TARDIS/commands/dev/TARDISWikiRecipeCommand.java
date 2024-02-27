@@ -39,6 +39,8 @@ public class TARDISWikiRecipeCommand {
             %s
 
             ## Crafting
+            
+            `/trecipe %s`
 
             | Ingredients | Crafting recipe | Difficulty |
             | ----------- | --------------- | ------------- |
@@ -162,6 +164,7 @@ public class TARDISWikiRecipeCommand {
 
     private String format(String section, String item) {
         if (plugin.getRecipesConfig().contains(section + "." + item)) {
+            String crafting = TARDISStringUtils.toLowercaseDashed(item);
             // get ingredients
             String easyIngredients;
             String hardIngredients;
@@ -187,7 +190,7 @@ public class TARDISWikiRecipeCommand {
             } catch (IllegalArgumentException ignored) {
             }
             // itemName, itemName, itemName, List.of(spacedIngredientName, scoredIngredientName), List.of(scoredIngredientName...) -> x2
-            return String.format(PAGE, item, item, desc, easyIngredients, easyTable, hardIngredients, hardTable);
+            return String.format(PAGE, item, item, desc, crafting, easyIngredients, easyTable, hardIngredients, hardTable);
         }
         return "";
     }
