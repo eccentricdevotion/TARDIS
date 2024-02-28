@@ -1,0 +1,40 @@
+package me.eccentric_nz.TARDIS.recipes.shaped;
+
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.meta.ItemMeta;
+
+public class ExteriorLampLevelSwitchRecipe {
+
+    private final TARDIS plugin;
+
+    public ExteriorLampLevelSwitchRecipe(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
+    public void addRecipe() {
+        // add exterior recipe
+        ItemStack is = new ItemStack(Material.LEVER, 1);
+        ItemMeta im = is.getItemMeta();
+        im.setDisplayName("Exterior Light Level Switch");
+        im.setCustomModelData(1000);
+        is.setItemMeta(im);
+        NamespacedKey key = new NamespacedKey(plugin, "exterior_lamp_level_switch");
+        ShapedRecipe r = new ShapedRecipe(key, is);
+        r.shape("   ", "LBM", "CCC");
+        r.setIngredient('L', Material.LEVER);
+        r.setIngredient('B', Material.BAMBOO_BUTTON);
+        r.setIngredient('M', Material.MANGROVE_BUTTON);
+        if (plugin.getDifficulty() == Difficulty.HARD) {
+            r.setIngredient('C', Material.COPPER_BLOCK);
+        } else {
+            r.setIngredient('C', Material.COPPER_INGOT);
+        }
+        plugin.getServer().addRecipe(r);
+        plugin.getFigura().getShapedRecipes().put("Exterior Lamp Level Switch", r);
+    }
+}

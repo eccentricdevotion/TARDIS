@@ -3,6 +3,9 @@ package me.eccentric_nz.TARDIS.commands.dev;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.info.TARDISDescription;
+import me.eccentric_nz.TARDIS.recipes.MakeShaped;
+import me.eccentric_nz.TARDIS.recipes.MakeShapeless;
+import me.eccentric_nz.TARDIS.recipes.MakeSmithing;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -39,7 +42,7 @@ public class TARDISWikiRecipeCommand {
             %s
 
             ## Crafting
-            
+                        
             `/trecipe %s`
 
             | Ingredients | Crafting recipe | Difficulty |
@@ -57,6 +60,18 @@ public class TARDISWikiRecipeCommand {
     public boolean write(CommandSender sender, String[] args) {
         if (args.length < 2) {
             return false;
+        }
+        if (args[1].equalsIgnoreCase("java_shaped")) {
+            new MakeShaped(plugin).saveShapedRecipes();
+            return true;
+        }
+        if (args[1].equalsIgnoreCase("java_shapeless")) {
+            new MakeShapeless(plugin).saveShapelessRecipes();
+            return true;
+        }
+        if (args[1].equalsIgnoreCase("java_smithing")) {
+            new MakeSmithing(plugin).saveSmithingRecipes();
+            return true;
         }
         if (args[1].equalsIgnoreCase("chest")) {
             if (!(sender instanceof Player player)) {
@@ -210,7 +225,7 @@ public class TARDISWikiRecipeCommand {
                 bw.write(contents);
             }
         } catch (IOException e) {
-            plugin.debug("Could not create and write to TARDIS_list.txt! " + e.getMessage());
+            plugin.debug("Could not create and write to " + filename + "! " + e.getMessage());
         }
     }
 

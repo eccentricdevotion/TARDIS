@@ -76,6 +76,10 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
         }
         RECIPE_SUBS.add("shaped");
         RECIPE_SUBS.add("shapeless");
+        RECIPE_SUBS.add("chest");
+        RECIPE_SUBS.add("java_shaped");
+        RECIPE_SUBS.add("java_shapeless");
+        RECIPE_SUBS.add("java_smithing");
         RECIPE_SUBS.addAll(plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false));
         RECIPE_SUBS.addAll(plugin.getRecipesConfig().getConfigurationSection("shapeless").getKeys(false));
     }

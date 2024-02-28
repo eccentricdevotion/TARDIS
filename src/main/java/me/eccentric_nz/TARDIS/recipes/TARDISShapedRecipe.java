@@ -127,7 +127,9 @@ public class TARDISShapedRecipe {
                 String which = split[1].toLowerCase(Locale.ENGLISH);
                 // set the second line of lore
                 List<String> lore;
-                String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
+                String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
+                        ? ChatColor.YELLOW + "unlimited"
+                        : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
                 lore = Arrays.asList("Uses left", uses);
                 im.setLore(lore);
             } else {
@@ -176,7 +178,9 @@ public class TARDISShapedRecipe {
                         String which = split[1].toLowerCase(Locale.ENGLISH);
                         // set the second line of lore
                         List<String> lore;
-                        String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
+                        String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
+                                ? ChatColor.YELLOW + "unlimited"
+                                : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
                         lore = Arrays.asList("Uses left", uses);
                         em.setLore(lore);
                     }
