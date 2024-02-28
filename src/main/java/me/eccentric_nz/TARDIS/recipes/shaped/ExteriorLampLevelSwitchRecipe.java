@@ -2,12 +2,27 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
+/*
+easy_shape: ---,LBM,CCC
+easy_ingredients.L: LEVER
+easy_ingredients.B: BAMBOO_BUTTON
+easy_ingredients.M: MANGROVE_BUTTON
+easy_ingredients.C: COPPER_INGOT
+hard_shape: ---,LBM,CCC
+hard_ingredients.L: LEVER
+hard_ingredients.B: BAMBOO_BUTTON
+hard_ingredients.M: MANGROVE_BUTTON
+hard_ingredients.C: COPPER_BLOCK
+result: LEVER
+amount: 1
+ */
 public class ExteriorLampLevelSwitchRecipe {
 
     private final TARDIS plugin;
@@ -21,7 +36,7 @@ public class ExteriorLampLevelSwitchRecipe {
         ItemStack is = new ItemStack(Material.LEVER, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Exterior Light Level Switch");
-        im.setCustomModelData(1000);
+        im.setCustomModelData(RecipeItem.EXTERIOR_LAMP_LEVEL_SWITCH.getCustomModelData());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "exterior_lamp_level_switch");
         ShapedRecipe r = new ShapedRecipe(key, is);

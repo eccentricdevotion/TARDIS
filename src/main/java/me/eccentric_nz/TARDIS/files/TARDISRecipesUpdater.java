@@ -359,34 +359,8 @@ public class TARDISRecipesUpdater {
         if (recipes_config.contains("shaped.Exterior Lamp Level Switch")) {
             // Exterior Lamp Level Switch
             recipes_config.set("shaped.Exterior Lamp Level Switch", null);
-//            recipes_config.set("shaped.Exterior Lamp Level Switch.easy_shape", "---,LBM,CCC");
-//            recipes_config.set("shaped.Exterior Lamp Level Switch.easy_ingredients.L", "LEVER");
-//            recipes_config.set("shaped.Exterior Lamp Level Switch.easy_ingredients.B", "BAMBOO_BUTTON");
-//            recipes_config.set("shaped.Exterior Lamp Level Switch.easy_ingredients.M", "MANGROVE_BUTTON");
-//            recipes_config.set("shaped.Exterior Lamp Level Switch.easy_ingredients.C", "COPPER_INGOT");
-//            recipes_config.set("shaped.Exterior Lamp Level Switch.hard_shape", "---,LBM,CCC");
-//            recipes_config.set("shaped.Exterior Lamp Level Switch.hard_ingredients.L", "LEVER");
-//            recipes_config.set("shaped.Exterior Lamp Level Switch.hard_ingredients.B", "BAMBOO_BUTTON");
-//            recipes_config.set("shaped.Exterior Lamp Level Switch.hard_ingredients.M", "MANGROVE_BUTTON");
-//            recipes_config.set("shaped.Exterior Lamp Level Switch.hard_ingredients.C", "COPPER_BLOCK");
-//            recipes_config.set("shaped.Exterior Lamp Level Switch.result", "LEVER");
-//            recipes_config.set("shaped.Exterior Lamp Level Switch.amount", "1");
-//            recipes_config.set("shaped.Exterior Lamp Level Switch.lore", "");
             // Interior Light Level Switch
             recipes_config.set("shaped.Interior Light Level Switch", null);
-//            recipes_config.set("shaped.Interior Light Level Switch.easy_shape", "---,WLA,CCC");
-//            recipes_config.set("shaped.Interior Light Level Switch.easy_ingredients.W", "WARPED_BUTTON");
-//            recipes_config.set("shaped.Interior Light Level Switch.easy_ingredients.L", "LEVER");
-//            recipes_config.set("shaped.Interior Light Level Switch.easy_ingredients.A", "ACACIA_BUTTON");
-//            recipes_config.set("shaped.Interior Light Level Switch.easy_ingredients.C", "COPPER_INGOT");
-//            recipes_config.set("shaped.Interior Light Level Switch.hard_shape", "---,WLA,CCC");
-//            recipes_config.set("shaped.Interior Light Level Switch.hard_ingredients.W", "WARPED_BUTTON");
-//            recipes_config.set("shaped.Interior Light Level Switch.hard_ingredients.L", "LEVER");
-//            recipes_config.set("shaped.Interior Light Level Switch.hard_ingredients.A", "ACACIA_BUTTON");
-//            recipes_config.set("shaped.Interior Light Level Switch.hard_ingredients.C", "COPPER_BLOCK");
-//            recipes_config.set("shaped.Interior Light Level Switch.result", "LEVER");
-//            recipes_config.set("shaped.Interior Light Level Switch.amount", "1");
-//            recipes_config.set("shaped.Interior Light Level Switch.lore", "");
             i++;
         }
         if (!recipes_config.contains("shaped.Monitor Frame")) {

@@ -47,10 +47,11 @@ public class TARDISSmithingRecipe {
 
     private SmithingRecipe makeRecipe(String s) {
         /*
-         template: REDSTONE
-         base: BLAZE_ROD
-         addition: GLOWSTONE_DUST
-         result: BLAZE_ROD
+        smithing:
+          Admin Repair:
+            base: BLAZE_ROD
+            addition: GLOWSTONE_DUST=Server Admin Circuit
+            result: BLAZE_ROD
          */
         // result
         String result = plugin.getRecipesConfig().getString("smithing." + s + ".result");

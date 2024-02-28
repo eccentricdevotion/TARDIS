@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.configuration.MemorySection;
 
 import java.io.BufferedWriter;
@@ -37,14 +37,16 @@ public class MakeSmithing {
     private final String newLine = System.lineSeparator();
 
     private final String JAVA = """
-            package me.eccentric_nz.TARDIS.recipes.shapeless;
+            package me.eccentric_nz.TARDIS.recipes.smithing;
                         
             import me.eccentric_nz.TARDIS.TARDIS;
-            import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+            import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
             import org.bukkit.Material;
             import org.bukkit.NamespacedKey;
             import org.bukkit.inventory.ItemStack;
-            import org.bukkit.inventory.ShapedRecipe;
+            import org.bukkit.inventory.RecipeChoice;
+            import org.bukkit.inventory.SmithingRecipe;
+            import org.bukkit.inventory.SmithingTransformRecipe;
             import org.bukkit.inventory.meta.ItemMeta;
 
             import java.util.Arrays;
@@ -62,20 +64,22 @@ public class MakeSmithing {
                 }
                         
                 public void addRecipes() {
-                    ItemStack is = new ItemStack(Material.%s, %s);
-                    ItemMeta im = is.getItemMeta();
-                    im.setDisplayName("%s");
-                    im.setCustomModelData(%s);
-                    String lore = plugin.getRecipesConfig().getString("shapeless.%s.lore");
-                    if (!lore.isEmpty()) {
-                        im.setLore(Arrays.asList(lore.split("~")));
-                    }
-                    is.setItemMeta(im);
+                    // result
+                    ItemStack result = new ItemStack(Material.%s, 1);
+                    // template
+                    RecipeChoice template = new RecipeChoice.MaterialChoice(Material.REDSTONE);
+                    // base material to upgrade
+                    RecipeChoice base = new RecipeChoice.MaterialChoice(Material.%s);
+                    // addition
+                    ItemStack isa = new ItemStack(Material.%s, 1);
+                    ItemMeta ima = isa.getItemMeta();
+                    ima.setDisplayName("%s");
+                    ima.setCustomModelData(RecipeItem.%s.getCustomModelData());
+                    isa.setItemMeta(ima);
+                    RecipeChoice addition = new RecipeChoice.ExactChoice(isa);
                     NamespacedKey key = new NamespacedKey(plugin, "%s");
-                    SmithingRecipe r = new SmithingRecipe(key, is);
-                    %s
+                    SmithingRecipe r = new SmithingTransformRecipe(key, result, template, base, addition);
                     plugin.getServer().addRecipe(r);
-                    plugin.getIncomposita().getShapelessRecipes().put("%s", r);
                 }
             }
             """;
@@ -86,40 +90,40 @@ public class MakeSmithing {
     }
 
     public void saveSmithingRecipes() {
-        Set<String> shaped = plugin.getRecipesConfig().getConfigurationSection("shapeless").getKeys(false);
-        shaped.forEach(this::saveRecipeFile);
+        Set<String> smithing = plugin.getRecipesConfig().getConfigurationSection("smithing").getKeys(false);
+        smithing.forEach(this::saveRecipeFile);
     }
 
     private void saveRecipeFile(String s) {
         /*
-        shapeless:
-          TARDIS Schematic Wand:
-            recipe: BONE,REDSTONE
-            result: BONE
-            amount: 1
-            lore: Right-click start~Left-click end
+        smithing:
+          Admin Repair:
+            base: BLAZE_ROD
+            addition: GLOWSTONE_DUST=Server Admin Circuit
+            result: BLAZE_ROD
          */
-        String result = plugin.getRecipesConfig().getString("shaped." + s + ".result");
+        String result = plugin.getRecipesConfig().getString("smithing." + s + ".result");
         String key = s.replace(" ", "_").toLowerCase(Locale.ENGLISH);
-        // get shape
         try {
-            String[] ingredients = plugin.getRecipesConfig().getString("shapeless." + s + ".recipe").split(",");
-            StringBuilder builder = new StringBuilder();
-            for (String i : ingredients) {
-                // r.setIngredient('W', Material.WARPED_BUTTON);
-                builder.append("r.setIngredient(Material.").append(i).append(");").append(newLine).append("            ");
-            }
+            // get base
+            String base = plugin.getRecipesConfig().getString("smithing." + s + ".base");
+            // get addition
+            String[] additionData = plugin.getRecipesConfig().getString("smithing." + s + ".addition").split("=");
+            String addition = additionData[0];
+            // addition display name
+            String dn = additionData[1];
+            // addition CMD name
+            String cmd = TARDISStringUtils.toEnumUppercase(dn);
+            // config
             StringBuilder configBuilder = new StringBuilder();
-            for (String c : plugin.getRecipesConfig().getConfigurationSection("shaped." + s).getKeys(true)) {
-                Object section = plugin.getRecipesConfig().get("shaped." + s + "." + c);
+            for (String c : plugin.getRecipesConfig().getConfigurationSection("smithing." + s).getKeys(true)) {
+                Object section = plugin.getRecipesConfig().get("smithing." + s + "." + c);
                 if (!(section instanceof MemorySection)) {
-                    configBuilder.append(c).append(":").append(plugin.getRecipesConfig().getString("shaped." + s + "." + c)).append(newLine);
+                    configBuilder.append(c).append(":").append(plugin.getRecipesConfig().getString("smithing." + s + "." + c)).append(newLine);
                 }
             }
             String className = s.replaceAll(" ", "").replaceAll("-", "");
-            int amount = plugin.getRecipesConfig().getInt("shapeless." + s + ".amount");
-            String cmd = RecipeItem.getByName(s).getCustomModelData() + "";
-            String data = String.format(JAVA, configBuilder, className, className, result, amount, s, cmd, s, key, builder, s);
+            String data = String.format(JAVA, configBuilder, className, className, result, base, addition, dn, cmd, key);
             save(className + "Recipe", data);
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, s + " recipe failed! Check the recipe config file!");
