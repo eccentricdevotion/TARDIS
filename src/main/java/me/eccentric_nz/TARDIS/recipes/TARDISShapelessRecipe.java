@@ -16,18 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
+import me.eccentric_nz.TARDIS.recipes.shapeless.*;
 import org.bukkit.inventory.ShapelessRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -43,52 +36,39 @@ public class TARDISShapelessRecipe {
     }
 
     public void addShapelessRecipes() {
-        Set<String> shapeless = plugin.getRecipesConfig().getConfigurationSection("shapeless").getKeys(false);
-        shapeless.forEach((s) -> plugin.getServer().addRecipe(makeRecipe(s)));
-    }
-
-    private ShapelessRecipe makeRecipe(String s) {
-        /*
-         recipe: VINE,VINE,VINE=Special Vine
-         result: SLIME_BALL
-         amount: 1
-         lore: ""
-         */
-        String[] ingredients = plugin.getRecipesConfig().getString("shapeless." + s + ".recipe").split(",");
-        String result = plugin.getRecipesConfig().getString("shapeless." + s + ".result");
-        Material mat = Material.valueOf(result);
-        int amount = plugin.getRecipesConfig().getInt("shapeless." + s + ".amount");
-        ItemStack is = new ItemStack(mat, amount);
-        ItemMeta im = is.getItemMeta();
-        im.setDisplayName(s);
-        if (!plugin.getRecipesConfig().getString("shapeless." + s + ".lore").equals("")) {
-            im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shapeless." + s + ".lore").split("~")));
-        }
-        im.setCustomModelData(RecipeItem.getByName(s).getCustomModelData());
-        is.setItemMeta(im);
-        NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
-        ShapelessRecipe r = new ShapelessRecipe(key, is);
-        for (String i : ingredients) {
-            if (i.contains("=")) {
-                ItemStack exact;
-                String[] choice = i.split("=");
-                Material m = Material.valueOf(choice[0]);
-                exact = new ItemStack(m, 1);
-                ItemMeta em = exact.getItemMeta();
-                em.setDisplayName(choice[1]);
-                em.setCustomModelData(RecipeItem.getByName(choice[1]).getCustomModelData());
-                exact.setItemMeta(em);
-                r.addIngredient(new RecipeChoice.ExactChoice(exact));
-            } else {
-                Material m = Material.valueOf(i);
-                r.addIngredient(m);
-            }
-        }
-        if (s.contains("Jelly Baby")) {
-            r.setGroup("Jelly Babies");
-        }
-        shapelessRecipes.put(s, r);
-        return r;
+        new AdminUpgradeRecipe(plugin).addRecipe();
+        new AppleJellyBabyRecipe(plugin).addRecipe();
+        new BiomeStorageDiskRecipe(plugin).addRecipe();
+        new BioscannerUpgradeRecipe(plugin).addRecipe();
+        new BlueberryJellyBabyRecipe(plugin).addRecipe();
+        new BowlofCustardRecipe(plugin).addRecipe();
+        new BrushUpgradeRecipe(plugin).addRecipe();
+        new BubblegumJellyBabyRecipe(plugin).addRecipe();
+        new CappuccinoJellyBabyRecipe(plugin).addRecipe();
+        new ConversionUpgradeRecipe(plugin).addRecipe();
+        new DiamondUpgradeRecipe(plugin).addRecipe();
+        new EarlGreyJellyBabyRecipe(plugin).addRecipe();
+        new EmeraldUpgradeRecipe(plugin).addRecipe();
+        new GrapeJellyBabyRecipe(plugin).addRecipe();
+        new IgniteUpgradeRecipe(plugin).addRecipe();
+        new IslandPunchJellyBabyRecipe(plugin).addRecipe();
+        new KnockbackUpgradeRecipe(plugin).addRecipe();
+        new LemonJellyBabyRecipe(plugin).addRecipe();
+        new LicoriceJellyBabyRecipe(plugin).addRecipe();
+        new LimeJellyBabyRecipe(plugin).addRecipe();
+        new OrangeJellyBabyRecipe(plugin).addRecipe();
+        new PainterUpgradeRecipe(plugin).addRecipe();
+        new PickupArrowsUpgradeRecipe(plugin).addRecipe();
+        new PlayerStorageDiskRecipe(plugin).addRecipe();
+        new PresetStorageDiskRecipe(plugin).addRecipe();
+        new RaspberryJellyBabyRecipe(plugin).addRecipe();
+        new RedstoneUpgradeRecipe(plugin).addRecipe();
+        new SaveStorageDiskRecipe(plugin).addRecipe();
+        new StrawberryJellyBabyRecipe(plugin).addRecipe();
+        new TARDISSchematicWandRecipe(plugin).addRecipe();
+        new VanillaJellyBabyRecipe(plugin).addRecipe();
+        new VodkaJellyBabyRecipe(plugin).addRecipe();
+        new WatermelonJellyBabyRecipe(plugin).addRecipe();
     }
 
     public HashMap<String, ShapelessRecipe> getShapelessRecipes() {

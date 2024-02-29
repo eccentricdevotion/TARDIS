@@ -17,18 +17,10 @@
 package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
+import me.eccentric_nz.TARDIS.recipes.smithing.*;
 import org.bukkit.inventory.SmithingRecipe;
-import org.bukkit.inventory.SmithingTransformRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
-import java.util.Locale;
-import java.util.Set;
 
 public class TARDISSmithingRecipe {
 
@@ -41,42 +33,19 @@ public class TARDISSmithingRecipe {
     }
 
     public void addSmithingRecipes() {
-        Set<String> smithing = plugin.getRecipesConfig().getConfigurationSection("smithing").getKeys(false);
-        smithing.forEach((s) -> plugin.getServer().addRecipe(makeRecipe(s)));
+        new AdminRepairRecipe(plugin).addRecipe();
+        new BioscannerRepairRecipe(plugin).addRecipe();
+        new BrushRepairRecipe(plugin).addRecipe();
+        new ConversionRepairRecipe(plugin).addRecipe();
+        new DiamondRepairRecipe(plugin).addRecipe();
+        new EmeraldRepairRecipe(plugin).addRecipe();
+        new IgniteRepairRecipe(plugin).addRecipe();
+        new KnockbackRepairRecipe(plugin).addRecipe();
+        new PainterRepairRecipe(plugin).addRecipe();
+        new PickupArrowsRepairRecipe(plugin).addRecipe();
+        new RedstoneRepairRecipe(plugin).addRecipe();
     }
-
-    private SmithingRecipe makeRecipe(String s) {
-        /*
-        smithing:
-          Admin Repair:
-            base: BLAZE_ROD
-            addition: GLOWSTONE_DUST=Server Admin Circuit
-            result: BLAZE_ROD
-         */
-        // result
-        String result = plugin.getRecipesConfig().getString("smithing." + s + ".result");
-        Material mat = Material.valueOf(result);
-        ItemStack is = new ItemStack(mat, 1);
-        NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
-        // template
-        RecipeChoice template = new RecipeChoice.MaterialChoice(Material.REDSTONE);
-        // base material to upgrade
-        Material bm = Material.valueOf(plugin.getRecipesConfig().getString("smithing." + s + ".base"));
-        RecipeChoice base = new RecipeChoice.MaterialChoice(bm);
-        // addition material to use
-        String[] split = plugin.getRecipesConfig().getString("smithing." + s + ".addition").split("=");
-        Material am = Material.valueOf(split[0]);
-        ItemStack isa = new ItemStack(am, 1);
-        ItemMeta im = isa.getItemMeta();
-        im.setDisplayName(split[1]);
-        im.setCustomModelData(RecipeItem.getByName(split[1]).getCustomModelData());
-        isa.setItemMeta(im);
-        RecipeChoice addition = new RecipeChoice.ExactChoice(isa);
-        SmithingRecipe r = new SmithingTransformRecipe(key, is, template, base, addition);
-        smithingRecipes.put(s, r);
-        return r;
-    }
-
+    
     public HashMap<String, SmithingRecipe> getSmithingRecipes() {
         return smithingRecipes;
     }

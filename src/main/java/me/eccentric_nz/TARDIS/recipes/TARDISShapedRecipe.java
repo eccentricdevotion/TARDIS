@@ -17,26 +17,10 @@
 package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
-import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
+import me.eccentric_nz.TARDIS.recipes.shaped.*;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionData;
-import org.bukkit.potion.PotionType;
 
-import java.util.*;
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -45,189 +29,91 @@ public class TARDISShapedRecipe {
 
     private final TARDIS plugin;
     private final HashMap<String, ShapedRecipe> shapedRecipes;
-    private final HashMap<String, Integer> sonicModelLookup = new HashMap<>();
-    private final HashMap<String, Integer> keyModelLookup = new HashMap<>();
-    private int keyModel = -1;
-    private int sonicModel = -1;
 
     public TARDISShapedRecipe(TARDIS plugin) {
         this.plugin = plugin;
         shapedRecipes = new HashMap<>();
-        sonicModelLookup.put("mark_1", 10000001);
-        sonicModelLookup.put("mark_2", 10000002);
-        sonicModelLookup.put("mark_3", 10000003);
-        sonicModelLookup.put("mark_4", 10000004);
-        sonicModelLookup.put("eighth", 10000008);
-        sonicModelLookup.put("ninth", 10000009);
-        sonicModelLookup.put("ninth_open", 12000009);
-        sonicModelLookup.put("tenth", 10000010);
-        sonicModelLookup.put("tenth_open", 12000010);
-        sonicModelLookup.put("eleventh", 10000011);
-        sonicModelLookup.put("eleventh_open", 12000011);
-        sonicModelLookup.put("master", 10000032);
-        sonicModelLookup.put("sarah_jane", 10000033);
-        sonicModelLookup.put("river_song", 10000031);
-        sonicModelLookup.put("twelfth", 10000012);
-        sonicModelLookup.put("thirteenth", 10000013);
-        sonicModelLookup.put("war", 10000085);
-        keyModelLookup.put("first", 1);
-        keyModelLookup.put("second", 2);
-        keyModelLookup.put("third", 3);
-        keyModelLookup.put("fifth", 4);
-        keyModelLookup.put("seventh", 5);
-        keyModelLookup.put("ninth", 6);
-        keyModelLookup.put("tenth", 7);
-        keyModelLookup.put("eleventh", 8);
-        keyModelLookup.put("rose", 9);
-        keyModelLookup.put("sally", 10);
-        keyModelLookup.put("perception", 11);
-        keyModelLookup.put("susan", 12);
-        keyModelLookup.put("gold", 13);
     }
 
     public void addShapedRecipes() {
-        keyModel = keyModelLookup.get(plugin.getConfig().getString("preferences.default_key").toLowerCase(Locale.ENGLISH));
-        sonicModel = sonicModelLookup.get(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ENGLISH));
-        Set<String> shaped = plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false);
-        shaped.forEach((s) -> {
-            try {
-                plugin.getServer().addRecipe(makeRecipe(s));
-            } catch (IllegalArgumentException e) {
-                plugin.debug("Invalid Recipe: " + ChatColor.RED + s);
-//                e.printStackTrace();
-            }
-        });
-    }
-
-    private ShapedRecipe makeRecipe(String s) {
-        /*
-         * shape: A-A,BBB,CDC
-         * ingredients: A: STONE B: GRASS_BLOCK C: BIRCH_PLANKS D: DIAMOND_BLOCK=Special Name
-         * result: DIAMOND_SWORD
-         * amount: 1
-         * lore: "The vorpal blade~goes snicker-snack!"
-         */
-        String result = plugin.getRecipesConfig().getString("shaped." + s + ".result");
-        Material mat = Material.valueOf(result);
-        int amount = plugin.getRecipesConfig().getInt("shaped." + s + ".amount");
-        ItemStack is = new ItemStack(mat, amount);
-        ItemMeta im = is.getItemMeta();
-        if (s.equals("TARDIS Key") && keyModel != -1) {
-            im.setCustomModelData(keyModel);
-        } else if (s.equals("Sonic Screwdriver") && sonicModel != -1) {
-            im.setCustomModelData(sonicModel);
-        } else {
-            im.setCustomModelData(RecipeItem.getByName(s).getCustomModelData());
-        }
-        im.setDisplayName(s);
-        if (!plugin.getRecipesConfig().getString("shaped." + s + ".lore").equals("")) {
-            if (mat.equals(Material.GLOWSTONE_DUST) && DiskCircuit.getCircuitNames().contains(s)) {
-                // which circuit is it?
-                String[] split = s.split(" ");
-                String which = split[1].toLowerCase(Locale.ENGLISH);
-                // set the second line of lore
-                List<String> lore;
-                String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
-                        ? ChatColor.YELLOW + "unlimited"
-                        : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
-                lore = Arrays.asList("Uses left", uses);
-                im.setLore(lore);
-            } else {
-                im.setLore(Arrays.asList(plugin.getRecipesConfig().getString("shaped." + s + ".lore").split("~")));
-            }
-        }
-        if (s.endsWith("Bow Tie") || s.equals("3-D Glasses") || s.equals("TARDIS Communicator")) {
-            Damageable damageable = (Damageable) im;
-            damageable.setDamage(50);
-            im.addItemFlags(ItemFlag.values());
-        }
-        if (s.endsWith("Disk")) {
-            im.addItemFlags(ItemFlag.values());
-        }
-        is.setItemMeta(im);
-        NamespacedKey key = new NamespacedKey(plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
-        ShapedRecipe r = new ShapedRecipe(key, is);
-        // get shape
-        String difficulty = (plugin.getDifficulty().equals(Difficulty.MEDIUM)) ? "easy" : plugin.getConfig().getString("preferences.difficulty").toLowerCase(Locale.ENGLISH);
-        try {
-            String[] shape_tmp = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_shape").split(",");
-            String[] shape = new String[shape_tmp.length];
-            for (int i = 0; i < shape_tmp.length; i++) {
-                shape[i] = shape_tmp[i].replaceAll("-", " ");
-            }
-            if (shape_tmp.length > 2) {
-                r.shape(shape[0], shape[1], shape[2]);
-            } else {
-                r.shape(shape[0], shape[1]);
-            }
-            Set<String> ingredients = plugin.getRecipesConfig().getConfigurationSection("shaped." + s + "." + difficulty + "_ingredients").getKeys(false);
-            ingredients.forEach((g) -> {
-                char c = g.charAt(0);
-                String i = plugin.getRecipesConfig().getString("shaped." + s + "." + difficulty + "_ingredients." + g);
-                if (i.contains("=")) {
-                    ItemStack exact;
-                    String[] choice = i.split("=");
-                    Material m = Material.valueOf(choice[0]);
-                    exact = new ItemStack(m, 1);
-                    ItemMeta em = exact.getItemMeta();
-                    em.setDisplayName(choice[1]);
-                    em.setCustomModelData(RecipeItem.getByName(choice[1]).getCustomModelData());
-                    if (m.equals(Material.GLOWSTONE_DUST) && DiskCircuit.getCircuitNames().contains(choice[1])) {
-                        // which circuit is it?
-                        String[] split = choice[1].split(" ");
-                        String which = split[1].toLowerCase(Locale.ENGLISH);
-                        // set the second line of lore
-                        List<String> lore;
-                        String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
-                                ? ChatColor.YELLOW + "unlimited"
-                                : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
-                        lore = Arrays.asList("Uses left", uses);
-                        em.setLore(lore);
-                    }
-                    exact.setItemMeta(em);
-                    r.setIngredient(c, new RecipeChoice.ExactChoice(exact));
-                } else if (i.contains(">")) {
-                    ItemStack potion;
-                    String[] choice = i.split(">");
-                    potion = new ItemStack(Material.POTION, 1);
-                    PotionMeta pm = (PotionMeta) potion.getItemMeta();
-                    PotionType potionType;
-                    try {
-                        potionType = PotionType.valueOf(choice[1]);
-                    } catch (IllegalArgumentException e) {
-                        potionType = PotionType.INVISIBILITY;
-                    }
-                    PotionData potionData = new PotionData(potionType);
-                    pm.setBasePotionData(potionData);
-                    potion.setItemMeta(pm);
-                    r.setIngredient(c, new RecipeChoice.ExactChoice(potion));
-                } else if (i.contains("≈")) {
-                    ItemStack book;
-                    String[] choice = i.split("≈");
-                    book = new ItemStack(Material.ENCHANTED_BOOK, 1);
-                    EnchantmentStorageMeta pm = (EnchantmentStorageMeta) book.getItemMeta();
-                    Enchantment enchantment;
-                    try {
-                        enchantment = Enchantment.getByKey(NamespacedKey.minecraft(choice[1].toLowerCase()));
-                    } catch (IllegalArgumentException e) {
-                        enchantment = Enchantment.KNOCKBACK;
-                    }
-                    pm.addStoredEnchant(enchantment, 1, false);
-                    book.setItemMeta(pm);
-                    r.setIngredient(c, new RecipeChoice.ExactChoice(book));
-                } else {
-                    Material m = Material.valueOf(i);
-                    r.setIngredient(c, m);
-                }
-            });
-        } catch (IllegalArgumentException e) {
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, s + " recipe failed! Check the recipe config file!");
-        }
-        if (s.contains("Bow Tie")) {
-            r.setGroup("Bow Ties");
-        }
-        shapedRecipes.put(s, r);
-        return r;
+        new AcidBatteryRecipe(plugin).addRecipe();
+        new ArtronStorageCellRecipe(plugin).addRecipe();
+        new AuthorisedControlDiskRecipe(plugin).addRecipe();
+        new BioscannerCircuitRecipe(plugin).addRecipe();
+        new BlackBowTieRecipe(plugin).addRecipe();
+        new BlankStorageDiskRecipe(plugin).addRecipe();
+        new BlueBowTieRecipe(plugin).addRecipe();
+        new BrownBowTieRecipe(plugin).addRecipe();
+        new BrushCircuitRecipe(plugin).addRecipe();
+        new ConversionCircuitRecipe(plugin).addRecipe();
+        new CustardCreamRecipe(plugin).addRecipe();
+        new CyanBowTieRecipe(plugin).addRecipe();
+        new DiamondDisruptorCircuitRecipe(plugin).addRecipe();
+        new EmeraldEnvironmentCircuitRecipe(plugin).addRecipe();
+        new ExteriorLampLevelSwitchRecipe(plugin).addRecipe();
+        new FishFingerRecipe(plugin).addRecipe();
+        new FobWatchRecipe(plugin).addRecipe();
+        new GreenBowTieRecipe(plugin).addRecipe();
+        new GreyBowTieRecipe(plugin).addRecipe();
+        new HandlesRecipe(plugin).addRecipe();
+        new IgniteCircuitRecipe(plugin).addRecipe();
+        new InteriorLightLevelSwitchRecipe(plugin).addRecipe();
+        new JammyDodgerRecipe(plugin).addRecipe();
+        new KnockbackCircuitRecipe(plugin).addRecipe();
+        new LightBlueBowTieRecipe(plugin).addRecipe();
+        new LightGreyBowTieRecipe(plugin).addRecipe();
+        new LimeBowTieRecipe(plugin).addRecipe();
+        new MagentaBowTieRecipe(plugin).addRecipe();
+        new MonitorFrameRecipe(plugin).addRecipe();
+        new OrangeBowTieRecipe(plugin).addRecipe();
+        new PainterCircuitRecipe(plugin).addRecipe();
+        new PaperBagRecipe(plugin).addRecipe();
+        new PerceptionCircuitRecipe(plugin).addRecipe();
+        new PerceptionFilterRecipe(plugin).addRecipe();
+        new PickupArrowsCircuitRecipe(plugin).addRecipe();
+        new PinkBowTieRecipe(plugin).addRecipe();
+        new PurpleBowTieRecipe(plugin).addRecipe();
+        new RedBowTieRecipe(plugin).addRecipe();
+        new RedstoneActivatorCircuitRecipe(plugin).addRecipe();
+        new RiftCircuitRecipe(plugin).addRecipe();
+        new RiftManipulatorRecipe(plugin).addRecipe();
+        new RustPlagueSwordRecipe(plugin).addRecipe();
+        new ServerAdminCircuitRecipe(plugin).addRecipe();
+        new SonicDockRecipe(plugin).addRecipe();
+        new SonicGeneratorRecipe(plugin).addRecipe();
+        new SonicOscillatorRecipe(plugin).addRecipe();
+        new SonicScrewdriverRecipe(plugin).addRecipe();
+        new StattenheimRemoteRecipe(plugin).addRecipe();
+        new TARDISARSCircuitRecipe(plugin).addRecipe();
+        new TARDISArtronFurnaceRecipe(plugin).addRecipe();
+        new TARDISBiomeReaderRecipe(plugin).addRecipe();
+        new TARDISChameleonCircuitRecipe(plugin).addRecipe();
+        new TARDISCommunicatorRecipe(plugin).addRecipe();
+        new TARDISInputCircuitRecipe(plugin).addRecipe();
+        new TARDISInvisibilityCircuitRecipe(plugin).addRecipe();
+        new TARDISKeyRecipe(plugin).addRecipe();
+        new TARDISLocatorCircuitRecipe(plugin).addRecipe();
+        new TARDISLocatorRecipe(plugin).addRecipe();
+        new TARDISMaterialisationCircuitRecipe(plugin).addRecipe();
+        new TARDISMemoryCircuitRecipe(plugin).addRecipe();
+        new TARDISMonitorRecipe(plugin).addRecipe();
+        new TARDISRandomiserCircuitRecipe(plugin).addRecipe();
+        new TARDISRemoteKeyRecipe(plugin).addRecipe();
+        new TARDISScannerCircuitRecipe(plugin).addRecipe();
+        new TARDISStattenheimCircuitRecipe(plugin).addRecipe();
+        new TARDISTelepathicCircuitRecipe(plugin).addRecipe();
+        new TARDISTemporalCircuitRecipe(plugin).addRecipe();
+        new ThreeDGlassesRecipe(plugin).addRecipe();
+        new TimeEngineRecipe(plugin).addRecipe();
+        new TimeRotorDeltaRecipe(plugin).addRecipe();
+        new TimeRotorEarlyRecipe(plugin).addRecipe();
+        new TimeRotorEleventhRecipe(plugin).addRecipe();
+        new TimeRotorEngineRecipe(plugin).addRecipe();
+        new TimeRotorHospitalRecipe(plugin).addRecipe();
+        new TimeRotorTenthRecipe(plugin).addRecipe();
+        new TimeRotorTwelfthRecipe(plugin).addRecipe();
+        new WhiteBowTieRecipe(plugin).addRecipe();
+        new YellowBowTieRecipe(plugin).addRecipe();
     }
 
     public HashMap<String, ShapedRecipe> getShapedRecipes() {

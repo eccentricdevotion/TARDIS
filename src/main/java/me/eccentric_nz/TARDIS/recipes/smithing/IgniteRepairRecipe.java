@@ -10,8 +10,6 @@ import org.bukkit.inventory.SmithingRecipe;
 import org.bukkit.inventory.SmithingTransformRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
-
 /*
 base:BLAZE_ROD
 addition:GLOWSTONE_DUST=Ignite Circuit
@@ -27,7 +25,7 @@ public class IgniteRepairRecipe {
         this.plugin = plugin;
     }
 
-    public void addRecipes() {
+    public void addRecipe() {
         // result
         ItemStack result = new ItemStack(Material.BLAZE_ROD, 1);
         // template
