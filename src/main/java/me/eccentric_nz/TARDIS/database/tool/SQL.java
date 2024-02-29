@@ -48,7 +48,7 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %scamera (c_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', location varchar(512) DEFAULT '', PRIMARY KEY (c_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %schameleon (chameleon_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', blueprintData text, stainData text, glassData text, line1 varchar(48) DEFAULT '', line2 varchar(48) DEFAULT '', line3 varchar(48) DEFAULT '', line4 varchar(48) DEFAULT '', active int(1) DEFAULT '0, PRIMARY KEY (chameleon_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %schameleon (chameleon_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', blueprintData text, stainData text, glassData text, line1 varchar(48) DEFAULT '', line2 varchar(48) DEFAULT '', line3 varchar(48) DEFAULT '', line4 varchar(48) DEFAULT '', active int(1) DEFAULT '0', PRIMARY KEY (chameleon_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %scolour (colour_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', red int(3) DEFAULT '0', green int(3) DEFAULT '0', blue int(3) DEFAULT '0', PRIMARY KEY (colour_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
