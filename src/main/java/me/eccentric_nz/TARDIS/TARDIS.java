@@ -611,9 +611,9 @@ public class TARDIS extends JavaPlugin {
             }
             // start bStats metrics
             new TARDISStats(this).startMetrics();
-            if (getConfig().getBoolean("debug")) {
-                getServer().getScheduler().scheduleSyncDelayedTask(this, new RecipeChecker(), 100L);
-            }
+//            if (getConfig().getBoolean("debug")) {
+//                getServer().getScheduler().scheduleSyncDelayedTask(this, new RecipeChecker(), 100L);
+//            }
         } else {
             getLogger().log(Level.SEVERE, "This plugin requires Spigot/Paper " + minVersion + " or higher, disabling...");
             pm.disablePlugin(this);
