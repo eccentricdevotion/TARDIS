@@ -223,6 +223,11 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     }
                 }
             }
+            // check for relativity differentiator
+            HashMap<String, Object> whereRelDiff = new HashMap<>();
+            whereRelDiff.put("tardis_id", id);
+            whereRelDiff.put("type", 47);
+            plugin.getQueryFactory().doDelete("controls", whereRelDiff);
             if (tardis.getRotor() != null) {
                 // remove item frame and delete UUID in db
                 ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
