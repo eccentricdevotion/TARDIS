@@ -62,8 +62,6 @@ import me.eccentric_nz.TARDIS.placeholders.TARDISPlaceholderExpansion;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import me.eccentric_nz.TARDIS.recipes.*;
-import me.eccentric_nz.TARDIS.recipes.shaped.ExteriorLampLevelSwitchRecipe;
-import me.eccentric_nz.TARDIS.recipes.shaped.InteriorLightLevelSwitchRecipe;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomPersister;
 import me.eccentric_nz.TARDIS.rooms.TARDISZeroRoomRunnable;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
@@ -423,8 +421,6 @@ public class TARDIS extends JavaPlugin {
                 obstructionum = new TARDISSeedRecipe(this);
                 obstructionum.addSeedRecipes();
             }
-            new ExteriorLampLevelSwitchRecipe(this).addRecipe();
-            new InteriorLightLevelSwitchRecipe(this).addRecipe();
             new TARDISSmithingRecipe(this).addSmithingRecipes();
             new TARDISDisplayItemRecipe(this).addDisplayItemRecipes();
             TARDISInformationSystemListener info = new TARDISListenerRegisterer(this).registerListeners();
@@ -615,9 +611,9 @@ public class TARDIS extends JavaPlugin {
             }
             // start bStats metrics
             new TARDISStats(this).startMetrics();
-//            if (getConfig().getBoolean("debug")) {
-//                getServer().getScheduler().scheduleSyncDelayedTask(this, new RecipeChecker(), 100L);
-//            }
+            if (getConfig().getBoolean("debug")) {
+                getServer().getScheduler().scheduleSyncDelayedTask(this, new RecipeChecker(), 100L);
+            }
         } else {
             getLogger().log(Level.SEVERE, "This plugin requires Spigot/Paper " + minVersion + " or higher, disabling...");
             pm.disablePlugin(this);

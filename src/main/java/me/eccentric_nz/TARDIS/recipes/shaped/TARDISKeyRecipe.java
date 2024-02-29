@@ -60,11 +60,11 @@ public class TARDISKeyRecipe {
         NamespacedKey key = new NamespacedKey(plugin, "tardis_key");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getDifficulty() == Difficulty.HARD) {
-            r.shape("C", "G", "   ");
+            r.shape(" C ", " G ", "   ");
             r.setIngredient('C', Material.COMPARATOR);
             r.setIngredient('G', Material.GOLD_NUGGET);            
         } else {
-            r.shape("R", "G", "   ");
+            r.shape(" R ", " G ", "   ");
             r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('G', Material.GOLD_NUGGET);            
         }

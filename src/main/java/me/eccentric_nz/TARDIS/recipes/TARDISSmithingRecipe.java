@@ -45,7 +45,7 @@ public class TARDISSmithingRecipe {
         new PickupArrowsRepairRecipe(plugin).addRecipe();
         new RedstoneRepairRecipe(plugin).addRecipe();
     }
-    
+
     public HashMap<String, SmithingRecipe> getSmithingRecipes() {
         return smithingRecipes;
     }
