@@ -1,14 +1,13 @@
 package me.eccentric_nz.TARDIS.recipes.shapeless;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
 
 /*
 recipe:BONE,REDSTONE
@@ -30,16 +29,12 @@ public class TARDISSchematicWandRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Schematic Wand");
         im.setCustomModelData(10000001);
-        String lore = plugin.getRecipesConfig().getString("shapeless.TARDIS Schematic Wand.lore");
-        if (!lore.isEmpty()) {
-            im.setLore(Arrays.asList(lore.split("~")));
-        }
+        im.setLore(List.of("Right-click start", "Left-click end"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_schematic_wand");
         ShapelessRecipe r = new ShapelessRecipe(key, is);
         r.addIngredient(Material.BONE);
-            r.addIngredient(Material.REDSTONE);
-            
+        r.addIngredient(Material.REDSTONE);
         plugin.getServer().addRecipe(r);
         plugin.getIncomposita().getShapelessRecipes().put("TARDIS Schematic Wand", r);
     }

@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
 
 /*
 easy_shape:-B-,-F-,-B-
@@ -35,10 +35,7 @@ public class FishFingerRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Fish Finger");
         im.setCustomModelData(10000001);
-        String lore = plugin.getRecipesConfig().getString("shaped.Fish Finger.lore");
-        if (!lore.isEmpty()) {
-            im.setLore(Arrays.asList(lore.split("~")));
-        }
+        im.setLore(List.of("Best eaten with custard!"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "fish_finger");
         ShapedRecipe r = new ShapedRecipe(key, is);

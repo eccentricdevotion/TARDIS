@@ -8,6 +8,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.List;
+
 /*
 easy_shape:---,WRW,---
 easy_ingredients.W:WHEAT
@@ -32,7 +34,8 @@ public class JammyDodgerRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Jammy Dodger");
         im.setCustomModelData(10000001);
-        String lore = plugin.getRecipesConfig().getString("shaped.Jammy Dodger.lore");
+        im.setLore(List.of("Best eaten with custard!"));
+        is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "jammy_dodger");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getDifficulty() == Difficulty.HARD) {

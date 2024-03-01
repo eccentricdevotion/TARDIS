@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
 
 /*
 easy_shape:---,SWS,---
@@ -37,10 +37,7 @@ public class BlackBowTieRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Black Bow Tie");
         im.setCustomModelData(10000038);
-        String lore = plugin.getRecipesConfig().getString("shaped.Black Bow Tie.lore");
-        if (!lore.isEmpty()) {
-            im.setLore(Arrays.asList(lore.split("~")));
-        }
+        im.setLore(List.of("Bow ties are cool!"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "black_bow_tie");
         ShapedRecipe r = new ShapedRecipe(key, is);
@@ -49,11 +46,11 @@ public class BlackBowTieRecipe {
             r.setIngredient('S', Material.STRING);
             r.setIngredient('T', Material.GLOWSTONE_DUST);
             r.setIngredient('L', Material.LEATHER);
-            r.setIngredient('W', Material.BLACK_WOOL);            
+            r.setIngredient('W', Material.BLACK_WOOL);
         } else {
             r.shape("   ", "SWS", "   ");
             r.setIngredient('S', Material.STRING);
-            r.setIngredient('W', Material.BLACK_WOOL);            
+            r.setIngredient('W', Material.BLACK_WOOL);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Black Bow Tie", r);

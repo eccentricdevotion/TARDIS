@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.schematic;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
@@ -32,14 +31,14 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.UUID;
+
 public class TARDISSchematicListener implements Listener {
 
     private final TARDIS plugin;
-    private final Material wand;
 
     public TARDISSchematicListener(TARDIS plugin) {
         this.plugin = plugin;
-        wand = getWand();
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -50,7 +49,7 @@ public class TARDISSchematicListener implements Listener {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         ItemStack itemStack = player.getInventory().getItemInMainHand();
-        if (itemStack == null || !itemStack.getType().equals(wand) || !player.hasPermission("tardis.admin") || !isWand(itemStack)) {
+        if (itemStack == null || !itemStack.getType().equals(Material.BONE) || !player.hasPermission("tardis.admin") || !isWand(itemStack)) {
             return;
         }
         Block b = event.getClickedBlock();
@@ -67,16 +66,6 @@ public class TARDISSchematicListener implements Listener {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_END");
         }
         event.setCancelled(true);
-    }
-
-    private Material getWand() {
-        Material mat;
-        try {
-            mat = Material.valueOf(plugin.getRecipesConfig().getString("shapeless.TARDIS Schematic Wand.result"));
-        } catch (IllegalArgumentException e) {
-            mat = Material.BONE;
-        }
-        return mat;
     }
 
     private boolean isWand(ItemStack is) {

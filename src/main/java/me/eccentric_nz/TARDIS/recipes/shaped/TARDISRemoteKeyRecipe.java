@@ -43,10 +43,7 @@ public class TARDISRemoteKeyRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Remote Key");
         im.setCustomModelData(15);
-        String lore = plugin.getRecipesConfig().getString("shaped.TARDIS Remote Key.lore");
-        if (!lore.isEmpty()) {
-            im.setLore(Arrays.asList(lore.split("~")));
-        }
+        im.setLore(List.of("Deadlock & unlock", "Hide & rebuild"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_remote_key");
         ShapedRecipe r = new ShapedRecipe(key, is);

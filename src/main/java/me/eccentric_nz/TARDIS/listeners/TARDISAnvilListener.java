@@ -46,13 +46,11 @@ public class TARDISAnvilListener implements Listener {
      */
     public TARDISAnvilListener(TARDIS plugin) {
         this.plugin = plugin;
-        plugin.getRecipesConfig().getConfigurationSection("shaped").getKeys(false).forEach((r) -> {
-            String[] result = plugin.getRecipesConfig().getString("shaped." + r + ".result").split(":");
-            disallow.put(r, Material.valueOf(result[0]));
+        plugin.getFigura().getShapedRecipes().entrySet().forEach((r) -> {
+            disallow.put(r.getKey(), r.getValue().getResult().getType());
         });
-        plugin.getRecipesConfig().getConfigurationSection("shapeless").getKeys(false).forEach((q) -> {
-            String[] result = plugin.getRecipesConfig().getString("shapeless." + q + ".result").split(":");
-            disallow.put(q, Material.valueOf(result[0]));
+        plugin.getIncomposita().getShapelessRecipes().entrySet().forEach((q) -> {
+            disallow.put(q.getKey(), q.getValue().getResult().getType());
         });
     }
 

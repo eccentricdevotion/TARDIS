@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
 
 /*
 easy_shape:III,ISI,IRI
@@ -38,10 +38,7 @@ public class HandlesRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Handles");
         im.setCustomModelData(10000001);
-        String lore = plugin.getRecipesConfig().getString("shaped.Handles.lore");
-        if (!lore.isEmpty()) {
-            im.setLore(Arrays.asList(lore.split("~")));
-        }
+        im.setLore(List.of("Cyberhead from the", "Maldovar Market"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "handles");
         ShapedRecipe r = new ShapedRecipe(key, is);
@@ -50,12 +47,12 @@ public class HandlesRecipe {
             r.setIngredient('I', Material.IRON_INGOT);
             r.setIngredient('D', Material.DIAMOND);
             r.setIngredient('S', Material.SKELETON_SKULL);
-            r.setIngredient('R', Material.REDSTONE);            
+            r.setIngredient('R', Material.REDSTONE);
         } else {
             r.shape("III", "ISI", "IRI");
             r.setIngredient('I', Material.IRON_INGOT);
             r.setIngredient('S', Material.SKELETON_SKULL);
-            r.setIngredient('R', Material.REDSTONE);            
+            r.setIngredient('R', Material.REDSTONE);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Handles", r);

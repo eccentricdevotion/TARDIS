@@ -10,7 +10,7 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
 
 /*
 easy_shape:OBO,-L-,RRR
@@ -41,10 +41,7 @@ public class StattenheimRemoteRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Stattenheim Remote");
         im.setCustomModelData(10000001);
-        String lore = plugin.getRecipesConfig().getString("shaped.Stattenheim Remote.lore");
-        if (!lore.isEmpty()) {
-            im.setLore(Arrays.asList(lore.split("~")));
-        }
+        im.setLore(List.of("Right-click block", "to call TARDIS"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "stattenheim_remote");
         ShapedRecipe r = new ShapedRecipe(key, is);

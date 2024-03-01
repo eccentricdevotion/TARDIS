@@ -66,7 +66,6 @@ public class TARDISStattenheimListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> useless = new ArrayList<>();
-    private final Material remote;
 
     public TARDISStattenheimListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -76,7 +75,6 @@ public class TARDISStattenheimListener implements Listener {
         useless.addAll(Tag.WOOL_CARPETS.getValues());
         useless.addAll(TARDISMaterials.plants);
         useless.addAll(Tag.SAPLINGS.getValues());
-        remote = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Stattenheim Remote.result"));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -86,7 +84,7 @@ public class TARDISStattenheimListener implements Listener {
         }
         Player player = event.getPlayer();
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (is.getType().equals(remote) && is.hasItemMeta()) {
+        if (is.getType().equals(Material.FLINT) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (im.getDisplayName().equals("Stattenheim Remote")) {
                 Action action = event.getAction();
@@ -333,6 +331,7 @@ public class TARDISStattenheimListener implements Listener {
             }
         }
     }
+
     private void handleSensor(int id) {
         ResultSetSensors rss = new ResultSetSensors(plugin, id);
         if (rss.resultSet()) {

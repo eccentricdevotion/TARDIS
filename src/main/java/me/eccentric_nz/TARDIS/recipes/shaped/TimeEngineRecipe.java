@@ -36,7 +36,7 @@ public class TimeEngineRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Time Engine");
         im.setCustomModelData(10000007);
-        String lore = plugin.getRecipesConfig().getString("shaped.Time Engine.lore");
+        is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "time_engine");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getDifficulty() == Difficulty.HARD) {
@@ -44,13 +44,13 @@ public class TimeEngineRecipe {
             r.setIngredient('L', Material.LIGHT_BLUE_DYE);
             r.setIngredient('R', Material.REDSTONE_BLOCK);
             r.setIngredient('A', Material.ANVIL);
-            r.setIngredient('G', Material.GLASS_PANE);            
+            r.setIngredient('G', Material.GLASS_PANE);
         } else {
             r.shape("LRL", "GAG", "GRG");
             r.setIngredient('L', Material.LIGHT_BLUE_DYE);
             r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('A', Material.ANVIL);
-            r.setIngredient('G', Material.GLASS_PANE);            
+            r.setIngredient('G', Material.GLASS_PANE);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Time Engine", r);

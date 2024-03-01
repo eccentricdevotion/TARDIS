@@ -8,8 +8,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 /*
@@ -47,26 +47,23 @@ public class TARDISKeyRecipe {
     }
 
     public void addRecipe() {
-       int keyModel = keyModelLookup.getOrDefault(plugin.getConfig().getString("preferences.default_key").toLowerCase(Locale.ENGLISH), 1);
+        int keyModel = keyModelLookup.getOrDefault(plugin.getConfig().getString("preferences.default_key").toLowerCase(Locale.ENGLISH), 1);
         ItemStack is = new ItemStack(Material.GOLD_NUGGET, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Key");
         im.setCustomModelData(keyModel);
-        String lore = plugin.getRecipesConfig().getString("shaped.TARDIS Key.lore");
-        if (!lore.isEmpty()) {
-            im.setLore(Arrays.asList(lore.split("~")));
-        }
+        im.setLore(List.of("Enter and exit your TARDIS"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_key");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getDifficulty() == Difficulty.HARD) {
             r.shape(" C ", " G ", "   ");
             r.setIngredient('C', Material.COMPARATOR);
-            r.setIngredient('G', Material.GOLD_NUGGET);            
+            r.setIngredient('G', Material.GOLD_NUGGET);
         } else {
             r.shape(" R ", " G ", "   ");
             r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('G', Material.GOLD_NUGGET);            
+            r.setIngredient('G', Material.GOLD_NUGGET);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Key", r);

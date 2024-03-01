@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
-import java.util.Arrays;
+import java.util.List;
 
 /*
 easy_shape:-S-,SES,-S-
@@ -40,10 +40,7 @@ public class TARDISTelepathicCircuitRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Telepathic Circuit");
         im.setCustomModelData(10000001);
-        String lore = plugin.getRecipesConfig().getString("shaped.TARDIS Telepathic Circuit.lore");
-        if (!lore.isEmpty()) {
-            im.setLore(Arrays.asList(lore.split("~")));
-        }
+        im.setLore(List.of("Allow companions to", "use TARDIS commands"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_telepathic_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

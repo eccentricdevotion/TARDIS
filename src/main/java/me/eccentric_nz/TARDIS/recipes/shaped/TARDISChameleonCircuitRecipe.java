@@ -43,10 +43,7 @@ public class TARDISChameleonCircuitRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Chameleon Circuit");
         im.setCustomModelData(10001966);
-        String lore = plugin.getRecipesConfig().getString("shaped.TARDIS Chameleon Circuit.lore");
-        if (!lore.isEmpty()) {
-            im.setLore(Arrays.asList(lore.split("~")));
-        }
+        im.setLore(List.of("Uses left", "25"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_chameleon_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

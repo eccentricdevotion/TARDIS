@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
 
 /*
 easy_shape:GRG,RGR,GRG
@@ -36,10 +36,7 @@ public class TARDISScannerCircuitRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Scanner Circuit");
         im.setCustomModelData(10001977);
-        String lore = plugin.getRecipesConfig().getString("shaped.TARDIS Scanner Circuit.lore");
-        if (!lore.isEmpty()) {
-            im.setLore(Arrays.asList(lore.split("~")));
-        }
+        im.setLore(List.of("Uses left", "20"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_scanner_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
@@ -47,11 +44,11 @@ public class TARDISScannerCircuitRecipe {
             r.shape("GRG", "RER", "GRG");
             r.setIngredient('G', Material.GLASS);
             r.setIngredient('E', Material.SPIDER_EYE);
-            r.setIngredient('R', Material.REDSTONE);            
+            r.setIngredient('R', Material.REDSTONE);
         } else {
             r.shape("GRG", "RGR", "GRG");
             r.setIngredient('G', Material.GLASS_PANE);
-            r.setIngredient('R', Material.REDSTONE);            
+            r.setIngredient('R', Material.REDSTONE);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Scanner Circuit", r);

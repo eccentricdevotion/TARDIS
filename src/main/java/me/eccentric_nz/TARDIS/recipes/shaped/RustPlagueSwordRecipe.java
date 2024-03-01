@@ -10,7 +10,7 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
 
 /*
 easy_shape:RIR,RIR,-S-
@@ -40,10 +40,7 @@ public class RustPlagueSwordRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Rust Plague Sword");
         im.setCustomModelData(10000001);
-        String lore = plugin.getRecipesConfig().getString("shaped.Rust Plague Sword.lore");
-        if (!lore.isEmpty()) {
-            im.setLore(Arrays.asList(lore.split("~")));
-        }
+        im.setLore(List.of("Dalek Virus Dispenser"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "rust_plague_sword");
         ShapedRecipe r = new ShapedRecipe(key, is);
@@ -57,12 +54,12 @@ public class RustPlagueSwordRecipe {
             r.setIngredient('R', new RecipeChoice.ExactChoice(exact));
             r.setIngredient('I', Material.IRON_INGOT);
             r.setIngredient('D', Material.DIAMOND);
-            r.setIngredient('S', Material.STICK);            
+            r.setIngredient('S', Material.STICK);
         } else {
             r.shape("RIR", "RIR", " S ");
             r.setIngredient('R', new RecipeChoice.ExactChoice(exact));
             r.setIngredient('I', Material.IRON_INGOT);
-            r.setIngredient('S', Material.STICK);            
+            r.setIngredient('S', Material.STICK);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Rust Plague Sword", r);

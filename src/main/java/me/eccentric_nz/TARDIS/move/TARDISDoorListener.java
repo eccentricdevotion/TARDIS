@@ -436,7 +436,7 @@ public class TARDISDoorListener {
             } else {
                 player.resetPlayerTime();
                 boolean remove = true;
-                Material m = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
+                Material m = plugin.getFigura().getShapedRecipes().get("Perception Filter").getResult().getType();
                 for (ItemStack is : player.getInventory().getArmorContents()) {
                     if (is != null && is.getType().equals(m)) {
                         remove = false;

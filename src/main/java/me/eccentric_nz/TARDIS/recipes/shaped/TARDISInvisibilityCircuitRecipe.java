@@ -13,7 +13,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
-import java.util.Arrays;
+import java.util.List;
 
 /*
 easy_shape:-D-,P-E,-W-
@@ -44,10 +44,7 @@ public class TARDISInvisibilityCircuitRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Invisibility Circuit");
         im.setCustomModelData(10001981);
-        String lore = plugin.getRecipesConfig().getString("shaped.TARDIS Invisibility Circuit.lore");
-        if (!lore.isEmpty()) {
-            im.setLore(Arrays.asList(lore.split("~")));
-        }
+        im.setLore(List.of("Uses left", "5"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_invisibility_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

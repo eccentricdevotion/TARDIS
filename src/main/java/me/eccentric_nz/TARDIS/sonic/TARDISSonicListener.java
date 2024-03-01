@@ -53,7 +53,6 @@ import java.util.*;
 public class TARDISSonicListener implements Listener {
 
     private final TARDIS plugin;
-    private final Material sonic;
     private final Set<Material> diamond = new HashSet<>();
     private final Set<Material> doors = new HashSet<>();
     private final Set<Material> redstone = new HashSet<>();
@@ -63,8 +62,6 @@ public class TARDISSonicListener implements Listener {
 
     public TARDISSonicListener(TARDIS plugin) {
         this.plugin = plugin;
-        String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
-        sonic = Material.valueOf(split[0]);
         diamond.add(Material.COBWEB);
         diamond.add(Material.IRON_BARS);
         diamond.add(Material.SNOW);
@@ -105,7 +102,7 @@ public class TARDISSonicListener implements Listener {
         Player player = event.getPlayer();
         long now = System.currentTimeMillis();
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (is.getType().equals(sonic) && is.hasItemMeta()) {
+        if (is.getType().equals(Material.BLAZE_ROD) && is.hasItemMeta()) {
             ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
             if (im.getDisplayName().endsWith("Sonic Screwdriver")) {
                 // check they have charge

@@ -50,12 +50,9 @@ public class TARDISFarmBlockListener implements Listener {
     private final Material ca = Material.CACTUS;
     private final Material pp = Material.PITCHER_POD;
     private final Material tf = Material.TORCHFLOWER;
-    private final Material sonic;
 
     public TARDISFarmBlockListener(TARDIS plugin) {
         this.plugin = plugin;
-        String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
-        sonic = Material.valueOf(split[0]);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -71,7 +68,7 @@ public class TARDISFarmBlockListener implements Listener {
         }
         PlayerInventory inv = player.getInventory();
         ItemStack stack = inv.getItemInMainHand();
-        if (stack.getType().equals(sonic) && stack.hasItemMeta()) {
+        if (stack.getType().equals(Material.BLAZE_ROD) && stack.hasItemMeta()) {
             ItemMeta im = stack.getItemMeta();
             if (im.hasDisplayName() && im.getDisplayName().endsWith("Sonic Screwdriver") && im.hasLore() && im.getLore().contains("Emerald Upgrade")) {
                 if ((material.equals(sc)) && inv.contains(sc)) {

@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
 
 /*
 easy_shape:BBB,BGB,BRB
@@ -37,10 +37,7 @@ public class MonitorFrameRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Monitor Frame");
         im.setCustomModelData(2);
-        String lore = plugin.getRecipesConfig().getString("shaped.Monitor Frame.lore");
-        if (!lore.isEmpty()) {
-            im.setLore(Arrays.asList(lore.split("~")));
-        }
+        im.setLore(List.of("Place in an upwards", "facing item frame"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "monitor_frame");
         ShapedRecipe r = new ShapedRecipe(key, is);
@@ -48,12 +45,12 @@ public class MonitorFrameRecipe {
             r.shape("BBB", "BGB", "BRB");
             r.setIngredient('B', Material.BLACKSTONE);
             r.setIngredient('G', Material.TINTED_GLASS);
-            r.setIngredient('R', Material.REDSTONE_BLOCK);            
+            r.setIngredient('R', Material.REDSTONE_BLOCK);
         } else {
             r.shape("BBB", "BGB", "BRB");
             r.setIngredient('B', Material.BLACKSTONE);
             r.setIngredient('G', Material.GLASS_PANE);
-            r.setIngredient('R', Material.REDSTONE);            
+            r.setIngredient('R', Material.REDSTONE);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Monitor Frame", r);

@@ -53,11 +53,9 @@ import java.util.HashMap;
 public class TARDISRemoteKeyListener implements Listener {
 
     private final TARDIS plugin;
-    private final Material rkey;
 
     public TARDISRemoteKeyListener(TARDIS plugin) {
         this.plugin = plugin;
-        rkey = Material.valueOf(this.plugin.getRecipesConfig().getString("shaped.TARDIS Remote Key.result"));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -72,7 +70,7 @@ public class TARDISRemoteKeyListener implements Listener {
         }
         // check item in hand
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (!is.getType().equals(rkey)) {
+        if (!is.getType().equals(Material.GOLD_NUGGET)) {
             return;
         }
         if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().endsWith("TARDIS Remote Key")) {

@@ -265,7 +265,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISSonicActivatorListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSonicMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSonicSorterListener(plugin), plugin);
-        plugin.getPM().registerEvents(new TARDISSonicUpgradeListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISSonicUpgradeListener(), plugin);
         plugin.getPM().registerEvents(new TARDISSpawnListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISStattenheimListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISStorageListener(plugin), plugin);

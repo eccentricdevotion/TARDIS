@@ -71,10 +71,8 @@ public class TARDISBlockDamageListener implements Listener {
                 ReplacedBlock rb = rsb.getReplacedBlock();
                 int id = rb.getTardis_id();
                 if (TARDISPermission.hasPermission(p, "tardis.sonic.admin")) {
-                    String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
-                    Material sonic = Material.valueOf(split[0]);
                     ItemStack is = event.getItemInHand();
-                    if (is != null && is.getType().equals(sonic)) {
+                    if (is != null && is.getType().equals(Material.BLAZE_ROD)) {
                         // unhide TARDIS
                         unhide(id, p);
                     }

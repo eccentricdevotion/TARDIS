@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
 
 /*
 easy_shape:-D-,NCE,-W-
@@ -41,10 +41,7 @@ public class TARDISRandomiserCircuitRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Randomiser Circuit");
         im.setCustomModelData(10001980);
-        String lore = plugin.getRecipesConfig().getString("shaped.TARDIS Randomiser Circuit.lore");
-        if (!lore.isEmpty()) {
-            im.setLore(Arrays.asList(lore.split("~")));
-        }
+        im.setLore(List.of("Uses left", "50"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_randomiser_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
@@ -54,14 +51,14 @@ public class TARDISRandomiserCircuitRecipe {
             r.setIngredient('N', Material.NETHERRACK);
             r.setIngredient('C', Material.COMPASS);
             r.setIngredient('E', Material.END_STONE);
-            r.setIngredient('W', Material.WATER_BUCKET);            
+            r.setIngredient('W', Material.WATER_BUCKET);
         } else {
             r.shape(" D ", "NCE", " W ");
             r.setIngredient('D', Material.DIRT);
             r.setIngredient('N', Material.NETHERRACK);
             r.setIngredient('C', Material.COMPASS);
             r.setIngredient('E', Material.END_STONE);
-            r.setIngredient('W', Material.WATER_BUCKET);            
+            r.setIngredient('W', Material.WATER_BUCKET);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Randomiser Circuit", r);

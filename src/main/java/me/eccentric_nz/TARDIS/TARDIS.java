@@ -154,7 +154,6 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration language;
     private FileConfiguration signs;
     private FileConfiguration chameleonGuis;
-    private FileConfiguration recipesConfig;
     private FileConfiguration roomsConfig;
     private FileConfiguration tagConfig;
     private FileConfiguration planetsConfig;
@@ -757,15 +756,6 @@ public class TARDIS extends JavaPlugin {
      */
     public FileConfiguration getTagConfig() {
         return tagConfig;
-    }
-
-    /**
-     * Gets the recipes configuration
-     *
-     * @return the recipes configuration
-     */
-    public FileConfiguration getRecipesConfig() {
-        return recipesConfig;
     }
 
     /**
@@ -1581,8 +1571,6 @@ public class TARDIS extends JavaPlugin {
         new TARDISArtronUpdater(this).checkArtronConfig();
         blocksConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "blocks.yml"));
         new TARDISBlocksUpdater(this, blocksConfig).checkBlocksConfig();
-        recipesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "recipes.yml"));
-        new TARDISRecipesUpdater(this, recipesConfig).addRecipes();
         condensablesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "condensables.yml"));
         new TARDISCondensablesUpdater(this).checkCondensables();
         customConsolesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_consoles.yml"));

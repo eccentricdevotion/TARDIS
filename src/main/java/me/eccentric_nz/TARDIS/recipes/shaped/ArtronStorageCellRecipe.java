@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
 
 /*
 easy_shape:-B-,-R-,-L-
@@ -37,10 +37,7 @@ public class ArtronStorageCellRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Artron Storage Cell");
         im.setCustomModelData(10000001);
-        String lore = plugin.getRecipesConfig().getString("shaped.Artron Storage Cell.lore");
-        if (!lore.isEmpty()) {
-            im.setLore(Arrays.asList(lore.split("~")));
-        }
+        im.setLore(List.of("Charge Level", "0"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "artron_storage_cell");
         ShapedRecipe r = new ShapedRecipe(key, is);
@@ -48,12 +45,12 @@ public class ArtronStorageCellRecipe {
             r.shape(" B ", "LRL", " L ");
             r.setIngredient('B', Material.BUCKET);
             r.setIngredient('R', Material.REDSTONE_BLOCK);
-            r.setIngredient('L', Material.LIME_STAINED_GLASS);            
+            r.setIngredient('L', Material.LIME_STAINED_GLASS);
         } else {
             r.shape(" B ", " R ", " L ");
             r.setIngredient('B', Material.BUCKET);
             r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('L', Material.LIME_STAINED_GLASS);            
+            r.setIngredient('L', Material.LIME_STAINED_GLASS);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Artron Storage Cell", r);

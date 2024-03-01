@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
 
 /*
 easy_shape:---,SWS,---
@@ -37,10 +37,7 @@ public class PinkBowTieRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Pink Bow Tie");
         im.setCustomModelData(10000029);
-        String lore = plugin.getRecipesConfig().getString("shaped.Pink Bow Tie.lore");
-        if (!lore.isEmpty()) {
-            im.setLore(Arrays.asList(lore.split("~")));
-        }
+        im.setLore(List.of("Bow ties are cool!"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "pink_bow_tie");
         ShapedRecipe r = new ShapedRecipe(key, is);

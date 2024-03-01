@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
 
 /*
 easy_shape:-T-,TCT,-T-
@@ -36,10 +36,7 @@ public class TARDISMemoryCircuitRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Memory Circuit");
         im.setCustomModelData(10001975);
-        String lore = plugin.getRecipesConfig().getString("shaped.TARDIS Memory Circuit.lore");
-        if (!lore.isEmpty()) {
-            im.setLore(Arrays.asList(lore.split("~")));
-        }
+        im.setLore(List.of("Uses left", "20"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_memory_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
