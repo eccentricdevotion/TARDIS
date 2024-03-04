@@ -51,6 +51,8 @@ import me.eccentric_nz.TARDIS.schematic.TARDISSchematicCommand;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicTabComplete;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayCommand;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISSayTabComplete;
+import me.eccentric_nz.tardischemistry.TARDISChemistryCommand;
+import me.eccentric_nz.tardischemistry.TARDISChemistryTabComplete;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
