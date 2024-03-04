@@ -47,12 +47,9 @@ import java.util.List;
 public class TARDISSonicEntityListener implements Listener {
 
     private final TARDIS plugin;
-    private final Material sonic;
 
     public TARDISSonicEntityListener(TARDIS plugin) {
         this.plugin = plugin;
-        String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
-        sonic = Material.valueOf(split[0]);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -64,7 +61,7 @@ public class TARDISSonicEntityListener implements Listener {
         long now = System.currentTimeMillis();
         ItemStack is = player.getInventory().getItemInMainHand();
         Entity ent = event.getRightClicked();
-        if (is.getType().equals(sonic) && is.hasItemMeta()) {
+        if (is.getType().equals(Material.BLAZE_ROD) && is.hasItemMeta()) {
             ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
             if (im.getDisplayName().endsWith("Sonic Screwdriver")) {
                 List<String> lore = im.getLore();

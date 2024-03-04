@@ -42,11 +42,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISPerceptionFilterListener implements Listener {
 
     private final TARDIS plugin;
-    private final Material filter;
 
     public TARDISPerceptionFilterListener(TARDIS plugin) {
         this.plugin = plugin;
-        filter = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Perception Filter.result"));
     }
 
     @EventHandler
@@ -56,7 +54,7 @@ public class TARDISPerceptionFilterListener implements Listener {
         }
         Player player = event.getPlayer();
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (is != null && is.getType().equals(filter) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+        if (is != null && is.getType().equals(Material.GOLD_NUGGET) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
                 if (im.hasDisplayName() && im.getDisplayName().equals("Perception Filter")) {

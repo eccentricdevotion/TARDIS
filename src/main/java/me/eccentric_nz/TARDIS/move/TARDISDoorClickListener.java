@@ -549,9 +549,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                 }
                             }
                         } else {
-                            String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
-                            Material sonic = Material.valueOf(split[0]);
-                            if (!material.equals(sonic) || !TARDISPermission.hasPermission(player, "tardis.sonic.admin")) {
+                            if (!material.equals(Material.BLAZE_ROD) || !TARDISPermission.hasPermission(player, "tardis.sonic.admin")) {
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_KEY", key);
                             }
                             // knock with hand

@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
+import me.eccentric_nz.TARDIS.control.SensorToggle;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
@@ -65,7 +66,6 @@ public class TARDISStattenheimListener implements Listener {
 
     private final TARDIS plugin;
     private final List<Material> useless = new ArrayList<>();
-    private final Material remote;
 
     public TARDISStattenheimListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -75,7 +75,6 @@ public class TARDISStattenheimListener implements Listener {
         useless.addAll(Tag.WOOL_CARPETS.getValues());
         useless.addAll(TARDISMaterials.plants);
         useless.addAll(Tag.SAPLINGS.getValues());
-        remote = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Stattenheim Remote.result"));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -85,7 +84,7 @@ public class TARDISStattenheimListener implements Listener {
         }
         Player player = event.getPlayer();
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (is.getType().equals(remote) && is.hasItemMeta()) {
+        if (is.getType().equals(Material.FLINT) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (im.getDisplayName().equals("Stattenheim Remote")) {
                 Action action = event.getAction();
@@ -325,8 +324,21 @@ public class TARDISStattenheimListener implements Listener {
                             new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, true, preset);
                         }
                         plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
+                        // toggle power sensor
+                        handleSensor(id);
                     }
                 }
+            }
+        }
+    }
+
+    private void handleSensor(int id) {
+        ResultSetSensors rss = new ResultSetSensors(plugin, id);
+        if (rss.resultSet()) {
+            SensorToggle toggle = new SensorToggle();
+            Block block = toggle.getBlock(rss.getSensors().getPower());
+            if (block != null) {
+                toggle.setState(block);
             }
         }
     }

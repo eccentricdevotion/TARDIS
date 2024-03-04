@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -36,7 +37,7 @@ public enum DiskCircuit {
     HANDLES("Handles Program Disk", Material.MUSIC_DISC_WARD),
     INPUT("TARDIS Input Circuit", Material.GLOWSTONE_DUST),
     INVISIBILITY("TARDIS Invisibility Circuit", Material.GLOWSTONE_DUST),
-    KEY("TARDIS Key", Material.valueOf(TARDIS.plugin.getRecipesConfig().getString("shaped.TARDIS Key.result"))),
+    KEY("TARDIS Key", Material.valueOf(TARDIS.plugin.getFigura().getShapedRecipes().get("TARDIS Key").getResult().getType().toString())),
     MATERIALISATION("TARDIS Materialisation Circuit", Material.GLOWSTONE_DUST),
     MEMORY("TARDIS Memory Circuit", Material.GLOWSTONE_DUST),
     PLAYER("Player Storage Disk", Material.MUSIC_DISC_WAIT),
@@ -44,7 +45,7 @@ public enum DiskCircuit {
     RANDOMISER("TARDIS Randomiser Circuit", Material.GLOWSTONE_DUST),
     SAVE("Save Storage Disk", Material.MUSIC_DISC_CHIRP),
     SCANNER("TARDIS Scanner Circuit", Material.GLOWSTONE_DUST),
-    SONIC("Sonic Screwdriver", Material.valueOf(TARDIS.plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result"))),
+    SONIC("Sonic Screwdriver", Material.BLAZE_ROD),
     TEMPORAL("TARDIS Temporal Circuit", Material.GLOWSTONE_DUST);
 
     static final List<String> circuitNames = new ArrayList<>();

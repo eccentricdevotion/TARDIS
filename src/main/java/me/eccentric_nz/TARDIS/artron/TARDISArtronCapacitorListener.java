@@ -124,7 +124,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                             int fc = plugin.getArtronConfig().getInt("full_charge");
                             Material item = player.getInventory().getItemInMainHand().getType();
                             Material full = Material.valueOf(plugin.getArtronConfig().getString("full_charge_item"));
-                            Material cell = Material.valueOf(plugin.getRecipesConfig().getString("shaped.Artron Storage Cell.result"));
+                            Material cell = plugin.getFigura().getShapedRecipes().get("Artron Storage Cell").getResult().getType();
                             // determine key item
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
                             String key;

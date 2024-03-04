@@ -19,11 +19,13 @@ package me.eccentric_nz.TARDIS.artron;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetExteriorLightLevel;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Levelled;
 
 /**
  * @author eccentric_nz
@@ -43,7 +45,12 @@ public class TARDISAdaptiveBoxLampToggler {
             Block light = location.getBlock().getRelative(BlockFace.UP, 2);
             if (preset.usesArmourStand()) {
                 if (on) {
-                    light.setBlockData(TARDISConstants.LIGHT);
+                    Levelled levelled = TARDISConstants.LIGHT;
+                    // use lamp level preference for this tardis
+                    ResultSetExteriorLightLevel rsell = new ResultSetExteriorLightLevel(plugin, id);
+                    int level = (rsell.resultSet()) ? rsell.getLevel() : 15;
+                    levelled.setLevel(level);
+                    light.setBlockData(levelled);
                 } else {
                     light.setBlockData(TARDISConstants.AIR);
                 }

@@ -215,7 +215,8 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                 which = "Sonic Dock";
                             }
                             default -> { // EXTERIOR_LAMP && LIGHT_LEVEL
-                                if (!isLevelSwitch(frame)) {
+                                SwitchPair sp = isLevelSwitch(frame);
+                                if (!sp.isSwitch()) {
                                     String what = (control == Control.EXTERIOR_LAMP) ? "exterior-lamp-level-switch" : "interior-light-level-switch";
                                     // they haven't placed a level switch in the frame first
                                     plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
@@ -224,6 +225,11 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                 }
                                 frame.setFixed(true);
                                 frame.setVisible(false);
+                                // set display to shorter version
+                                ItemMeta im  = sp.getLamp().getItemMeta();
+                                im.setDisplayName(control == Control.EXTERIOR_LAMP ? "Lamp" : "Light");
+                                sp.getLamp().setItemMeta(im);
+                                frame.setItem(sp.getLamp());
                                 plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                                 which = (control == Control.EXTERIOR_LAMP) ? "Exterior Lamp Level Switch" : "Interior Light Level Switch";
                             }
@@ -261,15 +267,33 @@ public class TARDISItemFrameUpdateListener implements Listener {
         return im.hasCustomModelData() && (im.getCustomModelData() == 1000 || im.getCustomModelData() == 1001);
     }
 
-    private boolean isLevelSwitch(ItemFrame frame) {
+    private SwitchPair isLevelSwitch(ItemFrame frame) {
         ItemStack lampSwitch = frame.getItem();
         if (lampSwitch.getType() != Material.LEVER || !lampSwitch.hasItemMeta()) {
-            return false;
+            return new SwitchPair(false, lampSwitch);
         }
         ItemMeta im = lampSwitch.getItemMeta();
         if (!im.hasDisplayName()) {
-            return false;
+            return new SwitchPair(false, lampSwitch);
         }
-        return im.hasCustomModelData() && im.getDisplayName().endsWith("Level Switch");
+        return new SwitchPair(im.hasCustomModelData() && im.getDisplayName().endsWith("Level Switch"), lampSwitch);
+    }
+
+    private class SwitchPair {
+        final boolean b;
+        final ItemStack lamp;
+
+        public SwitchPair(boolean b, ItemStack lamp) {
+            this.b = b;
+            this.lamp = lamp;
+        }
+
+        public boolean isSwitch() {
+            return b;
+        }
+
+        public ItemStack getLamp() {
+            return lamp;
+        }
     }
 }

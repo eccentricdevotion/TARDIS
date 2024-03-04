@@ -37,13 +37,6 @@ import java.util.List;
  */
 public class TARDISSonicUpgradeListener implements Listener {
 
-    private final Material sonicMaterial;
-
-    public TARDISSonicUpgradeListener(TARDIS plugin) {
-        String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
-        sonicMaterial = Material.valueOf(split[0]);
-    }
-
     /**
      * This event will check the crafting recipe to see if it is a sonic
      * upgrade. If it is, then the current sonic screwdriver is queried to see
@@ -60,7 +53,7 @@ public class TARDISSonicUpgradeListener implements Listener {
         // upgrades are all shapeless so only check those
         if (recipe instanceof ShapelessRecipe) {
             // if the recipe result is the same type of material as the sonic screwdriver
-            if (is != null && is.getType().equals(sonicMaterial) && is.hasItemMeta()) {
+            if (is != null && is.getType().equals(Material.BLAZE_ROD) && is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
                 // get the upgrade
                 boolean found = false;
@@ -92,7 +85,7 @@ public class TARDISSonicUpgradeListener implements Listener {
                 ItemStack sonic = null;
                 for (int i = 1; i <= ci.getSize(); i++) {
                     ItemStack item = ci.getItem(i);
-                    if (item != null && item.getType().equals(sonicMaterial) && item.hasItemMeta()) {
+                    if (item != null && item.getType().equals(Material.BLAZE_ROD) && item.hasItemMeta()) {
                         sonic = item;
                         break;
                     }

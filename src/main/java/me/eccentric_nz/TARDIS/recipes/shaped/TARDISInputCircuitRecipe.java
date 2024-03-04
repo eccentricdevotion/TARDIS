@@ -1,0 +1,54 @@
+package me.eccentric_nz.TARDIS.recipes.shaped;
+
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.List;
+
+/*
+easy_shape:-R-,-S-,-R-
+easy_ingredients.R:REDSTONE
+easy_ingredients.S:OAK_SIGN
+hard_shape:-R-,-S-,-R-
+hard_ingredients.R:REDSTONE
+hard_ingredients.S:OAK_SIGN
+result:GLOWSTONE_DUST
+amount:1
+lore:Uses left~50
+*/
+
+public class TARDISInputCircuitRecipe {
+
+    private final TARDIS plugin;
+
+    public TARDISInputCircuitRecipe(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
+    public void addRecipe() {
+        ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
+        ItemMeta im = is.getItemMeta();
+        im.setDisplayName("TARDIS Input Circuit");
+        im.setCustomModelData(10001976);
+        im.setLore(List.of("Uses left", "50"));
+        is.setItemMeta(im);
+        NamespacedKey key = new NamespacedKey(plugin, "tardis_input_circuit");
+        ShapedRecipe r = new ShapedRecipe(key, is);
+        if (plugin.getDifficulty() == Difficulty.HARD) {
+            r.shape(" R ", " S ", " R ");
+            r.setIngredient('R', Material.REDSTONE);
+            r.setIngredient('S', Material.OAK_SIGN);            
+        } else {
+            r.shape(" R ", " S ", " R ");
+            r.setIngredient('R', Material.REDSTONE);
+            r.setIngredient('S', Material.OAK_SIGN);            
+        }
+        plugin.getServer().addRecipe(r);
+        plugin.getFigura().getShapedRecipes().put("TARDIS Input Circuit", r);
+    }
+}

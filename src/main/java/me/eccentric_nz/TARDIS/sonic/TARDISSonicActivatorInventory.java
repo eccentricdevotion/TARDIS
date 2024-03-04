@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISonicActivator;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -51,9 +51,15 @@ class TARDISSonicActivatorInventory {
         lore.add("add 1 of each of the following");
         lore.add("items to this inventory:");
         // get the Sonic Generator recipe
-        String difficulty = (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("hard")) ? "hard" : "easy";
-        Set<String> ingredients = plugin.getRecipesConfig().getConfigurationSection("shaped.Sonic Generator." + difficulty + "_ingredients").getKeys(false);
-        ingredients.forEach((s) -> lore.add(ChatColor.AQUA + plugin.getRecipesConfig().getString("shaped.Sonic Generator." + difficulty + "_ingredients." + s)));
+        if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("hard")) {
+            lore.add(ChatColor.AQUA + "GOLD_INGOT");
+            lore.add(ChatColor.AQUA + "REDSTONE_BLOCK");
+        } else {
+            lore.add(ChatColor.AQUA + "GOLD_NUGGET");
+            lore.add(ChatColor.AQUA + "REDSTONE");
+        }
+        lore.add(ChatColor.AQUA + "FLOWER_POT");
+        lore.add(ChatColor.AQUA + "BLAZE_ROD");
         lore.add(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + "Then close the GUI.");
         // info
         ItemStack info = new ItemStack(Material.BOOK, 1);

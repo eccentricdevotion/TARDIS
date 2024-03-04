@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Material;
@@ -27,6 +25,9 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class TARDISSonicSound {
 
@@ -59,9 +60,7 @@ public class TARDISSonicSound {
     }
 
     private static void removeSonicEnchant(TARDIS plugin, PlayerInventory inv) {
-        String result = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result");
-        Material sonic = Material.valueOf(result);
-        int first = inv.first(sonic);
+        int first = inv.first(Material.BLAZE_ROD);
         if (first < 0) {
             return;
         }

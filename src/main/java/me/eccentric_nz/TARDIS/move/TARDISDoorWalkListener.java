@@ -233,9 +233,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                 boolean open = TARDISStaticUtils.isDoorOpen(block);
                                                 if ((!material.equals(m) && doortype == 0 && !open) && !plugin.getConfig().getBoolean("preferences.any_key")) {
                                                     // must use key to open the outer door
-                                                    String[] split = plugin.getRecipesConfig().getString("shaped.Sonic Screwdriver.result").split(":");
-                                                    Material sonic = Material.valueOf(split[0]);
-                                                    if (!material.equals(sonic) || !TARDISPermission.hasPermission(player, "tardis.sonic.admin")) {
+                                                    if (!material.equals(Material.BLAZE_ROD) || !TARDISPermission.hasPermission(player, "tardis.sonic.admin")) {
                                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_KEY", key);
                                                     }
                                                     return;

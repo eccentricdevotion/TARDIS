@@ -19,10 +19,7 @@ package me.eccentric_nz.TARDIS.artron;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisTimeLord;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -98,7 +95,10 @@ public class TARDISLampToggler {
                         }
                     }
                 } else {
-                    levelled.setLevel(15);
+                    // set light level from light level switch preference
+                    ResultSetInteriorLightLevel rsill = new ResultSetInteriorLightLevel(plugin, id);
+                    int level = (rsill.resultSet()) ? rsill.getLevel() : 15;
+                    levelled.setLevel(level);
                     b.setBlockData(levelled);
                     // switch the itemstack
                     if (display != null) {

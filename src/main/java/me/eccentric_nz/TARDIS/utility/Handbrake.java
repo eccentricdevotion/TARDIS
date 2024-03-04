@@ -6,6 +6,7 @@ import me.eccentric_nz.TARDIS.control.SensorToggle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSensors;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Comparator;
 
@@ -31,8 +32,10 @@ public class Handbrake {
         ResultSetControls rsc = new ResultSetControls(plugin, where, false);
         if (rsc.resultSet()) {
             Block rd = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation()).getBlock();
-            Comparator comparator = (Comparator) rd.getBlockData();
-            return comparator.getMode().equals(Comparator.Mode.SUBTRACT);
+            if (rd.getType() == Material.COMPARATOR) {
+                Comparator comparator = (Comparator) rd.getBlockData();
+                return comparator.getMode().equals(Comparator.Mode.SUBTRACT);
+            }
         }
         return false;
     }
