@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIConfiguration;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.*;
 
 /**
  * The Administrator of Solos is the Earth Empire's civilian overseer for that planet.
@@ -48,7 +49,19 @@ class TARDISConfigPageTwoInventory {
         Set<String> config = new TreeSet<>(plugin.getConfig().getKeys(true));
         config.forEach((c) -> {
             String value = plugin.getConfig().getString(c);
-            if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) && (c.startsWith("arch") || c.startsWith("circuits") || c.startsWith("creation") || c.startsWith("debug") || c.startsWith("desktop") || c.startsWith("junk") || c.startsWith("siege") || c.startsWith("travel") || c.startsWith("abandon") || c.startsWith("blueprints"))) {
+            if ((value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) && (
+                    c.startsWith("arch") ||
+                    c.startsWith("circuits") ||
+                    c.startsWith("creation") ||
+                    c.startsWith("debug") ||
+                    c.startsWith("desktop") ||
+                    c.startsWith("junk") ||
+                    c.startsWith("siege") ||
+                    c.startsWith("sonic") ||
+                    c.startsWith("travel") ||
+                    c.startsWith("abandon") ||
+                    c.startsWith("blueprints"))
+            ) {
                 ItemStack is = new ItemStack(Material.REPEATER, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(c);

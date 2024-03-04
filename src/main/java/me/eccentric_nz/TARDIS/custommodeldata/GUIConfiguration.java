@@ -37,6 +37,7 @@ public enum GUIConfiguration {
     DESKTOP(12, 0, Material.REPEATER),
     JUNK(13, 0, Material.REPEATER),
     SIEGE(14, 0, Material.REPEATER),
+    SONIC(55, 0, Material.REPEATER),
     TRAVEL(15, 0, Material.REPEATER),
     NEXT(86, 0, Material.BOWL),
     PREV(87, 0, Material.BOWL),

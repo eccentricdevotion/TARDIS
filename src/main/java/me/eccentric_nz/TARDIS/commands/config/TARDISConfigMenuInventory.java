@@ -64,6 +64,7 @@ public class TARDISConfigMenuInventory {
                     && !c.startsWith("junk")
                     && !c.startsWith("modules")
                     && !c.startsWith("siege")
+                    && !c.startsWith("sonic")
                     && !c.startsWith("storage")
                     && !c.startsWith("travel")
                     && !c.startsWith("worlds")
