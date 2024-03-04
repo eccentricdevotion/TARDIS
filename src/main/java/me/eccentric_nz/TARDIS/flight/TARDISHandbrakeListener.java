@@ -65,8 +65,8 @@ public class TARDISHandbrakeListener implements Listener {
     /**
      * Listens for player interaction with the handbrake (lever) on the TARDIS
      * console. If the button is right-clicked the handbrake is set off, if
-     * left-clicked it is set on. If right-clicked while sneaking the TARDIS
-     * enters exterior flight mode.
+     * left-clicked it is set on. If right-clicked while the TARDIS's relativity
+     * differentiator is engaged, the enters exterior flight mode.
      *
      * @param event the player clicking the handbrake
      */
@@ -183,13 +183,13 @@ public class TARDISHandbrakeListener implements Listener {
                                         return;
                                     }
                                     // check the state of the Relativity Differentiator
-                                    if (check.isRelativityDifferentiated(id) && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand()) {
-                                        // check if TARDIS is underground
+                                    if (check.isRelativityDifferentiated(id) && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand() && !player.isSneaking()) {
                                         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                                         if (!rsc.resultSet()) {
                                             plugin.debug("No current location");
                                             return;
                                         }
+                                        // check if TARDIS is underground
                                         for (int y = rsc.getY() + 4; y < rsc.getY() + 8; y++) {
                                             if (!rsc.getWorld().getBlockAt(rsc.getX(), y, rsc.getZ()).getType().isAir()) {
                                                 plugin.getMessenger().sendStatus(player, "FLIGHT_AIR");
