@@ -5,6 +5,12 @@ import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.info.TARDISDescription;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardischemistry.block.ChemistryBlock;
+import me.eccentric_nz.tardischemistry.block.RecipeData;
+import me.eccentric_nz.tardischemistry.compound.Compound;
+import me.eccentric_nz.tardischemistry.element.Element;
+import me.eccentric_nz.tardischemistry.product.Product;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
@@ -21,16 +27,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TARDISWikiRecipeCommand {
 
-    private final String MINECRAFT = "[%s](https://minecraft.wiki/w/%s)";
-    private final String WIKI = "[%s](/recipes/%s/%s)";
-    private final String newLine = System.lineSeparator();
-    private final String PAGE = """
+    private final String SHAPELESS = """
             ---
             layout: default
             title: %s
@@ -47,13 +50,12 @@ public class TARDISWikiRecipeCommand {
                         
             `/trecipe %s`
 
-            | Ingredients | Crafting recipe | Difficulty |
-            | ----------- | --------------- | ------------- |
-            | %s | <Recipe icons={%s} /> | easy |
-            | %s | <Recipe icons={%s} /> | hard |
-
+            | Ingredients | Crafting recipe |
+            | ----------- | --------------- |
+            | %s | <Recipe icons={%s} /> |
             """;
     private final TARDIS plugin;
+    Pattern regex = Pattern.compile("([A-Z_])+");
 
     public TARDISWikiRecipeCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -128,7 +130,7 @@ public class TARDISWikiRecipeCommand {
             // all shaped recipes
             for (String key : plugin.getFigura().getShapedRecipes().keySet()) {
                 plugin.debug(key);
-                data = format("shaped", key);
+                data = formatShaped("shaped", key);
                 if (!data.isEmpty()) {
                     save(TARDISStringUtils.toDashedLowercase(key), data);
                 }
@@ -137,9 +139,25 @@ public class TARDISWikiRecipeCommand {
             // all shapeless recipes
             for (String key : plugin.getIncomposita().getShapelessRecipes().keySet()) {
                 plugin.debug(key);
-                data = format("shapeless", key);
+                data = formatShapeless(key);
                 if (!data.isEmpty()) {
                     save(TARDISStringUtils.toDashedLowercase(key), data);
+                }
+            }
+        } else if (args[1].equalsIgnoreCase("chemistry")) {
+            // chemistry lab products & compounds?
+            for (Product p : Product.values()) {
+                plugin.debug(p.toString());
+                data = formatProduct(p);
+                if (!data.isEmpty()) {
+                    save(TARDISStringUtils.toDashedLowercase(p.toString()), data);
+                }
+            }
+            for (RecipeData block : ChemistryBlock.RECIPES.values()) {
+                plugin.debug(block.getNameSpacedKey());
+                data = formatChemistryBlock(block);
+                if (!data.isEmpty()) {
+                    save(TARDISStringUtils.toDashedLowercase(block.getDisplayName()), data);
                 }
             }
         } else {
@@ -154,9 +172,9 @@ public class TARDISWikiRecipeCommand {
             String item = sb.toString();
             // specific recipe
             if (plugin.getFigura().getShapedRecipes().containsKey(item)) {
-                data = format("shaped", item);
+                data = formatShaped("shaped", item);
             } else {
-                data = format("shapeless", item);
+                data = formatShaped("shapeless", item);
             }
             if (!data.isEmpty()) {
                 save(TARDISStringUtils.toDashedLowercase(item), data);
@@ -165,7 +183,7 @@ public class TARDISWikiRecipeCommand {
         return true;
     }
 
-    private String format(String section, String item) {
+    private String formatShaped(String section, String item) {
         String crafting = TARDISStringUtils.toLowercaseDashed(item);
         // get ingredients
         String easyIngredients;
@@ -174,12 +192,12 @@ public class TARDISWikiRecipeCommand {
         String easyTable;
         String hardTable;
         if (section.equals("shaped")) {
-            easyIngredients = getIngredients(item, "easy", true);
-            hardIngredients = getIngredients(item, "hard", true);
-            easyTable = getShapedTable(item, "easy");
-            hardTable = getShapedTable(item, "hard");
+            easyIngredients = getIngredients(item, true);
+            hardIngredients = getIngredients(item, true);
+            easyTable = getShapedTable(item);
+            hardTable = getShapedTable(item);
         } else {
-            easyIngredients = getIngredients(item, "easy", false);
+            easyIngredients = getIngredients(item, false);
             hardIngredients = "";
             easyTable = getShapelessTable(item);
             hardTable = "";
@@ -192,7 +210,99 @@ public class TARDISWikiRecipeCommand {
         } catch (IllegalArgumentException ignored) {
         }
         // itemName, itemName, itemName, List.of(spacedIngredientName, scoredIngredientName), List.of(scoredIngredientName...) -> x2
+        String PAGE = """
+                ---
+                layout: default
+                title: %s
+                ---
+
+                import Recipe from "@site/src/components/Recipe";
+
+                %s
+                ===================
+
+                %s
+
+                ## Crafting
+                            
+                `/trecipe %s`
+
+                | Ingredients | Crafting recipe | Difficulty |
+                | ----------- | --------------- | ------------- |
+                | %s | <Recipe icons={%s} /> | easy |
+                | %s | <Recipe icons={%s} /> | hard |
+                """;
         return String.format(PAGE, item, item, desc, crafting, easyIngredients, easyTable, hardIngredients, hardTable);
+    }
+
+    private String formatShapeless(String item) {
+        String crafting = TARDISStringUtils.toLowercaseDashed(item);
+        // get ingredients
+        String easyIngredients;
+        // get recipe arrays
+        String easyTable;
+        easyIngredients = getIngredients(item, false);
+        easyTable = getShapelessTable(item);
+        String desc = String.format("The %s is used to ", item);
+        try {
+            String info = TARDISStringUtils.toEnumUppercase(item) + "_INFO";
+            TARDISDescription description = TARDISDescription.valueOf(info);
+            desc = description.getDesc();
+        } catch (IllegalArgumentException ignored) {
+        }
+        // itemName, itemName, description, recipeCommand, List.of(spacedIngredientName, scoredIngredientName), List.of(scoredIngredientName...)
+        return String.format(SHAPELESS, item, item, desc, crafting, easyIngredients, easyTable);
+    }
+
+    private String formatChemistryBlock(RecipeData item) {
+        String crafting = TARDISStringUtils.toLowercaseDashed(item.getDisplayName());
+        // get ingredients
+        String mat = TARDISStringUtils.capitalise(item.getCraftMaterial().toString());
+        String easyIngredients = "[" + mat + "](https://minecraft.wiki/w/" + mat.replaceAll(" ", "_") + ")<br/>[Crafting Table](https://minecraft.wiki/w/Crafting_Table)";
+        // get recipe array
+        String icon = TARDISStringUtils.toLowercaseDashed(mat);
+        String easyTable = "['" + icon + "','" + icon + "','" + icon + "','" + icon + "','crafting-table','" + icon + "','" + icon + "','" + icon + "','" + icon + "','" + crafting + "']";
+        // itemName, itemName, description, recipeCommand, List.of(spacedIngredientName, scoredIngredientName), List.of(scoredIngredientName...)
+        return String.format(SHAPELESS, item.getDisplayName(), item.getDisplayName(), StringUtils.join(item.getLore(), " "), crafting, easyIngredients, easyTable);
+    }
+
+    private String formatProduct(Product product) {
+        String item = product.toString().replaceAll("_", " ");
+        String crafting = TARDISStringUtils.toLowercaseDashed(item);
+        // get recipe array
+        String[] data = getChemistryTable(product);
+        String ingredients = data[0];
+        String hardTable = data[1];
+        String desc = String.format("The %s is used to ", item);
+        try {
+            String info = TARDISStringUtils.toEnumUppercase(item) + "_INFO";
+            TARDISDescription description = TARDISDescription.valueOf(info);
+            desc = description.getDesc();
+        } catch (IllegalArgumentException ignored) {
+        }
+        // itemName, itemName, itemName, List.of(spacedIngredientName, scoredIngredientName), List.of(scoredIngredientName...) -> x2
+        String PROD = """
+                ---
+                layout: default
+                title: %s
+                ---
+
+                import Recipe from "@site/src/components/Recipe";
+
+                %s
+                ===================
+
+                %s
+
+                ## Formula
+                            
+                `/tchemistry formula %s`
+
+                | Ingredients | Lab recipe |
+                | ----------- | --------------- |
+                | %s | <Recipe icons={%s} /> |
+                """;
+        return String.format(PROD, item, item, desc, crafting, ingredients, hardTable);
     }
 
     private void save(String filename, String contents) {
@@ -214,20 +324,20 @@ public class TARDISWikiRecipeCommand {
         }
     }
 
-    private String getIngredients(String item, String difficulty, boolean shaped) {
+    private String getIngredients(String item, boolean shaped) {
         StringBuilder ingredientBuilder = new StringBuilder();
         String prefix = "";
         if (shaped) {
             for (Map.Entry<Character, RecipeChoice> map : plugin.getFigura().getShapedRecipes().get(item).getChoiceMap().entrySet()) {
                 RecipeChoice choice = map.getValue();
-                String link = getLink(choice, item);
+                String link = getLink(choice);
                 ingredientBuilder.append(prefix);
                 prefix = "<br/>";
                 ingredientBuilder.append(link);
             }
         } else {
             for (RecipeChoice choice : plugin.getIncomposita().getShapelessRecipes().get(item).getChoiceList()) {
-                String link = getLink(choice, item);
+                String link = getLink(choice);
                 ingredientBuilder.append(prefix);
                 prefix = "<br/>";
                 ingredientBuilder.append(link);
@@ -236,8 +346,9 @@ public class TARDISWikiRecipeCommand {
         return ingredientBuilder.toString();
     }
 
-    private String getLink(RecipeChoice choice, String item) {
+    private String getLink(RecipeChoice choice) {
         String ingredient;
+        String MINECRAFT = "[%s](https://minecraft.wiki/w/%s)";
         String link = MINECRAFT;
         if (choice instanceof RecipeChoice.MaterialChoice mat) {
             ingredient = TARDISStringUtils.capitalise(mat.getChoices().get(0).toString());
@@ -265,6 +376,7 @@ public class TARDISWikiRecipeCommand {
                     String dn = im.getDisplayName();
                     RecipeItem recipeItem = RecipeItem.getByName(dn);
                     String folder = recipeItem.getCategory().toString().toLowerCase(Locale.ROOT);
+                    String WIKI = "[%s](/recipes/%s/%s)";
                     link = String.format(WIKI, folder, dn, TARDISStringUtils.toLowercaseDashed(dn));
                 }
             }
@@ -312,7 +424,7 @@ public class TARDISWikiRecipeCommand {
         return tableBuilder.toString();
     }
 
-    private String getShapedTable(String item, String difficulty) {
+    private String getShapedTable(String item) {
         StringBuilder tableBuilder = new StringBuilder("[");
         ShapedRecipe shapedRecipe = plugin.getFigura().getShapedRecipes().get(item);
         Map<Character, RecipeChoice> choices = shapedRecipe.getChoiceMap();
@@ -361,5 +473,66 @@ public class TARDISWikiRecipeCommand {
         String result = TARDISStringUtils.toLowercaseDashed(item);
         tableBuilder.append("'").append(result).append("'").append("]");
         return tableBuilder.toString();
+    }
+
+    private String[] getChemistryTable(Product p) {
+        StringBuilder ingredientBuilder = new StringBuilder();
+        StringBuilder tableBuilder = new StringBuilder("[");
+        String[] shape = p.getRecipe().split("\\|");
+        String[][] data = new String[3][3];
+        data[0] = shape[0].split(",");
+        data[1] = shape[1].split(",");
+        data[2] = shape[2].split(",");
+        Set<String> ingredients = new HashSet<>();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (data[i][j] == null || data[i][j].equals("-")) {
+                    tableBuilder.append("'air',");
+                } else {
+                    String dashed = "";
+                    try {
+                        // is it a Spigot material?
+                        Material material = Material.valueOf(data[i][j]);
+                        ingredients.add(material.toString());
+                        dashed = TARDISStringUtils.toLowercaseDashed(TARDISStringUtils.capitalise(material.toString()));
+                    } catch (IllegalArgumentException me) {
+                        // is it a compound?
+                        try {
+                            Compound compound = Compound.valueOf(data[i][j].replace(" ", "_"));
+                            ingredients.add(data[i][j]);
+                            dashed = TARDISStringUtils.toLowercaseDashed(data[i][j]);
+                        } catch (IllegalArgumentException ce) {
+                            // is it an element?
+                            try {
+                                Element element = Element.valueOf(data[i][j]);
+                                ingredients.add(data[i][j]);
+                                dashed = data[i][j].toLowerCase();
+                            } catch (IllegalArgumentException ee) {
+                                // don't know what it is
+                            }
+                        }
+                    }
+                    tableBuilder.append("'").append(dashed).append("'").append(",");
+                }
+            }
+        }
+        String result = TARDISStringUtils.toDashedLowercase(p.toString());
+        tableBuilder.append("'").append(result).append("'").append("]");
+        String prefix = "";
+        for (String s : ingredients) {
+            Matcher matcher = regex.matcher(s);
+            if (matcher.matches()) {
+                Material mat = Material.valueOf(s);
+                String link = getLink(new RecipeChoice.MaterialChoice(mat));
+                ingredientBuilder.append(prefix);
+                prefix = "<br/>";
+                ingredientBuilder.append(link);
+            } else {
+                ingredientBuilder.append(prefix);
+                prefix = "<br/>";
+                ingredientBuilder.append(s);
+            }
+        }
+        return new String[]{ingredientBuilder.toString(), tableBuilder.toString()};
     }
 }
