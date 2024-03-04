@@ -29,7 +29,12 @@ public class ProductBuilder {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(product.toString().replace("_", " "));
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        int which = 10000001 + product.ordinal();
+        int which;
+        if (product.ordinal() < 4) {
+            which = 10001 + product.ordinal();
+        } else {
+            which = 10000001 + product.ordinal();
+        }
         im.setCustomModelData(which);
         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which);
         is.setItemMeta(im);
