@@ -126,9 +126,11 @@ public class TARDISSonicListener implements Listener {
                             set.put("sonic_uuid", sonic_uuid.toString());
                             // get sonic data
                             set.put("uuid", player.getUniqueId().toString());
-                            List<Integer> settings = TARDISSonicData.getSonicData(im.getLore());
-                            for (int i = 0; i < settings.size(); i++) {
-                                set.put(SonicUpgradeData.upgrades.get(i), settings.get(i));
+                            if (im.hasLore()) {
+                                List<Integer> settings = TARDISSonicData.getSonicData(im.getLore());
+                                for (int i = 0; i < settings.size(); i++) {
+                                    set.put(SonicUpgradeData.upgrades.get(SonicUpgradeData.sonicKeys.get(i)), settings.get(i));
+                                }
                             }
                             // insert
                             plugin.getQueryFactory().doInsert("sonic", set);

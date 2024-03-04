@@ -1,11 +1,23 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class SonicUpgradeData {
 
     public static final HashMap<String, String> upgrades = new HashMap<>();
     public static final HashMap<Integer, String> customModelData = new HashMap<>();
+    public static final List<String> sonicKeys = List.of(
+            "Bio-scanner Upgrade",
+            "Diamond Upgrade",
+            "Emerald Upgrade",
+            "Redstone Upgrade",
+            "Painter Upgrade",
+            "Ignite Upgrade",
+            "Pickup Arrows Upgrade",
+            "Knockback Upgrade",
+            "Brush Upgrade",
+            "Conversion Upgrade");
 
     static {
         upgrades.put("Admin Upgrade", "admin");
