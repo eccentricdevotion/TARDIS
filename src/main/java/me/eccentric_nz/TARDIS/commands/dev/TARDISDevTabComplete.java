@@ -30,9 +30,7 @@ import org.bukkit.entity.ItemDisplay;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * TabCompleter for /tardisdev
@@ -51,7 +49,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
     private final List<String> ITEM_SUBS = new ArrayList<>();
     private final List<String> PRESET_SUBS = new ArrayList<>();
     private final List<String> MONSTER_SUBS = new ArrayList<>();
-    private final Set<String> RECIPE_SUBS = new HashSet<>();
+    private final ImmutableList<String> RECIPE_SUBS = ImmutableList.of("shaped", "shapeless", "chest", "chemistry", "custom");
 
     public TARDISDevTabComplete(TARDIS plugin) {
         plugin.getTardisHelper().getTreeMatrials().forEach((m) -> MAT_SUBS.add(m.toString()));
@@ -74,12 +72,6 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
         for (Monster m : Monster.values()) {
             MONSTER_SUBS.add(m.toString());
         }
-        RECIPE_SUBS.add("shaped");
-        RECIPE_SUBS.add("shapeless");
-        RECIPE_SUBS.add("chest");
-        RECIPE_SUBS.add("chemistry");
-        RECIPE_SUBS.addAll(plugin.getFigura().getShapedRecipes().keySet());
-        RECIPE_SUBS.addAll(plugin.getIncomposita().getShapelessRecipes().keySet());
     }
 
     @Override
