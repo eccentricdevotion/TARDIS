@@ -53,7 +53,7 @@ public class FollowerPersister {
                 uuid = pdc.getOrDefault(TARDISWeepingAngels.K9, TARDISWeepingAngels.PersistentDataTypeUUID, follower.getUUID()).toString();
             }
             // save custom follower
-            ps = connection.prepareStatement("REPLACE INTO " + prefix + "followers (uuid, owner, species, following, option, colour, ammo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            ps = connection.prepareStatement("REPLACE INTO " + prefix + "followers (`uuid`, `owner`, `species`, `following`, `option`, `colour`, `ammo`) VALUES (?, ?, ?, ?, ?, ?, ?)");
             ps.setString(1, uuid);
             ps.setString(2, owner);
             ps.setString(3, species);
@@ -78,7 +78,7 @@ public class FollowerPersister {
     public void save(Follower follower, UUID uuid) {
         try {
             // save custom follower
-            ps = connection.prepareStatement("INSERT INTO " + prefix + "followers (uuid, owner, species, following, option, colour, ammo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            ps = connection.prepareStatement("INSERT INTO " + prefix + "followers (`uuid`, `owner`, `species`, `following`, `option`, `colour`, `ammo`) VALUES (?, ?, ?, ?, ?, ?, ?)");
             ps.setString(1, uuid.toString());
             ps.setString(2, follower.getOwner().toString());
             ps.setString(3, follower.getSpecies().toString());

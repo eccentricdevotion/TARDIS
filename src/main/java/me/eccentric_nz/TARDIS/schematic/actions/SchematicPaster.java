@@ -18,14 +18,10 @@ package me.eccentric_nz.TARDIS.schematic.actions;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
-import static me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter.setBanners;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISHeadSetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemDisplaySetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemFrameSetter;
@@ -42,6 +38,12 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import static me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter.setBanners;
+
 /**
  * @author eccentric_nz
  */
@@ -51,6 +53,7 @@ public class SchematicPaster implements Runnable {
     private final Player player;
     private final boolean air;
     private final HashMap<Block, BlockData> postRedstoneTorches = new HashMap<>();
+    private final HashMap<Block, BlockData> postRedstoneDust = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> postBanners = new HashMap<>();
     private int task, l, r, h, w, d, x, y, z;
     private int counter = 0;
@@ -106,6 +109,12 @@ public class SchematicPaster implements Runnable {
         }
         if (l == h && r == w - 1) {
             for (Map.Entry<Block, BlockData> map : postRedstoneTorches.entrySet()) {
+                map.getKey().setBlockData(map.getValue());
+                if (TARDIS.plugin.getBlockLogger().isLogging()) {
+                    TARDIS.plugin.getBlockLogger().logPlacement(map.getKey());
+                }
+            }
+            for (Map.Entry<Block, BlockData> map : postRedstoneDust.entrySet()) {
                 map.getKey().setBlockData(map.getValue());
                 if (TARDIS.plugin.getBlockLogger().isLogging()) {
                     TARDIS.plugin.getBlockLogger().logPlacement(map.getKey());
@@ -171,6 +180,7 @@ public class SchematicPaster implements Runnable {
                     }
                 }
                 case REDSTONE_TORCH -> postRedstoneTorches.put(block, data);
+                case REDSTONE -> postRedstoneDust.put(block, data);
                 case PLAYER_HEAD, PLAYER_WALL_HEAD -> {
                     block.setBlockData(data, true);
                     JsonObject head = col.has("head") ? col.get("head").getAsJsonObject() : null;

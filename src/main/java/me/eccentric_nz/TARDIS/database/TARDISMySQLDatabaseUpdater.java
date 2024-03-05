@@ -277,7 +277,7 @@ class TARDISMySQLDatabaseUpdater {
                 statement.executeUpdate(chi_alter);
             }
             // add preset to homes
-            String preset_query = "SHOW COLUMNS FROM " + prefix + "homes LIKE 'biome'";
+            String preset_query = "SHOW COLUMNS FROM " + prefix + "homes LIKE 'preset'";
             ResultSet rspreset = statement.executeQuery(preset_query);
             if (!rspreset.next()) {
                 i++;

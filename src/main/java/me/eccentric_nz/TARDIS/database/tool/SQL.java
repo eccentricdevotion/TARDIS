@@ -116,7 +116,7 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %stag (tag_id int(11) NOT NULL AUTO_INCREMENT, player varchar(32) DEFAULT '', `time` bigint(20) DEFAULT '0', PRIMARY KEY (tag_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %stardis (tardis_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', owner varchar(32) DEFAULT '', last_known_name varchar(32) DEFAULT '', chunk varchar(64) DEFAULT '', tips int(4) DEFAULT '0', size varchar(32) DEFAULT '', abandoned int(1) DEFAULT '0', artron_level int(11) DEFAULT '0', replaced text NULL, companions text NULL, handbrake_on int(1) DEFAULT '1', iso_on int(1) DEFAULT '0', hidden int(1) DEFAULT '0', recharging int(1) DEFAULT '0', tardis_init int(1) DEFAULT '0', adapti_on int(1) DEFAULT '0', chameleon_preset varchar(32) DEFAULT 'FACTORY', chameleon_demat varchar(32) DEFAULT 'FACTORY', creeper varchar(512) DEFAULT '', beacon varchar(512) DEFAULT '', eps varchar(512) DEFAULT '', rail varchar(512) DEFAULT '', renderer varchar(512) DEFAULT '', zero varchar(512) DEFAULT '', rotor varchar(48) DEFAULT '', powered_on int(1) DEFAULT '0', lights_on int(1) DEFAULT '1', siege_on int(1) DEFAULT '0', lastuse bigint(20), monsters int(2) DEFAULT '0',, bedrock int(1) DEFAULT '0', PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %stardis (tardis_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', owner varchar(32) DEFAULT '', last_known_name varchar(32) DEFAULT '', chunk varchar(64) DEFAULT '', tips int(4) DEFAULT '0', size varchar(32) DEFAULT '', abandoned int(1) DEFAULT '0', artron_level int(11) DEFAULT '0', replaced text NULL, companions text NULL, handbrake_on int(1) DEFAULT '1', iso_on int(1) DEFAULT '0', hidden int(1) DEFAULT '0', recharging int(1) DEFAULT '0', tardis_init int(1) DEFAULT '0', adapti_on int(1) DEFAULT '0', chameleon_preset varchar(32) DEFAULT 'FACTORY', chameleon_demat varchar(32) DEFAULT 'FACTORY', creeper varchar(512) DEFAULT '', beacon varchar(512) DEFAULT '', eps varchar(512) DEFAULT '', rail varchar(512) DEFAULT '', renderer varchar(512) DEFAULT '', zero varchar(512) DEFAULT '', rotor varchar(48) DEFAULT '', powered_on int(1) DEFAULT '0', lights_on int(1) DEFAULT '1', siege_on int(1) DEFAULT '0', lastuse bigint(20), monsters int(2) DEFAULT '0', bedrock int(1) DEFAULT '0', PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %stransmats (transmat_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', name varchar(64) DEFAULT '', world varchar(64) DEFAULT '', x float(7,1) DEFAULT '0', y float(3,1) DEFAULT '0', z float(7,1) DEFAULT '0', yaw float(7,1) DEFAULT '0.0', PRIMARY KEY (transmat_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -133,7 +133,7 @@ public class SQL {
             "CREATE TABLE IF NOT EXISTS %svortex (tardis_id int(11) NOT NULL, task int(11) DEFAULT '0', PRIMARY KEY (tardis_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             // shop
-            "CREATE TABLE IF NOT EXISTS %sitems (item_id int(11) NOT NULL AUTO_INCREMENT, item varchar(64) DEFAULT '', location varchar(512) DEFAULT '', cost float(5,1) DEFAULT 0), PRIMARY KEY (item_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %sitems (item_id int(11) NOT NULL AUTO_INCREMENT, item varchar(64) DEFAULT '', location varchar(512) DEFAULT '', cost float(5,1) DEFAULT 0, PRIMARY KEY (item_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             // vortex manipulator
             "CREATE TABLE IF NOT EXISTS %sbeacons (beacon_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', location varchar(512) DEFAULT '', block_data varchar(32) DEFAULT '', PRIMARY KEY (beacon_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
@@ -144,7 +144,7 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %ssaves (save_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', save_name varchar(64) DEFAULT '', world varchar(64) DEFAULT '', x float DEFAULT '0', y float DEFAULT '0', z float DEFAULT '0', yaw float DEFAULT '0', pitch float DEFAULT '0', PRIMARY KEY (save_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %sfollowers (uuid varchar(48) NOT NULL, owner varchar(48), species  varchar(8) DEFAULT '', following int(1) DEFAULT '0', option int(1) DEFAULT '0', colour varchar(5) DEFAULT '', ammo int(3) DEFAULT '0', PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;"
+            "CREATE TABLE IF NOT EXISTS %sfollowers (uuid varchar(48) NOT NULL, owner varchar(48), species varchar(8) DEFAULT '', following int(1) DEFAULT '0', `option` int(1) DEFAULT '0', colour varchar(5) DEFAULT '', ammo int(3) DEFAULT '0', PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;"
     );
     public static final List<String> VALUES = Arrays.asList(
 
