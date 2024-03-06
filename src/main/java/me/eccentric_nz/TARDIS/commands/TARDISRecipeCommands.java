@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISRecipeLister;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryInventory;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -47,6 +48,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
     private final TARDIS plugin;
     private final HashMap<String, String> recipeItems = new HashMap<>();
     private final HashMap<String, Material> t = new HashMap<>();
+    private final Set<String> CHEM_SUBS = new HashSet<>();
 
     public TARDISRecipeCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -112,6 +114,11 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 t.put(console.toUpperCase(Locale.ENGLISH), cmat);
             }
         });
+        for (RecipeItem recipeItem : RecipeItem.values()) {
+            if (recipeItem.getCategory() == RecipeCategory.CHEMISTRY) {
+                CHEM_SUBS.add(recipeItem.toTabCompletionString());
+            }
+        }
     }
 
     @Override
@@ -142,6 +149,12 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return true;
             }
             String which = args[0].toLowerCase();
+            if (CHEM_SUBS.contains(which)) {
+                // use `/tchemistry formula command`
+                String command = TARDISStringUtils.chemistryCase(which);
+                plugin.getMessenger().sendColouredCommand(player, "USE_FORMULA", "/tchemistry formula " + command, plugin);
+                return true;
+            }
             if (!recipeItems.containsKey(which)) {
                 if (args[0].equalsIgnoreCase("list_more")) {
                     new TARDISRecipeLister(plugin, sender).listMore();

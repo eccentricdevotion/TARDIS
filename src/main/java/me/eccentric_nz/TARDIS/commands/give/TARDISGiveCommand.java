@@ -22,6 +22,11 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISGiveLister;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardischemistry.lab.Lab;
+import me.eccentric_nz.tardischemistry.lab.LabBuilder;
+import me.eccentric_nz.tardischemistry.product.Product;
+import me.eccentric_nz.tardischemistry.product.ProductBuilder;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -60,6 +65,8 @@ public class TARDISGiveCommand implements CommandExecutor {
         items.put("recipes", "");
         items.put("seed", "");
         items.put("tachyon", "");
+        items.put("acid-bucket", "Acid Bucket");
+        items.put("rust-bucket", "Rust Bucket");
         for (RecipeItem recipeItem : RecipeItem.values()) {
             if (recipeItem.getCategory() != RecipeCategory.SONIC_UPGRADES && recipeItem.getCategory() != RecipeCategory.UNUSED && recipeItem.getCategory() != RecipeCategory.UNCRAFTABLE) {
                 items.put(recipeItem.toTabCompletionString(), recipeItem.toRecipeString());
@@ -110,7 +117,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                 if (item.equals("blueprint")) {
                     String blueprint = args[2].toUpperCase(Locale.ENGLISH);
                     if (TARDISGiveTabComplete.getBlueprints().contains(blueprint)) {
-                         giveBlueprint(sender, args, blueprint);
+                        giveBlueprint(sender, args, blueprint);
                     } else {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_BLUEPRINT");
                     }
@@ -215,53 +222,97 @@ public class TARDISGiveCommand implements CommandExecutor {
             return true;
         }
         String item_to_give = items.get(item);
-        ItemStack result;
-        if (item.equals("vortex-manipulator") && !plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "RECIPE_VORTEX");
-            return true;
+        plugin.debug(item_to_give);
+        RecipeCategory category = RecipeCategory.ITEMS;
+        try {
+            plugin.debug(TARDISStringUtils.toEnumUppercase(item_to_give));
+            RecipeItem recipeItem = RecipeItem.valueOf(TARDISStringUtils.toEnumUppercase(item_to_give));
+            category = recipeItem.getCategory();
+        } catch (IllegalArgumentException ignored) {
         }
-        if (item.equals("save-storage-disk") || item.equals("preset-storage-disk") || item.equals("biome-storage-disk") || item.equals("player-storage-disk") || item.equals("bowl-of-custard") || item.equals("jelly-baby") || item.equals("schematic-wand") || item.equals("judoon-ammunition")) {
-            result = plugin.getIncomposita().getShapelessRecipes().get(item_to_give).getResult();
-        } else if (custom.contains(item)) {
-            result = new TARDISDisplayBlockCommand(plugin).getStack(item);
-        } else {
-            result = plugin.getFigura().getShapedRecipes().get(item_to_give).getResult();
-        }
-        if (item.equals("vortex-manipulator")) {
-            plugin.getMessenger().sendColouredCommand(sender, "GIVE_VORTEX", "/vm activate " + player.getName(), plugin);
-        }
-        if (item.equals("invisibility-circuit")) {
-            // set the second line of lore
-            ItemMeta im = result.getItemMeta();
-            List<String> lore = im.getLore();
-            String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
-            lore.set(1, uses);
-            im.setLore(lore);
-            result.setItemMeta(im);
-        }
-        if (item.equals("blank") || item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk") || item.equals("blaster") || item.equals("control")) {
-            ItemMeta im = result.getItemMeta();
-            im.addItemFlags(ItemFlag.values());
-            result.setItemMeta(im);
-        }
-        if (item.equals("key") || item.equals("control")) {
-            ItemMeta im = result.getItemMeta();
-            im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
-            List<String> lore = im.getLore();
-            if (lore == null) {
-                lore = new ArrayList<>();
+        plugin.debug(category.toString());
+        ItemStack result = null;
+        if (category == RecipeCategory.CHEMISTRY) {
+            if (!plugin.getConfig().getBoolean("modules.chemistry")) {
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "RECIPE_CHEMISTRY");
+                return true;
             }
-            String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
-            String what = item.equals("key") ? "key" : "disk";
-            lore.add(format + "This " + what + " belongs to");
-            lore.add(format + player.getName());
-            im.setLore(lore);
-            result.setItemMeta(im);
+            String enumName;
+            if (item.equalsIgnoreCase("balloon") || item.equalsIgnoreCase("glow-stick") || item.equalsIgnoreCase("sparkler")) {
+                switch (item) {
+                    case "balloon" -> enumName = "Red_Balloon";
+                    case "glow-stick" -> enumName = "Light_Blue_Glow_Stick";
+                    default -> enumName = "Green_Sparkler";
+                }
+            } else {
+                enumName = item_to_give.replaceAll(" ", "_");
+            }
+            try {
+                Product product = Product.valueOf(enumName);
+                result = ProductBuilder.getProduct(product);
+            } catch (IllegalArgumentException e) {
+                try {
+                    Lab lab = Lab.valueOf(enumName);
+                    result = LabBuilder.getLabProduct(lab);
+                } catch (IllegalArgumentException ignored) {
+                }
+            }
+        } else {
+            if (item.equals("vortex-manipulator") && !plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "RECIPE_VORTEX");
+                return true;
+            }
+            if (item.equals("acid-bucket") || item.equals("rust-bucket")) {
+                result = new ItemStack((item.equals("acid-bucket") ? Material.WATER_BUCKET : Material.LAVA_BUCKET), 1);
+                ItemMeta im = result.getItemMeta();
+                im.setDisplayName(items.get(item));
+                im.setCustomModelData(1);
+                result.setItemMeta(im);
+            } else if (item.equals("save-storage-disk") || item.equals("preset-storage-disk") || item.equals("biome-storage-disk") || item.equals("player-storage-disk") || item.equals("bowl-of-custard") || item.equals("jelly-baby") || item.equals("schematic-wand") || item.equals("judoon-ammunition")) {
+                result = plugin.getIncomposita().getShapelessRecipes().get(item_to_give).getResult();
+            } else if (custom.contains(item)) {
+                result = new TARDISDisplayBlockCommand(plugin).getStack(item);
+            } else {
+                result = plugin.getFigura().getShapedRecipes().get(item_to_give).getResult();
+            }
+            if (item.equals("vortex-manipulator")) {
+                plugin.getMessenger().sendColouredCommand(sender, "GIVE_VORTEX", "/vm activate " + player.getName(), plugin);
+            }
+            if (item.equals("invisibility-circuit")) {
+                // set the second line of lore
+                ItemMeta im = result.getItemMeta();
+                List<String> lore = im.getLore();
+                String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
+                lore.set(1, uses);
+                im.setLore(lore);
+                result.setItemMeta(im);
+            }
+            if (item.equals("blank") || item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk") || item.equals("blaster") || item.equals("control")) {
+                ItemMeta im = result.getItemMeta();
+                im.addItemFlags(ItemFlag.values());
+                result.setItemMeta(im);
+            }
+            if (item.equals("key") || item.equals("control")) {
+                ItemMeta im = result.getItemMeta();
+                im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
+                List<String> lore = im.getLore();
+                if (lore == null) {
+                    lore = new ArrayList<>();
+                }
+                String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
+                String what = item.equals("key") ? "key" : "disk";
+                lore.add(format + "This " + what + " belongs to");
+                lore.add(format + player.getName());
+                im.setLore(lore);
+                result.setItemMeta(im);
+            }
         }
-        result.setAmount(amount);
-        player.getInventory().addItem(result);
-        player.updateInventory();
-        plugin.getMessenger().send(player, TardisModule.TARDIS, "GIVE_ITEM", sender.getName(), amount + " " + item_to_give);
+        if (result != null) {
+            result.setAmount(amount);
+            player.getInventory().addItem(result);
+            player.updateInventory();
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "GIVE_ITEM", sender.getName(), amount + " " + item_to_give);
+        }
         return true;
     }
 

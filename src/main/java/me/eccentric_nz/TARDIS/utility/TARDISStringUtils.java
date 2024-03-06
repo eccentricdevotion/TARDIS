@@ -65,6 +65,18 @@ public class TARDISStringUtils {
         return builder.toString().trim();
     }
 
+    public static String chemistryCase(String s) {
+        String[] split = s.split("-");
+        StringBuilder builder = new StringBuilder();
+        String prefix = "";
+        for (String str : split) {
+            builder.append(prefix);
+            prefix = "_";
+            builder.append(uppercaseFirst(str));
+        }
+        return builder.toString().trim();
+    }
+
     public static String fromInt(int i) {
         if (i > 9) {
             return "A big number";

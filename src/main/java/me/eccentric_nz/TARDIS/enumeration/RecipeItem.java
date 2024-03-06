@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 
 public enum RecipeItem {
     // shaped recipes start here
-    ACID_BATTERY(10000001, RecipeCategory.MISC),
+    ACID_BATTERY(10000001, RecipeCategory.PLANETS),
     ARTRON_STORAGE_CELL(10000001, RecipeCategory.ITEMS),
     AUTHORISED_CONTROL_DISK(10000001, RecipeCategory.STORAGE_DISKS),
     BIO_SCANNER_CIRCUIT(10001969, RecipeCategory.SONIC_CIRCUITS),
@@ -45,9 +45,9 @@ public enum RecipeItem {
     PERCEPTION_FILTER(14, RecipeCategory.ITEMS),
     PICKUP_ARROWS_CIRCUIT(10001984, RecipeCategory.SONIC_CIRCUITS),
     REDSTONE_ACTIVATOR_CIRCUIT(10001970, RecipeCategory.SONIC_CIRCUITS),
-    RIFT_CIRCUIT(10001983, RecipeCategory.ITEM_CIRCUITS),
-    RIFT_MANIPULATOR(10000001, RecipeCategory.ACCESSORIES),
-    RUST_PLAGUE_SWORD(10000001, RecipeCategory.MISC),
+    RIFT_CIRCUIT(10001983, RecipeCategory.PLANETS),
+    RIFT_MANIPULATOR(10000001, RecipeCategory.PLANETS),
+    RUST_PLAGUE_SWORD(10000001, RecipeCategory.PLANETS),
     SERVER_ADMIN_CIRCUIT(10001968, RecipeCategory.SONIC_CIRCUITS),
     SONIC_DOCK(1000, RecipeCategory.SONIC_CIRCUITS),
     SONIC_GENERATOR(10000001, RecipeCategory.ITEM_CIRCUITS),
@@ -161,7 +161,25 @@ public enum RecipeItem {
     // planet items
     ACID_BUCKET(1, RecipeCategory.UNCRAFTABLE),
     RUST_BUCKET(1, RecipeCategory.UNCRAFTABLE),
-    // not fond
+    // chemistry
+    ATOMIC_ELEMENTS(10001, RecipeCategory.CHEMISTRY),
+    CHEMICAL_COMPOUNDS(10001, RecipeCategory.CHEMISTRY),
+    LAB_TABLE(10001, RecipeCategory.CHEMISTRY),
+    PRODUCT_CRAFTING(10001, RecipeCategory.CHEMISTRY),
+    MATERIAL_REDUCER(10001, RecipeCategory.CHEMISTRY),
+    ELEMENT_CONSTRUCTOR(10001, RecipeCategory.CHEMISTRY),
+    BLUE_LAMP(10001, RecipeCategory.CHEMISTRY),
+    GREEN_LAMP(10002, RecipeCategory.CHEMISTRY),
+    PURPLE_LAMP(10003, RecipeCategory.CHEMISTRY),
+    RED_LAMP(10004, RecipeCategory.CHEMISTRY),
+    HEAT_BLOCK(10001, RecipeCategory.CHEMISTRY),
+    BALLOON(10000019, RecipeCategory.CHEMISTRY),
+    BLEACH(1, RecipeCategory.CHEMISTRY),
+    GLOW_STICK(10000005, RecipeCategory.CHEMISTRY),
+    ICE_BOMB(3, RecipeCategory.CHEMISTRY),
+    SPARKLER(10000035, RecipeCategory.CHEMISTRY),
+    SUPER_FERTILISER(4, RecipeCategory.CHEMISTRY),
+    // not found
     NOT_FOUND(-1, RecipeCategory.UNCRAFTABLE);
 
     private final int customModelData;

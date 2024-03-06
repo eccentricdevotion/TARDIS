@@ -17,10 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.give;
 
 import com.google.common.collect.ImmutableList;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.*;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
@@ -32,6 +28,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * TabCompleter for /tardisgive
@@ -52,6 +53,8 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
         GIVE_SUBS.add("recipes");
         GIVE_SUBS.add("seed");
         GIVE_SUBS.add("tachyon");
+        GIVE_SUBS.add("acid-bucket");
+        GIVE_SUBS.add("rust-bucket");
         for (RecipeItem recipeItem : RecipeItem.values()) {
             if (recipeItem.getCategory() != RecipeCategory.SONIC_UPGRADES && recipeItem.getCategory() != RecipeCategory.UNCRAFTABLE) {
                 GIVE_SUBS.add(recipeItem.toTabCompletionString());

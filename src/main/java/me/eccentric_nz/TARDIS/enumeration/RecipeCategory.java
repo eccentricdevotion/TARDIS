@@ -21,9 +21,11 @@ import org.bukkit.Material;
 
 public enum RecipeCategory {
 
+    CHEMISTRY(Material.BREWING_STAND, 1, 7, "#AA0000"),
     CUSTOM_BLOCKS(Material.ANVIL, 1, 8, "#AA0000"),
     ACCESSORIES(Material.LEATHER_HELMET, 10000037, 9, "#55FF55"),
-//    CONTROLS(Material.LEVER, 1000, 10, "#AAFF00"),
+    //    CONTROLS(Material.LEVER, 1000, 10, "#AAFF00"),
+    PLANETS(Material.SLIME_BALL, 12, 10, "#AAFF00"),
     CONSOLE_CIRCUITS(Material.GLOWSTONE_DUST, 10001977, 11, "#FF55FF"),
     FOOD(Material.MELON_SLICE, 10000002, 13, "#AAAAAA"),
     ITEM_CIRCUITS(Material.GLOWSTONE_DUST, 10001967, 15, "#FF5555"),

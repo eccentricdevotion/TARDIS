@@ -56,7 +56,7 @@ public class TARDISRecipeTabComplete extends TARDISCompleter implements TabCompl
         ROOT_SUBS.add("seed");
         ROOT_SUBS.add("tardis");
         for (RecipeItem recipeItem : RecipeItem.values()) {
-            if (recipeItem.getCategory() != RecipeCategory.UNCRAFTABLE && recipeItem.getCategory() != RecipeCategory.UNUSED) {
+            if (recipeItem.getCategory() != RecipeCategory.UNCRAFTABLE && recipeItem.getCategory() != RecipeCategory.UNUSED && recipeItem.getCategory() != RecipeCategory.CHEMISTRY) {
                 ROOT_SUBS.add(recipeItem.toTabCompletionString());
             }
         }
