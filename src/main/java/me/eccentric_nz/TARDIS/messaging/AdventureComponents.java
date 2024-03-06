@@ -83,7 +83,7 @@ public class AdventureComponents {
                 .append(Component.text("/tadmin update_plugins", NamedTextColor.AQUA)
                         .clickEvent(ClickEvent.suggestCommand("/tadmin update_plugins"))
                 )
-                .append(Component.text("to update!"));
+                .append(Component.text(" to update!"));
     }
 
     public static TextComponent getRequestComehereAccept(String key, String command) {
