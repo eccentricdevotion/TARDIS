@@ -45,7 +45,10 @@ public class ResultSetSonicLocation {
                         location = player.getPlayer().getLocation();
                     }
                 } else {
-                    location = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("last_scanned"));
+                    String l = rs.getString("last_scanned");
+                    if (!l.isEmpty()) {
+                        location = TARDISStaticLocationGetters.getLocationFromBukkitString(l);
+                    }
                 }
             } else {
                 return false;
