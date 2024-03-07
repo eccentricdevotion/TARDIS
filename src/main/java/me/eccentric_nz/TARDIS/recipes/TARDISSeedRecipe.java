@@ -68,7 +68,7 @@ public class TARDISSeedRecipe {
                 model = tdi.getCustomModelData();
                 is = new ItemStack(tdi.getMaterial(), 1);
             } catch (IllegalArgumentException e) {
-                plugin.debug("Could not get display item for console! "+e.getMessage());
+                plugin.debug("Could not get display item for console! " + e.getMessage());
                 is = new ItemStack(TARDISDisplayItem.CUSTOM.getMaterial(), 1);
             }
         }
