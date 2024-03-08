@@ -3,16 +3,17 @@
 ## Current version `5.4.0`
 
 1. Fix dem bugs
-2. Add recipes for advanced console / storage etc
-3. Add new items to the TARDIS information system
+2. Add new items to the TARDIS information system
    - handles
    - light level switches
+   - relativity differentiator
    - monitor
    - camera
    - flying
-   - sonic dock
+   - sonic dock / charging
    - vortex manipulator
-   - sonic blaster / battery / 
+   - weeping angels / monsters
+   - sonic blaster / battery / landing pad
 
 ## Next version `5.5.0`
 
