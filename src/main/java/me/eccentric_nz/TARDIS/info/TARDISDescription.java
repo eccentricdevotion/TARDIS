@@ -48,6 +48,8 @@ public enum TARDISDescription {
     STATTENHEIM_CIRCUIT_INFO("The Stattenheim Circuit is used in the crafting of a Stattenhiem Remote. This circuit combines the Materialization Circuit and the Locator Circuit to allow the two to fit in the remote's casing."),
     SONIC_OSCILLATOR_INFO("The Oscillator Circuit is used in crafting the Sonic Screwdriver."),
     BIO_SCANNER_CIRCUIT_INFO("The Bio-scanner Circuit is used to upgrade the Sonic Screwdriver."),
+    BRUSH_CIRCUIT_INFO("The Brush Circuit is used to upgrade the Sonic Screwdriver."),
+    CONVERSION_CIRCUIT_INFO("The Conversion Circuit is used to upgrade the Sonic Screwdriver."),
     REDSTONE_ACTIVATOR_CIRCUIT_INFO("The Redstone Activator Circuit is used to upgrade the Sonic Screwdriver."),
     RANDOMISER_CIRCUIT_INFO("The Randomiser Circuit is used to generate random Time Travel destinations when placed in the Advanced Console."),
     RIFT_CIRCUIT_INFO("The Rift Circuit is an ingredient in crafting a Rift Manipulator."),

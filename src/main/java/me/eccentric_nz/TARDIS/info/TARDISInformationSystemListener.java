@@ -35,7 +35,7 @@ import java.util.UUID;
 /**
  * The TARDIS information system is a searchable database which was discovered
  * by the Fifth Doctor's companions Nyssa and Tegan from a readout in the
- * control room. The Fifth Doctor called it the TARDIS databank.
+ * control room. The Fifth Doctor called it the TARDIS data bank.
  *
  * @author bootthanoo, eccentric_nz
  */
@@ -346,6 +346,15 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 }
                 if (chat.equalsIgnoreCase("c")) {
                     processKey(p, TARDISInfoMenu.PICKUP_ARROWS_CIRCUIT);
+                }
+                if (chat.equalsIgnoreCase("u")) {
+                    processKey(p, TARDISInfoMenu.BRUSH_CIRCUIT);
+                }
+                if (chat.equalsIgnoreCase("n")) {
+                    processKey(p, TARDISInfoMenu.CONVERSION_CIRCUIT);
+                }
+                if (chat.equalsIgnoreCase("R")) {
+                    processKey(p, TARDISInfoMenu.REDSTONE_ACTIVATOR_CIRCUIT);
                 }
             }
             case MANUAL -> {
@@ -976,6 +985,22 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 }
                 if (chat.equalsIgnoreCase("R")) {
                     showRecipe(p, TARDISInfoMenu.PICKUP_ARROWS_CIRCUIT_RECIPE);
+                }
+            }
+            case BRUSH_CIRCUIT -> {
+                if (chat.equalsIgnoreCase("I")) {
+                    showInfo(p, TARDISInfoMenu.BRUSH_CIRCUIT_INFO);
+                }
+                if (chat.equalsIgnoreCase("R")) {
+                    showRecipe(p, TARDISInfoMenu.BRUSH_CIRCUIT_RECIPE);
+                }
+            }
+            case CONVERSION_CIRCUIT -> {
+                if (chat.equalsIgnoreCase("I")) {
+                    showInfo(p, TARDISInfoMenu.CONVERSION_CIRCUIT_INFO);
+                }
+                if (chat.equalsIgnoreCase("R")) {
+                    showRecipe(p, TARDISInfoMenu.CONVERSION_CIRCUIT_RECIPE);
                 }
             }
             case TARDIS -> {
