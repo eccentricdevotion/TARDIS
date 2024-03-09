@@ -82,9 +82,10 @@ public class ResultSetLightLevel {
                 type = rs.getInt("type");
                 level = rs.getInt("secondary");
                 powered = rs.getBoolean("powered_on");
+                String[] split = rs.getString("chameleon_preset").split(":");
                 ChameleonPreset preset;
                 try {
-                    preset = ChameleonPreset.valueOf(rs.getString("chameleon_preset"));
+                    preset = ChameleonPreset.valueOf(split[0]);
                 } catch (IllegalArgumentException e) {
                     preset = ChameleonPreset.FACTORY;
                 }
