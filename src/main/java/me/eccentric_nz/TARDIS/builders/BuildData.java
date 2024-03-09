@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
  */
 public final class BuildData extends MaterialisationData {
 
-    private final int[] exterior_level = new int[]{2, 4, 6, 8};
     private boolean addSign = true;
     private boolean malfunction;
     private boolean minecartSounds = false;
@@ -44,7 +43,7 @@ public final class BuildData extends MaterialisationData {
         // set exterior lamp
         ResultSetExteriorLightLevel rs = new ResultSetExteriorLightLevel(TARDIS.plugin, tardisID);
         if (rs.resultSet()) {
-            exteriorLampLevel = exterior_level[rs.getLevel()];
+            exteriorLampLevel = LightLevel.exterior_level[rs.getLevel()];
         } else {
             exteriorLampLevel = 9;
         }

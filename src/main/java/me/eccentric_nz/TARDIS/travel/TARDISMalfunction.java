@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
+import me.eccentric_nz.TARDIS.builders.LightLevel;
 import me.eccentric_nz.TARDIS.control.SensorToggle;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
@@ -48,7 +49,6 @@ import java.util.UUID;
 public class TARDISMalfunction {
 
     private final TARDIS plugin;
-    private final int[] interior_level = new int[]{2, 5, 10, 15};
 
     public TARDISMalfunction(TARDIS plugin) {
         this.plugin = plugin;
@@ -219,7 +219,7 @@ public class TARDISMalfunction {
                     light = TardisLight.getFromDisplayItem(tdi);
                 }
                 ResultSetInteriorLightLevel rs = new ResultSetInteriorLightLevel(plugin, id);
-                int level = rs.resultSet() ? interior_level[rs.getLevel()] : 15;
+                int level = rs.resultSet() ? LightLevel.interior_level[rs.getLevel()] : 15;
                 // flicker lights
                 long end = System.currentTimeMillis() + 10000;
                 TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, rsl.getData(), end, light, light.getOn() == tdi, level);

@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.builders.LightLevel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetExteriorLightLevel;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -33,7 +34,6 @@ import org.bukkit.block.data.Levelled;
 public class TARDISAdaptiveBoxLampToggler {
 
     private final TARDIS plugin;
-    private final int[] exterior_level = new int[]{2, 4, 6, 8};
 
     public TARDISAdaptiveBoxLampToggler(TARDIS plugin) {
         this.plugin = plugin;
@@ -49,7 +49,7 @@ public class TARDISAdaptiveBoxLampToggler {
                     Levelled levelled = TARDISConstants.LIGHT;
                     // use lamp level preference for this tardis
                     ResultSetExteriorLightLevel rsell = new ResultSetExteriorLightLevel(plugin, id);
-                    int level = (rsell.resultSet()) ? exterior_level[rsell.getLevel()] : 9;
+                    int level = (rsell.resultSet()) ? LightLevel.exterior_level[rsell.getLevel()] : 9;
                     levelled.setLevel(level);
                     light.setBlockData(levelled);
                 } else {

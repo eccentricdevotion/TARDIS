@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.builders.LightLevel;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
@@ -38,7 +39,6 @@ import java.util.UUID;
 public class TARDISLampToggler {
 
     private final TARDIS plugin;
-    private final int[] interior_level = new int[]{2, 5, 10, 15};
 
     public TARDISLampToggler(TARDIS plugin) {
         this.plugin = plugin;
@@ -98,7 +98,7 @@ public class TARDISLampToggler {
                 } else {
                     // set light level from light level switch preference
                     ResultSetInteriorLightLevel rsill = new ResultSetInteriorLightLevel(plugin, id);
-                    int level = (rsill.resultSet()) ? interior_level[rsill.getLevel()] : 15;
+                    int level = (rsill.resultSet()) ? LightLevel.interior_level[rsill.getLevel()] : 15;
                     levelled.setLevel(level);
                     b.setBlockData(levelled);
                     // switch the itemstack

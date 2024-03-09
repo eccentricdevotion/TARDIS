@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners.controls;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.LightLevel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightLevel;
@@ -39,8 +40,6 @@ import java.util.HashMap;
 public class TARDISLightLevelFrameListener implements Listener {
 
     private final TARDIS plugin;
-    private final int[] interior_level = new int[]{2, 5, 10, 15};
-    private final int[] exterior_level = new int[]{2, 4, 6, 8};
 
     public TARDISLightLevelFrameListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -85,7 +84,7 @@ public class TARDISLightLevelFrameListener implements Listener {
                         if (!rs.isPoliceBox()) {
                             return;
                         }
-                        light_level = exterior_level[setLevel];
+                        light_level = LightLevel.exterior_level[setLevel];
                         // get current TARDIS location
                         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getTardis_id());
                         if (rsc.resultSet()) {
@@ -104,7 +103,7 @@ public class TARDISLightLevelFrameListener implements Listener {
                         }
                     } else {
                         // interior
-                        light_level = interior_level[setLevel];
+                        light_level = LightLevel.interior_level[setLevel];
                         // get TARDIS lights
                         HashMap<String, Object> whereLight = new HashMap<>();
                         whereLight.put("tardis_id", rs.getTardis_id());
