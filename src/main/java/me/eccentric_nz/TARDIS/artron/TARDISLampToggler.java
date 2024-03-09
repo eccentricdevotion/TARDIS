@@ -38,6 +38,7 @@ import java.util.UUID;
 public class TARDISLampToggler {
 
     private final TARDIS plugin;
+    private final int[] interior_level = new int[]{2, 5, 10, 15};
 
     public TARDISLampToggler(TARDIS plugin) {
         this.plugin = plugin;
@@ -97,7 +98,7 @@ public class TARDISLampToggler {
                 } else {
                     // set light level from light level switch preference
                     ResultSetInteriorLightLevel rsill = new ResultSetInteriorLightLevel(plugin, id);
-                    int level = (rsill.resultSet()) ? rsill.getLevel() : 15;
+                    int level = (rsill.resultSet()) ? interior_level[rsill.getLevel()] : 15;
                     levelled.setLevel(level);
                     b.setBlockData(levelled);
                     // switch the itemstack

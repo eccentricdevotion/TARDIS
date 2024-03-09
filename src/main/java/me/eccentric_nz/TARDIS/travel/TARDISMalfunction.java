@@ -48,6 +48,7 @@ import java.util.UUID;
 public class TARDISMalfunction {
 
     private final TARDIS plugin;
+    private final int[] interior_level = new int[]{2, 5, 10, 15};
 
     public TARDISMalfunction(TARDIS plugin) {
         this.plugin = plugin;
@@ -218,7 +219,7 @@ public class TARDISMalfunction {
                     light = TardisLight.getFromDisplayItem(tdi);
                 }
                 ResultSetInteriorLightLevel rs = new ResultSetInteriorLightLevel(plugin, id);
-                int level = rs.resultSet() ? rs.getLevel() : 15;
+                int level = rs.resultSet() ? interior_level[rs.getLevel()] : 15;
                 // flicker lights
                 long end = System.currentTimeMillis() + 10000;
                 TARDISLampsRunnable runnable = new TARDISLampsRunnable(plugin, rsl.getData(), end, light, light.getOn() == tdi, level);
