@@ -364,7 +364,7 @@ public class SQL {
 
             "INSERT INTO `%stransmats` (`transmat_id`, `tardis_id`, `name`, `world`, `x`, `y`, `z`, `yaw`) VALUES ",
 
-            "INSERT INTO `%stravel_stats` (`travel_stats_id`, `travel_ype`, `tardis_id`, `uuid`) VALUES ",
+            "INSERT INTO `%stravel_stats` (`travel_stats_id`, `travel_type`, `tardis_id`, `uuid`) VALUES ",
 
             "INSERT INTO `%straveled_to` (`uuid`, `environment`) VALUES ",
 
