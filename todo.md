@@ -38,7 +38,6 @@
 * Make all images tabbed
 * Vanilla/TARDIS screenshots for TabbedImage views
 * Update shell room GUI info
-* Custom block recipes
 * ?
 
 ## Resource Pack / Monsters
