@@ -126,7 +126,8 @@ public class TARDISConfiguration {
         booleanOptions.put("preferences.no_coords", false);
         booleanOptions.put("preferences.no_creative_condense", false);
         booleanOptions.put("preferences.no_enchanted_condense", true);
-        booleanOptions.put("preferences.notify_update", true);
+        booleanOptions.put("preferences.update.notify", true);
+        booleanOptions.put("preferences.update.auto_download", false);
         booleanOptions.put("preferences.open_door_policy", false);
         booleanOptions.put("preferences.render_entities", false);
         booleanOptions.put("preferences.respect_factions", true);
@@ -341,6 +342,12 @@ public class TARDISConfiguration {
             plugin.getConfig().set("modules.mapping", config.getBoolean("preferences.enable_dynmap"));
             plugin.getConfig().set("mapping.provider", "dynmap");
             plugin.getConfig().set("preferences.enable_dynmap", null);
+            i++;
+        }
+        // check / transfer update settings
+        if (config.contains("preferences.notify_update")) {
+            plugin.getConfig().set("preferences.update.notify", config.getBoolean("preferences.notify_update"));
+            plugin.getConfig().set("preferences.notify_update", null);
             i++;
         }
         // check / transfer sonic settings

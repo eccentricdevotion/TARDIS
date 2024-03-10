@@ -84,7 +84,9 @@ travel:
 # general preferences
 # https://tardis.pages.dev/configuration/prefs
 preferences:
-  notify_update: true
+  update:
+    notify: true
+    auto_update: false
   language: en
   key: GOLD_NUGGET
   any_key: false

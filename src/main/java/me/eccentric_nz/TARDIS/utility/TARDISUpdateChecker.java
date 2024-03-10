@@ -112,7 +112,12 @@ public class TARDISUpdateChecker implements Runnable {
         plugin.setUpdateNumber(newBuildNumber);
         if (sender == null) {
             plugin.getMessenger().sendJenkinsUpdateReady(plugin.getConsole(), buildNumber, newBuildNumber);
-            plugin.getMessenger().sendUpdateCommand(plugin.getConsole());
+            if (plugin.getConfig().getBoolean("preferences.update.auto_download")) {
+                new UpdateTARDISPlugins(plugin).fetchFromJenkins(plugin.getConsole());
+                plugin.getMessenger().send(plugin.getConsole(), TardisModule.TARDIS, "AUTO_UPDATE");
+            } else {
+                plugin.getMessenger().sendUpdateCommand(plugin.getConsole());
+            }
         } else {
             plugin.getMessenger().sendBuildsBehind(sender, (newBuildNumber - buildNumber));
         }
@@ -157,7 +162,7 @@ public class TARDISUpdateChecker implements Runnable {
                     <dependency>
                         <groupId>org.spigotmc</groupId>
                         <artifactId>spigot</artifactId>
-                        <version>1.20.2-R0.1-SNAPSHOT</version>
+                        <version>1.20.4-R0.1-SNAPSHOT</version>
              */
             NodeList list = doc.getElementsByTagName("dependencies");
             Node root = list.item(0); // there's only one node

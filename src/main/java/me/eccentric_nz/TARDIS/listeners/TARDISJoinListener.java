@@ -266,7 +266,7 @@ public class TARDISJoinListener implements Listener {
             }, 2L);
         }
         // notify updates
-        if (plugin.getConfig().getBoolean("preferences.notify_update") && plugin.isUpdateFound() && player.isOp()) {
+        if (plugin.getConfig().getBoolean("preferences.update.notify") && plugin.isUpdateFound() && player.isOp()) {
             plugin.getMessenger().sendJenkinsUpdateReady(player, plugin.getBuildNumber(), plugin.getUpdateNumber());
         }
     }
