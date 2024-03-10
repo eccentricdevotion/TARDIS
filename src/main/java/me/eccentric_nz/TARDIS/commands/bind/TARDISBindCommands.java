@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.bind;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
@@ -28,7 +27,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
 
 /**
  * A Time Control Unit is a golden sphere about the size of a Cricket ball. It is stored in the Secondary Control Room.
@@ -46,7 +46,7 @@ public class TARDISBindCommands implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisbind")) {
             if (!TARDISPermission.hasPermission(sender, "tardis.update")) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");

@@ -32,7 +32,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -122,7 +121,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisrecipe")) {
             if (!TARDISPermission.hasPermission(sender, "tardis.help")) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");

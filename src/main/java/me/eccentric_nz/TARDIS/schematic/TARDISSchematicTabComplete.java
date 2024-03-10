@@ -28,7 +28,6 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -80,7 +79,7 @@ public class TARDISSchematicTabComplete extends TARDISCompleter implements TabCo
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         if (args.length <= 1) {
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2 && args[0].equalsIgnoreCase("load")) {

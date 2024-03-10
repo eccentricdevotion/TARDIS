@@ -32,7 +32,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -84,7 +83,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player player) {
             // If the player typed /tardisprefs then do the following...
             // check there is the right number of arguments

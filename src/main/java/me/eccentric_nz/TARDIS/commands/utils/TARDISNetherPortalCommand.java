@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.utils;
 
 import com.google.common.collect.ImmutableList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
@@ -31,7 +30,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  * Inspired by Nether Portal Calculator v1.0 by D3Phoenix <a href="http://ilurker.rooms.cwal.net/portal.html">...</a>
@@ -61,7 +61,7 @@ public class TARDISNetherPortalCommand extends TARDISCompleter implements Comman
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisnetherportal")) {
             Player player = null;
             if (sender instanceof Player) {
@@ -134,7 +134,7 @@ public class TARDISNetherPortalCommand extends TARDISCompleter implements Comman
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 4) {
             return partial(args[3], ENVIRON_SUBS);
         }

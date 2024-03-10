@@ -33,7 +33,6 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -67,7 +66,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardisworld")) {
             if (sender == null) {
                 plugin.debug("Sender was null!");
@@ -308,7 +307,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         String lastArg = args[args.length - 1];
         if (args.length == 1) {
             List<String> part = partial(args[0], ROOT_SUBS);

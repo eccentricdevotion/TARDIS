@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.Command;
@@ -24,8 +23,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class TARDISCallCommand implements CommandExecutor, TabCompleter {
 
@@ -36,7 +36,7 @@ public class TARDISCallCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardiscall")) {
             if (!(sender instanceof Player player)) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
@@ -59,7 +59,7 @@ public class TARDISCallCommand implements CommandExecutor, TabCompleter {
 
     @Nullable
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
         return null;
     }
 }

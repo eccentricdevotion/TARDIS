@@ -40,7 +40,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -68,7 +67,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardissudo")) {
             if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {
                 if (args.length < 2) {
@@ -208,7 +207,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1) {
             return null;
         }

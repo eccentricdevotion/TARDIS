@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
@@ -38,17 +37,17 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
      * @return The identifier in {@code %<identifier>_<value>%} as String.
      */
     @Override
-    public @NotNull String getIdentifier() {
+    public String getIdentifier() {
         return "tardis";
     }
 
     @Override
-    public @NotNull String getAuthor() {
+    public String getAuthor() {
         return "eccentric_nz";
     }
 
     @Override
-    public @NotNull String getVersion() {
+    public String getVersion() {
         return "1.0.0";
     }
 
@@ -71,7 +70,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
      * @return a possibly-null String of the requested identifier
      */
     @Override
-    public String onRequest(OfflinePlayer player, @NotNull String identifier) {
+    public String onRequest(OfflinePlayer player, String identifier) {
         String result = null;
         if (player == null) {
             result = "";

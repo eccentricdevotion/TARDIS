@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
@@ -13,7 +12,8 @@ import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
-import org.jetbrains.annotations.NotNull;
+
+import java.util.UUID;
 
 public class FloodgateTransmatForm {
 
@@ -45,7 +45,7 @@ public class FloodgateTransmatForm {
         }
     }
 
-    private void handleResponse(@NotNull SimpleFormResponse response) {
+    private void handleResponse(SimpleFormResponse response) {
         String label = response.clickedButton().text();
         Player player = plugin.getServer().getPlayer(uuid);
         ResultSetTransmat rst = new ResultSetTransmat(plugin, id, label);

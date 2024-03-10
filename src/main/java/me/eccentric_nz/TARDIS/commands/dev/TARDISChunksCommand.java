@@ -17,7 +17,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
@@ -71,7 +70,6 @@ public class TARDISChunksCommand {
         return false;
     }
 
-    @NotNull
     private Location getLocation(Schematic schematic, Tardis tardis, World world) {
         int starty;
         if (schematic.getPermission().equals("mechanical")) {

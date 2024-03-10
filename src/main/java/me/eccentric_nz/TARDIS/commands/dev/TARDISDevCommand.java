@@ -34,7 +34,6 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 import java.util.Map;
@@ -80,7 +79,7 @@ public class TARDISDevCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // If the player typed /tardisdev then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisdev")) {
             if (sender instanceof ConsoleCommandSender || sender.hasPermission("tardis.admin")) {

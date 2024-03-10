@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.universaltranslator;
 
-import java.util.Arrays;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -27,7 +25,9 @@ import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
+
+import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * A Time Control Unit is a golden sphere about the size of a Cricket ball. It
@@ -47,7 +47,7 @@ public class TARDISSayCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("tardissay")) {
             if (!TARDISPermission.hasPermission(sender, "tardis.translate")) {
                 plugin.getMessenger().send(sender, TardisModule.TRANSLATOR, "NO_PERMS");

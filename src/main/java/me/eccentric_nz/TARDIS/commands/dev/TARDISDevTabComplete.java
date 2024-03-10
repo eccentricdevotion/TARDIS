@@ -27,7 +27,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.ItemDisplay;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +74,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         String lastArg = args[args.length - 1];
         String sub = args[0];
         switch (args.length) {

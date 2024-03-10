@@ -17,16 +17,16 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RootCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 /**
  * TabCompleter for /tardis?
@@ -47,7 +47,7 @@ public class TARDISQuestionTabComplete extends TARDISCompleter implements TabCom
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         String lastArg = args[args.length - 1];
         if (args.length == 1) {
             return partial(args[0], ROOT_SUBS);

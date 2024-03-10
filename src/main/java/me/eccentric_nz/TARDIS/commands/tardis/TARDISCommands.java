@@ -33,7 +33,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 import java.util.UUID;
@@ -55,7 +54,7 @@ public class TARDISCommands implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // If the player typed /tardis then do the following...
         // check there is the right number of arguments
         if (cmd.getName().equalsIgnoreCase("tardis")) {

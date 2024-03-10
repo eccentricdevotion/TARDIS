@@ -83,9 +83,7 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener {
                     p.openInventory(gui);
                 }, 2L);
             }
-            case 26 ->
-                // close
-                    close(p);
+            case 26 -> close(p); // close
             default -> {
             }
         }

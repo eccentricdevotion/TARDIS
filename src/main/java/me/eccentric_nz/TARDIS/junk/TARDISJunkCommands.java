@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.junk;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -47,7 +47,7 @@ public class TARDISJunkCommands implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // If the player typed /tardisjunk then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisjunk")) {
             if (args.length == 0) {

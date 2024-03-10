@@ -56,7 +56,6 @@ import me.eccentric_nz.tardischemistry.TARDISChemistryTabComplete;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
@@ -172,7 +171,7 @@ class TARDISCommandSetter {
         }
 
         @Override
-        public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
             plugin.getMessenger().send(commandSender, module, "MODULE_NOT_ENABLED", moduleName);
             return true;
         }

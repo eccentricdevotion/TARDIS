@@ -39,7 +39,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -64,7 +63,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // If the player/console typed /tardisremote then do the following...
         if (cmd.getName().equalsIgnoreCase("tardisremote") && TARDISPermission.hasPermission(sender, "tardis.remote")) {
             if (args.length < 2) {
@@ -377,7 +376,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
     }
 
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1) {
             return null;
         } else if (args.length == 2) {

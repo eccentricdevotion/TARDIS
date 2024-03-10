@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.monitor;
 
-import java.awt.Color;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -25,7 +24,8 @@ import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
-import org.jetbrains.annotations.NotNull;
+
+import java.awt.Color;
 
 public class SnapshotRenderer extends MapRenderer {
 
@@ -39,7 +39,7 @@ public class SnapshotRenderer extends MapRenderer {
     }
 
     @Override
-    public void render(MapView map, @NotNull MapCanvas canvas, @NotNull Player player) {
+    public void render(MapView map, MapCanvas canvas, Player player) {
         if (map.isLocked()) {
             return;
         }

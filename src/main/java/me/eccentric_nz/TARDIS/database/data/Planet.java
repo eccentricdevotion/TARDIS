@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.database.data;
 
 import org.bukkit.Material;
-import org.jetbrains.annotations.NotNull;
 
 public class Planet implements Comparable<Planet> {
 
@@ -22,7 +21,7 @@ public class Planet implements Comparable<Planet> {
     }
 
     @Override
-    public int compareTo(@NotNull Planet o) {
+    public int compareTo(Planet o) {
         return getName().compareToIgnoreCase(o.getName());
     }
 }
