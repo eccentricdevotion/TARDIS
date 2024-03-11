@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.flight.FlightReturnData;
 import me.eccentric_nz.TARDIS.flight.TARDISRegulatorRunnable;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
+import me.eccentric_nz.TARDIS.info.TISCategory;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.portal.CastData;
@@ -109,6 +110,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, String> telepathicPlacements = new HashMap<>();
     private final HashMap<UUID, TARDISDisplayType> display = new HashMap<>();
     private final HashMap<UUID, TARDISInfoMenu> infoMenu = new HashMap<>();
+    private final HashMap<UUID, TISCategory> infoGUI = new HashMap<>();
     private final HashMap<UUID, TARDISMoveSession> moveSessions = new HashMap<>();
     private final HashMap<UUID, TARDISRegulatorRunnable> regulating = new HashMap<>();
     private final HashMap<UUID, TARDISSeedData> roomSeed = new HashMap<>();
@@ -699,6 +701,15 @@ public class TARDISTrackerInstanceKeeper {
      */
     public HashMap<UUID, TARDISInfoMenu> getInfoMenu() {
         return infoMenu;
+    }
+
+    /**
+     * Tracks players using the TARDIS Information System
+     *
+     * @return a Map of player UUIDs and the TIS category they are viewing
+     */
+    public HashMap<UUID, TISCategory> getInfoGUI() {
+        return infoGUI;
     }
 
     /**

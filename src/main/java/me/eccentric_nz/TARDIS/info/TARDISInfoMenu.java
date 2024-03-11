@@ -70,7 +70,7 @@ public enum TARDISInfoMenu {
     SONIC_PICKUP_ARROWS_RECIPE("TIS|Items|Sonic Screwdriver|Types|Pickup Arrows Sonic|Recipe", "SONIC_PICKUP_ARROWS", "R"),
     SONIC_CONVERSION("TIS|Items|Sonic Screwdriver|Types|Conversion Sonic", "SONIC_TYPES", "o"),
     SONIC_CONVERSION_INFO("TIS|Items|Sonic Screwdriver|Types|Conversion Sonic|Info", "SONIC_CONVERSION", "I"),
-    SONIC_CONVERSION_RECIPE("TIS|Items|Sonic Screwdriver|Types|Conversion Sonic|Recipe", "SONIC_CONVERSION","R"),
+    SONIC_CONVERSION_RECIPE("TIS|Items|Sonic Screwdriver|Types|Conversion Sonic|Recipe", "SONIC_CONVERSION", "R"),
     LOCATOR("TIS|Items|TARDIS Locator", "ITEMS", "L"),
     LOCATOR_INFO("TIS|Items|TARDIS Locator|Info", "LOCATOR", "I"),
     LOCATOR_RECIPE("TIS|Items|TARDIS Locator|Recipe", "LOCATOR", "R"),
@@ -222,32 +222,51 @@ public enum TARDISInfoMenu {
     ANCIENT("TIS|TARDIS Types|Ancient~", "TYPES", "~"),
     CUSTOM("TIS|TARDIS Types|Custom", "TYPES", "C"),
     ROOMS("TIS|Rooms", "TIS", "R"),
+    ROOMS_2("TIS|Rooms 2", "TIS", "2"),
+    ALLAY("TIS|Rooms|Allay", "ROOMS", "y"),
     ANTIGRAVITY("TIS|Rooms|Anti-gravity", "ROOMS", "A"),
+    APIARY("TIS|Rooms|Apiary", "ROOMS", "ia"),
     AQUARIUM("TIS|Rooms|Aquarium", "ROOMS", "q"),
     ARBORETUM("TIS|Rooms|Arboretum", "ROOMS", "u"),
     BAKER("TIS|Rooms|Baker", "ROOMS", "B"),
+    BAMBOO("TIS|Rooms|Bamboo", "ROOMS", "oo"),
     BEDROOM("TIS|Rooms|Bedroom", "ROOMS", "d"),
     BIRDCAGE("TIS|Rooms|Bird Cage", "ROOMS", "c"),
+    CHEMISTRY("TIS|Rooms|Chemistry", "ROOMS", "he"),
     EMPTY("TIS|Rooms|Empty", "ROOMS", "y"),
     FARM("TIS|Rooms|Farm", "ROOMS", "F"),
+    GARDEN("TIS|Rooms|Garden", "ROOMS", "de"),
+    GEODE("TIS|Rooms|Geode", "ROOMS", "eo"),
     GRAVITY("TIS|Rooms|Gravity", "ROOMS", "G"),
     GREENHOUSE("TIS|Rooms|Greenhouse", "ROOMS", "n"),
     HARMONY("TIS|Rooms|Harmony", "ROOMS", "H"),
+    HUTCH("TIS|Rooms|Hutch", "ROOMS", "ut"),
+    IGLOO("TIS|Rooms|Igloo", "ROOMS", "gl"),
+    IISTUBIL("TIS|Rooms|Iistabul", "ROOMS", "Ii"),
     KITCHEN("TIS|Rooms|Kitchen", "ROOMS", "K"),
-    LIBRARY("TIS|Rooms|Library", "ROOMS", "L"),
-    MUSHROOM("TIS|Rooms|Mushroom", "ROOMS", "M"),
-    PASSAGE("TIS|Rooms|Passage", "ROOMS", "P"),
-    POOL("TIS|Rooms|Pool", "ROOMS", "o"),
-    RAIL("TIS|Rooms|Rail", "ROOMS", "R"),
-    RENDERER("TIS|Rooms|External Renderer", "ROOMS", "x"),
-    SHELL("TIS|Rooms|Shell", "ROOMS", "Sh"),
-    STABLE("TIS|Rooms|Stable", "ROOMS", "S"),
-    STALL("TIS|Rooms|Llama Stall", "ROOMS", "Ll"),
-    TRENZALORE("TIS|Rooms|Trenzalore", "ROOMS", "T"),
-    VAULT("TIS|Rooms|Vault", "ROOMS", "V"),
-    VILLAGE("TIS|Rooms|Village", "ROOMS", "i"),
-    WOOD("TIS|Rooms|Wood", "ROOMS", "W"),
-    WORKSHOP("TIS|Rooms|Workshop", "ROOMS", "h"),
+    LAVA("TIS|Rooms|Lava", "ROOMS", "av"),
+    LAZARUS("TIS|Rooms 2|Lazarus", "ROOMS_2", "za"),
+    LIBRARY("TIS|Rooms 2|Library", "ROOMS_2", "L"),
+    MANGROVE("TIS|Rooms 2|Mangrove", "ROOMS_2", "ng"),
+    MAZE("TIS|Rooms 2|Maze", "ROOMS_2", "ze"),
+    MUSHROOM("TIS|Rooms 2|Mushroom", "ROOMS_2", "M"),
+    NETHER("TIS|Rooms 2|Nether", "ROOMS_2", "th"),
+    PASSAGE("TIS|Rooms 2|Passage", "ROOMS_2", "P"),
+    PEN("TIS|Rooms 2|Pen", "ROOMS_2", "Pe"),
+    POOL("TIS|Rooms 2|Pool", "ROOMS_2", "o"),
+    RAIL("TIS|Rooms 2|Rail", "ROOMS_2", "R"),
+    RENDERER("TIS|Rooms 2|External Renderer", "ROOMS_2", "x"),
+    SHELL("TIS|Rooms 2|Shell", "ROOMS_2", "Sh"),
+    SMELTER("TIS|Rooms 2|Smelter", "ROOMS_2", "lt"),
+    STABLE("TIS|Rooms 2|Stable", "ROOMS_2", "S"),
+    STALL("TIS|Rooms 2|Llama Stall", "ROOMS_2", "Ll"),
+    SURGERY("TIS|Rooms 2|Surgery", "ROOMS_2", "rg"),
+    TRENZALORE("TIS|Rooms 2|Trenzalore", "ROOMS_2", "T"),
+    VAULT("TIS|Rooms 2|Vault", "ROOMS_2", "V"),
+    VILLAGE("TIS|Rooms 2|Village", "ROOMS_2", "i"),
+    WOOD("TIS|Rooms 2|Wood", "ROOMS_2", "W"),
+    WORKSHOP("TIS|Rooms 2|Workshop", "ROOMS_2", "h"),
+    ZERO("TIS|Rooms 2|Zero", "ROOMS_2", "er"),
     MANUAL("TIS|Manual", "TIS", "M"),
     COMMANDS("TIS|Commands", "TIS", "o"),
     TARDIS("TIS|Commands|TARDIS Commands", "COMMANDS", "T"),
@@ -356,6 +375,9 @@ public enum TARDISInfoMenu {
     CUSTARD("TIS|Food & Accessories|Custard", "FOOD_ACCESSORIES", "C"),
     CUSTARD_INFO("TIS|Food & Accessories|Custard|Info", "CUSTARD", "I"),
     CUSTARD_RECIPE("TIS|Food & Accessories|Custard|Recipe", "CUSTARD", "R"),
+    CUSTARD_CREAM("TIS|Food & Accessories|Custard Cream", "FOOD_ACCESSORIES", "m"),
+    CUSTARD_CREAM_INFO("TIS|Food & Accessories|Custard Cream|Info", "CUSTARD_CREAM", "I"),
+    CUSTARD_CREAM_RECIPE("TIS|Food & Accessories|Custard Cream|Recipe", "CUSTARD_CREAM", "R"),
     FISH_FINGER("TIS|Food & Accessories|Fish Finger", "FOOD_ACCESSORIES", "F"),
     FISH_FINGER_INFO("TIS|Food & Accessories|Fish Finger|Info", "FISH_FINGER", "I"),
     FISH_FINGER_RECIPE("TIS|Food & Accessories|Fish Finger|Recipe", "FISH_FINGER", "R"),
@@ -456,5 +478,148 @@ public enum TARDISInfoMenu {
      */
     private String getKey() {
         return key;
+    }
+
+    public boolean isConsoleBlock() {
+        switch (this) {
+            case ARS, CONSOLE_ARS, ADVANCED, STORAGE, ARTRON, BACKDOOR, BUTTON, CHAMELEON, CONDENSER, DOOR, HANDBRAKE, INFO, KEYBOARD, TOGGLE, LIGHT, SAVE_SIGN, SCANNER, TERMINAL, TEMPORAL, WORLD_REPEATER, X_REPEATER, Y_REPEATER, Z_REPEATER -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    public boolean isUpdateable() {
+        switch (this) {
+            case CREEPER, CONSOLE_FARM, CONSOLE_RAIL, CONSOLE_STABLE, CONSOLE_STALL, EPS -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    public boolean isItem() {
+        switch (this) {
+            case KEY, SONIC_SCREWDRIVER, LOCATOR, STATTENHEIM_REMOTE, BIOME_READER, REMOTE_KEY, ARTRON_STORAGE_CELL, ARTRON_FURNACE, PERCEPTION_FILTER, SONIC_GENERATOR -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    public boolean isSonicUpgrade() {
+        switch (this) {
+            case SONIC_STANDARD, SONIC_BIO, SONIC_REDSTONE, SONIC_DIAMOND, SONIC_EMERALD, SONIC_ADMIN, SONIC_PAINTER, SONIC_BRUSH, SONIC_IGNITE, SONIC_KNOCKBACK, SONIC_PICKUP_ARROWS, SONIC_CONVERSION -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    public boolean isSonicComponent() {
+        switch (this) {
+            case BIO_SCANNER_CIRCUIT, BRUSH_CIRCUIT, CONVERSION_CIRCUIT, DIAMOND_DISRUPTOR_CIRCUIT, EMERALD_ENVIRONMENT_CIRCUIT, IGNITE_CIRCUIT, KNOCKBACK_CIRCUIT, PAINTER_CIRCUIT, PERCEPTION_CIRCUIT, PICKUP_ARROWS_CIRCUIT, REDSTONE_ACTIVATOR_CIRCUIT, SERVER_ADMIN_CIRCUIT, SONIC_OSCILLATOR -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    public boolean isComponent() {
+        switch (this) {
+            case ARS_CIRCUIT, CHAMELEON_CIRCUIT, INPUT_CIRCUIT, INVISIBILITY_CIRCUIT, LOCATOR_CIRCUIT, MATERIALISATION_CIRCUIT, MEMORY_CIRCUIT, RANDOMISER_CIRCUIT, SCANNER_CIRCUIT, STATTENHEIM_CIRCUIT, TEMPORAL_CIRCUIT -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    public boolean isDisk() {
+        switch (this) {
+            case AREA_DISK, AUTHORISED_CONTROL_DISK, BLANK_STORAGE_DISK, BIOME_STORAGE_DISK, PLAYER_STORAGE_DISK, PRESET_STORAGE_DISK, SAVE_STORAGE_DISK -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    public boolean isConsole() {
+        switch (this) {
+            case ARS, BIGGER, BUDGET, CAVE, COPPER_11TH, CORAL, CURSED, DELTA, DELUXE, DIVISION, ELEVENTH, ENDER, FACTORY, FIFTEENTH, FUGITIVE, HOSPITAL, MASTER, MECHANICAL, PLANK, PYRAMID, REDSTONE, STEAMPUNK, THIRTEENTH, TOM, TWELFTH, WAR, WEATHERED, ORIGINAL, ANCIENT, CUSTOM -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    public boolean isRoom() {
+        switch (this) {
+            case ALLAY, ANTIGRAVITY, APIARY, AQUARIUM, ARBORETUM, BAKER, BAMBOO, BEDROOM, BIRDCAGE, CHEMISTRY, EMPTY, FARM, GARDEN, GEODE, GRAVITY, GREENHOUSE, HARMONY, HUTCH, IGLOO, IISTUBIL, KITCHEN, LAZARUS, LAVA, LIBRARY, MANGROVE, MAZE, MUSHROOM, NETHER, PASSAGE, PEN, POOL, RAIL, RENDERER, SHELL, SMELTER, STABLE, STALL, SURGERY, TRENZALORE, VAULT, VILLAGE, WOOD, WORKSHOP, ZERO -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    public boolean isAccessory() {
+        switch (this) {
+            case BOW_TIE, THREE_D_GLASSES, FOB_WATCH -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    public boolean isFood() {
+        switch (this) {
+            case CUSTARD, FISH_FINGER, JAMMY_DODGER, JELLY_BABY, CUSTARD_CREAM -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    public boolean isPlanet() {
+        switch (this) {
+            case SKARO, SILURIA, GALLIFREY, RIFT_CIRCUIT, RIFT_MANIPULATOR, RUST_BUCKET, RUST_PLAGUE_SWORD, ACID_BUCKET, ACID_BATTERY -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    public boolean isTimeTravel() {
+        switch (this) {
+            case MALFUNCTIONS, ALT_CONTROLS -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
     }
 }
