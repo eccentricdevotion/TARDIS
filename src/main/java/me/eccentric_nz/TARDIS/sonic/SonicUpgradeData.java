@@ -25,7 +25,7 @@ public class SonicUpgradeData {
         upgrades.put("Redstone Upgrade", "redstone");
         upgrades.put("Diamond Upgrade", "diamond");
         upgrades.put("Emerald Upgrade", "emerald");
-        upgrades.put("Painter Upgrade", "paint");
+        upgrades.put("Painter Upgrade", "painter");
         upgrades.put("Ignite Upgrade", "ignite");
         upgrades.put("Pickup Arrows Upgrade", "arrow");
         upgrades.put("Knockback Upgrade", "knockback");
