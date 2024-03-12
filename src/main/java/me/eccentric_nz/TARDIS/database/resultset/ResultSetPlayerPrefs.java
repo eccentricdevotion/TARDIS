@@ -68,6 +68,7 @@ public class ResultSetPlayerPrefs {
     private boolean submarineOn;
     private boolean telepathyOn;
     private boolean travelbarOn;
+    private boolean infoOn;
     private HADS hadsType;
     private int artronLevel;
     private int flightMode;
@@ -157,6 +158,7 @@ public class ResultSetPlayerPrefs {
                     signOn = rs.getBoolean("sign_on");
                     telepathyOn = rs.getBoolean("telepathy_on");
                     travelbarOn = rs.getBoolean("travelbar_on");
+                    infoOn = rs.getBoolean("info_on");
                     farmOn = rs.getBoolean("farm_on");
                     try {
                         lights = TardisLight.valueOf(rs.getString("lights"));
@@ -301,6 +303,10 @@ public class ResultSetPlayerPrefs {
 
     public boolean isTravelbarOn() {
         return travelbarOn;
+    }
+
+    public boolean isInfoOn() {
+        return infoOn;
     }
 
     public boolean isFarmOn() {

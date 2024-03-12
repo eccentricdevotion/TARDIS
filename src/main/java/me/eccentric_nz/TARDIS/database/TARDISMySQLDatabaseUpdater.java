@@ -100,6 +100,7 @@ class TARDISMySQLDatabaseUpdater {
         prefsupdates.add("sign_on int(1) DEFAULT '1'");
         prefsupdates.add("telepathy_on int(1) DEFAULT '0'");
         prefsupdates.add("travelbar_on int(1) DEFAULT '0'");
+        prefsupdates.add("info_on int(1) DEFAULT '0'");
         prefsupdates.add("auto_powerup_on int(1) DEFAULT '0'");
         destsupdates.add("preset varchar(32) DEFAULT ''");
         destsupdates.add("slot int(1) DEFAULT '-1'");

@@ -108,6 +108,7 @@ class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("submarine_on INTEGER DEFAULT 0");
         prefsupdates.add("telepathy_on INTEGER DEFAULT 0");
         prefsupdates.add("travelbar_on INTEGER DEFAULT 0");
+        prefsupdates.add("info_on INTEGER DEFAULT 0");
         prefsupdates.add("wall TEXT DEFAULT 'ORANGE_WOOL'");
         prefsupdates.add("auto_powerup_on INTEGER DEFAULT 0");
         tardisupdates.add("abandoned INTEGER DEFAULT 0");
