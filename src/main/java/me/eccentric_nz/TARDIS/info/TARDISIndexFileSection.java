@@ -62,9 +62,9 @@ public class TARDISIndexFileSection {
                 stack[i] = makeButton(tim);
                 i++;
             } else if (category == TISCategory.MONSTERS && tim.isMonster()) {
-            stack[i] = makeButton(tim);
-            i++;
-        }
+                stack[i] = makeButton(tim);
+                i++;
+            }
         }
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
