@@ -27,10 +27,9 @@ public class TARDISIndexFileInventory {
         int i = 0;
         // categories
         for (TISCategory category : TISCategory.values()) {
-            ItemStack is = new ItemStack(category.getIcon(), 1);
+            ItemStack is = new ItemStack(Material.BOOKSHELF, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(category.getName());
-            im.setCustomModelData(category.getCustomModelData());
             im.setLore(List.of(category.getLore().split("~")));
             is.setItemMeta(im);
             stack[i] = is;

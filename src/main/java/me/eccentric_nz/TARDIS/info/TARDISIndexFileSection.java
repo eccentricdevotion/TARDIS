@@ -77,10 +77,9 @@ public class TARDISIndexFileSection {
     }
 
     private ItemStack makeButton(TARDISInfoMenu tim) {
-        ItemStack is = new ItemStack(category.getIcon(), 1);
+        ItemStack is = new ItemStack(Material.WRITTEN_BOOK, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(TARDISStringUtils.capitalise(tim.toString()));
-        im.setCustomModelData(2);
         is.setItemMeta(im);
         return is;
     }
