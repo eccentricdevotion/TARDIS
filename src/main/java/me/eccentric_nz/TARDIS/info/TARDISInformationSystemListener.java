@@ -493,6 +493,18 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 }
             }
             case TIME_TRAVEL -> {
+                if (chat.equalsIgnoreCase("F")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.FLYING);
+                }
+                if (chat.equalsIgnoreCase("C")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.CAMERA);
+                }
+                if (chat.equalsIgnoreCase("A")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.ALT_CONTROLS);
+                }
+                if (chat.equalsIgnoreCase("M")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.MALFUNCTIONS);
+                }
             }
             case MONSTERS -> {
                 if (chat.equalsIgnoreCase("C")) {
@@ -854,6 +866,9 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 if (chat.equalsIgnoreCase("W")) {
                     processKey(p, TARDISInfoMenu.FOB_WATCH);
                 }
+                if (chat.equalsIgnoreCase("u")) {
+                    processKey(p, TARDISInfoMenu.COMMUNICATOR);
+                }
             }
             case PLANETS -> {
                 if (chat.equalsIgnoreCase("S")) {
@@ -1003,6 +1018,15 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 }
                 if (chat.equalsIgnoreCase("R")) {
                     new TISRecipe(plugin).show(p, TARDISInfoMenu.FOB_WATCH_RECIPE);
+                }
+                exit(p);
+            }
+            case COMMUNICATOR -> {
+                if (chat.equalsIgnoreCase("I")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.COMMUNICATOR_INFO);
+                }
+                if (chat.equalsIgnoreCase("R")) {
+                    new TISRecipe(plugin).show(p, TARDISInfoMenu.COMMUNICATOR_RECIPE);
                 }
                 exit(p);
             }

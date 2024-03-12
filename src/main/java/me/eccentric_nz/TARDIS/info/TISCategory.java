@@ -15,7 +15,7 @@ public enum TISCategory {
     ROOMS("All the TARDIS rooms", true),
     FOOD("The Doctor's~favourite foods"),
     ACCESSORIES("Functional and~cosmetic items"),
-    TIME_TRAVEL("How to fly~the TARDIS"),
+    TIME_TRAVEL("How to fly~the TARDIS", true),
     PLANETS("Visit planets from~the Whoniverse"),
     MONSTERS("Monsters from~the Whoniverse");
 

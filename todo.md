@@ -4,9 +4,6 @@
 
 1. Fix dem bugs
 2. Add new items to the TARDIS information system
-   - flying
-   - camera
-   - malfunctions
 
 ## Next version `5.5.0`
 

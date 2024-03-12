@@ -101,6 +101,7 @@ public enum TARDISDescription {
     JAMMY_DODGER_INFO("The eleventh Doctor fooled the Daleks into thinking a Jammy Dodger was a self-destruct button for the TARDIS."),
     JELLY_BABY_INFO("The fourth Doctor's favourite. Offer them to strangers in order to defuse tense situations."),
     FOB_WATCH_INFO("The Tenth Doctor used a Chameleon Arch to change himself into the human John Smith to elude the Family of Blood. You can craft a fob watch to change your self from a Time Lord in a regular player (a Steve - albeit with a random name)."),
+    COMMUNICATOR_INFO("You can craft a communicator to talk to Handles when he is inside the TARDIS."),
     EXTERIOR_LAMP_LEVEL_SWITCH_INFO("Allows you to set the light level for the TARDIS's exterior lamp. Levels are 2, 4, 6, and 8. The Chameleon Preset must be using an armour stand model e.g. a coloured Police Box."),
     INTERIOR_LIGHT_LEVEL_SWITCH_INFO("Allows you to set the light level of the custom lights inside the TARDIS."),
     CHARGING_SENSOR("""
@@ -138,7 +139,6 @@ public enum TARDISDescription {
             USAGE: Right-click the levers to update the exterior view.
             UPDATING: Place a monitor frame in an item frame and use /tardis update monitor
             BLOCK: ITEM_FRAME with placed monitor frame item"""),
-    CAMERA("You can view the TARDIS exterior from an armour stand Chameleon preset by sneaking and clicking the TARDIS Monitor. Press the dismount ket (default: shift) to return to the TARDIS interior."),
     RELATIVITY_DIFFERENTIATOR("""
             INFO: The Relativity Differentiator is a comparator that controls whether the TARDIS automatically enters exterior flight mode when the handbrake is released.
             USAGE: Set the comparator to pp and powered ("subtraction mode") to engage exterior flying mode.
@@ -221,6 +221,8 @@ public enum TARDISDescription {
     WOOD("A secondary console room made of wood."),
     WORKSHOP("Craft, smelt, brew, enchant and repair."),
     ZERO("Recover your health in tranquility."),
+    FLYING("You can fly the TARDIS exterior if it is set to an armour stand Chameleon preset. Use the relativity differentiator to make the TARDIS enter flying mode when the handbrake is released. Once flying use the WASD keys to navigate, and press the dismount key (default: shift) to land."),
+    CAMERA("You can view the TARDIS exterior from an armour stand Chameleon preset by sneaking and clicking the TARDIS Monitor. Press the dismount key (default: shift) to return to the TARDIS interior."),
     ALT_CONTROLS("Please refer to the Advanced Console, the Save Sign, the Keyboard, the Destination Terminal and the travel commands."),
     MALFUNCTIONS("When the TARDIS travels, there is a chance of a malfunction happening that deposits the TARDIS in an unexpected location."),
     CONSOLE_ARS("""
@@ -314,7 +316,7 @@ public enum TARDISDescription {
             BLOCK: LEVER, STONE_BUTTON or WOOD_BUTTON"""),
     UPDATEABLE_RAIL("""
             INFO: Updates the block that storage minecarts spawn on when entering the TARDIS.
-            USAGE: Attach a minetrack to the front of the TARDIS and have a Minecart with Chest run into the TARDIS door.
+            USAGE: Attach a rail track to the front of the TARDIS and have a Minecart with Chest run into the TARDIS door.
             UPDATING: /tardis update rail
             BLOCK: FENCE"""),
     SAVE_SIGN("""

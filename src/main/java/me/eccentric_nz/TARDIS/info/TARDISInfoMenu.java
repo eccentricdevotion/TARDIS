@@ -199,7 +199,10 @@ public enum TARDISInfoMenu {
     SAVE_STORAGE_DISK("TIS|TARDIS Disks|Save Storage Disk", "DISKS", "S"),
     SAVE_STORAGE_DISK_INFO("TIS|TARDIS Disks|Save Storage Disk|Info", "SAVE_STORAGE_DISK", "I"),
     SAVE_STORAGE_DISK_RECIPE("TIS|TARDIS Disks|Save Storage Disk|Recipe", "SAVE_STORAGE_DISK", "R"),
-    CAMERA("TIS|Manual|TARDIS Controls|Camera", "TARDIS_CONTROLS", "C"),
+    FLYING("TIS|Manual|Time Travel|Flying", "TIME_TRAVEL", "F"),
+    CAMERA("TIS|Manual|Time Travel|Camera", "TIME_TRAVEL", "C"),
+    ALT_CONTROLS("TIS|Manual|Time Travel|Alternative Controls", "TIME_TRAVEL", "A"),
+    MALFUNCTIONS("TIS|Manual|Time Travel|Malfunctions", "TIME_TRAVEL", "M"),
     TYPES("TIS|TARDIS Types", "TIS", "T"),
     ARS("TIS|TARDIS Types|ARS", "TYPES", "A"),
     BIGGER("TIS|TARDIS Types|Bigger", "TYPES", "i"),
@@ -411,8 +414,6 @@ public enum TARDISInfoMenu {
     MONITOR_FRAME_RECIPE("TIS|Manual|Console Blocks 3|Monitor Frame|Recipe", "MONITOR_FRAME", "R"),
     RELATIVITY_DIFFERENTIATOR("TIS|Manual|Console Blocks 3|Relativity Differentiator", "CONSOLE_BLOCKS_3", "R"),
     TARDIS_CONTROLS("TIS|Manual|TARDIS Controls", "MANUAL", "S"),
-    MALFUNCTIONS("TIS|Manual|TARDIS Controls|Malfunctions", "TARDIS_CONTROLS", "M"),
-    ALT_CONTROLS("TIS|Manual|TARDIS Controls|Alternative Controls", "TARDIS_CONTROLS", "l"),
     FOOD_ACCESSORIES("TIS|Food & Accessories", "TIS", "F"),
     CUSTARD("TIS|Food & Accessories|Custard", "FOOD_ACCESSORIES", "C"),
     CUSTARD_INFO("TIS|Food & Accessories|Custard|Info", "CUSTARD", "I"),
@@ -438,6 +439,10 @@ public enum TARDISInfoMenu {
     FOB_WATCH("TIS|Food & Accessories|Chameleon Arch Fob Watch", "FOOD_ACCESSORIES", "W"),
     FOB_WATCH_INFO("TIS|Food & Accessories|Chameleon Arch Fob Watch|Info", "FOB_WATCH", "I"),
     FOB_WATCH_RECIPE("TIS|Food & Accessories|Chameleon Arch Fob Watch|Recipe", "FOB_WATCH", "R"),
+
+    COMMUNICATOR("TIS|Food & Accessories|TARDIS Communicator", "FOOD_ACCESSORIES", "u"),
+    COMMUNICATOR_INFO("TIS|Food & Accessories|TARDIS Communicator|Info", "COMMUNICATOR", "I"),
+    COMMUNICATOR_RECIPE("TIS|Food & Accessories|TARDIS Communicator|Recipe", "COMMUNICATOR", "R"),
     PLANETS("TIS|Planets", "TIS", "P"),
     SKARO("TIS|Planets|Skaro", "PLANETS", "S"),
     SKARO_INFO("TIS|Planets|Skaro|Info", "SKARO", "I"),
@@ -667,7 +672,7 @@ public enum TARDISInfoMenu {
 
     public boolean isAccessory() {
         switch (this) {
-            case BOW_TIE, THREE_D_GLASSES, FOB_WATCH -> {
+            case BOW_TIE, THREE_D_GLASSES, FOB_WATCH, COMMUNICATOR -> {
                 return true;
             }
             default -> {
@@ -701,7 +706,7 @@ public enum TARDISInfoMenu {
 
     public boolean isTimeTravel() {
         switch (this) {
-            case MALFUNCTIONS, ALT_CONTROLS, CAMERA -> {
+            case MALFUNCTIONS, ALT_CONTROLS, CAMERA, FLYING -> {
                 return true;
             }
             default -> {
