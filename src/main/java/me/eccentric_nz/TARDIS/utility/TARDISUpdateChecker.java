@@ -114,7 +114,7 @@ public class TARDISUpdateChecker implements Runnable {
             plugin.getMessenger().sendJenkinsUpdateReady(plugin.getConsole(), buildNumber, newBuildNumber);
             if (plugin.getConfig().getBoolean("preferences.update.auto_download")) {
                 new UpdateTARDISPlugins(plugin).fetchFromJenkins(plugin.getConsole());
-                plugin.getMessenger().send(plugin.getConsole(), TardisModule.TARDIS, "AUTO_UPDATE");
+                plugin.getMessenger().send(plugin.getConsole(), TardisModule.TARDIS, "AUTO_DOWNLOAD");
             } else {
                 plugin.getMessenger().sendUpdateCommand(plugin.getConsole());
             }
