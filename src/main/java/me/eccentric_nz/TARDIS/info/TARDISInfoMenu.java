@@ -359,20 +359,33 @@ public enum TARDISInfoMenu {
     BUTTON("TIS|Manual|Console Blocks|Button", "CONSOLE_BLOCKS", "u"),
     CHAMELEON("TIS|Manual|Console Blocks|Chameleon", "CONSOLE_BLOCKS", "C"),
     CONDENSER("TIS|Manual|Console Blocks|Condenser", "CONSOLE_BLOCKS", "o"),
-    CREEPER("TIS|Manual|Console Blocks|Creeper", "CONSOLE_BLOCKS", "p"),
     DOOR("TIS|Manual|Console Blocks|Door", "CONSOLE_BLOCKS", "D"),
-    EPS("TIS|Manual|Console Blocks|EPS", "CONSOLE_BLOCKS", "P"),
-    CONSOLE_FARM("TIS|Manual|Console Blocks|Farm", "CONSOLE_BLOCKS", "m"),
     HANDBRAKE("TIS|Manual|Console Blocks|Handbrake", "CONSOLE_BLOCKS", "k"),
     INFO("TIS|Manual|Console Blocks|Information System", "CONSOLE_BLOCKS_2", "I"),
     KEYBOARD("TIS|Manual|Console Blocks|Keyboard", "CONSOLE_BLOCKS_2", "K"),
     TOGGLE("TIS|Manual|Console Blocks 2|Wool toggle", "CONSOLE_BLOCKS_2", "o"),
     LIGHT("TIS|Manual|Console Blocks 2|Light", "CONSOLE_BLOCKS_2", "L"),
-    CONSOLE_RAIL("TIS|Manual|Console Blocks 2|Rails", "CONSOLE_BLOCKS_2", "R"),
     SAVE_SIGN("TIS|Manual|Console Blocks 2|Save Sign", "CONSOLE_BLOCKS_2", "S"),
     SCANNER("TIS|Manual|Console Blocks 2|Scanner", "CONSOLE_BLOCKS_2", "c"),
-    CONSOLE_STABLE("TIS|Manual|Console Blocks 2|Stable", "CONSOLE_BLOCKS_2", "b"),
-    CONSOLE_STALL("TIS|Manual|Console Blocks 2|Stall", "CONSOLE_BLOCKS_2", "a"),
+    UPDATEABLE_BLOCKS("TIS|Manual|Updateable Blocks", "MANUAL", "U"),
+    EPS("TIS|Manual|Updateable Blocks|EPS", "UPDATEABLE_BLOCKS", "P"),
+    CREEPER("TIS|Manual|Updateable Blocks|Creeper", "UPDATEABLE_BLOCKS", "C"),
+    UPDATEABLE_FARM("TIS|Manual|Updateable Blocks|Farm", "UPDATEABLE_BLOCKS", "F"),
+    UPDATEABLE_RAIL("TIS|Manual|Updateable Blocks|Rails", "UPDATEABLE_BLOCKS", "R"),
+    UPDATEABLE_STABLE("TIS|Manual|Updateable Blocks|Stable", "UPDATEABLE_BLOCKS", "l"),
+    UPDATEABLE_STALL("TIS|Manual|Updateable Blocks|Stall", "UPDATEABLE_BLOCKS", "a"),
+    UPDATEABLE_ALLAY("TIS|Manual|Updateable Blocks|Ally", "UPDATEABLE_BLOCKS", "y"),
+    UPDATEABLE_BAMBOO("TIS|Manual|Updateable Blocks|Bamboo", "UPDATEABLE_BLOCKS", "B"),
+    UPDATEABLE_BIRDCAGE("TIS|Manual|Updateable Blocks|Birdcage", "UPDATEABLE_BLOCKS", "g"),
+    UPDATEABLE_FUEL("TIS|Manual|Updateable Blocks|Fuel", "UPDATEABLE_BLOCKS", "u"),
+    UPDATEABLE_HUTCH("TIS|Manual|Updateable Blocks|Hutch", "UPDATEABLE_BLOCKS", "H"),
+    UPDATEABLE_IGLOO("TIS|Manual|Updateable Blocks|Igloo", "UPDATEABLE_BLOCKS", "I"),
+    UPDATEABLE_IISTUBIL("TIS|Manual|Updateable Blocks|Iistabul", "UPDATEABLE_BLOCKS", "Ii"),
+    UPDATEABLE_LAVA("TIS|Manual|Updateable Blocks|Lava", "UPDATEABLE_BLOCKS", "v"),
+    UPDATEABLE_PEN("TIS|Manual|Updateable Blocks|Pen", "UPDATEABLE_BLOCKS", "n"),
+    UPDATEABLE_SMELT("TIS|Manual|Updateable Blocks|Smelt", "UPDATEABLE_BLOCKS", "S"),
+    UPDATEABLE_VAULT("TIS|Manual|Updateable Blocks|Vault", "UPDATEABLE_BLOCKS", "Va"),
+    UPDATEABLE_VILLAGE("TIS|Manual|Updateable Blocks|Village", "UPDATEABLE_BLOCKS", "Vi"),
     TERMINAL("TIS|Manual|Console Blocks 2|Terminal", "CONSOLE_BLOCKS_2", "T"),
     TEMPORAL("TIS|Manual|Console Blocks 2|Temporal Locator", "CONSOLE_BLOCKS_2", "m"),
     WORLD_REPEATER("TIS|Manual|Console Blocks 2|World Repeater", "CONSOLE_BLOCKS_2", "W"),
@@ -552,7 +565,10 @@ public enum TARDISInfoMenu {
 
     public boolean isUpdateable() {
         switch (this) {
-            case CREEPER, CONSOLE_FARM, CONSOLE_RAIL, CONSOLE_STABLE, CONSOLE_STALL, EPS -> {
+            case CREEPER, EPS, UPDATEABLE_FARM, UPDATEABLE_RAIL, UPDATEABLE_STABLE, UPDATEABLE_STALL,
+                    UPDATEABLE_ALLAY, UPDATEABLE_BAMBOO, UPDATEABLE_BIRDCAGE, UPDATEABLE_FUEL, UPDATEABLE_HUTCH,
+                    UPDATEABLE_IGLOO, UPDATEABLE_IISTUBIL, UPDATEABLE_LAVA, UPDATEABLE_PEN, UPDATEABLE_SMELT,
+                    UPDATEABLE_VAULT, UPDATEABLE_VILLAGE -> {
                 return true;
             }
             default -> {
@@ -563,7 +579,8 @@ public enum TARDISInfoMenu {
 
     public boolean isItem() {
         switch (this) {
-            case KEY, SONIC_SCREWDRIVER, LOCATOR, STATTENHEIM_REMOTE, BIOME_READER, REMOTE_KEY, ARTRON_STORAGE_CELL, ARTRON_FURNACE, PERCEPTION_FILTER, SONIC_GENERATOR, SONIC_BLASTER, VORTEX_MANIPULATOR, HANDLES -> {
+            case KEY, SONIC_SCREWDRIVER, LOCATOR, STATTENHEIM_REMOTE, BIOME_READER, REMOTE_KEY, ARTRON_STORAGE_CELL,
+                    ARTRON_FURNACE, PERCEPTION_FILTER, SONIC_GENERATOR, SONIC_BLASTER, VORTEX_MANIPULATOR, HANDLES -> {
                 return true;
             }
             default -> {
@@ -574,7 +591,8 @@ public enum TARDISInfoMenu {
 
     public boolean isSonicUpgrade() {
         switch (this) {
-            case SONIC_STANDARD, SONIC_BIO, SONIC_REDSTONE, SONIC_DIAMOND, SONIC_EMERALD, SONIC_ADMIN, SONIC_PAINTER, SONIC_BRUSH, SONIC_IGNITE, SONIC_KNOCKBACK, SONIC_PICKUP_ARROWS, SONIC_CONVERSION -> {
+            case SONIC_STANDARD, SONIC_BIO, SONIC_REDSTONE, SONIC_DIAMOND, SONIC_EMERALD, SONIC_ADMIN, SONIC_PAINTER,
+                    SONIC_BRUSH, SONIC_IGNITE, SONIC_KNOCKBACK, SONIC_PICKUP_ARROWS, SONIC_CONVERSION -> {
                 return true;
             }
             default -> {
@@ -585,7 +603,9 @@ public enum TARDISInfoMenu {
 
     public boolean isSonicComponent() {
         switch (this) {
-            case BIO_SCANNER_CIRCUIT, BRUSH_CIRCUIT, CONVERSION_CIRCUIT, DIAMOND_DISRUPTOR_CIRCUIT, EMERALD_ENVIRONMENT_CIRCUIT, IGNITE_CIRCUIT, KNOCKBACK_CIRCUIT, PAINTER_CIRCUIT, PERCEPTION_CIRCUIT, PICKUP_ARROWS_CIRCUIT, REDSTONE_ACTIVATOR_CIRCUIT, SERVER_ADMIN_CIRCUIT, SONIC_OSCILLATOR -> {
+            case BIO_SCANNER_CIRCUIT, BRUSH_CIRCUIT, CONVERSION_CIRCUIT, DIAMOND_DISRUPTOR_CIRCUIT,
+                    EMERALD_ENVIRONMENT_CIRCUIT, IGNITE_CIRCUIT, KNOCKBACK_CIRCUIT, PAINTER_CIRCUIT, PERCEPTION_CIRCUIT,
+                    PICKUP_ARROWS_CIRCUIT, REDSTONE_ACTIVATOR_CIRCUIT, SERVER_ADMIN_CIRCUIT, SONIC_OSCILLATOR -> {
                 return true;
             }
             default -> {
@@ -596,7 +616,8 @@ public enum TARDISInfoMenu {
 
     public boolean isComponent() {
         switch (this) {
-            case ARS_CIRCUIT, CHAMELEON_CIRCUIT, INPUT_CIRCUIT, INVISIBILITY_CIRCUIT, LOCATOR_CIRCUIT, MATERIALISATION_CIRCUIT, MEMORY_CIRCUIT, RANDOMISER_CIRCUIT, SCANNER_CIRCUIT, STATTENHEIM_CIRCUIT, TEMPORAL_CIRCUIT -> {
+            case ARS_CIRCUIT, CHAMELEON_CIRCUIT, INPUT_CIRCUIT, INVISIBILITY_CIRCUIT, LOCATOR_CIRCUIT, MATERIALISATION_CIRCUIT,
+                    MEMORY_CIRCUIT, RANDOMISER_CIRCUIT, SCANNER_CIRCUIT, STATTENHEIM_CIRCUIT, TEMPORAL_CIRCUIT -> {
                 return true;
             }
             default -> {
@@ -607,7 +628,8 @@ public enum TARDISInfoMenu {
 
     public boolean isDisk() {
         switch (this) {
-            case AREA_DISK, AUTHORISED_CONTROL_DISK, BLANK_STORAGE_DISK, BIOME_STORAGE_DISK, PLAYER_STORAGE_DISK, PRESET_STORAGE_DISK, SAVE_STORAGE_DISK -> {
+            case AREA_DISK, AUTHORISED_CONTROL_DISK, BLANK_STORAGE_DISK, BIOME_STORAGE_DISK,
+                    PLAYER_STORAGE_DISK, PRESET_STORAGE_DISK, SAVE_STORAGE_DISK -> {
                 return true;
             }
             default -> {
@@ -618,7 +640,9 @@ public enum TARDISInfoMenu {
 
     public boolean isConsole() {
         switch (this) {
-            case ARS, BIGGER, BUDGET, CAVE, COPPER_11TH, CORAL, CURSED, DELTA, DELUXE, DIVISION, ELEVENTH, ENDER, FACTORY, FIFTEENTH, FUGITIVE, HOSPITAL, MASTER, MECHANICAL, PLANK, PYRAMID, REDSTONE, STEAMPUNK, THIRTEENTH, TOM, TWELFTH, WAR, WEATHERED, ORIGINAL, ANCIENT, CUSTOM -> {
+            case ARS, BIGGER, BUDGET, CAVE, COPPER_11TH, CORAL, CURSED, DELTA, DELUXE, DIVISION, ELEVENTH, ENDER,
+                    FACTORY, FIFTEENTH, FUGITIVE, HOSPITAL, MASTER, MECHANICAL, PLANK, PYRAMID, REDSTONE, STEAMPUNK,
+                    THIRTEENTH, TOM, TWELFTH, WAR, WEATHERED, ORIGINAL, ANCIENT, CUSTOM -> {
                 return true;
             }
             default -> {
@@ -629,7 +653,10 @@ public enum TARDISInfoMenu {
 
     public boolean isRoom() {
         switch (this) {
-            case ALLAY, ANTIGRAVITY, APIARY, AQUARIUM, ARBORETUM, BAKER, BAMBOO, BEDROOM, BIRDCAGE, CHEMISTRY, EMPTY, FARM, GARDEN, GEODE, GRAVITY, GREENHOUSE, HARMONY, HUTCH, IGLOO, IISTUBIL, KITCHEN, LAZARUS, LAVA, LIBRARY, MANGROVE, MAZE, MUSHROOM, NETHER, PASSAGE, PEN, POOL, RAIL, RENDERER, SHELL, SMELTER, STABLE, STALL, SURGERY, TRENZALORE, VAULT, VILLAGE, WOOD, WORKSHOP, ZERO -> {
+            case ALLAY, ANTIGRAVITY, APIARY, AQUARIUM, ARBORETUM, BAKER, BAMBOO, BEDROOM, BIRDCAGE, CHEMISTRY, EMPTY,
+                    FARM, GARDEN, GEODE, GRAVITY, GREENHOUSE, HARMONY, HUTCH, IGLOO, IISTUBIL, KITCHEN, LAZARUS, LAVA,
+                    LIBRARY, MANGROVE, MAZE, MUSHROOM, NETHER, PASSAGE, PEN, POOL, RAIL, RENDERER, SHELL, SMELTER, STABLE,
+                    STALL, SURGERY, TRENZALORE, VAULT, VILLAGE, WOOD, WORKSHOP, ZERO -> {
                 return true;
             }
             default -> {
@@ -662,7 +689,8 @@ public enum TARDISInfoMenu {
 
     public boolean isPlanet() {
         switch (this) {
-            case SKARO, SILURIA, GALLIFREY, RIFT_CIRCUIT, RIFT_MANIPULATOR, RUST_BUCKET, RUST_PLAGUE_SWORD, ACID_BUCKET, ACID_BATTERY -> {
+            case SKARO, SILURIA, GALLIFREY, RIFT_CIRCUIT, RIFT_MANIPULATOR, RUST_BUCKET,
+                    RUST_PLAGUE_SWORD, ACID_BUCKET, ACID_BATTERY -> {
                 return true;
             }
             default -> {
@@ -684,7 +712,9 @@ public enum TARDISInfoMenu {
 
     public boolean isMonster() {
         switch (this) {
-            case CYBERMAN, DALEK, DALEK_SEC, DAVROS, EMPTY_CHILD, HATH, HEADLESS_MONK, ICE_WARRIOR, JUDOON, K9, MIRE, OOD, RACNOSS, SEA_DEVIL, SILENT, SILURIAN, SLITHEEN, SONTARAN, STRAX, TOCLAFANE, VASHTA_NERADA, WEEPING_ANGEL, ZYGON -> {
+            case CYBERMAN, DALEK, DALEK_SEC, DAVROS, EMPTY_CHILD, HATH, HEADLESS_MONK, ICE_WARRIOR,
+                    JUDOON, K9, MIRE, OOD, RACNOSS, SEA_DEVIL, SILENT, SILURIAN, SLITHEEN, SONTARAN,
+                    STRAX, TOCLAFANE, VASHTA_NERADA, WEEPING_ANGEL, ZYGON -> {
                 return true;
             }
             default -> {

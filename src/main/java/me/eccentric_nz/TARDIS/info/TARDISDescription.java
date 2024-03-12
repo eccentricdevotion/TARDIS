@@ -276,7 +276,7 @@ public enum TARDISDescription {
             USAGE: Right-click the block to update
             UPDATING: /tardis update EPS
             BLOCK: any"""),
-    CONSOLE_FARM("""
+    UPDATEABLE_FARM("""
             INFO: Updates the block that animals spawn relative to when entering the TARDIS.
             USAGE: Right-click the block to update.
             UPDATING: /tardis update farm
@@ -312,7 +312,7 @@ public enum TARDISDescription {
             USAGE: Right-click.
             UPDATING: /tardis update toggle_wool
             BLOCK: LEVER, STONE_BUTTON or WOOD_BUTTON"""),
-    CONSOLE_RAIL("""
+    UPDATEABLE_RAIL("""
             INFO: Updates the block that storage minecarts spawn on when entering the TARDIS.
             USAGE: Attach a minetrack to the front of the TARDIS and have a Minecart with Chest run into the TARDIS door.
             UPDATING: /tardis update rail
@@ -327,15 +327,75 @@ public enum TARDISDescription {
             USAGE: Right-click.
             UPDATING: /tardis update scanner
             BLOCK: LEVER, STONE_BUTTON or WOOD_BUTTON"""),
-    CONSOLE_STABLE("""
+    UPDATEABLE_STABLE("""
             INFO: Updates the block that horses spawn on when entering the TARDIS.
             USAGE: Right-click the block that horses are to spawn on.
             UPDATING: /tardis update stable
             BLOCK: any"""),
-    CONSOLE_STALL("""
+    UPDATEABLE_STALL("""
             INFO: Updates the block that llamas spawn on when entering the TARDIS.
             USAGE: Right-click the block that llamas are to spawn on.
             UPDATING: /tardis update stall
+            BLOCK: any"""),
+    UPDATEABLE_ALLAY("""
+            INFO: Updates the block that allays spawn on when entering the TARDIS.
+            USAGE: Right-click the block that allays are to spawn on.
+            UPDATING: /tardis update allay
+            BLOCK: any"""),
+    UPDATEABLE_BAMBOO("""
+            INFO: Updates the block that pandas spawn on when entering the TARDIS.
+            USAGE: Right-click the block that pandas are to spawn on.
+            UPDATING: /tardis update bamboo
+            BLOCK: any"""),
+    UPDATEABLE_BIRDCAGE("""
+            INFO: Updates the block that parrots spawn on when entering the TARDIS.
+            USAGE: Right-click the block that parrots are to spawn on.
+            UPDATING: /tardis update birdcage
+            BLOCK: any"""),
+    UPDATEABLE_FUEL("""
+            INFO: Updates the chest that fuel items are dropped into in the Smelter room.
+            USAGE: Right-click the chest that fuel items go in.
+            UPDATING: /tardis update fuel
+            BLOCK: any"""),
+    UPDATEABLE_HUTCH("""
+            INFO: Updates the block that rabbits spawn on when entering the TARDIS.
+            USAGE: Right-click the block that rabbits are to spawn on.
+            UPDATING: /tardis update hutch
+            BLOCK: any"""),
+    UPDATEABLE_IGLOO("""
+            INFO: Updates the block that polar bears spawn on when entering the TARDIS.
+            USAGE: Right-click the block that polar bears are to spawn on.
+            UPDATING: /tardis update igloo
+            BLOCK: any"""),
+    UPDATEABLE_IISTUBIL("""
+            INFO: Updates the block that camels spawn on when entering the TARDIS.
+            USAGE: Right-click the block that camels are to spawn on.
+            UPDATING: /tardis update iistabul
+            BLOCK: any"""),
+    UPDATEABLE_LAVA("""
+            INFO: Updates the block that striders spawn on when entering the TARDIS.
+            USAGE: Right-click the block that striders are to spawn on.
+            UPDATING: /tardis update lava
+            BLOCK: any"""),
+    UPDATEABLE_PEN("""
+            INFO: Updates the block that sniffers spawn on when entering the TARDIS.
+            USAGE: Right-click the block that sniffers are to spawn on.
+            UPDATING: /tardis update pen
+            BLOCK: any"""),
+    UPDATEABLE_SMELT("""
+            INFO: Updates the chest that smeltable items are dropped into in the Smelter room.
+            USAGE: Right-click the chest that smeltable items go in.
+            UPDATING: /tardis update smelt
+            BLOCK: CHEST"""),
+    UPDATEABLE_VAULT("""
+            INFO: Updates the drop chest that distributes items into the Vault room.
+            USAGE: Right-click the chest to act as the drop chest.
+            UPDATING: /tardis update vault
+            BLOCK: CHEST, TRAPPED_CHEST"""),
+    UPDATEABLE_VILLAGE("""
+            INFO: Updates the block that villagers spawn on when entering the TARDIS.
+            USAGE: Right-click the block that villagers are to spawn on.
+            UPDATING: /tardis update village
             BLOCK: any"""),
     STORAGE("""
             The Disk Storage Container lets you store Storage Disks and Circuits.

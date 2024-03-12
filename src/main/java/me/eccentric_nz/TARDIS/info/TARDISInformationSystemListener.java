@@ -167,17 +167,8 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 if (chat.equalsIgnoreCase("o")) {
                     new TISInfo(plugin).show(p, TARDISInfoMenu.CONDENSER);
                 }
-                if (chat.equalsIgnoreCase("p")) {
-                    new TISInfo(plugin).show(p, TARDISInfoMenu.CREEPER);
-                }
                 if (chat.equalsIgnoreCase("D")) {
                     new TISInfo(plugin).show(p, TARDISInfoMenu.DOOR);
-                }
-                if (chat.equalsIgnoreCase("P")) {
-                    new TISInfo(plugin).show(p, TARDISInfoMenu.EPS);
-                }
-                if (chat.equalsIgnoreCase("m")) {
-                    new TISInfo(plugin).show(p, TARDISInfoMenu.CONSOLE_FARM);
                 }
                 if (chat.equalsIgnoreCase("k")) {
                     new TISInfo(plugin).show(p, TARDISInfoMenu.HANDBRAKE);
@@ -197,20 +188,11 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 if (chat.equalsIgnoreCase("L")) {
                     new TISInfo(plugin).show(p, TARDISInfoMenu.LIGHT);
                 }
-                if (chat.equalsIgnoreCase("R")) {
-                    new TISInfo(plugin).show(p, TARDISInfoMenu.CONSOLE_RAIL);
-                }
                 if (chat.equalsIgnoreCase("S")) {
                     new TISInfo(plugin).show(p, TARDISInfoMenu.SAVE_SIGN);
                 }
                 if (chat.equalsIgnoreCase("c")) {
                     new TISInfo(plugin).show(p, TARDISInfoMenu.SCANNER);
-                }
-                if (chat.equalsIgnoreCase("b")) {
-                    new TISInfo(plugin).show(p, TARDISInfoMenu.CONSOLE_STABLE);
-                }
-                if (chat.equalsIgnoreCase("Ll")) {
-                    new TISInfo(plugin).show(p, TARDISInfoMenu.CONSOLE_STALL);
                 }
                 if (chat.equalsIgnoreCase("T")) {
                     new TISInfo(plugin).show(p, TARDISInfoMenu.TERMINAL);
@@ -269,6 +251,63 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                     new TISInfo(plugin).show(p, TARDISInfoMenu.RELATIVITY_DIFFERENTIATOR);
                     exit(p);
                 }
+            }
+            case UPDATEABLE_BLOCKS -> {
+                if (chat.equalsIgnoreCase("C")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.CREEPER);
+                }
+                if (chat.equalsIgnoreCase("P")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.EPS);
+                }
+                if (chat.equalsIgnoreCase("m")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.UPDATEABLE_FARM);
+                }
+                if (chat.equalsIgnoreCase("R")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.UPDATEABLE_RAIL);
+                }
+                if (chat.equalsIgnoreCase("b")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.UPDATEABLE_STABLE);
+                }
+                if (chat.equalsIgnoreCase("Ll")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.UPDATEABLE_STALL);
+                }
+                if (chat.equalsIgnoreCase("y")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.UPDATEABLE_ALLAY);
+                }
+                if (chat.equalsIgnoreCase("B")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.UPDATEABLE_BAMBOO);
+                }
+                if (chat.equalsIgnoreCase("g")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.UPDATEABLE_BIRDCAGE);
+                }
+                if (chat.equalsIgnoreCase("u")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.UPDATEABLE_FUEL);
+                }
+                if (chat.equalsIgnoreCase("H")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.UPDATEABLE_HUTCH);
+                }
+                if (chat.equalsIgnoreCase("I")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.UPDATEABLE_IGLOO);
+                }
+                if (chat.equalsIgnoreCase("Ii")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.UPDATEABLE_IISTUBIL);
+                }
+                if (chat.equalsIgnoreCase("v")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.UPDATEABLE_LAVA);
+                }
+                if (chat.equalsIgnoreCase("n")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.UPDATEABLE_PEN);
+                }
+                if (chat.equalsIgnoreCase("S")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.UPDATEABLE_SMELT);
+                }
+                if (chat.equalsIgnoreCase("Va")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.UPDATEABLE_VAULT);
+                }
+                if (chat.equalsIgnoreCase("Vi")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.UPDATEABLE_VILLAGE);
+                }
+                exit(p);
             }
             case ITEMS -> {
                 if (chat.equalsIgnoreCase("A")) {
@@ -429,6 +468,9 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 }
                 if (chat.equalsIgnoreCase("k")) {
                     processKey(p, TARDISInfoMenu.CONSOLE_BLOCKS_3);
+                }
+                if (chat.equalsIgnoreCase("U")) {
+                    processKey(p, TARDISInfoMenu.UPDATEABLE_BLOCKS);
                 }
                 if (chat.equalsIgnoreCase("S")) {
                     processKey(p, TARDISInfoMenu.TARDIS_CONTROLS);
