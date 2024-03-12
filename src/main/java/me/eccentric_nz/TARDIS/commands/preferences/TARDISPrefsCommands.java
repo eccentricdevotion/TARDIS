@@ -56,7 +56,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
             "eps", "eps_message",
             "farm", "flight", "floor", "forcefield",
             "hads", "hads_type", "hum",
-            "isomorphic",
+            "info", "isomorphic",
             "key", "key_menu",
             "junk",
             "language", "lights", "lock_containers",

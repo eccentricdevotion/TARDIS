@@ -110,8 +110,9 @@ public class TARDISPrefsMenuInventory {
             values.add(!plugin.getWorldGuardUtils().queryContainers(world, plugin.getServer().getPlayer(uuid).getName()));
         } else {
             values.add(false);
+            // make a stack
         }
-        // make a stack
+        values.add(rsp.isInfoOn());
         ItemStack[] stack = new ItemStack[36];
         for (GUIPlayerPreferences pref : GUIPlayerPreferences.values()) {
             if (pref.getMaterial() == Material.REPEATER) {

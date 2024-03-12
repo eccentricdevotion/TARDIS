@@ -78,6 +78,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         lookup.put("Exterior Rendering Room", "renderer_on");
         lookup.put("Hostile Action Displacement System", "hads_on");
         lookup.put("Interior SFX", "sfx_on");
+        lookup.put("Info GUI", "info_on");
         lookup.put("Minecart Sounds", "minecart_on");
         lookup.put("Mob Farming", "farm_on");
         lookup.put("Preset Sign", "sign_on");

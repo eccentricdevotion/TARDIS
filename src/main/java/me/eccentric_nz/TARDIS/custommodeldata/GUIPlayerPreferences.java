@@ -29,7 +29,7 @@ public enum GUIPlayerPreferences {
     BEACON(23, 3, Material.REPEATER),
     CLOSE_GUI(50, 4, Material.REPEATER),
     DO_NOT_DISTURB(24, 5, Material.REPEATER),
-    dynamic_lamps(54, 7, Material.REPEATER),
+    DYNAMIC_LAMPS(54, 7, Material.REPEATER),
     EMERGENCY_PROGRAMME_ONE(25, 6, Material.REPEATER),
     HOSTILE_ACTION_DISPLACEMENT_SYSTEM(26, 8, Material.REPEATER),
     HADS_TYPE(27, 9, Material.REPEATER),
@@ -48,13 +48,14 @@ public enum GUIPlayerPreferences {
     MINECART_SOUNDS(45, 23, Material.REPEATER),
     EASY_DIFFICULTY(46, 24, Material.REPEATER),
     LOCK_CONTAINERS(49, 25, Material.REPEATER),
-    FLIGHT_MODE(1, 26, Material.ELYTRA),
-    INTERIOR_HUM_SOUND(58, 27, Material.BOWL),
-    HANDBRAKE(1, 28, Material.LEVER),
-    TARDIS_MAP(3, 29, Material.MAP),
-    AUTONOMOUS_PREFERENCES(145, 30, Material.BOWL),
-    FARMING_PREFERENCES(155, 31, Material.BOWL),
-    SONIC_CONFIGURATOR(135, 32, Material.BOWL),
+    INFO_GUI(56, 26, Material.REPEATER),
+    FLIGHT_MODE(1, 27, Material.ELYTRA),
+    INTERIOR_HUM_SOUND(58, 28, Material.BOWL),
+    HANDBRAKE(1, 29, Material.LEVER),
+    TARDIS_MAP(3, 30, Material.MAP),
+    AUTONOMOUS_PREFERENCES(145, 31, Material.BOWL),
+    FARMING_PREFERENCES(155, 32, Material.BOWL),
+    SONIC_CONFIGURATOR(135, 33, Material.BOWL),
     ADMIN_MENU(1, 35, Material.NETHER_STAR);
 
     private final int customModelData;
@@ -92,7 +93,7 @@ public enum GUIPlayerPreferences {
         } else if (s.endsWith("SFX")) {
             return "Interior SFX";
         } else if (s.endsWith("GUI")) {
-            return "Close GUI";
+            return s.startsWith("INFO") ? "Info GUI" : "Close GUI";
         } else {
             return TARDISStringUtils.capitalise(s);
         }
