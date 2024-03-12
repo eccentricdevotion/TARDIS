@@ -17,7 +17,8 @@ public enum TISCategory {
     FOOD(Material.MINER_POTTERY_SHERD, "The Doctor's~favourite foods"),
     ACCESSORIES(Material.SKULL_POTTERY_SHERD, "Functional and~cosmetic items"),
     TIME_TRAVEL(Material.BURN_POTTERY_SHERD, "How to fly~the TARDIS"),
-    PLANETS(Material.DANGER_POTTERY_SHERD, "Visit planets from~the Whoniverse");
+    PLANETS(Material.DANGER_POTTERY_SHERD, "Visit planets from~the Whoniverse"),
+    MONSTERS(Material.DANGER_POTTERY_SHERD, "Monsters from~the Whoniverse");
 
     private final String name;
     private final Material icon;

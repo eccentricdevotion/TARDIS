@@ -67,6 +67,7 @@ public enum TARDISDescription {
     GALLIFREY_INFO("Gallifrey is a barren rust-coloured landscape, with brown lakes and grey clouds. Structures are plentiful and lootable, and look out for a good trade!"),
     GALLIFREY_MONSTERS("The native inhabitants of Gallifrey are Time Lords (who like to trade)."),
     SONIC_GENERATOR_INFO("The Sonic Generator allows players to configure and produce a new screwdriver from the console."),
+    SONIC_DOCK_INFO("The Sonic Dock allows players to charge their Sonic Screwdriver and load the last scanned location or player as the TARDIS's next travel destination."),
     DIAMOND_DISRUPTOR_CIRCUIT_INFO("The Diamond Disruptor Circuit is used to upgrade the Sonic Screwdriver."),
     EMERALD_ENVIRONMENT_CIRCUIT_INFO("The Emerald Environment Circuit is used to upgrade the Sonic Screwdriver."),
     SERVER_ADMIN_CIRCUIT_INFO("The Server Admin Circuit is used to upgrade the Sonic Screwdriver."),
@@ -100,6 +101,52 @@ public enum TARDISDescription {
     JAMMY_DODGER_INFO("The eleventh Doctor fooled the Daleks into thinking a Jammy Dodger was a self-destruct button for the TARDIS."),
     JELLY_BABY_INFO("The fourth Doctor's favourite. Offer them to strangers in order to defuse tense situations."),
     FOB_WATCH_INFO("The Tenth Doctor used a Chameleon Arch to change himself into the human John Smith to elude the Family of Blood. You can craft a fob watch to change your self from a Time Lord in a regular player (a Steve - albeit with a random name)."),
+    EXTERIOR_LAMP_LEVEL_SWITCH_INFO("Allows you to set the light level for the TARDIS's exterior lamp. Levels are 2, 4, 6, and 8. The Chameleon Preset must be using an armour stand model e.g. a coloured Police Box."),
+    INTERIOR_LIGHT_LEVEL_SWITCH_INFO("Allows you to set the light level of the custom lights inside the TARDIS."),
+    CHARGING_SENSOR("""
+            INFO: The Charging Sensor changes to a Redstone block when the TARDIS is charging.
+            USAGE: Automatic.
+            UPDATING: /tardis update charging-sensor
+            BLOCK: REDSTONE_BLOCK"""),
+    FLIGHT_SENSOR("""
+            INFO: The Flight Sensor changes to a Redstone block when the TARDIS is in flight.
+            USAGE: Automatic.
+            UPDATING: /tardis update flight-sensor
+            BLOCK: REDSTONE_BLOCK"""),
+    HANDBRAKE_SENSOR("""
+            INFO: The Handbrake Sensor changes to a Redstone block when the TARDIS handbrake is released.
+            USAGE: Automatic.
+            UPDATING: /tardis update handbrake-sensor
+            BLOCK: REDSTONE_BLOCK"""),
+    MALFUNCTION_SENSOR("""
+            INFO: The Malfunction Sensor changes to a Redstone block when the TARDIS malfunctions.
+            USAGE: Automatic.
+            UPDATING: /tardis update malfunction-sensor
+            BLOCK: REDSTONE_BLOCK"""),
+    POWER_SENSOR("""
+            INFO: The Power Sensor changes to a Redstone block when the TARDIS is powered on.
+            USAGE: Automatic.
+            UPDATING: /tardis update power-sensor
+            BLOCK: REDSTONE_BLOCK"""),
+    TARDIS_MONITOR_INFO("""
+            INFO: The TARDIS Monitor allows you to view the exterior of the TARDIS.
+            USAGE: Right-click the levers on the Monitor Frame to update the exterior view.
+            UPDATING: Place a monitor in an item frame and use /tardis update monitor
+            BLOCK: ITEM_FRAME with placed TARDIS Monitor item"""),
+    MONITOR_FRAME_INFO("""
+            INFO: The Monitor Frame is part of the TARDIS Monitor setup and contains the control levers.
+            USAGE: Right-click the levers to update the exterior view.
+            UPDATING: Place a monitor frame in an item frame and use /tardis update monitor
+            BLOCK: ITEM_FRAME with placed monitor frame item"""),
+    CAMERA("You can view the TARDIS exterior from an armour stand Chameleon preset by sneaking and clicking the TARDIS Monitor. Press the dismount ket (default: shift) to return to the TARDIS interior."),
+    RELATIVITY_DIFFERENTIATOR("""
+            INFO: The Relativity Differentiator is a comparator that controls whether the TARDIS automatically enters exterior flight mode when the handbrake is released.
+            USAGE: Set the comparator to pp and powered ("subtraction mode") to engage exterior flying mode.
+            UPDATING: /tardis update relativity-differentiator
+            BLOCK: COMPARATOR"""),
+    HANDLES_INFO("You can craft and place Handles - a Cyberman head from the Maldovarium Market - so that he can interact with you and the TARDIS."),
+    VORTEX_MANIPULATOR_INFO("Travel like Jack Harkness or River Song from Doctor Who! Have the Vortex Manipulator in your hand, put in your desired location, and GO!"),
+    SONIC_BLASTER_INFO("A sonic blaster, or squareness gun, is a type of weapon available in the 51st century."),
     BUDGET("Small, but cosy - good if you don't like walking too far to the console :)"),
     BIGGER("Big enough to swing a cat - console design by killeratnight & L0rd Rahl."),
     DELUXE("Luxury in a box - console design by killeratnight & L0rd Rahl."),
@@ -328,7 +375,29 @@ public enum TARDISDescription {
             USAGE: Right-click the repeater to set the ticks.
             UPDATING: /tardis update z-repeater
             BLOCK: REPEATER"""),
-    ;
+    CYBERMAN("Cybermen will upgrade villagers and players when they have killed them (a new Cyberman) spawns in their place."),
+    DALEK("Daleks come in different colours, but mostly spawn in their typical bronze colour. Exterminate!"),
+    DALEK_SEC("Dalek Sec just looks fabulous! He’s passive unless you annoy him."),
+    DAVROS("Davros doesn’t do much yet, but probably best not to get in his way."),
+    EMPTY_CHILD("If you are killed by an Empty Child you get a gas mask applied to your head when you respawn that you can’t remove for 30 seconds."),
+    HATH("Hath don’t do much yet, but they look pretty cool."),
+    HEADLESS_MONK("Headless Monks fire energy blasts from their hands as well as channelling that energy into their swords."),
+    ICE_WARRIOR("Ice Warriors are really angry."),
+    JUDOON("Judoon are the police force of the Whoniverse. Left-click a Judoon to claim it as your own."),
+    K9("You can either craft a K-9 or tame a wolf to get a K-9! Clicking a K-9 will toggle whether he will follow you or stay put."),
+    MIRE("The Mire will distill you down to your essential nectar."),
+    OOD("Ood spawn randomly around villagers. Left-click an Ood to claim it as your own."),
+    RACNOSS("Racnoss spawn randomly in the Nether."),
+    SEA_DEVIL("Found in the sea and on land, best if they don’t find you!"),
+    SILENT("Silent spawn anywhere. Beware their deadly energy discharges!"),
+    SILURIAN("Only spawn underground in caves. Watch out for their Silurian guns!"),
+    SLITHEEN("A nasty flatulent surprise, best avoided if you want to survive."),
+    SONTARAN("Sontarans will try to kill you (as any good Sontaran should). If you manage to right-click a Sontaran with a Weakness Potion before he kills you, he will transform into Strax.n"),
+    STRAX("If you right-click Strax he’ll talk to you, and if you right-click him with an empty bucket, you’ll be able to milk him."),
+    TOCLAFANE("Toclafane fly around passively until you hit them, then watch out as they get angry with you."),
+    VASHTA_NERADA("Vashta Nerada have a random chance of spawning when a bookshelf is broken."),
+    WEEPING_ANGEL("Weeping Angels can only be killed with the configured weapon - by default a DIAMOND_PICKAXE. You can freeze them in place by looking at them and quickly pressing the sneak key."),
+    ZYGON("Zygons don’t do much yet (except try to kill you), but they look pretty cool.");
     private final String desc;
 
     TARDISDescription(String desc) {

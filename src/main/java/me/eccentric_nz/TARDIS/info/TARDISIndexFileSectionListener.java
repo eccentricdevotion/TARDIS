@@ -49,7 +49,7 @@ public class TARDISIndexFileSectionListener extends TARDISMenuListener {
                 if (category == TISCategory.ROOMS) {
                     new TISRoomInfo(plugin).show(p, tim);
                     close(p);
-                } else if (category.isFirstLevel()) {
+                } else if ((category.isFirstLevel() && !hasRecipe(tim)) || (category == TISCategory.MONSTERS && tim != TARDISInfoMenu.K9)) {
                     new TISInfo(plugin).show(p, tim);
                     close(p);
                 } else {
@@ -61,6 +61,17 @@ public class TARDISIndexFileSectionListener extends TARDISMenuListener {
                     }, 2L);
                 }
             } catch (IllegalArgumentException ignored) {
+            }
+        }
+    }
+
+    private boolean hasRecipe(TARDISInfoMenu tim) {
+        switch (tim) {
+            case EXTERIOR_LAMP_LEVEL_SWITCH, INTERIOR_LIGHT_LEVEL_SWITCH, TARDIS_MONITOR, MONITOR_FRAME -> {
+                return true;
+            }
+            default -> {
+                return false;
             }
         }
     }

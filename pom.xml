@@ -29,7 +29,7 @@
             <url>https://repo.opencollab.dev/maven-snapshots/</url>
         </repository>
         <repository>
-            <id>worldedit_worldguard</id>
+            <id>worldguard</id>
             <url>https://maven.enginehub.org/repo/</url>
         </repository>
         <repository>

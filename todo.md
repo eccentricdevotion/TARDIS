@@ -4,16 +4,9 @@
 
 1. Fix dem bugs
 2. Add new items to the TARDIS information system
-   - handles
-   - light level switches
-   - relativity differentiator
-   - monitor
-   - camera
    - flying
-   - sonic dock / charging
-   - vortex manipulator
-   - weeping angels / monsters
-   - sonic blaster / battery / landing pad
+   - camera
+   - malfunctions
 
 ## Next version `5.5.0`
 

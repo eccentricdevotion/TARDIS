@@ -48,6 +48,7 @@ public class TARDISInfoMenuButton {
         plugin.getMessenger().sendInfo(player, "> Rooms ", "2", "");
         plugin.getMessenger().sendInfo(player, "> ", "F", "ood & Accessories");
         plugin.getMessenger().sendInfo(player, "> ", "P", "lanets");
+        plugin.getMessenger().sendInfo(player, "> Mo", "n", "sters");
         plugin.getMessenger().sendInfo(player, "> ", "E", "xit");
     }
 }

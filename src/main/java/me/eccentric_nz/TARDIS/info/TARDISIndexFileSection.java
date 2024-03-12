@@ -61,7 +61,10 @@ public class TARDISIndexFileSection {
             } else if (category == TISCategory.UPDATEABLE_BLOCKS && tim.isUpdateable()) {
                 stack[i] = makeButton(tim);
                 i++;
-            }
+            } else if (category == TISCategory.MONSTERS && tim.isMonster()) {
+            stack[i] = makeButton(tim);
+            i++;
+        }
         }
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);

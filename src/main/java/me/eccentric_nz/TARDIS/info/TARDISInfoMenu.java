@@ -95,6 +95,15 @@ public enum TARDISInfoMenu {
     SONIC_GENERATOR("TIS|Items|Sonic Generator", "ITEMS", "G"),
     SONIC_GENERATOR_INFO("TIS|Items|Sonic Generator|Info", "SONIC_GENERATOR", "I"),
     SONIC_GENERATOR_RECIPE("TIS|Items|Sonic Generator|Recipe", "SONIC_GENERATOR", "R"),
+    HANDLES("TIS|Items|Handles", "ITEMS", "H"),
+    HANDLES_INFO("TIS|Items|Handles|Info", "HANDLES", "I"),
+    HANDLES_RECIPE("TIS|Items|Handles|Recipe", "HANDLES", "R"),
+    VORTEX_MANIPULATOR("TIS|Items|Vortex Manipulator", "ITEMS", "V"),
+    VORTEX_MANIPULATOR_INFO("TIS|Items|Vortex Manipulator|Info", "VORTEX_MANIPULATOR", "I"),
+    VORTEX_MANIPULATOR_RECIPE("TIS|Items|Vortex Manipulator|Recipe", "VORTEX_MANIPULATOR", "R"),
+    SONIC_BLASTER("TIS|Items|Sonic Blaster", "ITEMS", "o"),
+    SONIC_BLASTER_INFO("TIS|Items|Sonic Blaster|Info", "SONIC_BLASTER", "I"),
+    SONIC_BLASTER_RECIPE("TIS|Items|Sonic Blaster|Recipe", "SONIC_BLASTER", "R"),
     COMPONENTS("TIS|Components", "TIS", "C"),
     ARS_CIRCUIT("TIS|Components|Architectural Reconfiguration System (ARS) Circuit", "COMPONENTS", "h"),
     ARS_CIRCUIT_INFO("TIS|Components|Architectural Reconfiguration System (ARS) Circuit|Info", "TARDIS_ARS_CIRCUIT", "I"),
@@ -190,6 +199,7 @@ public enum TARDISInfoMenu {
     SAVE_STORAGE_DISK("TIS|TARDIS Disks|Save Storage Disk", "DISKS", "S"),
     SAVE_STORAGE_DISK_INFO("TIS|TARDIS Disks|Save Storage Disk|Info", "SAVE_STORAGE_DISK", "I"),
     SAVE_STORAGE_DISK_RECIPE("TIS|TARDIS Disks|Save Storage Disk|Recipe", "SAVE_STORAGE_DISK", "R"),
+    CAMERA("TIS|Manual|TARDIS Controls|Camera", "TARDIS_CONTROLS", "C"),
     TYPES("TIS|TARDIS Types", "TIS", "T"),
     ARS("TIS|TARDIS Types|ARS", "TYPES", "A"),
     BIGGER("TIS|TARDIS Types|Bigger", "TYPES", "i"),
@@ -340,6 +350,7 @@ public enum TARDISInfoMenu {
     TIME_TRAVEL("TIS|Manual|Time Travel", "MANUAL", "T"),
     CONSOLE_BLOCKS("TIS|Manual|Console Blocks", "MANUAL", "C"),
     CONSOLE_BLOCKS_2("TIS|Manual|Console Blocks 2", "MANUAL", "o"),
+    CONSOLE_BLOCKS_3("TIS|Manual|Console Blocks 3", "MANUAL", "k"),
     CONSOLE_ARS("TIS|Manual|Console Blocks|ARS", "CONSOLE_BLOCKS", "A"),
     ADVANCED("TIS|Manual|Console Blocks|Advanced Console", "CONSOLE_BLOCKS", "v"),
     STORAGE("TIS|Manual|Console Blocks|Disk Storage", "CONSOLE_BLOCKS", "S"),
@@ -368,6 +379,24 @@ public enum TARDISInfoMenu {
     X_REPEATER("TIS|Manual|Console Blocks 2|X Repeater", "CONSOLE_BLOCKS_2", "X"),
     Y_REPEATER("TIS|Manual|Console Blocks 2|Y Repeater", "CONSOLE_BLOCKS_2", "Y"),
     Z_REPEATER("TIS|Manual|Console Blocks 2|Z Repeater", "CONSOLE_BLOCKS_2", "Z"),
+    EXTERIOR_LAMP_LEVEL_SWITCH("TIS|Manual|Console Blocks 3|Exterior Lamp Level Switch", "CONSOLE_BLOCKS_3", "x"),
+    EXTERIOR_LAMP_LEVEL_SWITCH_INFO("TIS|Manual|Console Blocks 3|Exterior Lamp Level Switch|Info", "EXTERIOR_LAMP_LEVEL_SWITCH", "I"),
+    EXTERIOR_LAMP_LEVEL_SWITCH_RECIPE("TIS|Manual|Console Blocks 3|Exterior Lamp Level Switch|Recipe", "EXTERIOR_LAMP_LEVEL_SWITCH", "R"),
+    INTERIOR_LIGHT_LEVEL_SWITCH("TIS|Manual|Console Blocks 3|Interior Light Level Switch", "CONSOLE_BLOCKS_3", "I"),
+    INTERIOR_LIGHT_LEVEL_SWITCH_INFO("TIS|Manual|Console Blocks 3|Interior Light Level Switch|Info", "INTERIOR_LIGHT_LEVEL_SWITCH", "I"),
+    INTERIOR_LIGHT_LEVEL_SWITCH_RECIPE("TIS|Manual|Console Blocks 3|Interior Light Level Switch|Recipe", "INTERIOR_LIGHT_LEVEL_SWITCH", "R"),
+    CHARGING_SENSOR("TIS|Manual|Console Blocks 3|Charging Sensor", "CONSOLE_BLOCKS_3", "C"),
+    FLIGHT_SENSOR("TIS|Manual|Console Blocks 3|Flight Sensor", "CONSOLE_BLOCKS_3", "l"),
+    HANDBRAKE_SENSOR("TIS|Manual|Console Blocks 3|Handbrake Sensor", "CONSOLE_BLOCKS_3", "H"),
+    MALFUNCTION_SENSOR("TIS|Manual|Console Blocks 3|Malfunction Sensor", "CONSOLE_BLOCKS_3", "M"),
+    POWER_SENSOR("TIS|Manual|Console Blocks 3|Power Sensor", "CONSOLE_BLOCKS_3", "P"),
+    TARDIS_MONITOR("TIS|Manual|Console Blocks 3|Monitor", "CONSOLE_BLOCKS_3", "o"),
+    TARDIS_MONITOR_INFO("TIS|Manual|Console Blocks 3|Monitor|Info", "TARDIS_MONITOR", "I"),
+    TARDIS_MONITOR_RECIPE("TIS|Manual|Console Blocks 3|Monitor|Recipe", "TARDIS_MONITOR", "R"),
+    MONITOR_FRAME("TIS|Manual|Console Blocks 3|Monitor Frame", "CONSOLE_BLOCKS_3", "F"),
+    MONITOR_FRAME_INFO("TIS|Manual|Console Blocks 3|Monitor Frame|Info", "MONITOR_FRAME", "I"),
+    MONITOR_FRAME_RECIPE("TIS|Manual|Console Blocks 3|Monitor Frame|Recipe", "MONITOR_FRAME", "R"),
+    RELATIVITY_DIFFERENTIATOR("TIS|Manual|Console Blocks 3|Relativity Differentiator", "CONSOLE_BLOCKS_3", "R"),
     TARDIS_CONTROLS("TIS|Manual|TARDIS Controls", "MANUAL", "S"),
     MALFUNCTIONS("TIS|Manual|TARDIS Controls|Malfunctions", "TARDIS_CONTROLS", "M"),
     ALT_CONTROLS("TIS|Manual|TARDIS Controls|Alternative Controls", "TARDIS_CONTROLS", "l"),
@@ -424,7 +453,33 @@ public enum TARDISInfoMenu {
     ACID_BUCKET_RECIPE("TIS|Planets|Skaro|Items|Acid Bucket|Recipe", "ACID_BUCKET", "R"),
     ACID_BATTERY("TIS|Planets|Skaro|Items|Acid Battery", "SKARO_ITEMS", "c"),
     ACID_BATTERY_INFO("TIS|Planets|Skaro|Items|Acid Battery|Info", "ACID_BATTERY", "I"),
-    ACID_BATTERY_RECIPE("TIS|Planets|Skaro|Items|Acid Battery|Recipe", "ACID_BATTERY", "R");
+    ACID_BATTERY_RECIPE("TIS|Planets|Skaro|Items|Acid Battery|Recipe", "ACID_BATTERY", "R"),
+    MONSTERS("TIS|Monsters", "MONSTERS", "n"),
+    CYBERMAN("TIS|Monsters|Cyberman", "MONSTERS", "C"),
+    DALEK("TIS|Monsters|Dalek", "MONSTERS", "D"),
+    DALEK_SEC("TIS|Monsters|Dalek Sec", "MONSTERS", "a"),
+    DAVROS("TIS|Monsters|Davros", "MONSTERS", "av"),
+    EMPTY_CHILD("TIS|Monsters|Empty Child", "MONSTERS", "p"),
+    HATH("TIS|Monsters|Hath", "MONSTERS", "H"),
+    HEADLESS_MONK("TIS|Monsters|Headless Monk", "MONSTERS", "k"),
+    ICE_WARRIOR("TIS|Monsters|Ice Warrior", "MONSTERS", "I"),
+    JUDOON("TIS|Monsters|Judoon", "MONSTERS", "J"),
+    K9("TIS|Monsters|K9", "MONSTERS", "K"),
+    K9_INFO("TIS|Monsters|K9|Info", "K9", "I"),
+    K9_RECIPE("TIS|Monsters|K9|Recipe", "K9", "R"),
+    MIRE("TIS|Monsters|Mire", "MONSTERS", "M"),
+    OOD("TIS|Monsters|Ood", "MONSTERS", "O"),
+    RACNOSS("TIS|Monsters|Racnoss", "MONSTERS", "R"),
+    SEA_DEVIL("TIS|Monsters|Sea Devil", "MONSTERS", "S"),
+    SILENT("TIS|Monsters|Silent", "MONSTERS", "l"),
+    SILURIAN("TIS|Monsters|Silurian", "MONSTERS", "n"),
+    SLITHEEN("TIS|Monsters|Slitheen", "MONSTERS", "li"),
+    SONTARAN("TIS|Monsters|Sontaran", "MONSTERS", "on"),
+    STRAX("TIS|Monsters|Strax", "MONSTERS", "x"),
+    TOCLAFANE("TIS|Monsters|Toclafane", "MONSTERS", "f"),
+    VASHTA_NERADA("TIS|Monsters|Vashta Nerada", "MONSTERS", "V"),
+    WEEPING_ANGEL("TIS|Monsters|Weeping Angel", "MONSTERS", "W"),
+    ZYGON("TIS|Monsters|Zygon", "MONSTERS", "Z");
 
     private final String name;
     private final String parent;
@@ -482,7 +537,11 @@ public enum TARDISInfoMenu {
 
     public boolean isConsoleBlock() {
         switch (this) {
-            case ARS, CONSOLE_ARS, ADVANCED, STORAGE, ARTRON, BACKDOOR, BUTTON, CHAMELEON, CONDENSER, DOOR, HANDBRAKE, INFO, KEYBOARD, TOGGLE, LIGHT, SAVE_SIGN, SCANNER, TERMINAL, TEMPORAL, WORLD_REPEATER, X_REPEATER, Y_REPEATER, Z_REPEATER -> {
+            case ARS, CONSOLE_ARS, ADVANCED, STORAGE, ARTRON, BACKDOOR, BUTTON, CHAMELEON, CONDENSER,
+                    DOOR, HANDBRAKE, INFO, KEYBOARD, TOGGLE, LIGHT, SAVE_SIGN, SCANNER, TERMINAL,
+                    TEMPORAL, WORLD_REPEATER, X_REPEATER, Y_REPEATER, Z_REPEATER, EXTERIOR_LAMP_LEVEL_SWITCH,
+                    INTERIOR_LIGHT_LEVEL_SWITCH, CHARGING_SENSOR, FLIGHT_SENSOR, HANDBRAKE_SENSOR,
+                    MALFUNCTION_SENSOR, POWER_SENSOR, TARDIS_MONITOR, MONITOR_FRAME, RELATIVITY_DIFFERENTIATOR -> {
                 return true;
             }
             default -> {
@@ -504,7 +563,7 @@ public enum TARDISInfoMenu {
 
     public boolean isItem() {
         switch (this) {
-            case KEY, SONIC_SCREWDRIVER, LOCATOR, STATTENHEIM_REMOTE, BIOME_READER, REMOTE_KEY, ARTRON_STORAGE_CELL, ARTRON_FURNACE, PERCEPTION_FILTER, SONIC_GENERATOR -> {
+            case KEY, SONIC_SCREWDRIVER, LOCATOR, STATTENHEIM_REMOTE, BIOME_READER, REMOTE_KEY, ARTRON_STORAGE_CELL, ARTRON_FURNACE, PERCEPTION_FILTER, SONIC_GENERATOR, SONIC_BLASTER, VORTEX_MANIPULATOR, HANDLES -> {
                 return true;
             }
             default -> {
@@ -614,7 +673,18 @@ public enum TARDISInfoMenu {
 
     public boolean isTimeTravel() {
         switch (this) {
-            case MALFUNCTIONS, ALT_CONTROLS -> {
+            case MALFUNCTIONS, ALT_CONTROLS, CAMERA -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
+
+    public boolean isMonster() {
+        switch (this) {
+            case CYBERMAN, DALEK, DALEK_SEC, DAVROS, EMPTY_CHILD, HATH, HEADLESS_MONK, ICE_WARRIOR, JUDOON, K9, MIRE, OOD, RACNOSS, SEA_DEVIL, SILENT, SILURIAN, SLITHEEN, SONTARAN, STRAX, TOCLAFANE, VASHTA_NERADA, WEEPING_ANGEL, ZYGON -> {
                 return true;
             }
             default -> {
