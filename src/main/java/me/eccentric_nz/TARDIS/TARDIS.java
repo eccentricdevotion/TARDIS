@@ -700,7 +700,7 @@ public class TARDIS extends JavaPlugin {
      */
     public void debug(Object o) {
         if (getConfig().getBoolean("debug")) {
-            getMessenger().message(console, TardisModule.DEBUG, "Debug: " + o);
+            getMessenger().message(console, TardisModule.DEBUG, "" + o);
         }
     }
 
