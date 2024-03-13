@@ -60,7 +60,7 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
             return;
         }
         switch (slot) {
-            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 -> {
+            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 -> {
                 event.setCancelled(true);
                 // set custom model data of sonic in slot 27
                 ItemStack sonic = view.getItem(27);

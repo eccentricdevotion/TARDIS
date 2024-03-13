@@ -3,7 +3,6 @@
 ## Current version `5.4.0`
 
 1. Fix dem bugs
-2. Add new items to the TARDIS information system
 
 ## Next version `5.5.0`
 

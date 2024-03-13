@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -36,8 +35,9 @@ public class TARDISSonicSound {
     public static void playSonicSound(TARDIS plugin, Player player, long now, long cooldown, String sound) {
         if ((!timeout.containsKey(player.getUniqueId()) || timeout.get(player.getUniqueId()) < now)) {
             ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
-            im.addEnchant(Enchantment.DURABILITY, 1, true);
-            im.addItemFlags(ItemFlag.values());
+            // change model to 'on/open', then after scheduled time change back to 'off/closed' model
+            int cmd = im.getCustomModelData();
+            im.setCustomModelData(cmd + 2000000);
             player.getInventory().getItemInMainHand().setItemMeta(im);
             timeout.put(player.getUniqueId(), now + cooldown);
             TARDISSounds.playTARDISSound(player.getLocation(), sound);
@@ -45,6 +45,8 @@ public class TARDISSonicSound {
                 ItemStack is = player.getInventory().getItemInMainHand();
                 if (is.hasItemMeta()) {
                     ItemMeta meta = is.getItemMeta();
+                    meta.setCustomModelData(cmd);
+                    is.setItemMeta(meta);
                     if (meta.hasDisplayName() && meta.getDisplayName().endsWith("Sonic Screwdriver")) {
                         player.getInventory().getItemInMainHand().getEnchantments().keySet().forEach((e) -> player.getInventory().getItemInMainHand().removeEnchantment(e));
                     } else {
