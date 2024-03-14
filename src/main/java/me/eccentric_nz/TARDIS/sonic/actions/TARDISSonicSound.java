@@ -49,24 +49,30 @@ public class TARDISSonicSound {
                     is.setItemMeta(meta);
                     if (meta.hasDisplayName() && meta.getDisplayName().endsWith("Sonic Screwdriver")) {
                         player.getInventory().getItemInMainHand().getEnchantments().keySet().forEach((e) -> player.getInventory().getItemInMainHand().removeEnchantment(e));
+                        meta.setCustomModelData(cmd);
+                        is.setItemMeta(meta);
                     } else {
                         // find the screwdriver in the player's inventory
-                        removeSonicEnchant(plugin, player.getInventory());
+                        revertSonic(player.getInventory());
                     }
                 } else {
                     // find the screwdriver in the player's inventory
-                    removeSonicEnchant(plugin, player.getInventory());
+                    revertSonic(player.getInventory());
                 }
             }, (cooldown / 50L));
         }
     }
 
-    private static void removeSonicEnchant(TARDIS plugin, PlayerInventory inv) {
+    private static void revertSonic(PlayerInventory inv) {
         int first = inv.first(Material.BLAZE_ROD);
         if (first < 0) {
             return;
         }
         ItemStack stack = inv.getItem(first);
+        ItemMeta meta = stack.getItemMeta();
+        int cmd = meta.getCustomModelData();
+        meta.setCustomModelData(cmd - 2000000);
+        stack.setItemMeta(meta);
         if (stack.containsEnchantment(Enchantment.DURABILITY)) {
             stack.getEnchantments().keySet().forEach(stack::removeEnchantment);
         }
