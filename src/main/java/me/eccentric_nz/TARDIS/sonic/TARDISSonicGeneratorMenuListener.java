@@ -112,7 +112,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
         }
         event.setCancelled(true);
         switch (slot) {
-            case 0, 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14, 15, 18, 19, 20, 21, 22, 23, 24 -> {
+            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 -> {
                 // set display name of sonic in slot 49
                 sonic = view.getItem(49);
                 if (sonic == null) {
