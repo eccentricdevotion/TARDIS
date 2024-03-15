@@ -147,7 +147,7 @@ public class TARDISDisplayItemUtils {
      */
     public static void set(TARDISDisplayItem tdi, Block block) {
         // spawn an item display entity
-        if (tdi == TARDISDisplayItem.DOOR || tdi.isLight()) {
+        if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR_OPEN || tdi.isLight()) {
             // also set an interaction entity
             Interaction interaction = (Interaction) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
             interaction.setResponsive(true);
@@ -156,6 +156,11 @@ public class TARDISDisplayItemUtils {
             if (tdi == TARDISDisplayItem.DOOR) {
                 // set size
                 interaction.setInteractionHeight(2.0f);
+                interaction.setInteractionWidth(1.0f);
+            }
+            if (tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR_OPEN) {
+                // set size
+                interaction.setInteractionHeight(3.0f);
                 interaction.setInteractionWidth(1.0f);
             }
             if (tdi.isLight()) {
@@ -175,10 +180,10 @@ public class TARDISDisplayItemUtils {
         }
         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
         is.setItemMeta(im);
-        double ay = (tdi == TARDISDisplayItem.DOOR) ? 0.0d : 0.5d;
+        double ay = (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR) ? 0.0d : 0.5d;
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
-        if (tdi == TARDISDisplayItem.DOOR) {
+        if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR) {
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
         }
         display.setPersistent(true);

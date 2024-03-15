@@ -45,7 +45,6 @@ import org.bukkit.util.Transformation;
 import java.util.HashMap;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISDisplayItemCommand {
@@ -99,14 +98,15 @@ public class TARDISDisplayItemCommand {
                 ItemDisplay blockDisplay = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.0d, 0.5d), EntityType.ITEM_DISPLAY);
                 ItemStack door = new ItemStack(Material.IRON_DOOR);
                 ItemMeta im = door.getItemMeta();
-                im.setCustomModelData((args.length == 3) ? 10002 : 10001);
+                int cmd = (args.length == 3) ? TARDISNumberParsers.parseInt(args[2]) : 1;
+                im.setCustomModelData(10000 + cmd);
                 door.setItemMeta(im);
                 blockDisplay.setItemStack(door);
                 blockDisplay.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
                 // also set an interaction entity
                 Interaction interaction = (Interaction) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.0d, 0.5d), EntityType.INTERACTION);
                 interaction.setResponsive(true);
-                interaction.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 10001);
+                interaction.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 10000 + cmd);
                 interaction.setPersistent(true);
                 interaction.setInteractionHeight(2.0f);
                 interaction.setInteractionWidth(1.0f);
@@ -136,7 +136,7 @@ public class TARDISDisplayItemCommand {
                     im.setDisplayName(TARDISStringUtils.capitalise(args[2]));
                     is.setItemMeta(im);
                     Block up = block.getRelative(BlockFace.UP);
-                    if (tdi == TARDISDisplayItem.DOOR || tdi.isLight()) {
+                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi.isLight()) {
                         // also set an interaction entity
                         Interaction interaction = (Interaction) block.getWorld().spawnEntity(up.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
                         interaction.setResponsive(true);
@@ -148,7 +148,7 @@ public class TARDISDisplayItemCommand {
                             light.setLevel(level);
                             up.setBlockData(light);
                         }
-                        if (tdi == TARDISDisplayItem.DOOR) {
+                        if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR) {
                             // set size
                             interaction.setInteractionHeight(2.0f);
                             interaction.setInteractionWidth(1.0f);
@@ -156,12 +156,12 @@ public class TARDISDisplayItemCommand {
                     } else {
                         up.setType((tdi == TARDISDisplayItem.ARTRON_FURNACE) ? Material.FURNACE : Material.BARRIER);
                     }
-                    double ay = (tdi == TARDISDisplayItem.DOOR) ? 0.0d : 0.5d;
+                    double ay = (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR) ? 0.0d : 0.5d;
                     ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
                     display.setItemStack(is);
                     display.setPersistent(true);
                     display.setInvulnerable(true);
-                    if (tdi == TARDISDisplayItem.DOOR) {
+                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR) {
                         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
                     }
                     if (tdi.getMaterial() == Material.AMETHYST_SHARD) {

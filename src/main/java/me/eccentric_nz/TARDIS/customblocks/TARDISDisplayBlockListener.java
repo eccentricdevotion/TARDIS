@@ -91,7 +91,7 @@ public class TARDISDisplayBlockListener implements Listener {
         Location location = event.getBlock().getLocation();
         event.setCancelled(true);
         BlockData data;
-        if (which.isLight() || which == TARDISDisplayItem.DOOR) {
+        if (which.isLight() || which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR) {
             if (which.isLight()) {
                 Levelled light = TARDISConstants.LIGHT;
                 light.setLevel((which.isLit() ? 15 : 0));
@@ -100,19 +100,19 @@ public class TARDISDisplayBlockListener implements Listener {
                 data = null;
             }
             // set an Interaction entity
-            TARDISDisplayItemUtils.set(location, cmd, which == TARDISDisplayItem.DOOR);
+            TARDISDisplayItemUtils.set(location, cmd, which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR);
         } else {
             data = TARDISConstants.BARRIER;
         }
         if (data != null) {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> location.getBlock().setBlockData(data), 1L);
         }
-        double ay = (which == TARDISDisplayItem.DOOR) ? 0.0d : 0.5d;
+        double ay = (which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR) ? 0.0d : 0.5d;
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(single);
         display.setPersistent(true);
         display.setInvulnerable(true);
-        if (which == TARDISDisplayItem.DOOR) {
+        if (which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR) {
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
         }
         if (player.getGameMode() != GameMode.CREATIVE) {
@@ -238,7 +238,7 @@ public class TARDISDisplayBlockListener implements Listener {
                 } else {
                     TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
                     if (tdi != null) {
-                        if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN) {
+                        if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR_OPEN) {
                             if (!plugin.getUtils().inTARDISWorld(player)) {
                                 return;
                             }
@@ -263,7 +263,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                 return;
                             }
                             if (player.isSneaking()) {
-                                if (tdi == TARDISDisplayItem.DOOR) {
+                                if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR) {
                                     // move to outside
                                     new DisplayItemDoorMover(plugin).exit(player, block);
                                 }
@@ -287,17 +287,34 @@ public class TARDISDisplayBlockListener implements Listener {
                                         case DOOR -> {
                                             // open doors / activate portal
                                             im.setCustomModelData(10002);
+                                            itemStack.setItemMeta(im);
+                                            display.setItemStack(itemStack);
                                             new DisplayItemDoorToggler(plugin).openClose(player, block, false);
                                         }
                                         case DOOR_OPEN -> {
-                                            // close doors / decativate portal
+                                            // close doors / deactivate portal
                                             im.setCustomModelData(10001);
+                                            itemStack.setItemMeta(im);
+                                            display.setItemStack(itemStack);
                                             new DisplayItemDoorToggler(plugin).openClose(player, block, true);
                                         }
-                                        default -> im.setCustomModelData(10001); // just close doors
+                                        case CLASSIC_DOOR -> {
+                                            // open doors / activate portal
+                                            new ClassicDoorAnimator(plugin, display).open();
+                                            new DisplayItemDoorToggler(plugin).openClose(player, block, false);
+                                        }
+                                        case CLASSIC_DOOR_OPEN -> {
+                                            // close doors / deactivate portal
+                                            new ClassicDoorAnimator(plugin, display).close();
+                                            new DisplayItemDoorToggler(plugin).openClose(player, block, true);
+                                        }
+                                        default -> {
+                                            // just close doors
+                                            im.setCustomModelData(10001);
+                                            itemStack.setItemMeta(im);
+                                            display.setItemStack(itemStack);
+                                        }
                                     }
-                                    itemStack.setItemMeta(im);
-                                    display.setItemStack(itemStack);
                                 }
                             }
                         } else if (player.isSneaking() && tdi.isLight()) {
