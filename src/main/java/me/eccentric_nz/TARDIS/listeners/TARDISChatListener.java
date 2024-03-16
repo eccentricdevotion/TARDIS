@@ -101,7 +101,7 @@ public class TARDISChatListener implements Listener {
             return;
         }
         if (howToPattern == null) {
-            howToPattern = Pattern.compile("(^|.*\\W)how\\W.*\\W(create|make|build|get)\\W.*tardis(\\W.*|$)", Pattern.CASE_INSENSITIVE);
+            howToPattern = Pattern.compile("(^|.*\\W)how\\W.*\\W(craft|create|make|build|get)\\W.*tardis(\\W.*|$)", Pattern.CASE_INSENSITIVE);
         }
         if (howToPattern.matcher(message).matches()) {
             plugin.getTrackerKeeper().getHowTo().add(p.getUniqueId());
