@@ -16,11 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.howto;
 
-import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
 
 /**
  * By the time of his eleventh incarnation, the Doctor's console room had gone through at least twelve redesigns, though
@@ -49,8 +51,22 @@ class TARDISSeedRecipeInventory {
      */
     private ItemStack[] getItemStack() {
         ItemStack[] stack = new ItemStack[27];
-        // redstone torch
-        ItemStack red = new ItemStack(Material.REDSTONE_TORCH, 1);
+        // get torch item
+        Material torch = Material.REDSTONE_TORCH;
+        if (!plugin.getConfig().getBoolean("creation.seed_block.legacy")) {
+            String difficulty;
+            World world = plugin.getServer().getWorlds().get(0);
+            switch (world.getDifficulty()) {
+                case HARD -> difficulty = "hard";
+                case NORMAL -> difficulty = "normal";
+                default -> difficulty = "easy";
+            }
+            try {
+                torch = Material.valueOf(plugin.getConfig().getString("creation.seed_block." + difficulty));
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+        ItemStack red = new ItemStack(torch, 1);
         // lapis block
         ItemStack lapis = new ItemStack(Material.LAPIS_BLOCK, 1);
         // interior wall

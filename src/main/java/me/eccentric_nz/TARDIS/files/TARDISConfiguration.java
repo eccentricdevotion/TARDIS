@@ -102,7 +102,8 @@ public class TARDISConfiguration {
         booleanOptions.put("creation.default_world", true);
         booleanOptions.put("creation.enable_legacy", true);
         booleanOptions.put("creation.keep_night", true);
-        booleanOptions.put("creation.seed_block_crafting", true);
+        booleanOptions.put("creation.seed_block.crafting", true);
+        booleanOptions.put("creation.seed_block.legacy", true);
         booleanOptions.put("debug", false);
         booleanOptions.put("desktop.check_blocks_before_upgrade", false);
         booleanOptions.put("growth.return_room_seed", true);
@@ -214,6 +215,9 @@ public class TARDISConfiguration {
         stringOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
         stringOptions.put("creation.tips_next", "FREE");
         stringOptions.put("creation.use_clay", "WOOL");
+        stringOptions.put("creation.seed_block.easy", "REDSTONE_TORCH");
+        stringOptions.put("creation.seed_block.normal", "SOUL_LANTERN");
+        stringOptions.put("creation.seed_block.hard", "DRAGON_BREATH");
         stringOptions.put("display.all", "&6X&7%X% &6Y&7%Y% &6Z&7%Z% &6F&7%FACING% (%FACING_XZ%) %TARGET_BLOCK%");
         stringOptions.put("police_box.default_preset", "FACTORY");
         stringOptions.put("police_box.sign_colour", "WHITE");
@@ -387,6 +391,11 @@ public class TARDISConfiguration {
         if (config.contains("handles")) {
             plugin.getConfig().set("allow.handles", null);
             plugin.getConfig().set("handles", null);
+            i++;
+        }
+        // remove seed_block_crafting
+        if (config.contains("creation.seed_block_crafting")) {
+            plugin.getConfig().set("creation.seed_block_crafting", null);
             i++;
         }
         // switch chemistry to a module

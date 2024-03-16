@@ -71,6 +71,9 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsStr.put("reload", "");
         firstsStr.put("respect_towny", "preferences");
         firstsStr.put("respect_worldguard", "preferences");
+        firstsStr.put("seed_block.easy", "creation");
+        firstsStr.put("seed_block.normal", "creation");
+        firstsStr.put("seed_block.hard", "creation");
         firstsStr.put("siege", "siege");
         firstsStr.put("sign_colour", "police_box");
         firstsStr.put("use_clay", "creation");
@@ -136,7 +139,8 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("respect_worldborder", "preferences");
         firstsBool.put("return_room_seed", "growth");
         firstsBool.put("rooms_require_blocks", "growth");
-        firstsBool.put("seed_block_crafting", "creation");
+        firstsBool.put("seed_block.crafting", "creation");
+        firstsBool.put("seed_block.legacy", "creation");
         firstsBool.put("sfx", "allow");
         firstsBool.put("shop", "modules");
         firstsBool.put("sonic_blaster", "modules");

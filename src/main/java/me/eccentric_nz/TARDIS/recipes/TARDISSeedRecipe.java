@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
@@ -84,13 +85,29 @@ public class TARDISSeedRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         // set shape
         r.shape("T  ", "L W", "S F");
+        // get torch item
+        Material torch = Material.REDSTONE_TORCH;
+        if (!plugin.getConfig().getBoolean("creation.seed_block.legacy")) {
+            String difficulty;
+            World world = plugin.getServer().getWorlds().get(0);
+            switch (world.getDifficulty()) {
+                case HARD -> difficulty = "hard";
+                case NORMAL -> difficulty = "normal";
+                default -> difficulty = "easy";
+            }
+            try {
+                torch = Material.valueOf(plugin.getConfig().getString("creation.seed_block." + difficulty));
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
         // set ingredients
-        r.setIngredient('T', Material.REDSTONE_TORCH);
+        r.setIngredient('T', torch);
         r.setIngredient('L', Material.LAPIS_BLOCK);
         r.setIngredient('W', choices);
         r.setIngredient('S', s.getSeedMaterial());
         r.setIngredient('F', choices);
         seedRecipes.put(s, r);
+
         return r;
     }
 

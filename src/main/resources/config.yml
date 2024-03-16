@@ -39,7 +39,12 @@ creation:
   count: 0
   area: none
   check_for_home: true
-  seed_block_crafting: true
+  seed_block:
+    crafting: true
+    legacy: true
+    easy: REDSTONE_TORCH
+    normal: SOUL_LANTERN
+    hard: DRAGON_BREATH
 # outer TARDIS
 # https://tardis.pages.dev/configuration/preset
 police_box:

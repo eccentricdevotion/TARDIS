@@ -416,7 +416,7 @@ public class TARDIS extends JavaPlugin {
             figura.addShapedRecipes();
             incomposita = new TARDISShapelessRecipe(this);
             incomposita.addShapelessRecipes();
-            if (getConfig().getBoolean("creation.seed_block_crafting")) {
+            if (getConfig().getBoolean("creation.seed_block.crafting")) {
                 obstructionum = new TARDISSeedRecipe(this);
                 obstructionum.addSeedRecipes();
             }

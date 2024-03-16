@@ -3,6 +3,7 @@
 ## Current version `5.4.0`
 
 1. Fix dem bugs
+2. Redo WAR interior with classic door
 
 ## Next version `5.5.0`
 
@@ -26,7 +27,6 @@
 
 * Make all images tabbed
 * Vanilla/TARDIS screenshots for TabbedImage views
-* Update shell room GUI info
 * ?
 
 ## Resource Pack / Monsters
