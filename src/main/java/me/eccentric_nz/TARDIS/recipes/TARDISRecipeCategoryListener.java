@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
+import me.eccentric_nz.TARDIS.howto.TARDISSeedsInventory;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.md_5.bungee.api.ChatColor;
@@ -47,7 +48,7 @@ public class TARDISRecipeCategoryListener extends TARDISMenuListener {
         event.setCancelled(true);
         int slot = event.getRawSlot();
         Player player = (Player) event.getWhoClicked();
-        if (slot < 8 || slot > 26) {
+        if (slot < 4 || slot > 26) {
             return;
         }
         ItemStack is = view.getItem(slot);
@@ -56,9 +57,17 @@ public class TARDISRecipeCategoryListener extends TARDISMenuListener {
             String cat = TARDISStringUtils.toEnumUppercase(im.getDisplayName());
             RecipeCategory category = RecipeCategory.valueOf(cat);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                ItemStack[] items = new TARDISRecipeInventory(plugin, category).getMenu();
-                Inventory recipes = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS Recipes");
-                recipes.setContents(items);
+                Inventory recipes;
+                ItemStack[] items;
+                if (category == RecipeCategory.SEED_BLOCKS) {
+                    items = new TARDISSeedsInventory(plugin, player).getMenu();
+                    recipes = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "TARDIS Seeds Menu");
+                    recipes.setContents(items);
+                } else {
+                    items = new TARDISRecipeInventory(plugin, category).getMenu();
+                    recipes = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS Recipes");
+                    recipes.setContents(items);
+                }
                 player.openInventory(recipes);
             }, 2L);
         }

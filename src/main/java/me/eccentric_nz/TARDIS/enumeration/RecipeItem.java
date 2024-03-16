@@ -121,8 +121,8 @@ public enum RecipeItem {
     LIGHT_THIRTEENTH(10009, RecipeCategory.CUSTOM_BLOCKS),
     DOOR(10001, RecipeCategory.CUSTOM_BLOCKS),
     CLASSIC_DOOR(10004, RecipeCategory.CUSTOM_BLOCKS),
-    HANDBRAKE(1001, RecipeCategory.CUSTOM_BLOCKS),
-    THROTTLE(1001, RecipeCategory.CUSTOM_BLOCKS),
+//    HANDBRAKE(1001, RecipeCategory.CUSTOM_BLOCKS),
+//    THROTTLE(1001, RecipeCategory.CUSTOM_BLOCKS),
     // unshaped recipes start here
     BIOME_STORAGE_DISK(10000001, RecipeCategory.STORAGE_DISKS),
     BOWL_OF_CUSTARD(10000001, RecipeCategory.FOOD),
