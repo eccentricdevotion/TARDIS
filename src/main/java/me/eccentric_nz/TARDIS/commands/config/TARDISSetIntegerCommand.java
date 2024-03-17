@@ -58,7 +58,7 @@ class TARDISSetIntegerCommand {
         if (first.equals("circuits.uses.chameleon_uses")) {
             first = "circuits.uses.chameleon";
         }
-        if (first.equals("circuits.uses.invisibility_uses")) {
+        if (first.equals("circuits.uses.invisibility")) {
             first = "circuits.uses.invisibility";
         }
         if (first.equals("preferences.chat_width")) {
@@ -99,21 +99,19 @@ class TARDISSetIntegerCommand {
 
     public boolean setRandomInt(CommandSender sender, String[] args) {
         String first = args[0];
-        String which = args[1];
-        if (!which.equalsIgnoreCase("x") || !which.equalsIgnoreCase("z")) {
-            plugin.getMessenger().sendColouredCommand(sender, "ARG_DIRECTION", "/tconfig random_circuit [x|z] [distance]", plugin);
+        if (!first.endsWith(".x") || !first.endsWith(".z")) {
+            plugin.getMessenger().sendColouredCommand(sender, "ARG_DIRECTION", "/tconfig random_circuit.[x|z] [distance]", plugin);
             return true;
         }
-        String a = args[2];
         int val;
         try {
-            val = Integer.parseInt(a);
+            val = Integer.parseInt(args[1]);
         } catch (NumberFormatException nfe) {
             // not a number
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_LAST_NUMBER");
             return false;
         }
-        plugin.getConfig().set("travel." + first + "." + which.toLowerCase(Locale.ENGLISH), val);
+        plugin.getConfig().set("travel." + first, val);
         plugin.saveConfig();
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG_UPDATED", first);
         return true;

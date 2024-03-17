@@ -121,6 +121,8 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("materialise", "police_box");
         firstsBool.put("mob_farming", "allow");
         firstsBool.put("name_tardis", "police_box");
+        firstsBool.put("nerf_pistons.enabled", "preferences");
+        firstsBool.put("nerf_pistons.only_tardis_worlds", "preferences");
         firstsBool.put("nether", "travel");
         firstsBool.put("no_coords", "preferences");
         firstsBool.put("no_creative_condense", "preferences");
@@ -131,7 +133,6 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("perception_filter", "allow");
         firstsBool.put("power_down", "allow");
         firstsBool.put("power_down_on_quit", "allow");
-        firstsBool.put("redefine", "travel.terminal");
         firstsBool.put("reduce_count", "abandon");
         firstsBool.put("render_entities", "preferences");
         firstsBool.put("respect_factions", "preferences");
@@ -148,7 +149,10 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("spawn_random_monsters", "preferences");
         firstsBool.put("strike_lightning", "preferences");
         firstsBool.put("switch_resource_packs", "");
+        firstsBool.put("terminal.redefine", "travel");
         firstsBool.put("the_end", "travel");
+        firstsBool.put("update.auto_update", "preferences");
+        firstsBool.put("update.notify", "preferences");
         firstsBool.put("use_default_condensables", "preferences");
         firstsBool.put("use_nick", "police_box");
         firstsBool.put("use_worldguard", "preferences");
@@ -162,11 +166,9 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("wg_flag_set", "allow");
         firstsBool.put("zero_room", "allow");
         // integer
-        firstsInt.put("ARS", "circuits.uses");
         firstsInt.put("ars_limit", "growth");
         firstsInt.put("block_change_percent", "desktop");
         firstsInt.put("border_radius", "creation");
-        firstsInt.put("chameleon_uses", "circuits.uses");
         firstsInt.put("charge_interval", "sonic");
         firstsInt.put("charge_level", "sonic");
         firstsInt.put("chat_width", "preferences");
@@ -174,29 +176,23 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsInt.put("count", "creation");
         firstsInt.put("delay_factor", "growth");
         firstsInt.put("force_field", "allow");
+        firstsInt.put("freeze_cooldown", "sonic");
         firstsInt.put("grace_period", "travel");
         firstsInt.put("gravity_max_distance", "growth");
         firstsInt.put("gravity_max_velocity", "growth");
         firstsInt.put("hads_damage", "preferences");
         firstsInt.put("hads_distance", "preferences");
         firstsInt.put("heal_speed", "preferences");
-        firstsInt.put("input", "circuits.uses");
-        firstsInt.put("invisibility_uses", "circuits.uses");
-        firstsInt.put("freeze_cooldown", "sonic");
         firstsInt.put("malfunction", "preferences");
         firstsInt.put("malfunction_end", "preferences");
         firstsInt.put("malfunction_nether", "preferences");
-        firstsInt.put("materialisation", "circuits.uses");
-        firstsInt.put("memory", "circuits.uses");
         firstsInt.put("min_time", "arch");
         firstsInt.put("random_attempts", "travel");
-        firstsInt.put("random_circuit", "travel");
-        firstsInt.put("randomiser", "circuits.uses");
+        firstsInt.put("random_circuit.x", "travel");
+        firstsInt.put("random_circuit.z", "travel");
         firstsInt.put("room_speed", "growth");
         firstsInt.put("rooms_condenser_percent", "growth");
-        firstsInt.put("scanner", "circuits.uses");
         firstsInt.put("sfx_volume", "preferences");
-        firstsInt.put("temporal", "circuits.uses");
         firstsInt.put("terminal_step", "travel");
         firstsInt.put("timeout", "travel");
         firstsInt.put("timeout_height", "travel");
@@ -205,6 +201,15 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsInt.put("update_period", "mapping");
         firstsInt.put("updates_per_tick", "mapping");
         firstsInt.put("usage", "sonic");
+        firstsInt.put("uses.ars", "circuits");
+        firstsInt.put("uses.chameleon", "circuits");
+        firstsInt.put("uses.input", "circuits");
+        firstsInt.put("uses.invisibility", "circuits");
+        firstsInt.put("uses.materialisation", "circuits");
+        firstsInt.put("uses.memory", "circuits");
+        firstsInt.put("uses.randomiser", "circuits");
+        firstsInt.put("uses.scanner", "circuits");
+        firstsInt.put("uses.temporal", "circuits");
         firstsInt.put("wall_data", "police_box");
         firstsInt.put("wall_id", "police_box");
         firstsIntArtron.add("autonomous");
@@ -374,7 +379,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                 }
                 // checks if it's a number config option
                 if (firstsInt.containsKey(first)) {
-                    if (first.equalsIgnoreCase("random_circuit")) {
+                    if (first.startsWith("random_circuit.")) {
                         return new TARDISSetIntegerCommand(plugin).setRandomInt(sender, args);
                     } else {
                         return new TARDISSetIntegerCommand(plugin).setConfigInt(sender, args, firstsInt.get(first));
