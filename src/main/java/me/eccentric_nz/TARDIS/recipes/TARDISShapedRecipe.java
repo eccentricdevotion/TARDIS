@@ -112,6 +112,7 @@ public class TARDISShapedRecipe {
         new TimeRotorHospitalRecipe(plugin).addRecipe();
         new TimeRotorTenthRecipe(plugin).addRecipe();
         new TimeRotorTwelfthRecipe(plugin).addRecipe();
+        new TimeRotorCustomRecipe(plugin).addRecipes();
         new WhiteBowTieRecipe(plugin).addRecipe();
         new YellowBowTieRecipe(plugin).addRecipe();
     }

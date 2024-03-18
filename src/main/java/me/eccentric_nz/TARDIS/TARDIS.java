@@ -150,6 +150,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration blocksConfig;
     private FileConfiguration condensablesConfig;
     private FileConfiguration customConsolesConfig;
+    private FileConfiguration customRotorsConfig;
     private FileConfiguration kitsConfig;
     private FileConfiguration language;
     private FileConfiguration signs;
@@ -401,6 +402,7 @@ public class TARDIS extends JavaPlugin {
             buildKeeper.setSeeds(getSeeds());
             new ResultSetTIPS(this).fillUsedSlotList();
             new TARDISConsoleLoader(this).addSchematics();
+            new TARDISCustomRotorLoader(this).addRotors();
             loadFiles();
             disguisesOnServer = pm.isPluginEnabled("LibsDisguises");
             generalKeeper = new TARDISGeneralInstanceKeeper(this);
@@ -783,6 +785,15 @@ public class TARDIS extends JavaPlugin {
      */
     public FileConfiguration getCustomConsolesConfig() {
         return customConsolesConfig;
+    }
+
+    /**
+     * Gets the custom consoles configuration
+     *
+     * @return the custom consoles configuration
+     */
+    public FileConfiguration getCustomRotorsConfig() {
+        return customRotorsConfig;
     }
 
     /**
@@ -1556,7 +1567,7 @@ public class TARDIS extends JavaPlugin {
      */
     private void loadCustomConfigs() {
         List<String> files = Arrays.asList("achievements.yml", "adaptive.yml", "artron.yml", "blaster.yml",
-                "blocks.yml", "condensables.yml", "custom_consoles.yml", "custom_models.yml", "flat_world.yml",
+                "blocks.yml", "condensables.yml", "custom_consoles.yml", "custom_models.yml", "custom_time_rotors.yml", "flat_world.yml",
                 "handles.yml", "items.yml", "kits.yml", "monsters.yml", "planets.yml", "recipes.yml", "rooms.yml",
                 "shop.yml", "tag.yml", "vortex_manipulator.yml");
         for (String f : files) {
@@ -1574,6 +1585,7 @@ public class TARDIS extends JavaPlugin {
         condensablesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "condensables.yml"));
         new TARDISCondensablesUpdater(this).checkCondensables();
         customConsolesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_consoles.yml"));
+        customRotorsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_time_rotors.yml"));
         kitsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "kits.yml"));
         achievementConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "achievements.yml"));
         tagConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "tag.yml"));

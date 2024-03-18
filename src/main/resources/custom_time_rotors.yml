@@ -1,0 +1,16 @@
+# visit https://tardis.pages.dev/custom_rotors for more info
+classic:
+  # assets/minecraft/models/item/light_gray_dye.json
+  # must be higher than 10000009
+  off_custom_model_data: 10000010
+  # the material of the animated rotor item
+  # animation states start at "custom_model_data": 1021
+  # set in assets/minecraft/models/item/[animated_material].json
+  # must be unique for each rotor
+  animated_material: YELLOW_DYE
+  # a comma separated list of frame numbers where the
+  # number is added to the starting animation frame to
+  # get the custom_model_data predicate e.g. 1021 + 3 = 1024
+  animation_sequence: 0,1,2,3,4,5,6,7
+  # frame rate in ticks
+  frame_rate: 6

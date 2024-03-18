@@ -67,7 +67,7 @@ public class TARDISTimeRotor {
         itemFrame.setFixed(true);
         itemFrame.setVisible(false);
         itemFrame.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which.getOffModelData());
-        if (which != Rotor.TWELFTH) {
+        if (!which.getName().equals("twelfth")) {
             // start repeating animation task
             int task = Bukkit.getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, new TimeRotorAnimation(itemFrame, which.getFrames()), which.getFrameTick(), which.getFrameTick());
             // add item frame uuid and task id to map for tracking
