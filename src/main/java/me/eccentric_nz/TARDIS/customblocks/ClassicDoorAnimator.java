@@ -2,7 +2,6 @@ package me.eccentric_nz.TARDIS.customblocks;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -12,7 +11,6 @@ public class ClassicDoorAnimator {
     private final TARDIS plugin;
     private final ItemDisplay display;
 
-    private final Block block;
     private int taskID;
     private int open = 5;
     private int closed = 9;
@@ -20,7 +18,6 @@ public class ClassicDoorAnimator {
     public ClassicDoorAnimator(TARDIS plugin, ItemDisplay display) {
         this.plugin = plugin;
         this.display = display;
-        this.block = display.getLocation().getBlock();
     }
 
     public void open() {

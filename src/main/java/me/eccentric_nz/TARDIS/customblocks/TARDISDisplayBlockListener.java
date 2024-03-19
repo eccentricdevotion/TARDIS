@@ -276,7 +276,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                         itemStack.setItemMeta(im);
                                         display.setItemStack(itemStack);
                                         // close doors / decativate portal
-                                        new DisplayItemDoorToggler(plugin).openClose(player, block, true);
+                                        new DisplayItemDoorToggler(plugin).openClose(player, block, true, TARDISDisplayItem.DOOR_OPEN);
                                     }
                                 }
                             } else {
@@ -289,24 +289,24 @@ public class TARDISDisplayBlockListener implements Listener {
                                             im.setCustomModelData(10002);
                                             itemStack.setItemMeta(im);
                                             display.setItemStack(itemStack);
-                                            new DisplayItemDoorToggler(plugin).openClose(player, block, false);
+                                            new DisplayItemDoorToggler(plugin).openClose(player, block, false, TARDISDisplayItem.DOOR);
                                         }
                                         case DOOR_OPEN -> {
                                             // close doors / deactivate portal
                                             im.setCustomModelData(10001);
                                             itemStack.setItemMeta(im);
                                             display.setItemStack(itemStack);
-                                            new DisplayItemDoorToggler(plugin).openClose(player, block, true);
+                                            new DisplayItemDoorToggler(plugin).openClose(player, block, true, TARDISDisplayItem.DOOR_OPEN);
                                         }
                                         case CLASSIC_DOOR -> {
                                             // open doors / activate portal
                                             new ClassicDoorAnimator(plugin, display).open();
-                                            new DisplayItemDoorToggler(plugin).openClose(player, block, false);
+                                            new DisplayItemDoorToggler(plugin).openClose(player, block, false, TARDISDisplayItem.CLASSIC_DOOR);
                                         }
                                         case CLASSIC_DOOR_OPEN -> {
                                             // close doors / deactivate portal
                                             new ClassicDoorAnimator(plugin, display).close();
-                                            new DisplayItemDoorToggler(plugin).openClose(player, block, true);
+                                            new DisplayItemDoorToggler(plugin).openClose(player, block, true, TARDISDisplayItem.CLASSIC_DOOR_OPEN);
                                         }
                                         default -> {
                                             // just close doors

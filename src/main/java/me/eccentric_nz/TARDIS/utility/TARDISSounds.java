@@ -33,7 +33,8 @@ public class TARDISSounds {
     private static float VOLUME = TARDIS.plugin.getConfig().getInt("preferences.sfx_volume") / 10.0F;
 
     /**
-     * Plays the interior hum sound upon TARDIS entry. As it is a player preference, only play the sound for the specific player, as preferences may differ.
+     * Plays the interior hum sound upon TARDIS entry. As it is a player preference, only play the sound for the
+     * specific player, as preferences may differ.
      *
      * @param p the player to play the sound to
      */
@@ -93,6 +94,20 @@ public class TARDISSounds {
      */
     public static void playTARDISSound(Player p, String s, long d) {
         TARDIS.plugin.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> p.playSound(p.getLocation(), s, VOLUME, 1.0f), d);
+    }
+
+    /**
+     * Plays a door sound when a police box door is clicked.
+     *
+     * @param open     which sound to play, open (true), close (false)
+     * @param location a location to play the sound at
+     */
+    public static void playDoorSound(boolean open, Location location) {
+        if (open) {
+            playTARDISSound(location, "tardis_door_open");
+        } else {
+            playTARDISSound(location, "tardis_door_close");
+        }
     }
 
     public static void setVolume(float v) {

@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -59,24 +60,40 @@ public class TARDISDoorToggler {
     }
 
     /**
+     * Toggle the door open and closed without playing the door sound.
+     */
+    public void toggleDoorsWithoutSound(boolean classic) {
+        UUID uuid = player.getUniqueId();
+        if (open) {
+            new TARDISDoorCloser(plugin, uuid, id).closeDoors();
+        } else {
+            new TARDISDoorOpener(plugin, uuid, id).openDoors();
+        }
+        if (!classic) {
+            playDoorSound(player, open, block.getLocation(), minecart);
+        }
+    }
+
+    /**
      * Plays a door sound when the iron door is clicked.
      *
-     * @param p    a player to play the sound for
-     * @param open which sound to play, open (true), close (false)
-     * @param l    a location to play the sound at
-     * @param m    whether to play the custom sound (false) or the Minecraft one (true)
+     * @param player   a player to play the sound for
+     * @param open     which sound to play, open (true), close (false)
+     * @param location a location to play the sound at
+     * @param minecart whether to play the custom sound (false) or the Minecraft one (true)
      */
-    private void playDoorSound(Player p, boolean open, Location l, boolean m) {
+    private void playDoorSound(Player player, boolean open, Location location, boolean minecart) {
+        plugin.debug("playDoorSound from TARDISDoorToggler at " + location.toString());
         if (open) {
-            if (!m) {
-                TARDISSounds.playTARDISSound(l, "tardis_door_close");
+            if (!minecart) {
+                TARDISSounds.playTARDISSound(location, "tardis_door_close");
             } else {
-                p.playSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_CLOSE, 1.0F, 1.0F);
+                player.playSound(player.getLocation(), Sound.BLOCK_IRON_DOOR_CLOSE, 1.0F, 1.0F);
             }
-        } else if (!m) {
-            TARDISSounds.playTARDISSound(l, "tardis_door_open");
+        } else if (!minecart) {
+            TARDISSounds.playTARDISSound(location, "tardis_door_open");
         } else {
-            p.playSound(p.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
+            player.playSound(player.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
         }
     }
 }

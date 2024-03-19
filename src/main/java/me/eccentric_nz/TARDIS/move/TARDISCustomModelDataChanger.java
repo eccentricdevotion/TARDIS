@@ -86,7 +86,7 @@ public class TARDISCustomModelDataChanger {
                             newData = 1001;
                         }
                         if (preset != ChameleonPreset.PANDORICA) {
-                            playDoorSound(open, block.getLocation());
+                            TARDISSounds.playDoorSound(open, stand.getLocation());
                         }
                         im.setCustomModelData(newData);
                         is.setItemMeta(im);
@@ -97,17 +97,5 @@ public class TARDISCustomModelDataChanger {
         }
     }
 
-    /**
-     * Plays a door sound when a police box door is clicked.
-     *
-     * @param open which sound to play, open (true), close (false)
-     * @param l    a location to play the sound at
-     */
-    private void playDoorSound(boolean open, Location l) {
-        if (open) {
-            TARDISSounds.playTARDISSound(l, "tardis_door_open");
-        } else {
-            TARDISSounds.playTARDISSound(l, "tardis_door_close");
-        }
-    }
+
 }

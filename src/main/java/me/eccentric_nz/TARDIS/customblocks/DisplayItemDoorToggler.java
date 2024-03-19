@@ -32,7 +32,6 @@ import java.util.HashMap;
 import java.util.UUID;
 
 /**
- *
  * @author eccentric_nz
  */
 public class DisplayItemDoorToggler {
@@ -43,7 +42,7 @@ public class DisplayItemDoorToggler {
         this.plugin = plugin;
     }
 
-    public void openClose(Player player, Block block, boolean close) {
+    public void openClose(Player player, Block block, boolean close, TARDISDisplayItem tdi) {
         Location block_loc = block.getLocation();
         String bw = block_loc.getWorld().getName();
         int bx = block_loc.getBlockX();
@@ -86,7 +85,7 @@ public class DisplayItemDoorToggler {
                         if (rsp.resultSet()) {
                             minecart = rsp.isMinecartOn();
                         }
-                        new TARDISDoorToggler(plugin, block, player, minecart, close, id).toggleDoors();
+                        new TARDISDoorToggler(plugin, block, player, minecart, close, id).toggleDoorsWithoutSound(tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR_OPEN);
                     } else if (!rs.getTardis().getUuid().equals(playerUUID)) {
                         plugin.getMessenger().sendStatus(player, "DOOR_DEADLOCKED");
                     } else {

@@ -188,7 +188,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                                         ee.setHelmet(dye, true);
                                                     }
                                                 }
-                                                playDoorSound(true, location);
+                                                TARDISSounds.playDoorSound(true, location);
                                             } else if (TARDISStaticUtils.isSonic(hand) && TARDISMaterials.dyes.contains(dye.getType()) && tardis.getUuid().equals(playerUUID)) {
                                                 ItemMeta im = hand.getItemMeta();
                                                 List<String> lore = im.getLore();
@@ -241,7 +241,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                                 dim.setCustomModelData(1001);
                                                 dye.setItemMeta(dim);
                                                 ee.setHelmet(dye, true);
-                                                playDoorSound(false, location);
+                                                TARDISSounds.playDoorSound(false, location);
                                             }
                                         }
                                     } else if (!tardis.getUuid().equals(playerUUID)) {
@@ -255,20 +255,6 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                     }
                 }
             }
-        }
-    }
-
-    /**
-     * Plays a door sound when the blue police box oak trapdoor is clicked.
-     *
-     * @param open which sound to play, open (true), close (false)
-     * @param l a location to play the sound at
-     */
-    private void playDoorSound(boolean open, Location l) {
-        if (open) {
-            TARDISSounds.playTARDISSound(l, "tardis_door_open");
-        } else {
-            TARDISSounds.playTARDISSound(l, "tardis_door_close");
         }
     }
 }
