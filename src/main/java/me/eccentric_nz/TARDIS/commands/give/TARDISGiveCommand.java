@@ -221,15 +221,12 @@ public class TARDISGiveCommand implements CommandExecutor {
             return true;
         }
         String item_to_give = items.get(item);
-        plugin.debug(item_to_give);
         RecipeCategory category = RecipeCategory.ITEMS;
         try {
-            plugin.debug(TARDISStringUtils.toEnumUppercase(item_to_give));
             RecipeItem recipeItem = RecipeItem.valueOf(TARDISStringUtils.toEnumUppercase(item_to_give));
             category = recipeItem.getCategory();
         } catch (IllegalArgumentException ignored) {
         }
-        plugin.debug(category.toString());
         ItemStack result = null;
         if (category == RecipeCategory.CHEMISTRY) {
             if (!plugin.getConfig().getBoolean("modules.chemistry")) {

@@ -28,14 +28,12 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
-import org.bukkit.entity.AbstractArrow;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -103,7 +101,7 @@ public class TARDISSonicListener implements Listener {
         long now = System.currentTimeMillis();
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.getType().equals(Material.BLAZE_ROD) && is.hasItemMeta()) {
-            ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
+            ItemMeta im = is.getItemMeta();
             if (im.getDisplayName().endsWith("Sonic Screwdriver")) {
                 // check they have charge
                 if (plugin.getConfig().getBoolean("sonic.charge") || plugin.getDifficulty() == Difficulty.HARD) {
@@ -265,6 +263,22 @@ public class TARDISSonicListener implements Listener {
     public void onPlayerFrozenMove(PlayerMoveEvent event) {
         if (plugin.getTrackerKeeper().getFrozenPlayers().contains(event.getPlayer().getUniqueId())) {
             event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onSonicDrop(PlayerDropItemEvent event) {
+        Item item = event.getItemDrop();
+        ItemStack is = item.getItemStack();
+        if (is.getType().equals(Material.BLAZE_ROD) && is.hasItemMeta()) {
+            ItemMeta im = is.getItemMeta();
+            if (im.getDisplayName().endsWith("Sonic Screwdriver")) {
+                // set to off state
+                int cmd = im.getCustomModelData() - 2000000;
+                im.setCustomModelData(cmd);
+                is.setItemMeta(im);
+                item.setItemStack(is);
+            }
         }
     }
 }
