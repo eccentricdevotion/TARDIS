@@ -127,8 +127,6 @@ public class TARDISSonicUpgradeListener implements Listener {
                 ci.setResult(null);
                 TARDIS.plugin.getMessenger().send(event.getView().getPlayer(), TardisModule.TARDIS, "REMOTE_KEY");
             }
-        } else if (recipe instanceof SmithingRecipe) {
-            TARDIS.plugin.debug("SmithingRecipe");
         }
     }
 }

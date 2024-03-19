@@ -83,7 +83,6 @@ public class TARDISDoorToggler {
      * @param minecart whether to play the custom sound (false) or the Minecraft one (true)
      */
     private void playDoorSound(Player player, boolean open, Location location, boolean minecart) {
-        plugin.debug("playDoorSound from TARDISDoorToggler at " + location.toString());
         if (open) {
             if (!minecart) {
                 TARDISSounds.playTARDISSound(location, "tardis_door_close");

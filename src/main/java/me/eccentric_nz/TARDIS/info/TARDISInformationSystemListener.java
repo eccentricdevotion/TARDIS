@@ -1837,8 +1837,6 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
             if (split.length > 1) {
                 String first = "> " + split[0];
                 plugin.getMessenger().sendInfo(p, first, value, split[1]);
-            } else {
-                plugin.debug(key + ", " + value);
             }
         });
         plugin.getMessenger().sendInfo(p, "> ", "E", "xit");
