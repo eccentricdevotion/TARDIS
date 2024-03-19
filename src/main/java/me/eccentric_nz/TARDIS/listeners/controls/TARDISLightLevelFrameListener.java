@@ -108,7 +108,7 @@ public class TARDISLightLevelFrameListener implements Listener {
                                     light.setBlockData(levelled);
                                 }
                             }
-                        } else {
+                        } else if (rs.isLightsOn()) {
                             // interior
                             light_level = LightLevel.interior_level[setLevel];
                             // get TARDIS lights

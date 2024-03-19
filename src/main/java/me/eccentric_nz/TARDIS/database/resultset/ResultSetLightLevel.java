@@ -46,6 +46,7 @@ public class ResultSetLightLevel {
     private int type;
     private int level;
     private boolean powered;
+    private boolean lightsOn;
     private boolean policeBox;
 
     /**
@@ -69,7 +70,7 @@ public class ResultSetLightLevel {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT " + prefix + "controls.*, " + prefix + "tardis.powered_on, " + prefix + "tardis.chameleon_preset FROM " + prefix + "controls, " + prefix + "tardis WHERE `type` IN (49, 50) AND location = ? AND " + prefix + "controls.tardis_id = " + prefix + "tardis.tardis_id";
+        String query = "SELECT " + prefix + "controls.*, " + prefix + "tardis.powered_on, " + prefix + "tardis.lights_on, " + prefix + "tardis.chameleon_preset FROM " + prefix + "controls, " + prefix + "tardis WHERE `type` IN (49, 50) AND location = ? AND " + prefix + "controls.tardis_id = " + prefix + "tardis.tardis_id";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -82,6 +83,7 @@ public class ResultSetLightLevel {
                 type = rs.getInt("type");
                 level = rs.getInt("secondary");
                 powered = rs.getBoolean("powered_on");
+                lightsOn = rs.getBoolean("lights_on");
                 String[] split = rs.getString("chameleon_preset").split(":");
                 ChameleonPreset preset;
                 try {
@@ -133,6 +135,10 @@ public class ResultSetLightLevel {
 
     public boolean isPowered() {
         return powered;
+    }
+
+    public boolean isLightsOn() {
+        return lightsOn;
     }
 
     public boolean isPoliceBox() {
