@@ -74,6 +74,7 @@ public class TARDISShellRoomConstructor {
             // must be at least one block and one door
             boolean hasBlock = false;
             boolean hasDoor = false;
+            boolean hasPrecious = false;
             for (int c = 0; c < 10; c++) {
                 for (int y = fy; y < fy + 4; y++) {
                     Block fb = w.getBlockAt(fx + orderx[c], y, fz + orderz[c]);
@@ -81,13 +82,21 @@ public class TARDISShellRoomConstructor {
                         if (TARDISMaterials.doors.contains(fb.getType())) {
                             hasDoor = true;
                         } else {
+                            if (!plugin.getConfig().getBoolean("allow.all_blocks")
+                                    && TARDISMaterials.precious.contains(fb.getType()) || Tag.WOOL_CARPETS.isTagged(fb.getType())) {
+                                hasPrecious = true;
+                            }
                             hasBlock = true;
                         }
                     }
                 }
             }
-            if (!hasBlock && !hasDoor) {
+            if (!hasBlock || !hasDoor) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SHELL_MIN_BLOCKS");
+                return;
+            }
+            if (hasPrecious) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_NOT_CUSTOM");
                 return;
             }
             Tardis tardis = rs.getTardis();

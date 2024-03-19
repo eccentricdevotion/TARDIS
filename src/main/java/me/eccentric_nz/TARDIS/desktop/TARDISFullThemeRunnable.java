@@ -880,7 +880,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                             try {
                                 UUID uuid = UUID.fromString(head.get("uuid").getAsString());
                                 TARDISHeadSetter.textureSkull(plugin, uuid, head, b);
-                            }catch (IllegalArgumentException ignored) {
+                            } catch (IllegalArgumentException ignored) {
                             }
                         }
                     }

@@ -81,7 +81,6 @@ public class TARDISShellInventory {
                     JsonArray inner = json.get(k).getAsJsonArray();
                     for (int j = 0; j < 4; j++) {
                         String block = inner.get(j).getAsString();
-                        plugin.debug(block);
                         if (!block.equals("minecraft:air")) {
                             BlockData blockData = plugin.getServer().createBlockData(block);
                             material = blockData.getMaterial();

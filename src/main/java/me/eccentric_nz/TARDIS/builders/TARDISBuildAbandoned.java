@@ -599,7 +599,7 @@ class TARDISBuildAbandoned implements Runnable {
                         try {
                             UUID uuid = UUID.fromString(head.get("uuid").getAsString());
                             TARDISHeadSetter.textureSkull(plugin, uuid, head, world.getBlockAt(x, y, z));
-                        }catch (IllegalArgumentException ignored) {
+                        } catch (IllegalArgumentException ignored) {
                         }
                     }
                 }
