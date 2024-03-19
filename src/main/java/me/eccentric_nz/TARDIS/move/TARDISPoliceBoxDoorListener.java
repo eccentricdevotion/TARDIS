@@ -178,7 +178,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
                                                     plugin.getQueryFactory().doSyncInsert("travellers", set);
                                                 } else {
                                                     // create portal & open inner door
-                                                    new TARDISInnerDoorOpener(plugin, uuid, id).openDoor();
+                                                    new TARDISInnerDoorOpener(plugin, uuid, id).openDoor(!plugin.getUtils().inTARDISWorld(player));
                                                     if (dye.getType() == Material.ENDER_PEARL) {
                                                         // animate pandorica opening
                                                         new PandoricaOpens(plugin).animate(stand, true);

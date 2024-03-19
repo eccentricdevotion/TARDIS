@@ -29,8 +29,10 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
@@ -57,18 +59,18 @@ public class TARDISInnerDoorOpener {
         this.id = id;
     }
 
-    public void openDoor() {
+    public void openDoor(boolean outside) {
         // get inner door location
         ResultSetDoorBlocks rs = new ResultSetDoorBlocks(plugin, id);
         if (rs.resultSet()) {
-            open(rs.getInnerBlock());
+            open(rs.getInnerBlock(), outside);
         }
     }
 
     /**
      * Open the door.
      */
-    private void open(Block block) {
+    private void open(Block block, boolean outside) {
         if (Tag.DOORS.isTagged(block.getType())) {
             Openable openable = (Openable) block.getBlockData();
             openable.setOpen(true);
@@ -78,10 +80,17 @@ public class TARDISInnerDoorOpener {
             ItemDisplay display = TARDISDisplayItemUtils.getFromBoundingBox(block);
             if (display != null) {
                 TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
-                if (tdi != null && (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN) || tdi == TARDISDisplayItem.CLASSIC_DOOR) {
+                if (tdi != null && (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN || (tdi == TARDISDisplayItem.CLASSIC_DOOR && outside))) {
                     ItemStack itemStack = display.getItemStack();
                     ItemMeta im = itemStack.getItemMeta();
-                    im.setCustomModelData(tdi == TARDISDisplayItem.CLASSIC_DOOR ? 100010 : 10002);
+                    int cmd = 10002;
+                    if (tdi == TARDISDisplayItem.CLASSIC_DOOR) {
+                        cmd = 10010;
+                        // remove barriers
+                        block.getRelative(BlockFace.UP).setType(Material.AIR);
+                        block.getRelative(BlockFace.UP).getRelative(BlockFace.EAST).setType(Material.AIR);
+                    }
+                    im.setCustomModelData(cmd);
                     itemStack.setItemMeta(im);
                     display.setItemStack(itemStack);
                 }
@@ -158,7 +167,7 @@ public class TARDISInnerDoorOpener {
                     }
                 }
             }
-            if (!plugin.getPresetBuilder().checkForSpace(block, indirection)) {
+            if (plugin.getPresetBuilder().hasBlockBehind(block, indirection)) {
                 // set trackers
                 TARDISTeleportLocation tp_in = new TARDISTeleportLocation();
                 tp_in.setLocation(indoor);

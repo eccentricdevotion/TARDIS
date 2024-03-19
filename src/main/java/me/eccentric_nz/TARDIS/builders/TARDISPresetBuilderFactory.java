@@ -16,20 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstantPreset;
-import me.eccentric_nz.TARDIS.enumeration.Adaption;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkBuilder;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Chunk;
@@ -38,8 +31,12 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 /**
- * The Wibbly lever was a part of The Doctor's TARDIS console. The lever had at least two functions: opening and closing
+ * The Wibbly Lever was a part of The Doctor's TARDIS console. The lever had at least two functions: opening and closing
  * doors and controlling implosions used to revert paradoxes in which the TARDIS had materialised within itself.
  *
  * @author eccentric_nz
@@ -188,7 +185,7 @@ public class TARDISPresetBuilderFactory {
             whered.put("tardis_id", bd.getTardisID());
             HashMap<String, Object> set = new HashMap<>();
             if (preset == ChameleonPreset.ITEM) {
-                set.put("chameleon_demat", "ITEM:"+tardis.getItemPreset());
+                set.put("chameleon_demat", "ITEM:" + tardis.getItemPreset());
             } else {
                 set.put("chameleon_demat", preset.toString());
             }
@@ -222,8 +219,8 @@ public class TARDISPresetBuilderFactory {
         };
     }
 
-    public boolean checkForSpace(Block b, COMPASS d) {
+    public boolean hasBlockBehind(Block b, COMPASS d) {
         BlockFace face = getOppositeFace(d);
-        return (b.getRelative(face).getType().isAir() && b.getRelative(face).getRelative(BlockFace.UP).getType().isAir());
+        return (!b.getRelative(face).getType().isAir() && !b.getRelative(face).getRelative(BlockFace.UP).getType().isAir());
     }
 }

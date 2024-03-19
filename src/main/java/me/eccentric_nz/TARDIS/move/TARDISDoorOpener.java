@@ -181,7 +181,7 @@ public class TARDISDoorOpener {
                     }
                 }
             }
-            if (!plugin.getPresetBuilder().checkForSpace(inner, indirection)) {
+            if (plugin.getPresetBuilder().hasBlockBehind(inner, indirection)) {
                 // set trackers
                 TARDISTeleportLocation tp_in = new TARDISTeleportLocation();
                 tp_in.setLocation(indoor);

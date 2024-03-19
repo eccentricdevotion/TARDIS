@@ -79,7 +79,7 @@ public class TARDISCustomModelDataChanger {
                         boolean open = (cmd == 1001);
                         int newData;
                         if (open) {
-                            new TARDISInnerDoorOpener(plugin, uuid, id).openDoor();
+                            new TARDISInnerDoorOpener(plugin, uuid, id).openDoor(!plugin.getUtils().inTARDISWorld(player));
                             newData = 1002;
                         } else {
                             new TARDISInnerDoorCloser(plugin, uuid, id).closeDoor();

@@ -2,6 +2,11 @@ package me.eccentric_nz.TARDIS.customblocks;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Directional;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -21,7 +26,10 @@ public class ClassicDoorAnimator {
     }
 
     public void open() {
-        TARDISSounds.playTARDISSound(display.getLocation(), "classic_door");
+        // remove the barrier blocks
+        Location location = display.getLocation();
+        setBlocks(location, Material.AIR);
+        TARDISSounds.playTARDISSound(location, "classic_door");
         ItemStack is = display.getItemStack();
         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             ItemMeta im = is.getItemMeta();
@@ -37,7 +45,8 @@ public class ClassicDoorAnimator {
     }
 
     public void close() {
-        TARDISSounds.playTARDISSound(display.getLocation(), "classic_door");
+        Location location = display.getLocation();
+        TARDISSounds.playTARDISSound(location, "classic_door");
         ItemStack is = display.getItemStack();
         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             ItemMeta im = is.getItemMeta();
@@ -47,8 +56,26 @@ public class ClassicDoorAnimator {
             if (closed < 5) {
                 plugin.getServer().getScheduler().cancelTask(taskID);
                 taskID = 0;
+                // set the barrier blocks to prevent entry
+                setBlocks(location, Material.BARRIER);
             }
             closed--;
         }, 2L, 4L);
+    }
+
+    private void setBlocks(Location location, Material material) {
+        Block block = location.getBlock().getRelative(BlockFace.UP);
+        Block barrier = block.getRelative(BlockFace.EAST);
+        if (material == Material.END_ROD) {
+            Directional left = (Directional)material.createBlockData();
+            left.setFacing(BlockFace.EAST);
+            Directional right = (Directional) material.createBlockData();
+            right.setFacing(BlockFace.WEST);
+            block.setBlockData(left);
+            barrier.setBlockData(right);
+        } else {
+            block.setType(material);
+            barrier.setType(material);
+        }
     }
 }

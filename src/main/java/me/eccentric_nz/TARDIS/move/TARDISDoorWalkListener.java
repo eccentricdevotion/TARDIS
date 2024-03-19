@@ -255,7 +255,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                 if (doortype == 1 || !plugin.getPM().isPluginEnabled("RedProtect") || TARDISRedProtectChecker.shouldToggleDoor(block)) {
                                                     new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
                                                 } else {
-                                                    new TARDISInnerDoorOpener(plugin, playerUUID, id).openDoor();
+                                                    new TARDISInnerDoorOpener(plugin, playerUUID, id).openDoor(!plugin.getUtils().inTARDISWorld(player));
                                                 }
                                             }
                                         } else if (Tag.TRAPDOORS.isTagged(blockType)) {
