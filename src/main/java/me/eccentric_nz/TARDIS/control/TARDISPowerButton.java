@@ -20,15 +20,23 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightLevelLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSensors;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.BoundingBox;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -131,6 +139,25 @@ public class TARDISPowerButton {
         // toggle the power sensor
         handleSensor(id);
         plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
+        // get light level switches
+        // interior
+        ResultSetLightLevelLocation rslls = new ResultSetLightLevelLocation(plugin, id, 50);
+        if (rslls.resultSet()) {
+            Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rslls.getLocation());
+            ItemFrame frame = getFrame(location.getBlock());
+            if (frame != null) {
+                setFrame(frame, powered);
+            }
+        }
+        // exterior
+        ResultSetLightLevelLocation rsllx = new ResultSetLightLevelLocation(plugin, id, 49);
+        if (rsllx.resultSet()) {
+            Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsllx.getLocation());
+            ItemFrame frame = getFrame(location.getBlock());
+            if (frame != null) {
+                setFrame(frame, powered);
+            }
+        }
     }
 
     private boolean isTravelling(int id) {
@@ -146,5 +173,24 @@ public class TARDISPowerButton {
                 toggle.setState(block);
             }
         }
+    }
+
+    private ItemFrame getFrame(Block block) {
+        BoundingBox box = new BoundingBox(block.getX(), block.getY(), block.getZ(), block.getX() + 1, block.getY() + 1, block.getZ() + 1).expand(0.1d);
+        for (Entity e : block.getWorld().getNearbyEntities(box, (d) -> d.getType() == EntityType.ITEM_FRAME)) {
+            if (e instanceof ItemFrame frame) {
+                return frame;
+            }
+        }
+        return null;
+    }
+
+    private void setFrame(ItemFrame frame, boolean on) {
+        ItemStack is = frame.getItem();
+        ItemMeta im = is.getItemMeta();
+        int cmd = im.getCustomModelData();
+        im.setCustomModelData(on ? cmd + 1000 : cmd - 1000);
+        is.setItemMeta(im);
+        frame.setItem(is);
     }
 }
