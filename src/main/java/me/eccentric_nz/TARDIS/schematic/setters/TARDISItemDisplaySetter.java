@@ -20,6 +20,7 @@ import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -52,11 +53,25 @@ public class TARDISItemDisplaySetter {
             if (stack.has("door")) {
                 HashMap<String, Object> setd = new HashMap<>();
                 String doorloc = block.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
-                setd.put("tardis_id", id);
-                setd.put("door_type", 1);
                 setd.put("door_location", doorloc);
                 setd.put("door_direction", "SOUTH");
-                TARDIS.plugin.getQueryFactory().doInsert("doors", setd);
+                // check if there is an existing record
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("tardis_id", id);
+                where.put("door_type", 1);
+                ResultSetDoors rsd = new ResultSetDoors(TARDIS.plugin, where, false);
+                if (rsd.resultSet()) {
+                    // update
+                    HashMap<String, Object> whered = new HashMap<>();
+                    whered.put("tardis_id", id);
+                    whered.put("door_type", 1);
+                    TARDIS.plugin.getQueryFactory().doUpdate("doors", setd, whered);
+                } else {
+                    // insert
+                    setd.put("tardis_id", id);
+                    setd.put("door_type", 1);
+                    TARDIS.plugin.getQueryFactory().doInsert("doors", setd);
+                }
                 // if create_worlds is true, set the world spawn
                 if (TARDIS.plugin.getConfig().getBoolean("creation.create_worlds")) {
                     block.getWorld().setSpawnLocation(l.getBlockX(), l.getBlockY(), (l.getBlockZ() + 1));
