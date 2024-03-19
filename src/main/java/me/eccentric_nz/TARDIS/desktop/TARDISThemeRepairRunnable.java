@@ -55,9 +55,8 @@ import org.bukkit.entity.*;
 import java.util.*;
 
 /**
- * There was also a safety mechanism for when TARDIS rooms were deleted,
- * automatically relocating any living beings in the deleted room, depositing
- * them in the control room.
+ * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
+ * the deleted room, depositing them in the control room.
  *
  * @author eccentric_nz
  */
@@ -116,7 +115,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
     public void run() {
         // initialise
         if (!running) {
-            // get Archive if nescessary
+            // get Archive if necessary
             if (tud.getSchematic().getPermission().equals("archive")) {
                 HashMap<String, Object> wherean = new HashMap<>();
                 wherean.put("uuid", uuid.toString());
@@ -420,7 +419,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     postBedrock = world.getBlockAt(x, y, z);
                 }
                 if (type.equals(Material.SCULK_SHRIEKER)) {
-                    // remember the location so we can make it shriek when flying
+                    // remember the location, so we can make it shriek when flying
                     String shrieker = new Location(world, x, y, z).toString();
                     TARDISTimeRotor.updateRotorRecord(id, shrieker);
                 }
@@ -614,9 +613,10 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     if (bb.has("head")) {
                         JsonObject head = bb.get("head").getAsJsonObject();
                         if (head.has("uuid")) {
-                            UUID uuid = UUID.fromString(head.get("uuid").getAsString());
-                            if (uuid != null) {
+                            try {
+                                UUID uuid = UUID.fromString(head.get("uuid").getAsString());
                                 TARDISHeadSetter.textureSkull(plugin, uuid, head, world.getBlockAt(x, y, z));
+                            } catch (IllegalArgumentException ignored) {
                             }
                         }
                     }

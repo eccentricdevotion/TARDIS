@@ -563,7 +563,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     postBedrock = b;
                 }
                 if (type.equals(Material.SCULK_SHRIEKER)) {
-                    // remember the location so we can make it shriek when flying
+                    // remember the location, so we can make it shriek when flying
                     String shrieker = new Location(world, x, y, z).toString();
                     TARDISTimeRotor.updateRotorRecord(id, shrieker);
                 }
@@ -877,9 +877,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     if (bb.has("head")) {
                         JsonObject head = bb.get("head").getAsJsonObject();
                         if (head.has("uuid")) {
-                            UUID uuid = UUID.fromString(head.get("uuid").getAsString());
-                            if (uuid != null) {
+                            try {
+                                UUID uuid = UUID.fromString(head.get("uuid").getAsString());
                                 TARDISHeadSetter.textureSkull(plugin, uuid, head, b);
+                            }catch (IllegalArgumentException ignored) {
                             }
                         }
                     }
