@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.destroyers;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
@@ -29,10 +30,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -74,12 +72,18 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                 default -> { // preset
                     cmd = 1001;
                     Levelled levelled = TARDISConstants.LIGHT;
-                    levelled.setLevel(7);
+                    // set light level from exterior lamp control
+                    levelled.setLevel(dd.getExteriorLampLevel());
                     light.setBlockData(levelled);
                 }
             }
             // first run - play sound
             if (i == 1) {
+                // remove interaction entity
+                Interaction interaction = TARDISDisplayItemUtils.getInteraction(dd.getLocation());
+                if (interaction != null) {
+                    interaction.remove();
+                }
                 boolean found = false;
                 for (Entity e : world.getNearbyEntities(dd.getLocation(), 1.0d, 1.0d, 1.0d)) {
                     if (e instanceof ArmorStand a) {

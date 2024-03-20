@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetExteriorLightLevel;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import org.bukkit.Location;
@@ -35,6 +37,7 @@ public class MaterialisationData {
     private boolean submarine;
     private boolean siege;
     private int tardisID;
+    private int exteriorLampLevel;
     private SpaceTimeThrottle throttle;
 
     public COMPASS getDirection() {
@@ -91,6 +94,17 @@ public class MaterialisationData {
 
     public void setTardisID(int tardisID) {
         this.tardisID = tardisID;
+        // set exterior lamp
+        ResultSetExteriorLightLevel rs = new ResultSetExteriorLightLevel(TARDIS.plugin, tardisID);
+        if (rs.resultSet()) {
+            exteriorLampLevel = LightLevel.exterior_level[rs.getLevel()];
+        } else {
+            exteriorLampLevel = 8;
+        }
+    }
+
+    public int getExteriorLampLevel() {
+        return exteriorLampLevel;
     }
 
     public SpaceTimeThrottle getThrottle() {

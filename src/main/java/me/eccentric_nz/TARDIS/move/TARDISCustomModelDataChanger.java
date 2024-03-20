@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
-import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -35,14 +34,12 @@ import java.util.UUID;
 public class TARDISCustomModelDataChanger {
 
     private final TARDIS plugin;
-    private final Block block;
     private final Player player;
     private final int id;
     private final ChameleonPreset preset;
 
-    public TARDISCustomModelDataChanger(TARDIS plugin, Block block, Player player, int id, ChameleonPreset preset) {
+    public TARDISCustomModelDataChanger(TARDIS plugin, Player player, int id, ChameleonPreset preset) {
         this.plugin = plugin;
-        this.block = block;
         this.player = player;
         this.id = id;
         this.preset = preset;

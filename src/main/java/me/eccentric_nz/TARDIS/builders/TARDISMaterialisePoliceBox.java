@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.flight.FlightEnd;
@@ -200,6 +201,8 @@ public class TARDISMaterialisePoliceBox implements Runnable {
             if (!bd.isRebuild()) {
                 plugin.getTrackerKeeper().getActiveForceFields().remove(bd.getPlayer().getPlayer().getUniqueId());
             }
+            // add an interaction entity
+            TARDISDisplayItemUtils.setInteraction(stand, bd.getTardisID());
             // message travellers in tardis
             if (loops > 3) {
                 new FlightEnd(plugin).process(bd.getTardisID(), bd.getPlayer().getPlayer(), bd.isMalfunction());

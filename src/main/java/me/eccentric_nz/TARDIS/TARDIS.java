@@ -195,7 +195,9 @@ public class TARDIS extends JavaPlugin {
     private NamespacedKey customBlockKey;
     private NamespacedKey destroyKey;
     private NamespacedKey loopKey;
+    private NamespacedKey tardisIdKey;
     private NamespacedKey timeLordUuidKey;
+    private NamespacedKey standUuidKey;
     private NamespacedKey blueprintKey;
     private NamespacedKey sonicUuidKey;
     private NamespacedKey sonicChargeKey;
@@ -297,7 +299,9 @@ public class TARDIS extends JavaPlugin {
         customBlockKey = new NamespacedKey(this, "custom_block");
         destroyKey = new NamespacedKey(this, "destroy");
         loopKey = new NamespacedKey(this, "loop");
+        tardisIdKey = new NamespacedKey(this, "tardis_id");
         timeLordUuidKey = new NamespacedKey(this, "timelord_uuid");
+        standUuidKey = new NamespacedKey(this, "stand_uuid");
         blueprintKey = new NamespacedKey(this, "blueprint");
         sonicUuidKey = new NamespacedKey(this, "sonic_uuid");
         sonicChargeKey = new NamespacedKey(this, "sonic_charge");
@@ -1274,6 +1278,15 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
+     * Gets the TARDIS ID NamespacedKey
+     *
+     * @return the TARDIS ID NamespacedKey
+     */
+    public NamespacedKey getTardisIdKey() {
+        return tardisIdKey;
+    }
+
+    /**
      * Gets the Time Lord UUID NamespacedKey
      *
      * @return the Time Lord UUID NamespacedKey
@@ -1282,6 +1295,14 @@ public class TARDIS extends JavaPlugin {
         return timeLordUuidKey;
     }
 
+    /**
+     * Gets the armour stand UUID NamespacedKey
+     *
+     * @return the armour stand UUID NamespacedKey
+     */
+    public NamespacedKey getStandUuidKey() {
+        return standUuidKey;
+    }
     /**
      * Gets the TARDIS Blueprint NamespacedKey
      *

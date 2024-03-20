@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetExteriorLightLevel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 
 /**
@@ -31,22 +30,9 @@ public final class BuildData extends MaterialisationData {
     private boolean malfunction;
     private boolean minecartSounds = false;
     private boolean rebuild;
-    private int exteriorLampLevel;
 
     public BuildData(String uuid) {
         setPlayerDefaults(uuid);
-    }
-
-    @Override
-    public void setTardisID(int tardisID) {
-        super.setTardisID(tardisID);
-        // set exterior lamp
-        ResultSetExteriorLightLevel rs = new ResultSetExteriorLightLevel(TARDIS.plugin, tardisID);
-        if (rs.resultSet()) {
-            exteriorLampLevel = LightLevel.exterior_level[rs.getLevel()];
-        } else {
-            exteriorLampLevel = 9;
-        }
     }
 
     boolean shouldAddSign() {
@@ -73,23 +59,17 @@ public final class BuildData extends MaterialisationData {
         this.rebuild = rebuild;
     }
 
-    public int getExteriorLampLevel() {
-        return exteriorLampLevel;
-    }
-
     private void setPlayerDefaults(String uuid) {
         if (uuid == null) {
             // sane defaults
             addSign = true;
             minecartSounds = false;
-            exteriorLampLevel = 7;
         } else {
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(TARDIS.plugin, uuid);
             if (rsp.resultSet()) {
                 addSign = rsp.isSignOn();
                 minecartSounds = rsp.isMinecartOn();
             }
-
         }
     }
 }

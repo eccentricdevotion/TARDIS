@@ -53,7 +53,7 @@ public class TARDISInnerDoorOpener {
     private final UUID uuid;
     private final int id;
 
-    TARDISInnerDoorOpener(TARDIS plugin, UUID uuid, int id) {
+    public TARDISInnerDoorOpener(TARDIS plugin, UUID uuid, int id) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.id = id;

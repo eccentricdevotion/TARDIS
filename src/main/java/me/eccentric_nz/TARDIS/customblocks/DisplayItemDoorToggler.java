@@ -78,7 +78,7 @@ public class DisplayItemDoorToggler {
                     if (!rsd.isLocked()) {
                         // toggle the door
                         if (rs.getTardis().getPreset().usesArmourStand()) {
-                            new TARDISCustomModelDataChanger(plugin, block, player, id, rs.getTardis().getPreset()).toggleOuterDoor();
+                            new TARDISCustomModelDataChanger(plugin, player, id, rs.getTardis().getPreset()).toggleOuterDoor();
                         }
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, playerUUID.toString());
                         boolean minecart = false;

@@ -114,6 +114,15 @@ public class TARDISDisplayItemUtils {
         return null;
     }
 
+    public static Interaction getInteraction(Location location) {
+        for (Entity e : location.getWorld().getNearbyEntities(location, 1.5d, 3d, 1.5d, (d) -> d.getType() == EntityType.INTERACTION)) {
+            if (e instanceof Interaction interaction) {
+                return interaction;
+            }
+        }
+        return null;
+    }
+
     /**
      * Spawn an Item Display entity
      *
@@ -229,6 +238,46 @@ public class TARDISDisplayItemUtils {
             interaction.setInteractionHeight(2.0f);
             interaction.setInteractionWidth(1.0f);
         }
+    }
+
+    /**
+     * Spawn an Interaction entity for a modelled TARDIS exterior
+     *
+     * @param stand the armour stand to add the interaction entity to
+     * @param id    the tardis id to set for the key associated with the entity
+     */
+    public static void setInteraction(ArmorStand stand, int id) {
+        Location location = stand.getLocation();
+        // spawn an interaction entity
+        Interaction interaction = (Interaction) location.getWorld().spawnEntity(location, EntityType.INTERACTION);
+        interaction.getPersistentDataContainer().set(TARDIS.plugin.getTardisIdKey(), PersistentDataType.INTEGER, id);
+        interaction.getPersistentDataContainer().set(TARDIS.plugin.getStandUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), stand.getUniqueId());
+        interaction.setResponsive(true);
+        interaction.setPersistent(true);
+        interaction.setInvulnerable(true);
+        // set size
+        interaction.setInteractionHeight(2.5f);
+        interaction.setInteractionWidth(1.5f);
+    }
+
+    /**
+     * Spawn an Interaction entity for a block TARDIS exterior
+     *
+     * @param block the block to spawn the interaction entity at
+     * @param id    the tardis id to set for the key associated with the entity
+     */
+    public static void setInteraction(Block block, int id) {
+        Location location = block.getLocation().clone().add(0.5d, 0, 0.5d);
+        // spawn an interaction entity
+        Interaction interaction = (Interaction) location.getWorld().spawnEntity(location, EntityType.INTERACTION);
+        interaction.getPersistentDataContainer().set(TARDIS.plugin.getTardisIdKey(), PersistentDataType.INTEGER, id);
+//        interaction.getPersistentDataContainer().set(TARDIS.plugin.getStandUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), block.getUniqueId());
+        interaction.setResponsive(true);
+        interaction.setPersistent(true);
+        interaction.setInvulnerable(true);
+        // set size
+        interaction.setInteractionHeight(4.0f);
+        interaction.setInteractionWidth(3.0f);
     }
 
     /**

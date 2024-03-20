@@ -29,11 +29,15 @@ import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
+import me.eccentric_nz.TARDIS.move.actions.DoorLockAction;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISRedProtectChecker;
-import org.bukkit.*;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Tag;
+import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -156,53 +160,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                         boolean minecart = rsp.isMinecartOn();
                         Material m = Material.getMaterial(key);
                         if (action == Action.LEFT_CLICK_BLOCK) {
-                            if (stack.hasItemMeta() && stack.getItemMeta().hasDisplayName() && stack.getItemMeta().getDisplayName().endsWith("TARDIS Remote Key")) {
-                                return;
-                            }
-                            // must be the owner
-                            ResultSetTardisID rs = new ResultSetTardisID(plugin);
-                            if (rs.fromUUID(playerUUID.toString())) {
-                                // must use key to lock / unlock door
-                                if (material.equals(m) || plugin.getConfig().getBoolean("preferences.any_key")) {
-                                    if (rs.getTardis_id() != id) {
-                                        plugin.getMessenger().sendStatus(player, "DOOR_LOCK_UNLOCK");
-                                        return;
-                                    }
-                                    int locked = (rsd.isLocked()) ? 0 : 1;
-                                    String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
-                                    HashMap<String, Object> setl = new HashMap<>();
-                                    setl.put("locked", locked);
-                                    HashMap<String, Object> wherel = new HashMap<>();
-                                    wherel.put("tardis_id", rsd.getTardis_id());
-                                    // always lock / unlock both doors
-                                    plugin.getQueryFactory().doUpdate("doors", setl, wherel);
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_LOCK", message);
-                                } else if (material.isAir() && rs.getTardis_id() != id) { // knock with hand if it's not their TARDIS
-                                    // only outside the TARDIS
-                                    if (doortype == 0) {
-                                        // only if companion
-                                        ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
-                                        if (rsc.getCompanions().contains(playerUUID)) {
-                                            // get Time Lord
-                                            HashMap<String, Object> wherett = new HashMap<>();
-                                            wherett.put("tardis_id", id);
-                                            ResultSetTardis rstt = new ResultSetTardis(plugin, wherett, "", false, 2);
-                                            if (rstt.resultSet()) {
-                                                UUID tluuid = rstt.getTardis().getUuid();
-                                                // only if Time Lord is inside
-                                                HashMap<String, Object> wherev = new HashMap<>();
-                                                wherev.put("uuid", tluuid.toString());
-                                                ResultSetTravellers rsv = new ResultSetTravellers(plugin, wherev, false);
-                                                if (rsv.resultSet()) {
-                                                    Player tl = plugin.getServer().getPlayer(tluuid);
-                                                    Sound knock = (blockType.equals(Material.IRON_DOOR)) ? Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR : Sound.ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR;
-                                                    tl.getWorld().playSound(tl.getLocation(), knock, 3.0F, 3.0F);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                            new DoorLockAction(plugin).lockUnlock(player, m, id, rsd.isLocked(), true);
                         }
                         if (action == Action.RIGHT_CLICK_BLOCK && !player.isSneaking()) {
                             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
@@ -249,7 +207,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                 }
                                                 // toggle the door
                                                 if (isPoliceBox) {
-                                                    new TARDISCustomModelDataChanger(plugin, block, player, id, rs.getTardis().getPreset()).toggleOuterDoor();
+                                                    new TARDISCustomModelDataChanger(plugin, player, id, rs.getTardis().getPreset()).toggleOuterDoor();
                                                     // should toggle inner door too!
                                                 }
                                                 if (doortype == 1 || !plugin.getPM().isPluginEnabled("RedProtect") || TARDISRedProtectChecker.shouldToggleDoor(block)) {

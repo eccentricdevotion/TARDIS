@@ -53,24 +53,18 @@ import java.util.Set;
 public class TARDISDevCommand implements CommandExecutor {
 
     private final Set<String> firstsStr = Sets.newHashSet(
-            "add_regions",
-            "advancements",
-            "box",
-            "brushable",
-            "chunks", "chunky",
-            "circuit",
-            "dismount",
-            "displayitem",
-            "frame",
-            "furnace",
+            "add_regions", "advancements",
+            "box", "brushable",
+            "chunks", "chunky", "circuit",
+            "dismount", "displayitem",
+            "frame", "furnace",
+            "interaction",
             "label", "list",
             "nms",
             "plurals",
             "recipe",
-            "snapshot",
-            "stats",
-            "tis",
-            "tree"
+            "snapshot", "stats",
+            "tis", "tree"
     );
     private final TARDIS plugin;
 
@@ -98,6 +92,12 @@ public class TARDISDevCommand implements CommandExecutor {
                     }
                     if (first.equals("furnace")) {
                         return new TARDISFurnaceCommand(plugin).list(sender);
+                    }
+                    if (first.equals("interaction")) {
+                        if (sender instanceof Player player) {
+                            return new TARDISInteractionCommand(plugin).process(player.getUniqueId());
+                        }
+                        return false;
                     }
                     if (first.equals("stats")) {
                         ARSRoomCounts arsRoomCounts = new ARSRoomCounts(plugin);

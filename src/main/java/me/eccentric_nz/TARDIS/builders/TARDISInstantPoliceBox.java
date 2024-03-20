@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
@@ -99,7 +100,7 @@ public class TARDISInstantPoliceBox {
             block.setBlockData(TARDISConstants.AIR);
             TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisID(), false);
             // spawn armour stand
-            stand = (ArmorStand) world.spawnEntity(bd.getLocation().clone().add(0.5d, 0,0.5d), EntityType.ARMOR_STAND);
+            stand = (ArmorStand) world.spawnEntity(bd.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.ARMOR_STAND);
         }
         stand.setRotation(bd.getDirection().getYaw(), 0.0f);
         Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, bd.getTardisID(), true);
@@ -147,5 +148,7 @@ public class TARDISInstantPoliceBox {
         // set light level from exterior lamp control
         levelled.setLevel(bd.getExteriorLampLevel());
         block.getRelative(BlockFace.UP, 2).setBlockData(levelled);
+        // add an interaction entity
+        TARDISDisplayItemUtils.setInteraction(stand, bd.getTardisID());
     }
 }

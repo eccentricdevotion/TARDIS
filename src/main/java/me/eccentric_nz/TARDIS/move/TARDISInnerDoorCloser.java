@@ -40,19 +40,19 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISInnerDoorCloser {
+public class TARDISInnerDoorCloser {
 
     private final TARDIS plugin;
     private final UUID uuid;
     private final int id;
 
-    TARDISInnerDoorCloser(TARDIS plugin, UUID uuid, int id) {
+    public TARDISInnerDoorCloser(TARDIS plugin, UUID uuid, int id) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.id = id;
     }
 
-    void closeDoor() {
+    public void closeDoor() {
         // get inner door location
         ResultSetDoorBlocks rs = new ResultSetDoorBlocks(plugin, id);
         if (rs.resultSet()) {

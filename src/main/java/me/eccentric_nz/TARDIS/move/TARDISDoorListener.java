@@ -44,7 +44,7 @@ import java.util.UUID;
 public class TARDISDoorListener {
 
     public final float[][] adjustYaw = new float[4][8];
-    final TARDIS plugin;
+    public final TARDIS plugin;
     private final int player_artron;
 
     public TARDISDoorListener(TARDIS plugin) {
@@ -457,7 +457,7 @@ public class TARDISDoorListener {
      *
      * @param uuid the UUID of the player to remove
      */
-    void removeTraveller(UUID uuid) {
+    public void removeTraveller(UUID uuid) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         plugin.getQueryFactory().doSyncDelete("travellers", where);
