@@ -28,7 +28,7 @@ public class ClassicDoorAnimator {
     public void open() {
         // remove the barrier blocks
         Location location = display.getLocation();
-        setBlocks(location, Material.AIR);
+        setBlocks(location, Material.AIR, display.getYaw());
         TARDISSounds.playTARDISSound(location, "classic_door");
         ItemStack is = display.getItemStack();
         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
@@ -57,17 +57,27 @@ public class ClassicDoorAnimator {
                 plugin.getServer().getScheduler().cancelTask(taskID);
                 taskID = 0;
                 // set the barrier blocks to prevent entry
-                setBlocks(location, Material.BARRIER);
+                setBlocks(location, Material.BARRIER, display.getYaw());
             }
             closed--;
         }, 2L, 4L);
     }
 
-    private void setBlocks(Location location, Material material) {
+    private void setBlocks(Location location, Material material, float yaw) {
+        BlockFace face;
+        if (yaw == 90) {
+            face = BlockFace.SOUTH;
+        } else if (yaw == -90) {
+            face = BlockFace.NORTH;
+        } else if (yaw == -180) {
+            face = BlockFace.WEST;
+        } else {
+            face = BlockFace.EAST;
+        }
         Block block = location.getBlock().getRelative(BlockFace.UP);
-        Block barrier = block.getRelative(BlockFace.EAST);
+        Block barrier = block.getRelative(face);
         if (material == Material.END_ROD) {
-            Directional left = (Directional)material.createBlockData();
+            Directional left = (Directional) material.createBlockData();
             left.setFacing(BlockFace.EAST);
             Directional right = (Directional) material.createBlockData();
             right.setFacing(BlockFace.WEST);

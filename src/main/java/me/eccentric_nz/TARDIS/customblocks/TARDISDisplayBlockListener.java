@@ -62,6 +62,7 @@ public class TARDISDisplayBlockListener implements Listener {
         this.plugin = plugin;
     }
 
+
     /**
      * Place an item display entity and a barrier block to simulate a custom TARDIS block.
      *
@@ -114,6 +115,9 @@ public class TARDISDisplayBlockListener implements Listener {
         display.setInvulnerable(true);
         if (which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR) {
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
+            float yaw = getLookAtYaw(player);
+            // set display rotation
+            display.setRotation(yaw, 0);
         }
         if (player.getGameMode() != GameMode.CREATIVE) {
             int amount = is.getAmount() - 1;
@@ -124,6 +128,27 @@ public class TARDISDisplayBlockListener implements Listener {
                 player.getInventory().setItemInMainHand(is);
             }
         }
+    }
+
+    public float getLookAtYaw(Player player) {
+        Vector motion = player.getEyeLocation().getDirection().multiply(-1);
+        double dx = motion.getX();
+        double dz = motion.getZ();
+        double yaw = 0;
+        // Set yaw
+        if (dx != 0) {
+            // Set yaw start value based on dx
+            if (dx < 0) {
+                yaw = 1.5 * Math.PI;
+            } else {
+                yaw = 0.5 * Math.PI;
+            }
+            yaw -= Math.atan(dz / dx);
+        } else if (dz < 0) {
+            yaw = Math.PI;
+        }
+        double y = (-yaw * 180 / Math.PI);
+        return (float) Math.round(y / 90) * 90;
     }
 
     /**
@@ -239,9 +264,9 @@ public class TARDISDisplayBlockListener implements Listener {
                     TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
                     if (tdi != null) {
                         if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR_OPEN) {
-                            if (!plugin.getUtils().inTARDISWorld(player)) {
-                                return;
-                            }
+//                            if (!plugin.getUtils().inTARDISWorld(player)) {
+//                                return;
+//                            }
                             Block block = interaction.getLocation().getBlock();
                             UUID playerUUID = player.getUniqueId();
                             if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(player.getUniqueId())) {
