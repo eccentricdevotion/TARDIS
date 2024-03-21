@@ -58,6 +58,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 recipeItems.put(recipeItem.toTabCompletionString(), recipeItem.toRecipeString());
             }
         }
+        // custom time rotors
+        for (String r : TARDIS.plugin.getCustomRotorsConfig().getKeys(false)) {
+            recipeItems.put("time-rotor-" + r.toLowerCase(), "Time Rotor " + TARDISStringUtils.capitalise(r));
+        }
         // remove recipes form modules that are not enabled
         if (!plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
             recipeItems.remove("vortex-manipulator");

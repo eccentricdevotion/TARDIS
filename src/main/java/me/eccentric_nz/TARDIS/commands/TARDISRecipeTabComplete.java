@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands;
 
 import com.google.common.collect.ImmutableList;
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.command.Command;
@@ -58,6 +59,9 @@ public class TARDISRecipeTabComplete extends TARDISCompleter implements TabCompl
             if (recipeItem.getCategory() != RecipeCategory.UNCRAFTABLE && recipeItem.getCategory() != RecipeCategory.UNUSED && recipeItem.getCategory() != RecipeCategory.CHEMISTRY) {
                 ROOT_SUBS.add(recipeItem.toTabCompletionString());
             }
+        }
+        for (String r : TARDIS.plugin.getCustomRotorsConfig().getKeys(false)) {
+            ROOT_SUBS.add("time-rotor-" + r.toLowerCase());
         }
     }
 
