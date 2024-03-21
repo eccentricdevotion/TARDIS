@@ -91,6 +91,7 @@ public class TARDISConfiguration {
         booleanOptions.put("conversions.controls", false);
         booleanOptions.put("conversions.custom_preset", false);
         booleanOptions.put("conversions.icons", false);
+        booleanOptions.put("conversions.interior_door_id", false);
         booleanOptions.put("conversions.legacy_budget", false);
         booleanOptions.put("conversions.player_prefs_materials", false);
         booleanOptions.put("conversions.restore_biomes", false);

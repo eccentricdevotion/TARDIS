@@ -17,14 +17,6 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import com.google.gson.JsonObject;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisTimeLord;
@@ -34,6 +26,15 @@ import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 public class TARDISRoomPersister {
 
@@ -56,7 +57,7 @@ public class TARDISRoomPersister {
                 ps.setString(1, rd.getDirection().toString());
                 ps.setString(2, rd.getRoom());
                 Location location = rd.getLocation();
-                String l = location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
+                String l = TARDISStaticLocationGetters.makeLocationStr(location);
                 ps.setString(3, l);
                 ps.setInt(4, rd.getTardis_id());
                 ps.setInt(5, rd.getRow());

@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chameleon.construct.ConstructsConverter;
 import me.eccentric_nz.TARDIS.chatGUI.*;
 import me.eccentric_nz.TARDIS.control.TARDISControlRunnable;
+import me.eccentric_nz.TARDIS.customblocks.TARDISInteractionDoorUpdater;
 import me.eccentric_nz.TARDIS.database.*;
 import me.eccentric_nz.TARDIS.database.converters.*;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTIPS;
@@ -610,6 +611,12 @@ public class TARDIS extends JavaPlugin {
                 getServer().getScheduler().scheduleSyncDelayedTask(this, () -> new TARDISBiomeConverter(this).convertBiomes(), 1200);
                 getConfig().set("conversions.restore_biomes", true);
                 conversions++;
+            }
+            if (!getConfig().getBoolean("conversions.interior_door_id")) {
+                if (new TARDISInteractionDoorUpdater(this).addIds()) {
+                    getConfig().set("conversions.interior_door_id", true);
+                    conversions++;
+                }
             }
             if (conversions > 0) {
                 saveConfig();

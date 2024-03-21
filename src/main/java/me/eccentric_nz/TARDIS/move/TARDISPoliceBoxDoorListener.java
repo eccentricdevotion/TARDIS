@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.move;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.move.actions.DoorToggleAction;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -40,7 +41,7 @@ public class TARDISPoliceBoxDoorListener extends TARDISDoorListener implements L
         Player player = event.getPlayer();
         if (event.getRightClicked() instanceof ArmorStand stand) {
             Location location = stand.getLocation();
-            String doorloc = location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
+            String doorloc = TARDISStaticLocationGetters.makeLocationStr(location);
             HashMap<String, Object> where = new HashMap<>();
             where.put("door_location", doorloc);
             where.put("door_type", 0);

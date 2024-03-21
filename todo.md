@@ -1,17 +1,17 @@
 # TODO
 
-## Current version `5.5.0`
+## Current version `5.5.1`
 
 1. Fix dem bugs
-2. Redo WAR interior with classic door
 
 ## Next version `5.6.0`
 
-1. Allow 3D Police Boxes to land on slabs [#777](https://github.com/eccentricdevotion/TARDIS/issues/777)
-2. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
+1. Custom display doors [#833](https://github.com/eccentricdevotion/TARDIS/issues/833)
+2. Allow 3D Police Boxes to land on slabs [#777](https://github.com/eccentricdevotion/TARDIS/issues/777)
+3. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
-3. Animated models for player disguises
-4. ?
+4. Animated models for player disguises
+5. ?
 
 ## Future versions
 

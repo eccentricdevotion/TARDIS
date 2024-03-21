@@ -263,3 +263,4 @@ conversions:
     sonic_blaster: true
     vortex_manipulator: true
     weeping_angels: true
+  interior_door_id: true

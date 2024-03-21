@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicSound;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -54,7 +55,7 @@ public class DoorToggleAction extends TARDISDoorListener {
                     UUID uuid = player.getUniqueId();
                     // get TARDIS from location
                     Location location = stand.getLocation();
-                    String doorloc = location.getWorld().getName() + ":" + location.getBlockX() + ":" + location.getBlockY() + ":" + location.getBlockZ();
+                    String doorloc = TARDISStaticLocationGetters.makeLocationStr(location);
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("door_location", doorloc);
                     where.put("door_type", 0);

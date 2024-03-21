@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetDeadlock;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -66,7 +67,6 @@ public class TARDISDisplayBlockListener implements Listener {
     public TARDISDisplayBlockListener(TARDIS plugin) {
         this.plugin = plugin;
     }
-
 
     /**
      * Place an item display entity and a barrier block to simulate a custom TARDIS block.
@@ -219,9 +219,8 @@ public class TARDISDisplayBlockListener implements Listener {
     @EventHandler
     public void onInteractionClick(PlayerInteractAtEntityEvent event) {
         if (event.getRightClicked() instanceof Interaction interaction) {
-            if (interaction.getPersistentDataContainer().has(plugin.getTardisIdKey(), PersistentDataType.INTEGER)) {
+            if (interaction.getPersistentDataContainer().has(plugin.getStandUuidKey(), plugin.getPersistentDataTypeUUID())) {
                 Player player = event.getPlayer();
-                int id = interaction.getPersistentDataContainer().get(plugin.getTardisIdKey(), PersistentDataType.INTEGER);
                 UUID uuid = interaction.getPersistentDataContainer().get(plugin.getStandUuidKey(), plugin.getPersistentDataTypeUUID());
                 if (uuid == null) {
                     return;
@@ -230,6 +229,7 @@ public class TARDISDisplayBlockListener implements Listener {
                 if (stand == null) {
                     return;
                 }
+                int id = interaction.getPersistentDataContainer().get(plugin.getTardisIdKey(), PersistentDataType.INTEGER);
                 // toggle the door
                 new DoorToggleAction(plugin).openClose(id, player, stand);
             } else {
@@ -324,6 +324,12 @@ public class TARDISDisplayBlockListener implements Listener {
                                         }
                                     }
                                 } else {
+                                    // check if door is deadlocked
+                                    ResultSetDeadlock rsd = new ResultSetDeadlock(plugin, display.getLocation());
+                                    if (rsd.resultSet() && rsd.isLocked()) {
+                                        plugin.getMessenger().sendStatus(player, "DOOR_DEADLOCKED");
+                                        return;
+                                    }
                                     ItemStack itemStack = display.getItemStack();
                                     if (itemStack != null) {
                                         ItemMeta im = itemStack.getItemMeta();
@@ -478,11 +484,8 @@ public class TARDISDisplayBlockListener implements Listener {
     }
 
     @EventHandler
-    public void onPoliceBoxInteract(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player player
-                && !plugin.getUtils().inTARDISWorld(player)
-                && event.getEntity() instanceof Interaction interaction
-                && interaction.getPersistentDataContainer().has(plugin.getTardisIdKey(), PersistentDataType.INTEGER)) {
+    public void onDoorInteract(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Player player && event.getEntity() instanceof Interaction interaction && interaction.getPersistentDataContainer().has(plugin.getTardisIdKey(), PersistentDataType.INTEGER)) {
             int id = interaction.getPersistentDataContainer().get(plugin.getTardisIdKey(), PersistentDataType.INTEGER);
             if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT");
@@ -494,7 +497,7 @@ public class TARDISDisplayBlockListener implements Listener {
             }
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
-            where.put("door_type", 0);
+            where.put("door_type", !plugin.getUtils().inTARDISWorld(player) ? 0 : 1);
             ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
             if (rsd.resultSet()) {
                 event.setCancelled(true);
