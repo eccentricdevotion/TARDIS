@@ -349,7 +349,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     // place siege block
                                     siege.setBlockData(TARDISConstants.BARRIER);
                                     TARDISDisplayItemUtils.remove(siege);
-                                    TARDISDisplayItemUtils.set(TARDISDisplayItem.SIEGE_CUBE, siege);
+                                    TARDISDisplayItemUtils.set(TARDISDisplayItem.SIEGE_CUBE, siege, id);
                                     // track this siege block
                                     plugin.getTrackerKeeper().getInSiegeMode().add(id);
                                     set.put("siege_on", 1);

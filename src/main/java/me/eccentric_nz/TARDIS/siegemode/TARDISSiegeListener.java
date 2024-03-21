@@ -207,7 +207,7 @@ public class TARDISSiegeListener implements Listener {
             // turn the drop into a block
             item.remove();
             Block siege = loc.getBlock();
-            TARDISDisplayItemUtils.set(TARDISDisplayItem.SIEGE_CUBE, siege);
+            TARDISDisplayItemUtils.set(TARDISDisplayItem.SIEGE_CUBE, siege, id);
             // remove trackers
             plugin.getTrackerKeeper().getIsSiegeCube().remove(id);
             plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);

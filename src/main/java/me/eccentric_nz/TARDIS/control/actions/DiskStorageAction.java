@@ -104,7 +104,7 @@ public class DiskStorageAction {
         if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
             if (block.getType().equals(Material.NOTE_BLOCK) || block.getType().equals(Material.MUSHROOM_STEM)) {
                 block.setBlockData(TARDISConstants.BARRIER, true);
-                TARDISDisplayItemUtils.set(TARDISDisplayItem.DISK_STORAGE, block);
+                TARDISDisplayItemUtils.set(TARDISDisplayItem.DISK_STORAGE, block, id);
             }
         }
     }

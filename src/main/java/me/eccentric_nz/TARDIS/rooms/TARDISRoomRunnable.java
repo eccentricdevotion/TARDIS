@@ -496,7 +496,7 @@ public class TARDISRoomRunnable implements Runnable {
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
                     if (rsp.resultSet() && rsp.isDynamicLightsOn()) {
                         TardisLight light = rsp.getLights();
-                        lampblocks.forEach((lamp) -> TARDISDisplayItemUtils.set(light.getOn(), lamp));
+                        lampblocks.forEach((lamp) -> TARDISDisplayItemUtils.set(light.getOn(), lamp, tardis_id));
                     } else {
                         lampblocks.forEach((lamp) -> lamp.setBlockData(TARDISConstants.LAMP));
                     }

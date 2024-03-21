@@ -237,7 +237,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             Player p = event.getPlayer();
             String uuid = p.getUniqueId().toString();
             Block block = event.getBlock();
-            TARDISDisplayItemUtils.set(TARDISDisplayItem.SONIC_GENERATOR, block);
+            TARDISDisplayItemUtils.set(TARDISDisplayItem.SONIC_GENERATOR, block, -1);
             String l = block.getLocation().toString();
             // generator was crafted
             // get tardis player is in

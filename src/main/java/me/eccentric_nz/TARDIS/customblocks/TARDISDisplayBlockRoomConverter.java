@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.customblocks;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -27,6 +26,8 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  *
@@ -81,7 +82,7 @@ public class TARDISDisplayBlockRoomConverter implements Runnable {
                     if (tdi != null) {
                         plugin.debug(tdi.getName());
                         block.setType(Material.BARRIER);
-                        TARDISDisplayItemUtils.set(tdi, block);
+                        TARDISDisplayItemUtils.set(tdi, block, -1);
                     }
                 }
             }

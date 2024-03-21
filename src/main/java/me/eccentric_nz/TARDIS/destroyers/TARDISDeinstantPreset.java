@@ -198,7 +198,7 @@ public class TARDISDeinstantPreset {
             Block siege = dd.getLocation().getBlock();
             siege.setBlockData(TARDISConstants.BARRIER);
             TARDISDisplayItemUtils.remove(siege);
-            TARDISDisplayItemUtils.set(TARDISDisplayItem.SIEGE_CUBE, siege);
+            TARDISDisplayItemUtils.set(TARDISDisplayItem.SIEGE_CUBE, siege, id);
         }
         plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(id));
         plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(id));

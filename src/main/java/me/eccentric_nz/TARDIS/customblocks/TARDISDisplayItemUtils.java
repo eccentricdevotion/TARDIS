@@ -154,7 +154,7 @@ public class TARDISDisplayItemUtils {
      * @param tdi   the TARDISDisplayItem to determine the ItemStack to display
      * @param block the block location to spawn the entity at
      */
-    public static void set(TARDISDisplayItem tdi, Block block) {
+    public static void set(TARDISDisplayItem tdi, Block block, int id) {
         // spawn an item display entity
         if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi.isLight()) {
             // also set an interaction entity
@@ -166,11 +166,13 @@ public class TARDISDisplayItemUtils {
                 // set size
                 interaction.setInteractionHeight(2.0f);
                 interaction.setInteractionWidth(1.0f);
+                interaction.getPersistentDataContainer().set(TARDIS.plugin.getTardisIdKey(), PersistentDataType.INTEGER, id);
             }
             if (tdi == TARDISDisplayItem.CLASSIC_DOOR) {
                 // set size
                 interaction.setInteractionHeight(3.0f);
                 interaction.setInteractionWidth(1.0f);
+                interaction.getPersistentDataContainer().set(TARDIS.plugin.getTardisIdKey(), PersistentDataType.INTEGER, id);
             }
             if (tdi.isLight()) {
                 // set a light block

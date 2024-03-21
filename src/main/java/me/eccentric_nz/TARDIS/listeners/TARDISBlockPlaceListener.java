@@ -95,7 +95,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         } else {
                             block.setBlockData(TARDISConstants.BARRIER);
                         }
-                        TARDISDisplayItemUtils.set(tdi, block);
+                        TARDISDisplayItemUtils.set(tdi, block, -1);
                     }
                     return;
                 }

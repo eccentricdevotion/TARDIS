@@ -79,7 +79,7 @@ public class TARDISLampToggler {
                     b.setBlockData(levelled);
                     if (b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP))) {
                         // convert to light display item
-                        TARDISDisplayItemUtils.set(light.getOff(), b);
+                        TARDISDisplayItemUtils.set(light.getOff(), b, id);
                     } else {
                         // switch the itemstack
                         if (display != null) {

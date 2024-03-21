@@ -301,7 +301,7 @@ public class TARDISUpdateListener implements Listener {
                     block.setBlockData(TARDISConstants.BARRIER);
                     TARDISDisplayItem tdi = (updateable.equals(Updateable.ADVANCED)) ? TARDISDisplayItem.ADVANCED_CONSOLE : TARDISDisplayItem.DISK_STORAGE;
                     TARDISDisplayItemUtils.remove(block);
-                    TARDISDisplayItemUtils.set(tdi, block);
+                    TARDISDisplayItemUtils.set(tdi, block, id);
                 }
                 case INFO -> {
                     plugin.getQueryFactory().insertControl(id, 13, blockLocStr, secondary ? 1 : 0);

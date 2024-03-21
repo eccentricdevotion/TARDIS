@@ -172,7 +172,7 @@ public class TARDISSonicRedstone {
                     if (tdi != null) {
                         int level = (tdi.isLit()) ? 15 : 0;
                         LampToggler.setLightlevel(block, level);
-                        TARDISDisplayItemUtils.set(tdi, block);
+                        TARDISDisplayItemUtils.set(tdi, block, -1);
                     }
                 }
                 default -> {

@@ -200,7 +200,7 @@ public class TARDISSeedBlockListener implements Listener {
                         Block block = event.getClickedBlock();
                         TARDISDisplayItemUtils.remove(block);
                         block.setBlockData(TARDISConstants.BARRIER);
-                        TARDISDisplayItemUtils.set(TARDISDisplayItem.GROW, block);
+                        TARDISDisplayItemUtils.set(TARDISDisplayItem.GROW, block, -1);
                         // send fake block change for bedrock players
                         if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

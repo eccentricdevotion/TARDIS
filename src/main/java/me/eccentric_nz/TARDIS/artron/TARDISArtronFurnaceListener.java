@@ -164,7 +164,7 @@ public class TARDISArtronFurnaceListener implements Listener {
             }
             plugin.getTardisHelper().nameFurnaceGUI(b, "TARDIS Artron Furnace");
             // set Item Display
-            TARDISDisplayItemUtils.set(TARDISDisplayItem.ARTRON_FURNACE, b);
+            TARDISDisplayItemUtils.set(TARDISDisplayItem.ARTRON_FURNACE, b, -1);
         } else {
             event.setCancelled(true);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_FURNACE");

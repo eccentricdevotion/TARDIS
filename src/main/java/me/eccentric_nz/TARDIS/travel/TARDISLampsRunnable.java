@@ -94,7 +94,7 @@ class TARDISLampsRunnable implements Runnable {
             lamps.forEach((b) -> {
                 if (i == 0 && (b.getType().equals(Material.SEA_LANTERN) || (b.getType().equals(Material.REDSTONE_LAMP)))) {
                     // convert to light display item
-                    TARDISDisplayItemUtils.set(light.getCloister(), b);
+                    TARDISDisplayItemUtils.set(light.getCloister(), b, -1);
                 } else {
                     ItemDisplay display = TARDISDisplayItemUtils.get(b);
                     if (display != null) {

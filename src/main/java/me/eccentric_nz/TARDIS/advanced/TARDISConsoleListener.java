@@ -95,7 +95,7 @@ public class TARDISConsoleListener implements Listener {
             // update block if it's not a display item entity
             if (block.getType().equals(Material.JUKEBOX) || block.getType().equals(Material.MUSHROOM_STEM)) {
                 block.setType(Material.BARRIER);
-                TARDISDisplayItemUtils.set(TARDISDisplayItem.ADVANCED_CONSOLE, block);
+                TARDISDisplayItemUtils.set(TARDISDisplayItem.ADVANCED_CONSOLE, block, rsc.getTardis_id());
             }
         }
         int id = rsc.getTardis_id();

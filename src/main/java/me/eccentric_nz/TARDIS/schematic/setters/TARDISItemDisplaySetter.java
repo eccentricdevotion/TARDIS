@@ -80,7 +80,7 @@ public class TARDISItemDisplaySetter {
             Material material = Material.valueOf(stack.get("type").getAsString());
             TARDISDisplayItem tdi = TARDISDisplayItem.getByMaterialAndData(material, model);
             if (tdi != null) {
-                TARDISDisplayItemUtils.set(tdi, block);
+                TARDISDisplayItemUtils.set(tdi, block, id);
             } else {
                 setInRoom(block, material, model);
             }

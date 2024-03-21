@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.sudo;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISTimeRotor;
@@ -40,6 +37,10 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * The TARDIS interior goes through occasional metamorphoses, sometimes by choice, sometimes for other reasons, such as
@@ -104,7 +105,7 @@ class SudoUpdate {
                 Block block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
                 if (block.getType().equals(Material.NOTE_BLOCK) || block.getType().equals(Material.MUSHROOM_STEM)) {
                     block.setBlockData(TARDISConstants.BARRIER, true);
-                    TARDISDisplayItemUtils.set(TARDISDisplayItem.DISK_STORAGE, block);
+                    TARDISDisplayItemUtils.set(TARDISDisplayItem.DISK_STORAGE, block, id);
                 }
             }
             if (new TARDISUpdateableChecker(plugin, updateable, player, tardis, tardis_block).canUpdate()) {
