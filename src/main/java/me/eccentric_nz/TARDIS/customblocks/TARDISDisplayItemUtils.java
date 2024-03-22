@@ -18,10 +18,7 @@ package me.eccentric_nz.TARDIS.customblocks;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Tag;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
@@ -188,7 +185,8 @@ public class TARDISDisplayItemUtils {
         } else if (tdi != TARDISDisplayItem.ARTRON_FURNACE && tdi != TARDISDisplayItem.SONIC_GENERATOR) {
             block.setBlockData(TARDISConstants.BARRIER);
         }
-        ItemStack is = new ItemStack(tdi.getMaterial(), 1);
+        Material material = (tdi == TARDISDisplayItem.CLASSIC_DOOR) ? tdi.getCraftMaterial() : tdi.getMaterial();
+        ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(tdi.getDisplayName());
         if (tdi.getCustomModelData() != -1) {

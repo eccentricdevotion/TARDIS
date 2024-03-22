@@ -205,8 +205,14 @@ public enum TARDISDisplayItem {
 
     public static TARDISDisplayItem getByMaterialAndData(Material m, int cmd) {
         for (TARDISDisplayItem tdi : values()) {
-            if (tdi.getMaterial() == m && tdi.getCustomModelData() == cmd) {
-                return tdi;
+            if (tdi == TARDISDisplayItem.CLASSIC_DOOR) {
+                if (tdi.getCraftMaterial() == m && tdi.getCustomModelData() == cmd) {
+                    return tdi;
+                }
+            } else {
+                if (tdi.getMaterial() == m && tdi.getCustomModelData() == cmd) {
+                    return tdi;
+                }
             }
         }
         return null;

@@ -86,7 +86,7 @@ public class DisplayItemDoorToggler {
                         if (rsp.resultSet()) {
                             minecart = rsp.isMinecartOn();
                         }
-                        new TARDISDoorToggler(plugin, block, player, minecart, close, id).toggleDoorsWithoutSound(tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR_OPEN);
+                        new TARDISDoorToggler(plugin, block, player, minecart, close, id).toggleDoorsWithoutSound(tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR_OPEN || tdi == TARDISDisplayItem.CUSTOM_DOOR);
                     } else if (!rs.getTardis().getUuid().equals(playerUUID)) {
                         plugin.getMessenger().sendStatus(player, "DOOR_DEADLOCKED");
                     } else {

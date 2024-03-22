@@ -230,7 +230,6 @@ public class TARDISDisplayBlockListener implements Listener {
                 // set an Interaction entity
                 TARDISDisplayItemUtils.set(location, 10000, true);
                 // add display door
-//                ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, 0.0d, 0.5d), EntityType.ITEM_DISPLAY);
                 float yaw = getLookAtYaw(player);
                 ItemStack single = dis.clone();
                 single.setAmount(1);
@@ -242,11 +241,6 @@ public class TARDISDisplayBlockListener implements Listener {
                     display.setInvulnerable(true);
                     display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
                 });
-//                display.setItemStack(single);
-//                display.setPersistent(true);
-//                display.setInvulnerable(true);
-//                display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
-//                display.setRotation(yaw, 0);
                 if (player.getGameMode() != GameMode.CREATIVE) {
                     int amount = dis.getAmount() - 1;
                     if (amount < 1) {
@@ -356,7 +350,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                     return;
                                 }
                                 if (player.isSneaking()) {
-                                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR) {
+                                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR|| tdi == TARDISDisplayItem.CUSTOM_DOOR) {
                                         // move to outside
                                         new DisplayItemDoorMover(plugin).exit(player, block);
                                     }
@@ -413,6 +407,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                             }
                                             case CUSTOM_DOOR -> {
                                                 // get if door is open
+                                                plugin.debug("CUSTOM_DOOR cmd = " + im.getCustomModelData());
                                                 boolean close = im.getCustomModelData() > 10000;
                                                 DoorAnimator animator = new DoorAnimator(plugin, display);
                                                 if (close) {
