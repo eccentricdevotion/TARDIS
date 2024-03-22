@@ -18,7 +18,10 @@ package me.eccentric_nz.TARDIS.commands.give;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.doors.Door;
+import me.eccentric_nz.TARDIS.rotors.Rotor;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -33,17 +36,41 @@ public class TARDISDisplayBlockCommand {
 
     public ItemStack getStack(String arg) {
         String display = TARDISStringUtils.toEnumUppercase(arg);
-        try {
-            TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(display);
-            ItemStack is = new ItemStack(tdi.getMaterial(), 1);
+        if (display.startsWith("DOOR_")) {
+            plugin.debug(display);
+            for (String d : Door.byName.keySet()) {
+                plugin.debug(d);
+            }
+            Door door = Door.byName.get(display);
+            ItemStack is = new ItemStack(door.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
-            im.setDisplayName(tdi.getDisplayName());
-            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
-            im.setCustomModelData(tdi.getCustomModelData());
+            im.setDisplayName("Door " + door.getName());
+            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 10000);
+            im.setCustomModelData(10000);
             is.setItemMeta(im);
             return is;
-        } catch (IllegalArgumentException e) {
-            return null;
+        } else if (display.startsWith("TIME_")) {
+            Rotor rotor = Rotor.byName.get(display);
+            ItemStack is = new ItemStack(Material.LIGHT_GRAY_DYE, 1);
+            ItemMeta im = is.getItemMeta();
+            im.setDisplayName("Time Rotor " + rotor.getName());
+            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, rotor.getOffModelData());
+            im.setCustomModelData(rotor.getOffModelData());
+            is.setItemMeta(im);
+            return is;
+        } else {
+            try {
+                TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(display);
+                ItemStack is = new ItemStack(tdi.getMaterial(), 1);
+                ItemMeta im = is.getItemMeta();
+                im.setDisplayName(tdi.getDisplayName());
+                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
+                im.setCustomModelData(tdi.getCustomModelData());
+                is.setItemMeta(im);
+                return is;
+            } catch (IllegalArgumentException e) {
+                return null;
+            }
         }
     }
 }

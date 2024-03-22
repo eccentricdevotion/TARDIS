@@ -8,6 +8,7 @@ import java.util.HashMap;
 public class Door {
 
     public static final HashMap<Material, Door> byMaterial = new HashMap<>();
+    public static final HashMap<String, Door> byName = new HashMap<>();
     private final String name;
     private final Material material;
     private final int[] frames;

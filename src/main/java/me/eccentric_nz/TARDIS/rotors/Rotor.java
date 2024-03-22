@@ -31,6 +31,7 @@ public class Rotor {
 
     public static final HashMap<Material, Rotor> byMaterial = new HashMap<>();
     public static final HashMap<Integer, Rotor> byCustomModelData = new HashMap<>();
+    public static final HashMap<String, Rotor> byName = new HashMap<>();
     private final String name;
     private final int offModelData;
     private final Material material;

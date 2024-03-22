@@ -39,6 +39,7 @@ public class TARDISCustomDoorLoader {
         Door police_box = new Door("Police Box", Material.IRON_DOOR, new int[]{1}, 1, true, "tardis_door_open", "tardis_door_close", false);
         Door classic = new Door("Classic", Material.CHERRY_DOOR, new int[]{0, 1, 2, 3, 4, 5, 6}, 4, false, "classic_door", "classic_door", false);
         Door.byMaterial.put(Material.IRON_DOOR, police_box);
+        Door.byName.put("DOOR_POLICE_BOX", police_box);
         Door.byMaterial.put(Material.CHERRY_DOOR, classic);
         for (String r : plugin.getCustomDoorsConfig().getKeys(false)) {
             try {
@@ -55,6 +56,7 @@ public class TARDISCustomDoorLoader {
                         true
                 );
                 Door.byMaterial.put(material, door);
+                Door.byName.put("DOOR_" + r.toUpperCase(), door);
             } catch (IllegalArgumentException e) {
                 plugin.debug("Invalid custom door item material for " + r + "!");
             }
