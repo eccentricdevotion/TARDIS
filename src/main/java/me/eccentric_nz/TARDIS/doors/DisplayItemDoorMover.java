@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.customblocks;
+package me.eccentric_nz.TARDIS.doors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -49,7 +49,7 @@ public class DisplayItemDoorMover {
         this.plugin = plugin;
     }
 
-    void exit(Player player, Block block) {
+    public void exit(Player player, Block block) {
         Location block_loc = block.getLocation();
         String bw = block_loc.getWorld().getName();
         int bx = block_loc.getBlockX();

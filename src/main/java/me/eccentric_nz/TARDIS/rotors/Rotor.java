@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.enumeration;
+package me.eccentric_nz.TARDIS.rotors;
 
 import org.bukkit.Material;
 

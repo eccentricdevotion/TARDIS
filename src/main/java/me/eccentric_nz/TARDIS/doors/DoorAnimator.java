@@ -1,9 +1,10 @@
-package me.eccentric_nz.TARDIS.customblocks;
+package me.eccentric_nz.TARDIS.doors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Directional;
@@ -11,7 +12,7 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class ClassicDoorAnimator {
+public class DoorAnimator {
 
     private final TARDIS plugin;
     private final ItemDisplay display;
@@ -20,7 +21,7 @@ public class ClassicDoorAnimator {
     private int open = 5;
     private int closed = 9;
 
-    public ClassicDoorAnimator(TARDIS plugin, ItemDisplay display) {
+    public DoorAnimator(TARDIS plugin, ItemDisplay display) {
         this.plugin = plugin;
         this.display = display;
     }
@@ -29,8 +30,19 @@ public class ClassicDoorAnimator {
         // remove the barrier blocks
         Location location = display.getLocation();
         setBlocks(location, Material.AIR, display.getYaw());
-        TARDISSounds.playTARDISSound(location, "classic_door");
         ItemStack is = display.getItemStack();
+        String sound = "tardis_door_open";
+        long delay = 4L;
+        if (Tag.ITEMS_DECORATED_POT_SHERDS.isTagged(is.getType())) {
+            DoorAnimationData data = Door.getOpenData(is.getType());
+            if (data != null) {
+                sound = data.getSound();
+                delay = data.getTicks();
+            }
+        } else {
+            sound = "classic_door";
+        }
+        TARDISSounds.playTARDISSound(location, sound);
         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             ItemMeta im = is.getItemMeta();
             im.setCustomModelData(10000 + open);
@@ -41,13 +53,24 @@ public class ClassicDoorAnimator {
                 taskID = 0;
             }
             open++;
-        }, 2L, 4L);
+        }, 2L, delay);
     }
 
     public void close() {
         Location location = display.getLocation();
-        TARDISSounds.playTARDISSound(location, "classic_door");
         ItemStack is = display.getItemStack();
+        String sound = "tardis_door_close";
+        long delay = 4L;
+        if (Tag.ITEMS_DECORATED_POT_SHERDS.isTagged(is.getType())) {
+            DoorAnimationData data = Door.getCloseData(is.getType());
+            if (data != null) {
+                sound = data.getSound();
+                delay = data.getTicks();
+            }
+        } else {
+            sound = "classic_door";
+        }
+        TARDISSounds.playTARDISSound(location, sound);
         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             ItemMeta im = is.getItemMeta();
             im.setCustomModelData(10000 + closed);
@@ -60,7 +83,7 @@ public class ClassicDoorAnimator {
                 setBlocks(location, Material.BARRIER, display.getYaw());
             }
             closed--;
-        }, 2L, 4L);
+        }, 2L, delay);
     }
 
     private void setBlocks(Location location, Material material, float yaw) {

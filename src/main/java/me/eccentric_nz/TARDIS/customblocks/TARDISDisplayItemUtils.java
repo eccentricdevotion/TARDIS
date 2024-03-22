@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
@@ -45,7 +46,11 @@ public class TARDISDisplayItemUtils {
         if (is != null) {
             ItemMeta im = is.getItemMeta();
             if (im.hasCustomModelData()) {
-                return TARDISDisplayItem.getByMaterialAndData(is.getType(), im.getCustomModelData());
+                if (Tag.ITEMS_DECORATED_POT_SHERDS.isTagged(is.getType())) {
+                    return TARDISDisplayItem.CUSTOM_DOOR;
+                } else {
+                    return TARDISDisplayItem.getByMaterialAndData(is.getType(), im.getCustomModelData());
+                }
             }
         }
         return null;

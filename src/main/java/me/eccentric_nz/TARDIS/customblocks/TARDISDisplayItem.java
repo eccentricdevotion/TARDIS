@@ -39,6 +39,7 @@ public enum TARDISDisplayItem {
     COPPER(10001, Material.COPPER_BLOCK, null),
     CORAL(10001, Material.FIRE_CORAL_BLOCK, null),
     CURSED(Material.BLACK_CONCRETE),
+    CUSTOM_DOOR(-1, Material.IRON_DOOR, null),
     DELTA(Material.CRYING_OBSIDIAN),
     DELUXE(Material.DIAMOND_BLOCK),
     DIVISION(Material.PINK_GLAZED_TERRACOTTA),
@@ -88,8 +89,8 @@ public enum TARDISDisplayItem {
     DOOR(10001, Material.IRON_DOOR, Material.IRON_DOOR),
     DOOR_OPEN(10002, Material.IRON_DOOR, null),
     DOOR_BOTH_OPEN(10003, Material.IRON_DOOR, null),
-    CLASSIC_DOOR(10004, Material.IRON_DOOR, Material.PISTON),
-    CLASSIC_DOOR_OPEN(10010, Material.IRON_DOOR, null),
+    CLASSIC_DOOR(10004, Material.IRON_DOOR, Material.CHERRY_DOOR),
+    CLASSIC_DOOR_OPEN(10010, Material.CHERRY_DOOR, null),
     SONIC_GENERATOR(10000001, Material.FLOWER_POT, null),
 //    THROTTLE(1001, Material.REPEATER, Material.REPEATER),
     // chemistry lamps off
