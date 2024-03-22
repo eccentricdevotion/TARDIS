@@ -45,21 +45,21 @@ public class Door {
     public static DoorAnimationData getOpenData(Material material) {
         Door door = byMaterial.get(material);
         if (door != null) {
-            return new DoorAnimationData(door.frameTick, door.openSound);
+            return new DoorAnimationData(door.frameTick, door.openSound, door.frames.length - 2);
         } else {
-            TARDIS.plugin.debug("getOpenData material = " + material);
+            // default for classic door
+            return new DoorAnimationData(4L, "tardis_door_open", 5);
         }
-        return null;
     }
 
     public static DoorAnimationData getCloseData(Material material) {
         Door door = byMaterial.get(material);
         if (door != null) {
-            return new DoorAnimationData(door.frameTick, door.closeSound);
+            return new DoorAnimationData(door.frameTick, door.closeSound, door.frames.length - 2);
         } else {
-            TARDIS.plugin.debug("getCloseData material = " + material);
+            // default for classic door
+            return new DoorAnimationData(4L, "tardis_door_close", 5);
         }
-        return null;
     }
 
     public String getName() {
