@@ -22,6 +22,8 @@ import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.doors.TARDISDoorToggler;
+import me.eccentric_nz.TARDIS.doors.TARDISInnerDoorOpener;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -107,12 +109,10 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                     // get key material
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, playerUUID.toString());
                     String key;
-                    boolean hasPrefs = false;
                     boolean willFarm = false;
                     boolean canPowerUp = false;
                     boolean userQuotes = false;
                     if (rsp.resultSet()) {
-                        hasPrefs = true;
                         key = (!rsp.getKey().isEmpty()) ? rsp.getKey() : plugin.getConfig().getString("preferences.key");
                         willFarm = rsp.isFarmOn();
                         canPowerUp = (rsp.isAutoPowerUp() && plugin.getConfig().getBoolean("allow.power_down"));
@@ -194,9 +194,8 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                     ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
                                     if (rsc.getCompanions().contains(playerUUID) || rs.getTardis().isAbandoned()) {
                                         if (!rsd.isLocked()) {
-                                            boolean isPoliceBox = (rs.getTardis().getPreset().usesArmourStand());
                                             // toggle the door open/closed
-                                            if (Tag.DOORS.isTagged(blockType) || (blockType.equals(Material.OAK_TRAPDOOR) && isPoliceBox)) {
+                                            if (Tag.DOORS.isTagged(blockType) || (blockType.equals(Material.OAK_TRAPDOOR))) {
                                                 if (doortype == 0 || doortype == 1) {
                                                     boolean open = TARDISStaticUtils.isDoorOpen(block);
                                                     if (plugin.getTrackerKeeper().getHasClickedHandbrake().contains(id) && doortype == 1) {
@@ -205,9 +204,6 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                         new TARDISTakeoff(plugin).run(id, player, rs.getTardis().getBeacon());
                                                     }
                                                     // toggle the doors
-                                                    if (isPoliceBox) {
-                                                        new TARDISCustomModelDataChanger(plugin, player, id, rs.getTardis().getPreset()).toggleOuterDoor();
-                                                    }
                                                     if (doortype == 1 || !plugin.getPM().isPluginEnabled("RedProtect") || TARDISRedProtectChecker.shouldToggleDoor(block)) {
                                                         new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
                                                     } else {
