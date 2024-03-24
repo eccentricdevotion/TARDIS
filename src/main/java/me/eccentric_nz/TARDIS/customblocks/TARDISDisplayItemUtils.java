@@ -276,7 +276,6 @@ public class TARDISDisplayItemUtils {
         // spawn an interaction entity
         Interaction interaction = (Interaction) location.getWorld().spawnEntity(location, EntityType.INTERACTION);
         interaction.getPersistentDataContainer().set(TARDIS.plugin.getTardisIdKey(), PersistentDataType.INTEGER, id);
-//        interaction.getPersistentDataContainer().set(TARDIS.plugin.getStandUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), block.getUniqueId());
         interaction.setResponsive(true);
         interaction.setPersistent(true);
         interaction.setInvulnerable(true);
@@ -294,10 +293,8 @@ public class TARDISDisplayItemUtils {
      */
     public static void removeDisplaysInChunk(Chunk chunk, int lower, int upper) {
         for (Entity entity : chunk.getEntities()) {
-            if ( // TARDIS item display and interaction entities
-                    ((entity instanceof ItemDisplay || entity instanceof Interaction) && entity.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER))
-                            // and item frames
-                            || entity instanceof ItemFrame) {
+            // TARDIS item display and interaction entities + item frames
+            if (((entity instanceof ItemDisplay || entity instanceof Interaction) && entity.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) || entity instanceof ItemFrame) {
                 int y = entity.getLocation().getBlockY();
                 if (y >= lower && y <= upper) {
                     entity.remove();

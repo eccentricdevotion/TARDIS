@@ -31,9 +31,11 @@ public class DoorUtility {
         if (!im.hasDisplayName() || !im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
             return;
         }
-        // set an Interaction entity
+        // set an Interaction
         TARDISDisplayItemUtils.set(location, 10000, true);
+        // set an ItemDisplay
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, 0.0d, 0.5d), EntityType.ITEM_DISPLAY);
+        display.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 10000);
         display.setItemStack(single);
         display.setPersistent(true);
         display.setInvulnerable(true);
