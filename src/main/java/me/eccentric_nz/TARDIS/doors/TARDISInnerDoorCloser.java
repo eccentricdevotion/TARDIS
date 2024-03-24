@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.move;
+package me.eccentric_nz.TARDIS.doors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -78,13 +78,21 @@ public class TARDISInnerDoorCloser {
             ItemDisplay display = TARDISDisplayItemUtils.getFromBoundingBox(block);
             if (display != null) {
                 TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
-                if (tdi != null && (tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN)) {
+                if (tdi != null) {
                     ItemStack itemStack = display.getItemStack();
                     ItemMeta im = itemStack.getItemMeta();
-                    im.setCustomModelData(10001);
+                    if (tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN) {
+                        im.setCustomModelData(10001);
+                    } else if (tdi == TARDISDisplayItem.CLASSIC_DOOR_OPEN || tdi == TARDISDisplayItem.CUSTOM_DOOR) {
+                        im.setCustomModelData(10000);
+                    }
                     itemStack.setItemMeta(im);
                     display.setItemStack(itemStack);
+                } else {
+                    plugin.debug("TARDISInnerDoorCloser TARDISDisplayItem was null");
                 }
+            } else {
+                plugin.debug("TARDISInnerDoorCloser display was null");
             }
         }
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.move;
+package me.eccentric_nz.TARDIS.doors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -26,13 +26,12 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPortals;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
@@ -80,17 +79,16 @@ public class TARDISInnerDoorOpener {
             ItemDisplay display = TARDISDisplayItemUtils.getFromBoundingBox(block);
             if (display != null) {
                 TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
-                if (tdi != null && (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN || (tdi == TARDISDisplayItem.CLASSIC_DOOR && outside))) {
+                if (tdi != null) {
                     ItemStack itemStack = display.getItemStack();
                     ItemMeta im = itemStack.getItemMeta();
-                    int cmd = 10002;
-                    if (tdi == TARDISDisplayItem.CLASSIC_DOOR) {
-                        cmd = 10010;
-                        // remove barriers
-                        block.getRelative(BlockFace.UP).setType(Material.AIR);
-                        block.getRelative(BlockFace.UP).getRelative(BlockFace.EAST).setType(Material.AIR);
+                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN) {
+                        im.setCustomModelData(10002);
                     }
-                    im.setCustomModelData(cmd);
+                    if (outside && (tdi == TARDISDisplayItem.CLASSIC_DOOR) || tdi == TARDISDisplayItem.CUSTOM_DOOR) {
+                        DoorAnimationData data = Door.getOpenData(itemStack.getType());
+                        im.setCustomModelData(10000 + data.getLastFrame() + 1);
+                    }
                     itemStack.setItemMeta(im);
                     display.setItemStack(itemStack);
                 }
