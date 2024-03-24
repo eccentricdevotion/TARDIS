@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.move;
+package me.eccentric_nz.TARDIS.doors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
@@ -36,13 +36,13 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class TARDISDoorCloser {
+public class DoorCloserAction {
 
     private final TARDIS plugin;
     private final UUID uuid;
     private final int id;
 
-    public TARDISDoorCloser(TARDIS plugin, UUID uuid, int id) {
+    public DoorCloserAction(TARDIS plugin, UUID uuid, int id) {
         this.plugin = plugin;
         this.uuid = uuid;
         this.id = id;

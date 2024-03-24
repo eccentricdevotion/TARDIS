@@ -1,4 +1,4 @@
-package me.eccentric_nz.TARDIS.move.actions;
+package me.eccentric_nz.TARDIS.doors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCompanions;

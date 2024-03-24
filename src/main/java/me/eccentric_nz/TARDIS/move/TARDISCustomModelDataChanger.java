@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.move;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.doors.TARDISInnerDoorCloser;
+import me.eccentric_nz.TARDIS.doors.TARDISInnerDoorOpener;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;

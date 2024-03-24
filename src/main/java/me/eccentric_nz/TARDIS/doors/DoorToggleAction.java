@@ -1,4 +1,4 @@
-package me.eccentric_nz.TARDIS.move.actions;
+package me.eccentric_nz.TARDIS.doors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -16,8 +16,6 @@ import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
-import me.eccentric_nz.TARDIS.move.TARDISInnerDoorCloser;
-import me.eccentric_nz.TARDIS.move.TARDISInnerDoorOpener;
 import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicSound;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;

@@ -27,8 +27,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.doors.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
-import me.eccentric_nz.TARDIS.move.actions.DoorLockAction;
-import me.eccentric_nz.TARDIS.move.actions.DoorToggleAction;
 import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicLight;
 import me.eccentric_nz.TARDIS.update.UpdateDoor;
 import org.bukkit.*;
@@ -121,7 +119,7 @@ public class TARDISDisplayBlockListener implements Listener {
         display.setInvulnerable(true);
         if (which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR) {
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
-            float yaw = DoorUtils.getLookAtYaw(player);
+            float yaw = DoorUtility.getLookAtYaw(player);
             // set display rotation
             display.setRotation(yaw, 0);
         }
@@ -203,7 +201,7 @@ public class TARDISDisplayBlockListener implements Listener {
                 // set a door
                 event.setCancelled(true);
                 Location location = event.getClickedBlock().getRelative(BlockFace.UP).getLocation();
-                DoorUtils.set(plugin, player, location);
+                DoorUtility.set(plugin, player, location);
                 if (player.getGameMode() != GameMode.CREATIVE) {
                     int amount = dis.getAmount() - 1;
                     if (amount < 1) {

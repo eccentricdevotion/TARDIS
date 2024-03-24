@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.doors;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 
 import java.util.HashMap;
@@ -33,8 +32,6 @@ public class Door {
         Door door = byMaterial.get(material);
         if (door != null) {
             return 10000 + door.getFrames().length;
-        } else {
-            TARDIS.plugin.debug("getCMD material = " + material);
         }
         return -1;
     }

@@ -26,10 +26,10 @@ import me.eccentric_nz.TARDIS.database.converters.TARDISAbandonUpdate;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisAbandoned;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.doors.DoorCloserAction;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -247,7 +247,7 @@ public class TARDISAbandonCommand {
                         new TARDISPowerButton(plugin, id, player, rs.getPreset(), rs.isPowered_on(), rs.isHidden(), rs.isLights_on(), player.getLocation(), rs.getArtron_level(), rs.getSchematic().getLights()).clickButton();
                     }
                     // close the door
-                    new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
+                    new DoorCloserAction(plugin, player.getUniqueId(), id).closeDoors();
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDONED_SUCCESS");
                     HashMap<String, Object> wherec = new HashMap<>();
                     wherec.put("tardis_id", id);

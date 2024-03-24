@@ -33,10 +33,10 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.desktop.TARDISWallFloorRunnable;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
+import me.eccentric_nz.TARDIS.doors.DoorCloserAction;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.FlightReturnData;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
-import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -101,7 +101,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                             if (rsp.isAutoOn() && !tardis.isSiege_on() && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
                                 boolean isHomeDefault = rsp.getAutoDefault() == Autonomous.Default.HOME;
                                 // close doors
-                                new TARDISDoorCloser(plugin, uuid, id).closeDoors();
+                                new DoorCloserAction(plugin, uuid, id).closeDoors();
                                 Location death_loc = player.getLocation();
                                 int amount = Math.round(plugin.getArtronConfig().getInt("autonomous") * spaceTimeThrottle.getArtronMultiplier());
                                 if (tardis.getArtron_level() > amount) {

@@ -11,7 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
-public class DoorUtils {
+public class DoorUtility {
 
     /**
      * Spawn an Item Display entity

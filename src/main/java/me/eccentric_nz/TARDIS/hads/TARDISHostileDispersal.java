@@ -21,10 +21,10 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISHADSEvent;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.doors.DoorCloserAction;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
-import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -81,7 +81,7 @@ class TARDISHostileDispersal {
             // always remove the portal
             plugin.getTrackerKeeper().getPortals().remove(l);
             // toggle the doors if neccessary
-            new TARDISDoorCloser(plugin, uuid, id).closeDoors();
+            new DoorCloserAction(plugin, uuid, id).closeDoors();
         }
         World w = l.getWorld();
         // make sure chunk is loaded
