@@ -89,8 +89,8 @@ public enum TARDISDisplayItem {
     DOOR(10001, Material.IRON_DOOR, Material.IRON_DOOR),
     DOOR_OPEN(10002, Material.IRON_DOOR, null),
     DOOR_BOTH_OPEN(10003, Material.IRON_DOOR, null),
-    CLASSIC_DOOR(10004, Material.IRON_DOOR, Material.CHERRY_DOOR),
-    CLASSIC_DOOR_OPEN(10005, Material.CHERRY_DOOR, null),
+    CLASSIC_DOOR(10000, Material.IRON_DOOR, Material.CHERRY_DOOR),
+    CLASSIC_DOOR_OPEN(10006, Material.CHERRY_DOOR, null),
     SONIC_GENERATOR(10000001, Material.FLOWER_POT, null),
 //    THROTTLE(1001, Material.REPEATER, Material.REPEATER),
     // chemistry lamps off

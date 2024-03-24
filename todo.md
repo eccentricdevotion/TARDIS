@@ -8,6 +8,8 @@
 ## Next version `5.6.0`
 
 1. Custom display doors [#833](https://github.com/eccentricdevotion/TARDIS/issues/833)
+   - fix toggling interior door from outside breaking the door
+   - fix doors getting out of sync
 2. Allow 3D Police Boxes to land on slabs [#777](https://github.com/eccentricdevotion/TARDIS/issues/777)
 3. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
