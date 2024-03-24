@@ -29,10 +29,6 @@ public class Door {
         this.custom = custom;
     }
 
-    public static Door getByMaterial(Material material) {
-        return byMaterial.get(material);
-    }
-
     public static int getCMD(Material material) {
         Door door = byMaterial.get(material);
         if (door != null) {

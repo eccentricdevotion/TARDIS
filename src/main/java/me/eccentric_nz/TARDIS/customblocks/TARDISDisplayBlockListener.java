@@ -24,10 +24,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDeadlock;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.doors.DisplayItemDoorMover;
-import me.eccentric_nz.TARDIS.doors.DisplayItemDoorToggler;
-import me.eccentric_nz.TARDIS.doors.Door;
-import me.eccentric_nz.TARDIS.doors.DoorAnimator;
+import me.eccentric_nz.TARDIS.doors.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.move.actions.DoorLockAction;
@@ -124,7 +121,7 @@ public class TARDISDisplayBlockListener implements Listener {
         display.setInvulnerable(true);
         if (which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR) {
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
-            float yaw = getLookAtYaw(player);
+            float yaw = DoorUtils.getLookAtYaw(player);
             // set display rotation
             display.setRotation(yaw, 0);
         }
@@ -137,27 +134,6 @@ public class TARDISDisplayBlockListener implements Listener {
                 player.getInventory().setItemInMainHand(is);
             }
         }
-    }
-
-    public float getLookAtYaw(Player player) {
-        Vector motion = player.getEyeLocation().getDirection().multiply(-1);
-        double dx = motion.getX();
-        double dz = motion.getZ();
-        double yaw = 0;
-        // Set yaw
-        if (dx != 0) {
-            // Set yaw start value based on dx
-            if (dx < 0) {
-                yaw = 1.5 * Math.PI;
-            } else {
-                yaw = 0.5 * Math.PI;
-            }
-            yaw -= Math.atan(dz / dx);
-        } else if (dz < 0) {
-            yaw = Math.PI;
-        }
-        double y = (-yaw * 180 / Math.PI);
-        return (float) Math.round(y / 90) * 90;
     }
 
     /**
@@ -227,20 +203,7 @@ public class TARDISDisplayBlockListener implements Listener {
                 // set a door
                 event.setCancelled(true);
                 Location location = event.getClickedBlock().getRelative(BlockFace.UP).getLocation();
-                // set an Interaction entity
-                TARDISDisplayItemUtils.set(location, 10000, true);
-                // add display door
-                float yaw = getLookAtYaw(player);
-                ItemStack single = dis.clone();
-                single.setAmount(1);
-                location.getWorld().spawn(location, ItemDisplay.class, display -> {
-                    // set display rotation
-                    display.setRotation(yaw, 0);
-                    display.setItemStack(single);
-                    display.setPersistent(true);
-                    display.setInvulnerable(true);
-                    display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
-                });
+                DoorUtils.set(plugin, player, location);
                 if (player.getGameMode() != GameMode.CREATIVE) {
                     int amount = dis.getAmount() - 1;
                     if (amount < 1) {
@@ -311,12 +274,9 @@ public class TARDISDisplayBlockListener implements Listener {
                         if (itemStack != null) {
                             ItemMeta im = itemStack.getItemMeta();
                             int cmd = im.getCustomModelData();
-                            switch (cmd) {
-                                case 10001 -> cmd = 10002;
-                                case 10002 -> cmd = 10003;
-                                case 10005 -> cmd = 10010;
-                                case 10010 -> cmd = 10005;
-                                default -> cmd = 10001;
+                            cmd++;
+                            if (cmd > 10010) {
+                                cmd = 10000;
                             }
                             im.setCustomModelData(cmd);
                             itemStack.setItemMeta(im);
@@ -350,7 +310,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                     return;
                                 }
                                 if (player.isSneaking()) {
-                                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR|| tdi == TARDISDisplayItem.CUSTOM_DOOR) {
+                                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.CUSTOM_DOOR) {
                                         // move to outside
                                         new DisplayItemDoorMover(plugin).exit(player, block);
                                     }
@@ -407,7 +367,6 @@ public class TARDISDisplayBlockListener implements Listener {
                                             }
                                             case CUSTOM_DOOR -> {
                                                 // get if door is open
-                                                plugin.debug("CUSTOM_DOOR cmd = " + im.getCustomModelData());
                                                 boolean close = im.getCustomModelData() > 10000;
                                                 DoorAnimator animator = new DoorAnimator(plugin, display);
                                                 if (close) {
