@@ -27,8 +27,6 @@ public class DoorAnimator {
 
     public void open() {
         Location location = display.getLocation();
-        // remove the barrier blocks
-//        setBlocks(location, Material.AIR, display.getYaw());
         ItemStack is = display.getItemStack();
         DoorAnimationData data = Door.getOpenData(is.getType());
         TARDISSounds.playTARDISSound(location, data.getSound());
@@ -59,8 +57,6 @@ public class DoorAnimator {
             if (closed < 1) {
                 plugin.getServer().getScheduler().cancelTask(taskID);
                 taskID = 0;
-//                // set the barrier blocks to prevent entry
-//                setBlocks(location, Material.BARRIER, display.getYaw());
             }
             closed--;
         }, 2L, data.getTicks());

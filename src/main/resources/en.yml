@@ -1079,6 +1079,7 @@ UPDATE_BEACON: "The TARDIS must be powered on in order to update the beacon togg
 UPDATE_CLICK: "Click the TARDIS %s to update its position."
 UPDATE_CONDENSER: "You didn't target a CHEST! Try the command again."
 UPDATE_CONTROL: "Click on the TARDIS Control you want to update in the list below:"
+UPDATE_DOUBLE_DOOR: "The door state was updated."
 UPDATE_INFO: "You can update the position of the following:"
 UPDATE_INTERFACE: "Click on the TARDIS User Interface you want to update in the list below"
 UPDATE_IN_WORLD: "You must be in a TARDIS world to update this block!"

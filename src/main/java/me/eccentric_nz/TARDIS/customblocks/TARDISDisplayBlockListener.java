@@ -286,12 +286,12 @@ public class TARDISDisplayBlockListener implements Listener {
                         TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
                         if (tdi != null) {
                             if (tdi == TARDISDisplayItem.CUSTOM_DOOR || tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR_OPEN) {
-//                                if (!plugin.getUtils().inTARDISWorld(player)) {
-//                                    return;
-//                                }
+                                if (!player.isOp() && !plugin.getUtils().inTARDISWorld(player)) {
+                                    return;
+                                }
                                 Block block = interaction.getLocation().getBlock();
                                 UUID playerUUID = player.getUniqueId();
-                                if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(player.getUniqueId())) {
+                                if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(playerUUID)) {
                                     String uuid = (TARDISSudoTracker.SUDOERS.containsKey(playerUUID)) ? TARDISSudoTracker.SUDOERS.get(playerUUID).toString() : playerUUID.toString();
                                     HashMap<String, Object> where = new HashMap<>();
                                     where.put("uuid", uuid);
@@ -320,12 +320,12 @@ public class TARDISDisplayBlockListener implements Listener {
                                         if (itemStack != null) {
                                             ItemMeta im = itemStack.getItemMeta();
                                             // get custom model data
-                                            int cmd = tdi == TARDISDisplayItem.DOOR_OPEN ? 10003 : Door.getCMD(itemStack.getType());
+                                            int cmd = tdi == TARDISDisplayItem.DOOR_OPEN ? 10005 : Door.getCMD(itemStack.getType());
                                             if (cmd != -1) {
                                                 im.setCustomModelData(cmd);
                                                 itemStack.setItemMeta(im);
                                                 display.setItemStack(itemStack);
-                                                // close doors / decativate portal
+                                                // close doors / deactivate portal
                                                 new DisplayItemDoorToggler(plugin).openClose(player, block, true, TARDISDisplayItem.DOOR_OPEN);
                                             }
                                         }
@@ -343,16 +343,12 @@ public class TARDISDisplayBlockListener implements Listener {
                                         switch (tdi) {
                                             case DOOR -> {
                                                 // open doors / activate portal
-                                                im.setCustomModelData(10002);
-                                                itemStack.setItemMeta(im);
-                                                display.setItemStack(itemStack);
+                                                new DoorAnimator(plugin, display).open();
                                                 new DisplayItemDoorToggler(plugin).openClose(player, block, false, TARDISDisplayItem.DOOR);
                                             }
-                                            case DOOR_OPEN -> {
+                                            case DOOR_OPEN, DOOR_BOTH_OPEN -> {
                                                 // close doors / deactivate portal
-                                                im.setCustomModelData(10001);
-                                                itemStack.setItemMeta(im);
-                                                display.setItemStack(itemStack);
+                                                new DoorAnimator(plugin, display).close();
                                                 new DisplayItemDoorToggler(plugin).openClose(player, block, true, TARDISDisplayItem.DOOR_OPEN);
                                             }
                                             case CLASSIC_DOOR -> {
@@ -378,7 +374,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                             }
                                             default -> {
                                                 // just close doors
-                                                im.setCustomModelData(10001);
+                                                im.setCustomModelData(10000);
                                                 itemStack.setItemMeta(im);
                                                 display.setItemStack(itemStack);
                                             }
@@ -416,6 +412,25 @@ public class TARDISDisplayBlockListener implements Listener {
                                         }
                                     }
                                 }
+                            }
+                        } else if (plugin.getTrackerKeeper().getUpdatePlayers().containsKey(player.getUniqueId())) {
+                            // check if display is double door
+                            ItemStack is = display.getItemStack();
+                            if (!is.hasItemMeta()) {
+                                return;
+                            }
+                            ItemMeta im = is.getItemMeta();
+                            if (!im.hasCustomModelData()) {
+                                return;
+                            }
+                            int cmd = im.getCustomModelData();
+                            if (cmd == 10001 || cmd == 10002 || cmd == 10003) {
+                                // set custom model data to 10000
+                                im.setCustomModelData(10000);
+                                is.setItemMeta(im);
+                                display.setItemStack(is);
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_DOUBLE_DOOR");
+                                plugin.getTrackerKeeper().getUpdatePlayers().remove(player.getUniqueId());
                             }
                         }
                     }
