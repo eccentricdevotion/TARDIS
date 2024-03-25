@@ -117,6 +117,7 @@ public class TARDISConfiguration {
         booleanOptions.put("modules.vortex_manipulator", false);
         booleanOptions.put("modules.shop", false);
         booleanOptions.put("modules.sonic_blaster", false);
+        booleanOptions.put("police_box.animated_door", true);
         booleanOptions.put("police_box.load_shells", false);
         booleanOptions.put("police_box.keep_chunk_force_loaded", true);
         booleanOptions.put("police_box.use_nick", false);

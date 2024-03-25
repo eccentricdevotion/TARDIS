@@ -58,6 +58,7 @@ police_box:
   rebuild_cooldown: 10000
   load_shells: false
   keep_chunk_force_loaded: true
+  animated_door: true
 # travel settings
 # https://tardis.pages.dev/configuration/travel
 travel:
