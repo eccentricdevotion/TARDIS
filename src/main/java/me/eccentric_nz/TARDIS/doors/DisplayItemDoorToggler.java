@@ -14,16 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.customblocks;
+package me.eccentric_nz.TARDIS.doors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISCustomModelDataChanger;
-import me.eccentric_nz.TARDIS.move.TARDISDoorToggler;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -85,7 +85,7 @@ public class DisplayItemDoorToggler {
                         if (rsp.resultSet()) {
                             minecart = rsp.isMinecartOn();
                         }
-                        new TARDISDoorToggler(plugin, block, player, minecart, close, id).toggleDoorsWithoutSound(tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR_OPEN);
+                        new TARDISDoorToggler(plugin, block, player, minecart, close, id).toggleDoorsWithoutSound(tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR_OPEN || tdi == TARDISDisplayItem.CUSTOM_DOOR);
                     } else if (!rs.getTardis().getUuid().equals(playerUUID)) {
                         plugin.getMessenger().sendStatus(player, "DOOR_DEADLOCKED");
                     } else {

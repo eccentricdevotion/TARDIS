@@ -14,10 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.files;
+package me.eccentric_nz.TARDIS.rotors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Rotor;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 
@@ -46,20 +45,28 @@ public class TARDISCustomRotorLoader {
         // add plugin rotors to look-ups
         Rotor.byMaterial.put(Material.BLACK_DYE, early);
         Rotor.byCustomModelData.put(10000002, early);
+        Rotor.byName.put("TIME_ROTOR_EARLY", early);
         Rotor.byMaterial.put(Material.ORANGE_DYE, rotor);
         Rotor.byCustomModelData.put(10000003, rotor);
+        Rotor.byName.put("TIME_ROTOR_ROTOR", rotor);
         Rotor.byMaterial.put(Material.BROWN_DYE, copper);
         Rotor.byCustomModelData.put(10000004, copper);
+        Rotor.byName.put("TIME_ROTOR_COPPER", copper);
         Rotor.byMaterial.put(Material.GRAY_DYE, round);
         Rotor.byCustomModelData.put(10000005, round);
+        Rotor.byName.put("TIME_ROTOR_ROUND", round);
         Rotor.byMaterial.put(Material.CYAN_DYE, delta);
         Rotor.byCustomModelData.put(10000006, delta);
+        Rotor.byName.put("TIME_ROTOR_DELTA", delta);
         Rotor.byMaterial.put(Material.LIGHT_BLUE_DYE, engine);
         Rotor.byCustomModelData.put(10000007, engine);
+        Rotor.byName.put("TIME_ENGINE", engine);
         Rotor.byMaterial.put(Material.BLUE_DYE, engine_rotor);
         Rotor.byCustomModelData.put(10000008, engine_rotor);
+        Rotor.byName.put("TIME_ROTOR_ENGINE", engine_rotor);
         Rotor.byMaterial.put(Material.WHITE_DYE, hospital);
         Rotor.byCustomModelData.put(10000009, hospital);
+        Rotor.byName.put("TIME_ROTOR_HOSPITAL", hospital);
         for (String r : plugin.getCustomRotorsConfig().getKeys(false)) {
             try {
                 int cmd = plugin.getCustomRotorsConfig().getInt(r + ".off_custom_model_data");
@@ -69,6 +76,7 @@ public class TARDISCustomRotorLoader {
                 // add the rotor to look-ups
                 Rotor.byMaterial.put(material, column);
                 Rotor.byCustomModelData.put(cmd, column);
+                Rotor.byName.put("TIME_ROTOR_" + r.toUpperCase(), column);
             } catch (IllegalArgumentException e) {
                 plugin.debug("Invalid custom rotor item material for " + r + "!");
             }

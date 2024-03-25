@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.enumeration;
+package me.eccentric_nz.TARDIS.rotors;
 
 import org.bukkit.Material;
 
@@ -31,6 +31,7 @@ public class Rotor {
 
     public static final HashMap<Material, Rotor> byMaterial = new HashMap<>();
     public static final HashMap<Integer, Rotor> byCustomModelData = new HashMap<>();
+    public static final HashMap<String, Rotor> byName = new HashMap<>();
     private final String name;
     private final int offModelData;
     private final Material material;

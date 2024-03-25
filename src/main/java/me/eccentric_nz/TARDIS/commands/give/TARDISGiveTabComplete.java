@@ -59,6 +59,12 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
                 GIVE_SUBS.add(recipeItem.toTabCompletionString());
             }
         }
+        for (String r : TARDIS.plugin.getCustomDoorsConfig().getKeys(false)) {
+            GIVE_SUBS.add("door-" + r.toLowerCase());
+        }
+        for (String r : TARDIS.plugin.getCustomRotorsConfig().getKeys(false)) {
+            GIVE_SUBS.add("time-rotor-" + r.toLowerCase());
+        }
         Set<String> kits = plugin.getKitsConfig().getConfigurationSection("kits").getKeys(false);
         KIT_SUBS = ImmutableList.copyOf(kits);
         for (BlueprintBase base : BlueprintBase.values()) {

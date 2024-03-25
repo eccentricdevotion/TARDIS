@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.move;
+package me.eccentric_nz.TARDIS.doors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -52,9 +52,9 @@ public class TARDISDoorToggler {
     public void toggleDoors() {
         UUID uuid = player.getUniqueId();
         if (open) {
-            new TARDISDoorCloser(plugin, uuid, id).closeDoors();
+            new DoorCloserAction(plugin, uuid, id).closeDoors();
         } else {
-            new TARDISDoorOpener(plugin, uuid, id).openDoors();
+            new DoorOpenerAction(plugin, uuid, id).openDoors();
         }
         playDoorSound(player, open, block.getLocation(), minecart);
     }
@@ -65,9 +65,9 @@ public class TARDISDoorToggler {
     public void toggleDoorsWithoutSound(boolean classic) {
         UUID uuid = player.getUniqueId();
         if (open) {
-            new TARDISDoorCloser(plugin, uuid, id).closeDoors();
+            new DoorCloserAction(plugin, uuid, id).closeDoors();
         } else {
-            new TARDISDoorOpener(plugin, uuid, id).openDoors();
+            new DoorOpenerAction(plugin, uuid, id).openDoors();
         }
         if (!classic) {
             playDoorSound(player, open, block.getLocation(), minecart);

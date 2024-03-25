@@ -74,6 +74,14 @@ public class TARDISGiveCommand implements CommandExecutor {
                 custom.add(recipeItem.toTabCompletionString());
             }
         }
+        for (String r : TARDIS.plugin.getCustomDoorsConfig().getKeys(false)) {
+            items.put("door-" + r.toLowerCase(), "DOOR_" + r.toUpperCase());
+            custom.add("door-" + r.toLowerCase());
+        }
+        for (String r : TARDIS.plugin.getCustomRotorsConfig().getKeys(false)) {
+            items.put("time-rotor-" + r.toLowerCase(), "TIME_ROTOR_" + r.toUpperCase());
+            custom.add("time-rotor-" + r.toLowerCase());
+        }
     }
 
     @Override

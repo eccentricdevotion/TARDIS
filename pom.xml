@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.TARDIS</groupId>
     <artifactId>TARDIS</artifactId>
-    <version>5.5.1</version>
+    <version>5.6.0</version>
     <name>TARDIS</name>
     <description>A Doctor Who Plugin</description>
     <properties>

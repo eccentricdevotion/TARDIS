@@ -21,6 +21,9 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.doors.DoorLockAction;
+import me.eccentric_nz.TARDIS.doors.TARDISDoorToggler;
+import me.eccentric_nz.TARDIS.doors.TARDISInnerDoorOpener;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -28,7 +31,6 @@ import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
-import me.eccentric_nz.TARDIS.move.actions.DoorLockAction;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -170,9 +172,8 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                     return;
                                 }
                                 if (!rsd.isLocked()) {
-                                    boolean isPoliceBox = (rs.getTardis().getPreset().usesArmourStand());
                                     // toggle the door open/closed
-                                    if (Tag.DOORS.isTagged(blockType) || (blockType.equals(Material.OAK_TRAPDOOR) && isPoliceBox)) {
+                                    if (Tag.DOORS.isTagged(blockType) || (blockType.equals(Material.OAK_TRAPDOOR))) {
                                         if (doortype == 0 || doortype == 1) {
                                             boolean open = TARDISStaticUtils.isDoorOpen(block);
                                             boolean toggle = true;
@@ -204,9 +205,6 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             // toggle the door
                                             if (toggle || rs.getTardis().isAbandoned()) {
                                                 // toggle the door
-                                                if (isPoliceBox) {
-                                                    new TARDISCustomModelDataChanger(plugin, player, id, rs.getTardis().getPreset()).toggleOuterDoor();
-                                                }
                                                 if (doortype == 1 || !plugin.getPM().isPluginEnabled("RedProtect") || TARDISRedProtectChecker.shouldToggleDoor(block)) {
                                                     new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
                                                 } else {
@@ -309,7 +307,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                             }
                                             exitLoc.setYaw(yaw);
                                             // get location from database
-                                            // make  safe location outside of the bluebox
+                                            // make a safe location outside the blue police box
                                             double ex = exitLoc.getX();
                                             double ez = exitLoc.getZ();
                                             if (opened) {

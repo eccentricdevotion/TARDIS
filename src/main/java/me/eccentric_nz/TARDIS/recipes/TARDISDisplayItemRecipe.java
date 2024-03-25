@@ -40,7 +40,12 @@ public class TARDISDisplayItemRecipe {
     public void addDisplayItemRecipes() {
         for (TARDISDisplayItem tdi : TARDISDisplayItem.values()) {
             if (tdi.getCraftMaterial() != null) {
-                ItemStack is = new ItemStack(tdi.getMaterial(), 1);
+                ItemStack is;
+                if (tdi == TARDISDisplayItem.CLASSIC_DOOR) {
+                    is = new ItemStack(tdi.getCraftMaterial(), 1);
+                } else {
+                    is = new ItemStack(tdi.getMaterial(), 1);
+                }
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(tdi.getDisplayName());
                 if (tdi.getCustomModelData() != -1) {

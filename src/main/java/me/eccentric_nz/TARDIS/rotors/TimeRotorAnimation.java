@@ -1,4 +1,4 @@
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.TARDIS.rotors;
 
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;

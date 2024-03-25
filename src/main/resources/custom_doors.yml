@@ -1,0 +1,32 @@
+# visit https://tardis.pages.dev/custom-doors for more info
+# this entry is the police box door, but centred on a block
+centred:
+  # the material of the door item display - MUST be an unused POTTERY_SHERD, one of:
+  # ANGLER_POTTERY_SHERD, ARCHER_POTTERY_SHERD, ARMS_UP_POTTERY_SHERD, BLADE_POTTERY_SHERD,
+  # BREWER_POTTERY_SHERD, BURN_POTTERY_SHERD, DANGER_POTTERY_SHERD, EXPLORER_POTTERY_SHERD,
+  # FRIEND_POTTERY_SHERD, HEART_POTTERY_SHERD, HEARTBREAK_POTTERY_SHERD, HOWL_POTTERY_SHERD,
+  # MINER_POTTERY_SHERD, MOURNER_POTTERY_SHERD, PLENTY_POTTERY_SHERD, PRIZE_POTTERY_SHERD,
+  # SHEAF_POTTERY_SHERD, SHELTER_POTTERY_SHERD, SKULL_POTTERY_SHERD, SNORT_POTTERY_SHERD
+  # 1.21+ FLOW_POTTERY_SHERD, GUSTER_POTTERY_SHERD, SCRAPE_POTTERY_SHERD
+  # open/closed/animation states will need to be set with "custom_model_data" predicates
+  # in assets/minecraft/models/item/[xxx_pottery_sherd].json starting at 10000
+  material: ANGLER_POTTERY_SHERD
+  # a comma separated list of frame numbers where the
+  # number is added to the starting (closed) animation frame to
+  # get the "custom_model_data" predicate e.g. 10000 + 3 = 10003
+  # in this example, 0 => closed, 4 => fully open, but for a simple door
+  # 0,1 would be just closed and open
+  animation_sequence: 0,1,2,3,4
+  # the animation frame rate in ticks
+  frame_rate: 6
+  # whether the door has a third state activated by crouch-right-clicking
+  # e.g. the double police door has one side open, closed, and a third "both sides open" state
+  # the "custom_model_data" predicate for this state should be 1 greater than
+  # the highest value of the animation_sequence, for this example it would be 5
+  has_extra: true
+  # sfx - if using new custom sounds, you will need to add entries to assets/minecraft/sounds.json
+  # and save .ogg files to assets/tardis/sounds/ in the resource pack
+  # the sound for when the door opens
+  open_sound: tardis_door_open
+  # the sound for when the door closes
+  close_sound: tardis_door_close

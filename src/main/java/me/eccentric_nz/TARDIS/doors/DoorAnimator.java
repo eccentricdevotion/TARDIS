@@ -1,4 +1,4 @@
-package me.eccentric_nz.TARDIS.customblocks;
+package me.eccentric_nz.TARDIS.doors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -11,56 +11,59 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class ClassicDoorAnimator {
+public class DoorAnimator {
 
     private final TARDIS plugin;
     private final ItemDisplay display;
 
     private int taskID;
-    private int open = 5;
-    private int closed = 9;
+    private int open = 1;
+    private int closed = 5;
 
-    public ClassicDoorAnimator(TARDIS plugin, ItemDisplay display) {
+    public DoorAnimator(TARDIS plugin, ItemDisplay display) {
         this.plugin = plugin;
         this.display = display;
     }
 
     public void open() {
-        // remove the barrier blocks
         Location location = display.getLocation();
-        setBlocks(location, Material.AIR, display.getYaw());
-        TARDISSounds.playTARDISSound(location, "classic_door");
+        // remove the barrier blocks
+//        setBlocks(location, Material.AIR, display.getYaw());
         ItemStack is = display.getItemStack();
+        DoorAnimationData data = Door.getOpenData(is.getType());
+        TARDISSounds.playTARDISSound(location, data.getSound());
         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             ItemMeta im = is.getItemMeta();
             im.setCustomModelData(10000 + open);
             is.setItemMeta(im);
             display.setItemStack(is);
-            if (open > 9) {
+            if (open > data.getLastFrame()) {
                 plugin.getServer().getScheduler().cancelTask(taskID);
                 taskID = 0;
             }
             open++;
-        }, 2L, 4L);
+        }, 2L, data.getTicks());
     }
 
     public void close() {
         Location location = display.getLocation();
-        TARDISSounds.playTARDISSound(location, "classic_door");
         ItemStack is = display.getItemStack();
+        DoorAnimationData data = Door.getCloseData(is.getType());
+        closed = data.getLastFrame();
+        TARDISSounds.playTARDISSound(location, data.getSound());
         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             ItemMeta im = is.getItemMeta();
             im.setCustomModelData(10000 + closed);
             is.setItemMeta(im);
             display.setItemStack(is);
-            if (closed < 5) {
+            if (closed < 1) {
                 plugin.getServer().getScheduler().cancelTask(taskID);
                 taskID = 0;
-                // set the barrier blocks to prevent entry
-                setBlocks(location, Material.BARRIER, display.getYaw());
+//                // set the barrier blocks to prevent entry
+//                setBlocks(location, Material.BARRIER, display.getYaw());
             }
             closed--;
-        }, 2L, 4L);
+        }, 2L, data.getTicks());
     }
 
     private void setBlocks(Location location, Material material, float yaw) {

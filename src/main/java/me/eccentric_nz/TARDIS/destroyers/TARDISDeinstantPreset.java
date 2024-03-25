@@ -22,9 +22,9 @@ import me.eccentric_nz.TARDIS.builders.MaterialisationData;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
+import me.eccentric_nz.TARDIS.doors.DoorCloserAction;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSponge;
 import org.bukkit.Chunk;
@@ -34,6 +34,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemFrame;
 
 import java.util.Collections;
@@ -71,7 +72,12 @@ public class TARDISDeinstantPreset {
             // always remove the portal
             plugin.getTrackerKeeper().getPortals().remove(l);
             // toggle the doors if necessary
-            new TARDISDoorCloser(plugin, dd.getPlayer().getUniqueId(), id).closeDoors();
+            new DoorCloserAction(plugin, dd.getPlayer().getUniqueId(), id).closeDoors();
+        }
+        // remove interaction entity
+        Interaction interaction = TARDISDisplayItemUtils.getInteraction(dd.getLocation());
+        if (interaction != null) {
+            interaction.remove();
         }
         World w = l.getWorld();
         // make sure chunk is loaded

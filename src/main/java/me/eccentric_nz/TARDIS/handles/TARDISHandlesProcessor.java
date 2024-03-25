@@ -29,9 +29,9 @@ import me.eccentric_nz.TARDIS.database.data.Program;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
+import me.eccentric_nz.TARDIS.doors.DoorCloserAction;
+import me.eccentric_nz.TARDIS.doors.DoorOpenerAction;
 import me.eccentric_nz.TARDIS.enumeration.*;
-import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
-import me.eccentric_nz.TARDIS.move.TARDISDoorOpener;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeMode;
 import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
@@ -120,8 +120,8 @@ public class TARDISHandlesProcessor {
                         switch (thb) {
                             case DOOR -> {
                                 switch (next) {
-                                    case CLOSE -> new TARDISDoorCloser(plugin, uuid, id).closeDoors();
-                                    case OPEN -> new TARDISDoorOpener(plugin, uuid, id).openDoors();
+                                    case CLOSE -> new DoorCloserAction(plugin, uuid, id).closeDoors();
+                                    case OPEN -> new DoorOpenerAction(plugin, uuid, id).openDoors();
                                     case LOCK, UNLOCK -> {
                                         HashMap<String, Object> whered = new HashMap<>();
                                         whered.put("tardis_id", id);

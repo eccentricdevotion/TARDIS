@@ -115,6 +115,7 @@ public class TARDISShapedRecipe {
         new TimeRotorCustomRecipe(plugin).addRecipes();
         new WhiteBowTieRecipe(plugin).addRecipe();
         new YellowBowTieRecipe(plugin).addRecipe();
+        new DoorCustomRecipe(plugin).addRecipes();
     }
 
     public HashMap<String, ShapedRecipe> getShapedRecipes() {

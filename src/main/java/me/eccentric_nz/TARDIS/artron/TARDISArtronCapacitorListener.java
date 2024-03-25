@@ -26,9 +26,9 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.doors.DoorCloserAction;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.move.TARDISDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -310,7 +310,7 @@ public class TARDISArtronCapacitorListener implements Listener {
         if (rscl.resultSet()) {
             Location current = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
             if (pu) {
-                new TARDISDoorCloser(plugin, player.getUniqueId(), id).closeDoors();
+                new DoorCloserAction(plugin, player.getUniqueId(), id).closeDoors();
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDON_CLAIMED");
                 plugin.getPM().callEvent(new TARDISClaimEvent(player, tardis, current));
             }

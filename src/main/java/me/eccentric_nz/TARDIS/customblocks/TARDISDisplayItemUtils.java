@@ -18,9 +18,7 @@ package me.eccentric_nz.TARDIS.customblocks;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
@@ -45,7 +43,11 @@ public class TARDISDisplayItemUtils {
         if (is != null) {
             ItemMeta im = is.getItemMeta();
             if (im.hasCustomModelData()) {
-                return TARDISDisplayItem.getByMaterialAndData(is.getType(), im.getCustomModelData());
+                if (Tag.ITEMS_DECORATED_POT_SHERDS.isTagged(is.getType())) {
+                    return TARDISDisplayItem.CUSTOM_DOOR;
+                } else {
+                    return TARDISDisplayItem.getByMaterialAndData(is.getType(), im.getCustomModelData());
+                }
             }
         }
         return null;
@@ -115,6 +117,9 @@ public class TARDISDisplayItemUtils {
     }
 
     public static Interaction getInteraction(Location location) {
+        while (!location.getChunk().isLoaded()) {
+            location.getChunk().load();
+        }
         for (Entity e : location.getWorld().getNearbyEntities(location, 1.5d, 3d, 1.5d, (d) -> d.getType() == EntityType.INTERACTION)) {
             if (e instanceof Interaction interaction) {
                 return interaction;
@@ -183,7 +188,8 @@ public class TARDISDisplayItemUtils {
         } else if (tdi != TARDISDisplayItem.ARTRON_FURNACE && tdi != TARDISDisplayItem.SONIC_GENERATOR) {
             block.setBlockData(TARDISConstants.BARRIER);
         }
-        ItemStack is = new ItemStack(tdi.getMaterial(), 1);
+        Material material = (tdi == TARDISDisplayItem.CLASSIC_DOOR) ? tdi.getCraftMaterial() : tdi.getMaterial();
+        ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(tdi.getDisplayName());
         if (tdi.getCustomModelData() != -1) {
@@ -273,7 +279,6 @@ public class TARDISDisplayItemUtils {
         // spawn an interaction entity
         Interaction interaction = (Interaction) location.getWorld().spawnEntity(location, EntityType.INTERACTION);
         interaction.getPersistentDataContainer().set(TARDIS.plugin.getTardisIdKey(), PersistentDataType.INTEGER, id);
-//        interaction.getPersistentDataContainer().set(TARDIS.plugin.getStandUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), block.getUniqueId());
         interaction.setResponsive(true);
         interaction.setPersistent(true);
         interaction.setInvulnerable(true);
@@ -291,10 +296,8 @@ public class TARDISDisplayItemUtils {
      */
     public static void removeDisplaysInChunk(Chunk chunk, int lower, int upper) {
         for (Entity entity : chunk.getEntities()) {
-            if ( // TARDIS item display and interaction entities
-                    ((entity instanceof ItemDisplay || entity instanceof Interaction) && entity.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER))
-                            // and item frames
-                            || entity instanceof ItemFrame) {
+            // TARDIS item display and interaction entities + item frames
+            if (((entity instanceof ItemDisplay || entity instanceof Interaction) && entity.getPersistentDataContainer().has(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) || entity instanceof ItemFrame) {
                 int y = entity.getLocation().getBlockY();
                 if (y >= lower && y <= upper) {
                     entity.remove();
