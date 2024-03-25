@@ -82,10 +82,7 @@ public class TARDISInnerDoorOpener {
                 if (tdi != null) {
                     ItemStack itemStack = display.getItemStack();
                     ItemMeta im = itemStack.getItemMeta();
-                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN) {
-                        im.setCustomModelData(10004);
-                    }
-                    if (outside && (tdi == TARDISDisplayItem.CLASSIC_DOOR) || tdi == TARDISDisplayItem.CUSTOM_DOOR) {
+                    if (outside) {
                         DoorAnimationData data = Door.getOpenData(itemStack.getType());
                         im.setCustomModelData(10000 + data.getLastFrame() + 1);
                     }
