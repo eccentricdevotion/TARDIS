@@ -117,6 +117,9 @@ public class TARDISDisplayItemUtils {
     }
 
     public static Interaction getInteraction(Location location) {
+        while (!location.getChunk().isLoaded()) {
+            location.getChunk().load();
+        }
         for (Entity e : location.getWorld().getNearbyEntities(location, 1.5d, 3d, 1.5d, (d) -> d.getType() == EntityType.INTERACTION)) {
             if (e instanceof Interaction interaction) {
                 return interaction;

@@ -34,6 +34,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemFrame;
 
 import java.util.Collections;
@@ -72,6 +73,11 @@ public class TARDISDeinstantPreset {
             plugin.getTrackerKeeper().getPortals().remove(l);
             // toggle the doors if necessary
             new DoorCloserAction(plugin, dd.getPlayer().getUniqueId(), id).closeDoors();
+        }
+        // remove interaction entity
+        Interaction interaction = TARDISDisplayItemUtils.getInteraction(dd.getLocation());
+        if (interaction != null) {
+            interaction.remove();
         }
         World w = l.getWorld();
         // make sure chunk is loaded

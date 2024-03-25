@@ -88,11 +88,7 @@ public class TARDISInnerDoorCloser {
                     }
                     itemStack.setItemMeta(im);
                     display.setItemStack(itemStack);
-                } else {
-                    plugin.debug("TARDISInnerDoorCloser TARDISDisplayItem was null");
                 }
-            } else {
-                plugin.debug("TARDISInnerDoorCloser display was null");
             }
         }
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {

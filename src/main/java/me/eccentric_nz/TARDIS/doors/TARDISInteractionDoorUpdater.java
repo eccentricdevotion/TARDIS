@@ -27,7 +27,6 @@ public class TARDISInteractionDoorUpdater {
             for (HashMap<String, String> map : rsd.getData()) {
                 String l = map.get("door_location");
                 String i = map.get("tardis_id");
-                plugin.debug(i + " " + l);
                 Location location = TARDISStaticLocationGetters.getLocationFromDB(l);
                 if (location != null) {
                     while (!location.getChunk().isLoaded()) {

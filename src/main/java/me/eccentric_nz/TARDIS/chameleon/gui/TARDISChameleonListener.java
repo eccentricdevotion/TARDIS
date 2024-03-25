@@ -118,6 +118,7 @@ public class TARDISChameleonListener extends TARDISMenuListener {
         boolean hasFrame = rsf.resultSet();
         switch (slot) {
             case 0 -> {
+                // apply
                 player.performCommand("tardis rebuild");
                 close(player);
                 // damage the circuit if configured
