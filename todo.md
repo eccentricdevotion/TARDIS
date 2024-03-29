@@ -2,7 +2,7 @@
 
 ## Current version `5.6.0`
 
-1. Custom display doors [#833](https://github.com/eccentricdevotion/TARDIS/issues/833)
+1. Fix fifteenth console redstone piston door
 2. ?
 
 ## Next version `5.7.0`

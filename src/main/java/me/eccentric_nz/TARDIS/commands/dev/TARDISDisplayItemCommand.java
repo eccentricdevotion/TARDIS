@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockConverter;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockRoomConverter;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -30,7 +31,6 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Chunk;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -233,38 +233,7 @@ public class TARDISDisplayItemCommand {
                 return true;
             }
             case "console" -> {
-                Block up = block.getRelative(BlockFace.UP);
-                for (int i = 0; i < 6; i++) {
-                    ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
-                    ItemMeta im = shard.getItemMeta();
-                    im.setCustomModelData(1001 + i);
-                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
-                    shard.setItemMeta(im);
-                    ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
-                    display.setItemStack(shard);
-                    display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
-                    display.setPersistent(true);
-                    display.setInvulnerable(true);
-                    float yaw = i * 60.0f;
-                    yaw = Location.normalizeYaw(yaw);
-                    // set display rotation
-                    display.setRotation(yaw, 0);
-                }
-                for (int i = 30; i < 360; i += 60) {
-                    ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
-                    ItemMeta im = shard.getItemMeta();
-                    im.setCustomModelData(1007);
-                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
-                    shard.setItemMeta(im);
-                    ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
-                    display.setItemStack(shard);
-                    display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
-                    display.setPersistent(true);
-                    display.setInvulnerable(true);
-                    float yaw = Location.normalizeYaw(i);
-                    // set display rotation
-                    display.setRotation(yaw, 0);
-                }
+                new ConsoleBuilder(plugin).create(block, 1);
                 return true;
             }
             default -> {
