@@ -37,6 +37,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
 
@@ -120,59 +121,64 @@ public class TARDISCraftListener implements Listener {
         if (recipe != null) {
             ItemStack is = recipe.getResult();
             CraftingInventory ci = event.getInventory();
-            if (is.hasItemMeta() && is.getItemMeta().hasDisplayName()) {
-                String dn = is.getItemMeta().getDisplayName();
-                if (dn.equals(ChatColor.GOLD + "TARDIS Seed Block")) {
-                    ItemMeta im = is.getItemMeta();
-                    List<String> lore = im.getLore();
-                    lore.add("Walls: " + ci.getItem(6).getType());
-                    lore.add("Floors: " + ci.getItem(9).getType());
-                    lore.add("Chameleon: FACTORY");
-                    im.setLore(lore);
-                    is.setItemMeta(im);
-                    ci.setResult(is);
-                } else if (is.getType().equals(Material.GLOWSTONE_DUST)) {
-                    if (DiskCircuit.getCircuitNames().contains(dn)) {
-                        // which circuit is it?
-                        String[] split = dn.split(" ");
-                        String which = split[1].toLowerCase(Locale.ENGLISH);
-                        // set the second line of lore
-                        ItemMeta im = is.getItemMeta();
-                        List<String> lore;
-                        String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
-                        if (im.hasLore()) {
-                            lore = im.getLore();
-                            lore.set(1, uses);
-                        } else {
-                            lore = Arrays.asList("Uses left", uses);
-                        }
+            if (is.hasItemMeta()) {
+                ItemMeta im = is.getItemMeta();
+                if (im.hasDisplayName()) {
+                    String dn = im.getDisplayName();
+                    if (dn.equals(ChatColor.GOLD + "TARDIS Seed Block")) {
+                        List<String> lore = im.getLore();
+                        lore.add("Walls: " + ci.getItem(6).getType());
+                        lore.add("Floors: " + ci.getItem(9).getType());
+                        lore.add("Chameleon: FACTORY");
                         im.setLore(lore);
                         is.setItemMeta(im);
                         ci.setResult(is);
-                    }
-                } else if (is.getType().equals(Material.IRON_SWORD) && dn.equals("Rust Plague Sword")) {
-                    // enchant the result
-                    is.addEnchantment(Enchantment.DAMAGE_UNDEAD, 2);
-                    ci.setResult(is);
-                } else if (is.getType().equals(Material.LEATHER_HELMET) && dn.equals("3-D Glasses") || dn.equals("TARDIS Communicator")) {
-                    LeatherArmorMeta lam = (LeatherArmorMeta) is.getItemMeta();
-                    lam.setColor(Color.WHITE);
-                    is.setItemMeta(lam);
-                    ci.setResult(is);
-                } else if (dn.contains("Key") || dn.contains("Authorised Control")) {
-                    HumanEntity human = event.getView().getPlayer();
-                    if (human instanceof Player) {
-                        ItemMeta im = is.getItemMeta();
-                        im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), human.getUniqueId());
-                        List<String> lore = im.getLore();
-                        if (lore == null) {
-                            lore = new ArrayList<>();
+                    } else if (is.getType().equals(Material.GLOWSTONE_DUST)) {
+                        if (DiskCircuit.getCircuitNames().contains(dn)) {
+                            // which circuit is it?
+                            String[] split = dn.split(" ");
+                            String which = split[1].toLowerCase(Locale.ENGLISH);
+                            // set the second line of lore
+                            List<String> lore;
+                            String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
+                            if (im.hasLore()) {
+                                lore = im.getLore();
+                                lore.set(1, uses);
+                            } else {
+                                lore = Arrays.asList("Uses left", uses);
+                            }
+                            im.setLore(lore);
+                            is.setItemMeta(im);
+                            ci.setResult(is);
                         }
-                        String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
-                        String what = dn.contains("Key") ? "key" : "disk";
-                        lore.add(format + "This " + what + " belongs to");
-                        lore.add(format + human.getName());
-                        im.setLore(lore);
+                    } else if (is.getType().equals(Material.IRON_SWORD) && dn.equals("Rust Plague Sword")) {
+                        // enchant the result
+                        is.addEnchantment(Enchantment.DAMAGE_UNDEAD, 2);
+                        ci.setResult(is);
+                    } else if (is.getType().equals(Material.LEATHER_HELMET) && dn.equals("3-D Glasses") || dn.equals("TARDIS Communicator")) {
+                        LeatherArmorMeta lam = (LeatherArmorMeta) im;
+                        lam.setColor(Color.WHITE);
+                        is.setItemMeta(lam);
+                        ci.setResult(is);
+                    } else if (dn.contains("Key") || dn.contains("Authorised Control")) {
+                        HumanEntity human = event.getView().getPlayer();
+                        if (human instanceof Player) {
+                            im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), human.getUniqueId());
+                            List<String> lore = im.getLore();
+                            if (lore == null) {
+                                lore = new ArrayList<>();
+                            }
+                            String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
+                            String what = dn.contains("Key") ? "key" : "disk";
+                            lore.add(format + "This " + what + " belongs to");
+                            lore.add(format + human.getName());
+                            im.setLore(lore);
+                            is.setItemMeta(im);
+                            ci.setResult(is);
+                        }
+                    } else if (dn.startsWith("Door ") && im.hasCustomModelData()) {
+                        // add custom block key to PDC
+                        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 10000);
                         is.setItemMeta(im);
                         ci.setResult(is);
                     }
