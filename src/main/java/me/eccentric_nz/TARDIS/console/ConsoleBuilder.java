@@ -52,5 +52,6 @@ public class ConsoleBuilder {
             // set display rotation
             display.setRotation(yaw, 0);
         }
+        // TODO set interaction entities for console controls
     }
 }
