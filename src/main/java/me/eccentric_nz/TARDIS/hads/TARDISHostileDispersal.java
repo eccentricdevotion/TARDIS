@@ -80,7 +80,7 @@ class TARDISHostileDispersal {
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
             // always remove the portal
             plugin.getTrackerKeeper().getPortals().remove(l);
-            // toggle the doors if neccessary
+            // toggle the doors if necessary
             new DoorCloserAction(plugin, uuid, id).closeDoors();
         }
         World w = l.getWorld();

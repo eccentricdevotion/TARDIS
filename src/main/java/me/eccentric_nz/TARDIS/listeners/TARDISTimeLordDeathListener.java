@@ -184,7 +184,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                                     going_home = true;
                                                 }
                                             } else {
-                                                // died in home world get closest location
+                                                // died in home world, get closest location
                                                 Location recharger = getRecharger(death_world, player);
                                                 if (recharger != null) {
                                                     // which is closer?
@@ -304,7 +304,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                             HashMap<String, Object> setp = new HashMap<>();
                                             // power down
                                             setp.put("powered_on", 0);
-                                            // police box lamp, delay it incase the TARDIS needs rebuilding
+                                            // police box lamp, delay it in case the TARDIS needs rebuilding
                                             if (tardis.getPreset().equals(ChameleonPreset.ADAPTIVE) || tardis.getPreset().usesArmourStand()) {
                                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, tardis.getPreset()), 1L);
                                             }

@@ -209,7 +209,7 @@ public class DoorToggleAction extends TARDISDoorListener {
                                             return true;
                                         }
                                         // close portal & inner door
-                                        new TARDISInnerDoorCloser(plugin, uuid, id).closeDoor();
+                                        new TARDISInnerDoorCloser(plugin, uuid, id).closeDoor(!plugin.getUtils().inTARDISWorld(player));
                                         if (dye.getType() == Material.ENDER_PEARL) {
                                             new PandoricaOpens(plugin).animate(stand, false);
                                         } else {

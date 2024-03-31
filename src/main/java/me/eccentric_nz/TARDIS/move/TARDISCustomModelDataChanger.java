@@ -77,11 +77,12 @@ public class TARDISCustomModelDataChanger {
                     if (cmd == 1001 || cmd == 1002) {
                         boolean open = (cmd == 1001);
                         int newData;
+                        boolean outside = !plugin.getUtils().inTARDISWorld(player);
                         if (open) {
-                            new TARDISInnerDoorOpener(plugin, uuid, id).openDoor(!plugin.getUtils().inTARDISWorld(player));
+                            new TARDISInnerDoorOpener(plugin, uuid, id).openDoor(outside);
                             newData = 1002;
                         } else {
-                            new TARDISInnerDoorCloser(plugin, uuid, id).closeDoor();
+                            new TARDISInnerDoorCloser(plugin, uuid, id).closeDoor(outside);
                             newData = 1001;
                         }
                         if (preset != ChameleonPreset.PANDORICA) {

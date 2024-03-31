@@ -52,14 +52,14 @@ public class TARDISInnerDoorCloser {
         this.id = id;
     }
 
-    public void closeDoor() {
+    public void closeDoor(boolean outside) {
         // get inner door location
         ResultSetDoorBlocks rs = new ResultSetDoorBlocks(plugin, id);
         if (rs.resultSet()) {
             if (!rs.getInnerBlock().getChunk().isLoaded()) {
                 rs.getInnerBlock().getChunk().load();
             }
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> close(rs.getInnerBlock()), 5L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> close(rs.getInnerBlock(), outside), 5L);
         }
     }
 
@@ -68,7 +68,7 @@ public class TARDISInnerDoorCloser {
      *
      * @param block the bottom door block
      */
-    private void close(Block block) {
+    private void close(Block block, boolean outside) {
         if (block != null && Tag.DOORS.isTagged(block.getType())) {
             Openable closeable = (Openable) block.getBlockData();
             closeable.setOpen(false);
@@ -81,7 +81,7 @@ public class TARDISInnerDoorCloser {
                 if (tdi != null) {
                     ItemStack itemStack = display.getItemStack();
                     ItemMeta im = itemStack.getItemMeta();
-                    if (tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN || tdi == TARDISDisplayItem.CLASSIC_DOOR_OPEN || tdi == TARDISDisplayItem.CUSTOM_DOOR) {
+                    if ((tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN || tdi == TARDISDisplayItem.CLASSIC_DOOR_OPEN || tdi == TARDISDisplayItem.CUSTOM_DOOR) && outside) {
                         im.setCustomModelData(10000);
                     }
                     itemStack.setItemMeta(im);
