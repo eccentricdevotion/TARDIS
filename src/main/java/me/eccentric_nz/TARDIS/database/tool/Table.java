@@ -46,6 +46,7 @@ public enum Table {
     gardens("garden_id"),
     gravity_well("g_id"),
     homes,
+    interactions("i_id"),
     inventories("id"),
     junk("id"),
     lamps("l_id"),

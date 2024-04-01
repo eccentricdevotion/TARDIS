@@ -160,6 +160,10 @@ public class TARDISSQLiteDatabase {
             String queryHomes = "CREATE TABLE IF NOT EXISTS " + prefix + "homes (home_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, direction TEXT DEFAULT '', submarine INTEGER DEFAULT 0, preset TEXT DEFAULT '')";
             statement.executeUpdate(queryHomes);
 
+            // Table structure for table 'interactions'
+            String queryInteractions = "CREATE TABLE IF NOT EXISTS " + prefix + "interactions (i_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, uuid TEXT DEFAULT '', control TEXT DEFAULT '', state INTEGER)";
+            statement.executeUpdate(queryInteractions);
+
             // Table structure for inventories
             String queryInventories = "CREATE TABLE IF NOT EXISTS " + prefix + "inventories (id INTEGER PRIMARY KEY NOT NULL, uuid TEXT, player TEXT, arch INTEGER, inventory TEXT, armour TEXT, attributes TEXT, armour_attributes TEXT)";
             statement.executeUpdate(queryInventories);

@@ -238,6 +238,10 @@ public class Main {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("home_id"), rs.getInt("tardis_id"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("direction"), rs.getInt("submarine"), rs.getString("preset")) + end;
                                         bw.write(str);
                                     }
+                                    case interactions -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("i_id"), rs.getInt("tardis_id"), rs.getString("uuid"), rs.getString("control"), rs.getInt("state")) + end;
+                                        bw.write(str);
+                                    }
                                     case inventories -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("id"), rs.getString("uuid"), rs.getString("player"), rs.getInt("arch"), rs.getString("inventory"), rs.getString("armour"), rs.getString("attributes"), rs.getString("armour_attributes")) + end;
                                         bw.write(str);

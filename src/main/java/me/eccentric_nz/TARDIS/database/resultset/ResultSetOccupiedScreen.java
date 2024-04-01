@@ -32,15 +32,13 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Many facts, figures, and formulas are contained within the Matrix, including... the companions who travel in the
- * TARDIS.
- * <p>
- * Companions are the Doctor's closest friends. Such people knew the Doctor's "secret": that he was someone non-human
- * who travelled in space and time in a police box-shaped craft called the TARDIS.
+ * The TARDIS scanner, also known as the video screen, vid-screen or, in its smoke-like monitor-less configuration,
+ * the smoke screen is the main method for the occupants of the vessel to observe the outside environment.
+ * The appearance and specifications of the scanner system have varied significantly in the course of the Doctor's travels.
  *
  * @author eccentric_nz
  */
-public class ResultSetOccupiedConsole {
+public class ResultSetOccupiedScreen {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
@@ -53,7 +51,7 @@ public class ResultSetOccupiedConsole {
      *
      * @param plugin an instance of the main class.
      */
-    public ResultSetOccupiedConsole(TARDIS plugin) {
+    public ResultSetOccupiedScreen(TARDIS plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
     }
@@ -77,7 +75,12 @@ public class ResultSetOccupiedConsole {
         Statement statement = null;
         ResultSet rs = null;
         long time = System.currentTimeMillis() - 86400000;
-        String query = "SELECT DISTINCT " + prefix + "travellers.tardis_id, " + prefix + "consoles.uuid FROM " + prefix + "travellers, " + prefix + "tardis, " + prefix + "consoles WHERE " + prefix + "tardis.lastuse > " + time + " AND " + prefix + "tardis.tardis_id = " + prefix + "travellers.tardis_id  AND " + prefix + "tardis.tardis_id = " + prefix + "consoles.tardis_id";
+        String query = "SELECT DISTINCT " + prefix + "travellers.tardis_id, " + prefix + "interactions.uuid FROM "
+                + prefix + "travellers, " + prefix + "tardis, " + prefix + "interactions WHERE "
+                + prefix + "interactions.control = 'SCREEN' AND "
+                + prefix + "tardis.lastuse > " + time + " AND "
+                + prefix + "tardis.tardis_id = " + prefix + "travellers.tardis_id  AND "
+                + prefix + "tardis.tardis_id = " + prefix + "interactions.tardis_id";
         try {
             service.testConnection(connection);
             statement = connection.createStatement();
@@ -95,7 +98,7 @@ public class ResultSetOccupiedConsole {
                 }
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for ResultSetOccupiedConsole! " + e.getMessage());
+            plugin.debug("ResultSet error for ResultSetOccupiedScreen! " + e.getMessage());
         } finally {
             try {
                 if (rs != null) {
@@ -105,7 +108,7 @@ public class ResultSetOccupiedConsole {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing ResultSetOccupiedConsole! " + e.getMessage());
+                plugin.debug("Error closing ResultSetOccupiedScreen! " + e.getMessage());
             }
         }
     }
@@ -116,6 +119,6 @@ public class ResultSetOccupiedConsole {
 
     public interface ResultSetOccupiedCallback {
 
-        void onDone(ResultSetOccupiedConsole resultSetOccupied);
+        void onDone(ResultSetOccupiedScreen resultSetOccupied);
     }
 }

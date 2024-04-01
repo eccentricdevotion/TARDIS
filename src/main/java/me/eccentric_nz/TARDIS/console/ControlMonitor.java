@@ -4,7 +4,7 @@ import com.mojang.datafixers.util.Pair;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConsole;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetOccupiedConsole;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetOccupiedScreen;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -29,7 +29,7 @@ public class ControlMonitor implements Runnable {
 
     @Override
     public void run() {
-        ResultSetOccupiedConsole rsoc = new ResultSetOccupiedConsole(plugin);
+        ResultSetOccupiedScreen rsoc = new ResultSetOccupiedScreen(plugin);
         rsoc.resultSetAsync(resultSetOccupied -> {
             for (Pair<Integer, UUID> pair : rsoc.getData()) {
                 update(pair.getFirst(), pair.getSecond(), modulo % 2 == 0);
