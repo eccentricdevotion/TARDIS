@@ -20,7 +20,7 @@ import java.util.UUID;
 public class ControlMonitor implements Runnable {
 
     private final TARDIS plugin;
-    private final Transformation transformation = new Transformation(TARDISConstants.VECTOR_ZERO, TARDISConstants.AXIS_ANGLE_ZERO, new Vector3f(0.5f, 0.5f, 0.5f), TARDISConstants.AXIS_ANGLE_ZERO);
+    private final Transformation transformation = new Transformation(TARDISConstants.VECTOR_ZERO, TARDISConstants.AXIS_ANGLE_ZERO, new Vector3f(0.4f, 0.4f, 0.4f), TARDISConstants.AXIS_ANGLE_ZERO);
     private int modulo = 0;
 
     public ControlMonitor(TARDIS plugin) {
@@ -29,9 +29,9 @@ public class ControlMonitor implements Runnable {
 
     @Override
     public void run() {
-        ResultSetOccupiedScreen rsoc = new ResultSetOccupiedScreen(plugin);
-        rsoc.resultSetAsync(resultSetOccupied -> {
-            for (Pair<Integer, UUID> pair : rsoc.getData()) {
+        ResultSetOccupiedScreen rsos = new ResultSetOccupiedScreen(plugin);
+        rsos.resultSetAsync(resultSetOccupied -> {
+            for (Pair<Integer, UUID> pair : rsos.getData()) {
                 update(pair.getFirst(), pair.getSecond(), modulo % 2 == 0);
             }
         });
@@ -48,12 +48,8 @@ public class ControlMonitor implements Runnable {
         }
         textDisplay.setTransformation(transformation);
         textDisplay.setBillboard(Display.Billboard.FIXED);
-        String text = makeText(id, coords);
-        plugin.debug(text);
-        textDisplay.setText(text);
-    }
-
-    private String makeText(int id, boolean coords) {
+        textDisplay.setSeeThrough(true);
+        // get text
         ResultSetConsole rsc = new ResultSetConsole(plugin, id);
         StringBuilder builder = new StringBuilder();
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
@@ -62,6 +58,7 @@ public class ControlMonitor implements Runnable {
                     .append("in the\n")
                     .append("time\n")
                     .append("vortex...");
+            textDisplay.setText(builder.toString());
         } else if (coords) {
             rsc.locationAsync((hasResult, resultSetConsole) -> {
                 if (hasResult) {
@@ -78,6 +75,7 @@ public class ControlMonitor implements Runnable {
                             .append(resultSetConsole.getY())
                             .append("\n")
                             .append(resultSetConsole.getZ());
+                    textDisplay.setText(builder.toString());
                 }
             });
         } else {
@@ -101,9 +99,9 @@ public class ControlMonitor implements Runnable {
                         preset = ChatColor.BLUE + resultSetConsole.getPreset().replace("ITEM:", "");
                     }
                     builder.append(preset);
+                    textDisplay.setText(builder.toString());
                 }
             });
         }
-        return builder.toString();
     }
 }

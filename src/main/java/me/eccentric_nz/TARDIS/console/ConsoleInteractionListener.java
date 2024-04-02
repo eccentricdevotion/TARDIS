@@ -16,7 +16,7 @@ import java.util.UUID;
 
 public class ConsoleInteractionListener implements Listener {
 
-    private  final TARDIS plugin;
+    private final TARDIS plugin;
 
     public ConsoleInteractionListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -32,15 +32,12 @@ public class ConsoleInteractionListener implements Listener {
                     switch (rsi.getControl()) {
                         case SCREEN_LEFT, SCREEN_RIGHT -> {
                             plugin.getMessenger().announceRepeater(event.getPlayer(), rsi.getControl().getAlternateName());
-                            // spawn a text display
                             boolean coords = rsi.getControl() == ConsoleInteraction.SCREEN_RIGHT;
+                            // get the text display
                             TextDisplay display = getTextDisplay(interaction.getLocation(), coords);
                             if (display != null) {
                                 display.setRotation(Location.normalizeYaw(300), -10f);
-                                plugin.debug(display.getLocation());
                                 new ControlMonitor(plugin).update(3, display.getUniqueId(), coords);
-                            } else {
-                                plugin.getMessenger().announceRepeater(event.getPlayer(), "No text display :(");
                             }
                         }
                         default -> plugin.getMessenger().announceRepeater(event.getPlayer(), rsi.getControl().getAlternateName());
@@ -58,7 +55,7 @@ public class ConsoleInteractionListener implements Listener {
         }
         if (textDisplay == null) {
             Location adjusted = location.clone();
-            Vector vector = coords ? new Vector(0.33f,0,0.5f) : new Vector(1.1f,0,0);
+            Vector vector = coords ? new Vector(0.0d, 0.5d, 0.35d) : new Vector(0.32d, 0.5d, -0.225d);
             adjusted.add(vector);
             textDisplay = (TextDisplay) location.getWorld().spawnEntity(adjusted, EntityType.TEXT_DISPLAY);
         }
