@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.database.resultset;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.console.ConsoleInteraction;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.enumeration.Control;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,7 +43,7 @@ public class ResultSetInteraction {
     private final UUID uuid;
     private int interaction_id;
     private int tardis_id;
-    private Control control;
+    private ConsoleInteraction control;
     private int state;
 
     /**
@@ -76,7 +76,7 @@ public class ResultSetInteraction {
                 while (rs.next()) {
                     interaction_id = rs.getInt("i_id");
                     tardis_id = rs.getInt("tardis_id");
-                    control = Control.valueOf(rs.getString("control"));
+                    control = ConsoleInteraction.valueOf(rs.getString("control"));
                     state = rs.getInt("state");
                 }
             } else {
@@ -112,7 +112,7 @@ public class ResultSetInteraction {
         return uuid;
     }
 
-    public Control getControl() {
+    public ConsoleInteraction getControl() {
         return control;
     }
 

@@ -38,6 +38,7 @@ import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuListener;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISWeatherListener;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddGUIListener;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionGUIListener;
+import me.eccentric_nz.TARDIS.console.ConsoleInteractionListener;
 import me.eccentric_nz.TARDIS.control.TARDISControlListener;
 import me.eccentric_nz.TARDIS.control.TARDISControlMenuListener;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockListener;
@@ -193,6 +194,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISDismountListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISDisplayBlockListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISDisplayListener(plugin), plugin);
+        plugin.getPM().registerEvents(new ConsoleInteractionListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISEjectListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISEntityGriefListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISExplosionAndDamageListener(plugin), plugin);

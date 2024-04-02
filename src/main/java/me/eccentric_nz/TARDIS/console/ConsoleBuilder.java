@@ -6,10 +6,13 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.HashMap;
 
 public class ConsoleBuilder {
 
@@ -52,6 +55,23 @@ public class ConsoleBuilder {
             // set display rotation
             display.setRotation(yaw, 0);
         }
-        // TODO set interaction entities for console controls
+        // set interaction entities for console controls
+        for (ConsoleInteraction i : ConsoleInteraction.values()) {
+            double x = i.getRelativePosition().getX();
+            double z = i.getRelativePosition().getZ();
+            Location location = block.getLocation().clone().add(x, 1, z);
+            Interaction interaction = (Interaction) location.getWorld().spawnEntity(location, EntityType.INTERACTION);
+            interaction.getPersistentDataContainer().set(plugin.getInteractionUuidKey(), plugin.getPersistentDataTypeUUID(), interaction.getUniqueId());
+            interaction.setInteractionWidth(i.getWidth());
+            interaction.setInteractionHeight(i.getHeight());
+            interaction.setPersistent(true);
+            interaction.setInvulnerable(true);
+            HashMap<String,Object> data = new HashMap<>();
+            data.put("tardis_id", 3);
+            data.put("uuid", interaction.getUniqueId());
+            data.put("control", i.toString());
+            data.put("state", 0);
+            plugin.getQueryFactory().doInsert("interactions", data);
+        }
     }
 }

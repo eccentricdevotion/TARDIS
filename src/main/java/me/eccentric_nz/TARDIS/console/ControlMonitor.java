@@ -48,7 +48,9 @@ public class ControlMonitor implements Runnable {
         }
         textDisplay.setTransformation(transformation);
         textDisplay.setBillboard(Display.Billboard.FIXED);
-        textDisplay.setText(makeText(id, coords));
+        String text = makeText(id, coords);
+        plugin.debug(text);
+        textDisplay.setText(text);
     }
 
     private String makeText(int id, boolean coords) {
@@ -70,7 +72,7 @@ public class ControlMonitor implements Runnable {
                     builder.append(ChatColor.DARK_PURPLE)
                             .append(worldName)
                             .append("\n")
-                            .append(ChatColor.BLACK)
+                            .append(ChatColor.WHITE)
                             .append(resultSetConsole.getX())
                             .append("\n")
                             .append(resultSetConsole.getY())
@@ -82,16 +84,16 @@ public class ControlMonitor implements Runnable {
             // get the artron data
             rsc.artronAsync((hasResult, resultSetConsole) -> {
                 if (hasResult) {
-                    builder.append(ChatColor.BLACK)
+                    builder.append(ChatColor.WHITE)
                             .append(plugin.getLanguage().getString("ARTRON_DISPLAY"))
                             .append("\n")
                             .append(ChatColor.AQUA)
                             .append(resultSetConsole.getArtronLevel())
                             .append("\n")
-                            .append(ChatColor.BLACK)
+                            .append(ChatColor.WHITE)
                             .append(plugin.getLanguage().getString("CHAM_DISPLAY"))
                             .append("\n");
-                    String preset = "";
+                    String preset;
                     if (resultSetConsole.getPreset().startsWith("POLICE_BOX_")) {
                         ChatColor colour = TARDISStaticUtils.policeBoxToChatColor(resultSetConsole.getPreset());
                         preset = colour + "POLICE_BOX";
