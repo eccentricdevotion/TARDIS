@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.customblocks;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
@@ -111,6 +112,39 @@ public class TARDISDisplayItemUtils {
         for (Entity e : interaction.getWorld().getNearbyEntities(interaction.getBoundingBox().expand(0.1d), (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
             if (e instanceof ItemDisplay display) {
                 return display;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get an item display entity from an Interaction entity. Used for console sonic docks.
+     *
+     * @param interaction the Interaction entity to use as the search location
+     * @return The Item Display entity at the Interaction location or null if there isn't one
+     */
+    public static ItemDisplay getSonic(Interaction interaction) {
+        for (Entity e : interaction.getWorld().getNearbyEntities(interaction.getBoundingBox().expand(0.75d), (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
+            if (e instanceof ItemDisplay display) {
+                ItemStack is = display.getItemStack();
+                if (TARDISStaticUtils.isSonic(is)) {
+                    return display;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get a text display entity from an Interaction entity. Used for console sonic docks.
+     *
+     * @param interaction the Interaction entity to use as the search location
+     * @return The Text Display entity at the Interaction location or null if there isn't one
+     */
+    public static TextDisplay getText(Interaction interaction) {
+        for (Entity e : interaction.getWorld().getNearbyEntities(interaction.getBoundingBox().expand(0.1d), (d) -> d.getType() == EntityType.TEXT_DISPLAY)) {
+            if (e instanceof TextDisplay display) {
+                    return display;
             }
         }
         return null;

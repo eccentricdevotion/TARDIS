@@ -122,7 +122,7 @@ public class TARDISExteriorFlight {
         });
     }
 
-    void startFlying(Player player, int id, Block block, Location current, boolean beac_on, String beacon, boolean pandorica) {
+    public void startFlying(Player player, int id, Block block, Location current, boolean beac_on, String beacon, boolean pandorica) {
         // get the TARDIS's current location
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (!rsc.resultSet()) {
@@ -131,11 +131,13 @@ public class TARDISExteriorFlight {
         }
         Location interior = player.getLocation();
         // set the handbrake
-        TARDISHandbrake.setLevers(block, false, true, block.getLocation().toString(), id, plugin);
+        if (block != null) {
+            TARDISHandbrake.setLevers(block, false, true, block.getLocation().toString(), id, plugin);
+            TARDISSounds.playTARDISSound(block.getLocation(), "tardis_handbrake_release");
+        }
         if (plugin.getConfig().getBoolean("circuits.damage")) {
             plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
         }
-        TARDISSounds.playTARDISSound(block.getLocation(), "tardis_handbrake_release");
         Handbrake hb = new Handbrake(plugin);
         if (!beac_on && !beacon.isEmpty()) {
             hb.toggleBeacon(beacon, true);
