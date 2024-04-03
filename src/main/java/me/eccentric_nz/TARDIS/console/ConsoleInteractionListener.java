@@ -27,7 +27,7 @@ public class ConsoleInteractionListener implements Listener {
                 if (rsi.resultSet()) {
                     ConsoleInteraction ci = rsi.getControl();
                     switch (ci) {
-                        case SCREEN_LEFT, SCREEN_RIGHT -> new ScreenInteraction(plugin).display(interaction.getLocation(), ci == ConsoleInteraction.SCREEN_RIGHT);
+                        case SCREEN_LEFT, SCREEN_RIGHT -> new ScreenInteraction(plugin).display(rsi.getTardis_id(), interaction.getLocation(), ci == ConsoleInteraction.SCREEN_RIGHT);
                         case SCANNER -> new ScannerIntraction(plugin).process(rsi.getTardis_id(), event.getPlayer());
                         case ARTRON -> plugin.getMessenger().sendArtron(event.getPlayer(), rsi.getTardis_id(), 0);
                         case REBUILD -> new RebuildInteraction(plugin).process(rsi.getTardis_id(), event.getPlayer());

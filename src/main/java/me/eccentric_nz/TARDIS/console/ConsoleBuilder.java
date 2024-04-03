@@ -22,7 +22,7 @@ public class ConsoleBuilder {
         this.plugin = plugin;
     }
 
-    public void create(Block block, int type) {
+    public void create(Block block, int type, int id) {
         Block up = block.getRelative(BlockFace.UP);
         for (int i = 0; i < 6; i++) {
             ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
@@ -67,7 +67,7 @@ public class ConsoleBuilder {
             interaction.setPersistent(true);
             interaction.setInvulnerable(true);
             HashMap<String,Object> data = new HashMap<>();
-            data.put("tardis_id", 3);
+            data.put("tardis_id", id);
             data.put("uuid", interaction.getUniqueId());
             data.put("control", i.toString());
             data.put("state", 0);

@@ -16,12 +16,12 @@ public class ScreenInteraction {
         this.plugin = plugin;
     }
 
-    public void display(Location location, boolean coords) {
+    public void display(int id, Location location, boolean coords) {
         // get the text display
         TextDisplay display = getTextDisplay(location, coords);
         if (display != null) {
             display.setRotation(Location.normalizeYaw(300), -10f);
-            new ControlMonitor(plugin).update(3, display.getUniqueId(), coords);
+            new ControlMonitor(plugin).update(id, display.getUniqueId(), coords);
         }
     }
 

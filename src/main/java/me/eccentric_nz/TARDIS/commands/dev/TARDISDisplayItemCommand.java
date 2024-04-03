@@ -233,7 +233,11 @@ public class TARDISDisplayItemCommand {
                 return true;
             }
             case "console" -> {
-                new ConsoleBuilder(plugin).create(block, 1);
+                // get TARDIS id
+                ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                if (rs.fromUUID(player.getUniqueId().toString())) {
+                    new ConsoleBuilder(plugin).create(block, 1, rs.getTardis_id());
+                }
                 return true;
             }
             default -> {
