@@ -110,7 +110,7 @@ public class HandbrakeInteraction {
                             return;
                         }
                         // check the state of the Relativity Differentiator
-                        if (check.isRelativityDifferentiated(id) && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand() && !player.isSneaking()) {
+                        if (check.isFlightModeExterior(uuid.toString()) && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand() && !player.isSneaking()) {
                             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                             if (!rsc.resultSet()) {
                                 plugin.debug("No current location");
@@ -148,6 +148,14 @@ public class HandbrakeInteraction {
                                 }
                             }
                         }
+                        // update handbrake state
+                        HashMap<String, Object> seti = new HashMap<>();
+                        seti.put("state", 0);
+                        HashMap<String, Object> whereinteraction = new HashMap<>();
+                        whereinteraction.put("tardis_id", id);
+                        whereinteraction.put("control", "HANDBRAKE");
+                        plugin.getQueryFactory().doUpdate("interactions", seti, whereinteraction);
+
                     } else {
                         plugin.getMessenger().sendStatus(player, "HANDBRAKE_OFF_ERR");
                     }
@@ -215,6 +223,12 @@ public class HandbrakeInteraction {
                         HashMap<String, Object> whereh = new HashMap<>();
                         whereh.put("tardis_id", id);
                         plugin.getQueryFactory().doUpdate("tardis", set, whereh);
+                        HashMap<String, Object> seti = new HashMap<>();
+                        seti.put("state", 1);
+                        HashMap<String, Object> whereinteraction = new HashMap<>();
+                        whereinteraction.put("tardis_id", id);
+                        whereinteraction.put("control", "HANDBRAKE");
+                        plugin.getQueryFactory().doUpdate("interactions", seti, whereinteraction);
                     } else {
                         plugin.getMessenger().sendStatus(player, "HANDBRAKE_ON_ERR");
                     }

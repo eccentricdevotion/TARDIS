@@ -21,18 +21,20 @@ public class FlightModeInteraction {
         String uuid = player.getUniqueId().toString();
         // get current throttle setting
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
-        int mode = rsp.getFlightMode() + 1;
-        if (mode > 4) {
-            mode = 1;
+        if (rsp.resultSet()) {
+            int mode = rsp.getFlightMode() + 1;
+            if (mode > 4) {
+                mode = 1;
+            }
+            FlightMode fm = FlightMode.getByMode().get(mode);
+            plugin.getMessenger().announceRepeater(player, TARDISStringUtils.capitalise(fm.toString()));
+            HashMap<String, Object> setf = new HashMap<>();
+            setf.put("flying_mode", mode);
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", player.getUniqueId().toString());
+            TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", setf, where);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_SAVED");
+            // TODO set custom model data for relativity differentiator item display
         }
-        FlightMode fm = FlightMode.getByMode().get(mode);
-        plugin.getMessenger().announceRepeater(player, TARDISStringUtils.capitalise(fm.toString()));
-        HashMap<String, Object> setf = new HashMap<>();
-        setf.put("flying_mode", mode);
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", player.getUniqueId().toString());
-        TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", setf, where);
-        plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_SAVED");
-        // TODO set custom model data for relativity differentiator item display
     }
 }
