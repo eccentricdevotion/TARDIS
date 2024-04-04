@@ -115,9 +115,9 @@ class SudoUpdate {
                     ItemFrame itemFrame = null;
                     switch (updateable) {
                         case ROTOR -> itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
-                        case MONITOR -> itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardis_id(), true);
+                        case MONITOR -> itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardisId(), true);
                         case MONITOR_FRAME -> {
-                            itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardis_id(), false);
+                            itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardisId(), false);
                             // reinstate display name
                             ItemStack glass = itemFrame.getItem();
                             ItemMeta im = glass.getItemMeta();

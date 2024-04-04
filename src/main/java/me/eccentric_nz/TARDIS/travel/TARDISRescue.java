@@ -131,8 +131,8 @@ public class TARDISRescue {
                 return new RescueData(false, 0);
             }
             Tardis tardis = rs.getTardis();
-            int id = tardis.getTardis_id();
-            if (!tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+            int id = tardis.getTardisId();
+            if (!tardis.isHandbrakeOn() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
                 return new RescueData(false, 0);
             }
@@ -148,7 +148,7 @@ public class TARDISRescue {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_ONLY_TL");
                 return new RescueData(false, 0);
             }
-            int level = tardis.getArtron_level();
+            int level = tardis.getArtronLevel();
             int travel = plugin.getArtronConfig().getInt("travel");
             if (level < travel) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");

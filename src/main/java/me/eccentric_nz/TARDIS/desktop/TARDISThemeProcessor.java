@@ -62,7 +62,7 @@ public class TARDISThemeProcessor {
             // check if the player has a Handles placed
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("type", 26);
-            whereh.put("tardis_id", tardis.getTardis_id());
+            whereh.put("tardis_id", tardis.getTardisId());
             ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
             if (rsc.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "UPGRADE_REMOVE_HANDLES");

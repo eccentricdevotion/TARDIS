@@ -80,7 +80,7 @@ public class TARDISUpgradeBlockScanner {
                 startx = pos.getCentreX();
                 startz = pos.getCentreZ();
             } else {
-                int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+                int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
                 startx = gsl[0];
                 startz = gsl[2];
             }

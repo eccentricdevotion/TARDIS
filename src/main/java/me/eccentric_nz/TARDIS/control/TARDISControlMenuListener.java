@@ -105,15 +105,15 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
         }
         Tardis tardis = rs.getTardis();
         // check they initialised
-        if (!tardis.isTardis_init()) {
+        if (!tardis.isTardisInit()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_INIT");
             return;
         }
-        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on() && slot != 6 && slot != 13 && slot != 20) {
+        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn() && slot != 6 && slot != 13 && slot != 20) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
             return;
         }
-        if (!tardis.isHandbrake_on()) {
+        if (!tardis.isHandbrakeOn()) {
             switch (slot) {
                 case 2, 4, 11, 13, 40 -> {
                     if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
@@ -125,8 +125,8 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 }
             }
         }
-        boolean lights = tardis.isLights_on();
-        int level = tardis.getArtron_level();
+        boolean lights = tardis.isLightsOn();
+        int level = tardis.getArtronLevel();
         TARDISCircuitChecker tcc = null;
         if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
             tcc = new TARDISCircuitChecker(plugin, id);
@@ -226,7 +226,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 // 9 = saves for the TARDIS the player is in
                 // 18 = saves for the player's TARDIS (if they're not in their own)
                 // so, determine player's TARDIS id vs occupied TARDIS id
-                int whichId = tardis.getTardis_id();
+                int whichId = tardis.getTardisId();
                 if (slot == 18) {
                     ResultSetTardisID tstid = new ResultSetTardisID(plugin);
                     if (tstid.fromUUID(uuid.toString())) {
@@ -268,7 +268,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             case 13 -> {
                 // siege
                 close(player, true);
-                new SiegeAction(plugin).clickButton(tcc, player, tardis.isPowered_on(), id);
+                new SiegeAction(plugin).clickButton(tcc, player, tardis.isPoweredOn(), id);
             }
             case 15 -> {
                 // scanner
@@ -289,7 +289,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                         return;
                     }
                     close(player, true);
-                    new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), level, tardis.getSchematic().getLights()).clickButton();
+                    new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPoweredOn(), tardis.isHidden(), lights, player.getLocation(), level, tardis.getSchematic().getLights()).clickButton();
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN_DISABLED");
                 }
@@ -348,7 +348,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                     return;
                 }
-                if (!lights && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+                if (!lights && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                     return;
                 }

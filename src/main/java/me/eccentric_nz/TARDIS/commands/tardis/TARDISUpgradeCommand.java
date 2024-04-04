@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
@@ -32,6 +31,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -64,7 +65,7 @@ class TARDISUpgradeCommand {
             return true;
         }
         // check they are not growing rooms
-        if (plugin.getTrackerKeeper().getIsGrowingRooms().contains(tardis.getTardis_id())) {
+        if (plugin.getTrackerKeeper().getIsGrowingRooms().contains(tardis.getTardisId())) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_UPGRADE_WHILE_GROWING");
             return true;
         }
@@ -91,7 +92,7 @@ class TARDISUpgradeCommand {
         }
         // get player's current console
         Schematic current_console = tardis.getSchematic();
-        int level = tardis.getArtron_level();
+        int level = tardis.getArtronLevel();
         TARDISUpgradeData tud = new TARDISUpgradeData();
         tud.setPrevious(current_console);
         tud.setLevel(level);

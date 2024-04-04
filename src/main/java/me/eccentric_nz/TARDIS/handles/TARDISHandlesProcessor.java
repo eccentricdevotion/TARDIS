@@ -116,7 +116,7 @@ public class TARDISHandlesProcessor {
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
                     if (rs.resultSet()) {
                         Tardis tardis = rs.getTardis();
-                        int id = tardis.getTardis_id();
+                        int id = tardis.getTardisId();
                         switch (thb) {
                             case DOOR -> {
                                 switch (next) {
@@ -147,23 +147,23 @@ public class TARDISHandlesProcessor {
                             }
                             case LIGHTS -> {
                                 boolean onoff = next.equals(TARDISHandlesBlock.ON);
-                                if ((onoff && !tardis.isLights_on()) || (!onoff && tardis.isLights_on())) {
+                                if ((onoff && !tardis.isLightsOn()) || (!onoff && tardis.isLightsOn())) {
                                     new TARDISLampToggler(plugin).flickSwitch(id, uuid, onoff, tardis.getSchematic().getLights());
                                 }
                             }
                             case POWER -> {
                                 switch (next) {
                                     case ON -> {
-                                        if (!tardis.isPowered_on()) {
+                                        if (!tardis.isPoweredOn()) {
                                             if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                                new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().getLights()).clickButton();
+                                                new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLightsOn(), player.getLocation(), tardis.getArtronLevel(), tardis.getSchematic().getLights()).clickButton();
                                             }
                                         }
                                     }
                                     case OFF -> {
-                                        if (tardis.isPowered_on()) {
+                                        if (tardis.isPoweredOn()) {
                                             if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                                new TARDISPowerButton(plugin, id, player, tardis.getPreset(), true, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().getLights()).clickButton();
+                                                new TARDISPowerButton(plugin, id, player, tardis.getPreset(), true, tardis.isHidden(), tardis.isLightsOn(), player.getLocation(), tardis.getArtronLevel(), tardis.getSchematic().getLights()).clickButton();
                                             }
                                         }
                                     }
@@ -189,7 +189,7 @@ public class TARDISHandlesProcessor {
                                 }
                             }
                             case SIEGE -> {
-                                if ((next.equals(TARDISHandlesBlock.ON) && !tardis.isSiege_on()) || (next.equals(TARDISHandlesBlock.OFF) && tardis.isSiege_on())) {
+                                if ((next.equals(TARDISHandlesBlock.ON) && !tardis.isSiegeOn()) || (next.equals(TARDISHandlesBlock.OFF) && tardis.isSiegeOn())) {
                                     new TARDISSiegeMode(plugin).toggleViaSwitch(id, player);
                                 }
                             }

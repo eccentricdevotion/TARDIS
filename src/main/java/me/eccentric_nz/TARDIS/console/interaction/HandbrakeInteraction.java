@@ -65,12 +65,12 @@ public class HandbrakeInteraction {
                 return;
             }
             UUID ownerUUID = tardis.getUuid();
-            if ((tardis.isIso_on() && !uuid.equals(ownerUUID) && !TARDISPermission.hasPermission(player, "tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
+            if ((tardis.isIsomorphicOn() && !uuid.equals(ownerUUID) && !TARDISPermission.hasPermission(player, "tardis.skeletonkey")) || plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
                 // check if cancelled, so we don't get double messages from the bind listener
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ISO_HANDS_OFF");
                 return;
             }
-            if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+            if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                 return;
             }
@@ -89,13 +89,13 @@ public class HandbrakeInteraction {
                     spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
                 }
                 if (state == 1) {
-                    if (tardis.isHandbrake_on()) {
+                    if (tardis.isHandbrakeOn()) {
                         if (preset.equals(ChameleonPreset.JUNK_MODE) && !plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NEED_DEST");
                             return;
                         }
                         // check there is enough power for at least random travel
-                        if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtron_level() < plugin.getArtronConfig().getInt("random")) {
+                        if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtronLevel() < plugin.getArtronConfig().getInt("random")) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NOT_ENOUGH");
                             return;
                         }
@@ -161,7 +161,7 @@ public class HandbrakeInteraction {
                     }
                 }
                 if (state == 0) {
-                    if (!tardis.isHandbrake_on()) {
+                    if (!tardis.isHandbrakeOn()) {
                         // stop time rotor?
                         if (tardis.getRotor() != null) {
                             if (tardis.getRotor() == TARDISConstants.UUID_ZERO) {

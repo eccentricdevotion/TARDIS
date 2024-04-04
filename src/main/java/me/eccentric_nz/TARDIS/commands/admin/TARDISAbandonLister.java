@@ -51,13 +51,13 @@ public class TARDISAbandonLister {
                 String owner = (t.getOwner().isEmpty()) ? "TARDIS Admin" : t.getOwner();
                 // get current location
                 HashMap<String, Object> wherec = new HashMap<>();
-                wherec.put("tardis_id", t.getTardis_id());
+                wherec.put("tardis_id", t.getTardisId());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
                 if (rsc.resultSet()) {
                     String w = (!plugin.getPlanetsConfig().getBoolean("planets." + rsc.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TARDISAliasResolver.getWorldAlias(rsc.getWorld());
                     String l = w + " " + rsc.getX() + ", " + rsc.getY() + ", " + rsc.getZ();
                     if (click) {
-                        plugin.getMessenger().sendAbandoned(sender, i, owner, l, t.getTardis_id());
+                        plugin.getMessenger().sendAbandoned(sender, i, owner, l, t.getTardisId());
                     } else {
                         sender.sendMessage(i + ". Abandoned by: " + owner + ", location: " + l);
                     }

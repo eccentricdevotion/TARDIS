@@ -302,7 +302,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                         return;
                                     }
                                     Tardis tardis = rs.getTardis();
-                                    int id = tardis.getTardis_id();
+                                    int id = tardis.getTardisId();
                                     new UpdateDoor(plugin).process(Updateable.DOOR, block, false, id, player);
                                     plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
                                     TARDISSudoTracker.SUDOERS.remove(playerUUID);

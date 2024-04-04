@@ -98,7 +98,7 @@ public class TARDISStattenheimListener implements Listener {
                     return;
                 }
                 Tardis tardis = rs.getTardis();
-                int id = tardis.getTardis_id();
+                int id = tardis.getTardisId();
                 if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                     return;
@@ -107,7 +107,7 @@ public class TARDISStattenheimListener implements Listener {
                     plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
                     return;
                 }
-                boolean power = tardis.isPowered_on();
+                boolean power = tardis.isPoweredOn();
                 if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
                     Block b = event.getClickedBlock();
                     Material m = b.getType();
@@ -158,7 +158,7 @@ public class TARDISStattenheimListener implements Listener {
                             return;
                         }
                         boolean hidden = tardis.isHidden();
-                        int level = tardis.getArtron_level();
+                        int level = tardis.getArtronLevel();
                         // check they are not in the tardis
                         HashMap<String, Object> wherettrav = new HashMap<>();
                         wherettrav.put("uuid", uuid.toString());
@@ -174,7 +174,7 @@ public class TARDISStattenheimListener implements Listener {
                         }
                         // get TARDIS's current location
                         HashMap<String, Object> wherecl = new HashMap<>();
-                        wherecl.put("tardis_id", tardis.getTardis_id());
+                        wherecl.put("tardis_id", tardis.getTardisId());
                         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                         if (!rsc.resultSet()) {
                             hidden = true;
@@ -312,7 +312,7 @@ public class TARDISStattenheimListener implements Listener {
                         setp.put("powered_on", 1);
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_ON");
                         // if lights are off, turn them on
-                        if (tardis.isLights_on()) {
+                        if (tardis.isLightsOn()) {
                             new TARDISLampToggler(plugin).flickSwitch(id, uuid, false, tardis.getSchematic().getLights());
                         }
                         // if beacon is off turn it on

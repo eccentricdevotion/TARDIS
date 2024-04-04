@@ -67,7 +67,7 @@ public class DisplayItemDoorToggler {
             tid.put("tardis_id", id);
             ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
             if (rs.resultSet()) {
-                if (!rs.getTardis().isHandbrake_on()) {
+                if (!rs.getTardis().isHandbrakeOn()) {
                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                     return;
                 }

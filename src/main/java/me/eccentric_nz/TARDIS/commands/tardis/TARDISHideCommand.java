@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -32,6 +30,9 @@ import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -66,7 +67,7 @@ public class TARDISHideCommand {
                 return false;
             }
             Tardis tardis = rs.getTardis();
-            if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+            if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "POWER_DOWN");
                 return true;
             }
@@ -74,7 +75,7 @@ public class TARDISHideCommand {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "INVISIBILITY_ENGAGED");
                 return true;
             }
-            id = tardis.getTardis_id();
+            id = tardis.getTardisId();
             TARDISCircuitChecker tcc = null;
             if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player.getPlayer(), true)) {
                 tcc = new TARDISCircuitChecker(plugin, id);
@@ -105,14 +106,14 @@ public class TARDISHideCommand {
                 return true;
             }
             HashMap<String, Object> wherecl = new HashMap<>();
-            wherecl.put("tardis_id", tardis.getTardis_id());
+            wherecl.put("tardis_id", tardis.getTardisId());
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
             if (!rsc.resultSet()) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return true;
             }
             Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            int level = tardis.getArtron_level();
+            int level = tardis.getArtronLevel();
             int hide = plugin.getArtronConfig().getInt("hide");
             if (level < hide) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "ENERGY_NO_HIDE");

@@ -127,7 +127,7 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
             }
             Tardis tardis = rs.getTardis();
             int slot = tardis.getTIPS();
-            int id = tardis.getTardis_id();
+            int id = tardis.getTardisId();
             if (slot != -1000001) { // default world - use TIPS
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(slot);

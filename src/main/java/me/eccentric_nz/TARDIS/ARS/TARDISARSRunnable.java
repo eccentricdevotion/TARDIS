@@ -67,11 +67,11 @@ class TARDISARSRunnable implements Runnable {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            plugin.getTrackerKeeper().getIsGrowingRooms().add(tardis.getTardis_id());
+            plugin.getTrackerKeeper().getIsGrowingRooms().add(tardis.getTardisId());
             World w = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
             TARDISRoomData roomData = new TARDISRoomData();
-            roomData.setTardis_id(tardis.getTardis_id());
+            roomData.setTardis_id(tardis.getTardisId());
             // get middle data, default to orange wool if not set
             Material wall_type, floor_type;
             if (rsp.resultSet()) {

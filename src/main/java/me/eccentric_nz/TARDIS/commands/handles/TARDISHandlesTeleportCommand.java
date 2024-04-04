@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.handles;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.BuildData;
@@ -30,6 +28,9 @@ import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -59,12 +60,12 @@ public class TARDISHandlesTeleportCommand {
             return;
         }
         Tardis tardis = rs.getTardis();
-        int id = tardis.getTardis_id();
-        if (!tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+        int id = tardis.getTardisId();
+        if (!tardis.isHandbrakeOn() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             plugin.getMessenger().handlesSend(player, "NOT_WHILE_TRAVELLING");
             return;
         }
-        int level = tardis.getArtron_level();
+        int level = tardis.getArtronLevel();
         int travel = plugin.getArtronConfig().getInt("travel");
         if (level < travel) {
             plugin.getMessenger().handlesSend(player, "NOT_ENOUGH_ENERGY");

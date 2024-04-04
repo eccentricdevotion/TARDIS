@@ -62,7 +62,7 @@ class TARDISRemoveCompanionCommand {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_NONE");
                     return true;
                 }
-                id = tardis.getTardis_id();
+                id = tardis.getTardisId();
                 data = tardis.getChunk();
                 owner = tardis.getOwner();
             }

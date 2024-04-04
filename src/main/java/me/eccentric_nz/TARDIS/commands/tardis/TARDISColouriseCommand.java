@@ -70,7 +70,7 @@ class TARDISColouriseCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "COLOUR_SONIC");
             return true;
         }
-        int ownerid = tardis.getTardis_id();
+        int ownerid = tardis.getTardisId();
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("uuid", player.getUniqueId().toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);

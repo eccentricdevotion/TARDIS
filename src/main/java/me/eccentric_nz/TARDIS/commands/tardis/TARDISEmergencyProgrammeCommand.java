@@ -58,7 +58,7 @@ class TARDISEmergencyProgrammeCommand {
             return true;
         }
         Tardis tardis = rs.getTardis();
-        int id = tardis.getTardis_id();
+        int id = tardis.getTardisId();
         String eps = tardis.getEps();
         String creeper = tardis.getCreeper();
         HashMap<String, Object> wherem = new HashMap<>();

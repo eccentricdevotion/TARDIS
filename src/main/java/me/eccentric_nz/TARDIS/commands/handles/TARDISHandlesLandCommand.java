@@ -64,7 +64,7 @@ class TARDISHandlesLandCommand {
                 plugin.getMessenger().handlesSend(player, "HANDLES_JUNK");
                 return true;
             }
-            if (tardis.isHandbrake_on()) {
+            if (tardis.isHandbrakeOn()) {
                 plugin.getMessenger().handlesSend(player, "HANDBRAKE_ON_ERR");
                 return true;
             }

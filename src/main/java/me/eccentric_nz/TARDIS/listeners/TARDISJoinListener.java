@@ -139,7 +139,7 @@ public class TARDISJoinListener implements Listener {
         ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            int id = tardis.getTardis_id();
+            int id = tardis.getTardisId();
             String owner = tardis.getOwner();
             String last_known_name = tardis.getLastKnownName();
             HashMap<String, Object> wherecl = new HashMap<>();

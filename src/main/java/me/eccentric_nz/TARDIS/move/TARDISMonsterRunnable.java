@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -36,6 +35,8 @@ import org.bukkit.entity.*;
 import org.bukkit.entity.Villager.Profession;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -310,7 +311,7 @@ public class TARDISMonsterRunnable implements Runnable {
                     }
                 }
                 HashMap<String, Object> wherer = new HashMap<>();
-                wherer.put("tardis_id", rst.getTardis().getTardis_id());
+                wherer.put("tardis_id", rst.getTardis().getTardisId());
                 wherer.put("type", 5);
                 wherer.put("secondary", 0);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherer, false);
@@ -325,6 +326,7 @@ public class TARDISMonsterRunnable implements Runnable {
                 loc.getChunk().load();
             }
             // spawn a monster in the TARDIS
+            // TODO update monsters count in database
             plugin.setTardisSpawn(true);
             Entity ent = loc.getWorld().spawnEntity(loc, m.getType());
             switch (m.getType()) {

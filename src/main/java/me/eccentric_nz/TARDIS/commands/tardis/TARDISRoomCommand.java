@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -34,6 +30,11 @@ import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -70,7 +71,7 @@ class TARDISRoomCommand {
             return true;
         }
         Tardis tardis = rs.getTardis();
-        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
             return true;
         }
@@ -82,7 +83,7 @@ class TARDISRoomCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "RENDER_EXISTS");
             return true;
         }
-        int id = tardis.getTardis_id();
+        int id = tardis.getTardisId();
         TARDISCircuitChecker tcc = null;
         if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
             tcc = new TARDISCircuitChecker(plugin, id);
@@ -92,7 +93,7 @@ class TARDISRoomCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_MISSING");
             return true;
         }
-        int level = tardis.getArtron_level();
+        int level = tardis.getArtronLevel();
         String chunk = tardis.getChunk();
         Schematic schm = tardis.getSchematic();
         int tips = tardis.getTIPS();

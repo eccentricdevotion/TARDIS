@@ -158,7 +158,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             }
             Tardis tardis = rs.getTardis();
             slot = tardis.getTIPS();
-            id = tardis.getTardis_id();
+            id = tardis.getTardisId();
             Chunk chunk = TARDISStaticLocationGetters.getChunk(tardis.getChunk());
             if (tud.getPrevious().getPermission().equals("ender")) {
                 // remove ender crystal
@@ -211,7 +211,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 startz = pos.getCentreZ();
                 resetz = pos.getCentreZ();
             } else {
-                int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+                int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
                 startx = gsl[0];
                 resetx = gsl[1];
                 startz = gsl[2];

@@ -54,13 +54,13 @@ class TARDISListCommand {
                         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))) {
                             for (Tardis t : rsl.getData()) {
                                 HashMap<String, Object> wherecl = new HashMap<>();
-                                wherecl.put("tardis_id", t.getTardis_id());
+                                wherecl.put("tardis_id", t.getTardisId());
                                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                                 if (!rsc.resultSet()) {
                                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                                     return true;
                                 }
-                                String line = "ID: " + t.getTardis_id() + ", Time Lord: " + t.getOwner() + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
+                                String line = "ID: " + t.getTardisId() + ", Time Lord: " + t.getOwner() + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
                                 bw.write(line);
                                 bw.newLine();
                             }
@@ -100,7 +100,7 @@ class TARDISListCommand {
                 plugin.getMessenger().message(sender, "");
                 for (Tardis t : rsl.getData()) {
                     HashMap<String, Object> wherecl = new HashMap<>();
-                    wherecl.put("tardis_id", t.getTardis_id());
+                    wherecl.put("tardis_id", t.getTardisId());
                     ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                     if (!rsc.resultSet()) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");

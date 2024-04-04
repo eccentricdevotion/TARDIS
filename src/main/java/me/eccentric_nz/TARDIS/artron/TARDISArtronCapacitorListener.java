@@ -118,9 +118,9 @@ public class TARDISArtronCapacitorListener implements Listener {
                             boolean abandoned = tardis.isAbandoned();
                             HashMap<String, Object> whereid = new HashMap<>();
                             whereid.put("tardis_id", id);
-                            int current_level = tardis.getArtron_level();
-                            boolean init = tardis.isTardis_init();
-                            boolean lights = tardis.isLights_on();
+                            int current_level = tardis.getArtronLevel();
+                            boolean init = tardis.isTardisInit();
+                            boolean lights = tardis.isLightsOn();
                             int fc = plugin.getArtronConfig().getInt("full_charge");
                             Material item = player.getInventory().getItemInMainHand().getType();
                             Material full = Material.valueOf(plugin.getArtronConfig().getString("full_charge_item"));
@@ -243,7 +243,7 @@ public class TARDISArtronCapacitorListener implements Listener {
                                             pu = claimAbandoned(player, id, block, tardis);
                                         }
                                         if (pu) {
-                                            new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), current_level, tardis.getSchematic().getLights()).clickButton();
+                                            new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPoweredOn(), tardis.isHidden(), lights, player.getLocation(), current_level, tardis.getSchematic().getLights()).clickButton();
                                         }
                                     }
                                 }

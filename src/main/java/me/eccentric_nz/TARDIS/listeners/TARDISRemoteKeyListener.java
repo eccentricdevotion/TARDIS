@@ -83,8 +83,8 @@ public class TARDISRemoteKeyListener implements Listener {
                 return;
             }
             Tardis tardis = rs.getTardis();
-            int id = tardis.getTardis_id();
-            boolean powered = tardis.isPowered_on();
+            int id = tardis.getTardisId();
+            boolean powered = tardis.isPoweredOn();
             ChameleonPreset preset = tardis.getPreset();
             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");

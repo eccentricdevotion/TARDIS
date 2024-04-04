@@ -140,7 +140,7 @@ public class TARDISSonicDock {
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                     if (rs.resultSet()) {
                         Tardis tardis = rs.getTardis();
-                        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+                        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                             return display;
                         }
@@ -169,7 +169,7 @@ public class TARDISSonicDock {
                         }
                         SpaceTimeThrottle spaceTimeThrottle = new ResultSetThrottle(plugin).getSpeed(player.getUniqueId().toString());
                         int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * spaceTimeThrottle.getArtronMultiplier());
-                        if (tardis.getArtron_level() < ch) {
+                        if (tardis.getArtronLevel() < ch) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
                             return display;
                         }

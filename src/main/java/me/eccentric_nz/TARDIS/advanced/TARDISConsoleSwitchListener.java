@@ -116,14 +116,14 @@ public class TARDISConsoleSwitchListener implements Listener {
                 } // Memory circuit (saves/areas)
                 case 10001975, 20001975 -> {
                     new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
-                    stack = new TARDISSavesPlanetInventory(plugin, tardis.getTardis_id()).getPlanets();
+                    stack = new TARDISSavesPlanetInventory(plugin, tardis.getTardisId()).getPlanets();
                 } // Input circuit (terminal)
                 case 10001976, 20001976 -> {
                     new_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Destination Terminal");
                     stack = new TARDISTerminalInventory(plugin).getTerminal();
                 }
                 // scanner circuit
-                default -> new TARDISScanner(plugin).scan(tardis.getTardis_id(), p, tardis.getRenderer(), tardis.getArtron_level());
+                default -> new TARDISScanner(plugin).scan(tardis.getTardisId(), p, tardis.getRenderer(), tardis.getArtronLevel());
             }
             // close inventory
             p.closeInventory();

@@ -81,10 +81,10 @@ public class TARDISSiegeMode {
         HashMap<String, Object> wheres = new HashMap<>();
         wheres.put("tardis_id", id);
         HashMap<String, Object> set = new HashMap<>();
-        if (tardis.isSiege_on()) {
+        if (tardis.isSiegeOn()) {
             // must have at least 10% power
             int min = (plugin.getArtronConfig().getInt("full_charge") / 100) * plugin.getArtronConfig().getInt("siege_transfer");
-            if (min > tardis.getArtron_level()) {
+            if (min > tardis.getArtronLevel()) {
                 plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_POWER");
                 return;
             }

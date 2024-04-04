@@ -147,7 +147,7 @@ public class TARDISUpdateListener implements Listener {
                 return;
             }
             Tardis tardis = rs.getTardis();
-            int id = tardis.getTardis_id();
+            int id = tardis.getTardisId();
             HashMap<String, Object> tid = new HashMap<>();
             HashMap<String, Object> set = new HashMap<>();
             tid.put("tardis_id", id);
@@ -181,10 +181,10 @@ public class TARDISUpdateListener implements Listener {
                 case CHARGING_SENSOR, FLIGHT_SENSOR, HANDBRAKE_SENSOR, MALFUNCTION_SENSOR, POWER_SENSOR -> {
                     String tmp = updateable.toString().toLowerCase(Locale.ROOT);
                     String type = tmp.substring(0, tmp.length() - 7);
-                    plugin.getQueryFactory().insertSensor(tardis.getTardis_id(), type, blockLocStr);
+                    plugin.getQueryFactory().insertSensor(tardis.getTardisId(), type, blockLocStr);
                     // set default state of sensor - OFF
-                    if ((updateable == Updateable.HANDBRAKE_SENSOR && !tardis.isHandbrake_on())
-                            || (updateable == Updateable.POWER_SENSOR && tardis.isPowered_on())) {
+                    if ((updateable == Updateable.HANDBRAKE_SENSOR && !tardis.isHandbrakeOn())
+                            || (updateable == Updateable.POWER_SENSOR && tardis.isPoweredOn())) {
                         block.setType(Material.REDSTONE_BLOCK);
                     } else {
                         block.setType(Material.STONE);

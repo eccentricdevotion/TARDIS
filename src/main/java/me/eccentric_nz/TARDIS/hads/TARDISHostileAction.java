@@ -48,7 +48,7 @@ public class TARDISHostileAction {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             UUID uuid = tardis.getUuid();
-            boolean poweredOn = tardis.isPowered_on();
+            boolean poweredOn = tardis.isPoweredOn();
             ChameleonPreset preset = tardis.getPreset();
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             if (rsp.resultSet()) {

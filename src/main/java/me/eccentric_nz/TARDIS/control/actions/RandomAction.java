@@ -24,13 +24,13 @@ public class RandomAction {
         }
         cooldown.add(player.getUniqueId());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> cooldown.remove(player.getUniqueId()), 60L);
-        if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id) || (!tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) || plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
+        if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id) || (!tardis.isHandbrakeOn() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) || plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
             return;
         }
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             plugin.getTrackerKeeper().getHasRandomised().add(id);
         }
-        new TARDISRandomButton(plugin, player, id, tardis.getArtron_level(), secondary, tardis.getCompanions(), tardis.getUuid()).clickButton();
+        new TARDISRandomButton(plugin, player, id, tardis.getArtronLevel(), secondary, tardis.getCompanions(), tardis.getUuid()).clickButton();
     }
 }

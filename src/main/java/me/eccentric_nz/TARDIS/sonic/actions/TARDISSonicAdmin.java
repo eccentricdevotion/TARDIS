@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
@@ -31,6 +28,10 @@ import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class TARDISSonicAdmin {
 
@@ -63,7 +64,7 @@ public class TARDISSonicAdmin {
                     Tardis tardis = rsn.getTardis();
                     String name = plugin.getServer().getOfflinePlayer(tardis.getUuid()).getName();
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_WHOSE", name);
-                    int percent = Math.round((tardis.getArtron_level() * 100F) / plugin.getArtronConfig().getInt("full_charge"));
+                    int percent = Math.round((tardis.getArtronLevel() * 100F) / plugin.getArtronConfig().getInt("full_charge"));
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_LEVEL", String.format("%d", percent));
                     HashMap<String, Object> whereb = new HashMap<>();
                     whereb.put("tardis_id", id);

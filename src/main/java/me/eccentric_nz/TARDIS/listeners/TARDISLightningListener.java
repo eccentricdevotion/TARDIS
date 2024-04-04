@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -28,6 +27,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.weather.LightningStrikeEvent;
+
+import java.util.HashMap;
 
 /**
  * Artron energy is vital in the running of a TARDIS; it can run low and when down to 10% it means even backup power is
@@ -61,7 +62,7 @@ public class TARDISLightningListener implements Listener {
             if (rs.resultSet()) {
                 for (Tardis t : rs.getData()) {
                     boolean charging = !t.isRecharging();
-                    int id = t.getTardis_id();
+                    int id = t.getTardisId();
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                         return;
                     }
@@ -75,7 +76,7 @@ public class TARDISLightningListener implements Listener {
                             Location loc = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());
                             // only recharge if the TARDIS is within range
                             if (plugin.getUtils().compareLocations(loc, loc)) {
-                                int amount = plugin.getArtronConfig().getInt("lightning_recharge") + t.getArtron_level();
+                                int amount = plugin.getArtronConfig().getInt("lightning_recharge") + t.getArtronLevel();
                                 HashMap<String, Object> set = new HashMap<>();
                                 set.put("artron_level", amount);
                                 HashMap<String, Object> where = new HashMap<>();

@@ -23,14 +23,14 @@ public class TerminalAction {
     }
 
     public void openGUI(Player player, int id, Tardis tardis, TARDISCircuitChecker tcc) {
-        if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id) || (!tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) || plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
+        if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id) || (!tardis.isHandbrakeOn() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) || plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
             return;
         }
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             plugin.getTrackerKeeper().getHasRandomised().add(id);
         }
-        if (tardis.getArtron_level() < plugin.getArtronConfig().getInt("travel")) {
+        if (tardis.getArtronLevel() < plugin.getArtronConfig().getInt("travel")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
             return;
         }

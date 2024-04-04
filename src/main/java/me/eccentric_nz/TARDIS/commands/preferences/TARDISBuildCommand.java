@@ -52,7 +52,7 @@ class TARDISBuildCommand {
             return true;
         }
         Tardis tardis = rs.getTardis();
-        Integer id = tardis.getTardis_id();
+        Integer id = tardis.getTardisId();
         HashMap<String, Object> setp = new HashMap<>();
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", player.getUniqueId().toString());

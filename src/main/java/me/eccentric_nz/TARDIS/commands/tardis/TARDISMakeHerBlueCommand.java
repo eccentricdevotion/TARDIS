@@ -67,7 +67,7 @@ class TARDISMakeHerBlueCommand {
             return true;
         }
         Tardis tardis = rs.getTardis();
-        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "POWER_DOWN");
             return true;
         }
@@ -75,7 +75,7 @@ class TARDISMakeHerBlueCommand {
             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "INVISIBILITY_NOT");
             return true;
         }
-        int id = tardis.getTardis_id();
+        int id = tardis.getTardisId();
         TARDISCircuitChecker tcc = null;
         if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
             tcc = new TARDISCircuitChecker(plugin, id);
@@ -100,7 +100,7 @@ class TARDISMakeHerBlueCommand {
             return true;
         }
         HashMap<String, Object> wherecl = new HashMap<>();
-        wherecl.put("tardis_id", tardis.getTardis_id());
+        wherecl.put("tardis_id", tardis.getTardisId());
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "CURRENT_NOT_FOUND");
@@ -108,7 +108,7 @@ class TARDISMakeHerBlueCommand {
             return true;
         }
         Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-        int level = tardis.getArtron_level();
+        int level = tardis.getArtronLevel();
         int rebuild = plugin.getArtronConfig().getInt("random");
         if (level < rebuild) {
             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "ENERGY_NO_REBUILD");

@@ -86,7 +86,7 @@ public class TARDISDeleteCommand {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, abandoned);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            int id = tardis.getTardis_id();
+            int id = tardis.getTardisId();
             int tips = tardis.getTIPS();
             Schematic schm = tardis.getSchematic();
             String chunkLoc = tardis.getChunk();

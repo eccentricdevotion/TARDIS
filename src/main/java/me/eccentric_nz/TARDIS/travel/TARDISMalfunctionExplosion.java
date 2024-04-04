@@ -59,7 +59,7 @@ public class TARDISMalfunctionExplosion implements Runnable {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
             if (rs.resultSet()) {
                 Tardis tardis = rs.getTardis();
-                ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, tardis.getTardis_id(), 0);
+                ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, tardis.getTardisId(), 0);
                 if (rsr.resultSet()) {
                     locations = rsr.getLocations();
                 }

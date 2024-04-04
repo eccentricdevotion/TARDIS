@@ -3,8 +3,9 @@
 ## Current version `5.6.0`
 
 1. Fix fifteenth console redstone piston door
-2. Fix follower persistence 
-3. ?
+2. Fix follower persistence
+3. Update `monsters` count in database
+4. ?
 
 ## Next version `5.7.0`
 

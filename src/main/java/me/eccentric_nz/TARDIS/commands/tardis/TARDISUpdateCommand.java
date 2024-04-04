@@ -169,7 +169,7 @@ class TARDISUpdateCommand {
                 Block block = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 10);
                 if (block.getType().equals(Material.NOTE_BLOCK) || block.getType().equals(Material.MUSHROOM_STEM)) {
                     block.setBlockData(TARDISConstants.BARRIER, true);
-                    TARDISDisplayItemUtils.set(TARDISDisplayItem.DISK_STORAGE, block, tardis.getTardis_id());
+                    TARDISDisplayItemUtils.set(TARDISDisplayItem.DISK_STORAGE, block, tardis.getTardisId());
                 }
             }
             if (new TARDISUpdateableChecker(plugin, updateable, player, tardis, tardis_block).canUpdate()) {
@@ -179,9 +179,9 @@ class TARDISUpdateCommand {
                     ItemFrame itemFrame = null;
                     switch (updateable) {
                         case ROTOR -> itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
-                        case MONITOR -> itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardis_id(), true);
+                        case MONITOR -> itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardisId(), true);
                         case MONITOR_FRAME -> {
-                            itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardis_id(), false);
+                            itemFrame = MonitorUtils.getItemFrameFromLocation(tardis.getTardisId(), false);
                             // reinstate display name
                             ItemStack glass = itemFrame.getItem();
                             ItemMeta im = glass.getItemMeta();

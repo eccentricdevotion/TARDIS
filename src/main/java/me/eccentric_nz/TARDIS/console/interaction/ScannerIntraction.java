@@ -20,7 +20,7 @@ public class ScannerIntraction {
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
-            new TARDISScanner(plugin).scan(id, player, rs.getTardis().getRenderer(), rs.getTardis().getArtron_level());
+            new TARDISScanner(plugin).scan(id, player, rs.getTardis().getRenderer(), rs.getTardis().getArtronLevel());
         }
     }
 }

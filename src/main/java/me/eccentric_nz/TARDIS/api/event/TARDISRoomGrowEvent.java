@@ -34,7 +34,7 @@ public final class TARDISRoomGrowEvent extends TARDISEvent {
      *
      * @param player   the player growing the room
      * @param tardis   the Tardis data object, may be null - if room was manually grown, use {@link
-     *                 #getRoomData()}.getTardis_id()
+     *                 #getRoomData()}.getTardisId()
      * @param slot     the TARDISARSSlot data object, may be null - if the room was manually grown, use {@link
      *                 #getRoomData()}.getLocation()
      * @param roomData the TARDISRoomData data object

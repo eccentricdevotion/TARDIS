@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.handles;
 
-import java.util.Collections;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -30,6 +28,9 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
+
+import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -58,7 +59,7 @@ class TARDISHandlesTakeoffCommand {
                 if (tardis.getPreset().equals(ChameleonPreset.JUNK)) {
                     return true;
                 }
-                if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+                if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                     plugin.getMessenger().handlesSend(player, "POWER_DOWN");
                     return true;
                 }
@@ -71,9 +72,9 @@ class TARDISHandlesTakeoffCommand {
                 whereh.put("tardis_id", id);
                 ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
                 if (rsc.resultSet()) {
-                    if (tardis.isHandbrake_on()) {
+                    if (tardis.isHandbrakeOn()) {
                         // check there is enough power for at last random travel
-                        if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtron_level() < plugin.getArtronConfig().getInt("random")) {
+                        if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtronLevel() < plugin.getArtronConfig().getInt("random")) {
                             plugin.getMessenger().handlesSend(player, "ENERGY_NOT_ENOUGH");
                             return true;
                         }

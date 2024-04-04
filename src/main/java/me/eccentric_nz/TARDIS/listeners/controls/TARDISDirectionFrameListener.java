@@ -67,7 +67,7 @@ public class TARDISDirectionFrameListener implements Listener {
                     }
                     // if the item frame has a tripwire hook in it
                     if (frame.getItem().getType().equals(Material.TRIPWIRE_HOOK)) {
-                        if (plugin.getConfig().getBoolean("allow.power_down") && !rso.getTardis().isPowered_on()) {
+                        if (plugin.getConfig().getBoolean("allow.power_down") && !rso.getTardis().isPoweredOn()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                             return;
                         }

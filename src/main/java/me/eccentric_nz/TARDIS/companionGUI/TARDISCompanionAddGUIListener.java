@@ -101,7 +101,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener {
                 ResultSetTardis rsa = new ResultSetTardis(plugin, wherea, "", false, 0);
                 if (rsa.resultSet()) {
                     Tardis tardis = rsa.getTardis();
-                    int id = tardis.getTardis_id();
+                    int id = tardis.getTardisId();
                     String comps = tardis.getCompanions();
                     addCompanion(id, comps, "everyone");
                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
@@ -121,7 +121,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener {
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                 if (rs.resultSet()) {
                     Tardis tardis = rs.getTardis();
-                    int id = tardis.getTardis_id();
+                    int id = tardis.getTardisId();
                     String comps = tardis.getCompanions();
 //                    ItemStack h = view.getItem(slot);
                     ItemMeta m = is.getItemMeta();

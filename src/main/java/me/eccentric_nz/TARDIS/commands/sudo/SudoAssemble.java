@@ -46,7 +46,7 @@ class SudoAssemble {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            plugin.getTrackerKeeper().getDispersedTARDII().remove(tardis.getTardis_id());
+            plugin.getTrackerKeeper().getDispersedTARDII().remove(tardis.getTardisId());
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ASSEMBLE_PLAYER", player);
             Player dispersed = plugin.getServer().getPlayer(uuid);
             if (dispersed != null) {

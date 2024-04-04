@@ -106,7 +106,7 @@ public class TARDISStaticUtils {
         ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, where, "", false, 0);
         if (rst.resultSet()) {
             Tardis tardis = rst.getTardis();
-            if (!tardis.isTardis_init()) {
+            if (!tardis.isTardisInit()) {
                 return false;
             }
             UUID ownerUUID = tardis.getUuid();

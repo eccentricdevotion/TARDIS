@@ -74,7 +74,7 @@ public class DoorToggleAction extends TARDISDoorListener {
                         ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
-                            if (!tardis.isHandbrake_on()) {
+                            if (!tardis.isHandbrakeOn()) {
                                 plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                                 return true;
                             }
@@ -140,9 +140,9 @@ public class DoorToggleAction extends TARDISDoorListener {
                                                         new TARDISFollowerSpawner(plugin).spawn(petsAndFollowers.getFollowers(), tardis_loc, player, d, true);
                                                     }
                                                 }
-                                                if (canPowerUp && !tardis.isPowered_on() && !tardis.isAbandoned()) {
+                                                if (canPowerUp && !tardis.isPoweredOn() && !tardis.isAbandoned()) {
                                                     // power up the TARDIS
-                                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().getLights()).clickButton(), 20L);
+                                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLightsOn(), player.getLocation(), tardis.getArtronLevel(), tardis.getSchematic().getLights()).clickButton(), 20L);
                                                 }
                                                 // put player into travellers table
                                                 // remove them first as they may have exited incorrectly, and we only want them listed once
@@ -199,7 +199,7 @@ public class DoorToggleAction extends TARDISDoorListener {
                                                 set.put("chameleon_preset", c);
                                                 set.put("chameleon_demat", c);
                                                 HashMap<String, Object> wheret = new HashMap<>();
-                                                wheret.put("tardis_id", tardis.getTardis_id());
+                                                wheret.put("tardis_id", tardis.getTardisId());
                                                 plugin.getQueryFactory().doUpdate("tardis", set, wheret);
                                             }
                                         }

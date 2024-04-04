@@ -121,7 +121,7 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener {
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                     if (rs.resultSet()) {
                         Tardis tardis = rs.getTardis();
-                        int id = tardis.getTardis_id();
+                        int id = tardis.getTardisId();
                         String comps = tardis.getCompanions();
                         ItemStack h = view.getItem(selected_head.get(uuid));
                         ItemMeta m = h.getItemMeta();

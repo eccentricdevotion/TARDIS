@@ -59,7 +59,7 @@ class TARDISSaveLocationCommand {
                 plugin.getMessenger().sendColouredCommand(player, "SAVE_RESERVED", "/tardis home", plugin);
                 return false;
             } else {
-                int id = rs.getTardis().getTardis_id();
+                int id = rs.getTardis().getTardisId();
                 // check has unique name
                 HashMap<String, Object> wherename = new HashMap<>();
                 wherename.put("tardis_id", id);

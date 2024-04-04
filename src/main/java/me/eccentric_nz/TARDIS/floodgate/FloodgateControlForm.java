@@ -95,15 +95,15 @@ public class FloodgateControlForm {
             if (rs.resultSet()) {
                 Tardis tardis = rs.getTardis();
                 // check they initialised
-                if (!tardis.isTardis_init()) {
+                if (!tardis.isTardisInit()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_INIT");
                     return;
                 }
-                if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on() && buttonId != 7 && buttonId != 12 && buttonId != 17) {
+                if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn() && buttonId != 7 && buttonId != 12 && buttonId != 17) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                     return;
                 }
-                if (!tardis.isHandbrake_on()) {
+                if (!tardis.isHandbrakeOn()) {
                     switch (buttonId) {
                         case 5 -> {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_NO_TRAVEL");
@@ -118,8 +118,8 @@ public class FloodgateControlForm {
                         default -> {}
                     }
                 }
-                boolean lights = tardis.isLights_on();
-                int level = tardis.getArtron_level();
+                boolean lights = tardis.isLightsOn();
+                int level = tardis.getArtronLevel();
                 TARDISCircuitChecker tcc = null;
                 if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
                     tcc = new TARDISCircuitChecker(plugin, id);
@@ -233,7 +233,7 @@ public class FloodgateControlForm {
                     }
                     case 7 -> { // power
                         if (plugin.getConfig().getBoolean("allow.power_down")) {
-                            new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), level, tardis.getSchematic().getLights()).clickButton();
+                            new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPoweredOn(), tardis.isHidden(), lights, player.getLocation(), level, tardis.getSchematic().getLights()).clickButton();
                         } else {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN_DISABLED");
                         }
@@ -243,7 +243,7 @@ public class FloodgateControlForm {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                             return;
                         }
-                        if (!lights && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+                        if (!lights && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                             return;
                         }
@@ -273,7 +273,7 @@ public class FloodgateControlForm {
                         new FloodgateChameleonCircuitForm(plugin, uuid, id, tardis.getPreset()).send();
                     }
                     case 12 -> { // siege mode
-                        new SiegeAction(plugin).clickButton(tcc, player, tardis.isPowered_on(), id);
+                        new SiegeAction(plugin).clickButton(tcc, player, tardis.isPoweredOn(), id);
                     }
                     case 13 -> { // hide
                         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {

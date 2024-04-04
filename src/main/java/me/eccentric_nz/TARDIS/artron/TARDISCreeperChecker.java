@@ -55,7 +55,7 @@ public class TARDISCreeperChecker {
             // only if there is a saved creeper location
             if (!tardis.getCreeper().isEmpty()) {
                 // only if the TARDIS has been initialised
-                if (tardis.isTardis_init()) {
+                if (tardis.isTardisInit()) {
                     World w = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getCreeper());
                     if (w != null) {
                         Location l = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());

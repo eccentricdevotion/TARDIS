@@ -104,7 +104,7 @@ public class TARDISMinecartListener implements Listener {
                     if (rsp.resultSet()) {
                         Tardis tardis = rsp.getTardis();
                         playerUUID = tardis.getUuid();
-                        id = tardis.getTardis_id();
+                        id = tardis.getTardisId();
                         HashMap<String, Object> whereinner = new HashMap<>();
                         whereinner.put("tardis_id", id);
                         whereinner.put("door_type", 1);
