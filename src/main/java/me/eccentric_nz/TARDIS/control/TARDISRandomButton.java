@@ -20,7 +20,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
-import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.control.actions.ExileAction;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetRepeaters;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravelledTo;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
@@ -71,40 +75,16 @@ public class TARDISRandomButton {
             new TARDISEmergencyRelocation(plugin).relocate(id, player);
             return;
         }
-        COMPASS dir = rscl.getDirection();
-        Location cl = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
+        COMPASS direction = rscl.getDirection();
         if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
-            // get the exile area
-            String permArea = plugin.getTardisArea().getExileArea(player);
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "EXILE", permArea);
-            Location l;
-            HashMap<String, Object> wherea = new HashMap<>();
-            wherea.put("area_name", permArea);
-            ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
-            rsa.resultSet();
-            if (rsa.getArea().isGrid()) {
-                l = plugin.getTardisArea().getNextSpot(permArea);
-            } else {
-                l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
-            }
-            if (l == null) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MORE_SPOTS");
-            } else {
-                set.put("world", l.getWorld().getName());
-                set.put("x", l.getBlockX());
-                set.put("y", l.getBlockY());
-                set.put("z", l.getBlockZ());
-                set.put("direction", dir.toString());
-                set.put("submarine", 0);
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_APPROVED", permArea);
-            }
+            new ExileAction(plugin).getExile(player, id, direction);
         } else {
             ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, id, secondary);
             if (rsr.resultSet()) {
+                int[] repeaters = rsr.getRepeaters();
                 String environment = "THIS";
                 int nether_min = plugin.getArtronConfig().getInt("nether_min");
                 int the_end_min = plugin.getArtronConfig().getInt("the_end_min");
-                int[] repeaters = rsr.getRepeaters();
                 if (repeaters[0] == -1) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_BAD");
                     return;
@@ -148,9 +128,10 @@ public class TARDISRandomButton {
                         environment = "THE_END";
                     }
                 }
+                Location current = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
                 // create a random destination
                 TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-                Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], dir, environment, rscl.getWorld(), false, cl);
+                Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], direction, environment, rscl.getWorld(), false, current);
                 if (rand != null) {
                     // double check TARDIS travel is allowed in this world
                     if (!plugin.getPlanetsConfig().getBoolean("planets." + rand.getWorld().getName() + ".time_travel")) {
@@ -161,7 +142,7 @@ public class TARDISRandomButton {
                     set.put("x", rand.getBlockX());
                     set.put("y", rand.getBlockY());
                     set.put("z", rand.getBlockZ());
-                    set.put("direction", dir.toString());
+                    set.put("direction", direction.toString());
                     set.put("submarine", (plugin.getTrackerKeeper().getSubmarine().contains(id)) ? 1 : 0);
                     plugin.getTrackerKeeper().getSubmarine().remove(id);
                     String worldname;

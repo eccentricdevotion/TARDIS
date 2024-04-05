@@ -10,7 +10,7 @@ public enum ConsoleInteraction {
     RELATIVITY_DIFFERENTIATOR("Flight Mode Selector", new Vector(0.575d, 1.0d, 1.75d), 0.5f, 0.65f),
 
     // section one
-    WORLD("Dimension Selector", new Vector(-0.525d, 1.0d, 0.95d), 0.15f, 0.65f),
+    WORLD("Environment Selector", new Vector(-0.525d, 1.0d, 0.95d), 0.15f, 0.65f),
     MULTIPLIER("Coordinate Increment Modifier", new Vector(-0.4d, 1.0d, 1.2d), 0.15f, 0.65f),
     X("X Distance", new Vector(-0.75d, 1.0d, 1.1d), 0.15f, 0.4f),
     Z("Z Distance", new Vector(-0.6d, 1.0d, 1.3d), 0.15f, 0.4f),

@@ -98,7 +98,7 @@ public class TARDISMonsterRunnable implements Runnable {
             List<Entity> entities = ent.getNearbyEntities(16, 16, 16);
             ent.remove();
             boolean found = false;
-            if (entities.size() < 1) {
+            if (entities.isEmpty()) {
                 continue;
             }
             // check if a Time Lord or companion is near

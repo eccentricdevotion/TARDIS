@@ -4,6 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.interaction.*;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetInteraction;
 import org.bukkit.entity.Interaction;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
@@ -26,11 +27,13 @@ public class ConsoleInteractionListener implements Listener {
                 ResultSetInteraction rsi = new ResultSetInteraction(plugin, uuid);
                 if (rsi.resultSet()) {
                     ConsoleInteraction ci = rsi.getControl();
+                    int id = rsi.getTardisId();
+                    Player player = event.getPlayer();
                     switch (ci) {
                         // section zero
-                        case HANDBRAKE -> new HandbrakeInteraction(plugin).process(rsi.getTardis_id(), rsi.getState(), event.getPlayer(), interaction.getLocation());
-                        case THROTTLE -> new ThrottleInteraction(plugin).process(event.getPlayer());
-                        case RELATIVITY_DIFFERENTIATOR -> new FlightModeInteraction(plugin).process(event.getPlayer());
+                        case HANDBRAKE -> new HandbrakeInteraction(plugin).process(id, rsi.getState(), player, interaction.getLocation());
+                        case THROTTLE -> new ThrottleInteraction(plugin).process(player);
+                        case RELATIVITY_DIFFERENTIATOR -> new FlightModeInteraction(plugin).process(player);
                         // section one
                         case WORLD -> new WorldInteraction(plugin).selectWorld();
                         case MULTIPLIER -> new MultiplierInteraction(plugin).setRange();
@@ -41,12 +44,12 @@ public class ConsoleInteractionListener implements Listener {
                             new HelmicRegulatorInteraction(plugin).selectWorld();
                         }
                         // section two
-                        case RANDOMISER -> new RandomiserInteraction(plugin).generateDestination();
+                        case RANDOMISER -> new RandomiserInteraction(plugin).generateDestination(id, player);
                         case WAYPOINT_SELECTOR -> new WayPointInteraction(plugin).openSaveGUI();
                         case FAST_RETURN -> new FastReturnInteraction(plugin).setBack();
                         case TELEPATHIC_CIRCUIT -> new TelepathicCircuitInteraction(plugin).openGUI();
                         // section three
-                        case SONIC_DOCK -> new SonicDockInteraction(plugin).process(event.getPlayer(), interaction, rsi.getTardis_id());
+                        case SONIC_DOCK -> new SonicDockInteraction(plugin).process(player, interaction, id);
                         case DIRECTION -> new DirectionInteraction(plugin).rotate();
                         // section four
                         case LIGHT_SWITCH -> new LightSwitchInteraction(plugin).toggle();
@@ -54,11 +57,11 @@ public class ConsoleInteractionListener implements Listener {
                         case EXTERIOR_LAMP_LEVEL_SWITCH -> new LampLevelInteraction(plugin).setExterior();
                         case DOOR_TOGGLE -> new DoorToggleInteraction(plugin).toggle();
                         // section five
-                        case SCREEN_LEFT, SCREEN_RIGHT -> new ScreenInteraction(plugin).display(rsi.getTardis_id(), interaction.getLocation(), ci == ConsoleInteraction.SCREEN_RIGHT);
-                        case SCANNER -> new ScannerIntraction(plugin).process(rsi.getTardis_id(), event.getPlayer());
-                        case ARTRON -> plugin.getMessenger().sendArtron(event.getPlayer(), rsi.getTardis_id(), 0);
-                        case REBUILD -> new RebuildInteraction(plugin).process(rsi.getTardis_id(), event.getPlayer());
-                        default -> plugin.getMessenger().announceRepeater(event.getPlayer(), rsi.getControl().getAlternateName());
+                        case SCREEN_LEFT, SCREEN_RIGHT -> new ScreenInteraction(plugin).display(id, interaction.getLocation(), ci == ConsoleInteraction.SCREEN_RIGHT);
+                        case SCANNER -> new ScannerIntraction(plugin).process(id, player);
+                        case ARTRON -> plugin.getMessenger().sendArtron(player, id, 0);
+                        case REBUILD -> new RebuildInteraction(plugin).process(id, player);
+                        default -> plugin.getMessenger().announceRepeater(player, rsi.getControl().getAlternateName());
                     }
                 }
             }

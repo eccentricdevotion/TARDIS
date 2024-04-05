@@ -35,6 +35,10 @@ public class FlightModeInteraction {
             TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", setf, where);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_SAVED");
             // TODO set custom model data for relativity differentiator item display
+            // TODO make relativity differentiator standalone control set player_prefs flightmode when toggled - exterior|normal
+            // TODO then alter `isRelativityDifferentiated()` to check player prefs instead
+            // should !exterior|normal flight modes even be accessible from this interaction? if so:
+            // TODO make malfunction / manual / regulator classes?
         }
     }
 }

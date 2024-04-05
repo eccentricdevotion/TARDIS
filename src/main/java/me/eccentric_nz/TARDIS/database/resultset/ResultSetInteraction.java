@@ -104,7 +104,7 @@ public class ResultSetInteraction {
         return interaction_id;
     }
 
-    public int getTardis_id() {
+    public int getTardisId() {
         return tardis_id;
     }
 
