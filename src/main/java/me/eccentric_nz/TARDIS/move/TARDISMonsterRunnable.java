@@ -45,7 +45,6 @@ public class TARDISMonsterRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final List<EntityType> monsters = new ArrayList<>();
-    private final List<EntityType> random_monsters = new ArrayList<>();
 
     public TARDISMonsterRunnable(TARDIS plugin) {
         this.plugin = plugin;
@@ -53,29 +52,23 @@ public class TARDISMonsterRunnable implements Runnable {
         monsters.add(EntityType.CREEPER);
         monsters.add(EntityType.ENDERMAN);
         monsters.add(EntityType.ENDERMITE);
-        monsters.add(EntityType.HOGLIN);
         monsters.add(EntityType.HUSK);
         monsters.add(EntityType.PIGLIN);
         monsters.add(EntityType.PILLAGER);
         monsters.add(EntityType.SILVERFISH);
         monsters.add(EntityType.SKELETON);
-        monsters.add(EntityType.SLIME);
         monsters.add(EntityType.SPIDER);
         monsters.add(EntityType.STRAY);
         monsters.add(EntityType.VEX);
         monsters.add(EntityType.VINDICATOR);
         monsters.add(EntityType.WITCH);
-        monsters.add(EntityType.WITHER_SKELETON);
         monsters.add(EntityType.ZOGLIN);
         monsters.add(EntityType.ZOMBIE);
         monsters.add(EntityType.ZOMBIE_VILLAGER);
         monsters.add(EntityType.ZOMBIFIED_PIGLIN);
         if (this.plugin.getConfig().getBoolean("allow.guardians")) {
             monsters.add(EntityType.GUARDIAN);
-        } else {
-            random_monsters.add(EntityType.GUARDIAN);
         }
-        random_monsters.addAll(monsters);
     }
 
     @Override
@@ -210,7 +203,7 @@ public class TARDISMonsterRunnable implements Runnable {
                     if (rs.resultSet() && rs.getTardis().getMonsters() < plugin.getConfig().getInt("preferences.spawn_limit")) {
                         TARDISMonster rtm = new TARDISMonster();
                         // choose a random monster
-                        EntityType type = random_monsters.get(TARDISConstants.RANDOM.nextInt(random_monsters.size()));
+                        EntityType type = monsters.get(TARDISConstants.RANDOM.nextInt(monsters.size()));
                         rtm.setType(type);
                         String dn = TARDISStringUtils.uppercaseFirst(type.toString().toLowerCase(Locale.ENGLISH));
                         if (type.equals(EntityType.ZOMBIE_VILLAGER)) {
@@ -325,8 +318,9 @@ public class TARDISMonsterRunnable implements Runnable {
             while (!loc.getChunk().isLoaded()) {
                 loc.getChunk().load();
             }
+            // update monsters count in database
+            plugin.getQueryFactory().doMonsterIncrement(tpl.getTardisId());
             // spawn a monster in the TARDIS
-            // TODO update monsters count in database
             plugin.setTardisSpawn(true);
             Entity ent = loc.getWorld().spawnEntity(loc, m.getType());
             switch (m.getType()) {

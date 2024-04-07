@@ -23,16 +23,19 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionInventory;
+import me.eccentric_nz.TARDIS.control.actions.DirectionAction;
 import me.eccentric_nz.TARDIS.control.actions.FastReturnAction;
 import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
 import me.eccentric_nz.TARDIS.control.actions.SiegeAction;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
@@ -398,39 +401,14 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             }
             case 40 -> {
                 // direction
-                if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
-                    return;
+                String direction = new DirectionAction(plugin).rotate(id, player);
+                if (!direction.isEmpty()) {
+                    // update the lore
+                    ItemStack d = view.getItem(40);
+                    ItemMeta im = d.getItemMeta();
+                    im.setLore(Collections.singletonList(direction));
+                    d.setItemMeta(im);
                 }
-                HashMap<String, Object> whered = new HashMap<>();
-                whered.put("tardis_id", id);
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, whered);
-                String direction = "EAST";
-                if (rsc.resultSet()) {
-                    direction = rsc.getDirection().toString();
-                    if (!tardis.getPreset().usesArmourStand()) {
-                        // skip the angled rotations
-                        switch (rsc.getDirection()) {
-                            case SOUTH -> direction = "SOUTH_WEST";
-                            case EAST -> direction = "SOUTH_EAST";
-                            case NORTH -> direction = "NORTH_EAST";
-                            case WEST -> direction = "NORTH_WEST";
-                            default -> {}
-                        }
-                    }
-                    int ordinal = COMPASS.valueOf(direction).ordinal() + 1;
-                    if (ordinal == 8) {
-                        ordinal = 0;
-                    }
-                    direction = COMPASS.values()[ordinal].toString();
-                }
-                String[] args = new String[]{"direction", direction};
-                new TARDISDirectionCommand(plugin).changeDirection(player, args);
-                // update the lore
-                ItemStack d = view.getItem(40);
-                ItemMeta im = d.getItemMeta();
-                im.setLore(Collections.singletonList(direction));
-                d.setItemMeta(im);
             }
             case 45 -> {
                 // destination terminal

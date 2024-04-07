@@ -17,6 +17,7 @@ public class ScreenInteraction {
     }
 
     public void display(int id, Location location, boolean coords) {
+        // TODO if shift-click change display else open Control Menu GUI
         // get the text display
         TextDisplay display = getTextDisplay(location, coords);
         if (display != null) {

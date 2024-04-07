@@ -73,10 +73,8 @@ public class TARDISRandomButton {
             ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, id, secondary);
             if (rsr.resultSet()) {
                 int[] repeaters = rsr.getRepeaters();
-                new RandomDestinationAction(plugin).getRandomDestination(player, id, repeaters, rscl, direction, level, cost);
+                new RandomDestinationAction(plugin).getRandomDestination(player, id, repeaters, rscl, direction, level, cost, comps, ownerUUID);
             }
         }
     }
-
-
 }

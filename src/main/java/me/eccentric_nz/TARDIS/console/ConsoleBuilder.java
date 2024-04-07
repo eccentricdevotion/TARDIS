@@ -62,15 +62,24 @@ public class ConsoleBuilder {
             Location location = block.getLocation().clone().add(x, 1, z);
             Interaction interaction = (Interaction) location.getWorld().spawnEntity(location, EntityType.INTERACTION);
             interaction.getPersistentDataContainer().set(plugin.getInteractionUuidKey(), plugin.getPersistentDataTypeUUID(), interaction.getUniqueId());
+            if (i == ConsoleInteraction.THROTTLE) {
+                interaction.getPersistentDataContainer().set(plugin.getUnaryKey(), PersistentDataType.INTEGER, -1);
+            }
+            if (i == ConsoleInteraction.EXTERIOR_LAMP_LEVEL_SWITCH || i == ConsoleInteraction.INTERIOR_LIGHT_LEVEL_SWITCH) {
+                interaction.getPersistentDataContainer().set(plugin.getUnaryKey(), PersistentDataType.INTEGER, 1);
+                // add a control record
+                int cid = (i == ConsoleInteraction.EXTERIOR_LAMP_LEVEL_SWITCH) ? 49 : 50;
+                plugin.getQueryFactory().insertControl(id, cid, location.toString(), 0);
+            }
             interaction.setInteractionWidth(i.getWidth());
             interaction.setInteractionHeight(i.getHeight());
             interaction.setPersistent(true);
             interaction.setInvulnerable(true);
-            HashMap<String,Object> data = new HashMap<>();
+            HashMap<String, Object> data = new HashMap<>();
             data.put("tardis_id", id);
             data.put("uuid", interaction.getUniqueId());
             data.put("control", i.toString());
-            data.put("state", 0);
+            data.put("state", i.getDefaultState());
             plugin.getQueryFactory().doInsert("interactions", data);
         }
     }

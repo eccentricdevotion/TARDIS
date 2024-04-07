@@ -28,7 +28,7 @@ public class RandomDestinationAction {
         this.plugin = plugin;
     }
 
-    public void getRandomDestination(Player player, int id, int[] repeaters, ResultSetCurrentFromId rscl, COMPASS direction, int level, int cost) {
+    public void getRandomDestination(Player player, int id, int[] repeaters, ResultSetCurrentFromId rscl, COMPASS direction, int level, int cost, String comps, UUID ownerUUID) {
         String environment = "THIS";
         int nether_min = plugin.getArtronConfig().getInt("nether_min");
         int the_end_min = plugin.getArtronConfig().getInt("the_end_min");
@@ -85,6 +85,7 @@ public class RandomDestinationAction {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
                 return;
             }
+            HashMap<String, Object> set = new HashMap<>();
             set.put("world", rand.getWorld().getName());
             set.put("x", rand.getBlockX());
             set.put("y", rand.getBlockY());

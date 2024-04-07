@@ -2,11 +2,21 @@ package me.eccentric_nz.TARDIS.console.interaction;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.control.TARDISRandomButton;
+import me.eccentric_nz.TARDIS.control.actions.ExileAction;
+import me.eccentric_nz.TARDIS.control.actions.RandomDestinationAction;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetRandomInteractions;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -42,6 +52,46 @@ public class RandomiserInteraction {
             return;
         }
         Tardis tardis = rs.getTardis();
-        new TARDISRandomButton(plugin, player, id, tardis.getArtronLevel(), 0, tardis.getCompanions(), tardis.getUuid()).clickButton();
+        int cost = plugin.getArtronConfig().getInt("random");
+        if (tardis.getArtronLevel() < cost) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
+            return;
+        }
+        ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
+        if (!rscl.resultSet()) {
+            // emergency TARDIS relocation
+            new TARDISEmergencyRelocation(plugin).relocate(id, player);
+            return;
+        }
+        COMPASS direction = rscl.getDirection();
+        if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
+            new ExileAction(plugin).getExile(player, id, direction);
+        } else {
+            new TARDISRandomButton(plugin, player, id, tardis.getArtronLevel(), 0, tardis.getCompanions(), tardis.getUuid()).clickButton();
+            // get state from WORLD, MULTIPLIER, X, Z and HELMIC_REGULATOR interactions
+            ResultSetRandomInteractions rsri = new ResultSetRandomInteractions(plugin, id);
+            if (rsri.resultSet()) {
+                // get if HELMIC_REGULATOR is active
+                if (rsri.getStates()[4] != 0) {
+                    // get selected world
+                    World world = getWorldFromState(rsri.getStates()[4]);
+                    if (world != null) {
+                        Location current = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
+                        new TARDISTimeTravel(plugin).getDestination(world, rsri.getStates()[1], rsri.getStates()[2], rsri.getStates()[3], direction, world.getEnvironment().toString(), current, player);
+                    }
+                } else {
+                    new RandomDestinationAction(plugin).getRandomDestination(player, id, rsri.getStates(), rscl, direction, tardis.getArtronLevel(), cost, tardis.getCompanions(), tardis.getUuid());
+                }
+            }
+        }
+    }
+
+    private World getWorldFromState(int state) {
+        for (String w : plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false)) {
+            if (plugin.getPlanetsConfig().getInt("planets." + w + ".helmic_regulator_order") == state) {
+                return plugin.getServer().getWorld(w);
+            }
+        }
+        return null;
     }
 }

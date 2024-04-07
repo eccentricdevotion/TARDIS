@@ -20,6 +20,7 @@ planets:
     allow_portals: false
     alias: TimeVortex
     icon: CRYING_OBSIDIAN
+    helmic_regultor_order: -1
   TARDIS_Zero_Room:
     enabled: false
     resource_pack: default
@@ -38,6 +39,7 @@ planets:
     allow_portals: false
     alias: ZeroRoom
     icon: PINK_WOOL
+    helmic_regultor_order: -1
   skaro:
     enabled: false
     resource_pack: default
@@ -61,6 +63,7 @@ planets:
     allow_portals: false
     alias: Skaro
     icon: FIRE_CORAL_BLOCK
+    helmic_regultor_order: -1
   siluria:
     enabled: false
     resource_pack: default
@@ -77,6 +80,7 @@ planets:
     allow_portals: false
     alias: Siluria
     icon: BAMBOO_MOSAIC
+    helmic_regultor_order: -1
   gallifrey:
     enabled: false
     resource_pack: default
@@ -98,3 +102,4 @@ planets:
       # max usage is 16
       uses: 1
       chance: 20
+    helmic_regultor_order: -1

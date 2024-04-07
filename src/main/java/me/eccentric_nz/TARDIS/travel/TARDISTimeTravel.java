@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -48,12 +43,13 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
+import java.util.*;
+
 /**
  * All things related to time travel.
  * <p>
- * All TARDISes built after a certain point, including the Type 40 the Doctor
- * uses, have a mathematically modelled duplicate of the Eye of harmony with all
- * its attendant features.
+ * All TARDISes built after a certain point, including the Type 40 the Doctor uses, have a mathematically modelled
+ * duplicate of the Eye of harmony with all its attendant features.
  *
  * @author eccentric_nz
  */
@@ -70,16 +66,16 @@ public class TARDISTimeTravel {
     }
 
     /**
-     * Checks if a random location is safe for the TARDIS Police Box to land at.
-     * The Police Box requires a clear 4 x 3 x 4 (d x w x h) area.
+     * Checks if a random location is safe for the TARDIS Police Box to land at. The Police Box requires a clear 4 x 3 x
+     * 4 (d x w x h) area.
      *
      * @param startx a starting position in the x direction.
      * @param starty a starting position in the y direction.
      * @param startz a starting position in the z direction.
      * @param resetx a copy of the starting x position to return to.
      * @param resetz a copy of the starting z position to return to.
-     * @param w the world the location check will take place in.
-     * @param d the direction the Police Box is facing.
+     * @param w      the world the location check will take place in.
+     * @param d      the direction the Police Box is facing.
      * @return the number of unsafe blocks
      */
     public static int safeLocation(int startx, int starty, int startz, int resetx, int resetz, World w, COMPASS d) {
@@ -143,7 +139,7 @@ public class TARDISTimeTravel {
      * Gets the starting location for safe location checking.
      *
      * @param loc a location object to check.
-     * @param d the direction the Police Box is facing.
+     * @param d   the direction the Police Box is facing.
      * @return an array containing x and z coordinates
      */
     public static int[] getStartLocation(Location loc, COMPASS d) {
@@ -172,37 +168,25 @@ public class TARDISTimeTravel {
     }
 
     /**
-     * Retrieves a random location determined from the TARDIS repeater or
-     * terminal settings.
+     * Retrieves a random location determined from the TARDIS repeater or terminal settings.
      *
-     * @param p a player object used to check permissions against.
-     * @param rx the delay setting of the x-repeater, this determines the
-     * distance in the x direction.
-     * @param rz the delay setting of the z-repeater, this determines the
-     * distance in the z direction.
-     * @param ry the delay setting of the y-repeater, this determines the
-     * multiplier for both the x and z directions.
-     * @param d the direction the TARDIS Police Box faces.
-     * @param e the environment(s) the player has chosen (or is allowed) to
-     * travel to.
-     * @param this_world the world the Police Box is currently in
+     * @param player      a player object used to check permissions against.
+     * @param rx          the delay setting of the x-repeater, this determines the distance in the x direction.
+     * @param rz          the delay setting of the z-repeater, this determines the distance in the z direction.
+     * @param ry          the delay setting of the y-repeater, this determines the multiplier for both the x and z
+     *                    directions.
+     * @param d           the direction the TARDIS Police Box faces.
+     * @param e           the environment(s) the player has chosen (or is allowed) to travel to.
+     * @param this_world  the world the Police Box is currently in
      * @param malfunction whether there should be a malfunction
-     * @param current the current location of the TARDIS
+     * @param current     the current location of the TARDIS
      * @return a random Location
      */
-    public Location randomDestination(Player p, int rx, int rz, int ry, COMPASS d, String e, World this_world, boolean malfunction, Location current) {
-        int startx, starty, startz, resetx, resetz, listlen;
-        World randworld;
-        int count;
-        // get max_radius from config
-        int max = plugin.getConfig().getInt("travel.tp_radius");
-        int quarter = (max + 4 - 1) / 4;
-        int range = quarter + 1;
-        int wherex = 0, highest = 252, wherez = 0;
+    public Location randomDestination(Player player, int rx, int rz, int ry, COMPASS d, String e, World this_world, boolean malfunction, Location current) {
+        int listlen;
         // get worlds
         Set<String> worldlist = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
         List<World> allowedWorlds = new ArrayList<>();
-
         if (e.equals("THIS") && plugin.getPlanetsConfig().getBoolean("planets." + this_world.getName() + ".time_travel")) {
             allowedWorlds.add(this_world);
         } else {
@@ -233,7 +217,7 @@ public class TARDISTimeTravel {
                         allowedWorlds.remove(this_world);
                     }
                     // remove the world if the player doesn't have permission
-                    if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !TARDISPermission.hasPermission(p, "tardis.travel." + o)) {
+                    if (allowedWorlds.size() > 1 && plugin.getConfig().getBoolean("travel.per_world_perms") && !TARDISPermission.hasPermission(player, "tardis.travel." + o)) {
                         allowedWorlds.remove(ww);
                     }
                 }
@@ -241,8 +225,18 @@ public class TARDISTimeTravel {
         }
         listlen = allowedWorlds.size();
         // random world
-        randworld = allowedWorlds.get(TARDISConstants.RANDOM.nextInt(listlen));
+        World randworld = allowedWorlds.get(TARDISConstants.RANDOM.nextInt(listlen));
+        return getDestination(randworld, rx, rz, ry, d, e, current, player);
+    }
 
+    public Location getDestination(World randworld, int rx, int rz, int ry, COMPASS d, String e, Location current, Player p) {
+        int startx, starty, startz, resetx, resetz, listlen;
+        int count;
+        // get max_radius from config
+        int max = plugin.getConfig().getInt("travel.tp_radius");
+        int quarter = (max + 4 - 1) / 4;
+        int range = quarter + 1;
+        int wherex = 0, highest = 252, wherez = 0;
         switch (randworld.getEnvironment()) {
             case NETHER -> {
                 for (int n = 0; n < attempts; n++) {
@@ -395,11 +389,10 @@ public class TARDISTimeTravel {
     }
 
     /**
-     * Checks if a location is safe for the TARDIS Police Box to land at. Used
-     * for debugging purposes only. The Police Box requires a clear 4 x 3 x 4 (d
-     * x w x h) area.
+     * Checks if a location is safe for the TARDIS Police Box to land at. Used for debugging purposes only. The Police
+     * Box requires a clear 4 x 3 x 4 (d x w x h) area.
      *
-     * @param location the location to test
+     * @param location  the location to test
      * @param direction the direction the Police Box is facing.
      */
     public void testSafeLocation(Location location, COMPASS direction, Player player) {
@@ -456,8 +449,8 @@ public class TARDISTimeTravel {
      * @param nether a Nether world to search in.
      * @param wherex an x co-ordinate.
      * @param wherez a z co-ordinate.
-     * @param d the direction the Police Box is facing.
-     * @param p the player to check permissions for
+     * @param d      the direction the Police Box is facing.
+     * @param p      the player to check permissions for
      * @return true or false
      */
     public boolean safeNether(World nether, int wherex, int wherez, COMPASS d, Player p) {
@@ -500,12 +493,12 @@ public class TARDISTimeTravel {
     /**
      * Returns a random positive or negative x integer.
      *
-     * @param range the maximum the random number can be.
+     * @param range   the maximum the random number can be.
      * @param quarter one fourth of the max_distance config option.
-     * @param rx the delay of the x-repeater setting.
-     * @param ry the delay of the y-repeater setting.
-     * @param e a string to determine where to start the random search from
-     * @param l the current TARDIS location
+     * @param rx      the delay of the x-repeater setting.
+     * @param ry      the delay of the y-repeater setting.
+     * @param e       a string to determine where to start the random search from
+     * @param l       the current TARDIS location
      */
     private int randomX(int range, int quarter, int rx, int ry, String e, Location l) {
         int currentx = (e.equals("THIS")) ? l.getBlockX() : 0;
@@ -525,12 +518,12 @@ public class TARDISTimeTravel {
     /**
      * Returns a random positive or negative z integer.
      *
-     * @param range the maximum the random number can be.
+     * @param range   the maximum the random number can be.
      * @param quarter one fourth of the max_distance config option.
-     * @param rz the delay of the x-repeater setting.
-     * @param ry the delay of the y-repeater setting.
-     * @param e a string to determine where to start the random search from
-     * @param l the current TARDIS location
+     * @param rz      the delay of the x-repeater setting.
+     * @param ry      the delay of the y-repeater setting.
+     * @param e       a string to determine where to start the random search from
+     * @param l       the current TARDIS location
      */
     private int randomZ(int range, int quarter, int rz, int ry, String e, Location l) {
         int currentz = (e.equals("THIS")) ? l.getBlockZ() : 0;

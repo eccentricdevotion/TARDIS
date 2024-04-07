@@ -203,6 +203,7 @@ public class TARDIS extends JavaPlugin {
     private NamespacedKey timeLordUuidKey;
     private NamespacedKey standUuidKey;
     private NamespacedKey interactionUuidKey;
+    private NamespacedKey unaryKey;
     private NamespacedKey blueprintKey;
     private NamespacedKey sonicUuidKey;
     private NamespacedKey sonicChargeKey;
@@ -308,6 +309,7 @@ public class TARDIS extends JavaPlugin {
         timeLordUuidKey = new NamespacedKey(this, "timelord_uuid");
         standUuidKey = new NamespacedKey(this, "stand_uuid");
         interactionUuidKey = new NamespacedKey(this, "interaction_uuid");
+        unaryKey = new NamespacedKey(this, "unary");
         blueprintKey = new NamespacedKey(this, "blueprint");
         sonicUuidKey = new NamespacedKey(this, "sonic_uuid");
         sonicChargeKey = new NamespacedKey(this, "sonic_charge");
@@ -1333,6 +1335,15 @@ public class TARDIS extends JavaPlugin {
      */
     public NamespacedKey getInteractionUuidKey() {
         return interactionUuidKey;
+    }
+
+    /**
+     * Gets the console interaction unary NamespacedKey
+     *
+     * @return the console interaction unary NamespacedKey
+     */
+    public NamespacedKey getUnaryKey() {
+        return unaryKey;
     }
 
     /**

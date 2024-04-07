@@ -17,22 +17,15 @@
 package me.eccentric_nz.TARDIS.listeners.controls;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.LightLevel;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
+import me.eccentric_nz.TARDIS.control.actions.LightLevelAction;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightLevel;
 import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -49,8 +42,8 @@ public class TARDISLightLevelFrameListener implements Listener {
     public void onLightLevelClick(PlayerInteractEntityEvent event) {
         if (event.getRightClicked() instanceof ItemFrame frame) {
             // check if it is a light level item frame
-            Location l = frame.getLocation();
-            ResultSetLightLevel rs = new ResultSetLightLevel(plugin, l.toString());
+            Location location = frame.getLocation();
+            ResultSetLightLevel rs = new ResultSetLightLevel(plugin, location.toString());
             if (rs.resultSet()) {
                 // which switch is it?
                 int start = (rs.getType() == 49) ? 1000 : 3000;
@@ -76,55 +69,7 @@ public class TARDISLightLevelFrameListener implements Listener {
                     im.setCustomModelData(cmd);
                     is.setItemMeta(im);
                     frame.setItem(is);
-                    // save the level to the database
-                    int setLevel = (rs.getLevel() + 1) > 3 ? 0 : rs.getLevel() + 1;
-                    HashMap<String, Object> set = new HashMap<>();
-                    set.put("secondary", setLevel);
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("c_id", rs.getControlId());
-                    plugin.getQueryFactory().doSyncUpdate("controls", set, where);
-                    if (rs.isPowered()) {
-                        // alter light levels
-                        int light_level;
-                        if (rs.getType() == 49) {
-                            // exterior
-                            if (!rs.isPoliceBox()) {
-                                return;
-                            }
-                            light_level = LightLevel.exterior_level[setLevel];
-                            // get current TARDIS location
-                            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getTardis_id());
-                            if (rsc.resultSet()) {
-                                if (rsc.getWorld() == null) {
-                                    return;
-                                }
-                                Location location = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                                while (!location.getChunk().isLoaded()) {
-                                    location.getChunk().load();
-                                }
-                                Block light = location.getBlock().getRelative(BlockFace.UP, 2);
-                                if (light.getBlockData() instanceof Levelled levelled) {
-                                    levelled.setLevel(light_level);
-                                    light.setBlockData(levelled);
-                                }
-                            }
-                        } else if (rs.isLightsOn()) {
-                            // interior
-                            light_level = LightLevel.interior_level[setLevel];
-                            // get TARDIS lights
-                            HashMap<String, Object> whereLight = new HashMap<>();
-                            whereLight.put("tardis_id", rs.getTardis_id());
-                            ResultSetLamps rsl = new ResultSetLamps(plugin, whereLight, true);
-                            if (rsl.resultSet()) {
-                                for (Block block : rsl.getData()) {
-                                    if (block.getBlockData() instanceof Levelled levelled) {
-                                        levelled.setLevel(light_level);
-                                        block.setBlockData(levelled);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    new LightLevelAction(plugin).illuminate(rs.getLevel(), rs.getControlId(), rs.isPowered(), rs.getType(), rs.isPoliceBox(), rs.getTardis_id(), rs.isLightsOn());
                 }
             }
         }

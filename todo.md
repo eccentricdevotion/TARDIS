@@ -13,7 +13,8 @@
 2. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
 3. Animated models for player disguises
-4. ?
+4. Rework difficulty [#754](https://github.com/eccentricdevotion/TARDIS/issues/754)
+5. ?
 
 ## Future versions
 
