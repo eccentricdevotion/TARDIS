@@ -79,7 +79,6 @@ public class ResultSetRandomInteractions {
                 int i = 0;
                 while (rs.next()) {
                     // 0 => 'WORLD', 1 => 'X', 2 => 'Z', 3 => 'MULTIPLIER', 4 => HELMIC_REGULATOR
-                    // TODO these interactions should have a default state of 1
                     diodes[map.get(rs.getString("control"))] = rs.getInt("state");
                     i++;
                 }

@@ -40,14 +40,16 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class TARDISStructureTravel {
 
+    public static final List<Structure> netherStructures = new ArrayList<>();
+    public static final List<Structure> overworldStructures = new ArrayList<>();
     private final TARDIS plugin;
-    private final List<Structure> netherStructures = new ArrayList<>();
-    private final List<Structure> overworldStructures = new ArrayList<>();
 
     public TARDISStructureTravel(TARDIS plugin) {
         this.plugin = plugin;
         netherStructures.add(Structure.BASTION_REMNANT);
         netherStructures.add(Structure.FORTRESS);
+        netherStructures.add(Structure.NETHER_FOSSIL);
+        netherStructures.add(Structure.RUINED_PORTAL_NETHER);
         overworldStructures.add(Structure.ANCIENT_CITY);
         overworldStructures.add(Structure.DESERT_PYRAMID);
         overworldStructures.add(Structure.IGLOO);
@@ -56,11 +58,20 @@ public class TARDISStructureTravel {
         overworldStructures.add(Structure.MINESHAFT);
         overworldStructures.add(Structure.MINESHAFT_MESA);
         overworldStructures.add(Structure.MONUMENT);
+        overworldStructures.add(Structure.OCEAN_RUIN_COLD);
+        overworldStructures.add(Structure.OCEAN_RUIN_WARM);
         overworldStructures.add(Structure.PILLAGER_OUTPOST);
+        overworldStructures.add(Structure.RUINED_PORTAL);
+        overworldStructures.add(Structure.RUINED_PORTAL_DESERT);
+        overworldStructures.add(Structure.RUINED_PORTAL_JUNGLE);
+        overworldStructures.add(Structure.RUINED_PORTAL_SWAMP);
+        overworldStructures.add(Structure.RUINED_PORTAL_MOUNTAIN);
+        overworldStructures.add(Structure.RUINED_PORTAL_OCEAN);
         overworldStructures.add(Structure.SHIPWRECK);
         overworldStructures.add(Structure.SHIPWRECK_BEACHED);
         overworldStructures.add(Structure.STRONGHOLD);
         overworldStructures.add(Structure.SWAMP_HUT);
+        overworldStructures.add(Structure.TRAIL_RUINS);
         overworldStructures.add(Structure.VILLAGE_DESERT);
         overworldStructures.add(Structure.VILLAGE_PLAINS);
         overworldStructures.add(Structure.VILLAGE_SAVANNA);

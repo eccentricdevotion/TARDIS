@@ -39,6 +39,9 @@ import me.eccentric_nz.TARDIS.commands.utils.TARDISWeatherListener;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddGUIListener;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionGUIListener;
 import me.eccentric_nz.TARDIS.console.ConsoleInteractionListener;
+import me.eccentric_nz.TARDIS.console.telepathic.TelepathicBiomeListener;
+import me.eccentric_nz.TARDIS.console.telepathic.TelepathicGUIListener;
+import me.eccentric_nz.TARDIS.console.telepathic.TelepathicStructureListener;
 import me.eccentric_nz.TARDIS.control.TARDISControlListener;
 import me.eccentric_nz.TARDIS.control.TARDISControlMenuListener;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockListener;
@@ -321,6 +324,10 @@ class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new TARDISAntiBuildListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISPlayerKickListener(plugin), plugin);
+        // telepathic listeners
+        plugin.getPM().registerEvents(new TelepathicGUIListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TelepathicBiomeListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TelepathicStructureListener(plugin), plugin);
         if (plugin.getPlanetsConfig().getBoolean("planets.skaro.enabled")) {
             plugin.debug("Skaro enabled, registering planet event listeners");
             if (plugin.getPlanetsConfig().getBoolean("planets.skaro.acid")) {

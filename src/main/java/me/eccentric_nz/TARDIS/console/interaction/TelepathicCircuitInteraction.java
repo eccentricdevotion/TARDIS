@@ -16,7 +16,7 @@ public class TelepathicCircuitInteraction {
     }
 
     public void openGUI(Player player) {
-        // open new GUI for
+        // open GUI for
         // toggling telepathic circuit on/off
         // cave finder
         // structure finder

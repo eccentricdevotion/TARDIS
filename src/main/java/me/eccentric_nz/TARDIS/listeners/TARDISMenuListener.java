@@ -135,6 +135,7 @@ public class TARDISMenuListener implements Listener {
         map.put(ChatColor.DARK_RED + "TARDIS Seeds Menu", 90);
         map.put(ChatColor.DARK_RED + "TARDIS Seeds Recipe", 90);
         map.put(ChatColor.DARK_RED + "TARDIS Shell Loader", 54);
+        map.put(ChatColor.DARK_RED + "TARDIS Telepathic Circuit", 54);
         map.put(ChatColor.DARK_RED + "TARDIS Upgrade Menu", 54);
         map.put(ChatColor.DARK_RED + "TARDIS Wall & Floor Menu", 90);
         map.put(ChatColor.DARK_RED + "TARDIS Wall Menu", 54);
@@ -143,6 +144,8 @@ public class TARDISMenuListener implements Listener {
         map.put(ChatColor.DARK_RED + "TARDIS saves", 90);
         map.put(ChatColor.DARK_RED + "TARDIS transmats", 90);
         map.put(ChatColor.DARK_RED + "Temporal Locator", 27);
+        map.put(ChatColor.DARK_RED + "Telepathic Biome Finder", 54);
+        map.put(ChatColor.DARK_RED + "Telepathic Structure Finder", 54);
         // Vortex Manipulator
         map.put(ChatColor.DARK_RED + "Vortex Manipulator", 81);
         map.put(ChatColor.DARK_RED + "VM Messages", 81);
