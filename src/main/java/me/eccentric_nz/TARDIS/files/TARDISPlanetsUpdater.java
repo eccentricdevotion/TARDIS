@@ -144,6 +144,13 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.TARDIS_Zero_Room.gamerules.announceAdvancements", false);
             save++;
         }
+        if (!planets_config.contains("planets.TARDIS_Zero_Room.helmic_regulator_order")) {
+            Set<String> worlds = planets_config.getConfigurationSection("planets").getKeys(false);
+            for (String w : worlds) {
+                planets_config.set("planets." + w + ".helmic_regulator_order", -1);
+            }
+            save++;
+        }
         if (planets_config.contains("default_resource_pack") && planets_config.getString("default_resource_pack").equalsIgnoreCase("https://dl.dropboxusercontent.com/u/53758864/rp/Default.zip")) {
             planets_config.set("default_resource_pack", "https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1");
             save++;
