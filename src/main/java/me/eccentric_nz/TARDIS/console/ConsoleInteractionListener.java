@@ -39,10 +39,7 @@ public class ConsoleInteractionListener implements Listener {
                         // section one
                         case WORLD -> new WorldInteraction(plugin).selectWorld(state, player, id);
                         case MULTIPLIER, X, Z -> new MultiplierXZInteraction(plugin).setRange(ci, state, id, player);
-                        case HELMIC_REGULATOR -> {
-                            // TODO add config options to planets.yml - helmic_regulator_order: [1-8|-1]
-                            new HelmicRegulatorInteraction(plugin).selectWorld(state, id, player);
-                        }
+                        case HELMIC_REGULATOR -> new HelmicRegulatorInteraction(plugin).selectWorld(state, id, player);
                         // section two
                         case RANDOMISER -> new RandomiserInteraction(plugin).generateDestination(id, player);
                         case WAYPOINT_SELECTOR -> new WayPointInteraction(plugin).openSaveGUI(id, player);
@@ -57,7 +54,7 @@ public class ConsoleInteractionListener implements Listener {
                         case EXTERIOR_LAMP_LEVEL_SWITCH -> new LampLevelInteraction(plugin).setExterior(state, id, interaction, player);
                         case DOOR_TOGGLE -> new DoorToggleInteraction(plugin).toggle(id, player);
                         // section five
-                        case SCREEN_LEFT, SCREEN_RIGHT -> new ScreenInteraction(plugin).display(id, interaction.getLocation(), ci == ConsoleInteraction.SCREEN_RIGHT);
+                        case SCREEN_LEFT, SCREEN_RIGHT -> new ScreenInteraction(plugin).display(id, interaction.getLocation(), ci == ConsoleInteraction.SCREEN_RIGHT, player);
                         case SCANNER -> new ScannerIntraction(plugin).process(id, player);
                         case ARTRON -> plugin.getMessenger().sendArtron(player, id, 0);
                         case REBUILD -> new RebuildInteraction(plugin).process(id, player);

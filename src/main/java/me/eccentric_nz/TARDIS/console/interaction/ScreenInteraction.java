@@ -2,9 +2,11 @@ package me.eccentric_nz.TARDIS.console.interaction;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.ControlMonitor;
+import me.eccentric_nz.TARDIS.control.actions.ControlMenuAction;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
 import org.bukkit.util.Vector;
 
@@ -16,13 +18,18 @@ public class ScreenInteraction {
         this.plugin = plugin;
     }
 
-    public void display(int id, Location location, boolean coords) {
-        // TODO if shift-click change display else open Control Menu GUI
-        // get the text display
-        TextDisplay display = getTextDisplay(location, coords);
-        if (display != null) {
-            display.setRotation(Location.normalizeYaw(300), -10f);
-            new ControlMonitor(plugin).update(id, display.getUniqueId(), coords);
+    public void display(int id, Location location, boolean coords, Player player) {
+        // if shift-click change display else open Control Menu GUI
+        if (player.isSneaking()) {
+            // get the text display
+            TextDisplay display = getTextDisplay(location, coords);
+            if (display != null) {
+                display.setRotation(Location.normalizeYaw(300), -10f);
+                new ControlMonitor(plugin).update(id, display.getUniqueId(), coords);
+            }
+        } else {
+            // open control menu
+            new ControlMenuAction(plugin).openGUI(player, id);
         }
     }
 
