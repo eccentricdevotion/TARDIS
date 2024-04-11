@@ -8,6 +8,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISSculkShrieker;
 import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
+import me.eccentric_nz.TARDIS.console.models.HandbrakeModel;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -20,6 +21,8 @@ import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.utility.Handbrake;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
+import org.bukkit.entity.Interaction;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
@@ -36,8 +39,9 @@ public class HandbrakeInteraction {
         this.plugin = plugin;
     }
 
-    public void process(int id, int state, Player player, Location handbrake) {
+    public void process(int id, int state, Player player, Interaction interaction) {
         UUID uuid = player.getUniqueId();
+        Location handbrake = interaction.getLocation();
         TARDISCircuitChecker tcc = null;
         if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, state == 0)) {
             tcc = new TARDISCircuitChecker(plugin, id);
@@ -155,7 +159,13 @@ public class HandbrakeInteraction {
                         whereinteraction.put("tardis_id", id);
                         whereinteraction.put("control", "HANDBRAKE");
                         plugin.getQueryFactory().doUpdate("interactions", seti, whereinteraction);
-
+                        // get the model display item
+                        UUID model = interaction.getPersistentDataContainer().get(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID());
+                        if (model != null) {
+                            ItemDisplay display = (ItemDisplay) plugin.getServer().getEntity(model);
+                            // set the handbrake display
+                            new HandbrakeModel().setState(display, 0);
+                        }
                     } else {
                         plugin.getMessenger().sendStatus(player, "HANDBRAKE_OFF_ERR");
                     }
@@ -186,6 +196,13 @@ public class HandbrakeInteraction {
                         });
                         TARDISSounds.playTARDISSound(handbrake, "tardis_handbrake_engage");
                         // TODO change the custom model data so the lever is on
+                        // get the model display item
+                        UUID model = interaction.getPersistentDataContainer().get(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID());
+                        if (model != null) {
+                            ItemDisplay display = (ItemDisplay) plugin.getServer().getEntity(model);
+                            // set the handbrake display
+                            new HandbrakeModel().setState(display, 1);
+                        }
 //                        TARDISHandbrake.setLevers(block, true, true, handbrake.toString(), id, plugin);
                         // Check if it's at a recharge point
                         new TARDISArtronLevels(plugin).recharge(id);

@@ -33,7 +33,7 @@ public class ConsoleInteractionListener implements Listener {
                     switch (ci) {
                         // section zero
                         case HANDBRAKE ->
-                                new HandbrakeInteraction(plugin).process(id, state, player, interaction.getLocation());
+                                new HandbrakeInteraction(plugin).process(id, state, player, interaction);
                         case THROTTLE -> new ThrottleInteraction(plugin).process(player, interaction, id);
                         case RELATIVITY_DIFFERENTIATOR -> new FlightModeInteraction(plugin).process(player);
                         // section one

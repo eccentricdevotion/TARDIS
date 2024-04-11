@@ -203,6 +203,7 @@ public class TARDIS extends JavaPlugin {
     private NamespacedKey timeLordUuidKey;
     private NamespacedKey standUuidKey;
     private NamespacedKey interactionUuidKey;
+    private NamespacedKey modelUuidKey;
     private NamespacedKey unaryKey;
     private NamespacedKey blueprintKey;
     private NamespacedKey sonicUuidKey;
@@ -309,6 +310,7 @@ public class TARDIS extends JavaPlugin {
         timeLordUuidKey = new NamespacedKey(this, "timelord_uuid");
         standUuidKey = new NamespacedKey(this, "stand_uuid");
         interactionUuidKey = new NamespacedKey(this, "interaction_uuid");
+        modelUuidKey = new NamespacedKey(this, "model_uuid");
         unaryKey = new NamespacedKey(this, "unary");
         blueprintKey = new NamespacedKey(this, "blueprint");
         sonicUuidKey = new NamespacedKey(this, "sonic_uuid");
@@ -1338,6 +1340,15 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
+     * Gets the console model UUID NamespacedKey
+     *
+     * @return the console model UUID NamespacedKey
+     */
+    public NamespacedKey getModelUuidKey() {
+        return modelUuidKey;
+    }
+
+    /**
      * Gets the console interaction unary NamespacedKey
      *
      * @return the console interaction unary NamespacedKey
@@ -1978,4 +1989,5 @@ public class TARDIS extends JavaPlugin {
     public String getServerStr() {
         return serverStr;
     }
+
 }

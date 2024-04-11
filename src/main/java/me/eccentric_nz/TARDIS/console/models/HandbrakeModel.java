@@ -9,11 +9,11 @@ public class HandbrakeModel {
     public void setState(ItemDisplay display, int state) {
         ItemStack is = display.getItemStack();
         ItemMeta im = is.getItemMeta();
-        int cmd = im.getCustomModelData();
+        int cmd;
         if (state == 0) {
-            cmd += 10000;
+            cmd = 5001;
         } else {
-            cmd -= 10000;
+            cmd = 5002;
         }
         im.setCustomModelData(cmd);
         is.setItemMeta(im);
