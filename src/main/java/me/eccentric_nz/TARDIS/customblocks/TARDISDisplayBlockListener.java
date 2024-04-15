@@ -313,17 +313,13 @@ public class TARDISDisplayBlockListener implements Listener {
                                     return;
                                 }
                                 if (player.isSneaking()) {
-                                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.CUSTOM_DOOR) {
+                                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || (tdi == TARDISDisplayItem.CUSTOM_DOOR && isCustomClosed(display))) {
                                         // move to outside
-                                        // if custom door only move if door is currently closed
-                                        if (tdi == TARDISDisplayItem.CUSTOM_DOOR && !isCustomClosed(interaction)) {
-                                            return;
-                                        }
                                         new DisplayItemDoorMover(plugin).exit(player, block);
+                                        return;
                                     }
-                                    if (tdi == TARDISDisplayItem.DOOR_OPEN || (tdi == TARDISDisplayItem.CUSTOM_DOOR && !isCustomClosed(interaction))) {
+                                    if (tdi == TARDISDisplayItem.DOOR_OPEN || (tdi == TARDISDisplayItem.CUSTOM_DOOR && !isCustomClosed(display))) {
                                         // open right hand door as well
-                                        // open right hand / extra state door for custom doors only door is already open
                                         ItemStack itemStack = display.getItemStack();
                                         if (itemStack != null) {
                                             ItemMeta im = itemStack.getItemMeta();
@@ -441,8 +437,7 @@ public class TARDISDisplayBlockListener implements Listener {
         }
     }
 
-    private boolean isCustomClosed(Interaction interaction) {
-        ItemDisplay display = TARDISDisplayItemUtils.get(interaction);
+    private boolean isCustomClosed(ItemDisplay display) {
         if (display == null) {
             return false;
         }
