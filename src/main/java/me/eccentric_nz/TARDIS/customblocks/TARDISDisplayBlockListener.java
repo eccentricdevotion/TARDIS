@@ -224,6 +224,9 @@ public class TARDISDisplayBlockListener implements Listener {
      */
     @EventHandler
     public void onInteractionClick(PlayerInteractAtEntityEvent event) {
+        if (event.getHand() == EquipmentSlot.OFF_HAND) {
+            return;
+        }
         if (event.getRightClicked() instanceof Interaction interaction) {
             if (interaction.getPersistentDataContainer().has(plugin.getStandUuidKey(), plugin.getPersistentDataTypeUUID())) {
                 Player player = event.getPlayer();
@@ -312,10 +315,15 @@ public class TARDISDisplayBlockListener implements Listener {
                                 if (player.isSneaking()) {
                                     if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.CUSTOM_DOOR) {
                                         // move to outside
+                                        // if custom door only move if door is currently closed
+                                        if (tdi == TARDISDisplayItem.CUSTOM_DOOR && !isCustomClosed(interaction)) {
+                                            return;
+                                        }
                                         new DisplayItemDoorMover(plugin).exit(player, block);
                                     }
-                                    if (tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.CUSTOM_DOOR) {
+                                    if (tdi == TARDISDisplayItem.DOOR_OPEN || (tdi == TARDISDisplayItem.CUSTOM_DOOR && !isCustomClosed(interaction))) {
                                         // open right hand door as well
+                                        // open right hand / extra state door for custom doors only door is already open
                                         ItemStack itemStack = display.getItemStack();
                                         if (itemStack != null) {
                                             ItemMeta im = itemStack.getItemMeta();
@@ -371,12 +379,6 @@ public class TARDISDisplayBlockListener implements Listener {
                                                     animator.open();
                                                 }
                                                 new DisplayItemDoorToggler(plugin).openClose(player, block, close, TARDISDisplayItem.CUSTOM_DOOR);
-                                            }
-                                            default -> {
-                                                // just close doors
-                                                im.setCustomModelData(10000);
-                                                itemStack.setItemMeta(im);
-                                                display.setItemStack(itemStack);
                                             }
                                         }
                                     }
@@ -437,6 +439,20 @@ public class TARDISDisplayBlockListener implements Listener {
                 }
             }
         }
+    }
+
+    private boolean isCustomClosed(Interaction interaction) {
+        ItemDisplay display = TARDISDisplayItemUtils.get(interaction);
+        if (display == null) {
+            return false;
+        }
+        ItemStack is = display.getItemStack();
+        if (is == null) {
+            return false;
+        }
+        ItemMeta im = is.getItemMeta();
+        int cmd = im.hasCustomModelData()? im.getCustomModelData() : -1;
+        return cmd == 10000;
     }
 
     private boolean isPlaceable(Material material) {
