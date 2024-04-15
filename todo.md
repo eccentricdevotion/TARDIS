@@ -18,13 +18,12 @@
 
 ## Future versions
 
-1. Cache TARDIS data to speed lookup and reduce database queries
-2. Use the Vortex Manipulator to teleport past force fields
-3. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
-4. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
-5. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
-6. Sonic Blaster
-7. All the things...
+1. Use the Vortex Manipulator to teleport past force fields
+2. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
+3. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
+4. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
+5. Sonic Blaster
+6. All the things...
 
 ## Wiki Documentation
 
