@@ -209,7 +209,7 @@ public class HandbrakeInteraction {
                             hb.toggleBeacon(beacon, false);
                         }
                         hb.handleSensor(id);
-                        // Remove energy from TARDIS and sets database
+                        // remove energy from TARDIS and set database
                         plugin.getMessenger().sendStatus(player, "HANDBRAKE_ON");
                         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                             int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * spaceTimeThrottle.getArtronMultiplier());
