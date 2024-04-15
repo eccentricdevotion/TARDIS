@@ -42,10 +42,8 @@ public class TARDISStructureTravel {
 
     public static final List<Structure> netherStructures = new ArrayList<>();
     public static final List<Structure> overworldStructures = new ArrayList<>();
-    private final TARDIS plugin;
 
-    public TARDISStructureTravel(TARDIS plugin) {
-        this.plugin = plugin;
+    static {
         netherStructures.add(Structure.BASTION_REMNANT);
         netherStructures.add(Structure.FORTRESS);
         netherStructures.add(Structure.NETHER_FOSSIL);
@@ -77,6 +75,12 @@ public class TARDISStructureTravel {
         overworldStructures.add(Structure.VILLAGE_SAVANNA);
         overworldStructures.add(Structure.VILLAGE_SNOWY);
         overworldStructures.add(Structure.VILLAGE_TAIGA);
+    }
+
+    private final TARDIS plugin;
+
+    public TARDISStructureTravel(TARDIS plugin) {
+        this.plugin = plugin;
     }
 
     public TARDISStructureLocation getRandomVillage(Player p, int id, String[] args) {
@@ -185,15 +189,7 @@ public class TARDISStructureTravel {
                 // check there is enough height for the police box
                 if (yy <= y - 3 && !w.getBlockAt(x - 1, yy - 1, z - 1).getType().equals(Material.STONE)) {
                     // check there is room for the police box
-                    if (w.getBlockAt(x - 1, yy, z - 1).getType().isAir()
-                            && w.getBlockAt(x - 1, yy, z).getType().isAir()
-                            && w.getBlockAt(x - 1, yy, z + 1).getType().isAir()
-                            && w.getBlockAt(x, yy, z - 1).getType().isAir()
-                            && w.getBlockAt(x, yy, z + 1).getType().isAir()
-                            && w.getBlockAt(x + 1, yy, z - 1).getType().isAir()
-                            && w.getBlockAt(x + 1, yy, z).getType().isAir()
-                            && w.getBlockAt(x + 1, yy, z + 1).getType().isAir()
-                    ) {
+                    if (w.getBlockAt(x - 1, yy, z - 1).getType().isAir() && w.getBlockAt(x - 1, yy, z).getType().isAir() && w.getBlockAt(x - 1, yy, z + 1).getType().isAir() && w.getBlockAt(x, yy, z - 1).getType().isAir() && w.getBlockAt(x, yy, z + 1).getType().isAir() && w.getBlockAt(x + 1, yy, z - 1).getType().isAir() && w.getBlockAt(x + 1, yy, z).getType().isAir() && w.getBlockAt(x + 1, yy, z + 1).getType().isAir()) {
                         ret.setSafe(true);
                         ret.setY(yy);
                     }

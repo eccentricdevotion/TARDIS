@@ -2,12 +2,16 @@ package me.eccentric_nz.TARDIS.console.interaction;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.InteractionResponse;
+import me.eccentric_nz.TARDIS.console.models.LightLevelModel;
 import me.eccentric_nz.TARDIS.control.actions.LightLevelAction;
 import me.eccentric_nz.TARDIS.database.InteractionStateSaver;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightLevel;
 import org.bukkit.entity.Interaction;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.UUID;
 
 public class LightLevelInteraction {
 
@@ -29,7 +33,12 @@ public class LightLevelInteraction {
             unary = 1;
         }
         interaction.getPersistentDataContainer().set(plugin.getUnaryKey(), PersistentDataType.INTEGER, unary);
-        // TODO set custom model data for light level switch item display
+        // set custom model data for light level switch item display
+        UUID uuid = interaction.getPersistentDataContainer().get(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID());
+        if (uuid != null) {
+            ItemDisplay display = (ItemDisplay) plugin.getServer().getEntity(uuid);
+            new LightLevelModel().setState(display, setLevel, true);
+        }
         // get light level record
         ResultSetLightLevel rs = new ResultSetLightLevel(plugin, interaction.getLocation().toString());
         if (rs.resultSet()) {

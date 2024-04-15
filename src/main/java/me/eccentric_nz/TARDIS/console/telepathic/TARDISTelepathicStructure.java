@@ -46,7 +46,7 @@ public class TARDISTelepathicStructure {
     private ItemStack make(Structure structure, Material material) {
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(TARDISStringUtils.capitalise(structure.toString()));
+        im.setDisplayName(TARDISStringUtils.capitalise(structure.getKey().getKey()));
         is.setItemMeta(im);
         return is;
     }

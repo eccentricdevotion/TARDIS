@@ -7,6 +7,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class DirectionModel {
 
     public void setState(ItemDisplay display, int state) {
+        if (display == null) {
+            return;
+        }
         ItemStack is = display.getItemStack();
         ItemMeta im = is.getItemMeta();
         im.setCustomModelData(state + 10000);

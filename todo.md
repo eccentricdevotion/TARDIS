@@ -5,7 +5,8 @@
 1. Fix fifteenth console redstone piston door
 2. Fix follower persistence
 3. Update `monsters` count in database
-4. ?
+4. Shift-clicking custom door shouldn't open it
+5. ?
 
 ## Next version `5.7.0`
 

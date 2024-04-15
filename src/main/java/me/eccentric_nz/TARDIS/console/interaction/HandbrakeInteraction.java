@@ -163,7 +163,7 @@ public class HandbrakeInteraction {
                         UUID model = interaction.getPersistentDataContainer().get(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID());
                         if (model != null) {
                             ItemDisplay display = (ItemDisplay) plugin.getServer().getEntity(model);
-                            // set the handbrake display
+                            // change the custom model data so the lever is off
                             new HandbrakeModel().setState(display, 0);
                         }
                     } else {
@@ -195,15 +195,13 @@ public class HandbrakeInteraction {
                             plugin.getTrackerKeeper().getFlyingReturnLocation().remove(uuid);
                         });
                         TARDISSounds.playTARDISSound(handbrake, "tardis_handbrake_engage");
-                        // TODO change the custom model data so the lever is on
                         // get the model display item
                         UUID model = interaction.getPersistentDataContainer().get(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID());
                         if (model != null) {
                             ItemDisplay display = (ItemDisplay) plugin.getServer().getEntity(model);
-                            // set the handbrake display
+                            // change the custom model data so the lever is on
                             new HandbrakeModel().setState(display, 1);
                         }
-//                        TARDISHandbrake.setLevers(block, true, true, handbrake.toString(), id, plugin);
                         // Check if it's at a recharge point
                         new TARDISArtronLevels(plugin).recharge(id);
                         Handbrake hb = new Handbrake(plugin);

@@ -21,7 +21,7 @@ public class LightLevelAction {
 
     public void illuminate(int level, int control, boolean powered, int type, boolean policebox, int id, boolean lightsOn) {
         // save the level to the database
-        int setLevel = (level + 1) > 3 ? 0 : level + 1;
+        int setLevel = (level + 1) > 8 ? 0 : level + 1;
         HashMap<String, Object> set = new HashMap<>();
         set.put("secondary", setLevel);
         HashMap<String, Object> where = new HashMap<>();

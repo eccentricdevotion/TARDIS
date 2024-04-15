@@ -6,11 +6,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class HelmicRegulatorModel {
 
-    public void setState(ItemDisplay display, int state, boolean powered) {
+    public void setState(ItemDisplay display, int state) {
         ItemStack is = display.getItemStack();
         ItemMeta im = is.getItemMeta();
-        int base = (powered) ? 10000 : 20000;
-        im.setCustomModelData(state + base);
+        im.setCustomModelData(state + 2000);
         is.setItemMeta(im);
         display.setItemStack(is);
     }

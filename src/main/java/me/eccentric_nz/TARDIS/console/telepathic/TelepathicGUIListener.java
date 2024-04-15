@@ -57,6 +57,8 @@ public class TelepathicGUIListener extends TARDISMenuListener {
                 int cmd = im.getCustomModelData();
                 im.setCustomModelData((cmd > 100) ? cmd - 100 : cmd + 100);
                 choice.setItemMeta(im);
+                plugin.getMessenger().announceRepeater(player, "Telepathic Circuit " + (b == 1 ? "ON" : "OFF"));
+                close(player);
             }
             // cave finder
             case 2 -> {

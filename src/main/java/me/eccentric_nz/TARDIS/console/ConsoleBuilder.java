@@ -1,6 +1,8 @@
 package me.eccentric_nz.TARDIS.console;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -61,7 +63,7 @@ public class ConsoleBuilder {
             UUID uuid = null;
             if (i.hasModel()) {
                 // spawn a display entity and save it's UUID to the interaction entity
-                uuid = spawnControl(i, block.getLocation());
+                uuid = spawnControl(i, block.getLocation(), i.getYaw(), id);
             }
             double x = i.getRelativePosition().getX();
             double z = i.getRelativePosition().getZ();
@@ -93,51 +95,61 @@ public class ConsoleBuilder {
         }
     }
 
-    private UUID spawnControl(ConsoleInteraction interaction, Location location) {
+    private UUID spawnControl(ConsoleInteraction interaction, Location location, float angle, int id) {
         Material material = Material.LEVER;
         int cmd;
         switch (interaction) {
-            case HANDBRAKE -> {
-                cmd = 5001;
-            }
+            case HANDBRAKE -> cmd = 5002;
             case THROTTLE -> {
-                material = Material.LEVER;
-                cmd = 5001;
+                material = Material.REPEATER;
+                cmd = 1004;
             }
             case HELMIC_REGULATOR -> {
-                material = Material.LEVER;
-                cmd = 5001;
+                material = Material.REPEATER;
+                cmd = 2000;
             }
             case DIRECTION -> {
-                material = Material.LEVER;
-                cmd = 5001;
+                material = Material.RAIL;
+                HashMap<String, Object> wherec = new HashMap<>();
+                wherec.put("tardis_id", id);
+                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+                cmd = (rsc.resultSet()) ? getCmd(rsc.getDirection()) + 10000 : 10000;
             }
-            case RELATIVITY_DIFFERENTIATOR -> {
-                material = Material.LEVER;
-                cmd = 5001;
-            }
-            case INTERIOR_LIGHT_LEVEL_SWITCH -> {
-                material = Material.LEVER;
-                cmd = 5001;
-            }
-            default -> {
-                material = Material.LEVER;
-                cmd = 5001;
-            }
+            case RELATIVITY_DIFFERENTIATOR -> cmd = 6001;
+            case INTERIOR_LIGHT_LEVEL_SWITCH -> cmd = 7000;
+            default -> cmd = 8000;
         }
-        // spawn a handbrake
+        // spawn a control
         ItemStack is = new ItemStack(material);
         ItemMeta im = is.getItemMeta();
         im.setCustomModelData(cmd);
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
         is.setItemMeta(im);
-        ItemDisplay handbrake = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
-        handbrake.setItemStack(is);
-        handbrake.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
-        handbrake.setPersistent(true);
-        handbrake.setInvulnerable(true);
-        UUID uuid = handbrake.getUniqueId();
-        handbrake.getPersistentDataContainer().set(plugin.getInteractionUuidKey(), plugin.getPersistentDataTypeUUID(), uuid);
+        ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, 1.5d, 0.5d), EntityType.ITEM_DISPLAY);
+        display.setItemStack(is);
+        display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
+        display.setPersistent(true);
+        display.setInvulnerable(true);
+        UUID uuid = display.getUniqueId();
+        display.getPersistentDataContainer().set(plugin.getInteractionUuidKey(), plugin.getPersistentDataTypeUUID(), uuid);
+        float yaw = Location.normalizeYaw(angle);
+        // set display rotation
+        display.setRotation(yaw, 0);
         return uuid;
+    }
+
+    private int getCmd(COMPASS direction) {
+        int cmd;
+        switch (direction) {
+            case NORTH_EAST -> cmd = 1;
+            case EAST -> cmd = 2;
+            case SOUTH_EAST -> cmd = 3;
+            case SOUTH -> cmd = 4;
+            case SOUTH_WEST -> cmd = 5;
+            case WEST -> cmd = 6;
+            case NORTH_WEST -> cmd = 7;
+            default -> cmd = 0;
+        }
+        return cmd;
     }
 }

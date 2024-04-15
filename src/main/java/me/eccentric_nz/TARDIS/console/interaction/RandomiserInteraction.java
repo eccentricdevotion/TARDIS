@@ -4,7 +4,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
-import me.eccentric_nz.TARDIS.control.TARDISRandomButton;
 import me.eccentric_nz.TARDIS.control.actions.ExileAction;
 import me.eccentric_nz.TARDIS.control.actions.RandomDestinationAction;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -67,7 +66,7 @@ public class RandomiserInteraction {
         if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
             new ExileAction(plugin).getExile(player, id, direction);
         } else {
-            new TARDISRandomButton(plugin, player, id, tardis.getArtronLevel(), 0, tardis.getCompanions(), tardis.getUuid()).clickButton();
+//            new TARDISRandomButton(plugin, player, id, tardis.getArtronLevel(), 0, tardis.getCompanions(), tardis.getUuid()).clickButton();
             // get state from WORLD, MULTIPLIER, X, Z and HELMIC_REGULATOR interactions
             ResultSetRandomInteractions rsri = new ResultSetRandomInteractions(plugin, id);
             if (rsri.resultSet()) {

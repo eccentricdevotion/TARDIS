@@ -1,14 +1,17 @@
 package me.eccentric_nz.TARDIS.console.interaction;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.console.models.ThrottleModel;
 import me.eccentric_nz.TARDIS.database.InteractionStateSaver;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import org.bukkit.entity.Interaction;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class ThrottleInteraction {
 
@@ -51,7 +54,12 @@ public class ThrottleInteraction {
             plugin.getQueryFactory().doUpdate("player_prefs", setr, wherer);
             new InteractionStateSaver(plugin).write("THROTTLE", delay, id);
             plugin.getMessenger().announceRepeater(player, throttle);
-            // TODO set custom model data for throttle item display
+            // set custom model data for throttle item display
+            UUID model = interaction.getPersistentDataContainer().get(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID());
+            if (model != null) {
+                ItemDisplay display = (ItemDisplay) plugin.getServer().getEntity(model);
+                new ThrottleModel().setState(display, delay);
+            }
         }
     }
 }

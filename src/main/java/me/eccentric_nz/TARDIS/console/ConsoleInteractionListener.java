@@ -35,11 +35,11 @@ public class ConsoleInteractionListener implements Listener {
                         case HANDBRAKE ->
                                 new HandbrakeInteraction(plugin).process(id, state, player, interaction);
                         case THROTTLE -> new ThrottleInteraction(plugin).process(player, interaction, id);
-                        case RELATIVITY_DIFFERENTIATOR -> new FlightModeInteraction(plugin).process(player);
+                        case RELATIVITY_DIFFERENTIATOR -> new FlightModeInteraction(plugin).process(player, interaction);
                         // section one
                         case WORLD -> new WorldInteraction(plugin).selectWorld(state, player, id);
                         case MULTIPLIER, X, Z -> new MultiplierXZInteraction(plugin).setRange(ci, state, id, player);
-                        case HELMIC_REGULATOR -> new HelmicRegulatorInteraction(plugin).selectWorld(state, id, player);
+                        case HELMIC_REGULATOR -> new HelmicRegulatorInteraction(plugin).selectWorld(state, id, player, interaction);
                         // section two
                         case RANDOMISER -> new RandomiserInteraction(plugin).generateDestination(id, player);
                         case WAYPOINT_SELECTOR -> new WayPointInteraction(plugin).openSaveGUI(id, player);
@@ -47,7 +47,7 @@ public class ConsoleInteractionListener implements Listener {
                         case TELEPATHIC_CIRCUIT -> new TelepathicCircuitInteraction(plugin).openGUI(player);
                         // section three
                         case SONIC_DOCK -> new SonicDockInteraction(plugin).process(player, interaction, id);
-                        case DIRECTION -> new DirectionInteraction(plugin).rotate(id, player);
+                        case DIRECTION -> new DirectionInteraction(plugin).rotate(id, player, interaction);
                         // section four
                         case LIGHT_SWITCH -> new LightSwitchInteraction(plugin).toggle(id, player);
                         case INTERIOR_LIGHT_LEVEL_SWITCH -> new LightLevelInteraction(plugin).setInterior(state, id, interaction, player);

@@ -6,10 +6,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class LightLevelModel {
 
-    public void setState(ItemDisplay display, int state, boolean powered) {
+    public void setState(ItemDisplay display, int state, boolean interior) {
+        if (display == null) {
+            return;
+        }
         ItemStack is = display.getItemStack();
         ItemMeta im = is.getItemMeta();
-        int base = (powered) ? 10000 : 20000;
+        int base = (interior) ? 7000 : 8000;
         im.setCustomModelData(state + base);
         is.setItemMeta(im);
         display.setItemStack(is);
