@@ -153,9 +153,9 @@ public class TARDISSonicDock {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
                             return display;
                         }
-                        COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
-                        int[] start_loc = TARDISTimeTravel.getStartLocation(dest, player_d);
-                        int count = TARDISTimeTravel.safeLocation(start_loc[0], dest.getBlockY(), start_loc[2], start_loc[1], start_loc[3], dest.getWorld(), player_d);
+                        COMPASS player_direction = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
+                        int[] start_loc = TARDISTimeTravel.getStartLocation(dest, player_direction);
+                        int count = TARDISTimeTravel.safeLocation(start_loc[0], dest.getBlockY(), start_loc[2], start_loc[1], start_loc[3], dest.getWorld(), player_direction);
                         Block under = dest.getBlock().getRelative(BlockFace.DOWN);
                         if (plugin.getPM().isPluginEnabled("BlockLocker") && (BlockLockerAPIv2.isProtected(dest.getBlock()) || BlockLockerAPIv2.isProtected(under))) {
                             count = 1;

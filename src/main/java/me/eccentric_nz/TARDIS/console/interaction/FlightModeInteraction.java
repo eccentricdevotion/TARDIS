@@ -20,7 +20,7 @@ public class FlightModeInteraction {
         this.plugin = plugin;
     }
 
-    public void process(Player player, Interaction interaction) {
+    public void process(Player player, int id, Interaction interaction) {
         String uuid = player.getUniqueId().toString();
         // get current throttle setting
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
@@ -29,23 +29,28 @@ public class FlightModeInteraction {
             if (mode > 4) {
                 mode = 1;
             }
-            FlightMode fm = FlightMode.getByMode().get(mode);
-            plugin.getMessenger().announceRepeater(player, TARDISStringUtils.capitalise(fm.toString()));
-            HashMap<String, Object> setf = new HashMap<>();
-            setf.put("flying_mode", mode);
+            FlightMode flightMode = FlightMode.getByMode().get(mode);
+            plugin.getMessenger().announceRepeater(player, TARDISStringUtils.capitalise(flightMode.toString()));
+            // update control record
+            HashMap<String, Object> set = new HashMap<>();
+            set.put("secondary", mode == 4 ? 1 : 0);
             HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", player.getUniqueId().toString());
-            TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", setf, where);
+            where.put("tardis_id", id);
+            where.put("type", 47);
+            plugin.getQueryFactory().doUpdate("controls", set, where);
+            // also update player prefs
+            HashMap<String, Object> setp = new HashMap<>();
+            setp.put("flying_mode", mode);
+            HashMap<String, Object> wherep = new HashMap<>();
+            wherep.put("uuid", player.getUniqueId().toString());
+            plugin.getQueryFactory().doUpdate("player_prefs", setp, wherep);
             // set custom model data for relativity differentiator item display
             UUID model = interaction.getPersistentDataContainer().get(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID());
             if (model != null) {
                 ItemDisplay display = (ItemDisplay) plugin.getServer().getEntity(model);
                 new FlightModeModel().setState(display, mode);
             }
-            // TODO make relativity differentiator standalone control set player_prefs flightmode when toggled - exterior|normal
-            // TODO then alter `isRelativityDifferentiated()` to check player prefs instead
-            // should !exterior|normal flight modes even be accessible from this interaction? if so:
-            // TODO make malfunction / manual / regulator classes?
+            // TODO make malfunction / manual classes
         }
     }
 }

@@ -5,6 +5,7 @@ import me.eccentric_nz.TARDIS.console.models.ThrottleModel;
 import me.eccentric_nz.TARDIS.database.InteractionStateSaver;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
@@ -45,7 +46,7 @@ public class ThrottleInteraction {
             }
             // save unary value in the interaction PDC
             interaction.getPersistentDataContainer().set(plugin.getUnaryKey(), PersistentDataType.INTEGER, unary);
-            String throttle = SpaceTimeThrottle.getByDelay().get(delay).toString();
+            String throttle = TARDISStringUtils.capitalise(SpaceTimeThrottle.getByDelay().get(delay).toString());
             // update player prefs
             HashMap<String, Object> wherer = new HashMap<>();
             wherer.put("uuid", uuid);

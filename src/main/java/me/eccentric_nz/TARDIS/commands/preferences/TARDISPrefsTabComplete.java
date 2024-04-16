@@ -40,7 +40,7 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
     private final ImmutableList<String> ONOFF_SUBS = ImmutableList.of("on", "off");
     private final ImmutableList<String> HADS_SUBS = ImmutableList.of("DISPLACEMENT", "DISPERSAL");
     private final ImmutableList<String> HUM_SUBS = ImmutableList.of("alien", "atmosphere", "computer", "copper", "coral", "galaxy", "learning", "mind", "neon", "sleeping", "void", "random");
-    private final ImmutableList<String> FLIGHT_SUBS = ImmutableList.of("normal", "regulator", "manual");
+    private final ImmutableList<String> FLIGHT_SUBS = ImmutableList.of("normal", "regulator", "manual", "exterior");
     private final ImmutableList<String> KEY_SUBS;
     private final List<String> LIGHT_SUBS = new ArrayList<>();
     private final ImmutableList<String> MAT_SUBS;

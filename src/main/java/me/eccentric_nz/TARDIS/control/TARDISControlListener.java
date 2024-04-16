@@ -219,7 +219,7 @@ public class TARDISControlListener implements Listener {
                                 // space/time throttle
                                 case 39 -> new ThrottleAction(plugin).setSpaceTime(block, player);
                                 // relativity differentiator
-                                case 47 -> new DifferentiatorAction(plugin).bleep(block);
+                                case 47 -> new DifferentiatorAction(plugin).bleep(block, id);
                                 default -> {
                                 }
                             }

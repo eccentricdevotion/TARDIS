@@ -36,6 +36,8 @@ public class Handbrake {
             if (rd.getType() == Material.COMPARATOR) {
                 Comparator comparator = (Comparator) rd.getBlockData();
                 return comparator.getMode().equals(Comparator.Mode.SUBTRACT);
+            } else {
+                return rsc.getSecondary() == 1;
             }
         }
         return false;

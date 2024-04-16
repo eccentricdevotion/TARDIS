@@ -21,7 +21,7 @@ public class FlightModeAction {
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
         if (rsp.resultSet()) {
             int mode = rsp.getFlightMode() + 1;
-            if (mode > 3) {
+            if (mode > 4) {
                 mode = 1;
             }
             // set flight mode
