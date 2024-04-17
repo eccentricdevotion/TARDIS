@@ -51,6 +51,7 @@ public class TARDISSonicDock {
         }
         ItemDisplay display = doDocking(sonic, interaction.getLocation(), new Vector(0.05d, 0.75d, -0.05d), player, id);
         display.setRotation(0.0f, -15.0f);
+        // start charging
         if (plugin.getConfig().getBoolean("sonic.charge") || plugin.getDifficulty() == Difficulty.HARD) {
             long delay = plugin.getConfig().getLong("sonic.charge_level") / plugin.getConfig().getLong("sonic.charge_interval");
             SonicConsoleRecharge recharge = new SonicConsoleRecharge(plugin, display.getUniqueId(), interaction, id, player);
@@ -90,8 +91,6 @@ public class TARDISSonicDock {
         display.setInvulnerable(true);
         // remove item from hand
         player.getInventory().setItemInMainHand(null);
-//        // change the dock model
-//        updateModel(frame, 1001, false);
         if (uuid != null) {
             // get last scan coordinates
             ResultSetSonicLocation rssc = new ResultSetSonicLocation(plugin, uuid);
@@ -238,13 +237,6 @@ public class TARDISSonicDock {
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "DOCK_NOT_SCANNED");
         }
-//        // start charging
-//        if (plugin.getConfig().getBoolean("sonic.charge") || plugin.getDifficulty() == Difficulty.HARD) {
-//            long delay = plugin.getConfig().getLong("sonic.charge_level") / plugin.getConfig().getLong("sonic.charge_interval");
-//            SonicRecharge recharge = new SonicRecharge(plugin, display.getUniqueId(), frame, id, player);
-//            int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, recharge, 1L, delay);
-//            recharge.setTask(task);
-//        }
         return display;
     }
 
