@@ -12,7 +12,7 @@ public class LightLevelModel {
         }
         ItemStack is = display.getItemStack();
         ItemMeta im = is.getItemMeta();
-        int base = (interior) ? 7000 : 8000;
+        int base = (interior) ? 8000 : 7000;
         im.setCustomModelData(state + base);
         is.setItemMeta(im);
         display.setItemStack(is);

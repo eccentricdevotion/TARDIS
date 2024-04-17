@@ -116,8 +116,9 @@ public class ConsoleBuilder {
                 cmd = (rsc.resultSet()) ? getCmd(rsc.getDirection()) + 10000 : 10000;
             }
             case RELATIVITY_DIFFERENTIATOR -> cmd = 6001;
-            case INTERIOR_LIGHT_LEVEL_SWITCH -> cmd = 7000;
-            default -> cmd = 8000;
+            case INTERIOR_LIGHT_LEVEL_SWITCH -> cmd = 8000;
+            // EXTERIOR_LAMP_LEVEL_SWITCH
+            default -> cmd = 7000;
         }
         // spawn a control
         ItemStack is = new ItemStack(material);
