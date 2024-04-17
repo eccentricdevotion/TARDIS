@@ -2,8 +2,7 @@
 
 ## Current version `5.6.0`
 
-1. Custom display doors [#833](https://github.com/eccentricdevotion/TARDIS/issues/833)
-2. ?
+1. ?
 
 ## Next version `5.7.0`
 
