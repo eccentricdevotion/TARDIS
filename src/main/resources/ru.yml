@@ -559,7 +559,7 @@ ID_NOT_FOUND: "Не удалось получить идентификатор T
 INPUT_MISSING: "В консоли отсутствует входная цепь!"
 ВНУТРИ: "В твоей TARDIS никого нет."
 INSIDE_PLAYERS: "Игроки внутри вашей TARDIS:"
-INVALID_CONSTRUCT: "Обнаружен недействительный Chameleon CONSTRUCT, измените предустановку Chamelon!"
+INVALID_CONSTRUCT: "Обнаружена неверная конструкция Chameleon CONSTRUCT. Используйте %s, а затем измените предустановку Chamelon!"
 INVISIBILITY_DISABLED: "Невидимая посадка отключена на этом сервере!"
 INVISIBILITY_ENGAGED: "Вы не можете этого сделать, пока включена цепь невидимости!"
 INVISIBILITY_LORE_1: "Нажатие этой кнопки повредит цепь."

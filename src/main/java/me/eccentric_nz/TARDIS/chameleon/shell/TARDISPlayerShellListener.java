@@ -161,6 +161,11 @@ public class TARDISPlayerShellListener extends TARDISMenuListener {
             case 45 -> {
                 // set as the active shell
                 if (selected.containsKey(uuid)) {
+                    int cid = getChameleonId(view, selected.get(uuid));
+                    if (cid == -1) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SHELL_SELECT");
+                        return;
+                    }
                     // set other shells as inactive
                     HashMap<String, Object> seti = new HashMap<>();
                     seti.put("active", 0);
@@ -168,7 +173,6 @@ public class TARDISPlayerShellListener extends TARDISMenuListener {
                     wherei.put("tardis_id", id);
                     plugin.getQueryFactory().doSyncUpdate("chameleon", seti, wherei);
                     // set selected as active
-                    int cid = getChameleonId(view, selected.get(uuid));
                     HashMap<String, Object> wheresc = new HashMap<>();
                     wheresc.put("chameleon_id", cid);
                     HashMap<String, Object> seta = new HashMap<>();
@@ -183,12 +187,12 @@ public class TARDISPlayerShellListener extends TARDISMenuListener {
                 }
             }
             default -> {
-                selected.put(uuid, slot);
                 // get the chameleon_id
                 int cid = getChameleonId(view, slot);
                 if (cid == -1) {
                     return;
                 }
+                selected.put(uuid, slot);
                 // load selected shell
                 preset = ChameleonPreset.CONSTRUCT;
                 // load saved construct
