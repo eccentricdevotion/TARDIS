@@ -98,6 +98,7 @@ class TARDISDematerialisePreset implements Runnable {
             // remove trackers
             plugin.getTrackerKeeper().getDematerialising().removeAll(Collections.singleton(dd.getTardisID()));
             plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(dd.getTardisID()));
+            return;
         }
         BlockData[][] data;
         // get relative locations
