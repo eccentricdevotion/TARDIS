@@ -166,20 +166,26 @@ public class TARDISPlayerShellListener extends TARDISMenuListener {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "SHELL_SELECT");
                         return;
                     }
-                    // set other shells as inactive
-                    HashMap<String, Object> seti = new HashMap<>();
-                    seti.put("active", 0);
-                    HashMap<String, Object> wherei = new HashMap<>();
-                    wherei.put("tardis_id", id);
-                    plugin.getQueryFactory().doSyncUpdate("chameleon", seti, wherei);
-                    // set selected as active
-                    HashMap<String, Object> wheresc = new HashMap<>();
-                    wheresc.put("chameleon_id", cid);
-                    HashMap<String, Object> seta = new HashMap<>();
-                    seta.put("active", 1);
-                    plugin.getQueryFactory().doUpdate("chameleon", seta, wheresc);
-                    // set chameleon circuit to selected shell
-                    new ConstructBuilder(plugin).build(rs.getTardis().getPreset().toString(), id, player);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        // set other shells as inactive
+                        HashMap<String, Object> seti = new HashMap<>();
+                        seti.put("active", 0);
+                        HashMap<String, Object> wherei = new HashMap<>();
+                        wherei.put("tardis_id", id);
+                        plugin.getQueryFactory().doSyncUpdate("chameleon", seti, wherei);
+                    }, 1L);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        // set selected as active
+                        HashMap<String, Object> wheresc = new HashMap<>();
+                        wheresc.put("chameleon_id", cid);
+                        HashMap<String, Object> seta = new HashMap<>();
+                        seta.put("active", 1);
+                        plugin.getQueryFactory().doSyncUpdate("chameleon", seta, wheresc);
+                    }, 5L);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        // set chameleon circuit to selected shell
+                        new ConstructBuilder(plugin).build(rs.getTardis().getPreset().toString(), id, player);
+                    }, 10L);
                     // close
                     close(player);
                 } else {
