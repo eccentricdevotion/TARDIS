@@ -23,6 +23,6 @@ public class ArtronInteraction {
             ItemDisplay display = (ItemDisplay) plugin.getServer().getEntity(uuid);
             new ButtonModel().setState(display, plugin);
         }
-        plugin.getMessenger().sendArtron(player, id, 0);
+        new ArtronRightClick(plugin).process(id, player, interaction.getLocation());
     }
 }
