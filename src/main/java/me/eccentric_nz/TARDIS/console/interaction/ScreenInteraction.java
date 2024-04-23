@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.console.interaction;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.console.ConsoleDestroyer;
 import me.eccentric_nz.TARDIS.console.ControlMonitor;
 import me.eccentric_nz.TARDIS.console.models.ColourType;
 import me.eccentric_nz.TARDIS.console.models.ConcoleColourChanger;
@@ -52,6 +53,16 @@ public class ScreenInteraction {
                             hand.setAmount(amount - 6);
                             player.getInventory().setItemInMainHand(hand);
                         }
+                    }
+                }
+            } else if (Tag.ITEMS_PICKAXES.isTagged(hand.getType())) {
+                String uuids = interaction.getPersistentDataContainer().get(plugin.getUnaryKey(), PersistentDataType.STRING);
+                if (uuids != null) {
+                    // remove the console
+                    ItemStack console = new ConsoleDestroyer(plugin).returnStack(uuids, id);
+                    // return a console block of the correct colour
+                    if (console != null) {
+                        interaction.getWorld().dropItemNaturally(interaction.getLocation(), console);
                     }
                 }
             } else {

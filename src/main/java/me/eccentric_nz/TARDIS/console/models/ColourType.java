@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class ColourType {
 
     public static final HashMap<Material, Integer> LOOKUP = new HashMap<>();
+    public static final HashMap<Integer, String> COLOURS = new HashMap<>();
 
     static {
         LOOKUP.put(Material.LIGHT_GRAY_CONCRETE_POWDER, 1);
@@ -25,5 +26,21 @@ public class ColourType {
         LOOKUP.put(Material.MAGENTA_CONCRETE_POWDER, 14);
         LOOKUP.put(Material.PINK_CONCRETE_POWDER, 15);
         LOOKUP.put(Material.BROWN_CONCRETE_POWDER, 16);
+        COLOURS.put(1, "LIGHT_GRAY");
+        COLOURS.put(2, "GRAY");
+        COLOURS.put(3, "BLACK");
+        COLOURS.put(4, "WHITE");
+        COLOURS.put(5, "RED");
+        COLOURS.put(6, "ORANGE");
+        COLOURS.put(7, "YELLOW");
+        COLOURS.put(8, "LIME");
+        COLOURS.put(9, "GREEN");
+        COLOURS.put(10, "CYAN");
+        COLOURS.put(11, "LIGHT_BLUE");
+        COLOURS.put(12, "BLUE");
+        COLOURS.put(13, "PURPLE");
+        COLOURS.put(14, "MAGENTA");
+        COLOURS.put(15, "PINK");
+        COLOURS.put(16, "BROWN");
     }
 }
