@@ -45,6 +45,7 @@ public class TARDISShapedRecipe {
         new BlueBowTieRecipe(plugin).addRecipe();
         new BrownBowTieRecipe(plugin).addRecipe();
         new BrushCircuitRecipe(plugin).addRecipe();
+        new ConsoleRecipe(plugin).addRecipes();
         new ConversionCircuitRecipe(plugin).addRecipe();
         new CustardCreamRecipe(plugin).addRecipe();
         new CyanBowTieRecipe(plugin).addRecipe();
