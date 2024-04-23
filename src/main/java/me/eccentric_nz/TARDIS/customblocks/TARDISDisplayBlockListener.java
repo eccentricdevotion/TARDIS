@@ -85,7 +85,7 @@ public class TARDISDisplayBlockListener implements Listener {
         if (!im.hasDisplayName() || !im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
             return;
         }
-        if (im.getDisplayName().equals(ChatColor.GOLD + "TARDIS Seed Block")) {
+        if (im.getDisplayName().equals(ChatColor.GOLD + "TARDIS Seed Block") || im.getDisplayName().endsWith("Console")) {
             return;
         }
         int cmd = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);

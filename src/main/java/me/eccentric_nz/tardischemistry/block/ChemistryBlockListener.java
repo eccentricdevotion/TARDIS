@@ -173,13 +173,4 @@ public class ChemistryBlockListener implements Listener {
             }
         }
     }
-
-//    @EventHandler(ignoreCancelled = true)
-//    public void onChemistryBlockPlace(BlockPlaceEvent event) {
-//        ItemStack is = event.getItemInHand();
-//        Material material = event.getBlock().getType();
-//        if (is.hasItemMeta() && is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER) && !isMushroomBlock(material)) {
-//            event.setCancelled(true);
-//        }
-//    }
 }

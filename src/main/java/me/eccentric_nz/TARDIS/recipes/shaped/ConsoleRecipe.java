@@ -6,12 +6,12 @@ import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.Tag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
+import java.util.List;
 import java.util.Map;
 
 /*
@@ -32,26 +32,26 @@ amount:1
 public class ConsoleRecipe {
 
     private final TARDIS plugin;
-    private final RecipeChoice.MaterialChoice choices;
 
     public ConsoleRecipe(TARDIS plugin) {
         this.plugin = plugin;
-        this.choices = new RecipeChoice.MaterialChoice(Tag.CONCRETE_POWDER.getValues().toArray(new Material[0]));
     }
 
     public void addRecipes() {
         for (Map.Entry<Material, Integer> colour : ColourType.LOOKUP.entrySet()) {
             // get colour name
             String name = colour.getKey().toString().replace("_CONCRETE_POWDER", "");
-            ItemStack is = new ItemStack(Material.LIGHT_GRAY_CONCRETE, 1);
+            Material material = Material.valueOf(name + "_CONCRETE");
+            ItemStack is = new ItemStack(material, 1);
             ItemMeta im = is.getItemMeta();
             String dn = TARDISStringUtils.capitalise(name) + " Console";
-            plugin.debug("dn " + dn);
             im.setDisplayName(dn);
-            im.setCustomModelData(1000 + colour.getValue());
+            im.setLore(List.of("Integration with interaction"));
+            im.setCustomModelData(1001);
+            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, colour.getValue()
+            );
             is.setItemMeta(im);
             NamespacedKey key = new NamespacedKey(plugin, name.toLowerCase() + "_console");
-            plugin.debug("key " + key);
             ShapedRecipe r = new ShapedRecipe(key, is);
             if (plugin.getDifficulty() == Difficulty.HARD) {
                 r.shape("CBC", "LRL", "CBC");

@@ -7,10 +7,9 @@
 3. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
    * New interior with console
-   * Remove interaction records when removing console
-   * Crafting
-   * Placing
-4. ?
+   * Malfunction & manual flight classes
+4. Update old light level controls
+5. ?
 
 ## Next version `5.7.0`
 
