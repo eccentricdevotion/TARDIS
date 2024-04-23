@@ -166,14 +166,12 @@ public class TARDISPlayerShellListener extends TARDISMenuListener {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "SHELL_SELECT");
                         return;
                     }
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        // set other shells as inactive
-                        HashMap<String, Object> seti = new HashMap<>();
-                        seti.put("active", 0);
-                        HashMap<String, Object> wherei = new HashMap<>();
-                        wherei.put("tardis_id", id);
-                        plugin.getQueryFactory().doSyncUpdate("chameleon", seti, wherei);
-                    }, 1L);
+                    // set other shells as inactive
+                    HashMap<String, Object> seti = new HashMap<>();
+                    seti.put("active", 0);
+                    HashMap<String, Object> wherei = new HashMap<>();
+                    wherei.put("tardis_id", id);
+                    plugin.getQueryFactory().doSyncUpdate("chameleon", seti, wherei);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         // set selected as active
                         HashMap<String, Object> wheresc = new HashMap<>();

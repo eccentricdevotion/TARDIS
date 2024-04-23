@@ -4,6 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
+import me.eccentric_nz.TARDIS.console.models.ButtonModel;
 import me.eccentric_nz.TARDIS.control.actions.ExileAction;
 import me.eccentric_nz.TARDIS.control.actions.RandomDestinationAction;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -16,9 +17,12 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Interaction;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class RandomiserInteraction {
 
@@ -28,7 +32,7 @@ public class RandomiserInteraction {
         this.plugin = plugin;
     }
 
-    public void generateDestination(int id, Player player) {
+    public void generateDestination(int id, Player player, Interaction interaction) {
         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
             return;
@@ -62,11 +66,16 @@ public class RandomiserInteraction {
             new TARDISEmergencyRelocation(plugin).relocate(id, player);
             return;
         }
+        // set custom model data for random button item display
+        UUID uuid = interaction.getPersistentDataContainer().get(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID());
+        if (uuid != null) {
+            ItemDisplay display = (ItemDisplay) plugin.getServer().getEntity(uuid);
+            new ButtonModel().setState(display, plugin);
+        }
         COMPASS direction = rscl.getDirection();
         if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
             new ExileAction(plugin).getExile(player, id, direction);
         } else {
-//            new TARDISRandomButton(plugin, player, id, tardis.getArtronLevel(), 0, tardis.getCompanions(), tardis.getUuid()).clickButton();
             // get state from WORLD, MULTIPLIER, X, Z and HELMIC_REGULATOR interactions
             ResultSetRandomInteractions rsri = new ResultSetRandomInteractions(plugin, id);
             if (rsri.resultSet()) {

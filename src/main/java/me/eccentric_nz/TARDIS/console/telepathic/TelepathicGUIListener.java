@@ -70,6 +70,9 @@ public class TelepathicGUIListener extends TARDISMenuListener {
             // structure finder
             case 4 -> {
                 if (choice != null) {
+                    if (!plugin.getUtils().inTARDISWorld(player)) {
+                        return;
+                    }
                     TARDISTelepathicStructure tts = new TARDISTelepathicStructure(plugin);
                     ItemStack[] gui = tts.getButtons();
                     Inventory structure = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Telepathic Structure Finder");

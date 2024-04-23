@@ -2,12 +2,15 @@ package me.eccentric_nz.TARDIS.console.interaction;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.ControlMonitor;
+import me.eccentric_nz.TARDIS.console.models.ColourType;
+import me.eccentric_nz.TARDIS.console.models.ConcoleColourChanger;
 import me.eccentric_nz.TARDIS.control.actions.ControlMenuAction;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.TextDisplay;
+import org.bukkit.Tag;
+import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
 public class ScreenInteraction {
@@ -18,18 +21,43 @@ public class ScreenInteraction {
         this.plugin = plugin;
     }
 
-    public void display(int id, Location location, boolean coords, Player player) {
+    public void display(int id, Interaction interaction, boolean coords, Player player) {
         // if shift-click change display else open Control Menu GUI
         if (player.isSneaking()) {
             // get the text display
-            TextDisplay display = getTextDisplay(location, coords);
+            TextDisplay display = getTextDisplay(interaction.getLocation(), coords);
             if (display != null) {
                 display.setRotation(Location.normalizeYaw(300), -10f);
                 new ControlMonitor(plugin).update(id, display.getUniqueId(), coords);
             }
         } else {
-            // open control menu
-            new ControlMenuAction(plugin).openGUI(player, id);
+            ItemStack hand = player.getInventory().getItemInMainHand();
+            if (Tag.CONCRETE_POWDER.isTagged(hand.getType())) {
+                int amount = hand.getAmount();
+                if (amount < 6) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CONSOLE_COLOUR_AMOUNT");
+                    return;
+                }
+                // get colour
+                int colour = ColourType.LOOKUP.getOrDefault(hand.getType(), 1);
+                // get the UUIDs
+                String uuids = interaction.getPersistentDataContainer().get(plugin.getUnaryKey(), PersistentDataType.STRING);
+                if (uuids != null) {
+                    // change the colour of the console
+                    if (new ConcoleColourChanger(plugin, interaction.getLocation(), uuids, colour).paint()) {
+                        // take the concrete powder
+                        if (amount < 7) {
+                            player.getInventory().setItemInMainHand(null);
+                        } else {
+                            hand.setAmount(amount - 6);
+                            player.getInventory().setItemInMainHand(hand);
+                        }
+                    }
+                }
+            } else {
+                // open control menu
+                new ControlMenuAction(plugin).openGUI(player, id);
+            }
         }
     }
 
