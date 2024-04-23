@@ -4,16 +4,20 @@
 
 1. Fix fifteenth console redstone piston door
 2. Fix follower persistence
-3. ?
+3. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
+   [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
+   * New interior with console
+   * Remove interaction records when removing console
+   * Crafting
+   * Placing
+4. ?
 
 ## Next version `5.7.0`
 
 1. Allow 3D Police Boxes to land on slabs [#777](https://github.com/eccentricdevotion/TARDIS/issues/777)
-2. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
-   [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
-3. Animated models for player disguises
-4. Rework difficulty [#754](https://github.com/eccentricdevotion/TARDIS/issues/754)
-5. ?
+2. Animated models for player disguises
+3. Rework difficulty [#754](https://github.com/eccentricdevotion/TARDIS/issues/754)
+4. ?
 
 ## Future versions
 

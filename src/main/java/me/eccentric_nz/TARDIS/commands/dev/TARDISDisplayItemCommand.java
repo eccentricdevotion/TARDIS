@@ -233,10 +233,19 @@ public class TARDISDisplayItemCommand {
                 return true;
             }
             case "console" -> {
+                if (args.length < 3) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                    return true;
+                }
+                int colour = TARDISNumberParsers.parseInt(args[2]);
+                if (colour < 1 || colour > 16) {
+                    plugin.getMessenger().message(player, "Number must be between 1-16!");
+                    return true;
+                }
                 // get TARDIS id
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                 if (rs.fromUUID(player.getUniqueId().toString())) {
-                    new ConsoleBuilder(plugin).create(block, 1, rs.getTardis_id());
+                    new ConsoleBuilder(plugin).create(block, colour, rs.getTardis_id());
                 }
                 return true;
             }

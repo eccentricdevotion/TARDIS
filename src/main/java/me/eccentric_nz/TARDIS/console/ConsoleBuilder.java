@@ -26,16 +26,22 @@ public class ConsoleBuilder {
     }
 
     public void create(Block block, int type, int id) {
+        StringBuilder builder = new StringBuilder();
+        String prefix = "";
         Block up = block.getRelative(BlockFace.UP);
         for (int i = 0; i < 6; i++) {
             ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
             ItemMeta im = shard.getItemMeta();
-            im.setCustomModelData((1000 * type) + (i + 1));
+            im.setCustomModelData(1000 + type);
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
             shard.setItemMeta(im);
             ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
             display.setItemStack(shard);
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
+            UUID uuid = display.getUniqueId();
+            builder.append(prefix).append(uuid);
+            prefix = "~";
+            display.getPersistentDataContainer().set(plugin.getInteractionUuidKey(), plugin.getPersistentDataTypeUUID(), uuid);
             display.setPersistent(true);
             display.setInvulnerable(true);
             float yaw = i * 60.0f;
@@ -46,12 +52,15 @@ public class ConsoleBuilder {
         for (int i = 30; i < 360; i += 60) {
             ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
             ItemMeta im = shard.getItemMeta();
-            im.setCustomModelData((1000 * type) + 7);
+            im.setCustomModelData(2000 + type);
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
             shard.setItemMeta(im);
             ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
             display.setItemStack(shard);
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
+            UUID uuid = display.getUniqueId();
+            builder.append(prefix).append(uuid);
+            display.getPersistentDataContainer().set(plugin.getInteractionUuidKey(), plugin.getPersistentDataTypeUUID(), uuid);
             display.setPersistent(true);
             display.setInvulnerable(true);
             float yaw = Location.normalizeYaw(i);
@@ -60,11 +69,8 @@ public class ConsoleBuilder {
         }
         // set interaction entities for console controls
         for (ConsoleInteraction i : ConsoleInteraction.values()) {
-            UUID uuid = null;
-            if (i.hasModel()) {
-                // spawn a display entity and save it's UUID to the interaction entity
-                uuid = spawnControl(i, block.getLocation(), i.getYaw(), id);
-            }
+            // spawn a display entity and save it's UUID to the interaction entity
+            UUID uuid = spawnControl(i, block.getLocation(), i.getYaw(), id);
             double x = i.getRelativePosition().getX();
             double z = i.getRelativePosition().getZ();
             Location location = block.getLocation().clone().add(x, 1, z);
@@ -79,9 +85,10 @@ public class ConsoleBuilder {
                 int cid = (i == ConsoleInteraction.EXTERIOR_LAMP_LEVEL_SWITCH) ? 49 : 50;
                 plugin.getQueryFactory().insertControl(id, cid, location.toString(), 0);
             }
-            if (uuid != null) {
-                interaction.getPersistentDataContainer().set(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID(), uuid);
+            if (i == ConsoleInteraction.SCREEN_RIGHT || i == ConsoleInteraction.SCREEN_LEFT) {
+                interaction.getPersistentDataContainer().set(plugin.getUnaryKey(), PersistentDataType.STRING, builder.toString());
             }
+            interaction.getPersistentDataContainer().set(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID(), uuid);
             interaction.setInteractionWidth(i.getWidth());
             interaction.setInteractionHeight(i.getHeight());
             interaction.setPersistent(true);
@@ -96,29 +103,16 @@ public class ConsoleBuilder {
     }
 
     private UUID spawnControl(ConsoleInteraction interaction, Location location, float angle, int id) {
-        Material material = Material.LEVER;
-        int cmd;
-        switch (interaction) {
-            case HANDBRAKE -> cmd = 5002;
-            case THROTTLE -> {
-                material = Material.REPEATER;
-                cmd = 1004;
-            }
-            case HELMIC_REGULATOR -> {
-                material = Material.REPEATER;
-                cmd = 2000;
-            }
-            case DIRECTION -> {
-                material = Material.RAIL;
-                HashMap<String, Object> wherec = new HashMap<>();
-                wherec.put("tardis_id", id);
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
-                cmd = (rsc.resultSet()) ? getCmd(rsc.getDirection()) + 10000 : 10000;
-            }
-            case RELATIVITY_DIFFERENTIATOR -> cmd = 6001;
-            case INTERIOR_LIGHT_LEVEL_SWITCH -> cmd = 8000;
-            // EXTERIOR_LAMP_LEVEL_SWITCH
-            default -> cmd = 7000;
+        if (interaction == ConsoleInteraction.SCREEN_LEFT) {
+            return null;
+        }
+        Material material = interaction.getMaterial();
+        int cmd = interaction.getCustomModelData();
+        if (interaction == ConsoleInteraction.DIRECTION) {
+            HashMap<String, Object> wherec = new HashMap<>();
+            wherec.put("tardis_id", id);
+            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+            cmd = (rsc.resultSet()) ? getCmd(rsc.getDirection()) + 10000 : 10000;
         }
         // spawn a control
         ItemStack is = new ItemStack(material);
