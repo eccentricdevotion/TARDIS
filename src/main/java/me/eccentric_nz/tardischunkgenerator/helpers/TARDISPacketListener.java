@@ -65,7 +65,7 @@ public class TARDISPacketListener {
     private static Connection getConnection(final ServerCommonPacketListenerImpl playerConnection) {
         try {
             if (connectionField == null) {
-                connectionField = ServerCommonPacketListenerImpl.class.getDeclaredField("c");
+                connectionField = ServerCommonPacketListenerImpl.class.getDeclaredField("e");
                 connectionField.setAccessible(true);
             }
             return (Connection) connectionField.get(playerConnection);

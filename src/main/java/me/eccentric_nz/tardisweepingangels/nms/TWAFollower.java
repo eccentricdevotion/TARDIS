@@ -41,9 +41,9 @@ public class TWAFollower extends Husk implements OwnableEntity {
     }
 
     public static void unfreezeEntityRegistry() throws NoSuchFieldException, IllegalAccessException {
-        Field intrusiveHolderCache = MappedRegistry.class.getDeclaredField("m");
-        intrusiveHolderCache.setAccessible(true);
-        intrusiveHolderCache.set(BuiltInRegistries.ENTITY_TYPE, new IdentityHashMap<EntityType<?>, Holder.Reference<EntityType<?>>>());
+        Field unregisteredIntrusiveHolders = MappedRegistry.class.getDeclaredField("m");
+        unregisteredIntrusiveHolders.setAccessible(true);
+        unregisteredIntrusiveHolders.set(BuiltInRegistries.ENTITY_TYPE, new IdentityHashMap<EntityType<?>, Holder.Reference<EntityType<?>>>());
         Field frozenField = MappedRegistry.class.getDeclaredField("l");
         frozenField.setAccessible(true);
         frozenField.set(BuiltInRegistries.ENTITY_TYPE, false);
