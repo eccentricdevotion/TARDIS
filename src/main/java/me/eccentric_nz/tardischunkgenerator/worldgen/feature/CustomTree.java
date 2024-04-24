@@ -6,8 +6,8 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_20_R3.CraftRegionAccessor;
-import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R4.CraftRegionAccessor;
+import org.bukkit.craftbukkit.v1_20_R4.CraftWorld;
 import org.bukkit.generator.LimitedRegion;
 
 public class CustomTree {

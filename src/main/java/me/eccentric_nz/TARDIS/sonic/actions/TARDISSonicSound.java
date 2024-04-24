@@ -73,7 +73,7 @@ public class TARDISSonicSound {
         int cmd = meta.getCustomModelData();
         meta.setCustomModelData(cmd - 2000000);
         stack.setItemMeta(meta);
-        if (stack.containsEnchantment(Enchantment.DURABILITY)) {
+        if (stack.containsEnchantment(Enchantment.UNBREAKING)) {
             stack.getEnchantments().keySet().forEach(stack::removeEnchantment);
         }
     }

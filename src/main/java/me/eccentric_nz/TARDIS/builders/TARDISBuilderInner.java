@@ -283,7 +283,7 @@ public class TARDISBuilderInner implements Runnable {
                 }
             }
             if (ender != null) {
-                Entity ender_crystal = world.spawnEntity(ender, EntityType.ENDER_CRYSTAL);
+                Entity ender_crystal = world.spawnEntity(ender, EntityType.END_CRYSTAL);
                 ((EnderCrystal) ender_crystal).setShowingBottom(false);
             }
             if (obj.has("paintings")) {

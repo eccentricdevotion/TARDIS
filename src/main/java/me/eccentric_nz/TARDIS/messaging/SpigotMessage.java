@@ -129,7 +129,7 @@ public class SpigotMessage implements TARDISMessage {
         TextComponent textComponent = SpigotComponents.getModule(module);
         TextComponent m = new TextComponent(message);
         textComponent.addExtra(m);
-        TARDIS.plugin.getServer().broadcast(textComponent);
+        TARDIS.plugin.getServer().spigot().broadcast(textComponent);
     }
 
     @Override

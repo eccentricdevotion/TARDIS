@@ -378,7 +378,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                                             options = new Object[]{AGE.getFromBoolean(getBaby(view))};
                                         }
                                     }
-                                    case SNOWMAN -> {
+                                    case SNOW_GOLEM -> {
                                         if (plugin.isDisguisesOnServer()) {
                                             new TARDISLazarusLibs(player, disguise, snowmen.get(uuid), false, false).createDisguise();
                                         } else {
@@ -399,7 +399,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                                             options = new Object[]{TropicalFish.Pattern.values()[tropics.get(uuid)]};
                                         }
                                     }
-                                    case MUSHROOM_COW -> {
+                                    case MOOSHROOM -> {
                                         if (plugin.isDisguisesOnServer()) {
                                             new TARDISLazarusLibs(player, disguise, getCowVariant(view), false, getBaby(view)).createDisguise();
                                         } else {

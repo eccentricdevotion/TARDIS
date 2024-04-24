@@ -9,7 +9,6 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
 import java.util.List;
@@ -49,8 +48,7 @@ public class TARDISTelepathicCircuitRecipe {
             r.setIngredient('S', Material.SLIME_BALL);
             ItemStack potion = new ItemStack(Material.POTION, 1);
             PotionMeta pm = (PotionMeta) potion.getItemMeta();
-            PotionData potionData = new PotionData(PotionType.AWKWARD);
-            pm.setBasePotionData(potionData);
+            pm.setBasePotionType(PotionType.AWKWARD);
             potion.setItemMeta(pm);
             r.setIngredient('P', new RecipeChoice.ExactChoice(potion));
             r.setIngredient('E', Material.EMERALD);

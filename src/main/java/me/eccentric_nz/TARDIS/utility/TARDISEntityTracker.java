@@ -16,15 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.TARDISScanner;
 import me.eccentric_nz.tardischunkgenerator.disguise.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -76,10 +77,10 @@ public class TARDISEntityTracker {
                     case ZOMBIE_VILLAGER -> options = new Object[]{PROFESSION.getFromVillagerProfession(((ZombieVillager) e).getVillagerProfession()), AGE.getFromBoolean(!((Ageable) e).isAdult())};
                     case SLIME, MAGMA_CUBE -> options = new Object[]{((Slime) e).getSize()};
                     case COW, TURTLE, ZOMBIE, BEE -> options = new Object[]{AGE.getFromBoolean(!((Ageable) e).isAdult())};
-                    case SNOWMAN -> options = new Object[]{((Snowman) e).isDerp()};
+                    case SNOW_GOLEM -> options = new Object[]{((Snowman) e).isDerp()};
                     case PUFFERFISH -> options = new Object[]{((PufferFish) e).getPuffState()};
                     case TROPICAL_FISH -> options = new Object[]{((TropicalFish) e).getPattern()};
-                    case MUSHROOM_COW -> options = new Object[]{MUSHROOM_COW.getFromMushroomCowType(((MushroomCow) e).getVariant()), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                    case MOOSHROOM -> options = new Object[]{MUSHROOM_COW.getFromMushroomCowType(((MushroomCow) e).getVariant()), AGE.getFromBoolean(!((Ageable) e).isAdult())};
                     case FOX -> options = new Object[]{FOX.getFromFoxType(((Fox) e).getFoxType()), AGE.getFromBoolean(!((Ageable) e).isAdult())};
                     default -> { }
                 }

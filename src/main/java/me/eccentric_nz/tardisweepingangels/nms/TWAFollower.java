@@ -16,7 +16,7 @@ import net.minecraft.world.entity.monster.Husk;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
@@ -58,10 +58,11 @@ public class TWAFollower extends Husk implements OwnableEntity {
         this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
     }
 
+
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_OWNER_UUID_ID, Optional.empty());
+    protected void defineSynchedData(SynchedEntityData.Builder datawatcher) {
+        super.defineSynchedData(datawatcher);
+        this.entityData.set(DATA_OWNER_UUID_ID, Optional.empty());
     }
 
     @Nullable

@@ -10,7 +10,6 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
 import java.util.List;
@@ -55,8 +54,7 @@ public class TARDISInvisibilityCircuitRecipe {
         exact.setItemMeta(em);
         ItemStack potion = new ItemStack(Material.POTION, 1);
         PotionMeta pm = (PotionMeta) potion.getItemMeta();
-        PotionData potionData = new PotionData(PotionType.INVISIBILITY);
-        pm.setBasePotionData(potionData);
+        pm.setBasePotionType(PotionType.INVISIBILITY);
         potion.setItemMeta(pm);
         if (plugin.getDifficulty() == Difficulty.HARD) {
             r.shape(" D ", "P E", " W ");

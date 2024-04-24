@@ -25,7 +25,7 @@ import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessFlame
 import me.eccentric_nz.tardisweepingangels.nms.FollowerPersister;
 import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftZombie;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftZombie;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

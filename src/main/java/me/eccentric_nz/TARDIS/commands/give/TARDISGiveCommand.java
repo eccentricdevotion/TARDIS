@@ -512,7 +512,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         int max = plugin.getArtronConfig().getInt("full_charge");
         lore.set(1, "" + max);
         im.setLore(lore);
-        im.addEnchant(Enchantment.DURABILITY, 1, true);
+        im.addEnchant(Enchantment.UNBREAKING, 1, true);
         im.addItemFlags(ItemFlag.values());
         result.setItemMeta(im);
         player.getInventory().addItem(result);

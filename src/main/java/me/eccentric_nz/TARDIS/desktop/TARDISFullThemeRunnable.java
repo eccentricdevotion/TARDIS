@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.TARDIS.builders.FractalFence;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Archive;
@@ -40,6 +39,7 @@ import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgateDisplaySetter;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
+import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -218,7 +218,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             if (tud.getPrevious().getPermission().equals("ender")) {
                 // remove ender crystal
                 for (Entity entity : chunk.getEntities()) {
-                    if (entity.getType().equals(EntityType.ENDER_CRYSTAL)) {
+                    if (entity.getType().equals(EntityType.END_CRYSTAL)) {
                         entity.remove();
                     }
                 }
@@ -410,7 +410,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
             }
             if (ender != null) {
-                Entity ender_crystal = world.spawnEntity(ender, EntityType.ENDER_CRYSTAL);
+                Entity ender_crystal = world.spawnEntity(ender, EntityType.END_CRYSTAL);
                 ((EnderCrystal) ender_crystal).setShowingBottom(false);
             }
             if (obj.has("paintings")) {

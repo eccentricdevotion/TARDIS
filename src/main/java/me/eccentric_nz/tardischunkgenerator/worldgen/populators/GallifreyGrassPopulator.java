@@ -7,7 +7,7 @@ import me.eccentric_nz.tardischunkgenerator.worldgen.feature.TARDISFeatures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_20_R3.CraftRegionAccessor;
+import org.bukkit.craftbukkit.v1_20_R4.CraftRegionAccessor;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;

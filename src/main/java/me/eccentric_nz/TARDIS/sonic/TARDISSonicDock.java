@@ -80,7 +80,7 @@ public class TARDISSonicDock {
 
     private ItemDisplay doDocking(ItemStack sonic, Location location, Vector vector, Player player, int id) {
         // remove enchantments if any
-        sonic.removeEnchantment(Enchantment.DURABILITY);
+        sonic.removeEnchantment(Enchantment.UNBREAKING);
         // get sonic uuid
         UUID uuid = sonic.getItemMeta().getPersistentDataContainer().get(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID());
         // set item display

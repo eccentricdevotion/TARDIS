@@ -21,7 +21,7 @@ import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
 import me.eccentric_nz.tardisweepingangels.nms.FollowerPersister;
 import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftZombie;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftZombie;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;

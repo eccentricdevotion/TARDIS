@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.handles;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -37,6 +34,10 @@ import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.scheduler.BukkitScheduler;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -108,15 +109,15 @@ class TARDISHandlesScanCommand {
                         if (ee.getHelmet() != null) {
                             switch (ee.getHelmet().getType()) {
                                 case BAKED_POTATO -> et = EntityType.EGG; // Strax
-                                case BOOK -> et = EntityType.ENDER_CRYSTAL; // Vashta Nerada
+                                case BOOK -> et = EntityType.END_CRYSTAL; // Vashta Nerada
                                 case CRIMSON_BUTTON -> et = EntityType.BLOCK_DISPLAY; // davros
                                 case FEATHER -> et = EntityType.BOAT; // Silurian
                                 case IRON_INGOT -> et = EntityType.AREA_EFFECT_CLOUD; // Cyberman
-                                case KELP -> et = EntityType.THROWN_EXP_BOTTLE; // sea devil
+                                case KELP -> et = EntityType.EXPERIENCE_BOTTLE; // sea devil
                                 case MANGROVE_PROPAGULE -> et = EntityType.SMALL_FIREBALL; // dalek sec
                                 case NETHERITE_SCRAP -> et = EntityType.GLOW_ITEM_FRAME; // mire
-                                case PAINTING -> et = EntityType.FISHING_HOOK; // Zygon
-                                case POTATO -> et = EntityType.FIREWORK; // Sontaran
+                                case PAINTING -> et = EntityType.FISHING_BOBBER; // Zygon
+                                case POTATO -> et = EntityType.FIREWORK_ROCKET; // Sontaran
                                 case PUFFERFISH -> et = EntityType.INTERACTION; // hath
                                 case RED_CANDLE -> et = EntityType.TEXT_DISPLAY; // headless monk
                                 case SLIME_BALL -> et = EntityType.LLAMA_SPIT; // dalek
@@ -131,7 +132,7 @@ class TARDISHandlesScanCommand {
                     }
                     if (et.equals(EntityType.ENDERMAN) && !k.getPassengers().isEmpty() && k.getPassengers().get(0) != null && k.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
                         // silent
-                        et = EntityType.SPLASH_POTION;
+                        et = EntityType.POTION;
                     }
                     if (et.equals(EntityType.ARMOR_STAND)) {
                         EntityEquipment ee = ((ArmorStand) k).getEquipment();
@@ -140,7 +141,7 @@ class TARDISHandlesScanCommand {
                                 case YELLOW_DYE -> et = EntityType.SHULKER_BULLET; // Judoon
                                 case BONE -> et = EntityType.EVOKER_FANGS; // K9
                                 case ROTTEN_FLESH -> et = EntityType.ITEM_FRAME; // Ood
-                                case GUNPOWDER -> et = EntityType.DROPPED_ITEM; // Toclafane
+                                case GUNPOWDER -> et = EntityType.ITEM; // Toclafane
                                 default -> { }
                             }
                         }
@@ -202,13 +203,13 @@ class TARDISHandlesScanCommand {
                             case BLOCK_DISPLAY -> player.sendMessage("    Davros: " + value);
                             case BOAT -> player.sendMessage("    Silurian: " + value);
                             case DRAGON_FIREBALL -> player.sendMessage("    Weeping Angel: " + value);
-                            case DROPPED_ITEM -> player.sendMessage("    Toclafane: " + value);
+                            case ITEM -> player.sendMessage("    Toclafane: " + value);
                             case EGG -> player.sendMessage("    Strax: " + value);
-                            case ENDER_CRYSTAL -> player.sendMessage("    Vashta Nerada: " + value);
+                            case END_CRYSTAL -> player.sendMessage("    Vashta Nerada: " + value);
                             case EVOKER_FANGS -> player.sendMessage("    K9: " + value);
                             case FALLING_BLOCK -> player.sendMessage("    Empty Child: " + value);
-                            case FIREWORK -> player.sendMessage("    Sontaran: " + value);
-                            case FISHING_HOOK -> player.sendMessage("    Zygon: " + value);
+                            case FIREWORK_ROCKET -> player.sendMessage("    Sontaran: " + value);
+                            case FISHING_BOBBER -> player.sendMessage("    Zygon: " + value);
                             case GLOW_ITEM_FRAME -> player.sendMessage("    Mire: " + value);
                             case INTERACTION -> player.sendMessage("    Hath: " + value);
                             case ITEM_DISPLAY -> player.sendMessage("    Racnoss: " + value);
@@ -217,9 +218,9 @@ class TARDISHandlesScanCommand {
                             case SHULKER_BULLET -> player.sendMessage("    Judoon: " + value);
                             case SMALL_FIREBALL -> player.sendMessage("    Dalek Sec: " + value);
                             case SNOWBALL -> player.sendMessage("    Ice Warrior: " + value);
-                            case SPLASH_POTION -> player.sendMessage("    Silent: " + value);
+                            case POTION -> player.sendMessage("    Silent: " + value);
                             case TEXT_DISPLAY -> player.sendMessage("    Headless Monk: " + value);
-                            case THROWN_EXP_BOTTLE -> player.sendMessage("    Sea Devil: " + value);
+                            case EXPERIENCE_BOTTLE -> player.sendMessage("    Sea Devil: " + value);
                             default -> player.sendMessage("    " + ent + ": " + value + m);
                         }
                     }, 3L);

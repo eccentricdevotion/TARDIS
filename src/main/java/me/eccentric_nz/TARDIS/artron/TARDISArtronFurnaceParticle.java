@@ -44,7 +44,7 @@ public class TARDISArtronFurnaceParticle {
                     for (int z = 0; z < 16; z++) {
                         Block block = world.getBlockAt(sx + x, sy + y, sz + z);
                         if (isArtronFurnace(block)) {
-                            player.spawnParticle(Particle.WATER_SPLASH, block.getLocation().add(0.5d, 1.0d, 0.5d), 10);
+                            player.spawnParticle(Particle.SPLASH, block.getLocation().add(0.5d, 1.0d, 0.5d), 10);
                         }
                     }
                 }

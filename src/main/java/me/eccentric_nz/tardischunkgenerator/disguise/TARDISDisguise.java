@@ -19,6 +19,7 @@ package me.eccentric_nz.tardischunkgenerator.disguise;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.AgeableMob;
@@ -35,9 +36,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack;
-import org.bukkit.craftbukkit.v1_20_R3.util.CraftNamespacedKey;
+import org.bukkit.craftbukkit.v1_20_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_20_R4.util.CraftNamespacedKey;
 import org.bukkit.entity.Axolotl;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Frog;
@@ -197,7 +198,7 @@ public class TARDISDisguise {
                             }
                             case WOLF -> {
                                 Wolf wolf = (Wolf) entity;
-                                wolf.setTame(true);
+                                wolf.setTame(true, false);
                                 wolf.setCollarColor(DyeColor.valueOf(o.toString()));
                             }
                             default -> {
@@ -212,7 +213,7 @@ public class TARDISDisguise {
                     if (disguise.getEntityType().equals(EntityType.FROG) && o instanceof Frog.Variant fv) {
                         net.minecraft.world.entity.animal.frog.Frog frog = (net.minecraft.world.entity.animal.frog.Frog) entity;
                         net.minecraft.world.entity.animal.FrogVariant variant = BuiltInRegistries.FROG_VARIANT.byId(fv.ordinal());
-                        frog.setVariant(variant);
+                        frog.setVariant(Holder.direct(variant));
                     }
                     if (disguise.getEntityType().equals(EntityType.RABBIT) && o instanceof org.bukkit.entity.Rabbit.Type rt) {
                         Rabbit rabbit = (Rabbit) entity;
@@ -237,13 +238,13 @@ public class TARDISDisguise {
                         Parrot parrot = (Parrot) entity;
                         parrot.setVariant(Parrot.Variant.byId(pv.ordinal()));
                     }
-                    if (disguise.getEntityType().equals(EntityType.MUSHROOM_COW) && o instanceof MUSHROOM_COW mc) {
+                    if (disguise.getEntityType().equals(EntityType.MOOSHROOM) && o instanceof MUSHROOM_COW mc) {
                         MushroomCow cow = (MushroomCow) entity;
                         cow.setVariant(mc.getNmsType());
                     }
                     if (disguise.getEntityType().equals(EntityType.CAT) && o instanceof org.bukkit.entity.Cat.Type c) {
                         Cat cat = (Cat) entity;
-                        cat.setVariant(BuiltInRegistries.CAT_VARIANT.byId(c.ordinal()));
+                        cat.setVariant(Holder.direct(BuiltInRegistries.CAT_VARIANT.byId(c.ordinal())));
                     }
                     if (disguise.getEntityType().equals(EntityType.FOX) && o instanceof FOX f) {
                         Fox fox = (Fox) entity;
@@ -263,7 +264,7 @@ public class TARDISDisguise {
                         switch (disguise.getEntityType()) {
                             case FOX, WOLF, CAT -> {
                                 TamableAnimal tameable = (TamableAnimal) entity;
-                                tameable.setTame(bool);
+                                tameable.setTame(bool, false);
                             }
                             case DONKEY, MULE -> {
                                 AbstractChestedHorse chesty = (AbstractChestedHorse) entity;
@@ -290,7 +291,7 @@ public class TARDISDisguise {
                                 Bat bat = (Bat) entity;
                                 bat.setResting(bool);
                             }
-                            case SNOWMAN -> {
+                            case SNOW_GOLEM -> {
                                 SnowGolem snowman = (SnowGolem) entity;
                                 snowman.setPumpkin(!bool);
                             }

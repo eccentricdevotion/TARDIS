@@ -2,7 +2,7 @@ package me.eccentric_nz.tardisweepingangels.nms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Husk;
 

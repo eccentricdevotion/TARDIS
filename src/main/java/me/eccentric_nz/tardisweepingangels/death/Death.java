@@ -28,7 +28,7 @@ import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import net.citizensnpcs.api.CitizensAPI;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -41,7 +41,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
 import java.util.ArrayList;
@@ -144,7 +143,7 @@ public class Death implements Listener {
                         if (stack.getType() == Material.POTION) {
                             // make it a strength potion
                             PotionMeta potionMeta = (PotionMeta) stack.getItemMeta();
-                            potionMeta.setBasePotionData(new PotionData(PotionType.STRENGTH));
+                            potionMeta.setBasePotionType(PotionType.STRENGTH);
                             stack.setItemMeta(potionMeta);
                         }
                     }
@@ -269,7 +268,7 @@ public class Death implements Listener {
                     } else if (TARDISConstants.RANDOM.nextInt(100) < 6) {
                         stack = new ItemStack(Material.POTION);
                         PotionMeta potionMeta = (PotionMeta) stack.getItemMeta();
-                        potionMeta.setBasePotionData(new PotionData(PotionType.REGEN));
+                        potionMeta.setBasePotionType(PotionType.REGENERATION);
                         stack.setItemMeta(potionMeta);
                     } else {
                         stack = new ItemStack(empty_drops.get(TARDISConstants.RANDOM.nextInt(empty_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);

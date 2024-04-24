@@ -41,7 +41,7 @@ public class TARDISSonicIgnite {
             Block above = b.getRelative(BlockFace.UP);
             if (b.getType().equals(Material.TNT)) {
                 b.setBlockData(TARDISConstants.AIR);
-                b.getWorld().spawnEntity(b.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.PRIMED_TNT);
+                b.getWorld().spawnEntity(b.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.TNT);
                 plugin.getPM().callEvent(new BlockIgniteEvent(b, BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL, p));
                 return;
             }

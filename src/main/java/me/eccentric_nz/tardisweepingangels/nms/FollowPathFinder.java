@@ -6,10 +6,10 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_20_R3.event.CraftEventFactory;
+import org.bukkit.craftbukkit.v1_20_R4.event.CraftEventFactory;
 import org.bukkit.event.entity.EntityTeleportEvent;
 
 import java.util.EnumSet;
@@ -62,14 +62,14 @@ public class FollowPathFinder extends Goal {
 
     public void start() {
         this.timeToRecalcPath = 0;
-        this.oldWaterCost = this.follower.getPathfindingMalus(BlockPathTypes.WATER);
-        this.follower.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+        this.oldWaterCost = this.follower.getPathfindingMalus(PathType.WATER);
+        this.follower.setPathfindingMalus(PathType.WATER, 0.0F);
     }
 
     public void stop() {
         this.owner = null;
         this.navigation.stop();
-        this.follower.setPathfindingMalus(BlockPathTypes.WATER, this.oldWaterCost);
+        this.follower.setPathfindingMalus(PathType.WATER, this.oldWaterCost);
     }
 
     public void tick() {
@@ -119,8 +119,8 @@ public class FollowPathFinder extends Goal {
     }
 
     private boolean canTeleportTo(BlockPos pos) {
-        BlockPathTypes pathType = WalkNodeEvaluator.getBlockPathTypeStatic(this.level, pos.mutable());
-        if (pathType != BlockPathTypes.WALKABLE) {
+        PathType pathType = WalkNodeEvaluator.getPathTypeStatic(this.follower, pos.mutable());
+        if (pathType != PathType.WALKABLE) {
             return false;
         }
         BlockState state = this.level.getBlockState(pos.below());

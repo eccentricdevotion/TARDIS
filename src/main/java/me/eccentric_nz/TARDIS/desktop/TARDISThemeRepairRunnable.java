@@ -163,7 +163,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             if (tud.getPrevious().getPermission().equals("ender")) {
                 // remove ender crystal
                 for (Entity entity : chunk.getEntities()) {
-                    if (entity.getType().equals(EntityType.ENDER_CRYSTAL)) {
+                    if (entity.getType().equals(EntityType.END_CRYSTAL)) {
                         entity.remove();
                     }
                 }
@@ -312,7 +312,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 }
             }
             if (ender != null) {
-                Entity ender_crystal = world.spawnEntity(ender, EntityType.ENDER_CRYSTAL);
+                Entity ender_crystal = world.spawnEntity(ender, EntityType.END_CRYSTAL);
                 ((EnderCrystal) ender_crystal).setShowingBottom(false);
             }
             if (obj.has("paintings")) {

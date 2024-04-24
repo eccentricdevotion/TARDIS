@@ -7,7 +7,6 @@ import me.eccentric_nz.tardisweepingangels.monsters.ood.OodColour;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.datafix.DataFixers;
 import net.minecraft.util.datafix.fixes.References;
@@ -17,6 +16,8 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Map;
 import java.util.UUID;
@@ -53,14 +54,16 @@ public class TWAOod extends TWAFollower {
     public void aiStep() {
         if (hasItemInSlot(EquipmentSlot.HEAD)) {
             ItemStack is = getItemBySlot(EquipmentSlot.HEAD);
-            CompoundTag nbt = is.getTag();
+            org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
+            ItemMeta im = bukkit.getItemMeta();
             if (!isPathFinding()) {
                 Bukkit.getScheduler().cancelTask(task);
                 int cmd = 405 + colour.getStep();
                 if (redeye) {
                     cmd += 18;
                 }
-                nbt.putInt("CustomModelData", cmd);
+                im.setCustomModelData(cmd);
+                bukkit.setItemMeta(im);
                 isAnimating = false;
             } else if (!isAnimating) {
                 // play move animation
@@ -69,7 +72,7 @@ public class TWAOod extends TWAFollower {
                     if (redeye) {
                         cmd += 18;
                     }
-                    nbt.putInt("CustomModelData", cmd + frames[i]);
+                    im.setCustomModelData(cmd + frames[i]);
                     i++;
                     if (i == frames.length) {
                         i = 0;
@@ -77,6 +80,7 @@ public class TWAOod extends TWAFollower {
                 }, 1L, 3L);
                 isAnimating = true;
             }
+            setItemSlot(EquipmentSlot.HEAD, CraftItemStack.asNMSCopy(bukkit));
         }
         super.aiStep();
     }

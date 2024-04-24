@@ -17,13 +17,14 @@
 package me.eccentric_nz.tardisweepingangels.nms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * Custom entity class for Sea Devils
@@ -45,10 +46,12 @@ public class TWADrowned extends Drowned {
     public void aiStep() {
         if (hasItemInSlot(EquipmentSlot.HEAD)) {
             ItemStack is = getItemBySlot(EquipmentSlot.HEAD);
-            CompoundTag nbt = is.getTag();
+            org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
+            ItemMeta im = bukkit.getItemMeta();
             if (!isPathFinding()) {
                 Bukkit.getScheduler().cancelTask(task);
-                nbt.putInt("CustomModelData", 405);
+                im.setCustomModelData(405);
+                bukkit.setItemMeta(im);
                 isAnimating = false;
             } else if (!isAnimating) {
                 // play move animation
@@ -59,7 +62,8 @@ public class TWADrowned extends Drowned {
                     } else if (getTarget() != null) {
                         cmd = 406;
                     }
-                    nbt.putInt("CustomModelData", cmd + frames[i]);
+                    im.setCustomModelData(cmd + frames[i]);
+                    bukkit.setItemMeta(im);
                     i++;
                     if (i == frames.length) {
                         i = 0;
@@ -67,6 +71,7 @@ public class TWADrowned extends Drowned {
                 }, 1L, 3L);
                 isAnimating = true;
             }
+            setItemSlot(EquipmentSlot.HEAD, CraftItemStack.asNMSCopy(bukkit));
         }
         super.aiStep();
     }

@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
@@ -42,6 +39,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -138,7 +139,7 @@ public class TARDISAcidWater implements Listener {
                             plugin.getPlanetsConfig().getStringList("planets.skaro.acid_potions").forEach((t) -> {
                                 PotionEffectType pet = PotionEffectType.getByName(t);
                                 if (pet != null) {
-                                    if (pet.equals(PotionEffectType.BLINDNESS) || pet.equals(PotionEffectType.CONFUSION) || pet.equals(PotionEffectType.HUNGER) || pet.equals(PotionEffectType.SLOW) || pet.equals(PotionEffectType.SLOW_DIGGING) || pet.equals(PotionEffectType.WEAKNESS)) {
+                                    if (pet.equals(PotionEffectType.BLINDNESS) || pet.equals(PotionEffectType.NAUSEA) || pet.equals(PotionEffectType.HUNGER) || pet.equals(PotionEffectType.SLOWNESS) || pet.equals(PotionEffectType.MINING_FATIGUE) || pet.equals(PotionEffectType.WEAKNESS)) {
                                         player.addPotionEffect(new PotionEffect(pet, 200, 1));
                                     } else {
                                         // Poison

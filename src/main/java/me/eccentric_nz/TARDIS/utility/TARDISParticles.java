@@ -37,7 +37,7 @@ public class TARDISParticles {
                 v = rotateAroundAxisX(v, l.getPitch() * 0.017453292F);
                 v = rotateAroundAxisY(v, -l.getYaw() * 0.017453292F);
                 l.add(v);
-                p.spawnParticle(Particle.SPELL, l, 10);
+                p.spawnParticle(Particle.ENTITY_EFFECT, l, 10);
                 l.subtract(v);
             }
             step += 1;

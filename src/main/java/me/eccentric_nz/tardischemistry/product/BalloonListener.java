@@ -51,7 +51,7 @@ public class BalloonListener implements Listener {
             }
             removeJumpBoost(player);
             if (factor > -1) {
-                PotionEffect potionEffect = new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, factor);
+                PotionEffect potionEffect = new PotionEffect(PotionEffectType.JUMP_BOOST, Integer.MAX_VALUE, factor);
                 player.addPotionEffect(potionEffect);
             }
         }, 1L);
@@ -83,7 +83,7 @@ public class BalloonListener implements Listener {
                     }
                     removeJumpBoost(player);
                     if (factor > -1) {
-                        PotionEffect potionEffect = new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, factor);
+                        PotionEffect potionEffect = new PotionEffect(PotionEffectType.JUMP_BOOST, Integer.MAX_VALUE, factor);
                         player.addPotionEffect(potionEffect);
                     }
                 }
@@ -104,7 +104,7 @@ public class BalloonListener implements Listener {
                     factor -= 1;
                 }
                 if (factor > -1) {
-                    PotionEffect potionEffect = new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, factor);
+                    PotionEffect potionEffect = new PotionEffect(PotionEffectType.JUMP_BOOST, Integer.MAX_VALUE, factor);
                     player.addPotionEffect(potionEffect);
                 } else {
                     removeJumpBoost(player);
@@ -122,10 +122,10 @@ public class BalloonListener implements Listener {
     }
 
     private void removeJumpBoost(Player player) {
-        if (player.hasPotionEffect(PotionEffectType.JUMP)) {
-            PotionEffect potionEffect = player.getPotionEffect(PotionEffectType.JUMP);
+        if (player.hasPotionEffect(PotionEffectType.JUMP_BOOST)) {
+            PotionEffect potionEffect = player.getPotionEffect(PotionEffectType.JUMP_BOOST);
             if (potionEffect.getDuration() > 150000000) {
-                player.removePotionEffect(PotionEffectType.JUMP);
+                player.removePotionEffect(PotionEffectType.JUMP_BOOST);
             }
         }
     }

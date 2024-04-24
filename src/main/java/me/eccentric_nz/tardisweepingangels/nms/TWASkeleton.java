@@ -17,7 +17,6 @@
 package me.eccentric_nz.tardisweepingangels.nms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -26,6 +25,8 @@ import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * Custom entity class for Headless Monks, Mire, Silent, Silurians, and Weeping Angels
@@ -48,20 +49,23 @@ public class TWASkeleton extends Skeleton {
     public void aiStep() {
         if (hasItemInSlot(EquipmentSlot.HEAD)) {
             ItemStack is = getItemBySlot(EquipmentSlot.HEAD);
-            CompoundTag nbt = is.getTag();
+            org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
+            ItemMeta im = bukkit.getItemMeta();
             Entity passenger = getFirstPassenger();
             if (passenger instanceof Guardian guardian) {
                 beaming = guardian.hasActiveAttackTarget();
             }
             if (!isPathFinding() || beaming) {
                 Bukkit.getScheduler().cancelTask(task);
-                nbt.putInt("CustomModelData", beaming ? 11 : 405);
+                im.setCustomModelData(beaming ? 11 : 405);
+                bukkit.setItemMeta(im);
                 isAnimating = false;
             } else if (!isAnimating) {
                 // play move animation
                 task = Bukkit.getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, () -> {
                     int cmd = getTarget() != null ? 406 : 400;
-                    nbt.putInt("CustomModelData", cmd + frames[i]);
+                    im.setCustomModelData(cmd + frames[i]);
+                    bukkit.setItemMeta(im);
                     i++;
                     if (i == frames.length) {
                         i = 0;
@@ -69,6 +73,7 @@ public class TWASkeleton extends Skeleton {
                 }, 1L, 3L);
                 isAnimating = true;
             }
+            setItemSlot(EquipmentSlot.HEAD, CraftItemStack.asNMSCopy(bukkit));
         }
         super.aiStep();
     }

@@ -1,7 +1,5 @@
 package me.eccentric_nz.tardischunkgenerator.custombiome;
 
-import java.util.List;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.WritableRegistry;
@@ -13,13 +11,15 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.chunk.ChunkStatus;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_20_R3.CraftChunk;
-import org.bukkit.craftbukkit.v1_20_R3.CraftServer;
-import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R4.CraftChunk;
+import org.bukkit.craftbukkit.v1_20_R4.CraftServer;
+import org.bukkit.craftbukkit.v1_20_R4.CraftWorld;
+
+import java.util.List;
 
 public class BiomeHelper {
 
