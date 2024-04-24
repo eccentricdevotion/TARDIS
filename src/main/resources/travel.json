@@ -1,7 +1,8 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:diamond"
+            "count": 1,
+            "id": "minecraft:diamond"
         },
         "title": "Got the travel bug",
         "description": "Travel in your TARDIS"

@@ -1,7 +1,8 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:minecart"
+            "count": 1,
+            "id": "minecraft:minecart"
         },
         "title": "Create a TARDIS",
         "description": "The time vortex awaits!"

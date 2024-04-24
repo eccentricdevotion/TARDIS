@@ -9,7 +9,9 @@
    * New interior with console
    * Malfunction & manual flight classes
 4. Update old light level controls
-5. ?
+5. Add Armadillo
+6. Wolf armour and variants
+7. ?
 
 ## Next version `5.7.0`
 

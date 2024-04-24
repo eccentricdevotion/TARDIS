@@ -1,7 +1,8 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:redstone_block"
+            "count": 1,
+            "id": "minecraft:redstone_block"
         },
         "title": "Power hungry",
         "description": "Overcharge the Artron Energy Capacitor"

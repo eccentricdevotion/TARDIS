@@ -1,7 +1,8 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:red_tulip"
+            "count": 1,
+            "id": "minecraft:red_tulip"
         },
         "title": "The host with the most",
         "description": "Add companions to your TARDIS"

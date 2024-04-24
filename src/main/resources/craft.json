@@ -1,7 +1,8 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:lapis_block"
+            "count": 1,
+            "id": "minecraft:lapis_block"
         },
         "title": "Craft a TARDIS Seed Block",
         "description": "One step closer to stealing a TARDIS",

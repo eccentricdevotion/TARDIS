@@ -18,12 +18,13 @@ package me.eccentric_nz.TARDIS.utility;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author eccentric_nz
@@ -71,7 +72,7 @@ public class TARDISChecker {
 
     public void checkAdvancements() {
         // get server's main world folder
-        // is there a worlds container?
+        // is there a world container?
         File container = plugin.getServer().getWorldContainer();
         String s_world = plugin.getServer().getWorlds().get(0).getName();
         // check if directories exist
@@ -81,28 +82,15 @@ public class TARDISChecker {
             TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, plugin.getLanguage().getString("ADVANCEMENT_DIRECTORIES"));
             tardisDir.mkdirs();
         }
-        // update root advancement
-        File root = new File(dataPacksRoot, "root.json");
-        if (root.exists()) {
-            copy("root.json", root);
-        }
-        for (Advancement advancement : Advancement.values()) {
-            String json = advancement.getConfigName() + ".json";
-            File jfile = new File(dataPacksRoot, json);
-            if (!jfile.exists()) {
-                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), json));
-                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), json));
-                copy(json, jfile);
-            }
-        }
         String dataPacksMeta = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis";
         File mcmeta = new File(dataPacksMeta, "pack.mcmeta");
         if (!mcmeta.exists()) {
             TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), "pack.mcmeta"));
             TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), "pack.mcmeta"));
             copy("pack.mcmeta", mcmeta);
+            write(dataPacksRoot, false);
         } else {
-            // update the format - 15 is the latest for 1.20
+            // update the format - 41 is the latest for 1.20.5
             // it's a json file, so load it and check the value
             Gson gson = new GsonBuilder().create();
             try {
@@ -114,22 +102,37 @@ public class TARDISChecker {
                         for (Map.Entry<?, ?> data : values.entrySet()) {
                             if (data.getKey().equals("pack_format")) {
                                 Double d = (Double) data.getValue();
-                                if (d < 15.0D) {
+                                if (d < 41.0D) {
                                     Map<String, Map<String, Object>> mcmap = new HashMap<>();
                                     Map<String, Object> pack = new HashMap<>();
                                     pack.put("description", "Data pack for the TARDIS plugin");
-                                    pack.put("pack_format", 15);
+                                    pack.put("pack_format", 41);
                                     mcmap.put("pack", pack);
                                     FileWriter writer = new FileWriter(mcmeta);
                                     gson.toJson(mcmap, writer);
                                     writer.close();
+                                    // update json files
+                                    write(dataPacksRoot, true);
                                 }
                             }
                         }
                     }
                 }
-            } catch (IOException e) {
+            } catch (IOException ignored) {
+            }
+        }
+    }
 
+    private void write(String dataPacksRoot, boolean overwrite) {
+        for (Advancement advancement : Advancement.values()) {
+            String json = advancement.getConfigName() + ".json";
+            File jfile = new File(dataPacksRoot, json);
+            if (!jfile.exists() || overwrite) {
+                if (!overwrite) {
+                    TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), json));
+                }
+                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), json));
+                copy(json, jfile);
             }
         }
     }

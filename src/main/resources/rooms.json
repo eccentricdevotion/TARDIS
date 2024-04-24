@@ -1,7 +1,8 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:bookshelf"
+            "count": 1,
+            "id": "minecraft:bookshelf"
         },
         "title": "Room freak",
         "description": "Grow all room types"
