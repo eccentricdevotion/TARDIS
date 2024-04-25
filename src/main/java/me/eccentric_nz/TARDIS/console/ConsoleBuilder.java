@@ -20,6 +20,7 @@ import java.util.UUID;
 public class ConsoleBuilder {
 
     private final TARDIS plugin;
+    private UUID right;
 
     public ConsoleBuilder(TARDIS plugin) {
         this.plugin = plugin;
@@ -103,8 +104,8 @@ public class ConsoleBuilder {
     }
 
     private UUID spawnControl(ConsoleInteraction interaction, Location location, float angle, int id) {
-        if (interaction == ConsoleInteraction.SCREEN_LEFT) {
-            return null;
+        if (interaction == ConsoleInteraction.SCREEN_LEFT && right != null) {
+            return right;
         }
         Material material = interaction.getMaterial();
         int cmd = interaction.getCustomModelData();
@@ -130,6 +131,9 @@ public class ConsoleBuilder {
         float yaw = Location.normalizeYaw(angle);
         // set display rotation
         display.setRotation(yaw, 0);
+        if (interaction == ConsoleInteraction.SCREEN_RIGHT) {
+            right = uuid;
+        }
         return uuid;
     }
 
