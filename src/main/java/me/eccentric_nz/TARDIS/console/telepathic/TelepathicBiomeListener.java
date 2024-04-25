@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -31,6 +32,15 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
         this.plugin = plugin;
         rows = EnvironmentBiomes.OVERWORLD.size() / 8 + 1;
         biomes = getBiomes();
+    }
+
+    @EventHandler
+    public void onWallMenuOpen(InventoryOpenEvent event) {
+        String name = event.getView().getTitle();
+        if (name.equals(ChatColor.DARK_RED + "Telepathic Biome Finder")) {
+            Player p = (Player) event.getPlayer();
+            scroll.put(p.getUniqueId(), 0);
+        }
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -116,6 +126,9 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
         int c = 0;
         for (Biome biome : EnvironmentBiomes.OVERWORLD) {
             ItemStack is = new ItemStack(EnvironmentBiomes.BIOME_BLOCKS.get(biome), 1);
+            ItemMeta im = is.getItemMeta();
+            im.setDisplayName(TARDISStringUtils.capitalise(biome.toString()));
+            is.setItemMeta(im);
             stacks[r][c] = is;
             c++;
             if (c == 8) {
