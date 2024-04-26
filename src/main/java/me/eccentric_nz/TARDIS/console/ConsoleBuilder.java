@@ -21,6 +21,7 @@ public class ConsoleBuilder {
 
     private final TARDIS plugin;
     private UUID right;
+    private UUID wxyz;
 
     public ConsoleBuilder(TARDIS plugin) {
         this.plugin = plugin;
@@ -107,6 +108,9 @@ public class ConsoleBuilder {
         if (interaction == ConsoleInteraction.SCREEN_LEFT && right != null) {
             return right;
         }
+        if ((interaction == ConsoleInteraction.X||interaction == ConsoleInteraction.Z||interaction == ConsoleInteraction.MULTIPLIER) && wxyz != null) {
+            return wxyz;
+        }
         Material material = interaction.getMaterial();
         int cmd = interaction.getCustomModelData();
         if (interaction == ConsoleInteraction.DIRECTION) {
@@ -133,6 +137,9 @@ public class ConsoleBuilder {
         display.setRotation(yaw, 0);
         if (interaction == ConsoleInteraction.SCREEN_RIGHT) {
             right = uuid;
+        }
+        if (interaction == ConsoleInteraction.WORLD) {
+            wxyz = uuid;
         }
         return uuid;
     }
