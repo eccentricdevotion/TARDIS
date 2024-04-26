@@ -145,13 +145,15 @@ public class TARDISStructureTravel {
                     StructureSearchResult normalResult = world.locateNearestStructure(location, structure, 64, false);
                     loc = (normalResult != null) ? normalResult.getLocation() : null;
                     // if ANCIENT_CITY, get underground location
-                    if (loc != null && structure.equals(Structure.ANCIENT_CITY)) {
-                        Check check = isThereRoom(world, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
-                        if (check.isSafe()) {
-                            loc.setY(check.getY());
+                    if (loc != null) {
+                        if (structure.equals(Structure.ANCIENT_CITY)) {
+                            Check check = isThereRoom(world, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+                            if (check.isSafe()) {
+                                loc.setY(check.getY());
+                            }
+                        } else {
+                            loc.setY(world.getHighestBlockYAt(loc));
                         }
-                    } else {
-                        loc.setY(world.getHighestBlockYAt(loc));
                     }
                 }
             }
