@@ -8,6 +8,7 @@
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
    * New interior with console
    * Malfunction & manual flight classes
+   * Regular handbrake needs to check console filght mode
 4. Update old light level controls
 5. Add Armadillo
 6. Wolf armour and variants

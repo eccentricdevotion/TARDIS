@@ -46,6 +46,7 @@ class TARDISMySQLDatabaseUpdater {
     private final List<String> chameleonupdates = new ArrayList<>();
     private final List<String> farmingupdates = new ArrayList<>();
     private final List<String> sonicupdates = new ArrayList<>();
+    private final List<String> flightupdates = new ArrayList<>();
     private final HashMap<String, String> uuidUpdates = new HashMap<>();
     private final Statement statement;
     private final TARDIS plugin;
@@ -130,6 +131,8 @@ class TARDISMySQLDatabaseUpdater {
         sonicupdates.add("sonic_uuid varchar(48) DEFAULT ''");
         sonicupdates.add("last_scanned varchar(512) DEFAULT ''");
         sonicupdates.add("scan_type int(1) DEFAULT '0'");
+        flightupdates.add("chicken varchar(48) DEFAULT ''");
+        flightupdates.add("stand varchar(48) DEFAULT ''");
     }
 
     /**
@@ -247,6 +250,16 @@ class TARDISMySQLDatabaseUpdater {
                     statement.executeUpdate(s_alter);
                 }
             }
+            for (String f : flightupdates) {
+                String[] ssplit = f.split(" ");
+                String f_query = "SHOW COLUMNS FROM " + prefix + "flight LIKE '" + ssplit[0] + "'";
+                ResultSet fa = statement.executeQuery(f_query);
+                if (!fa.next()) {
+                    i++;
+                    String f_alter = "ALTER TABLE " + prefix + "flight ADD " + f;
+                    statement.executeUpdate(f_alter);
+                }
+            }
             // update data type for `data` in blocks
             String blockdata_check = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '" + prefix + "blocks' AND COLUMN_NAME = 'data'";
             ResultSet rsbdc = statement.executeQuery(blockdata_check);
@@ -268,14 +281,6 @@ class TARDISMySQLDatabaseUpdater {
                 i++;
                 String bio_alter = "ALTER TABLE " + prefix + "current ADD biome varchar(64) DEFAULT ''";
                 statement.executeUpdate(bio_alter);
-            }
-            // add chicken to flight persistence
-            String chi_query = "SHOW COLUMNS FROM " + prefix + "flight LIKE 'chicken'";
-            ResultSet rschi = statement.executeQuery(chi_query);
-            if (!rschi.next()) {
-                i++;
-                String chi_alter = "ALTER TABLE " + prefix + "flight ADD chicken varchar(48) DEFAULT ''";
-                statement.executeUpdate(chi_alter);
             }
             // add preset to homes
             String preset_query = "SHOW COLUMNS FROM " + prefix + "homes LIKE 'preset'";

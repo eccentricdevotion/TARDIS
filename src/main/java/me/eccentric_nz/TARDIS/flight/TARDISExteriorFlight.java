@@ -90,6 +90,11 @@ public class TARDISExteriorFlight {
             plugin.getQueryFactory().doUpdate("current", set, where);
             // update door location
             TARDISBuilderUtility.saveDoorLocation(location, data.getId(), direction);
+            Block under = location.getBlock().getRelative(BlockFace.DOWN);
+            if (under.getType().isAir()) {
+                // if location is in the air, set under door block
+                TARDISBlockSetters.setUnderDoorBlock(location.getWorld(), under.getX(), under.getY(), under.getZ(), data.getId(), false);
+            }
             // set the light
             Levelled light = TARDISConstants.LIGHT;
             light.setLevel(7);
@@ -152,7 +157,8 @@ public class TARDISExteriorFlight {
         plugin.getTrackerKeeper().getInVortex().add(id);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             // teleport player to exterior
-            player.teleport(current);
+            player.setGravity(false);
+            player.teleport(current.clone().add(0.5, 0.25, 0.5));
             // get the armour stand
             for (Entity e : current.getWorld().getNearbyEntities(current, 1, 1, 1, (s) -> s.getType() == EntityType.ARMOR_STAND)) {
                 if (e instanceof ArmorStand stand) {
@@ -162,6 +168,7 @@ public class TARDISExteriorFlight {
                         player.getPersistentDataContainer().set(plugin.getLoopKey(), PersistentDataType.INTEGER, sound);
                         // spawn a chicken
                         LivingEntity chicken = new MonsterSpawner().create(stand.getLocation(), Monster.FLYER);
+                        chicken.setGravity(false);
                         stand.addPassenger(player);
                         stand.setGravity(false);
                         chicken.addPassenger(stand);
@@ -173,7 +180,11 @@ public class TARDISExteriorFlight {
                         // remove the light
                         current.getBlock().getRelative(BlockFace.UP, 2).setBlockData(TARDISConstants.AIR);
                         // save player's current location, so we can teleport them back to it when they finish flying
-                        plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(id, interior, sound, animation, chicken.getUniqueId()));
+                        plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(id, interior, sound, animation, chicken.getUniqueId(), stand.getUniqueId()));
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            player.setGravity(true);
+                            chicken.setGravity(true);
+                        }, 1L);
                     }, 2L);
                     break;
                 }

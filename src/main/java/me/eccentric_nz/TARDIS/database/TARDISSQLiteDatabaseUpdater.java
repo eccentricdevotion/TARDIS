@@ -48,6 +48,7 @@ class TARDISSQLiteDatabaseUpdater {
     private final List<String> chameleonupdates = new ArrayList<>();
     private final List<String> farmingupdates = new ArrayList<>();
     private final List<String> sonicupdates = new ArrayList<>();
+    private final List<String> flightupdates = new ArrayList<>();
     private final List<String> uuidUpdates = Arrays.asList("achievements", "ars", "player_prefs", "storage", "t_count", "tardis", "travellers");
     private final Statement statement;
     private final TARDIS plugin;
@@ -160,6 +161,8 @@ class TARDISSQLiteDatabaseUpdater {
         sonicupdates.add("sonic_uuid TEXT DEFAULT ''");
         sonicupdates.add("last_scanned TEXT DEFAULT ''");
         sonicupdates.add("scan_type INTEGER DEFAULT 0");
+        flightupdates.add("chicken TEXT DEFAULT ''");
+        flightupdates.add("stand TEXT DEFAULT ''");
     }
 
     /**
@@ -301,13 +304,23 @@ class TARDISSQLiteDatabaseUpdater {
                 }
             }
             for (String s : sonicupdates) {
-                String[] fsplit = s.split(" ");
-                String s_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "sonic' AND sql LIKE '%" + fsplit[0] + "%'";
+                String[] ssplit = s.split(" ");
+                String s_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "sonic' AND sql LIKE '%" + ssplit[0] + "%'";
                 ResultSet rss = statement.executeQuery(s_query);
                 if (!rss.next()) {
                     i++;
                     String s_alter = "ALTER TABLE " + prefix + "sonic ADD " + s;
                     statement.executeUpdate(s_alter);
+                }
+            }
+            for (String f : flightupdates) {
+                String[] fsplit = f.split(" ");
+                String f_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "flight' AND sql LIKE '%" + fsplit[0] + "%'";
+                ResultSet rsf = statement.executeQuery(f_query);
+                if (!rsf.next()) {
+                    i++;
+                    String f_alter = "ALTER TABLE " + prefix + "flight ADD " + f;
+                    statement.executeUpdate(f_alter);
                 }
             }
             // add biome to current location
@@ -317,14 +330,6 @@ class TARDISSQLiteDatabaseUpdater {
                 i++;
                 String bio_alter = "ALTER TABLE " + prefix + "current ADD biome TEXT DEFAULT ''";
                 statement.executeUpdate(bio_alter);
-            }
-            // add chicken to flight persistence
-            String chi_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "flight' AND sql LIKE '%chicken%'";
-            ResultSet rschi = statement.executeQuery(chi_query);
-            if (!rschi.next()) {
-                i++;
-                String chi_alter = "ALTER TABLE " + prefix + "flight ADD chicken TEXT DEFAULT ''";
-                statement.executeUpdate(chi_alter);
             }
             // add preset to homes
             String preset_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "homes' AND sql LIKE '%preset%'";

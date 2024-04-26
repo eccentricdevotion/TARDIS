@@ -21,7 +21,6 @@ import org.bukkit.Location;
 import java.util.UUID;
 
 /**
- *
  * @author eccentric_nz
  */
 public class FlightReturnData {
@@ -31,13 +30,15 @@ public class FlightReturnData {
     private final int sound;
     private final int animation;
     private final UUID chicken;
+    private final UUID stand;
 
-    public FlightReturnData(int id, Location location, int sound, int animation, UUID chicken) {
+    public FlightReturnData(int id, Location location, int sound, int animation, UUID chicken, UUID stand) {
         this.id = id;
         this.location = location;
         this.sound = sound;
         this.animation = animation;
         this.chicken = chicken;
+        this.stand = stand;
     }
 
     public int getId() {
@@ -58,5 +59,9 @@ public class FlightReturnData {
 
     public UUID getChicken() {
         return chicken;
+    }
+
+    public UUID getStand() {
+        return stand;
     }
 }

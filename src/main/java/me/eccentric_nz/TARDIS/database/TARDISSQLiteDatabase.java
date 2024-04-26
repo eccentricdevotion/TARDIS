@@ -141,7 +141,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryFarmingPrefs);
 
             // Table structure for table 'flight'
-            String queryFlight = "CREATE TABLE IF NOT EXISTS " + prefix + "flight (f_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', tardis_id INTEGER, location TEXT DEFAULT '')";
+            String queryFlight = "CREATE TABLE IF NOT EXISTS " + prefix + "flight (f_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', tardis_id INTEGER, location TEXT DEFAULT '', chicken TEXT DEFAULT '', stand TEXT DEFAULT '')";
             statement.executeUpdate(queryFlight);
 
             // Table structure for table 'forcefield'
