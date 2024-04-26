@@ -3,11 +3,16 @@ package me.eccentric_nz.TARDIS.console;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.models.ColourType;
 import me.eccentric_nz.TARDIS.database.ClearInteractions;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetConsoleLabel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetInteractionsFromId;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemDisplay;
+import org.bukkit.entity.TextDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -44,6 +49,13 @@ public class ConsoleDestroyer {
                     e.remove();
                 }
             }
+            // remove the centre block
+            ResultSetConsoleLabel rsc = new ResultSetConsoleLabel(plugin, id);
+            if (rsc.resultSet()) {
+                Block centre = rsc.getLocation().getBlock();
+                centre.setType(Material.AIR);
+                removeTextDisplays(rsc.getLocation());
+            }
             String[] split = uuids.split("~");
             for (String u : split) {
                 try {
@@ -77,5 +89,14 @@ public class ConsoleDestroyer {
             return console;
         }
         return null;
+    }
+
+    private void removeTextDisplays(Location centre) {
+        Location spawn = centre.clone().add(0.5f, 0, 0.5f);
+        for (Entity e : spawn.getWorld().getNearbyEntities(spawn, 3.5, 2, 3.5, (t) -> t.getType() == EntityType.TEXT_DISPLAY)) {
+            if (e instanceof TextDisplay) {
+                e.remove();
+            }
+        }
     }
 }

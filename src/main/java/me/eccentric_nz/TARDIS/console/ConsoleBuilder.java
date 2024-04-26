@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.console;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -31,6 +32,13 @@ public class ConsoleBuilder {
         StringBuilder builder = new StringBuilder();
         String prefix = "";
         Block up = block.getRelative(BlockFace.UP);
+        // save the block location
+        HashMap<String, Object> setb = new HashMap<>();
+        setb.put("tardis_id", id);
+        setb.put("uuid", TARDISStaticLocationGetters.makeLocationStr(block.getLocation()));
+        setb.put("control", "CENTRE");
+        setb.put("state", 0);
+        plugin.getQueryFactory().doInsert("interactions", setb);
         for (int i = 0; i < 6; i++) {
             ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
             ItemMeta im = shard.getItemMeta();

@@ -9,6 +9,8 @@
    * New interior with console
    * Malfunction & manual flight classes
    * Regular handbrake needs to check console filght mode
+   * Remove sonic screwdriver when breaking console
+   * Alter console side model inner edge / make new time rotor for console
 4. Update old light level controls
 5. Add Armadillo
 6. Wolf armour and variants

@@ -83,6 +83,7 @@ public class ScreenInteraction {
             Vector vector = coords ? new Vector(0.0d, 0.5d, 0.35d) : new Vector(0.32d, 0.5d, -0.225d);
             adjusted.add(vector);
             textDisplay = (TextDisplay) location.getWorld().spawnEntity(adjusted, EntityType.TEXT_DISPLAY);
+            textDisplay.getPersistentDataContainer().set(plugin.getInteractionUuidKey(), PersistentDataType.BOOLEAN, true);
         }
         return textDisplay;
     }
