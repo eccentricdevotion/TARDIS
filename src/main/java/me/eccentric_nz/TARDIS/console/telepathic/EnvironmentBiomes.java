@@ -4,7 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Biome;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class EnvironmentBiomes {
         put(Biome.FLOWER_FOREST, Material.ORANGE_TULIP);
         put(Biome.FOREST, Material.OAK_PLANKS);
         put(Biome.FROZEN_OCEAN, Material.BLUE_ICE);
-        put(Biome.FROZEN_PEAKS, Material.POWDER_SNOW);
+        put(Biome.FROZEN_PEAKS, Material.POWDER_SNOW_BUCKET);
         put(Biome.FROZEN_RIVER, Material.ICE);
         put(Biome.GROVE, Material.STRIPPED_SPRUCE_LOG);
         put(Biome.ICE_SPIKES, Material.PACKED_ICE);
@@ -87,6 +87,6 @@ public class EnvironmentBiomes {
                 OVERWORLD.add(biome);
             }
         }
-        Collections.sort(OVERWORLD);
+        OVERWORLD.sort(Comparator.comparing(Enum::toString));
     }
 }
