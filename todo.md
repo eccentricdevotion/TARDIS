@@ -14,9 +14,7 @@
    * Change order of console panels so handbrake is near door
    * Make sneak-clicking a control show the label + alter the position based on the angle of the panel the control is on
 4. Update old light level controls
-5. Add Armadillo
-6. Wolf armour and variants
-7. ?
+5. ?
 
 ## Next version `5.7.0`
 

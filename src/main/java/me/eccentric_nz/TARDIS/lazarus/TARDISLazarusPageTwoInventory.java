@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIGeneticManipulator;
@@ -26,6 +23,10 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * The Genetic Manipulation Device was invented by Professor Richard Lazarus. The machine would turn anyone inside
@@ -47,6 +48,7 @@ class TARDISLazarusPageTwoInventory {
         disguises.add(Material.POLAR_BEAR_SPAWN_EGG);
         disguises.add(Material.SPIDER_SPAWN_EGG);
         disguises.add(Material.TRADER_LLAMA_SPAWN_EGG);
+        disguises.add(Material.WANDERING_TRADER_SPAWN_EGG);
         disguises.add(Material.WOLF_SPAWN_EGG);
         disguises.add(Material.ZOMBIFIED_PIGLIN_SPAWN_EGG);
         // hostile
@@ -137,21 +139,21 @@ class TARDISLazarusPageTwoInventory {
         ItemStack the = new ItemStack(Material.COMPARATOR, 1);
         ItemMeta master = the.getItemMeta();
         master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
-        master.setLore(Collections.singletonList(plugin.getLanguage().getString("SET_OFF")));
+        master.setLore(List.of(plugin.getLanguage().getString("SET_OFF")));
         master.setCustomModelData(GUIGeneticManipulator.BUTTON_MASTER.getCustomModelData());
         the.setItemMeta(master);
         stacks[45] = the;
         ItemStack adult = new ItemStack(Material.HOPPER, 1);
         ItemMeta baby = adult.getItemMeta();
         baby.setDisplayName(plugin.getLanguage().getString("BUTTON_AGE"));
-        baby.setLore(Collections.singletonList("ADULT"));
+        baby.setLore(List.of("ADULT"));
         baby.setCustomModelData(GUIGeneticManipulator.BUTTON_AGE.getCustomModelData());
         adult.setItemMeta(baby);
         stacks[47] = adult;
         ItemStack typ = new ItemStack(Material.CYAN_DYE, 1);
         ItemMeta col = typ.getItemMeta();
         col.setDisplayName(plugin.getLanguage().getString("BUTTON_TYPE"));
-        col.setLore(Collections.singletonList("WHITE"));
+        col.setLore(List.of("WHITE"));
         col.setCustomModelData(GUIGeneticManipulator.BUTTON_TYPE.getCustomModelData());
         typ.setItemMeta(col);
         stacks[48] = typ;

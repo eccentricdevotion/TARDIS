@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
-import java.util.Collections;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
@@ -9,6 +8,8 @@ import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.List;
 
 public class TARDISWeepingAngelsMonstersInventory {
 
@@ -29,14 +30,16 @@ public class TARDISWeepingAngelsMonstersInventory {
         ItemStack[] stacks = new ItemStack[54];
         int i = 0;
         for (Monster monster : Monster.values()) {
-            ItemStack mon = new ItemStack(monster.getMaterial(), 1);
-            ItemMeta ster = mon.getItemMeta();
-            ster.setDisplayName(monster.toString());
-            GUIGeneticManipulator gui = GUIGeneticManipulator.valueOf(monster.toString());
-            ster.setCustomModelData(gui.getCustomModelData());
-            mon.setItemMeta(ster);
-            stacks[i] = mon;
-            i++;
+            if (monster != Monster.FLYER) {
+                ItemStack mon = new ItemStack(monster.getMaterial(), 1);
+                ItemMeta ster = mon.getItemMeta();
+                ster.setDisplayName(monster.toString());
+                GUIGeneticManipulator gui = GUIGeneticManipulator.valueOf(monster.toString());
+                ster.setCustomModelData(gui.getCustomModelData());
+                mon.setItemMeta(ster);
+                stacks[i] = mon;
+                i++;
+            }
         }
         // page one
         ItemStack page1 = new ItemStack(Material.ARROW, 1);
@@ -56,7 +59,7 @@ public class TARDISWeepingAngelsMonstersInventory {
         ItemStack the = new ItemStack(Material.COMPARATOR, 1);
         ItemMeta master = the.getItemMeta();
         master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
-        master.setLore(Collections.singletonList(plugin.getLanguage().getString("SET_OFF")));
+        master.setLore(List.of(plugin.getLanguage().getString("SET_OFF")));
         master.setCustomModelData(GUIGeneticManipulator.BUTTON_MASTER.getCustomModelData());
         the.setItemMeta(master);
         stacks[45] = the;

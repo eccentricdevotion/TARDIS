@@ -47,6 +47,7 @@ class TARDISLazarusInventory {
         // maximum number of eggs is 45
         // passive
         disguises.add(Material.ALLAY_SPAWN_EGG);
+        disguises.add(Material.ARMADILLO_SPAWN_EGG);
         disguises.add(Material.AXOLOTL_SPAWN_EGG);
         disguises.add(Material.BAT_SPAWN_EGG);
         disguises.add(Material.CAMEL_SPAWN_EGG);
@@ -77,7 +78,6 @@ class TARDISLazarusInventory {
         disguises.add(Material.TROPICAL_FISH_SPAWN_EGG);
         disguises.add(Material.TURTLE_SPAWN_EGG);
         disguises.add(Material.VILLAGER_SPAWN_EGG);
-        disguises.add(Material.WANDERING_TRADER_SPAWN_EGG);
         // neutral
         disguises.add(Material.BEE_SPAWN_EGG);
         disguises.add(Material.CAVE_SPIDER_SPAWN_EGG);
@@ -131,21 +131,21 @@ class TARDISLazarusInventory {
         ItemStack the = new ItemStack(Material.COMPARATOR, 1);
         ItemMeta master = the.getItemMeta();
         master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
-        master.setLore(Collections.singletonList(plugin.getLanguage().getString("SET_OFF")));
+        master.setLore(List.of(plugin.getLanguage().getString("SET_OFF")));
         master.setCustomModelData(GUIGeneticManipulator.BUTTON_MASTER.getCustomModelData());
         the.setItemMeta(master);
         stacks[45] = the;
         ItemStack adult = new ItemStack(Material.HOPPER, 1);
         ItemMeta baby = adult.getItemMeta();
         baby.setDisplayName(plugin.getLanguage().getString("BUTTON_AGE"));
-        baby.setLore(Collections.singletonList("ADULT"));
+        baby.setLore(List.of("ADULT"));
         baby.setCustomModelData(GUIGeneticManipulator.BUTTON_AGE.getCustomModelData());
         adult.setItemMeta(baby);
         stacks[47] = adult;
         ItemStack typ = new ItemStack(Material.CYAN_DYE, 1);
         ItemMeta col = typ.getItemMeta();
         col.setDisplayName(plugin.getLanguage().getString("BUTTON_TYPE"));
-        col.setLore(Collections.singletonList("WHITE"));
+        col.setLore(List.of("WHITE"));
         col.setCustomModelData(GUIGeneticManipulator.BUTTON_TYPE.getCustomModelData());
         typ.setItemMeta(col);
         stacks[48] = typ;

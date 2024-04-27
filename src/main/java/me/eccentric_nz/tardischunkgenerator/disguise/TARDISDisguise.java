@@ -37,6 +37,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_20_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftWolf;
 import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.v1_20_R4.util.CraftNamespacedKey;
 import org.bukkit.entity.Axolotl;
@@ -46,8 +47,6 @@ import org.bukkit.entity.Frog;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ThreadLocalRandom;
-
-;
 
 public class TARDISDisguise {
 
@@ -64,6 +63,11 @@ public class TARDISDisguise {
         String packagePath = "net.minecraft.world.entity.";
         boolean hasEntityStr = true;
         switch (disguise.getEntityType()) {
+            case ARMADILLO -> {
+                str = "Armadillo";
+                packagePath += "animal.armadillo.";
+                hasEntityStr = false;
+            }
             case AXOLOTL -> {
                 str = "Axolotl";
                 packagePath += "animal.axolotl.";
@@ -146,7 +150,9 @@ public class TARDISDisguise {
                 str = "PigZombie";
                 packagePath += "monster.";
             }
-            case BLAZE, CAVE_SPIDER, CREEPER, DROWNED, ENDERMAN, ENDERMITE, EVOKER, GHAST, GUARDIAN, MAGMA_CUBE, PHANTOM, PILLAGER, RAVAGER, SHULKER, SILVERFISH, SKELETON, SLIME, SPIDER, STRIDER, VEX, VINDICATOR, WITCH, ZOGLIN, ZOMBIE, ZOMBIE_VILLAGER -> {
+            case BLAZE, CAVE_SPIDER, CREEPER, DROWNED, ENDERMAN, ENDERMITE, EVOKER, GHAST, GUARDIAN, MAGMA_CUBE,
+                 PHANTOM, PILLAGER, RAVAGER, SHULKER, SILVERFISH, SKELETON, SLIME, SPIDER, STRIDER, VEX, VINDICATOR,
+                 WITCH, ZOGLIN, ZOMBIE, ZOMBIE_VILLAGER -> {
                 str = capitalise(disguise.getEntityType().toString());
                 packagePath += "monster.";
             }
@@ -191,18 +197,9 @@ public class TARDISDisguise {
                 for (Object o : disguise.getOptions()) {
                     if (o instanceof org.bukkit.DyeColor) {
                         // colour a sheep / wolf collar
-                        switch (disguise.getEntityType()) {
-                            case SHEEP -> {
-                                Sheep sheep = (Sheep) entity;
-                                sheep.setColor(DyeColor.valueOf(o.toString()));
-                            }
-                            case WOLF -> {
-                                Wolf wolf = (Wolf) entity;
-                                wolf.setTame(true, false);
-                                wolf.setCollarColor(DyeColor.valueOf(o.toString()));
-                            }
-                            default -> {
-                            }
+                        if (disguise.getEntityType() == EntityType.SHEEP) {
+                            Sheep sheep = (Sheep) entity;
+                            sheep.setColor(DyeColor.valueOf(o.toString()));
                         }
                     }
                     if (disguise.getEntityType().equals(EntityType.AXOLOTL) && o instanceof Axolotl.Variant av) {
@@ -241,6 +238,10 @@ public class TARDISDisguise {
                     if (disguise.getEntityType().equals(EntityType.MOOSHROOM) && o instanceof MUSHROOM_COW mc) {
                         MushroomCow cow = (MushroomCow) entity;
                         cow.setVariant(mc.getNmsType());
+                    }
+                    if (disguise.getEntityType().equals(EntityType.WOLF) && o instanceof org.bukkit.entity.Wolf.Variant wv) {
+                        Wolf wolf = (Wolf) entity;
+                        wolf.setVariant(CraftWolf.CraftVariant.bukkitToMinecraftHolder(wv));
                     }
                     if (disguise.getEntityType().equals(EntityType.CAT) && o instanceof org.bukkit.entity.Cat.Type c) {
                         Cat cat = (Cat) entity;
