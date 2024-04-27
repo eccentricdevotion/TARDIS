@@ -92,12 +92,19 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets." + dn + ".void", true);
             planets_config.set("planets." + dn + ".gamerules.doWeatherCycle", false);
             planets_config.set("planets." + dn + ".gamerules.doDaylightCycle", false);
-            planets_config.set("planets." + dn + ".keep_spawn_in_memory", false);
+            planets_config.set("planets." + dn + ".spawn_chunk_radius", 0);
             save++;
         }
         if (!planets_config.contains("colour_skies")) {
             planets_config.set("colour_skies", true);
             save++;
+        }
+        if (!planets_config.contains("planets.TARDIS_Zero_Room.spawn_chunk_radius")) {
+            Set<String> worlds = planets_config.getConfigurationSection("planets").getKeys(false);
+            for (String w : worlds) {
+                planets_config.set("planets." + w + ".spawn_chunk_radius", planets_config.getBoolean("planets." + dn + ".keep_spawn_in_memory") ? 2 : 0);
+                planets_config.set("planets." + w + ".keep_spawn_in_memory", null);
+            }
         }
         if (!planets_config.contains("planets.TARDIS_Zero_Room.alias")) {
             Set<String> worlds = planets_config.getConfigurationSection("planets").getKeys(false);
@@ -156,10 +163,6 @@ public class TARDISPlanetsUpdater {
             save++;
         }
         for (String p : planets_config.getConfigurationSection("planets").getKeys(false)) {
-            if (!planets_config.contains("planets." + p + ".keep_spawn_in_memory")) {
-                planets_config.set("planets." + p + ".keep_spawn_in_memory", false);
-                save++;
-            }
             if (!planets_config.contains("planets." + p + ".allow_portals")) {
                 planets_config.set("planets." + p + ".allow_portals", true);
                 save++;
@@ -179,7 +182,7 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.skaro.world_type", "NORMAL");
             planets_config.set("planets.skaro.environment", "NORMAL");
             planets_config.set("planets.skaro.generator", "TARDIS:skaro");
-            planets_config.set("planets.skaro.keep_spawn_in_memory", false);
+            planets_config.set("planets.skaro.spawn_chunk_radius", 0);
             planets_config.set("planets.skaro.spawn_other_mobs", true);
             planets_config.set("planets.skaro.gamerules.doTraderSpawning", false);
             planets_config.set("planets.skaro.gamerules.doPatrolSpawning", false);
@@ -193,7 +196,7 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.siluria.world_type", "NORMAL");
             planets_config.set("planets.siluria.environment", "NORMAL");
             planets_config.set("planets.siluria.generator", "TARDIS:siluria");
-            planets_config.set("planets.siluria.keep_spawn_in_memory", false);
+            planets_config.set("planets.siluria.spawn_chunk_radius", 0);
             planets_config.set("planets.siluria.spawn_other_mobs", true);
             planets_config.set("planets.siluria.gamerules.doTraderSpawning", false);
             planets_config.set("planets.siluria.gamerules.doPatrolSpawning", false);
@@ -207,7 +210,7 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.gallifrey.world_type", "NORMAL");
             planets_config.set("planets.gallifrey.environment", "NORMAL");
             planets_config.set("planets.gallifrey.generator", "TARDIS:gallifrey");
-            planets_config.set("planets.gallifrey.keep_spawn_in_memory", false);
+            planets_config.set("planets.gallifrey.spawn_chunk_radius", 0);
             planets_config.set("planets.gallifrey.spawn_other_mobs", true);
             planets_config.set("planets.gallifrey.gamerules.doTraderSpawning", false);
             planets_config.set("planets.gallifrey.gamerules.doPatrolSpawning", false);

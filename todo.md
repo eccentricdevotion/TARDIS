@@ -11,6 +11,8 @@
    * Regular handbrake needs to check console filght mode
    * Remove sonic screwdriver when breaking console
    * Alter console side model inner edge / make new time rotor for console
+   * Change order of console panels so handbrake is near door
+   * Make sneak-clicking a control show the label + alter the position based on the angle of the panel the control is on
 4. Update old light level controls
 5. Add Armadillo
 6. Wolf armour and variants
