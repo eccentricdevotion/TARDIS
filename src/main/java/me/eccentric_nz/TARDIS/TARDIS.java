@@ -458,7 +458,6 @@ public class TARDIS extends JavaPlugin {
                 tardisMapper.enable();
             }
             if (getConfig().getBoolean("modules.weeping_angels")) {
-                if (PaperLib.isPaper()) {
                     getMessenger().message(console, TardisModule.TARDIS, "Loading Weeping Angels Module");
                     new TARDISWeepingAngels(this).enable();
                     if (!getConfig().getBoolean("conversions.all_in_one.weeping_angels")) {
@@ -467,9 +466,6 @@ public class TARDIS extends JavaPlugin {
                             conversions++;
                         }
                     }
-                } else {
-                    getLogger().log(Level.WARNING, "The Weeping Angels Module requires Paper server or a suitable variant!");
-                }
             }
             if (getConfig().getBoolean("modules.vortex_manipulator")) {
                 getMessenger().message(console, TardisModule.TARDIS, "Loading Vortex Manipulator Module");

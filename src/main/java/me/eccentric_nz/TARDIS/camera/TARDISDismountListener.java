@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.camera;
 
-import io.papermc.lib.PaperLib;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.entity.ArmorStand;
@@ -24,7 +23,7 @@ public class TARDISDismountListener implements Listener {
     public void onDismount(EntityDismountEvent event) {
         EntityType riding = event.getEntity().getType();
         EntityType ridden = event.getDismounted().getType();
-        if ((PaperLib.isPaper() && plugin.getConfig().getBoolean("modules.weeping_angels")) && ridden == EntityType.SKELETON && riding == EntityType.GUARDIAN) {
+        if (plugin.getConfig().getBoolean("modules.weeping_angels") && ridden == EntityType.SKELETON && riding == EntityType.GUARDIAN) {
             if (event.getEntity().getPersistentDataContainer().has(TARDISWeepingAngels.SILENT, PersistentDataType.INTEGER)) {
                 event.setCancelled(true);
             }
