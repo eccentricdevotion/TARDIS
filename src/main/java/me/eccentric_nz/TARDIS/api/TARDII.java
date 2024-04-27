@@ -193,7 +193,7 @@ public class TARDII implements TardisAPI {
 
     @Override
     public Location getRandomOverworldLocation(String world, Player p) {
-        return getRandomLocation(Collections.singletonList(world), Environment.NORMAL, p);
+        return getRandomLocation(List.of(world), Environment.NORMAL, p);
     }
 
     @Override
@@ -203,7 +203,7 @@ public class TARDII implements TardisAPI {
 
     @Override
     public Location getRandomNetherLocation(String world, Player p) {
-        return getRandomLocation(Collections.singletonList(world), Environment.NETHER, p);
+        return getRandomLocation(List.of(world), Environment.NETHER, p);
     }
 
     @Override
@@ -213,7 +213,7 @@ public class TARDII implements TardisAPI {
 
     @Override
     public Location getRandomEndLocation(String world, Player p) {
-        return getRandomLocation(Collections.singletonList(world), Environment.THE_END, p);
+        return getRandomLocation(List.of(world), Environment.THE_END, p);
     }
 
     @Override

@@ -20,7 +20,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Collections;
+import java.util.List;
 
 public class CompoundBuilder {
 
@@ -48,7 +48,7 @@ public class CompoundBuilder {
                 is = new ItemStack(Material.GLASS_BOTTLE, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(compound.toString().replace("_", " "));
-                im.setLore(Collections.singletonList(compound.getSymbol()));
+                im.setLore(List.of(compound.getSymbol()));
                 im.setCustomModelData(10000001 + compound.ordinal());
                 is.setItemMeta(im);
             }

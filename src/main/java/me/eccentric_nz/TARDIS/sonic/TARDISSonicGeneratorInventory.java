@@ -59,7 +59,7 @@ class TARDISSonicGeneratorInventory {
                 ItemStack is = new ItemStack(Material.BLAZE_ROD, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName("Sonic Screwdriver");
-                im.setLore(Collections.singletonList(sonic.getName()));
+                im.setLore(List.of(sonic.getName()));
                 im.setCustomModelData(sonic.getCustomModelData());
                 is.setItemMeta(im);
                 stack[sonic.getSlot()] = is;
@@ -155,7 +155,7 @@ class TARDISSonicGeneratorInventory {
         ItemStack cost = new ItemStack(Material.BOWL, 1);
         ItemMeta cost_im = cost.getItemMeta();
         cost_im.setDisplayName("Artron cost");
-        cost_im.setLore(Collections.singletonList("" + artron));
+        cost_im.setLore(List.of("" + artron));
         cost_im.setCustomModelData(GUISonicGenerator.ARTRON_COST.getCustomModelData());
         cost.setItemMeta(cost_im);
         stack[45] = cost;

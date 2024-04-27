@@ -56,7 +56,7 @@ public class TARDISSonicMenuInventory {
                 ItemStack is = new ItemStack(sonic.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName("Sonic Screwdriver");
-                im.setLore(Collections.singletonList(sonic.getName()));
+                im.setLore(List.of(sonic.getName()));
                 im.setCustomModelData(sonic.getCustomModelData());
                 is.setItemMeta(im);
                 stack[sonic.getSlot()] = is;

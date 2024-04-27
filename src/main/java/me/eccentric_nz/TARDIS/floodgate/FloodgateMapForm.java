@@ -34,7 +34,7 @@ public class FloodgateMapForm {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
-    private final List<String> STONE = Collections.singletonList("STONE");
+    private final List<String> STONE = List.of("STONE");
     private final UUID uuid;
     private final int id;
     private final String path = "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/room/%s.png";

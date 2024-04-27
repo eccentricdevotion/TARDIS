@@ -59,8 +59,8 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -406,7 +406,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                     // update the lore
                     ItemStack d = view.getItem(40);
                     ItemMeta im = d.getItemMeta();
-                    im.setLore(Collections.singletonList(direction));
+                    im.setLore(List.of(direction));
                     d.setItemMeta(im);
                 }
             }
@@ -462,7 +462,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                     delay = 4;
                 }
                 String throttle = SpaceTimeThrottle.getByDelay().get(delay).toString();
-                im.setLore(Collections.singletonList(throttle));
+                im.setLore(List.of(throttle));
                 spt.setItemMeta(im);
                 // update player prefs
                 HashMap<String, Object> wherer = new HashMap<>();

@@ -183,7 +183,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("handbrake_on", 1);
                         plugin.getQueryFactory().doUpdate("tardis", set, wheret);
-                        im.setLore(Collections.singletonList(plugin.getLanguage().getString("SET_ON")));
+                        im.setLore(List.of(plugin.getLanguage().getString("SET_ON")));
                         is.setItemMeta(im);
                         // Check if it's at a recharge point
                         TARDISArtronLevels tal = new TARDISArtronLevels(plugin);

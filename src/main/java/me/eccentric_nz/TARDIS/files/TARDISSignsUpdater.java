@@ -42,8 +42,8 @@ public class TARDISSignsUpdater {
         strings.put("terminal", Arrays.asList("Destination", "Terminal"));
         strings.put("saves", Arrays.asList("Saved", "Locations"));
         strings.put("control", Arrays.asList("Control", "Centre"));
-        strings.put("keyboard", Collections.singletonList("Keyboard"));
-        strings.put("junk", Collections.singletonList("Destination"));
+        strings.put("keyboard", List.of("Keyboard"));
+        strings.put("junk", List.of("Destination"));
     }
 
     public void checkSignsConfig() {

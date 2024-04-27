@@ -168,7 +168,7 @@ public class TARDISTerminalListener implements Listener {
                     // set lore
                     ItemStack is = view.getItem(49);
                     ItemMeta im = is.getItemMeta();
-                    List<String> lore = Collections.singletonList("No valid destination has been set!");
+                    List<String> lore = List.of("No valid destination has been set!");
                     im.setLore(lore);
                     is.setItemMeta(im);
                 }
@@ -209,7 +209,7 @@ public class TARDISTerminalListener implements Listener {
                 String sub = (rsp.isSubmarineOn()) ? "true" : "false";
                 ItemStack is = inv.getItem(44);
                 ItemMeta im = is.getItemMeta();
-                im.setLore(Collections.singletonList(sub));
+                im.setLore(List.of(sub));
                 is.setItemMeta(im);
             }
         }
@@ -244,7 +244,7 @@ public class TARDISTerminalListener implements Listener {
             case 6 -> (signed) ? "-" + (3 * step) : "x" + 1;
             default -> (signed) ? "0" : "x" + 4;
         };
-        return Collections.singletonList(str);
+        return List.of(str);
     }
 
     private int getValue(int max, int slot, boolean signed, UUID uuid) {
@@ -295,24 +295,24 @@ public class TARDISTerminalListener implements Listener {
                 switch (slot) {
                     case 38 ->
                         // get a normal world
-                            lore = Collections.singletonList(getWorld("NORMAL", current, p));
+                            lore = List.of(getWorld("NORMAL", current, p));
                     case 40 -> {
                         // get a nether world
                         if (plugin.getConfig().getBoolean("travel.nether") || !plugin.getConfig().getBoolean("travel.terminal.redefine")) {
-                            lore = Collections.singletonList(getWorld("NETHER", current, p));
+                            lore = List.of(getWorld("NETHER", current, p));
                         } else {
-                            lore = Collections.singletonList(getWorld(plugin.getConfig().getString("travel.terminal.nether"), current, p));
+                            lore = List.of(getWorld(plugin.getConfig().getString("travel.terminal.nether"), current, p));
                         }
                     }
                     case 42 -> {
                         // get an end world
                         if (plugin.getConfig().getBoolean("travel.the_end") || !plugin.getConfig().getBoolean("travel.terminal.redefine")) {
-                            lore = Collections.singletonList(getWorld("THE_END", current, p));
+                            lore = List.of(getWorld("THE_END", current, p));
                         } else {
-                            lore = Collections.singletonList(getWorld(plugin.getConfig().getString("travel.terminal.the_end"), current, p));
+                            lore = List.of(getWorld(plugin.getConfig().getString("travel.terminal.the_end"), current, p));
                         }
                     }
-                    default -> lore = Collections.singletonList(current);
+                    default -> lore = List.of(current);
                 }
             }
             im.setLore(lore);
@@ -326,7 +326,7 @@ public class TARDISTerminalListener implements Listener {
             String bool = (rsp.isSubmarineOn()) ? "false" : "true";
             ItemStack is = view.getItem(44);
             ItemMeta im = is.getItemMeta();
-            im.setLore(Collections.singletonList(bool));
+            im.setLore(List.of(bool));
             is.setItemMeta(im);
             int tf = (rsp.isSubmarineOn()) ? 0 : 1;
             HashMap<String, Object> set = new HashMap<>();

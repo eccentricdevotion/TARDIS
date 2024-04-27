@@ -75,7 +75,7 @@ public class TARDISTravelCoords {
                         return true;
                     }
                     // only world specified
-                    List<String> worlds = Collections.singletonList(world.getName());
+                    List<String> worlds = List.of(world.getName());
                     // get current location
                     HashMap<String, Object> wherec = new HashMap<>();
                     wherec.put("tardis_id", id);

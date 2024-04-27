@@ -70,7 +70,7 @@ class TARDISConfigPageTwoInventory {
                     cmd += 100; // xx -> 1xx
                 }
                 im.setCustomModelData(cmd);
-                im.setLore(Collections.singletonList(value));
+                im.setLore(List.of(value));
                 is.setItemMeta(im);
                 options.add(is);
             }

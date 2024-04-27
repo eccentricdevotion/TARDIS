@@ -28,8 +28,8 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -125,7 +125,7 @@ public class TARDISHumListener extends TARDISMenuListener {
     private void setPlay(InventoryView view, String str) {
         ItemStack play = view.getItem(15);
         ItemMeta save = play.getItemMeta();
-        save.setLore(Collections.singletonList(str));
+        save.setLore(List.of(str));
         play.setItemMeta(save);
     }
 

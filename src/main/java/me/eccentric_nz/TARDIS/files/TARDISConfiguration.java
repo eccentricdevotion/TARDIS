@@ -248,7 +248,7 @@ public class TARDISConfiguration {
         comments.put("circuits", Arrays.asList("circuits", "https://tardis.pages.dev/circuit-use#configuration-options"));
         comments.put("creation", Arrays.asList("inner TARDIS", "https://tardis.pages.dev/configuration/creation"));
         comments.put("desktop", Arrays.asList("desktop theme", "https://tardis.pages.dev/desktop-theme#config-options"));
-        comments.put("display", Collections.singletonList("HUD display"));
+        comments.put("display", List.of("HUD display"));
         comments.put("growth", Arrays.asList("room related", "https://tardis.pages.dev/configuration/growth"));
         comments.put("junk", Arrays.asList("junk TARDIS", "https://tardis.pages.dev/junk-tardis#configuration-options"));
         comments.put("mapping", Arrays.asList("mapping", "https://tardis.pages.dev/modules/mapping#configuration-options"));
@@ -259,7 +259,7 @@ public class TARDISConfiguration {
         comments.put("sonic", Arrays.asList("sonic screwdriver preferences", "https://tardis.pages.dev/sonic-dock#configuration"));
         comments.put("storage", Arrays.asList("how the plugin persists data", "https://tardis.pages.dev/configuration/storage"));
         comments.put("travel", Arrays.asList("travel settings", "https://tardis.pages.dev/configuration/travel"));
-        comments.put("conversions", Collections.singletonList("don't touch!"));
+        comments.put("conversions", List.of("don't touch!"));
     }
 
     /**
