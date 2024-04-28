@@ -93,7 +93,7 @@ public class ConsoleDestroyer {
 
     private void removeTextDisplays(Location centre) {
         Location spawn = centre.clone().add(0.5f, 0, 0.5f);
-        for (Entity e : spawn.getWorld().getNearbyEntities(spawn, 3.5, 2, 3.5, (t) -> t.getType() == EntityType.TEXT_DISPLAY)) {
+        for (Entity e : spawn.getWorld().getNearbyEntities(spawn, 4, 3, 4, (t) -> t.getType() == EntityType.TEXT_DISPLAY)) {
             if (e instanceof TextDisplay) {
                 e.remove();
             }

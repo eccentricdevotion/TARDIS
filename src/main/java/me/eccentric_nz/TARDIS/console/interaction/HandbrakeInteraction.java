@@ -114,7 +114,7 @@ public class HandbrakeInteraction {
                             return;
                         }
                         // check the state of the Relativity Differentiator
-                        if (check.isFlightModeExterior(uuid.toString()) && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand() && !player.isSneaking()) {
+                        if (check.isFlightModeExterior(uuid.toString()) && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand()) {
                             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                             if (!rsc.resultSet()) {
                                 plugin.debug("No current location");

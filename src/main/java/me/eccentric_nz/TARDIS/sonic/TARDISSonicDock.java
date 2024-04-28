@@ -49,8 +49,8 @@ public class TARDISSonicDock {
         if (TARDISDisplayItemUtils.getSonic(interaction) != null) {
             return;
         }
-        ItemDisplay display = doDocking(sonic, interaction.getLocation(), new Vector(0.05d, 0.75d, -0.05d), player, id);
-        display.setRotation(0.0f, -15.0f);
+        ItemDisplay display = doDocking(sonic, interaction.getLocation(), new Vector(0, 0.75d, 0.1d), player, id);
+        display.setRotation(0.0f, 15.0f);
         // start charging
         if (plugin.getConfig().getBoolean("sonic.charge") || plugin.getDifficulty() == Difficulty.HARD) {
             long delay = plugin.getConfig().getLong("sonic.charge_level") / plugin.getConfig().getLong("sonic.charge_interval");

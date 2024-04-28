@@ -28,7 +28,7 @@ public class ScreenInteraction {
             // get the text display
             TextDisplay display = getTextDisplay(interaction.getLocation(), coords);
             if (display != null) {
-                display.setRotation(Location.normalizeYaw(300), -10f);
+                display.setRotation(Location.normalizeYaw(120), -10f);
                 new ControlMonitor(plugin).update(id, display.getUniqueId(), coords);
             }
         } else {
@@ -80,7 +80,8 @@ public class ScreenInteraction {
         }
         if (textDisplay == null) {
             Location adjusted = location.clone();
-            Vector vector = coords ? new Vector(0.0d, 0.5d, 0.35d) : new Vector(0.32d, 0.5d, -0.225d);
+            // from middle of interaction!
+            Vector vector = coords ? new Vector(0d, 0.5d, -0.35d) : new Vector(-0.2d, 0.5d, 0.175d);
             adjusted.add(vector);
             textDisplay = (TextDisplay) location.getWorld().spawnEntity(adjusted, EntityType.TEXT_DISPLAY);
             textDisplay.getPersistentDataContainer().set(plugin.getInteractionUuidKey(), PersistentDataType.BOOLEAN, true);

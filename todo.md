@@ -8,12 +8,11 @@
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
    * New interior with console
    * Malfunction & manual flight classes
-   * Regular handbrake needs to check console filght mode
+   * Regular handbrake needs to check console flight mode
    * Remove sonic screwdriver when breaking console
    * Alter console side model inner edge / make new time rotor for console
-   * Change order of console panels so handbrake is near door
-   * Make sneak-clicking a control show the label + alter the position based on the angle of the panel the control is on
-4. Update old light level controls
+   * Alter the position of the control label based on the angle of the panel the control is on
+4. Update old light level controls, and light switch shoulf return to correct level
 5. ?
 
 ## Next version `5.7.0`

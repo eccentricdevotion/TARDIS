@@ -116,7 +116,7 @@ public class ConsoleBuilder {
         if (interaction == ConsoleInteraction.SCREEN_LEFT && right != null) {
             return right;
         }
-        if ((interaction == ConsoleInteraction.X||interaction == ConsoleInteraction.Z||interaction == ConsoleInteraction.MULTIPLIER) && wxyz != null) {
+        if ((interaction == ConsoleInteraction.X || interaction == ConsoleInteraction.Z || interaction == ConsoleInteraction.MULTIPLIER) && wxyz != null) {
             return wxyz;
         }
         Material material = interaction.getMaterial();
