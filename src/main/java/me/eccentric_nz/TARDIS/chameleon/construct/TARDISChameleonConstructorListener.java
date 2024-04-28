@@ -239,25 +239,25 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener {
                     String jsonBlue = gson.toJson(blue);
                     String jsonStain = gson.toJson(stain);
                     String jsonGlass = gson.toJson(glass);
-                    // save chameleon construct
-                    HashMap<String, Object> wherec = new HashMap<>();
-                    wherec.put("tardis_id", id);
-                    ResultSetChameleon rsc = new ResultSetChameleon(plugin, wherec);
-                    HashMap<String, Object> set = new HashMap<>();
-                    set.put("blueprintData", jsonBlue);
-                    set.put("stainData", jsonStain);
-                    set.put("glassData", jsonGlass);
-                    if (rsc.resultSet()) {
-                        // update
-                        HashMap<String, Object> whereu = new HashMap<>();
-                        whereu.put("tardis_id", id);
-                        plugin.getQueryFactory().doUpdate("chameleon", set, whereu);
-                    } else {
-                        // insert
-                        set.put("tardis_id", id);
-                        plugin.getQueryFactory().doInsert("chameleon", set);
-                    }
-                    new ConstructBuilder(plugin).build(tardis.getPreset().toString(), id, player);
+                    HashMap<String, Object> seti = new HashMap<>();
+                    seti.put("active", 0);
+                    HashMap<String, Object> wherei = new HashMap<>();
+                    wherei.put("tardis_id", id);
+                    plugin.getQueryFactory().doSyncUpdate("chameleon", seti, wherei);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        // save chameleon construct
+                        HashMap<String, Object> wherec = new HashMap<>();
+                        ResultSetChameleon rsc = new ResultSetChameleon(plugin, wherec);
+                        HashMap<String, Object> setc = new HashMap<>();
+                        setc.put("tardis_id", id);
+                        setc.put("blueprintData", jsonBlue);
+                        setc.put("stainData", jsonStain);
+                        setc.put("glassData", jsonGlass);
+                        setc.put("active", 1);
+                        // always insert as you can now have multiple shell constructs
+                        plugin.getQueryFactory().doSyncInsert("chameleon", setc);
+                        new ConstructBuilder(plugin).build(tardis.getPreset().toString(), id, player);
+                    }, 5L);
                 }
                 case 26 -> {
                     // set lamp
@@ -306,6 +306,4 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener {
         view.setItem(52, new ItemStack(doors.get(d)));
         currentDoor.put(uuid, d);
     }
-
-
 }
