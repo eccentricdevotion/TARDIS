@@ -27,8 +27,12 @@ public class ConsoleInteractionListener implements Listener {
                 ResultSetInteraction rsi = new ResultSetInteraction(plugin, uuid);
                 if (rsi.resultSet()) {
                     ConsoleInteraction ci = rsi.getControl();
-                    int id = rsi.getTardisId();
                     Player player = event.getPlayer();
+                    if (player.isSneaking() && ci != ConsoleInteraction.SCREEN_LEFT && ci != ConsoleInteraction.SCREEN_RIGHT&& ci != ConsoleInteraction.ARTRON) {
+                        plugin.getMessenger().announceRepeater(player, rsi.getControl().getAlternateName());
+                        return;
+                    }
+                    int id = rsi.getTardisId();
                     int state = rsi.getState();
                     switch (ci) {
                         // section zero
