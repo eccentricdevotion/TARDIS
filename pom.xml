@@ -247,16 +247,9 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.20.5-R0.1-SNAPSHOT</version>
-            <classifier>remapped-mojang</classifier>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.20.4-R0.1-SNAPSHOT</version>
+            <version>1.20.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -276,6 +269,13 @@
                     <artifactId>maven-resolver-provider</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.20.5-R0.1-SNAPSHOT</version>
+            <classifier>remapped-mojang</classifier>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.papermc</groupId>
