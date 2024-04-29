@@ -11,6 +11,7 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 public class LightLevelInteraction {
@@ -48,6 +49,13 @@ public class LightLevelInteraction {
             new LightLevelAction(plugin).illuminate(setLevel - 1, rs.getControlId(), rs.isPowered(), 50, rs.isPoliceBox(), id, rs.isLightsOn());
             new InteractionStateSaver(plugin).write("INTERIOR_LIGHT_LEVEL_SWITCH", setLevel, id);
             plugin.getMessenger().announceRepeater(player, "Light level: " + InteractionResponse.levels.get(setLevel));
+            // set control record
+            HashMap<String, Object> set = new HashMap<>();
+            set.put("secondary", setLevel);
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            where.put("type", 50);
+            plugin.getQueryFactory().doSyncUpdate("controls", set, where);
         }
     }
 }

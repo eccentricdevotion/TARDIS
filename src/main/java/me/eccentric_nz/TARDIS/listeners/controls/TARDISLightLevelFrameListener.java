@@ -51,7 +51,7 @@ public class TARDISLightLevelFrameListener implements Listener {
                 if (!rs.isPowered()) {
                     start += 1000;
                 }
-                int limit = start + 3;
+                int limit = start + 7;
                 ItemStack is = frame.getItem();
                 ItemMeta im = is.getItemMeta();
                 if (im.hasCustomModelData()) {
