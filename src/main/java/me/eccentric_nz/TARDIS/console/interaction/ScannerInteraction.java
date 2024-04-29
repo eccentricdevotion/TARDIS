@@ -20,6 +20,9 @@ public class ScannerInteraction {
     }
 
     public void process(int id, Player player, Interaction interaction) {
+        if (plugin.getTrackerKeeper().getFlight().containsKey(player.getUniqueId())) {
+            return;
+        }
         // set custom model data for scanner button item display
         UUID uuid = interaction.getPersistentDataContainer().get(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID());
         if (uuid != null) {

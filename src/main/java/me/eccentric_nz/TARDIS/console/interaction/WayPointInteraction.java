@@ -21,6 +21,9 @@ public class WayPointInteraction {
     }
 
     public void openSaveGUI(int id, Player player, Interaction interaction) {
+        if (plugin.getTrackerKeeper().getFlight().containsKey(player.getUniqueId())) {
+            return;
+        }
         // set custom model data for saves button item display
         UUID uuid = interaction.getPersistentDataContainer().get(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID());
         if (uuid != null) {

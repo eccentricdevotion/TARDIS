@@ -21,6 +21,9 @@ public class SonicDockInteraction {
     }
 
     public void process(Player player, Interaction interaction, int id) {
+        if (plugin.getTrackerKeeper().getFlight().containsKey(player.getUniqueId())) {
+            return;
+        }
         boolean activate = false;
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.getType().equals(Material.BLAZE_ROD) && is.hasItemMeta()) {

@@ -21,6 +21,9 @@ public class FlightModeInteraction {
     }
 
     public void process(Player player, int id, Interaction interaction) {
+        if (plugin.getTrackerKeeper().getFlight().containsKey(player.getUniqueId())) {
+            return;
+        }
         String uuid = player.getUniqueId().toString();
         // get current throttle setting
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);

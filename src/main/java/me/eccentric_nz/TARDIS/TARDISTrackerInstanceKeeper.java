@@ -84,7 +84,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, Integer> secondaryRemovers = new HashMap<>();
     private final HashMap<UUID, Integer> siegeCarrying = new HashMap<>();
     private final HashMap<UUID, JsonObject> pastes = new HashMap<>();
-    private final HashMap<UUID, List<Location>> repeaters = new HashMap<>();
+    private final HashMap<UUID, List<Location>> manualFlightLocations = new HashMap<>();
     private final HashMap<UUID, List<UUID>> renderedNPCs = new HashMap<>();
     private final HashMap<UUID, Location> activeForceFields = new HashMap<>();
     private final HashMap<UUID, Location> dispersed = new HashMap<>();
@@ -464,10 +464,10 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Another tracker for TARDIS Manual flight mode
      *
-     * @return a Map of player UUIDs and their TARDIS repeater control locations
+     * @return a Map of player UUIDs and their TARDIS control locations
      */
-    public HashMap<UUID, List<Location>> getRepeaters() {
-        return repeaters;
+    public HashMap<UUID, List<Location>> getManualFlightLocations() {
+        return manualFlightLocations;
     }
 
     /**

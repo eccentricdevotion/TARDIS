@@ -23,6 +23,9 @@ public class ScreenInteraction {
     }
 
     public void display(int id, Interaction interaction, boolean coords, Player player) {
+        if (plugin.getTrackerKeeper().getFlight().containsKey(player.getUniqueId())) {
+            return;
+        }
         // if shift-click change display else open Control Menu GUI
         if (player.isSneaking()) {
             // get the text display

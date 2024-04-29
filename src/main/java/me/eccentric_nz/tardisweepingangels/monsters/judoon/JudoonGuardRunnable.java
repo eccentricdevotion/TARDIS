@@ -33,7 +33,6 @@ public class JudoonGuardRunnable implements Runnable {
 
     private final TARDIS plugin;
 
-    // TODO - delete
     public JudoonGuardRunnable(TARDIS plugin) {
         this.plugin = plugin;
     }
@@ -70,7 +69,6 @@ public class JudoonGuardRunnable implements Runnable {
                             // set judoon yaw
                             origin.setDirection(direction.subtract(start)); //set the origin's direction to be the direction vector between point A and B.
                             float yaw = origin.getYaw();
-                            plugin.debug("yaw = " + yaw);
                             entity.setRotation(yaw,0);
                             ammo -= 1;
                             if (ammo >= 0) {

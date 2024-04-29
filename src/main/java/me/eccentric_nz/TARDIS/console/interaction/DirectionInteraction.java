@@ -20,6 +20,9 @@ public class DirectionInteraction {
     }
 
     public void rotate(int id, Player player, Interaction interaction) {
+        if (plugin.getTrackerKeeper().getFlight().containsKey(player.getUniqueId())) {
+            return;
+        }
         if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT");
             return;

@@ -135,7 +135,7 @@ public class TARDISWeepingAngels {
 
     public void enable() {
         citizensEnabled = plugin.getPM().isPluginEnabled("Citizens");
-        // TODO add TWA apin to TARDIS API
+        // TODO add TWA api to TARDIS API
         api = new MonsterEquipment();
         // update the config
         new MonstersConfig(plugin).updateConfig();

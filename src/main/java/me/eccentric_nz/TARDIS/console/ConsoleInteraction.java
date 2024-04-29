@@ -33,12 +33,19 @@ public enum ConsoleInteraction {
     FAST_RETURN("Back Button", new Vector(1.8d, 1d, -0.9d), 0.25f, 0.33f, 0, 240.0f, Material.BAMBOO_BUTTON, 1003),
     TELEPATHIC_CIRCUIT("Telepathic Circuit", new Vector(1.575d, 1d, -0.05d), 0.5f, 0.65f, 0, 240.0f, Material.DAYLIGHT_DETECTOR, 1000),
 
-    // section five HELMIC_REGULATOR x=-1.134, z=-1.636
+    // section five
+
     WORLD("Environment Selector", new Vector(1.425d, 1.0d, 1.15d), 0.15f, 0.65f, 1, 300.0f, Material.BAMBOO_BUTTON, 1009),
     MULTIPLIER("Coordinate Increment Modifier", new Vector(1.55d, 1.0d, 0.925d), 0.15f, 0.65f, 1, 300.0f, Material.BAMBOO_BUTTON, 1009),
     X("X Distance", new Vector(1.625d, 1.0d, 1.275d), 0.15f, 0.4f, 1, 300.0f, Material.BAMBOO_BUTTON, 1009),
     Z("Z Distance", new Vector(1.75d, 1.0d, 1.05), 0.15f, 0.4f, 1, 300.0f, Material.BAMBOO_BUTTON, 1009),
-    HELMIC_REGULATOR("Dimension Selector", new Vector(2.25d, 1d, 1.075d), 0.5f, 0.6f, 0, 300.0f, Material.REPEATER, 2000);
+    HELMIC_REGULATOR("Helmic Regulator", new Vector(2.25d, 1d, 1.075d), 0.5f, 0.6f, 0, 300.0f, Material.ARMADILLO_SCUTE, 2000),
+
+    // manual flight (includes helmic regulator above)
+    ASTROSEXTANT_RECTIFIER("Astrosextant Rectifier", new Vector(0.55d, 1d, -1.35d), 0.15f, 0.35f, 0, 180.0f, Material.ARMADILLO_SCUTE, 1000),
+    GRAVITIC_ANOMALISER("Gravitic Anomaliser", new Vector(0.125d, 1d, 1.8d), 0.15f, 0.5f, 0, 0.0f, Material.ARMADILLO_SCUTE, 1001),
+    ABSOLUTE_TESSERACTULATOR("Absolute Tesseractulator", new Vector(-1.15d, 1d, 0.825d), 0.15f, 0.5f, 0, 60.0f, Material.ARMADILLO_SCUTE, 1002);
+
 
     private final String alternateName;
     private final Vector relativePosition;

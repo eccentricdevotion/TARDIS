@@ -22,6 +22,9 @@ public class LightLevelInteraction {
     }
 
     public void setInterior(int state, int id, Interaction interaction, Player player) {
+        if (plugin.getTrackerKeeper().getFlight().containsKey(player.getUniqueId())) {
+            return;
+        }
         int unary = interaction.getPersistentDataContainer().getOrDefault(plugin.getUnaryKey(), PersistentDataType.INTEGER, 1);
         int setLevel = state + unary;
         if (setLevel > 7) {

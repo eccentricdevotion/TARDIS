@@ -16,6 +16,9 @@ public class TelepathicCircuitInteraction {
     }
 
     public void openGUI(Player player) {
+        if (plugin.getTrackerKeeper().getFlight().containsKey(player.getUniqueId())) {
+            return;
+        }
         // open GUI for
         // toggling telepathic circuit on/off
         // cave finder

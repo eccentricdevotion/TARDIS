@@ -17,6 +17,9 @@ public class ArtronInteraction {
     }
 
     public void show(int id, Player player, Interaction interaction) {
+        if (plugin.getTrackerKeeper().getFlight().containsKey(player.getUniqueId())) {
+            return;
+        }
         // set custom model data for artron button item display
         UUID uuid = interaction.getPersistentDataContainer().get(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID());
         if (uuid != null) {

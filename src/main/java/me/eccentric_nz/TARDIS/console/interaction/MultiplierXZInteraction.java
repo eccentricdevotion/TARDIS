@@ -19,6 +19,9 @@ public class MultiplierXZInteraction {
     }
 
     public void setRange(ConsoleInteraction ci, int state, Interaction interaction, int id, Player player) {
+        if (plugin.getTrackerKeeper().getFlight().containsKey(player.getUniqueId())) {
+            return;
+        }
         int next = state + 1;
         if (next > 4) {
             next = 1;

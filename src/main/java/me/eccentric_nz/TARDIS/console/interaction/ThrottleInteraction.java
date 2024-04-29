@@ -23,6 +23,9 @@ public class ThrottleInteraction {
     }
 
     public void process(Player player, Interaction interaction, int id) {
+        if (plugin.getTrackerKeeper().getFlight().containsKey(player.getUniqueId())) {
+            return;
+        }
         String uuid = player.getUniqueId().toString();
         int unary = interaction.getPersistentDataContainer().getOrDefault(plugin.getUnaryKey(), PersistentDataType.INTEGER, -1);
         // get current throttle setting

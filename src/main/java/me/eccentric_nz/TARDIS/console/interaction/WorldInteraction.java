@@ -19,6 +19,9 @@ public class WorldInteraction {
     }
 
     public void selectWorld(int state, Player player, Interaction interaction, int id) {
+        if (plugin.getTrackerKeeper().getFlight().containsKey(player.getUniqueId())) {
+            return;
+        }
         /*
         THIS => 1,
         NORMAL => 2,

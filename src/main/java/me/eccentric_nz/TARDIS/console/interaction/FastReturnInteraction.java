@@ -24,6 +24,9 @@ public class FastReturnInteraction {
     }
 
     public void setBack(int id, Player player, Interaction interaction) {
+        if (plugin.getTrackerKeeper().getFlight().containsKey(player.getUniqueId())) {
+            return;
+        }
         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
             return;

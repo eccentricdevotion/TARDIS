@@ -40,6 +40,9 @@ public class HandbrakeInteraction {
     }
 
     public void process(int id, int state, Player player, Interaction interaction) {
+        if (plugin.getTrackerKeeper().getFlight().containsKey(player.getUniqueId())) {
+            return;
+        }
         UUID uuid = player.getUniqueId();
         Location handbrake = interaction.getLocation();
         TARDISCircuitChecker tcc = null;
