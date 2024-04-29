@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.chatGUI;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.entity.Player;
 
 public class TARDISUpdateChatGUIAdventure implements TARDISUpdateChatGUI {
@@ -33,42 +34,42 @@ public class TARDISUpdateChatGUIAdventure implements TARDISUpdateChatGUI {
         if (args.length == 1) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_SECTION");
             player.sendMessage("------");
-//            plugin.getJsonKeeper().getSections().forEach((s) -> player.sendMessage((TextComponent) s));
+            plugin.getJsonKeeper().getSections().forEach((s) -> player.sendMessage((TextComponent) s));
             player.sendMessage("------");
             return true;
         }
         if (args[1].equalsIgnoreCase("controls")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_CONTROL");
             player.sendMessage("------");
-//            plugin.getJsonKeeper().getControls().forEach((c) -> player.sendMessage((TextComponent) c));
+            plugin.getJsonKeeper().getControls().forEach((c) -> player.sendMessage((TextComponent) c));
             player.sendMessage("------");
             return true;
         }
         if (args[1].equalsIgnoreCase("interfaces")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_INTERFACE");
             player.sendMessage("------");
-//            plugin.getJsonKeeper().getInterfaces().forEach((i) -> player.sendMessage((TextComponent) i));
+            plugin.getJsonKeeper().getInterfaces().forEach((i) -> player.sendMessage((TextComponent) i));
             player.sendMessage("------");
             return true;
         }
         if (args[1].equalsIgnoreCase("locations")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_LOCATION");
             player.sendMessage("------");
-//            plugin.getJsonKeeper().getLocations().forEach((l) -> player.sendMessage((TextComponent) l));
+            plugin.getJsonKeeper().getLocations().forEach((l) -> player.sendMessage((TextComponent) l));
             player.sendMessage("------");
             return true;
         }
         if (args[1].equalsIgnoreCase("sensors")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_SENSOR");
             player.sendMessage("------");
-//            plugin.getJsonKeeper().getSensors().forEach((s) -> player.sendMessage((TextComponent) s));
+            plugin.getJsonKeeper().getSensors().forEach((s) -> player.sendMessage((TextComponent) s));
             player.sendMessage("------");
             return true;
         }
         if (args[1].equalsIgnoreCase("others")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_OTHER");
             player.sendMessage("------");
-//            plugin.getJsonKeeper().getOthers().forEach((o) -> player.sendMessage((TextComponent) o));
+            plugin.getJsonKeeper().getOthers().forEach((o) -> player.sendMessage((TextComponent) o));
             player.sendMessage("------");
             return true;
         }
