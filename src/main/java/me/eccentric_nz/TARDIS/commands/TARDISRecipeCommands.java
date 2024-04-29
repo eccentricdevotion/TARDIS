@@ -380,10 +380,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
             case "TARDIS Invisibility Circuit", "Perception Filter" -> {
                 return "Perception Circuit"; // 1978
             }
-            case "Sonic Screwdriver", "Server Admin Circuit" -> {
+            case "Sonic Screwdriver", "Server Admin Circuit", "Sonic Dock" -> {
                 return "Sonic Oscillator"; // 1967
             }
-            case "Fob Watch" -> {
+            case "Fob Watch", "Preset Storage Disk" -> {
                 return "TARDIS Chameleon Circuit"; // 1966
             }
             case "TARDIS Biome Reader", "Emerald Upgrade" -> {
