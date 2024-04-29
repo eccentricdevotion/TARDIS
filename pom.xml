@@ -418,7 +418,7 @@
         <dependency>
             <groupId>nl.rutgerkok</groupId>
             <artifactId>blocklocker</artifactId>
-            <version>1.10.5-SNAPSHOT</version>
+            <version>1.12.2</version>
             <type>jar</type>
             <scope>provided</scope>
             <exclusions>
