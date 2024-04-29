@@ -14,7 +14,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class TelepathicStructureListener extends TARDISMenuListener {
 
-
     public TelepathicStructureListener(TARDIS plugin) {
         super(plugin);
     }

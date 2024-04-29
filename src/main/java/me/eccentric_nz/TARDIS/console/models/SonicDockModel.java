@@ -15,7 +15,7 @@ public class SonicDockModel {
         ItemStack is = display.getItemStack();
         ItemMeta im = is.getItemMeta();
         int cmd = im.getCustomModelData();
-        im.setCustomModelData(activate?2001:2000);
+        im.setCustomModelData(activate ? 2001 : 2000);
         is.setItemMeta(im);
         display.setItemStack(is);
     }

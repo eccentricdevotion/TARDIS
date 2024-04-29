@@ -18,7 +18,7 @@ public class ConsoleChanger {
 
     public void setType(Block block, int type) {
         // get item displays around the block
-        for (Entity entity : block.getWorld().getNearbyEntities(block.getLocation(), 2,2,2)) {
+        for (Entity entity : block.getWorld().getNearbyEntities(block.getLocation(), 2, 2, 2)) {
             if (entity instanceof ItemDisplay display) {
                 // get the item stack
                 ItemStack is = display.getItemStack();

@@ -2,17 +2,16 @@ package me.eccentric_nz.TARDIS.console;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.models.ColourType;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.ClearInteractions;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConsoleLabel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetInteractionsFromId;
+import me.eccentric_nz.TARDIS.sonic.SonicLore;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.ItemDisplay;
-import org.bukkit.entity.TextDisplay;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -37,6 +36,15 @@ public class ConsoleDestroyer {
             for (UUID u : rs.getUuids()) {
                 Entity e = plugin.getServer().getEntity(u);
                 if (e != null) {
+                    // check for sonic
+                    ItemDisplay docked = TARDISDisplayItemUtils.getSonic((Interaction) e);
+                    if (docked != null) {
+                        ItemStack sonic = docked.getItemStack();
+                        // set the charge level in lore
+                        SonicLore.setChargeLevel(sonic);
+                        e.getWorld().dropItemNaturally(e.getLocation(), sonic);
+                        docked.remove();
+                    }
                     // item displays
                     UUID uuid = e.getPersistentDataContainer().get(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID());
                     if (uuid != null) {
