@@ -7,7 +7,6 @@
 3. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
    * New interior with console
-   * Malfunction & manual flight classes
    * Regular handbrake needs to check console flight mode
    * Remove sonic screwdriver when breaking console
    * Alter console side model inner edge / make new time rotor for console

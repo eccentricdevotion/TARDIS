@@ -115,8 +115,8 @@ public class TARDISSeedBlockListener implements Listener {
                 return;
             }
             // must not have a console already
-            ResultSetInteractionCheck rsi = new ResultSetInteractionCheck(plugin, player.getUniqueId());
-            if (rsi.resultSet()) {
+            ResultSetInteractionCheck rsi = new ResultSetInteractionCheck(plugin);
+            if (rsi.resultSetFromUUID(player.getUniqueId())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CONSOLE_HAS");
                 event.setCancelled(true);
                 return;

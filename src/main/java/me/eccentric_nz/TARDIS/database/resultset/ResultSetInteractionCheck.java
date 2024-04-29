@@ -39,16 +39,14 @@ public class ResultSetInteractionCheck {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
-    private final UUID uuid;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the interactions table.
      *
      * @param plugin an instance of the main class.
      */
-    public ResultSetInteractionCheck(TARDIS plugin, UUID uuid) {
+    public ResultSetInteractionCheck(TARDIS plugin) {
         this.plugin = plugin;
-        this.uuid = uuid;
         prefix = this.plugin.getPrefix();
     }
 
@@ -58,7 +56,7 @@ public class ResultSetInteractionCheck {
      *
      * @return true or false depending on whether any data matches the query
      */
-    public boolean resultSet() {
+    public boolean resultSetFromUUID(UUID uuid) {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT " + prefix + "interactions.i_id FROM " + prefix + "interactions, " + prefix + "tardis WHERE " + prefix + "tardis.uuid = ? AND " + prefix + "interactions.tardis_id = " + prefix + "tardis.tardis_id";
@@ -73,7 +71,7 @@ public class ResultSetInteractionCheck {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for interactions check table! " + e.getMessage());
+            plugin.debug("ResultSet error for interactions UUID check! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -84,7 +82,38 @@ public class ResultSetInteractionCheck {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing interactions check table! " + e.getMessage());
+                plugin.debug("Error closing interactions UUID check! " + e.getMessage());
+            }
+        }
+    }
+
+    public boolean resultSetFromId(int id) {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "SELECT " + prefix + "interactions.i_id FROM " + prefix + "interactions, " + prefix + "tardis WHERE " + prefix + "tardis.tardis_id = ? AND " + prefix + "interactions.tardis_id = " + prefix + "tardis.tardis_id";
+        try {
+            service.testConnection(connection);
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for interactions id check! " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing interactions id check! " + e.getMessage());
             }
         }
     }

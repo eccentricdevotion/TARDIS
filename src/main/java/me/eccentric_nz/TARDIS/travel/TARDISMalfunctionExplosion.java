@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.travel;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetFlightControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISFirework;
@@ -41,14 +42,16 @@ public class TARDISMalfunctionExplosion implements Runnable {
     private final TARDIS plugin;
     private final int id;
     private final long end;
+    private final boolean console;
     private boolean started = false;
     private List<Location> locations;
     private int task;
 
-    public TARDISMalfunctionExplosion(TARDIS plugin, int id, long end) {
+    public TARDISMalfunctionExplosion(TARDIS plugin, int id, long end, boolean console) {
         this.plugin = plugin;
         this.id = id;
         this.end = end;
+        this.console = console;
     }
 
     @Override
@@ -59,9 +62,16 @@ public class TARDISMalfunctionExplosion implements Runnable {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
             if (rs.resultSet()) {
                 Tardis tardis = rs.getTardis();
-                ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, tardis.getTardisId(), 0);
-                if (rsr.resultSet()) {
-                    locations = rsr.getLocations();
+                if (console) {
+                    ResultSetFlightControls rsfc = new ResultSetFlightControls(plugin, id);
+                    if (rsfc.resultSet()) {
+                        locations = rsfc.getLocations();
+                    }
+                } else {
+                    ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, tardis.getTardisId(), 0);
+                    if (rsr.resultSet()) {
+                        locations = rsr.getLocations();
+                    }
                 }
                 started = true;
             }

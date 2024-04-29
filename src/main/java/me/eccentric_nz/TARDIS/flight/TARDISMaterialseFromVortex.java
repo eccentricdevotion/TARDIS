@@ -202,8 +202,8 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         if (flight_mode == 2) {
                             runner = new TARDISRegulatorStarter(plugin, player, id);
                         } else {
-                            ResultSetInteractionCheck rsic = new ResultSetInteractionCheck(plugin, uuid);
-                            runner = new TARDISManualFlightStarter(plugin, player, id, rsic.resultSet());
+                            ResultSetInteractionCheck rsic = new ResultSetInteractionCheck(plugin);
+                            runner = new TARDISManualFlightStarter(plugin, player, id, rsic.resultSetFromId(id));
                         }
                         // start the flying mode (after demat if not in vortex already)
                         scheduler.scheduleSyncDelayedTask(plugin, runner, flight_mode_delay);
