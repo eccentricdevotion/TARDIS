@@ -45,7 +45,7 @@ public class ConsoleBuilder {
             im.setCustomModelData(1000 + type);
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
             shard.setItemMeta(im);
-            ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
+            ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.25d, 0.5d), EntityType.ITEM_DISPLAY);
             display.setItemStack(shard);
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
             UUID uuid = display.getUniqueId();
@@ -65,7 +65,7 @@ public class ConsoleBuilder {
             im.setCustomModelData(2000 + type);
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
             shard.setItemMeta(im);
-            ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
+            ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.25d, 0.5d), EntityType.ITEM_DISPLAY);
             display.setItemStack(shard);
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
             UUID uuid = display.getUniqueId();
@@ -83,7 +83,7 @@ public class ConsoleBuilder {
             UUID uuid = spawnControl(i, block.getLocation(), i.getYaw(), id);
             double x = i.getRelativePosition().getX();
             double z = i.getRelativePosition().getZ();
-            Location location = block.getLocation().clone().add(x, 1, z);
+            Location location = block.getLocation().clone().add(x, 0.75, z);
             Interaction interaction = (Interaction) location.getWorld().spawnEntity(location, EntityType.INTERACTION);
             interaction.getPersistentDataContainer().set(plugin.getInteractionUuidKey(), plugin.getPersistentDataTypeUUID(), interaction.getUniqueId());
             if (i == ConsoleInteraction.THROTTLE) {
@@ -133,7 +133,7 @@ public class ConsoleBuilder {
         im.setCustomModelData(cmd);
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
         is.setItemMeta(im);
-        ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, 1.5d, 0.5d), EntityType.ITEM_DISPLAY);
+        ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
         display.setPersistent(true);
