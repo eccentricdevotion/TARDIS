@@ -10,14 +10,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.UUID;
 
-public class ConcoleColourChanger {
+public class ConsoleColourChanger {
 
     private final TARDIS plugin;
     private final Location location;
     private final String uuids;
     private final int type;
 
-    public ConcoleColourChanger(TARDIS plugin, Location location, String uuids, int type) {
+    public ConsoleColourChanger(TARDIS plugin, Location location, String uuids, int type) {
         this.plugin = plugin;
         this.location = location;
         this.uuids = uuids;

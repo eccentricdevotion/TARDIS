@@ -4,7 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.ConsoleDestroyer;
 import me.eccentric_nz.TARDIS.console.ControlMonitor;
 import me.eccentric_nz.TARDIS.console.models.ColourType;
-import me.eccentric_nz.TARDIS.console.models.ConcoleColourChanger;
+import me.eccentric_nz.TARDIS.console.models.ConsoleColourChanger;
 import me.eccentric_nz.TARDIS.control.actions.ControlMenuAction;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
@@ -48,7 +48,7 @@ public class ScreenInteraction {
                 String uuids = interaction.getPersistentDataContainer().get(plugin.getUnaryKey(), PersistentDataType.STRING);
                 if (uuids != null) {
                     // change the colour of the console
-                    if (new ConcoleColourChanger(plugin, interaction.getLocation(), uuids, colour).paint()) {
+                    if (new ConsoleColourChanger(plugin, interaction.getLocation(), uuids, colour).paint()) {
                         // take the concrete powder
                         if (amount < 7) {
                             player.getInventory().setItemInMainHand(null);
