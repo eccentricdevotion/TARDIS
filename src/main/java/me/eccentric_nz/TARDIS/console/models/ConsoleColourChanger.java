@@ -36,7 +36,12 @@ public class ConsoleColourChanger {
                         ItemStack is = display.getItemStack();
                         if (is != null) {
                             ItemMeta im = is.getItemMeta();
-                            int cmd = im.getCustomModelData() > 2000 ? 2000 : 1000;
+                            int cmd = 1000;
+                            if (im.getCustomModelData() > 3000) {
+                                cmd = 3000;
+                            } else if (im.getCustomModelData() > 2000) {
+                                cmd = 2000;
+                            }
                             im.setCustomModelData(cmd + type);
                             is.setItemMeta(im);
                             display.setItemStack(is);

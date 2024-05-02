@@ -53,7 +53,6 @@ public class FlightModeInteraction {
                 ItemDisplay display = (ItemDisplay) plugin.getServer().getEntity(model);
                 new FlightModeModel().setState(display, mode);
             }
-            // TODO make malfunction / manual classes
         }
     }
 }

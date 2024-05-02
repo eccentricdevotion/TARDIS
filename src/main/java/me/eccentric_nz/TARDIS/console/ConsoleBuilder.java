@@ -30,7 +30,7 @@ public class ConsoleBuilder {
 
     public void create(Block block, int type, int id) {
         StringBuilder builder = new StringBuilder();
-        String prefix = "";
+        String prefix = "~";
         Block up = block.getRelative(BlockFace.UP);
         // save the block location
         HashMap<String, Object> setb = new HashMap<>();
@@ -39,6 +39,9 @@ public class ConsoleBuilder {
         setb.put("control", "CENTRE");
         setb.put("state", 0);
         plugin.getQueryFactory().doInsert("interactions", setb);
+        // spawn a centre display item
+        UUID centre = spawnCentreDisplay(up.getLocation(), type);
+        builder.append(centre);
         for (int i = 0; i < 6; i++) {
             ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
             ItemMeta im = shard.getItemMeta();
@@ -50,7 +53,6 @@ public class ConsoleBuilder {
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
             UUID uuid = display.getUniqueId();
             builder.append(prefix).append(uuid);
-            prefix = "~";
             display.getPersistentDataContainer().set(plugin.getInteractionUuidKey(), plugin.getPersistentDataTypeUUID(), uuid);
             display.setPersistent(true);
             display.setInvulnerable(true);
@@ -165,5 +167,22 @@ public class ConsoleBuilder {
             default -> cmd = 0;
         }
         return cmd;
+    }
+
+    private UUID spawnCentreDisplay(Location up, int type) {
+        ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
+        ItemMeta im = shard.getItemMeta();
+        int cmd = 3000 + type;
+        im.setCustomModelData(cmd);
+        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
+        shard.setItemMeta(im);
+        ItemDisplay display = (ItemDisplay) up.getWorld().spawnEntity(up.add(0.5d, 0.25d, 0.5d), EntityType.ITEM_DISPLAY);
+        display.setItemStack(shard);
+        display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
+        UUID uuid = display.getUniqueId();
+        display.getPersistentDataContainer().set(plugin.getInteractionUuidKey(), plugin.getPersistentDataTypeUUID(), uuid);
+        display.setPersistent(true);
+        display.setInvulnerable(true);
+        return uuid;
     }
 }
