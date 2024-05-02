@@ -26,7 +26,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -80,7 +79,7 @@ class TARDISSonicGeneratorInventory {
         ItemStack info = new ItemStack(Material.BOOK, 1);
         ItemMeta info_im = info.getItemMeta();
         info_im.setDisplayName("Instructions (1/3)");
-        List<String> lore = Arrays.asList("Select your Sonic Screwdriver", "type from the top three rows.", "Click on the upgrades you", "want to add to the sonic.");
+        List<String> lore = Arrays.asList("Select your Sonic Screwdriver", "type from the top two rows.", "Click on the upgrades you", "want to add to the sonic.");
         info_im.setLore(lore);
         info_im.setCustomModelData(GUISonicGenerator.INSTRUCTIONS_1_OF_3.getCustomModelData());
         info.setItemMeta(info_im);

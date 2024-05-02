@@ -119,12 +119,10 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
                     sonic = new ItemStack(Material.BLAZE_ROD, 1);
                     slotWasNull = true;
                 }
-                // get Display name of selected sonic
+                // get custom model data of selected sonic
                 ItemStack choice = view.getItem(slot);
                 ItemMeta choice_im = choice.getItemMeta();
-                String choice_name = choice_im.getDisplayName();
                 sonic_im = sonic.getItemMeta();
-                sonic_im.setDisplayName(choice_name);
                 sonic_im.setCustomModelData(choice_im.getCustomModelData());
                 sonic.setItemMeta(sonic_im);
                 if (slotWasNull) {
@@ -209,14 +207,8 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
         HashMap<String, Object> set = new HashMap<>();
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", p.getUniqueId().toString());
+        where.put("activated", 1);
         ItemMeta im = is.getItemMeta();
-        String dn = im.getDisplayName();
-        // get ChatColor from display name
-        String colour = "";
-        if (!dn.startsWith("Sonic")) {
-            colour = ChatColor.getByChar(dn.substring(1, 2)).name();
-        }
-        set.put("sonic_type", colour);
         set.put("model", im.getCustomModelData());
         if (im.hasLore()) {
             List<String> lore = im.getLore();

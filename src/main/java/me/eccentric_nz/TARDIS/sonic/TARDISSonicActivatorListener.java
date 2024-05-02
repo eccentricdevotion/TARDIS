@@ -103,7 +103,7 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener {
         }
         close(p);
         if (count == stacks.size()) {
-            // actvate Sonic Generator
+            // activate Sonic Generator
             String uuid = p.getUniqueId().toString();
             // do they have a sonic record?
             HashMap<String, Object> wheres = new HashMap<>();

@@ -76,34 +76,32 @@ public class TARDISSonicGeneratorListener implements Listener {
         where.put("type", 24);
         where.put("location", location);
         ResultSetControls rsc = new ResultSetControls(plugin, where, false);
-        if (rsc.resultSet()) {
-            if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-                Player player = event.getPlayer();
-                UUID uuid = player.getUniqueId();
-                // check if the generator is activated
-                HashMap<String, Object> wheres = new HashMap<>();
-                wheres.put("uuid", uuid.toString());
-                ResultSetSonic rss = new ResultSetSonic(plugin, wheres);
-                if (rss.resultSet()) {
-                    Sonic s = rss.getSonic();
-                    if (s.isActivated()) {
-                        if (player.isSneaking()) {
-                            // generate sonic
-                            generate(player, block.getLocation(), s);
-                        } else {
-                            // open GUI
-                            ItemStack[] items = new TARDISSonicGeneratorInventory(plugin, s, player).getGenerator();
-                            Inventory sgc = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Sonic Generator");
-                            sgc.setContents(items);
-                            plugin.getTrackerKeeper().getSonicGenerators().put(uuid, block.getLocation());
-                            player.openInventory(sgc);
-                        }
+        if (rsc.resultSet() && event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            Player player = event.getPlayer();
+            UUID uuid = player.getUniqueId();
+            // check if the generator is activated
+            HashMap<String, Object> wheres = new HashMap<>();
+            wheres.put("uuid", uuid.toString());
+            ResultSetSonic rss = new ResultSetSonic(plugin, wheres);
+            if (rss.resultSet()) {
+                Sonic s = rss.getSonic();
+                if (s.isActivated()) {
+                    if (player.isSneaking()) {
+                        // generate sonic
+                        generate(player, block.getLocation(), s);
                     } else {
-                        openActivate(player);
+                        // open GUI
+                        ItemStack[] items = new TARDISSonicGeneratorInventory(plugin, s, player).getGenerator();
+                        Inventory sgc = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Sonic Generator");
+                        sgc.setContents(items);
+                        plugin.getTrackerKeeper().getSonicGenerators().put(uuid, block.getLocation());
+                        player.openInventory(sgc);
                     }
                 } else {
                     openActivate(player);
                 }
+            } else {
+                openActivate(player);
             }
         }
     }
@@ -208,21 +206,19 @@ public class TARDISSonicGeneratorListener implements Listener {
         HashMap<String, Object> wheres = new HashMap<>();
         wheres.put("uuid", event.getPlayer().getUniqueId().toString());
         ResultSetSonic rss = new ResultSetSonic(plugin, wheres);
-        if (rss.resultSet()) {
-            if (rss.getSonic().isActivated()) {
-                event.setCancelled(true);
-                // remove Item Display
-                TARDISDisplayItemUtils.remove(b);
-                // set block to AIR
-                b.setBlockData(TARDISConstants.AIR);
-                // drop a custom FLOWER_POT_ITEM
-                ItemStack is = new ItemStack(Material.FLOWER_POT, 1);
-                ItemMeta im = is.getItemMeta();
-                im.setDisplayName("Sonic Generator");
-                im.setCustomModelData(10000001);
-                is.setItemMeta(im);
-                b.getWorld().dropItemNaturally(b.getLocation(), is);
-            }
+        if (rss.resultSet() && rss.getSonic().isActivated()) {
+            event.setCancelled(true);
+            // remove Item Display
+            TARDISDisplayItemUtils.remove(b);
+            // set block to AIR
+            b.setBlockData(TARDISConstants.AIR);
+            // drop a custom FLOWER_POT_ITEM
+            ItemStack is = new ItemStack(Material.FLOWER_POT, 1);
+            ItemMeta im = is.getItemMeta();
+            im.setDisplayName("Sonic Generator");
+            im.setCustomModelData(10000001);
+            is.setItemMeta(im);
+            b.getWorld().dropItemNaturally(b.getLocation(), is);
         }
     }
 
