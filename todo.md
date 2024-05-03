@@ -8,6 +8,8 @@
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
    * New interior with console
    * Alter the position of the control label based on the angle of the panel the control is on
+   * Fix monitor text display position?
+   * Set throttle/flight mode/direction position when building console
 4. Update old light level controls, and light switch should return to correct level
 5. ?
 
