@@ -9,6 +9,7 @@ import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.TextDisplay;
@@ -48,7 +49,8 @@ public class ControlMonitor implements Runnable {
         }
         textDisplay.setTransformation(transformation);
         textDisplay.setBillboard(Display.Billboard.FIXED);
-        textDisplay.setSeeThrough(true);
+        textDisplay.setBackgroundColor(Color.fromRGB(8, 10, 15));
+        textDisplay.setSeeThrough(false);
         // get text
         ResultSetConsole rsc = new ResultSetConsole(plugin, id);
         StringBuilder builder = new StringBuilder();

@@ -31,7 +31,7 @@ public class ScreenInteraction {
             // get the text display
             TextDisplay display = getTextDisplay(interaction.getLocation(), coords);
             if (display != null) {
-                display.setRotation(Location.normalizeYaw(120), -10f);
+                display.setRotation(Location.normalizeYaw(120), -7.5f);
                 new ControlMonitor(plugin).update(id, display.getUniqueId(), coords);
             }
         } else {
