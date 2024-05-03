@@ -48,15 +48,14 @@ public class LabelAction {
     }
 
     private void spawnTextDisplay(Location centre, ConsoleInteraction ci) {
-        double half = ci.getWidth() / 2.0d;
-        Location spawn = centre.clone().add(ci.getRelativePosition().getX() - half, ci.getRelativePosition().getY() + ci.getHeight(), ci.getRelativePosition().getZ() - half);
+        float h = (ci == ConsoleInteraction.WORLD) ? 0.15f : 0;
+        Location spawn = centre.clone().add(ci.getRelativePosition().getX(), ci.getRelativePosition().getY() + ci.getHeight() + h, ci.getRelativePosition().getZ());
         TextDisplay display = (TextDisplay) centre.getWorld().spawnEntity(spawn, EntityType.TEXT_DISPLAY);
         display.setText(ci.getAlternateName());
         display.setBackgroundColor(Color.BLACK);
         display.setRotation(Location.normalizeYaw(ci.getYaw()), 0.0f);
         display.setTransformation(transformation);
         display.setBillboard(Display.Billboard.FIXED);
-        display.setSeeThrough(true);
     }
 
     private void removeTextDisplay(Location centre) {
