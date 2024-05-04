@@ -62,7 +62,8 @@ public class TWAFollower extends Husk implements OwnableEntity {
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder datawatcher) {
         super.defineSynchedData(datawatcher);
-        this.entityData.set(DATA_OWNER_UUID_ID, Optional.empty());
+        datawatcher.define(DATA_OWNER_UUID_ID, Optional.empty());
+//        this.entityData.set(DATA_OWNER_UUID_ID, Optional.empty());
     }
 
     @Nullable
