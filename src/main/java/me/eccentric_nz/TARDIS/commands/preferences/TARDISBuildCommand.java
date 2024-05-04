@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -25,6 +24,8 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -71,8 +72,8 @@ class TARDISBuildCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "WG_NOT_FOUND");
                 return true;
             }
-            Vector min = new Vector(pr.getMinimumPoint().getBlockX(), pr.getMinimumPoint().getBlockY(), pr.getMinimumPoint().getBlockZ());
-            Vector max = new Vector(pr.getMaximumPoint().getBlockX(), pr.getMaximumPoint().getBlockY(), pr.getMaximumPoint().getBlockZ());
+            Vector min = new Vector(pr.getMinimumPoint().x(), pr.getMinimumPoint().y(), pr.getMinimumPoint().z());
+            Vector max = new Vector(pr.getMaximumPoint().x(), pr.getMaximumPoint().y(), pr.getMaximumPoint().z());
             tab.setMin(min);
             tab.setMax(max);
             tab.setTimelord(playerNameStr);
