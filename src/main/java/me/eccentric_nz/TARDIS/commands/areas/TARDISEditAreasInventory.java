@@ -64,7 +64,7 @@ public class TARDISEditAreasInventory {
         ItemStack add = new ItemStack(Material.NETHER_STAR, 1);
         ItemMeta er = add.getItemMeta();
         er.setDisplayName("Add");
-        er.setLore(Collections.singletonList("area_id: " + area_id));
+        er.setLore(List.of("area_id: " + area_id));
         add.setItemMeta(er);
         stacks[48] = add;
         // remove

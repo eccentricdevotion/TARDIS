@@ -71,7 +71,7 @@ public class TabComplete extends TARDISCompleter implements TabCompleter {
                 return switch (args[0]) {
                     case "disguise" -> partial(args[2], ONOFF_SUBS);
                     case "give" -> partial(args[2], MONSTER_SUBS);
-                    case "follow" -> Collections.singletonList("15");
+                    case "follow" -> List.of("15");
                     default -> partial(args[2], WORLD_SUBS);
                 };
             }

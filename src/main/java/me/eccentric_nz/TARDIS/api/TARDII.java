@@ -182,28 +182,6 @@ public class TARDII implements TardisAPI {
     }
 
     @Override
-    public Location getRandomLocation(List<String> worlds, Environment environment, Parameters param) {
-        if (environment == null) {
-            // choose random environment - weighted towards normal!
-            environment = weightedChoice.next();
-            // check if environment is enabled
-            if ((environment.equals(Environment.NETHER) && !TARDIS.plugin.getConfig().getBoolean("travel.nether")) || (environment.equals(Environment.THE_END) && !TARDIS.plugin.getConfig().getBoolean("travel.the_end"))) {
-                environment = Environment.NORMAL;
-            }
-        }
-        return switch (environment) {
-            case NETHER -> new TARDISRandomNether(TARDIS.plugin, worlds, param).getlocation();
-            case THE_END -> new TARDISRandomTheEnd(TARDIS.plugin, worlds, param).getlocation();
-            default -> new TARDISRandomOverworld(TARDIS.plugin, worlds, param).getlocation();
-        };
-    }
-
-    @Override
-    public Location getRandomLocation(List<String> worlds, Environment environment, Player p) {
-        return getRandomLocation(getWorlds(), null, new Parameters(p, Flag.getAPIFlags()));
-    }
-
-    @Override
     public Location getRandomLocation(List<String> worlds, Player p) {
         return getRandomLocation(getWorlds(), null, new Parameters(p, Flag.getAPIFlags()));
     }
@@ -215,7 +193,7 @@ public class TARDII implements TardisAPI {
 
     @Override
     public Location getRandomOverworldLocation(String world, Player p) {
-        return getRandomLocation(Collections.singletonList(world), Environment.NORMAL, p);
+        return getRandomLocation(List.of(world), Environment.NORMAL, p);
     }
 
     @Override
@@ -225,7 +203,7 @@ public class TARDII implements TardisAPI {
 
     @Override
     public Location getRandomNetherLocation(String world, Player p) {
-        return getRandomLocation(Collections.singletonList(world), Environment.NETHER, p);
+        return getRandomLocation(List.of(world), Environment.NETHER, p);
     }
 
     @Override
@@ -235,7 +213,7 @@ public class TARDII implements TardisAPI {
 
     @Override
     public Location getRandomEndLocation(String world, Player p) {
-        return getRandomLocation(Collections.singletonList(world), Environment.THE_END, p);
+        return getRandomLocation(List.of(world), Environment.THE_END, p);
     }
 
     @Override
@@ -1023,5 +1001,27 @@ public class TARDII implements TardisAPI {
     @Override
     public ItemStack getK9() {
         return HeadBuilder.getK9();
+    }
+
+    @Override
+    public Location getRandomLocation(List<String> worlds, Environment environment, Parameters param) {
+        if (environment == null) {
+            // choose random environment - weighted towards normal!
+            environment = weightedChoice.next();
+            // check if environment is enabled
+            if ((environment.equals(Environment.NETHER) && !TARDIS.plugin.getConfig().getBoolean("travel.nether")) || (environment.equals(Environment.THE_END) && !TARDIS.plugin.getConfig().getBoolean("travel.the_end"))) {
+                environment = Environment.NORMAL;
+            }
+        }
+        return switch (environment) {
+            case NETHER -> new TARDISRandomNether(TARDIS.plugin, worlds, param).getlocation();
+            case THE_END -> new TARDISRandomTheEnd(TARDIS.plugin, worlds, param).getlocation();
+            default -> new TARDISRandomOverworld(TARDIS.plugin, worlds, param).getlocation();
+        };
+    }
+
+    @Override
+    public Location getRandomLocation(List<String> worlds, Environment environment, Player p) {
+        return getRandomLocation(getWorlds(), null, new Parameters(p, Flag.getAPIFlags()));
     }
 }

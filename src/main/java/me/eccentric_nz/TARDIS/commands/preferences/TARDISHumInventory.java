@@ -71,7 +71,7 @@ class TARDISHumInventory {
         ItemStack play = new ItemStack(Material.BOWL, 1);
         ItemMeta save = play.getItemMeta();
         save.setDisplayName("Action");
-        save.setLore(Collections.singletonList("PLAY"));
+        save.setLore(List.of("PLAY"));
         save.setCustomModelData(GUIInteriorSounds.ACTION.getCustomModelData());
         play.setItemMeta(save);
         stack[15] = play;

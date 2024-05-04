@@ -34,7 +34,7 @@ public class ARSRoomCounts {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
-    private final List<String> STONE = Collections.singletonList("STONE");
+    private final List<String> STONE = List.of("STONE");
     private final List<Double> numberOfRoomsPerTARDIS = new ArrayList<>();
 
     public ARSRoomCounts(TARDIS plugin) {

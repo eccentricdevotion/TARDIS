@@ -115,7 +115,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
                     return partial(lastArg, THEME_SUBS);
                 }
                 case "home" -> {
-                    return partial(lastArg, Collections.singletonList("set"));
+                    return partial(lastArg, List.of("set"));
                 }
                 case "item" -> {
                     return partial(lastArg, ITEM_SUBS);

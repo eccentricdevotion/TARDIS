@@ -112,7 +112,7 @@ public class TARDISConfigMenuListener implements Listener {
     }
 
     private void setLore(InventoryView view, int slot, String str) {
-        List<String> lore = (str != null) ? Collections.singletonList(str) : null;
+        List<String> lore = (str != null) ? List.of(str) : null;
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
         im.setLore(lore);

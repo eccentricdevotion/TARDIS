@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.Arrays;
-import java.util.Collections;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUITemporalLocator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Time travel is, as the name suggests, the (usually controlled) process of travelling through time, even in a
@@ -58,7 +59,7 @@ public class TARDISTemporalLocatorInventory {
             if (clock.getLore().contains("~")) {
                 im.setLore(Arrays.asList(clock.getLore().split("~")));
             } else {
-                im.setLore(Collections.singletonList(clock.getLore()));
+                im.setLore(List.of(clock.getLore()));
             }
             im.setCustomModelData(clock.getCustomModelData());
             is.setItemMeta(im);

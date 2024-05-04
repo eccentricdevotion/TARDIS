@@ -37,8 +37,8 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -192,7 +192,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                 ItemStack is = view.getItem(slot);
                 is.setType(Material.ARROW);
                 ItemMeta im = is.getItemMeta();
-                im.setLore(Collections.singletonList(plugin.getLanguage().getString("ARS_MAP_HERE")));
+                im.setLore(List.of(plugin.getLanguage().getString("ARS_MAP_HERE")));
                 im.setCustomModelData(6);
                 is.setItemMeta(im);
             }

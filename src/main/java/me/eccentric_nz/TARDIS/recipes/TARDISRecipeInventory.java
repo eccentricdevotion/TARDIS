@@ -30,8 +30,8 @@ import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 public class TARDISRecipeInventory {
 
@@ -102,7 +102,7 @@ public class TARDISRecipeInventory {
                     }
                     ItemMeta im = result.getItemMeta();
                     im.setDisplayName(str);
-                    im.setLore(Collections.singletonList("/trecipe " + arg));
+                    im.setLore(List.of("/trecipe " + arg));
                     im.setCustomModelData(item.getCustomModelData());
                     im.addItemFlags(ItemFlag.values());
                     result.setItemMeta(im);

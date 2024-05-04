@@ -133,7 +133,7 @@ public class TARDISControlInventory {
         ItemMeta ttle = thro.getItemMeta();
         ttle.setDisplayName(plugin.getLanguage().getString("BUTTON_THROTTLE"));
         String throttle = SpaceTimeThrottle.getByDelay().get(delay).toString();
-        ttle.setLore(Collections.singletonList(throttle));
+        ttle.setLore(List.of(throttle));
         ttle.setCustomModelData(GUIControlCentre.BUTTON_THROTTLE.getCustomModelData());
         thro.setItemMeta(ttle);
         /*
@@ -155,7 +155,7 @@ public class TARDISControlInventory {
         ItemStack pow = new ItemStack(Material.REPEATER, 1);
         ItemMeta dwn = pow.getItemMeta();
         dwn.setDisplayName(plugin.getLanguage().getString("BUTTON_POWER"));
-        dwn.setLore(Collections.singletonList(power_onoff));
+        dwn.setLore(List.of(power_onoff));
         int pcmd = GUIControlCentre.BUTTON_POWER.getCustomModelData();
         if (power_onoff.equals(off)) {
             pcmd += 100;
@@ -166,7 +166,7 @@ public class TARDISControlInventory {
         ItemStack lig = new ItemStack(Material.REPEATER, 1);
         ItemMeta swi = lig.getItemMeta();
         swi.setDisplayName(plugin.getLanguage().getString("BUTTON_LIGHTS"));
-        swi.setLore(Collections.singletonList(lights_onoff));
+        swi.setLore(List.of(lights_onoff));
         int lcmd = GUIControlCentre.BUTTON_LIGHTS.getCustomModelData();
         if (lights_onoff.equals(off)) {
             lcmd += 100;
@@ -177,7 +177,7 @@ public class TARDISControlInventory {
         ItemStack tog = new ItemStack(Material.REPEATER, 1);
         ItemMeta gle = tog.getItemMeta();
         gle.setDisplayName(plugin.getLanguage().getString("BUTTON_TOGGLE"));
-        gle.setLore(Collections.singletonList(toggle_openclosed));
+        gle.setLore(List.of(toggle_openclosed));
         int tcmd = GUIControlCentre.BUTTON_TOGGLE.getCustomModelData();
         if (!open) {
             tcmd += 100;
@@ -203,7 +203,7 @@ public class TARDISControlInventory {
         ItemStack siege = new ItemStack(Material.REPEATER, 1);
         ItemMeta mode = siege.getItemMeta();
         mode.setDisplayName(plugin.getLanguage().getString("BUTTON_SIEGE"));
-        mode.setLore(Collections.singletonList(siege_onoff));
+        mode.setLore(List.of(siege_onoff));
         int scmd = GUIControlCentre.BUTTON_SIEGE.getCustomModelData();
         if (siege_onoff.equals(off)) {
             scmd += 100;
@@ -227,7 +227,7 @@ public class TARDISControlInventory {
         ItemMeta ection = dir.getItemMeta();
         ection.setDisplayName(plugin.getLanguage().getString("BUTTON_DIRECTION"));
         ection.setCustomModelData(GUIControlCentre.BUTTON_DIRECTION.getCustomModelData());
-        ection.setLore(Collections.singletonList(direction));
+        ection.setLore(List.of(direction));
         dir.setItemMeta(ection);
         // temporal
         ItemStack temp = new ItemStack(Material.BOWL, 1);

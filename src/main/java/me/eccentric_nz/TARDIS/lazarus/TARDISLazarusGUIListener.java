@@ -119,7 +119,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                 // remember selection
                 String display = im.getDisplayName();
                 if (twaMonsters.contains(display) && !plugin.getConfig().getBoolean("modules.weeping_angels")) {
-                    im.setLore(Collections.singletonList("Genetic modification not available!"));
+                    im.setLore(List.of("Genetic modification not available!"));
                     is.setItemMeta(im);
                 } else {
                     if (display.equals("HEROBRINE")) {
@@ -168,7 +168,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                         if (plugin.getTrackerKeeper().getImmortalityGate().equals("")) {
                             boolean isOff = im.getLore().get(0).equals(plugin.getLanguage().getString("SET_OFF"));
                             String onoff = isOff ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-                            im.setLore(Collections.singletonList(onoff));
+                            im.setLore(List.of(onoff));
                             int cmd = isOff ? 2 : 3;
                             im.setCustomModelData(cmd);
                         } else {
@@ -183,7 +183,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     ItemStack is = view.getItem(slot);
                     ItemMeta im = is.getItemMeta();
                     String onoff = (im.getLore().get(0).equals("ADULT")) ? "BABY" : "ADULT";
-                    im.setLore(Collections.singletonList(onoff));
+                    im.setLore(List.of(onoff));
                     is.setItemMeta(im);
                 }
                 case 48 -> { // type / colour
@@ -637,7 +637,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
         if (t != null) {
             ItemStack is = i.getItem(48);
             ItemMeta im = is.getItemMeta();
-            im.setLore(Collections.singletonList(t));
+            im.setLore(List.of(t));
             is.setItemMeta(im);
         }
     }

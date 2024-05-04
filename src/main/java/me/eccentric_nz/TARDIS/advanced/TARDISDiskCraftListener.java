@@ -127,7 +127,7 @@ public class TARDISDiskCraftListener implements Listener {
                 if (preset.isEmpty()) {
                     return;
                 }
-                List<String> disk_lore = Collections.singletonList(preset);
+                List<String> disk_lore = List.of(preset);
                 disk = new ItemStack(Material.MUSIC_DISC_MALL, 1);
                 ItemMeta dim = disk.getItemMeta();
                 dim.setDisplayName("Preset Storage Disk");
