@@ -17,12 +17,6 @@
 package me.eccentric_nz.TARDIS.files;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
@@ -30,6 +24,13 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetGravity;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.util.Vector;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * An anti-gravity spiral is a projectable beam used for removing gravity from an object. The Seventh Doctor used his
@@ -123,8 +124,8 @@ public class TARDISBlockLoader {
                     String[] split = rs.getString("chunk").split(":");
                     ProtectedRegion pr = plugin.getWorldGuardUtils().getRegion(split[0], tl);
                     if (pr != null) {
-                        Vector min = new Vector(pr.getMinimumPoint().getBlockX(), pr.getMinimumPoint().getBlockY(), pr.getMinimumPoint().getBlockZ());
-                        Vector max = new Vector(pr.getMaximumPoint().getBlockX(), pr.getMaximumPoint().getBlockY(), pr.getMaximumPoint().getBlockZ());
+                        Vector min = new Vector(pr.getMinimumPoint().x(), pr.getMinimumPoint().y(), pr.getMinimumPoint().z());
+                        Vector max = new Vector(pr.getMaximumPoint().x(), pr.getMaximumPoint().y(), pr.getMaximumPoint().z());
                         tab.setMin(min);
                         tab.setMax(max);
                         tab.setTimelord(tl);
