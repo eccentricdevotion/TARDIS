@@ -9,7 +9,7 @@ dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://tardis.pages.dev/
 version: ${project.version}-b${project.build.number}
 build-number: ${project.build.number}
-api-version: '1.20.5'
+api-version: '1.20.6'
 libraries:
   - org.jsoup:jsoup:1.16.1
 permissions:

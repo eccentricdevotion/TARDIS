@@ -90,7 +90,7 @@ public class TARDISChecker {
             copy("pack.mcmeta", mcmeta);
             write(dataPacksRoot, false);
         } else {
-            // update the format - 41 is the latest for 1.20.5
+            // update the format - 41 is the latest for 1.20.6
             // it's a json file, so load it and check the value
             Gson gson = new GsonBuilder().create();
             try {
