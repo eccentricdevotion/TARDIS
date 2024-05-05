@@ -45,8 +45,6 @@ public class TARDISSonicSound {
                 ItemStack is = player.getInventory().getItemInMainHand();
                 if (is.hasItemMeta()) {
                     ItemMeta meta = is.getItemMeta();
-                    meta.setCustomModelData(cmd);
-                    is.setItemMeta(meta);
                     if (meta.hasDisplayName() && meta.getDisplayName().endsWith("Sonic Screwdriver")) {
                         player.getInventory().getItemInMainHand().getEnchantments().keySet().forEach((e) -> player.getInventory().getItemInMainHand().removeEnchantment(e));
                         meta.setCustomModelData(cmd);
