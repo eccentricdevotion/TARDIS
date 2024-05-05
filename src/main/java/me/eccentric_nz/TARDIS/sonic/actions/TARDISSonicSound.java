@@ -70,11 +70,13 @@ public class TARDISSonicSound {
         }
         ItemStack stack = inv.getItem(first);
         ItemMeta meta = stack.getItemMeta();
-        int cmd = meta.getCustomModelData();
-        meta.setCustomModelData(cmd - 2000000);
-        stack.setItemMeta(meta);
-        if (stack.containsEnchantment(Enchantment.DURABILITY)) {
-            stack.getEnchantments().keySet().forEach(stack::removeEnchantment);
+        if (meta.hasDisplayName() && meta.getDisplayName().endsWith("Sonic Screwdriver")) {
+            int cmd = meta.getCustomModelData();
+            meta.setCustomModelData(cmd - 2000000);
+            stack.setItemMeta(meta);
+            if (stack.containsEnchantment(Enchantment.DURABILITY)) {
+                stack.getEnchantments().keySet().forEach(stack::removeEnchantment);
+            }
         }
     }
 }
