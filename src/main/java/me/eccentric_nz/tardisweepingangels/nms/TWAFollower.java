@@ -3,9 +3,11 @@ package me.eccentric_nz.tardisweepingangels.nms;
 import net.minecraft.core.Holder;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.OwnableEntity;
@@ -26,7 +28,8 @@ import java.util.UUID;
 
 public class TWAFollower extends Husk implements OwnableEntity {
 
-    protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNER_UUID_ID = SynchedEntityData.defineId(TWAFollower.class, EntityDataSerializers.OPTIONAL_UUID);
+    protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(TWAFollower.class, EntityDataSerializers.BYTE);
+    protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(TWAFollower.class, EntityDataSerializers.OPTIONAL_UUID);
     protected final int[] frames = new int[]{0, 1, 2, 1, 0, 3, 4, 3};
     protected UUID uuid;
     protected boolean isAnimating = false;
@@ -58,23 +61,23 @@ public class TWAFollower extends Husk implements OwnableEntity {
         this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
     }
 
-
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder datawatcher) {
         super.defineSynchedData(datawatcher);
-        datawatcher.define(DATA_OWNER_UUID_ID, Optional.empty());
-//        this.entityData.set(DATA_OWNER_UUID_ID, Optional.empty());
+        datawatcher.define(TWAFollower.DATA_FLAGS_ID, (byte) 0);
+        datawatcher.define(TWAFollower.DATA_OWNERUUID_ID, Optional.empty());
     }
 
     @Nullable
     @Override
+    @SuppressWarnings("unchecked")
     public UUID getOwnerUUID() {
-        return (UUID) ((Optional) this.entityData.get(DATA_OWNER_UUID_ID)).orElse(null);
+        return (UUID) ((Optional) this.entityData.get(DATA_OWNERUUID_ID)).orElse(null);
     }
 
     public void setOwnerUUID(@Nullable UUID uuid) {
-        this.uuid = uuid;
-        this.entityData.set(DATA_OWNER_UUID_ID, Optional.ofNullable(uuid));
+        this.setTame(true);
+        this.entityData.set(DATA_OWNERUUID_ID, Optional.ofNullable(uuid));
     }
 
     @Nullable
@@ -85,6 +88,47 @@ public class TWAFollower extends Husk implements OwnableEntity {
         }
         org.bukkit.entity.Player player = Bukkit.getPlayer(uuid);
         return (player != null) ? ((CraftPlayer) player).getHandle() : null;
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        if (this.getOwnerUUID() != null) {
+            tag.putUUID("Owner", this.getOwnerUUID());
+        }
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        UUID uuid;
+        if (tag.hasUUID("Owner")) {
+            uuid = tag.getUUID("Owner");
+        } else {
+            String s = tag.getString("Owner");
+            uuid = OldUsersConverter.convertMobOwnerIfNecessary(this.getServer(), s);
+        }
+        if (uuid != null) {
+            try {
+                this.setOwnerUUID(uuid);
+                this.setTame(true);
+            } catch (Throwable throwable) {
+                this.setTame(false);
+            }
+        }
+    }
+
+    public boolean isTame() {
+        return (this.entityData.get(TWAFollower.DATA_FLAGS_ID) & 4) != 0;
+    }
+
+    public void setTame(boolean tame) {
+        byte b0 = this.entityData.get(TWAFollower.DATA_FLAGS_ID);
+        if (tame) {
+            this.entityData.set(TWAFollower.DATA_FLAGS_ID, (byte) (b0 | 4));
+        } else {
+            this.entityData.set(TWAFollower.DATA_FLAGS_ID, (byte) (b0 & -5));
+        }
     }
 
     public boolean isFollowing() {
