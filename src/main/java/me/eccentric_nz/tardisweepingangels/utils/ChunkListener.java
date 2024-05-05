@@ -85,26 +85,28 @@ public class ChunkListener implements Listener {
                     }
                 }
             } else if (d instanceof Zombie zombie) {
-                if (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)) {
-                    new Equipper(Monster.CYBERMAN, zombie, false, false).setHelmetAndInvisibilty();
-                } else if (pdc.has(TARDISWeepingAngels.EMPTY, PersistentDataType.INTEGER)) {
-                    new Equipper(Monster.EMPTY_CHILD, zombie, false, false).setHelmetAndInvisibilty();
-                    EmptyChildEquipment.setSpeed(zombie);
-                } else if (zombie.getPersistentDataContainer().has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)) {
-                    new Equipper(Monster.SLITHEEN, zombie, false).setHelmetAndInvisibilty();
-                } else if (pdc.has(TARDISWeepingAngels.SONTARAN, PersistentDataType.INTEGER)) {
-                    new Equipper(Monster.SONTARAN, zombie, false, false).setHelmetAndInvisibilty();
-                } else if (pdc.has(TARDISWeepingAngels.VASHTA, PersistentDataType.INTEGER)) {
-                    new Equipper(Monster.VASHTA_NERADA, zombie, false, false).setHelmetAndInvisibilty();
-                } else if (pdc.has(TARDISWeepingAngels.ZYGON, PersistentDataType.INTEGER)) {
-                    new Equipper(Monster.ZYGON, zombie, false, false).setHelmetAndInvisibilty();
+                if (d instanceof Husk husk) {
+                    new ResetMonster(plugin, husk).reset();
+                } else {
+                    if (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)) {
+                        new Equipper(Monster.CYBERMAN, zombie, false, false).setHelmetAndInvisibilty();
+                    } else if (pdc.has(TARDISWeepingAngels.EMPTY, PersistentDataType.INTEGER)) {
+                        new Equipper(Monster.EMPTY_CHILD, zombie, false, false).setHelmetAndInvisibilty();
+                        EmptyChildEquipment.setSpeed(zombie);
+                    } else if (zombie.getPersistentDataContainer().has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)) {
+                        new Equipper(Monster.SLITHEEN, zombie, false).setHelmetAndInvisibilty();
+                    } else if (pdc.has(TARDISWeepingAngels.SONTARAN, PersistentDataType.INTEGER)) {
+                        new Equipper(Monster.SONTARAN, zombie, false, false).setHelmetAndInvisibilty();
+                    } else if (pdc.has(TARDISWeepingAngels.VASHTA, PersistentDataType.INTEGER)) {
+                        new Equipper(Monster.VASHTA_NERADA, zombie, false, false).setHelmetAndInvisibilty();
+                    } else if (pdc.has(TARDISWeepingAngels.ZYGON, PersistentDataType.INTEGER)) {
+                        new Equipper(Monster.ZYGON, zombie, false, false).setHelmetAndInvisibilty();
+                    }
                 }
             } else if (d instanceof ArmorStand stand && stand.getPersistentDataContainer().has(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER)) {
                 // restart flame runnable
                 int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(stand), 1, 20);
                 pdc.set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
-            } else if (d instanceof Husk husk) {
-                new ResetMonster(plugin, husk).reset();
             }
         }
     }

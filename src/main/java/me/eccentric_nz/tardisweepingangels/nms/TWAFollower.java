@@ -1,8 +1,6 @@
 package me.eccentric_nz.tardisweepingangels.nms;
 
-import net.minecraft.core.Holder;
-import net.minecraft.core.MappedRegistry;
-import net.minecraft.core.registries.BuiltInRegistries;
+import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -21,8 +19,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_20_R4.entity.CraftPlayer;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Field;
-import java.util.IdentityHashMap;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -43,15 +39,6 @@ public class TWAFollower extends Husk implements OwnableEntity {
         setOwnerUUID(this.uuid);
     }
 
-    public static void unfreezeEntityRegistry() throws NoSuchFieldException, IllegalAccessException {
-        Field unregisteredIntrusiveHolders = MappedRegistry.class.getDeclaredField("m");
-        unregisteredIntrusiveHolders.setAccessible(true);
-        unregisteredIntrusiveHolders.set(BuiltInRegistries.ENTITY_TYPE, new IdentityHashMap<EntityType<?>, Holder.Reference<EntityType<?>>>());
-        Field frozenField = MappedRegistry.class.getDeclaredField("l");
-        frozenField.setAccessible(true);
-        frozenField.set(BuiltInRegistries.ENTITY_TYPE, false);
-    }
-
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(1, new FloatGoal(this));
@@ -66,28 +53,6 @@ public class TWAFollower extends Husk implements OwnableEntity {
         super.defineSynchedData(datawatcher);
         datawatcher.define(TWAFollower.DATA_FLAGS_ID, (byte) 0);
         datawatcher.define(TWAFollower.DATA_OWNERUUID_ID, Optional.empty());
-    }
-
-    @Nullable
-    @Override
-    @SuppressWarnings("unchecked")
-    public UUID getOwnerUUID() {
-        return (UUID) ((Optional) this.entityData.get(DATA_OWNERUUID_ID)).orElse(null);
-    }
-
-    public void setOwnerUUID(@Nullable UUID uuid) {
-        this.setTame(true);
-        this.entityData.set(DATA_OWNERUUID_ID, Optional.ofNullable(uuid));
-    }
-
-    @Nullable
-    @Override
-    public LivingEntity getOwner() {
-        if (uuid == null) {
-            return null;
-        }
-        org.bukkit.entity.Player player = Bukkit.getPlayer(uuid);
-        return (player != null) ? ((CraftPlayer) player).getHandle() : null;
     }
 
     @Override
@@ -111,24 +76,30 @@ public class TWAFollower extends Husk implements OwnableEntity {
         if (uuid != null) {
             try {
                 this.setOwnerUUID(uuid);
-                this.setTame(true);
             } catch (Throwable throwable) {
-                this.setTame(false);
             }
         }
     }
 
-    public boolean isTame() {
-        return (this.entityData.get(TWAFollower.DATA_FLAGS_ID) & 4) != 0;
+    @Nullable
+    @Override
+    @SuppressWarnings("unchecked")
+    public UUID getOwnerUUID() {
+        return this.getBukkitEntity().getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
     }
 
-    public void setTame(boolean tame) {
-        byte b0 = this.entityData.get(TWAFollower.DATA_FLAGS_ID);
-        if (tame) {
-            this.entityData.set(TWAFollower.DATA_FLAGS_ID, (byte) (b0 | 4));
-        } else {
-            this.entityData.set(TWAFollower.DATA_FLAGS_ID, (byte) (b0 & -5));
+    public void setOwnerUUID(UUID uuid) {
+        this.getBukkitEntity().getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, uuid);
+    }
+
+    @Nullable
+    @Override
+    public LivingEntity getOwner() {
+        if (uuid == null) {
+            return null;
         }
+        org.bukkit.entity.Player player = Bukkit.getPlayer(uuid);
+        return (player != null) ? ((CraftPlayer) player).getHandle() : null;
     }
 
     public boolean isFollowing() {

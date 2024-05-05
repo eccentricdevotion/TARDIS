@@ -53,17 +53,18 @@ public class OodListener implements Listener {
                 if (player.getUniqueId().equals(oodId)) {
                     // set redeye
                     ood.setRedeye(!ood.isRedeye());
-                    ood.getOwnerUUID();
+//                    ood.getOwnerUUID();
                 } else if (TARDISWeepingAngels.UNCLAIMED.equals(oodId)) {
                     // claim the Ood
                     UUID pid = player.getUniqueId();
                     entity.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, pid);
                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_CLAIMED", "Ood");
                     ood.setOwnerUUID(pid);
-                    ood.getOwnerUUID();
-                } else {
-                    ood.getOwnerUUID();
+//                    ood.getOwnerUUID();
                 }
+//                else {
+//                    ood.getOwnerUUID();
+//                }
             }
         }
     }
