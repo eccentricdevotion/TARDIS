@@ -45,8 +45,6 @@ public class TARDISSonicSound {
                 ItemStack is = player.getInventory().getItemInMainHand();
                 if (is.hasItemMeta()) {
                     ItemMeta meta = is.getItemMeta();
-                    meta.setCustomModelData(cmd);
-                    is.setItemMeta(meta);
                     if (meta.hasDisplayName() && meta.getDisplayName().endsWith("Sonic Screwdriver")) {
                         player.getInventory().getItemInMainHand().getEnchantments().keySet().forEach((e) -> player.getInventory().getItemInMainHand().removeEnchantment(e));
                         meta.setCustomModelData(cmd);
@@ -69,12 +67,17 @@ public class TARDISSonicSound {
             return;
         }
         ItemStack stack = inv.getItem(first);
+        if (stack == null) {
+            return;
+        }
         ItemMeta meta = stack.getItemMeta();
-        int cmd = meta.getCustomModelData();
-        meta.setCustomModelData(cmd - 2000000);
-        stack.setItemMeta(meta);
-        if (stack.containsEnchantment(Enchantment.UNBREAKING)) {
-            stack.getEnchantments().keySet().forEach(stack::removeEnchantment);
+        if (meta.hasDisplayName() && meta.getDisplayName().endsWith("Sonic Screwdriver")) {
+            int cmd = meta.getCustomModelData();
+            meta.setCustomModelData(cmd - 2000000);
+            stack.setItemMeta(meta);
+            if (stack.containsEnchantment(Enchantment.UNBREAKING)) {
+                stack.getEnchantments().keySet().forEach(stack::removeEnchantment);
+            }
         }
     }
 }
