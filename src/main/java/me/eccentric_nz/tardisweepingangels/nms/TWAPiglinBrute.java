@@ -16,13 +16,11 @@
  */
 package me.eccentric_nz.tardisweepingangels.nms;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -34,8 +32,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TWAPiglinBrute extends PiglinBrute {
 
     private final int[] frames = new int[]{0, 1, 0, 2};
-    private boolean isAnimating = false;
-    private int task = -1;
+    private double oldX;
+    private double oldZ;
     private int i = 0;
 
     public TWAPiglinBrute(EntityType<? extends PiglinBrute> type, Level level) {
@@ -44,28 +42,25 @@ public class TWAPiglinBrute extends PiglinBrute {
 
     @Override
     public void aiStep() {
-        if (hasItemInSlot(EquipmentSlot.HEAD)) {
+        if (hasItemInSlot(EquipmentSlot.HEAD) && tickCount % 3 == 0) {
             ItemStack is = getItemBySlot(EquipmentSlot.HEAD);
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
             ItemMeta im = bukkit.getItemMeta();
-            if (!isPathFinding()) {
-                Bukkit.getScheduler().cancelTask(task);
+            if (oldX == getX() && oldZ == getZ()) {
                 im.setCustomModelData(405);
-                bukkit.setItemMeta(im);
-                isAnimating = false;
-            } else if (!isAnimating) {
+                i = 0;
+            } else {
                 // play move animation
-                task = Bukkit.getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, () -> {
-                    im.setCustomModelData(400 + frames[i]);
-                    bukkit.setItemMeta(im);
-                    i++;
-                    if (i == frames.length) {
-                        i = 0;
-                    }
-                }, 1L, 3L);
-                isAnimating = true;
+                im.setCustomModelData(400 + frames[i]);
+                i++;
+                if (i == frames.length) {
+                    i = 0;
+                }
             }
+            bukkit.setItemMeta(im);
             setItemSlot(EquipmentSlot.HEAD, CraftItemStack.asNMSCopy(bukkit));
+            oldX = getX();
+            oldZ = getZ();
         }
         super.aiStep();
     }

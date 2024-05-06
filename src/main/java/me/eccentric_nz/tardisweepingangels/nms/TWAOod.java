@@ -1,11 +1,9 @@
 package me.eccentric_nz.tardisweepingangels.nms;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.OodColour;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -24,35 +22,33 @@ public class TWAOod extends TWAFollower {
 
     @Override
     public void aiStep() {
-        if (hasItemInSlot(EquipmentSlot.HEAD)) {
+        if (hasItemInSlot(EquipmentSlot.HEAD) && tickCount % 3 == 0) {
             ItemStack is = getItemBySlot(EquipmentSlot.HEAD);
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
             ItemMeta im = bukkit.getItemMeta();
-            if (!isPathFinding()) {
-                Bukkit.getScheduler().cancelTask(task);
+            if (oldX == getX() && oldZ == getZ()) {
                 int cmd = 405 + colour.getStep();
                 if (redeye) {
                     cmd += 18;
                 }
                 im.setCustomModelData(cmd);
-                bukkit.setItemMeta(im);
-                isAnimating = false;
-            } else if (!isAnimating) {
+                i = 0;
+            } else {
                 // play move animation
-                task = Bukkit.getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, () -> {
-                    int cmd = 400 + colour.getStep();
-                    if (redeye) {
-                        cmd += 18;
-                    }
-                    im.setCustomModelData(cmd + frames[i]);
-                    i++;
-                    if (i == frames.length) {
-                        i = 0;
-                    }
-                }, 1L, 3L);
-                isAnimating = true;
+                int cmd = 400 + colour.getStep();
+                if (redeye) {
+                    cmd += 18;
+                }
+                im.setCustomModelData(cmd + frames[i]);
+                i++;
+                if (i == frames.length) {
+                    i = 0;
+                }
             }
+            bukkit.setItemMeta(im);
             setItemSlot(EquipmentSlot.HEAD, CraftItemStack.asNMSCopy(bukkit));
+            oldX = getX();
+            oldZ = getZ();
         }
         super.aiStep();
     }
