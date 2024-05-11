@@ -244,8 +244,9 @@ public class TARDISDisplayItemCommand {
                 }
                 // get TARDIS id
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
-                if (rs.fromUUID(player.getUniqueId().toString())) {
-                    new ConsoleBuilder(plugin).create(block, colour, rs.getTardis_id());
+                String uuid = player.getUniqueId().toString();
+                if (rs.fromUUID(uuid)) {
+                    new ConsoleBuilder(plugin).create(block, colour, rs.getTardis_id(), uuid);
                 }
                 return true;
             }

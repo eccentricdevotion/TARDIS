@@ -125,8 +125,9 @@ public class TARDISSeedBlockListener implements Listener {
             int colour = im.getPersistentDataContainer().getOrDefault(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
             // get TARDIS id
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
-            if (rs.fromUUID(player.getUniqueId().toString())) {
-                new ConsoleBuilder(plugin).create(event.getBlockPlaced(), colour, rs.getTardis_id());
+            String uuid = player.getUniqueId().toString();
+            if (rs.fromUUID(uuid)) {
+                new ConsoleBuilder(plugin).create(event.getBlockPlaced(), colour, rs.getTardis_id(), uuid);
             }
         }
     }

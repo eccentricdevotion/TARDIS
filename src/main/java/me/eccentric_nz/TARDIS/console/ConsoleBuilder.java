@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.console;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -28,7 +29,7 @@ public class ConsoleBuilder {
         this.plugin = plugin;
     }
 
-    public void create(Block block, int type, int id) {
+    public void create(Block block, int type, int id, String playerUuid) {
         StringBuilder builder = new StringBuilder();
         String prefix = "~";
         Block up = block.getRelative(BlockFace.UP);
@@ -82,7 +83,7 @@ public class ConsoleBuilder {
         // set interaction entities for console controls
         for (ConsoleInteraction i : ConsoleInteraction.values()) {
             // spawn a display entity and save it's UUID to the interaction entity
-            UUID uuid = spawnControl(i, block.getLocation(), i.getYaw(), id);
+            UUID uuid = spawnControl(i, block.getLocation(), i.getYaw(), id, playerUuid);
             double x = i.getRelativePosition().getX();
             double z = i.getRelativePosition().getZ();
             Location location = block.getLocation().clone().add(x, 0.75, z);
@@ -114,7 +115,7 @@ public class ConsoleBuilder {
         }
     }
 
-    private UUID spawnControl(ConsoleInteraction interaction, Location location, float angle, int id) {
+    private UUID spawnControl(ConsoleInteraction interaction, Location location, float angle, int id, String playerUuid) {
         if (interaction == ConsoleInteraction.SCREEN_LEFT && right != null) {
             return right;
         }
@@ -128,6 +129,12 @@ public class ConsoleBuilder {
             wherec.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
             cmd = (rsc.resultSet()) ? getCmd(rsc.getDirection()) + 10000 : 10000;
+        }
+        if (interaction == ConsoleInteraction.THROTTLE || interaction == ConsoleInteraction.RELATIVITY_DIFFERENTIATOR) {
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, playerUuid);
+            if (rsp.resultSet()) {
+                cmd = (interaction == ConsoleInteraction.THROTTLE) ? 1000 + rsp.getThrottle() : 6000 + rsp.getFlightMode();
+            }
         }
         // spawn a control
         ItemStack is = new ItemStack(material);
