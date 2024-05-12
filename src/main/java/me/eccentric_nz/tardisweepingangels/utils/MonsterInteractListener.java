@@ -25,7 +25,7 @@ import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -81,7 +81,7 @@ public class MonsterInteractListener implements Listener {
                     ItemStack is = p.getInventory().getItemInMainHand();
                     if (is.getType().equals(Material.POTION)) {
                         PotionMeta potionMeta = (PotionMeta) is.getItemMeta();
-                        if (potionMeta != null && potionMeta.getBasePotionData().getType().equals(PotionType.WEAKNESS)) {
+                        if (potionMeta != null && potionMeta.getBasePotionType() != null && potionMeta.getBasePotionType().equals(PotionType.WEAKNESS)) {
                             // remove the potion
                             int a = p.getInventory().getItemInMainHand().getAmount();
                             int a2 = a - 1;

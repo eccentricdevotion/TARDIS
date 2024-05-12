@@ -111,9 +111,9 @@ public class AdventureComponents {
     }
 
     public static TextComponent getTARDISForList(Tardis t, String world, int x, int y, int z) {
-        return Component.text(String.format("%s %s", t.getTardis_id(), t.getOwner()), NamedTextColor.GREEN)
+        return Component.text(String.format("%s %s", t.getTardisId(), t.getOwner()), NamedTextColor.GREEN)
                 .hoverEvent(HoverEvent.showText(Component.text(String.format("%s %s, %s, %s", world, x, y, z))))
-                .clickEvent(ClickEvent.runCommand("/tardisadmin enter " + t.getTardis_id()));
+                .clickEvent(ClickEvent.runCommand("/tardisadmin enter " + t.getTardisId()));
     }
 
     public static TextComponent getExterminate(TARDIS plugin) {

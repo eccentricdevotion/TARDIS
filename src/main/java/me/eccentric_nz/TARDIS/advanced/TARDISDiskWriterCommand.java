@@ -83,7 +83,7 @@ public class TARDISDiskWriterCommand {
                     return false;
                 } else {
                     Tardis tardis = rs.getTardis();
-                    int id = tardis.getTardis_id();
+                    int id = tardis.getTardisId();
                     ChameleonPreset preset = tardis.getPreset();
                     // check has unique name - this will always return false in HARD & MEDIUM difficulty
                     // TODO check for disk lore if MEDIUM difficulty

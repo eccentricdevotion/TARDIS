@@ -32,11 +32,13 @@ class TARDISManualFlightStarter implements Runnable {
     private final TARDIS plugin;
     private final Player player;
     private final int id;
+    private final boolean console;
 
-    TARDISManualFlightStarter(TARDIS plugin, Player player, int id) {
+    TARDISManualFlightStarter(TARDIS plugin, Player player, int id, boolean console) {
         this.plugin = plugin;
         this.player = player;
         this.id = id;
+        this.console = console;
     }
 
     @Override
@@ -44,7 +46,7 @@ class TARDISManualFlightStarter implements Runnable {
         long delay = plugin.getConfig().getLong("travel.manual_flight_delay");
         // start a manual flight session
         plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_ENGAGED");
-        TARDISManualFlightRunnable mfr = new TARDISManualFlightRunnable(plugin, player, id);
+        TARDISManualFlightRunnable mfr = new TARDISManualFlightRunnable(plugin, player, id, console);
         int taskid = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, mfr, 10L, delay);
         mfr.setTaskID(taskid);
         // play inflight sound

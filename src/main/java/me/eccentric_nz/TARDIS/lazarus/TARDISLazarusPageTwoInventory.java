@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIGeneticManipulator;
@@ -26,6 +23,10 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * The Genetic Manipulation Device was invented by Professor Richard Lazarus. The machine would turn anyone inside
@@ -47,6 +48,7 @@ class TARDISLazarusPageTwoInventory {
         disguises.add(Material.POLAR_BEAR_SPAWN_EGG);
         disguises.add(Material.SPIDER_SPAWN_EGG);
         disguises.add(Material.TRADER_LLAMA_SPAWN_EGG);
+        disguises.add(Material.WANDERING_TRADER_SPAWN_EGG);
         disguises.add(Material.WOLF_SPAWN_EGG);
         disguises.add(Material.ZOMBIFIED_PIGLIN_SPAWN_EGG);
         // hostile

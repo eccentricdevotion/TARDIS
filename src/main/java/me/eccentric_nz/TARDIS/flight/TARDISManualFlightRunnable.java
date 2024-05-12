@@ -16,16 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetFlightControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * After materialization, the Astrosextant Rectifier will attempt to confirm that a TARDIS has arrived at the correct
@@ -41,15 +43,17 @@ class TARDISManualFlightRunnable implements Runnable {
     private final List<String> controls = Arrays.asList("Helmic Regulator", "Astrosextant Rectifier", "Gravitic Anomaliser", "Absolute Tesseractulator");
     private final Player player;
     private final UUID uuid;
+    private final boolean console;
     private int taskID;
     private int i = 0;
 
-    TARDISManualFlightRunnable(TARDIS plugin, Player player, int id) {
+    TARDISManualFlightRunnable(TARDIS plugin, Player player, int id, boolean console) {
         this.plugin = plugin;
         this.player = player;
-        target = getRepeaterList(id);
+        target = getLocationList(id);
         uuid = player.getUniqueId();
-        plugin.getTrackerKeeper().getRepeaters().put(uuid, target);
+        this.console = console;
+        plugin.getTrackerKeeper().getManualFlightLocations().put(uuid, target);
     }
 
     @Override
@@ -78,14 +82,21 @@ class TARDISManualFlightRunnable implements Runnable {
                 Location adjusted = new TARDISFlightAdjustment(plugin).getLocation(plugin.getTrackerKeeper().getFlightData().get(uuid), blocks);
                 plugin.getTrackerKeeper().getFlightData().get(uuid).setLocation(adjusted);
             }
-            plugin.getTrackerKeeper().getRepeaters().remove(uuid);
+            plugin.getTrackerKeeper().getManualFlightLocations().remove(uuid);
         }
     }
 
-    private List<Location> getRepeaterList(int id) {
-        ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, id, 0);
-        if (rsr.resultSet()) {
-            return rsr.getLocations();
+    private List<Location> getLocationList(int id) {
+        if (console) {
+            ResultSetFlightControls rsfc = new ResultSetFlightControls(plugin, id);
+            if (rsfc.resultSet()) {
+                return rsfc.getLocations();
+            }
+        } else {
+            ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, id, 0);
+            if (rsr.resultSet()) {
+                return rsr.getLocations();
+            }
         }
         return null;
     }

@@ -62,7 +62,7 @@ public class FloodgateAddCompanionsForm {
         ResultSetTardis rsa = new ResultSetTardis(plugin, wherea, "", false, 0);
         if (rsa.resultSet()) {
             Tardis tardis = rsa.getTardis();
-            int id = tardis.getTardis_id();
+            int id = tardis.getTardisId();
             String comps = tardis.getCompanions();
             if (label.equals("Everyone")) {
                 TARDISCompanionAddGUIListener.addCompanion(id, comps, "everyone");

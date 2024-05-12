@@ -66,7 +66,7 @@ public class FloodgateCompanionsForm {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             if (rs.resultSet()) {
                 Tardis tardis = rs.getTardis();
-                int id = tardis.getTardis_id();
+                int id = tardis.getTardisId();
                 String comps = tardis.getCompanions();
                 // get UUID for offline player
                 OfflinePlayer op = plugin.getServer().getOfflinePlayer(label);

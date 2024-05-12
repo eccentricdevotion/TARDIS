@@ -31,15 +31,15 @@ import net.minecraft.network.protocol.game.ServerboundPlayerInputPacket;
 import net.minecraft.server.network.ServerCommonPacketListenerImpl;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.LevelChunkSection;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.ticks.LevelChunkTicks;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_20_R3.CraftChunk;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R4.CraftChunk;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -65,7 +65,7 @@ public class TARDISPacketListener {
     private static Connection getConnection(final ServerCommonPacketListenerImpl playerConnection) {
         try {
             if (connectionField == null) {
-                connectionField = ServerCommonPacketListenerImpl.class.getDeclaredField("c");
+                connectionField = ServerCommonPacketListenerImpl.class.getDeclaredField("e");
                 connectionField.setAccessible(true);
             }
             return (Connection) connectionField.get(playerConnection);

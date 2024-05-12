@@ -68,7 +68,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     return true;
                 }
                 Tardis tardis = rs.getTardis();
-                int id = tardis.getTardis_id();
+                int id = tardis.getTardisId();
                 if (args[0].equalsIgnoreCase("cancel")) {
                     return new TARDISTravelCancel(plugin).action(player, id);
                 }
@@ -82,9 +82,9 @@ public class TARDISTravelCommands implements CommandExecutor {
                 if (args.length == 1 && args[0].equalsIgnoreCase("stop")) {
                     return new TARDISTravelStop(plugin).action(player, id);
                 }
-                int level = tardis.getArtron_level();
-                boolean powered = tardis.isPowered_on();
-                if (!tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                int level = tardis.getArtronLevel();
+                boolean powered = tardis.isPoweredOn();
+                if (!tardis.isHandbrakeOn() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
                     return true;
                 }

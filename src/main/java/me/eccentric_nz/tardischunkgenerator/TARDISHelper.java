@@ -48,9 +48,9 @@ import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
-import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_20_R3.block.CraftBlock;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftVillager;
+import org.bukkit.craftbukkit.v1_20_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R4.block.CraftBlock;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftVillager;
 import org.bukkit.entity.*;
 import org.bukkit.map.MapView;
 import org.bukkit.util.Vector;
@@ -106,7 +106,8 @@ public class TARDISHelper {
             BlockPos bp = new BlockPos(block.getX(), block.getY(), block.getZ());
             BlockEntity tile = ws.getBlockEntity(bp);
             if (tile instanceof FurnaceBlockEntity furnace) {
-                furnace.setCustomName(Component.literal(name));
+//                furnace.setCustomName(Component.literal(name));
+                furnace.name = Component.literal(name);
             }
         }
     }
@@ -336,7 +337,7 @@ public class TARDISHelper {
         BlockState data = ((CraftBlock) block).getNMS();
         net.minecraft.world.level.Level world = ((CraftWorld) block.getWorld()).getHandle();
         BlockPos position = ((CraftBlock) block).getPosition();
-        data.use(world, null, null, BlockHitResult.miss(data.getOffset(world, position), direction, position));
+        data.useWithoutItem(world, null, BlockHitResult.miss(data.getOffset(world, position), direction, position));
     }
 
     public void growTree(String tree, Location location) {

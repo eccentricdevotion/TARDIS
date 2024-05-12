@@ -134,7 +134,7 @@ public class TARDISExterminator {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            int id = tardis.getTardis_id();
+            int id = tardis.getTardisId();
             // check that the player is not currently in their TARDIS
             HashMap<String, Object> travid = new HashMap<>();
             travid.put("tardis_id", id);

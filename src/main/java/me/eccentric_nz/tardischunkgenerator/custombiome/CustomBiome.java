@@ -1,14 +1,10 @@
 package me.eccentric_nz.tardischunkgenerator.custombiome;
 
-import com.mojang.serialization.Lifecycle;
-
-import java.lang.reflect.Field;
-import java.util.IdentityHashMap;
-
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import net.minecraft.core.MappedRegistry;
+import net.minecraft.core.RegistrationInfo;
 import net.minecraft.core.WritableRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -19,7 +15,10 @@ import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_20_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_20_R4.CraftServer;
+
+import java.lang.reflect.Field;
+import java.util.IdentityHashMap;
 
 public class CustomBiome {
 
@@ -60,7 +59,8 @@ public class CustomBiome {
             unregisteredIntrusiveHolders.setAccessible(true);
             unregisteredIntrusiveHolders.set(registrywritable, new IdentityHashMap<>());
             registrywritable.createIntrusiveHolder(biome);
-            registrywritable.register(customKey, biome, Lifecycle.stable());
+//            registrywritable.register(customKey, biome, Lifecycle.stable());
+            registrywritable.register(customKey, biome, RegistrationInfo.BUILT_IN);
             // make unregisteredIntrusiveHolders null again to remove potential for undefined behaviour
             unregisteredIntrusiveHolders.set(registrywritable, null);
             // refreeze biome registry

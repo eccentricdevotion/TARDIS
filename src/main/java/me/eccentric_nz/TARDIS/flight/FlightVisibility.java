@@ -8,8 +8,8 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import net.minecraft.network.protocol.game.ClientboundSetEquipmentPacket;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.entity.EquipmentSlot;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -74,7 +74,7 @@ public class FlightVisibility {
                         // restart animation
                         int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(plugin, stand, player, tardis.getPreset().equals(ChameleonPreset.PANDORICA)), 5L, 3L);
                         // save flight data
-                        plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(frd.getId(), frd.getLocation(), frd.getSound(), animation, chicken.getUniqueId()));
+                        plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(frd.getId(), frd.getLocation(), frd.getSound(), animation, chicken.getUniqueId(), stand.getUniqueId()));
                         // remove tracker
                         plugin.getTrackerKeeper().getHiddenFlight().remove(player.getUniqueId());
                     }

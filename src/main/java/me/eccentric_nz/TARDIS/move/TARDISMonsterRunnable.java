@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.util.*;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -37,6 +36,8 @@ import org.bukkit.entity.Villager.Profession;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.*;
+
 /**
  * @author eccentric_nz
  */
@@ -44,7 +45,6 @@ public class TARDISMonsterRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final List<EntityType> monsters = new ArrayList<>();
-    private final List<EntityType> random_monsters = new ArrayList<>();
 
     public TARDISMonsterRunnable(TARDIS plugin) {
         this.plugin = plugin;
@@ -57,8 +57,8 @@ public class TARDISMonsterRunnable implements Runnable {
         monsters.add(EntityType.PIGLIN);
         monsters.add(EntityType.PILLAGER);
         monsters.add(EntityType.SILVERFISH);
-        monsters.add(EntityType.SKELETON);
         monsters.add(EntityType.SLIME);
+        monsters.add(EntityType.SKELETON);
         monsters.add(EntityType.SPIDER);
         monsters.add(EntityType.STRAY);
         monsters.add(EntityType.VEX);
@@ -71,10 +71,7 @@ public class TARDISMonsterRunnable implements Runnable {
         monsters.add(EntityType.ZOMBIFIED_PIGLIN);
         if (this.plugin.getConfig().getBoolean("allow.guardians")) {
             monsters.add(EntityType.GUARDIAN);
-        } else {
-            random_monsters.add(EntityType.GUARDIAN);
         }
-        random_monsters.addAll(monsters);
     }
 
     @Override
@@ -97,7 +94,7 @@ public class TARDISMonsterRunnable implements Runnable {
             List<Entity> entities = ent.getNearbyEntities(16, 16, 16);
             ent.remove();
             boolean found = false;
-            if (entities.size() < 1) {
+            if (entities.isEmpty()) {
                 continue;
             }
             // check if a Time Lord or companion is near
@@ -209,7 +206,7 @@ public class TARDISMonsterRunnable implements Runnable {
                     if (rs.resultSet() && rs.getTardis().getMonsters() < plugin.getConfig().getInt("preferences.spawn_limit")) {
                         TARDISMonster rtm = new TARDISMonster();
                         // choose a random monster
-                        EntityType type = random_monsters.get(TARDISConstants.RANDOM.nextInt(random_monsters.size()));
+                        EntityType type = monsters.get(TARDISConstants.RANDOM.nextInt(monsters.size()));
                         rtm.setType(type);
                         String dn = TARDISStringUtils.uppercaseFirst(type.toString().toLowerCase(Locale.ENGLISH));
                         if (type.equals(EntityType.ZOMBIE_VILLAGER)) {
@@ -310,7 +307,7 @@ public class TARDISMonsterRunnable implements Runnable {
                     }
                 }
                 HashMap<String, Object> wherer = new HashMap<>();
-                wherer.put("tardis_id", rst.getTardis().getTardis_id());
+                wherer.put("tardis_id", rst.getTardis().getTardisId());
                 wherer.put("type", 5);
                 wherer.put("secondary", 0);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherer, false);
@@ -324,6 +321,8 @@ public class TARDISMonsterRunnable implements Runnable {
             while (!loc.getChunk().isLoaded()) {
                 loc.getChunk().load();
             }
+            // update monsters count in database
+            plugin.getQueryFactory().doMonsterIncrement(tpl.getTardisId());
             // spawn a monster in the TARDIS
             plugin.setTardisSpawn(true);
             Entity ent = loc.getWorld().spawnEntity(loc, m.getType());

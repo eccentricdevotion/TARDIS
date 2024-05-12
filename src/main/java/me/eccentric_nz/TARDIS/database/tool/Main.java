@@ -219,7 +219,7 @@ public class Main {
                                         bw.write(str);
                                     }
                                     case flight -> {
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("f_id"), rs.getString("uuid"), rs.getInt("tardis_id"), rs.getString("location"), rs.getString("chicken")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("f_id"), rs.getString("uuid"), rs.getInt("tardis_id"), rs.getString("location"), rs.getString("chicken"), rs.getString("stand")) + end;
                                         bw.write(str);
                                     }
                                     case forcefield -> {
@@ -236,6 +236,10 @@ public class Main {
                                     }
                                     case homes -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("home_id"), rs.getInt("tardis_id"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("direction"), rs.getInt("submarine"), rs.getString("preset")) + end;
+                                        bw.write(str);
+                                    }
+                                    case interactions -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("i_id"), rs.getInt("tardis_id"), rs.getString("uuid"), rs.getString("control"), rs.getInt("state")) + end;
                                         bw.write(str);
                                     }
                                     case inventories -> {

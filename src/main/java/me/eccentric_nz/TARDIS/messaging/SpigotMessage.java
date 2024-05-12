@@ -105,11 +105,10 @@ public class SpigotMessage implements TARDISMessage {
 
     @Override
     public void send(Player player, String key, boolean handbrake) {
-        String local = TARDIS.plugin.getLanguage().getString(key);
         if (handbrake) {
-            sendJoinedStatus(player, local, "HANDBRAKE_RELEASE");
+            sendJoinedStatus(player, key, "HANDBRAKE_RELEASE");
         } else {
-            sendJoinedStatus(player, local, "LEAVING_VORTEX");
+            sendJoinedStatus(player, key, "LEAVING_VORTEX");
         }
     }
 
@@ -129,7 +128,7 @@ public class SpigotMessage implements TARDISMessage {
         TextComponent textComponent = SpigotComponents.getModule(module);
         TextComponent m = new TextComponent(message);
         textComponent.addExtra(m);
-        TARDIS.plugin.getServer().broadcast(textComponent);
+        TARDIS.plugin.getServer().spigot().broadcast(textComponent);
     }
 
     @Override

@@ -131,10 +131,10 @@ public class SpigotComponents {
     }
 
     public static TextComponent getTARDISForList(Tardis t, String world, int x, int y, int z) {
-        TextComponent textComponent = new TextComponent(String.format("%s %s", t.getTardis_id(), t.getOwner()));
+        TextComponent textComponent = new TextComponent(String.format("%s %s", t.getTardisId(), t.getOwner()));
         textComponent.setColor(ChatColor.GREEN);
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(String.format("%s %s, %s, %s", world, x, y, z))));
-        textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisadmin enter " + t.getTardis_id()));
+        textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisadmin enter " + t.getTardisId()));
         return textComponent;
     }
 

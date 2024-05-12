@@ -90,21 +90,21 @@ public class TARDISTimeLordDeathListener implements Listener {
                 // are they a time lord?
                 if (rs.resultSet()) {
                     Tardis tardis = rs.getTardis();
-                    if (tardis.isPowered_on()) {
-                        int id = tardis.getTardis_id();
+                    if (tardis.isPoweredOn()) {
+                        int id = tardis.getTardisId();
                         String eps = tardis.getEps();
                         String creeper = tardis.getCreeper();
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
                         if (rsp.resultSet()) {
                             SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
                             // do they have the autonomous circuit on?
-                            if (rsp.isAutoOn() && !tardis.isSiege_on() && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                            if (rsp.isAutoOn() && !tardis.isSiegeOn() && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
                                 boolean isHomeDefault = rsp.getAutoDefault() == Autonomous.Default.HOME;
                                 // close doors
                                 new DoorCloserAction(plugin, uuid, id).closeDoors();
                                 Location death_loc = player.getLocation();
                                 int amount = Math.round(plugin.getArtronConfig().getInt("autonomous") * spaceTimeThrottle.getArtronMultiplier());
-                                if (tardis.getArtron_level() > amount) {
+                                if (tardis.getArtronLevel() > amount) {
                                     if (plugin.getConfig().getBoolean("allow.emergency_npc") && rsp.isEpsOn()) {
                                         // check if there are players in the TARDIS
                                         HashMap<String, Object> wherev = new HashMap<>();

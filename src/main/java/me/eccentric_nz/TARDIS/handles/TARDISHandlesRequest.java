@@ -210,8 +210,8 @@ public class TARDISHandlesRequest {
                             ResultSetTardis rst = new ResultSetTardis(plugin, wherel, "", false, 2);
                             if (rst.resultSet()) {
                                 Tardis tardis = rst.getTardis();
-                                if ((onoff && !tardis.isLights_on()) || (!onoff && tardis.isLights_on())) {
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new LightSwitchAction(plugin, id, tardis.isLights_on(), player, tardis.getSchematic().getLights()).flickSwitch(), 1L);
+                                if ((onoff && !tardis.isLightsOn()) || (!onoff && tardis.isLightsOn())) {
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new LightSwitchAction(plugin, id, tardis.isLightsOn(), player, tardis.getSchematic().getLights()).flickSwitch(), 1L);
                                 }
                             }
                         }
@@ -225,9 +225,9 @@ public class TARDISHandlesRequest {
                             ResultSetTardis rst = new ResultSetTardis(plugin, wherel, "", false, 2);
                             if (rst.resultSet()) {
                                 Tardis tardis = rst.getTardis();
-                                if ((onoff && tardis.isPowered_on()) || (!onoff && !tardis.isPowered_on())) {
+                                if ((onoff && tardis.isPoweredOn()) || (!onoff && !tardis.isPoweredOn())) {
                                     if (plugin.getConfig().getBoolean("allow.power_down")) {
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), tardis.isLights_on(), player.getLocation(), tardis.getArtron_level(), tardis.getSchematic().getLights()).clickButton(), 1L);
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPoweredOn(), tardis.isHidden(), tardis.isLightsOn(), player.getLocation(), tardis.getArtronLevel(), tardis.getSchematic().getLights()).clickButton(), 1L);
                                     }
                                 }
                             }
@@ -257,7 +257,7 @@ public class TARDISHandlesRequest {
                         ResultSetTardis rsr = new ResultSetTardis(plugin, wherel, "", false, 2);
                         if (rsr.resultSet()) {
                             Tardis tardis = rsr.getTardis();
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISRandomButton(plugin, player, id, tardis.getArtron_level(), 0, tardis.getCompanions(), tardis.getUuid()).clickButton(), 1L);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISRandomButton(plugin, player, id, tardis.getArtronLevel(), 0, tardis.getCompanions(), tardis.getUuid()).clickButton(), 1L);
                             return;
                         }
                     }

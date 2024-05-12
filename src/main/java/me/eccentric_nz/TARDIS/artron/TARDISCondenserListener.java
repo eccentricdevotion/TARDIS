@@ -236,15 +236,15 @@ public class TARDISCondenserListener implements Listener {
                 item_counts.forEach((key, value) -> {
                     // check if the tardis has condensed this material before
                     HashMap<String, Object> wherec = new HashMap<>();
-                    wherec.put("tardis_id", tardis.getTardis_id());
+                    wherec.put("tardis_id", tardis.getTardisId());
                     wherec.put("block_data", key);
                     ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
                     HashMap<String, Object> setc = new HashMap<>();
                     if (rsc.resultSet()) {
                         int new_stack_size = value + rsc.getBlock_count();
-                        plugin.getQueryFactory().updateCondensedBlockCount(new_stack_size, tardis.getTardis_id(), key);
+                        plugin.getQueryFactory().updateCondensedBlockCount(new_stack_size, tardis.getTardisId(), key);
                     } else {
-                        setc.put("tardis_id", tardis.getTardis_id());
+                        setc.put("tardis_id", tardis.getTardisId());
                         setc.put("block_data", key);
                         setc.put("block_count", value);
                         plugin.getQueryFactory().doInsert("condenser", setc);
@@ -258,13 +258,13 @@ public class TARDISCondenserListener implements Listener {
             // halve it cause 1:1 is too much...
             amount = Math.round(amount / 2.0F);
             HashMap<String, Object> wheret = new HashMap<>();
-            wheret.put("tardis_id", tardis.getTardis_id());
+            wheret.put("tardis_id", tardis.getTardisId());
             plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
             if (amount > 0) {
                 // are we doing an achievement?
                 if (plugin.getAchievementConfig().getBoolean("energy.enabled")) {
                     // determine the current percentage
-                    int current_level = tardis.getArtron_level() + amount;
+                    int current_level = tardis.getArtronLevel() + amount;
                     int fc = plugin.getArtronConfig().getInt("full_charge");
                     int percent = Math.round((current_level * 100F) / fc);
                     TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, Advancement.ENERGY, 1);

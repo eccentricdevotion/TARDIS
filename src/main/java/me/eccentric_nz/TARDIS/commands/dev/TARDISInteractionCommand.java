@@ -22,7 +22,7 @@ public class TARDISInteractionCommand {
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (rs.resultSet()) {
-            int id = rs.getTardis().getTardis_id();
+            int id = rs.getTardis().getTardisId();
             HashMap<String, Object> wherec = new HashMap<>();
             wherec.put("tardis_id", id);
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);

@@ -65,6 +65,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     private final HashMap<UUID, Integer> sheep = new HashMap<>();
     private final HashMap<UUID, Integer> slimes = new HashMap<>();
     private final HashMap<UUID, Integer> tropics = new HashMap<>();
+    private final HashMap<UUID, Integer> wolves = new HashMap<>();
     private final HashMap<UUID, String> disguises = new HashMap<>();
     private final List<Integer> slimeSizes = Arrays.asList(1, 2, 4);
     private final List<Integer> pufferStates = Arrays.asList(0, 1, 2);
@@ -135,11 +136,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
             switch (slot) {
                 case 43 -> {
                     pagers.add(uuid);
-                    ItemStack is = view.getItem(slot);
-                    ItemMeta im = is.getItemMeta();
+                    ItemStack pageButton = view.getItem(slot);
+                    ItemMeta pageMeta = pageButton.getItemMeta();
                     // go to page one or two
                     Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
-                    if (im.getDisplayName().equals(plugin.getLanguage().getString("BUTTON_PAGE_1"))) {
+                    if (pageMeta.getDisplayName().equals(plugin.getLanguage().getString("BUTTON_PAGE_1"))) {
                         inv.setContents(new TARDISLazarusInventory(plugin).getPageOne());
                     } else {
                         inv.setContents(new TARDISLazarusPageTwoInventory(plugin).getPageTwo());
@@ -149,11 +150,11 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                 case 44 -> {
                     if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                         pagers.add(uuid);
-                        ItemStack is = view.getItem(slot);
-                        ItemMeta im = is.getItemMeta();
+                        ItemStack monstersButton = view.getItem(slot);
+                        ItemMeta monstersMeta = monstersButton.getItemMeta();
                         // go to monsters or page two
                         Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
-                        if (im.getDisplayName().equals(plugin.getLanguage().getString("BUTTON_PAGE_2"))) {
+                        if (monstersMeta.getDisplayName().equals(plugin.getLanguage().getString("BUTTON_PAGE_2"))) {
                             inv.setContents(new TARDISLazarusPageTwoInventory(plugin).getPageTwo());
                         } else {
                             inv.setContents(new TARDISWeepingAngelsMonstersInventory(plugin).getMonsters());
@@ -162,29 +163,29 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     }
                 }
                 case 45 -> { // The Master Switch : ON | OFF
-                    ItemStack is = view.getItem(slot);
-                    ItemMeta im = is.getItemMeta();
+                    ItemStack masterButton = view.getItem(slot);
+                    ItemMeta masterMeta = masterButton.getItemMeta();
                     if (TARDISPermission.hasPermission(player, "tardis.themaster")) {
                         if (plugin.getTrackerKeeper().getImmortalityGate().equals("")) {
-                            boolean isOff = im.getLore().get(0).equals(plugin.getLanguage().getString("SET_OFF"));
+                            boolean isOff = masterMeta.getLore().get(0).equals(plugin.getLanguage().getString("SET_OFF"));
                             String onoff = isOff ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF");
-                            im.setLore(List.of(onoff));
+                            masterMeta.setLore(List.of(onoff));
                             int cmd = isOff ? 2 : 3;
-                            im.setCustomModelData(cmd);
+                            masterMeta.setCustomModelData(cmd);
                         } else {
-                            im.setLore(Arrays.asList("The Master Race is already", " set to " + plugin.getTrackerKeeper().getImmortalityGate() + "!", "Try again later."));
+                            masterMeta.setLore(Arrays.asList("The Master Race is already", " set to " + plugin.getTrackerKeeper().getImmortalityGate() + "!", "Try again later."));
                         }
                     } else {
-                        im.setLore(Arrays.asList("You do not have permission", "to be The Master!"));
+                        masterMeta.setLore(Arrays.asList("You do not have permission", "to be The Master!"));
                     }
-                    is.setItemMeta(im);
+                    masterButton.setItemMeta(masterMeta);
                 }
                 case 47 -> { // adult / baby
-                    ItemStack is = view.getItem(slot);
-                    ItemMeta im = is.getItemMeta();
-                    String onoff = (im.getLore().get(0).equals("ADULT")) ? "BABY" : "ADULT";
-                    im.setLore(List.of(onoff));
-                    is.setItemMeta(im);
+                    ItemStack ageButton = view.getItem(slot);
+                    ItemMeta ageMeta = ageButton.getItemMeta();
+                    String onoff = (ChatColor.stripColor(ageMeta.getLore().get(0)).equals("ADULT")) ? "BABY" : "ADULT";
+                    ageMeta.setLore(List.of(onoff));
+                    ageButton.setItemMeta(ageMeta);
                 }
                 case 48 -> { // type / colour
                     if (disguises.containsKey(uuid)) {
@@ -192,14 +193,14 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     }
                 }
                 case 49 -> { // Tamed / Flying / Blazing / Powered / Beaming / Aggressive / Decorated / Chest carrying : TRUE | FALSE
-                    ItemStack is = view.getItem(slot);
-                    ItemMeta im = is.getItemMeta();
-                    List<String> lore = im.getLore();
+                    ItemStack optionsButton = view.getItem(slot);
+                    ItemMeta optionsMeta = optionsButton.getItemMeta();
+                    List<String> lore = optionsMeta.getLore();
                     int pos = lore.size() - 1;
                     String truefalse = (ChatColor.stripColor(lore.get(pos)).equals("FALSE")) ? ChatColor.GREEN + "TRUE" : ChatColor.RED + "FALSE";
                     lore.set(pos, truefalse);
-                    im.setLore(lore);
-                    is.setItemMeta(im);
+                    optionsMeta.setLore(lore);
+                    optionsButton.setItemMeta(optionsMeta);
                 }
                 case 51 -> { // remove disguise
                     pagers.remove(uuid);
@@ -315,11 +316,18 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                                             options = new Object[]{getBoolean(view)};
                                         }
                                     }
-                                    case SHEEP, WOLF -> {
+                                    case SHEEP -> {
                                         if (plugin.isDisguisesOnServer()) {
                                             new TARDISLazarusLibs(player, disguise, getColor(view), getBoolean(view), getBaby(view)).createDisguise();
                                         } else {
                                             options = new Object[]{getColor(view), getBoolean(view), AGE.getFromBoolean(getBaby(view))};
+                                        }
+                                    }
+                                    case WOLF -> {
+                                        if (plugin.isDisguisesOnServer()) {
+                                            new TARDISLazarusLibs(player, disguise, getWolfVariant(view), getBoolean(view), getBaby(view)).createDisguise();
+                                        } else {
+                                            options = new Object[]{getWolfVariant(view), getBoolean(view), AGE.getFromBoolean(getBaby(view))};
                                         }
                                     }
                                     case HORSE -> {
@@ -378,7 +386,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                                             options = new Object[]{AGE.getFromBoolean(getBaby(view))};
                                         }
                                     }
-                                    case SNOWMAN -> {
+                                    case SNOW_GOLEM -> {
                                         if (plugin.isDisguisesOnServer()) {
                                             new TARDISLazarusLibs(player, disguise, snowmen.get(uuid), false, false).createDisguise();
                                         } else {
@@ -399,7 +407,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                                             options = new Object[]{TropicalFish.Pattern.values()[tropics.get(uuid)]};
                                         }
                                     }
-                                    case MUSHROOM_COW -> {
+                                    case MOOSHROOM -> {
                                         if (plugin.isDisguisesOnServer()) {
                                             new TARDISLazarusLibs(player, disguise, getCowVariant(view), false, getBaby(view)).createDisguise();
                                         } else {
@@ -514,7 +522,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                 snowmen.put(uuid, derp);
                 t = (derp) ? "Pumpkin head" : "Derp face";
             }
-            case "SHEEP", "WOLF" -> {
+            case "SHEEP" -> {
                 if (sheep.containsKey(uuid)) {
                     o = (sheep.get(uuid) + 1 < 16) ? sheep.get(uuid) + 1 : 0;
                 } else {
@@ -522,6 +530,15 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                 }
                 t = DyeColor.values()[o].toString();
                 sheep.put(uuid, o);
+            }
+            case "WOLF" -> {
+                if (wolves.containsKey(uuid)) {
+                    o = (wolves.get(uuid) + 1 < 9) ? wolves.get(uuid) + 1 : 0;
+                } else {
+                    o = 0;
+                }
+                t = LazarusWolf.NAMES.get(o);
+                wolves.put(uuid, o);
             }
             case "HORSE" -> {
                 if (horses.containsKey(uuid)) {
@@ -755,6 +772,16 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
             return Rabbit.Type.valueOf(im.getLore().get(0));
         } catch (IllegalArgumentException e) {
             return Rabbit.Type.BROWN;
+        }
+    }
+
+    private Wolf.Variant getWolfVariant(InventoryView i) {
+        ItemStack is = i.getItem(48);
+        ItemMeta im = is.getItemMeta();
+        try {
+            return LazarusWolf.VARIANTS.get(im.getLore().get(0));
+        } catch (IllegalArgumentException e) {
+            return Wolf.Variant.PALE;
         }
     }
 

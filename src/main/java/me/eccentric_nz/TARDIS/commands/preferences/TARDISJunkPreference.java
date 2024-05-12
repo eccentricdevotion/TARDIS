@@ -48,7 +48,7 @@ class TARDISJunkPreference {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            int id = tardis.getTardis_id();
+            int id = tardis.getTardisId();
             // get current preset
             String current = tardis.getPreset().toString();
             // must be outside of the TARDIS

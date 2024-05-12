@@ -208,8 +208,8 @@ public class TARDISMoveListener implements Listener {
                         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
                         if (rs.resultSet()) {
                             Tardis tardis = rs.getTardis();
-                            if (!tardis.isPowered_on()) {
-                                new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), loc, tardis.getArtron_level(), tardis.getSchematic().getLights()).clickButton();
+                            if (!tardis.isPoweredOn()) {
+                                new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLightsOn(), loc, tardis.getArtronLevel(), tardis.getSchematic().getLights()).clickButton();
                             }
                         }
                     }, 20L);

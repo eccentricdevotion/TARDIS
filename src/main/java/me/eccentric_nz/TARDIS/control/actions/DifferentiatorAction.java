@@ -21,6 +21,8 @@ import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Comparator;
 
+import java.util.HashMap;
+
 /**
  * The relativity differentiator is a component inside the TARDIS that allows it to travel in space.
  *
@@ -33,9 +35,17 @@ public class DifferentiatorAction {
         this.plugin = plugin;
     }
 
-    public void bleep(Block block) {
+    public void bleep(Block block, int id) {
         Comparator comparator = (Comparator) block.getBlockData();
         String sound =  comparator.getMode().equals(Comparator.Mode.SUBTRACT) ? "differentiator_off" : "differentiator_on";
         TARDISSounds.playTARDISSound(block.getLocation(), sound);
+        // save control state
+        int mode = comparator.getMode().equals(Comparator.Mode.SUBTRACT) ? 0 : 1;
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("secondary", mode);
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        where.put("type", 47);
+        plugin.getQueryFactory().doUpdate("controls", set, where);
     }
 }

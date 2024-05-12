@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockConverter;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockRoomConverter;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -30,7 +31,6 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Chunk;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -136,7 +136,7 @@ public class TARDISDisplayItemCommand {
                     im.setDisplayName(TARDISStringUtils.capitalise(args[2]));
                     is.setItemMeta(im);
                     Block up = block.getRelative(BlockFace.UP);
-                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi.isLight()) {
+                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR || tdi.isLight()) {
                         // also set an interaction entity
                         Interaction interaction = (Interaction) block.getWorld().spawnEntity(up.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
                         interaction.setResponsive(true);
@@ -148,7 +148,7 @@ public class TARDISDisplayItemCommand {
                             light.setLevel(level);
                             up.setBlockData(light);
                         }
-                        if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR) {
+                        if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) {
                             // set size
                             interaction.setInteractionHeight(2.0f);
                             interaction.setInteractionWidth(1.0f);
@@ -156,12 +156,12 @@ public class TARDISDisplayItemCommand {
                     } else {
                         up.setType((tdi == TARDISDisplayItem.ARTRON_FURNACE) ? Material.FURNACE : Material.BARRIER);
                     }
-                    double ay = (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR) ? 0.0d : 0.5d;
+                    double ay = (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
                     ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
                     display.setItemStack(is);
                     display.setPersistent(true);
                     display.setInvulnerable(true);
-                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR) {
+                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) {
                         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
                     }
                     if (tdi.getMaterial() == Material.AMETHYST_SHARD) {
@@ -233,37 +233,20 @@ public class TARDISDisplayItemCommand {
                 return true;
             }
             case "console" -> {
-                Block up = block.getRelative(BlockFace.UP);
-                for (int i = 0; i < 6; i++) {
-                    ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
-                    ItemMeta im = shard.getItemMeta();
-                    im.setCustomModelData(1001 + i);
-                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
-                    shard.setItemMeta(im);
-                    ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
-                    display.setItemStack(shard);
-                    display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
-                    display.setPersistent(true);
-                    display.setInvulnerable(true);
-                    float yaw = i * 60.0f;
-                    yaw = Location.normalizeYaw(yaw);
-                    // set display rotation
-                    display.setRotation(yaw, 0);
+                if (args.length < 3) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+                    return true;
                 }
-                for (int i = 30; i < 360; i += 60) {
-                    ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
-                    ItemMeta im = shard.getItemMeta();
-                    im.setCustomModelData(1007);
-                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
-                    shard.setItemMeta(im);
-                    ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
-                    display.setItemStack(shard);
-                    display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
-                    display.setPersistent(true);
-                    display.setInvulnerable(true);
-                    float yaw = Location.normalizeYaw(i);
-                    // set display rotation
-                    display.setRotation(yaw, 0);
+                int colour = TARDISNumberParsers.parseInt(args[2]);
+                if (colour < 1 || colour > 16) {
+                    plugin.getMessenger().message(player, "Number must be between 1-16!");
+                    return true;
+                }
+                // get TARDIS id
+                ResultSetTardisID rs = new ResultSetTardisID(plugin);
+                String uuid = player.getUniqueId().toString();
+                if (rs.fromUUID(uuid)) {
+                    new ConsoleBuilder(plugin).create(block, colour, rs.getTardis_id(), uuid);
                 }
                 return true;
             }

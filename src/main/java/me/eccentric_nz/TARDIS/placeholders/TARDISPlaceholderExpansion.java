@@ -106,7 +106,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                             where.put("tardis_id", rsv.getTardis_id());
                             rst = new ResultSetTardis(plugin, where, "", false, 2);
                             if (rst.resultSet()) {
-                                if (rst.getTardis().getTardis_id() == rsv.getTardis_id()) {
+                                if (rst.getTardis().getTardisId() == rsv.getTardis_id()) {
                                     result = "their own";
                                 } else {
                                     result = rst.getTardis().getOwner() + "'s";

@@ -87,7 +87,7 @@ public class TARDISArtronFurnaceListener implements Listener {
                             lore.set(1, "0");
                             im.setLore(lore);
                             is.setItemMeta(im);
-                            is.removeEnchantment(Enchantment.DURABILITY);
+                            is.removeEnchantment(Enchantment.UNBREAKING);
                             furnace.getInventory().setItem(1, is);
                         }, 2L);
                     }

@@ -186,7 +186,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                 tid.put("tardis_id", id);
                                 ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
                                 if (rs.resultSet()) {
-                                    if (!rs.getTardis().isHandbrake_on()) {
+                                    if (!rs.getTardis().isHandbrakeOn()) {
                                         plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                                         return;
                                     }
@@ -237,20 +237,20 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                 ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
                                 if (rs.resultSet()) {
                                     Tardis tardis = rs.getTardis();
-                                    if (!tardis.isHandbrake_on()) {
+                                    if (!tardis.isHandbrakeOn()) {
                                         plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                                         return;
                                     }
-                                    int artron = tardis.getArtron_level();
+                                    int artron = tardis.getArtronLevel();
                                     int required = plugin.getArtronConfig().getInt("backdoor");
                                     UUID tlUUID = tardis.getUuid();
                                     ChameleonPreset preset = tardis.getPreset();
                                     float yaw = player.getLocation().getYaw();
                                     float pitch = player.getLocation().getPitch();
                                     String companions = tardis.getCompanions();
-                                    boolean hb = tardis.isHandbrake_on();
-                                    boolean po = !tardis.isPowered_on() && !tardis.isAbandoned();
-                                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardis_id());
+                                    boolean hb = tardis.isHandbrakeOn();
+                                    boolean po = !tardis.isPoweredOn() && !tardis.isAbandoned();
+                                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardisId());
                                     if (!rsc.resultSet()) {
                                         // emergency TARDIS relocation
                                         new TARDISEmergencyRelocation(plugin).relocate(id, player);
@@ -417,7 +417,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                                 }
                                                 if (canPowerUp && po) {
                                                     // power up the TARDIS
-                                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLights_on(), player.getLocation(), artron, tardis.getSchematic().getLights()).clickButton(), 20L);
+                                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), false, tardis.isHidden(), tardis.isLightsOn(), player.getLocation(), artron, tardis.getSchematic().getLights()).clickButton(), 20L);
                                                 }
 
                                                 // put player into travellers table

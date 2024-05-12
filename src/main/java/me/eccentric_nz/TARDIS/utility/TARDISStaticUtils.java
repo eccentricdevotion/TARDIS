@@ -47,6 +47,55 @@ public class TARDISStaticUtils {
 
     private static final UUID ZERO_UUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
 
+    public static ChatColor policeBoxToChatColor(String preset) {
+        switch (preset) {
+            case "POLICE_BOX_WHITE" -> {
+                return ChatColor.WHITE;
+            }
+            case "POLICE_BOX_BROWN", "POLICE_BOX_ORANGE" -> {
+                return ChatColor.GOLD;
+            }
+            case "POLICE_BOX_BLACK" -> {
+                return ChatColor.BLACK;
+            }
+            case "POLICE_BOX_CYAN" -> {
+                return ChatColor.DARK_AQUA;
+            }
+            case "POLICE_BOX_LIGHT_BLUE" -> {
+                return ChatColor.BLUE;
+            }
+            case "POLICE_BOX_GRAY" -> {
+                return ChatColor.DARK_GRAY;
+            }
+            case "POLICE_BOX_GREEN" -> {
+                return ChatColor.DARK_GREEN;
+            }
+            case "POLICE_BOX_PURPLE" -> {
+                return ChatColor.DARK_PURPLE;
+            }
+            case "POLICE_BOX_RED" -> {
+                return ChatColor.DARK_RED;
+            }
+            case "POLICE_BOX_LIGHT_GRAY" -> {
+                return ChatColor.GRAY;
+            }
+            case "POLICE_BOX_LIME" -> {
+                return ChatColor.GREEN;
+            }
+            case "POLICE_BOX_PINK" -> {
+                return ChatColor.LIGHT_PURPLE;
+            }
+            case "POLICE_BOX_MAGENTA" -> {
+                return ChatColor.RED;
+            }
+            case "POLICE_BOX_YELLOW" -> {
+                return ChatColor.YELLOW;
+            }
+            default -> {
+                return ChatColor.DARK_BLUE;
+            }
+        }
+    }
 
     /**
      *
@@ -57,7 +106,7 @@ public class TARDISStaticUtils {
         ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, where, "", false, 0);
         if (rst.resultSet()) {
             Tardis tardis = rst.getTardis();
-            if (!tardis.isTardis_init()) {
+            if (!tardis.isTardisInit()) {
                 return false;
             }
             UUID ownerUUID = tardis.getUuid();

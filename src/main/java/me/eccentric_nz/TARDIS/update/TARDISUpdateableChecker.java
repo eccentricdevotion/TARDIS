@@ -71,7 +71,7 @@ public class TARDISUpdateableChecker {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_DISABLED");
             return false;
         }
-        if (updateable.equals(Updateable.BEACON) && !tardis.isPowered_on()) {
+        if (updateable.equals(Updateable.BEACON) && !tardis.isPoweredOn()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_BEACON");
             return false;
         }
@@ -112,7 +112,7 @@ public class TARDISUpdateableChecker {
         // check ARS for room type
         if (mustGrowRoom.contains(updateable)) {
             HashMap<String, Object> wherea = new HashMap<>();
-            wherea.put("tardis_id", tardis.getTardis_id());
+            wherea.put("tardis_id", tardis.getTardisId());
             ResultSetARS rsa = new ResultSetARS(plugin, wherea);
             if (rsa.resultSet()) {
                 // check for rooms
@@ -174,7 +174,7 @@ public class TARDISUpdateableChecker {
                 return false;
             }
             // must grow a room first
-            ResultSetFarming rsf = new ResultSetFarming(plugin, tardis.getTardis_id());
+            ResultSetFarming rsf = new ResultSetFarming(plugin, tardis.getTardisId());
             if (rsf.resultSet()) {
                 Farm farming = rsf.getFarming();
                 if (updateable.equals(Updateable.FARM) && farming.getFarm().isEmpty() && !hasFarm) {
@@ -260,7 +260,7 @@ public class TARDISUpdateableChecker {
                 return false;
             }
             int thisid = rst.getTardis_id();
-            if (thisid != tardis.getTardis_id()) {
+            if (thisid != tardis.getTardisId()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_ONLY_TL");
                 return false;
             }

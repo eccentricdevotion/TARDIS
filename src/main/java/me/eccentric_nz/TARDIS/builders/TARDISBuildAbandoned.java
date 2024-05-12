@@ -20,6 +20,7 @@ import com.google.gson.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
@@ -106,7 +107,7 @@ class TARDISBuildAbandoned implements Runnable {
      * Builds the interior of an abandoned TARDIS.
      *
      * @param plugin an instance of the TARDIS plugin main class.
-     * @param schm   the name of the schematic file to use can be ANCIENT, ARS, BIGGER, BUDGET, CAVE, COPPER, CORAL,
+     * @param schm   the name of the schematic file to use can be ANCIENT, ARS, BIGGER, BONE, BUDGET, CAVE, COPPER, CORAL,
      *               CURSED, CUSTOM, DELTA, DELUXE, DIVISION, ELEVENTH, ENDER, FACTORY, FIFTEENTH, FUGITIVE, HOSPITAL,
      *               MASTER, MECHANICAL, ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH, TOM, TWELFTH,
      *               WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM
@@ -235,7 +236,7 @@ class TARDISBuildAbandoned implements Runnable {
                 plugin.getWorldGuardUtils().addWGProtection(randomUUID, randomUUID.toString(), pos, world);
             }
             if (ender != null) {
-                Entity ender_crystal = world.spawnEntity(ender, EntityType.ENDER_CRYSTAL);
+                Entity ender_crystal = world.spawnEntity(ender, EntityType.END_CRYSTAL);
                 ((EnderCrystal) ender_crystal).setShowingBottom(false);
             }
             if (obj.has("paintings")) {
@@ -292,6 +293,12 @@ class TARDISBuildAbandoned implements Runnable {
             int z = startz + col;
             BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
             Material type = data.getMaterial();
+            if (type.equals(Material.LIGHT_GRAY_CONCRETE) && schm.getPermission().equals("bone")) {
+                // get the block
+                Block block = new Location(world, x, y, z).getBlock();
+                // build a console
+                new ConsoleBuilder(plugin).create(block, 1, dbID, TARDISConstants.UUID_ZERO.toString());
+            }
             if (type.equals(Material.SCULK_SHRIEKER)) {
                 // remember the location, so we can make it shriek when flying
                 String shrieker = new Location(world, x, y, z).toString();
@@ -521,7 +528,7 @@ class TARDISBuildAbandoned implements Runnable {
                     data = switch (schm.getPermission()) {
                         case "ender" -> Material.END_STONE_BRICKS.createBlockData();
                         case "delta", "cursed" -> Material.BLACKSTONE.createBlockData();
-                        case "ancient", "fugitive" -> Material.GRAY_WOOL.createBlockData();
+                        case "ancient", "bone", "fugitive" -> Material.GRAY_WOOL.createBlockData();
                         case "hospital" -> Material.LIGHT_GRAY_WOOL.createBlockData();
                         default -> Material.STONE_BRICKS.createBlockData();
                     };

@@ -5,6 +5,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.control.SensorToggle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSensors;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -35,9 +36,16 @@ public class Handbrake {
             if (rd.getType() == Material.COMPARATOR) {
                 Comparator comparator = (Comparator) rd.getBlockData();
                 return comparator.getMode().equals(Comparator.Mode.SUBTRACT);
+            } else {
+                return rsc.getSecondary() == 1;
             }
         }
         return false;
+    }
+
+    public boolean isFlightModeExterior(String uuid) {
+        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
+        return (rsp.resultSet()) && rsp.getFlightMode() == 4;
     }
 
     public boolean isDoorOpen(int id) {

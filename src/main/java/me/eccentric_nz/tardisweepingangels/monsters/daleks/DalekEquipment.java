@@ -62,7 +62,7 @@ public class DalekEquipment {
             ee.setItemInMainHand(bow);
             ee.setItemInMainHandDropChance(0);
             Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
-                PotionEffect resistance = new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 360000, 1, true, false);
+                PotionEffect resistance = new PotionEffect(PotionEffectType.RESISTANCE, 360000, 1, true, false);
                 le.addPotionEffect(resistance);
                 AttributeInstance attribute = le.getAttribute(Attribute.GENERIC_MAX_HEALTH);
                 attribute.setBaseValue(30.0d);

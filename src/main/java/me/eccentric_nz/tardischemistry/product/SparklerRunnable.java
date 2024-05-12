@@ -52,7 +52,7 @@ public class SparklerRunnable implements Runnable {
         if (isSparkler(mainHand)) {
             if (System.currentTimeMillis() < startTime + 30000) {
                 Location rightHand = getHandLocation();
-                player.spawnParticle(Particle.BLOCK_DUST, rightHand, 5, colour);
+                player.spawnParticle(Particle.DUST, rightHand, 5, colour);
             } else {
                 ItemStack sparkler = inventory.getItemInMainHand();
                 int amount = sparkler.getAmount();

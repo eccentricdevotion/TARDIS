@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.nms.TWAOod;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,17 +53,18 @@ public class OodListener implements Listener {
                 if (player.getUniqueId().equals(oodId)) {
                     // set redeye
                     ood.setRedeye(!ood.isRedeye());
-                    ood.getOwnerUUID();
+//                    ood.getOwnerUUID();
                 } else if (TARDISWeepingAngels.UNCLAIMED.equals(oodId)) {
                     // claim the Ood
                     UUID pid = player.getUniqueId();
                     entity.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, pid);
                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_CLAIMED", "Ood");
                     ood.setOwnerUUID(pid);
-                    ood.getOwnerUUID();
-                } else {
-                    ood.getOwnerUUID();
+//                    ood.getOwnerUUID();
                 }
+//                else {
+//                    ood.getOwnerUUID();
+//                }
             }
         }
     }

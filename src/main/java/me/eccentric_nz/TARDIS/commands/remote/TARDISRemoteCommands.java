@@ -78,15 +78,15 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
             if (rs.resultSet()) {
                 Tardis tardis = rs.getTardis();
                 // not in siege mode
-                if (plugin.getTrackerKeeper().getInSiegeMode().contains(tardis.getTardis_id())) {
+                if (plugin.getTrackerKeeper().getInSiegeMode().contains(tardis.getTardisId())) {
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "SIEGE_NO_CMD");
                     return true;
                 }
                 // we're good to go
-                int id = tardis.getTardis_id();
+                int id = tardis.getTardisId();
                 boolean hidden = tardis.isHidden();
-                boolean handbrake = tardis.isHandbrake_on();
-                int level = tardis.getArtron_level();
+                boolean handbrake = tardis.isHandbrakeOn();
+                int level = tardis.getArtronLevel();
                 if (sender instanceof Player && !sender.hasPermission("tardis.admin")) {
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("uuid", ((Player) sender).getUniqueId().toString());
@@ -96,12 +96,12 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                         return true;
                     }
                     Tardis t = rst.getTardis();
-                    int tardis_id = t.getTardis_id();
+                    int tardis_id = t.getTardisId();
                     if (tardis_id != id) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_ONLY_TL_REMOTE");
                         return true;
                     }
-                    if (plugin.getConfig().getBoolean("allow.power_down") && !t.isPowered_on()) {
+                    if (plugin.getConfig().getBoolean("allow.power_down") && !t.isPoweredOn()) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "POWER_DOWN");
                         return true;
                     }

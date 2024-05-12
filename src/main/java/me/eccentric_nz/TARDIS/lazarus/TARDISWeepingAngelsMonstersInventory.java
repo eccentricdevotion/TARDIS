@@ -30,14 +30,16 @@ public class TARDISWeepingAngelsMonstersInventory {
         ItemStack[] stacks = new ItemStack[54];
         int i = 0;
         for (Monster monster : Monster.values()) {
-            ItemStack mon = new ItemStack(monster.getMaterial(), 1);
-            ItemMeta ster = mon.getItemMeta();
-            ster.setDisplayName(monster.toString());
-            GUIGeneticManipulator gui = GUIGeneticManipulator.valueOf(monster.toString());
-            ster.setCustomModelData(gui.getCustomModelData());
-            mon.setItemMeta(ster);
-            stacks[i] = mon;
-            i++;
+            if (monster != Monster.FLYER) {
+                ItemStack mon = new ItemStack(monster.getMaterial(), 1);
+                ItemMeta ster = mon.getItemMeta();
+                ster.setDisplayName(monster.toString());
+                GUIGeneticManipulator gui = GUIGeneticManipulator.valueOf(monster.toString());
+                ster.setCustomModelData(gui.getCustomModelData());
+                mon.setItemMeta(ster);
+                stacks[i] = mon;
+                i++;
+            }
         }
         // page one
         ItemStack page1 = new ItemStack(Material.ARROW, 1);

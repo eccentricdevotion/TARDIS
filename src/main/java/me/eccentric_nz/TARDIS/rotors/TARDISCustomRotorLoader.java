@@ -36,6 +36,7 @@ public class TARDISCustomRotorLoader {
         // create plugin rotors
         Rotor early = new Rotor("early", 10000002, Material.BLACK_DYE, new int[]{0, 1, 2, 3, 4, 5, 6, 7}, 6, false);
         Rotor rotor = new Rotor("rotor", 10000003, Material.ORANGE_DYE, new int[]{0, 0, 1, 2, 3, 4, 3, 2, 1}, 3, false);
+        Rotor console = new Rotor("console", 10000100, Material.RED_DYE, new int[]{0, 0, 1, 2, 3, 4, 3, 2, 1}, 2, false);
         Rotor copper = new Rotor("copper", 10000004, Material.BROWN_DYE, new int[]{0, 0, 1, 2, 3, 4, 3, 2, 1}, 2, false);
         Rotor round = new Rotor("round", 10000005, Material.GRAY_DYE, new int[]{0}, 1, false);
         Rotor delta = new Rotor("delta", 10000006, Material.CYAN_DYE, new int[]{0, 1, 2, 3, 4, 5}, 4, false);
@@ -49,6 +50,9 @@ public class TARDISCustomRotorLoader {
         Rotor.byMaterial.put(Material.ORANGE_DYE, rotor);
         Rotor.byCustomModelData.put(10000003, rotor);
         Rotor.byName.put("TIME_ROTOR_ROTOR", rotor);
+        Rotor.byMaterial.put(Material.RED_DYE, console);
+        Rotor.byCustomModelData.put(10000100, console);
+        Rotor.byName.put("TIME_ROTOR_CONSOLE", console);
         Rotor.byMaterial.put(Material.BROWN_DYE, copper);
         Rotor.byCustomModelData.put(10000004, copper);
         Rotor.byName.put("TIME_ROTOR_COPPER", copper);

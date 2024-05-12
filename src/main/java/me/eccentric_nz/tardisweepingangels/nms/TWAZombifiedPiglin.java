@@ -16,14 +16,13 @@
  */
 package me.eccentric_nz.tardisweepingangels.nms;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * Custom entity class for Dalek Sec, Hath, Ice Warrior, and Strax
@@ -33,8 +32,8 @@ import org.bukkit.Bukkit;
 public class TWAZombifiedPiglin extends ZombifiedPiglin {
 
     private final int[] frames = new int[]{0, 1, 2, 1, 0, 3, 4, 3};
-    private boolean isAnimating = false;
-    private int task = -1;
+    private double oldX;
+    private double oldZ;
     private int i = 0;
 
     public TWAZombifiedPiglin(EntityType<? extends ZombifiedPiglin> type, Level level) {
@@ -43,25 +42,26 @@ public class TWAZombifiedPiglin extends ZombifiedPiglin {
 
     @Override
     public void aiStep() {
-        if (hasItemInSlot(EquipmentSlot.HEAD)) {
+        if (hasItemInSlot(EquipmentSlot.HEAD) && tickCount % 3 == 0) {
             ItemStack is = getItemBySlot(EquipmentSlot.HEAD);
-            CompoundTag nbt = is.getTag();
-            if (!isPathFinding()) {
-                Bukkit.getScheduler().cancelTask(task);
-                nbt.putInt("CustomModelData", 405);
-                isAnimating = false;
-            } else if (!isAnimating) {
+            org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
+            ItemMeta im = bukkit.getItemMeta();
+            if (oldX == getX() && oldZ == getZ()) {
+                im.setCustomModelData(405);
+                i = 0;
+            } else {
                 // play move animation
-                task = Bukkit.getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, () -> {
-                    int cmd = getTarget() != null ? 406 : 400;
-                    nbt.putInt("CustomModelData", cmd + frames[i]);
-                    i++;
-                    if (i == frames.length) {
-                        i = 0;
-                    }
-                }, 1L, 3L);
-                isAnimating = true;
+                int cmd = getTarget() != null ? 406 : 400;
+                im.setCustomModelData(cmd + frames[i]);
+                i++;
+                if (i == frames.length) {
+                    i = 0;
+                }
             }
+            bukkit.setItemMeta(im);
+            setItemSlot(EquipmentSlot.HEAD, CraftItemStack.asNMSCopy(bukkit));
+            oldX = getX();
+            oldZ = getZ();
         }
         super.aiStep();
     }

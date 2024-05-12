@@ -517,7 +517,7 @@ public class TARDISFarmer {
                                 }
                             }
                         }
-                        case MUSHROOM_COW -> {
+                        case MOOSHROOM -> {
                             if (farmPrefs.shouldFarmLivestock() && (!farm.isEmpty() || spawnEggs)) {
                                 MushroomCow mushroomCow = (MushroomCow) entity;
                                 TARDISMooshroom tmshr = new TARDISMooshroom();
@@ -821,7 +821,7 @@ public class TARDISFarmer {
                             }
                             mooshrooms.forEach((e) -> {
                                 plugin.setTardisSpawn(true);
-                                MushroomCow fungi = (MushroomCow) world.spawnEntity(cow_pen, EntityType.MUSHROOM_COW);
+                                MushroomCow fungi = (MushroomCow) world.spawnEntity(cow_pen, EntityType.MOOSHROOM);
                                 fungi.setAge(e.getAge());
                                 if (e.isBaby()) {
                                     fungi.setBaby();

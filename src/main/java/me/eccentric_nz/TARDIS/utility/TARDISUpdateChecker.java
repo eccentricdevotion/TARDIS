@@ -161,7 +161,7 @@ public class TARDISUpdateChecker implements Runnable {
                     <dependency>
                         <groupId>org.spigotmc</groupId>
                         <artifactId>spigot</artifactId>
-                        <version>1.20.4-R0.1-SNAPSHOT</version>
+                        <version>1.20.6-R0.1-SNAPSHOT</version>
              */
             NodeList list = doc.getElementsByTagName("dependencies");
             Node root = list.item(0); // there's only one node

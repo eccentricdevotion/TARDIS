@@ -75,7 +75,7 @@ class TARDISAddCompanionCommand {
                 return true;
             } else {
                 Tardis tardis = rs.getTardis();
-                id = tardis.getTardis_id();
+                id = tardis.getTardisId();
                 comps = tardis.getCompanions();
                 data = tardis.getChunk();
                 owner = tardis.getOwner();

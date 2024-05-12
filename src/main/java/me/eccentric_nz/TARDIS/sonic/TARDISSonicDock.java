@@ -6,6 +6,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISSculkShrieker;
+import me.eccentric_nz.TARDIS.console.interaction.SonicConsoleRecharge;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -29,6 +30,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.Vector;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -42,24 +44,29 @@ public class TARDISSonicDock {
         this.plugin = plugin;
     }
 
+    public void dock(int id, Interaction interaction, Player player, ItemStack sonic) {
+        // check for existing display item
+        if (TARDISDisplayItemUtils.getSonic(interaction) != null) {
+            return;
+        }
+        ItemDisplay display = doDocking(sonic, interaction.getLocation(), new Vector(0, 0.75d, 0.1d), player, id);
+        display.setRotation(0.0f, 15.0f);
+        // start charging
+        if (plugin.getConfig().getBoolean("sonic.charge") || plugin.getDifficulty() == Difficulty.HARD) {
+            long delay = plugin.getConfig().getLong("sonic.charge_level") / plugin.getConfig().getLong("sonic.charge_interval");
+            SonicConsoleRecharge recharge = new SonicConsoleRecharge(plugin, display.getUniqueId(), interaction, id, player);
+            int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, recharge, 1L, delay);
+            recharge.setTask(task);
+        }
+    }
+
     public void dock(int id, ItemFrame frame, Player player, ItemStack sonic) {
         Block block = frame.getLocation().getBlock();
         // check for existing display item
         if (TARDISDisplayItemUtils.get(block) != null) {
             return;
         }
-        // remove enchantments if any
-        sonic.removeEnchantment(Enchantment.DURABILITY);
-        // get sonic uuid
-        UUID uuid = sonic.getItemMeta().getPersistentDataContainer().get(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID());
-        // set item display
-        ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 0.5d, 0.5d), EntityType.ITEM_DISPLAY);
-        display.setItemStack(sonic);
-        display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
-        display.setBillboard(Display.Billboard.FIXED);
-        display.setInvulnerable(true);
-        // remove item from hand
-        player.getInventory().setItemInMainHand(null);
+        ItemDisplay display = doDocking(sonic, block.getLocation(), new Vector(0.5d, 0.5d, 0.5d), player, id);
         // change the dock model
         updateModel(frame, 1001, false);
         // start charging
@@ -69,6 +76,21 @@ public class TARDISSonicDock {
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, recharge, 1L, delay);
             recharge.setTask(task);
         }
+    }
+
+    private ItemDisplay doDocking(ItemStack sonic, Location location, Vector vector, Player player, int id) {
+        // remove enchantments if any
+        sonic.removeEnchantment(Enchantment.UNBREAKING);
+        // get sonic uuid
+        UUID uuid = sonic.getItemMeta().getPersistentDataContainer().get(plugin.getSonicUuidKey(), plugin.getPersistentDataTypeUUID());
+        // set item display
+        ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(vector), EntityType.ITEM_DISPLAY);
+        display.setItemStack(sonic);
+        display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
+        display.setBillboard(Display.Billboard.FIXED);
+        display.setInvulnerable(true);
+        // remove item from hand
+        player.getInventory().setItemInMainHand(null);
         if (uuid != null) {
             // get last scan coordinates
             ResultSetSonicLocation rssc = new ResultSetSonicLocation(plugin, uuid);
@@ -78,48 +100,48 @@ public class TARDISSonicDock {
                 if (dest != null) {
                     if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
-                        return;
+                        return display;
                     }
                     if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
                         plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
-                        return;
+                        return display;
                     }
                     if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT");
-                        return;
+                        return display;
                     }
                     if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && dest.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
-                        return;
+                        return display;
                     }
                     if (!plugin.getPluginRespect().getRespect(dest, new Parameters(player, Flag.getDefaultFlags()))) {
-                        return;
+                        return display;
                     }
                     if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                         String areaPerm = plugin.getTardisArea().getExileArea(player);
                         if (plugin.getTardisArea().areaCheckInExile(areaPerm, dest)) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "EXILE_NO_TRAVEL");
-                            return;
+                            return display;
                         }
                     }
                     if (plugin.getTardisArea().isInExistingArea(dest)) {
                         plugin.getMessenger().sendColouredCommand(player, "AREA_NO_SONIC", "/tardistravel area [area name]", plugin);
-                        return;
+                        return display;
                     }
                     // check the world is not excluded
                     String world = dest.getWorld().getName();
                     if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PB_IN_WORLD");
-                        return;
+                        return display;
                     }
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("tardis_id", id);
                     ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
                     if (rs.resultSet()) {
                         Tardis tardis = rs.getTardis();
-                        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+                        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
-                            return;
+                            return display;
                         }
                         TARDISCircuitChecker tcc = null;
                         if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
@@ -128,11 +150,11 @@ public class TARDISSonicDock {
                         }
                         if (tcc != null && !tcc.hasMaterialisation()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
-                            return;
+                            return display;
                         }
-                        COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
-                        int[] start_loc = TARDISTimeTravel.getStartLocation(dest, player_d);
-                        int count = TARDISTimeTravel.safeLocation(start_loc[0], dest.getBlockY(), start_loc[2], start_loc[1], start_loc[3], dest.getWorld(), player_d);
+                        COMPASS player_direction = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
+                        int[] start_loc = TARDISTimeTravel.getStartLocation(dest, player_direction);
+                        int count = TARDISTimeTravel.safeLocation(start_loc[0], dest.getBlockY(), start_loc[2], start_loc[1], start_loc[3], dest.getWorld(), player_direction);
                         Block under = dest.getBlock().getRelative(BlockFace.DOWN);
                         if (plugin.getPM().isPluginEnabled("BlockLocker") && (BlockLockerAPIv2.isProtected(dest.getBlock()) || BlockLockerAPIv2.isProtected(under))) {
                             count = 1;
@@ -142,13 +164,13 @@ public class TARDISSonicDock {
                         }
                         if (count > 0) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "WOULD_GRIEF_BLOCKS");
-                            return;
+                            return display;
                         }
                         SpaceTimeThrottle spaceTimeThrottle = new ResultSetThrottle(plugin).getSpeed(player.getUniqueId().toString());
                         int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * spaceTimeThrottle.getArtronMultiplier());
-                        if (tardis.getArtron_level() < ch) {
+                        if (tardis.getArtronLevel() < ch) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
-                            return;
+                            return display;
                         }
                         // set next location
                         HashMap<String, Object> tid = new HashMap<>();
@@ -181,7 +203,7 @@ public class TARDISSonicDock {
                                     plugin.getTrackerKeeper().getHasClickedHandbrake().add(id);
                                     // give them 30 seconds to close the door
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id)), 600L);
-                                    return;
+                                    return display;
                                 }
                                 ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
                                 if (rsp.resultSet()) {
@@ -215,6 +237,16 @@ public class TARDISSonicDock {
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "DOCK_NOT_SCANNED");
         }
+        return display;
+    }
+
+    public void undock(Interaction interaction, Player player) {
+        // check for existing display item
+        ItemDisplay display = TARDISDisplayItemUtils.getSonic(interaction);
+        if (display == null) {
+            return;
+        }
+        doUndock(display, player);
     }
 
     public void undock(ItemFrame frame, Player player) {
@@ -223,6 +255,12 @@ public class TARDISSonicDock {
         if (display == null) {
             return;
         }
+        doUndock(display, player);
+        // change the dock model
+        updateModel(frame, 1000, true);
+    }
+
+    private void doUndock(ItemDisplay display, Player player) {
         // get the itemstack
         ItemStack sonic = display.getItemStack();
         // set the charge level in lore
@@ -233,8 +271,6 @@ public class TARDISSonicDock {
             player.getInventory().addItem(sonic);
         }
         display.remove();
-        // change the dock model
-        updateModel(frame, 1000, true);
     }
 
     private void updateModel(ItemFrame frame, int cmd, boolean setDisplay) {

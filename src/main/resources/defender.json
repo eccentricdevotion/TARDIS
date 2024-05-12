@@ -1,7 +1,8 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:bow"
+            "count": 1,
+            "id": "minecraft:bow"
         },
         "title": "Defender of the universe",
         "description": "Kill one of every Whovian monster"

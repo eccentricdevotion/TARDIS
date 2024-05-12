@@ -83,6 +83,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("ANCIENT", Material.SCULK); // ancient
         t.put("ARS", Material.QUARTZ_BLOCK); // ARS
         t.put("BIGGER", Material.GOLD_BLOCK); // bigger
+        t.put("BONE", Material.WAXED_OXIDIZED_CUT_COPPER); // bone loosely based on a console by DT10 - https://www.youtube.com/watch?v=Ux4qt0qYm80
         t.put("BUDGET", Material.IRON_BLOCK); // budget
         t.put("CAVE", Material.DRIPSTONE_BLOCK); // dripstone cave
         t.put("COPPER", Material.WARPED_PLANKS); // copper schematic designed by vistaero

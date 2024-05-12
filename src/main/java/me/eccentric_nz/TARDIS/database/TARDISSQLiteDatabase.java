@@ -141,7 +141,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryFarmingPrefs);
 
             // Table structure for table 'flight'
-            String queryFlight = "CREATE TABLE IF NOT EXISTS " + prefix + "flight (f_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', tardis_id INTEGER, location TEXT DEFAULT '')";
+            String queryFlight = "CREATE TABLE IF NOT EXISTS " + prefix + "flight (f_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', tardis_id INTEGER, location TEXT DEFAULT '', chicken TEXT DEFAULT '', stand TEXT DEFAULT '')";
             statement.executeUpdate(queryFlight);
 
             // Table structure for table 'forcefield'
@@ -159,6 +159,10 @@ public class TARDISSQLiteDatabase {
             // Table structure for table 'homes'
             String queryHomes = "CREATE TABLE IF NOT EXISTS " + prefix + "homes (home_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, direction TEXT DEFAULT '', submarine INTEGER DEFAULT 0, preset TEXT DEFAULT '')";
             statement.executeUpdate(queryHomes);
+
+            // Table structure for table 'interactions'
+            String queryInteractions = "CREATE TABLE IF NOT EXISTS " + prefix + "interactions (i_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, uuid TEXT DEFAULT '', control TEXT DEFAULT '', state INTEGER)";
+            statement.executeUpdate(queryInteractions);
 
             // Table structure for inventories
             String queryInventories = "CREATE TABLE IF NOT EXISTS " + prefix + "inventories (id INTEGER PRIMARY KEY NOT NULL, uuid TEXT, player TEXT, arch INTEGER, inventory TEXT, armour TEXT, attributes TEXT, armour_attributes TEXT)";

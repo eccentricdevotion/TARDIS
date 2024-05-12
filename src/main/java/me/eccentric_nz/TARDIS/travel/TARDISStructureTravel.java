@@ -40,14 +40,14 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class TARDISStructureTravel {
 
-    private final TARDIS plugin;
-    private final List<Structure> netherStructures = new ArrayList<>();
-    private final List<Structure> overworldStructures = new ArrayList<>();
+    public static final List<Structure> netherStructures = new ArrayList<>();
+    public static final List<Structure> overworldStructures = new ArrayList<>();
 
-    public TARDISStructureTravel(TARDIS plugin) {
-        this.plugin = plugin;
+    static {
         netherStructures.add(Structure.BASTION_REMNANT);
         netherStructures.add(Structure.FORTRESS);
+        netherStructures.add(Structure.NETHER_FOSSIL);
+        netherStructures.add(Structure.RUINED_PORTAL_NETHER);
         overworldStructures.add(Structure.ANCIENT_CITY);
         overworldStructures.add(Structure.DESERT_PYRAMID);
         overworldStructures.add(Structure.IGLOO);
@@ -56,16 +56,31 @@ public class TARDISStructureTravel {
         overworldStructures.add(Structure.MINESHAFT);
         overworldStructures.add(Structure.MINESHAFT_MESA);
         overworldStructures.add(Structure.MONUMENT);
+        overworldStructures.add(Structure.OCEAN_RUIN_COLD);
+        overworldStructures.add(Structure.OCEAN_RUIN_WARM);
         overworldStructures.add(Structure.PILLAGER_OUTPOST);
+        overworldStructures.add(Structure.RUINED_PORTAL);
+        overworldStructures.add(Structure.RUINED_PORTAL_DESERT);
+        overworldStructures.add(Structure.RUINED_PORTAL_JUNGLE);
+        overworldStructures.add(Structure.RUINED_PORTAL_SWAMP);
+        overworldStructures.add(Structure.RUINED_PORTAL_MOUNTAIN);
+        overworldStructures.add(Structure.RUINED_PORTAL_OCEAN);
         overworldStructures.add(Structure.SHIPWRECK);
         overworldStructures.add(Structure.SHIPWRECK_BEACHED);
         overworldStructures.add(Structure.STRONGHOLD);
         overworldStructures.add(Structure.SWAMP_HUT);
+        overworldStructures.add(Structure.TRAIL_RUINS);
         overworldStructures.add(Structure.VILLAGE_DESERT);
         overworldStructures.add(Structure.VILLAGE_PLAINS);
         overworldStructures.add(Structure.VILLAGE_SAVANNA);
         overworldStructures.add(Structure.VILLAGE_SNOWY);
         overworldStructures.add(Structure.VILLAGE_TAIGA);
+    }
+
+    private final TARDIS plugin;
+
+    public TARDISStructureTravel(TARDIS plugin) {
+        this.plugin = plugin;
     }
 
     public TARDISStructureLocation getRandomVillage(Player p, int id, String[] args) {
@@ -130,13 +145,15 @@ public class TARDISStructureTravel {
                     StructureSearchResult normalResult = world.locateNearestStructure(location, structure, 64, false);
                     loc = (normalResult != null) ? normalResult.getLocation() : null;
                     // if ANCIENT_CITY, get underground location
-                    if (loc != null && structure.equals(Structure.ANCIENT_CITY)) {
-                        Check check = isThereRoom(world, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
-                        if (check.isSafe()) {
-                            loc.setY(check.getY());
+                    if (loc != null) {
+                        if (structure.equals(Structure.ANCIENT_CITY)) {
+                            Check check = isThereRoom(world, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+                            if (check.isSafe()) {
+                                loc.setY(check.getY());
+                            }
+                        } else {
+                            loc.setY(world.getHighestBlockYAt(loc));
                         }
-                    } else {
-                        loc.setY(world.getHighestBlockYAt(loc));
                     }
                 }
             }
@@ -174,15 +191,7 @@ public class TARDISStructureTravel {
                 // check there is enough height for the police box
                 if (yy <= y - 3 && !w.getBlockAt(x - 1, yy - 1, z - 1).getType().equals(Material.STONE)) {
                     // check there is room for the police box
-                    if (w.getBlockAt(x - 1, yy, z - 1).getType().isAir()
-                            && w.getBlockAt(x - 1, yy, z).getType().isAir()
-                            && w.getBlockAt(x - 1, yy, z + 1).getType().isAir()
-                            && w.getBlockAt(x, yy, z - 1).getType().isAir()
-                            && w.getBlockAt(x, yy, z + 1).getType().isAir()
-                            && w.getBlockAt(x + 1, yy, z - 1).getType().isAir()
-                            && w.getBlockAt(x + 1, yy, z).getType().isAir()
-                            && w.getBlockAt(x + 1, yy, z + 1).getType().isAir()
-                    ) {
+                    if (w.getBlockAt(x - 1, yy, z - 1).getType().isAir() && w.getBlockAt(x - 1, yy, z).getType().isAir() && w.getBlockAt(x - 1, yy, z + 1).getType().isAir() && w.getBlockAt(x, yy, z - 1).getType().isAir() && w.getBlockAt(x, yy, z + 1).getType().isAir() && w.getBlockAt(x + 1, yy, z - 1).getType().isAir() && w.getBlockAt(x + 1, yy, z).getType().isAir() && w.getBlockAt(x + 1, yy, z + 1).getType().isAir()) {
                         ret.setSafe(true);
                         ret.setY(yy);
                     }

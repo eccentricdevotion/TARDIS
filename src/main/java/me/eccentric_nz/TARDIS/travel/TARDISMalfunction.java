@@ -227,7 +227,8 @@ public class TARDISMalfunction {
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 10L, 10L);
                 runnable.setTask(taskID);
                 // add fireworks
-                TARDISMalfunctionExplosion explodeable = new TARDISMalfunctionExplosion(plugin, id, end);
+                ResultSetInteractionCheck rsic = new ResultSetInteractionCheck(plugin);
+                TARDISMalfunctionExplosion explodeable = new TARDISMalfunctionExplosion(plugin, id, end, rsic.resultSetFromId(id));
                 int taskEx = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, explodeable, 10L, 30L);
                 explodeable.setTask(taskEx);
             }

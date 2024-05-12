@@ -139,7 +139,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             }
             lore.set(1, "" + new_amount);
             im.setLore(lore);
-            im.addEnchant(Enchantment.DURABILITY, 1, true);
+            im.addEnchant(Enchantment.UNBREAKING, 1, true);
             im.addItemFlags(ItemFlag.values());
             is.setItemMeta(im);
             // remove the energy from the tardis/timelord

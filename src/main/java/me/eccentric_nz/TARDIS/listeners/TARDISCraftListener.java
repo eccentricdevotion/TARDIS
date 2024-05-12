@@ -77,6 +77,7 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.REDSTONE_BLOCK, "REDSTONE"); // redstone
         t.put(Material.SANDSTONE_STAIRS, "PYRAMID"); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
         t.put(Material.SCULK, "ANCIENT"); // ancient city
+        t.put(Material.WAXED_OXIDIZED_CUT_COPPER, "BONE"); // bone loosely based on a console by DT10 - https://www.youtube.com/watch?v=Ux4qt0qYm80
         t.put(Material.WARPED_PLANKS, "COPPER"); // copper schematic designed by vistaero
         t.put(Material.WEATHERED_COPPER, "WEATHERED"); // weathered copper
         t.put(Material.WHITE_CONCRETE, "HOSPITAL"); // hospital
@@ -153,7 +154,7 @@ public class TARDISCraftListener implements Listener {
                         }
                     } else if (is.getType().equals(Material.IRON_SWORD) && dn.equals("Rust Plague Sword")) {
                         // enchant the result
-                        is.addEnchantment(Enchantment.DAMAGE_UNDEAD, 2);
+                        is.addEnchantment(Enchantment.SMITE, 2);
                         ci.setResult(is);
                     } else if (is.getType().equals(Material.LEATHER_HELMET) && dn.equals("3-D Glasses") || dn.equals("TARDIS Communicator")) {
                         LeatherArmorMeta lam = (LeatherArmorMeta) im;

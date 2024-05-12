@@ -80,7 +80,7 @@ public class TARDISQuitListener implements Listener {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             HashMap<String, Object> wherecl = new HashMap<>();
-            wherecl.put("tardis_id", tardis.getTardis_id());
+            wherecl.put("tardis_id", tardis.getTardisId());
             if (plugin.getConfig().getBoolean("police_box.keep_chunk_force_loaded")) {
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rsc.resultSet()) {
@@ -94,16 +94,16 @@ public class TARDISQuitListener implements Listener {
             // power down TARDIS
             if (plugin.getConfig().getBoolean("allow.power_down") && plugin.getConfig().getBoolean("allow.power_down_on_quit")) {
                 // check if powered on
-                if (tardis.isPowered_on()) {
+                if (tardis.isPoweredOn()) {
                     // not if flying or uninitialised
-                    int id = tardis.getTardis_id();
-                    if (!tardis.isTardis_init() || isTravelling(id) || !tardis.isHandbrake_on()) {
+                    int id = tardis.getTardisId();
+                    if (!tardis.isTardisInit() || isTravelling(id) || !tardis.isHandbrakeOn()) {
                         return;
                     }
                     // power off
                     ChameleonPreset preset = tardis.getPreset();
                     boolean hidden = tardis.isHidden();
-                    boolean lights = tardis.isLights_on();
+                    boolean lights = tardis.isLightsOn();
                     // police box lamp, delay it incase the TARDIS needs rebuilding
                     long delay = 1L;
                     // if hidden, rebuild

@@ -75,7 +75,7 @@ class TARDISEnterCommand {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            int id = tardis.getTardis_id();
+            int id = tardis.getTardisId();
             String owner = tardis.getOwner();
             HashMap<String, Object> wherei = new HashMap<>();
             wherei.put("door_type", 1);

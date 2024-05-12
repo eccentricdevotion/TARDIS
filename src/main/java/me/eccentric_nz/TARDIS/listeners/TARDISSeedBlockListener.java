@@ -20,9 +20,12 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
+import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetInteractionCheck;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -58,8 +61,8 @@ public class TARDISSeedBlockListener implements Listener {
     }
 
     /**
-     * Store the TARDIS Seed block's values for use when clicked with the TARDIS
-     * key to activate growing, or to return the block if broken.
+     * Store the TARDIS Seed block's values for use when clicked with the TARDIS key to activate growing, or to return
+     * the block if broken.
      *
      * @param event The TARDIS Seed block placement event
      */
@@ -74,7 +77,8 @@ public class TARDISSeedBlockListener implements Listener {
         if (!im.hasDisplayName() || !im.hasLore()) {
             return;
         }
-        if (im.getDisplayName().equals(ChatColor.GOLD + "TARDIS Seed Block")) {
+        String dn = im.getDisplayName();
+        if (dn.equals(ChatColor.GOLD + "TARDIS Seed Block")) {
             Block block = event.getBlockPlaced();
             if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
                 int which = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
@@ -103,6 +107,28 @@ public class TARDISSeedBlockListener implements Listener {
                 }, 3L);
             }
             // now the player has to click the block with the TARDIS key
+        } else if (dn.endsWith(" Console") && is.getType().toString().endsWith("_CONCRETE")) {
+            // must be in TARDIS world
+            if (!plugin.getUtils().inTARDISWorld(player)) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_IN_WORLD");
+                event.setCancelled(true);
+                return;
+            }
+            // must not have a console already
+            ResultSetInteractionCheck rsi = new ResultSetInteractionCheck(plugin);
+            if (rsi.resultSetFromUUID(player.getUniqueId())) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CONSOLE_HAS");
+                event.setCancelled(true);
+                return;
+            }
+            // build a console of the correct colour
+            int colour = im.getPersistentDataContainer().getOrDefault(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
+            // get TARDIS id
+            ResultSetTardisID rs = new ResultSetTardisID(plugin);
+            String uuid = player.getUniqueId().toString();
+            if (rs.fromUUID(uuid)) {
+                new ConsoleBuilder(plugin).create(event.getBlockPlaced(), colour, rs.getTardis_id(), uuid);
+            }
         }
     }
 

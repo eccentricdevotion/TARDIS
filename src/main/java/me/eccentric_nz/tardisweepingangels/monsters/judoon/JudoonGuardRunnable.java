@@ -22,7 +22,7 @@ import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import me.eccentric_nz.tardisweepingangels.nms.TWAJudoon;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
@@ -33,7 +33,6 @@ public class JudoonGuardRunnable implements Runnable {
 
     private final TARDIS plugin;
 
-    // TODO - delete
     public JudoonGuardRunnable(TARDIS plugin) {
         this.plugin = plugin;
     }
@@ -70,7 +69,6 @@ public class JudoonGuardRunnable implements Runnable {
                             // set judoon yaw
                             origin.setDirection(direction.subtract(start)); //set the origin's direction to be the direction vector between point A and B.
                             float yaw = origin.getYaw();
-                            plugin.debug("yaw = " + yaw);
                             entity.setRotation(yaw,0);
                             ammo -= 1;
                             if (ammo >= 0) {

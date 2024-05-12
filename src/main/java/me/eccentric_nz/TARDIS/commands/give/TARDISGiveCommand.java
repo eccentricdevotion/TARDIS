@@ -357,8 +357,8 @@ public class TARDISGiveCommand implements CommandExecutor {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            int id = tardis.getTardis_id();
-            int level = tardis.getArtron_level();
+            int id = tardis.getTardisId();
+            int level = tardis.getArtronLevel();
             int set_level;
             if (amount == 0) {
                 set_level = 0;
@@ -512,7 +512,7 @@ public class TARDISGiveCommand implements CommandExecutor {
         int max = plugin.getArtronConfig().getInt("full_charge");
         lore.set(1, "" + max);
         im.setLore(lore);
-        im.addEnchant(Enchantment.DURABILITY, 1, true);
+        im.addEnchant(Enchantment.UNBREAKING, 1, true);
         im.addItemFlags(ItemFlag.values());
         result.setItemMeta(im);
         player.getInventory().addItem(result);

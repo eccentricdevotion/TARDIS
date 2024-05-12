@@ -45,6 +45,7 @@ public class TARDISShapedRecipe {
         new BlueBowTieRecipe(plugin).addRecipe();
         new BrownBowTieRecipe(plugin).addRecipe();
         new BrushCircuitRecipe(plugin).addRecipe();
+        new ConsoleRecipe(plugin).addRecipes();
         new ConversionCircuitRecipe(plugin).addRecipe();
         new CustardCreamRecipe(plugin).addRecipe();
         new CyanBowTieRecipe(plugin).addRecipe();
@@ -105,6 +106,7 @@ public class TARDISShapedRecipe {
         new TARDISTemporalCircuitRecipe(plugin).addRecipe();
         new ThreeDGlassesRecipe(plugin).addRecipe();
         new TimeEngineRecipe(plugin).addRecipe();
+        new TimeRotorConsoleRecipe(plugin).addRecipe();
         new TimeRotorDeltaRecipe(plugin).addRecipe();
         new TimeRotorEarlyRecipe(plugin).addRecipe();
         new TimeRotorEleventhRecipe(plugin).addRecipe();

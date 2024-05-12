@@ -41,7 +41,7 @@ public class FastReturnAction {
     }
 
     public void clickButton(Player player, int id, Tardis tardis) {
-        if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id) || (!tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) || plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
+        if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id) || (!tardis.isHandbrakeOn() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) || plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
             return;
         }
@@ -49,7 +49,7 @@ public class FastReturnAction {
             plugin.getTrackerKeeper().getHasRandomised().add(id);
         }
         int cost = plugin.getArtronConfig().getInt("travel");
-        if (tardis.getArtron_level() < cost) {
+        if (tardis.getArtronLevel() < cost) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
             return;
         }

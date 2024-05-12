@@ -95,7 +95,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                         plugin.getMessenger().message(player, "     " + s + " -> " + world.getGameRuleValue(rule));
                     }
                 }
-                plugin.getMessenger().message(player, "Keep spawn in memory -> " + world.getKeepSpawnInMemory());
+                plugin.getMessenger().message(player, "Spawn chunk radius -> " + plugin.getPlanetsConfig().getInt("planets." + world.getName() + ".spawn_chunk_radius"));
                 plugin.getMessenger().message(player, "Time travel -> " + plugin.getPlanetsConfig().getString("planets." + world.getName() + ".time_travel"));
                 return true;
             }

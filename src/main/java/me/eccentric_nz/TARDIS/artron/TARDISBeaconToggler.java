@@ -65,7 +65,7 @@ public class TARDISBeaconToggler {
                     }
                     b.setBlockData((on) ? TARDISConstants.GLASS : TARDISConstants.POWER);
                     if (!plugin.getGeneralKeeper().getProtectBlockMap().containsKey(bl.toString())) {
-                        plugin.getGeneralKeeper().getProtectBlockMap().put(bl.toString(), tardis.getTardis_id());
+                        plugin.getGeneralKeeper().getProtectBlockMap().put(bl.toString(), tardis.getTardisId());
                     }
                 } else {
                     updateBeacon(schm, uuid);

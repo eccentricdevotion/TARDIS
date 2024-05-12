@@ -20,7 +20,7 @@ public class ARSAction {
     }
 
     public void openGUI(Player player, Tardis tardis, TARDISCircuitChecker tcc, int id) {
-        if (!tardis.isHandbrake_on()) {
+        if (!tardis.isHandbrakeOn()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_NO_TRAVEL");
             return;
         }
@@ -40,7 +40,7 @@ public class ARSAction {
                 return;
             }
             // upgrade menu
-            new TARDISThemeButton(plugin, player, tardis.getSchematic(), tardis.getArtron_level(), id).clickButton();
+            new TARDISThemeButton(plugin, player, tardis.getSchematic(), tardis.getArtronLevel(), id).clickButton();
         } else {
             // check they have permission to grow rooms
             if (!TARDISPermission.hasPermission(player, "tardis.architectural")) {

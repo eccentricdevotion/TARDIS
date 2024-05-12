@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -38,6 +36,9 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -60,12 +61,12 @@ public class TARDISCallRequestCommand {
             return true;
         }
         Tardis tardis = rs.getTardis();
-        int id = tardis.getTardis_id();
-        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+        int id = tardis.getTardisId();
+        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NOT_POWERED", requested.getName());
             return true;
         }
-        int level = tardis.getArtron_level();
+        int level = tardis.getArtronLevel();
         boolean hidden = tardis.isHidden();
         // get location
         Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();

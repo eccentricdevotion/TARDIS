@@ -44,8 +44,10 @@ public class TARDISTakeoff {
     }
 
     public void run(int id, Block block, Location handbrake, Player player, boolean beac_on, String beacon, boolean bar, SpaceTimeThrottle spaceTimeThrottle) {
-        // set the handbrake
-        TARDISHandbrake.setLevers(block, false, true, handbrake.toString(), id, plugin);
+        if (block != null) {
+            // set the handbrake
+            TARDISHandbrake.setLevers(block, false, true, handbrake.toString(), id, plugin);
+        }
         if (plugin.getConfig().getBoolean("circuits.damage")) {
             plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
         }

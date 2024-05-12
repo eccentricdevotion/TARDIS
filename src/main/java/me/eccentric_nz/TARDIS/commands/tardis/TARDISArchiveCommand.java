@@ -188,7 +188,7 @@ class TARDISArchiveCommand {
                         }
                         // calculate startx, starty, startz
                         int slot = tardis.getTIPS();
-                        id = tardis.getTardis_id();
+                        id = tardis.getTardisId();
                         int sx, sz;
                         if (slot != -1000001) { // default world - use TIPS
                             TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
@@ -196,7 +196,7 @@ class TARDISArchiveCommand {
                             sx = pos.getCentreX();
                             sz = pos.getCentreZ();
                         } else {
-                            int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+                            int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
                             sx = gsl[0];
                             sz = gsl[2];
                         }

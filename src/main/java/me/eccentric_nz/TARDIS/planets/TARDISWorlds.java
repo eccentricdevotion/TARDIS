@@ -78,8 +78,11 @@ public class TARDISWorlds {
                         }
                     }
                 }
-                boolean keepSpawnInMemory = TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".keep_spawn_in_memory");
-                w.setKeepSpawnInMemory(keepSpawnInMemory);
+                // spawn chunk radius (replaces deprecated `keep_spawn_in_memory` setting)
+                // 0 is the equivalent of keep_spawn_in_memory: false
+                // 10 is the equivalent of keep_spawn_in_memory: true (pre-1.20.5)
+                // the new default in 1.20.5+ is 2
+                w.setGameRule(GameRule.SPAWN_CHUNK_RADIUS, Math.clamp(TARDIS.plugin.getPlanetsConfig().getInt("planets." + world + ".spawn_chunk_radius", 0), 0, 32));
                 String d = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".difficulty");
                 if (d != null) {
                     try {

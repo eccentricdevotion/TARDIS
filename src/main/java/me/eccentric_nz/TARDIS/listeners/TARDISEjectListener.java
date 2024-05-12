@@ -249,9 +249,9 @@ public class TARDISEjectListener implements Listener {
                 llama.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(tmlla.getSpeed());
                 ent.remove();
             }
-            case MUSHROOM_COW -> {
+            case MOOSHROOM -> {
                 MushroomCow m = (MushroomCow) ent;
-                MushroomCow mush = (MushroomCow) l.getWorld().spawnEntity(l, EntityType.MUSHROOM_COW);
+                MushroomCow mush = (MushroomCow) l.getWorld().spawnEntity(l, EntityType.MOOSHROOM);
                 mush.setTicksLived(m.getTicksLived());
                 if ((!m.isAdult())) {
                     mush.setBaby();

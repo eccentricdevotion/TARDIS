@@ -334,7 +334,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "JUNK_ALREADY_OFF");
                         return;
                     }
-                    int id = tardis.getTardis_id();
+                    int id = tardis.getTardisId();
                     String cham_set;
                     HashMap<String, Object> setj = new HashMap<>();
                     if (has) {

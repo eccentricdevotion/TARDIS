@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.weeping_angels;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -33,6 +31,9 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Blink implements Listener {
 
@@ -98,7 +99,7 @@ public class Blink implements Listener {
         }
         // freeze the closest skeleton
         if (skeleton != null) {
-            skeleton.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, plugin.getMonstersConfig().getInt("angels.freeze_time"), 30, true, false));
+            skeleton.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, plugin.getMonstersConfig().getInt("angels.freeze_time"), 30, true, false));
             if (!player.isSneaking()) {
                 plugin.getMessenger().message(player, TardisModule.MONSTERS, message.get(TARDISConstants.RANDOM.nextInt(4)));
             }

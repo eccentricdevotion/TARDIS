@@ -74,16 +74,16 @@ public class DisplayItemDoorMover {
             ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
             if (rs.resultSet()) {
                 Tardis tardis = rs.getTardis();
-                if (!tardis.isHandbrake_on()) {
+                if (!tardis.isHandbrakeOn()) {
                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                     return;
                 }
                 ChameleonPreset preset = tardis.getPreset();
                 float yaw = player.getLocation().getYaw();
                 float pitch = player.getLocation().getPitch();
-                boolean hb = tardis.isHandbrake_on();
+                boolean hb = tardis.isHandbrakeOn();
                 HashMap<String, Object> wherecl = new HashMap<>();
-                wherecl.put("tardis_id", tardis.getTardis_id());
+                wherecl.put("tardis_id", tardis.getTardisId());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (!rsc.resultSet()) {
                     // emergency TARDIS relocation

@@ -85,7 +85,7 @@ public class TARDISRemoteComehereCommand {
             return true;
         }
         Tardis tardis = rs.getTardis();
-        int id = tardis.getTardis_id();
+        int id = tardis.getTardisId();
         // check they are not in the tardis
         HashMap<String, Object> wherettrav = new HashMap<>();
         wherettrav.put("uuid", player.getUniqueId().toString());

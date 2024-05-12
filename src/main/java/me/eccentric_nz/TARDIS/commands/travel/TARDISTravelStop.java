@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.travel;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -28,6 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.FlightReturnData;
 import me.eccentric_nz.TARDIS.flight.TARDISExteriorFlight;
+import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.util.Vector;
@@ -69,20 +69,27 @@ public class TARDISTravelStop {
             // land TARDIS
             FlightReturnData frd = plugin.getTrackerKeeper().getFlyingReturnLocation().get(player.getUniqueId());
             Entity chicken = plugin.getServer().getEntity(frd.getChicken());
+            Entity stand = plugin.getServer().getEntity(frd.getStand());
             if (chicken != null) {
                 chicken.setVelocity(new Vector(0, 0, 0));
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    Entity as = stand;
+                    if (as == null) {
+                        // attempt to find stand
+                        as = findStand(chicken);
+                    }
+                    if (as != null) {
+                        chicken.removePassenger(as);
+                    }
                     // kill chicken
-                    Entity stand = chicken.getPassengers().get(0);
-                    chicken.removePassenger(stand);
                     chicken.remove();
                     // teleport player back to the TARDIS interior
-                    new TARDISExteriorFlight(plugin).stopFlying(player, (ArmorStand) stand);
+                    new TARDISExteriorFlight(plugin).stopFlying(player, (ArmorStand) as);
                 });
             } else {
                 // scan for nearby chickens in case player teleport fails due to lag
                 for (Entity e : player.getLocation().getWorld().getNearbyEntities(player.getLocation(), 4, 4, 4, (s) -> s.getType() == EntityType.CHICKEN)) {
-                    if (!e.getPassengers().isEmpty() && e.getPassengers().get(0) instanceof ArmorStand armorStand) {
+                    if (!e.getPassengers().isEmpty() && e.getPassengers().getFirst() instanceof ArmorStand armorStand) {
                         e.setVelocity(new Vector(0, 0, 0));
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             // kill chicken
@@ -141,6 +148,13 @@ public class TARDISTravelStop {
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
             plugin.getQueryFactory().doSyncUpdate("tardis", seth, whereh);
+            // also set the console handbrake state if there is one
+            HashMap<String, Object> setc = new HashMap<>();
+            setc.put("state", 1);
+            HashMap<String, Object> wherec = new HashMap<>();
+            wherec.put("tardis_id", id);
+            wherec.put("control", "HANDBRAKE");
+            plugin.getQueryFactory().doSyncUpdate("interactions", setc, wherec);
             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.STOP, id));
         }
         // stop time rotor?
@@ -160,5 +174,16 @@ public class TARDISTravelStop {
             }
         }
         return true;
+    }
+
+    private Entity findStand(Entity other) {
+        Entity stand = null;
+        for (Entity e : other.getNearbyEntities(3, 3, 3)) {
+            if (e instanceof ArmorStand as) {
+                stand = as;
+                break;
+            }
+        }
+        return stand;
     }
 }

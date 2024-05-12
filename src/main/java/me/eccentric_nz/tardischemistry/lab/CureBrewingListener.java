@@ -36,7 +36,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
 import java.util.*;
@@ -45,25 +44,25 @@ public class CureBrewingListener implements Listener {
 
     private final TARDIS plugin;
     private final List<String> elements = Arrays.asList("Silver", "Bismuth", "Calcium", "Cobalt");
-    private final List<PotionType> cures = Arrays.asList(PotionType.AWKWARD, PotionType.MUNDANE, PotionType.THICK, PotionType.UNCRAFTABLE);
+    private final List<PotionType> cures = Arrays.asList(PotionType.AWKWARD, PotionType.MUNDANE, PotionType.THICK, PotionType.WATER);
     private final HashMap<PotionType, List<String>> potions = new HashMap<>();
     private final Set<UUID> noPickUps = new HashSet<>();
 
     public CureBrewingListener(TARDIS plugin) {
         this.plugin = plugin;
         potions.put(PotionType.FIRE_RESISTANCE, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "MAGMA_CREAM", "NETHER_WART"));
-        potions.put(PotionType.INSTANT_HEAL, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "GLISTERING_MELON", "NETHER_WART"));
+        potions.put(PotionType.HEALING, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "GLISTERING_MELON", "NETHER_WART"));
         potions.put(PotionType.INVISIBILITY, Arrays.asList("BLAZE_POWDER", "FERMENTED_SPIDER_EYE", "GLASS_BOTTLE", "GOLDEN_CARROT", "NETHER_WART"));
-        potions.put(PotionType.JUMP, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "NETHER_WART", "RABBIT_FOOT"));
+        potions.put(PotionType.LEAPING, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "NETHER_WART", "RABBIT_FOOT"));
         potions.put(PotionType.NIGHT_VISION, Arrays.asList("BLAZE_POWDER", "CARROT", "GLASS_BOTTLE", "GOLDEN_CARROT", "NETHER_WART"));
-        potions.put(PotionType.REGEN, Arrays.asList("BLAZE_POWDER", "GHAST_TEAR", "GLASS_BOTTLE", "NETHER_WART"));
-        potions.put(PotionType.SPEED, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "NETHER_WART", "SUGAR"));
+        potions.put(PotionType.REGENERATION, Arrays.asList("BLAZE_POWDER", "GHAST_TEAR", "GLASS_BOTTLE", "NETHER_WART"));
+        potions.put(PotionType.SWIFTNESS, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "NETHER_WART", "SUGAR"));
         potions.put(PotionType.STRENGTH, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "IRON_INGOT", "NETHER_WART"));
         potions.put(PotionType.WATER_BREATHING, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "NETHER_WART", "PUFFERFISH"));
         potions.put(PotionType.AWKWARD, Arrays.asList("BLAZE_POWDER", "FEATHER:Silver", "GLASS_BOTTLE", "NETHER_WART"));
         potions.put(PotionType.MUNDANE, Arrays.asList("BLAZE_POWDER", "FEATHER:Cobalt", "GLASS_BOTTLE", "NETHER_WART"));
         potions.put(PotionType.THICK, Arrays.asList("BLAZE_POWDER", "FEATHER:Calcium", "GLASS_BOTTLE", "NETHER_WART"));
-        potions.put(PotionType.UNCRAFTABLE, Arrays.asList("BLAZE_POWDER", "FEATHER:Bismuth", "GLASS_BOTTLE", "NETHER_WART"));
+        potions.put(PotionType.WATER, Arrays.asList("BLAZE_POWDER", "FEATHER:Bismuth", "GLASS_BOTTLE", "NETHER_WART"));
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -88,7 +87,7 @@ public class CureBrewingListener implements Listener {
                             }
                             noPickUps.add(player.getUniqueId());
                             Location particles = cauldron.getLocation().add(0.5, 1.25, 0.5);
-                            location.getWorld().spawnParticle(Particle.WATER_SPLASH, particles, 5);
+                            location.getWorld().spawnParticle(Particle.SPLASH, particles, 5);
                             player.playSound(player.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_BUBBLE_POP, 1.0F, 1.0F);
                             List<String> items = new ArrayList<>();
                             // add the current item
@@ -144,7 +143,7 @@ public class CureBrewingListener implements Listener {
                                     item.remove();
                                     // start bubble particles
                                     int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-                                        location.getWorld().spawnParticle(Particle.WATER_SPLASH, particles, 5);
+                                        location.getWorld().spawnParticle(Particle.SPLASH, particles, 5);
                                         player.playSound(player.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_BUBBLE_POP, 1.0F, 1.0F);
                                     }, 1L, 20L);
                                     // wait 20 seconds then give potion
@@ -195,8 +194,15 @@ public class CureBrewingListener implements Listener {
                                             is.setItemMeta(im);
                                         } else {
                                             PotionMeta pm = (PotionMeta) is.getItemMeta();
-                                            PotionData potionData = new PotionData(map.getKey(), extend, upgrade);
-                                            pm.setBasePotionData(potionData);
+                                            PotionType potionName;
+                                            if (extend && upgrade) {
+                                                potionName = PotionType.valueOf("STRONG_" + map.getKey().toString());
+                                            } else if (extend) {
+                                                potionName = PotionType.valueOf("LONG_" + map.getKey().toString());
+                                            } else {
+                                                potionName = potionType;
+                                            }
+                                            pm.setBasePotionType(potionName);
                                             is.setItemMeta(pm);
                                         }
                                         location.getWorld().dropItem(location.add(0, 1.0d, 0), is);

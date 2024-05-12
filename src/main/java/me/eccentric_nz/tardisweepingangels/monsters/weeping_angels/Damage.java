@@ -100,7 +100,7 @@ public class Damage implements Listener {
                         final Location tpLoc = l;
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.teleport(tpLoc), 1L);
                     }
-                    p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 300, 5, true, false));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 300, 5, true, false));
                     if (TARDISWeepingAngels.angelsCanSteal()) {
                         stealKey(p);
                     }

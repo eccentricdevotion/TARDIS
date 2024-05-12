@@ -1,7 +1,8 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:creeper_head"
+            "count": 1,
+            "id": "minecraft:creeper_head"
         },
         "title": "Lucky hunter",
         "description": "Kill a charged creeper",

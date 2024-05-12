@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.database.data;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -101,7 +102,7 @@ public class Tardis {
      *
      * @return the TARDIS id
      */
-    public int getTardis_id() {
+    public int getTardisId() {
         return tardis_id;
     }
 
@@ -234,7 +235,7 @@ public class Tardis {
      *
      * @return the Artron Energy level
      */
-    public int getArtron_level() {
+    public int getArtronLevel() {
         return artron_level;
     }
 
@@ -263,7 +264,7 @@ public class Tardis {
      *
      * @return true if on, false if off
      */
-    public boolean isHandbrake_on() {
+    public boolean isHandbrakeOn() {
         return handbrake_on;
     }
 
@@ -272,7 +273,7 @@ public class Tardis {
      *
      * @return true if initialized, false if not
      */
-    public boolean isTardis_init() {
+    public boolean isTardisInit() {
         return tardis_init;
     }
 
@@ -308,7 +309,7 @@ public class Tardis {
      *
      * @return true if on, false if off
      */
-    public boolean isIso_on() {
+    public boolean isIsomorphicOn() {
         return iso_on;
     }
 
@@ -367,7 +368,7 @@ public class Tardis {
      *
      * @return true if powered on, false if off
      */
-    public boolean isPowered_on() {
+    public boolean isPoweredOn() {
         return powered_on;
     }
 
@@ -376,7 +377,7 @@ public class Tardis {
      *
      * @return true if on, false if off
      */
-    public boolean isLights_on() {
+    public boolean isLightsOn() {
         return lights_on;
     }
 
@@ -385,7 +386,7 @@ public class Tardis {
      *
      * @return true if Siege Mode is on, false if off
      */
-    public boolean isSiege_on() {
+    public boolean isSiegeOn() {
         return siege_on;
     }
 

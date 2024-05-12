@@ -125,16 +125,16 @@ public class TARDISControlListener implements Listener {
                             return;
                         }
                         // check they initialised
-                        if (!tardis.isTardis_init()) {
+                        if (!tardis.isTardisInit()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_INIT");
                             return;
                         }
                         // check isomorphic controls
-                        if (tardis.isIso_on() && !player.getUniqueId().equals(tardis.getUuid())) {
+                        if (tardis.isIsomorphicOn() && !player.getUniqueId().equals(tardis.getUuid())) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ISO_HANDS_OFF");
                             return;
                         }
-                        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on() && !control.allowUnpowered()) {
+                        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn() && !control.allowUnpowered()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                             return;
                         }
@@ -142,8 +142,8 @@ public class TARDISControlListener implements Listener {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                             return;
                         }
-                        boolean lights = tardis.isLights_on();
-                        if (!lights && type == 12 && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+                        boolean lights = tardis.isLightsOn();
+                        if (!lights && type == 12 && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                             return;
                         }
@@ -181,7 +181,7 @@ public class TARDISControlListener implements Listener {
                                 // toggle black wool blocks behind door
                                 case 20 -> new TARDISBlackWoolToggler(plugin).toggleBlocks(id, player);
                                 // siege lever
-                                case 21 -> new SiegeAction(plugin).clickButton(tcc, player, tardis.isPowered_on(), id);
+                                case 21 -> new SiegeAction(plugin).clickButton(tcc, player, tardis.isPoweredOn(), id);
                                 // open control menu GUI
                                 case 22 -> {
                                     event.setCancelled(true);
@@ -197,7 +197,7 @@ public class TARDISControlListener implements Listener {
                                     new CustardCreamAction(plugin, player, block, id).dispense();
                                 }
                                 // force field
-                                case 29 -> new ForceFieldAction(plugin).toggleSheilds(player, blockLocation, tardis.getArtron_level());
+                                case 29 -> new ForceFieldAction(plugin).toggleSheilds(player, blockLocation, tardis.getArtronLevel());
                                 // flight mode button
                                 case 30 -> new FlightModeAction(plugin).setMode(ownerUUID.toString(), player);
                                 // chameleon sign
@@ -211,7 +211,7 @@ public class TARDISControlListener implements Listener {
                                     }
                                 }
                                 // scanner
-                                case 33 -> new TARDISScanner(plugin).scan(id, player, tardis.getRenderer(), tardis.getArtron_level());
+                                case 33 -> new TARDISScanner(plugin).scan(id, player, tardis.getRenderer(), tardis.getArtronLevel());
                                 // cloister bell
                                 case 35 -> new CloisterBellAction(plugin).ring(id, tardis);
                                 // weather menu
@@ -219,7 +219,7 @@ public class TARDISControlListener implements Listener {
                                 // space/time throttle
                                 case 39 -> new ThrottleAction(plugin).setSpaceTime(block, player);
                                 // relativity differentiator
-                                case 47 -> new DifferentiatorAction(plugin).bleep(block);
+                                case 47 -> new DifferentiatorAction(plugin).bleep(block, id);
                                 default -> {
                                 }
                             }

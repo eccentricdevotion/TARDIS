@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.control;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import org.bukkit.Color;
@@ -27,6 +26,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -59,7 +60,7 @@ public class TARDISAtmosphericExcitation {
             // get lamp block location
             l.add(0, 18, 0);
             // construct a firework effect and shoot it from lamp block location
-            Firework firework = (Firework) l.getWorld().spawnEntity(l, EntityType.FIREWORK);
+            Firework firework = (Firework) l.getWorld().spawnEntity(l, EntityType.FIREWORK_ROCKET);
             FireworkMeta fireworkMeta = firework.getFireworkMeta();
             fireworkMeta.addEffect(FireworkEffect.builder()
                     .flicker(false)

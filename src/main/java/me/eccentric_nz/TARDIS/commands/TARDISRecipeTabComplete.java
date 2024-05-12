@@ -36,7 +36,7 @@ public class TARDISRecipeTabComplete extends TARDISCompleter implements TabCompl
     public static final Set<String> ROOT_SUBS = new HashSet<>();
     public static final List<String> TARDIS_TYPES = ImmutableList.of(
             "ancient", "ars",
-            "bigger", "budget",
+            "bigger", "bone", "budget",
             "cave", "copper", "coral", "cursed", "custom",
             "delta", "deluxe", "division",
             "eleventh", "ender",

@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.siegemode;
 
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -28,6 +26,9 @@ import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -51,7 +52,7 @@ public class TARDISSiegeRunnable implements Runnable {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
             if (rs.resultSet()) {
                 Tardis tardis = rs.getTardis();
-                int level = tardis.getArtron_level();
+                int level = tardis.getArtronLevel();
                 if (level > deplete) {
                     // remove some energy
                     HashMap<String, Object> whered = new HashMap<>();

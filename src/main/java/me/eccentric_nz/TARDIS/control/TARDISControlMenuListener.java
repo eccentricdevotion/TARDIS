@@ -23,16 +23,19 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
-import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionInventory;
+import me.eccentric_nz.TARDIS.control.actions.DirectionAction;
 import me.eccentric_nz.TARDIS.control.actions.FastReturnAction;
 import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
 import me.eccentric_nz.TARDIS.control.actions.SiegeAction;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
@@ -105,15 +108,15 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
         }
         Tardis tardis = rs.getTardis();
         // check they initialised
-        if (!tardis.isTardis_init()) {
+        if (!tardis.isTardisInit()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_INIT");
             return;
         }
-        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on() && slot != 6 && slot != 13 && slot != 20) {
+        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn() && slot != 6 && slot != 13 && slot != 20) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
             return;
         }
-        if (!tardis.isHandbrake_on()) {
+        if (!tardis.isHandbrakeOn()) {
             switch (slot) {
                 case 2, 4, 11, 13, 40 -> {
                     if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
@@ -125,8 +128,8 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 }
             }
         }
-        boolean lights = tardis.isLights_on();
-        int level = tardis.getArtron_level();
+        boolean lights = tardis.isLightsOn();
+        int level = tardis.getArtronLevel();
         TARDISCircuitChecker tcc = null;
         if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
             tcc = new TARDISCircuitChecker(plugin, id);
@@ -226,7 +229,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 // 9 = saves for the TARDIS the player is in
                 // 18 = saves for the player's TARDIS (if they're not in their own)
                 // so, determine player's TARDIS id vs occupied TARDIS id
-                int whichId = tardis.getTardis_id();
+                int whichId = tardis.getTardisId();
                 if (slot == 18) {
                     ResultSetTardisID tstid = new ResultSetTardisID(plugin);
                     if (tstid.fromUUID(uuid.toString())) {
@@ -268,7 +271,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             case 13 -> {
                 // siege
                 close(player, true);
-                new SiegeAction(plugin).clickButton(tcc, player, tardis.isPowered_on(), id);
+                new SiegeAction(plugin).clickButton(tcc, player, tardis.isPoweredOn(), id);
             }
             case 15 -> {
                 // scanner
@@ -289,7 +292,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                         return;
                     }
                     close(player, true);
-                    new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPowered_on(), tardis.isHidden(), lights, player.getLocation(), level, tardis.getSchematic().getLights()).clickButton();
+                    new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPoweredOn(), tardis.isHidden(), lights, player.getLocation(), level, tardis.getSchematic().getLights()).clickButton();
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN_DISABLED");
                 }
@@ -348,7 +351,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                     return;
                 }
-                if (!lights && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+                if (!lights && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                     return;
                 }
@@ -398,39 +401,14 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             }
             case 40 -> {
                 // direction
-                if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
-                    return;
+                String direction = new DirectionAction(plugin).rotate(id, player);
+                if (!direction.isEmpty()) {
+                    // update the lore
+                    ItemStack d = view.getItem(40);
+                    ItemMeta im = d.getItemMeta();
+                    im.setLore(List.of(direction));
+                    d.setItemMeta(im);
                 }
-                HashMap<String, Object> whered = new HashMap<>();
-                whered.put("tardis_id", id);
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, whered);
-                String direction = "EAST";
-                if (rsc.resultSet()) {
-                    direction = rsc.getDirection().toString();
-                    if (!tardis.getPreset().usesArmourStand()) {
-                        // skip the angled rotations
-                        switch (rsc.getDirection()) {
-                            case SOUTH -> direction = "SOUTH_WEST";
-                            case EAST -> direction = "SOUTH_EAST";
-                            case NORTH -> direction = "NORTH_EAST";
-                            case WEST -> direction = "NORTH_WEST";
-                            default -> {}
-                        }
-                    }
-                    int ordinal = COMPASS.valueOf(direction).ordinal() + 1;
-                    if (ordinal == 8) {
-                        ordinal = 0;
-                    }
-                    direction = COMPASS.values()[ordinal].toString();
-                }
-                String[] args = new String[]{"direction", direction};
-                new TARDISDirectionCommand(plugin).changeDirection(player, args);
-                // update the lore
-                ItemStack d = view.getItem(40);
-                ItemMeta im = d.getItemMeta();
-                im.setLore(List.of(direction));
-                d.setItemMeta(im);
             }
             case 45 -> {
                 // destination terminal

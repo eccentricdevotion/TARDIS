@@ -75,11 +75,11 @@ public class TARDISDirectionCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_PRESET");
                 return true;
             }
-            if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+            if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                 return true;
             }
-            int id = tardis.getTardis_id();
+            int id = tardis.getTardisId();
             TARDISCircuitChecker tcc = null;
             if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
                 tcc = new TARDISCircuitChecker(plugin, id);
@@ -89,7 +89,7 @@ public class TARDISDirectionCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
                 return true;
             }
-            int level = tardis.getArtron_level();
+            int level = tardis.getArtronLevel();
             int amount = plugin.getArtronConfig().getInt("random");
             if (level < amount) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_DIRECTION");

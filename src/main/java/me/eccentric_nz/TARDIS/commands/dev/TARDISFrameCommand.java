@@ -40,7 +40,7 @@ public class TARDISFrameCommand {
 
     public static ItemFrame getItemFrame(Player player) {
         ItemFrame frame = null;
-        // get the armour stand player is looking at
+        // get the item frame player is looking at
         Location observerPos = player.getEyeLocation();
         Vector3D observerDir = new Vector3D(observerPos.getDirection());
         Vector3D observerStart = new Vector3D(observerPos);

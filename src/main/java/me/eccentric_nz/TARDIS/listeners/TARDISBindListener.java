@@ -123,16 +123,16 @@ public class TARDISBindListener implements Listener {
                             whereb.put("location", l);
                             ResultSetBind rsb = new ResultSetBind(plugin, whereb);
                             if (rsb.resultSet()) {
-                                if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+                                if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                                     plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                                     return;
                                 }
-                                if ((tardis.isIso_on() && !player.getUniqueId().equals(ownerUUID) && !event.useInteractedBlock().equals(Event.Result.DENY)) || plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
+                                if ((tardis.isIsomorphicOn() && !player.getUniqueId().equals(ownerUUID) && !event.useInteractedBlock().equals(Event.Result.DENY)) || plugin.getTrackerKeeper().getJohnSmith().containsKey(player.getUniqueId())) {
                                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ISO_HANDS_OFF");
                                     return;
                                 }
                                 int type = rsb.getType();
-                                if (type != 6 && !tardis.isHandbrake_on() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                                if (type != 6 && !tardis.isHandbrakeOn() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
                                     return;
                                 }

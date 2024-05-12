@@ -47,6 +47,7 @@ class TARDISLazarusInventory {
         // maximum number of eggs is 45
         // passive
         disguises.add(Material.ALLAY_SPAWN_EGG);
+        disguises.add(Material.ARMADILLO_SPAWN_EGG);
         disguises.add(Material.AXOLOTL_SPAWN_EGG);
         disguises.add(Material.BAT_SPAWN_EGG);
         disguises.add(Material.CAMEL_SPAWN_EGG);
@@ -77,7 +78,6 @@ class TARDISLazarusInventory {
         disguises.add(Material.TROPICAL_FISH_SPAWN_EGG);
         disguises.add(Material.TURTLE_SPAWN_EGG);
         disguises.add(Material.VILLAGER_SPAWN_EGG);
-        disguises.add(Material.WANDERING_TRADER_SPAWN_EGG);
         // neutral
         disguises.add(Material.BEE_SPAWN_EGG);
         disguises.add(Material.CAVE_SPIDER_SPAWN_EGG);

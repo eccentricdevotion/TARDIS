@@ -108,7 +108,7 @@ public class TARDISLister {
             ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, where, "", false, 0);
             if (rst.resultSet()) {
                 Tardis tardis = rst.getTardis();
-                int id = tardis.getTardis_id();
+                int id = tardis.getTardisId();
                 // list TARDIS saves
                 if (list.equalsIgnoreCase("saves")) {
                     plugin.getMessenger().messageWithColour(player, "TARDIS " + plugin.getLanguage().getString("SAVES"), "#FFAA00");

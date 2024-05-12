@@ -1,0 +1,69 @@
+package me.eccentric_nz.TARDIS.console.interaction;
+
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.console.models.HelmicRegulatorModel;
+import me.eccentric_nz.TARDIS.database.InteractionStateSaver;
+import org.bukkit.entity.Interaction;
+import org.bukkit.entity.ItemDisplay;
+import org.bukkit.entity.Player;
+
+import java.util.UUID;
+
+/**
+ * A TARDIS leaves temporary wakes and time ripples in the Vortex during travel. To ensure safe travel the TARDIS uses
+ * the helmic regulator to set up the proper Boolean constraints to regulate the Planck-Collapse within the Vortex, and
+ * stabilize the chronon beam to avoid complete overload of the Time Spiral's polyhelixes on the macrotransablative
+ * level. While the regulator normally works automatically there is a manual control on the console which can override
+ * the navigational instruments. This control is quite sensitive and rotating it will change the timeship's course
+ * through the Vortex, sending it thousands of years off course.
+ */
+public class HelmicRegulatorInteraction {
+
+    private final TARDIS plugin;
+
+    public HelmicRegulatorInteraction(TARDIS plugin) {
+        this.plugin = plugin;
+    }
+
+    public void selectWorld(int state, int id, Player player, Interaction interaction) {
+        UUID uuid = player.getUniqueId();
+        if (plugin.getTrackerKeeper().getFlight().containsKey(uuid)) {
+            if (interaction.getLocation().toString().equals(plugin.getTrackerKeeper().getFlight().get(uuid))) {
+                plugin.getTrackerKeeper().getCount().put(uuid, plugin.getTrackerKeeper().getCount().getOrDefault(uuid, 0) + 1);
+            }
+            plugin.getTrackerKeeper().getFlight().remove(uuid);
+        } else {
+            int next = state + 1;
+            if (next > 8 || player.isSneaking()) {
+                next = 0;
+            }
+            String which = "OFF";
+            if (next > 0) {
+                // get world name
+                which = getWorldFromState(next);
+            }
+            // show title
+            plugin.getMessenger().announceRepeater(player, which);
+            if (which.equals("OFF")) {
+                next = 0;
+            }
+            // save state
+            new InteractionStateSaver(plugin).write("HELMIC_REGULATOR", next, id);
+            // set custom model data for helmic regulator item display
+            UUID model = interaction.getPersistentDataContainer().get(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID());
+            if (model != null) {
+                ItemDisplay display = (ItemDisplay) plugin.getServer().getEntity(model);
+                new HelmicRegulatorModel().setState(display, next);
+            }
+        }
+    }
+
+    private String getWorldFromState(int state) {
+        for (String w : plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false)) {
+            if (plugin.getPlanetsConfig().getInt("planets." + w + ".helmic_regulator_order") == state) {
+                return w;
+            }
+        }
+        return "OFF";
+    }
+}

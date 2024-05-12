@@ -239,6 +239,7 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener {
                     String jsonBlue = gson.toJson(blue);
                     String jsonStain = gson.toJson(stain);
                     String jsonGlass = gson.toJson(glass);
+                    // set other shells as inactive
                     HashMap<String, Object> seti = new HashMap<>();
                     seti.put("active", 0);
                     HashMap<String, Object> wherei = new HashMap<>();

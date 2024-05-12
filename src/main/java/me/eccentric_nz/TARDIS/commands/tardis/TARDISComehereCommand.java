@@ -65,12 +65,12 @@ class TARDISComehereCommand {
             }
             if (plugin.getDifficulty().equals(Difficulty.EASY) || plugin.getUtils().inGracePeriod(player, true)) {
                 Tardis tardis = rs.getTardis();
-                int id = tardis.getTardis_id();
-                if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPowered_on()) {
+                int id = tardis.getTardisId();
+                if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                     return true;
                 }
-                int level = tardis.getArtron_level();
+                int level = tardis.getArtronLevel();
                 boolean hidden = tardis.isHidden();
                 // get location
                 Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();

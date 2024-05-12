@@ -41,7 +41,7 @@ public class TARDISDisplayItemRecipe {
         for (TARDISDisplayItem tdi : TARDISDisplayItem.values()) {
             if (tdi.getCraftMaterial() != null) {
                 ItemStack is;
-                if (tdi == TARDISDisplayItem.CLASSIC_DOOR) {
+                if (tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) {
                     is = new ItemStack(tdi.getCraftMaterial(), 1);
                 } else {
                     is = new ItemStack(tdi.getMaterial(), 1);

@@ -176,6 +176,7 @@ public enum TARDISDescription {
     WEATHERED("A weathered copper TARDIS."),
     ORIGINAL("The original v1.0 TARDIS."),
     ANCIENT("An ancient deep dark TARDIS."),
+    BONE("An early era styled TARDIS."),
     CUSTOM("A custom designed server TARDIS"),
     ALLAY("An allay house, bring your friends."),
     ANTIGRAVITY("Going up..."),

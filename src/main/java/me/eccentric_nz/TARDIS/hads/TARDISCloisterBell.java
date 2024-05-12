@@ -130,7 +130,8 @@ public class TARDISCloisterBell implements Runnable {
             }
             i++;
         } else {
-            plugin.getServer().getScheduler().cancelTask(plugin.getTrackerKeeper().getCloisterBells().get(id));
+//            int taskId = plugin.getTrackerKeeper().getCloisterBells().get(id);
+            plugin.getServer().getScheduler().cancelTask(task);
             task = -1;
             plugin.getTrackerKeeper().getCloisterBells().remove(id);
             if (messageOff && player != null && player.isOnline()) {

@@ -86,11 +86,11 @@ public class ResultSetPlayerPrefs {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the player_prefs table.
      *
      * @param plugin an instance of the main class.
-     * @param where  the UUID to select the preferences for.
+     * @param uuid  the UUID to select the preferences for.
      */
-    public ResultSetPlayerPrefs(TARDIS plugin, String where) {
+    public ResultSetPlayerPrefs(TARDIS plugin, String uuid) {
         this.plugin = plugin;
-        this.where = where;
+        this.where = uuid;
         prefix = this.plugin.getPrefix();
     }
 

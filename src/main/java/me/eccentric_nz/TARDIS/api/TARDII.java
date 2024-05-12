@@ -56,7 +56,7 @@ import me.eccentric_nz.tardisweepingangels.utils.HeadBuilder;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.*;
 import org.bukkit.World.Environment;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -172,8 +172,8 @@ public class TARDII implements TardisAPI {
                     }
                 }
             }
-            String powered = (tardis.isPowered_on()) ? "Yes" : "No";
-            String siege = (tardis.isSiege_on()) ? "Yes" : "No";
+            String powered = (tardis.isPoweredOn()) ? "Yes" : "No";
+            String siege = (tardis.isSiegeOn()) ? "Yes" : "No";
             String abandoned = (tardis.isAbandoned()) ? "Yes" : "No";
             List<String> occupants = getPlayersInTARDIS(id);
             data = new TARDISData(owner, current, console, chameleon, door, powered, siege, abandoned, occupants);
@@ -797,7 +797,7 @@ public class TARDII implements TardisAPI {
             TARDISUpgradeData tud = new TARDISUpgradeData();
             tud.setSchematic(current_console);
             tud.setPrevious(current_console);
-            tud.setLevel(rs.getTardis().getArtron_level());
+            tud.setLevel(rs.getTardis().getArtronLevel());
             tud.setWall(wall);
             tud.setFloor(floor);
             // change the wall and floor

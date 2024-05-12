@@ -310,7 +310,7 @@ public class TARDISSiegeListener implements Listener {
             return;
         }
         Tardis tardis = rst.getTardis();
-        int id = tardis.getTardis_id();
+        int id = tardis.getTardisId();
         if (!uuid.equals(tardis.getUuid())) {
             boolean isCompanion = false;
             if (!tardis.getCompanions().isEmpty()) {
@@ -351,7 +351,7 @@ public class TARDISSiegeListener implements Listener {
         } else {
             // attempt to unsiege the TARDIS
             // check TARDIS has minimum energy level
-            if (min > tardis.getArtron_level()) {
+            if (min > tardis.getArtronLevel()) {
                 plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_POWER");
                 return;
             }

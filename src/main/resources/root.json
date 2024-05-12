@@ -1,7 +1,8 @@
 {
     "display": {
         "icon": {
-            "item": "minecraft:compass",
+            "count": 1,
+            "id": "minecraft:compass",
             "nbt": "{ \"CustomModelData\": 1001 }"
         },
         "title": "Doctor Who",

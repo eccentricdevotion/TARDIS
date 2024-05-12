@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.customblocks;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
@@ -116,6 +117,39 @@ public class TARDISDisplayItemUtils {
         return null;
     }
 
+    /**
+     * Get an item display entity from an Interaction entity. Used for console sonic docks.
+     *
+     * @param interaction the Interaction entity to use as the search location
+     * @return The Item Display entity at the Interaction location or null if there isn't one
+     */
+    public static ItemDisplay getSonic(Interaction interaction) {
+        for (Entity e : interaction.getWorld().getNearbyEntities(interaction.getBoundingBox().expand(0.75d), (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
+            if (e instanceof ItemDisplay display) {
+                ItemStack is = display.getItemStack();
+                if (TARDISStaticUtils.isSonic(is)) {
+                    return display;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get a text display entity from an Interaction entity. Used for console sonic docks.
+     *
+     * @param interaction the Interaction entity to use as the search location
+     * @return The Text Display entity at the Interaction location or null if there isn't one
+     */
+    public static TextDisplay getText(Interaction interaction) {
+        for (Entity e : interaction.getWorld().getNearbyEntities(interaction.getBoundingBox().expand(0.1d), (d) -> d.getType() == EntityType.TEXT_DISPLAY)) {
+            if (e instanceof TextDisplay display) {
+                    return display;
+            }
+        }
+        return null;
+    }
+
     public static Interaction getInteraction(Location location) {
         while (!location.getChunk().isLoaded()) {
             location.getChunk().load();
@@ -161,7 +195,7 @@ public class TARDISDisplayItemUtils {
      */
     public static void set(TARDISDisplayItem tdi, Block block, int id) {
         // spawn an item display entity
-        if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi.isLight()) {
+        if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR || tdi.isLight()) {
             // also set an interaction entity
             Interaction interaction = (Interaction) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
             interaction.setResponsive(true);
@@ -173,7 +207,7 @@ public class TARDISDisplayItemUtils {
                 interaction.setInteractionWidth(1.0f);
                 interaction.getPersistentDataContainer().set(TARDIS.plugin.getTardisIdKey(), PersistentDataType.INTEGER, id);
             }
-            if (tdi == TARDISDisplayItem.CLASSIC_DOOR) {
+            if (tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) {
                 // set size
                 interaction.setInteractionHeight(3.0f);
                 interaction.setInteractionWidth(1.0f);
@@ -188,7 +222,7 @@ public class TARDISDisplayItemUtils {
         } else if (tdi != TARDISDisplayItem.ARTRON_FURNACE && tdi != TARDISDisplayItem.SONIC_GENERATOR) {
             block.setBlockData(TARDISConstants.BARRIER);
         }
-        Material material = (tdi == TARDISDisplayItem.CLASSIC_DOOR) ? tdi.getCraftMaterial() : tdi.getMaterial();
+        Material material = (tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) ? tdi.getCraftMaterial() : tdi.getMaterial();
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(tdi.getDisplayName());
@@ -197,10 +231,10 @@ public class TARDISDisplayItemUtils {
         }
         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
         is.setItemMeta(im);
-        double ay = (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR) ? 0.0d : 0.5d;
+        double ay = (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
-        if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR) {
+        if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) {
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
         }
         display.setPersistent(true);

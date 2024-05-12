@@ -85,7 +85,7 @@ public class TARDISDisplayBlockListener implements Listener {
         if (!im.hasDisplayName() || !im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
             return;
         }
-        if (im.getDisplayName().equals(ChatColor.GOLD + "TARDIS Seed Block")) {
+        if (im.getDisplayName().equals(ChatColor.GOLD + "TARDIS Seed Block") || im.getDisplayName().endsWith("Console")) {
             return;
         }
         int cmd = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
@@ -96,7 +96,7 @@ public class TARDISDisplayBlockListener implements Listener {
         Location location = event.getBlock().getLocation();
         event.setCancelled(true);
         BlockData data;
-        if (which.isLight() || which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR) {
+        if (which.isLight() || which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR || which == TARDISDisplayItem.BONE_DOOR) {
             if (which.isLight()) {
                 Levelled light = TARDISConstants.LIGHT;
                 light.setLevel((which.isLit() ? 15 : 0));
@@ -105,21 +105,21 @@ public class TARDISDisplayBlockListener implements Listener {
                 data = null;
             }
             // set an Interaction entity
-            TARDISDisplayItemUtils.set(location, cmd, which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR);
+            TARDISDisplayItemUtils.set(location, cmd, which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR || which == TARDISDisplayItem.BONE_DOOR);
         } else {
             data = TARDISConstants.BARRIER;
         }
         if (data != null) {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> location.getBlock().setBlockData(data), 1L);
         }
-        double ay = (which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR) ? 0.0d : 0.5d;
+        double ay = (which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR || which == TARDISDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
         // set an ItemDisplay entity
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
         display.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which.getCustomModelData());
         display.setItemStack(single);
         display.setPersistent(true);
         display.setInvulnerable(true);
-        if (which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR) {
+        if (which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR || which == TARDISDisplayItem.BONE_DOOR) {
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
             float yaw = DoorUtility.getLookAtYaw(player);
             // set display rotation
@@ -224,6 +224,9 @@ public class TARDISDisplayBlockListener implements Listener {
      */
     @EventHandler
     public void onInteractionClick(PlayerInteractAtEntityEvent event) {
+        if (event.getHand() == EquipmentSlot.OFF_HAND) {
+            return;
+        }
         if (event.getRightClicked() instanceof Interaction interaction) {
             if (interaction.getPersistentDataContainer().has(plugin.getStandUuidKey(), plugin.getPersistentDataTypeUUID())) {
                 Player player = event.getPlayer();
@@ -285,7 +288,7 @@ public class TARDISDisplayBlockListener implements Listener {
                     } else {
                         TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
                         if (tdi != null) {
-                            if (tdi == TARDISDisplayItem.CUSTOM_DOOR || tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR_OPEN) {
+                            if (tdi == TARDISDisplayItem.CUSTOM_DOOR || tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.DOOR_BOTH_OPEN || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR_OPEN || tdi == TARDISDisplayItem.BONE_DOOR || tdi == TARDISDisplayItem.BONE_DOOR_OPEN) {
                                 if (!player.isOp() && !plugin.getUtils().inTARDISWorld(player)) {
                                     return;
                                 }
@@ -302,7 +305,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                         return;
                                     }
                                     Tardis tardis = rs.getTardis();
-                                    int id = tardis.getTardis_id();
+                                    int id = tardis.getTardisId();
                                     new UpdateDoor(plugin).process(Updateable.DOOR, block, false, id, player);
                                     plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
                                     TARDISSudoTracker.SUDOERS.remove(playerUUID);
@@ -310,11 +313,12 @@ public class TARDISDisplayBlockListener implements Listener {
                                     return;
                                 }
                                 if (player.isSneaking()) {
-                                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.CUSTOM_DOOR) {
+                                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR || (tdi == TARDISDisplayItem.CUSTOM_DOOR && isCustomClosed(display))) {
                                         // move to outside
                                         new DisplayItemDoorMover(plugin).exit(player, block);
+                                        return;
                                     }
-                                    if (tdi == TARDISDisplayItem.DOOR_OPEN || tdi == TARDISDisplayItem.CUSTOM_DOOR) {
+                                    if (tdi == TARDISDisplayItem.DOOR_OPEN || (tdi == TARDISDisplayItem.CUSTOM_DOOR && !isCustomClosed(display))) {
                                         // open right hand door as well
                                         ItemStack itemStack = display.getItemStack();
                                         if (itemStack != null) {
@@ -351,15 +355,15 @@ public class TARDISDisplayBlockListener implements Listener {
                                                 new DoorAnimator(plugin, display).close();
                                                 new DisplayItemDoorToggler(plugin).openClose(player, block, true, TARDISDisplayItem.DOOR_OPEN);
                                             }
-                                            case CLASSIC_DOOR -> {
+                                            case CLASSIC_DOOR, BONE_DOOR -> {
                                                 // open doors / activate portal
                                                 new DoorAnimator(plugin, display).open();
-                                                new DisplayItemDoorToggler(plugin).openClose(player, block, false, TARDISDisplayItem.CLASSIC_DOOR);
+                                                new DisplayItemDoorToggler(plugin).openClose(player, block, false, tdi);
                                             }
-                                            case CLASSIC_DOOR_OPEN -> {
+                                            case CLASSIC_DOOR_OPEN, BONE_DOOR_OPEN -> {
                                                 // close doors / deactivate portal
                                                 new DoorAnimator(plugin, display).close();
-                                                new DisplayItemDoorToggler(plugin).openClose(player, block, true, TARDISDisplayItem.CLASSIC_DOOR_OPEN);
+                                                new DisplayItemDoorToggler(plugin).openClose(player, block, true, tdi);
                                             }
                                             case CUSTOM_DOOR -> {
                                                 // get if door is open
@@ -371,12 +375,6 @@ public class TARDISDisplayBlockListener implements Listener {
                                                     animator.open();
                                                 }
                                                 new DisplayItemDoorToggler(plugin).openClose(player, block, close, TARDISDisplayItem.CUSTOM_DOOR);
-                                            }
-                                            default -> {
-                                                // just close doors
-                                                im.setCustomModelData(10000);
-                                                itemStack.setItemMeta(im);
-                                                display.setItemStack(itemStack);
                                             }
                                         }
                                     }
@@ -437,6 +435,19 @@ public class TARDISDisplayBlockListener implements Listener {
                 }
             }
         }
+    }
+
+    private boolean isCustomClosed(ItemDisplay display) {
+        if (display == null) {
+            return false;
+        }
+        ItemStack is = display.getItemStack();
+        if (is == null) {
+            return false;
+        }
+        ItemMeta im = is.getItemMeta();
+        int cmd = im.hasCustomModelData()? im.getCustomModelData() : -1;
+        return cmd == 10000;
     }
 
     private boolean isPlaceable(Material material) {

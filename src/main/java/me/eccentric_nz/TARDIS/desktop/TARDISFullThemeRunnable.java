@@ -26,12 +26,14 @@ import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.TARDIS.builders.FractalFence;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
-import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
+import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
+import me.eccentric_nz.TARDIS.console.ConsoleDestroyer;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetScreenInteraction;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
@@ -40,6 +42,7 @@ import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgateDisplaySetter;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
 import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
+import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
@@ -55,6 +58,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,9 +66,8 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * There was also a safety mechanism for when TARDIS rooms were deleted,
- * automatically relocating any living beings in the deleted room, depositing
- * them in the control room.
+ * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
+ * the deleted room, depositing them in the control room.
  *
  * @author eccentric_nz
  */
@@ -213,12 +216,12 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             }
             Tardis tardis = rs.getTardis();
             slot = tardis.getTIPS();
-            id = tardis.getTardis_id();
+            id = tardis.getTardisId();
             chunk = TARDISStaticLocationGetters.getChunk(tardis.getChunk());
             if (tud.getPrevious().getPermission().equals("ender")) {
                 // remove ender crystal
                 for (Entity entity : chunk.getEntities()) {
-                    if (entity.getType().equals(EntityType.ENDER_CRYSTAL)) {
+                    if (entity.getType().equals(EntityType.END_CRYSTAL)) {
                         entity.remove();
                     }
                 }
@@ -247,6 +250,18 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 TARDISTimeRotor.updateRotorRecord(id, "");
                 plugin.getGeneralKeeper().getTimeRotors().add(tardis.getRotor());
             }
+            // remove console if present
+            ResultSetScreenInteraction rssi = new ResultSetScreenInteraction(plugin, id);
+            if (rssi.resultSet() && rssi.getUuid() != null) {
+                Entity screen = chunk.getWorld().getEntity(rssi.getUuid());
+                if (screen != null && screen.getPersistentDataContainer().has(plugin.getUnaryKey(), PersistentDataType.STRING)) {
+                    String uuids = screen.getPersistentDataContainer().get(plugin.getUnaryKey(), PersistentDataType.STRING);
+                    if (uuids != null) {
+                        // remove the console
+                        new ConsoleDestroyer(plugin).returnStack(uuids, id);
+                    }
+                }
+            }
             chunks = TARDISChunkUtils.getConsoleChunks(chunk, tud.getSchematic());
             previousChunks = TARDISChunkUtils.getConsoleChunks(chunk, tud.getPrevious());
             if (!tardis.getCreeper().isEmpty()) {
@@ -272,7 +287,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 startz = pos.getCentreZ();
                 resetz = pos.getCentreZ();
             } else {
-                int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardis_id());
+                int[] gsl = plugin.getLocationUtils().getStartLocation(tardis.getTardisId());
                 startx = gsl[0];
                 resetx = gsl[1];
                 startz = gsl[2];
@@ -346,7 +361,6 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             previousChunks.forEach((c) -> {
                 // remove any item display or interactions
                 TARDISDisplayItemUtils.removeDisplaysInChunk(c, 62, 64 + ph);
-
             });
             plugin.getPM().callEvent(new TARDISDesktopThemeEvent(player, tardis, tud));
         }
@@ -410,7 +424,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
             }
             if (ender != null) {
-                Entity ender_crystal = world.spawnEntity(ender, EntityType.ENDER_CRYSTAL);
+                Entity ender_crystal = world.spawnEntity(ender, EntityType.END_CRYSTAL);
                 ((EnderCrystal) ender_crystal).setShowingBottom(false);
             }
             if (obj.has("paintings")) {
@@ -561,6 +575,12 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     String bedrocloc = world.getName() + ":" + x + ":" + y + ":" + z;
                     set.put("beacon", bedrocloc);
                     postBedrock = b;
+                }
+                if (type.equals(Material.LIGHT_GRAY_CONCRETE) && tud.getSchematic().getPermission().equals("bone")) {
+                    // get the block
+                    Block block = new Location(world, x, y, z).getBlock();
+                    // build a console
+                    new ConsoleBuilder(plugin).create(block, 1, id, uuid.toString());
                 }
                 if (type.equals(Material.SCULK_SHRIEKER)) {
                     // remember the location, so we can make it shriek when flying
@@ -800,7 +820,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         data = switch (tud.getSchematic().getPermission()) {
                             case "ender" -> Material.END_STONE_BRICKS.createBlockData();
                             case "delta", "cursed" -> Material.BLACKSTONE.createBlockData();
-                            case "ancient", "fugitive" -> Material.GRAY_WOOL.createBlockData();
+                            case "ancient", "bone", "fugitive" -> Material.GRAY_WOOL.createBlockData();
                             case "hospital" -> Material.LIGHT_GRAY_WOOL.createBlockData();
                             default -> Material.STONE_BRICKS.createBlockData();
                         };

@@ -24,7 +24,7 @@ public class ZeroRoomAction {
     public void doEntry(Player player, Tardis tardis, int id) {
         // enter zero room
         int zero_amount = plugin.getArtronConfig().getInt("zero");
-        if (tardis.getArtron_level() < zero_amount) {
+        if (tardis.getArtronLevel() < zero_amount) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ZERO_ENERGY");
             return;
         }

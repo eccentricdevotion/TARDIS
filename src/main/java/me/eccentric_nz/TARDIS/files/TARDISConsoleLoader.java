@@ -36,6 +36,7 @@ public class TARDISConsoleLoader {
 
     private final TARDIS plugin;
     private boolean save = false;
+//    Material material = Material.WAXED_OXIDIZED_CUT_COPPER;
 
     public TARDISConsoleLoader(TARDIS plugin) {
         this.plugin = plugin;
@@ -47,6 +48,8 @@ public class TARDISConsoleLoader {
         // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
         Consoles.getBY_NAMES().put("ARS", new Schematic("QUARTZ_BLOCK", "ars", "ARS Console", ConsoleSize.SMALL, true, TardisLight.TENTH, false));
         Consoles.getBY_NAMES().put("BIGGER", new Schematic("GOLD_BLOCK", "bigger", "A Bigger Console", ConsoleSize.MEDIUM, true, TardisLight.TENTH, false));
+        // BONE loosely based on a console by DT10 - https://www.youtube.com/watch?v=Ux4qt0qYm80
+        Consoles.getBY_NAMES().put("BONE", new Schematic("WAXED_OXIDIZED_CUT_COPPER", "bone", "An Early Style Console", ConsoleSize.SMALL, true, TardisLight.CLASSIC, false));
         Consoles.getBY_NAMES().put("BUDGET", new Schematic("IRON_BLOCK", "budget", "Default Console", ConsoleSize.SMALL, true, TardisLight.TENTH, false));
         Consoles.getBY_NAMES().put("CAVE", new Schematic("DRIPSTONE_BLOCK", "cave", "Cave Console", ConsoleSize.SMALL, false, TardisLight.LAMP, false));
         // COPPER & CORAL schematics designed by vistaero

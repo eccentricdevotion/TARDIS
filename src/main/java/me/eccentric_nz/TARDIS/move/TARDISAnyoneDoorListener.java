@@ -167,7 +167,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                             tid.put("tardis_id", id);
                             ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
                             if (rs.resultSet()) {
-                                if (!rs.getTardis().isHandbrake_on()) {
+                                if (!rs.getTardis().isHandbrakeOn()) {
                                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                                     return;
                                 }
@@ -243,19 +243,19 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                             ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
                             if (rs.resultSet()) {
                                 Tardis tardis = rs.getTardis();
-                                if (!tardis.isHandbrake_on()) {
+                                if (!tardis.isHandbrakeOn()) {
                                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                                     return;
                                 }
-                                int artron = tardis.getArtron_level();
+                                int artron = tardis.getArtronLevel();
                                 int required = plugin.getArtronConfig().getInt("backdoor");
                                 UUID tlUUID = tardis.getUuid();
                                 ChameleonPreset preset = tardis.getPreset();
                                 float yaw = player.getLocation().getYaw();
                                 float pitch = player.getLocation().getPitch();
                                 String companions = tardis.getCompanions();
-                                boolean hb = tardis.isHandbrake_on();
-                                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardis_id());
+                                boolean hb = tardis.isHandbrakeOn();
+                                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardisId());
                                 if (!rsc.resultSet()) {
                                     // emergency TARDIS relocation
                                     new TARDISEmergencyRelocation(plugin).relocate(id, player);

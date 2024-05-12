@@ -71,13 +71,13 @@ public class TARDISControlInventory {
         boolean open = false;
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            siege_onoff = (tardis.isSiege_on()) ? on : off;
-            lights_onoff = (tardis.isLights_on()) ? on : off;
-            open = new TARDISBlackWoolToggler(plugin).isOpen(tardis.getTardis_id());
+            siege_onoff = (tardis.isSiegeOn()) ? on : off;
+            lights_onoff = (tardis.isLightsOn()) ? on : off;
+            open = new TARDISBlackWoolToggler(plugin).isOpen(tardis.getTardisId());
             toggle_openclosed = (open) ? plugin.getLanguage().getString("SET_OPEN") : plugin.getLanguage().getString("SET_CLOSED");
-            power_onoff = (tardis.isPowered_on()) ? on : off;
+            power_onoff = (tardis.isPoweredOn()) ? on : off;
             HashMap<String, Object> wheret = new HashMap<>();
-            wheret.put("tardis_id", tardis.getTardis_id());
+            wheret.put("tardis_id", tardis.getTardisId());
             ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wheret);
             if (rsc.resultSet()) {
                 direction = rsc.getDirection().toString();

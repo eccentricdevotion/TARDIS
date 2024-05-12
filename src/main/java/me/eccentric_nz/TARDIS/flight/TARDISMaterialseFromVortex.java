@@ -23,10 +23,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISMaterialisationEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
@@ -120,7 +117,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                             TARDISSounds.playTARDISSound(handbrake, "tardis_malfunction");
                         }
                         // add a potion effect to the player
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 150, 5));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 150, 5));
                         long cloister_delay = (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 262L : 360L;
                         Location location = exit;
                         scheduler.scheduleSyncDelayedTask(plugin, () -> {
@@ -201,7 +198,13 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     if (flight_mode == 2 || flight_mode == 3) {
                         materialisation_delay += 650L;
                         travel_time += 650L;
-                        Runnable runner = (flight_mode == 2) ? new TARDISRegulatorStarter(plugin, player, id) : new TARDISManualFlightStarter(plugin, player, id);
+                        Runnable runner;
+                        if (flight_mode == 2) {
+                            runner = new TARDISRegulatorStarter(plugin, player, id);
+                        } else {
+                            ResultSetInteractionCheck rsic = new ResultSetInteractionCheck(plugin);
+                            runner = new TARDISManualFlightStarter(plugin, player, id, rsic.resultSetFromId(id));
+                        }
                         // start the flying mode (after demat if not in vortex already)
                         scheduler.scheduleSyncDelayedTask(plugin, runner, flight_mode_delay);
                     }

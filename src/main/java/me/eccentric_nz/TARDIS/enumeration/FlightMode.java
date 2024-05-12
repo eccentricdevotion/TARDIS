@@ -22,7 +22,8 @@ public enum FlightMode {
 
     NORMAL(1),
     REGULATOR(2),
-    MANUAL(3);
+    MANUAL(3),
+    EXTERIOR(4);
 
     private static final HashMap<Integer, FlightMode> byMode = new HashMap<>();
 
