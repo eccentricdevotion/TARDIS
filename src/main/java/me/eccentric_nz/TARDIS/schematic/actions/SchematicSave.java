@@ -219,7 +219,7 @@ public class SchematicSave {
                                 if (tdi != null) {
                                     stack.addProperty("light", tdi.isLight());
                                     stack.addProperty("lit", tdi.isLit());
-                                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR) {
+                                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) {
                                         stack.addProperty("door", true);
                                     }
                                 }

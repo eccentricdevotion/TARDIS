@@ -7,7 +7,7 @@
 3. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
    * New interior with console
-4. Update old light level controls, and light switch should return to correct level
+4. Add doors to shop item
 5. ?
 
 ## Next version `5.7.0`

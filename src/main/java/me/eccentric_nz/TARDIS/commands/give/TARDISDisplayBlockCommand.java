@@ -36,7 +36,7 @@ public class TARDISDisplayBlockCommand {
 
     public ItemStack getStack(String arg) {
         String display = TARDISStringUtils.toEnumUppercase(arg);
-        if (display.startsWith("DOOR_")) {
+        if (display.startsWith("DOOR_") || display.endsWith("_DOOR")) {
 //            plugin.debug(display);
 //            for (String d : Door.byName.keySet()) {
 //                plugin.debug(d);

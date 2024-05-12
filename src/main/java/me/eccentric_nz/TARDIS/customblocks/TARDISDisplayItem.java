@@ -34,6 +34,7 @@ public enum TARDISDisplayItem {
     ANCIENT(Material.SCULK),
     ARS(Material.QUARTZ_BLOCK),
     BIGGER(Material.GOLD_BLOCK),
+    BONE(Material.WAXED_OXIDIZED_CUT_COPPER),
     BUDGET(Material.IRON_BLOCK),
     CAVE(Material.DRIPSTONE_BLOCK),
     COPPER(10001, Material.COPPER_BLOCK, null),
@@ -88,6 +89,8 @@ public enum TARDISDisplayItem {
     DOOR(10000, Material.IRON_DOOR, Material.IRON_DOOR),
     DOOR_OPEN(10004, Material.IRON_DOOR, null),
     DOOR_BOTH_OPEN(10005, Material.IRON_DOOR, null),
+    BONE_DOOR(10000, Material.IRON_DOOR, Material.BIRCH_DOOR),
+    BONE_DOOR_OPEN(10006, Material.BIRCH_DOOR, null),
     CLASSIC_DOOR(10000, Material.IRON_DOOR, Material.CHERRY_DOOR),
     CLASSIC_DOOR_OPEN(10006, Material.CHERRY_DOOR, null),
     CUSTOM_DOOR(-1, Material.IRON_DOOR, null),
@@ -205,7 +208,7 @@ public enum TARDISDisplayItem {
 
     public static TARDISDisplayItem getByMaterialAndData(Material m, int cmd) {
         for (TARDISDisplayItem tdi : values()) {
-            if (tdi == TARDISDisplayItem.CLASSIC_DOOR) {
+            if (tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) {
                 if (tdi.getCraftMaterial() == m && tdi.getCustomModelData() == cmd) {
                     return tdi;
                 }

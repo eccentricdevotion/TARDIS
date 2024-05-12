@@ -140,6 +140,7 @@ public enum RecipeItem {
     LIGHT_TWELFTH(10008, RecipeCategory.CUSTOM_BLOCKS),
     LIGHT_THIRTEENTH(10009, RecipeCategory.CUSTOM_BLOCKS),
     DOOR(10001, RecipeCategory.CUSTOM_BLOCKS),
+    BONE_DOOR(10004, RecipeCategory.CUSTOM_BLOCKS),
     CLASSIC_DOOR(10004, RecipeCategory.CUSTOM_BLOCKS),
 //    HANDBRAKE(1001, RecipeCategory.CUSTOM_BLOCKS),
 //    THROTTLE(1001, RecipeCategory.CUSTOM_BLOCKS),
