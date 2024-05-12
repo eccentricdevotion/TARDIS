@@ -206,6 +206,7 @@ public enum TARDISInfoMenu {
     TYPES("TIS|TARDIS Types", "TIS", "T"),
     ARS("TIS|TARDIS Types|ARS", "TYPES", "A"),
     BIGGER("TIS|TARDIS Types|Bigger", "TYPES", "i"),
+    BONE("TIS|TARDIS Types|Bone!", "TYPES", "!"),
     BUDGET("TIS|TARDIS Types|Budget", "TYPES", "B"),
     CAVE("TIS|TARDIS Types|Cave", "TYPES", "v"),
     COPPER_11TH("TIS|TARDIS Types|Copper 11th", "TYPES", "1"),
@@ -645,7 +646,7 @@ public enum TARDISInfoMenu {
 
     public boolean isConsole() {
         switch (this) {
-            case ARS, BIGGER, BUDGET, CAVE, COPPER_11TH, CORAL, CURSED, DELTA, DELUXE, DIVISION, ELEVENTH, ENDER,
+            case ARS, BIGGER, BONE, BUDGET, CAVE, COPPER_11TH, CORAL, CURSED, DELTA, DELUXE, DIVISION, ELEVENTH, ENDER,
                     FACTORY, FIFTEENTH, FUGITIVE, HOSPITAL, MASTER, MECHANICAL, PLANK, PYRAMID, REDSTONE, STEAMPUNK,
                     THIRTEENTH, TOM, TWELFTH, WAR, WEATHERED, ORIGINAL, ANCIENT, CUSTOM -> {
                 return true;

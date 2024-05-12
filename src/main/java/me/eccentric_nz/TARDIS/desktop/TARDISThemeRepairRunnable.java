@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.TARDIS.builders.FractalFence;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Archive;
@@ -418,6 +419,12 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     set.put("beacon", bedrocloc);
                     postBedrock = world.getBlockAt(x, y, z);
                 }
+                if (type.equals(Material.LIGHT_GRAY_CONCRETE) && tud.getSchematic().getPermission().equals("bone")) {
+                    // get the block
+                    Block block = new Location(world, x, y, z).getBlock();
+                    // build a console
+                    new ConsoleBuilder(plugin).create(block, 1, id, uuid.toString());
+                }
                 if (type.equals(Material.SCULK_SHRIEKER)) {
                     // remember the location, so we can make it shriek when flying
                     String shrieker = new Location(world, x, y, z).toString();
@@ -538,7 +545,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                         data = switch (tud.getSchematic().getPermission()) {
                             case "ender" -> Material.END_STONE_BRICKS.createBlockData();
                             case "delta", "cursed" -> Material.BLACKSTONE.createBlockData();
-                            case "ancient", "fugitive" -> Material.GRAY_WOOL.createBlockData();
+                            case "ancient", "bone", "fugitive" -> Material.GRAY_WOOL.createBlockData();
                             case "hospital" -> Material.LIGHT_GRAY_WOOL.createBlockData();
                             default -> Material.STONE_BRICKS.createBlockData();
                         };

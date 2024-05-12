@@ -269,6 +269,7 @@ permissions:
       tardis.ancient: true
       tardis.ars: true
       tardis.bigger: true
+      tardis.bone: true
       tardis.cave: true
       tardis.copper: true
       tardis.coral: true

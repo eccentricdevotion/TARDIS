@@ -21,6 +21,7 @@ public enum BlueprintConsole {
     ANCIENT("tardis.ancient"),
     ARS("tardis.ars"),
     BIGGER("tardis.bigger"),
+    BONE("tardis.bone"),
     CAVE("tardis.cave"),
     COPPER("tardis.copper"),
     CORAL("tardis.coral"),

@@ -32,6 +32,7 @@ public class FloodgateDesktopThemeForm {
         blocks.put("ANCIENT", "sculk");
         blocks.put("ARS", "quartz");
         blocks.put("BIGGER", "gold");
+        blocks.put("BONE", "waxed_oxidized_cut_copper");
         blocks.put("BUDGET", "iron");
         blocks.put("CAVE", "cave");
         blocks.put("COPPER", "warped_planks");

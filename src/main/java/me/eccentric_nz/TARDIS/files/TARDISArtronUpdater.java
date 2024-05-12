@@ -86,6 +86,7 @@ public class TARDISArtronUpdater {
         integerOptions.put("upgrades.ancient", 5000);
         integerOptions.put("upgrades.ars", 5000);
         integerOptions.put("upgrades.bigger", 7500);
+        integerOptions.put("upgrades.bone", 5000);
         integerOptions.put("upgrades.budget", 5000);
         integerOptions.put("upgrades.cave", 5000);
         integerOptions.put("upgrades.copper", 20000);
