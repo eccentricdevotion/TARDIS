@@ -26,10 +26,12 @@ import me.eccentric_nz.TARDIS.builders.FractalFence;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
+import me.eccentric_nz.TARDIS.console.ConsoleDestroyer;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetScreenInteraction;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -52,6 +54,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
 
@@ -186,6 +189,18 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     itemFrame.remove();
                     TARDISTimeRotor.updateRotorRecord(id, "");
                     plugin.getGeneralKeeper().getTimeRotors().add(tardis.getRotor());
+                }
+            }
+            // remove console if present
+            ResultSetScreenInteraction rssi = new ResultSetScreenInteraction(plugin, id);
+            if (rssi.resultSet() && rssi.getUuid() != null) {
+                Entity screen = chunk.getWorld().getEntity(rssi.getUuid());
+                if (screen != null && screen.getPersistentDataContainer().has(plugin.getUnaryKey(), PersistentDataType.STRING)) {
+                    String uuids = screen.getPersistentDataContainer().get(plugin.getUnaryKey(), PersistentDataType.STRING);
+                    if (uuids != null) {
+                        // remove the console
+                        new ConsoleDestroyer(plugin).returnStack(uuids, id);
+                    }
                 }
             }
             chunks = TARDISChunkUtils.getConsoleChunks(chunk, tud.getSchematic());
