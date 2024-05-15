@@ -6,14 +6,13 @@
 2. Fix follower persistence
 3. Custom Control models [#703](https://github.com/eccentricdevotion/TARDIS/issues/703)
    [#355](https://github.com/eccentricdevotion/TARDIS/issues/355)
-   * New interior with console
 4. Add doors to shop item
 5. ?
 
 ## Next version `5.7.0`
 
 1. Allow 3D Police Boxes to land on slabs [#777](https://github.com/eccentricdevotion/TARDIS/issues/777)
-2. Animated models for player disguises
+2. Animated models for TWA player disguises
 3. Rework difficulty [#754](https://github.com/eccentricdevotion/TARDIS/issues/754)
 4. ?
 
