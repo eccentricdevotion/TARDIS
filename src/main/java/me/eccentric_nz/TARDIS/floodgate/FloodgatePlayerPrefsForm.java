@@ -61,7 +61,7 @@ public class FloodgatePlayerPrefsForm {
                 .dropdown("Flight Mode", flightmodes)
                 .dropdown("Interior Hum Sound", hums)
                 .dropdown("Autonomus Mode", automodes)
-                .validResultHandler(response -> handleResponse(response))
+                .validResultHandler(this::handleResponse)
                 .build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
         player.sendForm(form);

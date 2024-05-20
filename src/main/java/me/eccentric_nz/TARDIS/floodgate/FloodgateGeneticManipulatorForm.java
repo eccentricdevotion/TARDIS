@@ -46,7 +46,7 @@ public class FloodgateGeneticManipulatorForm {
             builder.button(m.toString().replace("_SPAWN_EGG", ""), FormImage.Type.URL, String.format(path, m.toString().toLowerCase(Locale.ROOT)));
         }
         builder.button("Master's Reverse Polarity");
-        builder.validResultHandler(response -> handleResponse(response));
+        builder.validResultHandler(this::handleResponse);
         builder.closedOrInvalidResultHandler(response -> handleClose());
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);

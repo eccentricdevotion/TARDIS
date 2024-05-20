@@ -21,7 +21,6 @@ import java.util.UUID;
 
 public class TelepathicBiomeListener extends TARDISMenuListener {
 
-    private final TARDIS plugin;
     private final HashMap<UUID, Integer> scroll = new HashMap<>();
     private final List<UUID> scrolling = new ArrayList<>();
     private final ItemStack[][] biomes;
@@ -29,7 +28,6 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
 
     public TelepathicBiomeListener(TARDIS plugin) {
         super(plugin);
-        this.plugin = plugin;
         rows = EnvironmentBiomes.OVERWORLD.size() / 8 + 1;
         biomes = getBiomes();
     }

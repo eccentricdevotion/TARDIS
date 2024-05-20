@@ -46,7 +46,8 @@ public class FloodgateChameleonCircuitForm {
                 .button("Shorted out", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/chameleon/shorted_button.png")
                 .button("Construct", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/chameleon/construct_button.png")
                 .button("Lock", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/chameleon/lock_button.png")
-                .validResultHandler(response -> handleResponse(response)).build();
+                .validResultHandler(this::handleResponse)
+                .build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
         player.sendForm(form);
     }

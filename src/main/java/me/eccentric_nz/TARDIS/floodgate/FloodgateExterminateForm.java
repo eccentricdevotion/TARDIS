@@ -1,12 +1,13 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
 import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
+
+import java.util.UUID;
 
 public class FloodgateExterminateForm {
 
@@ -23,7 +24,7 @@ public class FloodgateExterminateForm {
         builder.title("Delete TARDIS");
         builder.content(plugin.getLanguage().getString("EXTERMINATE_CONFIRM"));
         builder.button("Exterminate");
-        builder.validResultHandler(response -> handleResponse(response));
+        builder.validResultHandler(this::handleResponse);
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
         player.sendForm(form);

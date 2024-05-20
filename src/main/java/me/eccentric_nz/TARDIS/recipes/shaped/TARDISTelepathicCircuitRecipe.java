@@ -11,7 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionType;
 
-import java.util.List;
+import java.util.Arrays;
 
 /*
 easy_shape:-S-,SES,-S-
@@ -35,11 +35,11 @@ public class TARDISTelepathicCircuitRecipe {
     }
 
     public void addRecipe() {
-        ItemStack is = new ItemStack(Material.DAYLIGHT_DETECTOR, 1);
+        ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Telepathic Circuit");
-        im.setCustomModelData(10000001);
-        im.setLore(List.of("Allow companions to", "use TARDIS commands"));
+        im.setCustomModelData(10001962);
+        im.setLore(Arrays.asList("Allow companions to", "use TARDIS commands", "and search for", "travel destinations."));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_telepathic_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

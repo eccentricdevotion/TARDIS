@@ -33,8 +33,7 @@ import java.util.HashMap;
 /**
  * Command /tardistravel [arguments].
  * <p>
- * Time travel is the process of travelling through time, even in a non-linear
- * direction.
+ * Time travel is the process of travelling through time, even in a non-linear direction.
  *
  * @author eccentric_nz
  */
@@ -130,8 +129,8 @@ public class TARDISTravelCommands implements CommandExecutor {
                         case "cave" -> {
                             return new TARDISTravelCave(plugin).action(player, id);
                         }
-                        case "village", "structure" -> {
-                            return new TARDISTravelStructure(plugin).action(player, args, id);
+                        case "village", "structure", "biome" -> {
+                            return new TARDISTravelGUI(plugin).open(player,id, args[0].toLowerCase());
                         }
                         default -> {
                             return new TARDISTravelPlayer(plugin).action(player, args[0], id);
@@ -147,7 +146,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                 if (args.length == 2 && (args[1].equals("?") || args[1].equalsIgnoreCase("tpa"))) {
                     return new TARDISTravelAsk(plugin).action(player, args);
                 }
-                if (args[0].equalsIgnoreCase("biome")) {
+                if (args.length == 2 && args[0].equalsIgnoreCase("biome")) {
                     // we're thinking this is a biome search
                     return new TARDISTravelBiome(plugin).action(player, args, id);
                 }

@@ -51,6 +51,7 @@ public class TARDISCircuitRepairListener implements Listener {
         circuits.put(10001980, "randomiser");
         circuits.put(10001977, "scanner");
         circuits.put(10001974, "temporal");
+        circuits.put(10001962, "telepathic");
     }
 
     @EventHandler(ignoreCancelled = true)

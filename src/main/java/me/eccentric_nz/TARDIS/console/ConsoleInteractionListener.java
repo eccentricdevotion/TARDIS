@@ -51,7 +51,7 @@ public class ConsoleInteractionListener implements Listener {
                                 new RandomiserInteraction(plugin).generateDestination(id, player, interaction);
                         case WAYPOINT_SELECTOR -> new WayPointInteraction(plugin).openSaveGUI(id, player, interaction);
                         case FAST_RETURN -> new FastReturnInteraction(plugin).setBack(id, player, interaction);
-                        case TELEPATHIC_CIRCUIT -> new TelepathicCircuitInteraction(plugin).openGUI(player);
+                        case TELEPATHIC_CIRCUIT -> new TelepathicCircuitInteraction(plugin).process(player);
                         // section three
                         case SONIC_DOCK -> new SonicDockInteraction(plugin).process(player, interaction, id);
                         case DIRECTION -> new DirectionInteraction(plugin).rotate(id, player, interaction);

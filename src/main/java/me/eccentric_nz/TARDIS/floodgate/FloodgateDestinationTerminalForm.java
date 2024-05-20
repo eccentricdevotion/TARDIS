@@ -51,7 +51,7 @@ public class FloodgateDestinationTerminalForm {
                 .dropdown("World", worlds)
                 .toggle("Submarine", false)
                 .toggle("Just check calculated destination", false)
-                .validResultHandler(response -> handleResponse(response))
+                .validResultHandler(this::handleResponse)
                 .build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
         player.sendForm(form);

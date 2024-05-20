@@ -48,6 +48,7 @@ public enum GlowstoneCircuit {
     SCANNER("TARDIS Scanner Circuit", 10001977),
     SONIC("Sonic Oscillator", 10001967),
     STATTENHEIM("TARDIS Stattenheim Circuit", 10001963),
+    TELEPATHIC("TARDIS Telepathic Circuit", 10001962),
     TEMPORAL("TARDIS Temporal Circuit", 10001974);
 
     private static final HashMap<String, GlowstoneCircuit> BY_NAME = new HashMap<>();

@@ -33,7 +33,7 @@ public class FloodgateTemporalForm {
         for (GUITemporalLocator clock : GUITemporalLocator.values()) {
             builder.button(clock.getName()+" ~"+clock.getLore(), FormImage.Type.PATH, "textures/items/clock_item.png");
         }
-        builder.validResultHandler(response -> handleResponse(response));
+        builder.validResultHandler(this::handleResponse);
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
         player.sendForm(form);

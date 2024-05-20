@@ -32,7 +32,7 @@ public class FloodgateIndexEntryForm {
         for (String key : TARDISInfoMenu.getChildren(tardisInfoMenu.toString()).keySet()) {
             builder.button(key, FormImage.Type.PATH, "textures/items/book.png");
         }
-        builder.validResultHandler(response -> handleResponse(response));
+        builder.validResultHandler(this::handleResponse);
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
         player.sendForm(form);

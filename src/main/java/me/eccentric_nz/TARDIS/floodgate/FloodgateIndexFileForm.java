@@ -27,7 +27,7 @@ public class FloodgateIndexFileForm {
         for (TISCategory category : TISCategory.values()) {
             builder.button(category.getName(), FormImage.Type.PATH, "textures/items/bookshelf.png");
         }
-        builder.validResultHandler(response -> handleResponse(response));
+        builder.validResultHandler(this::handleResponse);
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
         player.sendForm(form);

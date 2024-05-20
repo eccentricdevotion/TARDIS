@@ -49,11 +49,11 @@ public class FloodgateSavesForm {
         builder.button("Home", FormImage.Type.PATH, "textures/blocks/beehive_front.png");
         if (rsd.resultSet()) {
             for (HashMap<String, String> map : rsd.getData()) {
-                builder.button(map.get("dest_name") + " ~ " + map.get("dest_id"), FormImage.Type.URL, String.format(path, FloodgateColouredBlocks.IMAGES.get(i)));
+                builder.button(map.get("dest_name") + " ~ " + map.get("dest_id"), FormImage.Type.PATH, String.format(path, FloodgateColouredBlocks.IMAGES.get(i)));
                 i++;
             }
         }
-        builder.validResultHandler(response -> handleResponse(response));
+        builder.validResultHandler(this::handleResponse);
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
         player.sendForm(form);
