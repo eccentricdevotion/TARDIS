@@ -6,7 +6,6 @@ import me.eccentric_nz.TARDIS.console.models.ButtonModel;
 import me.eccentric_nz.TARDIS.control.actions.FastReturnAction;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
@@ -32,7 +31,7 @@ public class FastReturnInteraction {
             return;
         }
         TARDISCircuitChecker tcc = null;
-        if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
+        if (plugin.getConfig().getBoolean("difficulty.circuits")) {
             tcc = new TARDISCircuitChecker(plugin, id);
             tcc.getCircuits();
         }

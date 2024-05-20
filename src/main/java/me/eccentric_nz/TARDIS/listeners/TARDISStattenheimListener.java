@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
@@ -148,14 +149,17 @@ public class TARDISStattenheimListener implements Listener {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                             return;
                         }
-                        TARDISCircuitChecker tcc = null;
-                        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
-                            tcc = new TARDISCircuitChecker(plugin, id);
+                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                             tcc.getCircuits();
-                        }
-                        if (tcc != null && !tcc.hasMaterialisation()) {
+                        if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true) && !tcc.hasMaterialisation()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
                             return;
+                        }
+                        // damage circuit if configured
+                        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+                            // decrement uses
+                            int uses_left = tcc.getMaterialisationUses();
+                            new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
                         }
                         boolean hidden = tardis.isHidden();
                         int level = tardis.getArtronLevel();

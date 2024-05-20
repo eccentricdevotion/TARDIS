@@ -16,11 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
@@ -29,6 +24,12 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -53,13 +54,13 @@ public class TARDISCircuitDamager {
         if (uses_left == 0) {
             uses_left = plugin.getConfig().getInt("circuits.uses." + circuit.toString().toLowerCase(Locale.ENGLISH));
         }
-        if ((uses_left - 1) <= 0) {
+        int decremented = uses_left - 1;
+        if (decremented <= 0) {
             // destroy
             setCircuitDamage(circuit.getName(), 0, true);
             plugin.getMessenger().send(p, TardisModule.TARDIS, "CIRCUIT_VAPOUR", circuit.getName());
         } else {
             // decrement
-            int decremented = uses_left - 1;
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 setCircuitDamage(circuit.getName(), decremented, false);
                 plugin.getMessenger().send(p, TardisModule.TARDIS, "CIRCUIT_USES", circuit.getName(), String.format("%d", decremented));

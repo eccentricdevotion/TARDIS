@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -41,7 +41,7 @@ public class ArtronStorageCellRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "artron_storage_cell");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" B ", "LRL", " L ");
             r.setIngredient('B', Material.BUCKET);
             r.setIngredient('R', Material.REDSTONE_BLOCK);

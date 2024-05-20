@@ -13,7 +13,10 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.*;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.flight.TARDISExteriorFlight;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.rotors.Rotor;
@@ -45,12 +48,9 @@ public class HandbrakeInteraction {
         }
         UUID uuid = player.getUniqueId();
         Location handbrake = interaction.getLocation();
-        TARDISCircuitChecker tcc = null;
-        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, state == 0)) {
-            tcc = new TARDISCircuitChecker(plugin, id);
-            tcc.getCircuits();
-        }
-        if (tcc != null && !tcc.hasMaterialisation()) {
+        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+        tcc.getCircuits();
+        if (plugin.getConfig().getBoolean("difficulty.circuits") && !tcc.hasMaterialisation() && !plugin.getUtils().inGracePeriod(player, state == 0)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
             return;
         }
@@ -231,7 +231,7 @@ public class HandbrakeInteraction {
                             plugin.getTrackerKeeper().getHasRandomised().removeAll(Collections.singleton(id));
                         }
                         // damage the circuit if configured
-                        if (tcc != null && plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+                        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
                             // decrement uses
                             int uses_left = tcc.getMaterialisationUses();
                             new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();

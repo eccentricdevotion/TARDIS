@@ -29,7 +29,10 @@ import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * The Administrator of Solos is the Earth Empire's civilian overseer for that planet.
@@ -102,7 +105,6 @@ public class TARDISPrefsMenuInventory {
         values.add(rsp.isAutoPowerUp());
         values.add(plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid));
         values.add(rsp.isMinecartOn());
-        values.add(rsp.isEasyDifficulty());
         if (plugin.isWorldGuardOnServer()) {
             String chunk = rst.getTardis().getChunk();
             String[] split = chunk.split(":");

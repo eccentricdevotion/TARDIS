@@ -23,7 +23,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Alpha Centauran Table Tennis Club is a club established by the Alpha Centaurans for the play of table tennis. The
@@ -61,7 +64,6 @@ public class TARDISConfiguration {
         booleanOptions.put("allow.invisibility", true);
         booleanOptions.put("allow.mob_farming", true);
         booleanOptions.put("allow.perception_filter", true);
-        booleanOptions.put("allow.player_difficulty", true);
         booleanOptions.put("allow.power_down", true);
         booleanOptions.put("allow.power_down_on_quit", false);
         booleanOptions.put("allow.repair", true);
@@ -107,6 +109,12 @@ public class TARDISConfiguration {
         booleanOptions.put("creation.seed_block.legacy", true);
         booleanOptions.put("debug", false);
         booleanOptions.put("desktop.check_blocks_before_upgrade", false);
+        booleanOptions.put("difficulty.circuits", false);
+        booleanOptions.put("difficulty.disks", false);
+        booleanOptions.put("difficulty.disk_in_hand_for_write", true);
+        booleanOptions.put("difficulty.biome_reader", true);
+        booleanOptions.put("difficulty.stattenheim_remote", false);
+        booleanOptions.put("difficulty.tardis_locator", false);
         booleanOptions.put("growth.return_room_seed", true);
         booleanOptions.put("growth.rooms_require_blocks", false);
         booleanOptions.put("junk.enabled", true);
@@ -170,6 +178,7 @@ public class TARDISConfiguration {
         integerOptions.put("circuits.uses.memory", 20);
         integerOptions.put("circuits.uses.randomiser", 50);
         integerOptions.put("circuits.uses.scanner", 20);
+        integerOptions.put("circuits.uses.telepathic", 20);
         integerOptions.put("circuits.uses.temporal", 20);
         integerOptions.put("creation.border_radius", 256);
         integerOptions.put("creation.count", 0);
@@ -220,6 +229,7 @@ public class TARDISConfiguration {
         stringOptions.put("creation.seed_block.easy", "REDSTONE_TORCH");
         stringOptions.put("creation.seed_block.normal", "SOUL_LANTERN");
         stringOptions.put("creation.seed_block.hard", "DRAGON_BREATH");
+        stringOptions.put("difficulty.crafting", "easy");
         stringOptions.put("display.all", "&6X&7%X% &6Y&7%Y% &6Z&7%Z% &6F&7%FACING% (%FACING_XZ%) %TARGET_BLOCK%");
         stringOptions.put("police_box.default_preset", "FACTORY");
         stringOptions.put("police_box.sign_colour", "WHITE");
@@ -341,6 +351,38 @@ public class TARDISConfiguration {
             plugin.getConfig().set("storage.mysql.port", port);
             plugin.getConfig().set("storage.mysql.database", database);
             plugin.getConfig().set("storage.mysql.url", null);
+            i++;
+        }
+        // transfer / remove difficulty settings
+        if (config.contains("preferences.difficulty")) {
+            switch (config.getString("preferences.difficulty", "easy").toLowerCase()) {
+                case "medium" -> {
+                    plugin.getConfig().set("difficulty.crafting", "easy");
+                    plugin.getConfig().set("difficulty.circuits", false);
+                    plugin.getConfig().set("difficulty.disks", false);
+                    plugin.getConfig().set("difficulty.biome_reader", true);
+                    plugin.getConfig().set("difficulty.stattenheim_remote", true);
+                    plugin.getConfig().set("difficulty.tardis_locator", true);
+                }
+                case "hard" -> {
+                    plugin.getConfig().set("difficulty.crafting", "hard");
+                    plugin.getConfig().set("difficulty.circuits", true);
+                    plugin.getConfig().set("difficulty.disks", true);
+                    plugin.getConfig().set("difficulty.biome_reader", false);
+                    plugin.getConfig().set("difficulty.stattenheim_remote", true);
+                    plugin.getConfig().set("difficulty.tardis_locator", true);
+                }
+                default -> {
+                    plugin.getConfig().set("difficulty.crafting", "easy");
+                    plugin.getConfig().set("difficulty.circuits", false);
+                    plugin.getConfig().set("difficulty.disks", false);
+                    plugin.getConfig().set("difficulty.biome_reader", true);
+                    plugin.getConfig().set("difficulty.stattenheim_remote", false);
+                    plugin.getConfig().set("difficulty.tardis_locator", false);
+                }
+            }
+            plugin.getConfig().set("difficulty.disk_in_hand_for_write", true);
+            plugin.getConfig().set("preferences.difficulty", null);
             i++;
         }
         // check / transfer dynmap settings

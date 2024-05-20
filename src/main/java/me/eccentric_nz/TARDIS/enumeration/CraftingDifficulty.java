@@ -19,9 +19,8 @@ package me.eccentric_nz.TARDIS.enumeration;
 /**
  * @author eccentric_nz
  */
-public enum Difficulty {
+public enum CraftingDifficulty {
 
     EASY,
-    MEDIUM,
     HARD
 }

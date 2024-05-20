@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -35,14 +35,14 @@ public class PickupArrowsCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "pickup_arrows_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" S ", "SRS", " S ");
             r.setIngredient('S', Material.SPECTRAL_ARROW);
-            r.setIngredient('R', Material.REDSTONE_BLOCK);            
+            r.setIngredient('R', Material.REDSTONE_BLOCK);
         } else {
             r.shape(" A ", "ARA", " A ");
             r.setIngredient('A', Material.ARROW);
-            r.setIngredient('R', Material.REDSTONE);            
+            r.setIngredient('R', Material.REDSTONE);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Pickup Arrows Circuit", r);

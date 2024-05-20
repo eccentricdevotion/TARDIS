@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
@@ -64,7 +63,7 @@ class TARDISSetDestinationCommand {
             } else {
                 int id = rs.getTardis_id();
                 TARDISCircuitChecker tcc = null;
-                if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
+                if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true)) {
                     tcc = new TARDISCircuitChecker(plugin, id);
                     tcc.getCircuits();
                 }

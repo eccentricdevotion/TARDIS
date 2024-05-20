@@ -18,11 +18,11 @@ package me.eccentric_nz.TARDIS.commands.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -55,9 +55,18 @@ public class TARDISTravelBiome {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_PERM_BIOME");
             return true;
         }
+        // check for telepathic circuit
+        if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true)) {
+            TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+            tcc.getCircuits();
+            if (!tcc.hasTelepathic()) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TELEPATHIC_CIRCUIT");
+                return true;
+            }
+        }
         String upper = args[1].toUpperCase(Locale.ENGLISH);
-        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false) && !upper.equals("LIST")) {
-            if (plugin.getDifficulty().equals(Difficulty.MEDIUM)) {
+        if (plugin.getConfig().getBoolean("difficulty.disks") && !plugin.getUtils().inGracePeriod(player, false) && !upper.equals("LIST")) {
+            if (plugin.getConfig().getBoolean("difficulty.biome_reader")) {
                 // check they have a biome disk in storage
                 boolean hasBiomeDisk = false;
                 UUID uuid = player.getUniqueId();
@@ -76,7 +85,7 @@ public class TARDISTravelBiome {
                             }
                         }
                     } catch (IOException ex) {
-                        plugin.debug("Could not serialize inventory!");
+                        plugin.debug("Could not deserialize inventory!");
                     }
                 }
                 if (!hasBiomeDisk) {

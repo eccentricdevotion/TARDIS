@@ -465,7 +465,7 @@ public class TARDISHandlesProcessor {
                                         if (goto_loc != null) {
                                             plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(travel, travelType));
                                             plugin.getTrackerKeeper().getRescue().remove(id);
-                                            if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.memory") > 0 && !plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
+                                            if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.memory") > 0 && !plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
                                                 plugin.getTrackerKeeper().getHasNotClickedHandbrake().add(id);
                                                 TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                                                 tcc.getCircuits();

@@ -26,7 +26,10 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.*;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
@@ -63,7 +66,7 @@ class TARDISComehereCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                 return true;
             }
-            if (plugin.getDifficulty().equals(Difficulty.EASY) || plugin.getUtils().inGracePeriod(player, true)) {
+            if (!plugin.getConfig().getBoolean("difficulty.stattenheim_remote") || plugin.getUtils().inGracePeriod(player, true)) {
                 Tardis tardis = rs.getTardis();
                 int id = tardis.getTardisId();
                 if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {

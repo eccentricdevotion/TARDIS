@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -56,7 +56,7 @@ public class TARDISInvisibilityCircuitRecipe {
         PotionMeta pm = (PotionMeta) potion.getItemMeta();
         pm.setBasePotionType(PotionType.INVISIBILITY);
         potion.setItemMeta(pm);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" D ", "P E", " W ");
             r.setIngredient('D', Material.DIAMOND);
             r.setIngredient('P', new RecipeChoice.ExactChoice(exact));

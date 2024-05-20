@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -26,9 +23,13 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+
 /**
- * The synchronic feedback circuit, along with the multi-loop stabiliser, was an
- * essential component for a smooth rematerialisation of a TARDIS.
+ * The synchronic feedback circuit, along with the multi-loop stabiliser, was an essential component for a smooth
+ * rematerialisation of a TARDIS.
  *
  * @author eccentric_nz
  */
@@ -44,6 +45,7 @@ public class TARDISCircuitChecker {
     private boolean memory;
     private boolean randomiser;
     private boolean scanner;
+    private boolean telepathic;
     private boolean temporal;
     private int arsUses;
     private int chameleonUses;
@@ -54,6 +56,7 @@ public class TARDISCircuitChecker {
     private int randomiserUses;
     private int scannerUses;
     private int temporalUses;
+    private int telepathicUses;
 
     public TARDISCircuitChecker(TARDIS plugin, int id) {
         this.plugin = plugin;
@@ -66,6 +69,7 @@ public class TARDISCircuitChecker {
         memory = false;
         randomiser = false;
         scanner = false;
+        telepathic = false;
         temporal = false;
         arsUses = 0;
         chameleonUses = 0;
@@ -75,12 +79,12 @@ public class TARDISCircuitChecker {
         memoryUses = 0;
         randomiserUses = 0;
         scannerUses = 0;
+        telepathicUses = 0;
         temporalUses = 0;
     }
 
     /**
-     * Checks the TARDIS's Advanced Console inventory to see which circuits are
-     * installed.
+     * Checks the TARDIS's Advanced Console inventory to see which circuits are installed.
      */
     public void getCircuits() {
         HashMap<String, Object> where = new HashMap<>();
@@ -127,6 +131,10 @@ public class TARDISCircuitChecker {
                                 scanner = true;
                                 scannerUses = getUses(im);
                             }
+                            if (dn.equals("TARDIS Telepathic Circuit")) {
+                                temporal = true;
+                                temporalUses = getUses(im);
+                            }
                             if (dn.equals("TARDIS Temporal Circuit")) {
                                 temporal = true;
                                 temporalUses = getUses(im);
@@ -172,6 +180,10 @@ public class TARDISCircuitChecker {
         return scanner;
     }
 
+    public boolean hasTelepathic() {
+        return telepathic;
+    }
+
     public boolean hasTemporal() {
         return temporal;
     }
@@ -206,6 +218,10 @@ public class TARDISCircuitChecker {
 
     public int getScannerUses() {
         return scannerUses;
+    }
+
+    public int getTelepathicUses() {
+        return telepathicUses;
     }
 
     public int getTemporalUses() {

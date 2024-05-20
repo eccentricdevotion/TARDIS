@@ -16,13 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayType;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.worldgen.TARDISChunkGenerator;
@@ -37,6 +33,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Various utility methods.
@@ -180,19 +179,7 @@ public class TARDISUtils {
                         set.put("grace", (grace_count + 1));
                         plugin.getQueryFactory().doUpdate("t_count", set, where);
                     }
-                } else if (plugin.getConfig().getBoolean("allow.player_difficulty") && TARDISPermission.hasPermission(p, "tardis.difficulty")) {
-                    // check player difficulty preference
-                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
-                    if (rsp.resultSet()) {
-                        inGracePeriod = rsp.isEasyDifficulty();
-                    }
                 }
-            }
-        } else if (plugin.getConfig().getBoolean("allow.player_difficulty") && TARDISPermission.hasPermission(p, "tardis.difficulty")) {
-            // check player difficulty preference
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
-            if (rsp.resultSet()) {
-                inGracePeriod = rsp.isEasyDifficulty();
             }
         }
         return inGracePeriod;

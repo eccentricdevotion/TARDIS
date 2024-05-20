@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -39,7 +39,7 @@ public class TARDISLocatorRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_locator");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("OIO", "ICI", "OIO");
             r.setIngredient('O', Material.OBSIDIAN);
             r.setIngredient('I', Material.IRON_INGOT);

@@ -134,7 +134,7 @@ public class TARDISCraftListener implements Listener {
                         im.setLore(lore);
                         is.setItemMeta(im);
                         ci.setResult(is);
-                    } else if (is.getType().equals(Material.GLOWSTONE_DUST)) {
+                    } else if (is.getType().equals(Material.GLOWSTONE_DUST) || is.getType().equals(Material.DAYLIGHT_DETECTOR)) {
                         if (DiskCircuit.getCircuitNames().contains(dn)) {
                             // which circuit is it?
                             String[] split = dn.split(" ");

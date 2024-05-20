@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -37,16 +37,16 @@ public class BrushCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "brush_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" K ", "RSR", " R ");
             r.setIngredient('K', Material.BRUSH);
             r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('S', Material.COPPER_BLOCK);            
+            r.setIngredient('S', Material.COPPER_BLOCK);
         } else {
             r.shape(" K ", "RSR", " R ");
             r.setIngredient('K', Material.FEATHER);
             r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('S', Material.COPPER_INGOT);            
+            r.setIngredient('S', Material.COPPER_INGOT);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Brush Circuit", r);

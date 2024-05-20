@@ -100,7 +100,7 @@ public class TARDISConsoleCloseListener implements Listener {
         Inventory inv = event.getInventory();
         // remember what was placed in the console
         saveCurrentConsole(inv, p.getUniqueId().toString());
-        if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
+        if (plugin.getConfig().getBoolean("difficulty.circuits")) {
             // check circuits
             TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
             tcc.getCircuits();
@@ -331,7 +331,7 @@ public class TARDISConsoleCloseListener implements Listener {
                             new TARDISLand(plugin, id, p).exitVortex();
                             plugin.getPM().callEvent(new TARDISTravelEvent(p, null, TravelType.SAVE, id));
                         }
-                        if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.memory") > 0 && !plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
+                        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.memory") > 0 && !plugin.getTrackerKeeper().getHasNotClickedHandbrake().contains(id)) {
                             plugin.getTrackerKeeper().getHasNotClickedHandbrake().add(id);
                             TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                             tcc.getCircuits();
@@ -368,7 +368,7 @@ public class TARDISConsoleCloseListener implements Listener {
                         new TARDISLand(plugin, id, p).exitVortex();
                         plugin.getPM().callEvent(new TARDISTravelEvent(p, null, TravelType.RANDOM, id));
                     }
-                    if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.randomiser") > 0) {
+                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.randomiser") > 0) {
                         TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                         tcc.getCircuits();
                         // decrement uses

@@ -16,20 +16,20 @@
  */
 package me.eccentric_nz.TARDIS.commands.travel;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  *
@@ -55,7 +55,7 @@ public class TARDISTravelArea {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_AREA_PERM", args[1]);
             return true;
         }
-        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
+        if (plugin.getConfig().getBoolean("difficulty.disks") && !plugin.getUtils().inGracePeriod(player, false)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ADV_AREA");
             return true;
         }

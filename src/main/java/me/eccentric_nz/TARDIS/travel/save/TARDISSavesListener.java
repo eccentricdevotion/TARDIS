@@ -17,13 +17,12 @@
 package me.eccentric_nz.TARDIS.travel.save;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Flag;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.enumeration.TravelType;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -201,6 +200,14 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                     }
                                 }
                                 if (!save_dest.equals(current) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(occupiedTardisId)) {
+                                    // damage circuit if configured
+                                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+                                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, occupiedTardisId);
+                                        tcc.getCircuits();
+                                        // decrement uses
+                                        int uses_left = tcc.getMemoryUses();
+                                        new TARDISCircuitDamager(plugin, DiskCircuit.MEMORY, uses_left, occupiedTardisId, player).damage();
+                                    }
                                     HashMap<String, Object> set = new HashMap<>();
                                     set.put("world", lore.get(0));
                                     set.put("x", TARDISNumberParsers.parseInt(lore.get(1)));

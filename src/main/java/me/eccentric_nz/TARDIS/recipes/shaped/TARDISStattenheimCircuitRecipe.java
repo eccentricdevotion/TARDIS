@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
@@ -62,7 +62,7 @@ public class TARDISStattenheimCircuitRecipe {
         lim.setDisplayName("TARDIS Locator Circuit");
         lim.setCustomModelData(RecipeItem.TARDIS_LOCATOR_CIRCUIT.getCustomModelData());
         locator.setItemMeta(lim);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("   ", "LRM", "QQQ");
             r.setIngredient('L', new RecipeChoice.ExactChoice(locator));
             r.setIngredient('R', Material.REDSTONE);

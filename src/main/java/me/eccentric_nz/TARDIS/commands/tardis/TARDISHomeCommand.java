@@ -23,7 +23,10 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.*;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -101,7 +104,7 @@ class TARDISHomeCommand {
                     return true;
                 }
                 TARDISCircuitChecker tcc = null;
-                if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
+                if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, false)) {
                     tcc = new TARDISCircuitChecker(plugin, id);
                     tcc.getCircuits();
                 }

@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -37,16 +37,16 @@ public class EmeraldEnvironmentCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "emerald_environment_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" S ", "LEL", " S ");
             r.setIngredient('E', Material.EMERALD);
             r.setIngredient('L', Material.OAK_LEAVES);
-            r.setIngredient('S', Material.STONE);            
+            r.setIngredient('S', Material.STONE);
         } else {
             r.shape(" D ", "LEL", " D ");
             r.setIngredient('E', Material.EMERALD);
             r.setIngredient('D', Material.DIRT);
-            r.setIngredient('L', Material.OAK_LEAVES);            
+            r.setIngredient('L', Material.OAK_LEAVES);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Emerald Environment Circuit", r);

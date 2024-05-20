@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -43,7 +43,7 @@ public class TARDISTelepathicCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_telepathic_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" S ", "SPS", "ESE");
             r.setIngredient('S', Material.SLIME_BALL);
             ItemStack potion = new ItemStack(Material.POTION, 1);

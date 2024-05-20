@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISZeroRoomBuilder;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISRoomLister;
@@ -85,7 +84,7 @@ class TARDISRoomCommand {
         }
         int id = tardis.getTardisId();
         TARDISCircuitChecker tcc = null;
-        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
+        if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true)) {
             tcc = new TARDISCircuitChecker(plugin, id);
             tcc.getCircuits();
         }

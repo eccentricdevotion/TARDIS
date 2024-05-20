@@ -52,7 +52,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
             "announce_repeaters", "auto", "auto_powerup", "auto_rescue", "auto_siege",
             "beacon", "build",
             "close_gui", "console_labels",
-            "difficulty", "dnd", "dynamic_lamps",
+            "dnd", "dynamic_lamps",
             "eps", "eps_message",
             "farm", "flight", "floor", "forcefield",
             "hads", "hads_type", "hum",
@@ -130,9 +130,6 @@ public class TARDISPrefsCommands implements CommandExecutor {
                 switch (pref) {
                     case "console_labels" -> {
                         return new TARDISLabelsCommand(plugin).toggle(player, args);
-                    }
-                    case "difficulty" -> {
-                        return new TARDISSetDifficultyCommand(plugin).setDiff(player, args);
                     }
                     case "eps_message" -> {
                         return new TARDISEPSMessageCommand(plugin).setMessage(player, args);

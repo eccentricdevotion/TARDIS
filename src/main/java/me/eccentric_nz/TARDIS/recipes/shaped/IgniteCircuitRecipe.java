@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -36,15 +36,15 @@ public class IgniteCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "ignite_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("LN ", "NFN", " NL");
             r.setIngredient('N', Material.NETHERRACK);
             r.setIngredient('F', Material.FLINT_AND_STEEL);
-            r.setIngredient('L', Material.LAVA_BUCKET);            
+            r.setIngredient('L', Material.LAVA_BUCKET);
         } else {
             r.shape(" N ", "NFN", " N ");
             r.setIngredient('N', Material.NETHERRACK);
-            r.setIngredient('F', Material.FLINT_AND_STEEL);            
+            r.setIngredient('F', Material.FLINT_AND_STEEL);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Ignite Circuit", r);

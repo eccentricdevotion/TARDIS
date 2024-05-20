@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISAcceptor;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.ComehereAction;
@@ -275,8 +274,8 @@ public class TARDISCommands implements CommandExecutor {
                     if (itemStack.getType().equals(Material.MUSIC_DISC_FAR)) {
                         return new TARDISDiskWriterCommand(plugin).writeSaveToControlDisk(player, args);
                     } else {
-                        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
-                            if (plugin.getDifficulty().equals(Difficulty.HARD) && heldDiskIsWrong(itemStack, "Save Storage Disk")) {
+                        if (plugin.getConfig().getBoolean("difficulty.disks") && !plugin.getUtils().inGracePeriod(player, true)) {
+                            if (plugin.getConfig().getBoolean("difficulty.disk_in_hand_for_write") && heldDiskIsWrong(itemStack, "Save Storage Disk")) {
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_HAND_SAVE");
                                 return true;
                             }

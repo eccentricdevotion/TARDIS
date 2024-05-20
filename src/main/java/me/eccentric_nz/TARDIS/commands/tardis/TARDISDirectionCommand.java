@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -80,14 +81,17 @@ public class TARDISDirectionCommand {
                 return true;
             }
             int id = tardis.getTardisId();
-            TARDISCircuitChecker tcc = null;
-            if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
-                tcc = new TARDISCircuitChecker(plugin, id);
-                tcc.getCircuits();
-            }
-            if (tcc != null && !tcc.hasMaterialisation()) {
+            TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+            tcc.getCircuits();
+            if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true) && !tcc.hasMaterialisation()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
                 return true;
+            }
+            // damage circuit if configured
+            if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+                // decrement uses
+                int uses_left = tcc.getMaterialisationUses();
+                new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
             }
             int level = tardis.getArtronLevel();
             int amount = plugin.getArtronConfig().getInt("random");

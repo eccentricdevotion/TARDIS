@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -24,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Control;
+import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import net.md_5.bungee.api.ChatColor;
@@ -158,6 +161,14 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener {
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", set, wheret);
+            // damage the circuit if configured
+            if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
+                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                tcc.getCircuits();
+                // decrement uses
+                int uses_left = tcc.getChameleonUses();
+                new TARDISCircuitDamager(plugin, DiskCircuit.CHAMELEON, uses_left, id, player).damage();
+            }
         }
     }
 

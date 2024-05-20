@@ -87,6 +87,17 @@ travel:
     x: 5000
     z: 5000
   no_destination_malfunctions: true
+# difficulty preferences
+# https://tardis.pages.dev/configuration/difficulty
+difficulty:
+  crafting: easy
+  circuits: false
+  save_requires_circuit: false
+  disks: false
+  disk_in_hand_for_write: true
+  biome_reader: true
+  stattenheim_remote: false
+  tardis_locator: false
 # general preferences
 # https://tardis.pages.dev/configuration/prefs
 preferences:
@@ -106,7 +117,6 @@ preferences:
   respect_grief_prevention: true
   respect_red_protect: true
   sfx_volume: 10
-  difficulty: easy
   strike_lightning: true
   hads_damage: 10
   hads_distance: 10
@@ -152,6 +162,7 @@ circuits:
     memory: 20
     randomiser: 50
     scanner: 20
+    telepathic: 20
     temporal: 20
 # restrictions
 # https://tardis.pages.dev/configuration/allow
@@ -173,7 +184,6 @@ allow:
   external_gravity: false
   power_down: true
   power_down_on_quit: false
-  player_difficulty: true
   3d_doors: false
   village_travel: false
   perception_filter: true

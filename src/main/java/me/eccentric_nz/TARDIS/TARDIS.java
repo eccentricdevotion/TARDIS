@@ -141,9 +141,8 @@ public class TARDIS extends JavaPlugin {
     private final String versionRegex = "(\\d+[.])+\\d+";
     private final Pattern versionPattern = Pattern.compile(versionRegex);
     private final String serverStr = "1.20.6";
-    private TARDISChatGUI jsonKeeper;
+    private TARDISChatGUI<?> jsonKeeper;
     private TARDISUpdateChatGUI updateChatGUI;
-    //    public TARDISFurnaceRecipe fornacis;
     private Calendar afterCal;
     private Calendar beforeCal;
     private ConsoleCommandSender console;
@@ -192,7 +191,7 @@ public class TARDIS extends JavaPlugin {
     private TARDISHelper tardisHelper = null;
     private TARDISMultiverseHelper mvHelper = null;
     private String prefix;
-    private Difficulty difficulty;
+    private CraftingDifficulty craftingDifficulty;
     private WorldManager worldManager;
     private BukkitTask recordingTask;
     private NamespacedKey oldBlockKey;
@@ -423,10 +422,10 @@ public class TARDIS extends JavaPlugin {
             generalKeeper = new TARDISGeneralInstanceKeeper(this);
             generalKeeper.setQuotes(quotes());
             try {
-                difficulty = Difficulty.valueOf(getConfig().getString("preferences.difficulty", "EASY").toUpperCase(Locale.ENGLISH));
+                craftingDifficulty = CraftingDifficulty.valueOf(getConfig().getString("difficulty.crafting", "EASY").toUpperCase(Locale.ENGLISH));
             } catch (IllegalArgumentException e) {
                 debug("Could not determine difficulty setting, using EASY");
-                difficulty = Difficulty.EASY;
+                craftingDifficulty = CraftingDifficulty.EASY;
             }
             // register recipes
             figura = new TARDISShapedRecipe(this);
@@ -1232,17 +1231,17 @@ public class TARDIS extends JavaPlugin {
      *
      * @return the TARDIS Difficulty level
      */
-    public Difficulty getDifficulty() {
-        return difficulty;
+    public CraftingDifficulty getCraftingDifficulty() {
+        return craftingDifficulty;
     }
 
     /**
      * Sets the TARDIS Difficulty level
      *
-     * @param difficulty the {@link Difficulty} level to set
+     * @param craftingDifficulty the {@link CraftingDifficulty} level to set
      */
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
+    public void setDifficulty(CraftingDifficulty craftingDifficulty) {
+        this.craftingDifficulty = craftingDifficulty;
     }
 
     /**

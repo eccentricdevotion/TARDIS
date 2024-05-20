@@ -87,8 +87,6 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
                     partial(lastArg, LANGUAGE_SUBS);
                 case "flight" ->
                     partial(lastArg, FLIGHT_SUBS);
-                case "difficulty" ->
-                    partial(lastArg, DIFF_SUBS);
                 case "hads_type" ->
                     partial(lastArg, HADS_SUBS);
                 case "hum" ->

@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -36,15 +36,15 @@ public class SonicOscillatorRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "sonic_oscillator");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("RQR", "RBR", "RQR");
             r.setIngredient('Q', Material.QUARTZ);
             r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('B', Material.STONE_BUTTON);            
+            r.setIngredient('B', Material.STONE_BUTTON);
         } else {
             r.shape("RQR", "R R", "RQR");
             r.setIngredient('Q', Material.QUARTZ);
-            r.setIngredient('R', Material.REDSTONE);            
+            r.setIngredient('R', Material.REDSTONE);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Sonic Oscillator", r);

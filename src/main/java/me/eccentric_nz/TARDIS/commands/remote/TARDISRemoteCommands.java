@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.remote;
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
@@ -87,7 +88,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                 boolean hidden = tardis.isHidden();
                 boolean handbrake = tardis.isHandbrakeOn();
                 int level = tardis.getArtronLevel();
-                if (sender instanceof Player && !sender.hasPermission("tardis.admin")) {
+                if (sender instanceof Player player && !sender.hasPermission("tardis.admin")) {
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("uuid", ((Player) sender).getUniqueId().toString());
                     ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
@@ -106,14 +107,17 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                         return true;
                     }
                     // must have circuits
-                    TARDISCircuitChecker tcc = null;
-                    if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
-                        tcc = new TARDISCircuitChecker(plugin, id);
-                        tcc.getCircuits();
-                    }
-                    if (tcc != null && !tcc.hasMaterialisation()) {
+                    TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                    tcc.getCircuits();
+                    if (plugin.getConfig().getBoolean("difficulty.circuits") && !tcc.hasMaterialisation()) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
                         return true;
+                    }
+                    // damage circuit if configured
+                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+                        // decrement uses
+                        int uses_left = tcc.getMaterialisationUses();
+                        new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
                     }
                 }
                 // what are we going to do?
@@ -227,7 +231,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                     }
                                     if ((sender instanceof Player && !sender.hasPermission("tardis.admin")) || sender instanceof BlockCommandSender) {
                                         // must use advanced console if difficulty hard
-                                        if (plugin.getDifficulty().equals(Difficulty.HARD)) {
+                                        if (plugin.getConfig().getBoolean("difficulty.disks")) {
                                             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ADV_AREA");
                                             return true;
                                         }

@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -49,7 +49,7 @@ public class RiftManipulatorRecipe {
         aim.setDisplayName("Acid Battery");
         aim.setCustomModelData(RecipeItem.ACID_BATTERY.getCustomModelData());
         acid.setItemMeta(aim);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" A ", "ACA", "NAN");
             r.setIngredient('A', new RecipeChoice.ExactChoice(acid));
             r.setIngredient('C', new RecipeChoice.ExactChoice(rift));

@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -25,7 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
@@ -74,14 +75,17 @@ public class TARDISRebuildCommand {
                 return true;
             }
             int id = tardis.getTardisId();
-            TARDISCircuitChecker tcc = null;
-            if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player.getPlayer(), true)) {
-                tcc = new TARDISCircuitChecker(plugin, id);
-                tcc.getCircuits();
-            }
-            if (tcc != null && !tcc.hasMaterialisation()) {
+            TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+            tcc.getCircuits();
+            if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player.getPlayer(), true) && !tcc.hasMaterialisation()) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NO_MAT_CIRCUIT");
                 return true;
+            }
+            // damage circuit if configured
+            if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+                // decrement uses
+                int uses_left = tcc.getMaterialisationUses();
+                new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player.getPlayer()).damage();
             }
             HashMap<String, Object> wherein = new HashMap<>();
             wherein.put("uuid", uuid.toString());

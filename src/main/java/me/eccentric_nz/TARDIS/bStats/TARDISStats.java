@@ -53,9 +53,9 @@ public class TARDISStats {
         ARSRoomCounts arsRoomCounts = new ARSRoomCounts(plugin);
         metrics.addCustomChart(new Metrics.AdvancedPie("rooms", arsRoomCounts::getRoomCounts));
         metrics.addCustomChart(new Metrics.SimplePie("median_rooms_per_tardis", arsRoomCounts::getMedian));
-        // how many servers/players use hard or easy mode
-        metrics.addCustomChart(new Metrics.SimplePie("server_difficulty", () -> plugin.getConfig().getString("preferences.difficulty", "easy")));
-        metrics.addCustomChart(new Metrics.AdvancedPie("player_difficulty", () -> new PlayerDifficulty(plugin).getModes()));
+        // how many servers use circuits and disks
+        metrics.addCustomChart(new Metrics.SimplePie("difficulty_circuits", () -> plugin.getConfig().getString("difficulty.circuits", "false")));
+        metrics.addCustomChart(new Metrics.SimplePie("difficulty_disks", () -> plugin.getConfig().getString("difficulty.disks", "false")));
         // junk tardis enabled
         metrics.addCustomChart(new Metrics.SimplePie("junk_tardis", () -> plugin.getConfig().getString("junk.enabled", "true")));
     }

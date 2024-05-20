@@ -16,19 +16,22 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
-import java.io.IOException;
-import java.util.*;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
  * @author eccentric_nz
@@ -49,7 +52,8 @@ public class TARDISDiskWriterCommand {
 
     public boolean writeSave(Player player, String[] args) {
         ItemStack is;
-        if (plugin.getDifficulty().equals(Difficulty.MEDIUM)) {
+        boolean makeAndSaveDisk = !plugin.getConfig().getBoolean("difficulty.disk_in_hand_for_write");
+        if (makeAndSaveDisk) {
             is = new ItemStack(Material.MUSIC_DISC_CHIRP, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("Save Storage Disk");
@@ -114,7 +118,7 @@ public class TARDISDiskWriterCommand {
                     lore.add(7, (rsc.isSubmarine()) ? "true" : "false");
                     im.setLore(lore);
                     is.setItemMeta(im);
-                    if (plugin.getDifficulty().equals(Difficulty.MEDIUM)) {
+                    if (makeAndSaveDisk) {
                         // save the disk to storage
                         boolean isSpace = saveDiskToStorage(player, is);
                         if (!isSpace) {

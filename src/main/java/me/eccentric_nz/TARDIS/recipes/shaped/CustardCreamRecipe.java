@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -35,14 +35,14 @@ public class CustardCreamRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "custard_cream");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("   ", "WYW", "   ");
             r.setIngredient('W', Material.WHEAT);
-            r.setIngredient('Y', Material.YELLOW_DYE);            
+            r.setIngredient('Y', Material.YELLOW_DYE);
         } else {
             r.shape("   ", "WYW", "   ");
             r.setIngredient('W', Material.WHEAT);
-            r.setIngredient('Y', Material.YELLOW_DYE);            
+            r.setIngredient('Y', Material.YELLOW_DYE);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Custard Cream", r);

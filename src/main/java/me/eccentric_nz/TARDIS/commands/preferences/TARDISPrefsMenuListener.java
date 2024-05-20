@@ -28,7 +28,6 @@ import me.eccentric_nz.TARDIS.commands.config.TARDISConfigMenuInventory;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIPlayerPreferences;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.FlightMode;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -73,7 +72,6 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         lookup.put("Close GUI", "close_gui_on");
         lookup.put("Companion Build", "build_on");
         lookup.put("Do Not Disturb", "dnd_on");
-        lookup.put("Easy Difficulty", "difficulty");
         lookup.put("Emergency Programme One", "eps_on");
         lookup.put("Exterior Rendering Room", "renderer_on");
         lookup.put("Hostile Action Displacement System", "hads_on");
@@ -200,13 +198,10 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                         if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
                             plugin.getTrackerKeeper().getHasRandomised().removeAll(Collections.singleton(id));
                         }
-                        TARDISCircuitChecker tcc = null;
-                        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(p, true)) {
-                            tcc = new TARDISCircuitChecker(plugin, id);
-                            tcc.getCircuits();
-                        }
                         // damage the circuit if configured
-                        if (tcc != null && plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+                        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+                            TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                            tcc.getCircuits();
                             // decrement uses
                             int uses_left = tcc.getMaterialisationUses();
                             new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, p).damage();

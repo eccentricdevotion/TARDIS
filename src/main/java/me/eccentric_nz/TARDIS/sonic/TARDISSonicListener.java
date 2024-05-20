@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.sonic;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.sonic.actions.*;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
@@ -104,7 +103,7 @@ public class TARDISSonicListener implements Listener {
             ItemMeta im = is.getItemMeta();
             if (im.getDisplayName().endsWith("Sonic Screwdriver")) {
                 // check they have charge
-                if (plugin.getConfig().getBoolean("sonic.charge") || plugin.getDifficulty() == Difficulty.HARD) {
+                if (plugin.getConfig().getBoolean("sonic.charge")) {
                     // get sonic UUID
                     PersistentDataContainer pdc = im.getPersistentDataContainer();
                     int needs = plugin.getConfig().getInt("sonic.usage");

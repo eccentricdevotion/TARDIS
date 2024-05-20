@@ -18,12 +18,13 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
@@ -76,12 +77,9 @@ class TARDISMakeHerBlueCommand {
             return true;
         }
         int id = tardis.getTardisId();
-        TARDISCircuitChecker tcc = null;
-        if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
-            tcc = new TARDISCircuitChecker(plugin, id);
+        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
             tcc.getCircuits();
-        }
-        if (tcc != null) {
+        if (plugin.getConfig().getBoolean("difficulty.circuits")) {
             if (!tcc.hasInvisibility() && !tardis.getPreset().equals(ChameleonPreset.JUNK_MODE)) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "INVISIBILITY_MISSING");
                 return true;
@@ -89,6 +87,19 @@ class TARDISMakeHerBlueCommand {
             if (!tcc.hasMaterialisation()) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NO_MAT_CIRCUIT");
                 return true;
+            }
+        }
+        // damage circuits if configured
+        if (plugin.getConfig().getBoolean("circuits.damage")) {
+            if (plugin.getConfig().getInt("circuits.uses.invisibility") > 0) {
+                // decrement uses
+                int uses_left = tcc.getInvisibilityUses();
+                new TARDISCircuitDamager(plugin, DiskCircuit.INVISIBILITY, uses_left, id, player).damage();
+            }
+            if (plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+                // decrement uses
+                int uses_left = tcc.getMaterialisationUses();
+                new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
             }
         }
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

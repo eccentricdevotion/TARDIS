@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -46,6 +47,15 @@ public class TARDISTravelCave {
         if (!TARDISPermission.hasPermission(player, "tardis.timetravel.cave")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_PERM_CAVE");
             return true;
+        }
+        // check for telepathic circuit
+        if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true)) {
+            TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+            tcc.getCircuits();
+            if (!tcc.hasTelepathic()) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TELEPATHIC_CIRCUIT");
+                return true;
+            }
         }
         // find a cave
         Location cave = new TARDISCaveFinder(plugin).searchCave(player, id);

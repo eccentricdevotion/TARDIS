@@ -157,7 +157,7 @@ public class TARDISTerminalListener implements Listener {
                         plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.TERMINAL, terminalIDs.get(uuid)));
                     }
                     // damage the circuit if configured
-                    if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.input") > 0) {
+                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.input") > 0) {
                         TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, terminalIDs.get(uuid));
                         tcc.getCircuits();
                         // decrement uses

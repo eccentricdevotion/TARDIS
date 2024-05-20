@@ -25,7 +25,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetJunk;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Control;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateSavesForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
@@ -150,7 +149,7 @@ public class TARDISControlListener implements Listener {
                         UUID ownerUUID = tardis.getUuid();
                         UUID playerUUID = player.getUniqueId();
                         TARDISCircuitChecker tcc = null;
-                        if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
+                        if (plugin.getConfig().getBoolean("difficulty.circuits")) {
                             tcc = new TARDISCircuitChecker(plugin, id);
                             tcc.getCircuits();
                         }

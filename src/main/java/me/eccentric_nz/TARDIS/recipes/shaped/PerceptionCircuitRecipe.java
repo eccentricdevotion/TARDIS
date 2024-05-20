@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -43,14 +43,14 @@ public class PerceptionCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "perception_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("IGI", "CEC", "DTD");
             r.setIngredient('I', Material.IRON_INGOT);
             r.setIngredient('G', Material.GOLDEN_CARROT);
             r.setIngredient('C', Material.COMPARATOR);
             r.setIngredient('E', Material.FERMENTED_SPIDER_EYE);
             r.setIngredient('D', Material.REPEATER);
-            r.setIngredient('T', Material.REDSTONE_TORCH);            
+            r.setIngredient('T', Material.REDSTONE_TORCH);
         } else {
             r.shape("IGI", "CEC", "DTD");
             r.setIngredient('I', Material.IRON_INGOT);
@@ -58,7 +58,7 @@ public class PerceptionCircuitRecipe {
             r.setIngredient('C', Material.COMPARATOR);
             r.setIngredient('E', Material.FERMENTED_SPIDER_EYE);
             r.setIngredient('D', Material.REPEATER);
-            r.setIngredient('T', Material.REDSTONE_TORCH);            
+            r.setIngredient('T', Material.REDSTONE_TORCH);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Perception Circuit", r);

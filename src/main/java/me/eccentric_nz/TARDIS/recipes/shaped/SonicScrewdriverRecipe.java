@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -65,7 +65,7 @@ public class SonicScrewdriverRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "sonic_screwdriver");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" Q ", " I ", " O ");
             r.setIngredient('Q', Material.QUARTZ);
             r.setIngredient('I', Material.IRON_INGOT);

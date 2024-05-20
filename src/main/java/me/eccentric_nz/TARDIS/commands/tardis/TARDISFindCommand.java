@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -46,7 +45,7 @@ class TARDISFindCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 return true;
             }
-            if (plugin.getDifficulty().equals(Difficulty.EASY) || plugin.getUtils().inGracePeriod(player, true)) {
+            if (!plugin.getConfig().getBoolean("difficulty.tardis_locator") || plugin.getUtils().inGracePeriod(player, true)) {
                 HashMap<String, Object> wherecl = new HashMap<>();
                 wherecl.put("tardis_id", rs.getTardis_id());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);

@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.commands.travel;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  *
@@ -40,7 +40,7 @@ public class TARDISTravelPlayer {
 
     public boolean action(Player player, String p, int id) {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel.player")) {
-            if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
+            if (plugin.getConfig().getBoolean("difficulty.disks") && !plugin.getUtils().inGracePeriod(player, false)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ADV_PLAYER");
                 return true;
             }

@@ -16,11 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.travel;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
@@ -31,8 +33,9 @@ import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISTravelStructure {
@@ -51,6 +54,19 @@ public class TARDISTravelStructure {
         if (!TARDISPermission.hasPermission(player, "tardis.timetravel.village")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_PERM_VILLAGE");
             return true;
+        }
+        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+        tcc.getCircuits();
+        // check for telepathic circuit
+        if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true) && !tcc.hasTelepathic()) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TELEPATHIC_CIRCUIT");
+            return true;
+        }
+        // damage circuit if configured
+        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.telepathic") > 0) {
+            // decrement uses
+            int uses_left = tcc.getTelepathicUses();
+            new TARDISCircuitDamager(plugin, DiskCircuit.TELEPATHIC, uses_left, id, player).damage();
         }
         // find a village / nether fortress / end city
         TARDISStructureLocation randomVillage = new TARDISStructureTravel(plugin).getRandomVillage(player, id, args);

@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
@@ -47,7 +47,7 @@ public class TARDISRemoteKeyRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_remote_key");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("RCR", " K ", " T ");
             r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('C', Material.COMPARATOR);
