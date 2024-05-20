@@ -43,6 +43,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -157,7 +158,9 @@ public class TARDISTelepathicListener implements Listener {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Telepathic Circuit");
         im.setCustomModelData(10001962);
-        im.setLore(Arrays.asList("Allow companions to", "use TARDIS commands", "and search for", "travel destinations."));
+        String uses = (plugin.getConfig().getString("circuits.uses.telepathic").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.telepathic");
+        List<String> lore = Arrays.asList("Uses left", uses);
+        im.setLore(lore);
         is.setItemMeta(im);
         b.getWorld().dropItemNaturally(b.getLocation(), is);
     }

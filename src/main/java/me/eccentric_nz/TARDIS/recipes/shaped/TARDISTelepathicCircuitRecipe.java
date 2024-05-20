@@ -11,8 +11,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionType;
 
-import java.util.Arrays;
-
 /*
 easy_shape:-S-,SES,-S-
 easy_ingredients.S:SLIME_BALL
@@ -39,7 +37,6 @@ public class TARDISTelepathicCircuitRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Telepathic Circuit");
         im.setCustomModelData(10001962);
-        im.setLore(Arrays.asList("Allow companions to", "use TARDIS commands", "and search for", "travel destinations."));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_telepathic_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
