@@ -37,6 +37,7 @@ import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -50,6 +51,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,7 +89,25 @@ public class TARDISStattenheimListener implements Listener {
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.getType().equals(Material.FLINT) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
+            int uses;
             if (im.getDisplayName().equals("Stattenheim Remote")) {
+                // check uses
+                if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+                    uses = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
+                    if (uses <= 0) {
+                        // break the remote
+                        player.getInventory().setItemInMainHand(null);
+                        player.playSound(player.getLocation(), Sound.ITEM_SHIELD_BREAK, 1.0f, 1.0f);
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "STATTENHEIM_USED");
+                        return;
+                    }
+                } else {
+                    // add uses
+                    int u = plugin.getConfig().getInt("circuits.uses.stattenheim");
+                    uses = u > 0 ? u : 1000;
+                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, uses);
+                    is.setItemMeta(im);
+                }
                 Action action = event.getAction();
                 // check they are a Time Lord
                 UUID uuid = player.getUniqueId();
@@ -150,7 +170,7 @@ public class TARDISStattenheimListener implements Listener {
                             return;
                         }
                         TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
-                            tcc.getCircuits();
+                        tcc.getCircuits();
                         if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true) && !tcc.hasMaterialisation()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
                             return;
@@ -161,6 +181,9 @@ public class TARDISStattenheimListener implements Listener {
                             int uses_left = tcc.getMaterialisationUses();
                             new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
                         }
+                        // decrement uses
+                        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, uses - 1);
+                        is.setItemMeta(im);
                         boolean hidden = tardis.isHidden();
                         int level = tardis.getArtronLevel();
                         // check they are not in the tardis

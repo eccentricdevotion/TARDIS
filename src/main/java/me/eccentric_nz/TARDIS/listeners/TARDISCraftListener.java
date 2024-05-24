@@ -182,6 +182,11 @@ public class TARDISCraftListener implements Listener {
                         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 10000);
                         is.setItemMeta(im);
                         ci.setResult(is);
+                    } else if (dn.contains("Stattenheim")) {
+                        int uses = plugin.getConfig().getInt("circuits.uses.stattenheim");
+                        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, uses > 0 ? uses : 1000);
+                        is.setItemMeta(im);
+                        ci.setResult(is);
                     }
                 }
             }

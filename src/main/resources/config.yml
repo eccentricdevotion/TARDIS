@@ -92,7 +92,6 @@ travel:
 difficulty:
   crafting: easy
   circuits: false
-  save_requires_circuit: false
   disks: false
   disk_in_hand_for_write: true
   biome_reader: true
@@ -164,6 +163,7 @@ circuits:
     scanner: 20
     telepathic: 20
     temporal: 20
+    stattenheim: 15
 # restrictions
 # https://tardis.pages.dev/configuration/allow
 allow:

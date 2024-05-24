@@ -180,6 +180,7 @@ public class TARDISConfiguration {
         integerOptions.put("circuits.uses.scanner", 20);
         integerOptions.put("circuits.uses.telepathic", 20);
         integerOptions.put("circuits.uses.temporal", 20);
+        integerOptions.put("circuits.uses.stattenheim", 15);
         integerOptions.put("creation.border_radius", 256);
         integerOptions.put("creation.count", 0);
         integerOptions.put("creation.inventory_group", 0);
