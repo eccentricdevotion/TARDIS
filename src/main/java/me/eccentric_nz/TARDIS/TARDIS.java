@@ -170,6 +170,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration itemsConfig;
     private FileConfiguration blasterConfig;
     private FileConfiguration customModelConfig;
+    private FileConfiguration systemUpgradesConfig;
     private HashMap<String, Integer> condensables;
     private BukkitTask standbyTask;
     private TARDISChameleonPreset presets;
@@ -882,6 +883,15 @@ public class TARDIS extends JavaPlugin {
      */
     public FileConfiguration getCustomModelConfig() {
         return customModelConfig;
+    }
+
+    /**
+     * Gets the system upgrades configuration
+     *
+     * @return the system upgrades configuration
+     */
+    public FileConfiguration getSystemUpgradesConfig() {
+        return systemUpgradesConfig;
     }
 
     /**
@@ -1647,7 +1657,7 @@ public class TARDIS extends JavaPlugin {
                 "monsters.yml",
                 "planets.yml",
                 "recipes.yml", "rooms.yml",
-                "shop.yml",
+                "shop.yml", "system_upgrades.yml",
                 "tag.yml",
                 "vortex_manipulator.yml"
         );
@@ -1689,6 +1699,7 @@ public class TARDIS extends JavaPlugin {
             blasterConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "blaster.yml"));
         }
         customModelConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_models.yml"));
+        systemUpgradesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "system_upgrades.yml"));
     }
 
     /**

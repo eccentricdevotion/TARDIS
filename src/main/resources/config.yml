@@ -97,6 +97,7 @@ difficulty:
   biome_reader: true
   stattenheim_remote: false
   tardis_locator: false
+  system_upgrades: false
 # general preferences
 # https://tardis.pages.dev/configuration/prefs
 preferences:

@@ -551,8 +551,8 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", costa, wherea, player);
                                     }
                                     default -> {
+                                        // do nothing
                                     }
-                                    // do nothing
                                 }
                             }
                         }

@@ -383,6 +383,7 @@ public class TARDISConfiguration {
                 }
             }
             plugin.getConfig().set("difficulty.disk_in_hand_for_write", true);
+            plugin.getConfig().set("difficulty.system_upgrades", true);
             plugin.getConfig().set("preferences.difficulty", null);
             i++;
         }

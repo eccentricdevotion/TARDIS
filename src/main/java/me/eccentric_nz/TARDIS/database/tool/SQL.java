@@ -114,6 +114,8 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %sstorage (storage_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', uuid varchar(48) DEFAULT '', owner varchar(32) DEFAULT '', saves_one text NULL, saves_two text NULL, areas text NULL, presets_one text NULL, presets_two text NULL, biomes_one text NULL, biomes_two text NULL, players text NULL, circuits text NULL, console text NULL, PRIMARY KEY (storage_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
+            "CREATE TABLE IF NOT EXISTS %ssystem_upgrades (sys_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', uuid varchar(48) DEFAULT '', architecture int(1) DEFAULT '0', chameleon int(1) DEFAULT '0', rooms int(1) DEFAULT '0', desktop int(1) DEFAULT '0', navigation int(1) DEFAULT '0', saves int(1) DEFAULT '0', distance_1 int(1) DEFAULT '0', distance_2 int(1) DEFAULT '0', distance_3 int(1) DEFAULT '0', inter_dimension int(1) DEFAULT '0', tools int(1) DEFAULT '0', locator int(1) DEFAULT '0', biome_reader int(1) DEFAULT '0', force_field int(1) DEFAULT '0', stattenheim_remote int(1) DEFAULT '0', PRIMARY KEY (sys_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
             "CREATE TABLE IF NOT EXISTS %st_count (t_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', count int(3) DEFAULT '0', grace int(3) DEFAULT '0', repair int(3) DEFAULT '0', PRIMARY KEY (t_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %stag (tag_id int(11) NOT NULL AUTO_INCREMENT, player varchar(32) DEFAULT '', `time` bigint(20) DEFAULT '0', PRIMARY KEY (tag_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
@@ -238,6 +240,8 @@ public class SQL {
 
             "(%s, %s, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
 
+            "(%s, %s, '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+
             "(%s, '%s', '%s', %s, %s, %s)",
 
             "(%s, '%s', %s)",
@@ -361,6 +365,8 @@ public class SQL {
             "INSERT INTO `%ssonic` (`sonic_id`, `uuid`, `activated`, `model`, `bio`, `diamond`, `emerald`, `redstone`, `painter`, `ignite`, `arrow`, `knockback`, `brush`, `conversion`, `sonic_uuid`, `last_scanned`, `scan_type`) VALUES ",
 
             "INSERT INTO `%sstorage` (`storage_id`, `tardis_id`, `uuid`, `owner`, `saves_one`, `saves_two`, `areas`, `presets_one`, `presets_two`, `biomes_one`, `biomes_two`, `players`, `circuits`, `console`) VALUES ",
+
+            "INSERT INTO `%ssystem_upgrades` (`sys_id`, `tardis_id`, `uuid`, `architecture`, `chameleon`, `rooms`, `desktop`, `navigation`, `saves`, `distance_1`, `distance_2`, `distance_3`, `inter_dimension`, `tools`, `locator`, `biome_reader`, `force_field`, `stattenheim_remote`) VALUES ",
 
             "INSERT INTO `%st_count` (`t_id`, `uuid`, `player`, `count`, `grace`, `repair`) VALUES ",
 

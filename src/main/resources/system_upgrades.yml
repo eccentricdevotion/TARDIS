@@ -1,0 +1,19 @@
+branch: 100
+# architecture branch
+architecture:
+  chameleon_circuit: 1000
+  room_growing: 1000
+  desktop_theme: 2000
+# navigation branch
+navigation:
+  saves: 1000
+  distance_1: 1000
+  distance_2: 2000
+  distance_3: 3000
+  inter_dimensional_travel: 4000
+# tools branch
+tools:
+  tardis_locator: 500
+  biome_reader: 2000
+  force_field: 3000
+  stattenheim_remote: 4000

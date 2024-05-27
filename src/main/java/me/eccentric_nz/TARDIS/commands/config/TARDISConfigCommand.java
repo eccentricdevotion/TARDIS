@@ -155,6 +155,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("stattenheim_remote", "difficulty");
         firstsBool.put("strike_lightning", "preferences");
         firstsBool.put("switch_resource_packs", "");
+        firstsBool.put("system_upgrades", "difficulty");
         firstsBool.put("tardis_locator", "difficulty");
         firstsBool.put("terminal.redefine", "travel");
         firstsBool.put("the_end", "travel");

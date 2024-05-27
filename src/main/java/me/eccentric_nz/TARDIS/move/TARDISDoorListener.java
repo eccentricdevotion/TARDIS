@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISPet;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeCheck;
 import me.eccentric_nz.TARDIS.utility.TARDISItemRenamer;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -192,6 +193,8 @@ public class TARDISDoorListener {
             if (plugin.getTrackerKeeper().getHasTravelled().contains(uuid)) {
                 plugin.getQueryFactory().alterEnergyLevel("player_prefs", player_artron, where, player);
                 plugin.getTrackerKeeper().getHasTravelled().remove(uuid);
+                // make a system upgrade record if necessary
+                new SystemUpgradeCheck(plugin).makeRecord(uuid.toString());
             }
             // set player time when exiting TARDIS
             if (plugin.getTrackerKeeper().getSetTime().containsKey(uuid)) {

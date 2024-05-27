@@ -269,6 +269,10 @@ public class Converter implements Runnable {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("storage_id"), rs.getInt("tardis_id"), rs.getString("uuid"), rs.getString("owner"), rs.getString("saves_one"), rs.getString("saves_two"), rs.getString("areas"), rs.getString("presets_one"), rs.getString("presets_two"), rs.getString("biomes_one"), rs.getString("biomes_two"), rs.getString("players"), rs.getString("circuits"), rs.getString("console")) + end;
                                         sb.append(str);
                                     }
+                                    case system_upgrades -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("sys_id"), rs.getInt("tardis_id"), rs.getString("uuid"), rs.getInt("architecture"), rs.getInt("chameleon"), rs.getInt("rooms"), rs.getInt("desktop"), rs.getInt("navigation"), rs.getInt("saves"), rs.getInt("distance_1"), rs.getInt("distance_2"), rs.getInt("distance_3"), rs.getInt("inter_dimension"), rs.getInt("tools"), rs.getInt("locator"), rs.getInt("biome_reader"), rs.getInt("force_field"), rs.getInt("stattenheim_remote")) + end;
+                                        sb.append(str);
+                                    }
                                     case t_count -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("t_id"), rs.getString("uuid"), rs.getString("player"), rs.getInt("count"), rs.getInt("grace"), rs.getInt("repair")) + end;
                                         sb.append(str);

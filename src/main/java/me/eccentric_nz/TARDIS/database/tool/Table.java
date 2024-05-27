@@ -63,6 +63,7 @@ public enum Table {
     siege,
     sonic,
     storage,
+    system_upgrades("sys_id"),
     t_count("t_id"),
     tag,
     tardis("tardis_id"),
