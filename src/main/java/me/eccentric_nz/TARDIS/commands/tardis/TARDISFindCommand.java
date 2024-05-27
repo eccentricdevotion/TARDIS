@@ -47,7 +47,7 @@ class TARDISFindCommand {
             }
             if (!plugin.getConfig().getBoolean("difficulty.tardis_locator") || plugin.getUtils().inGracePeriod(player, true)) {
                 HashMap<String, Object> wherecl = new HashMap<>();
-                wherecl.put("tardis_id", rs.getTardis_id());
+                wherecl.put("tardis_id", rs.getTardisId());
                 ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rsc.resultSet()) {
                     String world = TARDISAliasResolver.getWorldAlias(rsc.getWorld());

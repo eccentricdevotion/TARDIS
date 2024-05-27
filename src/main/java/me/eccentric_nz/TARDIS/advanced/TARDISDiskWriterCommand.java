@@ -261,7 +261,7 @@ public class TARDISDiskWriterCommand {
                         save = "Home";
                     } else {
                         HashMap<String, Object> wherename = new HashMap<>();
-                        wherename.put("tardis_id", rs.getTardis_id());
+                        wherename.put("tardis_id", rs.getTardisId());
                         wherename.put("dest_name", args[1]);
                         wherename.put("type", 0);
                         ResultSetDestinations rsd = new ResultSetDestinations(plugin, wherename, false);

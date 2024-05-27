@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS vaults.
@@ -34,7 +35,7 @@ public class ResultSetTardisID {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
-    private int tardis_id;
+    private int tardisId;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the vaults table.
@@ -64,7 +65,7 @@ public class ResultSetTardisID {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                tardis_id = rs.getInt("tardis_id");
+                tardisId = rs.getInt("tardis_id");
                 return true;
             }
             return false;
@@ -103,7 +104,7 @@ public class ResultSetTardisID {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                tardis_id = rs.getInt("tardis_id");
+                tardisId = rs.getInt("tardis_id");
                 return true;
             }
             return false;
@@ -124,7 +125,7 @@ public class ResultSetTardisID {
         }
     }
 
-    public int getTardis_id() {
-        return tardis_id;
+    public int getTardisId() {
+        return tardisId;
     }
 }

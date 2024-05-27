@@ -77,7 +77,7 @@ public class TARDISColourPickerListener extends TARDISMenuListener {
                 // get the player's tardis_id
                 ResultSetTardisID rst = new ResultSetTardisID(plugin);
                 if (rst.fromUUID(player.getUniqueId().toString())) {
-                    int id = rst.getTardis_id();
+                    int id = rst.getTardisId();
                     // save the colour
                     Color color = getColour(view);
                     HashMap<String, Object> set = new HashMap<>();

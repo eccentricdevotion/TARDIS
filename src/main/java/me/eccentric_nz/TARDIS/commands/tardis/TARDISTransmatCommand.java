@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.TARDISBoundTransmatRemoval;
@@ -27,6 +25,9 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.regex.Pattern;
 
 class TARDISTransmatCommand {
 
@@ -60,7 +61,7 @@ class TARDISTransmatCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
             return false;
         }
-        int id = rs.getTardis_id();
+        int id = rs.getTardisId();
         int thisid = rst.getTardis_id();
         if (thisid != id) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_ONLY_TL");

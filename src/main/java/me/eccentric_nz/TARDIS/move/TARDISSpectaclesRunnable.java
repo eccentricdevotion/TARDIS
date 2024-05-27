@@ -60,7 +60,7 @@ public class TARDISSpectaclesRunnable implements Runnable {
                 if (b.equals(value.toString())) {
                     ResultSetTardisID rs = new ResultSetTardisID(plugin);
                     if (rs.fromUUID(key.toString())) {
-                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getTardis_id());
+                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getTardisId());
                         if (rsc.resultSet()) {
                             p.sendBlockChange(value.getLocation(), lower.get(rsc.getDirection()));
                             p.sendBlockChange(value.getRelative(BlockFace.UP).getLocation(), upper);

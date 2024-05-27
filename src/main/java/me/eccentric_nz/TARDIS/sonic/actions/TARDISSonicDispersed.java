@@ -16,11 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.sonic.actions;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 public class TARDISSonicDispersed {
 
@@ -36,7 +37,7 @@ public class TARDISSonicDispersed {
             if (rs.fromUUID(uuid.toString())) {
                 // rebuild
                 plugin.getTrackerKeeper().getDispersed().remove(uuid);
-                plugin.getTrackerKeeper().getDispersedTARDII().remove(rs.getTardis_id());
+                plugin.getTrackerKeeper().getDispersedTARDII().remove(rs.getTardisId());
                 player.performCommand("tardis rebuild");
             }
         }

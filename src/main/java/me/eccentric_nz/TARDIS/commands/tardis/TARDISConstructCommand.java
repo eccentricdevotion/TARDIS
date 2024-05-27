@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConstructSign;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -26,6 +23,10 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -49,7 +50,7 @@ class TARDISConstructCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
             return true;
         }
-        int id = rs.getTardis_id();
+        int id = rs.getTardisId();
         // must have a construct
         ResultSetConstructSign rscs = new ResultSetConstructSign(plugin, id);
         if (!rscs.resultSet()) {

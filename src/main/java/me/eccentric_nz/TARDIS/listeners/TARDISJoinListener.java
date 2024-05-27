@@ -252,7 +252,7 @@ public class TARDISJoinListener implements Listener {
                 } else if (!rsid.fromUUID(player.getUniqueId().toString())) {
                     return;
                 }
-                int id = rsid.getTardis_id();
+                int id = rsid.getTardisId();
                 HashMap<String, Object> wherei = new HashMap<>();
                 wherei.put("tardis_id", id);
                 wherei.put("uuid", player.getUniqueId().toString());

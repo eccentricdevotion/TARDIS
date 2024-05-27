@@ -79,7 +79,7 @@ class TARDISToggleOnOffCommand {
                     // get tardis id
                     ResultSetTardisID rsi = new ResultSetTardisID(plugin);
                     if (rsi.fromUUID(uuid.toString())) {
-                        new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardis_id(), true);
+                        new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), true);
                     }
                 }
             }
@@ -96,7 +96,7 @@ class TARDISToggleOnOffCommand {
                     // get tardis id
                     ResultSetTardisID rsi = new ResultSetTardisID(plugin);
                     if (rsi.fromUUID(uuid.toString())) {
-                        new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardis_id(), false);
+                        new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), false);
                     }
                 }
             }

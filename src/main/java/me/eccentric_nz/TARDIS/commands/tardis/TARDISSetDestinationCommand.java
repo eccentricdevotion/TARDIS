@@ -61,7 +61,7 @@ class TARDISSetDestinationCommand {
                 plugin.getMessenger().sendColouredCommand(player, "SAVE_RESERVED", "/tardis home", plugin);
                 return false;
             } else {
-                int id = rs.getTardis_id();
+                int id = rs.getTardisId();
                 TARDISCircuitChecker tcc = null;
                 if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true)) {
                     tcc = new TARDISCircuitChecker(plugin, id);

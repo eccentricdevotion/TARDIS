@@ -99,7 +99,7 @@ public class TARDISJettisonSeeder implements Listener {
                 // get the TARDIS id
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                 if (rs.fromUUID(player.getUniqueId().toString())) {
-                    int id = rs.getTardis_id();
+                    int id = rs.getTardisId();
                     TARDISRoomRemover remover = new TARDISRoomRemover(plugin, room, l, d, id);
                     if (remover.remove()) {
                         plugin.getTrackerKeeper().getJettison().remove(uuid);

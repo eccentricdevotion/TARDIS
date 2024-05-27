@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.Map;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
+
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -43,7 +44,7 @@ class TARDISCubeCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 return true;
             }
-            int id = rs.getTardis_id();
+            int id = rs.getTardisId();
             if (!plugin.getTrackerKeeper().getIsSiegeCube().contains(id)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NOT_SIEGED");
                 return true;

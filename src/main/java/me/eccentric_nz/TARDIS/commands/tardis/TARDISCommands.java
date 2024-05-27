@@ -107,7 +107,7 @@ public class TARDISCommands implements CommandExecutor {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                 return true;
             }
-            if (plugin.getTrackerKeeper().getInSiegeMode().contains(rs.getTardis_id()) && tc.noSiege()) {
+            if (plugin.getTrackerKeeper().getInSiegeMode().contains(rs.getTardisId()) && tc.noSiege()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CMD");
                 return true;
             }
@@ -132,7 +132,7 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISARSRemoveCommand(plugin).resetARS(player);
                 }
                 case bell -> {
-                    return new TARDISBellCommand(plugin).toggle(rs.getTardis_id(), player, args);
+                    return new TARDISBellCommand(plugin).toggle(rs.getTardisId(), player, args);
                 }
                 case check_loc -> {
                     return new TARDISCheckLocCommand(plugin).doACheckLocation(player);
@@ -177,7 +177,7 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISFindCommand(plugin).findTARDIS(player);
                 }
                 case handbrake -> {
-                    return new TARDISHandbrakeCommand(plugin).toggle(player, rs.getTardis_id(), args, false);
+                    return new TARDISHandbrakeCommand(plugin).toggle(player, rs.getTardisId(), args, false);
                 }
                 case hide -> {
                     return new TARDISHideCommand(plugin).hide(player);
@@ -204,7 +204,7 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISMakeHerBlueCommand(plugin).show(player);
                 }
                 case monsters -> {
-                    return new TARDISMonstersCommand(plugin).reset(player, rs.getTardis_id(), args);
+                    return new TARDISMonstersCommand(plugin).reset(player, rs.getTardisId(), args);
                 }
                 case namekey -> {
                     return new TARDISNameKeyCommand(plugin).nameKey(player, args);

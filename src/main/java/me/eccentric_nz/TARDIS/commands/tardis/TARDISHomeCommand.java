@@ -53,7 +53,7 @@ class TARDISHomeCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                 return false;
             }
-            int id = rs.getTardis_id();
+            int id = rs.getTardisId();
             if (args.length == 3 && args[1].equalsIgnoreCase("set")) {
                 // set the PRESET for the home location
                 String which;

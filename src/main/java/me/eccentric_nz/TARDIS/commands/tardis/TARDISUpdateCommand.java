@@ -95,7 +95,7 @@ class TARDISUpdateCommand {
                 // get players tardis_id
                 ResultSetTardisID rst = new ResultSetTardisID(plugin);
                 if (rst.fromUUID(player.getUniqueId().toString())) {
-                    int id = rst.getTardis_id();
+                    int id = rst.getTardisId();
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("tardis_id", id);
                     ResultSetARS rsa = new ResultSetARS(plugin, where);

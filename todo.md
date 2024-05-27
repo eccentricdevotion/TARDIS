@@ -11,7 +11,8 @@
 3. Add doors to shop items
 4. Allow 3D Police Boxes to land on slabs [#777](https://github.com/eccentricdevotion/TARDIS/issues/777)
 5. Animated models for TWA player disguises
-6. ?
+6. System upgrades - similar to [TARDIS: Refined 2](https://wiki.tardisrefined.net/upgrades-and-functions.html#unlocking-upgrades) mod - and [#303](https://github.com/eccentricdevotion/TARDIS/issues/303) + ties in well with new difficulty settings
+7. ?
 
 ## Future versions
 

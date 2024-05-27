@@ -72,7 +72,7 @@ public class TARDISRoomBuilder {
         if (rs.fromUUID(p.getUniqueId().toString())) {
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
             TARDISRoomData roomData = new TARDISRoomData();
-            roomData.setTardis_id(rs.getTardis_id());
+            roomData.setTardis_id(rs.getTardisId());
             // get wall data, default to orange wool if not set
             Material wall_type, floor_type;
             if (rsp.resultSet()) {
@@ -124,11 +124,11 @@ public class TARDISRoomBuilder {
             // damage the ARS circuit if configured
             if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.ars") > 0) {
                 // get the id of the TARDIS this player is in
-                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, rs.getTardis_id());
+                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, rs.getTardisId());
                 tcc.getCircuits();
                 // decrement uses
                 int uses_left = tcc.getArsUses();
-                new TARDISCircuitDamager(plugin, DiskCircuit.ARS, uses_left, rs.getTardis_id(), p).damage();
+                new TARDISCircuitDamager(plugin, DiskCircuit.ARS, uses_left, rs.getTardisId(), p).damage();
             }
         }
         return true;

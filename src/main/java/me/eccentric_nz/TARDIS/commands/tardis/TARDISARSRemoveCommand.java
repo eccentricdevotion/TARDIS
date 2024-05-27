@@ -49,7 +49,7 @@ class TARDISARSRemoveCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
             return true;
         }
-        int id = rs.getTardis_id();
+        int id = rs.getTardisId();
         // get the sign location so we can reset the sign text
         HashMap<String, Object> wheres = new HashMap<>();
         wheres.put("tardis_id", id);

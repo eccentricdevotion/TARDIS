@@ -52,7 +52,7 @@ public class TARDISThemeButton {
         int tid = 0;
         ResultSetTardisID rs = new ResultSetTardisID(TARDIS.plugin);
         if (rs.fromUUID(uuid)) {
-            tid = rs.getTardis_id();
+            tid = rs.getTardisId();
         }
         return tid;
     }

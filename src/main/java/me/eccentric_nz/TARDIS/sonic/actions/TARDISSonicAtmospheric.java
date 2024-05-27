@@ -45,7 +45,7 @@ public class TARDISSonicAtmospheric {
             // get TARDIS id
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (rs.fromUUID(player.getUniqueId().toString())) {
-                int tid = rs.getTardis_id();
+                int tid = rs.getTardisId();
                 Block blockbehind = null;
                 Directional directional = (Directional) b.getBlockData();
                 if (directional.getFacing().equals(BlockFace.WEST)) {

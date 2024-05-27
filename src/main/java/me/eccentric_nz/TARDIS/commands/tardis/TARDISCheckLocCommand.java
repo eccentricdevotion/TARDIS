@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -26,6 +25,8 @@ import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -52,7 +53,7 @@ class TARDISCheckLocCommand {
             return true;
         }
         HashMap<String, Object> wherecl = new HashMap<>();
-        wherecl.put("tardis_id", rs.getTardis_id());
+        wherecl.put("tardis_id", rs.getTardisId());
         ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
         if (!rsc.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_NOT_FOUND");

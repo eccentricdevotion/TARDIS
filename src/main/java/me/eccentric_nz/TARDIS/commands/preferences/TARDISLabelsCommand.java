@@ -40,7 +40,7 @@ class TARDISLabelsCommand {
         }
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID(player.getUniqueId().toString())) {
-            int id = rs.getTardis_id();
+            int id = rs.getTardisId();
             boolean on = args[1].equalsIgnoreCase("on");
             new LabelAction(plugin).toggle(id, on);
         }

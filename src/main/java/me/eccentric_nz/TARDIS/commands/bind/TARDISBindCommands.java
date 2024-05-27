@@ -77,7 +77,7 @@ public class TARDISBindCommands implements CommandExecutor {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                 return false;
             }
-            int id = rs.getTardis_id();
+            int id = rs.getTardisId();
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", player.getUniqueId().toString());
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);

@@ -232,7 +232,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 if (slot == 18) {
                     ResultSetTardisID tstid = new ResultSetTardisID(plugin);
                     if (tstid.fromUUID(uuid.toString())) {
-                        int pid = tstid.getTardis_id();
+                        int pid = tstid.getTardisId();
                         if (whichId != pid) {
                             whichId = pid;
                             plugin.getTrackerKeeper().getSavesIds().put(uuid, pid);

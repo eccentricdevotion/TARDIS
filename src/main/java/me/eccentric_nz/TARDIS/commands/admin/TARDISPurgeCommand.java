@@ -56,7 +56,7 @@ class TARDISPurgeCommand {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NOT_FOUND_DB", args[1]);
                 return true;
             }
-            int id = rs.getTardis_id();
+            int id = rs.getTardisId();
             TARDISExterminator purger = new TARDISExterminator(plugin);
             purger.cleanHashMaps(id);
             purger.cleanDatabase(id);

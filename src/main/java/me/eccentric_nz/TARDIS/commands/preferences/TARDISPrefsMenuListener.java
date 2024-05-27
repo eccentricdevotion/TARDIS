@@ -172,7 +172,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                 // get this player's TARDIS
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                 if (rs.fromUUID(uuid.toString())) {
-                    int id = rs.getTardis_id();
+                    int id = rs.getTardisId();
                     // must not be in the vortex or materialising
                     if (!plugin.getTrackerKeeper().getMaterialising().contains(id) && !plugin.getTrackerKeeper().getInVortex().contains(id)) {
                         // set the handbrake to ON
@@ -415,7 +415,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             // get tardis id
             ResultSetTardisID rsi = new ResultSetTardisID(plugin);
             if (rsi.fromUUID(uuid.toString())) {
-                new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardis_id(), !bool);
+                new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), !bool);
             }
         }
     }

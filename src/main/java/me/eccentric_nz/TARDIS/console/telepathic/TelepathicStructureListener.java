@@ -53,7 +53,7 @@ public class TelepathicStructureListener extends TARDISMenuListener {
                 }
                 // get tardis artron level
                 ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
-                if (!rs.fromID(rst.getTardis_id())) {
+                if (!rs.fromID(rst.getTardisId())) {
                     return;
                 }
                 int travel = plugin.getArtronConfig().getInt("travel");

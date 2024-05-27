@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.commands.sudo;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 class SudoDeadlock {
 
@@ -36,7 +37,7 @@ class SudoDeadlock {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         // does the player have a TARDIS
         if (rs.fromUUID(uuid.toString())) {
-            int id = rs.getTardis_id();
+            int id = rs.getTardisId();
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
             ResultSetDoors rsd = new ResultSetDoors(plugin, wheret, false);

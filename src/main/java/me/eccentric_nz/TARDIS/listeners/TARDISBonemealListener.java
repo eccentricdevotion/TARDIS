@@ -43,7 +43,7 @@ public class TARDISBonemealListener implements Listener {
         }
         // is it the player's garden?
         ResultSetTardisID rst = new ResultSetTardisID(plugin);
-        if (rst.fromUUID(event.getPlayer().getUniqueId().toString()) && rst.getTardis_id() == id) {
+        if (rst.fromUUID(event.getPlayer().getUniqueId().toString()) && rst.getTardisId() == id) {
             int y = location.getBlockY() + 1;
             for (BlockState state : event.getBlocks()) {
                 Block block = state.getBlock();

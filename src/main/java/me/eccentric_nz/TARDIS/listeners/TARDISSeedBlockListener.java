@@ -127,7 +127,7 @@ public class TARDISSeedBlockListener implements Listener {
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             String uuid = player.getUniqueId().toString();
             if (rs.fromUUID(uuid)) {
-                new ConsoleBuilder(plugin).create(event.getBlockPlaced(), colour, rs.getTardis_id(), uuid);
+                new ConsoleBuilder(plugin).create(event.getBlockPlaced(), colour, rs.getTardisId(), uuid);
             }
         }
     }

@@ -16,12 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.hads;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Map;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -29,6 +23,13 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Location;
 import org.bukkit.World;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -63,7 +64,7 @@ public class TARDISHadsPersister {
                 // get tardis_id
                 ResultSetTardisID rst = new ResultSetTardisID(plugin);
                 rst.fromUUID(uuid);
-                ps.setInt(6, rst.getTardis_id());
+                ps.setInt(6, rst.getTardisId());
                 count += ps.executeUpdate();
             }
             if (count > 0) {

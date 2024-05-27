@@ -47,7 +47,7 @@ class TARDISJunkDelete {
         }
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
-            int id = rs.getTardis_id();
+            int id = rs.getTardisId();
             // get the current location
             Location bb_loc = null;
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
