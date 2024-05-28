@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TARDISSystemTreeGUI {
@@ -34,7 +35,7 @@ public class TARDISSystemTreeGUI {
                 ItemMeta im = is.getItemMeta();
                 String prefix = (g.getBranch().equals("branch")) ? ChatColor.GOLD + "" : "";
                 im.setDisplayName(prefix + g.getName());
-                List<String> lore = g.getLore();
+                List<String> lore = new ArrayList<>(g.getLore());
                 boolean has = sysData.getUpgrades().get(g);
                 if (!has) {
                     String cost;
@@ -43,7 +44,12 @@ public class TARDISSystemTreeGUI {
                     } else {
                         cost = plugin.getSystemUpgradesConfig().getString(g.getBranch() + "." + g.toString().toLowerCase());
                     }
-                    lore.add(ChatColor.ITALIC + "" + ChatColor.AQUA + "Cost: " + cost);
+                    lore.add(ChatColor.AQUA + "" + ChatColor.ITALIC + "Cost: " + cost);
+                } else if (g != GUISystemTree.UPGRADE_TREE) {
+                    lore.add(ChatColor.GOLD + "Unlocked");
+                } else {
+                    // add players current Artron level to UPGRADE_TREE
+                    lore.add(ChatColor.AQUA + "" + ChatColor.ITALIC + "Artron Level: " + sysData.getArtronLevel());
                 }
                 im.setLore(lore);
                 // does the player have this system upgrade?

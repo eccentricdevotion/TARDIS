@@ -46,7 +46,7 @@ public class ResultSetPlayerArtronLevel {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT " + prefix + "player_prefs.artron_level, " + prefix + "system_upgrades.* FROM " + prefix + "player_prefs, " + prefix + "system_upgrades WHERE " + prefix + "system_upgrades.uuid = ? AND " + prefix + "system_upgrades.tardis_id = ? AND " + prefix + "system_upgrades.uuid = " + prefix + "player_prefs.uuid";
-        plugin.debug(query);
+//        plugin.debug(query);
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

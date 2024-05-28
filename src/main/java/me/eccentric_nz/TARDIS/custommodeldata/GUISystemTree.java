@@ -19,8 +19,6 @@ package me.eccentric_nz.TARDIS.custommodeldata;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public enum GUISystemTree {
@@ -32,22 +30,22 @@ public enum GUISystemTree {
     D_RIGHT(4),
     BLANK(5),
     CLOSE(6),
-    UPGRADE_TREE(1001, 2, Material.LIME_GLAZED_TERRACOTTA, new ArrayList<>(Arrays.asList("Unlock upgrades using", "your Time Lord", "Artron Energy.")), "", ""),
-    ARCHITECTURE(1002, 9, Material.LIME_GLAZED_TERRACOTTA, new ArrayList<>(Arrays.asList("Unlocks the", "architecture branch.")), "UPGRADE_TREE", "branch"),
-    CHAMELEON_CIRCUIT(1005, 19, Material.LIME_GLAZED_TERRACOTTA, new ArrayList<>(Arrays.asList("Allows the TARDIS", "exterior to be changed.")), "ARCHITECTURE", "architecture"),
-    ROOM_GROWING(1005, 28, Material.LIME_GLAZED_TERRACOTTA, new ArrayList<>(Arrays.asList("Allows rooms", "to be grown.")), "CHAMELEON_CIRCUIT", "architecture"),
-    DESKTOP_THEME(1005, 37, Material.LIME_GLAZED_TERRACOTTA, new ArrayList<>(Arrays.asList("Allows the desktop", "theme to be reconfigured.")), "ROOM_GROWING", "architecture"),
-    NAVIGATION(1003, 13, Material.LIME_GLAZED_TERRACOTTA, new ArrayList<>(Arrays.asList("Unlocks the", "navigation branch.")), "UPGRADE_TREE", "branch"),
-    SAVES(1005, 23, Material.LIME_GLAZED_TERRACOTTA, new ArrayList<>(Arrays.asList("Allows you", "to create", "saved locations")), "NAVIGATION", "navigation"),
-    DISTANCE_1(1005, 32, Material.LIME_GLAZED_TERRACOTTA, new ArrayList<>(Arrays.asList("Unlocks the 2x", "distance multiplier.")), "DISTANCE_1", "navigation"),
-    DISTANCE_2(1005, 41, Material.LIME_GLAZED_TERRACOTTA, new ArrayList<>(Arrays.asList("Unlocks the 3x", "distance multiplier.")), "DISTANCE_2", "navigation"),
-    DISTANCE_3(1005, 50, Material.LIME_GLAZED_TERRACOTTA, new ArrayList<>(Arrays.asList("Unlocks the 4x", "distance multiplier.")), "DISTANCE_3", "navigation"),
-    INTER_DIMENSIONAL_TRAVEL(1006, 48, Material.LIME_GLAZED_TERRACOTTA, new ArrayList<>(Arrays.asList("Unlocks travel to", "the Nether and End.")), "INTER_DIMENSIONAL_TRAVEL", "navigation"),
-    TOOLS(1004, 16, Material.LIME_GLAZED_TERRACOTTA, new ArrayList<>(Arrays.asList("Unlocks the", "tools branch.")), "UPGRADE_TREE", "branch"),
-    TARDIS_LOCATOR(1005, 26, Material.LIME_GLAZED_TERRACOTTA, new ArrayList<>(Arrays.asList("Allows the TARDIS", "to be found.")), "TOOLS", "tools"),
-    BIOME_READER(1005, 35, Material.LIME_GLAZED_TERRACOTTA, new ArrayList<>(Arrays.asList("Allows biomes", "to be stored", "for travel.")), "LOCATOR", "tools"),
-    FORCE_FIELD(1005, 44, Material.LIME_GLAZED_TERRACOTTA, new ArrayList<>(Arrays.asList("Allows the TARDIS", "to have a monster", "repelling force field.")), "BIOME_READER", "tools"),
-    STATTENHEIM_REMOTE(1005, 53, Material.LIME_GLAZED_TERRACOTTA, new ArrayList<>(Arrays.asList("Allows the TARDIS", "to be remotely", "called to a location.")), "FORCE_FIELD", "tools");
+    UPGRADE_TREE(1001, 2, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlock upgrades using", "your Time Lord", "Artron Energy."), "", ""),
+    ARCHITECTURE(1002, 9, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the", "architecture branch."), "UPGRADE_TREE", "branch"),
+    CHAMELEON_CIRCUIT(1005, 19, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "exterior to be changed."), "ARCHITECTURE", "architecture"),
+    ROOM_GROWING(1005, 28, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows rooms", "to be grown."), "CHAMELEON_CIRCUIT", "architecture"),
+    DESKTOP_THEME(1005, 37, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the desktop", "theme to be reconfigured."), "ROOM_GROWING", "architecture"),
+    NAVIGATION(1003, 13, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the", "navigation branch."), "UPGRADE_TREE", "branch"),
+    SAVES(1005, 23, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows you", "to create", "saved locations"), "NAVIGATION", "navigation"),
+    DISTANCE_1(1005, 32, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 2x", "distance multiplier."), "DISTANCE_1", "navigation"),
+    DISTANCE_2(1005, 41, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 3x", "distance multiplier."), "DISTANCE_2", "navigation"),
+    DISTANCE_3(1005, 50, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 4x", "distance multiplier."), "DISTANCE_3", "navigation"),
+    INTER_DIMENSIONAL_TRAVEL(1006, 48, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks travel to", "the Nether and End."), "INTER_DIMENSIONAL_TRAVEL", "navigation"),
+    TOOLS(1004, 16, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the", "tools branch."), "UPGRADE_TREE", "branch"),
+    TARDIS_LOCATOR(1005, 26, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "to be found."), "TOOLS", "tools"),
+    BIOME_READER(1005, 35, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows biomes", "to be stored", "for travel."), "LOCATOR", "tools"),
+    FORCE_FIELD(1005, 44, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "to have a monster", "repelling force field."), "BIOME_READER", "tools"),
+    STATTENHEIM_REMOTE(1005, 53, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "to be remotely", "called to a location."), "FORCE_FIELD", "tools");
 
     private final int customModelData;
     private final int slot;
@@ -101,5 +99,28 @@ public enum GUISystemTree {
     public String getName() {
         String s = toString();
         return TARDISStringUtils.sentenceCase(s);
+    }
+
+    public String getDatabaseName() {
+        switch (this) {
+            case CHAMELEON_CIRCUIT -> {
+                return "chameleon";
+            }
+            case ROOM_GROWING -> {
+                return "rooms";
+            }
+            case DESKTOP_THEME -> {
+                return "desktop";
+            }
+            case INTER_DIMENSIONAL_TRAVEL -> {
+                return "inter_dimension";
+            }
+            case TARDIS_LOCATOR -> {
+                return "locator";
+            }
+            default -> {
+                return toString().toLowerCase();
+            }
+        }
     }
 }

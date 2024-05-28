@@ -10,13 +10,16 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class TARDISSystemTreeListener extends TARDISMenuListener {
 
@@ -79,75 +82,35 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
         SystemUpgrade current = rsp.getSystemUpgrade();
         GUISystemTree clicked;
         switch (slot) {
-            case 9 -> {
-                // architecture
-                clicked = GUISystemTree.ARCHITECTURE;
-            }
-            case 13 -> {
-                // navigation
-                clicked = GUISystemTree.NAVIGATION;
-            }
-            case 16 -> {
-                // tools
-                clicked = GUISystemTree.TOOLS;
-            }
-            case 19 -> {
-                // chameleon
-                clicked = GUISystemTree.CHAMELEON_CIRCUIT;
-            }
-            case 28 -> {
-                // rooms
-                clicked = GUISystemTree.ROOM_GROWING;
-            }
-            case 37 -> {
-                // desktop
-                clicked = GUISystemTree.DESKTOP_THEME;
-            }
-            case 23 -> {
-                // saves
-                clicked = GUISystemTree.SAVES;
-            }
-            case 32 -> {
-                // distance 1
-                clicked = GUISystemTree.DISTANCE_1;
-            }
-            case 41 -> {
-                // distance 2
-                clicked = GUISystemTree.DISTANCE_2;
-            }
-            case 48 -> {
-                // inter dimension
-                clicked = GUISystemTree.INTER_DIMENSIONAL_TRAVEL;
-            }
-            case 50 -> {
-                // distance 3
-                clicked = GUISystemTree.DISTANCE_3;
-            }
-            case 26 -> {
-                // locator
-                clicked = GUISystemTree.TARDIS_LOCATOR;
-            }
-            case 35 -> {
-                // biome reader
-                clicked = GUISystemTree.BIOME_READER;
-            }
-            case 44 -> {
-                // force field
-                clicked = GUISystemTree.FORCE_FIELD;
-            }
-            case 53 -> {
-                // stattenheim remote
-                clicked = GUISystemTree.STATTENHEIM_REMOTE;
-            }
-            default -> {
-                clicked = GUISystemTree.UPGRADE_TREE;
-            }
+            case 9 -> clicked = GUISystemTree.ARCHITECTURE;
+            case 13 -> clicked = GUISystemTree.NAVIGATION;
+            case 16 -> clicked = GUISystemTree.TOOLS;
+            case 19 -> clicked = GUISystemTree.CHAMELEON_CIRCUIT;
+            case 23 -> clicked = GUISystemTree.SAVES;
+            case 26 -> clicked = GUISystemTree.TARDIS_LOCATOR;
+            case 28 -> clicked = GUISystemTree.ROOM_GROWING;
+            case 32 -> clicked = GUISystemTree.DISTANCE_1;
+            case 35 -> clicked = GUISystemTree.BIOME_READER;
+            case 37 -> clicked = GUISystemTree.DESKTOP_THEME;
+            case 41 -> clicked = GUISystemTree.DISTANCE_2;
+            case 44 -> clicked = GUISystemTree.FORCE_FIELD;
+            case 48 -> clicked = GUISystemTree.INTER_DIMENSIONAL_TRAVEL;
+            case 50 -> clicked = GUISystemTree.DISTANCE_3;
+            case 53 -> clicked = GUISystemTree.STATTENHEIM_REMOTE;
+            default -> clicked = GUISystemTree.UPGRADE_TREE;
         }
         try {
             GUISystemTree required = GUISystemTree.valueOf(clicked.getRequired());
             if (!current.getUpgrades().get(required)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_REQUIRED", required.getName());
+                player.playSound(player.getLocation(), Sound.ENTITY_WARDEN_TENDRIL_CLICKS, 1.0f, 1.0f);
             } else {
+                // check if they have upgrade already
+                if (current.getUpgrades().get(clicked)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_HAS", clicked.getName());
+                    player.playSound(player.getLocation(), Sound.ENTITY_WARDEN_STEP, 1.0f, 1.0f);
+                    return;
+                }
                 // check artron
                 int cost;
                 if (clicked.getBranch().equals("branch")) {
@@ -157,15 +120,38 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
                 }
                 if (cost > current.getArtronLevel()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_COST", clicked.getName());
+                    player.playSound(player.getLocation(), Sound.ENTITY_CAT_EAT, 1.0f, 1.0f);
                     return;
                 }
-                // close and debit
-                close(player);
-                plugin.getQueryFactory().alterEnergyLevel("player_prefs", -cost, where, player);
+                // debit
+                HashMap<String, Object> wheretl = new HashMap<>();
+                wheretl.put("uuid", uuid);
+                plugin.getQueryFactory().alterEnergyLevel("player_prefs", -cost, wheretl, player);
+                // play sound
+                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.0f);
+                // message
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_SUCCESS", clicked.getName());
+                // update system upgrade record
+                new SystemUpgradeUpdate(plugin).set(uuid, id, clicked);
+                // set custom model data for clicked upgrade
+                ItemMeta im = is.getItemMeta();
+                im.setCustomModelData(im.getCustomModelData() + 1000);
+                List<String> lore = im.getLore();
+                lore.set(lore.size() - 1, ChatColor.GOLD + "Unlocked");
+                im.setLore(lore);
+                is.setItemMeta(im);
+                // set artron level remaining for item in system tree slot
+                int remaining = current.getArtronLevel() - cost;
+                ItemStack st = view.getItem(GUISystemTree.UPGRADE_TREE.getSlot());
+                ItemMeta stim = st.getItemMeta();
+                List<String> stlore = stim.getLore();
+                stlore.set(3, ChatColor.AQUA + "" + ChatColor.ITALIC + "Artron Level: " + remaining);
+                stim.setLore(stlore);
+                st.setItemMeta(stim);
             }
         } catch (IllegalArgumentException e) {
             // clicked upgrade tree
+            plugin.debug("IllegalArgumentException for " + clicked.getRequired());
             close(player);
         }
     }
