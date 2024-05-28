@@ -33,7 +33,7 @@ public class TARDISSystemTreeGUI {
             if (g.getSlot() != -1) {
                 ItemStack is = new ItemStack(g.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
-                String prefix = (g.getBranch().equals("branch")) ? ChatColor.GOLD + "" : "";
+                String prefix = (g.getBranch().equals("branch")) ? ChatColor.GOLD + "" + ChatColor.ITALIC : "";
                 im.setDisplayName(prefix + g.getName());
                 List<String> lore = new ArrayList<>(g.getLore());
                 boolean has = sysData.getUpgrades().get(g);
@@ -46,7 +46,7 @@ public class TARDISSystemTreeGUI {
                     }
                     lore.add(ChatColor.AQUA + "" + ChatColor.ITALIC + "Cost: " + cost);
                 } else if (g != GUISystemTree.UPGRADE_TREE) {
-                    lore.add(ChatColor.GOLD + "Unlocked");
+                    lore.add(ChatColor.GREEN + "" + ChatColor.ITALIC + "Unlocked");
                 } else {
                     // add players current Artron level to UPGRADE_TREE
                     lore.add(ChatColor.AQUA + "" + ChatColor.ITALIC + "Artron Level: " + sysData.getArtronLevel());

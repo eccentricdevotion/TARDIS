@@ -43,7 +43,7 @@ public enum GUISystemTree {
     INTER_DIMENSIONAL_TRAVEL(1006, 48, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks travel to", "the Nether and End."), "INTER_DIMENSIONAL_TRAVEL", "navigation"),
     TOOLS(1004, 16, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the", "tools branch."), "UPGRADE_TREE", "branch"),
     TARDIS_LOCATOR(1005, 26, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "to be found."), "TOOLS", "tools"),
-    BIOME_READER(1005, 35, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows biomes", "to be stored", "for travel."), "LOCATOR", "tools"),
+    BIOME_READER(1005, 35, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows biomes", "to be stored", "for travel."), "TARDIS_LOCATOR", "tools"),
     FORCE_FIELD(1005, 44, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "to have a monster", "repelling force field."), "BIOME_READER", "tools"),
     STATTENHEIM_REMOTE(1005, 53, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "to be remotely", "called to a location."), "FORCE_FIELD", "tools");
 

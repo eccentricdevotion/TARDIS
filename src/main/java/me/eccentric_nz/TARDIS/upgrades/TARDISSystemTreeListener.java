@@ -8,7 +8,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -137,7 +137,7 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
                 ItemMeta im = is.getItemMeta();
                 im.setCustomModelData(im.getCustomModelData() + 1000);
                 List<String> lore = im.getLore();
-                lore.set(lore.size() - 1, ChatColor.GOLD + "Unlocked");
+                lore.set(lore.size() - 1, ChatColor.GREEN + "" + org.bukkit.ChatColor.ITALIC + "Unlocked");
                 im.setLore(lore);
                 is.setItemMeta(im);
                 // set artron level remaining for item in system tree slot

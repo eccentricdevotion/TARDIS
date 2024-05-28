@@ -22,7 +22,7 @@ public class SystemUpgradeUpdate {
 
     public void set(String uuid, int id, GUISystemTree clicked) {
         PreparedStatement ps = null;
-        String query = "UPDATE " + prefix + "system_upgrades SET " + clicked.getDatabaseName() + " = 1 WHERE uuid = ? AND id = ?";
+        String query = "UPDATE " + prefix + "system_upgrades SET " + clicked.getDatabaseName() + " = 1 WHERE uuid = ? AND tardis_id = ?";
         try {
             service.testConnection(connection);
             ps = connection.prepareStatement(query);
