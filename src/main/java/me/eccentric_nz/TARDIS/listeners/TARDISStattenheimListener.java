@@ -26,11 +26,13 @@ import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.control.SensorToggle;
+import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
@@ -91,6 +93,11 @@ public class TARDISStattenheimListener implements Listener {
             ItemMeta im = is.getItemMeta();
             int uses;
             if (im.getDisplayName().equals("Stattenheim Remote")) {
+                UUID uuid = player.getUniqueId();
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), GUISystemTree.STATTENHEIM_REMOTE)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Stattenheim Remote");
+                    return;
+                }
                 // check uses
                 if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
                     uses = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
@@ -110,7 +117,6 @@ public class TARDISStattenheimListener implements Listener {
                 }
                 Action action = event.getAction();
                 // check they are a Time Lord
-                UUID uuid = player.getUniqueId();
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);

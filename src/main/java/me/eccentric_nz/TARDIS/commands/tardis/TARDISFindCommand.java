@@ -18,11 +18,13 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -40,6 +42,10 @@ class TARDISFindCommand {
 
     boolean findTARDIS(Player player) {
         if (TARDISPermission.hasPermission(player, "tardis.find")) {
+            if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), GUISystemTree.TARDIS_LOCATOR)) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "TARDIS Locator");
+                return true;
+            }
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (!rs.fromUUID(player.getUniqueId().toString())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");

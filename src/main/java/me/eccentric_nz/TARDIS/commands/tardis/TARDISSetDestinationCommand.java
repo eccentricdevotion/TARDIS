@@ -20,10 +20,12 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -45,10 +47,15 @@ class TARDISSetDestinationCommand {
 
     boolean doSetDestination(Player player, String[] args) {
         if (TARDISPermission.hasPermission(player, "tardis.save")) {
+            String uuid = player.getUniqueId().toString();
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
-            if (!rs.fromUUID(player.getUniqueId().toString())) {
+            if (!rs.fromUUID(uuid)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                return false;
+                return true;
+            }
+            if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid, GUISystemTree.SAVES)) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
+                return true;
             }
             if (args.length < 2) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
@@ -73,7 +80,7 @@ class TARDISSetDestinationCommand {
                 }
                 // check they are not in the tardis
                 HashMap<String, Object> wherettrav = new HashMap<>();
-                wherettrav.put("uuid", player.getUniqueId().toString());
+                wherettrav.put("uuid", uuid);
                 wherettrav.put("tardis_id", id);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wherettrav, false);
                 if (rst.resultSet()) {

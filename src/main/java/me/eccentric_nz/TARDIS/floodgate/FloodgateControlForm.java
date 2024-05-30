@@ -11,6 +11,7 @@ import me.eccentric_nz.TARDIS.control.*;
 import me.eccentric_nz.TARDIS.control.actions.FastReturnAction;
 import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
 import me.eccentric_nz.TARDIS.control.actions.SiegeAction;
+import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -20,6 +21,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -138,6 +140,10 @@ public class FloodgateControlForm {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISRandomButton(plugin, player, id, level, 0, tardis.getCompanions(), tardis.getUuid()).clickButton(), 2L);
                     }
                     case 1 -> { // saves gui
+                        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), GUISystemTree.SAVES)) {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
+                            return;
+                        }
                         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                             return;
@@ -186,6 +192,10 @@ public class FloodgateControlForm {
                         new FloodgateDestinationTerminalForm(plugin, uuid).send();
                     }
                     case 5 -> { // ars
+                        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), GUISystemTree.ROOM_GROWING)) {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Room Growing");
+                            return;
+                        }
                         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                             return;
@@ -213,6 +223,10 @@ public class FloodgateControlForm {
                         }, 100);
                     }
                     case 6 -> { // desktop theme
+                        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), GUISystemTree.DESKTOP_THEME)) {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Desktop Theme");
+                            return;
+                        }
                         // check player is in own TARDIS
                         int p_tid = TARDISThemeButton.getTardisId(uuid.toString());
                         if (p_tid != id) {
@@ -258,6 +272,10 @@ public class FloodgateControlForm {
                     }
                     case 10 -> new FloodgateMapForm(plugin, uuid, id).send(); // map
                     case 11 -> { // chameleon circuit
+                        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), GUISystemTree.CHAMELEON_CIRCUIT)) {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Chameleon Circuit");
+                            return;
+                        }
                         if (tcc != null && !tcc.hasChameleon()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_MISSING");
                             return;
@@ -362,7 +380,6 @@ public class FloodgateControlForm {
                         if (comps == null || comps.isEmpty()) {
                             // open companions add gui
                             new FloodgateAddCompanionsForm(plugin, uuid).send();
-//                            plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_NONE");
                             return;
                         }
                         String[] companionData = comps.split(":");

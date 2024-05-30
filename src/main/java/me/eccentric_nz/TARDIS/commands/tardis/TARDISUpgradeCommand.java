@@ -20,12 +20,14 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISPluginThemeInventory;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -33,6 +35,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -50,13 +53,18 @@ class TARDISUpgradeCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_UPGRADE");
             return true;
         }
+        UUID uuid = player.getUniqueId();
         // they must have an existing TARDIS
         HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", player.getUniqueId().toString());
+        where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (!rs.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-            return false;
+            return true;
+        }
+        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), GUISystemTree.DESKTOP_THEME)) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Desktop Theme");
+            return true;
         }
         Tardis tardis = rs.getTardis();
         // console must in a TARDIS world
@@ -96,7 +104,7 @@ class TARDISUpgradeCommand {
         TARDISUpgradeData tud = new TARDISUpgradeData();
         tud.setPrevious(current_console);
         tud.setLevel(level);
-        plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
+        plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
         // open the upgrade menu
         ItemStack[] consoles = new TARDISPluginThemeInventory(plugin, player, current_console.getPermission(), level).getMenu();
         Inventory upg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Upgrade Menu");

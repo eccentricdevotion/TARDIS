@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.control.actions.DirectionAction;
 import me.eccentric_nz.TARDIS.control.actions.FastReturnAction;
 import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
 import me.eccentric_nz.TARDIS.control.actions.SiegeAction;
+import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -48,6 +49,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.travel.save.TARDISSavesPlanetInventory;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
@@ -152,6 +154,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             }
             case 2 -> {
                 // ars
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), GUISystemTree.ROOM_GROWING)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Room Growing");
+                    return;
+                }
                 if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                     return;
@@ -177,6 +183,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             }
             case 4 -> {
                 // chameleon circuit
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), GUISystemTree.CHAMELEON_CIRCUIT)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Chameleon Circuit");
+                    return;
+                }
                 if (tcc != null && !tcc.hasChameleon()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_MISSING");
                     return;
@@ -226,6 +236,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             }
             case 9, 18 -> {
                 // saves
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), GUISystemTree.SAVES)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
+                    return;
+                }
                 // 9 = saves for the TARDIS the player is in
                 // 18 = saves for the player's TARDIS (if they're not in their own)
                 // so, determine player's TARDIS id vs occupied TARDIS id
@@ -258,6 +272,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             }
             case 11 -> {
                 // desktop theme
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), GUISystemTree.DESKTOP_THEME)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Desktop Theme");
+                    return;
+                }
                 if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                     return;

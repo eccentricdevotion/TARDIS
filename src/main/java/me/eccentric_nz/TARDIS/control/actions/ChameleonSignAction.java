@@ -2,9 +2,12 @@ package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.TARDISChameleonControl;
+import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateChameleonCircuitForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -18,9 +21,13 @@ public class ChameleonSignAction {
     }
 
     public void openGUI(Player player, Tardis tardis, int id) {
-        UUID playerUUID = player.getUniqueId();
-        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
-            new FloodgateChameleonCircuitForm(plugin, playerUUID, id, tardis.getPreset()).send();
+        UUID uuid = player.getUniqueId();
+        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), GUISystemTree.ROOM_GROWING)) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Room Growing");
+            return;
+        }
+        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(uuid)) {
+            new FloodgateChameleonCircuitForm(plugin, uuid, id, tardis.getPreset()).send();
         } else {
             new TARDISChameleonControl(plugin).openGUI(player, id, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset());
         }

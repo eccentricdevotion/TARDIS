@@ -5,8 +5,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.control.TARDISThemeButton;
+import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -20,6 +22,10 @@ public class ARSAction {
     }
 
     public void openGUI(Player player, Tardis tardis, TARDISCircuitChecker tcc, int id) {
+        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), GUISystemTree.ROOM_GROWING)) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Room Growing");
+            return;
+        }
         if (!tardis.isHandbrakeOn()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_NO_TRAVEL");
             return;
