@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.SystemUpgrade;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerArtronLevel;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetSystemUpgrades;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -42,12 +42,12 @@ public class SystemTreeCommand {
             return true;
         }
         // get player's artron energy level
-        ResultSetPlayerArtronLevel rsp = new ResultSetPlayerArtronLevel(plugin, id, uuid);
+        ResultSetSystemUpgrades rsp = new ResultSetSystemUpgrades(plugin, id, uuid);
         if (!rsp.resultset()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_TRAVEL_FIRST");
             return true;
         }
-        SystemUpgrade current = rsp.getSystemUpgrade();
+        SystemUpgrade current = rsp.getData();
         ItemStack[] menu = new TARDISSystemTreeGUI(plugin, current).getInventory();
         Inventory upgrades = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS System Upgrades");
         upgrades.setContents(menu);

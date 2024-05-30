@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.upgrades;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
 import me.eccentric_nz.TARDIS.database.data.SystemUpgrade;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerArtronLevel;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetSystemUpgrades;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -69,7 +69,7 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
             return;
         }
         // get player's artron energy level
-        ResultSetPlayerArtronLevel rsp = new ResultSetPlayerArtronLevel(plugin, id, uuid);
+        ResultSetSystemUpgrades rsp = new ResultSetSystemUpgrades(plugin, id, uuid);
         if (!rsp.resultset()) {
             close(player);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_TRAVEL_FIRST");
@@ -79,7 +79,7 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
             close(player);
             return;
         }
-        SystemUpgrade current = rsp.getSystemUpgrade();
+        SystemUpgrade current = rsp.getData();
         GUISystemTree clicked;
         switch (slot) {
             case 9 -> clicked = GUISystemTree.ARCHITECTURE;

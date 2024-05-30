@@ -25,7 +25,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ResultSetPlayerArtronLevel {
+public class ResultSetSystemUpgrades {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
@@ -33,9 +33,9 @@ public class ResultSetPlayerArtronLevel {
     private final int id;
     private final String uuid;
     private final String prefix;
-    private SystemUpgrade systemUpgrade;
+    private SystemUpgrade data;
 
-    public ResultSetPlayerArtronLevel(TARDIS plugin, int id, String uuid) {
+    public ResultSetSystemUpgrades(TARDIS plugin, int id, String uuid) {
         this.plugin = plugin;
         this.id = id;
         this.uuid = uuid;
@@ -46,7 +46,6 @@ public class ResultSetPlayerArtronLevel {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT " + prefix + "player_prefs.artron_level, " + prefix + "system_upgrades.* FROM " + prefix + "player_prefs, " + prefix + "system_upgrades WHERE " + prefix + "system_upgrades.uuid = ? AND " + prefix + "system_upgrades.tardis_id = ? AND " + prefix + "system_upgrades.uuid = " + prefix + "player_prefs.uuid";
-//        plugin.debug(query);
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -55,7 +54,7 @@ public class ResultSetPlayerArtronLevel {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                systemUpgrade = new SystemUpgrade(
+                data = new SystemUpgrade(
                         rs.getInt("artron_level"),
                         rs.getBoolean("architecture"),
                         rs.getBoolean("chameleon"),
@@ -94,7 +93,7 @@ public class ResultSetPlayerArtronLevel {
         return true;
     }
 
-    public SystemUpgrade getSystemUpgrade() {
-        return systemUpgrade;
+    public SystemUpgrade getData() {
+        return data;
     }
 }

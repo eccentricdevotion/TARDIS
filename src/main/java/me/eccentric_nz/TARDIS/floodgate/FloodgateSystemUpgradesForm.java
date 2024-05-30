@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.floodgate;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
 import me.eccentric_nz.TARDIS.database.data.SystemUpgrade;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerArtronLevel;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetSystemUpgrades;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -54,12 +54,12 @@ public class FloodgateSystemUpgradesForm {
             return;
         }
         // get player's artron energy level
-        ResultSetPlayerArtronLevel rsp = new ResultSetPlayerArtronLevel(plugin, id, uuid.toString());
+        ResultSetSystemUpgrades rsp = new ResultSetSystemUpgrades(plugin, id, uuid.toString());
         if (!rsp.resultset()) {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "SYS_TRAVEL_FIRST");
             return;
         }
-        sysData = rsp.getSystemUpgrade();
+        sysData = rsp.getData();
         SimpleForm.Builder builder = SimpleForm.builder();
         builder.title("TARDIS System Upgrades");
         builder.content("Artron Level: " + sysData.getArtronLevel());
