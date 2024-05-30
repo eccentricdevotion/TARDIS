@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
+import me.eccentric_nz.TARDIS.commands.dev.SystemTreeCommand;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
@@ -322,7 +323,6 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                         presetinv.setContents(items);
                         player.openInventory(presetinv);
                     }, 2L);
-//                    plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_NONE");
                     return;
                 }
                 String[] companionData = comps.split(":");
@@ -372,6 +372,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 Inventory smat = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS transmats");
                 smat.setContents(tran);
                 player.openInventory(smat);
+            }
+            case 35 -> {
+                // system upgrades
+                new SystemTreeCommand(plugin).open(player);
             }
             case 36 -> {
                 // areas

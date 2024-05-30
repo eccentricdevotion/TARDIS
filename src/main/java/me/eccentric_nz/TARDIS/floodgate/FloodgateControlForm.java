@@ -73,6 +73,7 @@ public class FloodgateControlForm {
                 .button("Zero Room", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/control/zero_button.png")
                 .button("Player Preferences", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/control/prefs_button.png")
                 .button("Companions", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/control/companions_button.png")
+                .button("System Upgrades", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/control/system_upgrades_button.png")
                 .validResultHandler(this::handleResponse)
                 .build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
@@ -80,8 +81,8 @@ public class FloodgateControlForm {
     }
 
     private void handleResponse(SimpleFormResponse response) {
-        int buttonId = response.clickedButtonId();
         Player player = Bukkit.getPlayer(uuid);
+        int buttonId = response.clickedButtonId();
         // get the TARDIS the player is in
         HashMap<String, Object> wheres = new HashMap<>();
         wheres.put("uuid", uuid.toString());
@@ -367,6 +368,12 @@ public class FloodgateControlForm {
                         String[] companionData = comps.split(":");
                         new FloodgateCompanionsForm(plugin, uuid, companionData).send();
                     }
+                    case 24 -> { // system upgrades
+                        if (!plugin.getConfig().getBoolean("difficulty.system_upgrades")) {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_DISABLED");
+                            return;
+                        }
+                        new FloodgateSystemUpgradesForm(plugin, uuid, id).send(); }
                     default -> { // do nothing
                     }
                 }

@@ -5,6 +5,7 @@ import me.eccentric_nz.TARDIS.database.data.SystemUpgrade;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerArtronLevel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.upgrades.TARDISSystemTreeGUI;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
@@ -37,11 +38,13 @@ public class SystemTreeCommand {
         wheret.put("uuid", uuid);
         ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
         if (!rs.resultSet()) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_OWNER");
             return true;
         }
         // get player's artron energy level
         ResultSetPlayerArtronLevel rsp = new ResultSetPlayerArtronLevel(plugin, id, uuid);
         if (!rsp.resultset()) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_TRAVEL_FIRST");
             return true;
         }
         SystemUpgrade current = rsp.getSystemUpgrade();
