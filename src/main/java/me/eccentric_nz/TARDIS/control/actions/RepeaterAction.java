@@ -25,9 +25,8 @@ public class RepeaterAction {
         boolean hasnt = false;
         // check if player/tardis has system upgrade
         if (plugin.getConfig().getBoolean("difficulty.system_upgrades")) {
-//            plugin.debug("delay: " + delay);
             if (rc == RepeaterControl.WORLD) {
-                if ((delay == 3 || delay == 4) && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), GUISystemTree.INTER_DIMENSIONAL_TRAVEL)) {
+                if ((delay == 2 || delay == 3) && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), GUISystemTree.INTER_DIMENSIONAL_TRAVEL)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Inter Dimensional Travel");
                     hasnt = true;
                 }
@@ -47,9 +46,10 @@ public class RepeaterAction {
                 }
             }
             if (hasnt) {
-                plugin.debug("hasnt - setting repeater back to previous tick setting");
-                repeater.setDelay(1);
-                block.setBlockData(repeater);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    repeater.setDelay(1);
+                    block.setBlockData(repeater);
+                }, 2L);
             }
         }
         // message setting when clicked
