@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.upgrades;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
 import me.eccentric_nz.TARDIS.database.data.SystemUpgrade;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSystemUpgrades;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -80,27 +79,28 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
             return;
         }
         SystemUpgrade current = rsp.getData();
-        GUISystemTree clicked;
+        SystemTree clicked;
         switch (slot) {
-            case 9 -> clicked = GUISystemTree.ARCHITECTURE;
-            case 13 -> clicked = GUISystemTree.NAVIGATION;
-            case 16 -> clicked = GUISystemTree.TOOLS;
-            case 19 -> clicked = GUISystemTree.CHAMELEON_CIRCUIT;
-            case 23 -> clicked = GUISystemTree.SAVES;
-            case 26 -> clicked = GUISystemTree.TARDIS_LOCATOR;
-            case 28 -> clicked = GUISystemTree.ROOM_GROWING;
-            case 32 -> clicked = GUISystemTree.DISTANCE_1;
-            case 35 -> clicked = GUISystemTree.BIOME_READER;
-            case 37 -> clicked = GUISystemTree.DESKTOP_THEME;
-            case 41 -> clicked = GUISystemTree.DISTANCE_2;
-            case 44 -> clicked = GUISystemTree.FORCE_FIELD;
-            case 48 -> clicked = GUISystemTree.INTER_DIMENSIONAL_TRAVEL;
-            case 50 -> clicked = GUISystemTree.DISTANCE_3;
-            case 53 -> clicked = GUISystemTree.STATTENHEIM_REMOTE;
-            default -> clicked = GUISystemTree.UPGRADE_TREE;
+            case 9 -> clicked = SystemTree.ARCHITECTURE;
+            case 13 -> clicked = SystemTree.NAVIGATION;
+            case 16 -> clicked = SystemTree.TOOLS;
+            case 19 -> clicked = SystemTree.CHAMELEON_CIRCUIT;
+            case 23 -> clicked = SystemTree.SAVES;
+            case 26 -> clicked = SystemTree.TARDIS_LOCATOR;
+            case 28 -> clicked = SystemTree.ROOM_GROWING;
+            case 32 -> clicked = SystemTree.DISTANCE_1;
+            case 35 -> clicked = SystemTree.BIOME_READER;
+            case 37 -> clicked = SystemTree.DESKTOP_THEME;
+            case 39 -> clicked = SystemTree.EXTERIOR_FLIGHT;
+            case 41 -> clicked = SystemTree.DISTANCE_2;
+            case 44 -> clicked = SystemTree.FORCE_FIELD;
+            case 48 -> clicked = SystemTree.INTER_DIMENSIONAL_TRAVEL;
+            case 50 -> clicked = SystemTree.DISTANCE_3;
+            case 53 -> clicked = SystemTree.STATTENHEIM_REMOTE;
+            default -> clicked = SystemTree.UPGRADE_TREE;
         }
         try {
-            GUISystemTree required = GUISystemTree.valueOf(clicked.getRequired());
+            SystemTree required = SystemTree.valueOf(clicked.getRequired());
             if (!current.getUpgrades().get(required)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_REQUIRED", required.getName());
                 player.playSound(player.getLocation(), Sound.ENTITY_WARDEN_TENDRIL_CLICKS, 1.0f, 1.0f);
@@ -142,7 +142,7 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
                 is.setItemMeta(im);
                 // set artron level remaining for item in system tree slot
                 int remaining = current.getArtronLevel() - cost;
-                ItemStack st = view.getItem(GUISystemTree.UPGRADE_TREE.getSlot());
+                ItemStack st = view.getItem(SystemTree.UPGRADE_TREE.getSlot());
                 ItemMeta stim = st.getItemMeta();
                 List<String> stlore = stim.getLore();
                 stlore.set(3, ChatColor.AQUA + "" + ChatColor.ITALIC + "Artron Level: " + remaining);

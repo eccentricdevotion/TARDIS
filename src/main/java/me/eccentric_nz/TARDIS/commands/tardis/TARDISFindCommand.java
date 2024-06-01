@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -42,7 +42,7 @@ class TARDISFindCommand {
 
     boolean findTARDIS(Player player) {
         if (TARDISPermission.hasPermission(player, "tardis.find")) {
-            if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), GUISystemTree.TARDIS_LOCATOR)) {
+            if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.TARDIS_LOCATOR)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "TARDIS Locator");
                 return true;
             }

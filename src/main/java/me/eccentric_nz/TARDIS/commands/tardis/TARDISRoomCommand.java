@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISZeroRoomBuilder;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -50,7 +50,7 @@ class TARDISRoomCommand {
 
     boolean startRoom(Player player, String[] args) {
         UUID uuid = player.getUniqueId();
-        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), GUISystemTree.ROOM_GROWING)) {
+        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.ROOM_GROWING)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Room Growing");
             return true;
         }

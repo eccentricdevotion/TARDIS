@@ -32,7 +32,7 @@ import me.eccentric_nz.TARDIS.control.actions.DirectionAction;
 import me.eccentric_nz.TARDIS.control.actions.FastReturnAction;
 import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
 import me.eccentric_nz.TARDIS.control.actions.SiegeAction;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -154,7 +154,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             }
             case 2 -> {
                 // ars
-                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), GUISystemTree.ROOM_GROWING)) {
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.ROOM_GROWING)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Room Growing");
                     return;
                 }
@@ -183,7 +183,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             }
             case 4 -> {
                 // chameleon circuit
-                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), GUISystemTree.CHAMELEON_CIRCUIT)) {
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.CHAMELEON_CIRCUIT)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Chameleon Circuit");
                     return;
                 }
@@ -236,7 +236,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             }
             case 9, 18 -> {
                 // saves
-                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), GUISystemTree.SAVES)) {
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.SAVES)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
                     return;
                 }
@@ -272,7 +272,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             }
             case 11 -> {
                 // desktop theme
-                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), GUISystemTree.DESKTOP_THEME)) {
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.DESKTOP_THEME)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Desktop Theme");
                     return;
                 }

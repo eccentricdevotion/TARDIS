@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.upgrades;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
 import me.eccentric_nz.TARDIS.database.data.SystemUpgrade;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +28,7 @@ public class TARDISSystemTreeGUI {
      */
     private ItemStack[] getItemStacks() {
         ItemStack[] stacks = new ItemStack[54];
-        for (GUISystemTree g : GUISystemTree.values()) {
+        for (SystemTree g : SystemTree.values()) {
             if (g.getSlot() != -1) {
                 ItemStack is = new ItemStack(g.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
@@ -45,7 +44,7 @@ public class TARDISSystemTreeGUI {
                         cost = plugin.getSystemUpgradesConfig().getString(g.getBranch() + "." + g.toString().toLowerCase());
                     }
                     lore.add(ChatColor.AQUA + "" + ChatColor.ITALIC + "Cost: " + cost);
-                } else if (g != GUISystemTree.UPGRADE_TREE) {
+                } else if (g != SystemTree.UPGRADE_TREE) {
                     lore.add(ChatColor.GREEN + "" + ChatColor.ITALIC + "Unlocked");
                 } else {
                     // add players current Artron level to UPGRADE_TREE
@@ -62,55 +61,55 @@ public class TARDISSystemTreeGUI {
         // horizontal
         int[] horizontal = new int[]{10, 12, 14, 15};
         for (int h : horizontal) {
-            ItemStack is = new ItemStack(GUISystemTree.H_LINE.getMaterial(), 1);
+            ItemStack is = new ItemStack(SystemTree.H_LINE.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(ChatColor.RESET + "");
-            im.setCustomModelData(GUISystemTree.H_LINE.getCustomModelData());
+            im.setCustomModelData(SystemTree.H_LINE.getCustomModelData());
             is.setItemMeta(im);
             stacks[h] = is;
         }
         // t_right
         int[] t_right = new int[]{18, 22, 25, 27, 31, 34, 40, 43};
         for (int r : t_right) {
-            ItemStack is = new ItemStack(GUISystemTree.T_RIGHT.getMaterial(), 1);
+            ItemStack is = new ItemStack(SystemTree.T_RIGHT.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(ChatColor.RESET + "");
-            im.setCustomModelData(GUISystemTree.T_RIGHT.getCustomModelData());
+            im.setCustomModelData(SystemTree.T_RIGHT.getCustomModelData());
             is.setItemMeta(im);
             stacks[r] = is;
         }
         // t_up
         int[] t_up = new int[]{11, 49};
         for (int t : t_up) {
-            ItemStack is = new ItemStack(GUISystemTree.T_UP.getMaterial(), 1);
+            ItemStack is = new ItemStack(SystemTree.T_UP.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(ChatColor.RESET + "");
-            im.setCustomModelData(GUISystemTree.T_UP.getCustomModelData());
+            im.setCustomModelData(SystemTree.T_UP.getCustomModelData());
             is.setItemMeta(im);
             stacks[t] = is;
         }
         // down_right
         int[] down_right = new int[]{36, 52};
         for (int d : down_right) {
-            ItemStack is = new ItemStack(GUISystemTree.D_RIGHT.getMaterial(), 1);
+            ItemStack is = new ItemStack(SystemTree.D_RIGHT.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(ChatColor.RESET + "");
-            im.setCustomModelData(GUISystemTree.D_RIGHT.getCustomModelData());
+            im.setCustomModelData(SystemTree.D_RIGHT.getCustomModelData());
             is.setItemMeta(im);
             stacks[d] = is;
         }
         // background
-        ItemStack is = new ItemStack(GUISystemTree.BLANK.getMaterial(), 1);
+        ItemStack is = new ItemStack(SystemTree.BLANK.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.RESET + "");
-        im.setCustomModelData(GUISystemTree.BLANK.getCustomModelData());
+        im.setCustomModelData(SystemTree.BLANK.getCustomModelData());
         is.setItemMeta(im);
         stacks[0] = is;
         // close
-        ItemStack close = new ItemStack(GUISystemTree.CLOSE.getMaterial(), 1);
+        ItemStack close = new ItemStack(SystemTree.CLOSE.getMaterial(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUISystemTree.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(SystemTree.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
         stacks[8] = close;
         return stacks;

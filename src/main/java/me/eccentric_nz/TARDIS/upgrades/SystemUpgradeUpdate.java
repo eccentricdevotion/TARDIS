@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.upgrades;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
 import java.sql.Connection;
@@ -20,7 +19,7 @@ public class SystemUpgradeUpdate {
         this.prefix = this.plugin.getPrefix();
     }
 
-    public void set(String uuid, int id, GUISystemTree clicked) {
+    public void set(String uuid, int id, SystemTree clicked) {
         PreparedStatement ps = null;
         String query = "UPDATE " + prefix + "system_upgrades SET " + clicked.getDatabaseName() + " = 1 WHERE uuid = ? AND tardis_id = ?";
         try {

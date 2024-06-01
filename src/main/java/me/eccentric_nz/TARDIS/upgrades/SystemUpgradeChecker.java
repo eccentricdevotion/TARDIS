@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.upgrades;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSystemUpgrades;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 
@@ -13,7 +12,7 @@ public class SystemUpgradeChecker {
         this.plugin = plugin;
     }
 
-    public boolean has(String uuid, GUISystemTree upgrade) {
+    public boolean has(String uuid, SystemTree upgrade) {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (!rs.fromUUID(uuid)) {
             return false;

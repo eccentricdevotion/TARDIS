@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
@@ -20,7 +20,7 @@ public class ForceFieldAction {
 
     public void toggleSheilds(Player player, Location blockLocation, int level) {
         if (TARDISPermission.hasPermission(player, "tardis.forcefield")) {
-            if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), GUISystemTree.FORCE_FIELD)) {
+            if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.FORCE_FIELD)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Force Field");
                 return;
             }

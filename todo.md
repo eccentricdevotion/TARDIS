@@ -13,7 +13,8 @@
 5. Animated models for TWA player disguises
 6. System upgrades - similar to [TARDIS: Refined 2](https://wiki.tardisrefined.net/upgrades-and-functions.html#unlocking-upgrades) mod - and [#303](https://github.com/eccentricdevotion/TARDIS/issues/303) + ties in well with new difficulty settings
    - if enabled, check whether player/TARDIS can use the upgrade
-   - add exterior flight upgrade
+   - add monitor, _(cave, structure, biome)->telepathic_ upgrades
+   - save sign / save disks
 7. ?
 
 ## Future versions

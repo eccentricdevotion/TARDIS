@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.database.data.SystemUpgrade;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSystemUpgrades;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -64,8 +64,8 @@ public class FloodgateSystemUpgradesForm {
         builder.title("TARDIS System Upgrades");
         builder.content("Artron Level: " + sysData.getArtronLevel());
         // add buttons
-        for (GUISystemTree g : GUISystemTree.values()) {
-            if (g.getSlot() != -1 && g != GUISystemTree.UPGRADE_TREE) {
+        for (SystemTree g : SystemTree.values()) {
+            if (g.getSlot() != -1 && g != SystemTree.UPGRADE_TREE) {
                 boolean has = sysData.getUpgrades().get(g);
                 boolean branch = g.getBranch().equals("branch");
                 String prefix = (branch) ? ChatColor.GOLD + "" + ChatColor.ITALIC : "";
@@ -97,27 +97,27 @@ public class FloodgateSystemUpgradesForm {
     private void handleResponse(SimpleFormResponse response) {
         Player player = Bukkit.getPlayer(uuid);
         int button = response.clickedButtonId();
-        GUISystemTree clicked;
+        SystemTree clicked;
         switch (button) {
-            case 0 -> clicked = GUISystemTree.ARCHITECTURE;
-            case 1 -> clicked = GUISystemTree.CHAMELEON_CIRCUIT;
-            case 2 -> clicked = GUISystemTree.ROOM_GROWING;
-            case 3 -> clicked = GUISystemTree.DESKTOP_THEME;
-            case 4 -> clicked = GUISystemTree.NAVIGATION;
-            case 5 -> clicked = GUISystemTree.SAVES;
-            case 6 -> clicked = GUISystemTree.DISTANCE_1;
-            case 7 -> clicked = GUISystemTree.DISTANCE_2;
-            case 8 -> clicked = GUISystemTree.DISTANCE_3;
-            case 9 -> clicked = GUISystemTree.INTER_DIMENSIONAL_TRAVEL;
-            case 10 -> clicked = GUISystemTree.TOOLS;
-            case 11 -> clicked = GUISystemTree.TARDIS_LOCATOR;
-            case 12 -> clicked = GUISystemTree.BIOME_READER;
-            case 13 -> clicked = GUISystemTree.FORCE_FIELD;
-            case 14 -> clicked = GUISystemTree.STATTENHEIM_REMOTE;
-            default -> clicked = GUISystemTree.UPGRADE_TREE;
+            case 0 -> clicked = SystemTree.ARCHITECTURE;
+            case 1 -> clicked = SystemTree.CHAMELEON_CIRCUIT;
+            case 2 -> clicked = SystemTree.ROOM_GROWING;
+            case 3 -> clicked = SystemTree.DESKTOP_THEME;
+            case 4 -> clicked = SystemTree.NAVIGATION;
+            case 5 -> clicked = SystemTree.SAVES;
+            case 6 -> clicked = SystemTree.DISTANCE_1;
+            case 7 -> clicked = SystemTree.DISTANCE_2;
+            case 8 -> clicked = SystemTree.DISTANCE_3;
+            case 9 -> clicked = SystemTree.INTER_DIMENSIONAL_TRAVEL;
+            case 10 -> clicked = SystemTree.TOOLS;
+            case 11 -> clicked = SystemTree.TARDIS_LOCATOR;
+            case 12 -> clicked = SystemTree.BIOME_READER;
+            case 13 -> clicked = SystemTree.FORCE_FIELD;
+            case 14 -> clicked = SystemTree.STATTENHEIM_REMOTE;
+            default -> clicked = SystemTree.UPGRADE_TREE;
         }
         try {
-            GUISystemTree required = GUISystemTree.valueOf(clicked.getRequired());
+            SystemTree required = SystemTree.valueOf(clicked.getRequired());
             if (!sysData.getUpgrades().get(required)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_REQUIRED", required.getName());
                 player.playSound(player.getLocation(), Sound.ENTITY_WARDEN_TENDRIL_CLICKS, 1.0f, 1.0f);

@@ -4,6 +4,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.models.FlightModeModel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.FlightMode;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
@@ -33,6 +36,11 @@ public class FlightModeInteraction {
                 mode = 1;
             }
             FlightMode flightMode = FlightMode.getByMode().get(mode);
+            if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && flightMode == FlightMode.EXTERIOR &&  !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.EXTERIOR_FLIGHT)) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Exterior Flight");
+                mode = 1;
+                flightMode = FlightMode.NORMAL;
+            }
             plugin.getMessenger().announceRepeater(player, TARDISStringUtils.capitalise(flightMode.toString()));
             // update control record
             HashMap<String, Object> set = new HashMap<>();

@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.custommodeldata;
+package me.eccentric_nz.TARDIS.upgrades;
 
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
 import java.util.List;
 
-public enum GUISystemTree {
+public enum SystemTree {
 
     // TARDIS System Upgrades
     T_UP(1),
@@ -41,6 +41,7 @@ public enum GUISystemTree {
     DISTANCE_2(1005, 41, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 3x", "distance multiplier."), "DISTANCE_1", "navigation"),
     DISTANCE_3(1005, 50, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 4x", "distance multiplier."), "DISTANCE_2", "navigation"),
     INTER_DIMENSIONAL_TRAVEL(1006, 48, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks travel to", "the Nether and End."), "DISTANCE_3", "navigation"),
+    EXTERIOR_FLIGHT(1007, 39, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks flying the", "TARDIS exterior."), "INTER_DIMENSIONAL_TRAVEL", "navigation"),
     TOOLS(1004, 16, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the", "tools branch."), "UPGRADE_TREE", "branch"),
     TARDIS_LOCATOR(1005, 26, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "to be found."), "TOOLS", "tools"),
     BIOME_READER(1005, 35, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows biomes", "to be stored", "for travel."), "TARDIS_LOCATOR", "tools"),
@@ -54,7 +55,7 @@ public enum GUISystemTree {
     private final String required;
     private final String branch;
 
-    GUISystemTree(int customModelData, int slot, Material material, List<String> lore, String required, String branch) {
+    SystemTree(int customModelData, int slot, Material material, List<String> lore, String required, String branch) {
         this.customModelData = customModelData;
         this.slot = slot;
         this.material = material;
@@ -63,7 +64,7 @@ public enum GUISystemTree {
         this.branch = branch;
     }
 
-    GUISystemTree(int customModelData) {
+    SystemTree(int customModelData) {
         this.customModelData = customModelData;
         this.slot = -1;
         this.material = Material.MAGENTA_GLAZED_TERRACOTTA;

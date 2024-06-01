@@ -4,7 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellInventory;
 import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellPresetInventory;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateShellLoaderForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
@@ -25,7 +25,7 @@ public class ShellRoomAction {
     }
 
     public void openGUI(Player player, int id) {
-        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), GUISystemTree.CHAMELEON_CIRCUIT)) {
+        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.CHAMELEON_CIRCUIT)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Chameleon Circuit");
             return;
         }
