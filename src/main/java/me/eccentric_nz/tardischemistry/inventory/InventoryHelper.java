@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardischemistry.inventory;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

@@ -12,7 +12,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardisshop.database.InsertShopItem;
 import me.eccentric_nz.tardisshop.database.ResultSetUpdateShop;
 import me.eccentric_nz.tardisshop.database.UpdateShopItem;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

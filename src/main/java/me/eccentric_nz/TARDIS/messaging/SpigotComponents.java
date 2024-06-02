@@ -251,12 +251,12 @@ public class SpigotComponents {
 
     public static TextComponent getUpdate(String first, String value, String split) {
         TextComponent textComponent = new TextComponent(first);
-        textComponent.setColor(net.md_5.bungee.api.ChatColor.GOLD);
+        textComponent.setColor(ChatColor.GOLD);
         TextComponent tck = new TextComponent(value);
-        tck.setColor(net.md_5.bungee.api.ChatColor.WHITE);
+        tck.setColor(ChatColor.WHITE);
         textComponent.addExtra(tck);
         TextComponent tcl = new TextComponent(split);
-        tcl.setColor(net.md_5.bungee.api.ChatColor.GOLD);
+        tcl.setColor(ChatColor.GOLD);
         textComponent.addExtra(tcl);
         textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click me!")));
         textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardisinfo " + value));

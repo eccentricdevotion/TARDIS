@@ -8,7 +8,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetOccupiedScreen;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;

@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.handles.TARDISHandlesRequest;
 import me.eccentric_nz.TARDIS.howto.TARDISSeedsInventory;
 import me.eccentric_nz.TARDIS.travel.ComehereAction;
 import me.eccentric_nz.TARDIS.travel.ComehereRequest;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

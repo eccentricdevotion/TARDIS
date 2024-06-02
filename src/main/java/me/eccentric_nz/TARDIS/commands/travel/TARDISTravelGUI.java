@@ -8,7 +8,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateBiomesForm;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateStructuresForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;

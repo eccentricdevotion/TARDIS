@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.console.interaction;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.telepathic.TARDISTelepathicInventory;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;

@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 /**
  * The TARDISChatPaginator takes a raw string of arbitrary length and breaks it down into an array of strings
