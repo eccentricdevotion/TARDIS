@@ -30,6 +30,7 @@
 
 * Make all images tabbed
 * Vanilla/TARDIS screenshots for TabbedImage views
+* Add new difficulty and system upgrades
 * ?
 
 ## Resource Pack / Monsters
