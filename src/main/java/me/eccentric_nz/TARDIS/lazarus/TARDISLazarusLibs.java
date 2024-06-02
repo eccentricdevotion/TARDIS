@@ -73,6 +73,11 @@ public class TARDISLazarusLibs {
                 return;
             }
             switch (dt) {
+                case AXOLOTL -> {
+                    AxolotlWatcher axolotlWatcher = (AxolotlWatcher) livingWatcher;
+                    axolotlWatcher.setVariant((Axolotl.Variant) choice);
+                    axolotlWatcher.setBaby(isBaby);
+                }
                 case CAT -> {
                     CatWatcher catWatcher = (CatWatcher) livingWatcher;
                     catWatcher.setType((Cat.Type) choice);
@@ -80,6 +85,11 @@ public class TARDISLazarusLibs {
                         catWatcher.setTamed(true);
                     }
                     catWatcher.setBaby(isBaby);
+                }
+                case FROG -> {
+                    FrogWatcher frogWatcher = (FrogWatcher) livingWatcher;
+                    frogWatcher.setVariant((Frog.Variant) choice);
+                    frogWatcher.setBaby(isBaby);
                 }
                 case PANDA -> {
                     PandaWatcher pandaWatcher = (PandaWatcher) livingWatcher;

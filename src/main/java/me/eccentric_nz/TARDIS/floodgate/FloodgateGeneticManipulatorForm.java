@@ -110,12 +110,16 @@ public class FloodgateGeneticManipulatorForm {
                 Object[] options = null;
                 switch (dt) {
                     case AXOLOTL -> {
-                        if (!plugin.isDisguisesOnServer()) {
+                        if (plugin.isDisguisesOnServer()) {
+                            new TARDISLazarusLibs(player, label, Axolotl.Variant.LUCY, false, false).createDisguise();
+                        } else {
                             options = new Object[]{Axolotl.Variant.WILD, AGE.ADULT};
                         }
                     }
                     case FROG -> {
-                        if (!plugin.isDisguisesOnServer()) {
+                        if (plugin.isDisguisesOnServer()) {
+                            new TARDISLazarusLibs(player, label, Frog.Variant.TEMPERATE, false, false).createDisguise();
+                        } else {
                             options = new Object[]{Frog.Variant.TEMPERATE, AGE.ADULT};
                         }
                     }

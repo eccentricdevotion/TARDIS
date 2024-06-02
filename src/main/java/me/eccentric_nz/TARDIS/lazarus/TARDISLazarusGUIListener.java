@@ -279,12 +279,16 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                                 Object[] options = null;
                                 switch (dt) {
                                     case AXOLOTL -> {
-                                        if (!plugin.isDisguisesOnServer()) {
+                                        if (plugin.isDisguisesOnServer()) {
+                                            new TARDISLazarusLibs(player, disguise, getAxolotlVariant(view), getBoolean(view), getBaby(view)).createDisguise();
+                                        } else {
                                             options = new Object[]{getAxolotlVariant(view), AGE.getFromBoolean(getBaby(view))};
                                         }
                                     }
                                     case FROG -> {
-                                        if (!plugin.isDisguisesOnServer()) {
+                                        if (plugin.isDisguisesOnServer()) {
+                                            new TARDISLazarusLibs(player, disguise, getFrogVariant(view), getBoolean(view), getBaby(view)).createDisguise();
+                                        } else {
                                             options = new Object[]{getFrogVariant(view), AGE.getFromBoolean(getBaby(view))};
                                         }
                                     }
