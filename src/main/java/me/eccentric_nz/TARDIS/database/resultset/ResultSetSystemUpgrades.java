@@ -65,11 +65,14 @@ public class ResultSetSystemUpgrades {
                         rs.getBoolean("distance_1"),
                         rs.getBoolean("distance_2"),
                         rs.getBoolean("distance_3"),
+                        rs.getBoolean("telepathic"),
                         rs.getBoolean("inter_dimension"),
+                        rs.getBoolean("flight"),
                         rs.getBoolean("tools"),
                         rs.getBoolean("locator"),
                         rs.getBoolean("biome_reader"),
                         rs.getBoolean("force_field"),
+                        rs.getBoolean("monitor"),
                         rs.getBoolean("stattenheim_remote")
                 );
             } else {

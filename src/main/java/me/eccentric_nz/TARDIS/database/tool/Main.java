@@ -307,7 +307,7 @@ public class Main {
                                         bw.write(str);
                                     }
                                     case system_upgrades -> {
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("sys_id"), rs.getInt("tardis_id"), rs.getString("uuid"), rs.getInt("architecture"), rs.getInt("chameleon"), rs.getInt("rooms"), rs.getInt("desktop"), rs.getInt("navigation"), rs.getInt("saves"), rs.getInt("distance_1"), rs.getInt("distance_2"), rs.getInt("distance_3"), rs.getInt("inter_dimension"), rs.getInt("tools"), rs.getInt("locator"), rs.getInt("biome_reader"), rs.getInt("force_field"), rs.getInt("stattenheim_remote")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("sys_id"), rs.getInt("tardis_id"), rs.getString("uuid"), rs.getInt("architecture"), rs.getInt("chameleon"), rs.getInt("rooms"), rs.getInt("desktop"), rs.getInt("navigation"), rs.getInt("saves"), rs.getInt("distance_1"), rs.getInt("distance_2"), rs.getInt("distance_3"), rs.getInt("telepathic"), rs.getInt("inter_dimension"), rs.getInt("flight"), rs.getInt("tools"), rs.getInt("locator"), rs.getInt("biome_reader"), rs.getInt("force_field"), rs.getInt("monitor"), rs.getInt("stattenheim_remote")) + end;
                                         bw.write(str);
                                     }
                                     case t_count -> {

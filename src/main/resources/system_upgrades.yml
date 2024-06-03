@@ -10,10 +10,13 @@ navigation:
   distance_1: 1000
   distance_2: 2000
   distance_3: 3000
+  telepathic_circuit: 2000
   inter_dimensional_travel: 4000
+  exterior_flight: 3000
 # tools branch
 tools:
   tardis_locator: 500
   biome_reader: 2000
   force_field: 3000
+  monitor: 2000
   stattenheim_remote: 4000

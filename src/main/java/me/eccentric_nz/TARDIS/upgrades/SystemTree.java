@@ -40,13 +40,16 @@ public enum SystemTree {
     DISTANCE_1(1005, 32, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 2x", "distance multiplier."), "SAVES", "navigation"),
     DISTANCE_2(1005, 41, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 3x", "distance multiplier."), "DISTANCE_1", "navigation"),
     DISTANCE_3(1005, 50, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 4x", "distance multiplier."), "DISTANCE_2", "navigation"),
+//    TELEPATHIC_CIRCUIT(1006, 49, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks cave,", "structure and", "biome travel."), "DISTANCE_3", "navigation"),
     INTER_DIMENSIONAL_TRAVEL(1006, 48, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks travel to", "the Nether and End."), "DISTANCE_3", "navigation"),
-    EXTERIOR_FLIGHT(1007, 39, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks flying the", "TARDIS exterior."), "INTER_DIMENSIONAL_TRAVEL", "navigation"),
+//    EXTERIOR_FLIGHT(1007, 39, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks flying the", "TARDIS exterior."), "INTER_DIMENSIONAL_TRAVEL", "navigation"),
     TOOLS(1004, 16, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the", "tools branch."), "UPGRADE_TREE", "branch"),
     TARDIS_LOCATOR(1005, 26, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "to be found."), "TOOLS", "tools"),
     BIOME_READER(1005, 35, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows biomes", "to be stored", "for travel."), "TARDIS_LOCATOR", "tools"),
     FORCE_FIELD(1005, 44, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "to have a monster", "repelling force field."), "BIOME_READER", "tools"),
-    STATTENHEIM_REMOTE(1005, 53, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "to be remotely", "called to a location."), "FORCE_FIELD", "tools");
+    STATTENHEIM_REMOTE(1005, 53, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "to be remotely", "called to a location."), "FORCE_FIELD", "tools"),
+//    MONITOR(1006, 42, Material.LIME_GLAZED_TERRACOTTA, List.of("View the", "TARDIS exterior."), "FORCE_FIELD", "tools")
+    ;
 
     private final int customModelData;
     private final int slot;
