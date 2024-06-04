@@ -527,7 +527,7 @@ public class TARDISCondensables {
             condensables.put("MAGENTA_TERRACOTTA", 15);
             condensables.put("MAGENTA_WALL_BANNER", 120);
             condensables.put("MAGENTA_WOOL", 20);
-            condensables.put("MAGMA_BLOCK", 600);
+            condensables.put("MAGMA_BLOCK", 60);
             condensables.put("MAGMA_CREAM", 150);
             // 1.19 - Wild Update
             condensables.put("MANGROVE_BOAT", 3);
