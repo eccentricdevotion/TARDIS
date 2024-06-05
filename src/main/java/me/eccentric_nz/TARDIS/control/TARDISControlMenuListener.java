@@ -32,7 +32,6 @@ import me.eccentric_nz.TARDIS.control.actions.DirectionAction;
 import me.eccentric_nz.TARDIS.control.actions.FastReturnAction;
 import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
 import me.eccentric_nz.TARDIS.control.actions.SiegeAction;
-import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -49,6 +48,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.travel.save.TARDISSavesPlanetInventory;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.ChatColor;
@@ -391,10 +391,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 smat.setContents(tran);
                 player.openInventory(smat);
             }
-            case 35 -> {
-                // system upgrades
-                new SystemTreeCommand(plugin).open(player);
-            }
+            case 35 -> new SystemTreeCommand(plugin).open(player); // system upgrades
             case 36 -> {
                 // areas
                 if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {

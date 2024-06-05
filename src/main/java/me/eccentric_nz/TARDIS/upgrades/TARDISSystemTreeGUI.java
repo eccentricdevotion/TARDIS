@@ -69,7 +69,7 @@ public class TARDISSystemTreeGUI {
             stacks[h] = is;
         }
         // t_right
-        int[] t_right = new int[]{18, 22, 25, 27, 31, 34, 40, 43};
+        int[] t_right = new int[]{18, 25, 27, 34, 43};
         for (int r : t_right) {
             ItemStack is = new ItemStack(SystemTree.T_RIGHT.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
@@ -79,17 +79,14 @@ public class TARDISSystemTreeGUI {
             stacks[r] = is;
         }
         // t_up
-        int[] t_up = new int[]{11, 49};
-        for (int t : t_up) {
-            ItemStack is = new ItemStack(SystemTree.T_UP.getMaterial(), 1);
-            ItemMeta im = is.getItemMeta();
-            im.setDisplayName(ChatColor.RESET + "");
-            im.setCustomModelData(SystemTree.T_UP.getCustomModelData());
-            is.setItemMeta(im);
-            stacks[t] = is;
-        }
+        ItemStack ist = new ItemStack(SystemTree.T_UP.getMaterial(), 1);
+        ItemMeta up = ist.getItemMeta();
+        up.setDisplayName(ChatColor.RESET + "");
+        up.setCustomModelData(SystemTree.T_UP.getCustomModelData());
+        ist.setItemMeta(up);
+        stacks[11] = ist;
         // down_right
-        int[] down_right = new int[]{36, 52};
+        int[] down_right = new int[]{36, 49, 52};
         for (int d : down_right) {
             ItemStack is = new ItemStack(SystemTree.D_RIGHT.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
@@ -97,6 +94,16 @@ public class TARDISSystemTreeGUI {
             im.setCustomModelData(SystemTree.D_RIGHT.getCustomModelData());
             is.setItemMeta(im);
             stacks[d] = is;
+        }
+        // cross
+        int[] cross = new int[]{22, 31, 40, 43};
+        for (int c : cross) {
+            ItemStack cr = new ItemStack(SystemTree.CROSS.getMaterial(), 1);
+            ItemMeta oss = cr.getItemMeta();
+            oss.setDisplayName(ChatColor.RESET + "");
+            oss.setCustomModelData(SystemTree.CROSS.getCustomModelData());
+            cr.setItemMeta(oss);
+            stacks[c] = cr;
         }
         // background
         ItemStack is = new ItemStack(SystemTree.BLANK.getMaterial(), 1);

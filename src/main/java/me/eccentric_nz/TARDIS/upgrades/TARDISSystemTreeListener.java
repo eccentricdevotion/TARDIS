@@ -37,7 +37,7 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
         }
         event.setCancelled(true);
         int slot = event.getRawSlot();
-        if (slot < 0 || slot >= 54) {
+        if (slot < 0 || slot >= 63) {
             return;
         }
         ItemStack is = view.getItem(slot);
@@ -81,22 +81,24 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
         SystemUpgrade current = rsp.getData();
         SystemTree clicked;
         switch (slot) {
-            case 9 -> clicked = SystemTree.ARCHITECTURE;
             case 13 -> clicked = SystemTree.NAVIGATION;
             case 16 -> clicked = SystemTree.TOOLS;
             case 19 -> clicked = SystemTree.CHAMELEON_CIRCUIT;
+            case 21 -> clicked = SystemTree.DISTANCE_1;
             case 23 -> clicked = SystemTree.SAVES;
             case 26 -> clicked = SystemTree.TARDIS_LOCATOR;
             case 28 -> clicked = SystemTree.ROOM_GROWING;
-            case 32 -> clicked = SystemTree.DISTANCE_1;
+            case 30 -> clicked = SystemTree.DISTANCE_2;
+            case 32 -> clicked = SystemTree.TELEPATHIC_CIRCUIT;
             case 35 -> clicked = SystemTree.BIOME_READER;
             case 37 -> clicked = SystemTree.DESKTOP_THEME;
-            case 39 -> clicked = SystemTree.EXTERIOR_FLIGHT;
-            case 41 -> clicked = SystemTree.DISTANCE_2;
+            case 39 -> clicked = SystemTree.DISTANCE_3;
+            case 41 -> clicked = SystemTree.INTER_DIMENSIONAL_TRAVEL;
+            case 42 -> clicked = SystemTree.MONITOR;
             case 44 -> clicked = SystemTree.FORCE_FIELD;
-            case 48 -> clicked = SystemTree.INTER_DIMENSIONAL_TRAVEL;
-            case 50 -> clicked = SystemTree.DISTANCE_3;
+            case 50 -> clicked = SystemTree.EXTERIOR_FLIGHT;
             case 53 -> clicked = SystemTree.STATTENHEIM_REMOTE;
+            case 9 -> clicked = SystemTree.ARCHITECTURE;
             default -> clicked = SystemTree.UPGRADE_TREE;
         }
         try {
