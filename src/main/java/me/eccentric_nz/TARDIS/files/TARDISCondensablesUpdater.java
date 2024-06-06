@@ -585,6 +585,72 @@ public class TARDISCondensablesUpdater {
                 plugin.getCondensablesConfig().set("ARMS_POTTERY_SHERD UP", null);
                 i++;
             }
+            if (!plugin.getCondensablesConfig().contains("ARMADILLO_SCUTE")) {
+                // 1.20.5
+                plugin.getCondensablesConfig().set("ARMADILLO_SCUTE", 20);
+                plugin.getCondensablesConfig().set("WOLF_ARMOR", 120);
+                // 1.21
+                plugin.getCondensablesConfig().set("BREEZE_ROD", 200);
+                plugin.getCondensablesConfig().set("CHISELED_COPPER", 360);
+                plugin.getCondensablesConfig().set("CHISELED_TUFF", 2);
+                plugin.getCondensablesConfig().set("CHISELED_TUFF_BRICKS", 4);
+                plugin.getCondensablesConfig().set("COPPER_BULB", 700);
+                plugin.getCondensablesConfig().set("COPPER_DOOR", 40);
+                plugin.getCondensablesConfig().set("COPPER_GRATE", 180);
+                plugin.getCondensablesConfig().set("COPPER_TRAPDOOR", 60);
+                plugin.getCondensablesConfig().set("CRAFTER", 210);
+                plugin.getCondensablesConfig().set("EXPOSED_CHISELED_COPPER", 360);
+                plugin.getCondensablesConfig().set("EXPOSED_COPPER_BULB", 700);
+                plugin.getCondensablesConfig().set("EXPOSED_COPPER_DOOR", 40);
+                plugin.getCondensablesConfig().set("EXPOSED_COPPER_GRATE", 180);
+                plugin.getCondensablesConfig().set("EXPOSED_COPPER_TRAPDOOR", 60);
+                plugin.getCondensablesConfig().set("HEAVY_CORE", 300);
+                plugin.getCondensablesConfig().set("OXIDIZED_CHISELED_COPPER", 360);
+                plugin.getCondensablesConfig().set("OXIDIZED_COPPER_BULB", 700);
+                plugin.getCondensablesConfig().set("OXIDIZED_COPPER_DOOR", 40);
+                plugin.getCondensablesConfig().set("OXIDIZED_COPPER_GRATE", 180);
+                plugin.getCondensablesConfig().set("OXIDIZED_COPPER_TRAPDOOR", 60);
+                plugin.getCondensablesConfig().set("POLISHED_TUFF", 2);
+                plugin.getCondensablesConfig().set("POLISHED_TUFF_SLAB", 2);
+                plugin.getCondensablesConfig().set("POLISHED_TUFF_STAIRS", 2);
+                plugin.getCondensablesConfig().set("POLISHED_TUFF_WALL", 2);
+                plugin.getCondensablesConfig().set("TUFF_BRICKS", 4);
+                plugin.getCondensablesConfig().set("TUFF_BRICK_SLAB", 2);
+                plugin.getCondensablesConfig().set("TUFF_BRICK_STAIRS", 2);
+                plugin.getCondensablesConfig().set("TUFF_BRICK_WALL", 2);
+                plugin.getCondensablesConfig().set("TUFF_SLAB", 2);
+                plugin.getCondensablesConfig().set("TUFF_STAIRS", 2);
+                plugin.getCondensablesConfig().set("TUFF_WALL", 2);
+                plugin.getCondensablesConfig().set("WAXED_CHISELED_COPPER", 2);
+                plugin.getCondensablesConfig().set("WAXED_COPPER_BULB", 720);
+                plugin.getCondensablesConfig().set("WAXED_COPPER_DOOR", 60);
+                plugin.getCondensablesConfig().set("WAXED_COPPER_GRATE", 200);
+                plugin.getCondensablesConfig().set("WAXED_COPPER_TRAPDOOR", 80);
+                plugin.getCondensablesConfig().set("WAXED_EXPOSED_CHISELED_COPPER", 380);
+                plugin.getCondensablesConfig().set("WAXED_EXPOSED_COPPER_BULB", 720);
+                plugin.getCondensablesConfig().set("WAXED_EXPOSED_COPPER_DOOR", 60);
+                plugin.getCondensablesConfig().set("WAXED_EXPOSED_COPPER_GRATE", 200);
+                plugin.getCondensablesConfig().set("WAXED_EXPOSED_COPPER_TRAPDOOR", 80);
+                plugin.getCondensablesConfig().set("WAXED_OXIDIZED_CHISELED_COPPER", 380);
+                plugin.getCondensablesConfig().set("WAXED_OXIDIZED_COPPER_BULB", 720);
+                plugin.getCondensablesConfig().set("WAXED_OXIDIZED_COPPER_DOOR", 60);
+                plugin.getCondensablesConfig().set("WAXED_OXIDIZED_COPPER_GRATE", 200);
+                plugin.getCondensablesConfig().set("WAXED_OXIDIZED_COPPER_TRAPDOOR", 80);
+                plugin.getCondensablesConfig().set("WAXED_WEATHERED_CHISELED_COPPER", 380);
+                plugin.getCondensablesConfig().set("WAXED_WEATHERED_COPPER_BULB", 720);
+                plugin.getCondensablesConfig().set("WAXED_WEATHERED_COPPER_DOOR", 60);
+                plugin.getCondensablesConfig().set("WAXED_WEATHERED_COPPER_GRATE", 200);
+                plugin.getCondensablesConfig().set("WAXED_WEATHERED_COPPER_TRAPDOOR", 80);
+                plugin.getCondensablesConfig().set("WEATHERED_CHISELED_COPPER", 360);
+                plugin.getCondensablesConfig().set("WEATHERED_COPPER_BULB", 700);
+                plugin.getCondensablesConfig().set("WEATHERED_COPPER_DOOR", 40);
+                plugin.getCondensablesConfig().set("WEATHERED_COPPER_GRATE", 180);
+                plugin.getCondensablesConfig().set("WEATHERED_COPPER_TRAPDOOR", 60);
+                plugin.getCondensablesConfig().set("FLOW_POTTERY_SHERD", 20);
+                plugin.getCondensablesConfig().set("GUSTER_POTTERY_SHERD", 20);
+                plugin.getCondensablesConfig().set("SCRAPE_POTTERY_SHERD", 20);
+                i++;
+            }
             if (i > 0) {
                 try {
                     String listPath = plugin.getDataFolder() + File.separator + "condensables.yml";

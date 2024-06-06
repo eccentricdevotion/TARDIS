@@ -81,6 +81,7 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
         SystemUpgrade current = rsp.getData();
         SystemTree clicked;
         switch (slot) {
+            case 9 -> clicked = SystemTree.ARCHITECTURE;
             case 13 -> clicked = SystemTree.NAVIGATION;
             case 16 -> clicked = SystemTree.TOOLS;
             case 19 -> clicked = SystemTree.CHAMELEON_CIRCUIT;
@@ -98,7 +99,6 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
             case 44 -> clicked = SystemTree.FORCE_FIELD;
             case 50 -> clicked = SystemTree.EXTERIOR_FLIGHT;
             case 53 -> clicked = SystemTree.STATTENHEIM_REMOTE;
-            case 9 -> clicked = SystemTree.ARCHITECTURE;
             default -> clicked = SystemTree.UPGRADE_TREE;
         }
         try {
