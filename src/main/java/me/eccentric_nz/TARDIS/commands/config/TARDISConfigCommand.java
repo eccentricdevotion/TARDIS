@@ -278,7 +278,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                 }
                 if (first.equals("provider")) {
                     String provider = args[1];
-                    if (!provider.equals("dynmap") && !provider.equals("BlueMap")) {
+                    if (!provider.equals("dynmap") && !provider.equals("BlueMap") && !provider.equals("squaremap")) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_PROVIDER");
                         return true;
                     }

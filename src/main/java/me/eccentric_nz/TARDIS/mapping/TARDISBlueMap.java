@@ -53,7 +53,6 @@ public class TARDISBlueMap implements TARDISMapper {
         // if enabled, activate
         if (bluemap != null && bluemap.isEnabled()) {
             activate();
-            checkIcon();
         }
     }
 
@@ -68,10 +67,6 @@ public class TARDISBlueMap implements TARDISMapper {
     @Override
     public void updateMarkerSet(long period) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new BlueMapMarkerUpdate(), period);
-    }
-
-    private void checkIcon() {
-
     }
 
     private class BlueMapMarkerUpdate implements Runnable {

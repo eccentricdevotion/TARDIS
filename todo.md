@@ -14,8 +14,7 @@
 6. System upgrades - similar to [TARDIS: Refined 2](https://wiki.tardisrefined.net/upgrades-and-functions.html#unlocking-upgrades) mod - and [#303](https://github.com/eccentricdevotion/TARDIS/issues/303) + ties in well with new difficulty settings
    - if enabled, check whether player/TARDIS can use the upgrade
    - save sign / save disks
-7. Add [SquareMap](https://github.com/jpenilla/squaremap/wiki) support - [example addon](https://github.com/jpenilla/squaremap-addons/tree/master/addons/deathspot/src/main/java/xyz/jpenilla/squaremap/addon/deathspot)
-8. ?
+7. ?
 
 ## Future versions
 

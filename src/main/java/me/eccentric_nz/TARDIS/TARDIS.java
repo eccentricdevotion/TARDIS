@@ -53,6 +53,7 @@ import me.eccentric_nz.TARDIS.junk.TARDISJunkReturnRunnable;
 import me.eccentric_nz.TARDIS.mapping.TARDISBlueMap;
 import me.eccentric_nz.TARDIS.mapping.TARDISDynmap;
 import me.eccentric_nz.TARDIS.mapping.TARDISMapper;
+import me.eccentric_nz.TARDIS.mapping.TARDISSquareMap;
 import me.eccentric_nz.TARDIS.messaging.AdventureMessage;
 import me.eccentric_nz.TARDIS.messaging.SpigotMessage;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -452,6 +453,8 @@ public class TARDIS extends JavaPlugin {
                 getMessenger().message(console, TardisModule.TARDIS, "Loading Mapping Module");
                 if (mapper.equals("dynmap")) {
                     tardisMapper = new TARDISDynmap(this);
+                } else if (mapper.equals("squaremap")) {
+                    tardisMapper = new TARDISSquareMap(this);
                 } else {
                     tardisMapper = new TARDISBlueMap(this);
                 }
