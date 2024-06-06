@@ -63,7 +63,10 @@ public class TARDISSquareMap implements TARDISMapper {
             if (!plugin.getPlanetsConfig().getBoolean("planets." + world.identifier() + "time_travel")) {
                 continue;
             }
-            SimpleLayerProvider provider = SimpleLayerProvider.builder("TARDIS").showControls(true).defaultHidden(true).build();
+            SimpleLayerProvider provider = SimpleLayerProvider.builder("TARDIS")
+                    .showControls(true)
+                    .defaultHidden(false)
+                    .build();
             world.layerRegistry().register(TARDIS_LAYER_KEY, provider);
             SquaremapTask task = new SquaremapTask(world, provider, plugin);
             task.runTaskTimerAsynchronously(plugin, 0, 20L * period);
