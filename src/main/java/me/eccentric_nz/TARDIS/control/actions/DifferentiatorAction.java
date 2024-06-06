@@ -17,9 +17,13 @@
 package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Comparator;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
@@ -35,12 +39,18 @@ public class DifferentiatorAction {
         this.plugin = plugin;
     }
 
-    public void bleep(Block block, int id) {
-        Comparator comparator = (Comparator) block.getBlockData();
-        String sound =  comparator.getMode().equals(Comparator.Mode.SUBTRACT) ? "differentiator_off" : "differentiator_on";
-        TARDISSounds.playTARDISSound(block.getLocation(), sound);
-        // save control state
-        int mode = comparator.getMode().equals(Comparator.Mode.SUBTRACT) ? 0 : 1;
+    public void bleep(Block block, int id, Player player) {
+        int mode;
+        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.EXTERIOR_FLIGHT)) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Exterior Flight");
+            mode = 0;
+        } else {
+            Comparator comparator = (Comparator) block.getBlockData();
+            String sound = comparator.getMode().equals(Comparator.Mode.SUBTRACT) ? "differentiator_off" : "differentiator_on";
+            TARDISSounds.playTARDISSound(block.getLocation(), sound);
+            // save control state
+            mode = comparator.getMode().equals(Comparator.Mode.SUBTRACT) ? 0 : 1;
+        }
         HashMap<String, Object> set = new HashMap<>();
         set.put("secondary", mode);
         HashMap<String, Object> where = new HashMap<>();

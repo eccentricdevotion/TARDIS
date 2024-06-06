@@ -25,6 +25,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateTelepathicForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -71,8 +73,13 @@ public class TARDISTelepathicListener implements Listener {
             where.put("location", location);
             ResultSetControls rsc = new ResultSetControls(plugin, where, false);
             if (rsc.resultSet()) {
-                int id = rsc.getTardis_id();
                 Player player = event.getPlayer();
+                UUID uuid = player.getUniqueId();
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.TELEPATHIC_CIRCUIT)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Telepathic Circuit");
+                    return;
+                }
+                int id = rsc.getTardis_id();
                 if (player.isSneaking()) {
                     // get the Time Lord of this TARDIS
                     HashMap<String, Object> wheret = new HashMap<>();
@@ -84,7 +91,6 @@ public class TARDISTelepathicListener implements Listener {
                         // get Time Lord player prefs
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, owner);
                         if (rsp.resultSet()) {
-                            UUID uuid = player.getUniqueId();
                             if (rsp.isTelepathyOn()) {
                                 // track player
                                 plugin.getTrackerKeeper().getTelepaths().put(uuid, o_uuid);
@@ -96,8 +102,8 @@ public class TARDISTelepathicListener implements Listener {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> block.setBlockData(TARDISConstants.DAYLIGHT), 3L);
                     }
                 } else {
-                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
-                        new FloodgateTelepathicForm(plugin, player.getUniqueId(), id).send();
+                    if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(uuid)) {
+                        new FloodgateTelepathicForm(plugin, uuid, id).send();
                     } else {
                         // open the Telepathic GUI
                         TARDISTelepathicInventory tti = new TARDISTelepathicInventory(plugin, player);
