@@ -29,6 +29,8 @@ import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISAreaCheck;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -50,6 +52,10 @@ public class TARDISTravelSave {
     public boolean action(Player player, String[] args, int id, ChameleonPreset preset) {
         // we're thinking this is a saved destination name
         if (TARDISPermission.hasPermission(player, "tardis.save")) {
+            if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.SAVES)) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
+                return true;
+            }
             HashMap<String, Object> whered = new HashMap<>();
             whered.put("dest_name", args[1]);
             whered.put("tardis_id", id);

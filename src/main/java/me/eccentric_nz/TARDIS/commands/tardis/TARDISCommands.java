@@ -26,6 +26,8 @@ import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.ComehereAction;
 import me.eccentric_nz.TARDIS.travel.ComehereRequest;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -270,6 +272,10 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISExterminateCommand(plugin).doExterminate(player, messagePlayer);
                 }
                 case save -> {
+                    if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.SAVES)) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
+                        return true;
+                    }
                     ItemStack itemStack = player.getInventory().getItemInMainHand();
                     if (itemStack.getType().equals(Material.MUSIC_DISC_FAR)) {
                         return new TARDISDiskWriterCommand(plugin).writeSaveToControlDisk(player, args);

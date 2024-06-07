@@ -28,6 +28,8 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.travel.save.TARDISSavesPlanetInventory;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -66,9 +68,10 @@ public class TARDISConsoleSwitchListener implements Listener {
             return;
         }
         Player player = (Player) event.getWhoClicked();
+        String uuid = player.getUniqueId().toString();
         // check they're in the TARDIS
         HashMap<String, Object> wheret = new HashMap<>();
-        wheret.put("uuid", player.getUniqueId().toString());
+        wheret.put("uuid", uuid);
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
         if (!rst.resultSet()) {
             event.setCancelled(true);
@@ -92,7 +95,7 @@ public class TARDISConsoleSwitchListener implements Listener {
             return;
         }
         HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", player.getUniqueId().toString());
+        where.put("uuid", uuid);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
@@ -125,6 +128,10 @@ public class TARDISConsoleSwitchListener implements Listener {
                 }
                 // Memory circuit (saves/areas)
                 case 10001975, 20001975 -> {
+                    if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid, SystemTree.SAVES)) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
+                        return;
+                    }
                     new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
                     stack = new TARDISSavesPlanetInventory(plugin, tardis.getTardisId()).getPlanets();
                 }
