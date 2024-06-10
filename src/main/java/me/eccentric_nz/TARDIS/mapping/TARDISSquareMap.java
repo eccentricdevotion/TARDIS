@@ -90,8 +90,8 @@ public class TARDISSquareMap implements TARDISMapper {
 
         @Override
         public void run() {
-            if (this.stop) {
-                this.cancel();
+            if (stop) {
+                cancel();
             }
             provider.clearMarkers();
             final World bukkitWorld = BukkitAdapter.bukkitWorld(world);
@@ -107,7 +107,7 @@ public class TARDISSquareMap implements TARDISMapper {
             Icon icon = Marker.icon(BukkitAdapter.point(location), TARDISSquareMap.TARDIS_ICON_KEY, 16);
             String label = String.format("%s (TARDIS)", name);
             icon.markerOptions(MarkerOptions.builder().hoverTooltip(label));
-            final String markerid = "tardis_" + name;
+            String markerid = "tardis_" + name;
             provider.addMarker(Key.of(markerid), icon);
         }
 
