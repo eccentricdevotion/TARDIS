@@ -21,6 +21,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.particles.ParticleEffect;
+import me.eccentric_nz.TARDIS.particles.ParticleShape;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -36,7 +38,7 @@ import java.util.List;
  */
 public class TARDISDevTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add_regions", "advancements", "chunks", "chunky", "dismount", "furnace", "list", "plurals", "stats", "systree", "tree", "snapshot", "displayitem", "frame", "brushable", "box", "nms", "circuit", "label", "recipe", "interaction");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add_regions", "advancements", "chunks", "chunky", "dismount", "furnace", "list", "plurals", "stats", "systree", "tree", "snapshot", "displayitem", "frame", "brushable", "box", "nms", "circuit", "label", "recipe", "interaction", "effect");
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints", "commands", "block_colours", "change", "consoles");
     private final ImmutableList<String> SNAPSHOT_SUBS = ImmutableList.of("in", "out", "c");
     private final ImmutableList<String> STATE_SUBS = ImmutableList.of("closed", "open", "stained", "glass", "fly");
@@ -48,6 +50,8 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
     private final List<String> ITEM_SUBS = new ArrayList<>();
     private final List<String> PRESET_SUBS = new ArrayList<>();
     private final List<String> MONSTER_SUBS = new ArrayList<>();
+    private final List<String> EFFECT_SUBS = new ArrayList<>();
+    private final List<String> SHAPE_SUBS = new ArrayList<>();
     private final ImmutableList<String> RECIPE_SUBS = ImmutableList.of("shaped", "shapeless", "chest", "chemistry", "custom");
 
     public TARDISDevTabComplete(TARDIS plugin) {
@@ -70,6 +74,12 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
         }
         for (Monster m : Monster.values()) {
             MONSTER_SUBS.add(m.toString());
+        }
+        for (ParticleEffect e : ParticleEffect.values()) {
+            EFFECT_SUBS.add(e.toString());
+        }
+        for (ParticleShape s : ParticleShape.values()) {
+            SHAPE_SUBS.add(s.toString());
         }
     }
 
@@ -106,10 +116,16 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
                 if (sub.equals("recipe")) {
                     return partial(lastArg, RECIPE_SUBS);
                 }
+                if (sub.equals("effect")) {
+                    return partial(lastArg, SHAPE_SUBS);
+                }
             }
             case 3 -> {
                 if (sub.equals("box")) {
                     return partial(lastArg, STATE_SUBS);
+                }
+                if (sub.equals("effect")) {
+                    return partial(lastArg, EFFECT_SUBS);
                 }
             }
             case 4 -> {

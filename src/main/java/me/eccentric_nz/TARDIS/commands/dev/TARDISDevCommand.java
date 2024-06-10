@@ -55,6 +55,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "box", "brushable",
             "chunks", "chunky", "circuit",
             "dismount", "displayitem",
+            "effect",
             "frame", "furnace",
             "interaction",
             "label", "list",
@@ -219,6 +220,11 @@ public class TARDISDevCommand implements CommandExecutor {
                             }
                         }
                         return true;
+                    }
+                    case "effect" -> {
+                        if (sender instanceof Player player) {
+                            return new TARDISDevEffectCommand(plugin).show(player, args);
+                        }
                     }
                     default -> {
                         return false;
