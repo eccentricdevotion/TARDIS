@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFlightControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.utility.TARDISFirework;
+import me.eccentric_nz.TARDIS.particles.TARDISFirework;
 import org.bukkit.Location;
 
 import java.util.HashMap;
