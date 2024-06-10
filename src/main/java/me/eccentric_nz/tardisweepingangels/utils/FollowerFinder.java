@@ -16,31 +16,32 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
-import me.eccentric_nz.tardisweepingangels.monsters.weeping_angels.Blink;
+import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicFreeze;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 public class FollowerFinder {
 
     public static Entity getEntity(Player player, EntityType type) {
-        Entity entity = null;
+//        Entity entity = null;
         // get the entity the player is looking at
         Location observerPos = player.getEyeLocation();
-        Vector3D observerDir = new Vector3D(observerPos.getDirection());
-        Vector3D observerStart = new Vector3D(observerPos);
-        Vector3D observerEnd = observerStart.add(observerDir.multiply(16));
+        Vector observerDir = observerPos.getDirection();
+        Vector observerStart = observerPos.toVector();
+        Vector observerEnd = observerStart.add(observerDir.multiply(16));
         // Get nearby entities
         for (Entity target : player.getNearbyEntities(8.0d, 8.0d, 8.0d)) {
             // Bounding box of the given player
-            Vector3D targetPos = new Vector3D(target.getLocation());
-            Vector3D minimum = targetPos.add(-0.5, 0, -0.5);
-            Vector3D maximum = targetPos.add(0.5, 1.67, 0.5);
-            if (target.getType().equals(type) && Blink.hasIntersection(observerStart, observerEnd, minimum, maximum)) {
-                if (entity == null || entity.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
-                    return target;
-                }
+            Vector targetPos = target.getLocation().toVector();
+            Vector minimum = targetPos.add(new Vector(-0.5, 0, -0.5));
+            Vector maximum = targetPos.add(new Vector(0.5, 1.67, 0.5));
+            if (target.getType().equals(type) && TARDISSonicFreeze.hasIntersection(observerStart, observerEnd, minimum, maximum)) {
+//                if (entity == null || entity.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
+                return target;
+//                }
             }
         }
         return null;
