@@ -41,13 +41,13 @@ public class TARDISParticleRunnable implements Runnable {
     public void spawnParticle(Particle particle, Location location, int count) {
         if (particle == Particle.DUST) {
             Particle.DustOptions options = new Particle.DustOptions(Color.BLUE, 1.0f);
-            location.getWorld().spawnParticle(particle, location, count, options);
+            location.getWorld().spawnParticle(particle, location, count, 0, 0, 0, 0, options, false);
         } else if (particle == Particle.SHRIEK) {
-            location.getWorld().spawnParticle(particle, location, count, 1);
+            location.getWorld().spawnParticle(particle, location, count, 0, 0, 0, 0, 1, false);
         } else if (particle == Particle.SCULK_CHARGE) {
-            location.getWorld().spawnParticle(particle, location, count, 1.0f);
+            location.getWorld().spawnParticle(particle, location, count, 0, 0, 0, 0, 1.0f, false);
         } else {
-            location.getWorld().spawnParticle(particle, location, count);
+            location.getWorld().spawnParticle(particle, location, count, 0, 0, 0, 0, null, false);
         }
     }
 
