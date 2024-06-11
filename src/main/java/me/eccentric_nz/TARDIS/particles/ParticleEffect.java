@@ -11,7 +11,7 @@ public enum ParticleEffect {
     CLOUDS(Particle.CLOUD, 4),
     DUST(Particle.DUST, 16),
     EFFECT(Particle.EFFECT, 24),
-    FLAMES(Particle.SMALL_FLAME, 16),
+    FLAMES(Particle.FLAME, 16),
     GLOW(Particle.GLOW, 24),
     GUST(Particle.SMALL_GUST, 12),
     HEART(Particle.HEART, 16),
