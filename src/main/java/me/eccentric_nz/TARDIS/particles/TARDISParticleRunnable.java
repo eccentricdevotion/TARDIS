@@ -47,7 +47,7 @@ public class TARDISParticleRunnable implements Runnable {
         } else if (particle == Particle.SCULK_CHARGE) {
             location.getWorld().spawnParticle(particle, location, count, 0, 0, 0, 0, 1.0f, false);
         } else {
-            location.getWorld().spawnParticle(particle, location, count, 0, 0, 0, 0, null, false);
+            location.getWorld().spawnParticle(particle, location, count, 0, 0, 0, 0.05, null, false);
         }
     }
 
