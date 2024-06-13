@@ -229,6 +229,10 @@ public class Converter implements Runnable {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("paper_bag_id"), rs.getString("uuid"), rs.getString("flavour_1"), rs.getInt("amount_1"), rs.getString("flavour_2"), rs.getInt("amount_2"), rs.getString("flavour_3"), rs.getInt("amount_3"), rs.getString("flavour_4"), rs.getInt("amount_4")) + end;
                                         sb.append(str);
                                     }
+                                    case particle_prefs -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("pp_id"), rs.getString("uuid"), rs.getString("effect"), rs.getString("shape"), rs.getDouble("speed"), rs.getInt("particles_on")) + end;
+                                        sb.append(str);
+                                    }
                                     case player_prefs -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("pp_id"), rs.getString("uuid"), rs.getString("player"), rs.getString("key"), rs.getInt("sfx_on"), rs.getInt("quotes_on"), rs.getInt("artron_level"), rs.getString("wall"), rs.getString("floor"), rs.getString("siege_wall"), rs.getString("siege_floor"), rs.getInt("announce_repeaters_on"), rs.getInt("auto_on"), rs.getString("auto_type"), rs.getString("auto_default"), rs.getInt("beacon_on"), rs.getInt("hads_on"), rs.getString("hads_type"), rs.getInt("build_on"), rs.getInt("close_gui_on"), rs.getInt("eps_on"), rs.getString("eps_message").replace("'", "\\'"), rs.getString("language"), rs.getInt("submarine_on"), rs.getInt("dnd_on"), rs.getInt("dynamic_lamps_on"), rs.getInt("minecart_on"), rs.getInt("renderer_on"), rs.getInt("sign_on"), rs.getInt("telepathy_on"), rs.getInt("travelbar_on"), rs.getInt("info_on"), rs.getInt("farm_on"), rs.getString("lights"), rs.getInt("auto_siege_on"), rs.getInt("flying_mode"), rs.getInt("throttle"), rs.getInt("auto_powerup_on"), rs.getInt("auto_rescue_on"), rs.getString("hum")) + end;
                                         sb.append(str);

@@ -53,6 +53,7 @@ public enum Table {
     movers("uuid"),
     next,
     paper_bag,
+    particle_prefs("pp_id"),
     player_prefs("pp_id"),
     portals,
     programs,

@@ -53,7 +53,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
             "beacon", "build",
             "close_gui", "console_labels",
             "dnd", "dynamic_lamps",
-            "eps", "eps_message",
+            "effect", "eps", "eps_message",
             "farm", "flight", "floor", "forcefield",
             "hads", "hads_type", "hum",
             "info", "isomorphic",
@@ -63,7 +63,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
             "minecart",
             "quotes",
             "renderer",
-            "sfx", "siege_floor", "siege_wall", "sign", "sonic", "submarine",
+            "sfx", "shape", "siege_floor", "siege_wall", "sign", "sonic", "speed", "submarine",
             "telepathy", "translate", "travelbar",
             "wall"
     );
@@ -157,6 +157,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     }
                     case "wall", "floor", "siege_wall", "siege_floor" -> {
                         return new TARDISFloorCommand(plugin).setFloorOrWallBlock(player, args);
+                    }
+                    case "effect", "shape", "speed" -> {
+                        return new TARDISParticlePrefsCommand(plugin).setPartclePref(player, args);
                     }
                     default -> {
                         if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {

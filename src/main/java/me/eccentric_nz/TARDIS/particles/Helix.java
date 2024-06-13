@@ -1,15 +1,17 @@
 package me.eccentric_nz.TARDIS.particles;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
-import org.bukkit.Particle;
+
+import java.util.UUID;
 
 public class Helix extends TARDISParticleRunnable {
 
-    private final Particle particle;
+    private final ParticleEffect particle;
     private final Location location;
 
-    public Helix(Particle particle, Location location) {
-        super();
+    public Helix(TARDIS plugin, UUID uuid, ParticleEffect particle, Location location) {
+        super(plugin, uuid);
         this.particle = particle;
         this.location = location;
     }
@@ -23,7 +25,7 @@ public class Helix extends TARDISParticleRunnable {
         double z = radius * Math.sin(t);
         location.add(x, y, z);
         // spawn particle
-        spawnParticle(particle, location, 1);
+        spawnParticle(particle.getParticle(), location, 1, speed);
         location.subtract(x, y, z);
         if (t > Math.PI * 8) {
             cancel();

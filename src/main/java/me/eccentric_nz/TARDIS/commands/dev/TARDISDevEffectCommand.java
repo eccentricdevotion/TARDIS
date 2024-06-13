@@ -31,7 +31,7 @@ public class TARDISDevEffectCommand {
             } catch (IllegalArgumentException e) {
                 particle = ParticleEffect.EFFECT;
             }
-            Emitter emitter = new Emitter(plugin, player.getLocation().add(3,0,3), shape, particle, SpaceTimeThrottle.NORMAL.getFlightTime());
+            Emitter emitter = new Emitter(plugin, player.getUniqueId(), player.getLocation().add(3, 0, 3), shape, particle, SpaceTimeThrottle.NORMAL.getFlightTime());
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, shape.getPeriod());
             emitter.setTaskID(task);
         }

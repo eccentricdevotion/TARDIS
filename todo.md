@@ -16,6 +16,8 @@
 8. Exterior button door control [#839](https://github.com/eccentricdevotion/TARDIS/issues/839)
 9. Console lamp [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)
 10. Materialisation particles [#798](https://github.com/eccentricdevotion/TARDIS/issues/798)
+    * Make a particle density preference
+    * Make a particle preferences GUI
 11. ?
 
 ## Future versions

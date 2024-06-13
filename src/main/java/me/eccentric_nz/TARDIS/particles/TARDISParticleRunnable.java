@@ -18,36 +18,46 @@ package me.eccentric_nz.TARDIS.particles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetParticlePrefs;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.util.Vector;
+
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
  */
 public class TARDISParticleRunnable implements Runnable {
 
+    protected final UUID uuid;
     protected double t = 0;
+    protected double speed = 0;
     int taskID;
 
-    public TARDISParticleRunnable() {
+    public TARDISParticleRunnable(TARDIS plugin, UUID uuid) {
+        this.uuid = uuid;
+        ResultSetParticlePrefs rs = new ResultSetParticlePrefs(plugin);
+        if (rs.fromUUID(uuid.toString())) {
+            this.speed = rs.getData().getSpeed();
+        }
     }
 
     public void setTaskID(int taskID) {
         this.taskID = taskID;
     }
 
-    public void spawnParticle(Particle particle, Location location, int count) {
+    public void spawnParticle(Particle particle, Location location, int count, double speed) {
         if (particle == Particle.DUST) {
             Particle.DustOptions options = new Particle.DustOptions(Color.BLUE, 1.0f);
-            location.getWorld().spawnParticle(particle, location, count, 0, 0, 0, 0, options, false);
+            location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, options, false);
         } else if (particle == Particle.SHRIEK) {
-            location.getWorld().spawnParticle(particle, location, count, 0, 0, 0, 0, 1, false);
+            location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, 1, false);
         } else if (particle == Particle.SCULK_CHARGE) {
-            location.getWorld().spawnParticle(particle, location, count, 0, 0, 0, 0, 1.0f, false);
+            location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, 1.0f, false);
         } else {
-            location.getWorld().spawnParticle(particle, location, count, 0, 0, 0, 0.05, null, false);
+            location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, null, false);
         }
     }
 

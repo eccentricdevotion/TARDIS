@@ -4,7 +4,7 @@ import org.bukkit.Particle;
 
 public enum ParticleEffect {
 
-    ASH(Particle.ASH),
+    ASH(Particle.ASH, 0.5),
     BOOM(Particle.SONIC_BOOM, 8),
     BREATH(Particle.DRAGON_BREATH, 8),
     BUBBLES(Particle.BUBBLE_POP),
