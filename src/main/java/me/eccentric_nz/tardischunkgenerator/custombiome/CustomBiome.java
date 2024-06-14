@@ -15,7 +15,7 @@ import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_20_R4.CraftServer;
+import org.bukkit.craftbukkit.v1_21_R1.CraftServer;
 
 import java.lang.reflect.Field;
 import java.util.IdentityHashMap;
@@ -24,8 +24,8 @@ public class CustomBiome {
 
     public static void addCustomBiome(CustomBiomeData data) {
         DedicatedServer dedicatedServer = ((CraftServer) Bukkit.getServer()).getServer();
-        ResourceKey<Biome> minecraftKey = ResourceKey.create(Registries.BIOME, new ResourceLocation("minecraft", data.getMinecraftName()));
-        ResourceKey<Biome> customKey = ResourceKey.create(Registries.BIOME, new ResourceLocation("tardis", data.getCustomName()));
+        ResourceKey<Biome> minecraftKey = ResourceKey.create(Registries.BIOME, ResourceLocation.withDefaultNamespace(data.getMinecraftName()));
+        ResourceKey<Biome> customKey = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("tardis", data.getCustomName()));
         WritableRegistry<Biome> registrywritable = (WritableRegistry<Biome>) dedicatedServer.registryAccess().registryOrThrow(Registries.BIOME);
         Biome minecraftbiome = registrywritable.get(minecraftKey);
         Biome.BiomeBuilder newBiome = new Biome.BiomeBuilder();

@@ -28,7 +28,7 @@ import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_20_R4.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_21_R1.entity.CraftPlayer;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -69,7 +69,7 @@ public class TARDISChameleonArchDisguiser {
         }
         ClientboundPlayerInfoUpdatePacket packetPlayOutPlayerInfo = new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, entityPlayer); // a = ADD_PLAYER
         ClientboundRemoveEntitiesPacket packetPlayOutEntityDestroy = new ClientboundRemoveEntitiesPacket(player.getEntityId());
-        ClientboundAddEntityPacket packetPlayOutNamedEntitySpawn = new ClientboundAddEntityPacket(entityPlayer);
+        ClientboundAddEntityPacket packetPlayOutNamedEntitySpawn = new ClientboundAddEntityPacket(entityPlayer, 0, entityPlayer.blockPosition());
         for (org.bukkit.entity.Player p : Bukkit.getOnlinePlayers()) {
             ServerPlayer ep = ((CraftPlayer) p).getHandle();
             if (ep != entityPlayer && p.getWorld() == player.getWorld() && p.canSee(player)) {
@@ -114,7 +114,7 @@ public class TARDISChameleonArchDisguiser {
         }
         ClientboundPlayerInfoUpdatePacket packetPlayOutPlayerInfo = new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, entityPlayer);
         ClientboundRemoveEntitiesPacket packetPlayOutEntityDestroy = new ClientboundRemoveEntitiesPacket(player.getEntityId());
-        ClientboundAddEntityPacket packetPlayOutNamedEntitySpawn = new ClientboundAddEntityPacket(entityPlayer);
+        ClientboundAddEntityPacket packetPlayOutNamedEntitySpawn = new ClientboundAddEntityPacket(entityPlayer, 0, entityPlayer.blockPosition());
         for (org.bukkit.entity.Player p : Bukkit.getOnlinePlayers()) {
             ServerPlayer ep = ((CraftPlayer) p).getHandle();
             if (ep != entityPlayer && p.getWorld() == player.getWorld() && p.canSee(player)) {
