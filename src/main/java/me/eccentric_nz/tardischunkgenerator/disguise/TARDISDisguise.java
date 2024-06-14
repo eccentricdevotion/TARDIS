@@ -188,9 +188,9 @@ public class TARDISDisguise {
         }
         try {
             String entityPackage = packagePath + ((hasEntityStr) ? "Entity" : "") + str;
-            Class entityClass = Class.forName(entityPackage);
-            Constructor constructor = entityClass.getConstructor(net.minecraft.world.entity.EntityType.class, net.minecraft.world.level.Level.class);
-            net.minecraft.world.entity.EntityType type = BuiltInRegistries.ENTITY_TYPE.get(CraftNamespacedKey.toMinecraft(disguise.getEntityType().getKey()));
+            Class<?> entityClass = Class.forName(entityPackage);
+            Constructor<?> constructor = entityClass.getConstructor(net.minecraft.world.entity.EntityType.class, net.minecraft.world.level.Level.class);
+            net.minecraft.world.entity.EntityType<?> type = BuiltInRegistries.ENTITY_TYPE.get(CraftNamespacedKey.toMinecraft(disguise.getEntityType().getKey()));
             net.minecraft.world.level.Level world = ((CraftWorld) w).getHandle();
             Entity entity = (Entity) constructor.newInstance(type, world);
             if (disguise.getOptions() != null) {

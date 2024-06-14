@@ -19,13 +19,14 @@ package me.eccentric_nz.TARDIS.utility;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 public class TARDISSpigotChecker implements Runnable {
 
@@ -46,8 +47,8 @@ public class TARDISSpigotChecker implements Runnable {
                 return;
             }
             int name = spigotBuild.getAsJsonPrimitive("name").getAsInt();
-            // 3777 is the latest 1.20 build (as of 9-06-2023)
-            String[] split = spigotVersion.split("-"); // something like '3777-Spigot-723951c-f3b2b22 (MC: 1.20)'
+            // 4202 is the latest 1.21 build (as of 14-06-2024)
+            String[] split = spigotVersion.split("-"); // something like '4202-Spigot-146439e-8d842e2 (MC: 1.21)'
             int current = TARDISNumberParsers.parseInt(split[0]);
             if (name > current) {
                 JsonObject refs = spigotBuild.get("refs").getAsJsonObject();

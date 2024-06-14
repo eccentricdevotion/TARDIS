@@ -90,7 +90,7 @@ public class TARDISChecker {
             copy("pack.mcmeta", mcmeta);
             write(dataPacksRoot, false);
         } else {
-            // update the format - 41 is the latest for 1.20.6
+            // update the format - 48 is the latest for 1.21
             // it's a json file, so load it and check the value
             Gson gson = new GsonBuilder().create();
             try {
@@ -102,11 +102,11 @@ public class TARDISChecker {
                         for (Map.Entry<?, ?> data : values.entrySet()) {
                             if (data.getKey().equals("pack_format")) {
                                 Double d = (Double) data.getValue();
-                                if (d < 41.0D) {
+                                if (d < 48.0D) {
                                     Map<String, Map<String, Object>> mcmap = new HashMap<>();
                                     Map<String, Object> pack = new HashMap<>();
                                     pack.put("description", "Data pack for the TARDIS plugin");
-                                    pack.put("pack_format", 41);
+                                    pack.put("pack_format", 48);
                                     mcmap.put("pack", pack);
                                     FileWriter writer = new FileWriter(mcmeta);
                                     gson.toJson(mcmap, writer);

@@ -59,7 +59,7 @@ public class TARDISChameleonArchDisguiser {
             GameProfile arch = new GameProfile(player.getUniqueId(), name);
             arch.getProperties().removeAll("textures");
             arch.getProperties().put("textures", new Property("textures", archSkin, archSignature));
-            Field gpField = Player.class.getDeclaredField("cC"); // cC = GameProfile
+            Field gpField = Player.class.getDeclaredField("cD"); // cD = GameProfile
             gpField.setAccessible(true);
             gpField.set(entityPlayer, arch);
             gpField.setAccessible(false);
@@ -103,7 +103,7 @@ public class TARDISChameleonArchDisguiser {
             nameField.set(arch, oldName);
             nameField.setAccessible(false);
             arch.getProperties().putAll(properties);
-            Field gpField = Player.class.getDeclaredField("cC"); // cC = GameProfile
+            Field gpField = Player.class.getDeclaredField("cD"); // cD = GameProfile
             gpField.setAccessible(true);
             gpField.set(entityPlayer, arch);
             gpField.setAccessible(false);

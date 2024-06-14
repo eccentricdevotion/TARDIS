@@ -1,8 +1,9 @@
 package me.eccentric_nz.tardischunkgenerator.custombiome;
 
+import org.bukkit.Material;
+
 import java.util.Arrays;
 import java.util.List;
-import org.bukkit.Material;
 
 public class CubicMaterial {
 
@@ -406,7 +407,29 @@ public class CubicMaterial {
             Material.STRIPPED_BAMBOO_BLOCK,
             Material.STRIPPED_CHERRY_LOG,
             Material.STRIPPED_CHERRY_WOOD,
-//            Material.SUSPICIOUS_GRAVEL,
-            Material.SUSPICIOUS_SAND
+            Material.SUSPICIOUS_GRAVEL,
+            Material.SUSPICIOUS_SAND,
+            // 1.21 blocks
+            Material.CHISELED_COPPER,
+            Material.CHISELED_TUFF,
+            Material.CHISELED_TUFF_BRICKS,
+            Material.COPPER_BULB,
+            Material.CRAFTER,
+            Material.EXPOSED_CHISELED_COPPER,
+            Material.EXPOSED_COPPER_BULB,
+            Material.OXIDIZED_CHISELED_COPPER,
+            Material.OXIDIZED_COPPER_BULB,
+            Material.POLISHED_TUFF,
+            Material.TUFF_BRICKS,
+            Material.WAXED_CHISELED_COPPER,
+            Material.WAXED_COPPER_BULB,
+            Material.WAXED_EXPOSED_CHISELED_COPPER,
+            Material.WAXED_EXPOSED_COPPER_BULB,
+            Material.WAXED_OXIDIZED_CHISELED_COPPER,
+            Material.WAXED_OXIDIZED_COPPER_BULB,
+            Material.WAXED_WEATHERED_CHISELED_COPPER,
+            Material.WAXED_WEATHERED_COPPER_BULB,
+            Material.WEATHERED_CHISELED_COPPER,
+            Material.WEATHERED_COPPER_BULB
     );
 }
