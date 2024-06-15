@@ -6,6 +6,7 @@ import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.particles.Emitter;
 import me.eccentric_nz.TARDIS.particles.ParticleEffect;
 import me.eccentric_nz.TARDIS.particles.ParticleShape;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.entity.Player;
 
 import java.util.Locale;
@@ -19,7 +20,7 @@ public class TARDISDevEffectCommand {
     }
 
     public boolean show(Player player, String[] args) {
-        if (args.length == 3) {
+        if (args.length > 2) {
             ParticleShape shape;
             ParticleEffect particle;
             try {
@@ -32,7 +33,16 @@ public class TARDISDevEffectCommand {
             } catch (IllegalArgumentException e) {
                 particle = ParticleEffect.EFFECT;
             }
-            Emitter emitter = new Emitter(plugin, player.getUniqueId(), player.getLocation().add(3, 0, 3), new ParticleData(particle, shape, 16, 0, true), SpaceTimeThrottle.NORMAL.getFlightTime());
+            // get density and speed
+            int density = 16;
+            double speed = 0;
+            if (args.length > 3) {
+                density = TARDISNumberParsers.parseInt(args[3]);
+            }
+            if (args.length > 4) {
+                speed = TARDISNumberParsers.parseDouble(args[4]);
+            }
+            Emitter emitter = new Emitter(plugin, player.getUniqueId(), player.getLocation().add(3, 0, 3), new ParticleData(particle, shape, density, speed, true), SpaceTimeThrottle.RAPID.getFlightTime());
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, shape.getPeriod());
             emitter.setTaskID(task);
         }

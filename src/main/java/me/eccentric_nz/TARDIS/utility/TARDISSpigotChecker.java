@@ -47,8 +47,8 @@ public class TARDISSpigotChecker implements Runnable {
                 return;
             }
             int name = spigotBuild.getAsJsonPrimitive("name").getAsInt();
-            // 4212 is the latest 1.21 build (as of 15-06-2024)
-            String[] split = spigotVersion.split("-"); // something like '4212-Spigot-146439e-2828725 (MC: 1.21)'
+            // 4213 is the latest 1.21 build (as of 15-06-2024)
+            String[] split = spigotVersion.split("-"); // something like '4213-Spigot-146439e-f5a63f7 (MC: 1.21)'
             int current = TARDISNumberParsers.parseInt(split[0]);
             if (name > current) {
                 JsonObject refs = spigotBuild.get("refs").getAsJsonObject();
@@ -83,7 +83,7 @@ public class TARDISSpigotChecker implements Runnable {
                     .uri(uri)
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            JsonElement root = JsonParser.parseString((String) response.body());
+            JsonElement root = JsonParser.parseString(response.body());
             return root.getAsJsonObject();
         } catch (Exception ex) {
             plugin.debug("Failed to check for the latest build info from Spigot.");
