@@ -36,6 +36,7 @@ import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmingInventory;
+import me.eccentric_nz.TARDIS.particles.TARDISParticleInventory;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicConfiguratorInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
@@ -277,6 +278,18 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             }, 1L);
             return;
         }
+        if (slot == GUIPlayerPreferences.PARTICLES.getSlot() && im.getDisplayName().equals("Materialisation Particles")) {
+            // close this gui and load the Particle Prefs
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                Inventory particle_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Particle Preferences");
+                // close inventory
+                p.closeInventory();
+                // open new inventory
+                particle_inv.setContents(new TARDISParticleInventory(plugin, uuid.toString()).getGUI());
+                p.openInventory(particle_inv);
+            }, 1L);
+            return;
+        }
         if (slot == GUIPlayerPreferences.ADMIN_MENU.getSlot() && im.getDisplayName().equals("Admin Config Menu")) {
             // close this gui and load the Admin Menu
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -292,7 +305,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         int b = (bool) ? 0 : 1;
         switch (im.getDisplayName()) {
             case "Junk TARDIS" -> {
-                // must be outside of the TARDIS
+                // must be on the outside of the TARDIS
                 HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("uuid", uuid);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);

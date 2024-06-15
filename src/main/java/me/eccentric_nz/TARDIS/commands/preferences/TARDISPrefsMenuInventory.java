@@ -195,6 +195,13 @@ public class TARDISPrefsMenuInventory {
         config.setCustomModelData(GUIPlayerPreferences.SONIC_CONFIGURATOR.getCustomModelData());
         sonic.setItemMeta(config);
         stack[GUIPlayerPreferences.SONIC_CONFIGURATOR.getSlot()] = sonic;
+        // particle prefs
+        ItemStack part = new ItemStack(Material.BOWL, 1);
+        ItemMeta icles = part.getItemMeta();
+        icles.setDisplayName("Materialisation Particles");
+        icles.setCustomModelData(GUIPlayerPreferences.PARTICLES.getCustomModelData());
+        part.setItemMeta(icles);
+        stack[GUIPlayerPreferences.PARTICLES.getSlot()] = part;
         if (plugin.getServer().getPlayer(uuid).hasPermission("tardis.admin")) {
             // admin
             ItemStack ad = new ItemStack(Material.NETHER_STAR, 1);

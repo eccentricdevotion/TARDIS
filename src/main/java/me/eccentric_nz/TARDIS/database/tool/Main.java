@@ -267,7 +267,7 @@ public class Main {
                                         bw.write(str);
                                     }
                                     case particle_prefs -> {
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("pp_id"), rs.getString("uuid"), rs.getString("effect"), rs.getString("shape"), rs.getDouble("speed"), rs.getInt("particles_on")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("pp_id"), rs.getString("uuid"), rs.getString("effect"), rs.getString("shape"), rs.getInt("density"), rs.getInt("speed"), rs.getInt("particles_on")) + end;
                                         bw.write(str);
                                     }
                                     case player_prefs -> {

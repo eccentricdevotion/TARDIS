@@ -111,6 +111,7 @@ public class TARDISMenuListener implements Listener {
         map.put(ChatColor.DARK_RED + "Genetic Manipulator", 54);
         // TODO should Handles Program GUI be in here?
 //        map.put(ChatColor.DARK_RED + "Handles Program", 54);
+        map.put(ChatColor.DARK_RED + "Particle Preferences", 54);
         map.put(ChatColor.DARK_RED + "Player Prefs Menu", 36);
         map.put(ChatColor.DARK_RED + "Recipe Categories", 27);
         map.put(ChatColor.DARK_RED + "TARDIS Recipes", 27);

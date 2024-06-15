@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.database.resultset;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.data.ParticlePrefs;
+import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.particles.ParticleEffect;
 import me.eccentric_nz.TARDIS.particles.ParticleShape;
 
@@ -17,7 +17,7 @@ public class ResultSetParticlePrefs {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
-    private ParticlePrefs data;
+    private ParticleData data;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the player_prefs table.
@@ -43,7 +43,7 @@ public class ResultSetParticlePrefs {
                 try {
                     ParticleEffect effect = ParticleEffect.valueOf(rs.getString("effect"));
                     ParticleShape shape = ParticleShape.valueOf(rs.getString("shape"));
-                    data = new ParticlePrefs(effect, shape, rs.getDouble("speed"), rs.getInt("density"), rs.getBoolean("particles_on"));
+                    data = new ParticleData(effect, shape, rs.getInt("density"), rs.getDouble("speed")/10.0d, rs.getBoolean("particles_on"));
                     return true;
                 } catch (IllegalArgumentException ignored) {
                 }
@@ -66,7 +66,7 @@ public class ResultSetParticlePrefs {
         }
     }
 
-    public ParticlePrefs getData() {
+    public ParticleData getData() {
         return data;
     }
 }

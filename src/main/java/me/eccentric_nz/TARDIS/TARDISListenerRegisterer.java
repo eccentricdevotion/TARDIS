@@ -72,6 +72,7 @@ import me.eccentric_nz.TARDIS.listeners.*;
 import me.eccentric_nz.TARDIS.listeners.controls.*;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmingMenuListener;
 import me.eccentric_nz.TARDIS.move.*;
+import me.eccentric_nz.TARDIS.particles.TARDISParticleGUIListener;
 import me.eccentric_nz.TARDIS.planets.*;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryListener;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeInventoryListener;
@@ -241,6 +242,7 @@ class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new TARDISPerceptionFilterListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISPaperBagListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISParticleGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPistonListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPortalListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPrefsMenuListener(plugin), plugin);

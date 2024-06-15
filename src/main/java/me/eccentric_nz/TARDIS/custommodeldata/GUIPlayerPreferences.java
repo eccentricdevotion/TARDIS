@@ -55,6 +55,7 @@ public enum GUIPlayerPreferences {
     AUTONOMOUS_PREFERENCES(145, 31, Material.BOWL),
     FARMING_PREFERENCES(155, 32, Material.BOWL),
     SONIC_CONFIGURATOR(135, 33, Material.BOWL),
+    PARTICLES(157, 34, Material.BOWL),
     ADMIN_MENU(1, 35, Material.NETHER_STAR);
 
     private final int customModelData;

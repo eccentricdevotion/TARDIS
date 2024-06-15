@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.particles.Emitter;
 import me.eccentric_nz.TARDIS.particles.ParticleEffect;
@@ -31,7 +32,7 @@ public class TARDISDevEffectCommand {
             } catch (IllegalArgumentException e) {
                 particle = ParticleEffect.EFFECT;
             }
-            Emitter emitter = new Emitter(plugin, player.getUniqueId(), player.getLocation().add(3, 0, 3), shape, particle, SpaceTimeThrottle.NORMAL.getFlightTime());
+            Emitter emitter = new Emitter(plugin, player.getUniqueId(), player.getLocation().add(3, 0, 3), new ParticleData(particle, shape, 16, 0, true), SpaceTimeThrottle.NORMAL.getFlightTime());
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, shape.getPeriod());
             emitter.setTaskID(task);
         }
