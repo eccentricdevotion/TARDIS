@@ -112,7 +112,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
     private void setEffect(InventoryView view, int slot, String display, UUID uuid) {
         for (int s = 11; s < 44; s++) {
             ItemStack is = view.getItem(s);
-            if (is != null && s != GUIParticle.TOGGLE.getSlot()) {
+            if (is != null && s != GUIParticle.TOGGLE.getSlot() && s != GUIParticle.TEST.getSlot()) {
                 is.setType(s == slot ? Material.REDSTONE_ORE : Material.REDSTONE);
                 view.setItem(s, is);
             }
