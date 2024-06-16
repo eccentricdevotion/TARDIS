@@ -58,7 +58,7 @@ public class TARDISPrefsMenuInventory {
      */
 
     private ItemStack[] getItemStack() {
-        // get player prefs
+        // get player preferences
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
         List<Boolean> values = new ArrayList<>();
         if (!rsp.resultSet()) {
@@ -132,7 +132,7 @@ public class TARDISPrefsMenuInventory {
                 if (pref == GUIPlayerPreferences.HADS_TYPE) {
                     im.setLore(List.of(v ? "DISPERSAL" : "DISPLACEMENT"));
                 } else {
-                    im.setLore(List.of(v ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF")));
+                    im.setLore(List.of(v ? plugin.getLanguage().getString("SET_ON", "ON") : plugin.getLanguage().getString("SET_OFF", "OFF")));
                 }
                 is.setItemMeta(im);
                 stack[pref.getSlot()] = is;
@@ -163,7 +163,7 @@ public class TARDISPrefsMenuInventory {
         ItemStack hand = new ItemStack(Material.LEVER, 1);
         ItemMeta brake = hand.getItemMeta();
         brake.setDisplayName("Handbrake");
-        brake.setLore(List.of((tardis != null && tardis.isHandbrakeOn()) ? plugin.getLanguage().getString("SET_ON") : plugin.getLanguage().getString("SET_OFF")));
+        brake.setLore(List.of((tardis != null && tardis.isHandbrakeOn()) ? plugin.getLanguage().getString("SET_ON", "ON") : plugin.getLanguage().getString("SET_OFF", "OFF")));
         brake.setCustomModelData(GUIPlayerPreferences.HANDBRAKE.getCustomModelData());
         hand.setItemMeta(brake);
         stack[GUIPlayerPreferences.HANDBRAKE.getSlot()] = hand;
@@ -174,20 +174,24 @@ public class TARDISPrefsMenuInventory {
         map.setCustomModelData(GUIPlayerPreferences.TARDIS_MAP.getCustomModelData());
         tt.setItemMeta(map);
         stack[GUIPlayerPreferences.TARDIS_MAP.getSlot()] = tt;
-        // autonomous prefs
-        ItemStack auto = new ItemStack(Material.BOWL, 1);
-        ItemMeta prefs = auto.getItemMeta();
-        prefs.setDisplayName("Autonomous Preferences");
-        prefs.setCustomModelData(GUIPlayerPreferences.AUTONOMOUS_PREFERENCES.getCustomModelData());
-        auto.setItemMeta(prefs);
-        stack[GUIPlayerPreferences.AUTONOMOUS_PREFERENCES.getSlot()] = auto;
-        // farming prefs
-        ItemStack farm = new ItemStack(Material.BOWL, 1);
-        ItemMeta ing = farm.getItemMeta();
-        ing.setDisplayName("Farming Preferences");
-        ing.setCustomModelData(GUIPlayerPreferences.FARMING_PREFERENCES.getCustomModelData());
-        farm.setItemMeta(ing);
-        stack[GUIPlayerPreferences.FARMING_PREFERENCES.getSlot()] = farm;
+        if (plugin.getServer().getPlayer(uuid).hasPermission("tardis.autonomous")) {
+            // autonomous preferences
+            ItemStack auto = new ItemStack(Material.BOWL, 1);
+            ItemMeta prefs = auto.getItemMeta();
+            prefs.setDisplayName("Autonomous Preferences");
+            prefs.setCustomModelData(GUIPlayerPreferences.AUTONOMOUS_PREFERENCES.getCustomModelData());
+            auto.setItemMeta(prefs);
+            stack[GUIPlayerPreferences.AUTONOMOUS_PREFERENCES.getSlot()] = auto;
+        }
+        if (plugin.getServer().getPlayer(uuid).hasPermission("tardis.farm")) {
+            // farming preferences
+            ItemStack farm = new ItemStack(Material.BOWL, 1);
+            ItemMeta ing = farm.getItemMeta();
+            ing.setDisplayName("Farming Preferences");
+            ing.setCustomModelData(GUIPlayerPreferences.FARMING_PREFERENCES.getCustomModelData());
+            farm.setItemMeta(ing);
+            stack[GUIPlayerPreferences.FARMING_PREFERENCES.getSlot()] = farm;
+        }
         // sonic configurator
         ItemStack sonic = new ItemStack(Material.BOWL, 1);
         ItemMeta config = sonic.getItemMeta();
@@ -195,13 +199,15 @@ public class TARDISPrefsMenuInventory {
         config.setCustomModelData(GUIPlayerPreferences.SONIC_CONFIGURATOR.getCustomModelData());
         sonic.setItemMeta(config);
         stack[GUIPlayerPreferences.SONIC_CONFIGURATOR.getSlot()] = sonic;
-        // particle prefs
-        ItemStack part = new ItemStack(Material.BOWL, 1);
-        ItemMeta icles = part.getItemMeta();
-        icles.setDisplayName("Materialisation Particles");
-        icles.setCustomModelData(GUIPlayerPreferences.PARTICLES.getCustomModelData());
-        part.setItemMeta(icles);
-        stack[GUIPlayerPreferences.PARTICLES.getSlot()] = part;
+        if (plugin.getServer().getPlayer(uuid).hasPermission("tardis.particles")) {
+            // particle preferences
+            ItemStack part = new ItemStack(Material.BOWL, 1);
+            ItemMeta icles = part.getItemMeta();
+            icles.setDisplayName("Materialisation Particles");
+            icles.setCustomModelData(GUIPlayerPreferences.PARTICLES.getCustomModelData());
+            part.setItemMeta(icles);
+            stack[GUIPlayerPreferences.PARTICLES.getSlot()] = part;
+        }
         if (plugin.getServer().getPlayer(uuid).hasPermission("tardis.admin")) {
             // admin
             ItemStack ad = new ItemStack(Material.NETHER_STAR, 1);

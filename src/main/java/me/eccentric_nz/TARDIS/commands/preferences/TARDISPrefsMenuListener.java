@@ -109,7 +109,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             // toggle force field on / off
             if (TARDISPermission.hasPermission(p, "tardis.forcefield")) {
                 List<String> lore = im.getLore();
-                boolean bool = (lore.get(0).equals(plugin.getLanguage().getString("SET_OFF")));
+                boolean bool = (lore.getFirst().equals(plugin.getLanguage().getString("SET_OFF")));
                 if (bool) {
                     // check power
                     ResultSetArtronLevel rsal = new ResultSetArtronLevel(plugin, uuid.toString());
@@ -138,7 +138,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         if (slot == GUIPlayerPreferences.FLIGHT_MODE.getSlot() && im.getDisplayName().equals("Flight Mode")) {
             List<String> lore = im.getLore();
             // cycle through flight modes
-            FlightMode flight = FlightMode.valueOf(lore.get(0));
+            FlightMode flight = FlightMode.valueOf(lore.getFirst());
             int mode = flight.getMode() + 1;
             if (mode > 3) {
                 mode = 1;
@@ -169,7 +169,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         if (slot == GUIPlayerPreferences.HANDBRAKE.getSlot() && im.getDisplayName().equals("Handbrake")) {
             // you can only set it to ON!
             List<String> lore = im.getLore();
-            if (lore.get(0).equals(plugin.getLanguage().getString("SET_OFF"))) {
+            if (lore.getFirst().equals(plugin.getLanguage().getString("SET_OFF"))) {
                 // get this player's TARDIS
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                 if (rs.fromUUID(uuid.toString())) {
@@ -279,7 +279,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             return;
         }
         if (slot == GUIPlayerPreferences.PARTICLES.getSlot() && im.getDisplayName().equals("Materialisation Particles")) {
-            // close this gui and load the Particle Prefs
+            // close this gui and load the Particle Preferences
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 Inventory particle_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Particle Preferences");
                 // close inventory
@@ -300,7 +300,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             return;
         }
         List<String> lore = im.getLore();
-        boolean bool = (lore.get(0).equals(plugin.getLanguage().getString("SET_ON")));
+        boolean bool = (lore.getFirst().equals(plugin.getLanguage().getString("SET_ON")));
         String value = (bool) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
         int b = (bool) ? 0 : 1;
         switch (im.getDisplayName()) {
@@ -411,7 +411,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
                 if (im.getDisplayName().equals("HADS Type")) {
-                    value = (lore.get(0).equals("DISPLACEMENT")) ? "DISPERSAL" : "DISPLACEMENT";
+                    value = (lore.getFirst().equals("DISPLACEMENT")) ? "DISPERSAL" : "DISPLACEMENT";
                     set.put("hads_type", value);
                 } else {
                     set.put(lookup.get(im.getDisplayName()), b);

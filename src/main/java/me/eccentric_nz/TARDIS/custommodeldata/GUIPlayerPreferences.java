@@ -50,12 +50,12 @@ public enum GUIPlayerPreferences {
     INFO_GUI(56, 24, Material.REPEATER),
     FLIGHT_MODE(1, 27, Material.ELYTRA),
     INTERIOR_HUM_SOUND(58, 28, Material.BOWL),
-    HANDBRAKE(1, 29, Material.LEVER),
-    TARDIS_MAP(3, 30, Material.MAP),
-    AUTONOMOUS_PREFERENCES(145, 31, Material.BOWL),
-    FARMING_PREFERENCES(155, 32, Material.BOWL),
-    SONIC_CONFIGURATOR(135, 33, Material.BOWL),
-    PARTICLES(157, 34, Material.BOWL),
+    AUTONOMOUS_PREFERENCES(145, 29, Material.BOWL),
+    FARMING_PREFERENCES(155, 30, Material.BOWL),
+    PARTICLES(157, 31, Material.BOWL),
+    SONIC_CONFIGURATOR(135, 32, Material.BOWL),
+    HANDBRAKE(1, 33, Material.LEVER),
+    TARDIS_MAP(3, 34, Material.MAP),
     ADMIN_MENU(1, 35, Material.NETHER_STAR);
 
     private final int customModelData;
