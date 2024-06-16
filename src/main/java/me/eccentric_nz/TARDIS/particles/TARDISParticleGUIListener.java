@@ -18,9 +18,15 @@ package me.eccentric_nz.TARDIS.particles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIParticle;
+import me.eccentric_nz.TARDIS.database.data.ParticleData;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -75,6 +81,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
                          29, 30, 31, 32, 33, 34,
                          38, 39, 40, 41, 42, 43 -> setEffect(view, slot, display, uuid); // particle effect
                     case 27 -> toggle(view, is, uuid); // set enabled/disabled
+                    case 35 -> test(view, player, uuid); // test
                     case 45 -> less(view, true, uuid); // less density
                     case 47 -> more(view, true, uuid); // more density
                     case 49 -> less(view, false, uuid); // less speed
@@ -131,6 +138,61 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         plugin.getQueryFactory().doSyncUpdate("particle_prefs", set, where);
+    }
+
+    private void test(InventoryView view, Player player, UUID uuid) {
+        // get players TARDIS id
+        ResultSetTardisID rst = new ResultSetTardisID(plugin);
+        if (rst.fromUUID(uuid.toString())) {
+            // get TARDIS location
+            HashMap<String, Object> wherec = new HashMap<>();
+            wherec.put("tardis_id", rst.getTardisId());
+            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+            if (rsc.resultSet()) {
+                Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ()).add(0.5, 0, 0.5);
+                // get throttle setting
+                ResultSetThrottle rs = new ResultSetThrottle(plugin);
+                SpaceTimeThrottle throttle  = rs.getSpeed(uuid.toString());
+                // read current settings
+                ParticleData data = getParticleData(view);
+                // display particles
+                Emitter emitter = new Emitter(plugin, uuid, current, data, throttle.getFlightTime());
+                int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, data.getShape().getPeriod());
+                emitter.setTaskID(task);
+                // close GUI
+                close(player);
+            }
+        }
+    }
+
+    private ParticleData getParticleData(InventoryView view) {
+        ParticleEffect effect = ParticleEffect.ASH;
+        ParticleShape shape = ParticleShape.RANDOM;
+        int density = 16;
+        double speed = 0;
+        boolean b = false;
+        try {
+            for (int s = 11; s < 44; s++) {
+                ItemStack eis = view.getItem(s);
+                if (eis != null && eis.getType() == Material.REDSTONE_ORE) {
+                    effect = ParticleEffect.valueOf(eis.getItemMeta().getDisplayName().toUpperCase(Locale.ROOT));
+                }
+            }
+            for (int s = 2; s < 8; s++) {
+                ItemStack sis = view.getItem(s);
+                if (sis != null && sis.getType() == Material.LAPIS_ORE) {
+                    shape = ParticleShape.valueOf(sis.getItemMeta().getDisplayName().toUpperCase(Locale.ROOT));
+                }
+            }
+        } catch (IllegalArgumentException ignored) {
+        }
+        ItemStack dis = view.getItem(GUIParticle.DENSITY.getSlot());
+        String d = dis.getItemMeta().getLore().get(0);
+        density = TARDISNumberParsers.parseInt(d);
+        ItemStack spis = view.getItem(GUIParticle.SPEED.getSlot());
+        String s = spis.getItemMeta().getLore().get(0);
+        speed = TARDISNumberParsers.parseInt(d) / 10.0d;
+        return new ParticleData(effect, shape, density, speed, b);
     }
 
     private void less(InventoryView view, boolean b, UUID uuid) {

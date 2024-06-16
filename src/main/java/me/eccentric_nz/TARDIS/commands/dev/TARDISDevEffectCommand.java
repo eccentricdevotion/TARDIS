@@ -2,14 +2,21 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetParticlePrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.particles.Emitter;
 import me.eccentric_nz.TARDIS.particles.ParticleEffect;
 import me.eccentric_nz.TARDIS.particles.ParticleShape;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.UUID;
 
 public class TARDISDevEffectCommand {
 
@@ -20,7 +27,33 @@ public class TARDISDevEffectCommand {
     }
 
     public boolean show(Player player, String[] args) {
-        if (args.length > 2) {
+        if (args.length == 1) {
+            // use particle prefs
+            UUID uuid = player.getUniqueId();
+            // get players TARDIS id
+            ResultSetTardisID rst = new ResultSetTardisID(plugin);
+            if (rst.fromUUID(uuid.toString())) {
+                // get TARDIS location
+                HashMap<String, Object> wherec = new HashMap<>();
+                wherec.put("tardis_id", rst.getTardisId());
+                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+                if (rsc.resultSet()) {
+                    Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ()).add(0.5, 0, 0.5);
+                    // get throttle setting
+                    ResultSetThrottle rs = new ResultSetThrottle(plugin);
+                    SpaceTimeThrottle throttle  = rs.getSpeed(uuid.toString());
+                    // get current settings
+                    ResultSetParticlePrefs rspp = new ResultSetParticlePrefs(plugin);
+                    if (rspp.fromUUID(uuid.toString())) {
+                        ParticleData data = rspp.getData();
+                        // display particles
+                        Emitter emitter = new Emitter(plugin, uuid, current, data, throttle.getFlightTime());
+                        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, data.getShape().getPeriod());
+                        emitter.setTaskID(task);
+                    }
+                }
+            }
+        } else if (args.length > 2) {
             ParticleShape shape;
             ParticleEffect particle;
             try {

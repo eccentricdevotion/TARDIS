@@ -26,6 +26,7 @@ public enum GUIParticle {
     EFFECT_INFO(2, 9, Material.REDSTONE_BLOCK),
     EFFECT(1, -1, Material.REDSTONE),
     TOGGLE(19, 27, Material.REPEATER),
+    TEST(1, 35, Material.COPPER_INGOT),
     MINUS(40, -1, Material.PAPER),
     PLUS(39, -1, Material.PAPER),
     DENSITY(5, 46, Material.IRON_INGOT),

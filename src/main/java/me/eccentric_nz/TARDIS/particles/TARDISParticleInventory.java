@@ -120,6 +120,14 @@ public class TARDISParticleInventory {
         tim.setCustomModelData(cmd);
         toggle.setItemMeta(tim);
         stacks[GUIParticle.TOGGLE.getSlot()] = toggle;
+        // test
+        ItemStack test = new ItemStack(GUIParticle.TEST.getMaterial(), 1);
+        ItemMeta xim = test.getItemMeta();
+        xim.setDisplayName("Test");
+        xim.setLore(List.of("Display particles", "around your TARDIS", "with the current settings."));
+        xim.setCustomModelData(GUIParticle.TEST.getCustomModelData());
+        test.setItemMeta(xim);
+        stacks[GUIParticle.TEST.getSlot()] = test;
         // density
         ItemStack density = new ItemStack(GUIParticle.DENSITY.getMaterial(), 1);
         ItemMeta dim = density.getItemMeta();
