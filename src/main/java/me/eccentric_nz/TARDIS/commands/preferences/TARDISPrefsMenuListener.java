@@ -140,7 +140,8 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             // cycle through flight modes
             FlightMode flight = FlightMode.valueOf(lore.getFirst());
             int mode = flight.getMode() + 1;
-            if (mode > 3) {
+            int limit = (plugin.getServer().getPlayer(uuid).hasPermission("tardis.fly")) ? 4 : 3;
+            if (mode > limit) {
                 mode = 1;
             }
             lore.set(0, FlightMode.getByMode().get(mode).toString());
