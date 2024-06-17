@@ -21,10 +21,12 @@ import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetParticlePrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.particles.Emitter;
 import me.eccentric_nz.TARDIS.particles.TARDISParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -40,6 +42,7 @@ import org.bukkit.entity.Player;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * A dematerialisation circuit was an essential part of a Type 40 TARDIS which enabled it to dematerialise from normal
@@ -199,24 +202,33 @@ class TARDISDematerialisePreset implements Runnable {
                 if (dd.isOutside()) {
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, dd.getPlayer().getUniqueId().toString());
                     boolean minecart = false;
-                    SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
                     if (rsp.resultSet()) {
                         minecart = rsp.isMinecartOn();
-                        spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
                     }
                     if (!minecart) {
                         String sound;
                         if (preset.equals(ChameleonPreset.JUNK_MODE)) {
                             sound = "junk_takeoff";
                         } else {
-                            sound = switch (spaceTimeThrottle) {
-                                case WARP, RAPID, FASTER -> "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
+                            sound = switch (dd.getThrottle()) {
+                                case WARP, RAPID, FASTER -> "tardis_takeoff_" + dd.getThrottle().toString().toLowerCase();
                                 default -> "tardis_takeoff"; // NORMAL
                             };
                         }
                         TARDISSounds.playTARDISSound(dd.getLocation(), sound);
                     } else {
                         world.playSound(dd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
+                    }
+                }
+                if (dd.hasParticles()) {
+                    ResultSetParticlePrefs rspp = new ResultSetParticlePrefs(plugin);
+                    UUID uuid = dd.getPlayer().getUniqueId();
+                    if (rspp.fromUUID(uuid.toString())) {
+                        ParticleData particleData = rspp.getData();
+                        // display particles
+                        Emitter emitter = new Emitter(plugin, uuid, dd.getLocation(), particleData, dd.getThrottle().getFlightTime());
+                        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, particleData.getShape().getPeriod());
+                        emitter.setTaskID(task);
                     }
                 }
                 getColours(dd.getTardisID(), preset);

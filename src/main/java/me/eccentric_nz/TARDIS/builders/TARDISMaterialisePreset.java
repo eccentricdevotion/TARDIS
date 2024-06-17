@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -30,6 +31,7 @@ import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
+import me.eccentric_nz.TARDIS.particles.Emitter;
 import me.eccentric_nz.TARDIS.particles.TARDISParticles;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -199,6 +201,17 @@ class TARDISMaterialisePreset implements Runnable {
                             TARDISSounds.playTARDISSound(bd.getLocation(), sound);
                         } else {
                             world.playSound(bd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
+                        }
+                    }
+                    if (bd.hasParticles()) {
+                        ResultSetParticlePrefs rspp = new ResultSetParticlePrefs(plugin);
+                        UUID uuid = bd.getPlayer().getUniqueId();
+                        if (rspp.fromUUID(uuid.toString())) {
+                            ParticleData data = rspp.getData();
+                            // display particles
+                            Emitter emitter = new Emitter(plugin, uuid, bd.getLocation(), data, bd.getThrottle().getFlightTime());
+                            int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, data.getShape().getPeriod());
+                            emitter.setTaskID(task);
                         }
                     }
                     // get direction player is facing from yaw place block under door if block is in list of blocks an iron door cannot go on

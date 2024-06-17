@@ -20,9 +20,12 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.data.ParticleData;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetParticlePrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.particles.Emitter;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -33,6 +36,8 @@ import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.UUID;
 
 public class TARDISDematerialisePoliceBox implements Runnable {
 
@@ -101,7 +106,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                         frame.remove();
                     }
                     // spawn armour stand
-                    stand = (ArmorStand) world.spawnEntity(dd.getLocation().clone().add(0.5d, 0,0.5d), EntityType.ARMOR_STAND);
+                    stand = (ArmorStand) world.spawnEntity(dd.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.ARMOR_STAND);
                 }
                 stand.setRotation(dd.getDirection().getYaw(), 0.0f);
                 Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, dd.getTardisID(), false);
@@ -117,14 +122,24 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                     }
                     if (!minecart) {
                         String sound = switch (spaceTimeThrottle) {
-                            case WARP, RAPID, FASTER ->
-                                "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
+                            case WARP, RAPID, FASTER -> "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
                             default -> // NORMAL
-                                "tardis_takeoff";
+                                    "tardis_takeoff";
                         };
                         TARDISSounds.playTARDISSound(dd.getLocation(), sound);
                     } else {
                         world.playSound(dd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
+                    }
+                }
+                if (dd.hasParticles()) {
+                    ResultSetParticlePrefs rspp = new ResultSetParticlePrefs(plugin);
+                    UUID uuid = dd.getPlayer().getUniqueId();
+                    if (rspp.fromUUID(uuid.toString())) {
+                        ParticleData data = rspp.getData();
+                        // display particles
+                        Emitter emitter = new Emitter(plugin, uuid, dd.getLocation(), data, dd.getThrottle().getFlightTime());
+                        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, data.getShape().getPeriod());
+                        emitter.setTaskID(task);
                     }
                 }
             }

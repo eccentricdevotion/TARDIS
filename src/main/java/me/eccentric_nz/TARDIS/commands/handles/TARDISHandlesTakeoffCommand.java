@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.commands.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -92,13 +92,12 @@ class TARDISHandlesTakeoffCommand {
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, args[1]);
                         boolean beac_on = true;
                         boolean bar = false;
-                        SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
                         if (rsp.resultSet()) {
                             beac_on = rsp.isBeaconOn();
                             bar = rsp.isTravelbarOn();
-                            spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
                         }
-                        new TARDISTakeoff(plugin).run(id, handbrake, location, player, beac_on, tardis.getBeacon(), bar, spaceTimeThrottle);
+                        Throticle throticle = new ResultSetThrottle(plugin).getSpeedAndParticles(args[1]);
+                        new TARDISTakeoff(plugin).run(id, handbrake, location, player, beac_on, tardis.getBeacon(), bar, throticle);
                     } else {
                         plugin.getMessenger().handlesSend(player, "HANDBRAKE_OFF_ERR");
                     }

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.flight;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISDematerialisationEvent;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -45,14 +46,14 @@ public class TARDISDematerialiseToVortex implements Runnable {
     private final int id;
     private final Player player;
     private final Location handbrake;
-    private final SpaceTimeThrottle spaceTimeThrottle;
+    private final Throticle throticle;
 
-    public TARDISDematerialiseToVortex(TARDIS plugin, int id, Player player, Location handbrake, SpaceTimeThrottle spaceTimeThrottle) {
+    public TARDISDematerialiseToVortex(TARDIS plugin, int id, Player player, Location handbrake, Throticle throticle) {
         this.plugin = plugin;
         this.id = id;
         this.player = player;
         this.handbrake = handbrake;
-        this.spaceTimeThrottle = spaceTimeThrottle;
+        this.throticle = throticle;
     }
 
     @Override
@@ -98,7 +99,8 @@ public class TARDISDematerialiseToVortex implements Runnable {
             dd.setOutside(false);
             dd.setSubmarine(sub);
             dd.setTardisID(id);
-            dd.setThrottle(spaceTimeThrottle);
+            dd.setThrottle(throticle.getThrottle());
+            dd.setParticles(throticle.getParticles());
             ChameleonPreset preset = tardis.getPreset();
             if (preset.equals(ChameleonPreset.JUNK_MODE)) {
                 HashMap<String, Object> wherenl = new HashMap<>();
@@ -121,7 +123,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
                         if (plugin.getTrackerKeeper().getMalfunction().get(id) && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                             sound = "tardis_malfunction_takeoff";
                         } else {
-                            sound = switch (spaceTimeThrottle) {
+                            sound = switch (throticle.getThrottle()) {
                                 case WARP -> "tardis_takeoff_warp";
                                 case RAPID -> "tardis_takeoff_rapid";
                                 case FASTER -> "tardis_takeoff_faster";

@@ -16,14 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -33,13 +34,13 @@ public class TARDISLand {
     private final TARDIS plugin;
     private final int id;
     private final Player player;
-    private final SpaceTimeThrottle spaceTimeThrottle;
+    private final Throticle throticle;
 
     public TARDISLand(TARDIS plugin, int id, Player player) {
         this.plugin = plugin;
         this.id = id;
         this.player = player;
-        spaceTimeThrottle = getThrottle(this.player);
+        throticle = getThrottle(this.player);
     }
 
     public void exitVortex() {
@@ -52,11 +53,11 @@ public class TARDISLand {
         if (rsh.resultSet()) {
             Location handbrake = TARDISStaticLocationGetters.getLocationFromBukkitString(rsh.getLocation());
             // materialise
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISMaterialseFromVortex(plugin, id, player, handbrake, spaceTimeThrottle), 10L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISMaterialseFromVortex(plugin, id, player, handbrake, throticle), 10L);
         }
     }
 
-    private SpaceTimeThrottle getThrottle(Player player) {
-        return new ResultSetThrottle(plugin).getSpeed(player.getUniqueId().toString());
+    private Throticle getThrottle(Player player) {
+        return new ResultSetThrottle(plugin).getSpeedAndParticles(player.getUniqueId().toString());
     }
 }

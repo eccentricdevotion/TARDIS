@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
+import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
@@ -173,10 +174,11 @@ public class TARDISAuthorisedControlDisk {
                 TARDISEPSRunnable EPS_runnable = new TARDISEPSRunnable(plugin, message, player, playerUUIDs, id, eps, creeper);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, EPS_runnable, 20L);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    Throticle throticle = new Throticle(SpaceTimeThrottle.NORMAL, false);
                     // dematerialise
-                    new TARDISDematerialiseToVortex(plugin, id, player, handbrake, SpaceTimeThrottle.NORMAL).run();
+                    new TARDISDematerialiseToVortex(plugin, id, player, handbrake, throticle).run();
                     // materialise
-                    new TARDISMaterialseFromVortex(plugin, id, player, handbrake, SpaceTimeThrottle.NORMAL).run();
+                    new TARDISMaterialseFromVortex(plugin, id, player, handbrake, throticle).run();
                 }, 60L);
             } else {
                 return "Could not disengage handbrake.";

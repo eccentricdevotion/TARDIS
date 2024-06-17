@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISMaterialisationEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
@@ -52,14 +53,14 @@ public class TARDISMaterialseFromVortex implements Runnable {
     private final int id;
     private final Player player;
     private final Location handbrake;
-    private final SpaceTimeThrottle spaceTimeThrottle;
+    private final Throticle throticle;
 
-    public TARDISMaterialseFromVortex(TARDIS plugin, int id, Player player, Location handbrake, SpaceTimeThrottle spaceTimeThrottle) {
+    public TARDISMaterialseFromVortex(TARDIS plugin, int id, Player player, Location handbrake, Throticle throticle) {
         this.plugin = plugin;
         this.id = id;
         this.player = player;
         this.handbrake = handbrake;
-        this.spaceTimeThrottle = spaceTimeThrottle;
+        this.throticle = throticle;
     }
 
     @Override
@@ -100,7 +101,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         setsave.put("submarine", 0);
                         plugin.getQueryFactory().doSyncUpdate("next", setsave, wheress);
                         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                            int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * spaceTimeThrottle.getArtronMultiplier());
+                            int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * throticle.getThrottle().getArtronMultiplier());
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
@@ -161,6 +162,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     bd.setSubmarine(is_next_sub);
                     bd.setTardisID(id);
                     bd.setThrottle(spaceTimeThrottle);
+                    bd.setParticles(throticle.getParticles());
                     // determine delay values
                     long flight_mode_delay;
                     long travel_time;
