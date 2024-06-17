@@ -15,9 +15,9 @@
 7. Modelled controls [#836](https://github.com/eccentricdevotion/TARDIS/issues/836)
 8. Exterior button door control [#839](https://github.com/eccentricdevotion/TARDIS/issues/839)
 9. Console lamp [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)
-10. Materialisation particles [#798](https://github.com/eccentricdevotion/TARDIS/issues/798)
-    * Display particles when materialising
-11. ?
+10. Fix difficulty settings not persisting after changing with `/tconfig` command
+11. New RUSTIC console using 1.21 blocks
+12. ?
 
 ## Future versions
 

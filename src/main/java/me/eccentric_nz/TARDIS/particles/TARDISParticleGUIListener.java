@@ -141,6 +141,10 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
     }
 
     private void test(InventoryView view, Player player, UUID uuid) {
+        if (plugin.getUtils().inTARDISWorld(player)) {
+            // must be outside the TARDIS
+            return;
+        }
         // get players TARDIS id
         ResultSetTardisID rst = new ResultSetTardisID(plugin);
         if (rst.fromUUID(uuid.toString())) {
