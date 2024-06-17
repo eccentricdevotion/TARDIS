@@ -19,10 +19,10 @@ package me.eccentric_nz.TARDIS.particles;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIParticle;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
+import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
@@ -152,11 +152,11 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
                 Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ()).add(0.5, 0, 0.5);
                 // get throttle setting
                 ResultSetThrottle rs = new ResultSetThrottle(plugin);
-                SpaceTimeThrottle throttle  = rs.getSpeed(uuid.toString());
+                Throticle throticle  = rs.getSpeedAndParticles(uuid.toString());
                 // read current settings
                 ParticleData data = getParticleData(view);
                 // display particles
-                Emitter emitter = new Emitter(plugin, uuid, current, data, throttle.getFlightTime());
+                Emitter emitter = new Emitter(plugin, uuid, current, data, throticle.getThrottle().getFlightTime());
                 int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, data.getShape().getPeriod());
                 emitter.setTaskID(task);
                 // close GUI
@@ -187,11 +187,13 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         } catch (IllegalArgumentException ignored) {
         }
         ItemStack dis = view.getItem(GUIParticle.DENSITY.getSlot());
-        String d = dis.getItemMeta().getLore().get(0);
+        String d = ChatColor.stripColor(dis.getItemMeta().getLore().getFirst());
         density = TARDISNumberParsers.parseInt(d);
+        plugin.debug(density);
         ItemStack spis = view.getItem(GUIParticle.SPEED.getSlot());
-        String s = spis.getItemMeta().getLore().get(0);
-        speed = TARDISNumberParsers.parseInt(d) / 10.0d;
+        String s = ChatColor.stripColor(spis.getItemMeta().getLore().getFirst());
+        speed = TARDISNumberParsers.parseInt(s) / 10.0d;
+        plugin.debug(speed);
         return new ParticleData(effect, shape, density, speed, b);
     }
 
