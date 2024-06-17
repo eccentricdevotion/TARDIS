@@ -21,7 +21,7 @@ public class Rings extends TARDISParticleRunnable {
     public void run() {
         t += Math.PI / 10;
         for (double theta = 0; theta <= 2 * Math.PI; theta += Math.PI / data.getDensity()) {
-            double radius = 2.5d;
+            double radius = 1.5d;
             double x = radius * Math.cos(theta);
             double y = radius * Math.cos(t);
             double z = radius * Math.sin(theta);

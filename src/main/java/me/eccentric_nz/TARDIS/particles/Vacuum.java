@@ -10,7 +10,7 @@ public class Vacuum extends TARDISParticleRunnable {
 
     private final ParticleData data;
     private final Location location;
-    double radius = 3d;
+    double radius = 2.5d;
 
     public Vacuum(TARDIS plugin, UUID uuid, ParticleData data, Location location) {
         super(plugin, uuid);
