@@ -193,11 +193,9 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         ItemStack dis = view.getItem(GUIParticle.DENSITY.getSlot());
         String d = ChatColor.stripColor(dis.getItemMeta().getLore().getFirst());
         density = TARDISNumberParsers.parseInt(d);
-        plugin.debug(density);
         ItemStack spis = view.getItem(GUIParticle.SPEED.getSlot());
         String s = ChatColor.stripColor(spis.getItemMeta().getLore().getFirst());
         speed = TARDISNumberParsers.parseInt(s) / 10.0d;
-        plugin.debug(speed);
         return new ParticleData(effect, shape, density, speed, b);
     }
 
