@@ -235,7 +235,6 @@ public class TARDISConfiguration {
         stringOptions.put("police_box.default_preset", "FACTORY");
         stringOptions.put("police_box.sign_colour", "WHITE");
         stringOptions.put("preferences.default_key", "eleventh");
-        stringOptions.put("preferences.difficulty", "hard");
         stringOptions.put("preferences.key", "GOLD_NUGGET");
         stringOptions.put("preferences.language", "en");
         stringOptions.put("preferences.respect_towny", "nation");

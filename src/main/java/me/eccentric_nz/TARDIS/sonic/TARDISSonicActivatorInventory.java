@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISonicActivator;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -51,7 +52,7 @@ class TARDISSonicActivatorInventory {
         lore.add("add 1 of each of the following");
         lore.add("items to this inventory:");
         // get the Sonic Generator recipe
-        if (plugin.getConfig().getString("preferences.difficulty").equalsIgnoreCase("hard")) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             lore.add(ChatColor.AQUA + "GOLD_INGOT");
             lore.add(ChatColor.AQUA + "REDSTONE_BLOCK");
         } else {

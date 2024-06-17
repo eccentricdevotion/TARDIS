@@ -11,13 +11,11 @@
 3. Add doors to shop items
 4. Allow 3D Police Boxes to land on slabs [#777](https://github.com/eccentricdevotion/TARDIS/issues/777)
 5. Animated models for TWA player disguises
-6. System upgrades - similar to [TARDIS: Refined 2](https://wiki.tardisrefined.net/upgrades-and-functions.html#unlocking-upgrades) mod - and [#303](https://github.com/eccentricdevotion/TARDIS/issues/303) - Paradox Circuit?
-7. Modelled controls [#836](https://github.com/eccentricdevotion/TARDIS/issues/836)
-8. Exterior button door control [#839](https://github.com/eccentricdevotion/TARDIS/issues/839)
-9. Console lamp [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)
-10. Fix difficulty settings not persisting after changing with `/tconfig` command
-11. New RUSTIC console using 1.21 blocks
-12. ?
+6. Modelled controls [#836](https://github.com/eccentricdevotion/TARDIS/issues/836)
+7. Exterior button door control [#839](https://github.com/eccentricdevotion/TARDIS/issues/839)
+8. Console lamp [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)
+9. New RUSTIC console using 1.21 blocks
+10. ?
 
 ## Future versions
 
