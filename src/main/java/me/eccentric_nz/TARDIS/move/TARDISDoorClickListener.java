@@ -157,7 +157,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                                 // must be the owner
                                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                                 if (rs.fromUUID(playerUUID.toString())) {
-                                    if (rs.getTardis_id() != id) {
+                                    if (rs.getTardisId() != id) {
                                         plugin.getMessenger().sendStatus(player, "DOOR_LOCK_UNLOCK");
                                         return;
                                     }

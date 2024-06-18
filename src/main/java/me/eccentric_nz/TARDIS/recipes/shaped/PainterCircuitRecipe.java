@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -37,16 +37,16 @@ public class PainterCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "painter_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" I ", "DGD", " I ");
             r.setIngredient('I', Material.BLACK_DYE);
             r.setIngredient('D', Material.PURPLE_DYE);
-            r.setIngredient('G', Material.GOLD_BLOCK);            
+            r.setIngredient('G', Material.GOLD_BLOCK);
         } else {
             r.shape(" I ", "DGD", " I ");
             r.setIngredient('I', Material.BLACK_DYE);
             r.setIngredient('D', Material.PURPLE_DYE);
-            r.setIngredient('G', Material.GOLD_NUGGET);            
+            r.setIngredient('G', Material.GOLD_NUGGET);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Painter Circuit", r);

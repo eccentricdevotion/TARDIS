@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -39,18 +39,18 @@ public class ThreeDGlassesRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "3-d_glasses");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("R T", "P P", "CPM");
             r.setIngredient('R', Material.COMPARATOR);
             r.setIngredient('T', Material.REDSTONE_TORCH);
             r.setIngredient('P', Material.PAPER);
             r.setIngredient('C', Material.CYAN_STAINED_GLASS_PANE);
-            r.setIngredient('M', Material.MAGENTA_STAINED_GLASS_PANE);            
+            r.setIngredient('M', Material.MAGENTA_STAINED_GLASS_PANE);
         } else {
             r.shape("   ", "P P", "CPM");
             r.setIngredient('P', Material.PAPER);
             r.setIngredient('C', Material.CYAN_STAINED_GLASS_PANE);
-            r.setIngredient('M', Material.MAGENTA_STAINED_GLASS_PANE);            
+            r.setIngredient('M', Material.MAGENTA_STAINED_GLASS_PANE);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("3-D Glasses", r);

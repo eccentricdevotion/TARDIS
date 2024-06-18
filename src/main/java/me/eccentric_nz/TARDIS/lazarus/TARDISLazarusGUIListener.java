@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.tardischunkgenerator.disguise.*;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -279,12 +279,16 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                                 Object[] options = null;
                                 switch (dt) {
                                     case AXOLOTL -> {
-                                        if (!plugin.isDisguisesOnServer()) {
+                                        if (plugin.isDisguisesOnServer()) {
+                                            new TARDISLazarusLibs(player, disguise, getAxolotlVariant(view), getBoolean(view), getBaby(view)).createDisguise();
+                                        } else {
                                             options = new Object[]{getAxolotlVariant(view), AGE.getFromBoolean(getBaby(view))};
                                         }
                                     }
                                     case FROG -> {
-                                        if (!plugin.isDisguisesOnServer()) {
+                                        if (plugin.isDisguisesOnServer()) {
+                                            new TARDISLazarusLibs(player, disguise, getFrogVariant(view), getBoolean(view), getBaby(view)).createDisguise();
+                                        } else {
                                             options = new Object[]{getFrogVariant(view), AGE.getFromBoolean(getBaby(view))};
                                         }
                                     }

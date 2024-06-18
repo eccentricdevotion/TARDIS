@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -38,17 +38,17 @@ public class TARDISCommunicatorRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_communicator");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("N  ", "IIH", "  D");
             r.setIngredient('N', Material.NOTE_BLOCK);
             r.setIngredient('I', Material.IRON_INGOT);
             r.setIngredient('H', Material.HOPPER);
-            r.setIngredient('D', Material.DIAMOND);            
+            r.setIngredient('D', Material.DIAMOND);
         } else {
             r.shape("N  ", "IIH", "  I");
             r.setIngredient('N', Material.NOTE_BLOCK);
             r.setIngredient('I', Material.IRON_INGOT);
-            r.setIngredient('H', Material.HOPPER);            
+            r.setIngredient('H', Material.HOPPER);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Communicator", r);

@@ -21,13 +21,19 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.enumeration.*;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
@@ -56,6 +62,10 @@ class TARDISComehereCommand {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
             // check they are a timelord
             UUID uuid = player.getUniqueId();
+            if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.STATTENHEIM_REMOTE)) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Stattenheim Remote");
+                return true;
+            }
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -63,7 +73,7 @@ class TARDISComehereCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                 return true;
             }
-            if (plugin.getDifficulty().equals(Difficulty.EASY) || plugin.getUtils().inGracePeriod(player, true)) {
+            if (!plugin.getConfig().getBoolean("difficulty.stattenheim_remote") || plugin.getUtils().inGracePeriod(player, true)) {
                 Tardis tardis = rs.getTardis();
                 int id = tardis.getTardisId();
                 if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
@@ -154,8 +164,9 @@ class TARDISComehereCommand {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "WOULD_GRIEF_BLOCKS");
                     return true;
                 }
-                // get space time throttle
-                SpaceTimeThrottle spaceTimeThrottle = new ResultSetThrottle(plugin).getSpeed(uuid.toString());
+                // get space-time throttle
+                Throticle throticle = new ResultSetThrottle(plugin).getSpeedAndParticles(uuid.toString());
+                SpaceTimeThrottle spaceTimeThrottle = throticle.getThrottle();
                 int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * spaceTimeThrottle.getArtronMultiplier());
                 if (level < ch) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
@@ -216,6 +227,7 @@ class TARDISComehereCommand {
                     dd.setSubmarine(rsc.isSubmarine());
                     dd.setTardisID(id);
                     dd.setThrottle(spaceTimeThrottle);
+                    dd.setParticles(throticle.getParticles());
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         if (!hid) {
                             plugin.getTrackerKeeper().getDematerialising().add(id);
@@ -235,6 +247,7 @@ class TARDISComehereCommand {
                 bd.setSubmarine(sub);
                 bd.setTardisID(id);
                 bd.setThrottle(spaceTimeThrottle);
+                bd.setParticles(throticle.getParticles());
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
                 // remove energy from TARDIS
                 HashMap<String, Object> wheret = new HashMap<>();

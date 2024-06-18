@@ -195,7 +195,7 @@ public class TARDISDisplayItemCommand {
                 // get players tardis_id
                 ResultSetTardisID rst = new ResultSetTardisID(plugin);
                 if (rst.fromUUID(player.getUniqueId().toString())) {
-                    int id = rst.getTardis_id();
+                    int id = rst.getTardisId();
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("tardis_id", id);
                     ResultSetARS rsa = new ResultSetARS(plugin, where);
@@ -246,7 +246,7 @@ public class TARDISDisplayItemCommand {
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                 String uuid = player.getUniqueId().toString();
                 if (rs.fromUUID(uuid)) {
-                    new ConsoleBuilder(plugin).create(block, colour, rs.getTardis_id(), uuid);
+                    new ConsoleBuilder(plugin).create(block, colour, rs.getTardisId(), uuid);
                 }
                 return true;
             }

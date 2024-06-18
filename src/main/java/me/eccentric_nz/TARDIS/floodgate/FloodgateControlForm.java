@@ -11,18 +11,19 @@ import me.eccentric_nz.TARDIS.control.*;
 import me.eccentric_nz.TARDIS.control.actions.FastReturnAction;
 import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
 import me.eccentric_nz.TARDIS.control.actions.SiegeAction;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -74,15 +75,16 @@ public class FloodgateControlForm {
                 .button("Zero Room", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/control/zero_button.png")
                 .button("Player Preferences", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/control/prefs_button.png")
                 .button("Companions", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/control/companions_button.png")
-                .validResultHandler(response -> handleResponse(response))
+                .button("System Upgrades", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/control/system_upgrades_button.png")
+                .validResultHandler(this::handleResponse)
                 .build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
         player.sendForm(form);
     }
 
     private void handleResponse(SimpleFormResponse response) {
-        int buttonId = response.clickedButtonId();
         Player player = Bukkit.getPlayer(uuid);
+        int buttonId = response.clickedButtonId();
         // get the TARDIS the player is in
         HashMap<String, Object> wheres = new HashMap<>();
         wheres.put("uuid", uuid.toString());
@@ -121,7 +123,7 @@ public class FloodgateControlForm {
                 boolean lights = tardis.isLightsOn();
                 int level = tardis.getArtronLevel();
                 TARDISCircuitChecker tcc = null;
-                if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
+                if (plugin.getConfig().getBoolean("difficulty.circuits")) {
                     tcc = new TARDISCircuitChecker(plugin, id);
                     tcc.getCircuits();
                 }
@@ -138,6 +140,10 @@ public class FloodgateControlForm {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISRandomButton(plugin, player, id, level, 0, tardis.getCompanions(), tardis.getUuid()).clickButton(), 2L);
                     }
                     case 1 -> { // saves gui
+                        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.SAVES)) {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
+                            return;
+                        }
                         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                             return;
@@ -186,6 +192,10 @@ public class FloodgateControlForm {
                         new FloodgateDestinationTerminalForm(plugin, uuid).send();
                     }
                     case 5 -> { // ars
+                        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.ROOM_GROWING)) {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Room Growing");
+                            return;
+                        }
                         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                             return;
@@ -213,6 +223,10 @@ public class FloodgateControlForm {
                         }, 100);
                     }
                     case 6 -> { // desktop theme
+                        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.DESKTOP_THEME)) {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Desktop Theme");
+                            return;
+                        }
                         // check player is in own TARDIS
                         int p_tid = TARDISThemeButton.getTardisId(uuid.toString());
                         if (p_tid != id) {
@@ -258,6 +272,10 @@ public class FloodgateControlForm {
                     }
                     case 10 -> new FloodgateMapForm(plugin, uuid, id).send(); // map
                     case 11 -> { // chameleon circuit
+                        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.CHAMELEON_CIRCUIT)) {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Chameleon Circuit");
+                            return;
+                        }
                         if (tcc != null && !tcc.hasChameleon()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_MISSING");
                             return;
@@ -362,12 +380,17 @@ public class FloodgateControlForm {
                         if (comps == null || comps.isEmpty()) {
                             // open companions add gui
                             new FloodgateAddCompanionsForm(plugin, uuid).send();
-//                            plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_NONE");
                             return;
                         }
                         String[] companionData = comps.split(":");
                         new FloodgateCompanionsForm(plugin, uuid, companionData).send();
                     }
+                    case 24 -> { // system upgrades
+                        if (!plugin.getConfig().getBoolean("difficulty.system_upgrades")) {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_DISABLED");
+                            return;
+                        }
+                        new FloodgateSystemUpgradesForm(plugin, uuid, id).send(); }
                     default -> { // do nothing
                     }
                 }

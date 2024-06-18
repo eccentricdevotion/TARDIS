@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -44,7 +44,7 @@ public class TimeRotorCustomRecipe {
                 is.setItemMeta(im);
                 NamespacedKey key = new NamespacedKey(plugin, "time_rotor_" + r);
                 ShapedRecipe recipe = new ShapedRecipe(key, is);
-                if (plugin.getDifficulty() == Difficulty.HARD) {
+                if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
                     recipe.shape("CRC", "GWG", "GRG");
                     recipe.setIngredient('C', material);
                     recipe.setIngredient('R', Material.REDSTONE_BLOCK);

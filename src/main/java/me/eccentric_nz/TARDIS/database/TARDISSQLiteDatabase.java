@@ -27,9 +27,8 @@ import java.sql.Statement;
 /**
  * SQLite database creator and updater.
  * <p>
- * Many facts, figures, and formulas are contained within the Matrix - a
- * supercomputer and micro-universe used by the High Council of the Time Lords
- * as a storehouse of knowle
+ * Many facts, figures, and formulas are contained within the Matrix - a supercomputer and micro-universe used by the
+ * High Council of the Time Lords as a storehouse of knowle
  */
 public class TARDISSQLiteDatabase {
 
@@ -188,8 +187,12 @@ public class TARDISSQLiteDatabase {
             String queryPaperBag = "CREATE TABLE IF NOT EXISTS " + prefix + "paper_bag (paper_bag_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', flavour_1 TEXT DEFAULT '', amount_1 INTEGER, flavour_2 TEXT DEFAULT '', amount_2 INTEGER, flavour_3 TEXT DEFAULT '', amount_3 INTEGER, flavour_4 TEXT DEFAULT '', amount_4 INTEGER)";
             statement.executeUpdate(queryPaperBag);
 
+            // Table structure for table 'particle_prefs'
+            String queryParticlePrefs = "CREATE TABLE IF NOT EXISTS " + prefix + "particle_prefs (pp_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', effect TEXT DEFAULT 'ASH', shape TEXT DEFAULT 'RANDOM', density INTEGER DEFAULT 16, speed INTEGER DEFAULT 0, particles_on INTEGER DEFAULT 0)";
+            statement.executeUpdate(queryParticlePrefs);
+
             // Table structure for table 'player_prefs'
-            String queryPlayers = "CREATE TABLE IF NOT EXISTS " + prefix + "player_prefs (pp_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', key TEXT DEFAULT '', sfx_on INTEGER DEFAULT 0, quotes_on INTEGER DEFAULT 0, artron_level INTEGER DEFAULT 0, wall TEXT DEFAULT 'ORANGE_WOOL', floor TEXT DEFAULT 'LIGHT_GRAY_WOOL', siege_wall TEXT DEFAULT 'GRAY_TERRACOTTA', siege_floor TEXT DEFAULT 'BLACK_TERRACOTTA', announce_repeaters_on INTEGER DEFAULT 0, auto_on INTEGER DEFAULT 0, auto_type TEXT DEFAULT 'CLOSEST', auto_default TEXT DEFAULT 'HOME', beacon_on INTEGER DEFAULT 1, hads_on INTEGER DEFAULT 1, hads_type TEXT DEFAULT 'DISPLACEMENT', build_on INTEGER DEFAULT 1, close_gui_on INTEGER DEFAULT 1, eps_on INTEGER DEFAULT 0, eps_message TEXT DEFAULT '', language TEXT DEFAULT 'ENGLISH', submarine_on INTEGER DEFAULT 0, dnd_on INTEGER DEFAULT 0, dynamic_lamps_on INTEGER DEFAULT 0, minecart_on INTEGER DEFAULT 0, renderer_on INTEGER DEFAULT 1, sign_on INTEGER DEFAULT 1, telepathy_on INTEGER DEFAULT 0, travelbar_on INTEGER DEFAULT 0, info_on INTEGER DEFAULT 0, farm_on INTEGER DEFAULT 1, lights TEXT DEFAULT 'TENTH', auto_siege_on INTEGER DEFAULT 0, flying_mode INTEGER DEFAULT 1, throttle INTEGER DEFAULT 4, difficulty INTEGER DEFAULT 0, auto_powerup_on INTEGER DEFAULT 0, auto_phandbrake_on INTEGER DEFAULT 0, auto_rescue_on INTEGER DEFAULT 0, hum TEXT DEFAULT '')";
+            String queryPlayers = "CREATE TABLE IF NOT EXISTS " + prefix + "player_prefs (pp_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', key TEXT DEFAULT '', sfx_on INTEGER DEFAULT 0, quotes_on INTEGER DEFAULT 0, artron_level INTEGER DEFAULT 0, wall TEXT DEFAULT 'ORANGE_WOOL', floor TEXT DEFAULT 'LIGHT_GRAY_WOOL', siege_wall TEXT DEFAULT 'GRAY_TERRACOTTA', siege_floor TEXT DEFAULT 'BLACK_TERRACOTTA', announce_repeaters_on INTEGER DEFAULT 0, auto_on INTEGER DEFAULT 0, auto_type TEXT DEFAULT 'CLOSEST', auto_default TEXT DEFAULT 'HOME', beacon_on INTEGER DEFAULT 1, hads_on INTEGER DEFAULT 1, hads_type TEXT DEFAULT 'DISPLACEMENT', build_on INTEGER DEFAULT 1, close_gui_on INTEGER DEFAULT 1, eps_on INTEGER DEFAULT 0, eps_message TEXT DEFAULT '', language TEXT DEFAULT 'ENGLISH', submarine_on INTEGER DEFAULT 0, dnd_on INTEGER DEFAULT 0, dynamic_lamps_on INTEGER DEFAULT 0, minecart_on INTEGER DEFAULT 0, renderer_on INTEGER DEFAULT 1, sign_on INTEGER DEFAULT 1, telepathy_on INTEGER DEFAULT 0, travelbar_on INTEGER DEFAULT 0, info_on INTEGER DEFAULT 0, farm_on INTEGER DEFAULT 1, lights TEXT DEFAULT 'TENTH', auto_siege_on INTEGER DEFAULT 0, flying_mode INTEGER DEFAULT 1, throttle INTEGER DEFAULT 4, auto_powerup_on INTEGER DEFAULT 0, auto_phandbrake_on INTEGER DEFAULT 0, auto_rescue_on INTEGER DEFAULT 0, hum TEXT DEFAULT '')";
             statement.executeUpdate(queryPlayers);
 
             // Table structure for table 'portals'
@@ -238,6 +241,10 @@ public class TARDISSQLiteDatabase {
             // Table structure for table 'storage'
             String queryStorage = "CREATE TABLE IF NOT EXISTS " + prefix + "storage (storage_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, uuid TEXT DEFAULT '', owner TEXT DEFAULT '', saves_one TEXT DEFAULT '', saves_two TEXT DEFAULT '', areas TEXT DEFAULT '', presets_one TEXT DEFAULT '', presets_two TEXT DEFAULT '', biomes_one TEXT DEFAULT '', biomes_two TEXT DEFAULT '', players TEXT DEFAULT '', circuits TEXT DEFAULT '', console TEXT DEFAULT '')";
             statement.executeUpdate(queryStorage);
+
+            // Table structure for table 'system_upgrades'
+            String querySystem = "CREATE TABLE IF NOT EXISTS " + prefix + "system_upgrades (sys_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, uuid TEXT DEFAULT '', architecture INTEGER DEFAULT 0, chameleon INTEGER DEFAULT 0, rooms INTEGER DEFAULT 0, desktop INTEGER DEFAULT 0, navigation INTEGER DEFAULT 0, saves INTEGER DEFAULT 0, distance_1 INTEGER DEFAULT 0, distance_2 INTEGER DEFAULT 0, distance_3 INTEGER DEFAULT 0, telepathic INTEGER DEFAULT 0, inter_dimension INTEGER DEFAULT 0, flight INTEGER DEFAULT 0, tools INTEGER DEFAULT 0, locator INTEGER DEFAULT 0, biome_reader INTEGER DEFAULT 0, force_field INTEGER DEFAULT 0, monitor INTEGER DEFAULT 0, stattenheim_remote INTEGER DEFAULT 0)";
+            statement.executeUpdate(querySystem);
 
             // Table structure for table 'tag'
             String queryTag = "CREATE TABLE IF NOT EXISTS " + prefix + "tag (tag_id INTEGER PRIMARY KEY NOT NULL, player TEXT COLLATE NOCASE DEFAULT '', time INTEGER)";

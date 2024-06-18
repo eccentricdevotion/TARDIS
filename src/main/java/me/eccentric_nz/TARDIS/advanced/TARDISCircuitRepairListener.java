@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -51,6 +51,7 @@ public class TARDISCircuitRepairListener implements Listener {
         circuits.put(10001980, "randomiser");
         circuits.put(10001977, "scanner");
         circuits.put(10001974, "temporal");
+        circuits.put(10001962, "telepathic");
     }
 
     @EventHandler(ignoreCancelled = true)

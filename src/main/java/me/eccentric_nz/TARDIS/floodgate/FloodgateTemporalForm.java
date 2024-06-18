@@ -1,11 +1,9 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.custommodeldata.GUITemporalLocator;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -16,6 +14,8 @@ import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
+
+import java.util.UUID;
 
 public class FloodgateTemporalForm {
 
@@ -33,7 +33,7 @@ public class FloodgateTemporalForm {
         for (GUITemporalLocator clock : GUITemporalLocator.values()) {
             builder.button(clock.getName()+" ~"+clock.getLore(), FormImage.Type.PATH, "textures/items/clock_item.png");
         }
-        builder.validResultHandler(response -> handleResponse(response));
+        builder.validResultHandler(this::handleResponse);
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
         player.sendForm(form);
@@ -46,7 +46,7 @@ public class FloodgateTemporalForm {
         plugin.getTrackerKeeper().getSetTime().put(player.getUniqueId(), ticks);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "TEMPORAL_SET", String.format("%d", ticks));
         // damage the circuit if configured
-        if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.temporal") > 0) {
+        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.temporal") > 0) {
             int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player.getUniqueId());
             TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
             tcc.getCircuits();

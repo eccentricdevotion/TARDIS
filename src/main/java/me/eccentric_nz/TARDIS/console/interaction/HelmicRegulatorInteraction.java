@@ -3,6 +3,10 @@ package me.eccentric_nz.TARDIS.console.interaction;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.models.HelmicRegulatorModel;
 import me.eccentric_nz.TARDIS.database.InteractionStateSaver;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
+import org.bukkit.World;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
@@ -42,11 +46,17 @@ public class HelmicRegulatorInteraction {
                 // get world name
                 which = getWorldFromState(next);
             }
-            // show title
-            plugin.getMessenger().announceRepeater(player, which);
             if (which.equals("OFF")) {
                 next = 0;
+            } else if (plugin.getConfig().getBoolean("difficulty.system_upgrades")) {
+                World world = plugin.getServer().getWorld(which);
+                if (world != null && (world.getEnvironment() == World.Environment.NETHER || world.getEnvironment() == World.Environment.THE_END) && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.INTER_DIMENSIONAL_TRAVEL)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Inter Dimensional Travel");
+                    next = 0;
+                }
             }
+            // show title
+            plugin.getMessenger().announceRepeater(player, which);
             // save state
             new InteractionStateSaver(plugin).write("HELMIC_REGULATOR", next, id);
             // set custom model data for helmic regulator item display

@@ -46,6 +46,7 @@ public enum DiskCircuit {
     SAVE("Save Storage Disk", Material.MUSIC_DISC_CHIRP),
     SCANNER("TARDIS Scanner Circuit", Material.GLOWSTONE_DUST),
     SONIC("Sonic Screwdriver", Material.BLAZE_ROD),
+    TELEPATHIC("TARDIS Telepathic Circuit", Material.GLOWSTONE_DUST),
     TEMPORAL("TARDIS Temporal Circuit", Material.GLOWSTONE_DUST);
 
     static final List<String> circuitNames = new ArrayList<>();

@@ -23,7 +23,7 @@ import me.eccentric_nz.tardisweepingangels.nms.TWAOod;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.craftbukkit.v1_20_R4.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_21_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

@@ -7,7 +7,6 @@ import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Control;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.entity.Player;
@@ -54,7 +53,7 @@ public class ConstructBuilder {
         plugin.getTrackerKeeper().getConstructors().remove(player.getUniqueId());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> close(player), 2L);
         // damage the circuit if configured
-        if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
+        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
             TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
             tcc.getCircuits();
             // decrement uses

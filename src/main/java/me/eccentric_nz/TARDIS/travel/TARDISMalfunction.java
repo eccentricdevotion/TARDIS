@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import org.bukkit.Location;
@@ -115,7 +114,7 @@ public class TARDISMalfunction {
         if (rsl.resultSet()) {
             // should we damage circuits?
             int malfunctionDamage = plugin.getConfig().getInt("circuits.malfunction_damage");
-            if (plugin.getConfig().getBoolean("circuits.damage") && malfunctionDamage > 0 && !plugin.getDifficulty().equals(Difficulty.EASY)) {
+            if (plugin.getConfig().getBoolean("circuits.damage") && malfunctionDamage > 0 && !plugin.getConfig().getBoolean("difficulty.circuits")) {
                 // choose a random circuit
                 DiskCircuit circuit = DiskCircuit.getTardisCircuits().get(TARDISConstants.RANDOM.nextInt(DiskCircuit.getTardisCircuits().size()));
                 // is the circuit in the advanced console?

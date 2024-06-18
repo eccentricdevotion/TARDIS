@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -37,16 +37,16 @@ public class AuthorisedControlDiskRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "authorised_control_disk");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("QRQ", "RGR", "QRQ");
             r.setIngredient('Q', Material.QUARTZ);
             r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('G', Material.GOLDEN_HELMET);            
+            r.setIngredient('G', Material.GOLDEN_HELMET);
         } else {
             r.shape("QRQ", "RLR", "QRQ");
             r.setIngredient('Q', Material.QUARTZ);
             r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('L', Material.GLASS_PANE);            
+            r.setIngredient('L', Material.GLASS_PANE);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Authorised Control Disk", r);

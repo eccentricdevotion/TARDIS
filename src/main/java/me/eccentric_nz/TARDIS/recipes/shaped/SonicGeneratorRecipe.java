@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -39,18 +39,18 @@ public class SonicGeneratorRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "sonic_generator");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" S ", " F ", "GRG");
             r.setIngredient('G', Material.GOLD_INGOT);
             r.setIngredient('R', Material.REDSTONE_BLOCK);
             r.setIngredient('F', Material.FLOWER_POT);
-            r.setIngredient('S', Material.BLAZE_ROD);            
+            r.setIngredient('S', Material.BLAZE_ROD);
         } else {
             r.shape(" S ", " F ", "GRG");
             r.setIngredient('G', Material.GOLD_NUGGET);
             r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('F', Material.FLOWER_POT);
-            r.setIngredient('S', Material.BLAZE_ROD);            
+            r.setIngredient('S', Material.BLAZE_ROD);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Sonic Generator", r);

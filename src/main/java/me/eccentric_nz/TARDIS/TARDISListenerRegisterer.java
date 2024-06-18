@@ -49,7 +49,6 @@ import me.eccentric_nz.TARDIS.desktop.TARDISArchiveMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISThemeMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISWallMenuListener;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayListener;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
 import me.eccentric_nz.TARDIS.flight.FlightGamemodeListener;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrakeListener;
@@ -73,6 +72,7 @@ import me.eccentric_nz.TARDIS.listeners.*;
 import me.eccentric_nz.TARDIS.listeners.controls.*;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmingMenuListener;
 import me.eccentric_nz.TARDIS.move.*;
+import me.eccentric_nz.TARDIS.particles.TARDISParticleGUIListener;
 import me.eccentric_nz.TARDIS.planets.*;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryListener;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeInventoryListener;
@@ -92,6 +92,7 @@ import me.eccentric_nz.TARDIS.travel.save.TARDISSavesListener;
 import me.eccentric_nz.TARDIS.travel.save.TARDISSavesPlanetListener;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISTranslateChatListener;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateListener;
+import me.eccentric_nz.TARDIS.upgrades.TARDISSystemTreeListener;
 import me.eccentric_nz.tardischemistry.block.ChemistryBlockListener;
 import me.eccentric_nz.tardischemistry.compound.CompoundGUIListener;
 import me.eccentric_nz.tardischemistry.compound.GlueListener;
@@ -168,7 +169,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISArtronFurnaceListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBeaconColouringListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBindListener(plugin), plugin);
-        if (!plugin.getDifficulty().equals(Difficulty.HARD)) {
+        if (plugin.getConfig().getBoolean("difficulty.biome_reader")) {
             plugin.getPM().registerEvents(new TARDISBiomeReaderListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISBlockDamageListener(plugin), plugin);
@@ -241,6 +242,7 @@ class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new TARDISPerceptionFilterListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISPaperBagListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISParticleGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPistonListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPortalListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISPrefsMenuListener(plugin), plugin);
@@ -281,6 +283,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISSpawnListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISStattenheimListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISStorageListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISSystemTreeListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTagListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTelepathicListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTeleportListener(plugin), plugin);

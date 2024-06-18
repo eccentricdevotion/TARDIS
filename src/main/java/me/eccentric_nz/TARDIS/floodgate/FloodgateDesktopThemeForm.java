@@ -77,7 +77,7 @@ public class FloodgateDesktopThemeForm {
             }
         }
         builder.button("Archive Consoles", FormImage.Type.URL, "https://raw.githubusercontent.com/eccentricdevotion/TARDIS-Resource-Pack/master/assets/tardis/textures/item/gui/theme/archive.png");
-        builder.validResultHandler(response -> handleResponse(response));
+        builder.validResultHandler(this::handleResponse);
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
         player.sendForm(form);

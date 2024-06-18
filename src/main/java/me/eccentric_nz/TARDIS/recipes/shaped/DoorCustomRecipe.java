@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -30,8 +30,7 @@ public class DoorCustomRecipe {
                 NamespacedKey key = new NamespacedKey(plugin, "door_" + r);
                 ShapedRecipe recipe = new ShapedRecipe(key, is);
                 recipe.shape("#A#", "#D#", "###");
-                boolean hard = (plugin.getDifficulty().equals(Difficulty.HARD));
-                recipe.setIngredient('#', (hard) ? Material.GLASS : Material.GLASS_PANE);
+                recipe.setIngredient('#', plugin.getCraftingDifficulty() == CraftingDifficulty.HARD ? Material.GLASS : Material.GLASS_PANE);
                 recipe.setIngredient('A', material);
                 recipe.setIngredient('D', Material.IRON_DOOR);
                 plugin.getServer().addRecipe(recipe);

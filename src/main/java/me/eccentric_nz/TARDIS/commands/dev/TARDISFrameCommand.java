@@ -17,17 +17,16 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardisweepingangels.monsters.weeping_angels.Blink;
-import me.eccentric_nz.tardisweepingangels.utils.Vector3D;
+import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicFreeze;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.Vector;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISFrameCommand {
@@ -39,22 +38,22 @@ public class TARDISFrameCommand {
     }
 
     public static ItemFrame getItemFrame(Player player) {
-        ItemFrame frame = null;
+//        ItemFrame frame = null;
         // get the item frame player is looking at
         Location observerPos = player.getEyeLocation();
-        Vector3D observerDir = new Vector3D(observerPos.getDirection());
-        Vector3D observerStart = new Vector3D(observerPos);
-        Vector3D observerEnd = observerStart.add(observerDir.multiply(16));
+        Vector observerDir = observerPos.getDirection();
+        Vector observerStart = observerPos.toVector();
+        Vector observerEnd = observerStart.add(observerDir.multiply(16));
         // Get nearby entities
         for (Entity target : player.getNearbyEntities(8.0d, 8.0d, 8.0d)) {
             // Bounding box of the given player
-            Vector3D targetPos = new Vector3D(target.getLocation());
-            Vector3D minimum = targetPos.add(-0.5, 0, -0.5);
-            Vector3D maximum = targetPos.add(0.5, 1.67, 0.5);
-            if (target.getType().equals(EntityType.ITEM_FRAME) && Blink.hasIntersection(observerStart, observerEnd, minimum, maximum)) {
-                if (frame == null || frame.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
-                    return (ItemFrame) target;
-                }
+            Vector targetPos = target.getLocation().toVector();
+            Vector minimum = targetPos.add(new Vector(-0.5, 0, -0.5));
+            Vector maximum = targetPos.add(new Vector(0.5, 1.67, 0.5));
+            if (target.getType().equals(EntityType.ITEM_FRAME) && TARDISSonicFreeze.hasIntersection(observerStart, observerEnd, minimum, maximum)) {
+//                if (frame == null || frame.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
+                return (ItemFrame) target;
+//                }
             }
         }
         return null;

@@ -72,7 +72,7 @@ public class TARDISInteriorPostioning {
         int tips = getTIPSSlot(location);
         ResultSetTardisID rs = new ResultSetTardisID(TARDIS.plugin);
         if (rs.fromTIPSSlot(tips)) {
-            return rs.getTardis_id();
+            return rs.getTardisId();
         } else {
             return -1;
         }

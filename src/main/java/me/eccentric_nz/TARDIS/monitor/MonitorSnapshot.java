@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.monitor;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetChunks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
@@ -28,6 +27,8 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  *
@@ -123,7 +124,7 @@ public class MonitorSnapshot {
         // get interior door location
         ResultSetTardisID rst = new ResultSetTardisID(plugin);
         if (rst.fromUUID(player.getUniqueId().toString())) {
-            int id = rst.getTardis_id();
+            int id = rst.getTardisId();
             HashMap<String, Object> whered = new HashMap<>();
             whered.put("tardis_id", id);
             whered.put("door_type", which);

@@ -27,11 +27,10 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
@@ -347,7 +346,7 @@ public class TARDISARSMethods {
                             delay += period;
                         }
                         // damage the circuit if configured
-                        if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.ars") > 0) {
+                        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.ars") > 0) {
                             // get the id of the TARDIS this player is in
                             int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(playerUUID);
                             TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);

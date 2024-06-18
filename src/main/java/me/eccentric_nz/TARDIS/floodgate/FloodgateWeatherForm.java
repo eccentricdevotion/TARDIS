@@ -1,7 +1,5 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISWeather;
@@ -19,6 +17,9 @@ import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 public class FloodgateWeatherForm {
 
     private final TARDIS plugin;
@@ -35,7 +36,7 @@ public class FloodgateWeatherForm {
                 .button("rain", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/rain.png")
                 .button("thunder", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/thunder.png")
                 .button("excite", FormImage.Type.URL, "https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/gui/excite.png")
-                .validResultHandler(response -> handleResponse(response))
+                .validResultHandler(this::handleResponse)
                 .build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
         player.sendForm(form);

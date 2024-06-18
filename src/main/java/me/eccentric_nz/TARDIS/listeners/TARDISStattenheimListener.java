@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
@@ -26,16 +27,20 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.control.SensorToggle;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -49,6 +54,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,10 +92,32 @@ public class TARDISStattenheimListener implements Listener {
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.getType().equals(Material.FLINT) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
+            int uses;
             if (im.getDisplayName().equals("Stattenheim Remote")) {
+                UUID uuid = player.getUniqueId();
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.STATTENHEIM_REMOTE)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Stattenheim Remote");
+                    return;
+                }
+                // check uses
+                if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+                    uses = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
+                    if (uses <= 0) {
+                        // break the remote
+                        player.getInventory().setItemInMainHand(null);
+                        player.playSound(player.getLocation(), Sound.ITEM_SHIELD_BREAK, 1.0f, 1.0f);
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "STATTENHEIM_USED");
+                        return;
+                    }
+                } else {
+                    // add uses
+                    int u = plugin.getConfig().getInt("circuits.uses.stattenheim");
+                    uses = u > 0 ? u : 1000;
+                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, uses);
+                    is.setItemMeta(im);
+                }
                 Action action = event.getAction();
                 // check they are a Time Lord
-                UUID uuid = player.getUniqueId();
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
                 ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -148,15 +176,21 @@ public class TARDISStattenheimListener implements Listener {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                             return;
                         }
-                        TARDISCircuitChecker tcc = null;
-                        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
-                            tcc = new TARDISCircuitChecker(plugin, id);
-                            tcc.getCircuits();
-                        }
-                        if (tcc != null && !tcc.hasMaterialisation()) {
+                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                        tcc.getCircuits();
+                        if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true) && !tcc.hasMaterialisation()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
                             return;
                         }
+                        // damage circuit if configured
+                        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+                            // decrement uses
+                            int uses_left = tcc.getMaterialisationUses();
+                            new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
+                        }
+                        // decrement uses
+                        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, uses - 1);
+                        is.setItemMeta(im);
                         boolean hidden = tardis.isHidden();
                         int level = tardis.getArtronLevel();
                         // check they are not in the tardis
@@ -205,8 +239,8 @@ public class TARDISStattenheimListener implements Listener {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "WOULD_GRIEF_BLOCKS");
                             return;
                         }
-                        SpaceTimeThrottle spaceTimeThrottle = new ResultSetThrottle(plugin).getSpeed(uuid.toString());
-                        int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * spaceTimeThrottle.getArtronMultiplier());
+                        Throticle throticle = new ResultSetThrottle(plugin).getSpeedAndParticles(uuid.toString());
+                        int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * throticle.getThrottle().getArtronMultiplier());
                         if (level < ch) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
                             return;
@@ -266,7 +300,8 @@ public class TARDISStattenheimListener implements Listener {
                             dd.setOutside(true);
                             dd.setSubmarine(rsc.isSubmarine());
                             dd.setTardisID(id);
-                            dd.setThrottle(spaceTimeThrottle);
+                            dd.setThrottle(throticle.getThrottle());
+                            dd.setParticles(throticle.getParticles());
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 if (!hid) {
                                     plugin.getTrackerKeeper().getDematerialising().add(id);
@@ -285,7 +320,8 @@ public class TARDISStattenheimListener implements Listener {
                         bd.setRebuild(false);
                         bd.setSubmarine(sub);
                         bd.setTardisID(id);
-                        bd.setThrottle(spaceTimeThrottle);
+                        bd.setThrottle(throticle.getThrottle());
+                        bd.setParticles(throticle.getParticles());
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
                         // remove energy from TARDIS
                         HashMap<String, Object> wheret = new HashMap<>();

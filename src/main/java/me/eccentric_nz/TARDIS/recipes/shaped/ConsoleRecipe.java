@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.models.ColourType;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -53,7 +53,7 @@ public class ConsoleRecipe {
             is.setItemMeta(im);
             NamespacedKey key = new NamespacedKey(plugin, name.toLowerCase() + "_console");
             ShapedRecipe r = new ShapedRecipe(key, is);
-            if (plugin.getDifficulty() == Difficulty.HARD) {
+            if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
                 r.shape("CBC", "LRL", "CBC");
                 r.setIngredient('C', colour.getKey());
                 r.setIngredient('B', Material.BAMBOO_BUTTON);

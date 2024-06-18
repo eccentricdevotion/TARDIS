@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -45,7 +45,7 @@ public class InteriorLightLevelSwitchRecipe {
         r.setIngredient('W', Material.WARPED_BUTTON);
         r.setIngredient('L', Material.LEVER);
         r.setIngredient('A', Material.ACACIA_BUTTON);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.setIngredient('C', Material.COPPER_BLOCK);
         } else {
             r.setIngredient('C', Material.COPPER_INGOT);

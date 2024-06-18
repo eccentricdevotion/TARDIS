@@ -48,7 +48,7 @@ public class TARDISDoorCommand {
         }
         boolean open = (args[1].equalsIgnoreCase("close"));
         // toggle the door
-        new TARDISDoorToggler(plugin, player.getLocation().getBlock(), player, false, open, rs.getTardis_id()).toggleDoors();
+        new TARDISDoorToggler(plugin, player.getLocation().getBlock(), player, false, open, rs.getTardisId()).toggleDoors();
         return true;
     }
 }

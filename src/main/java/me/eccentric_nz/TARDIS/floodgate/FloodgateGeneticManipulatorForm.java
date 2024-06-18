@@ -46,7 +46,7 @@ public class FloodgateGeneticManipulatorForm {
             builder.button(m.toString().replace("_SPAWN_EGG", ""), FormImage.Type.URL, String.format(path, m.toString().toLowerCase(Locale.ROOT)));
         }
         builder.button("Master's Reverse Polarity");
-        builder.validResultHandler(response -> handleResponse(response));
+        builder.validResultHandler(this::handleResponse);
         builder.closedOrInvalidResultHandler(response -> handleClose());
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
@@ -110,12 +110,16 @@ public class FloodgateGeneticManipulatorForm {
                 Object[] options = null;
                 switch (dt) {
                     case AXOLOTL -> {
-                        if (!plugin.isDisguisesOnServer()) {
+                        if (plugin.isDisguisesOnServer()) {
+                            new TARDISLazarusLibs(player, label, Axolotl.Variant.LUCY, false, false).createDisguise();
+                        } else {
                             options = new Object[]{Axolotl.Variant.WILD, AGE.ADULT};
                         }
                     }
                     case FROG -> {
-                        if (!plugin.isDisguisesOnServer()) {
+                        if (plugin.isDisguisesOnServer()) {
+                            new TARDISLazarusLibs(player, label, Frog.Variant.TEMPERATE, false, false).createDisguise();
+                        } else {
                             options = new Object[]{Frog.Variant.TEMPERATE, AGE.ADULT};
                         }
                     }

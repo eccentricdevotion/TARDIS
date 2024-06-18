@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.control.TARDISScanner;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -230,7 +229,7 @@ class TARDISHandlesScanCommand {
                 plugin.getMessenger().handlesSend(player, "SCAN_NONE");
             }
             // damage the circuit if configured
-            if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
+            if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
                 TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                 tcc.getCircuits();
                 // decrement uses

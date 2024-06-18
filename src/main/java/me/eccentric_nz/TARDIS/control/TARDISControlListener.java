@@ -25,11 +25,12 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetJunk;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Control;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateSavesForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -150,7 +151,7 @@ public class TARDISControlListener implements Listener {
                         UUID ownerUUID = tardis.getUuid();
                         UUID playerUUID = player.getUniqueId();
                         TARDISCircuitChecker tcc = null;
-                        if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
+                        if (plugin.getConfig().getBoolean("difficulty.circuits")) {
                             tcc = new TARDISCircuitChecker(plugin, id);
                             tcc.getCircuits();
                         }
@@ -204,6 +205,10 @@ public class TARDISControlListener implements Listener {
                                 case 31 -> new ChameleonSignAction(plugin).openGUI(player, tardis, id);
                                 case 32 -> {
                                     // save_sign
+                                    if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(playerUUID.toString(), SystemTree.SAVES)) {
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
+                                        return;
+                                    }
                                     if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(playerUUID)) {
                                         new FloodgateSavesForm(plugin, playerUUID, id).send();
                                     } else {
@@ -219,7 +224,7 @@ public class TARDISControlListener implements Listener {
                                 // space/time throttle
                                 case 39 -> new ThrottleAction(plugin).setSpaceTime(block, player);
                                 // relativity differentiator
-                                case 47 -> new DifferentiatorAction(plugin).bleep(block, id);
+                                case 47 -> new DifferentiatorAction(plugin).bleep(block, id, player);
                                 default -> {
                                 }
                             }

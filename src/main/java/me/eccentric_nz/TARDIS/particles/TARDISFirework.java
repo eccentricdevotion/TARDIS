@@ -16,10 +16,8 @@
  *
  * Rocket code borrowed from com.darkblade12.itemslotmachine.rocket.Rocket.java
  */
-package me.eccentric_nz.TARDIS.utility;
+package me.eccentric_nz.TARDIS.particles;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.*;
@@ -28,6 +26,9 @@ import org.bukkit.entity.Firework;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TARDISFirework {
 

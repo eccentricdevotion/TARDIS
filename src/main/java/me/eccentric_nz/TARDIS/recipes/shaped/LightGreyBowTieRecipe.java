@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -41,16 +41,16 @@ public class LightGreyBowTieRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "light_grey_bow_tie");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("STS", "L L", "WWW");
             r.setIngredient('S', Material.STRING);
             r.setIngredient('T', Material.GLOWSTONE_DUST);
             r.setIngredient('L', Material.LEATHER);
-            r.setIngredient('W', Material.LIGHT_GRAY_WOOL);            
+            r.setIngredient('W', Material.LIGHT_GRAY_WOOL);
         } else {
             r.shape("   ", "SWS", "   ");
             r.setIngredient('S', Material.STRING);
-            r.setIngredient('W', Material.LIGHT_GRAY_WOOL);            
+            r.setIngredient('W', Material.LIGHT_GRAY_WOOL);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Light Grey Bow Tie", r);

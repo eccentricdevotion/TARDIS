@@ -46,7 +46,7 @@ class TARDISJunkFind {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
         if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
             // get current location
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getTardis_id());
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getTardisId());
             if (rsc.resultSet()) {
                 String world = TARDISAliasResolver.getWorldAlias(rsc.getWorld());
                 if (!plugin.getPlanetsConfig().getBoolean("planets." + rsc.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {

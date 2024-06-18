@@ -34,7 +34,7 @@ public class DoorLockAction {
         if (rs.fromUUID(playerUUID.toString())) {
             // must use key to lock / unlock door
             if (material.equals(m) || plugin.getConfig().getBoolean("preferences.any_key")) {
-                if (rs.getTardis_id() != id) {
+                if (rs.getTardisId() != id) {
                     plugin.getMessenger().sendStatus(player, "DOOR_LOCK_UNLOCK");
                     return;
                 }
@@ -48,7 +48,7 @@ public class DoorLockAction {
                 plugin.getQueryFactory().doUpdate("doors", setl, wherel);
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_LOCK", message);
             } else if (material.isAir()) {
-                if (checkId && rs.getTardis_id() == id) {
+                if (checkId && rs.getTardisId() == id) {
                     return;
                 }
                 // knock with hand if it's not their TARDIS

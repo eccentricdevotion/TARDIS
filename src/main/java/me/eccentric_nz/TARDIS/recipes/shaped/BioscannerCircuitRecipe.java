@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -37,16 +37,16 @@ public class BioscannerCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "bio-scanner_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" E ", "BRB", " E ");
             r.setIngredient('R', Material.REPEATER);
             r.setIngredient('E', Material.SPIDER_EYE);
-            r.setIngredient('B', Material.BONE);            
+            r.setIngredient('B', Material.BONE);
         } else {
             r.shape(" E ", "BRB", " E ");
             r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('E', Material.SPIDER_EYE);
-            r.setIngredient('B', Material.BONE);            
+            r.setIngredient('B', Material.BONE);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Bio-scanner Circuit", r);

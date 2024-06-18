@@ -51,7 +51,7 @@ class TARDISSetBooleanCommand {
     boolean setConfigBool(CommandSender sender, String[] args, String section) {
         String tolower = args[0].toLowerCase(Locale.ENGLISH);
         String first = (section.isEmpty()) ? tolower : section + "." + tolower;
-        // check they typed true of false
+        // check they typed true or false
         String tf = args[1].toLowerCase(Locale.ENGLISH);
         if (!tf.equals("true") && !tf.equals("false")) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "TRUE_FALSE");

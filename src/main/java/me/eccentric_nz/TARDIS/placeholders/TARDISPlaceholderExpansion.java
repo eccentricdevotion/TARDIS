@@ -98,7 +98,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                         case "any" -> result = "true";
                         case "own" -> {
                             rsti = new ResultSetTardisID(plugin);
-                            if (rsti.fromUUID(uuid) && rsti.getTardis_id() == rsv.getTardis_id()) {
+                            if (rsti.fromUUID(uuid) && rsti.getTardisId() == rsv.getTardis_id()) {
                                 result = "true";
                             }
                         }
@@ -119,7 +119,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                                 OfflinePlayer offlinePlayer = plugin.getServer().getPlayer(split[2]);
                                 if (offlinePlayer != null) {
                                     rsti = new ResultSetTardisID(plugin);
-                                    if (rsti.fromUUID(offlinePlayer.getUniqueId().toString()) && rsti.getTardis_id() == rsv.getTardis_id()) {
+                                    if (rsti.fromUUID(offlinePlayer.getUniqueId().toString()) && rsti.getTardisId() == rsv.getTardis_id()) {
                                         result = "true";
                                     }
                                 }
@@ -176,7 +176,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                     case "current_location" -> {
                         rsti = new ResultSetTardisID(plugin);
                         if (rsti.fromUUID(uuid)) {
-                            where.put("tardis_id", rsti.getTardis_id());
+                            where.put("tardis_id", rsti.getTardisId());
                             rscl = new ResultSetCurrentLocation(plugin, where);
                             if (rscl.resultSet()) {
                                 result = "TARDIS was left at " + rscl.getWorld().getName() + " at " + "x: " + rscl.getX() + " y: " + rscl.getY() + " z: " + rscl.getZ();
@@ -190,7 +190,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                     case "current_location_x" -> {
                         rsti = new ResultSetTardisID(plugin);
                         if (rsti.fromUUID(uuid)) {
-                            where.put("tardis_id", rsti.getTardis_id());
+                            where.put("tardis_id", rsti.getTardisId());
                             rscl = new ResultSetCurrentLocation(plugin, where);
                             if (rscl.resultSet()) {
                                 result = Integer.toString(rscl.getX());
@@ -204,7 +204,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                     case "current_location_y" -> {
                         rsti = new ResultSetTardisID(plugin);
                         if (rsti.fromUUID(uuid)) {
-                            where.put("tardis_id", rsti.getTardis_id());
+                            where.put("tardis_id", rsti.getTardisId());
                             rscl = new ResultSetCurrentLocation(plugin, where);
                             if (rscl.resultSet()) {
                                 result = Integer.toString(rscl.getY());
@@ -218,7 +218,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                     case "current_location_z" -> {
                         rsti = new ResultSetTardisID(plugin);
                         if (rsti.fromUUID(uuid)) {
-                            where.put("tardis_id", rsti.getTardis_id());
+                            where.put("tardis_id", rsti.getTardisId());
                             rscl = new ResultSetCurrentLocation(plugin, where);
                             if (rscl.resultSet()) {
                                 result = Integer.toString(rscl.getZ());
@@ -232,7 +232,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                     case "current_location_world" -> {
                         rsti = new ResultSetTardisID(plugin);
                         if (rsti.fromUUID(uuid)) {
-                            where.put("tardis_id", rsti.getTardis_id());
+                            where.put("tardis_id", rsti.getTardisId());
                             rscl = new ResultSetCurrentLocation(plugin, where);
                             if (rscl.resultSet()) {
                                 result = rscl.getWorld().getName();
@@ -246,7 +246,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                     case "current_location_direction" -> {
                         rsti = new ResultSetTardisID(plugin);
                         if (rsti.fromUUID(uuid)) {
-                            where.put("tardis_id", rsti.getTardis_id());
+                            where.put("tardis_id", rsti.getTardisId());
                             rscl = new ResultSetCurrentLocation(plugin, where);
                             if (rscl.resultSet()) {
                                 result = rscl.getDirection().toString();
@@ -260,7 +260,7 @@ public class TARDISPlaceholderExpansion extends PlaceholderExpansion {
                     case "current_location_biome" -> {
                         rsti = new ResultSetTardisID(plugin);
                         if (rsti.fromUUID(uuid)) {
-                            where.put("tardis_id", rsti.getTardis_id());
+                            where.put("tardis_id", rsti.getTardisId());
                             rscl = new ResultSetCurrentLocation(plugin, where);
                             if (rscl.resultSet()) {
                                 // get from current location

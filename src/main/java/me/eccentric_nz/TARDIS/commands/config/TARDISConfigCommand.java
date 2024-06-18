@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.config;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import org.bukkit.command.Command;
@@ -55,12 +55,12 @@ public class TARDISConfigCommand implements CommandExecutor {
         // add first arguments
         firstsStr.put("area", "creation");
         firstsStr.put("autonomous_area", "");
+        firstsStr.put("crafting", "difficulty");
         firstsStr.put("database", "storage");
         firstsStr.put("default_key", "preferences");
         firstsStr.put("default_model", "sonic");
         firstsStr.put("default_preset", "police_box");
         firstsStr.put("default_world_name", "creation");
-        firstsStr.put("difficulty", "preferences");
         firstsStr.put("exclude", "");
         firstsStr.put("include", "");
         firstsStr.put("inventory_group", "creation");
@@ -94,17 +94,21 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("any_key", "preferences");
         firstsBool.put("archive", "");
         firstsBool.put("autonomous", "allow");
+        firstsBool.put("biome_reader", "difficulty");
         firstsBool.put("blueprints", "modules");
         firstsBool.put("chameleon", "travel");
         firstsBool.put("charge", "sonic");
         firstsBool.put("check_blocks_before_upgrade", "desktop");
         firstsBool.put("check_for_home", "creation");
         firstsBool.put("chemistry", "modules");
+        firstsBool.put("circuits", "difficulty");
         firstsBool.put("create_worlds", "creation");
         firstsBool.put("create_worlds_with_perms", "creation");
         firstsBool.put("damage", "circuits");
         firstsBool.put("debug", "");
         firstsBool.put("default_world", "creation");
+        firstsBool.put("disk_in_hand_for_write", "difficulty");
+        firstsBool.put("disks", "difficulty");
         firstsBool.put("dynamic_lamps", "allow");
         firstsBool.put("emergency_npc", "allow");
         firstsBool.put("exile", "travel");
@@ -148,8 +152,11 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("sonic_blaster", "modules");
         firstsBool.put("spawn_eggs", "allow");
         firstsBool.put("spawn_random_monsters", "preferences");
+        firstsBool.put("stattenheim_remote", "difficulty");
         firstsBool.put("strike_lightning", "preferences");
         firstsBool.put("switch_resource_packs", "");
+        firstsBool.put("system_upgrades", "difficulty");
+        firstsBool.put("tardis_locator", "difficulty");
         firstsBool.put("terminal.redefine", "travel");
         firstsBool.put("the_end", "travel");
         firstsBool.put("update.auto_update", "preferences");
@@ -271,7 +278,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                 }
                 if (first.equals("provider")) {
                     String provider = args[1];
-                    if (!provider.equals("dynmap") && !provider.equals("BlueMap")) {
+                    if (!provider.equals("dynmap") && !provider.equals("BlueMap") && !provider.equals("squaremap")) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_PROVIDER");
                         return true;
                     }
@@ -330,13 +337,13 @@ public class TARDISConfigCommand implements CommandExecutor {
                 if (first.equals("respect_worldguard")) {
                     return new TARDISSetRespectCommand(plugin).setFlag(sender, args);
                 }
-                if (first.equals("difficulty")) {
-                    if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("medium") && !args[1].equalsIgnoreCase("hard")) {
+                if (first.equals("crafting")) {
+                    if (!args[1].equalsIgnoreCase("easy") && !args[1].equalsIgnoreCase("hard")) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_DIFF");
                         return true;
                     }
-                    plugin.getConfig().set("preferences.difficulty", args[1].toLowerCase(Locale.ENGLISH));
-                    plugin.setDifficulty(Difficulty.valueOf(args[1].toUpperCase(Locale.ENGLISH)));
+                    plugin.getConfig().set("difficulty.crafting", args[1].toLowerCase(Locale.ENGLISH));
+                    plugin.setDifficulty(CraftingDifficulty.valueOf(args[1].toUpperCase(Locale.ENGLISH)));
                 }
                 if (first.equals("default_preset")) {
                     if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(args[1])) {

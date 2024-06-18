@@ -23,13 +23,12 @@ import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import me.eccentric_nz.tardisweepingangels.utils.Follow;
 import me.eccentric_nz.tardisweepingangels.utils.FollowerFinder;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_20_R4.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_21_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Husk;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 public class FollowCommand {
 

@@ -24,10 +24,14 @@ import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateDestinationTerminalForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import net.md_5.bungee.api.ChatColor;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -52,14 +56,15 @@ public class TARDISThemeButton {
         int tid = 0;
         ResultSetTardisID rs = new ResultSetTardisID(TARDIS.plugin);
         if (rs.fromUUID(uuid)) {
-            tid = rs.getTardis_id();
+            tid = rs.getTardisId();
         }
         return tid;
     }
 
     public void clickButton() {
         // check player is in own TARDIS
-        int p_tid = getTardisId(player.getUniqueId().toString());
+        UUID uuid = player.getUniqueId();
+        int p_tid = getTardisId(uuid.toString());
         if (p_tid != id) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "UPGRADE_OWN");
             return;
@@ -69,14 +74,18 @@ public class TARDISThemeButton {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_UPGRADE_WHILE_GROWING");
             return;
         }
+        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.DESKTOP_THEME)) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Desktop Theme");
+            return;
+        }
         // get player's current console
         TARDISUpgradeData tud = new TARDISUpgradeData();
         tud.setPrevious(current_console);
         tud.setLevel(level);
-        plugin.getTrackerKeeper().getUpgrades().put(player.getUniqueId(), tud);
+        plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
         // open the upgrade menu
-        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
-            new FloodgateDestinationTerminalForm(plugin, player.getUniqueId()).send();
+        if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(uuid)) {
+            new FloodgateDestinationTerminalForm(plugin, uuid).send();
         } else {
             ItemStack[] consoles = new TARDISPluginThemeInventory(plugin, player, current_console.getPermission(), level).getMenu();
             Inventory upg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Upgrade Menu");

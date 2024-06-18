@@ -28,7 +28,6 @@ import me.eccentric_nz.TARDIS.commands.config.TARDISConfigMenuInventory;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIPlayerPreferences;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.FlightMode;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -37,9 +36,10 @@ import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmingInventory;
+import me.eccentric_nz.TARDIS.particles.TARDISParticleInventory;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicConfiguratorInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -73,7 +73,6 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         lookup.put("Close GUI", "close_gui_on");
         lookup.put("Companion Build", "build_on");
         lookup.put("Do Not Disturb", "dnd_on");
-        lookup.put("Easy Difficulty", "difficulty");
         lookup.put("Emergency Programme One", "eps_on");
         lookup.put("Exterior Rendering Room", "renderer_on");
         lookup.put("Hostile Action Displacement System", "hads_on");
@@ -110,7 +109,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             // toggle force field on / off
             if (TARDISPermission.hasPermission(p, "tardis.forcefield")) {
                 List<String> lore = im.getLore();
-                boolean bool = (lore.get(0).equals(plugin.getLanguage().getString("SET_OFF")));
+                boolean bool = (lore.getFirst().equals(plugin.getLanguage().getString("SET_OFF")));
                 if (bool) {
                     // check power
                     ResultSetArtronLevel rsal = new ResultSetArtronLevel(plugin, uuid.toString());
@@ -139,9 +138,10 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         if (slot == GUIPlayerPreferences.FLIGHT_MODE.getSlot() && im.getDisplayName().equals("Flight Mode")) {
             List<String> lore = im.getLore();
             // cycle through flight modes
-            FlightMode flight = FlightMode.valueOf(lore.get(0));
+            FlightMode flight = FlightMode.valueOf(lore.getFirst());
             int mode = flight.getMode() + 1;
-            if (mode > 3) {
+            int limit = (plugin.getServer().getPlayer(uuid).hasPermission("tardis.fly")) ? 4 : 3;
+            if (mode > limit) {
                 mode = 1;
             }
             lore.set(0, FlightMode.getByMode().get(mode).toString());
@@ -170,11 +170,11 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         if (slot == GUIPlayerPreferences.HANDBRAKE.getSlot() && im.getDisplayName().equals("Handbrake")) {
             // you can only set it to ON!
             List<String> lore = im.getLore();
-            if (lore.get(0).equals(plugin.getLanguage().getString("SET_OFF"))) {
+            if (lore.getFirst().equals(plugin.getLanguage().getString("SET_OFF"))) {
                 // get this player's TARDIS
                 ResultSetTardisID rs = new ResultSetTardisID(plugin);
                 if (rs.fromUUID(uuid.toString())) {
-                    int id = rs.getTardis_id();
+                    int id = rs.getTardisId();
                     // must not be in the vortex or materialising
                     if (!plugin.getTrackerKeeper().getMaterialising().contains(id) && !plugin.getTrackerKeeper().getInVortex().contains(id)) {
                         // set the handbrake to ON
@@ -200,13 +200,10 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                         if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
                             plugin.getTrackerKeeper().getHasRandomised().removeAll(Collections.singleton(id));
                         }
-                        TARDISCircuitChecker tcc = null;
-                        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(p, true)) {
-                            tcc = new TARDISCircuitChecker(plugin, id);
-                            tcc.getCircuits();
-                        }
                         // damage the circuit if configured
-                        if (tcc != null && plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+                        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+                            TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                            tcc.getCircuits();
                             // decrement uses
                             int uses_left = tcc.getMaterialisationUses();
                             new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, p).damage();
@@ -282,6 +279,18 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             }, 1L);
             return;
         }
+        if (slot == GUIPlayerPreferences.PARTICLES.getSlot() && im.getDisplayName().equals("Materialisation Particles")) {
+            // close this gui and load the Particle Preferences
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                Inventory particle_inv = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Particle Preferences");
+                // close inventory
+                p.closeInventory();
+                // open new inventory
+                particle_inv.setContents(new TARDISParticleInventory(plugin, uuid.toString()).getGUI());
+                p.openInventory(particle_inv);
+            }, 1L);
+            return;
+        }
         if (slot == GUIPlayerPreferences.ADMIN_MENU.getSlot() && im.getDisplayName().equals("Admin Config Menu")) {
             // close this gui and load the Admin Menu
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -292,12 +301,12 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             return;
         }
         List<String> lore = im.getLore();
-        boolean bool = (lore.get(0).equals(plugin.getLanguage().getString("SET_ON")));
+        boolean bool = (lore.getFirst().equals(plugin.getLanguage().getString("SET_ON")));
         String value = (bool) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
         int b = (bool) ? 0 : 1;
         switch (im.getDisplayName()) {
             case "Junk TARDIS" -> {
-                // must be outside of the TARDIS
+                // must be on the outside of the TARDIS
                 HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("uuid", uuid);
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
@@ -403,7 +412,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
                 if (im.getDisplayName().equals("HADS Type")) {
-                    value = (lore.get(0).equals("DISPLACEMENT")) ? "DISPERSAL" : "DISPLACEMENT";
+                    value = (lore.getFirst().equals("DISPLACEMENT")) ? "DISPERSAL" : "DISPLACEMENT";
                     set.put("hads_type", value);
                 } else {
                     set.put(lookup.get(im.getDisplayName()), b);
@@ -420,7 +429,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             // get tardis id
             ResultSetTardisID rsi = new ResultSetTardisID(plugin);
             if (rsi.fromUUID(uuid.toString())) {
-                new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardis_id(), !bool);
+                new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), !bool);
             }
         }
     }

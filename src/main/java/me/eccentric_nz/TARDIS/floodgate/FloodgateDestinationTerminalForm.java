@@ -9,7 +9,10 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.*;
+import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
+import me.eccentric_nz.TARDIS.enumeration.Flag;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
@@ -48,7 +51,7 @@ public class FloodgateDestinationTerminalForm {
                 .dropdown("World", worlds)
                 .toggle("Submarine", false)
                 .toggle("Just check calculated destination", false)
-                .validResultHandler(response -> handleResponse(response))
+                .validResultHandler(this::handleResponse)
                 .build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
         player.sendForm(form);
@@ -178,7 +181,7 @@ public class FloodgateDestinationTerminalForm {
                             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.TERMINAL, id));
                         }
                         // damage the circuit if configured
-                        if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.input") > 0) {
+                        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.input") > 0) {
                             TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                             tcc.getCircuits();
                             // decrement uses

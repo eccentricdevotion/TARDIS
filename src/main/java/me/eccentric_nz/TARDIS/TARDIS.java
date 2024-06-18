@@ -53,6 +53,7 @@ import me.eccentric_nz.TARDIS.junk.TARDISJunkReturnRunnable;
 import me.eccentric_nz.TARDIS.mapping.TARDISBlueMap;
 import me.eccentric_nz.TARDIS.mapping.TARDISDynmap;
 import me.eccentric_nz.TARDIS.mapping.TARDISMapper;
+import me.eccentric_nz.TARDIS.mapping.TARDISSquareMap;
 import me.eccentric_nz.TARDIS.messaging.AdventureMessage;
 import me.eccentric_nz.TARDIS.messaging.SpigotMessage;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
@@ -140,10 +141,9 @@ public class TARDIS extends JavaPlugin {
     private final HashMap<String, String> versions = new HashMap<>();
     private final String versionRegex = "(\\d+[.])+\\d+";
     private final Pattern versionPattern = Pattern.compile(versionRegex);
-    private final String serverStr = "1.20.6";
-    private TARDISChatGUI jsonKeeper;
+    private final String serverStr = "1.21";
+    private TARDISChatGUI<?> jsonKeeper;
     private TARDISUpdateChatGUI updateChatGUI;
-    //    public TARDISFurnaceRecipe fornacis;
     private Calendar afterCal;
     private Calendar beforeCal;
     private ConsoleCommandSender console;
@@ -171,6 +171,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration itemsConfig;
     private FileConfiguration blasterConfig;
     private FileConfiguration customModelConfig;
+    private FileConfiguration systemUpgradesConfig;
     private HashMap<String, Integer> condensables;
     private BukkitTask standbyTask;
     private TARDISChameleonPreset presets;
@@ -192,7 +193,7 @@ public class TARDIS extends JavaPlugin {
     private TARDISHelper tardisHelper = null;
     private TARDISMultiverseHelper mvHelper = null;
     private String prefix;
-    private Difficulty difficulty;
+    private CraftingDifficulty craftingDifficulty;
     private WorldManager worldManager;
     private BukkitTask recordingTask;
     private NamespacedKey oldBlockKey;
@@ -423,10 +424,10 @@ public class TARDIS extends JavaPlugin {
             generalKeeper = new TARDISGeneralInstanceKeeper(this);
             generalKeeper.setQuotes(quotes());
             try {
-                difficulty = Difficulty.valueOf(getConfig().getString("preferences.difficulty", "EASY").toUpperCase(Locale.ENGLISH));
+                craftingDifficulty = CraftingDifficulty.valueOf(getConfig().getString("difficulty.crafting", "EASY").toUpperCase(Locale.ENGLISH));
             } catch (IllegalArgumentException e) {
                 debug("Could not determine difficulty setting, using EASY");
-                difficulty = Difficulty.EASY;
+                craftingDifficulty = CraftingDifficulty.EASY;
             }
             // register recipes
             figura = new TARDISShapedRecipe(this);
@@ -452,6 +453,8 @@ public class TARDIS extends JavaPlugin {
                 getMessenger().message(console, TardisModule.TARDIS, "Loading Mapping Module");
                 if (mapper.equals("dynmap")) {
                     tardisMapper = new TARDISDynmap(this);
+                } else if (mapper.equals("squaremap")) {
+                    tardisMapper = new TARDISSquareMap(this);
                 } else {
                     tardisMapper = new TARDISBlueMap(this);
                 }
@@ -886,6 +889,15 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
+     * Gets the system upgrades configuration
+     *
+     * @return the system upgrades configuration
+     */
+    public FileConfiguration getSystemUpgradesConfig() {
+        return systemUpgradesConfig;
+    }
+
+    /**
      * Gets the language configuration
      *
      * @return the language configuration
@@ -1232,17 +1244,17 @@ public class TARDIS extends JavaPlugin {
      *
      * @return the TARDIS Difficulty level
      */
-    public Difficulty getDifficulty() {
-        return difficulty;
+    public CraftingDifficulty getCraftingDifficulty() {
+        return craftingDifficulty;
     }
 
     /**
      * Sets the TARDIS Difficulty level
      *
-     * @param difficulty the {@link Difficulty} level to set
+     * @param craftingDifficulty the {@link CraftingDifficulty} level to set
      */
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
+    public void setDifficulty(CraftingDifficulty craftingDifficulty) {
+        this.craftingDifficulty = craftingDifficulty;
     }
 
     /**
@@ -1648,7 +1660,7 @@ public class TARDIS extends JavaPlugin {
                 "monsters.yml",
                 "planets.yml",
                 "recipes.yml", "rooms.yml",
-                "shop.yml",
+                "shop.yml", "system_upgrades.yml",
                 "tag.yml",
                 "vortex_manipulator.yml"
         );
@@ -1690,6 +1702,7 @@ public class TARDIS extends JavaPlugin {
             blasterConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "blaster.yml"));
         }
         customModelConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_models.yml"));
+        systemUpgradesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "system_upgrades.yml"));
     }
 
     /**

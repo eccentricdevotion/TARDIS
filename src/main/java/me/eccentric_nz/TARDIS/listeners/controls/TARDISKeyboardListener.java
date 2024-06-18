@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Tag;
@@ -81,7 +80,7 @@ public class TARDISKeyboardListener implements Listener {
         }
         Player p = event.getPlayer();
         TARDISCircuitChecker tcc = null;
-        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(p, false)) {
+        if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(p, false)) {
             tcc = new TARDISCircuitChecker(plugin, rsc.getTardis_id());
             tcc.getCircuits();
         }

@@ -25,12 +25,11 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -283,6 +282,15 @@ public class TARDISControlInventory {
         list.setDisplayName(plugin.getLanguage().getString("COMPANIONS_MENU"));
         list.setCustomModelData(GUIControlCentre.COMPANIONS_MENU.getCustomModelData());
         companion.setItemMeta(list);
+        // system_upgrades
+        ItemStack system = null;
+        if (plugin.getConfig().getBoolean("difficulty.system_upgrades")) {
+            system = new ItemStack(Material.BOWL, 1);
+            ItemMeta upgrades = system.getItemMeta();
+            upgrades.setDisplayName(plugin.getLanguage().getString("SYS_MENU"));
+            upgrades.setCustomModelData(GUIControlCentre.BUTTON_SYSTEM_UPGRADES.getCustomModelData());
+            system.setItemMeta(upgrades);
+        }
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
@@ -294,7 +302,7 @@ public class TARDISControlInventory {
             ran, null, ars, null, cham, null, art, null, zero,
             save, null, upg, null, siege, null, scan, null, player,
             own, null, pow, null, hide, null, info, null, companion,
-            fast, null, lig, null, reb, null, tran, null, null,
+            fast, null, lig, null, reb, null, tran, null, system,
             area, null, tog, null, dir, null, null, null, null,
             ter, null, map, null, temp, null, thro, null, close
         };

@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicMenuInventory;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -52,8 +52,8 @@ public class TARDISPrefsCommands implements CommandExecutor {
             "announce_repeaters", "auto", "auto_powerup", "auto_rescue", "auto_siege",
             "beacon", "build",
             "close_gui", "console_labels",
-            "difficulty", "dnd", "dynamic_lamps",
-            "eps", "eps_message",
+            "dnd", "dynamic_lamps",
+            "effect", "eps", "eps_message",
             "farm", "flight", "floor", "forcefield",
             "hads", "hads_type", "hum",
             "info", "isomorphic",
@@ -63,7 +63,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
             "minecart",
             "quotes",
             "renderer",
-            "sfx", "siege_floor", "siege_wall", "sign", "sonic", "submarine",
+            "sfx", "shape", "siege_floor", "siege_wall", "sign", "sonic", "speed", "submarine",
             "telepathy", "translate", "travelbar",
             "wall"
     );
@@ -131,9 +131,6 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     case "console_labels" -> {
                         return new TARDISLabelsCommand(plugin).toggle(player, args);
                     }
-                    case "difficulty" -> {
-                        return new TARDISSetDifficultyCommand(plugin).setDiff(player, args);
-                    }
                     case "eps_message" -> {
                         return new TARDISEPSMessageCommand(plugin).setMessage(player, args);
                     }
@@ -160,6 +157,9 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     }
                     case "wall", "floor", "siege_wall", "siege_floor" -> {
                         return new TARDISFloorCommand(plugin).setFloorOrWallBlock(player, args);
+                    }
+                    case "effect", "shape", "speed" -> {
+                        return new TARDISParticlePrefsCommand(plugin).setPartclePref(player, args);
                     }
                     default -> {
                         if (args.length < 2 || (!args[1].equalsIgnoreCase("on") && !args[1].equalsIgnoreCase("off"))) {

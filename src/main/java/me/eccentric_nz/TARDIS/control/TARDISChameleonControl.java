@@ -21,9 +21,8 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -38,7 +37,7 @@ public class TARDISChameleonControl {
 
     public void openGUI(Player player, int id, Adaption adapt, ChameleonPreset preset, String model) {
         TARDISCircuitChecker tcc = null;
-        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
+        if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, false)) {
             tcc = new TARDISCircuitChecker(plugin, id);
             tcc.getCircuits();
         }

@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -37,16 +37,16 @@ public class TARDISMonitorRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_monitor");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("MRM", "RGR", "MRM");
             r.setIngredient('M', Material.MAP);
             r.setIngredient('G', Material.TINTED_GLASS);
-            r.setIngredient('R', Material.REDSTONE_BLOCK);            
+            r.setIngredient('R', Material.REDSTONE_BLOCK);
         } else {
             r.shape("MRM", "RGR", "MRM");
             r.setIngredient('M', Material.MAP);
             r.setIngredient('G', Material.GLASS_PANE);
-            r.setIngredient('R', Material.REDSTONE);            
+            r.setIngredient('R', Material.REDSTONE);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Monitor", r);

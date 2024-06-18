@@ -25,8 +25,11 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISSculkShrieker;
 import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.*;
+import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rotors.Rotor;
 import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.utility.Handbrake;
@@ -111,12 +114,9 @@ public class TARDISHandbrakeListener implements Listener {
                 if (found) {
                     event.setCancelled(true);
                     int id = tmp_id;
-                    TARDISCircuitChecker tcc = null;
-                    if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, event.getAction().equals(Action.LEFT_CLICK_BLOCK))) {
-                        tcc = new TARDISCircuitChecker(plugin, id);
-                        tcc.getCircuits();
-                    }
-                    if (tcc != null && !tcc.hasMaterialisation()) {
+                    TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                    tcc.getCircuits();
+                    if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, event.getAction().equals(Action.LEFT_CLICK_BLOCK)) && !tcc.hasMaterialisation()) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
                         return;
                     }
@@ -156,11 +156,10 @@ public class TARDISHandbrakeListener implements Listener {
                             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
                             boolean beac_on = true;
                             boolean bar = false;
-                            SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
+                            Throticle throticle = new ResultSetThrottle(plugin).getSpeedAndParticles(uuid.toString());
                             if (rsp.resultSet()) {
                                 beac_on = rsp.isBeaconOn();
                                 bar = rsp.isTravelbarOn();
-                                spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
                             }
                             if (action == Action.RIGHT_CLICK_BLOCK) {
                                 if (tardis.isHandbrakeOn()) {
@@ -205,7 +204,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), player.getLocation().getYaw(), player.getLocation().getPitch());
                                         new TARDISExteriorFlight(plugin).startFlying(player, id, block, current, beac_on, beacon, preset.equals(ChameleonPreset.PANDORICA));
                                     } else {
-                                        new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, spaceTimeThrottle);
+                                        new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, throticle);
                                     }
                                     // start time rotor?
                                     if (tardis.getRotor() != null) {
@@ -262,7 +261,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     // Remove energy from TARDIS and sets database
                                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ON");
                                     if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                                        int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * spaceTimeThrottle.getArtronMultiplier());
+                                        int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * throticle.getThrottle().getArtronMultiplier());
                                         HashMap<String, Object> wheret = new HashMap<>();
                                         wheret.put("tardis_id", id);
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
@@ -278,7 +277,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         plugin.getTrackerKeeper().getHasRandomised().removeAll(Collections.singleton(id));
                                     }
                                     // damage the circuit if configured
-                                    if (tcc != null && plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+                                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
                                         // decrement uses
                                         int uses_left = tcc.getMaterialisationUses();
                                         new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();

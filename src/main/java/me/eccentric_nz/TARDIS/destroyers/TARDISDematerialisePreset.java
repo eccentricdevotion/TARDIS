@@ -21,12 +21,14 @@ import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetParticlePrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.particles.Emitter;
+import me.eccentric_nz.TARDIS.particles.TARDISParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
-import me.eccentric_nz.TARDIS.utility.TARDISParticles;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.*;
@@ -40,6 +42,7 @@ import org.bukkit.entity.Player;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * A dematerialisation circuit was an essential part of a Type 40 TARDIS which enabled it to dematerialise from normal
@@ -199,24 +202,33 @@ class TARDISDematerialisePreset implements Runnable {
                 if (dd.isOutside()) {
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, dd.getPlayer().getUniqueId().toString());
                     boolean minecart = false;
-                    SpaceTimeThrottle spaceTimeThrottle = SpaceTimeThrottle.NORMAL;
                     if (rsp.resultSet()) {
                         minecart = rsp.isMinecartOn();
-                        spaceTimeThrottle = SpaceTimeThrottle.getByDelay().get(rsp.getThrottle());
                     }
                     if (!minecart) {
                         String sound;
                         if (preset.equals(ChameleonPreset.JUNK_MODE)) {
                             sound = "junk_takeoff";
                         } else {
-                            sound = switch (spaceTimeThrottle) {
-                                case WARP, RAPID, FASTER -> "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
+                            sound = switch (dd.getThrottle()) {
+                                case WARP, RAPID, FASTER -> "tardis_takeoff_" + dd.getThrottle().toString().toLowerCase();
                                 default -> "tardis_takeoff"; // NORMAL
                             };
                         }
                         TARDISSounds.playTARDISSound(dd.getLocation(), sound);
                     } else {
                         world.playSound(dd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
+                    }
+                }
+                if (dd.hasParticles()) {
+                    ResultSetParticlePrefs rspp = new ResultSetParticlePrefs(plugin);
+                    UUID uuid = dd.getPlayer().getUniqueId();
+                    if (rspp.fromUUID(uuid.toString())) {
+                        ParticleData particleData = rspp.getData();
+                        // display particles
+                        Emitter emitter = new Emitter(plugin, uuid, dd.getLocation(), particleData, dd.getThrottle().getFlightTime());
+                        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, particleData.getShape().getPeriod());
+                        emitter.setTaskID(task);
                     }
                 }
                 getColours(dd.getTardisID(), preset);
@@ -285,7 +297,13 @@ class TARDISDematerialisePreset implements Runnable {
                                 BlockData chaw = (preset.equals(ChameleonPreset.FLOWER)) ? the_colour : colData[yy];
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, chaw);
                             }
-                            case ACACIA_SAPLING, ALLIUM, AZURE_BLUET, BAMBOO_SAPLING, BEETROOTS, BIRCH_SAPLING, BLUE_ORCHID, CARROTS, CORNFLOWER, CRIMSON_FUNGUS, CRIMSON_ROOTS, DANDELION, DARK_OAK_SAPLING, DEAD_BUSH, FERN, SHORT_GRASS, JUNGLE_SAPLING, LARGE_FERN, LILAC, LILY_OF_THE_VALLEY, OAK_SAPLING, ORANGE_TULIP, OXEYE_DAISY, PEONY, PINK_TULIP, POPPY, POTATOES, RED_TULIP, ROSE_BUSH, SPRUCE_SAPLING, SUGAR_CANE, SUNFLOWER, SWEET_BERRY_BUSH, TALL_GRASS, WARPED_FUNGUS, WARPED_ROOTS, WHEAT, WHITE_TULIP, WITHER_ROSE -> {
+                            case ACACIA_SAPLING, ALLIUM, AZURE_BLUET, BAMBOO_SAPLING, BEETROOTS, BIRCH_SAPLING,
+                                 BLUE_ORCHID, CARROTS, CORNFLOWER, CRIMSON_FUNGUS, CRIMSON_ROOTS, DANDELION,
+                                 DARK_OAK_SAPLING, DEAD_BUSH, FERN, SHORT_GRASS, JUNGLE_SAPLING, LARGE_FERN, LILAC,
+                                 LILY_OF_THE_VALLEY, OAK_SAPLING, ORANGE_TULIP, OXEYE_DAISY, PEONY, PINK_TULIP, POPPY,
+                                 POTATOES, RED_TULIP, ROSE_BUSH, SPRUCE_SAPLING, SUGAR_CANE, SUNFLOWER,
+                                 SWEET_BERRY_BUSH, TALL_GRASS, WARPED_FUNGUS, WARPED_ROOTS, WHEAT, WHITE_TULIP,
+                                 WITHER_ROSE -> {
                             }
                             // lamps, glowstone and torches
                             case TORCH, GLOWSTONE, REDSTONE_LAMP -> {
@@ -298,7 +316,13 @@ class TARDISDematerialisePreset implements Runnable {
                                 TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, light);
                             }
                             // wood, iron & trap doors
-                            case IRON_DOOR, ACACIA_DOOR, ACACIA_TRAPDOOR, ACACIA_WALL_SIGN, BAMBOO_DOOR, BAMBOO_TRAPDOOR, BAMBOO_WALL_SIGN, BIRCH_DOOR, BIRCH_TRAPDOOR, BIRCH_WALL_SIGN, CHERRY_DOOR, CHERRY_TRAPDOOR, CHERRY_WALL_SIGN, CRIMSON_DOOR, CRIMSON_TRAPDOOR, CRIMSON_WALL_SIGN, DARK_OAK_DOOR, DARK_OAK_TRAPDOOR, DARK_OAK_WALL_SIGN, JUNGLE_DOOR, JUNGLE_TRAPDOOR, JUNGLE_WALL_SIGN, MANGROVE_DOOR, MANGROVE_TRAPDOOR, MANGROVE_WALL_SIGN, OAK_DOOR, OAK_TRAPDOOR, OAK_WALL_SIGN, SPRUCE_DOOR, SPRUCE_TRAPDOOR, SPRUCE_WALL_SIGN, WARPED_DOOR, WARPED_TRAPDOOR, WARPED_WALL_SIGN -> {
+                            case IRON_DOOR, ACACIA_DOOR, ACACIA_TRAPDOOR, ACACIA_WALL_SIGN, BAMBOO_DOOR,
+                                 BAMBOO_TRAPDOOR, BAMBOO_WALL_SIGN, BIRCH_DOOR, BIRCH_TRAPDOOR, BIRCH_WALL_SIGN,
+                                 CHERRY_DOOR, CHERRY_TRAPDOOR, CHERRY_WALL_SIGN, CRIMSON_DOOR, CRIMSON_TRAPDOOR,
+                                 CRIMSON_WALL_SIGN, DARK_OAK_DOOR, DARK_OAK_TRAPDOOR, DARK_OAK_WALL_SIGN, JUNGLE_DOOR,
+                                 JUNGLE_TRAPDOOR, JUNGLE_WALL_SIGN, MANGROVE_DOOR, MANGROVE_TRAPDOOR,
+                                 MANGROVE_WALL_SIGN, OAK_DOOR, OAK_TRAPDOOR, OAK_WALL_SIGN, SPRUCE_DOOR,
+                                 SPRUCE_TRAPDOOR, SPRUCE_WALL_SIGN, WARPED_DOOR, WARPED_TRAPDOOR, WARPED_WALL_SIGN -> {
                                 if (preset.equals(ChameleonPreset.SWAMP) || preset.equals(ChameleonPreset.TOPSYTURVEY) || preset.equals(ChameleonPreset.JAIL)) {
                                     TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.AIR);
                                 }

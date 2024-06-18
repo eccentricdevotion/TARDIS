@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.listeners.controls;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.control.TARDISScannerMap;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
@@ -28,6 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
 import me.eccentric_nz.TARDIS.monitor.Snapshot;
+import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Rotation;
@@ -87,7 +87,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                         return;
                     }
-                    int id = rst.getTardis_id();
+                    int id = rst.getTardisId();
                     if (control == Control.ROTOR) {
                         UUID rotorId = frame.getUniqueId();
                         TARDISTimeRotor.updateRotorRecord(id, rotorId.toString());

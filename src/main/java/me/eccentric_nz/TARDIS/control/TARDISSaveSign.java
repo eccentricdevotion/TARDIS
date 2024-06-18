@@ -18,19 +18,21 @@ package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.travel.save.TARDISSavesPlanetInventory;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 class TARDISSaveSign {
 
@@ -41,8 +43,13 @@ class TARDISSaveSign {
     }
 
     void openGUI(Player player, int id) {
+        UUID uuid = player.getUniqueId();
+        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.SAVES)) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
+            return;
+        }
         TARDISCircuitChecker tcc = null;
-        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
+        if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, false)) {
             tcc = new TARDISCircuitChecker(plugin, id);
             tcc.getCircuits();
         }
@@ -50,7 +57,7 @@ class TARDISSaveSign {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MEM_CIRCUIT");
             return;
         }
-        if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(player.getUniqueId()) && plugin.getDifficulty().equals(Difficulty.HARD)) {
+        if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(uuid) && plugin.getConfig().getBoolean("difficulty.disks")) {
             ItemStack disk = player.getInventory().getItemInMainHand();
             if (disk.hasItemMeta() && disk.getItemMeta().hasDisplayName() && disk.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
                 List<String> lore = disk.getItemMeta().getLore();

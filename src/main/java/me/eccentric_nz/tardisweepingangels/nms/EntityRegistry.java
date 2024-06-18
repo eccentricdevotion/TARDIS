@@ -50,7 +50,7 @@ public class EntityRegistry {
         try {
             unfreezeEntityRegistry();
             for (String ENTITY_ID : all) {
-                ResourceLocation mcKey = new ResourceLocation(ENTITY_ID);
+                ResourceLocation mcKey = ResourceLocation.withDefaultNamespace(ENTITY_ID);
                 if (BuiltInRegistries.ENTITY_TYPE.getOptional(mcKey).isEmpty()) {
                     @SuppressWarnings("unchecked") Map<String, Type<?>> types = (Map<String, Type<?>>) DataFixers.getDataFixer().getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion())).findChoiceType(References.ENTITY).types();
                     types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.HUSK).toString()));

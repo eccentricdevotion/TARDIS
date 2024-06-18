@@ -16,14 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -58,7 +59,7 @@ class TARDISJettisonCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                 return true;
             }
-            int id = rs.getTardis_id();
+            int id = rs.getTardisId();
             // check they are in the tardis
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", player.getUniqueId().toString());

@@ -59,7 +59,7 @@ public class TARDISSetFlightCommand {
         setf.put("flying_mode", mode);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", player.getUniqueId().toString());
-        TARDIS.plugin.getQueryFactory().doUpdate("player_prefs", setf, where);
+        plugin.getQueryFactory().doUpdate("player_prefs", setf, where);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_SAVED");
         return true;
     }

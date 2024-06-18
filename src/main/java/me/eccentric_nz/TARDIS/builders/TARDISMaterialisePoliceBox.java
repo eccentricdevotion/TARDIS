@@ -19,9 +19,12 @@ package me.eccentric_nz.TARDIS.builders;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetParticlePrefs;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.flight.FlightEnd;
+import me.eccentric_nz.TARDIS.particles.Emitter;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Color;
@@ -41,6 +44,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.Collections;
+import java.util.UUID;
 
 public class TARDISMaterialisePoliceBox implements Runnable {
 
@@ -159,6 +163,17 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     ResultSetColour rsc = new ResultSetColour(plugin, bd.getTardisID());
                     if (rsc.resultSet()) {
                         colour = Color.fromRGB(rsc.getRed(), rsc.getGreen(), rsc.getBlue());
+                    }
+                }
+                if (bd.hasParticles()) {
+                    ResultSetParticlePrefs rspp = new ResultSetParticlePrefs(plugin);
+                    UUID uuid = bd.getPlayer().getUniqueId();
+                    if (rspp.fromUUID(uuid.toString())) {
+                        ParticleData data = rspp.getData();
+                        // display particles
+                        Emitter emitter = new Emitter(plugin, uuid, bd.getLocation(), data, bd.getThrottle().getFlightTime());
+                        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, data.getShape().getPeriod());
+                        emitter.setTaskID(task);
                     }
                 }
             }

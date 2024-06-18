@@ -16,15 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -67,7 +68,7 @@ class TARDISOccupyCommand {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                     return false;
                 }
-                int id = rsid.getTardis_id();
+                int id = rsid.getTardisId();
                 HashMap<String, Object> wherei = new HashMap<>();
                 wherei.put("tardis_id", id);
                 wherei.put("uuid", player.getUniqueId().toString());

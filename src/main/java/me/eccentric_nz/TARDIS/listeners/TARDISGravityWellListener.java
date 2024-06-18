@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetGravity;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -38,6 +36,9 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.EquipmentSlot;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * Air corridors projected by TARDISes had the option to use anti-gravity, allowing the occupant of the corridor to
@@ -208,7 +209,7 @@ public class TARDISGravityWellListener implements Listener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                     return;
                 }
-                int id = rs.getTardis_id();
+                int id = rs.getTardisId();
                 String loc = b.getLocation().toString();
                 if (values[0] == 6) {
                     // find record and delete it

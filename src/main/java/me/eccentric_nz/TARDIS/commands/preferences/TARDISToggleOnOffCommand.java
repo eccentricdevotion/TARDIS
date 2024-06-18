@@ -37,7 +37,7 @@ class TARDISToggleOnOffCommand {
 
     TARDISToggleOnOffCommand(TARDIS plugin) {
         this.plugin = plugin;
-        was = Arrays.asList("announce_repeaters", "auto", "auto_powerup", "auto_siege", "beacon", "build", "difficulty", "dnd", "eps", "farm", "hads", "info", "lock_containers", "minecart", "renderer", "submarine", "travelbar", "telepathy");
+        was = Arrays.asList("announce_repeaters", "auto", "auto_powerup", "auto_siege", "beacon", "build", "dnd", "eps", "farm", "hads", "info", "lock_containers", "minecart", "renderer", "submarine", "travelbar", "telepathy");
     }
 
     public boolean toggle(Player player, String[] args) {
@@ -79,7 +79,7 @@ class TARDISToggleOnOffCommand {
                     // get tardis id
                     ResultSetTardisID rsi = new ResultSetTardisID(plugin);
                     if (rsi.fromUUID(uuid.toString())) {
-                        new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardis_id(), true);
+                        new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), true);
                     }
                 }
             }
@@ -96,7 +96,7 @@ class TARDISToggleOnOffCommand {
                     // get tardis id
                     ResultSetTardisID rsi = new ResultSetTardisID(plugin);
                     if (rsi.fromUUID(uuid.toString())) {
-                        new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardis_id(), false);
+                        new TARDISBeaconToggler(plugin).flickSwitch(uuid, rsi.getTardisId(), false);
                     }
                 }
             }

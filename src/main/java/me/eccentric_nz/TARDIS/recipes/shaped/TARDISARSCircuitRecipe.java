@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -43,18 +43,18 @@ public class TARDISARSCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_ars_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("SSS", "DPT", "RRR");
             r.setIngredient('S', Material.WHEAT_SEEDS);
             r.setIngredient('D', Material.REPEATER);
             r.setIngredient('P', Material.PISTON);
             r.setIngredient('T', Material.REDSTONE_TORCH);
-            r.setIngredient('R', Material.REDSTONE);            
+            r.setIngredient('R', Material.REDSTONE);
         } else {
             r.shape("SSS", "T T", "RRR");
             r.setIngredient('S', Material.WHEAT_SEEDS);
             r.setIngredient('T', Material.REDSTONE_TORCH);
-            r.setIngredient('R', Material.REDSTONE);            
+            r.setIngredient('R', Material.REDSTONE);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS ARS Circuit", r);

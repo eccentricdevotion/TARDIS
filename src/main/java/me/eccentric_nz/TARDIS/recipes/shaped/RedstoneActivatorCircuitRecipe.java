@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -37,16 +37,16 @@ public class RedstoneActivatorCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "redstone_activator_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("RCR", " I ", "RCR");
             r.setIngredient('R', Material.REPEATER);
             r.setIngredient('C', Material.COMPARATOR);
-            r.setIngredient('I', Material.IRON_INGOT);            
+            r.setIngredient('I', Material.IRON_INGOT);
         } else {
             r.shape("RCR", " I ", "RCR");
             r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('C', Material.COMPARATOR);
-            r.setIngredient('I', Material.IRON_INGOT);            
+            r.setIngredient('I', Material.IRON_INGOT);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Redstone Activator Circuit", r);

@@ -96,7 +96,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                             }
                             // does the player have an ARS record yet?
                             HashMap<String, Object> wherer = new HashMap<>();
-                            wherer.put("tardis_id", rs.getTardis_id());
+                            wherer.put("tardis_id", rs.getTardisId());
                             ResultSetARS rsa = new ResultSetARS(plugin, wherer);
                             if (!rsa.resultSet()) {
                                 // create default json
@@ -130,7 +130,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                                     Gson gson = new GsonBuilder().disableHtmlEscaping().create();
                                     JsonArray json = JsonParser.parseString(gson.toJson(empty)).getAsJsonArray();
                                     HashMap<String, Object> seta = new HashMap<>();
-                                    seta.put("tardis_id", rs.getTardis_id());
+                                    seta.put("tardis_id", rs.getTardisId());
                                     seta.put("uuid", uuid);
                                     seta.put("json", json.toString());
                                     plugin.getQueryFactory().doInsert("ars", seta);
@@ -142,10 +142,10 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                             return new SudoAssemble(plugin).restore(sender, uuid, offlinePlayer.getName());
                         }
                         case "back" -> {
-                            return new TARDISRemoteBackCommand(plugin).sendBack(sender, rs.getTardis_id(), offlinePlayer);
+                            return new TARDISRemoteBackCommand(plugin).sendBack(sender, rs.getTardisId(), offlinePlayer);
                         }
                         case "chameleon" -> {
-                            return new SudoChameleon(plugin).setPreset(sender, rs.getTardis_id(), args, offlinePlayer);
+                            return new SudoChameleon(plugin).setPreset(sender, rs.getTardisId(), args, offlinePlayer);
                         }
                         case "clean" -> {
                             return new SudoRepair(plugin, uuid, true).repair();
@@ -163,7 +163,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                         }
                         case "desiege" -> {
                             if (offlinePlayer.isOnline()) {
-                                return new SudoDesiege(plugin).restore(sender, uuid, rs.getTardis_id());
+                                return new SudoDesiege(plugin).restore(sender, uuid, rs.getTardisId());
                             } else {
                                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "NOT_ONLINE");
                                 return true;
@@ -173,14 +173,14 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                             return new SudoHandbrake(plugin).toggle(sender, args, uuid);
                         }
                         case "hide" -> {
-                            return new TARDISRemoteHideCommand(plugin).doRemoteHide(sender, rs.getTardis_id());
+                            return new TARDISRemoteHideCommand(plugin).doRemoteHide(sender, rs.getTardisId());
                         }
                         case "isomorphic" -> {
                             // toggle isomorphic
                             return new TARDISIsomorphicCommand(plugin).toggleIsomorphicControls(uuid, sender);
                         }
                         case "rebuild" -> {
-                            return new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, rs.getTardis_id(), offlinePlayer, true);
+                            return new TARDISRemoteRebuildCommand(plugin).doRemoteRebuild(sender, rs.getTardisId(), offlinePlayer, true);
                         }
                         case "repair" -> {
                             return new SudoRepair(plugin, uuid, false).repair();
@@ -194,7 +194,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_NO_CONSOLE");
                                 return true;
                             }
-                            return new SudoUpdate(plugin).initiate((Player) sender, args, rs.getTardis_id(), uuid);
+                            return new SudoUpdate(plugin).initiate((Player) sender, args, rs.getTardisId(), uuid);
                         }
                     }
                 }

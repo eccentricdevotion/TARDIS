@@ -22,11 +22,12 @@ import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISAcceptor;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisCommand;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.ComehereAction;
 import me.eccentric_nz.TARDIS.travel.ComehereRequest;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -108,7 +109,7 @@ public class TARDISCommands implements CommandExecutor {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                 return true;
             }
-            if (plugin.getTrackerKeeper().getInSiegeMode().contains(rs.getTardis_id()) && tc.noSiege()) {
+            if (plugin.getTrackerKeeper().getInSiegeMode().contains(rs.getTardisId()) && tc.noSiege()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CMD");
                 return true;
             }
@@ -133,7 +134,7 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISARSRemoveCommand(plugin).resetARS(player);
                 }
                 case bell -> {
-                    return new TARDISBellCommand(plugin).toggle(rs.getTardis_id(), player, args);
+                    return new TARDISBellCommand(plugin).toggle(rs.getTardisId(), player, args);
                 }
                 case check_loc -> {
                     return new TARDISCheckLocCommand(plugin).doACheckLocation(player);
@@ -178,7 +179,7 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISFindCommand(plugin).findTARDIS(player);
                 }
                 case handbrake -> {
-                    return new TARDISHandbrakeCommand(plugin).toggle(player, rs.getTardis_id(), args, false);
+                    return new TARDISHandbrakeCommand(plugin).toggle(player, rs.getTardisId(), args, false);
                 }
                 case hide -> {
                     return new TARDISHideCommand(plugin).hide(player);
@@ -205,7 +206,7 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISMakeHerBlueCommand(plugin).show(player);
                 }
                 case monsters -> {
-                    return new TARDISMonstersCommand(plugin).reset(player, rs.getTardis_id(), args);
+                    return new TARDISMonstersCommand(plugin).reset(player, rs.getTardisId(), args);
                 }
                 case namekey -> {
                     return new TARDISNameKeyCommand(plugin).nameKey(player, args);
@@ -271,12 +272,16 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISExterminateCommand(plugin).doExterminate(player, messagePlayer);
                 }
                 case save -> {
+                    if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.SAVES)) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
+                        return true;
+                    }
                     ItemStack itemStack = player.getInventory().getItemInMainHand();
                     if (itemStack.getType().equals(Material.MUSIC_DISC_FAR)) {
                         return new TARDISDiskWriterCommand(plugin).writeSaveToControlDisk(player, args);
                     } else {
-                        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
-                            if (plugin.getDifficulty().equals(Difficulty.HARD) && heldDiskIsWrong(itemStack, "Save Storage Disk")) {
+                        if (plugin.getConfig().getBoolean("difficulty.disks") && !plugin.getUtils().inGracePeriod(player, true)) {
+                            if (plugin.getConfig().getBoolean("difficulty.disk_in_hand_for_write") && heldDiskIsWrong(itemStack, "Save Storage Disk")) {
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_HAND_SAVE");
                                 return true;
                             }

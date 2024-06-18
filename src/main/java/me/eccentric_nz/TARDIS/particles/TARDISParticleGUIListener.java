@@ -1,0 +1,245 @@
+/*
+ * Copyright (C) 2024 eccentric_nz
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+package me.eccentric_nz.TARDIS.particles;
+
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIParticle;
+import me.eccentric_nz.TARDIS.database.data.ParticleData;
+import me.eccentric_nz.TARDIS.database.data.Throticle;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
+import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
+
+/**
+ * @author eccentric_nz
+ */
+public class TARDISParticleGUIListener extends TARDISMenuListener {
+
+    private final TARDIS plugin;
+
+    public TARDISParticleGUIListener(TARDIS plugin) {
+        super(plugin);
+        this.plugin = plugin;
+    }
+
+    /**
+     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
+     * accordingly.
+     *
+     * @param event a player clicking an inventory slot
+     */
+    @EventHandler(ignoreCancelled = true)
+    public void onParticleClick(InventoryClickEvent event) {
+        InventoryView view = event.getView();
+        if (!view.getTitle().equals(ChatColor.DARK_RED + "Particle Preferences")) {
+            return;
+        }
+        event.setCancelled(true);
+        int slot = event.getRawSlot();
+        Player player = (Player) event.getWhoClicked();
+        UUID uuid = player.getUniqueId();
+        if (slot >= 0 && slot < 54) {
+            // get selection
+            ItemStack is = view.getItem(slot);
+            if (is != null) {
+                ItemMeta im = is.getItemMeta();
+                String display = im.getDisplayName();
+                switch (slot) {
+                    case 2, 3, 4, 5, 6, 7 -> setShape(view, slot, display, uuid); // particle shape
+                    case 11, 12, 13, 14, 15, 16,
+                         20, 21, 22, 23, 24, 25,
+                         29, 30, 31, 32, 33, 34,
+                         38, 39, 40, 41, 42, 43 -> setEffect(view, slot, display, uuid); // particle effect
+                    case 27 -> toggle(view, is, uuid); // set enabled/disabled
+                    case 35 -> test(view, player, uuid); // test
+                    case 45 -> less(view, true, uuid); // less density
+                    case 47 -> more(view, true, uuid); // more density
+                    case 49 -> less(view, false, uuid); // less speed
+                    case 51 -> more(view, false, uuid); // more speed
+                    case 53 -> close(player);
+                    default -> {
+                    } // do nothing
+                }
+            }
+        }
+    }
+
+    private void setShape(InventoryView view, int slot, String display, UUID uuid) {
+        for (int s = 2; s < 8; s++) {
+            ItemStack is = view.getItem(s);
+            if (is != null) {
+                is.setType(s == slot ? Material.LAPIS_ORE : Material.LAPIS_LAZULI);
+                view.setItem(s, is);
+            }
+        }
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("shape", display.toUpperCase(Locale.ROOT));
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid.toString());
+        plugin.getQueryFactory().doSyncUpdate("particle_prefs", set, where);
+    }
+
+    private void setEffect(InventoryView view, int slot, String display, UUID uuid) {
+        for (int s = 11; s < 44; s++) {
+            ItemStack is = view.getItem(s);
+            if (is != null && s != GUIParticle.TOGGLE.getSlot() && s != GUIParticle.TEST.getSlot()) {
+                is.setType(s == slot ? Material.REDSTONE_ORE : Material.REDSTONE);
+                view.setItem(s, is);
+            }
+        }
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("effect", display.toUpperCase(Locale.ROOT));
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid.toString());
+        plugin.getQueryFactory().doSyncUpdate("particle_prefs", set, where);
+    }
+
+    private void toggle(InventoryView view, ItemStack is, UUID uuid) {
+        ItemMeta im = is.getItemMeta();
+        int cmd = im.getCustomModelData();
+        im.setCustomModelData(cmd > 100 ? 19 : 119);
+        List<String> lore = im.getLore();
+        lore.set(0, cmd > 100 ? "ON" : "OFF");
+        im.setLore(lore);
+        is.setItemMeta(im);
+        view.setItem(27, is);
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("particles_on", cmd > 100 ? 1 : 0);
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid.toString());
+        plugin.getQueryFactory().doSyncUpdate("particle_prefs", set, where);
+    }
+
+    private void test(InventoryView view, Player player, UUID uuid) {
+        if (plugin.getUtils().inTARDISWorld(player)) {
+            // must be outside the TARDIS
+            return;
+        }
+        // get players TARDIS id
+        ResultSetTardisID rst = new ResultSetTardisID(plugin);
+        if (rst.fromUUID(uuid.toString())) {
+            // get TARDIS location
+            HashMap<String, Object> wherec = new HashMap<>();
+            wherec.put("tardis_id", rst.getTardisId());
+            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+            if (rsc.resultSet()) {
+                Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ()).add(0.5, 0, 0.5);
+                // get throttle setting
+                ResultSetThrottle rs = new ResultSetThrottle(plugin);
+                Throticle throticle  = rs.getSpeedAndParticles(uuid.toString());
+                // read current settings
+                ParticleData data = getParticleData(view);
+                // display particles
+                Emitter emitter = new Emitter(plugin, uuid, current, data, throticle.getThrottle().getFlightTime());
+                int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, data.getShape().getPeriod());
+                emitter.setTaskID(task);
+                // close GUI
+                close(player);
+            }
+        }
+    }
+
+    private ParticleData getParticleData(InventoryView view) {
+        ParticleEffect effect = ParticleEffect.ASH;
+        ParticleShape shape = ParticleShape.RANDOM;
+        int density = 16;
+        double speed = 0;
+        boolean b = false;
+        try {
+            for (int s = 11; s < 44; s++) {
+                ItemStack eis = view.getItem(s);
+                if (eis != null && eis.getType() == Material.REDSTONE_ORE) {
+                    effect = ParticleEffect.valueOf(eis.getItemMeta().getDisplayName().toUpperCase(Locale.ROOT));
+                }
+            }
+            for (int s = 2; s < 8; s++) {
+                ItemStack sis = view.getItem(s);
+                if (sis != null && sis.getType() == Material.LAPIS_ORE) {
+                    shape = ParticleShape.valueOf(sis.getItemMeta().getDisplayName().toUpperCase(Locale.ROOT));
+                }
+            }
+        } catch (IllegalArgumentException ignored) {
+        }
+        ItemStack dis = view.getItem(GUIParticle.DENSITY.getSlot());
+        String d = ChatColor.stripColor(dis.getItemMeta().getLore().getFirst());
+        density = TARDISNumberParsers.parseInt(d);
+        ItemStack spis = view.getItem(GUIParticle.SPEED.getSlot());
+        String s = ChatColor.stripColor(spis.getItemMeta().getLore().getFirst());
+        speed = TARDISNumberParsers.parseInt(s) / 10.0d;
+        return new ParticleData(effect, shape, density, speed, b);
+    }
+
+    private void less(InventoryView view, boolean b, UUID uuid) {
+        int min = b ? 8 : 0;
+        int slot = b ? GUIParticle.DENSITY.getSlot() : GUIParticle.SPEED.getSlot();
+        ItemStack is = view.getItem(slot);
+        ItemMeta im = is.getItemMeta();
+        List<String> lore = im.getLore();
+        int level = TARDISNumberParsers.parseInt(ChatColor.stripColor(lore.get(0)));
+        level -= 1;
+        if (level >= min) {
+            lore.set(0, ChatColor.AQUA + "" + level);
+            im.setLore(lore);
+            is.setItemMeta(im);
+            view.setItem(slot, is);
+            String f = b ? "density" : "speed";
+            HashMap<String, Object> set = new HashMap<>();
+            set.put(f, b ? (int) level : level);
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", uuid.toString());
+            plugin.getQueryFactory().doSyncUpdate("particle_prefs", set, where);
+        }
+    }
+
+    private void more(InventoryView view, boolean b, UUID uuid) {
+        int max = b ? 32 : 10;
+        int slot = b ? GUIParticle.DENSITY.getSlot() : GUIParticle.SPEED.getSlot();
+        ItemStack is = view.getItem(slot);
+        ItemMeta im = is.getItemMeta();
+        List<String> lore = im.getLore();
+        int level = TARDISNumberParsers.parseInt(ChatColor.stripColor(lore.get(0)));
+        level += 1;
+        if (level <= max) {
+            lore.set(0, ChatColor.AQUA + "" + level);
+            im.setLore(lore);
+            is.setItemMeta(im);
+            view.setItem(slot, is);
+            String f = b ? "density" : "speed";
+            HashMap<String, Object> set = new HashMap<>();
+            set.put(f, b ? (int) level : level);
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", uuid.toString());
+            plugin.getQueryFactory().doSyncUpdate("particle_prefs", set, where);
+        }
+    }
+}

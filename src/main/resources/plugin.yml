@@ -9,7 +9,7 @@ dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://tardis.pages.dev/
 version: ${project.version}-b${project.build.number}
 build-number: ${project.build.number}
-api-version: '1.20.5'
+api-version: '1.21'
 libraries:
   - org.jsoup:jsoup:1.16.1
 permissions:
@@ -595,6 +595,9 @@ permissions:
     default: op
   tardis.load_shells:
     description: Allows a player to load Chameleon presets into the Shell room.
+    default: op
+  tardis.particles:
+    description: Allows the player to display TARDIS materialisation particles.
     default: op
   tardis.gamemode.bypass:
     description: Allows a player to bypass gamemode switching when changing worlds.
@@ -1194,50 +1197,67 @@ commands:
     biome:
       description: Get the biome the player is looking at.
       usage: /<command> biome
-    list:
-      description: Lists various options to aid documentation - possible listings are preset_perms, perms, recipes, blueprints, commands.
-      usage: /<command> list [which] [html|all]
-    stats:
-      description: Display ARS room counts.
-      usage: /<command> stats
-    tree:
-      description: Grows a Huge Fungus Tree on the block the player is targeting. If no further arguments are specified, random blocks are used to grow the tree. You can also specify a block for the stem, hat and decor.
-      usage: /<command> tree [stem] [hat] [decor]
-    plurals:
-      description: Displays a list of block and item names in plural form.
-      usage: /<command> plurals
-    chunky:
-      description: Pre-generates chunks using the Chunky plugin
-      usage: /<command> chunky [world]
-    snapshot:
-      description: Creates a TARDIS Monitor map snapshot. Using the c arguments clears the player's inventory of filled maps. Use in or out to determine which view (interior/exterior) to capture.
-      usage: /<command> snapshot [in|out|c]
-    frame:
-      description: Lock and unlock TARDIS item frames.
-      usage: /<command> frame [lock|unlock]
-    brushable:
-      description: Adds a suspicious sand block to the player's inventory.
-      usage: /<command> brushable
     box:
       description: Set the state of the armour stand police box between open/closed/stained/glass/flying.
       usage: /<command> box [open|closed|stained|glass|flying]
-    nms:
-      description: Spawn a custom NMS monster.
-      usage: /<command> nms [monster]
+    brushable:
+      description: Adds a suspicious sand block to the player's inventory.
+      usage: /<command> brushable
+    chunks:
+      description: Lists the chunks used by the TARDIS interior.
+      usage: /<command> chunks
+    chunky:
+      description: Pre-generates chunks using the Chunky plugin
+      usage: /<command> chunky [world]
     circuit:
       description: Give a player a random used TARDIS circuit.
       usage: /<command> circuit
-    tis:
-      description: Checks and lists TARDIS Information System entries.
-      usage: /<command> tis
+    dismount:
+      description: Dismounts a player from their vehicle.
+      usage: /<command> dismount
+    displayitem:
+      description: Various commands to test Item Display custom blocks and lights - subcommands are add, remove, place, break, convert, chunk, block, console
+    effect:
+      description: Shows TARDIS materialisation particles.
+      usage: /<command> effect [shape] [effect] [density] [speed]
+    frame:
+      description: Lock and unlock TARDIS item frames.
+      usage: /<command> frame [lock|unlock]
+    furnace:
+      description: Lists server furnace recipes.
+    interaction:
+      description: Sets an interaction entity at the TARDIS's exterior location.
+      usage: /<command> interaction
     label:
       description: Generates Text displays for the Library room.
       usage: /<command> label
+    list:
+      description: Lists various options to aid documentation - possible listings are preset_perms, perms, recipes, blueprints, commands.
+      usage: /<command> list [which] [html|all]
+    nms:
+      description: Spawn a custom NMS monster.
+      usage: /<command> nms [monster]
+    plurals:
+      description: Displays a list of block and item names in plural form.
+      usage: /<command> plurals
     recipe:
       description: Generates TARDIS item pages with recipes.
       usage: /<command> recipe [shaped|shapeless|item]
-    displayitem:
-      description: Various commands to test Item Display custom blocks and lights - subcommands are add, remove, place, break, convert, chunk, block, console
+    snapshot:
+      description: Creates a TARDIS Monitor map snapshot. Using the c arguments clears the player's inventory of filled maps. Use in or out to determine which view (interior/exterior) to capture.
+      usage: /<command> snapshot [in|out|c]
+    stats:
+      description: Display ARS room counts.
+      usage: /<command> stats
+    systree:
+      description: Opens the System Upgrades GUI
+      usage: /<command> systree
+    tis:
+      description: Checks and lists TARDIS Information System entries.
+      usage: /<command> tis
+    tree:
+      description: Grows a Huge Fungus Tree on the block the player is targeting. If no further arguments are specified, random blocks are used to grow the tree. You can also specify a block for the stem, hat and decor.
+      usage: /<command> tree [stem] [hat] [decor]
   tardisgive:
     aliases: tgive
     description: Give TARDIS items, Artron energy, Seed blocks, kits, knowledge books, or recipe discoveries to a player.

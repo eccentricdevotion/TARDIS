@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -49,7 +49,7 @@ public class RustPlagueSwordRecipe {
         em.setDisplayName("Rust Bucket");
         em.setCustomModelData(RecipeItem.RUST_BUCKET.getCustomModelData());
         exact.setItemMeta(em);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("RIR", "RIR", "DSD");
             r.setIngredient('R', new RecipeChoice.ExactChoice(exact));
             r.setIngredient('I', Material.IRON_INGOT);

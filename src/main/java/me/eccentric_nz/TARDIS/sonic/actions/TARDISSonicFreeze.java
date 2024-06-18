@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.sonic.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import java.util.UUID;
 
@@ -28,16 +28,16 @@ public class TARDISSonicFreeze {
 
     public static Player getTargetPlayer(Player player) {
         Location observerPos = player.getEyeLocation();
-        TARDISVector3D observerDir = new TARDISVector3D(observerPos.getDirection());
-        TARDISVector3D observerStart = new TARDISVector3D(observerPos);
-        TARDISVector3D observerEnd = observerStart.add(observerDir.multiply(16));
+        Vector observerDir = observerPos.getDirection();
+        Vector observerStart = observerPos.toVector();
+        Vector observerEnd = observerStart.add(observerDir.multiply(16));
         Player hit = null;
         // Get nearby players
         for (Player target : player.getWorld().getPlayers()) {
             // Bounding box of the given player
-            TARDISVector3D targetPos = new TARDISVector3D(target.getLocation());
-            TARDISVector3D minimum = targetPos.add(-0.5, 0, -0.5);
-            TARDISVector3D maximum = targetPos.add(0.5, 1.67, 0.5);
+            Vector targetPos = target.getLocation().toVector();
+            Vector minimum = targetPos.add(new Vector(-0.5, 0, -0.5));
+            Vector maximum = targetPos.add(new Vector(0.5, 1.67, 0.5));
             if (target != player && hasIntersection(observerStart, observerEnd, minimum, maximum)) {
                 if (hit == null || hit.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
                     hit = target;
@@ -61,27 +61,31 @@ public class TARDISSonicFreeze {
         }
     }
 
-    static boolean hasIntersection(TARDISVector3D p1, TARDISVector3D p2, TARDISVector3D min, TARDISVector3D max) {
+    public static boolean hasIntersection(Vector p1, Vector p2, Vector min, Vector max) {
         double epsilon = 0.0001f;
-        TARDISVector3D d = p2.subtract(p1).multiply(0.5);
-        TARDISVector3D e = max.subtract(min).multiply(0.5);
-        TARDISVector3D c = p1.add(d).subtract(min.add(max).multiply(0.5));
-        TARDISVector3D ad = d.abs();
-        if (Math.abs(c.x) > e.x + ad.x) {
+        Vector d = p2.subtract(p1).multiply(0.5);
+        Vector e = max.subtract(min).multiply(0.5);
+        Vector c = p1.add(d).subtract(min.add(max).multiply(0.5));
+        Vector ad = abs(d);
+        if (Math.abs(c.getX()) > e.getX() + ad.getX()) {
             return false;
         }
-        if (Math.abs(c.y) > e.y + ad.y) {
+        if (Math.abs(c.getY()) > e.getY() + ad.getY()) {
             return false;
         }
-        if (Math.abs(c.z) > e.z + ad.z) {
+        if (Math.abs(c.getZ()) > e.getZ() + ad.getZ()) {
             return false;
         }
-        if (Math.abs(d.y * c.z - d.z * c.y) > e.y * ad.z + e.z * ad.y + epsilon) {
+        if (Math.abs(d.getY() * c.getZ() - d.getZ() * c.getY()) > e.getY() * ad.getZ() + e.getZ() * ad.getY() + epsilon) {
             return false;
         }
-        if (Math.abs(d.z * c.x - d.x * c.z) > e.z * ad.x + e.x * ad.z + epsilon) {
+        if (Math.abs(d.getZ() * c.getX() - d.getX() * c.getZ()) > e.getZ() * ad.getX() + e.getX() * ad.getZ() + epsilon) {
             return false;
         }
-        return Math.abs(d.x * c.y - d.y * c.x) <= e.x * ad.y + e.y * ad.x + epsilon;
+        return Math.abs(d.getX() * c.getY() - d.getY() * c.getX()) <= e.getX() * ad.getY() + e.getY() * ad.getX() + epsilon;
+    }
+
+    private static Vector abs(Vector v) {
+        return new Vector(Math.abs(v.getX()), Math.abs(v.getY()), Math.abs(v.getZ()));
     }
 }

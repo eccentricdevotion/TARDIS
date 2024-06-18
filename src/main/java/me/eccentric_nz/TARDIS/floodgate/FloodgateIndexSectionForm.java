@@ -62,7 +62,7 @@ public class FloodgateIndexSectionForm {
                 builder.button(TARDISStringUtils.capitalise(tim.toString()), FormImage.Type.PATH, "textures/items/written_book.png");
             }
         }
-        builder.validResultHandler(response -> handleResponse(response));
+        builder.validResultHandler(this::handleResponse);
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
         player.sendForm(form);

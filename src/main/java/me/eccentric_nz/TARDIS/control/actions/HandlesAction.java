@@ -8,7 +8,7 @@ import me.eccentric_nz.TARDIS.handles.TARDISHandlesProcessor;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;

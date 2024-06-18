@@ -36,10 +36,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_20_R4.CraftWorld;
-import org.bukkit.craftbukkit.v1_20_R4.entity.CraftWolf;
-import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
-import org.bukkit.craftbukkit.v1_20_R4.util.CraftNamespacedKey;
+import org.bukkit.craftbukkit.v1_21_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_21_R1.entity.CraftWolf;
+import org.bukkit.craftbukkit.v1_21_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_21_R1.util.CraftNamespacedKey;
 import org.bukkit.entity.Axolotl;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Frog;
@@ -188,9 +188,9 @@ public class TARDISDisguise {
         }
         try {
             String entityPackage = packagePath + ((hasEntityStr) ? "Entity" : "") + str;
-            Class entityClass = Class.forName(entityPackage);
-            Constructor constructor = entityClass.getConstructor(net.minecraft.world.entity.EntityType.class, net.minecraft.world.level.Level.class);
-            net.minecraft.world.entity.EntityType type = BuiltInRegistries.ENTITY_TYPE.get(CraftNamespacedKey.toMinecraft(disguise.getEntityType().getKey()));
+            Class<?> entityClass = Class.forName(entityPackage);
+            Constructor<?> constructor = entityClass.getConstructor(net.minecraft.world.entity.EntityType.class, net.minecraft.world.level.Level.class);
+            net.minecraft.world.entity.EntityType<?> type = BuiltInRegistries.ENTITY_TYPE.get(CraftNamespacedKey.toMinecraft(disguise.getEntityType().getKey()));
             net.minecraft.world.level.Level world = ((CraftWorld) w).getHandle();
             Entity entity = (Entity) constructor.newInstance(type, world);
             if (disguise.getOptions() != null) {

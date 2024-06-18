@@ -29,7 +29,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
@@ -122,7 +122,7 @@ public class TARDISChameleonListener extends TARDISMenuListener {
                 player.performCommand("tardis rebuild");
                 close(player);
                 // damage the circuit if configured
-                if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
+                if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
                     TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                     tcc.getCircuits();
                     // decrement uses
@@ -194,14 +194,12 @@ public class TARDISChameleonListener extends TARDISMenuListener {
                     // check they have an Invisibility Circuit
                     TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                     tcc.getCircuits();
-                    if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
-                        if (!plugin.getUtils().inGracePeriod(player, false) && !tcc.hasInvisibility()) {
-                            close(player);
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "INVISIBILITY_MISSING");
-                            break;
-                        }
+                    if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, false) && !tcc.hasInvisibility()) {
+                        close(player);
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "INVISIBILITY_MISSING");
+                        break;
                     }
-                    if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.invisibility") > 0) {
+                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.invisibility") > 0) {
                         // decrement uses
                         int uses_left = tcc.getInvisibilityUses();
                         new TARDISCircuitDamager(plugin, DiskCircuit.INVISIBILITY, uses_left, id, player).damage();

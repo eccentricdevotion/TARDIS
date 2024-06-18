@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -45,7 +45,7 @@ public class StattenheimRemoteRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "stattenheim_remote");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("OBO", "OLO", "RRR");
             r.setIngredient('O', Material.OBSIDIAN);
             r.setIngredient('B', Material.STONE_BUTTON);

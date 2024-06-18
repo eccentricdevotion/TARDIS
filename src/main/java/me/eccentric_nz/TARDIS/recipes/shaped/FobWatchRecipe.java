@@ -1,9 +1,9 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -56,7 +56,7 @@ public class FobWatchRecipe {
         circuit = Arrays.asList("Uses left", uses);
         em.setLore(circuit);
         exact.setItemMeta(em);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" C ", "IWI", "R R");
             r.setIngredient('C', new RecipeChoice.ExactChoice(exact));
             r.setIngredient('I', Material.IRON_INGOT);

@@ -16,14 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import java.util.HashMap;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RoomRequiredLister {
 
@@ -62,7 +63,7 @@ public class RoomRequiredLister {
             for (Map.Entry<String, Integer> map : item_counts.entrySet()) {
                 // get the amount of this block that the player has condensed
                 HashMap<String, Object> wherec = new HashMap<>();
-                wherec.put("tardis_id", rs.getTardis_id());
+                wherec.put("tardis_id", rs.getTardisId());
                 wherec.put("block_data", map.getKey());
                 ResultSetCondenser rsc = new ResultSetCondenser(plugin, wherec);
                 int has = (rsc.resultSet()) ? rsc.getBlock_count() : 0;

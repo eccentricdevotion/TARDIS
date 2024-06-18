@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
+import me.eccentric_nz.TARDIS.commands.dev.SystemTreeCommand;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
@@ -37,7 +38,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -48,8 +48,10 @@ import me.eccentric_nz.TARDIS.travel.TARDISAreasInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.travel.save.TARDISSavesPlanetInventory;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -131,7 +133,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
         boolean lights = tardis.isLightsOn();
         int level = tardis.getArtronLevel();
         TARDISCircuitChecker tcc = null;
-        if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
+        if (plugin.getConfig().getBoolean("difficulty.circuits")) {
             tcc = new TARDISCircuitChecker(plugin, id);
             tcc.getCircuits();
         }
@@ -152,6 +154,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             }
             case 2 -> {
                 // ars
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.ROOM_GROWING)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Room Growing");
+                    return;
+                }
                 if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                     return;
@@ -177,6 +183,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             }
             case 4 -> {
                 // chameleon circuit
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.CHAMELEON_CIRCUIT)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Chameleon Circuit");
+                    return;
+                }
                 if (tcc != null && !tcc.hasChameleon()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_MISSING");
                     return;
@@ -226,6 +236,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             }
             case 9, 18 -> {
                 // saves
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.SAVES)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
+                    return;
+                }
                 // 9 = saves for the TARDIS the player is in
                 // 18 = saves for the player's TARDIS (if they're not in their own)
                 // so, determine player's TARDIS id vs occupied TARDIS id
@@ -233,7 +247,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 if (slot == 18) {
                     ResultSetTardisID tstid = new ResultSetTardisID(plugin);
                     if (tstid.fromUUID(uuid.toString())) {
-                        int pid = tstid.getTardis_id();
+                        int pid = tstid.getTardisId();
                         if (whichId != pid) {
                             whichId = pid;
                             plugin.getTrackerKeeper().getSavesIds().put(uuid, pid);
@@ -258,6 +272,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             }
             case 11 -> {
                 // desktop theme
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.DESKTOP_THEME)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Desktop Theme");
+                    return;
+                }
                 if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                     return;
@@ -323,7 +341,6 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                         presetinv.setContents(items);
                         player.openInventory(presetinv);
                     }, 2L);
-//                    plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_NONE");
                     return;
                 }
                 String[] companionData = comps.split(":");
@@ -374,6 +391,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 smat.setContents(tran);
                 player.openInventory(smat);
             }
+            case 35 -> new SystemTreeCommand(plugin).open(player); // system upgrades
             case 36 -> {
                 // areas
                 if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {

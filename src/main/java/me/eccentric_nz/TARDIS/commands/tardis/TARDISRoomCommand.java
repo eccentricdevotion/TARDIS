@@ -20,14 +20,15 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISZeroRoomBuilder;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISRoomLister;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -48,6 +49,11 @@ class TARDISRoomCommand {
     }
 
     boolean startRoom(Player player, String[] args) {
+        UUID uuid = player.getUniqueId();
+        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.ROOM_GROWING)) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Room Growing");
+            return true;
+        }
         if (args.length < 2) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return false;
@@ -62,7 +68,6 @@ class TARDISRoomCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_ROOM_TYPE");
             return true;
         }
-        UUID uuid = player.getUniqueId();
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
@@ -85,7 +90,7 @@ class TARDISRoomCommand {
         }
         int id = tardis.getTardisId();
         TARDISCircuitChecker tcc = null;
-        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
+        if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true)) {
             tcc = new TARDISCircuitChecker(plugin, id);
             tcc.getCircuits();
         }

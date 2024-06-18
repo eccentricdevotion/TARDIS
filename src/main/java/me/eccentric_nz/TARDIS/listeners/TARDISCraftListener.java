@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -180,6 +180,11 @@ public class TARDISCraftListener implements Listener {
                     } else if (dn.startsWith("Door ") && im.hasCustomModelData()) {
                         // add custom block key to PDC
                         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 10000);
+                        is.setItemMeta(im);
+                        ci.setResult(is);
+                    } else if (dn.contains("Stattenheim")) {
+                        int uses = plugin.getConfig().getInt("circuits.uses.stattenheim");
+                        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, uses > 0 ? uses : 1000);
                         is.setItemMeta(im);
                         ci.setResult(is);
                     }

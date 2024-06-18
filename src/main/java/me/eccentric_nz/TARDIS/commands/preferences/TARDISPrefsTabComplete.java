@@ -20,6 +20,8 @@ import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
+import me.eccentric_nz.TARDIS.particles.ParticleEffect;
+import me.eccentric_nz.TARDIS.particles.ParticleShape;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.universaltranslator.Language;
 import org.bukkit.Material;
@@ -36,7 +38,8 @@ import java.util.List;
 public class TARDISPrefsTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final ImmutableList<String> ROOT_SUBS = TARDISPrefsCommands.getRootArgs();
-    private final ImmutableList<String> DIFF_SUBS = ImmutableList.of("easy", "hard");
+    private final List<String> EFFECT_SUBS = new ArrayList<>();
+    private final List<String> SHAPE_SUBS = new ArrayList<>();
     private final ImmutableList<String> ONOFF_SUBS = ImmutableList.of("on", "off");
     private final ImmutableList<String> HADS_SUBS = ImmutableList.of("DISPLACEMENT", "DISPERSAL");
     private final ImmutableList<String> HUM_SUBS = ImmutableList.of("alien", "atmosphere", "computer", "copper", "coral", "galaxy", "learning", "mind", "neon", "sleeping", "void", "random");
@@ -67,6 +70,12 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
             }
             KEY_SUBS = ImmutableList.copyOf(keys);
         }
+        for (ParticleEffect e : ParticleEffect.values()) {
+            EFFECT_SUBS.add(e.toString());
+        }
+        for (ParticleShape s : ParticleShape.values()) {
+            SHAPE_SUBS.add(s.toString());
+        }
     }
 
     @Override
@@ -77,26 +86,17 @@ public class TARDISPrefsTabComplete extends TARDISCompleter implements TabComple
         } else if (args.length == 2) {
             String sub = args[0];
             return switch (sub) {
-                case "add", "remove" ->
-                    null; // return null to default to online player name matching
-                case "floor", "wall", "siege_floor", "siege_wall" ->
-                    partial(lastArg, MAT_SUBS);
-                case "key" ->
-                    partial(lastArg, KEY_SUBS);
-                case "language", "translate" ->
-                    partial(lastArg, LANGUAGE_SUBS);
-                case "flight" ->
-                    partial(lastArg, FLIGHT_SUBS);
-                case "difficulty" ->
-                    partial(lastArg, DIFF_SUBS);
-                case "hads_type" ->
-                    partial(lastArg, HADS_SUBS);
-                case "hum" ->
-                    partial(lastArg, HUM_SUBS);
-                case "lights" ->
-                    partial(lastArg, LIGHT_SUBS);
-                default ->
-                    partial(lastArg, ONOFF_SUBS);
+                case "add", "remove" -> null; // return null to default to online player name matching
+                case "floor", "wall", "siege_floor", "siege_wall" -> partial(lastArg, MAT_SUBS);
+                case "key" -> partial(lastArg, KEY_SUBS);
+                case "language", "translate" -> partial(lastArg, LANGUAGE_SUBS);
+                case "flight" -> partial(lastArg, FLIGHT_SUBS);
+                case "hads_type" -> partial(lastArg, HADS_SUBS);
+                case "hum" -> partial(lastArg, HUM_SUBS);
+                case "lights" -> partial(lastArg, LIGHT_SUBS);
+                case "effect" -> partial(lastArg, EFFECT_SUBS);
+                case "shape" -> partial(lastArg, SHAPE_SUBS);
+                default -> partial(lastArg, ONOFF_SUBS);
             };
         } else if (args.length == 3 && args[0].equalsIgnoreCase("translate")) {
             return partial(lastArg, LANGUAGE_SUBS);

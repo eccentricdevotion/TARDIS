@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -40,15 +40,15 @@ public class TARDISMemoryCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_memory_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("RTR", "TCT", "RTR");
             r.setIngredient('R', Material.RED_SAND);
             r.setIngredient('T', Material.REDSTONE_TORCH);
-            r.setIngredient('C', Material.TRAPPED_CHEST);            
+            r.setIngredient('C', Material.TRAPPED_CHEST);
         } else {
             r.shape(" T ", "TCT", " T ");
             r.setIngredient('T', Material.REDSTONE_TORCH);
-            r.setIngredient('C', Material.CHEST);            
+            r.setIngredient('C', Material.CHEST);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Memory Circuit", r);

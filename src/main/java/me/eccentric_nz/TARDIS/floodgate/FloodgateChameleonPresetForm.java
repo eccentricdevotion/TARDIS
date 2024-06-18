@@ -1,6 +1,8 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -8,6 +10,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Control;
+import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
@@ -42,7 +45,7 @@ public class FloodgateChameleonPresetForm {
                 builder.button(preset.toString(), FormImage.Type.PATH, path);
             }
         }
-        builder.validResultHandler(response -> handleResponse(response));
+        builder.validResultHandler(this::handleResponse);
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
         player.sendForm(form);
@@ -87,6 +90,14 @@ public class FloodgateChameleonPresetForm {
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", id);
                     plugin.getQueryFactory().doUpdate("tardis", set, wheret);
+                    // damage the circuit if configured
+                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
+                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                        tcc.getCircuits();
+                        // decrement uses
+                        int uses_left = tcc.getChameleonUses();
+                        new TARDISCircuitDamager(plugin, DiskCircuit.CHAMELEON, uses_left, id, player).damage();
+                    }
                 }
             }
         }

@@ -19,13 +19,14 @@ package me.eccentric_nz.TARDIS.utility;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 public class TARDISSpigotChecker implements Runnable {
 
@@ -46,8 +47,8 @@ public class TARDISSpigotChecker implements Runnable {
                 return;
             }
             int name = spigotBuild.getAsJsonPrimitive("name").getAsInt();
-            // 3777 is the latest 1.20 build (as of 9-06-2023)
-            String[] split = spigotVersion.split("-"); // something like '3777-Spigot-723951c-f3b2b22 (MC: 1.20)'
+            // 4213 is the latest 1.21 build (as of 15-06-2024)
+            String[] split = spigotVersion.split("-"); // something like '4213-Spigot-146439e-f5a63f7 (MC: 1.21)'
             int current = TARDISNumberParsers.parseInt(split[0]);
             if (name > current) {
                 JsonObject refs = spigotBuild.get("refs").getAsJsonObject();
@@ -82,7 +83,7 @@ public class TARDISSpigotChecker implements Runnable {
                     .uri(uri)
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            JsonElement root = JsonParser.parseString((String) response.body());
+            JsonElement root = JsonParser.parseString(response.body());
             return root.getAsJsonObject();
         } catch (Exception ex) {
             plugin.debug("Failed to check for the latest build info from Spigot.");

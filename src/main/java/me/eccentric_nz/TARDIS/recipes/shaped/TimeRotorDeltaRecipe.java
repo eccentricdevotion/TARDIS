@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -39,18 +39,18 @@ public class TimeRotorDeltaRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "time_rotor_delta");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("CRC", "GWG", "GRG");
             r.setIngredient('C', Material.PURPLE_DYE);
             r.setIngredient('R', Material.REDSTONE_BLOCK);
             r.setIngredient('W', Material.CLOCK);
-            r.setIngredient('G', Material.GLASS_PANE);            
+            r.setIngredient('G', Material.GLASS_PANE);
         } else {
             r.shape("CRC", "GWG", "GRG");
             r.setIngredient('C', Material.PURPLE_DYE);
             r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('W', Material.CLOCK);
-            r.setIngredient('G', Material.GLASS_PANE);            
+            r.setIngredient('G', Material.GLASS_PANE);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Time Rotor Delta", r);

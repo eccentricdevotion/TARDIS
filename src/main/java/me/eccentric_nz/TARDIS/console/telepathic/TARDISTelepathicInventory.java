@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.console.telepathic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIMap;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import org.bukkit.ChatColor;
@@ -36,7 +37,7 @@ public class TARDISTelepathicInventory {
         toggle.setItemMeta(tim);
         stack[0] = toggle;
         // cave finder
-        if (player.hasPermission("tardis.timetravel.cave")) {
+        if (TARDISPermission.hasPermission(player, "tardis.timetravel.cave")) {
             ItemStack cave = new ItemStack(Material.DRIPSTONE_BLOCK);
             ItemMeta cim = cave.getItemMeta();
             cim.setDisplayName("Cave Finder");
@@ -45,7 +46,7 @@ public class TARDISTelepathicInventory {
             stack[2] = cave;
         }
         // structure finder
-        if (player.hasPermission("tardis.timetravel.village")) {
+        if (TARDISPermission.hasPermission(player, "tardis.timetravel.village")) {
             ItemStack structure = new ItemStack(Material.HAY_BLOCK);
             ItemMeta sim = structure.getItemMeta();
             sim.setDisplayName("Structure Finder");
@@ -54,7 +55,7 @@ public class TARDISTelepathicInventory {
             stack[4] = structure;
         }
         // biome finder
-        if (player.hasPermission("tardis.timetravel.biome")) {
+        if (TARDISPermission.hasPermission(player, "tardis.timetravel.biome")) {
             ItemStack biome = new ItemStack(Material.BAMBOO_MOSAIC);
             ItemMeta bim = biome.getItemMeta();
             bim.setDisplayName("Biome Finder");

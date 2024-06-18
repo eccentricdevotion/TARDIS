@@ -27,7 +27,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
@@ -132,12 +131,9 @@ class TARDISHandlesLandCommand {
                                 plugin.getTrackerKeeper().getHasRandomised().removeAll(Collections.singleton(id));
                             }
                             // damage the circuit if configured
-                            TARDISCircuitChecker tcc = null;
-                            if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
-                                tcc = new TARDISCircuitChecker(plugin, id);
+                            if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+                                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);;
                                 tcc.getCircuits();
-                            }
-                            if (tcc != null && plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
                                 // decrement uses
                                 int uses_left = tcc.getMaterialisationUses();
                                 new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();

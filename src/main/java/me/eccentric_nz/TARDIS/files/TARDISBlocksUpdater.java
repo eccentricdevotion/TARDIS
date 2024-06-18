@@ -478,6 +478,91 @@ public class TARDISBlocksUpdater {
             blocks_config.set("version", 13);
             i += 3;
         }
+        if (!tbs.contains("CHISELED_COPPER")) {
+            // 1.21
+            List<String> blocks = new ArrayList<>();
+            blocks.add("CHISELED_COPPER");
+            blocks.add("CHISELED_TUFF");
+            blocks.add("CHISELED_TUFF_BRICKS");
+            blocks.add("COPPER_BULB");
+            blocks.add("COPPER_GRATE");
+            blocks.add("EXPOSED_CHISELED_COPPER");
+            blocks.add("EXPOSED_COPPER_BULB");
+            blocks.add("EXPOSED_COPPER_GRATE");
+            blocks.add("OXIDIZED_CHISELED_COPPER");
+            blocks.add("OXIDIZED_COPPER_BULB");
+            blocks.add("OXIDIZED_COPPER_GRATE");
+            blocks.add("POLISHED_TUFF");
+            blocks.add("TUFF_BRICKS");
+            blocks.add("WAXED_CHISELED_COPPER");
+            blocks.add("WAXED_COPPER_BULB");
+            blocks.add("WAXED_COPPER_GRATE");
+            blocks.add("WAXED_EXPOSED_CHISELED_COPPER");
+            blocks.add("WAXED_EXPOSED_COPPER_BULB");
+            blocks.add("WAXED_EXPOSED_COPPER_GRATE");
+            blocks.add("WAXED_OXIDIZED_CHISELED_COPPER");
+            blocks.add("WAXED_OXIDIZED_COPPER_BULB");
+            blocks.add("WAXED_OXIDIZED_COPPER_GRATE");
+            blocks.add("WAXED_WEATHERED_CHISELED_COPPER");
+            blocks.add("WAXED_WEATHERED_COPPER_BULB");
+            blocks.add("WAXED_WEATHERED_COPPER_GRATE");
+            blocks.add("WEATHERED_CHISELED_COPPER");
+            blocks.add("WEATHERED_COPPER_BULB");
+            blocks.add("WEATHERED_COPPER_GRATE");
+            // tardis blocks
+            tbs.addAll(blocks);
+            tbs.sort(Comparator.naturalOrder());
+            blocks_config.set("tardis_blocks", tbs);
+            // under door blocks
+            List<String> under = blocks_config.getStringList("under_door_blocks");
+            under.add("COPPER_DOOR");
+            under.add("COPPER_TRAPDOOR");
+            under.add("EXPOSED_COPPER_DOOR");
+            under.add("EXPOSED_COPPER_TRAPDOOR");
+            under.add("HEAVY_CORE");
+            under.add("OXIDIZED_COPPER_DOOR");
+            under.add("OXIDIZED_COPPER_TRAPDOOR");
+            under.add("POLISHED_TUFF_SLAB");
+            under.add("POLISHED_TUFF_STAIRS");
+            under.add("POLISHED_TUFF_WALL");
+            under.add("TUFF_BRICK_SLAB");
+            under.add("TUFF_BRICK_STAIRS");
+            under.add("TUFF_BRICK_WALL");
+            under.add("TUFF_SLAB");
+            under.add("TUFF_STAIRS");
+            under.add("TUFF_WALL");
+            under.add("WAXED_COPPER_DOOR");
+            under.add("WAXED_COPPER_TRAPDOOR");
+            under.add("WAXED_EXPOSED_COPPER_DOOR");
+            under.add("WAXED_EXPOSED_COPPER_TRAPDOOR");
+            under.add("WAXED_OXIDIZED_COPPER_DOOR");
+            under.add("WAXED_OXIDIZED_COPPER_TRAPDOOR");
+            under.add("WAXED_WEATHERED_COPPER_DOOR");
+            under.add("WAXED_WEATHERED_COPPER_TRAPDOOR");
+            under.add("WEATHERED_COPPER_DOOR");
+            under.add("WEATHERED_COPPER_TRAPDOOR");
+            under.sort(Comparator.naturalOrder());
+            blocks_config.set("under_door_blocks", under);
+            // chameleon blocks
+            List<String> chameleon = blocks_config.getStringList("chameleon_blocks");
+            chameleon.addAll(blocks);
+            chameleon.sort(Comparator.naturalOrder());
+            blocks_config.set("chameleon_blocks", chameleon);
+            // lamp blocks
+            List<String> lamps = blocks_config.getStringList("lamp_blocks");
+            lamps.add("COPPER_BULB");
+            lamps.add("EXPOSED_COPPER_BULB");
+            lamps.add("OXIDIZED_COPPER_BULB");
+            lamps.add("WAXED_COPPER_BULB");
+            lamps.add("WAXED_EXPOSED_COPPER_BULB");
+            lamps.add("WAXED_OXIDIZED_COPPER_BULB");
+            lamps.add("WAXED_WEATHERED_COPPER_BULB");
+            lamps.add("WEATHERED_COPPER_BULB");
+            lamps.sort(Comparator.naturalOrder());
+            blocks_config.set("lamp_blocks", lamps);
+            blocks_config.set("version", 15);
+            i += 4;
+        }
         try {
             blocks_config.save(new File(plugin.getDataFolder(), "blocks.yml"));
             if (i > 0) {

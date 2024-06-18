@@ -77,7 +77,7 @@ public class TARDISSaveIconCommand {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                     return false;
                 }
-                int id = rs.getTardis_id();
+                int id = rs.getTardisId();
                 HashMap<String, Object> whered = new HashMap<>();
                 whered.put("dest_name", args[1]);
                 whered.put("tardis_id", id);

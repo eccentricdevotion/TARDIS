@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.builders;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -27,11 +24,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.*;
-import me.eccentric_nz.TARDIS.enumeration.Advancement;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.planets.TARDISSpace;
@@ -43,6 +36,10 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * TARDISes are bioships that are grown from a species of coral presumably indigenous to Gallifrey.
@@ -279,7 +276,7 @@ public class TARDISSeedBlockProcessor {
                 }
             } else {
                 HashMap<String, Object> wherecl = new HashMap<>();
-                wherecl.put("tardis_id", rs.getTardis_id());
+                wherecl.put("tardis_id", rs.getTardisId());
                 ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
                 if (rscl.resultSet()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_HAVE", rscl.getWorld().getName() + " at x:" + rscl.getX() + " y:" + rscl.getY() + " z:" + rscl.getZ());

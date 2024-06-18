@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -44,19 +44,19 @@ public class TARDISMaterialisationCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_materialisation_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("IDI", "DLD", "QRQ");
             r.setIngredient('I', Material.ENDER_EYE);
             r.setIngredient('D', Material.REPEATER);
             r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('L', Material.BLUE_DYE);
-            r.setIngredient('Q', Material.QUARTZ);            
+            r.setIngredient('Q', Material.QUARTZ);
         } else {
             r.shape("IRI", " L ", "QRQ");
             r.setIngredient('I', Material.IRON_INGOT);
             r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('L', Material.BLUE_DYE);
-            r.setIngredient('Q', Material.QUARTZ);            
+            r.setIngredient('Q', Material.QUARTZ);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Materialisation Circuit", r);

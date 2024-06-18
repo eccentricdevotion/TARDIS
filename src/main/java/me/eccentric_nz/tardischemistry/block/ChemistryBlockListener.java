@@ -29,7 +29,7 @@ import me.eccentric_nz.tardischemistry.element.ElementInventory;
 import me.eccentric_nz.tardischemistry.lab.LabInventory;
 import me.eccentric_nz.tardischemistry.product.ProductInventory;
 import me.eccentric_nz.tardischemistry.reducer.ReducerInventory;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

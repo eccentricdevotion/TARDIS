@@ -16,14 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 public class ComehereAction {
 
@@ -38,9 +39,9 @@ public class ComehereAction {
         Player acceptor = plugin.getServer().getPlayer(request.getAccepter());
         Player requester = plugin.getServer().getPlayer(request.getRequester());
         boolean hidden = request.isHidden();
-        // get space time throttle
-        SpaceTimeThrottle spaceTimeThrottle = new ResultSetThrottle(plugin).getSpeed(request.getAccepter().toString());
-        int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * spaceTimeThrottle.getArtronMultiplier());
+        // get space-time throttle
+        Throticle throticle = new ResultSetThrottle(plugin).getSpeedAndParticles(request.getAccepter().toString());
+        int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * throticle.getThrottle().getArtronMultiplier());
         if (request.getLevel() < ch) {
             plugin.getMessenger().send(acceptor, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
             plugin.getMessenger().send(requester, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");

@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.enumeration.Storage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -111,6 +111,7 @@ public class TARDISMenuListener implements Listener {
         map.put(ChatColor.DARK_RED + "Genetic Manipulator", 54);
         // TODO should Handles Program GUI be in here?
 //        map.put(ChatColor.DARK_RED + "Handles Program", 54);
+        map.put(ChatColor.DARK_RED + "Particle Preferences", 54);
         map.put(ChatColor.DARK_RED + "Player Prefs Menu", 36);
         map.put(ChatColor.DARK_RED + "Recipe Categories", 27);
         map.put(ChatColor.DARK_RED + "TARDIS Recipes", 27);
@@ -135,6 +136,7 @@ public class TARDISMenuListener implements Listener {
         map.put(ChatColor.DARK_RED + "TARDIS Seeds Menu", 90);
         map.put(ChatColor.DARK_RED + "TARDIS Seeds Recipe", 90);
         map.put(ChatColor.DARK_RED + "TARDIS Shell Loader", 54);
+        map.put(ChatColor.DARK_RED + "TARDIS System Upgrades", 54);
         map.put(ChatColor.DARK_RED + "TARDIS Telepathic Circuit", 54);
         map.put(ChatColor.DARK_RED + "TARDIS Upgrade Menu", 54);
         map.put(ChatColor.DARK_RED + "TARDIS Wall & Floor Menu", 90);

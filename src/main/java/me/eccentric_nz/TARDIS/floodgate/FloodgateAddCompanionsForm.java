@@ -48,7 +48,7 @@ public class FloodgateAddCompanionsForm {
             }
         }
         builder.button("Everyone");
-        builder.validResultHandler(response -> handleResponse(response));
+        builder.validResultHandler(this::handleResponse);
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
         player.sendForm(form);

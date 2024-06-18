@@ -39,6 +39,7 @@ public class MaterialisationData {
     private int tardisID;
     private int exteriorLampLevel;
     private SpaceTimeThrottle throttle;
+    private boolean particles;
 
     public COMPASS getDirection() {
         return direction;
@@ -113,5 +114,13 @@ public class MaterialisationData {
 
     public void setThrottle(SpaceTimeThrottle throttle) {
         this.throttle = throttle;
+    }
+
+    public boolean hasParticles() {
+        return particles;
+    }
+
+    public void setParticles(boolean particles) {
+        this.particles = particles;
     }
 }

@@ -1,8 +1,5 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisSize;
@@ -24,6 +21,10 @@ import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.UUID;
 
 public class FloodgateDesktopArchiveForm {
 
@@ -47,7 +48,7 @@ public class FloodgateDesktopArchiveForm {
             builder.title("TARDIS Archive");
             for (ItemStack is : rs.getButtons()) {
                 ItemMeta im = is.getItemMeta();
-                builder.button(im.getDisplayName(), FormImage.Type.URL, String.format(path, FloodgateColouredBlocks.IMAGES.get(i)));
+                builder.button(im.getDisplayName(), FormImage.Type.PATH, String.format(path, FloodgateColouredBlocks.IMAGES.get(i)));
                 i++;
             }
         }
@@ -57,7 +58,7 @@ public class FloodgateDesktopArchiveForm {
                 builder.button(c.toString(), FormImage.Type.URL, url);
             }
         }
-        builder.validResultHandler(response -> handleResponse(response));
+        builder.validResultHandler(this::handleResponse);
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
         player.sendForm(form);

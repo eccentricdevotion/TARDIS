@@ -13,7 +13,7 @@ import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetManipulator;
 import me.eccentric_nz.tardisvortexmanipulator.gui.TVMGUI;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

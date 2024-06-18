@@ -527,7 +527,7 @@ public class TARDISCondensables {
             condensables.put("MAGENTA_TERRACOTTA", 15);
             condensables.put("MAGENTA_WALL_BANNER", 120);
             condensables.put("MAGENTA_WOOL", 20);
-            condensables.put("MAGMA_BLOCK", 600);
+            condensables.put("MAGMA_BLOCK", 60);
             condensables.put("MAGMA_CREAM", 150);
             // 1.19 - Wild Update
             condensables.put("MANGROVE_BOAT", 3);
@@ -799,7 +799,7 @@ public class TARDISCondensables {
             condensables.put("SANDSTONE_STAIRS", 118);
             condensables.put("SANDSTONE_WALL", 2);
             condensables.put("SCAFFOLDING", 18);
-            condensables.put("SCUTE", 20);
+            condensables.put("TURTLE_SCUTE", 20);
             condensables.put("SEA_LANTERN", 160);
             condensables.put("SEA_PICKLE", 6);
             condensables.put("SEAGRASS", 2);
@@ -1158,11 +1158,72 @@ public class TARDISCondensables {
             condensables.put("STRIPPED_BAMBOO_BLOCK", 2);
             condensables.put("STRIPPED_CHERRY_LOG", 2);
             condensables.put("STRIPPED_CHERRY_WOOD", 2);
-//            condensables.put("SUSPICIOUS_GRAVEL", 2); // unobtainable
-//            condensables.put("SUSPICIOUS_SAND", 2); // unobtainable
             condensables.put("TORCHFLOWER", 20);
             condensables.put("TORCHFLOWER_SEEDS", 20);
             condensables.put("WARPED_HANGING_SIGN", 2);
+            // 1.20.5
+            condensables.put("ARMADILLO_SCUTE", 20);
+            condensables.put("WOLF_ARMOR", 120);
+            // 1.21
+            condensables.put("BREEZE_ROD", 200);
+            condensables.put("CHISELED_COPPER", 360);
+            condensables.put("CHISELED_TUFF", 2);
+            condensables.put("CHISELED_TUFF_BRICKS", 4);
+            condensables.put("COPPER_BULB", 700);
+            condensables.put("COPPER_DOOR", 40);
+            condensables.put("COPPER_GRATE", 180);
+            condensables.put("COPPER_TRAPDOOR", 60);
+            condensables.put("CRAFTER", 210);
+            condensables.put("EXPOSED_CHISELED_COPPER", 360);
+            condensables.put("EXPOSED_COPPER_BULB", 700);
+            condensables.put("EXPOSED_COPPER_DOOR", 40);
+            condensables.put("EXPOSED_COPPER_GRATE", 180);
+            condensables.put("EXPOSED_COPPER_TRAPDOOR", 60);
+            condensables.put("HEAVY_CORE", 300);
+            condensables.put("OXIDIZED_CHISELED_COPPER", 360);
+            condensables.put("OXIDIZED_COPPER_BULB", 700);
+            condensables.put("OXIDIZED_COPPER_DOOR", 40);
+            condensables.put("OXIDIZED_COPPER_GRATE", 180);
+            condensables.put("OXIDIZED_COPPER_TRAPDOOR", 60);
+            condensables.put("POLISHED_TUFF", 2);
+            condensables.put("POLISHED_TUFF_SLAB", 2);
+            condensables.put("POLISHED_TUFF_STAIRS", 2);
+            condensables.put("POLISHED_TUFF_WALL", 2);
+            condensables.put("TUFF_BRICKS", 4);
+            condensables.put("TUFF_BRICK_SLAB", 2);
+            condensables.put("TUFF_BRICK_STAIRS", 2);
+            condensables.put("TUFF_BRICK_WALL", 2);
+            condensables.put("TUFF_SLAB", 2);
+            condensables.put("TUFF_STAIRS", 2);
+            condensables.put("TUFF_WALL", 2);
+            condensables.put("WAXED_CHISELED_COPPER", 2);
+            condensables.put("WAXED_COPPER_BULB", 720);
+            condensables.put("WAXED_COPPER_DOOR", 60);
+            condensables.put("WAXED_COPPER_GRATE", 200);
+            condensables.put("WAXED_COPPER_TRAPDOOR", 80);
+            condensables.put("WAXED_EXPOSED_CHISELED_COPPER", 380);
+            condensables.put("WAXED_EXPOSED_COPPER_BULB", 720);
+            condensables.put("WAXED_EXPOSED_COPPER_DOOR", 60);
+            condensables.put("WAXED_EXPOSED_COPPER_GRATE", 200);
+            condensables.put("WAXED_EXPOSED_COPPER_TRAPDOOR", 80);
+            condensables.put("WAXED_OXIDIZED_CHISELED_COPPER", 380);
+            condensables.put("WAXED_OXIDIZED_COPPER_BULB", 720);
+            condensables.put("WAXED_OXIDIZED_COPPER_DOOR", 60);
+            condensables.put("WAXED_OXIDIZED_COPPER_GRATE", 200);
+            condensables.put("WAXED_OXIDIZED_COPPER_TRAPDOOR", 80);
+            condensables.put("WAXED_WEATHERED_CHISELED_COPPER", 380);
+            condensables.put("WAXED_WEATHERED_COPPER_BULB", 720);
+            condensables.put("WAXED_WEATHERED_COPPER_DOOR", 60);
+            condensables.put("WAXED_WEATHERED_COPPER_GRATE", 200);
+            condensables.put("WAXED_WEATHERED_COPPER_TRAPDOOR", 80);
+            condensables.put("WEATHERED_CHISELED_COPPER", 360);
+            condensables.put("WEATHERED_COPPER_BULB", 700);
+            condensables.put("WEATHERED_COPPER_DOOR", 40);
+            condensables.put("WEATHERED_COPPER_GRATE", 180);
+            condensables.put("WEATHERED_COPPER_TRAPDOOR", 60);
+            condensables.put("FLOW_POTTERY_SHERD", 20);
+            condensables.put("GUSTER_POTTERY_SHERD", 20);
+            condensables.put("SCRAPE_POTTERY_SHERD", 20);
         } else {
             Set<String> items = plugin.getCondensablesConfig().getKeys(false);
             items.forEach((item) -> condensables.put(item, plugin.getCondensablesConfig().getInt(item)));

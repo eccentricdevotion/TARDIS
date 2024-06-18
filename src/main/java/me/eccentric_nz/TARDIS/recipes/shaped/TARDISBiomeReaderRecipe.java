@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -49,7 +49,7 @@ public class TARDISBiomeReaderRecipe {
         em.setDisplayName("Emerald Environment Circuit");
         em.setCustomModelData(RecipeItem.EMERALD_ENVIRONMENT_CIRCUIT.getCustomModelData());
         exact.setItemMeta(em);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" C ", "SDT", "LWN");
             r.setIngredient('C', new RecipeChoice.ExactChoice(exact));
             r.setIngredient('S', Material.SAND);

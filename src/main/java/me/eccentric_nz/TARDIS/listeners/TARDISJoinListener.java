@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.flight.FlightReturnData;
 import me.eccentric_nz.TARDIS.flight.FlyingAnimation;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
@@ -113,7 +112,7 @@ public class TARDISJoinListener implements Listener {
                 }
             }
         }
-        if (!plugin.getDifficulty().equals(Difficulty.EASY) && ((plugin.getConfig().getBoolean("allow.player_difficulty") && TARDISPermission.hasPermission(player, "tardis.difficulty")) || (plugin.getConfig().getInt("travel.grace_period") > 0 && TARDISPermission.hasPermission(player, "tardis.create")))) {
+        if (plugin.getConfig().getInt("travel.grace_period") > 0 && TARDISPermission.hasPermission(player, "tardis.create")) {
             // check if they have t_count record - create one if not
             ResultSetCount rsc = new ResultSetCount(plugin, uuid);
             if (!rsc.resultSet()) {
@@ -253,7 +252,7 @@ public class TARDISJoinListener implements Listener {
                 } else if (!rsid.fromUUID(player.getUniqueId().toString())) {
                     return;
                 }
-                int id = rsid.getTardis_id();
+                int id = rsid.getTardisId();
                 HashMap<String, Object> wherei = new HashMap<>();
                 wherei.put("tardis_id", id);
                 wherei.put("uuid", player.getUniqueId().toString());

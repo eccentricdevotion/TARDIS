@@ -5,7 +5,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.MapColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_20_R4.util.CraftMagicNumbers;
+import org.bukkit.craftbukkit.v1_21_R1.util.CraftMagicNumbers;
 
 import java.util.logging.Level;
 

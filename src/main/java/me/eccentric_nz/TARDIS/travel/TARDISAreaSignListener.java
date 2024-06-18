@@ -22,7 +22,9 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.travel.save.TARDISSavesPlanetInventory;
-import net.md_5.bungee.api.ChatColor;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -61,10 +63,11 @@ public class TARDISAreaSignListener extends TARDISMenuListener {
         event.setCancelled(true);
         int slot = event.getRawSlot();
         Player player = (Player) event.getWhoClicked();
+        String uuid = player.getUniqueId().toString();
         if (slot >= 0 && slot < 45) {
             // get the TARDIS the player is in
             HashMap<String, Object> wheres = new HashMap<>();
-            wheres.put("uuid", player.getUniqueId().toString());
+            wheres.put("uuid", uuid);
             ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
             if (!rst.resultSet()) {
                 return;
@@ -101,11 +104,15 @@ public class TARDISAreaSignListener extends TARDISMenuListener {
             return;
         }
         if (slot == 49) {
+            if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid, SystemTree.SAVES)) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
+                return;
+            }
             // load TARDIS saves
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 // get the TARDIS the player is in
                 HashMap<String, Object> wheres = new HashMap<>();
-                wheres.put("uuid", player.getUniqueId().toString());
+                wheres.put("uuid", uuid);
                 ResultSetTravellers rs = new ResultSetTravellers(plugin, wheres, false);
                 if (rs.resultSet()) {
                     TARDISSavesPlanetInventory sst = new TARDISSavesPlanetInventory(plugin, rs.getTardis_id());

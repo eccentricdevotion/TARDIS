@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -56,8 +56,7 @@ public class TARDISDisplayItemRecipe {
                 NamespacedKey key = new NamespacedKey(plugin, tdi.getName());
                 ShapedRecipe r = new ShapedRecipe(key, is);
                 r.shape("#A#", "#D#", "###");
-                boolean hard = (plugin.getDifficulty().equals(Difficulty.HARD));
-                r.setIngredient('#', (hard) ? Material.GLASS : Material.GLASS_PANE);
+                r.setIngredient('#', plugin.getCraftingDifficulty() == CraftingDifficulty.HARD ? Material.GLASS : Material.GLASS_PANE);
                 r.setIngredient('A', tdi.getCraftMaterial());
                 r.setIngredient('D', tdi.getMaterial());
                 plugin.getServer().addRecipe(r);

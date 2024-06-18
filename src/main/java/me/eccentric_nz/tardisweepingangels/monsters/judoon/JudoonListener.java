@@ -26,7 +26,7 @@ import net.minecraft.world.entity.Entity;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.ShulkerBox;
-import org.bukkit.craftbukkit.v1_20_R4.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_21_R1.entity.CraftEntity;
 import org.bukkit.entity.Husk;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

@@ -1,14 +1,16 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
+import org.bukkit.Material;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.bukkit.Material;
 
 public class FloodgateSpawnEgg {
     public static final List<Material> disguises = new ArrayList<>();
 
     static {
         disguises.add(Material.ALLAY_SPAWN_EGG);
+        disguises.add(Material.ARMADILLO_SPAWN_EGG);
         disguises.add(Material.AXOLOTL_SPAWN_EGG);
         disguises.add(Material.BAT_SPAWN_EGG);
         disguises.add(Material.BEE_SPAWN_EGG);

@@ -3,12 +3,14 @@ package me.eccentric_nz.TARDIS.sonic;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISSculkShrieker;
 import me.eccentric_nz.TARDIS.console.interaction.SonicConsoleRecharge;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISTakeoff;
@@ -52,7 +54,7 @@ public class TARDISSonicDock {
         ItemDisplay display = doDocking(sonic, interaction.getLocation(), new Vector(0, 0.75d, 0.1d), player, id);
         display.setRotation(0.0f, 15.0f);
         // start charging
-        if (plugin.getConfig().getBoolean("sonic.charge") || plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getConfig().getBoolean("sonic.charge")) {
             long delay = plugin.getConfig().getLong("sonic.charge_level") / plugin.getConfig().getLong("sonic.charge_interval");
             SonicConsoleRecharge recharge = new SonicConsoleRecharge(plugin, display.getUniqueId(), interaction, id, player);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, recharge, 1L, delay);
@@ -70,7 +72,7 @@ public class TARDISSonicDock {
         // change the dock model
         updateModel(frame, 1001, false);
         // start charging
-        if (plugin.getConfig().getBoolean("sonic.charge") || plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getConfig().getBoolean("sonic.charge")) {
             long delay = plugin.getConfig().getLong("sonic.charge_level") / plugin.getConfig().getLong("sonic.charge_interval");
             SonicRecharge recharge = new SonicRecharge(plugin, display.getUniqueId(), frame, id, player);
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, recharge, 1L, delay);
@@ -143,14 +145,17 @@ public class TARDISSonicDock {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                             return display;
                         }
-                        TARDISCircuitChecker tcc = null;
-                        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, true)) {
-                            tcc = new TARDISCircuitChecker(plugin, id);
-                            tcc.getCircuits();
-                        }
-                        if (tcc != null && !tcc.hasMaterialisation()) {
+                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                        tcc.getCircuits();
+                        if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, true) && !tcc.hasMaterialisation()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MAT_CIRCUIT");
                             return display;
+                        }
+                        // damage circuit if configured
+                        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
+                            // decrement uses
+                            int uses_left = tcc.getMaterialisationUses();
+                            new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
                         }
                         COMPASS player_direction = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                         int[] start_loc = TARDISTimeTravel.getStartLocation(dest, player_direction);
@@ -166,8 +171,8 @@ public class TARDISSonicDock {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "WOULD_GRIEF_BLOCKS");
                             return display;
                         }
-                        SpaceTimeThrottle spaceTimeThrottle = new ResultSetThrottle(plugin).getSpeed(player.getUniqueId().toString());
-                        int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * spaceTimeThrottle.getArtronMultiplier());
+                        Throticle throticle = new ResultSetThrottle(plugin).getSpeedAndParticles(player.getUniqueId().toString());
+                        int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * throticle.getThrottle().getArtronMultiplier());
                         if (tardis.getArtronLevel() < ch) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
                             return display;
@@ -209,7 +214,7 @@ public class TARDISSonicDock {
                                 if (rsp.resultSet()) {
                                     Location handbrake_loc = TARDISStaticLocationGetters.getLocationFromBukkitString(rsh.getLocation());
                                     // take off
-                                    new TARDISTakeoff(plugin).run(id, handbrake_loc.getBlock(), handbrake_loc, player, rsp.isBeaconOn(), tardis.getBeacon(), rsp.isTravelbarOn(), spaceTimeThrottle);
+                                    new TARDISTakeoff(plugin).run(id, handbrake_loc.getBlock(), handbrake_loc, player, rsp.isBeaconOn(), tardis.getBeacon(), rsp.isTravelbarOn(), throticle);
                                     // start time rotor?
                                     if (tardis.getRotor() != null) {
                                         if (tardis.getRotor() == TARDISConstants.UUID_ZERO) {

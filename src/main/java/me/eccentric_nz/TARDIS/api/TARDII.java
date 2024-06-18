@@ -56,7 +56,7 @@ import me.eccentric_nz.tardisweepingangels.utils.HeadBuilder;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.*;
 import org.bukkit.World.Environment;
-import org.bukkit.craftbukkit.v1_20_R4.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_21_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -179,6 +179,28 @@ public class TARDII implements TardisAPI {
             data = new TARDISData(owner, current, console, chameleon, door, powered, siege, abandoned, occupants);
         }
         return data;
+    }
+
+    @Override
+    public Location getRandomLocation(List<String> worlds, Environment environment, Parameters param) {
+        if (environment == null) {
+            // choose random environment - weighted towards normal!
+            environment = weightedChoice.next();
+            // check if environment is enabled
+            if ((environment.equals(Environment.NETHER) && !TARDIS.plugin.getConfig().getBoolean("travel.nether")) || (environment.equals(Environment.THE_END) && !TARDIS.plugin.getConfig().getBoolean("travel.the_end"))) {
+                environment = Environment.NORMAL;
+            }
+        }
+        return switch (environment) {
+            case NETHER -> new TARDISRandomNether(TARDIS.plugin, worlds, param).getlocation();
+            case THE_END -> new TARDISRandomTheEnd(TARDIS.plugin, worlds, param).getlocation();
+            default -> new TARDISRandomOverworld(TARDIS.plugin, worlds, param).getlocation();
+        };
+    }
+
+    @Override
+    public Location getRandomLocation(List<String> worlds, Environment environment, Player p) {
+        return getRandomLocation(getWorlds(), null, new Parameters(p, Flag.getAPIFlags()));
     }
 
     @Override
@@ -320,7 +342,7 @@ public class TARDII implements TardisAPI {
     public List<String> getPlayersInTARDIS(UUID uuid) {
         ResultSetTardisID rs = new ResultSetTardisID(TARDIS.plugin);
         if (rs.fromUUID(uuid.toString())) {
-            return getPlayersInTARDIS(rs.getTardis_id());
+            return getPlayersInTARDIS(rs.getTardisId());
         } else {
             return new ArrayList<>();
         }
@@ -627,7 +649,7 @@ public class TARDII implements TardisAPI {
         // get tardis_id
         ResultSetTardisID rst = new ResultSetTardisID(TARDIS.plugin);
         if (rst.fromUUID(uuid.toString())) {
-            return setDestination(rst.getTardis_id(), location, travel);
+            return setDestination(rst.getTardisId(), location, travel);
         } else {
             return false;
         }
@@ -722,7 +744,7 @@ public class TARDII implements TardisAPI {
         // get tardis_id
         ResultSetTardisID rst = new ResultSetTardisID(TARDIS.plugin);
         if (rst.fromUUID(uuid.toString())) {
-            return setChameleonPreset(rst.getTardis_id(), preset, rebuild);
+            return setChameleonPreset(rst.getTardisId(), preset, rebuild);
         } else {
             return false;
         }
@@ -1001,27 +1023,5 @@ public class TARDII implements TardisAPI {
     @Override
     public ItemStack getK9() {
         return HeadBuilder.getK9();
-    }
-
-    @Override
-    public Location getRandomLocation(List<String> worlds, Environment environment, Parameters param) {
-        if (environment == null) {
-            // choose random environment - weighted towards normal!
-            environment = weightedChoice.next();
-            // check if environment is enabled
-            if ((environment.equals(Environment.NETHER) && !TARDIS.plugin.getConfig().getBoolean("travel.nether")) || (environment.equals(Environment.THE_END) && !TARDIS.plugin.getConfig().getBoolean("travel.the_end"))) {
-                environment = Environment.NORMAL;
-            }
-        }
-        return switch (environment) {
-            case NETHER -> new TARDISRandomNether(TARDIS.plugin, worlds, param).getlocation();
-            case THE_END -> new TARDISRandomTheEnd(TARDIS.plugin, worlds, param).getlocation();
-            default -> new TARDISRandomOverworld(TARDIS.plugin, worlds, param).getlocation();
-        };
-    }
-
-    @Override
-    public Location getRandomLocation(List<String> worlds, Environment environment, Player p) {
-        return getRandomLocation(getWorlds(), null, new Parameters(p, Flag.getAPIFlags()));
     }
 }

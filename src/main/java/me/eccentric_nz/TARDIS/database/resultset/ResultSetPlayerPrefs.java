@@ -54,7 +54,6 @@ public class ResultSetPlayerPrefs {
     private boolean buildOn;
     private boolean closeGUIOn;
     private boolean DND;
-    private boolean easyDifficulty;
     private boolean dynamicLightsOn;
     private boolean epsOn;
     private boolean farmOn;
@@ -167,7 +166,6 @@ public class ResultSetPlayerPrefs {
                     }
                     flightMode = rs.getInt("flying_mode");
                     throttle = rs.getInt("throttle");
-                    easyDifficulty = rs.getBoolean("difficulty");
                     autoPowerUp = rs.getBoolean("auto_powerup_on");
                     hum = rs.getString("hum");
                 } else {
@@ -323,10 +321,6 @@ public class ResultSetPlayerPrefs {
 
     public int getThrottle() {
         return throttle;
-    }
-
-    public boolean isEasyDifficulty() {
-        return easyDifficulty;
     }
 
     public boolean isAutoPowerUp() {

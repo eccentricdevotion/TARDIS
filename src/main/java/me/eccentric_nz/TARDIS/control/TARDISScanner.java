@@ -25,7 +25,10 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.*;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -275,7 +278,7 @@ public class TARDISScanner {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_NONE");
             }
             // damage the circuit if configured
-            if (plugin.getConfig().getBoolean("circuits.damage") && !plugin.getDifficulty().equals(Difficulty.EASY) && plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
+            if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
                 TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                 tcc.getCircuits();
                 // decrement uses
@@ -287,18 +290,21 @@ public class TARDISScanner {
     }
 
     public void scan(int id, Player player, String renderer, int level) {
-        TARDISCircuitChecker tcc = null;
-        if (!plugin.getDifficulty().equals(Difficulty.EASY) && !plugin.getUtils().inGracePeriod(player, false)) {
-            tcc = new TARDISCircuitChecker(plugin, id);
-            tcc.getCircuits();
-        }
-        if (tcc != null && !tcc.hasScanner()) {
+        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+        tcc.getCircuits();
+        if (plugin.getConfig().getBoolean("difficulty.circuits") && !plugin.getUtils().inGracePeriod(player, false) && !tcc.hasScanner()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_MISSING");
             return;
         }
         if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SCAN_NO_RANDOM");
             return;
+        }
+        // damage circuit if configured
+        if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.scanner") > 0) {
+            // decrement uses
+            int uses_left = tcc.getScannerUses();
+            new TARDISCircuitDamager(plugin, DiskCircuit.SCANNER, uses_left, id, player).damage();
         }
         BukkitScheduler scheduler = plugin.getServer().getScheduler();
         TARDISScannerData data = getScannerData(player, id, scheduler);

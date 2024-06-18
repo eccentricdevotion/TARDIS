@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -41,7 +41,7 @@ public class PaperBagRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "paper_bag");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" LC", "PSP", " P ");
             r.setIngredient('L', Material.LAPIS_BLOCK);
             r.setIngredient('C', Material.COMPARATOR);

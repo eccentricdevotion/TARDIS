@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.console.telepathic;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,7 +21,6 @@ import java.util.UUID;
 
 public class TelepathicBiomeListener extends TARDISMenuListener {
 
-    private final TARDIS plugin;
     private final HashMap<UUID, Integer> scroll = new HashMap<>();
     private final List<UUID> scrolling = new ArrayList<>();
     private final ItemStack[][] biomes;
@@ -29,7 +28,6 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
 
     public TelepathicBiomeListener(TARDIS plugin) {
         super(plugin);
-        this.plugin = plugin;
         rows = EnvironmentBiomes.OVERWORLD.size() / 8 + 1;
         biomes = getBiomes();
     }

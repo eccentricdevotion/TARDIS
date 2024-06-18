@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -37,16 +37,16 @@ public class DiamondDisruptorCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "diamond_disruptor_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getDifficulty() == Difficulty.HARD) {
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" O ", "DSD", " O ");
             r.setIngredient('O', Material.OBSIDIAN);
             r.setIngredient('D', Material.DIAMOND);
-            r.setIngredient('S', Material.SHEARS);            
+            r.setIngredient('S', Material.SHEARS);
         } else {
             r.shape(" R ", "DSD", " R ");
             r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('D', Material.DIAMOND);
-            r.setIngredient('S', Material.SHEARS);            
+            r.setIngredient('S', Material.SHEARS);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Diamond Disruptor Circuit", r);

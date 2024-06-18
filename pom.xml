@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.eccentric_nz.TARDIS</groupId>
     <artifactId>TARDIS</artifactId>
-    <version>5.6.0</version>
+    <version>5.7.0</version>
     <name>TARDIS</name>
     <description>A Doctor Who Plugin</description>
     <properties>
@@ -170,9 +170,9 @@
                         </goals>
                         <id>remap-obf</id>
                         <configuration>
-                            <srgIn>org.spigotmc:minecraft-server:1.20.6-R0.1-SNAPSHOT:txt:maps-mojang</srgIn>
+                            <srgIn>org.spigotmc:minecraft-server:1.21-R0.1-SNAPSHOT:txt:maps-mojang</srgIn>
                             <reverse>true</reverse>
-                            <remappedDependencies>org.spigotmc:spigot:1.20.6-R0.1-SNAPSHOT:jar:remapped-mojang
+                            <remappedDependencies>org.spigotmc:spigot:1.21-R0.1-SNAPSHOT:jar:remapped-mojang
                             </remappedDependencies>
                             <remappedArtifactAttached>true</remappedArtifactAttached>
                             <remappedClassifierName>remapped-obf</remappedClassifierName>
@@ -188,8 +188,8 @@
                             <inputFile>
                                 ${project.build.directory}/${project.artifactId}-${project.version}-remapped-obf.jar
                             </inputFile>
-                            <srgIn>org.spigotmc:minecraft-server:1.20.6-R0.1-SNAPSHOT:csrg:maps-spigot</srgIn>
-                            <remappedDependencies>org.spigotmc:spigot:1.20.6-R0.1-SNAPSHOT:jar:remapped-obf
+                            <srgIn>org.spigotmc:minecraft-server:1.21-R0.1-SNAPSHOT:csrg:maps-spigot</srgIn>
+                            <remappedDependencies>org.spigotmc:spigot:1.21-R0.1-SNAPSHOT:jar:remapped-obf
                             </remappedDependencies>
                         </configuration>
                     </execution>
@@ -256,7 +256,7 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.20.6-R0.1-SNAPSHOT</version>
+            <version>1.21-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -280,7 +280,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.20.6-R0.1-SNAPSHOT</version>
+            <version>1.21-R0.1-SNAPSHOT</version>
             <classifier>remapped-mojang</classifier>
             <scope>provided</scope>
         </dependency>
@@ -349,7 +349,7 @@
         <dependency>
             <groupId>com.palmergames.bukkit.towny</groupId>
             <artifactId>towny</artifactId>
-            <version>0.100.2.0</version>
+            <version>0.100.3.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -486,7 +486,7 @@
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
-            <version>2.11.5</version>
+            <version>2.11.6</version>
             <type>jar</type>
             <scope>provided</scope>
             <exclusions>
@@ -563,6 +563,12 @@
             <groupId>de.bluecolored.bluemap</groupId>
             <artifactId>BlueMapAPI</artifactId>
             <version>2.7.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>xyz.jpenilla</groupId>
+            <artifactId>squaremap-api</artifactId>
+            <version>1.2.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

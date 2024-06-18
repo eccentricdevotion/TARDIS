@@ -12,7 +12,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetRandomInteractions;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
-import me.eccentric_nz.TARDIS.enumeration.Difficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import org.bukkit.Location;
@@ -42,7 +41,7 @@ public class RandomiserInteraction {
         }
         // get circuit checker
         TARDISCircuitChecker tcc = null;
-        if (!plugin.getDifficulty().equals(Difficulty.EASY)) {
+        if (plugin.getConfig().getBoolean("difficulty.circuits")) {
             tcc = new TARDISCircuitChecker(plugin, id);
             tcc.getCircuits();
         }

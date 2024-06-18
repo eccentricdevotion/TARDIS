@@ -27,6 +27,8 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
 import me.eccentric_nz.TARDIS.monitor.Snapshot;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ItemFrame;
@@ -38,6 +40,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -61,6 +64,11 @@ public class TARDISMonitorFrameListener implements Listener {
             where.put("type", 46);
             ResultSetControls rs = new ResultSetControls(plugin, where, false);
             if (rs.resultSet()) {
+                UUID uuid = player.getUniqueId();
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.MONITOR)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "TARDIS Monitor");
+                    return;
+                }
                 if (player.isSneaking() && TARDISPermission.hasPermission(player, "tardis.camera")) {
                     // not while travelling
                     if (isTravelling(rs.getTardis_id())) {
@@ -92,7 +100,7 @@ public class TARDISMonitorFrameListener implements Listener {
                             if (map.getType() == Material.FILLED_MAP) {
                                 // get the TARDIS the player is inside
                                 HashMap<String, Object> wheret = new HashMap<>();
-                                wheret.put("uuid", player.getUniqueId().toString());
+                                wheret.put("uuid", uuid.toString());
                                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
                                 if (rst.resultSet()) {
                                     int id = rst.getTardis_id();

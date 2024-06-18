@@ -1,11 +1,14 @@
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -74,7 +77,7 @@ public class TARDISColourPickerListener extends TARDISMenuListener {
                 // get the player's tardis_id
                 ResultSetTardisID rst = new ResultSetTardisID(plugin);
                 if (rst.fromUUID(player.getUniqueId().toString())) {
-                    int id = rst.getTardis_id();
+                    int id = rst.getTardisId();
                     // save the colour
                     Color color = getColour(view);
                     HashMap<String, Object> set = new HashMap<>();
@@ -92,6 +95,14 @@ public class TARDISColourPickerListener extends TARDISMenuListener {
                         plugin.getQueryFactory().doInsert("colour", set);
                     }
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "COLOUR_SET");
+                    // damage the circuit if configured
+                    if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
+                        TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
+                        tcc.getCircuits();
+                        // decrement uses
+                        int uses_left = tcc.getChameleonUses();
+                        new TARDISCircuitDamager(plugin, DiskCircuit.CHAMELEON, uses_left, id, player).damage();
+                    }
                 }
                 close(player);
             }

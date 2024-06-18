@@ -16,13 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.data.Throticle;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... the personal preferences of the Time
@@ -54,23 +56,29 @@ public class ResultSetThrottle {
      * @param uuid the unique id of the player to get the setting for
      * @return the Space Time Throttle setting
      */
-    public SpaceTimeThrottle getSpeed(String uuid) {
+    public Throticle getSpeedAndParticles(String uuid) {
+        SpaceTimeThrottle throttle = SpaceTimeThrottle.NORMAL;
+        boolean particles = false;
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT throttle FROM " + prefix + "player_prefs WHERE uuid = ?";
+        String throttleQuery = "SELECT throttle FROM " + prefix + "player_prefs WHERE uuid = ?";
+        String particleQuery = "SELECT particles_on FROM " + prefix + "particle_prefs WHERE uuid = ?";
         try {
             service.testConnection(connection);
-            statement = connection.prepareStatement(query);
+            statement = connection.prepareStatement(throttleQuery);
             statement.setString(1, uuid);
             rs = statement.executeQuery();
             if (rs.next()) {
-                return SpaceTimeThrottle.getByDelay().get(rs.getInt("throttle"));
-            } else {
-                return SpaceTimeThrottle.NORMAL;
+                throttle = SpaceTimeThrottle.getByDelay().get(rs.getInt("throttle"));
+            }
+            statement = connection.prepareStatement(particleQuery);
+            statement.setString(1, uuid);
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                particles = rs.getBoolean("particles_on");
             }
         } catch (SQLException e) {
             plugin.debug("ResultSet error for throttle table! " + e.getMessage());
-            return SpaceTimeThrottle.NORMAL;
         } finally {
             try {
                 if (rs != null) {
@@ -83,5 +91,6 @@ public class ResultSetThrottle {
                 plugin.debug("Error closing throttle table! " + e.getMessage());
             }
         }
+        return new Throticle(throttle, particles);
     }
 }

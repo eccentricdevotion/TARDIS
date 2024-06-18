@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
@@ -24,6 +23,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -47,7 +48,7 @@ class TARDISReorderSavedLocationCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 return false;
             }
-            int id = rs.getTardis_id();
+            int id = rs.getTardisId();
             HashMap<String, Object> whered = new HashMap<>();
             whered.put("dest_name", args[1]);
             whered.put("tardis_id", id);

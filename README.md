@@ -25,7 +25,7 @@ Jenkins CI builds can be found here:
 [http://tardisjenkins.duckdns.org:8080/job/TARDIS/](http://tardisjenkins.duckdns.org:8080/job/TARDIS/)
 
 [![Jenkins status](https://img.shields.io/website?down_message=offline&label=Jenkins&style=for-the-badge&up_message=online&url=http%3A%2F%2Ftardisjenkins.duckdns.org%3A8080%2F)](http://tardisjenkins.duckdns.org:8080/job/TARDIS/)  
-![Build Status](https://img.shields.io/jenkins/build?jobUrl=http%3A%2F%2Ftardisjenkins.duckdns.org%3A8080%2Fjob%2FTARDIS&style=for-the-badge)
+![Build Status](https://img.shields.io/jenkins/build?jobUrl=http://tardisjenkins.duckdns.org:8080/job/TARDIS&style=for-the-badge)
 ![GitHub last commit](https://img.shields.io/github/last-commit/eccentricdevotion/TARDIS?style=for-the-badge)
 
 ![GitHub top language](https://img.shields.io/github/languages/top/eccentricdevotion/TARDIS?style=for-the-badge)
@@ -37,6 +37,7 @@ Jenkins CI builds can be found here:
 ![Spigot size](https://img.shields.io/spiget/download-size/45729?label=Spigot%20size&style=for-the-badge)
 ![bStats Servers](https://img.shields.io/bstats/servers/11698?style=for-the-badge)
 
+![1.20.6 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.20.6/total?style=for-the-badge)
 ![1.20.4 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.20.4/total?style=for-the-badge)
 ![1.20.3 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.20.3/total?style=for-the-badge)
 ![1.20.2 downloads](https://img.shields.io/github/downloads/eccentricdevotion/TARDIS/1.20.2/total?style=for-the-badge)

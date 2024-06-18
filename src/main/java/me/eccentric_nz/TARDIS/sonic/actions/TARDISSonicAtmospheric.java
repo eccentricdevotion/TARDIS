@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -45,7 +45,7 @@ public class TARDISSonicAtmospheric {
             // get TARDIS id
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             if (rs.fromUUID(player.getUniqueId().toString())) {
-                int tid = rs.getTardis_id();
+                int tid = rs.getTardisId();
                 Block blockbehind = null;
                 Directional directional = (Directional) b.getBlockData();
                 if (directional.getFacing().equals(BlockFace.WEST)) {

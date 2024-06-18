@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners.controls;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
@@ -29,7 +26,7 @@ import me.eccentric_nz.TARDIS.handles.TARDISHandlesProcessor;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
@@ -41,6 +38,10 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -138,12 +139,12 @@ public class TARDISHandlesFrameListener implements Listener {
                     if (rst.fromUUID(player.getUniqueId().toString())) {
                         // check if they have a handles block
                         HashMap<String, Object> wherec = new HashMap<>();
-                        wherec.put("tardis_id", rst.getTardis_id());
+                        wherec.put("tardis_id", rst.getTardisId());
                         wherec.put("type", 26);
                         ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
                         if (!rsc.resultSet()) {
                             String newLocation = frame.getLocation().toString();
-                            plugin.getQueryFactory().insertControl(rst.getTardis_id(), 26, newLocation, 0);
+                            plugin.getQueryFactory().insertControl(rst.getTardisId(), 26, newLocation, 0);
                         } else {
                             event.setCancelled(true);
                             plugin.getMessenger().send(event.getPlayer(), TardisModule.TARDIS, "HANDLES_PLACED");
@@ -201,7 +202,7 @@ public class TARDISHandlesFrameListener implements Listener {
                         }
                         // is it the players handles?
                         ResultSetTardisID rst = new ResultSetTardisID(plugin);
-                        if (rst.fromUUID(player.getUniqueId().toString()) && rsc.getTardis_id() == rst.getTardis_id()) {
+                        if (rst.fromUUID(player.getUniqueId().toString()) && rsc.getTardis_id() == rst.getTardisId()) {
                             // remove control record
                             HashMap<String, Object> wherec = new HashMap<>();
                             wherec.put("c_id", rsc.getC_id());

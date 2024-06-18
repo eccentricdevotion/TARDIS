@@ -43,11 +43,11 @@ public class FloodgateAreasForm {
             for (Area a : rsa.getData()) {
                 String name = a.getAreaName();
                 if (TARDISPermission.hasPermission(player, "tardis.area." + name) || TARDISPermission.hasPermission(player, "tardis.area.*")) {
-                    builder.button(name, FormImage.Type.URL, String.format(path, FloodgateColouredBlocks.IMAGES.get(i)));
+                    builder.button(name, FormImage.Type.PATH, String.format(path, FloodgateColouredBlocks.IMAGES.get(i)));
                     i++;
                 }
             }
-            builder.validResultHandler(response -> handleResponse(response));
+            builder.validResultHandler(this::handleResponse);
             SimpleForm form = builder.build();
             FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);
             player.sendForm(form);

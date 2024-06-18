@@ -94,7 +94,9 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %spaper_bag (paper_bag_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', flavour_1 varchar(12) DEFAULT '', amount_1 int(2) DEFAULT '0', flavour_2 varchar(12) DEFAULT '', amount_2 int(2) DEFAULT '0', flavour_3 varchar(12) DEFAULT '', amount_3 int(2) DEFAULT '0', flavour_4 varchar(12) DEFAULT '', amount_4 int(2) DEFAULT '0', PRIMARY KEY (paper_bag_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %splayer_prefs (pp_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(32), `key_item` varchar(32) DEFAULT '', sfx_on int(1) DEFAULT '0', quotes_on int(1) DEFAULT '0', artron_level int(11) DEFAULT '0', wall varchar(64) DEFAULT 'ORANGE_WOOL', floor varchar(64) DEFAULT 'LIGHT_GRAY_WOOL', siege_wall varchar(64) DEFAULT 'GRAY_TERRACOTTA', siege_floor varchar(64) DEFAULT 'BLACK_TERRACOTTA', announce_repeaters_on int(1) DEFAULT '0', auto_on int(1) DEFAULT '0', auto_type varchar(32) DEFAULT 'CLOSEST', auto_default varchar(12) DEFAULT 'HOME', beacon_on int(1) DEFAULT '1', hads_on int(1) DEFAULT '1', hads_type varchar(12) DEFAULT 'DISPLACEMENT', build_on int(1) DEFAULT '1', close_gui_on int(1) DEFAULT '1', eps_on int(1) DEFAULT '0', eps_message text, language varchar(32) DEFAULT 'ENGLISH', submarine_on int(1) DEFAULT '0', dnd_on int(1) DEFAULT '0', dynamic_lamps_on int(1) DEFAULT '0', minecart_on int(1) DEFAULT '0', renderer_on int(1) DEFAULT '1', sign_on int(1) DEFAULT '1', telepathy_on int(1) DEFAULT '0', travelbar_on int(1) DEFAULT '0', info_on int(1) DEFAULT '0', farm_on int(1) DEFAULT '1', lights varchar(32) DEFAULT 'TENTH', auto_siege_on int(1) DEFAULT '0', flying_mode int(1) DEFAULT '1', throttle int(1) DEFAULT '4', difficulty int(1) DEFAULT '0', auto_powerup_on int(1) DEFAULT '0', auto_rescue_on int(1) DEFAULT '0', hum varchar(24) DEFAULT '', PRIMARY KEY (pp_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %sparticle_prefs (pp_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', `effect` varchar(32) DEFAULT 'ASH', `shape` varchar(32) DEFAULT 'RANDOM', `density` int(2) DEFAULT '16', `speed` int(2) DEFAULT '0', particles_on int(1) DEFAULT '0', PRIMARY KEY (pp_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
+            "CREATE TABLE IF NOT EXISTS %splayer_prefs (pp_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(32), `key_item` varchar(32) DEFAULT '', sfx_on int(1) DEFAULT '0', quotes_on int(1) DEFAULT '0', artron_level int(11) DEFAULT '0', wall varchar(64) DEFAULT 'ORANGE_WOOL', floor varchar(64) DEFAULT 'LIGHT_GRAY_WOOL', siege_wall varchar(64) DEFAULT 'GRAY_TERRACOTTA', siege_floor varchar(64) DEFAULT 'BLACK_TERRACOTTA', announce_repeaters_on int(1) DEFAULT '0', auto_on int(1) DEFAULT '0', auto_type varchar(32) DEFAULT 'CLOSEST', auto_default varchar(12) DEFAULT 'HOME', beacon_on int(1) DEFAULT '1', hads_on int(1) DEFAULT '1', hads_type varchar(12) DEFAULT 'DISPLACEMENT', build_on int(1) DEFAULT '1', close_gui_on int(1) DEFAULT '1', eps_on int(1) DEFAULT '0', eps_message text, language varchar(32) DEFAULT 'ENGLISH', submarine_on int(1) DEFAULT '0', dnd_on int(1) DEFAULT '0', dynamic_lamps_on int(1) DEFAULT '0', minecart_on int(1) DEFAULT '0', renderer_on int(1) DEFAULT '1', sign_on int(1) DEFAULT '1', telepathy_on int(1) DEFAULT '0', travelbar_on int(1) DEFAULT '0', info_on int(1) DEFAULT '0', farm_on int(1) DEFAULT '1', lights varchar(32) DEFAULT 'TENTH', auto_siege_on int(1) DEFAULT '0', flying_mode int(1) DEFAULT '1', throttle int(1) DEFAULT '4', auto_powerup_on int(1) DEFAULT '0', auto_rescue_on int(1) DEFAULT '0', hum varchar(24) DEFAULT '', PRIMARY KEY (pp_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %sportals (portal_id int(11) NOT NULL AUTO_INCREMENT, portal varchar(512) DEFAULT '', teleport varchar(512) DEFAULT '', direction varchar(5) DEFAULT '', tardis_id int(11) DEFAULT '0', abandoned int(1) DEFAULT '0', PRIMARY KEY (portal_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -113,6 +115,8 @@ public class SQL {
             "CREATE TABLE IF NOT EXISTS %ssonic (sonic_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', activated int(1) DEFAULT '0', model int(11) DEFAULT '10000011', bio int(1) DEFAULT '0', diamond int(1) DEFAULT '0', emerald int(1) DEFAULT '0', redstone int(1) DEFAULT '0', painter int(1) DEFAULT '0', ignite int(1) DEFAULT '0', arrow int(1) DEFAULT '0', knockback int(1) DEFAULT '0', brush int(1) DEFAULT '0', conversion int(1) DEFAULT '0', sonic_uuid varchar(48) DEFAULT '', last_scanned varchar(512) DEFAULT '', scan_type int(1) DEFAULT '0', PRIMARY KEY (sonic_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %sstorage (storage_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', uuid varchar(48) DEFAULT '', owner varchar(32) DEFAULT '', saves_one text NULL, saves_two text NULL, areas text NULL, presets_one text NULL, presets_two text NULL, biomes_one text NULL, biomes_two text NULL, players text NULL, circuits text NULL, console text NULL, PRIMARY KEY (storage_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
+            "CREATE TABLE IF NOT EXISTS %ssystem_upgrades (sys_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', uuid varchar(48) DEFAULT '', architecture int(1) DEFAULT '0', chameleon int(1) DEFAULT '0', rooms int(1) DEFAULT '0', desktop int(1) DEFAULT '0', navigation int(1) DEFAULT '0', saves int(1) DEFAULT '0', distance_1 int(1) DEFAULT '0', distance_2 int(1) DEFAULT '0', distance_3 int(1) DEFAULT '0', telepathic int(1) DEFAULT '0', inter_dimension int(1) DEFAULT '0', flight int(1) DEFAULT '0', tools int(1) DEFAULT '0', locator int(1) DEFAULT '0', biome_reader int(1) DEFAULT '0', force_field int(1) DEFAULT '0', monitor int(1) DEFAULT '0', stattenheim_remote int(1) DEFAULT '0', PRIMARY KEY (sys_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %st_count (t_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', count int(3) DEFAULT '0', grace int(3) DEFAULT '0', repair int(3) DEFAULT '0', PRIMARY KEY (t_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -217,8 +221,10 @@ public class SQL {
             "(%s, %s, '%s', %s, %s, %s, '%s', %s)",
 
             "(%s, '%s', '%s', %s, '%s', %s, '%s', %s, '%s', %s)",
+
+            "(%s, '%s', '%s', '%s', %s, %s, %s)",
             // player prefs
-            "(%s, '%s', '%s', '%s', %s, %s, %s, '%s', '%s', '%s', '%s', %s, %s, '%s', '%s', %s, %s, '%s', %s, %s, %s, '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, '%s', %s, %s, %s, %s, %s, %s, '%s')",
+            "(%s, '%s', '%s', '%s', %s, %s, %s, '%s', '%s', '%s', '%s', %s, %s, '%s', '%s', %s, %s, '%s', %s, %s, %s, '%s', '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, '%s', %s, %s, %s, %s, %s, '%s')",
 
             "(%s, '%s', '%s', '%s', %s, %s)",
 
@@ -237,6 +243,8 @@ public class SQL {
             "(%s, '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, '%s', '%s', %s)",
 
             "(%s, %s, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+
+            "(%s, %s, '%s', %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
 
             "(%s, '%s', '%s', %s, %s, %s)",
 
@@ -342,7 +350,9 @@ public class SQL {
 
             "INSERT INTO `%spaper_bag` (`paper_bag_id`, `uuid`, `flavour_1`, `amount_1`, `flavour_2`, `amount_2`, `flavour_3`, `amount_3`, `flavour_4`, `amount_4`) VALUES ",
 
-            "INSERT INTO `%splayer_prefs` (`pp_id`, `uuid`, `player`, `key_item`, `sfx_on`, `quotes_on`, `artron_level`, `wall`, `floor`,  `siege_wall`, `siege_floor`, `announce_repeaters_on`, `auto_on`, `auto_type`, `auto_default`, `beacon_on`, `hads_on`, `hads_type`, `build_on`, `close_gui_on`, `eps_on`, `eps_message`, `language`, `submarine_on`, `dnd_on`, `dynamic_lamps_on`, `minecart_on`, `renderer_on`, `sign_on`, `telepathy_on`, `travelbar_on`, `info_on`, `farm_on`,  `lights`, `auto_siege_on`, `flying_mode`, `throttle`, `difficulty`, `auto_powerup_on`, `auto_rescue_on`, `hum`) VALUES ",
+            "INSERT INTO `%sparticle_prefs` (`pp_id`, `uuid`, `effect`, `shape`, `density`, `speed`, `particles_on`) VALUES ",
+
+            "INSERT INTO `%splayer_prefs` (`pp_id`, `uuid`, `player`, `key_item`, `sfx_on`, `quotes_on`, `artron_level`, `wall`, `floor`,  `siege_wall`, `siege_floor`, `announce_repeaters_on`, `auto_on`, `auto_type`, `auto_default`, `beacon_on`, `hads_on`, `hads_type`, `build_on`, `close_gui_on`, `eps_on`, `eps_message`, `language`, `submarine_on`, `dnd_on`, `dynamic_lamps_on`, `minecart_on`, `renderer_on`, `sign_on`, `telepathy_on`, `travelbar_on`, `info_on`, `farm_on`,  `lights`, `auto_siege_on`, `flying_mode`, `throttle`, `auto_powerup_on`, `auto_rescue_on`, `hum`) VALUES ",
 
             "INSERT INTO `%sportals` (`portal_id`, `portal`, `teleport`, `direction`, `tardis_id`, `abandoned`) VALUES ",
 
@@ -361,6 +371,8 @@ public class SQL {
             "INSERT INTO `%ssonic` (`sonic_id`, `uuid`, `activated`, `model`, `bio`, `diamond`, `emerald`, `redstone`, `painter`, `ignite`, `arrow`, `knockback`, `brush`, `conversion`, `sonic_uuid`, `last_scanned`, `scan_type`) VALUES ",
 
             "INSERT INTO `%sstorage` (`storage_id`, `tardis_id`, `uuid`, `owner`, `saves_one`, `saves_two`, `areas`, `presets_one`, `presets_two`, `biomes_one`, `biomes_two`, `players`, `circuits`, `console`) VALUES ",
+
+            "INSERT INTO `%ssystem_upgrades` (`sys_id`, `tardis_id`, `uuid`, `architecture`, `chameleon`, `rooms`, `desktop`, `navigation`, `saves`, `distance_1`, `distance_2`, `distance_3`, `telepathic`, `inter_dimension`, `flight`, `tools`, `locator`, `biome_reader`, `force_field`, `monitor`, `stattenheim_remote`) VALUES ",
 
             "INSERT INTO `%st_count` (`t_id`, `uuid`, `player`, `count`, `grace`, `repair`) VALUES ",
 
