@@ -372,11 +372,12 @@ public class TARDISBuilderInner implements Runnable {
             int z = startz + col;
             BlockData data = plugin.getServer().createBlockData(c.get("data").getAsString());
             Material type = data.getMaterial();
-            if (type.equals(Material.LIGHT_GRAY_CONCRETE) && schm.getPermission().equals("bone")) {
+            if (type.equals(Material.LIGHT_GRAY_CONCRETE) && (schm.getPermission().equals("bone") || schm.getPermission().equals("rustic"))) {
                 // get the block
                 Block block = new Location(world, x, y, z).getBlock();
                 // build a console
-                new ConsoleBuilder(plugin).create(block, 1, dbID, playerUUID);
+                int ct = (schm.getPermission().equals("bone")) ? 1 : 17;
+                new ConsoleBuilder(plugin).create(block, ct, dbID, playerUUID);
             }
             if (type.equals(Material.SCULK_SHRIEKER)) {
                 // remember the location, so we can make it shriek when flying

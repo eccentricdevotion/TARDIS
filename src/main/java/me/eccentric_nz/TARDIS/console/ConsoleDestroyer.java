@@ -85,10 +85,10 @@ public class ConsoleDestroyer {
             // remove database records
             new ClearInteractions(plugin).removeRecords(id);
             // build item stack
-            Material material = Material.valueOf(colour + "_CONCRETE");
+            Material material = (cmd == 17) ? Material.WAXED_OXIDIZED_COPPER : Material.valueOf(colour + "_CONCRETE");
             ItemStack console = new ItemStack(material, 1);
             ItemMeta im = console.getItemMeta();
-            String dn = TARDISStringUtils.capitalise(colour) + " Console";
+            String dn = ((cmd == 17) ? "Rustic" : TARDISStringUtils.capitalise(colour)) + " Console";
             im.setDisplayName(dn);
             im.setLore(List.of("Integration with interaction"));
             im.setCustomModelData(1001);

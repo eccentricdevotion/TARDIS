@@ -107,7 +107,7 @@ public class TARDISSeedBlockListener implements Listener {
                 }, 3L);
             }
             // now the player has to click the block with the TARDIS key
-        } else if (dn.endsWith(" Console") && is.getType().toString().endsWith("_CONCRETE")) {
+        } else if (dn.endsWith(" Console") && (is.getType().toString().endsWith("_CONCRETE") || is.getType() == Material.WAXED_OXIDIZED_COPPER)) {
             // must be in TARDIS world
             if (!plugin.getUtils().inTARDISWorld(player)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_IN_WORLD");
@@ -122,12 +122,12 @@ public class TARDISSeedBlockListener implements Listener {
                 return;
             }
             // build a console of the correct colour
-            int colour = im.getPersistentDataContainer().getOrDefault(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
+            int type = im.getPersistentDataContainer().getOrDefault(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
             // get TARDIS id
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             String uuid = player.getUniqueId().toString();
             if (rs.fromUUID(uuid)) {
-                new ConsoleBuilder(plugin).create(event.getBlockPlaced(), colour, rs.getTardisId(), uuid);
+                new ConsoleBuilder(plugin).create(event.getBlockPlaced(), type, rs.getTardisId(), uuid);
             }
         }
     }

@@ -75,6 +75,7 @@ public enum RecipeItem {
     TARDIS_TEMPORAL_CIRCUIT(10001974, RecipeCategory.CONSOLE_CIRCUITS),
     // rotors
     TIME_ROTOR_CONSOLE(10000100, RecipeCategory.ROTORS),
+    TIME_ROTOR_RUSTIC(10000101, RecipeCategory.ROTORS),
     TIME_ROTOR_DELTA(10000006, RecipeCategory.ROTORS),
     TIME_ROTOR_EARLY(10000002, RecipeCategory.ROTORS),
     TIME_ENGINE(10000007, RecipeCategory.ROTORS),
@@ -100,6 +101,7 @@ public enum RecipeItem {
     MAGENTA_CONSOLE(1014, RecipeCategory.CONSOLES),
     PINK_CONSOLE(1015, RecipeCategory.CONSOLES),
     BROWN_CONSOLE(1016, RecipeCategory.CONSOLES),
+    RUSTIC_CONSOLE(1017, RecipeCategory.CONSOLES),
     // bow ties
     WHITE_BOW_TIE(10000023),
     ORANGE_BOW_TIE(10000024),

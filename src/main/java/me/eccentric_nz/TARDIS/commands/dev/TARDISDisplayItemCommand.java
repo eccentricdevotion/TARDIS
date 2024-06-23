@@ -238,8 +238,8 @@ public class TARDISDisplayItemCommand {
                     return true;
                 }
                 int colour = TARDISNumberParsers.parseInt(args[2]);
-                if (colour < 1 || colour > 16) {
-                    plugin.getMessenger().message(player, "Number must be between 1-16!");
+                if (colour < 1 || colour > 17) {
+                    plugin.getMessenger().message(player, "Number must be between 1-17!");
                     return true;
                 }
                 // get TARDIS id

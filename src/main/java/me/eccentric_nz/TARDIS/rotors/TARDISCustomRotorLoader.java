@@ -43,6 +43,7 @@ public class TARDISCustomRotorLoader {
         Rotor engine = new Rotor("engine", 10000007, Material.LIGHT_BLUE_DYE, new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}, 2, false);
         Rotor engine_rotor = new Rotor("engine_rotor", 10000008, Material.BLUE_DYE, new int[]{0, 1, 2, 3, 4, 5, 4, 3, 2, 1}, 3, false);
         Rotor hospital = new Rotor("hospital", 10000009, Material.WHITE_DYE, new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, 2, false);
+        Rotor rustic = new Rotor("rustic", 10000101, Material.GREEN_DYE, new int[]{0, 0, 1, 2, 3, 4, 3, 2, 1}, 2, false);
         // add plugin rotors to look-ups
         Rotor.byMaterial.put(Material.BLACK_DYE, early);
         Rotor.byCustomModelData.put(10000002, early);
@@ -53,6 +54,9 @@ public class TARDISCustomRotorLoader {
         Rotor.byMaterial.put(Material.RED_DYE, console);
         Rotor.byCustomModelData.put(10000100, console);
         Rotor.byName.put("TIME_ROTOR_CONSOLE", console);
+        Rotor.byMaterial.put(Material.GREEN_DYE, rustic);
+        Rotor.byCustomModelData.put(10000101, rustic);
+        Rotor.byName.put("TIME_ROTOR_RUSTIC", rustic);
         Rotor.byMaterial.put(Material.BROWN_DYE, copper);
         Rotor.byCustomModelData.put(10000004, copper);
         Rotor.byName.put("TIME_ROTOR_COPPER", copper);

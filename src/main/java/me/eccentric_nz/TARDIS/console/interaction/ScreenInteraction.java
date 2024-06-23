@@ -8,6 +8,7 @@ import me.eccentric_nz.TARDIS.console.models.ConsoleColourChanger;
 import me.eccentric_nz.TARDIS.control.actions.ControlMenuAction;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
@@ -36,14 +37,15 @@ public class ScreenInteraction {
             }
         } else {
             ItemStack hand = player.getInventory().getItemInMainHand();
-            if (Tag.CONCRETE_POWDER.isTagged(hand.getType())) {
+            Material material = hand.getType();
+            if (Tag.CONCRETE_POWDER.isTagged(material) || material == Material.COPPER_INGOT) {
                 int amount = hand.getAmount();
                 if (amount < 6) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CONSOLE_COLOUR_AMOUNT");
                     return;
                 }
                 // get colour
-                int colour = ColourType.LOOKUP.getOrDefault(hand.getType(), 1);
+                int colour = (material == Material.COPPER_INGOT) ? 17 : ColourType.LOOKUP.getOrDefault(hand.getType(), 1);
                 // get the UUIDs
                 String uuids = interaction.getPersistentDataContainer().get(plugin.getUnaryKey(), PersistentDataType.STRING);
                 if (uuids != null) {
