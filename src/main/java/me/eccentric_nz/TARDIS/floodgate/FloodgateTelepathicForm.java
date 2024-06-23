@@ -5,6 +5,8 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
@@ -31,7 +33,7 @@ public class FloodgateTelepathicForm {
     public void send() {
         // get biomes
         SimpleForm.Builder builder = SimpleForm.builder();
-        builder.title("Telepathic Biome Finder");
+        builder.title("Telepathic Location Finder");
         builder.button("Toggle telepathic circuit", FormImage.Type.PATH, "textures/block/daylight_detector_top.png");
         Player player = Bukkit.getPlayer(uuid);
         if (TARDISPermission.hasPermission(player, "tardis.timetravel.cave")) {
@@ -65,6 +67,10 @@ public class FloodgateTelepathicForm {
             return;
         }
         String label = response.clickedButton().text();
+        if (!label.equals("Toggle telepathic circuit") && plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.TELEPATHIC_CIRCUIT)) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Telepathic Circuit");
+            return;
+        }
         switch (label) {
             case "Cave finder" -> player.performCommand("tardistravel cave");
             case "Structure finder" -> new FloodgateStructuresForm(plugin, player.getUniqueId(), id).send();

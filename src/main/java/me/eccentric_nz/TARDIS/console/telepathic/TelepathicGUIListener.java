@@ -5,6 +5,8 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,9 +36,10 @@ public class TelepathicGUIListener extends TARDISMenuListener {
             return;
         }
         Player player = (Player) event.getWhoClicked();
+        String uuid = player.getUniqueId().toString();
         // get id of TARDIS player is in
         HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", player.getUniqueId().toString());
+        where.put("uuid", uuid);
         ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
         if (rs.resultSet()) {
             // check for telepathic circuit
@@ -60,6 +63,10 @@ public class TelepathicGUIListener extends TARDISMenuListener {
             }
             event.setCancelled(true);
             ItemStack choice = view.getItem(slot);
+            if (slot > 0 && slot < 8 && plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid, SystemTree.TELEPATHIC_CIRCUIT)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Telepathic Circuit");
+                    return;
+            }
             switch (slot) {
                 // toggle telepathy on/off
                 case 0 -> {

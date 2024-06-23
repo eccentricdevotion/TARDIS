@@ -3,9 +3,6 @@ package me.eccentric_nz.TARDIS.console.interaction;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.telepathic.TARDISTelepathicInventory;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.upgrades.SystemTree;
-import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -25,10 +22,6 @@ public class TelepathicCircuitInteraction {
     public void process(Player player) {
         UUID uuid = player.getUniqueId();
         if (plugin.getTrackerKeeper().getFlight().containsKey(uuid)) {
-            return;
-        }
-        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.TELEPATHIC_CIRCUIT)) {
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Telepathic Circuit");
             return;
         }
         if (player.isSneaking()) {

@@ -25,8 +25,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateTelepathicForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.upgrades.SystemTree;
-import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -75,10 +73,6 @@ public class TARDISTelepathicListener implements Listener {
             if (rsc.resultSet()) {
                 Player player = event.getPlayer();
                 UUID uuid = player.getUniqueId();
-                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.TELEPATHIC_CIRCUIT)) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Telepathic Circuit");
-                    return;
-                }
                 int id = rsc.getTardis_id();
                 if (player.isSneaking()) {
                     // get the Time Lord of this TARDIS
