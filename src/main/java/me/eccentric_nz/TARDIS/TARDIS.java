@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS;
 
 import io.papermc.lib.PaperLib;
 import me.eccentric_nz.TARDIS.ARS.ARSConverter;
+import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.TARDII;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceParticle;
@@ -593,12 +594,11 @@ public class TARDIS extends JavaPlugin {
             }
             startRecorderTask();
             getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISControlRunnable(this), 200, 200);
-//            getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
-//                if (!TARDISAchievementFactory.checkAdvancement("tardis")) {
-//                    getMessenger().message(console, TardisModule.TARDIS, getLanguage().getString("ADVANCEMENT_RELOAD"));
-//                    getServer().reloadData();
-//                }
-//            }, 199);
+            getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
+                if (!TARDISAchievementFactory.checkAdvancement("tardis")) {
+                    getMessenger().message(console, TardisModule.TARDIS, getLanguage().getString("ADVANCEMENT_RELOAD"));
+                }
+            }, 199);
             // check TARDIS build
             if (getConfig().getBoolean("preferences.update.notify")) {
                 getServer().getScheduler().runTaskAsynchronously(this, new TARDISUpdateChecker(this, null));

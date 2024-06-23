@@ -21,6 +21,7 @@ import com.google.gson.GsonBuilder;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.util.HashMap;
@@ -77,6 +78,18 @@ public class TARDISChecker {
         String s_world = plugin.getServer().getWorlds().get(0).getName();
         // check if directories exist
         String dataPacksRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis" + File.separator + "data" + File.separator + "tardis" + File.separator + "advancements";
+        File tardisOldDir = new File(dataPacksRoot);
+        boolean update = false;
+        if (tardisOldDir.exists()) {
+            // delete directory and files as they need updating
+            try {
+                FileUtils.deleteDirectory(tardisOldDir);
+                update = true;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        dataPacksRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis" + File.separator + "data" + File.separator + "tardis" + File.separator + "advancement";
         File tardisDir = new File(dataPacksRoot);
         if (!tardisDir.exists()) {
             TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, plugin.getLanguage().getString("ADVANCEMENT_DIRECTORIES"));
@@ -84,7 +97,7 @@ public class TARDISChecker {
         }
         String dataPacksMeta = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis";
         File mcmeta = new File(dataPacksMeta, "pack.mcmeta");
-        if (!mcmeta.exists()) {
+        if (!mcmeta.exists() || update) {
             TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), "pack.mcmeta"));
             TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), "pack.mcmeta"));
             copy("pack.mcmeta", mcmeta);

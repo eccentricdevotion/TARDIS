@@ -1,16 +1,17 @@
 {
-    "display": {
-        "icon": {
-            "count": 1,
-            "id": "minecraft:minecart"
-        },
-        "title": "Create a TARDIS",
-        "description": "The time vortex awaits!"
+  "display": {
+    "icon": {
+      "id": "minecraft:minecart",
+      "count": 1
     },
-    "parent": "tardis:craft",
-    "criteria": {
-        "built_tardis": {
-            "trigger": "minecraft:impossible"
-        }
+    "title": "Create a TARDIS",
+    "description": "The time vortex awaits!"
+  },
+  "parent": "tardis:craft",
+  "criteria": {
+    "built_tardis": {
+      "trigger": "minecraft:impossible"
     }
+  },
+  "sends_telemetry_event": false
 }

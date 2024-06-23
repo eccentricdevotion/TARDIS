@@ -1,25 +1,28 @@
 {
-    "display": {
-        "icon": {
-            "count": 1,
-            "id": "minecraft:lapis_block"
-        },
-        "title": "Craft a TARDIS Seed Block",
-        "description": "One step closer to stealing a TARDIS",
-        "show_toast": true,
-        "announce_to_chat": true
+  "display": {
+    "icon": {
+      "id": "minecraft:lapis_block",
+      "count": 1
     },
-    "parent": "tardis:root",
-    "criteria": {
-        "craft_seed": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                    {
-                        "nbt": "{\"display\":{\"Name\":\"§6TARDIS Seed Block\"}}"
-                    }
-                ]
+    "title": "Craft a TARDIS Seed Block",
+    "description": "One step closer to stealing a TARDIS",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "tardis:root",
+  "criteria": {
+    "craft_seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "minecraft:custom_name": "{\"text\":\"TARDIS Seed Block\",\"color\":\"gold\",\"italic\":false}"
             }
-        }
+          }
+        ]
+      }
     }
+  },
+  "sends_telemetry_event": false
 }
