@@ -48,7 +48,7 @@ public class PaperBagRecipe {
             r.setIngredient('P', Material.PAPER);
             r.setIngredient('S', Material.SHULKER_SHELL);
         } else {
-            r.shape("   ", "PLP", " P ");
+            r.shape("PLP", " P ");
             r.setIngredient('P', Material.PAPER);
             r.setIngredient('L', Material.LAPIS_BLOCK);
         }

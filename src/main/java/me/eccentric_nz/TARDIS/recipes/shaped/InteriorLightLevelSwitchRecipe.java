@@ -41,7 +41,7 @@ public class InteriorLightLevelSwitchRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "interior_light_level_switch");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        r.shape("   ", "WLA", "CCC");
+        r.shape("WLA", "CCC");
         r.setIngredient('W', Material.WARPED_BUTTON);
         r.setIngredient('L', Material.LEVER);
         r.setIngredient('A', Material.ACACIA_BUTTON);

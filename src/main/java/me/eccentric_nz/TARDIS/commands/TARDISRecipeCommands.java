@@ -214,7 +214,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                     continue;
                 }
                 ItemMeta im = item.getItemMeta();
-                if (item.getType().equals(Material.GLOWSTONE_DUST)) {
+                if (item.getType().equals(Material.GLOWSTONE_DUST) && !str.endsWith("Tie")) {
                     String dn = getDisplayName(str, glowstoneCount);
                     im.setDisplayName(dn);
                     im.setCustomModelData(RecipeItem.getByName(dn).getCustomModelData());

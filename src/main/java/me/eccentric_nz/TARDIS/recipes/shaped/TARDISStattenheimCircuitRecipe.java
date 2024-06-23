@@ -63,13 +63,13 @@ public class TARDISStattenheimCircuitRecipe {
         lim.setCustomModelData(RecipeItem.TARDIS_LOCATOR_CIRCUIT.getCustomModelData());
         locator.setItemMeta(lim);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape("   ", "LRM", "QQQ");
+            r.shape("LRM", "QQQ");
             r.setIngredient('L', new RecipeChoice.ExactChoice(locator));
             r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('M', new RecipeChoice.ExactChoice(exact));
             r.setIngredient('Q', Material.QUARTZ);
         } else {
-            r.shape("   ", "LRM", "QQQ");
+            r.shape("LRM", "QQQ");
             r.setIngredient('L', new RecipeChoice.ExactChoice(locator));
             r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('M', new RecipeChoice.ExactChoice(exact));

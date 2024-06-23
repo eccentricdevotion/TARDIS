@@ -38,12 +38,12 @@ public class TARDISArtronFurnaceRecipe {
         NamespacedKey key = new NamespacedKey(plugin, "tardis_artron_furnace");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape("   ", "OFO", "RRR");
+            r.shape("OFO", "RRR");
             r.setIngredient('O', Material.OBSIDIAN);
             r.setIngredient('F', Material.FURNACE);
             r.setIngredient('R', Material.REDSTONE);
         } else {
-            r.shape("   ", "OFO", "RRR");
+            r.shape("OFO", "RRR");
             r.setIngredient('O', Material.OBSIDIAN);
             r.setIngredient('F', Material.FURNACE);
             r.setIngredient('R', Material.REDSTONE);

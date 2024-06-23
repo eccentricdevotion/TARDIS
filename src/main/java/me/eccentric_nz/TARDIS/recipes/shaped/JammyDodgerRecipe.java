@@ -39,11 +39,11 @@ public class JammyDodgerRecipe {
         NamespacedKey key = new NamespacedKey(plugin, "jammy_dodger");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape("   ", "WRW", "   ");
+            r.shape("WRW");
             r.setIngredient('W', Material.WHEAT);
             r.setIngredient('R', Material.SWEET_BERRIES);
         } else {
-            r.shape("   ", "WRW", "   ");
+            r.shape("WRW");
             r.setIngredient('W', Material.WHEAT);
             r.setIngredient('R', Material.SWEET_BERRIES);
         }

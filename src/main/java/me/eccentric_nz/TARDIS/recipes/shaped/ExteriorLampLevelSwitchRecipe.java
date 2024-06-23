@@ -40,7 +40,7 @@ public class ExteriorLampLevelSwitchRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "exterior_lamp_level_switch");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        r.shape("   ", "LBM", "CCC");
+        r.shape("LBM", "CCC");
         r.setIngredient('L', Material.LEVER);
         r.setIngredient('B', Material.BAMBOO_BUTTON);
         r.setIngredient('M', Material.MANGROVE_BUTTON);

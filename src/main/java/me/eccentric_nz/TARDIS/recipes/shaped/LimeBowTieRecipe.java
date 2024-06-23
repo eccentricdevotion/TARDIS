@@ -48,7 +48,7 @@ public class LimeBowTieRecipe {
             r.setIngredient('L', Material.LEATHER);
             r.setIngredient('W', Material.LIME_WOOL);
         } else {
-            r.shape("   ", "SWS", "   ");
+            r.shape("SWS");
             r.setIngredient('S', Material.STRING);
             r.setIngredient('W', Material.LIME_WOOL);
         }

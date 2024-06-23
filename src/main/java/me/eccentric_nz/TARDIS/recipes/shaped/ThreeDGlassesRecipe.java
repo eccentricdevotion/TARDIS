@@ -47,7 +47,7 @@ public class ThreeDGlassesRecipe {
             r.setIngredient('C', Material.CYAN_STAINED_GLASS_PANE);
             r.setIngredient('M', Material.MAGENTA_STAINED_GLASS_PANE);
         } else {
-            r.shape("   ", "P P", "CPM");
+            r.shape("P P", "CPM");
             r.setIngredient('P', Material.PAPER);
             r.setIngredient('C', Material.CYAN_STAINED_GLASS_PANE);
             r.setIngredient('M', Material.MAGENTA_STAINED_GLASS_PANE);

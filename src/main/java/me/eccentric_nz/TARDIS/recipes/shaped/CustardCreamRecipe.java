@@ -36,11 +36,11 @@ public class CustardCreamRecipe {
         NamespacedKey key = new NamespacedKey(plugin, "custard_cream");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape("   ", "WYW", "   ");
+            r.shape("WYW");
             r.setIngredient('W', Material.WHEAT);
             r.setIngredient('Y', Material.YELLOW_DYE);
         } else {
-            r.shape("   ", "WYW", "   ");
+            r.shape("WYW");
             r.setIngredient('W', Material.WHEAT);
             r.setIngredient('Y', Material.YELLOW_DYE);
         }
