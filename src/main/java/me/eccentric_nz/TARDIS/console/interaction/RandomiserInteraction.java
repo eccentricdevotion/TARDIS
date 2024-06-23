@@ -87,7 +87,8 @@ public class RandomiserInteraction {
                     World world = getWorldFromState(rsri.getStates()[4]);
                     if (world != null) {
                         Location current = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
-                        new TARDISTimeTravel(plugin).getDestination(world, rsri.getStates()[1], rsri.getStates()[2], rsri.getStates()[3], direction, world.getEnvironment().toString(), current, player);
+                        Location rand = new TARDISTimeTravel(plugin).getDestination(world, rsri.getStates()[1], rsri.getStates()[2], rsri.getStates()[3], direction, world.getEnvironment().toString(), current, player);
+                        RandomDestinationAction.setDestination(plugin, player, id, direction, cost, tardis.getCompanions(), tardis.getUuid(), rand);
                     }
                 } else {
                     new RandomDestinationAction(plugin).getRandomDestination(player, id, rsri.getStates(), rscl, direction, tardis.getArtronLevel(), cost, tardis.getCompanions(), tardis.getUuid());

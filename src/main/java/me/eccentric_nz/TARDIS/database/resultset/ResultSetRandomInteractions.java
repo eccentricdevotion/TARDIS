@@ -56,8 +56,8 @@ public class ResultSetRandomInteractions {
         map.put("WORLD", 0);
         map.put("X", 1);
         map.put("Z", 2);
-        map.put("HELMIC_REGULATOR", 4);
         map.put("MULTIPLIER", 3);
+        map.put("HELMIC_REGULATOR", 4);
     }
 
     /**
@@ -76,11 +76,9 @@ public class ResultSetRandomInteractions {
             statement.setInt(1, id);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
-                int i = 0;
                 while (rs.next()) {
                     // 0 => 'WORLD', 1 => 'X', 2 => 'Z', 3 => 'MULTIPLIER', 4 => HELMIC_REGULATOR
                     diodes[map.get(rs.getString("control"))] = rs.getInt("state");
-                    i++;
                 }
             } else {
                 return false;
