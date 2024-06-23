@@ -30,6 +30,8 @@ import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.travel.TARDISStructureLocation;
 import me.eccentric_nz.TARDIS.travel.TARDISStructureTravel;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -53,6 +55,10 @@ public class TARDISTravelStructure {
         }
         if (!TARDISPermission.hasPermission(player, "tardis.timetravel.village")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_PERM_VILLAGE");
+            return true;
+        }
+        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.TELEPATHIC_CIRCUIT)) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Telepathic Circuit");
             return true;
         }
         TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);

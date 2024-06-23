@@ -27,6 +27,8 @@ import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.travel.TARDISCaveFinder;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -46,6 +48,10 @@ public class TARDISTravelCave {
     public boolean action(Player player, int id) {
         if (!TARDISPermission.hasPermission(player, "tardis.timetravel.cave")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_PERM_CAVE");
+            return true;
+        }
+        if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(player.getUniqueId().toString(), SystemTree.TELEPATHIC_CIRCUIT)) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Telepathic Circuit");
             return true;
         }
         // check for telepathic circuit
