@@ -94,7 +94,22 @@ public class TARDISSmithingListener implements Listener {
                 if (!lore.contains(upgrade)) {
                     im.setDisplayName(dn);
                     im.setCustomModelData(cmd);
-                    lore.add(upgrade);
+                    int index = -1;
+                    String charge = null;
+                    for (int i = lore.size() - 1; i >= 0; i--) {
+                        if (lore.get(i).startsWith("Charge: ")) {
+                            charge = lore.get(i);
+                            index = i;
+                            break;
+                        }
+                    }
+                    if (index != -1 && charge != null) {
+                        lore.remove(index);
+                        lore.add(upgrade);
+                        lore.add(charge);
+                    } else {
+                        lore.add(upgrade);
+                    }
                     im.setLore(lore);
                     is.setItemMeta(im);
                     // change the crafting result
