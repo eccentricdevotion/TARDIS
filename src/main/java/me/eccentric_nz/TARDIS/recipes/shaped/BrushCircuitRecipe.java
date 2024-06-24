@@ -40,14 +40,13 @@ public class BrushCircuitRecipe {
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" K ", "RSR", " R ");
             r.setIngredient('K', Material.BRUSH);
-            r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('S', Material.COPPER_BLOCK);
         } else {
             r.shape(" K ", "RSR", " R ");
             r.setIngredient('K', Material.FEATHER);
-            r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('S', Material.COPPER_INGOT);
         }
+        r.setIngredient('R', Material.REDSTONE);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Brush Circuit", r);
     }

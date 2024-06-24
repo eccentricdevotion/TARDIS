@@ -51,16 +51,13 @@ public class RustPlagueSwordRecipe {
         exact.setItemMeta(em);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("RIR", "RIR", "DSD");
-            r.setIngredient('R', new RecipeChoice.ExactChoice(exact));
-            r.setIngredient('I', Material.IRON_INGOT);
             r.setIngredient('D', Material.DIAMOND);
-            r.setIngredient('S', Material.STICK);
         } else {
             r.shape("RIR", "RIR", " S ");
-            r.setIngredient('R', new RecipeChoice.ExactChoice(exact));
-            r.setIngredient('I', Material.IRON_INGOT);
-            r.setIngredient('S', Material.STICK);
         }
+        r.setIngredient('R', new RecipeChoice.ExactChoice(exact));
+        r.setIngredient('I', Material.IRON_INGOT);
+        r.setIngredient('S', Material.STICK);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Rust Plague Sword", r);
     }

@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -39,15 +38,9 @@ public class FishFingerRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "fish_finger");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape(" B ", " F ", " B ");
-            r.setIngredient('B', Material.BREAD);
-            r.setIngredient('F', Material.COD);
-        } else {
-            r.shape(" B ", " F ", " B ");
-            r.setIngredient('B', Material.BREAD);
-            r.setIngredient('F', Material.COD);
-        }
+        r.shape("B", "F", "B");
+        r.setIngredient('B', Material.BREAD);
+        r.setIngredient('F', Material.COD);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Fish Finger", r);
     }

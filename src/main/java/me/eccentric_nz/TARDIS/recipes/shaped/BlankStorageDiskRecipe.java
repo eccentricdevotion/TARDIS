@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -33,13 +32,8 @@ public class BlankStorageDiskRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "blank_storage_disk");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape("QQQ", "Q Q", "QQQ");
-            r.setIngredient('Q', Material.QUARTZ);
-        } else {
-            r.shape("QQQ", "Q Q", "QQQ");
-            r.setIngredient('Q', Material.QUARTZ);
-        }
+        r.shape("QQQ", "Q Q", "QQQ");
+        r.setIngredient('Q', Material.QUARTZ);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Blank Storage Disk", r);
     }

@@ -50,9 +50,6 @@ public class TARDISChameleonCircuitRecipe {
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("DGD", "GEG", "RMR");
             r.setIngredient('D', Material.REPEATER);
-            r.setIngredient('G', Material.GOLD_INGOT);
-            r.setIngredient('E', Material.DETECTOR_RAIL);
-            r.setIngredient('R', Material.REDSTONE);
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
             em.setDisplayName("TARDIS Materialisation Circuit");
@@ -68,10 +65,10 @@ public class TARDISChameleonCircuitRecipe {
             r.setIngredient('M', new RecipeChoice.ExactChoice(exact));
         } else {
             r.shape(" G ", "RER", " G ");
-            r.setIngredient('G', Material.GOLD_INGOT);
-            r.setIngredient('E', Material.DETECTOR_RAIL);
-            r.setIngredient('R', Material.REDSTONE);
         }
+        r.setIngredient('G', Material.GOLD_INGOT);
+        r.setIngredient('E', Material.DETECTOR_RAIL);
+        r.setIngredient('R', Material.REDSTONE);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Chameleon Circuit", r);
     }

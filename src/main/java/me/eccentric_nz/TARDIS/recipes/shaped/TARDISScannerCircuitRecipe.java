@@ -44,12 +44,11 @@ public class TARDISScannerCircuitRecipe {
             r.shape("GRG", "RER", "GRG");
             r.setIngredient('G', Material.GLASS);
             r.setIngredient('E', Material.SPIDER_EYE);
-            r.setIngredient('R', Material.REDSTONE);
         } else {
             r.shape("GRG", "RGR", "GRG");
             r.setIngredient('G', Material.GLASS_PANE);
-            r.setIngredient('R', Material.REDSTONE);
         }
+        r.setIngredient('R', Material.REDSTONE);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Scanner Circuit", r);
     }

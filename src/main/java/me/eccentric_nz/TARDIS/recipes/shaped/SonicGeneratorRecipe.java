@@ -39,19 +39,16 @@ public class SonicGeneratorRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "sonic_generator");
         ShapedRecipe r = new ShapedRecipe(key, is);
+        r.shape(" S ", " F ", "GRG");
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape(" S ", " F ", "GRG");
             r.setIngredient('G', Material.GOLD_INGOT);
             r.setIngredient('R', Material.REDSTONE_BLOCK);
-            r.setIngredient('F', Material.FLOWER_POT);
-            r.setIngredient('S', Material.BLAZE_ROD);
         } else {
-            r.shape(" S ", " F ", "GRG");
             r.setIngredient('G', Material.GOLD_NUGGET);
             r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('F', Material.FLOWER_POT);
-            r.setIngredient('S', Material.BLAZE_ROD);
         }
+        r.setIngredient('F', Material.FLOWER_POT);
+        r.setIngredient('S', Material.BLAZE_ROD);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Sonic Generator", r);
     }

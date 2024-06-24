@@ -47,11 +47,11 @@ public class TARDISRemoteKeyRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_remote_key");
         ShapedRecipe r = new ShapedRecipe(key, is);
+        r.shape("RCR", " K ", " T ");
+        r.setIngredient('R', Material.REDSTONE);
+        r.setIngredient('C', Material.COMPARATOR);
+        r.setIngredient('K', Material.GOLD_NUGGET);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape("RCR", " K ", " T ");
-            r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('C', Material.COMPARATOR);
-            r.setIngredient('K', Material.GOLD_NUGGET);
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
             em.setDisplayName("TARDIS Materialisation Circuit");
@@ -66,10 +66,6 @@ public class TARDISRemoteKeyRecipe {
             exact.setItemMeta(em);
             r.setIngredient('T', new RecipeChoice.ExactChoice(exact));
         } else {
-            r.shape("RCR", " K ", " T ");
-            r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('C', Material.COMPARATOR);
-            r.setIngredient('K', Material.GOLD_NUGGET);
             r.setIngredient('T', Material.REDSTONE_TORCH);
         }
         plugin.getServer().addRecipe(r);

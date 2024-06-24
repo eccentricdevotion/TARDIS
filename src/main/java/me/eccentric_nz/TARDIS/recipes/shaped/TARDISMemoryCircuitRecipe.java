@@ -43,13 +43,12 @@ public class TARDISMemoryCircuitRecipe {
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("RTR", "TCT", "RTR");
             r.setIngredient('R', Material.RED_SAND);
-            r.setIngredient('T', Material.REDSTONE_TORCH);
             r.setIngredient('C', Material.TRAPPED_CHEST);
         } else {
             r.shape(" T ", "TCT", " T ");
-            r.setIngredient('T', Material.REDSTONE_TORCH);
             r.setIngredient('C', Material.CHEST);
         }
+        r.setIngredient('T', Material.REDSTONE_TORCH);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Memory Circuit", r);
     }

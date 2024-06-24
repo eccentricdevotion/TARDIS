@@ -43,15 +43,13 @@ public class PaperBagRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" LC", "PSP", " P ");
-            r.setIngredient('L', Material.LAPIS_BLOCK);
             r.setIngredient('C', Material.COMPARATOR);
-            r.setIngredient('P', Material.PAPER);
             r.setIngredient('S', Material.SHULKER_SHELL);
         } else {
             r.shape("PLP", " P ");
-            r.setIngredient('P', Material.PAPER);
-            r.setIngredient('L', Material.LAPIS_BLOCK);
         }
+        r.setIngredient('P', Material.PAPER);
+        r.setIngredient('L', Material.LAPIS_BLOCK);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Paper Bag", r);
     }

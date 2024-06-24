@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -42,15 +41,9 @@ public class ServerAdminCircuitRecipe {
         em.setDisplayName("Sonic Oscillator");
         em.setCustomModelData(RecipeItem.SONIC_OSCILLATOR.getCustomModelData());
         exact.setItemMeta(em);
-        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape("BBB", "BOB", "BBB");
-            r.setIngredient('B', Material.BEDROCK);
-            r.setIngredient('O', new RecipeChoice.ExactChoice(exact));
-        } else {
-            r.shape("BBB", "BOB", "BBB");
-            r.setIngredient('B', Material.BEDROCK);
-            r.setIngredient('O', new RecipeChoice.ExactChoice(exact));
-        }
+        r.shape("BBB", "BOB", "BBB");
+        r.setIngredient('B', Material.BEDROCK);
+        r.setIngredient('O', new RecipeChoice.ExactChoice(exact));
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Server Admin Circuit", r);
     }

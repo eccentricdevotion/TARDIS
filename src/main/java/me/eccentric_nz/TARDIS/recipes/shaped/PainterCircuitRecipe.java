@@ -37,15 +37,12 @@ public class PainterCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "painter_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
+        r.shape(" I ", "DGD", " I ");
+        r.setIngredient('I', Material.BLACK_DYE);
+        r.setIngredient('D', Material.PURPLE_DYE);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape(" I ", "DGD", " I ");
-            r.setIngredient('I', Material.BLACK_DYE);
-            r.setIngredient('D', Material.PURPLE_DYE);
             r.setIngredient('G', Material.GOLD_BLOCK);
         } else {
-            r.shape(" I ", "DGD", " I ");
-            r.setIngredient('I', Material.BLACK_DYE);
-            r.setIngredient('D', Material.PURPLE_DYE);
             r.setIngredient('G', Material.GOLD_NUGGET);
         }
         plugin.getServer().addRecipe(r);

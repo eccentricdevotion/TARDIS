@@ -38,14 +38,12 @@ public class IgniteCircuitRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("LN ", "NFN", " NL");
-            r.setIngredient('N', Material.NETHERRACK);
-            r.setIngredient('F', Material.FLINT_AND_STEEL);
             r.setIngredient('L', Material.LAVA_BUCKET);
         } else {
             r.shape(" N ", "NFN", " N ");
-            r.setIngredient('N', Material.NETHERRACK);
-            r.setIngredient('F', Material.FLINT_AND_STEEL);
         }
+        r.setIngredient('N', Material.NETHERRACK);
+        r.setIngredient('F', Material.FLINT_AND_STEEL);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Ignite Circuit", r);
     }

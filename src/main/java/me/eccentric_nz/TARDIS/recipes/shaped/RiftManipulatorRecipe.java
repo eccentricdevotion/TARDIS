@@ -51,15 +51,13 @@ public class RiftManipulatorRecipe {
         acid.setItemMeta(aim);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" A ", "ACA", "NAN");
-            r.setIngredient('A', new RecipeChoice.ExactChoice(acid));
-            r.setIngredient('C', new RecipeChoice.ExactChoice(rift));
             r.setIngredient('N', Material.NETHER_STAR);
         } else {
             r.shape(" A ", "ACA", "RAR");
-            r.setIngredient('A', new RecipeChoice.ExactChoice(acid));
-            r.setIngredient('C', new RecipeChoice.ExactChoice(rift));
             r.setIngredient('R', Material.REDSTONE);
         }
+        r.setIngredient('A', new RecipeChoice.ExactChoice(acid));
+        r.setIngredient('C', new RecipeChoice.ExactChoice(rift));
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Rift Manipulator", r);
     }

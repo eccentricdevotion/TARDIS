@@ -37,16 +37,13 @@ public class RedstoneActivatorCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "redstone_activator_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
+        r.shape("RCR", " I ", "RCR");
+        r.setIngredient('C', Material.COMPARATOR);
+        r.setIngredient('I', Material.IRON_INGOT);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape("RCR", " I ", "RCR");
             r.setIngredient('R', Material.REPEATER);
-            r.setIngredient('C', Material.COMPARATOR);
-            r.setIngredient('I', Material.IRON_INGOT);
         } else {
-            r.shape("RCR", " I ", "RCR");
             r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('C', Material.COMPARATOR);
-            r.setIngredient('I', Material.IRON_INGOT);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Redstone Activator Circuit", r);

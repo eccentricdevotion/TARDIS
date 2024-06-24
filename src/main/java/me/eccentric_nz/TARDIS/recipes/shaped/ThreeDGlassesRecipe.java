@@ -43,15 +43,12 @@ public class ThreeDGlassesRecipe {
             r.shape("R T", "P P", "CPM");
             r.setIngredient('R', Material.COMPARATOR);
             r.setIngredient('T', Material.REDSTONE_TORCH);
-            r.setIngredient('P', Material.PAPER);
-            r.setIngredient('C', Material.CYAN_STAINED_GLASS_PANE);
-            r.setIngredient('M', Material.MAGENTA_STAINED_GLASS_PANE);
         } else {
             r.shape("P P", "CPM");
-            r.setIngredient('P', Material.PAPER);
-            r.setIngredient('C', Material.CYAN_STAINED_GLASS_PANE);
-            r.setIngredient('M', Material.MAGENTA_STAINED_GLASS_PANE);
         }
+        r.setIngredient('P', Material.PAPER);
+        r.setIngredient('C', Material.CYAN_STAINED_GLASS_PANE);
+        r.setIngredient('M', Material.MAGENTA_STAINED_GLASS_PANE);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("3-D Glasses", r);
     }

@@ -45,17 +45,14 @@ public class TARDISARSCircuitRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("SSS", "DPT", "RRR");
-            r.setIngredient('S', Material.WHEAT_SEEDS);
             r.setIngredient('D', Material.REPEATER);
             r.setIngredient('P', Material.PISTON);
-            r.setIngredient('T', Material.REDSTONE_TORCH);
-            r.setIngredient('R', Material.REDSTONE);
         } else {
             r.shape("SSS", "T T", "RRR");
-            r.setIngredient('S', Material.WHEAT_SEEDS);
-            r.setIngredient('T', Material.REDSTONE_TORCH);
-            r.setIngredient('R', Material.REDSTONE);
         }
+        r.setIngredient('S', Material.WHEAT_SEEDS);
+        r.setIngredient('T', Material.REDSTONE_TORCH);
+        r.setIngredient('R', Material.REDSTONE);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS ARS Circuit", r);
     }

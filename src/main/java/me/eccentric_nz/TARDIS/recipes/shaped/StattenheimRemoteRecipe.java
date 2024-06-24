@@ -47,22 +47,19 @@ public class StattenheimRemoteRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("OBO", "OLO", "RRR");
-            r.setIngredient('O', Material.OBSIDIAN);
-            r.setIngredient('B', Material.STONE_BUTTON);
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
             em.setDisplayName("TARDIS Stattenheim Circuit");
             em.setCustomModelData(RecipeItem.TARDIS_STATTENHEIM_CIRCUIT.getCustomModelData());
             exact.setItemMeta(em);
             r.setIngredient('L', new RecipeChoice.ExactChoice(exact));
-            r.setIngredient('R', Material.REDSTONE);
         } else {
             r.shape("OBO", " L ", "RRR");
-            r.setIngredient('O', Material.OBSIDIAN);
-            r.setIngredient('B', Material.STONE_BUTTON);
             r.setIngredient('L', Material.BLUE_DYE);
-            r.setIngredient('R', Material.REDSTONE);
         }
+        r.setIngredient('O', Material.OBSIDIAN);
+        r.setIngredient('B', Material.STONE_BUTTON);
+        r.setIngredient('R', Material.REDSTONE);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Stattenheim Remote", r);
     }

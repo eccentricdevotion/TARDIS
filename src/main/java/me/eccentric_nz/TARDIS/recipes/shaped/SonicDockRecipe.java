@@ -41,9 +41,10 @@ public class SonicDockRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "sonic_dock");
         ShapedRecipe r = new ShapedRecipe(key, is);
+        r.shape("RGR", "GSG", "BGB");
+        r.setIngredient('R', Material.REDSTONE);
+        r.setIngredient('B', Material.BLACKSTONE);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape("RGR", "GSG", "BGB");
-            r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('G', Material.GOLD_INGOT);
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
@@ -51,13 +52,10 @@ public class SonicDockRecipe {
             em.setCustomModelData(RecipeItem.SONIC_OSCILLATOR.getCustomModelData());
             exact.setItemMeta(em);
             r.setIngredient('S', new RecipeChoice.ExactChoice(exact));
-            r.setIngredient('B', Material.BLACKSTONE);
         } else {
             r.shape("RGR", "GSG", "BGB");
-            r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('G', Material.GOLD_NUGGET);
             r.setIngredient('S', Material.REPEATER);
-            r.setIngredient('B', Material.BLACKSTONE);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Sonic Dock", r);

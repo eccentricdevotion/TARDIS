@@ -58,18 +58,13 @@ public class FobWatchRecipe {
         exact.setItemMeta(em);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" C ", "IWI", "R R");
-            r.setIngredient('C', new RecipeChoice.ExactChoice(exact));
             r.setIngredient('I', Material.IRON_INGOT);
-            r.setIngredient('W', Material.CLOCK);
-            r.setIngredient('R', Material.REDSTONE);
-
         } else {
             r.shape(" C ", " W ", "R R");
-            r.setIngredient('C', new RecipeChoice.ExactChoice(exact));
-            r.setIngredient('W', Material.CLOCK);
-            r.setIngredient('R', Material.REDSTONE);
-
         }
+        r.setIngredient('C', new RecipeChoice.ExactChoice(exact));
+        r.setIngredient('W', Material.CLOCK);
+        r.setIngredient('R', Material.REDSTONE);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Fob Watch", r);
     }

@@ -52,19 +52,16 @@ public class TARDISBiomeReaderRecipe {
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" C ", "SDT", "LWN");
             r.setIngredient('C', new RecipeChoice.ExactChoice(exact));
-            r.setIngredient('S', Material.SAND);
-            r.setIngredient('D', Material.DIRT);
-            r.setIngredient('T', Material.STONE);
             r.setIngredient('L', Material.CLAY);
             r.setIngredient('W', Material.SNOW_BLOCK);
             r.setIngredient('N', Material.NETHERRACK);
         } else {
             r.shape(" C ", "SDT");
             r.setIngredient('C', new RecipeChoice.ExactChoice(exact));
-            r.setIngredient('S', Material.SAND);
-            r.setIngredient('D', Material.DIRT);
-            r.setIngredient('T', Material.STONE);
         }
+        r.setIngredient('S', Material.SAND);
+        r.setIngredient('D', Material.DIRT);
+        r.setIngredient('T', Material.STONE);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Biome Reader", r);
     }

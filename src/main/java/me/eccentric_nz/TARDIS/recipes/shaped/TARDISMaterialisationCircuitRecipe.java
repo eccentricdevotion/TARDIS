@@ -48,16 +48,13 @@ public class TARDISMaterialisationCircuitRecipe {
             r.shape("IDI", "DLD", "QRQ");
             r.setIngredient('I', Material.ENDER_EYE);
             r.setIngredient('D', Material.REPEATER);
-            r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('L', Material.BLUE_DYE);
-            r.setIngredient('Q', Material.QUARTZ);
         } else {
             r.shape("IRI", " L ", "QRQ");
             r.setIngredient('I', Material.IRON_INGOT);
-            r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('L', Material.BLUE_DYE);
-            r.setIngredient('Q', Material.QUARTZ);
         }
+        r.setIngredient('R', Material.REDSTONE);
+        r.setIngredient('L', Material.BLUE_DYE);
+        r.setIngredient('Q', Material.QUARTZ);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Materialisation Circuit", r);
     }

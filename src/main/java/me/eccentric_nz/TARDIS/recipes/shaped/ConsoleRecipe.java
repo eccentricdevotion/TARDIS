@@ -55,17 +55,15 @@ public class ConsoleRecipe {
             ShapedRecipe r = new ShapedRecipe(key, is);
             if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
                 r.shape("CBC", "LRL", "CBC");
-                r.setIngredient('C', colour.getKey());
-                r.setIngredient('B', Material.BAMBOO_BUTTON);
                 r.setIngredient('L', Material.LEVER);
                 r.setIngredient('R', Material.COMPARATOR);
             } else {
                 r.shape("CBC", "ORO", "CBC");
-                r.setIngredient('C', colour.getKey());
-                r.setIngredient('B', Material.BAMBOO_BUTTON);
                 r.setIngredient('O', Material.COMPARATOR);
                 r.setIngredient('R', Material.REDSTONE_BLOCK);
             }
+            r.setIngredient('C', colour.getKey());
+            r.setIngredient('B', Material.BAMBOO_BUTTON);
             plugin.getServer().addRecipe(r);
             plugin.getFigura().getShapedRecipes().put(dn, r);
         }

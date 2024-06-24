@@ -66,9 +66,7 @@ public class SonicScrewdriverRecipe {
         NamespacedKey key = new NamespacedKey(plugin, "sonic_screwdriver");
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape(" Q ", " I ", " O ");
-            r.setIngredient('Q', Material.QUARTZ);
-            r.setIngredient('I', Material.IRON_INGOT);
+            r.shape("Q", "I", "O");
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
             em.setDisplayName("Sonic Oscillator");
@@ -76,10 +74,10 @@ public class SonicScrewdriverRecipe {
             exact.setItemMeta(em);
             r.setIngredient('O', new RecipeChoice.ExactChoice(exact));
         } else {
-            r.shape(" Q ", " I ", " I ");
-            r.setIngredient('Q', Material.QUARTZ);
-            r.setIngredient('I', Material.IRON_INGOT);
+            r.shape("Q", "I", "I");
         }
+        r.setIngredient('Q', Material.QUARTZ);
+        r.setIngredient('I', Material.IRON_INGOT);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Sonic Screwdriver", r);
     }

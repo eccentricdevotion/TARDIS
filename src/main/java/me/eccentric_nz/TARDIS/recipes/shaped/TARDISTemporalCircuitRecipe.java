@@ -44,16 +44,13 @@ public class TARDISTemporalCircuitRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" I ", "RWR", "QIQ");
-            r.setIngredient('I', Material.IRON_INGOT);
-            r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('W', Material.CLOCK);
             r.setIngredient('Q', Material.QUARTZ);
         } else {
             r.shape(" I ", "RWR", " I ");
-            r.setIngredient('I', Material.IRON_INGOT);
-            r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('W', Material.CLOCK);
         }
+        r.setIngredient('I', Material.IRON_INGOT);
+        r.setIngredient('R', Material.REDSTONE);
+        r.setIngredient('W', Material.CLOCK);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Temporal Circuit", r);
     }

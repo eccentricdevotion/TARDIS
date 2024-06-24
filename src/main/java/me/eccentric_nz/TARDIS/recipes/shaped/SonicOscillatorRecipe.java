@@ -38,14 +38,12 @@ public class SonicOscillatorRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("RQR", "RBR", "RQR");
-            r.setIngredient('Q', Material.QUARTZ);
-            r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('B', Material.STONE_BUTTON);
         } else {
             r.shape("RQR", "R R", "RQR");
-            r.setIngredient('Q', Material.QUARTZ);
-            r.setIngredient('R', Material.REDSTONE);
         }
+        r.setIngredient('Q', Material.QUARTZ);
+        r.setIngredient('R', Material.REDSTONE);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Sonic Oscillator", r);
     }

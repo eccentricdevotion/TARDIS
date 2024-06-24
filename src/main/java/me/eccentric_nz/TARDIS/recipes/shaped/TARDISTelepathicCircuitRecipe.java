@@ -42,18 +42,16 @@ public class TARDISTelepathicCircuitRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" S ", "SPS", "ESE");
-            r.setIngredient('S', Material.SLIME_BALL);
             ItemStack potion = new ItemStack(Material.POTION, 1);
             PotionMeta pm = (PotionMeta) potion.getItemMeta();
             pm.setBasePotionType(PotionType.AWKWARD);
             potion.setItemMeta(pm);
             r.setIngredient('P', new RecipeChoice.ExactChoice(potion));
-            r.setIngredient('E', Material.EMERALD);
         } else {
             r.shape(" S ", "SES", " S ");
-            r.setIngredient('S', Material.SLIME_BALL);
-            r.setIngredient('E', Material.EMERALD);
         }
+        r.setIngredient('S', Material.SLIME_BALL);
+        r.setIngredient('E', Material.EMERALD);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Telepathic Circuit", r);
     }

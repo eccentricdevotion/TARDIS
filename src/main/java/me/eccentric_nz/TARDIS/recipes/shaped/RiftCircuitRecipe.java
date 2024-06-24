@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -35,15 +34,9 @@ public class RiftCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "rift_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape(" D ", "DND", " D ");
-            r.setIngredient('D', Material.DIAMOND);
-            r.setIngredient('N', Material.NETHER_STAR);
-        } else {
-            r.shape(" D ", "DND", " D ");
-            r.setIngredient('D', Material.DIAMOND);
-            r.setIngredient('N', Material.NETHER_STAR);
-        }
+        r.shape(" D ", "DND", " D ");
+        r.setIngredient('D', Material.DIAMOND);
+        r.setIngredient('N', Material.NETHER_STAR);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Rift Circuit", r);
     }

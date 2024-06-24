@@ -37,14 +37,12 @@ public class TARDISMonitorRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_monitor");
         ShapedRecipe r = new ShapedRecipe(key, is);
+        r.shape("MRM", "RGR", "MRM");
+        r.setIngredient('M', Material.MAP);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape("MRM", "RGR", "MRM");
-            r.setIngredient('M', Material.MAP);
             r.setIngredient('G', Material.TINTED_GLASS);
             r.setIngredient('R', Material.REDSTONE_BLOCK);
         } else {
-            r.shape("MRM", "RGR", "MRM");
-            r.setIngredient('M', Material.MAP);
             r.setIngredient('G', Material.GLASS_PANE);
             r.setIngredient('R', Material.REDSTONE);
         }

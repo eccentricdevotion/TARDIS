@@ -44,13 +44,12 @@ public class AcidBatteryRecipe {
         exact.setItemMeta(em);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" A ", "ARA", " A ");
-            r.setIngredient('A', new RecipeChoice.ExactChoice(exact));
             r.setIngredient('R', Material.REDSTONE_BLOCK);
         } else {
             r.shape(" A ", "ARA", " A ");
-            r.setIngredient('A', new RecipeChoice.ExactChoice(exact));
             r.setIngredient('R', Material.REDSTONE);
         }
+        r.setIngredient('A', new RecipeChoice.ExactChoice(exact));
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Acid Battery", r);
     }

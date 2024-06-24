@@ -40,14 +40,12 @@ public class BioscannerCircuitRecipe {
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" E ", "BRB", " E ");
             r.setIngredient('R', Material.REPEATER);
-            r.setIngredient('E', Material.SPIDER_EYE);
-            r.setIngredient('B', Material.BONE);
         } else {
             r.shape(" E ", "BRB", " E ");
             r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('E', Material.SPIDER_EYE);
-            r.setIngredient('B', Material.BONE);
         }
+        r.setIngredient('E', Material.SPIDER_EYE);
+        r.setIngredient('B', Material.BONE);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Bio-scanner Circuit", r);
     }

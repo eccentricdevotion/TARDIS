@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -39,15 +38,9 @@ public class TARDISInputCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_input_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape(" R ", " S ", " R ");
-            r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('S', Material.OAK_SIGN);
-        } else {
-            r.shape(" R ", " S ", " R ");
-            r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('S', Material.OAK_SIGN);
-        }
+        r.shape("R", "S", "R");
+        r.setIngredient('R', Material.REDSTONE);
+        r.setIngredient('S', Material.OAK_SIGN);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Input Circuit", r);
     }

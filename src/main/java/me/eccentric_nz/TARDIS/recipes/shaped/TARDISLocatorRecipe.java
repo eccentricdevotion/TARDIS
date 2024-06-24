@@ -39,10 +39,9 @@ public class TARDISLocatorRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_locator");
         ShapedRecipe r = new ShapedRecipe(key, is);
+        r.shape("OIO", "ICI", "OIO");
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape("OIO", "ICI", "OIO");
             r.setIngredient('O', Material.OBSIDIAN);
-            r.setIngredient('I', Material.IRON_INGOT);
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
             em.setDisplayName("TARDIS Locator Circuit");
@@ -50,11 +49,10 @@ public class TARDISLocatorRecipe {
             exact.setItemMeta(em);
             r.setIngredient('C', new RecipeChoice.ExactChoice(exact));
         } else {
-            r.shape("OIO", "ICI", "OIO");
             r.setIngredient('O', Material.GRAVEL);
-            r.setIngredient('I', Material.IRON_INGOT);
             r.setIngredient('C', Material.RED_WOOL);
         }
+        r.setIngredient('I', Material.IRON_INGOT);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Locator", r);
     }

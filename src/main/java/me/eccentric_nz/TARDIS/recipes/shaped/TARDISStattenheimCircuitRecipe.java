@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -62,19 +61,11 @@ public class TARDISStattenheimCircuitRecipe {
         lim.setDisplayName("TARDIS Locator Circuit");
         lim.setCustomModelData(RecipeItem.TARDIS_LOCATOR_CIRCUIT.getCustomModelData());
         locator.setItemMeta(lim);
-        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape("LRM", "QQQ");
-            r.setIngredient('L', new RecipeChoice.ExactChoice(locator));
-            r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('M', new RecipeChoice.ExactChoice(exact));
-            r.setIngredient('Q', Material.QUARTZ);
-        } else {
-            r.shape("LRM", "QQQ");
-            r.setIngredient('L', new RecipeChoice.ExactChoice(locator));
-            r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('M', new RecipeChoice.ExactChoice(exact));
-            r.setIngredient('Q', Material.QUARTZ);
-        }
+        r.shape("LRM", "QQQ");
+        r.setIngredient('L', new RecipeChoice.ExactChoice(locator));
+        r.setIngredient('R', Material.REDSTONE);
+        r.setIngredient('M', new RecipeChoice.ExactChoice(exact));
+        r.setIngredient('Q', Material.QUARTZ);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Stattenheim Circuit", r);
     }

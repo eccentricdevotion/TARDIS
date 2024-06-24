@@ -44,16 +44,13 @@ public class HandlesRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("IDI", "ISI", "IRI");
-            r.setIngredient('I', Material.IRON_INGOT);
             r.setIngredient('D', Material.DIAMOND);
-            r.setIngredient('S', Material.SKELETON_SKULL);
-            r.setIngredient('R', Material.REDSTONE);
         } else {
             r.shape("III", "ISI", "IRI");
-            r.setIngredient('I', Material.IRON_INGOT);
-            r.setIngredient('S', Material.SKELETON_SKULL);
-            r.setIngredient('R', Material.REDSTONE);
         }
+        r.setIngredient('I', Material.IRON_INGOT);
+        r.setIngredient('S', Material.SKELETON_SKULL);
+        r.setIngredient('R', Material.REDSTONE);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Handles", r);
     }

@@ -25,7 +25,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -87,6 +86,7 @@ class TARDISLazarusInventory {
         disguises.add(Material.IRON_GOLEM_SPAWN_EGG);
         disguises.add(Material.LLAMA_SPAWN_EGG);
         disguises.add(Material.PANDA_SPAWN_EGG);
+        disguises.add(Material.PIGLIN_SPAWN_EGG);
 
         pageOne = getItemStack();
     }

@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -45,21 +44,12 @@ public class TARDISRandomiserCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_randomiser_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape(" D ", "NCE", " W ");
-            r.setIngredient('D', Material.DIRT);
-            r.setIngredient('N', Material.NETHERRACK);
-            r.setIngredient('C', Material.COMPASS);
-            r.setIngredient('E', Material.END_STONE);
-            r.setIngredient('W', Material.WATER_BUCKET);
-        } else {
-            r.shape(" D ", "NCE", " W ");
-            r.setIngredient('D', Material.DIRT);
-            r.setIngredient('N', Material.NETHERRACK);
-            r.setIngredient('C', Material.COMPASS);
-            r.setIngredient('E', Material.END_STONE);
-            r.setIngredient('W', Material.WATER_BUCKET);
-        }
+        r.shape(" D ", "NCE", " W ");
+        r.setIngredient('D', Material.DIRT);
+        r.setIngredient('N', Material.NETHERRACK);
+        r.setIngredient('C', Material.COMPASS);
+        r.setIngredient('E', Material.END_STONE);
+        r.setIngredient('W', Material.WATER_BUCKET);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Randomiser Circuit", r);
     }

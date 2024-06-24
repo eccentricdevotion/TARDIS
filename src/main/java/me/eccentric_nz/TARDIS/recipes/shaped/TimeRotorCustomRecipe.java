@@ -44,18 +44,14 @@ public class TimeRotorCustomRecipe {
                 is.setItemMeta(im);
                 NamespacedKey key = new NamespacedKey(plugin, "time_rotor_" + r);
                 ShapedRecipe recipe = new ShapedRecipe(key, is);
+                recipe.shape("CRC", "GWG", "GRG");
+                recipe.setIngredient('C', material);
+                recipe.setIngredient('W', Material.CLOCK);
+                recipe.setIngredient('G', Material.GLASS_PANE);
                 if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-                    recipe.shape("CRC", "GWG", "GRG");
-                    recipe.setIngredient('C', material);
                     recipe.setIngredient('R', Material.REDSTONE_BLOCK);
-                    recipe.setIngredient('W', Material.CLOCK);
-                    recipe.setIngredient('G', Material.GLASS_PANE);
                 } else {
-                    recipe.shape("CRC", "GWG", "GRG");
-                    recipe.setIngredient('C', material);
                     recipe.setIngredient('R', Material.REDSTONE);
-                    recipe.setIngredient('W', Material.CLOCK);
-                    recipe.setIngredient('G', Material.GLASS_PANE);
                 }
                 plugin.getServer().addRecipe(recipe);
                 plugin.getFigura().getShapedRecipes().put("Time Rotor " + dn, recipe);

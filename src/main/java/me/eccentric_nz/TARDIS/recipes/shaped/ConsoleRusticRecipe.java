@@ -35,30 +35,29 @@ public class ConsoleRusticRecipe {
     }
 
     public void addRecipe() {
-            ItemStack is = new ItemStack(Material.WAXED_OXIDIZED_COPPER, 1);
-            ItemMeta im = is.getItemMeta();
-            String dn = "Rustic Console";
-            im.setDisplayName(dn);
-            im.setLore(List.of("Integration with interaction"));
-            im.setCustomModelData(1001);
-            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 17);
-            is.setItemMeta(im);
-            NamespacedKey key = new NamespacedKey(plugin, "rustic_console");
-            ShapedRecipe r = new ShapedRecipe(key, is);
-            if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-                r.shape("CBC", "LRL", "CBC");
-                r.setIngredient('C', Material.COPPER_INGOT);
-                r.setIngredient('B', Material.BAMBOO_BUTTON);
-                r.setIngredient('L', Material.LEVER);
-                r.setIngredient('R', Material.COMPARATOR);
-            } else {
-                r.shape("CBC", "ORO", "CBC");
-                r.setIngredient('C', Material.COPPER_BLOCK);
-                r.setIngredient('B', Material.BAMBOO_BUTTON);
-                r.setIngredient('O', Material.COMPARATOR);
-                r.setIngredient('R', Material.REDSTONE_BLOCK);
-            }
-            plugin.getServer().addRecipe(r);
-            plugin.getFigura().getShapedRecipes().put(dn, r);
+        ItemStack is = new ItemStack(Material.WAXED_OXIDIZED_COPPER, 1);
+        ItemMeta im = is.getItemMeta();
+        String dn = "Rustic Console";
+        im.setDisplayName(dn);
+        im.setLore(List.of("Integration with interaction"));
+        im.setCustomModelData(1001);
+        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 17);
+        is.setItemMeta(im);
+        NamespacedKey key = new NamespacedKey(plugin, "rustic_console");
+        ShapedRecipe r = new ShapedRecipe(key, is);
+        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
+            r.shape("CBC", "LRL", "CBC");
+            r.setIngredient('C', Material.COPPER_INGOT);
+            r.setIngredient('L', Material.LEVER);
+            r.setIngredient('R', Material.COMPARATOR);
+        } else {
+            r.shape("CBC", "ORO", "CBC");
+            r.setIngredient('C', Material.COPPER_BLOCK);
+            r.setIngredient('O', Material.COMPARATOR);
+            r.setIngredient('R', Material.REDSTONE_BLOCK);
+        }
+        r.setIngredient('B', Material.BAMBOO_BUTTON);
+        plugin.getServer().addRecipe(r);
+        plugin.getFigura().getShapedRecipes().put(dn, r);
     }
 }

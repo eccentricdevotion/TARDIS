@@ -35,12 +35,11 @@ public class PickupArrowsCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "pickup_arrows_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
+        r.shape(" A ", "ARA", " A ");
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape(" S ", "SRS", " S ");
-            r.setIngredient('S', Material.SPECTRAL_ARROW);
+            r.setIngredient('A', Material.SPECTRAL_ARROW);
             r.setIngredient('R', Material.REDSTONE_BLOCK);
         } else {
-            r.shape(" A ", "ARA", " A ");
             r.setIngredient('A', Material.ARROW);
             r.setIngredient('R', Material.REDSTONE);
         }

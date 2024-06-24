@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -38,15 +37,9 @@ public class JammyDodgerRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "jammy_dodger");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape("WRW");
-            r.setIngredient('W', Material.WHEAT);
-            r.setIngredient('R', Material.SWEET_BERRIES);
-        } else {
-            r.shape("WRW");
-            r.setIngredient('W', Material.WHEAT);
-            r.setIngredient('R', Material.SWEET_BERRIES);
-        }
+        r.shape("WRW");
+        r.setIngredient('W', Material.WHEAT);
+        r.setIngredient('R', Material.SWEET_BERRIES);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Jammy Dodger", r);
     }

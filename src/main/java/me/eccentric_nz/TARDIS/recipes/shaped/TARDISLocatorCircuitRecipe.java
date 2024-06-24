@@ -1,7 +1,6 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -41,21 +40,12 @@ public class TARDISLocatorCircuitRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_locator_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape("RQR", "RIR", "DRL");
-            r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('Q', Material.QUARTZ);
-            r.setIngredient('I', Material.IRON_INGOT);
-            r.setIngredient('D', Material.REPEATER);
-            r.setIngredient('L', Material.BLUE_DYE);
-        } else {
-            r.shape("RQR", "RIR", "DRL");
-            r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('Q', Material.QUARTZ);
-            r.setIngredient('I', Material.IRON_INGOT);
-            r.setIngredient('D', Material.REPEATER);
-            r.setIngredient('L', Material.BLUE_DYE);
-        }
+        r.shape("RQR", "RIR", "DRL");
+        r.setIngredient('R', Material.REDSTONE);
+        r.setIngredient('Q', Material.QUARTZ);
+        r.setIngredient('I', Material.IRON_INGOT);
+        r.setIngredient('D', Material.REPEATER);
+        r.setIngredient('L', Material.BLUE_DYE);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Locator Circuit", r);
     }

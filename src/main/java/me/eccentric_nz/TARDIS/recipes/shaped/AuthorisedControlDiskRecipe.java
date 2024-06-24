@@ -39,15 +39,13 @@ public class AuthorisedControlDiskRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("QRQ", "RGR", "QRQ");
-            r.setIngredient('Q', Material.QUARTZ);
-            r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('G', Material.GOLDEN_HELMET);
         } else {
             r.shape("QRQ", "RLR", "QRQ");
-            r.setIngredient('Q', Material.QUARTZ);
-            r.setIngredient('R', Material.REDSTONE);
             r.setIngredient('L', Material.GLASS_PANE);
         }
+        r.setIngredient('Q', Material.QUARTZ);
+        r.setIngredient('R', Material.REDSTONE);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Authorised Control Disk", r);
     }

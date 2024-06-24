@@ -43,15 +43,13 @@ public class ArtronStorageCellRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" B ", "LRL", " L ");
-            r.setIngredient('B', Material.BUCKET);
             r.setIngredient('R', Material.REDSTONE_BLOCK);
-            r.setIngredient('L', Material.LIME_STAINED_GLASS);
         } else {
-            r.shape(" B ", " R ", " L ");
-            r.setIngredient('B', Material.BUCKET);
+            r.shape("B", "R", "L");
             r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('L', Material.LIME_STAINED_GLASS);
         }
+        r.setIngredient('B', Material.BUCKET);
+        r.setIngredient('L', Material.LIME_STAINED_GLASS);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Artron Storage Cell", r);
     }

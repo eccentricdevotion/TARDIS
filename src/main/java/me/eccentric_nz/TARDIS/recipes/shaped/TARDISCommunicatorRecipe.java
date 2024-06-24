@@ -40,16 +40,13 @@ public class TARDISCommunicatorRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("N  ", "IIH", "  D");
-            r.setIngredient('N', Material.NOTE_BLOCK);
-            r.setIngredient('I', Material.IRON_INGOT);
-            r.setIngredient('H', Material.HOPPER);
             r.setIngredient('D', Material.DIAMOND);
         } else {
             r.shape("N  ", "IIH", "  I");
-            r.setIngredient('N', Material.NOTE_BLOCK);
-            r.setIngredient('I', Material.IRON_INGOT);
-            r.setIngredient('H', Material.HOPPER);
         }
+        r.setIngredient('N', Material.NOTE_BLOCK);
+        r.setIngredient('I', Material.IRON_INGOT);
+        r.setIngredient('H', Material.HOPPER);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("TARDIS Communicator", r);
     }

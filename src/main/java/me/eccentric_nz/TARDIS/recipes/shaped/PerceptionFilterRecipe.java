@@ -41,11 +41,11 @@ public class PerceptionFilterRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "perception_filter");
         ShapedRecipe r = new ShapedRecipe(key, is);
+        r.shape("S S", " S ", "RGC");
+        r.setIngredient('S', Material.STRING);
+        r.setIngredient('R', Material.REDSTONE);
+        r.setIngredient('G', Material.GOLD_NUGGET);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape("S S", " S ", "RGC");
-            r.setIngredient('S', Material.STRING);
-            r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('G', Material.GOLD_NUGGET);
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
             em.setDisplayName("Perception Circuit");
@@ -53,10 +53,6 @@ public class PerceptionFilterRecipe {
             exact.setItemMeta(em);
             r.setIngredient('C', new RecipeChoice.ExactChoice(exact));
         } else {
-            r.shape("S S", " S ", "RGC");
-            r.setIngredient('S', Material.STRING);
-            r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('G', Material.GOLD_NUGGET);
             r.setIngredient('C', Material.COMPARATOR);
         }
         plugin.getServer().addRecipe(r);

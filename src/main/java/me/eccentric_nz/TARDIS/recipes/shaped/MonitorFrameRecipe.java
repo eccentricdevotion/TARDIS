@@ -43,15 +43,14 @@ public class MonitorFrameRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("BBB", "BGB", "BRB");
-            r.setIngredient('B', Material.BLACKSTONE);
             r.setIngredient('G', Material.TINTED_GLASS);
             r.setIngredient('R', Material.REDSTONE_BLOCK);
         } else {
             r.shape("BBB", "BGB", "BRB");
-            r.setIngredient('B', Material.BLACKSTONE);
             r.setIngredient('G', Material.GLASS_PANE);
             r.setIngredient('R', Material.REDSTONE);
         }
+        r.setIngredient('B', Material.BLACKSTONE);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Monitor Frame", r);
     }

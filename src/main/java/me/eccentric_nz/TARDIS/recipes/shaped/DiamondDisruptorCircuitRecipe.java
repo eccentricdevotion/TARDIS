@@ -40,14 +40,12 @@ public class DiamondDisruptorCircuitRecipe {
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" O ", "DSD", " O ");
             r.setIngredient('O', Material.OBSIDIAN);
-            r.setIngredient('D', Material.DIAMOND);
-            r.setIngredient('S', Material.SHEARS);
         } else {
             r.shape(" R ", "DSD", " R ");
             r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('D', Material.DIAMOND);
-            r.setIngredient('S', Material.SHEARS);
         }
+        r.setIngredient('D', Material.DIAMOND);
+        r.setIngredient('S', Material.SHEARS);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Diamond Disruptor Circuit", r);
     }

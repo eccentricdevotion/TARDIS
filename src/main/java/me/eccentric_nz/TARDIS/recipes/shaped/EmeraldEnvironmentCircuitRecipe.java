@@ -39,15 +39,13 @@ public class EmeraldEnvironmentCircuitRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" S ", "LEL", " S ");
-            r.setIngredient('E', Material.EMERALD);
-            r.setIngredient('L', Material.OAK_LEAVES);
             r.setIngredient('S', Material.STONE);
         } else {
             r.shape(" D ", "LEL", " D ");
-            r.setIngredient('E', Material.EMERALD);
             r.setIngredient('D', Material.DIRT);
-            r.setIngredient('L', Material.OAK_LEAVES);
         }
+        r.setIngredient('E', Material.EMERALD);
+        r.setIngredient('L', Material.OAK_LEAVES);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Emerald Environment Circuit", r);
     }

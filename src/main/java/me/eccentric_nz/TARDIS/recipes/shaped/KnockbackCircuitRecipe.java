@@ -48,14 +48,12 @@ public class KnockbackCircuitRecipe {
             pm.addStoredEnchant(enchantment, 1, false);
             book.setItemMeta(pm);
             r.setIngredient('K', new RecipeChoice.ExactChoice(book));
-            r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('S', Material.SHIELD);
         } else {
             r.shape(" K ", "RSR", " R ");
             r.setIngredient('K', Material.GOLDEN_SWORD);
-            r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('S', Material.SHIELD);
         }
+        r.setIngredient('R', Material.REDSTONE);
+        r.setIngredient('S', Material.SHIELD);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Knockback Circuit", r);
     }

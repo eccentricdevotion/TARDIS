@@ -39,18 +39,14 @@ public class TimeRotorTwelfthRecipe {
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "time_rotor_twelfth");
         ShapedRecipe r = new ShapedRecipe(key, is);
+        r.shape("CRC", "GWG", "GRG");
+        r.setIngredient('C', Material.ORANGE_DYE);
+        r.setIngredient('W', Material.CLOCK);
+        r.setIngredient('G', Material.GLASS_PANE);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            r.shape("CRC", "GWG", "GRG");
-            r.setIngredient('C', Material.ORANGE_DYE);
             r.setIngredient('R', Material.REDSTONE_BLOCK);
-            r.setIngredient('W', Material.CLOCK);
-            r.setIngredient('G', Material.GLASS_PANE);
         } else {
-            r.shape("CRC", "GWG", "GRG");
-            r.setIngredient('C', Material.ORANGE_DYE);
             r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('W', Material.CLOCK);
-            r.setIngredient('G', Material.GLASS_PANE);
         }
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Time Rotor Twelfth", r);
