@@ -273,10 +273,13 @@ public class TARDISSonicListener implements Listener {
             ItemMeta im = is.getItemMeta();
             if (im.getDisplayName().endsWith("Sonic Screwdriver")) {
                 // set to off state
-                int cmd = im.getCustomModelData() - 2000000;
-                im.setCustomModelData(cmd);
-                is.setItemMeta(im);
-                item.setItemStack(is);
+                int cmd = im.getCustomModelData();
+                if (cmd > 10001000) {
+                    cmd = cmd - 2000000;
+                    im.setCustomModelData(cmd);
+                    is.setItemMeta(im);
+                    item.setItemStack(is);
+                }
             }
         }
     }
