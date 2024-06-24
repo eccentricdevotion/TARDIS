@@ -41,7 +41,7 @@ public class PresetStorageDiskRecipe {
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName("TARDIS Chameleon Circuit");
-        em.setCustomModelData(RecipeItem.SERVER_ADMIN_CIRCUIT.getCustomModelData());
+        em.setCustomModelData(RecipeItem.TARDIS_CHAMELEON_CIRCUIT.getCustomModelData());
         // set the second line of lore
         List<String> circuit;
         String uses = (plugin.getConfig().getString("circuits.uses.chameleon").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
