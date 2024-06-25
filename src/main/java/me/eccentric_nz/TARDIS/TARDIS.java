@@ -322,12 +322,6 @@ public class TARDIS extends JavaPlugin {
         ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse(serverStr);
         // check server version
         if (serverVersion.compareTo(minVersion) >= 0) {
-            if (!PaperLib.isPaper() && !PaperLib.isSpigot()) {
-                getLogger().log(Level.SEVERE, "TARDIS no longer supports servers running CraftBukkit. Please use Spigot or Paper instead!)");
-                hasVersion = false;
-                pm.disablePlugin(this);
-                return;
-            }
             // don't start if TARDISChunkGenerator is present
             if (pm.isPluginEnabled("TARDISChunkGenerator")) {
                 getLogger().log(Level.SEVERE, "This plugin no longer requires TARDISChunkGenerator please remove and try again, disabling...");
@@ -335,7 +329,6 @@ public class TARDIS extends JavaPlugin {
                 pm.disablePlugin(this);
                 return;
             }
-            PaperLib.suggestPaper(this);
             messenger = (PaperLib.isPaper()) ? new AdventureMessage() : new SpigotMessage();
             jsonKeeper = (PaperLib.isPaper()) ? new TARDISChatGUIAdventure() : new TARDISChatGUISpigot();
             updateChatGUI = (PaperLib.isPaper()) ? new TARDISUpdateChatGUIAdventure(this) : new TARDISUpdateChatGUISpigot(this);
