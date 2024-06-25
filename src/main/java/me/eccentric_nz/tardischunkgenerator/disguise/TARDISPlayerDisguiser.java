@@ -67,7 +67,7 @@ public class TARDISPlayerDisguiser {
             connection.connect();
             if (connection.getResponseCode() == HttpsURLConnection.HTTP_OK) {
                 JsonParser jp = new JsonParser();
-                JsonElement root = jp.parse(new InputStreamReader((InputStream) connection.getContent())); //Convert the input stream to a json element
+                JsonElement root = jp.parse(new InputStreamReader((InputStream) connection.getContent())); // convert the input stream to a json element
                 JsonObject rootobj = root.getAsJsonObject();
                 JsonArray jsonArray = rootobj.getAsJsonArray("properties");
                 JsonObject properties = jsonArray.get(0).getAsJsonObject();

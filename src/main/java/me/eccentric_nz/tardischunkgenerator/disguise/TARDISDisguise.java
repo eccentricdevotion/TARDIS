@@ -19,6 +19,7 @@ package me.eccentric_nz.tardischunkgenerator.disguise;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -78,8 +79,18 @@ public class TARDISDisguise {
                 packagePath += "animal.allay.";
                 hasEntityStr = false;
             }
+            case BOGGED -> {
+                str = "Bogged";
+                packagePath += "monster.";
+                hasEntityStr = false;
+            }
+            case BREEZE -> {
+                str = "Breeze";
+                packagePath += "monster.breeze.";
+                hasEntityStr = false;
+            }
             case FROG, TADPOLE -> {
-                str = uppercaseFirst(disguise.getEntityType().toString());
+                str = TARDISStringUtils.uppercaseFirst(disguise.getEntityType().toString());
                 packagePath += "animal.frog.";
                 hasEntityStr = false;
             }
@@ -135,11 +146,11 @@ public class TARDISDisguise {
                 packagePath += "monster.";
             }
             case HORSE, LLAMA -> {
-                str = capitalise(disguise.getEntityType().toString());
+                str = TARDISStringUtils.capitalise(disguise.getEntityType().toString());
                 packagePath += "animal.horse.";
             }
             case DONKEY, MULE -> {
-                str = "Horse" + capitalise(disguise.getEntityType().toString());
+                str = "Horse" + TARDISStringUtils.capitalise(disguise.getEntityType().toString());
                 packagePath += "animal.horse.";
             }
             case VILLAGER -> {
@@ -153,7 +164,7 @@ public class TARDISDisguise {
             case BLAZE, CAVE_SPIDER, CREEPER, DROWNED, ENDERMAN, ENDERMITE, EVOKER, GHAST, GUARDIAN, MAGMA_CUBE,
                  PHANTOM, PILLAGER, RAVAGER, SHULKER, SILVERFISH, SKELETON, SLIME, SPIDER, STRIDER, VEX, VINDICATOR,
                  WITCH, ZOGLIN, ZOMBIE, ZOMBIE_VILLAGER -> {
-                str = capitalise(disguise.getEntityType().toString());
+                str = TARDISStringUtils.capitalise(disguise.getEntityType().toString());
                 packagePath += "monster.";
             }
             case HOGLIN -> {
@@ -169,7 +180,7 @@ public class TARDISDisguise {
                 packagePath += "boss.wither.";
             }
             case PIGLIN, PIGLIN_BRUTE -> {
-                str = capitalise(disguise.getEntityType().toString());
+                str = TARDISStringUtils.capitalise(disguise.getEntityType().toString());
                 packagePath += "monster.piglin.";
             }
             case GLOW_SQUID -> {
@@ -182,7 +193,7 @@ public class TARDISDisguise {
                 hasEntityStr = false;
             }
             default -> {
-                str = capitalise(disguise.getEntityType().toString());
+                str = TARDISStringUtils.capitalise(disguise.getEntityType().toString());
                 packagePath += "animal.";
             }
         }
@@ -364,16 +375,7 @@ public class TARDISDisguise {
 
     private static String switchAndCapitalise(String s) {
         String[] split = s.split("_");
-        return uppercaseFirst(split[1]) + uppercaseFirst(split[0]);
-    }
-
-    private static String capitalise(String s) {
-        String[] split = s.split("_");
-        return (split.length > 1) ? uppercaseFirst(split[0]) + uppercaseFirst(split[1]) : uppercaseFirst(split[0]);
-    }
-
-    private static String uppercaseFirst(String s) {
-        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+        return TARDISStringUtils.uppercaseFirst(split[1]) + TARDISStringUtils.uppercaseFirst(split[0]);
     }
 
     public EntityType getEntityType() {

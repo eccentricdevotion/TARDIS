@@ -67,7 +67,7 @@ public class TARDISChameleonArchDisguiser {
             TARDISDisguiseTracker.ARCHED.remove(player.getUniqueId());
             return;
         }
-        ClientboundPlayerInfoUpdatePacket packetPlayOutPlayerInfo = new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, entityPlayer); // a = ADD_PLAYER
+        ClientboundPlayerInfoUpdatePacket packetPlayOutPlayerInfo = new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, entityPlayer);
         ClientboundRemoveEntitiesPacket packetPlayOutEntityDestroy = new ClientboundRemoveEntitiesPacket(player.getEntityId());
         ClientboundAddEntityPacket packetPlayOutNamedEntitySpawn = new ClientboundAddEntityPacket(entityPlayer, 0, entityPlayer.blockPosition());
         for (org.bukkit.entity.Player p : Bukkit.getOnlinePlayers()) {

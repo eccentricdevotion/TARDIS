@@ -79,7 +79,7 @@ public class TARDISDisguiser {
                         ClientboundSetEntityDataPacket packetPlayOutEntityMetadata = new ClientboundSetEntityDataPacket(mob.getId(), mob.getEntityData().getNonDefaultValues());
                         ServerGamePacketListenerImpl connection = ((CraftPlayer) to).getHandle().connection;
                         connection.send(packetPlayOutEntityDestroy);
-//                        connection.send(packetPlayOutSpawnLivingEntity);
+                        connection.send(packetPlayOutSpawnLivingEntity);
                         connection.send(packetPlayOutEntityMetadata);
                     }
                 }
@@ -101,7 +101,7 @@ public class TARDISDisguiser {
                 if (p != player && player.getWorld() == p.getWorld()) {
                     ServerGamePacketListenerImpl connection = ((CraftPlayer) p).getHandle().connection;
                     connection.send(packetPlayOutEntityDestroy);
-//                    connection.send(packetPlayOutSpawnLivingEntity);
+                    connection.send(packetPlayOutSpawnLivingEntity);
                     connection.send(packetPlayOutEntityMetadata);
                 }
             }

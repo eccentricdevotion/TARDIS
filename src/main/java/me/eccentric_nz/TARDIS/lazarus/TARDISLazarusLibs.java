@@ -73,6 +73,10 @@ public class TARDISLazarusLibs {
                 return;
             }
             switch (dt) {
+                case ALLAY -> {
+                    AllayWatcher allayWatcher = (AllayWatcher) livingWatcher;
+                    allayWatcher.setDancing(hasOption);
+                }
                 case AXOLOTL -> {
                     AxolotlWatcher axolotlWatcher = (AxolotlWatcher) livingWatcher;
                     axolotlWatcher.setVariant((Axolotl.Variant) choice);
@@ -90,6 +94,11 @@ public class TARDISLazarusLibs {
                     FrogWatcher frogWatcher = (FrogWatcher) livingWatcher;
                     frogWatcher.setVariant((Frog.Variant) choice);
                     frogWatcher.setBaby(isBaby);
+                }
+                case GOAT -> {
+                    GoatWatcher goatWatcher = (GoatWatcher) livingWatcher;
+                    goatWatcher.setBaby(isBaby);
+                    goatWatcher.setScreaming(hasOption);
                 }
                 case PANDA -> {
                     PandaWatcher pandaWatcher = (PandaWatcher) livingWatcher;
@@ -152,11 +161,15 @@ public class TARDISLazarusLibs {
                     villagerWatcher.setProfession((Villager.Profession) choice);
                     villagerWatcher.setBaby(isBaby);
                 }
+                case WARDEN -> {
+                    WardenWatcher wardenWatcher = (WardenWatcher) livingWatcher;
+                    wardenWatcher.setAnger(hasOption ? 150 : 0);
+                }
                 case WOLF -> {
                     WolfWatcher wolfWatcher = (WolfWatcher) livingWatcher;
                     if (hasOption) {
                         wolfWatcher.setTamed(true);
-//                        wolfWatcher.setCollarColor((DyeColor) choice);
+                        wolfWatcher.setCollarColor((DyeColor) choice);
                     }
 //                    wolfWatcher.setVariant((Wolf.Variant) choice);
                     wolfWatcher.setBaby(isBaby);
