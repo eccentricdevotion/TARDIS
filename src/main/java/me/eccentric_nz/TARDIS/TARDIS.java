@@ -227,13 +227,13 @@ public class TARDIS extends JavaPlugin {
     public TARDIS() {
         worldGuardOnServer = false;
         invManager = InventoryManager.NONE;
-        versions.put("GriefPrevention", "16.18");
-        versions.put("LibsDisguises", "10.0.34");
+        versions.put("GriefPrevention", "16.18.3");
+        versions.put("LibsDisguises", "10.0.44");
         versions.put("Multiverse-Core", "4.3");
         versions.put("Multiverse-Inventories", "4.2");
-        versions.put("Towny", "0.98");
+        versions.put("Towny", "0.100");
         versions.put("WorldBorder", "1.9.0");
-        versions.put("WorldGuard", "7.0.8");
+        versions.put("WorldGuard", "7.0.11");
     }
 
     public TARDISMessage getMessenger() {
