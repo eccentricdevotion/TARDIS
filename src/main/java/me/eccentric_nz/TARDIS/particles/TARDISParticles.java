@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.particles;
 
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -37,7 +38,7 @@ public class TARDISParticles {
                 v = rotateAroundAxisX(v, l.getPitch() * 0.017453292F);
                 v = rotateAroundAxisY(v, -l.getYaw() * 0.017453292F);
                 l.add(v);
-                p.spawnParticle(Particle.ENTITY_EFFECT, l, 10);
+                p.spawnParticle(Particle.ENTITY_EFFECT, l, 10, 0, 0, 0, 0, Color.WHITE, false);
                 l.subtract(v);
             }
             step += 1;
