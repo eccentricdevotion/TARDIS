@@ -70,26 +70,25 @@ public class TARDISPrefsMenuInventory {
             rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
             rsp.resultSet();
         }
-        values.add(rsp.isAnnounceRepeatersOn());
-        values.add(rsp.isAutoOn());
-        values.add(rsp.isAutoSiegeOn());
-        values.add(rsp.isAutoRescueOn());
-        values.add(rsp.isBeaconOn());
-        values.add(rsp.isCloseGUIOn());
-        values.add(rsp.isDND());
-        values.add(rsp.isDynamicLightsOn());
-        values.add(rsp.isEpsOn());
-        values.add(rsp.isHadsOn());
-        values.add(rsp.getHadsType().equals(HADS.DISPERSAL));
-        values.add(rsp.isQuotesOn());
-        values.add(rsp.isRendererOn());
-        values.add(rsp.isSfxOn());
-        values.add(rsp.isSubmarineOn());
-        values.add(rsp.isBuildOn());
-        values.add(rsp.isSignOn());
-        values.add(rsp.isTravelbarOn());
-        values.add(rsp.isFarmOn());
-        values.add(rsp.isTelepathyOn());
+        values.add(rsp.isAutoOn()); // 0
+        values.add(rsp.isAutoSiegeOn()); // 1
+        values.add(rsp.isAutoRescueOn()); // 2
+        values.add(rsp.isBeaconOn()); // 3
+        values.add(rsp.isCloseGUIOn()); // 4
+        values.add(rsp.isDND()); // 5
+        values.add(rsp.isDynamicLightsOn()); // 6
+        values.add(rsp.isEpsOn()); // 7
+        values.add(rsp.isHadsOn()); // 8
+        values.add(rsp.getHadsType().equals(HADS.DISPERSAL)); // 9
+        values.add(rsp.isQuotesOn()); // 10
+        values.add(rsp.isRendererOn()); // 11
+        values.add(rsp.isSfxOn()); // 12
+        values.add(rsp.isSubmarineOn()); // 13
+        values.add(rsp.isBuildOn()); // 14
+        values.add(rsp.isSignOn()); // 15
+        values.add(rsp.isTravelbarOn()); // 16
+        values.add(rsp.isFarmOn()); // 17
+        values.add(rsp.isTelepathyOn()); // 18
         // get TARDIS preset
         Tardis tardis = null;
         HashMap<String, Object> wherep = new HashMap<>();
@@ -98,23 +97,24 @@ public class TARDISPrefsMenuInventory {
         boolean hasTARDIS = rst.resultSet();
         if (hasTARDIS) {
             tardis = rst.getTardis();
-            values.add(rst.getTardis().getPreset().equals(ChameleonPreset.JUNK_MODE)); // junk mode
+            values.add(rst.getTardis().getPreset().equals(ChameleonPreset.JUNK_MODE)); // junk mode - 19
         } else {
-            values.add(false);
+            values.add(false); // 19
         }
-        values.add(rsp.isAutoPowerUp());
-        values.add(plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid));
-        values.add(rsp.isMinecartOn());
+        values.add(rsp.isAutoPowerUp()); // 20
+        values.add(plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)); // 21
+        values.add(rsp.isMinecartOn()); // 22
         if (plugin.isWorldGuardOnServer()) {
             String chunk = rst.getTardis().getChunk();
             String[] split = chunk.split(":");
             World world = plugin.getServer().getWorld(split[0]);
-            values.add(!plugin.getWorldGuardUtils().queryContainers(world, plugin.getServer().getPlayer(uuid).getName()));
+            values.add(!plugin.getWorldGuardUtils().queryContainers(world, plugin.getServer().getPlayer(uuid).getName())); // lock containers - 23
         } else {
-            values.add(false);
+            values.add(false); // 23
             // make a stack
         }
-        values.add(rsp.isInfoOn());
+        values.add(rsp.isInfoOn()); // 24
+        values.add(rsp.isAnnounceRepeatersOn()); // 25
         ItemStack[] stack = new ItemStack[36];
         for (GUIPlayerPreferences pref : GUIPlayerPreferences.values()) {
             if (pref.getMaterial() == Material.REPEATER) {

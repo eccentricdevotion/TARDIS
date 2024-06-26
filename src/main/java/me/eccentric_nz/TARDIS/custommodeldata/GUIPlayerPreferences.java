@@ -22,15 +22,14 @@ import org.bukkit.Material;
 public enum GUIPlayerPreferences {
 
     // Player Prefs Menu
-    ANNOUNCE_REPEATERS(53, 25, Material.REPEATER),
     AUTONOMOUS(20, 0, Material.REPEATER),
     AUTONOMOUS_SIEGE(21, 1, Material.REPEATER),
     AUTO_RESCUE(22, 2, Material.REPEATER),
     BEACON(23, 3, Material.REPEATER),
     CLOSE_GUI(50, 4, Material.REPEATER),
     DO_NOT_DISTURB(24, 5, Material.REPEATER),
-    DYNAMIC_LAMPS(54, 7, Material.REPEATER),
-    EMERGENCY_PROGRAMME_ONE(25, 6, Material.REPEATER),
+    DYNAMIC_LAMPS(54, 6, Material.REPEATER),
+    EMERGENCY_PROGRAMME_ONE(25, 7, Material.REPEATER),
     HOSTILE_ACTION_DISPLACEMENT_SYSTEM(26, 8, Material.REPEATER),
     HADS_TYPE(27, 9, Material.REPEATER),
     WHO_QUOTES(28, 10, Material.REPEATER),
@@ -48,6 +47,7 @@ public enum GUIPlayerPreferences {
     MINECART_SOUNDS(45, 22, Material.REPEATER),
     LOCK_CONTAINERS(49, 23, Material.REPEATER),
     INFO_GUI(56, 24, Material.REPEATER),
+    ANNOUNCE_REPEATERS(53, 25, Material.REPEATER),
     FLIGHT_MODE(1, 27, Material.ELYTRA),
     INTERIOR_HUM_SOUND(58, 28, Material.BOWL),
     AUTONOMOUS_PREFERENCES(145, 29, Material.BOWL),
