@@ -63,25 +63,21 @@ public class TARDISDematerialisePoliceBox implements Runnable {
         World world = dd.getLocation().getWorld();
         Block light = dd.getLocation().getBlock().getRelative(BlockFace.UP, 2);
         if (i < loops) {
-            i++;
             int cmd;
-            switch (i % 3) {
-                case 2 -> { // stained
-                    cmd = 1003;
-                    light.setBlockData(TARDISConstants.AIR);
-                }
-                case 1 -> { // glass
-                    cmd = 1004;
-                    light.setBlockData(TARDISConstants.AIR);
-                }
-                default -> { // preset
-                    cmd = 1001;
-                    Levelled levelled = TARDISConstants.LIGHT;
-                    // set light level from exterior lamp control
-                    levelled.setLevel(dd.getExteriorLampLevel());
-                    light.setBlockData(levelled);
-                }
+            if (i % 2 == 0) { // stained
+                cmd = 1003;
+                light.setBlockData(TARDISConstants.AIR);
+            } else if (i % 4 == 1) { // glass
+                cmd = 1004;
+                light.setBlockData(TARDISConstants.AIR);
+            } else { // preset
+                cmd = 1001;
+                Levelled levelled = TARDISConstants.LIGHT;
+                // set light level from exterior lamp control
+                levelled.setLevel(dd.getExteriorLampLevel());
+                light.setBlockData(levelled);
             }
+            i++;
             // first run - play sound
             if (i == 1) {
                 // remove interaction entity

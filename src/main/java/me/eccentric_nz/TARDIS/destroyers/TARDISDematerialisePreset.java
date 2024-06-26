@@ -115,13 +115,15 @@ class TARDISDematerialisePreset implements Runnable {
         int z = dd.getLocation().getBlockZ(), plusz = dd.getLocation().getBlockZ() + 1, minusz = dd.getLocation().getBlockZ() - 1;
         World world = dd.getLocation().getWorld();
         if (i < loops) {
-            i++;
             // expand placed blocks to a police box
-            data = switch (i % 3) {
-                case 2 -> stained_column.getBlockData(); // stained
-                case 1 -> glass_column.getBlockData(); // glass
-                default -> column.getBlockData(); // preset
-            };
+            if (i % 2 == 0) {
+                data = stained_column.getBlockData(); // stained
+            } else if (i % 4 == 1) {
+                data = glass_column.getBlockData(); // glass
+            } else {
+                data = column.getBlockData(); // preset
+            }
+            i++;
             // first run - play sound
             if (i == 1) {
                 switch (preset) {

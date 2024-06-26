@@ -153,17 +153,19 @@ class TARDISMaterialisePreset implements Runnable {
             boolean hasDodgyDoor = preset.equals(ChameleonPreset.SWAMP) || preset.equals(ChameleonPreset.TOPSYTURVEY) || preset.equals(ChameleonPreset.JAIL);
             boolean isJunkOrToilet = preset.equals(ChameleonPreset.JUNK_MODE) || preset.equals(ChameleonPreset.TOILET);
             if (i < loops) {
-                i++;
                 if (preset.equals(ChameleonPreset.JUNK_MODE)) {
                     datas = column.getBlockData();
                 } else {
                     // determine preset to use
-                    datas = switch (i % 3) {
-                        case 2 -> stained_column.getBlockData(); // stained
-                        case 1 -> glass_column.getBlockData(); // glass
-                        default -> column.getBlockData(); // preset
-                    };
+                    if (i % 2 == 0) {
+                        datas = stained_column.getBlockData(); // stained
+                    } else if (i % 4 == 1) {
+                        datas = glass_column.getBlockData(); // glass
+                    } else {
+                        datas = column.getBlockData(); // preset
+                    }
                 }
+                i++;
                 // rescue player?
                 if (i == bd.getThrottle().getRescue() && plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisID())) {
                     UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisID());

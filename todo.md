@@ -15,9 +15,9 @@
 7. Exterior button door control [#839](https://github.com/eccentricdevotion/TARDIS/issues/839)
 8. Console lamp [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)
 9. New RUSTIC console using 1.21 blocks
-10. Update materialisation sequence - solid, stained, glass, stained, solid, stained, glass, stained etc.? [#693](https://github.com/eccentricdevotion/TARDIS/issues/693)
-11. Add button to Junk TARDIS to allow travel to a chunk near the player's TARDIS (if they have one and they have lost it)
-12. Add space time throttle settings to upgrade tree?
+10. Add button to Junk TARDIS to allow travel to a chunk near the player's TARDIS (if they have one and they have lost it)
+11. Add space time throttle settings to upgrade tree?
+12. Autonomous option to go to save [#855](https://github.com/eccentricdevotion/TARDIS/issues/855)
 13. ?
 
 ## Future versions

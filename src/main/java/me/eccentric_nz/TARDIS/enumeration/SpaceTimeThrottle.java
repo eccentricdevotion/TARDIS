@@ -25,11 +25,11 @@ import java.util.HashMap;
  */
 public enum SpaceTimeThrottle {
 
-    NORMAL(4, 500, 18, 10, 1.0f),
-    FASTER(3, 375, 12, 7, 1.5f),
-    RAPID(2, 250, 9, 5, 2.0f),
-    WARP(1, 125, 6, 4, 3.0f),
-    REBUILD(0, 80, 3, -1, 1.0f),
+    NORMAL(4, 560, 20, 11, 1.0f),
+    FASTER(3, 448, 16, 9, 1.5f),
+    RAPID(2, 336, 12, 7, 2.0f),
+    WARP(1, 224, 8, 5, 3.0f),
+    REBUILD(0, 112, 4, -1, 1.0f),
     JUNK(-1, 600, 25, -1, 1.0f);
 
     private static final HashMap<Integer, SpaceTimeThrottle> BY_DELAY = new HashMap<>();
