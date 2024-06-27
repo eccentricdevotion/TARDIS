@@ -10,8 +10,10 @@ import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.particles.Emitter;
 import me.eccentric_nz.TARDIS.particles.ParticleEffect;
 import me.eccentric_nz.TARDIS.particles.ParticleShape;
+import me.eccentric_nz.TARDIS.particles.Sphere;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 
 import java.util.Locale;
@@ -51,30 +53,43 @@ public class TARDISDevEffectCommand {
                 }
             }
         } else if (args.length > 2) {
-            ParticleShape shape;
-            ParticleEffect particle;
-            try {
-                shape = ParticleShape.valueOf(args[1].toUpperCase(Locale.ROOT));
-            } catch (IllegalArgumentException e) {
-                shape = ParticleShape.RANDOM;
+            if (args[1].equalsIgnoreCase("sphere")) {
+                Particle particle = Particle.ENTITY_EFFECT;
+                if (args[2].equalsIgnoreCase("dust")) {
+                    particle = Particle.DUST_COLOR_TRANSITION;
+                }
+                if (args[2].equalsIgnoreCase("block")) {
+                    particle = Particle.BLOCK;
+                }
+                Sphere sphere = new Sphere(plugin, player.getUniqueId(), player.getLocation().add(3, 5, 3), particle);
+                int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, sphere, 0, 10);
+                sphere.setTaskID(task);
+            } else {
+                ParticleShape shape;
+                ParticleEffect particle;
+                try {
+                    shape = ParticleShape.valueOf(args[1].toUpperCase(Locale.ROOT));
+                } catch (IllegalArgumentException e) {
+                    shape = ParticleShape.RANDOM;
+                }
+                try {
+                    particle = ParticleEffect.valueOf(args[2].toUpperCase(Locale.ROOT));
+                } catch (IllegalArgumentException e) {
+                    particle = ParticleEffect.EFFECT;
+                }
+                // get density and speed
+                int density = 16;
+                double speed = 0;
+                if (args.length > 3) {
+                    density = TARDISNumberParsers.parseInt(args[3]);
+                }
+                if (args.length > 4) {
+                    speed = TARDISNumberParsers.parseDouble(args[4]);
+                }
+                Emitter emitter = new Emitter(plugin, player.getUniqueId(), player.getLocation().add(3, 0, 3), new ParticleData(particle, shape, density, speed, true), SpaceTimeThrottle.RAPID.getFlightTime());
+                int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, shape.getPeriod());
+                emitter.setTaskID(task);
             }
-            try {
-                particle = ParticleEffect.valueOf(args[2].toUpperCase(Locale.ROOT));
-            } catch (IllegalArgumentException e) {
-                particle = ParticleEffect.EFFECT;
-            }
-            // get density and speed
-            int density = 16;
-            double speed = 0;
-            if (args.length > 3) {
-                density = TARDISNumberParsers.parseInt(args[3]);
-            }
-            if (args.length > 4) {
-                speed = TARDISNumberParsers.parseDouble(args[4]);
-            }
-            Emitter emitter = new Emitter(plugin, player.getUniqueId(), player.getLocation().add(3, 0, 3), new ParticleData(particle, shape, density, speed, true), SpaceTimeThrottle.RAPID.getFlightTime());
-            int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, shape.getPeriod());
-            emitter.setTaskID(task);
         }
         return true;
     }

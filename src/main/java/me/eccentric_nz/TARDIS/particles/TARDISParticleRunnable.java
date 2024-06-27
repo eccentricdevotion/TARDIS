@@ -49,15 +49,25 @@ public class TARDISParticleRunnable implements Runnable {
     }
 
     public void spawnParticle(Particle particle, Location location, int count, double speed) {
+        switch (particle) {
+            case DUST -> {
+                Particle.DustOptions options = new Particle.DustOptions(Color.BLUE, 1.0f);
+                location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, options, false);
+            }
+            case SHRIEK -> location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, 1, false);
+            case SCULK_CHARGE -> location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, 1.0f, false);
+            case ENTITY_EFFECT -> location.getWorld().spawnParticle(particle, location, count, 0, 0, 0, 0, Color.WHITE, false);
+            default -> location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, null, false);
+        }
+    }
+
+    public void spawnParticle(Particle particle, Location location, int count, double speed, Color colour) {
         if (particle == Particle.DUST) {
-            Particle.DustOptions options = new Particle.DustOptions(Color.BLUE, 1.0f);
+            Particle.DustOptions options = new Particle.DustOptions(colour, 1.0f);
             location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, options, false);
-        } else if (particle == Particle.SHRIEK) {
-            location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, 1, false);
-        } else if (particle == Particle.SCULK_CHARGE) {
-            location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, 1.0f, false);
-        } else {
-            location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, null, false);
+        }
+        if (particle == Particle.ENTITY_EFFECT) {
+            location.getWorld().spawnParticle(particle, location, count, 0, 0, 0, 0, colour, false);
         }
     }
 

@@ -15,8 +15,11 @@
 7. Exterior button door control [#839](https://github.com/eccentricdevotion/TARDIS/issues/839)
 8. Console lamp [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)
 9. New RUSTIC console using 1.21 blocks
-10. Add button to Junk TARDIS to allow travel to a chunk near the player's TARDIS (if they have one and they have lost it)
-11. Add space time throttle settings to upgrade tree?
+10. Add space time throttle settings to upgrade tree?
+11. Add new eye of harmony room [#781](https://github.com/eccentricdevotion/TARDIS/issues/781)
+    - with particle sphere
+    - particles should only animate if there is a player in the room
+    - try dust_color_transition with a smaller sphere inside of yellow
 12. ?
 
 ## Future versions
