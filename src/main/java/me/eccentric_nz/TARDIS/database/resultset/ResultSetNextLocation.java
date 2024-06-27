@@ -16,17 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.World;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the TARDIS can
@@ -39,9 +38,8 @@ public class ResultSetNextLocation {
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
-    private final HashMap<String, Object> where;
+    private final int id;
     private final String prefix;
-    private int next_id;
     private int tardis_id;
     private World world;
     private int x;
@@ -54,11 +52,11 @@ public class ResultSetNextLocation {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the next locations table.
      *
      * @param plugin an instance of the main class.
-     * @param where  a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
+     * @param id     a HashMap&lt;String, Object&gt; of table fields and values to refine the search.
      */
-    public ResultSetNextLocation(TARDIS plugin, HashMap<String, Object> where) {
+    public ResultSetNextLocation(TARDIS plugin, int id) {
         this.plugin = plugin;
-        this.where = where;
+        this.id = id;
         prefix = this.plugin.getPrefix();
     }
 
@@ -71,32 +69,14 @@ public class ResultSetNextLocation {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String wheres = "";
-        if (where != null) {
-            StringBuilder sbw = new StringBuilder();
-            where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
-            wheres = " WHERE " + sbw.substring(0, sbw.length() - 5);
-        }
-        String query = "SELECT * FROM " + prefix + "next" + wheres;
+        String query = "SELECT * FROM " + prefix + "next WHERE tardis_id = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
-            if (where != null) {
-                int s = 1;
-                for (Map.Entry<String, Object> entry : where.entrySet()) {
-                    if (entry.getValue() instanceof String) {
-                        statement.setString(s, entry.getValue().toString());
-                    } else {
-                        statement.setInt(s, (Integer) entry.getValue());
-                    }
-                    s++;
-                }
-                where.clear();
-            }
+            statement.setInt(1, id);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    next_id = rs.getInt("next_id");
                     tardis_id = rs.getInt("tardis_id");
                     world = TARDISAliasResolver.getWorldFromAlias(rs.getString("world"));
                     x = rs.getInt("x");
@@ -124,10 +104,6 @@ public class ResultSetNextLocation {
             }
         }
         return world != null;
-    }
-
-    public int getNext_id() {
-        return next_id;
     }
 
     public int getTardis_id() {

@@ -28,7 +28,7 @@ import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -280,9 +280,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                         set.put("direction", rsa.getArea().getDirection());
                                     } else {
                                         // get current direction
-                                        HashMap<String, Object> wherecl = new HashMap<>();
-                                        wherecl.put("tardis_id", id);
-                                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                                         if (!rsc.resultSet()) {
                                             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                                             return true;
@@ -336,9 +334,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                             return true;
                                         }
                                     }
-                                    HashMap<String, Object> wherecl = new HashMap<>();
-                                    wherecl.put("tardis_id", id);
-                                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                                     if (!rsc.resultSet()) {
                                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                                         return true;

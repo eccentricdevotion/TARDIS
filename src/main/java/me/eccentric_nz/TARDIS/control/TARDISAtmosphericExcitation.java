@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
@@ -26,8 +26,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
-
-import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -47,9 +45,7 @@ public class TARDISAtmosphericExcitation {
     }
 
     public void excite(int tid, Player p) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", tid);
-        ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
+        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, tid);
         if (rs.resultSet()) {
             // not if underwater
             if (rs.isSubmarine()) {

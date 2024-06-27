@@ -121,9 +121,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                     }
                                     String death_world = death_loc.getWorld().getName();
                                     // where is the TARDIS Police Box?
-                                    HashMap<String, Object> wherecl = new HashMap<>();
-                                    wherecl.put("tardis_id", id);
-                                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                                     if (!rsc.resultSet()) {
                                         plugin.debug("Current record not found!");
                                         return;
@@ -336,9 +334,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                 } else if (plugin.getConfig().getBoolean("siege.enabled") && rsp.isAutoSiegeOn()) {
                                     // enter siege mode
                                     // where is the TARDIS Police Box?
-                                    HashMap<String, Object> wherecl = new HashMap<>();
-                                    wherecl.put("tardis_id", id);
-                                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                                     if (!rsc.resultSet()) {
                                         plugin.debug("Current record not found!");
                                         return;
@@ -482,7 +478,7 @@ public class TARDISTimeLordDeathListener implements Listener {
         return null;
     }
 
-    private boolean compareCurrentToHome(ResultSetCurrentLocation c, ResultSetHomeLocation h) {
+    private boolean compareCurrentToHome(ResultSetCurrentFromId c, ResultSetHomeLocation h) {
         return (c.getWorld().equals(h.getWorld()) && c.getX() == h.getX() && c.getY() == h.getY() && c.getZ() == h.getZ());
     }
 }

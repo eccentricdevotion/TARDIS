@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -82,10 +82,8 @@ public class TARDISScanner {
         Location scan_loc;
         String whereIsIt;
         COMPASS tardisDirection;
-        HashMap<String, Object> wherenl = new HashMap<>();
-        wherenl.put("tardis_id", id);
         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-            ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
+            ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, id);
             if (!rsn.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NEXT_NOT_FOUND");
                 return null;
@@ -94,7 +92,7 @@ public class TARDISScanner {
             tardisDirection = rsn.getDirection();
             whereIsIt = plugin.getLanguage().getString("SCAN_NEXT");
         } else {
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherenl);
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             if (!rsc.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return null;

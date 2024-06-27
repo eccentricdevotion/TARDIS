@@ -142,9 +142,7 @@ public class TARDII implements TardisAPI {
 
     @Override
     public Location getTARDISNextLocation(int id) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetNextLocation rs = new ResultSetNextLocation(TARDIS.plugin, where);
+        ResultSetNextLocation rs = new ResultSetNextLocation(TARDIS.plugin, id);
         if (rs.resultSet()) {
             return new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
         }

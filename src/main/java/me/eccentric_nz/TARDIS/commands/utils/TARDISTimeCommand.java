@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.utils;
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Time;
 import org.bukkit.Location;
@@ -30,7 +30,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class TARDISTimeCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
@@ -60,9 +59,7 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
                     // get TARDIS player is in
                     int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player);
                     // get current TARDIS location
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("tardis_id", id);
-                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
+                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                     if (rsc.resultSet()) {
                         world = rsc.getWorld();
                     } else {

@@ -75,9 +75,7 @@ public class TARDISExterminator {
                 int tips = tardis.getTIPS();
                 boolean hasZero = (!tardis.getZero().isEmpty());
                 Schematic schm = tardis.getSchematic();
-                HashMap<String, Object> wherecl = new HashMap<>();
-                wherecl.put("tardis_id", id);
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                 if (!rsc.resultSet()) {
                     return false;
                 }
@@ -149,9 +147,7 @@ public class TARDISExterminator {
             boolean hasZero = (!tardis.getZero().isEmpty());
             Schematic schm = tardis.getSchematic();
             // check the sign location
-            HashMap<String, Object> wherecl = new HashMap<>();
-            wherecl.put("tardis_id", id);
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             if (!rsc.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return false;

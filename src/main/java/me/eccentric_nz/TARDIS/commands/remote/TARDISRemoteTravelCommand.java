@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.commands.remote;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
@@ -32,6 +31,8 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.CommandSender;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -51,9 +52,7 @@ class TARDISRemoteTravelCommand {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             boolean hidden = tardis.isHidden();
-            HashMap<String, Object> wherecl = new HashMap<>();
-            wherecl.put("tardis_id", id);
-            ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
+            ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
             String resetw = "";
             Location l = null;
             if (!rscl.resultSet()) {
@@ -64,9 +63,7 @@ class TARDISRemoteTravelCommand {
             }
             COMPASS cd = rscl.getDirection();
             boolean sub = rscl.isSubmarine();
-            HashMap<String, Object> wherenl = new HashMap<>();
-            wherenl.put("tardis_id", id);
-            ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
+            ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, id);
             if (!rsn.resultSet() && !(sender instanceof BlockCommandSender)) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "DEST_NO_LOAD");
                 return true;
@@ -126,9 +123,7 @@ class TARDISRemoteTravelCommand {
             HashMap<String, Object> wherecurrent = new HashMap<>();
             wherecurrent.put("tardis_id", id);
             // get current location for back
-            HashMap<String, Object> wherecu = new HashMap<>();
-            wherecu.put("tardis_id", id);
-            ResultSetCurrentLocation rscu = new ResultSetCurrentLocation(plugin, wherecu);
+            ResultSetCurrentFromId rscu = new ResultSetCurrentFromId(plugin, id);
             HashMap<String, Object> setback = new HashMap<>();
             if (!rscu.resultSet()) {
                 // back

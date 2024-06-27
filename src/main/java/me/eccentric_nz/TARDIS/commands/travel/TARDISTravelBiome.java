@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
@@ -121,9 +121,7 @@ public class TARDISTravelBiome {
                 }
                 plugin.getMessenger().sendStatus(player, "BIOME_SEARCH");
                 World w;
-                HashMap<String, Object> wherecl = new HashMap<>();
-                wherecl.put("tardis_id", id);
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                 if (!rsc.resultSet()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                     return true;

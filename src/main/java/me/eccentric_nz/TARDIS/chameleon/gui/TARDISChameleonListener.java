@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.chameleon.construct.TARDISChameleonConstructorGUI;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -248,9 +248,7 @@ public class TARDISChameleonListener extends TARDISMenuListener {
                 if (isBiomeAdaptive(view)) {
                     toggleOthers(ChameleonOption.PRESET, view);
                     // get current location's biome
-                    HashMap<String, Object> wherel = new HashMap<>();
-                    wherel.put("tardis_id", id);
-                    ResultSetCurrentLocation rsl = new ResultSetCurrentLocation(plugin, wherel);
+                    ResultSetCurrentFromId rsl = new ResultSetCurrentFromId(plugin, id);
                     if (rsl.resultSet()) {
                         Location current = new Location(rsl.getWorld(), rsl.getX(), rsl.getY(), rsl.getZ());
                         Biome biome = current.getBlock().getBiome();

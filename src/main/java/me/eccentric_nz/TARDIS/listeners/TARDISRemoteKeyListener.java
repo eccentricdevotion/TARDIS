@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.doors.TARDISDoorToggler;
@@ -97,9 +97,7 @@ public class TARDISRemoteKeyListener implements Listener {
             boolean hidden = tardis.isHidden();
             if (action.equals(Action.LEFT_CLICK_AIR)) {
                 // get the TARDIS current location
-                HashMap<String, Object> wherec = new HashMap<>();
-                wherec.put("tardis_id", id);
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                 if (!rsc.resultSet()) {
                     return;
                 }

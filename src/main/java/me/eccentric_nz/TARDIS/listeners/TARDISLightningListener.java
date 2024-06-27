@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -66,9 +66,7 @@ public class TARDISLightningListener implements Listener {
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                         return;
                     }
-                    HashMap<String, Object> wherecl = new HashMap<>();
-                    wherecl.put("tardis_id", id);
-                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                     if (rsc.resultSet()) {
                         World w = rsc.getWorld();
                         // only if the tardis is in the same world as the lightning strike and is not at a beacon recharger!

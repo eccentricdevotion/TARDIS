@@ -61,9 +61,7 @@ public class FloodgateSavesForm {
 
     private void handleResponse(SimpleFormResponse response) {
         Player player = Bukkit.getPlayer(uuid);
-        HashMap<String, Object> wherec = new HashMap<>();
-        wherec.put("tardis_id", id);
-        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         Location current = null;
         if (rsc.resultSet()) {
             current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());

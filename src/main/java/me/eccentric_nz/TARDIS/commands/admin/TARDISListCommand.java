@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
@@ -53,9 +53,7 @@ class TARDISListCommand {
                     try {
                         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, false))) {
                             for (Tardis t : rsl.getData()) {
-                                HashMap<String, Object> wherecl = new HashMap<>();
-                                wherecl.put("tardis_id", t.getTardisId());
-                                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, t.getTardisId());
                                 if (!rsc.resultSet()) {
                                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                                     return true;
@@ -99,9 +97,7 @@ class TARDISListCommand {
                 }
                 plugin.getMessenger().message(sender, "");
                 for (Tardis t : rsl.getData()) {
-                    HashMap<String, Object> wherecl = new HashMap<>();
-                    wherecl.put("tardis_id", t.getTardisId());
-                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, t.getTardisId());
                     if (!rsc.resultSet()) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                         return true;

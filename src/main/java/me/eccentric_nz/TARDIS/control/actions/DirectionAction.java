@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -23,9 +23,7 @@ public class DirectionAction {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
             return "";
         }
-        HashMap<String, Object> whered = new HashMap<>();
-        whered.put("tardis_id", id);
-        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, whered);
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (rsc.resultSet()) {
             String direction = rsc.getDirection().toString();
             HashMap<String, Object> wheret = new HashMap<>();

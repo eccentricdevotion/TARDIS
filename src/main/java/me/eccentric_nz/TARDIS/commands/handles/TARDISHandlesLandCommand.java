@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -73,9 +73,7 @@ class TARDISHandlesLandCommand {
             }
             // must have a destination, but setting one will make the TARDIS automatically exit the time vortex
             // so generate a random overworld location
-            HashMap<String, Object> wherecl = new HashMap<>();
-            wherecl.put("tardis_id", id);
-            ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
+            ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
             if (rscl.resultSet()) {
                 Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(player, rscl.getDirection());
                 if (l != null) {

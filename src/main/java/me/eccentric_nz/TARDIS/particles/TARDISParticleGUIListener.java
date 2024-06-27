@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIParticle;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -149,9 +149,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         ResultSetTardisID rst = new ResultSetTardisID(plugin);
         if (rst.fromUUID(uuid.toString())) {
             // get TARDIS location
-            HashMap<String, Object> wherec = new HashMap<>();
-            wherec.put("tardis_id", rst.getTardisId());
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rst.getTardisId());
             if (rsc.resultSet()) {
                 Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ()).add(0.5, 0, 0.5);
                 // get throttle setting

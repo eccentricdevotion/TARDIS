@@ -5,7 +5,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -133,9 +133,7 @@ public class FloodgateChameleonCircuitForm {
                 // ONLY if the Chameleon Circuit is set to Adaptive BIOME
                 if (isBiomeAdaptive(id)) {
                     // get current location's biome
-                    HashMap<String, Object> wherel = new HashMap<>();
-                    wherel.put("tardis_id", id);
-                    ResultSetCurrentLocation rsl = new ResultSetCurrentLocation(plugin, wherel);
+                    ResultSetCurrentFromId rsl = new ResultSetCurrentFromId(plugin, id);
                     if (rsl.resultSet()) {
                         Location current = new Location(rsl.getWorld(), rsl.getX(), rsl.getY(), rsl.getZ());
                         Biome biome = current.getBlock().getBiome();

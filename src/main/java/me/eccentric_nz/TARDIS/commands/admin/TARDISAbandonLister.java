@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -50,9 +50,7 @@ public class TARDISAbandonLister {
             for (Tardis t : rst.getData()) {
                 String owner = (t.getOwner().isEmpty()) ? "TARDIS Admin" : t.getOwner();
                 // get current location
-                HashMap<String, Object> wherec = new HashMap<>();
-                wherec.put("tardis_id", t.getTardisId());
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, t.getTardisId());
                 if (rsc.resultSet()) {
                     String w = (!plugin.getPlanetsConfig().getBoolean("planets." + rsc.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TARDISAliasResolver.getWorldAlias(rsc.getWorld());
                     String l = w + " " + rsc.getX() + ", " + rsc.getY() + ", " + rsc.getZ();

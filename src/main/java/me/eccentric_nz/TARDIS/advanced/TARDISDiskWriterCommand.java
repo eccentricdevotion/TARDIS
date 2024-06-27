@@ -101,9 +101,7 @@ public class TARDISDiskWriterCommand {
                         return true;
                     }
                     // get current destination
-                    HashMap<String, Object> wherecl = new HashMap<>();
-                    wherecl.put("tardis_id", id);
-                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                     if (!rsc.resultSet()) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                         return true;

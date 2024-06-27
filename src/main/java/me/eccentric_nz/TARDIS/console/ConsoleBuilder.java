@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.console;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -125,9 +125,7 @@ public class ConsoleBuilder {
         Material material = interaction.getMaterial();
         int cmd = interaction.getCustomModelData();
         if (interaction == ConsoleInteraction.DIRECTION) {
-            HashMap<String, Object> wherec = new HashMap<>();
-            wherec.put("tardis_id", id);
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             cmd = (rsc.resultSet()) ? getCmd(rsc.getDirection()) + 10000 : 10000;
         }
         if (interaction == ConsoleInteraction.THROTTLE || interaction == ConsoleInteraction.RELATIVITY_DIFFERENTIATOR) {

@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIControlCentre;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISaves;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
@@ -75,9 +75,7 @@ public class TARDISControlInventory {
             open = new TARDISBlackWoolToggler(plugin).isOpen(tardis.getTardisId());
             toggle_openclosed = (open) ? plugin.getLanguage().getString("SET_OPEN") : plugin.getLanguage().getString("SET_CLOSED");
             power_onoff = (tardis.isPoweredOn()) ? on : off;
-            HashMap<String, Object> wheret = new HashMap<>();
-            wheret.put("tardis_id", tardis.getTardisId());
-            ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wheret);
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardisId());
             if (rsc.resultSet()) {
                 direction = rsc.getDirection().toString();
             }

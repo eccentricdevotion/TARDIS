@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAbandonLister;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.converters.TARDISAbandonUpdate;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisAbandoned;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.doors.DoorCloserAction;
@@ -249,9 +249,7 @@ public class TARDISAbandonCommand {
                     // close the door
                     new DoorCloserAction(plugin, player.getUniqueId(), id).closeDoors();
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDONED_SUCCESS");
-                    HashMap<String, Object> wherec = new HashMap<>();
-                    wherec.put("tardis_id", id);
-                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherec);
+                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                     if (rsc.resultSet()) {
                         Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                         plugin.getPM().callEvent(new TARDISAbandonEvent(player, id, current));

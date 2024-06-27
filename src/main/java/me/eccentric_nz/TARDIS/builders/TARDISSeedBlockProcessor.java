@@ -275,9 +275,7 @@ public class TARDISSeedBlockProcessor {
                     return false;
                 }
             } else {
-                HashMap<String, Object> wherecl = new HashMap<>();
-                wherecl.put("tardis_id", rs.getTardisId());
-                ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherecl);
+                ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, rs.getTardisId());
                 if (rscl.resultSet()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_HAVE", rscl.getWorld().getName() + " at x:" + rscl.getX() + " y:" + rscl.getY() + " z:" + rscl.getZ());
                 } else {

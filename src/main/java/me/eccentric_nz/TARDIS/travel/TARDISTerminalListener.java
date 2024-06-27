@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -59,7 +59,7 @@ import java.util.*;
 public class TARDISTerminalListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<UUID, ResultSetCurrentLocation> terminalUsers = new HashMap<>();
+    private final HashMap<UUID, ResultSetCurrentFromId> terminalUsers = new HashMap<>();
     private final HashMap<UUID, String> terminalDestination = new HashMap<>();
     private final HashMap<UUID, Integer> terminalStep = new HashMap<>();
     private final HashMap<UUID, Integer> terminalIDs = new HashMap<>();
@@ -191,9 +191,7 @@ public class TARDISTerminalListener implements Listener {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();
-                HashMap<String, Object> wheret = new HashMap<>();
-                wheret.put("tardis_id", id);
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wheret);
+                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                 if (rsc.resultSet()) {
                     terminalUsers.put(uuid, rsc);
                     terminalIDs.put(uuid, id);

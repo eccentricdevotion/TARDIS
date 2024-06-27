@@ -16,11 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.listeners.controls;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
@@ -30,6 +29,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz
@@ -135,9 +136,7 @@ public class TARDISDirectionFrameListener implements Listener {
                         // are they placing a tripwire hook?
                         if (frame.getItem().getType().isAir() && player.getInventory().getItemInMainHand().getType().equals(Material.TRIPWIRE_HOOK)) {
                             // get current tardis direction
-                            HashMap<String, Object> wherec = new HashMap<>();
-                            wherec.put("tardis_id", id);
-                            ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
+                            ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
                             if (rscl.resultSet()) {
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                     // update the TRIPWIRE_HOOK rotation

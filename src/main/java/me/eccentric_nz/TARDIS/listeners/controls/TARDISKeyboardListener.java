@@ -127,9 +127,7 @@ public class TARDISKeyboardListener implements Listener {
             whereh.put("tardis_id", id);
             ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, whereh);
             if (rsh.resultSet()) {
-                HashMap<String, Object> wherec = new HashMap<>();
-                wherec.put("tardis_id", id);
-                ResultSetCurrentLocation rscl = new ResultSetCurrentLocation(plugin, wherec);
+                ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
                 if (rscl.resultSet()) {
                     if (currentIsNotHome(rsh, rscl)) {
                         p.performCommand("tardistravel home");
@@ -188,7 +186,7 @@ public class TARDISKeyboardListener implements Listener {
         plugin.getMessenger().send(p, TardisModule.TARDIS, "KEYBOARD_ERROR");
     }
 
-    private boolean currentIsNotHome(ResultSetHomeLocation rsh, ResultSetCurrentLocation rsc) {
+    private boolean currentIsNotHome(ResultSetHomeLocation rsh, ResultSetCurrentFromId rsc) {
         if (rsh.getWorld() != rsc.getWorld()) {
             return true;
         }

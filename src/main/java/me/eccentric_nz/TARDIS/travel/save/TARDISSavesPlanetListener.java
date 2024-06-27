@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.travel.save;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -114,9 +114,7 @@ public class TARDISSavesPlanetListener extends TARDISMenuListener {
                     close(player);
                     return;
                 }
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("tardis_id", id);
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, where);
+                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                 Location current = null;
                 if (rsc.resultSet()) {
                     current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());

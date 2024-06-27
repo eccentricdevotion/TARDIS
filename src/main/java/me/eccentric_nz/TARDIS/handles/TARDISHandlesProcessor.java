@@ -210,9 +210,7 @@ public class TARDISHandlesProcessor {
                                 if (lore != null) {
                                     String first = lore.get(0);
                                     // get current location
-                                    HashMap<String, Object> wherecl = new HashMap<>();
-                                    wherecl.put("tardis_id", id);
-                                    ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                                     if (rsc.resultSet()) {
                                         Location goto_loc = null;
                                         Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());

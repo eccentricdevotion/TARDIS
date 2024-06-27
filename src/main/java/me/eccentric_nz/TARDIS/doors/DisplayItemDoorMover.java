@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -82,9 +82,7 @@ public class DisplayItemDoorMover {
                 float yaw = player.getLocation().getYaw();
                 float pitch = player.getLocation().getPitch();
                 boolean hb = tardis.isHandbrakeOn();
-                HashMap<String, Object> wherecl = new HashMap<>();
-                wherecl.put("tardis_id", tardis.getTardisId());
-                ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardisId());
                 if (!rsc.resultSet()) {
                     // emergency TARDIS relocation
                     new TARDISEmergencyRelocation(plugin).relocate(id, player);

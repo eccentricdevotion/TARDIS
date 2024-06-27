@@ -207,9 +207,7 @@ public class TARDISStattenheimListener implements Listener {
                             return;
                         }
                         // get TARDIS's current location
-                        HashMap<String, Object> wherecl = new HashMap<>();
-                        wherecl.put("tardis_id", tardis.getTardisId());
-                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                         if (!rsc.resultSet()) {
                             hidden = true;
                         }

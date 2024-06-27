@@ -66,9 +66,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
     @Override
     public void run() {
         UUID uuid = player.getUniqueId();
-        HashMap<String, Object> wherenl = new HashMap<>();
-        wherenl.put("tardis_id", id);
-        ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, wherenl);
+        ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, id);
         if (!rsn.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "DEST_NO_LOAD");
             return;

@@ -16,13 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.database.converters;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.HashMap;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 
 /**
  * @author eccentric_nz
@@ -54,9 +54,7 @@ public class TARDISAbandonUpdate {
             ps.setInt(1, id);
             ps.executeUpdate();
             // get current location
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("tardis_id", id);
-            ResultSetCurrentLocation rs = new ResultSetCurrentLocation(plugin, where);
+            ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, id);
             if (rs.resultSet()) {
                 // back
                 query = "UPDATE " + prefix + "back SET world = ?, x = ?, y = ?, z = ?, direction = ?, submarine = ? WHERE tardis_id = ?";

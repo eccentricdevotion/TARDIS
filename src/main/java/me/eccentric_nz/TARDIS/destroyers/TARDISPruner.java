@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
-import java.util.HashMap;
 
 /**
  * Reesha was a rosebush-like plant who needed to keep herself pruned to prevent her consciousness from fading and
@@ -65,9 +64,7 @@ public class TARDISPruner {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "PRUNE_NONE");
                     }
                     while (rs.next()) {
-                        HashMap<String, Object> wherecl = new HashMap<>();
-                        wherecl.put("tardis_id", rs.getInt("tardis_id"));
-                        ResultSetCurrentLocation rsc = new ResultSetCurrentLocation(plugin, wherecl);
+                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getInt("tardis_id"));
                         if (rsc.resultSet()) {
                             // double check that this is an unused TARDIS
                             Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
