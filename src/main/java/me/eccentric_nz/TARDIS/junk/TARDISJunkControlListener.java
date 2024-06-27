@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.control.actions.FindWithJunkAction;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
@@ -64,6 +65,28 @@ public class TARDISJunkControlListener implements Listener {
         repeaterMap.put(3, 100);
         repeaterMap.put(4, 1000);
         worlds = this.plugin.getTardisAPI().getOverWorlds();
+    }
+
+    public static Sign getDestinationSign(int id) {
+        Sign sign = null;
+        Block b = getControlBlock(id, 9);
+        if (b != null && Tag.WALL_SIGNS.isTagged(b.getType())) {
+            sign = (Sign) b.getState();
+        }
+        return sign;
+    }
+
+    private static Block getControlBlock(int id, int type) {
+        Block b = null;
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        where.put("type", type);
+        ResultSetControls rs = new ResultSetControls(TARDIS.plugin, where, false);
+        if (rs.resultSet()) {
+            Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getLocation());
+            b = l.getBlock();
+        }
+        return b;
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -185,6 +208,19 @@ public class TARDISJunkControlListener implements Listener {
                     }
                 }
             }
+            if (blockType == Material.CRIMSON_BUTTON) {
+                // 52
+                where.put("type", 52);
+                ResultSetControls rsh = new ResultSetControls(plugin, where, false);
+                if (rsh.resultSet()) {
+                    int id = rsh.getTardis_id();
+                    // is it the Junk TARDIS?
+                    ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
+                    if (rs.fromID(id) && rs.getPreset().equals(ChameleonPreset.JUNK)) {
+                        new FindWithJunkAction(plugin).getNearbyChunkLocation(id, event.getPlayer());
+                    }
+                }
+            }
         }
     }
 
@@ -270,28 +306,6 @@ public class TARDISJunkControlListener implements Listener {
             s.getSide(Side.FRONT).setLine(line, "" + amount);
             s.update();
         }
-    }
-
-    private Sign getDestinationSign(int id) {
-        Sign sign = null;
-        Block b = getControlBlock(id, 9);
-        if (b != null && Tag.WALL_SIGNS.isTagged(b.getType())) {
-            sign = (Sign) b.getState();
-        }
-        return sign;
-    }
-
-    private Block getControlBlock(int id, int type) {
-        Block b = null;
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        where.put("type", type);
-        ResultSetControls rs = new ResultSetControls(plugin, where, false);
-        if (rs.resultSet()) {
-            Location l = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getLocation());
-            b = l.getBlock();
-        }
-        return b;
     }
 
     private int getActualHighestY(Location l) {

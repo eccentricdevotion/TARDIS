@@ -143,6 +143,11 @@ public class TARDISJunkBuilder implements Runnable {
                                         String wood_button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                                         plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 6, wood_button, 0);
                                     }
+                                    if (type.equals(Material.CRIMSON_BUTTON)) {
+                                        // remember location 52
+                                        String crimson_button = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                                        plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 52, crimson_button, 0);
+                                    }
                                     if (type.equals(Material.REPEATER)) {
                                         // remember location 3
                                         String repeater = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
