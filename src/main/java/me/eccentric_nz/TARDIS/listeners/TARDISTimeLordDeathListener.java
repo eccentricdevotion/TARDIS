@@ -173,7 +173,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                                 }
                                             }
                                         }
-                                        default -> { // CLOSEST
+                                        case CLOSEST -> { // CLOSEST
                                             // if home world is NOT the death world
                                             if (!hw.getName().equals(death_world)) {
                                                 // look for a recharge location
@@ -184,7 +184,7 @@ public class TARDISTimeLordDeathListener implements Listener {
                                                     going_home = true;
                                                 }
                                             } else {
-                                                // died in home world, get closest location
+                                                // died in home world, get the closest location
                                                 Location recharger = getRecharger(death_world, player);
                                                 if (recharger != null) {
                                                     // which is closer?
@@ -198,6 +198,24 @@ public class TARDISTimeLordDeathListener implements Listener {
                                                     goto_loc = home_loc;
                                                     going_home = true;
                                                 }
+                                            }
+                                        }
+                                        default -> { // SAVE
+                                            goto_loc = null;
+                                            HashMap<String, Object> whered = new HashMap<>();
+                                            whered.put("tardis_id", id);
+                                            whered.put("autonomous", 1);
+                                            ResultSetDestinations rsd = new ResultSetDestinations(plugin, whered, false);
+                                            if (rsd.resultSet()) {
+                                                World world = plugin.getServer().getWorld(rsd.getWorld());
+                                                if (world != null) {
+                                                    goto_loc = new Location(world, rsd.getX(), rsd.getY(), rsd.getZ());
+                                                }
+                                            }
+                                            if (goto_loc == null) {
+                                                // no autonomous save - default to TARDIS home location
+                                                goto_loc = home_loc;
+                                                going_home = true;
                                             }
                                         }
                                     }

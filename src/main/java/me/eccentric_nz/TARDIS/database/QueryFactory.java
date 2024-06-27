@@ -490,4 +490,31 @@ public class QueryFactory {
             }
         }
     }
+
+    public void doAutonomousSaveUpdate(int old, int auto) {
+        PreparedStatement ps = null;
+        String first = "UPDATE " + prefix + "destinations SET autonomous = 0 WHERE dest_id = ?";
+        String second = "UPDATE " + prefix + "destinations SET autonomous = 1 WHERE dest_id = ?";
+        try {
+            service.testConnection(connection);
+            if (old != -1) {
+                ps = connection.prepareStatement(first);
+                ps.setInt(1, old);
+                ps.executeUpdate();
+            }
+            ps = connection.prepareStatement(second);
+            ps.setInt(1, auto);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            plugin.debug("Update error for autonomous save! " + e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing autonomous save! " + e.getMessage());
+            }
+        }
+    }
 }

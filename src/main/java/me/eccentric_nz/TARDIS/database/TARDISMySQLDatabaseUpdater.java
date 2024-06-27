@@ -105,6 +105,7 @@ class TARDISMySQLDatabaseUpdater {
         destsupdates.add("preset varchar(32) DEFAULT ''");
         destsupdates.add("slot int(1) DEFAULT '-1'");
         destsupdates.add("icon varchar(64) DEFAULT ''");
+        destsupdates.add("autonomous int(1) DEFAULT '0'");
         countupdates.add("grace int(3) DEFAULT '0'");
         portalsupdates.add("abandoned int(1) DEFAULT '0'");
         inventoryupdates.add("attributes text");

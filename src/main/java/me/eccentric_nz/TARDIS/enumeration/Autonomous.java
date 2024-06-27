@@ -21,7 +21,8 @@ public enum Autonomous {
     HOME(12),
     AREAS(13),
     CONFIGURED_AREAS(14),
-    CLOSEST(15);
+    CLOSEST(15),
+    SAVE(16);
 
     final int slot;
 

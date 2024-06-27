@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
+
+import java.util.Arrays;
+import java.util.List;
 
 public enum GUIAutonomous {
 
@@ -30,11 +31,13 @@ public enum GUIAutonomous {
     AREAS(141, 4, Material.BOWL, Arrays.asList("Go to the an area", "in the death world.", "If a parking spot cannot", "be found, use the fallback", "specified below.")),
     CONFIGURED_AREAS(142, 5, Material.BOWL, Arrays.asList("Go to the server's", "default area(s).", "If a parking spot cannot", "be found, use the fallback", "specified below.")),
     CLOSEST(143, 6, Material.BOWL, Arrays.asList("Go to the TARDIS's", "home location or an area", "whichever is closest.")),
+    SAVE(158, 7, Material.BOWL, Arrays.asList("Go to a TARDIS", "saved destination.")),
     SELECTED_TYPE(-1, -1, Material.LIME_WOOL),
     FALLBACK(152, 18, Material.REPEATER),
     FALLBACK_INFO(57, 19, Material.BOWL, Arrays.asList("If a preferred location", "cannot be found, choose", "what the TARDIS should do.")),
     GO_HOME(140, 21, Material.BOWL),
     STAY(144, 22, Material.BOWL),
+    SAVE_SELECTOR(159, 25, Material.BOWL, Arrays.asList("Choose a save", "to travel to -", "click to set.")),
     SELECTED_DEFAULT(-1, -1, Material.LIME_WOOL),
     CLOSE(1, 35, Material.BOWL);
 

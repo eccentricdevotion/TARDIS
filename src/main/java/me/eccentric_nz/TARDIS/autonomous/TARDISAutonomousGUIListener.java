@@ -16,8 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.autonomous;
 
+import com.mojang.datafixers.util.Pair;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetAutonomousSave;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
@@ -30,6 +33,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class TARDISAutonomousGUIListener extends TARDISMenuListener {
 
@@ -102,6 +106,11 @@ public class TARDISAutonomousGUIListener extends TARDISMenuListener {
                 set.put("auto_type", "CLOSEST");
                 setTypeSlots(view, 15);
             }
+            case 7 -> {
+                // save
+                set.put("auto_type", "SAVE");
+                setTypeSlots(view, 16);
+            }
             case 21 -> {
                 // go home
                 set.put("auto_default", "HOME");
@@ -111,6 +120,43 @@ public class TARDISAutonomousGUIListener extends TARDISMenuListener {
                 // stay
                 set.put("auto_default", "STAY");
                 setDefaultSlots(view, 31);
+            }
+            case 25 -> {
+                // save selector
+                // get tardis id
+                ResultSetTardisID rst = new ResultSetTardisID(plugin);
+                if (rst.fromUUID(player.getUniqueId().toString())) {
+                    // get next save and set it as autonomous
+                    HashMap<String, Object> whered = new HashMap<>();
+                    whered.put("tardis_id", rst.getTardisId());
+                    ResultSetAutonomousSave rsa = new ResultSetAutonomousSave(plugin);
+                    if (rsa.fromID(rst.getTardisId())) {
+                        String autonomous = rsa.getAutonomous();
+                        int i = 0;
+                        int did = -1;
+                        for (Pair<String, Integer> pair : rsa.getData()) {
+                            i++;
+                            if (pair.getFirst().equals(autonomous)) {
+                                did = pair.getSecond();
+                                break;
+                            }
+                        }
+                        if (i >= rsa.getData().size()) {
+                            i = 0;
+                        }
+                        Pair<String, Integer> next = rsa.getData().get(i);
+                        ItemMeta im = is.getItemMeta();
+                        List<String> lore = im.getLore();
+                        if (lore.size() > 3) {
+                            lore.set(3, ChatColor.GREEN + next.getFirst());
+                            im.setLore(lore);
+                            is.setItemMeta(im);
+                            view.setItem(25, is);
+                        }
+                        // update destination table
+                        plugin.getQueryFactory().doAutonomousSaveUpdate(did, next.getSecond());
+                    }
+                }
             }
             case 35 -> close(player);
             default -> {
@@ -131,7 +177,7 @@ public class TARDISAutonomousGUIListener extends TARDISMenuListener {
     }
 
     private void setTypeSlots(InventoryView view, int slot) {
-        for (int i = 12; i < 16; i++) {
+        for (int i = 12; i < 17; i++) {
             ItemStack is = (i == slot) ? on : off;
             view.setItem(i, is);
         }

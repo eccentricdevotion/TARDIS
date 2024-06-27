@@ -16,14 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.autonomous;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIAutonomous;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetAutonomousSave;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class TARDISAutonomousInventory {
 
@@ -55,6 +60,7 @@ public class TARDISAutonomousInventory {
         stack[13] = off;
         stack[14] = off;
         stack[15] = off;
+        stack[16] = off;
         stack[30] = off;
         stack[31] = off;
         // set GUI buttons
@@ -65,7 +71,19 @@ public class TARDISAutonomousInventory {
             if (a.getCustomModelData() != -1) {
                 im.setCustomModelData(a.getCustomModelData());
             }
-            if (a.getLore() != null) {
+            if (a == GUIAutonomous.SAVE_SELECTOR) {
+                List<String> lore = new ArrayList<>(a.getLore());
+                // get tardis id
+                ResultSetTardisID rst = new ResultSetTardisID(plugin);
+                if (rst.fromUUID(uuid.toString())) {
+                    // get autonomous save
+                    ResultSetAutonomousSave rsd = new ResultSetAutonomousSave(plugin);
+                    if (rsd.fromID(rst.getTardisId())) {
+                        lore.add(ChatColor.GREEN + rsd.getAutonomous());
+                    }
+                }
+                im.setLore(lore);
+            } else if (a.getLore() != null) {
                 im.setLore(a.getLore());
             }
             is.setItemMeta(im);

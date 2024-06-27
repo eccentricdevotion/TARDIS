@@ -72,6 +72,7 @@ class TARDISSQLiteDatabaseUpdater {
         destupdates.add("submarine INTEGER DEFAULT 0");
         destupdates.add("slot INTEGER DEFAULT '-1'");
         destupdates.add("icon TEXT DEFAULT ''");
+        destupdates.add("autonomous INTEGER DEFAULT '0'");
         doorupdates.add("locked INTEGER DEFAULT 0");
         gravityupdates.add("distance INTEGER DEFAULT 11");
         gravityupdates.add("velocity REAL DEFAULT 0.5");
