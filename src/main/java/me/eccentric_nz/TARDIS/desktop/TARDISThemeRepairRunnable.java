@@ -194,7 +194,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             // remove console if present
             ResultSetScreenInteraction rssi = new ResultSetScreenInteraction(plugin, id);
             if (rssi.resultSet() && rssi.getUuid() != null) {
-                Entity screen = chunk.getWorld().getEntity(rssi.getUuid());
+                Entity screen = plugin.getServer().getEntity(rssi.getUuid());
                 if (screen != null && screen.getPersistentDataContainer().has(plugin.getUnaryKey(), PersistentDataType.STRING)) {
                     String uuids = screen.getPersistentDataContainer().get(plugin.getUnaryKey(), PersistentDataType.STRING);
                     if (uuids != null) {
