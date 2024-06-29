@@ -49,6 +49,17 @@ public class TARDISSonicRedstone {
             Material blockType = block.getType();
             // do redstone activation
             switch (blockType) {
+                case COPPER_BULB, WAXED_COPPER_BULB, EXPOSED_COPPER_BULB, WAXED_EXPOSED_COPPER_BULB, OXIDIZED_COPPER_BULB, WAXED_OXIDIZED_COPPER_BULB, WEATHERED_COPPER_BULB, WAXED_WEATHERED_COPPER_BULB -> {
+                    CopperBulb bulb = (CopperBulb) block.getBlockData();
+                    if (player.isSneaking()) {
+                        bulb.setLit(false);
+                        bulb.setPowered(!bulb.isPowered());
+                    } else {
+                        bulb.setLit(!bulb.isLit());
+                        bulb.setPowered(false);
+                    }
+                    block.setBlockData(bulb, true);
+                }
                 case DETECTOR_RAIL, POWERED_RAIL -> {
                     RedstoneRail rail = (RedstoneRail) block.getBlockData();
                     if (plugin.getGeneralKeeper().getSonicRails().contains(block.getLocation().toString())) {

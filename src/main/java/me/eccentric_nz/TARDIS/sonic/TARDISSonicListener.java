@@ -75,6 +75,14 @@ public class TARDISSonicListener implements Listener {
         redstone.add(Material.POWERED_RAIL);
         redstone.add(Material.REDSTONE_LAMP);
         redstone.add(Material.REDSTONE_WIRE);
+        redstone.add(Material.COPPER_BULB);
+        redstone.add(Material.EXPOSED_COPPER_BULB);
+        redstone.add(Material.OXIDIZED_COPPER_BULB);
+        redstone.add(Material.WAXED_COPPER_BULB);
+        redstone.add(Material.WAXED_EXPOSED_COPPER_BULB);
+        redstone.add(Material.WAXED_OXIDIZED_COPPER_BULB);
+        redstone.add(Material.WAXED_WEATHERED_COPPER_BULB);
+        redstone.add(Material.WEATHERED_COPPER_BULB);
         ignite.addAll(Tag.CAMPFIRES.getValues());
         ignite.addAll(Tag.CANDLES.getValues());
         ignite.addAll(Tag.CANDLE_CAKES.getValues());
