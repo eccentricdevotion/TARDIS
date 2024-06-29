@@ -576,11 +576,12 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     set.put("beacon", bedrocloc);
                     postBedrock = b;
                 }
-                if (type.equals(Material.LIGHT_GRAY_CONCRETE) && tud.getSchematic().getPermission().equals("bone")) {
+                if (type.equals(Material.LIGHT_GRAY_CONCRETE) && (tud.getSchematic().getPermission().equals("bone") || tud.getSchematic().getPermission().equals("rustic"))) {
                     // get the block
                     Block block = new Location(world, x, y, z).getBlock();
                     // build a console
-                    new ConsoleBuilder(plugin).create(block, 1, id, uuid.toString());
+                    int ct = (tud.getSchematic().getPermission().equals("bone")) ? 1 : 17;
+                    new ConsoleBuilder(plugin).create(block, ct, id, uuid.toString());
                 }
                 if (type.equals(Material.SCULK_SHRIEKER)) {
                     // remember the location, so we can make it shriek when flying

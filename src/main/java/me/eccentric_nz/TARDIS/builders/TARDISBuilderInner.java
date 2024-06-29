@@ -113,10 +113,10 @@ public class TARDISBuilderInner implements Runnable {
      * Builds the inside of the TARDIS.
      *
      * @param plugin     an instance of the main TARDIS plugin class
-     * @param schm       the name of the schematic file to use can be ANCIENT, ARS, BIGGER, BONE, BUDGET, CAVE, COPPER, CORAL,
-     *                   CURSED, CUSTOM, DELTA, DELUXE, DIVISION, ELEVENTH, ENDER, FACTORY, FIFTEENTH, FUGITIVE,
-     *                   HOSPITAL, MASTER, MECHANICAL, ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH,
-     *                   TOM, TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH,
+     * @param schm       the name of the schematic file to use can be ANCIENT, ARS, BIGGER, BONE, BUDGET, CAVE, COPPER,
+     *                   CORAL, CURSED, CUSTOM, DELTA, DELUXE, DIVISION, ELEVENTH, ENDER, FACTORY, FIFTEENTH, FUGITIVE,
+     *                   HOSPITAL, MASTER, MECHANICAL, ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, RUSTIC, STEAMPUNK,
+     *                   THIRTEENTH, TOM, TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH,
      *                   LEGACY_REDSTONE or a CUSTOM name.
      * @param world      the world where the TARDIS is to be built.
      * @param dbID       the unique key of the record for this TARDIS in the database.

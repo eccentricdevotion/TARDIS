@@ -56,6 +56,7 @@ public class TARDISCraftListener implements Listener {
         t.put(Material.BLACK_CONCRETE, "CURSED"); // cursed schematic designed by airomis (player at thatsnotacreeper.com)
         t.put(Material.BOOKSHELF, "PLANK"); // plank
         t.put(Material.COAL_BLOCK, "STEAMPUNK"); // steampunk
+        t.put(Material.COPPER_BULB, "RUSTIC"); // rustic
         t.put(Material.CRYING_OBSIDIAN, "DELTA"); // delta
         t.put(Material.DIAMOND_BLOCK, "DELUXE"); // deluxe
         t.put(Material.DRIPSTONE_BLOCK, "CAVE"); // dripstone cave

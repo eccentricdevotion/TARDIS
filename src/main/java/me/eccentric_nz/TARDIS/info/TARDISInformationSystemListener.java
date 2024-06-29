@@ -788,6 +788,12 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 if (chat.equalsIgnoreCase("R")) {
                     new TISInfo(plugin).show(p, TARDISInfoMenu.REDSTONE);
                 }
+                if (chat.equalsIgnoreCase("^")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.ROTOR);
+                }
+                if (chat.equalsIgnoreCase("$")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.RUSTIC);
+                }
                 if (chat.equalsIgnoreCase("S")) {
                     new TISInfo(plugin).show(p, TARDISInfoMenu.STEAMPUNK);
                 }

@@ -174,6 +174,8 @@ public enum TARDISDescription {
     DIVISION("The Division Interuniverse Spaceship."),
     CAVE("A dripstone cave TARDIS."),
     WEATHERED("A weathered copper TARDIS."),
+    ROTOR("A simple time rotor TARDIS."),
+    RUSTIC("A rustic TARDIS."),
     ORIGINAL("The original v1.0 TARDIS."),
     ANCIENT("An ancient deep dark TARDIS."),
     BONE("An early era styled TARDIS."),

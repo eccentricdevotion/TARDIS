@@ -45,7 +45,7 @@ public class TARDISRecipeTabComplete extends TARDISCompleter implements TabCompl
             "master", "mechanical",
             "original",
             "plank", "pyramid",
-            "redstone", "rotor",
+            "redstone", "rotor", "rustic",
             "steampunk",
             "thirteenth", "tom", "twelfth",
             "war", "weathered", "wood",

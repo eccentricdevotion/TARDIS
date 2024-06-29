@@ -46,6 +46,7 @@ public enum BlueprintConsole {
     PYRAMID("tardis.pyramid"),
     REDSTONE("tardis.redstone"),
     ROTOR("tardis.rotor"),
+    RUSTIC("tardis.rustic"),
     STEAMPUNK("tardis.steampunk"),
     THIRTEENTH("tardis.twelfth"),
     TOM("tardis.tom"),

@@ -80,6 +80,7 @@ public class TARDISConsoleLoader {
         Consoles.getBY_NAMES().put("PYRAMID", new Schematic("SANDSTONE_STAIRS", "pyramid", "A Sandstone Pyramid Console", ConsoleSize.SMALL, true, TardisLight.LAMP, false));
         Consoles.getBY_NAMES().put("REDSTONE", new Schematic("REDSTONE_BLOCK", "redstone", "Redstone Console", ConsoleSize.MEDIUM, true, TardisLight.TENTH, false));
         Consoles.getBY_NAMES().put("ROTOR", new Schematic("HONEYCOMB_BLOCK", "rotor", "Time Rotor Console", ConsoleSize.SMALL, false, TardisLight.TENTH, false));
+        Consoles.getBY_NAMES().put("RUSTIC", new Schematic("COPPER_BULB", "rustic", "Rustic Console", ConsoleSize.MEDIUM, false, TardisLight.BULB, false));
         Consoles.getBY_NAMES().put("STEAMPUNK", new Schematic("COAL_BLOCK", "steampunk", "Steampunk Console", ConsoleSize.SMALL, true, TardisLight.LAMP, false));
         // THIRTEENTH designed by Razihel
         Consoles.getBY_NAMES().put("THIRTEENTH", new Schematic("ORANGE_CONCRETE", "thirteenth", "13th Doctor's Console", ConsoleSize.MEDIUM, false, TardisLight.THIRTEENTH, false));

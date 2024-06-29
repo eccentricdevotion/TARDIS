@@ -226,6 +226,8 @@ public enum TARDISInfoMenu {
     PLANK("TIS|TARDIS Types|Plank", "TYPES", "P"),
     PYRAMID("TIS|TARDIS Types|Pyramid", "TYPES", "y"),
     REDSTONE("TIS|TARDIS Types|Redstone", "TYPES", "R"),
+    ROTOR("TIS|TARDIS Types|Rotor^", "TYPES", "^"),
+    RUSTIC("TIS|TARDIS Types|Ru$tic^", "TYPES", "$"),
     STEAMPUNK("TIS|TARDIS Types|Steampunk", "TYPES", "S"),
     THIRTEENTH("TIS|TARDIS Types|Thirteenth", "TYPES", "n"),
     TOM("TIS|TARDIS Types|Tom", "TYPES", "T"),
@@ -647,7 +649,7 @@ public enum TARDISInfoMenu {
     public boolean isConsole() {
         switch (this) {
             case ARS, BIGGER, BONE, BUDGET, CAVE, COPPER_11TH, CORAL, CURSED, DELTA, DELUXE, DIVISION, ELEVENTH, ENDER,
-                    FACTORY, FIFTEENTH, FUGITIVE, HOSPITAL, MASTER, MECHANICAL, PLANK, PYRAMID, REDSTONE, STEAMPUNK,
+                    FACTORY, FIFTEENTH, FUGITIVE, HOSPITAL, MASTER, MECHANICAL, PLANK, PYRAMID, REDSTONE, ROTOR, RUSTIC, STEAMPUNK,
                     THIRTEENTH, TOM, TWELFTH, WAR, WEATHERED, ORIGINAL, ANCIENT, CUSTOM -> {
                 return true;
             }

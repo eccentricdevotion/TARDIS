@@ -105,6 +105,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         t.put("PYRAMID", Material.SANDSTONE_STAIRS); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
         t.put("REDSTONE", Material.REDSTONE_BLOCK); // redstone
         t.put("ROTOR", Material.HONEYCOMB_BLOCK); // rotor
+        t.put("RUSTIC", Material.COPPER_BULB); // rustic
         t.put("STEAMPUNK", Material.COAL_BLOCK); // steampunk
         t.put("THIRTEENTH", Material.ORANGE_CONCRETE); // thirteenth designed by Razihel
         t.put("TOM", Material.LAPIS_BLOCK); // tom baker

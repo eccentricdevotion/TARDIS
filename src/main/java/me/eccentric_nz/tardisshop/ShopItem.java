@@ -101,6 +101,7 @@ public enum ShopItem {
     RIFT_CIRCUIT("Rift Circuit", Material.GLOWSTONE_DUST, 10001983),
     RIFT_MANIPULATOR("Rift Manipulator", Material.BEACON, 10000001),
     ROTOR_SEED("Rotor Seed", Material.HONEYCOMB_BLOCK, 1, ShopItemRecipe.SEED),
+    RUSTIC_SEED("Rustic Seed", Material.COPPER_BULB, 1, ShopItemRecipe.SEED),
     RUST_PLAGUE_SWORD("Rust Plague Sword", Material.IRON_SWORD, 10000001),
     SAVE_STORAGE_DISK("Save Storage Disk", Material.MUSIC_DISC_CHIRP, 10000001, ShopItemRecipe.SHAPELESS),
     SERVER_ADMIN_CIRCUIT("Server Admin Circuit", Material.GLOWSTONE_DUST, 10001968),

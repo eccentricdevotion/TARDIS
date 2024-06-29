@@ -107,11 +107,11 @@ class TARDISBuildAbandoned implements Runnable {
      * Builds the interior of an abandoned TARDIS.
      *
      * @param plugin an instance of the TARDIS plugin main class.
-     * @param schm   the name of the schematic file to use can be ANCIENT, ARS, BIGGER, BONE, BUDGET, CAVE, COPPER, CORAL,
-     *               CURSED, CUSTOM, DELTA, DELUXE, DIVISION, ELEVENTH, ENDER, FACTORY, FIFTEENTH, FUGITIVE, HOSPITAL,
-     *               MASTER, MECHANICAL, ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, STEAMPUNK, THIRTEENTH, TOM, TWELFTH,
-     *               WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH, LEGACY_REDSTONE or a CUSTOM
-     *               name.
+     * @param schm   the name of the schematic file to use can be ANCIENT, ARS, BIGGER, BONE, BUDGET, CAVE, COPPER,
+     *               CORAL, CURSED, CUSTOM, DELTA, DELUXE, DIVISION, ELEVENTH, ENDER, FACTORY, FIFTEENTH, FUGITIVE,
+     *               HOSPITAL, MASTER, MECHANICAL, ORIGINAL, PLANK, PYRAMID, REDSTONE, ROTOR, RUSTIC, STEAMPUNK,
+     *               THIRTEENTH, TOM, TWELFTH, WAR, WEATHERED, WOOD, LEGACY_BIGGER, LEGACY_DELUXE, LEGACY_ELEVENTH,
+     *               LEGACY_REDSTONE or a CUSTOM name.
      * @param world  the world where the TARDIS is to be built.
      * @param dbID   the unique key of the record for this TARDIS in the database.
      * @param player the player to show the progress bar to, may be null.

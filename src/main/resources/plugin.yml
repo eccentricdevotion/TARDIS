@@ -295,6 +295,7 @@ permissions:
       tardis.pyramid: true
       tardis.redstone: true
       tardis.rotor: true
+      tardis.rustic: true
       tardis.steampunk: true
       tardis.thirteenth: true
       tardis.tom: true
@@ -307,6 +308,9 @@ permissions:
     default: op
   tardis.bigger:
     description: Allow players to build the 'bigger' TARDIS.
+    default: op
+  tardis.bone:
+    description: Allow players to build the 'bone' TARDIS.
     default: op
   tardis.cave:
     description: Allow players to build the Lush Cave TARDIS.
@@ -361,6 +365,9 @@ permissions:
     default: op
   tardis.rotor:
     description: Allow players to build the Time Rotor TARDIS.
+    default: op
+  tardis.rustic:
+    description: Allow players to build the Rustic TARDIS.
     default: op
   tardis.steampunk:
     description: Allow players to build the 'steampunk' TARDIS.

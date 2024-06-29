@@ -56,6 +56,7 @@ public enum TARDISDisplayItem {
     PYRAMID(Material.SANDSTONE_STAIRS),
     REDSTONE(Material.REDSTONE_BLOCK),
     ROTOR(Material.HONEYCOMB_BLOCK),
+    RUSTIC(Material.COPPER_BULB),
     STEAMPUNK(Material.COAL_BLOCK),
     THIRTEENTH(10001, Material.HORN_CORAL_BLOCK, null),
     TOM(Material.LAPIS_BLOCK),
