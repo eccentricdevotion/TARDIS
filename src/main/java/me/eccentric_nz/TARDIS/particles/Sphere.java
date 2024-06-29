@@ -7,6 +7,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.HashSet;
@@ -40,24 +42,42 @@ public class Sphere extends TARDISParticleRunnable {
 
     @Override
     public void run() {
-        t += 0.25;
-        for (Vector v : coords) {
-            location.add(v.getX(), v.getY(), v.getZ());
-            switch (particle) {
-                case DUST_COLOR_TRANSITION -> {
-                    Particle.DustTransition transition = new Particle.DustTransition(Color.YELLOW, Color.ORANGE, 1.0f);
-                    location.getWorld().spawnParticle(particle, location, 3, 0, 0, 0, 0, transition, false);
+        // check for player in chunk
+        if (playerInChunk(location)) {
+            t += 0.25;
+            for (Vector v : coords) {
+                location.add(v.getX(), v.getY(), v.getZ());
+                switch (particle) {
+                    case DUST_COLOR_TRANSITION -> {
+                        Particle.DustTransition transition = new Particle.DustTransition(Color.YELLOW, Color.ORANGE, 1.0f);
+                        location.getWorld().spawnParticle(particle, location, 3, 0, 0, 0, 0, transition, false);
+                    }
+                    case BLOCK -> {
+                        BlockData data = TARDISConstants.RANDOM.nextBoolean() ? Material.ORANGE_CONCRETE.createBlockData() : Material.YELLOW_CONCRETE.createBlockData();
+                        location.getWorld().spawnParticle(particle, location, 3, 0, 0, 0, 0, data, false);
+                    }
+                    default -> spawnParticle(Particle.ENTITY_EFFECT, location, 3, 0, TARDISConstants.RANDOM.nextBoolean() ? Color.ORANGE : Color.YELLOW);
                 }
-                case BLOCK -> {
-                    BlockData data = TARDISConstants.RANDOM.nextBoolean() ? Material.ORANGE_CONCRETE.createBlockData() : Material.YELLOW_CONCRETE.createBlockData();
-                    location.getWorld().spawnParticle(particle, location, 3, 0, 0, 0, 0, data, false);
-                }
-                default -> spawnParticle(Particle.ENTITY_EFFECT, location, 3, 0, TARDISConstants.RANDOM.nextBoolean() ? Color.ORANGE : Color.YELLOW);
+                location.subtract(v.getX(), v.getY(), v.getZ());
             }
-            location.subtract(v.getX(), v.getY(), v.getZ());
+            if (t > 6) {
+                cancel();
+            }
         }
-        if (t > 6) {
-            cancel();
+    }
+
+    private boolean playerInChunk(Location location) {
+        int r = location.getBlockY() % 16;
+        int upperY = location.getBlockY() + (16 - r);
+        int lowerY = location.getBlockY() - r;
+        for (Entity e : location.getChunk().getEntities()) {
+            if (e instanceof Player p) {
+                int pl = p.getLocation().getBlockY();
+                if (pl < upperY && pl > lowerY) {
+                    return true;
+                }
+            }
         }
+        return false;
     }
 }

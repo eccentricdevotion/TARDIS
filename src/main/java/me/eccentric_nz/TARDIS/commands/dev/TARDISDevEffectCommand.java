@@ -13,8 +13,13 @@ import me.eccentric_nz.TARDIS.particles.ParticleShape;
 import me.eccentric_nz.TARDIS.particles.Sphere;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Locale;
 import java.util.UUID;
@@ -54,14 +59,15 @@ public class TARDISDevEffectCommand {
             }
         } else if (args.length > 2) {
             if (args[1].equalsIgnoreCase("sphere")) {
-                Particle particle = Particle.ENTITY_EFFECT;
-                if (args[2].equalsIgnoreCase("dust")) {
-                    particle = Particle.DUST_COLOR_TRANSITION;
-                }
-                if (args[2].equalsIgnoreCase("block")) {
-                    particle = Particle.BLOCK;
-                }
-                Sphere sphere = new Sphere(plugin, player.getUniqueId(), player.getLocation().add(3, 5, 3), particle);
+                Location s = player.getLocation().add(3.5d, 3.5d, 3.5d);
+                ItemDisplay display = (ItemDisplay) s.getWorld().spawnEntity(s, EntityType.ITEM_DISPLAY);
+                ItemStack is = new ItemStack(Material.MAGMA_BLOCK);
+                ItemMeta im = is.getItemMeta();
+                im.setCustomModelData(1000);
+                is.setItemMeta(im);
+                display.setItemStack(is);
+                display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
+                Sphere sphere = new Sphere(plugin, player.getUniqueId(), s, Particle.ENTITY_EFFECT);
                 int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, sphere, 0, 10);
                 sphere.setTaskID(task);
             } else {
