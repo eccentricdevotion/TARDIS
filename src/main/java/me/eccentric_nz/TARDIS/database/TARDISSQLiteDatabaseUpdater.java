@@ -49,6 +49,7 @@ class TARDISSQLiteDatabaseUpdater {
     private final List<String> farmingupdates = new ArrayList<>();
     private final List<String> sonicupdates = new ArrayList<>();
     private final List<String> flightupdates = new ArrayList<>();
+    private final List<String> systemupdates = new ArrayList<>();
     private final List<String> uuidUpdates = Arrays.asList("achievements", "ars", "player_prefs", "storage", "t_count", "tardis", "travellers");
     private final Statement statement;
     private final TARDIS plugin;
@@ -163,6 +164,11 @@ class TARDISSQLiteDatabaseUpdater {
         sonicupdates.add("scan_type INTEGER DEFAULT 0");
         flightupdates.add("chicken TEXT DEFAULT ''");
         flightupdates.add("stand TEXT DEFAULT ''");
+        systemupdates.add("feature INTEGER DEFAULT 0");
+        systemupdates.add("throttle INTEGER DEFAULT 0");
+        systemupdates.add("faster INTEGER DEFAULT 0");
+        systemupdates.add("rapid INTEGER DEFAULT 0");
+        systemupdates.add("warp INTEGER DEFAULT 0");
     }
 
     /**
@@ -321,6 +327,16 @@ class TARDISSQLiteDatabaseUpdater {
                     i++;
                     String f_alter = "ALTER TABLE " + prefix + "flight ADD " + f;
                     statement.executeUpdate(f_alter);
+                }
+            }
+            for (String sys : systemupdates) {
+                String[] ssplit = sys.split(" ");
+                String sys_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "system_upgrades' AND sql LIKE '%" + ssplit[0] + "%'";
+                ResultSet rssys = statement.executeQuery(sys_query);
+                if (!rssys.next()) {
+                    i++;
+                    String sys_alter = "ALTER TABLE " + prefix + "system_upgrades ADD " + sys;
+                    statement.executeUpdate(sys_alter);
                 }
             }
             // add biome to current location

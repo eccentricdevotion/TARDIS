@@ -55,25 +55,29 @@ public class ResultSetSystemUpgrades {
             if (rs.isBeforeFirst()) {
                 rs.next();
                 data = new SystemUpgrade(
-                        rs.getInt("artron_level"),
-                        rs.getBoolean("architecture"),
-                        rs.getBoolean("chameleon"),
-                        rs.getBoolean("rooms"),
-                        rs.getBoolean("desktop"),
-                        rs.getBoolean("navigation"),
-                        rs.getBoolean("saves"),
-                        rs.getBoolean("distance_1"),
-                        rs.getBoolean("distance_2"),
-                        rs.getBoolean("distance_3"),
-                        rs.getBoolean("telepathic"),
-                        rs.getBoolean("inter_dimension"),
-                        rs.getBoolean("flight"),
-                        rs.getBoolean("tools"),
-                        rs.getBoolean("locator"),
-                        rs.getBoolean("biome_reader"),
-                        rs.getBoolean("force_field"),
-                        rs.getBoolean("monitor"),
-                        rs.getBoolean("stattenheim_remote")
+                    rs.getInt("artron_level"),
+                    rs.getBoolean("architecture"),
+                    rs.getBoolean("chameleon"),
+                    rs.getBoolean("rooms"),
+                    rs.getBoolean("desktop"),
+                    rs.getBoolean("feature"),
+                    rs.getBoolean("saves"),
+                    rs.getBoolean("monitor"),
+                    rs.getBoolean("force_field"),
+                    rs.getBoolean("tools"),
+                    rs.getBoolean("locator"),
+                    rs.getBoolean("telepathic"),
+                    rs.getBoolean("stattenheim_remote"),
+                    rs.getBoolean("navigation"),
+                    rs.getBoolean("distance_1"),
+                    rs.getBoolean("distance_2"),
+                    rs.getBoolean("distance_3"),
+                    rs.getBoolean("inter_dimension"),
+                    rs.getBoolean("throttle"),
+                    rs.getBoolean("faster"),
+                    rs.getBoolean("rapid"),
+                    rs.getBoolean("warp"),
+                    rs.getBoolean("flight")
                 );
             } else {
                 return false;

@@ -58,8 +58,15 @@ public class TARDISSystemTreeGUI {
                 stacks[g.getSlot()] = is;
             }
         }
+        // left_down
+        ItemStack ld = new ItemStack(SystemTree.LEFT_DOWN.getMaterial(), 1);
+        ItemMeta eft = ld.getItemMeta();
+        eft.setDisplayName(ChatColor.RESET + "");
+        eft.setCustomModelData(SystemTree.LEFT_DOWN.getCustomModelData());
+        ld.setItemMeta(eft);
+        stacks[0] = ld;
         // horizontal
-        int[] horizontal = new int[]{10, 12, 14, 15};
+        int[] horizontal = new int[]{1, 3, 5, 7};
         for (int h : horizontal) {
             ItemStack is = new ItemStack(SystemTree.H_LINE.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
@@ -68,57 +75,44 @@ public class TARDISSystemTreeGUI {
             is.setItemMeta(im);
             stacks[h] = is;
         }
-        // t_right
-        int[] t_right = new int[]{18, 25, 27, 34, 43};
-        for (int r : t_right) {
-            ItemStack is = new ItemStack(SystemTree.T_RIGHT.getMaterial(), 1);
+        // both_down
+        int[] both_down = new int[]{2, 6};
+        for (int d : both_down) {
+            ItemStack is = new ItemStack(SystemTree.BOTH_DOWN.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(ChatColor.RESET + "");
-            im.setCustomModelData(SystemTree.T_RIGHT.getCustomModelData());
-            is.setItemMeta(im);
-            stacks[r] = is;
-        }
-        // t_up
-        ItemStack ist = new ItemStack(SystemTree.T_UP.getMaterial(), 1);
-        ItemMeta up = ist.getItemMeta();
-        up.setDisplayName(ChatColor.RESET + "");
-        up.setCustomModelData(SystemTree.T_UP.getCustomModelData());
-        ist.setItemMeta(up);
-        stacks[11] = ist;
-        // down_right
-        int[] down_right = new int[]{36, 49, 52};
-        for (int d : down_right) {
-            ItemStack is = new ItemStack(SystemTree.D_RIGHT.getMaterial(), 1);
-            ItemMeta im = is.getItemMeta();
-            im.setDisplayName(ChatColor.RESET + "");
-            im.setCustomModelData(SystemTree.D_RIGHT.getCustomModelData());
+            im.setCustomModelData(SystemTree.BOTH_DOWN.getCustomModelData());
             is.setItemMeta(im);
             stacks[d] = is;
         }
-        // cross
-        int[] cross = new int[]{22, 31, 40, 43};
-        for (int c : cross) {
-            ItemStack cr = new ItemStack(SystemTree.CROSS.getMaterial(), 1);
-            ItemMeta oss = cr.getItemMeta();
-            oss.setDisplayName(ChatColor.RESET + "");
-            oss.setCustomModelData(SystemTree.CROSS.getCustomModelData());
-            cr.setItemMeta(oss);
-            stacks[c] = cr;
-        }
+        // right_down
+        ItemStack rd = new ItemStack(SystemTree.RIGHT_DOWN.getMaterial(), 1);
+        ItemMeta own = rd.getItemMeta();
+        own.setDisplayName(ChatColor.RESET + "");
+        own.setCustomModelData(SystemTree.RIGHT_DOWN.getCustomModelData());
+        rd.setItemMeta(own);
+        stacks[8] = rd;
         // background
         ItemStack is = new ItemStack(SystemTree.BLANK.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.RESET + "");
         im.setCustomModelData(SystemTree.BLANK.getCustomModelData());
         is.setItemMeta(im);
-        stacks[0] = is;
+        stacks[10] = is;
+        // vertical
+        ItemStack vert = new ItemStack(SystemTree.VERTICAL.getMaterial(), 1);
+        ItemMeta ical = vert.getItemMeta();
+        ical.setDisplayName(ChatColor.RESET + "");
+        ical.setCustomModelData(SystemTree.VERTICAL.getCustomModelData());
+        vert.setItemMeta(ical);
+        stacks[13] = vert;
         // close
         ItemStack close = new ItemStack(SystemTree.CLOSE.getMaterial(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close_im.setCustomModelData(SystemTree.CLOSE.getCustomModelData());
         close.setItemMeta(close_im);
-        stacks[8] = close;
+        stacks[45] = close;
         return stacks;
     }
 

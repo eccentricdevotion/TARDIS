@@ -243,7 +243,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryStorage);
 
             // Table structure for table 'system_upgrades'
-            String querySystem = "CREATE TABLE IF NOT EXISTS " + prefix + "system_upgrades (sys_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, uuid TEXT DEFAULT '', architecture INTEGER DEFAULT 0, chameleon INTEGER DEFAULT 0, rooms INTEGER DEFAULT 0, desktop INTEGER DEFAULT 0, navigation INTEGER DEFAULT 0, saves INTEGER DEFAULT 0, distance_1 INTEGER DEFAULT 0, distance_2 INTEGER DEFAULT 0, distance_3 INTEGER DEFAULT 0, telepathic INTEGER DEFAULT 0, inter_dimension INTEGER DEFAULT 0, flight INTEGER DEFAULT 0, tools INTEGER DEFAULT 0, locator INTEGER DEFAULT 0, biome_reader INTEGER DEFAULT 0, force_field INTEGER DEFAULT 0, monitor INTEGER DEFAULT 0, stattenheim_remote INTEGER DEFAULT 0)";
+            String querySystem = "CREATE TABLE IF NOT EXISTS " + prefix + "system_upgrades (sys_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, uuid TEXT DEFAULT '', architecture INTEGER DEFAULT 0, chameleon INTEGER DEFAULT 0, rooms INTEGER DEFAULT 0, desktop INTEGER DEFAULT 0, feature INTEGER DEFAULT 0, saves INTEGER DEFAULT 0, monitor INTEGER DEFAULT 0, force_field INTEGER DEFAULT 0, tools INTEGER DEFAULT 0, locator INTEGER DEFAULT 0, telepathic INTEGER DEFAULT 0, stattenheim_remote INTEGER DEFAULT 0, navigation INTEGER DEFAULT 0, distance_1 INTEGER DEFAULT 0, distance_2 INTEGER DEFAULT 0, distance_3 INTEGER DEFAULT 0, inter_dimension INTEGER DEFAULT 0, throttle INTEGER DEFAULT 0, faster INTEGER DEFAULT 0, rapid INTEGER DEFAULT 0, warp INTEGER DEFAULT 0, flight INTEGER DEFAULT 0)";
             statement.executeUpdate(querySystem);
 
             // Table structure for table 'tag'

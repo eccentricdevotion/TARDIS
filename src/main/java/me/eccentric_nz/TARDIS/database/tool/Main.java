@@ -311,7 +311,7 @@ public class Main {
                                         bw.write(str);
                                     }
                                     case system_upgrades -> {
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("sys_id"), rs.getInt("tardis_id"), rs.getString("uuid"), rs.getInt("architecture"), rs.getInt("chameleon"), rs.getInt("rooms"), rs.getInt("desktop"), rs.getInt("navigation"), rs.getInt("saves"), rs.getInt("distance_1"), rs.getInt("distance_2"), rs.getInt("distance_3"), rs.getInt("telepathic"), rs.getInt("inter_dimension"), rs.getInt("flight"), rs.getInt("tools"), rs.getInt("locator"), rs.getInt("biome_reader"), rs.getInt("force_field"), rs.getInt("monitor"), rs.getInt("stattenheim_remote")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("sys_id"), rs.getInt("tardis_id"), rs.getString("uuid"), rs.getInt("architecture"), rs.getInt("chameleon"), rs.getInt("rooms"), rs.getInt("desktop"), rs.getInt("feature"), rs.getInt("saves"), rs.getInt("monitor"), rs.getInt("force_field"), rs.getInt("tools"), rs.getInt("locator"), rs.getInt("telepathic"), rs.getInt("stattenheim_remote"), rs.getInt("navigation"), rs.getInt("distance_1"), rs.getInt("distance_2"), rs.getInt("distance_3"), rs.getInt("inter_dimension"), rs.getInt("throttle"), rs.getInt("faster"), rs.getInt("rapid"), rs.getInt("warp"), rs.getInt("flight")) + end;
                                         bw.write(str);
                                     }
                                     case t_count -> {

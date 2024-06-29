@@ -5,6 +5,9 @@ import me.eccentric_nz.TARDIS.console.models.ThrottleModel;
 import me.eccentric_nz.TARDIS.database.InteractionStateSaver;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
@@ -46,6 +49,29 @@ public class ThrottleInteraction {
             if (delay > 4) {
                 delay = 3;
                 unary = -1;
+            }
+            if (delay != 4 && plugin.getConfig().getBoolean("difficulty.system_upgrades")) {
+                switch (delay) {
+                    case 3 -> {
+                        if (!new SystemUpgradeChecker(plugin).has(uuid, SystemTree.FASTER)) {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Faster");
+                            delay = 4;
+                        }
+                    }
+                    case 2 -> {
+                        if (!new SystemUpgradeChecker(plugin).has(uuid, SystemTree.RAPID)) {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Rapid");
+                            delay = 4;
+                        }
+                    }
+                    case 1 -> {
+                        if (!new SystemUpgradeChecker(plugin).has(uuid, SystemTree.WARP)) {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Warp");
+                            delay = 4;
+                        }
+                    }
+                    default -> { }
+                }
             }
             // save unary value in the interaction PDC
             interaction.getPersistentDataContainer().set(plugin.getUnaryKey(), PersistentDataType.INTEGER, unary);

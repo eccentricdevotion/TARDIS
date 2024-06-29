@@ -479,6 +479,29 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 if (delay < 1) {
                     delay = 4;
                 }
+                if (delay != 4 && plugin.getConfig().getBoolean("difficulty.system_upgrades")) {
+                    switch (delay) {
+                        case 3 -> {
+                            if (!new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.FASTER)) {
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Faster");
+                                delay = 4;
+                            }
+                        }
+                        case 2 -> {
+                            if (!new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.RAPID)) {
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Rapid");
+                                delay = 3;
+                            }
+                        }
+                        case 1 -> {
+                            if (!new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.WARP)) {
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Warp");
+                                delay = 2;
+                            }
+                        }
+                        default -> { }
+                    }
+                }
                 String throttle = SpaceTimeThrottle.getByDelay().get(delay).toString();
                 im.setLore(List.of(throttle));
                 spt.setItemMeta(im);

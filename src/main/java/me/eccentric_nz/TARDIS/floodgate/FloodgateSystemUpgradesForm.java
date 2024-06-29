@@ -1,12 +1,12 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.database.data.SystemUpgrade;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSystemUpgrades;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeUpdate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,6 +19,7 @@ import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class FloodgateSystemUpgradesForm {
@@ -27,6 +28,7 @@ public class FloodgateSystemUpgradesForm {
     private final UUID uuid;
     private final int id;
     private SystemUpgrade sysData;
+    private List<SystemTree> notThese = List.of(SystemTree.UPGRADE_TREE, SystemTree.EXTERIOR_FLIGHT, SystemTree.MONITOR);
 
     public FloodgateSystemUpgradesForm(TARDIS plugin, UUID uuid, int id) {
         this.plugin = plugin;
@@ -65,7 +67,7 @@ public class FloodgateSystemUpgradesForm {
         builder.content("Artron Level: " + sysData.getArtronLevel());
         // add buttons
         for (SystemTree g : SystemTree.values()) {
-            if (g.getSlot() != -1 && g != SystemTree.UPGRADE_TREE) {
+            if (g.getSlot() != -1 && !notThese.contains(g)) {
                 boolean has = sysData.getUpgrades().get(g);
                 boolean branch = g.getBranch().equals("branch");
                 String prefix = (branch) ? ChatColor.GOLD + "" + ChatColor.ITALIC : "";
@@ -103,17 +105,22 @@ public class FloodgateSystemUpgradesForm {
             case 1 -> clicked = SystemTree.CHAMELEON_CIRCUIT;
             case 2 -> clicked = SystemTree.ROOM_GROWING;
             case 3 -> clicked = SystemTree.DESKTOP_THEME;
-            case 4 -> clicked = SystemTree.NAVIGATION;
+            case 4 -> clicked = SystemTree.FEATURE;
             case 5 -> clicked = SystemTree.SAVES;
-            case 6 -> clicked = SystemTree.DISTANCE_1;
-            case 7 -> clicked = SystemTree.DISTANCE_2;
-            case 8 -> clicked = SystemTree.DISTANCE_3;
-            case 9 -> clicked = SystemTree.INTER_DIMENSIONAL_TRAVEL;
-            case 10 -> clicked = SystemTree.TOOLS;
-            case 11 -> clicked = SystemTree.TARDIS_LOCATOR;
-            case 12 -> clicked = SystemTree.BIOME_READER;
-            case 13 -> clicked = SystemTree.FORCE_FIELD;
-            case 14 -> clicked = SystemTree.STATTENHEIM_REMOTE;
+            case 6 -> clicked = SystemTree.FORCE_FIELD;
+            case 7 -> clicked = SystemTree.TOOLS;
+            case 8 -> clicked = SystemTree.TARDIS_LOCATOR;
+            case 9 -> clicked = SystemTree.TELEPATHIC_CIRCUIT;
+            case 10 -> clicked = SystemTree.STATTENHEIM_REMOTE;
+            case 11 -> clicked = SystemTree.NAVIGATION;
+            case 12 -> clicked = SystemTree.DISTANCE_1;
+            case 13 -> clicked = SystemTree.DISTANCE_2;
+            case 14 -> clicked = SystemTree.DISTANCE_3;
+            case 15 -> clicked = SystemTree.INTER_DIMENSIONAL_TRAVEL;
+            case 16 -> clicked = SystemTree.THROTTLE;
+            case 17 -> clicked = SystemTree.FASTER;
+            case 18 -> clicked = SystemTree.RAPID;
+            case 19 -> clicked = SystemTree.WARP;
             default -> clicked = SystemTree.UPGRADE_TREE;
         }
         try {

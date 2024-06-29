@@ -74,7 +74,7 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_TRAVEL_FIRST");
             return;
         }
-        if (slot == 8) {
+        if (slot == 45) {
             close(player);
             return;
         }
@@ -82,23 +82,27 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
         SystemTree clicked;
         switch (slot) {
             case 9 -> clicked = SystemTree.ARCHITECTURE;
-            case 13 -> clicked = SystemTree.NAVIGATION;
-            case 16 -> clicked = SystemTree.TOOLS;
-            case 19 -> clicked = SystemTree.CHAMELEON_CIRCUIT;
-            case 21 -> clicked = SystemTree.DISTANCE_1;
-            case 23 -> clicked = SystemTree.SAVES;
-            case 26 -> clicked = SystemTree.TARDIS_LOCATOR;
-            case 28 -> clicked = SystemTree.ROOM_GROWING;
-            case 30 -> clicked = SystemTree.DISTANCE_2;
-            case 32 -> clicked = SystemTree.TELEPATHIC_CIRCUIT;
-            case 35 -> clicked = SystemTree.BIOME_READER;
-            case 37 -> clicked = SystemTree.DESKTOP_THEME;
-            case 39 -> clicked = SystemTree.DISTANCE_3;
-            case 41 -> clicked = SystemTree.INTER_DIMENSIONAL_TRAVEL;
-            case 42 -> clicked = SystemTree.MONITOR;
-            case 44 -> clicked = SystemTree.FORCE_FIELD;
-            case 50 -> clicked = SystemTree.EXTERIOR_FLIGHT;
-            case 53 -> clicked = SystemTree.STATTENHEIM_REMOTE;
+            case 11 -> clicked = SystemTree.FEATURE;
+            case 15 -> clicked = SystemTree.NAVIGATION;
+            case 17 -> clicked = SystemTree.THROTTLE;
+            case 18 -> clicked = SystemTree.CHAMELEON_CIRCUIT;
+            case 20 -> clicked = SystemTree.SAVES;
+            case 22 -> clicked = SystemTree.TOOLS;
+            case 24 -> clicked = SystemTree.DISTANCE_1;
+            case 26 -> clicked = SystemTree.FASTER;
+            case 27 -> clicked = SystemTree.ROOM_GROWING;
+            case 29 -> clicked = SystemTree.MONITOR;
+            case 31 -> clicked = SystemTree.TARDIS_LOCATOR;
+            case 33 -> clicked = SystemTree.DISTANCE_2;
+            case 35 -> clicked = SystemTree.RAPID;
+            case 36 -> clicked = SystemTree.DESKTOP_THEME;
+            case 38 -> clicked = SystemTree.FORCE_FIELD;
+            case 40 -> clicked = SystemTree.TELEPATHIC_CIRCUIT;
+            case 42 -> clicked = SystemTree.DISTANCE_3;
+            case 44 -> clicked = SystemTree.WARP;
+            case 49 -> clicked = SystemTree.STATTENHEIM_REMOTE;
+            case 51 -> clicked = SystemTree.INTER_DIMENSIONAL_TRAVEL;
+            case 53 -> clicked = SystemTree.EXTERIOR_FLIGHT;
             default -> clicked = SystemTree.UPGRADE_TREE;
         }
         try {

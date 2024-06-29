@@ -1695,6 +1695,7 @@ public class TARDIS extends JavaPlugin {
         }
         customModelConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_models.yml"));
         systemUpgradesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "system_upgrades.yml"));
+        new TARDISSysUpsUpdater(this).checkSystemUpgradesConfig();
     }
 
     /**

@@ -47,6 +47,7 @@ class TARDISMySQLDatabaseUpdater {
     private final List<String> farmingupdates = new ArrayList<>();
     private final List<String> sonicupdates = new ArrayList<>();
     private final List<String> flightupdates = new ArrayList<>();
+    private final List<String> systemupdates = new ArrayList<>();
     private final HashMap<String, String> uuidUpdates = new HashMap<>();
     private final Statement statement;
     private final TARDIS plugin;
@@ -133,6 +134,11 @@ class TARDISMySQLDatabaseUpdater {
         sonicupdates.add("scan_type int(1) DEFAULT '0'");
         flightupdates.add("chicken varchar(48) DEFAULT ''");
         flightupdates.add("stand varchar(48) DEFAULT ''");
+        systemupdates.add("feature int(1) DEFAULT '0'");
+        systemupdates.add("throttle int(1) DEFAULT '0'");
+        systemupdates.add("faster int(1) DEFAULT '0'");
+        systemupdates.add("rapid int(1) DEFAULT '0'");
+        systemupdates.add("warp int(1) DEFAULT '0'");
     }
 
     /**
@@ -251,13 +257,23 @@ class TARDISMySQLDatabaseUpdater {
                 }
             }
             for (String f : flightupdates) {
-                String[] ssplit = f.split(" ");
-                String f_query = "SHOW COLUMNS FROM " + prefix + "flight LIKE '" + ssplit[0] + "'";
+                String[] fsplit = f.split(" ");
+                String f_query = "SHOW COLUMNS FROM " + prefix + "flight LIKE '" + fsplit[0] + "'";
                 ResultSet fa = statement.executeQuery(f_query);
                 if (!fa.next()) {
                     i++;
                     String f_alter = "ALTER TABLE " + prefix + "flight ADD " + f;
                     statement.executeUpdate(f_alter);
+                }
+            }
+            for (String sys : systemupdates) {
+                String[] ssplit = sys.split(" ");
+                String sys_query = "SHOW COLUMNS FROM " + prefix + "system_upgrades LIKE '" + ssplit[0] + "'";
+                ResultSet tem = statement.executeQuery(sys_query);
+                if (!tem.next()) {
+                    i++;
+                    String sys_alter = "ALTER TABLE " + prefix + "system_upgrades ADD " + sys;
+                    statement.executeUpdate(sys_alter);
                 }
             }
             // update data type for `data` in blocks
