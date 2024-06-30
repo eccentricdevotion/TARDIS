@@ -14,13 +14,9 @@
 6. Modelled controls [#836](https://github.com/eccentricdevotion/TARDIS/issues/836)
 7. Exterior button door control [#839](https://github.com/eccentricdevotion/TARDIS/issues/839)
 8. Console lamp [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)
-9. New RUSTIC console using 1.21 blocks
-10. Add space time throttle settings to upgrade tree?
-11. Add new eye of harmony room [#781](https://github.com/eccentricdevotion/TARDIS/issues/781)
+9. Add new eye of harmony room [#781](https://github.com/eccentricdevotion/TARDIS/issues/781)
     - with particle sphere
-    - particles should only animate if there is a player in the room
-    - try dust_color_transition with a smaller sphere inside of yellow
-12. ?
+10. ?
 
 ## Future versions
 

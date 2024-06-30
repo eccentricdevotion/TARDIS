@@ -86,8 +86,9 @@ public class ScreenInteraction {
         if (textDisplay == null) {
             Location adjusted = location.clone();
             // from middle of interaction!
-            Vector vector = coords ? new Vector(0d, 0.5d, -0.35d) : new Vector(-0.2d, 0.5d, 0.175d);
+            Vector vector = coords ? new Vector(-0.05d, 0.5d, -0.4d) : new Vector(-0.25d, 0.5d, 0.125d);
             adjusted.add(vector);
+            plugin.setTardisSpawn(true);
             textDisplay = (TextDisplay) location.getWorld().spawnEntity(adjusted, EntityType.TEXT_DISPLAY);
             textDisplay.getPersistentDataContainer().set(plugin.getInteractionUuidKey(), PersistentDataType.BOOLEAN, true);
         }
