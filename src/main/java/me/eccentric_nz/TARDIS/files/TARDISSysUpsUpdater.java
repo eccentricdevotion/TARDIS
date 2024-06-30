@@ -62,8 +62,13 @@ public class TARDISSysUpsUpdater {
             system_upgrades_config.set("tools.force_field", null);
             system_upgrades_config.set("tools.telepathic_circuit", system_upgrades_config.getInt("navigation.telepathic_circuit"));
             system_upgrades_config.set("navigation.telepathic_circuit", null);
-            system_upgrades_config.set("throttle.exterior_flight", system_upgrades_config.getInt("navigation.exterior_flight"));
+            system_upgrades_config.set("throttle.exterior_flight", 4000);
             system_upgrades_config.set("navigation.exterior_flight", null);
+            i++;
+        }
+        if (system_upgrades_config.contains("throttle.exterior_flight") && system_upgrades_config.getInt("throttle.exterior_flight") == 3000) {
+            system_upgrades_config.set("throttle.exterior_flight", 4000);
+            i++;
         }
         try {
             system_upgrades_config.save(new File(plugin.getDataFolder(), "system_upgrades.yml"));
