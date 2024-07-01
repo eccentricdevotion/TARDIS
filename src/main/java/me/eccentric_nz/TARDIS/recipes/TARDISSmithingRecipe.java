@@ -44,6 +44,7 @@ public class TARDISSmithingRecipe {
         new PainterRepairRecipe(plugin).addRecipe();
         new PickupArrowsRepairRecipe(plugin).addRecipe();
         new RedstoneRepairRecipe(plugin).addRecipe();
+        new CapacitorRepairRecipe(plugin).addRecipe();
     }
 
     public HashMap<String, SmithingRecipe> getSmithingRecipes() {

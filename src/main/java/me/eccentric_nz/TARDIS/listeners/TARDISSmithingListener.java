@@ -117,7 +117,27 @@ public class TARDISSmithingListener implements Listener {
                 } else {
                     event.setResult(null);
                 }
+            } else if (isDamagedCapacitor(sonic)) {
+                ItemStack repaired = sonic.clone();
+                ItemMeta im = repaired.getItemMeta();
+                im.setCustomModelData(10000003);
+                is.setItemMeta(im);
+                event.setResult(repaired);
             }
         }
+    }
+
+    private boolean isDamagedCapacitor(ItemStack is) {
+        if (is == null || is.getType() != Material.BUCKET || !is.hasItemMeta()) {
+            return false;
+        }
+        ItemMeta im = is.getItemMeta();
+        if (!im.hasDisplayName() || !im.hasCustomModelData()) {
+            return false;
+        }
+        if (!im.getDisplayName().equalsIgnoreCase("Artron Capacitor") || im.getCustomModelData() != 10000004) {
+            return false;
+        }
+        return true;
     }
 }
