@@ -269,6 +269,8 @@ public class TARDISSeedBlockProcessor {
                         setc.put("uuid", uuid);
                         plugin.getQueryFactory().doInsert("t_count", setc);
                     }
+                    // insert an eye record
+                    plugin.getQueryFactory().insertEye(lastInsertId);
                     return true;
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_WORLD_NOT_LOADED");

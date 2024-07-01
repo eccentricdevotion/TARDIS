@@ -517,4 +517,25 @@ public class QueryFactory {
             }
         }
     }
+
+    public void insertEye(int id) {
+        PreparedStatement ps = null;
+        String query = "INSERT INTO " + prefix + "eyes (tardis_id) VALUES (?)";
+        try {
+            service.testConnection(connection);
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            plugin.debug("Insert error for saving tardis_id to eyes! " + e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing eyes statement! " + e.getMessage());
+            }
+        }
+    }
 }

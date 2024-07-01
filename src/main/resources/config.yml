@@ -255,24 +255,25 @@ sonic:
   usage: 10
 # don't touch
 conversions:
-  short_grass: true
-  archive_wall_data: true
-  ars_materials: true
-  condenser_materials: true
-  player_prefs_materials: true
-  block_materials: true
-  block_wall_signs: true
-  custom_preset: true
-  constructs: true
-  controls: true
-  bind: true
-  icons: true
-  restore_biomes: true
-  legacy_budget: true
   all_in_one:
     helper: true
     shop: true
     sonic_blaster: true
     vortex_manipulator: true
     weeping_angels: true
+  archive_wall_data: true
+  ars_materials: true
+  bind: true
+  block_materials: true
+  block_wall_signs: true
+  condenser_materials: true
+  constructs: true
+  controls: true
+  custom_preset: true
+  eyes: true
+  icons: true
   interior_door_id: true
+  legacy_budget: true
+  player_prefs_materials: true
+  restore_biomes: true
+  short_grass: true

@@ -67,6 +67,7 @@ import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import me.eccentric_nz.TARDIS.recipes.*;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomPersister;
 import me.eccentric_nz.TARDIS.rooms.TARDISZeroRoomRunnable;
+import me.eccentric_nz.TARDIS.rooms.eye.EyePopulator;
 import me.eccentric_nz.TARDIS.rotors.TARDISCustomRotorLoader;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeRunnable;
@@ -358,6 +359,12 @@ public class TARDIS extends JavaPlugin {
             loadDatabase();
             queryFactory = new QueryFactory(this);
             int conversions = 0;
+            // insert eye records
+            if (!getConfig().getBoolean("conversions.eyes")) {
+                new EyePopulator(this).insert();
+                getConfig().set("conversions.eyes", true);
+                conversions++;
+            }
             // update database materials
             if (!getConfig().getBoolean("conversions.ars_materials")) {
                 new ARSConverter(this).convertARS();
