@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.transmat;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUITransmat;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
@@ -25,6 +23,9 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmatList;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TARDISTransmatInventory {
 
@@ -72,35 +73,35 @@ public class TARDISTransmatInventory {
                 }
             }
             // info
-            ItemStack info = new ItemStack(GUITransmat.INFO.getMaterial(), 1);
+            ItemStack info = new ItemStack(GUITransmat.INFO.material(), 1);
             ItemMeta meta = info.getItemMeta();
             meta.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
-            meta.setCustomModelData(GUITransmat.INFO.getCustomModelData());
+            meta.setCustomModelData(GUITransmat.INFO.customModelData());
             meta.setLore(plugin.getChameleonGuis().getStringList("INFO_TRANSMAT"));
             info.setItemMeta(meta);
-            stack[17] = info;
+            stack[GUITransmat.INFO.slot()] = info;
             // teleport
-            ItemStack tele = new ItemStack(GUITransmat.TRANSMAT.getMaterial(), 1);
+            ItemStack tele = new ItemStack(GUITransmat.TRANSMAT.material(), 1);
             ItemMeta port = tele.getItemMeta();
             port.setDisplayName(plugin.getLanguage().getString("BUTTON_TRANSMAT"));
-            port.setCustomModelData(GUITransmat.TRANSMAT.getCustomModelData());
+            port.setCustomModelData(GUITransmat.TRANSMAT.customModelData());
             tele.setItemMeta(port);
-            stack[17] = tele;
+            stack[GUITransmat.TRANSMAT.slot()] = tele;
             // delete
-            ItemStack delete = new ItemStack(GUITransmat.DELETE.getMaterial(), 1);
+            ItemStack delete = new ItemStack(GUITransmat.DELETE.material(), 1);
             ItemMeta dim = delete.getItemMeta();
             dim.setDisplayName(plugin.getLanguage().getString("BUTTON_DELETE"));
-            dim.setCustomModelData(GUITransmat.DELETE.getCustomModelData());
+            dim.setCustomModelData(GUITransmat.DELETE.customModelData());
             delete.setItemMeta(dim);
-            stack[35] = delete;
+            stack[GUITransmat.DELETE.slot()] = delete;
         }
         // close
-        ItemStack close = new ItemStack(GUITransmat.CLOSE.getMaterial(), 1);
+        ItemStack close = new ItemStack(GUITransmat.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUITransmat.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GUITransmat.CLOSE.customModelData());
         close.setItemMeta(close_im);
-        stack[53] = close;
+        stack[GUITransmat.CLOSE.slot()] = close;
 
         return stack;
     }

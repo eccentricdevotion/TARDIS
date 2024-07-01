@@ -16,46 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
-public enum GUISaves {
+public record GUISaves() {
 
     // TARDIS saves
-    HOME(140, 0, Material.BOWL),
-    REARRANGE_SAVES(5, 45, Material.ARROW),
-    LOAD_TARDIS_AREAS(1, 53, Material.MAP),
-    DELETE_SAVE(1, 47, Material.BUCKET),
-    LOAD_MY_SAVES(138, 49, Material.BOWL),
-    LOAD_SAVES_FROM_THIS_TARDIS(139, 49, Material.BOWL),
-    BACK_TO_PLANETS(1, 51, Material.ARROW),
-    GO_TO_PAGE_1(11, 51, Material.ARROW),
-    GO_TO_PAGE_2(12, 51, Material.ARROW);
-
-    private final int customModelData;
-    private final int slot;
-    private final Material material;
-
-    GUISaves(int customModelData, int slot, Material material) {
-        this.customModelData = customModelData;
-        this.slot = slot;
-        this.material = material;
-    }
-
-    public int getCustomModelData() {
-        return customModelData;
-    }
-
-    public int getSlot() {
-        return slot;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public String getName() {
-        String s = toString();
-        return TARDISStringUtils.sentenceCase(s);
-    }
+    public static GUIData HOME = new GUIData(140, 0, Material.BOWL);
+    public static GUIData REARRANGE_SAVES = new GUIData(5, 45, Material.ARROW);
+    public static GUIData LOAD_TARDIS_AREAS = new GUIData(1, 53, Material.MAP);
+    public static GUIData DELETE_SAVE = new GUIData(1, 47, Material.BUCKET);
+    public static GUIData LOAD_MY_SAVES = new GUIData(138, 49, Material.BOWL);
+    public static GUIData LOAD_SAVES_FROM_THIS_TARDIS = new GUIData(139, 49, Material.BOWL);
+    public static GUIData BACK_TO_PLANETS = new GUIData(1, 51, Material.ARROW);
+    public static GUIData GO_TO_PAGE_1 = new GUIData(11, 51, Material.ARROW);
+    public static GUIData GO_TO_PAGE_2 = new GUIData(12, 51, Material.ARROW);
 }

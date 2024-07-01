@@ -27,7 +27,7 @@ public class TARDISSavesPlanetInventory {
     private ItemStack[] getWorlds() {
         ItemStack[] stack = new ItemStack[54];
         // home stack
-        ItemStack his = new ItemStack(GUISaves.HOME.getMaterial(), 1);
+        ItemStack his = new ItemStack(GUISaves.HOME.material(), 1);
         ItemMeta him = his.getItemMeta();
         List<String> hlore = new ArrayList<>();
         HashMap<String, Object> wherehl = new HashMap<>();
@@ -48,9 +48,9 @@ public class TARDISSavesPlanetInventory {
             hlore.add("Not found!");
         }
         him.setLore(hlore);
-        him.setCustomModelData(GUISaves.HOME.getCustomModelData());
+        him.setCustomModelData(GUISaves.HOME.customModelData());
         his.setItemMeta(him);
-        stack[0] = his;
+        stack[GUISaves.HOME.slot()] = his;
         // unique planets from saved destinations
         ResultSetPlanets rsd = new ResultSetPlanets(plugin, id);
         if (rsd.resultSet()) {

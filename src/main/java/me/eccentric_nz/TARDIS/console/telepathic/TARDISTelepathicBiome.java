@@ -5,7 +5,6 @@ import me.eccentric_nz.TARDIS.custommodeldata.GUIMap;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIWallFloor;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.Material;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
@@ -54,26 +53,26 @@ public class TARDISTelepathicBiome {
             }
             if (environment == Environment.NORMAL) {
                 // scroll up
-                ItemStack scroll_up = new ItemStack(Material.ARROW, 1);
+                ItemStack scroll_up = new ItemStack(GUIWallFloor.BUTTON_SCROLL_U.material(), 1);
                 ItemMeta uim = scroll_up.getItemMeta();
                 uim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_U"));
-                uim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_U.getCustomModelData());
+                uim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_U.customModelData());
                 scroll_up.setItemMeta(uim);
-                stack[8] = scroll_up;
+                stack[GUIWallFloor.BUTTON_SCROLL_U.slot()] = scroll_up;
                 // scroll down
-                ItemStack scroll_down = new ItemStack(Material.ARROW, 1);
+                ItemStack scroll_down = new ItemStack(GUIWallFloor.BUTTON_SCROLL_D.material(), 1);
                 ItemMeta dim = scroll_down.getItemMeta();
                 dim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_D"));
-                dim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_D.getCustomModelData());
+                dim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_D.customModelData());
                 scroll_down.setItemMeta(dim);
-                stack[17] = scroll_down;
+                stack[GUIWallFloor.BUTTON_SCROLL_D.slot()] = scroll_down;
             }
         }
         // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIMap.BUTTON_CLOSE.material(), 1);
         ItemMeta gui = close.getItemMeta();
         gui.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        gui.setCustomModelData(GUIMap.BUTTON_CLOSE.getCustomModelData());
+        gui.setCustomModelData(GUIMap.BUTTON_CLOSE.customModelData());
         close.setItemMeta(gui);
         stack[53] = close;
         return stack;

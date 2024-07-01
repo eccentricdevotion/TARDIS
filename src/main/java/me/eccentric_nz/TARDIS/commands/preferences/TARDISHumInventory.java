@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIInteriorSounds;
 import me.eccentric_nz.TARDIS.enumeration.Hum;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Administrator of Solos is the Earth Empire's civilian overseer for that planet.
@@ -54,7 +54,7 @@ class TARDISHumInventory {
             ItemStack is = new ItemStack(Material.BOWL, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(hum.toString());
-            im.setCustomModelData(GUIInteriorSounds.valueOf(hum.toString()).getCustomModelData());
+            im.setCustomModelData(hum.getCmd());
             is.setItemMeta(im);
             options.add(is);
         }
@@ -68,20 +68,20 @@ class TARDISHumInventory {
             }
         }
         // play / save
-        ItemStack play = new ItemStack(Material.BOWL, 1);
+        ItemStack play = new ItemStack(GUIInteriorSounds.ACTION.material(), 1);
         ItemMeta save = play.getItemMeta();
         save.setDisplayName("Action");
         save.setLore(List.of("PLAY"));
-        save.setCustomModelData(GUIInteriorSounds.ACTION.getCustomModelData());
+        save.setCustomModelData(GUIInteriorSounds.ACTION.customModelData());
         play.setItemMeta(save);
-        stack[15] = play;
+        stack[GUIInteriorSounds.ACTION.slot()] = play;
         // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIInteriorSounds.CLOSE.material(), 1);
         ItemMeta c_im = close.getItemMeta();
         c_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        c_im.setCustomModelData(GUIInteriorSounds.CLOSE.getCustomModelData());
+        c_im.setCustomModelData(GUIInteriorSounds.CLOSE.customModelData());
         close.setItemMeta(c_im);
-        stack[17] = close;
+        stack[GUIInteriorSounds.CLOSE.slot()] = close;
 
         return stack;
     }

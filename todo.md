@@ -1,10 +1,6 @@
 # TODO
 
-## Current version `5.6.0`
-
-1. ?
-
-## Next version `5.7.0`
+## Current version `5.7.0`
 
 1. Fix fifteenth console redstone piston door
 2. Fix follower persistence
@@ -21,20 +17,23 @@
    - damage capacitors when there is a malfunction
 10. ?
 
+## Next version `5.8.0`
+
+1. Sonic Blaster - used to temporarily remove blocks only
+2. Microscope as an addition to Chemistry?
+3. Regeneration - make a bunch of timelord disguises and the Elixir Of Life item.
+   - Regenerations to use particle effects, maybe a couple of shapes, and configurable like particle like materialisation
+   - Configurable number of regenerations - classic 12 or new Who 15 for example? Could be permission based `tardis.regenerations.12`
+   - Regenerations upon death or when elixir is drunk
+   - Add potion effects both buff/debuff e.g. healing but also mining fatigue
+
 ## Future versions
 
 1. Use the Vortex Manipulator to teleport past force fields
 2. Optional world name in `/tardistravel` - [#306](https://github.com/eccentricdevotion/TARDIS/issues/306)
 3. Time travel - [#305](https://github.com/eccentricdevotion/TARDIS/issues/305)
 4. Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?)
-5. Sonic Blaster - used to temporarily remove blocks only
-6. Microscope as an addition to Chemistry?
-7. Regeneration - make a bunch of timelord disguises and the Elixir Of Life item.
-   - Regenerations to use particle effects, maybe a couple of shapes, and configurable like particle like materialisation
-   - Configurable number of regenerations - classic 12 or new Who 15 for example? Could be permission based `tardis.regenerations.12`
-   - Regenerations upon death or when elixir is drunk
-   - Add potion effects both buff/debuff e.g. healing but also mining fatigue
-8. All the things...
+5. All the things...
 
 ## Wiki Documentation
 

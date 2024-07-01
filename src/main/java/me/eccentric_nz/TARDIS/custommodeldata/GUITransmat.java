@@ -16,40 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
-public enum GUITransmat {
+public record GUITransmat() {
 
-    INFO(57, 8, Material.BOWL),
-    TRANSMAT(133, 26, Material.BOWL),
-    DELETE(1, 35, Material.BUCKET),
-    CLOSE(1, 53, Material.BOWL);
-
-    private final int customModelData;
-    private final int slot;
-    private final Material material;
-
-    GUITransmat(int customModelData, int slot, Material material) {
-        this.customModelData = customModelData;
-        this.slot = slot;
-        this.material = material;
-    }
-
-    public int getCustomModelData() {
-        return customModelData;
-    }
-
-    public int getSlot() {
-        return slot;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public String getName() {
-        String s = toString();
-        return TARDISStringUtils.sentenceCase(s);
-    }
+    public static GUIData INFO = new GUIData(57, 8, Material.BOWL);
+    public static GUIData TRANSMAT = new GUIData(133, 17, Material.BOWL);
+    public static GUIData DELETE = new GUIData(1, 35, Material.BUCKET);
+    public static GUIData CLOSE = new GUIData(1, 53, Material.BOWL);
 }

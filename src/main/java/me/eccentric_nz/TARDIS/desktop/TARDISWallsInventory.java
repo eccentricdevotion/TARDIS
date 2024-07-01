@@ -64,40 +64,40 @@ class TARDISWallsInventory {
         }
 
         // scroll up
-        ItemStack scroll_up = new ItemStack(Material.ARROW, 1);
+        ItemStack scroll_up = new ItemStack(GUIWallFloor.BUTTON_SCROLL_U.material(), 1);
         ItemMeta uim = scroll_up.getItemMeta();
         uim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_U"));
-        uim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_U.getCustomModelData());
+        uim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_U.customModelData());
         scroll_up.setItemMeta(uim);
-        stack[8] = scroll_up;
+        stack[GUIWallFloor.BUTTON_SCROLL_U.slot()] = scroll_up;
         // scroll down
-        ItemStack scroll_down = new ItemStack(Material.ARROW, 1);
+        ItemStack scroll_down = new ItemStack(GUIWallFloor.BUTTON_SCROLL_D.material(), 1);
         ItemMeta dim = scroll_down.getItemMeta();
         dim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_D"));
-        dim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_D.getCustomModelData());
+        dim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_D.customModelData());
         scroll_down.setItemMeta(dim);
-        stack[17] = scroll_down;
+        stack[GUIWallFloor.BUTTON_SCROLL_D.slot()] = scroll_down;
         // default wall
-        ItemStack wall = new ItemStack(Material.BOWL, 1);
+        ItemStack wall = new ItemStack(GUIWallFloor.WALL.material(), 1);
         ItemMeta wim = wall.getItemMeta();
         wim.setDisplayName("Default Wall Block");
-        wim.setCustomModelData(GUIWallFloor.WALL.getCustomModelData());
+        wim.setCustomModelData(GUIWallFloor.WALL.customModelData());
         wall.setItemMeta(wim);
-        stack[26] = wall;
+        stack[GUIWallFloor.WALL.slot()] = wall;
         // default floor
-        ItemStack floor = new ItemStack(Material.BOWL, 1);
+        ItemStack floor = new ItemStack(GUIWallFloor.FLOOR.material(), 1);
         ItemMeta fim = floor.getItemMeta();
         fim.setDisplayName("Default Floor Block");
-        fim.setCustomModelData(GUIWallFloor.FLOOR.getCustomModelData());
+        fim.setCustomModelData(GUIWallFloor.FLOOR.customModelData());
         floor.setItemMeta(fim);
-        stack[35] = floor;
+        stack[GUIWallFloor.FLOOR.slot()] = floor;
         // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIWallFloor.BUTTON_ABORT.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName("Abort upgrade");
-        close_im.setCustomModelData(GUIWallFloor.BUTTON_ABORT.getCustomModelData());
+        close_im.setCustomModelData(GUIWallFloor.BUTTON_ABORT.customModelData());
         close.setItemMeta(close_im);
-        stack[53] = close;
+        stack[GUIWallFloor.BUTTON_ABORT.slot()] = close;
 
         return stack;
     }

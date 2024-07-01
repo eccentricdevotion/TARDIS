@@ -65,33 +65,33 @@ class TARDISHowtoWallsInventory {
         }
 
         // scroll up
-        ItemStack scroll_up = new ItemStack(Material.ARROW, 1);
+        ItemStack scroll_up = new ItemStack(GUIWallFloor.BUTTON_SCROLL_U.material(), 1);
         ItemMeta uim = scroll_up.getItemMeta();
         uim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_U"));
-        uim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_U.getCustomModelData());
+        uim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_U.customModelData());
         scroll_up.setItemMeta(uim);
-        stack[8] = scroll_up;
+        stack[GUIWallFloor.BUTTON_SCROLL_U.slot()] = scroll_up;
         // scroll down
-        ItemStack scroll_down = new ItemStack(Material.ARROW, 1);
+        ItemStack scroll_down = new ItemStack(GUIWallFloor.BUTTON_SCROLL_D.material(), 1);
         ItemMeta dim = scroll_down.getItemMeta();
         dim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_D"));
-        dim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_D.getCustomModelData());
+        dim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_D.customModelData());
         scroll_down.setItemMeta(dim);
         stack[26] = scroll_down;
         // back
-        ItemStack back = new ItemStack(Material.BOWL, 1);
+        ItemStack back = new ItemStack(GUIChameleonPresets.BACK.material(), 1);
         ItemMeta back_im = back.getItemMeta();
         back_im.setDisplayName("Back");
         back_im.setCustomModelData(GUIChameleonPresets.BACK.customModelData());
         back.setItemMeta(back_im);
         stack[44] = back;
         // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIChameleonPresets.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close_im.setCustomModelData(GUIChameleonPresets.CLOSE.customModelData());
         close.setItemMeta(close_im);
-        stack[53] = close;
+        stack[GUIChameleonPresets.CLOSE.slot()] = close;
 
         return stack;
     }

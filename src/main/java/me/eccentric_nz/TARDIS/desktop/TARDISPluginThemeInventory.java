@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIUpgrade;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -72,31 +71,31 @@ public class TARDISPluginThemeInventory extends TARDISThemeInventory {
         }
         // archive consoles
         if (TARDISPermission.hasPermission(player, "tardis.archive")) {
-            ItemStack arc = new ItemStack(Material.BOWL, 1);
+            ItemStack arc = new ItemStack(GUIUpgrade.ARCHIVE_CONSOLES.material(), 1);
             ItemMeta hive_im = arc.getItemMeta();
             hive_im.setDisplayName("Archive Consoles");
-            hive_im.setCustomModelData(GUIUpgrade.ARCHIVE_CONSOLES.getCustomModelData());
+            hive_im.setCustomModelData(GUIUpgrade.ARCHIVE_CONSOLES.customModelData());
             arc.setItemMeta(hive_im);
-            stack[46] = arc;
+            stack[GUIUpgrade.ARCHIVE_CONSOLES.slot()] = arc;
         }
         if (plugin.getConfig().getBoolean("allow.repair")) {
             // repair
             if (TARDISPermission.hasPermission(player, "tardis.repair")) {
-                ItemStack rep = new ItemStack(Material.BOWL, 1);
+                ItemStack rep = new ItemStack(GUIUpgrade.REPAIR_CONSOLE.material(), 1);
                 ItemMeta air_im = rep.getItemMeta();
                 air_im.setDisplayName("Repair Console");
-                air_im.setCustomModelData(GUIUpgrade.REPAIR_CONSOLE.getCustomModelData());
+                air_im.setCustomModelData(GUIUpgrade.REPAIR_CONSOLE.customModelData());
                 rep.setItemMeta(air_im);
-                stack[47] = rep;
+                stack[GUIUpgrade.REPAIR_CONSOLE.slot()] = rep;
             }
             // clean
             if (TARDISPermission.hasPermission(player, "tardis.repair")) {
-                ItemStack cle = new ItemStack(Material.BOWL, 1);
+                ItemStack cle = new ItemStack(GUIUpgrade.CLEAN.material(), 1);
                 ItemMeta an_im = cle.getItemMeta();
                 an_im.setDisplayName("Clean");
-                an_im.setCustomModelData(GUIUpgrade.CLEAN.getCustomModelData());
+                an_im.setCustomModelData(GUIUpgrade.CLEAN.customModelData());
                 cle.setItemMeta(an_im);
-                stack[48] = cle;
+                stack[GUIUpgrade.CLEAN.slot()] = cle;
             }
         }
         // custom consoles page
@@ -107,12 +106,12 @@ public class TARDISPluginThemeInventory extends TARDISThemeInventory {
         custom.setItemMeta(custom_im);
         stack[51] = custom;
         // close
-        ItemStack close = new ItemStack(GUIChameleonPresets.CLOSE.material(), 1);
+        ItemStack close = new ItemStack(GUIUpgrade.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChameleonPresets.CLOSE.customModelData());
+        close_im.setCustomModelData(GUIUpgrade.CLOSE.customModelData());
         close.setItemMeta(close_im);
-        stack[GUIChameleonPresets.CLOSE.slot()] = close;
+        stack[GUIUpgrade.CLOSE.slot()] = close;
 
         return stack;
     }

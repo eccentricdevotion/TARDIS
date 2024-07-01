@@ -64,10 +64,10 @@ public class TARDISTelepathicInventory {
             stack[6] = biome;
         }
         // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIMap.BUTTON_CLOSE.material(), 1);
         ItemMeta gui = close.getItemMeta();
         gui.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        gui.setCustomModelData(GUIMap.BUTTON_CLOSE.getCustomModelData());
+        gui.setCustomModelData(GUIMap.BUTTON_CLOSE.customModelData());
         close.setItemMeta(gui);
         stack[8] = close;
         return stack;

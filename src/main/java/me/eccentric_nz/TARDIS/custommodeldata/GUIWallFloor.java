@@ -16,42 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 
-public enum GUIWallFloor {
+public record GUIWallFloor() {
 
     // TARDIS Wall & Floor Menu
-    BUTTON_SCROLL_U(3, 8, Material.ARROW),
-    BUTTON_SCROLL_D(2, 17, Material.ARROW),
-    WALL(136, 26, Material.BOWL),
-    FLOOR(137, 35, Material.BOWL),
-    BUTTON_ABORT(2, 53, Material.BOWL);
-
-    private final int customModelData;
-    private final int slot;
-    private final Material material;
-
-    GUIWallFloor(int customModelData, int slot, Material material) {
-        this.customModelData = customModelData;
-        this.slot = slot;
-        this.material = material;
-    }
-
-    public int getCustomModelData() {
-        return customModelData;
-    }
-
-    public int getSlot() {
-        return slot;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public String getName() {
-        String s = toString();
-        return TARDIS.plugin.getLanguage().getString(s);
-    }
+    public static GUIData BUTTON_SCROLL_U = new GUIData(3, 8, Material.ARROW);
+    public static GUIData BUTTON_SCROLL_D = new GUIData(2, 17, Material.ARROW);
+    public static GUIData WALL = new GUIData(136, 26, Material.BOWL);
+    public static GUIData FLOOR = new GUIData(137, 35, Material.BOWL);
+    public static GUIData BUTTON_ABORT = new GUIData(2, 53, Material.BOWL);
 }

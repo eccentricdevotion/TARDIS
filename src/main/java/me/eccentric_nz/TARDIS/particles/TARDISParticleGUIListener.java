@@ -112,7 +112,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
     private void setEffect(InventoryView view, int slot, String display, UUID uuid) {
         for (int s = 11; s < 44; s++) {
             ItemStack is = view.getItem(s);
-            if (is != null && s != GUIParticle.TOGGLE.getSlot() && s != GUIParticle.TEST.getSlot()) {
+            if (is != null && s != GUIParticle.TOGGLE.slot() && s != GUIParticle.TEST.slot()) {
                 is.setType(s == slot ? Material.REDSTONE_ORE : Material.REDSTONE);
                 view.setItem(s, is);
             }
@@ -188,10 +188,10 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
             }
         } catch (IllegalArgumentException ignored) {
         }
-        ItemStack dis = view.getItem(GUIParticle.DENSITY.getSlot());
+        ItemStack dis = view.getItem(GUIParticle.DENSITY.slot());
         String d = ChatColor.stripColor(dis.getItemMeta().getLore().getFirst());
         density = TARDISNumberParsers.parseInt(d);
-        ItemStack spis = view.getItem(GUIParticle.SPEED.getSlot());
+        ItemStack spis = view.getItem(GUIParticle.SPEED.slot());
         String s = ChatColor.stripColor(spis.getItemMeta().getLore().getFirst());
         speed = TARDISNumberParsers.parseInt(s) / 10.0d;
         return new ParticleData(effect, shape, density, speed, b);
@@ -199,7 +199,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
 
     private void less(InventoryView view, boolean b, UUID uuid) {
         int min = b ? 8 : 0;
-        int slot = b ? GUIParticle.DENSITY.getSlot() : GUIParticle.SPEED.getSlot();
+        int slot = b ? GUIParticle.DENSITY.slot() : GUIParticle.SPEED.slot();
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
         List<String> lore = im.getLore();
@@ -221,7 +221,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
 
     private void more(InventoryView view, boolean b, UUID uuid) {
         int max = b ? 32 : 10;
-        int slot = b ? GUIParticle.DENSITY.getSlot() : GUIParticle.SPEED.getSlot();
+        int slot = b ? GUIParticle.DENSITY.slot() : GUIParticle.SPEED.slot();
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
         List<String> lore = im.getLore();

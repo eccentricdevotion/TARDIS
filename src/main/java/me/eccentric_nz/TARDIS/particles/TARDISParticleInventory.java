@@ -68,41 +68,41 @@ public class TARDISParticleInventory {
             data = new ParticleData(ParticleEffect.ASH, ParticleShape.RANDOM, 16, 0, false);
         }
         // shape
-        ItemStack shape = new ItemStack(GUIParticle.SHAPE_INFO.getMaterial(), 1);
+        ItemStack shape = new ItemStack(GUIParticle.SHAPE_INFO.material(), 1);
         ItemMeta sim = shape.getItemMeta();
         sim.setDisplayName("Effect Shape");
         sim.setLore(List.of("Choose a shape", "from the options", "on the right."));
-        sim.setCustomModelData(GUIParticle.SHAPE_INFO.getCustomModelData());
+        sim.setCustomModelData(GUIParticle.SHAPE_INFO.customModelData());
         shape.setItemMeta(sim);
-        stacks[GUIParticle.SHAPE_INFO.getSlot()] = shape;
+        stacks[GUIParticle.SHAPE_INFO.slot()] = shape;
         int i = 2;
         // shapes
         for (ParticleShape ps : ParticleShape.values()) {
-            Material sm = (data.getShape() == ps) ? Material.LAPIS_ORE : GUIParticle.SHAPE.getMaterial();
+            Material sm = (data.getShape() == ps) ? Material.LAPIS_ORE : GUIParticle.SHAPE.material();
             ItemStack pshape = new ItemStack(sm, 1);
             ItemMeta me = pshape.getItemMeta();
             me.setDisplayName(TARDISStringUtils.capitalise(ps.toString()));
-            me.setCustomModelData(GUIParticle.SHAPE.getCustomModelData());
+            me.setCustomModelData(GUIParticle.SHAPE.customModelData());
             pshape.setItemMeta(me);
             stacks[i] = pshape;
             i++;
         }
         // effect
-        ItemStack effect = new ItemStack(GUIParticle.EFFECT_INFO.getMaterial(), 1);
+        ItemStack effect = new ItemStack(GUIParticle.EFFECT_INFO.material(), 1);
         ItemMeta eim = effect.getItemMeta();
         eim.setDisplayName("Effect Particle");
         eim.setLore(List.of("Choose a particle", "from the options", "on the right."));
-        eim.setCustomModelData(GUIParticle.EFFECT_INFO.getCustomModelData());
+        eim.setCustomModelData(GUIParticle.EFFECT_INFO.customModelData());
         effect.setItemMeta(eim);
-        stacks[GUIParticle.EFFECT_INFO.getSlot()] = effect;
+        stacks[GUIParticle.EFFECT_INFO.slot()] = effect;
         i = 11;
         // effects
         for (ParticleEffect pe : ParticleEffect.values()) {
-            Material pm = (data.getEffect() == pe) ? Material.REDSTONE_ORE : GUIParticle.EFFECT.getMaterial();
+            Material pm = (data.getEffect() == pe) ? Material.REDSTONE_ORE : GUIParticle.EFFECT.material();
             ItemStack peffect = new ItemStack(pm, 1);
             ItemMeta pim = peffect.getItemMeta();
             pim.setDisplayName(TARDISStringUtils.capitalise(pe.toString()));
-            pim.setCustomModelData(GUIParticle.EFFECT.getCustomModelData());
+            pim.setCustomModelData(GUIParticle.EFFECT.customModelData());
             peffect.setItemMeta(pim);
             stacks[i] = peffect;
             if (i % 9 == 7) {
@@ -112,51 +112,51 @@ public class TARDISParticleInventory {
             }
         }
         // toggle on/off
-        ItemStack toggle = new ItemStack(GUIParticle.TOGGLE.getMaterial(), 1);
+        ItemStack toggle = new ItemStack(GUIParticle.TOGGLE.material(), 1);
         ItemMeta tim = toggle.getItemMeta();
         tim.setDisplayName("Particles Enabled");
         tim.setLore(List.of(data.isOn() ? "ON" : "OFF"));
-        int cmd = (data.isOn()) ? GUIParticle.TOGGLE.getCustomModelData() : 119;
+        int cmd = (data.isOn()) ? GUIParticle.TOGGLE.customModelData() : 119;
         tim.setCustomModelData(cmd);
         toggle.setItemMeta(tim);
-        stacks[GUIParticle.TOGGLE.getSlot()] = toggle;
+        stacks[GUIParticle.TOGGLE.slot()] = toggle;
         // test
-        ItemStack test = new ItemStack(GUIParticle.TEST.getMaterial(), 1);
+        ItemStack test = new ItemStack(GUIParticle.TEST.material(), 1);
         ItemMeta xim = test.getItemMeta();
         xim.setDisplayName("Test");
         xim.setLore(List.of("Display particles", "around your TARDIS", "with the current settings."));
-        xim.setCustomModelData(GUIParticle.TEST.getCustomModelData());
+        xim.setCustomModelData(GUIParticle.TEST.customModelData());
         test.setItemMeta(xim);
-        stacks[GUIParticle.TEST.getSlot()] = test;
+        stacks[GUIParticle.TEST.slot()] = test;
         // density
-        ItemStack density = new ItemStack(GUIParticle.DENSITY.getMaterial(), 1);
+        ItemStack density = new ItemStack(GUIParticle.DENSITY.material(), 1);
         ItemMeta dim = density.getItemMeta();
         dim.setDisplayName("Particle Density");
         dim.setLore(List.of(ChatColor.AQUA + "" + data.getDensity(), "Has no effect", "on some shapes.", "Range: 8 - 32."));
-        dim.setCustomModelData(GUIParticle.DENSITY.getCustomModelData());
+        dim.setCustomModelData(GUIParticle.DENSITY.customModelData());
         density.setItemMeta(dim);
-        stacks[GUIParticle.DENSITY.getSlot()] = density;
+        stacks[GUIParticle.DENSITY.slot()] = density;
         // speed
-        ItemStack speed = new ItemStack(GUIParticle.SPEED.getMaterial(), 1);
+        ItemStack speed = new ItemStack(GUIParticle.SPEED.material(), 1);
         ItemMeta spim = speed.getItemMeta();
         spim.setDisplayName("Particle Speed");
         spim.setLore(List.of(ChatColor.AQUA + "" + String.format("%.0f", data.getSpeed() * 10), "Range: 0 - 10."));
-        spim.setCustomModelData(GUIParticle.SPEED.getCustomModelData());
+        spim.setCustomModelData(GUIParticle.SPEED.customModelData());
         speed.setItemMeta(spim);
-        stacks[GUIParticle.SPEED.getSlot()] = speed;
+        stacks[GUIParticle.SPEED.slot()] = speed;
         // minus
-        ItemStack minus = new ItemStack(GUIParticle.MINUS.getMaterial(), 1);
+        ItemStack minus = new ItemStack(GUIParticle.MINUS.material(), 1);
         ItemMeta mim = minus.getItemMeta();
         mim.setDisplayName(plugin.getLanguage().getString("BUTTON_LESS"));
-        mim.setCustomModelData(GUIParticle.MINUS.getCustomModelData());
+        mim.setCustomModelData(GUIParticle.MINUS.customModelData());
         minus.setItemMeta(mim);
         stacks[45] = minus;
         stacks[49] = minus;
         // plus
-        ItemStack plus = new ItemStack(GUIParticle.PLUS.getMaterial(), 1);
+        ItemStack plus = new ItemStack(GUIParticle.PLUS.material(), 1);
         ItemMeta pim = plus.getItemMeta();
         pim.setDisplayName(plugin.getLanguage().getString("BUTTON_MORE"));
-        pim.setCustomModelData(GUIParticle.PLUS.getCustomModelData());
+        pim.setCustomModelData(GUIParticle.PLUS.customModelData());
         plus.setItemMeta(pim);
         stacks[47] = plus;
         stacks[51] = plus;
@@ -164,9 +164,9 @@ public class TARDISParticleInventory {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta cim = close.getItemMeta();
         cim.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        cim.setCustomModelData(GUIParticle.CLOSE.getCustomModelData());
+        cim.setCustomModelData(GUIParticle.CLOSE.customModelData());
         close.setItemMeta(cim);
-        stacks[53] = close;
+        stacks[GUIParticle.CLOSE.slot()] = close;
         return stacks;
     }
 

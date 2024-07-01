@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISonicActivator;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -63,16 +62,16 @@ class TARDISSonicActivatorInventory {
         lore.add(ChatColor.AQUA + "BLAZE_ROD");
         lore.add(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + "Then close the GUI.");
         // info
-        ItemStack info = new ItemStack(Material.BOOK, 1);
+        ItemStack info = new ItemStack(GUISonicActivator.INSTRUCTIONS.material(), 1);
         ItemMeta info_im = info.getItemMeta();
         info_im.setDisplayName("Instructions");
         info_im.setLore(lore);
         info.setItemMeta(info_im);
         // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUISonicActivator.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUISonicActivator.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GUISonicActivator.CLOSE.customModelData());
         close.setItemMeta(close_im);
 
         return new ItemStack[]{null, null, null, null, null, null, null, info, close};

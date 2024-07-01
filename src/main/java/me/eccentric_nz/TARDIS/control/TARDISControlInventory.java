@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIControlCentre;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISaves;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -97,14 +96,14 @@ public class TARDISControlInventory {
         ItemStack save = new ItemStack(GUIControlCentre.BUTTON_SAVES.material(), 1);
         ItemMeta locs = save.getItemMeta();
         locs.setDisplayName(plugin.getLanguage().getString("BUTTON_SAVES"));
-        locs.setLore(List.of(GUISaves.LOAD_SAVES_FROM_THIS_TARDIS.getName()));
+        locs.setLore(List.of("load saves from this TARDIS"));
         locs.setCustomModelData(GUIControlCentre.BUTTON_SAVES.customModelData());
         save.setItemMeta(locs);
         // Own saves if in another player's TARDIS
         ItemStack own = new ItemStack(GUIControlCentre.BUTTON_SAVES.material(), 1);
         ItemMeta saves = own.getItemMeta();
         saves.setDisplayName(plugin.getLanguage().getString("BUTTON_SAVES"));
-        saves.setLore(List.of(GUISaves.LOAD_MY_SAVES.getName()));
+        saves.setLore(List.of("Load my saves"));
         saves.setCustomModelData(GUIControlCentre.BUTTON_SAVES.customModelData());
         own.setItemMeta(saves);
         // back

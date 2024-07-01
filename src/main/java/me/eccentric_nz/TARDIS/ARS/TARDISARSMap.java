@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.ARS;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIMap;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -46,76 +45,76 @@ public class TARDISARSMap {
     private ItemStack[] getItemStack() {
         // direction pad
         // up
-        ItemStack pad_up = new ItemStack(Material.CYAN_WOOL, 1);
+        ItemStack pad_up = new ItemStack(GUIMap.BUTTON_UP.material(), 1);
         ItemMeta up = pad_up.getItemMeta();
         up.setDisplayName(plugin.getLanguage().getString("BUTTON_UP"));
-        up.setCustomModelData(GUIMap.BUTTON_UP.getCustomModelData());
+        up.setCustomModelData(GUIMap.BUTTON_UP.customModelData());
         pad_up.setItemMeta(up);
         // down
-        ItemStack pad_down = new ItemStack(Material.CYAN_WOOL, 1);
+        ItemStack pad_down = new ItemStack(GUIMap.BUTTON_DOWN.material(), 1);
         ItemMeta down = pad_down.getItemMeta();
         down.setDisplayName(plugin.getLanguage().getString("BUTTON_DOWN"));
-        down.setCustomModelData(GUIMap.BUTTON_DOWN.getCustomModelData());
+        down.setCustomModelData(GUIMap.BUTTON_DOWN.customModelData());
         pad_down.setItemMeta(down);
         // left
-        ItemStack pad_left = new ItemStack(Material.CYAN_WOOL, 1);
+        ItemStack pad_left = new ItemStack(GUIMap.BUTTON_LEFT.material(), 1);
         ItemMeta left = pad_left.getItemMeta();
         left.setDisplayName(plugin.getLanguage().getString("BUTTON_LEFT"));
-        left.setCustomModelData(GUIMap.BUTTON_LEFT.getCustomModelData());
+        left.setCustomModelData(GUIMap.BUTTON_LEFT.customModelData());
         pad_left.setItemMeta(left);
         // right
-        ItemStack pad_right = new ItemStack(Material.CYAN_WOOL, 1);
+        ItemStack pad_right = new ItemStack(GUIMap.BUTTON_RIGHT.material(), 1);
         ItemMeta right = pad_right.getItemMeta();
         right.setDisplayName(plugin.getLanguage().getString("BUTTON_RIGHT"));
-        right.setCustomModelData(GUIMap.BUTTON_RIGHT.getCustomModelData());
+        right.setCustomModelData(GUIMap.BUTTON_RIGHT.customModelData());
         pad_right.setItemMeta(right);
         // level selected
-        ItemStack level_sel = new ItemStack(Material.YELLOW_WOOL, 1);
+        ItemStack level_sel = new ItemStack(GUIMap.BUTTON_LEVEL.material(), 1);
         ItemMeta main = level_sel.getItemMeta();
         main.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL"));
-        main.setCustomModelData(GUIMap.BUTTON_LEVEL.getCustomModelData());
+        main.setCustomModelData(GUIMap.BUTTON_LEVEL.customModelData());
         level_sel.setItemMeta(main);
         // level top
-        ItemStack level_top = new ItemStack(Material.WHITE_WOOL, 1);
+        ItemStack level_top = new ItemStack(GUIMap.BUTTON_LEVEL_T.material(), 1);
         ItemMeta top = level_top.getItemMeta();
         top.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL_T"));
-        top.setCustomModelData(GUIMap.BUTTON_LEVEL_T.getCustomModelData());
+        top.setCustomModelData(GUIMap.BUTTON_LEVEL_T.customModelData());
         level_top.setItemMeta(top);
         // level top
-        ItemStack level_bot = new ItemStack(Material.WHITE_WOOL, 1);
+        ItemStack level_bot = new ItemStack(GUIMap.BUTTON_LEVEL_B.material(), 1);
         ItemMeta bot = level_bot.getItemMeta();
         bot.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL_B"));
-        bot.setCustomModelData(GUIMap.BUTTON_LEVEL_B.getCustomModelData());
+        bot.setCustomModelData(GUIMap.BUTTON_LEVEL_B.customModelData());
         level_bot.setItemMeta(bot);
         // stone
-        ItemStack black = new ItemStack(Material.BLACK_WOOL, 1);
+        ItemStack black = new ItemStack(GUIMap.BUTTON_MAP_ON.material(), 1);
         ItemMeta wool = black.getItemMeta();
         wool.setDisplayName(plugin.getLanguage().getString("BUTTON_MAP_ON"));
-        wool.setCustomModelData(GUIMap.BUTTON_MAP_ON.getCustomModelData());
+        wool.setCustomModelData(GUIMap.BUTTON_MAP_ON.customModelData());
         black.setItemMeta(wool);
         // load map
-        ItemStack loa = new ItemStack(Material.MAP, 1);
+        ItemStack loa = new ItemStack(GUIMap.BUTTON_MAP.material(), 1);
         ItemMeta der = loa.getItemMeta();
         der.setDisplayName(plugin.getLanguage().getString("BUTTON_MAP"));
-        der.setCustomModelData(GUIMap.BUTTON_MAP.getCustomModelData());
+        der.setCustomModelData(GUIMap.BUTTON_MAP.customModelData());
         loa.setItemMeta(der);
         // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIMap.BUTTON_CLOSE.material(), 1);
         ItemMeta gui = close.getItemMeta();
         gui.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        gui.setCustomModelData(GUIMap.BUTTON_CLOSE.getCustomModelData());
+        gui.setCustomModelData(GUIMap.BUTTON_CLOSE.customModelData());
         close.setItemMeta(gui);
         // transmat
-        ItemStack tran = new ItemStack(Material.BOWL, 1);
+        ItemStack tran = new ItemStack(GUIMap.BUTTON_TRANSMAT.material(), 1);
         ItemMeta smat = tran.getItemMeta();
         smat.setDisplayName(plugin.getLanguage().getString("BUTTON_TRANSMAT"));
-        smat.setCustomModelData(GUIMap.BUTTON_TRANSMAT.getCustomModelData());
+        smat.setCustomModelData(GUIMap.BUTTON_TRANSMAT.customModelData());
         tran.setItemMeta(smat);
         // where am I?
-        ItemStack where = new ItemStack(Material.COMPASS, 1);
+        ItemStack where = new ItemStack(GUIMap.BUTTON_WHERE.material(), 1);
         ItemMeta ami = where.getItemMeta();
         ami.setDisplayName(plugin.getLanguage().getString("BUTTON_WHERE"));
-        ami.setCustomModelData(GUIMap.BUTTON_WHERE.getCustomModelData());
+        ami.setCustomModelData(GUIMap.BUTTON_WHERE.customModelData());
         where.setItemMeta(ami);
 
         return new ItemStack[]{

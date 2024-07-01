@@ -123,22 +123,22 @@ public class TARDISSavesInventory {
             }
         }
         // add button to allow rearranging saves
-        ItemStack tool = new ItemStack(GUISaves.REARRANGE_SAVES.getMaterial(), 1);
+        ItemStack tool = new ItemStack(GUISaves.REARRANGE_SAVES.material(), 1);
         ItemMeta rearrange = tool.getItemMeta();
         rearrange.setDisplayName("Rearrange saves");
-        rearrange.setCustomModelData(GUISaves.REARRANGE_SAVES.getCustomModelData());
+        rearrange.setCustomModelData(GUISaves.REARRANGE_SAVES.customModelData());
         tool.setItemMeta(rearrange);
         // add button to allow deleting saves
-        ItemStack bucket = new ItemStack(GUISaves.DELETE_SAVE.getMaterial(), 1);
+        ItemStack bucket = new ItemStack(GUISaves.DELETE_SAVE.material(), 1);
         ItemMeta delete = bucket.getItemMeta();
         delete.setDisplayName("Delete save");
-        delete.setCustomModelData(GUISaves.DELETE_SAVE.getCustomModelData());
+        delete.setCustomModelData(GUISaves.DELETE_SAVE.customModelData());
         bucket.setItemMeta(delete);
         // add button to go back to planets
-        ItemStack planet = new ItemStack(GUISaves.BACK_TO_PLANETS.getMaterial(), 1);
+        ItemStack planet = new ItemStack(GUISaves.BACK_TO_PLANETS.material(), 1);
         ItemMeta map = planet.getItemMeta();
         map.setDisplayName("Back to Dimension Map");
-        map.setCustomModelData(GUISaves.BACK_TO_PLANETS.getCustomModelData());
+        map.setCustomModelData(GUISaves.BACK_TO_PLANETS.customModelData());
         planet.setItemMeta(map);
         for (int m = 45; m < 54; m++) {
             switch (m) {

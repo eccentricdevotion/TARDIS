@@ -18,40 +18,18 @@ package me.eccentric_nz.TARDIS.custommodeldata;
 
 import org.bukkit.Material;
 
-public enum GUIParticle {
+public record GUIParticle() {
 
     // TARDIS Autonomous
-    SHAPE_INFO(2, 0, Material.LAPIS_BLOCK),
-    SHAPE(1, -1, Material.LAPIS_LAZULI),
-    EFFECT_INFO(2, 9, Material.REDSTONE_BLOCK),
-    EFFECT(1, -1, Material.REDSTONE),
-    TOGGLE(19, 27, Material.REPEATER),
-    TEST(1, 35, Material.COPPER_INGOT),
-    MINUS(40, -1, Material.PAPER),
-    PLUS(39, -1, Material.PAPER),
-    DENSITY(5, 46, Material.IRON_INGOT),
-    SPEED(1, 50, Material.GOLD_INGOT),
-    CLOSE(1, 54, Material.BOWL);
-
-    private final int customModelData;
-    private final int slot;
-    private final Material material;
-
-    GUIParticle(int customModelData, int slot, Material material) {
-        this.customModelData = customModelData;
-        this.slot = slot;
-        this.material = material;
-    }
-
-    public int getCustomModelData() {
-        return customModelData;
-    }
-
-    public int getSlot() {
-        return slot;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
+    public static GUIData SHAPE_INFO = new GUIData(2, 0, Material.LAPIS_BLOCK);
+    public static GUIData SHAPE = new GUIData(1, -1, Material.LAPIS_LAZULI);
+    public static GUIData EFFECT_INFO = new GUIData(2, 9, Material.REDSTONE_BLOCK);
+    public static GUIData EFFECT = new GUIData(1, -1, Material.REDSTONE);
+    public static GUIData TOGGLE = new GUIData(19, 27, Material.REPEATER);
+    public static GUIData TEST = new GUIData(1, 35, Material.COPPER_INGOT);
+    public static GUIData MINUS = new GUIData(40, -1, Material.PAPER);
+    public static GUIData PLUS = new GUIData(39, -1, Material.PAPER);
+    public static GUIData DENSITY = new GUIData(5, 46, Material.IRON_INGOT);
+    public static GUIData SPEED = new GUIData(1, 50, Material.GOLD_INGOT);
+    public static GUIData CLOSE = new GUIData(1, 53, Material.BOWL);
 }

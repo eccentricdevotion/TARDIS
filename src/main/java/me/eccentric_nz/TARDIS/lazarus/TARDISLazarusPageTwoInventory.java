@@ -120,7 +120,7 @@ class TARDISLazarusPageTwoInventory {
         hero.setItemMeta(brine);
         stacks[i] = hero;
         // page one
-        ItemStack page = new ItemStack(Material.ARROW, 1);
+        ItemStack page = new ItemStack(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.material(), 1);
         ItemMeta one = page.getItemMeta();
         one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
         one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.customModelData());
@@ -128,36 +128,39 @@ class TARDISLazarusPageTwoInventory {
         stacks[43] = page;
         // if TARDISWeepingAngels is enabled angels, cybermen and ice warriors will be available
         if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
-            ItemStack weep = new ItemStack(Material.BOWL, 1);
+            ItemStack weep = new ItemStack(GUIGeneticManipulator.BUTTON_TWA.material(), 1);
             ItemMeta ing = weep.getItemMeta();
             ing.setDisplayName("TARDIS Monsters");
-            ing.setCustomModelData(GUIGeneticManipulator.BUTTON_TWA.getCustomModelData());
+            ing.setCustomModelData(GUIGeneticManipulator.BUTTON_TWA.customModelData());
             weep.setItemMeta(ing);
-            stacks[44] = weep;
+            stacks[GUIGeneticManipulator.BUTTON_TWA.slot()] = weep;
         }
         // add options
-        ItemStack the = new ItemStack(Material.COMPARATOR, 1);
+        ItemStack the = new ItemStack(GUIGeneticManipulator.BUTTON_MASTER.material(), 1);
         ItemMeta master = the.getItemMeta();
         master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
         master.setLore(List.of(plugin.getLanguage().getString("SET_OFF")));
-        master.setCustomModelData(GUIGeneticManipulator.BUTTON_MASTER.getCustomModelData());
+        master.setCustomModelData(GUIGeneticManipulator.BUTTON_MASTER.customModelData());
         the.setItemMeta(master);
-        stacks[45] = the;
-        ItemStack adult = new ItemStack(Material.HOPPER, 1);
+        stacks[GUIGeneticManipulator.BUTTON_MASTER.slot()] = the;
+        // adult
+        ItemStack adult = new ItemStack(GUIGeneticManipulator.BUTTON_AGE.material(), 1);
         ItemMeta baby = adult.getItemMeta();
         baby.setDisplayName(plugin.getLanguage().getString("BUTTON_AGE"));
         baby.setLore(List.of("ADULT"));
-        baby.setCustomModelData(GUIGeneticManipulator.BUTTON_AGE.getCustomModelData());
+        baby.setCustomModelData(GUIGeneticManipulator.BUTTON_AGE.customModelData());
         adult.setItemMeta(baby);
-        stacks[47] = adult;
-        ItemStack typ = new ItemStack(Material.CYAN_DYE, 1);
+        stacks[GUIGeneticManipulator.BUTTON_AGE.slot()] = adult;
+        // type
+        ItemStack typ = new ItemStack(GUIGeneticManipulator.BUTTON_TYPE.material(), 1);
         ItemMeta col = typ.getItemMeta();
         col.setDisplayName(plugin.getLanguage().getString("BUTTON_TYPE"));
         col.setLore(List.of("WHITE"));
-        col.setCustomModelData(GUIGeneticManipulator.BUTTON_TYPE.getCustomModelData());
+        col.setCustomModelData(GUIGeneticManipulator.BUTTON_TYPE.customModelData());
         typ.setItemMeta(col);
-        stacks[48] = typ;
-        ItemStack tamed = new ItemStack(Material.LEAD, 1);
+        stacks[GUIGeneticManipulator.BUTTON_TYPE.slot()] = typ;
+        // tamed etc
+        ItemStack tamed = new ItemStack(GUIGeneticManipulator.BUTTON_OPTS.material(), 1);
         ItemMeta tf = tamed.getItemMeta();
         tf.setDisplayName(plugin.getLanguage().getString("BUTTON_OPTS"));
         List<String> opts = new ArrayList<>();
@@ -166,29 +169,30 @@ class TARDISLazarusPageTwoInventory {
         }
         opts.add(ChatColor.RED + "FALSE");
         tf.setLore(opts);
-        tf.setCustomModelData(GUIGeneticManipulator.BUTTON_OPTS.getCustomModelData());
+        tf.setCustomModelData(GUIGeneticManipulator.BUTTON_OPTS.customModelData());
         tamed.setItemMeta(tf);
-        stacks[49] = tamed;
+        stacks[GUIGeneticManipulator.BUTTON_OPTS.slot()] = tamed;
         // add buttons
-        ItemStack rem = new ItemStack(Material.APPLE, 1);
+        ItemStack rem = new ItemStack(GUIGeneticManipulator.BUTTON_RESTORE.material(), 1);
         ItemMeta ove = rem.getItemMeta();
         ove.setDisplayName(plugin.getLanguage().getString("BUTTON_RESTORE"));
-        ove.setCustomModelData(GUIGeneticManipulator.BUTTON_RESTORE.getCustomModelData());
+        ove.setCustomModelData(GUIGeneticManipulator.BUTTON_RESTORE.customModelData());
         rem.setItemMeta(ove);
-        stacks[51] = rem;
+        stacks[GUIGeneticManipulator.BUTTON_RESTORE.slot()] = rem;
         // set
-        ItemStack s = new ItemStack(Material.WRITABLE_BOOK, 1);
+        ItemStack s = new ItemStack(GUIGeneticManipulator.BUTTON_DNA.material(), 1);
         ItemMeta sim = s.getItemMeta();
         sim.setDisplayName(plugin.getLanguage().getString("BUTTON_DNA"));
-        sim.setCustomModelData(GUIGeneticManipulator.BUTTON_DNA.getCustomModelData());
+        sim.setCustomModelData(GUIGeneticManipulator.BUTTON_DNA.customModelData());
         s.setItemMeta(sim);
-        stacks[52] = s;
-        ItemStack can = new ItemStack(Material.BOWL, 1);
+        stacks[GUIGeneticManipulator.BUTTON_DNA.slot()] = s;
+        // cancel
+        ItemStack can = new ItemStack(GUIGeneticManipulator.BUTTON_CANCEL.material(), 1);
         ItemMeta cel = can.getItemMeta();
         cel.setDisplayName(plugin.getLanguage().getString("BUTTON_CANCEL"));
-        cel.setCustomModelData(GUIGeneticManipulator.BUTTON_CANCEL.getCustomModelData());
+        cel.setCustomModelData(GUIGeneticManipulator.BUTTON_CANCEL.customModelData());
         can.setItemMeta(cel);
-        stacks[53] = can;
+        stacks[GUIGeneticManipulator.BUTTON_CANCEL.slot()] = can;
 
         return stacks;
     }
