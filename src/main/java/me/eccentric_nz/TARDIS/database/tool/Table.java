@@ -39,6 +39,7 @@ public enum Table {
     destinations("dest_id"),
     dispersed("d_id"),
     doors,
+    eyes("eye_id"),
     farming("farm_id"),
     farming_prefs("farm_id"),
     flight("f_id"),

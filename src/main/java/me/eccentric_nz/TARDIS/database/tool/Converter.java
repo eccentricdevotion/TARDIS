@@ -173,6 +173,10 @@ public class Converter implements Runnable {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("door_id"), rs.getInt("tardis_id"), rs.getInt("door_type"), rs.getString("door_location"), rs.getString("door_direction"), rs.getInt("locked")) + end;
                                         sb.append(str);
                                     }
+                                    case eyes -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("eye_id"), rs.getInt("tardis_id"), rs.getInt("capacitors"), rs.getInt("damaged")) + end;
+                                        sb.append(str);
+                                    }
                                     case farming -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("farm_id"), rs.getInt("tardis_id"), rs.getString("allay"), rs.getString("apiary"), rs.getString("aquarium"), rs.getString("bamboo"), rs.getString("birdcage"), rs.getString("farm"), rs.getString("geode"), rs.getString("hutch"), rs.getString("igloo"), rs.getString("iistubil"), rs.getString("lava"), rs.getString("mangrove"), rs.getString("pen"), rs.getString("stable"), rs.getString("stall"), rs.getString("village")) + end;
                                         sb.append(str);
