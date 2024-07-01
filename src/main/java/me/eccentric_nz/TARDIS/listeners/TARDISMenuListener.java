@@ -94,6 +94,7 @@ public class TARDISMenuListener implements Listener {
         map.put(ChatColor.DARK_RED + "Admin Config Menu", 54);
         map.put(ChatColor.DARK_RED + "Architectural Reconfiguration", 54);
         map.put(ChatColor.DARK_RED + "Area Locations", 54);
+        map.put(ChatColor.DARK_RED + "Artron Capacitor Storage", 9);
         map.put(ChatColor.DARK_RED + "Chameleon Circuit", 27);
         map.put(ChatColor.DARK_RED + "Chameleon Construction", 18);
         map.put(ChatColor.DARK_RED + "Chameleon Help", 54);

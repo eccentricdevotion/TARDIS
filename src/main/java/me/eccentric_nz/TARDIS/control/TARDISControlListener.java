@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateSavesForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
+import me.eccentric_nz.TARDIS.rooms.eye.EyeOfHarmonyAction;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.Location;
@@ -225,6 +226,7 @@ public class TARDISControlListener implements Listener {
                                 case 39 -> new ThrottleAction(plugin).setSpaceTime(block, player);
                                 // relativity differentiator
                                 case 47 -> new DifferentiatorAction(plugin).bleep(block, id, player);
+                                case 54 -> new EyeOfHarmonyAction(plugin, id).openGUI(id, player);
                                 default -> {
                                 }
                             }
