@@ -211,7 +211,7 @@ public class Main {
                                         bw.write(str);
                                     }
                                     case eyes -> {
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("eye_id"), rs.getInt("tardis_id"), rs.getInt("capacitors"), rs.getInt("damaged")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("eye_id"), rs.getInt("tardis_id"), rs.getInt("capacitors"), rs.getInt("damaged"), rs.getInt("task")) + end;
                                         bw.write(str);
                                     }
                                     case farming -> {

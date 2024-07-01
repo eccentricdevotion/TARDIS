@@ -78,6 +78,7 @@ import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryListener;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeInventoryListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomSeeder;
+import me.eccentric_nz.TARDIS.rooms.eye.ArtronCapacitorStorageListener;
 import me.eccentric_nz.TARDIS.rooms.library.TARDISLibraryListener;
 import me.eccentric_nz.TARDIS.rooms.smelter.TARDISSmelterListener;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicListener;
@@ -166,6 +167,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISAreaListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISAreaSignListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISArtronCapacitorListener(plugin), plugin);
+        plugin.getPM().registerEvents(new ArtronCapacitorStorageListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISArtronFurnaceListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBeaconColouringListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBindListener(plugin), plugin);

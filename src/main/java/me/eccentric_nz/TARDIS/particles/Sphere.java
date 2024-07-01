@@ -2,13 +2,17 @@ package me.eccentric_nz.TARDIS.particles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.rooms.eye.Capacitor;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
 import java.util.HashSet;
@@ -18,26 +22,33 @@ import java.util.UUID;
 public class Sphere extends TARDISParticleRunnable {
 
     private final Location location;
-    private final Particle particle;
+    private final Capacitor capacitor;
     public Set<Vector> coords = new HashSet<>();
 
-    public Sphere(TARDIS plugin, UUID uuid, Location location, Particle particle) {
+    public Sphere(TARDIS plugin, UUID uuid, Location location, Capacitor capacitor) {
         super(plugin, uuid);
         this.location = location;
-        this.particle = particle;
+        this.capacitor = capacitor;
         init();
     }
 
     public void init() {
-        for (double i = 0; i <= Math.PI; i += Math.PI / 18) {
-            double radius = Math.sin(i) * 1.25;
+        for (double i = 0; i <= Math.PI; i += Math.PI / capacitor.getRings()) {
+            double r = Math.sin(i) * capacitor.getRadius();
             double y = Math.cos(i);
-            for (double a = 0; a < Math.PI * 2; a += Math.PI / 18) {
-                double x = Math.cos(a) * radius;
-                double z = Math.sin(a) * radius;
+            for (double a = 0; a < Math.PI * 2; a += Math.PI / capacitor.getDensity()) {
+                double x = Math.cos(a) * r;
+                double z = Math.sin(a) * r;
                 coords.add(new Vector(x, y, z));
             }
         }
+        ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location, EntityType.ITEM_DISPLAY);
+        ItemStack is = new ItemStack(Material.MAGMA_BLOCK);
+        ItemMeta im = is.getItemMeta();
+        im.setCustomModelData(capacitor.getCustomModelData());
+        is.setItemMeta(im);
+        display.setItemStack(is);
+        display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
     }
 
     @Override
@@ -47,17 +58,7 @@ public class Sphere extends TARDISParticleRunnable {
             t += 0.25;
             for (Vector v : coords) {
                 location.add(v.getX(), v.getY(), v.getZ());
-                switch (particle) {
-                    case DUST_COLOR_TRANSITION -> {
-                        Particle.DustTransition transition = new Particle.DustTransition(Color.YELLOW, Color.ORANGE, 1.0f);
-                        location.getWorld().spawnParticle(particle, location, 3, 0, 0, 0, 0, transition, false);
-                    }
-                    case BLOCK -> {
-                        BlockData data = TARDISConstants.RANDOM.nextBoolean() ? Material.ORANGE_CONCRETE.createBlockData() : Material.YELLOW_CONCRETE.createBlockData();
-                        location.getWorld().spawnParticle(particle, location, 3, 0, 0, 0, 0, data, false);
-                    }
-                    default -> spawnParticle(Particle.ENTITY_EFFECT, location, 3, 0, TARDISConstants.RANDOM.nextBoolean() ? Color.ORANGE : Color.YELLOW);
-                }
+                spawnParticle(Particle.ENTITY_EFFECT, location, 3, 0, TARDISConstants.RANDOM.nextBoolean() ? Color.ORANGE : Color.YELLOW);
                 location.subtract(v.getX(), v.getY(), v.getZ());
             }
             if (t > 6) {

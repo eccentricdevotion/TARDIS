@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
+import me.eccentric_nz.TARDIS.rooms.eye.EyeOfHarmonyPartcles;
 import me.eccentric_nz.TARDIS.rooms.library.LibraryCatalogue;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemDisplaySetter;
@@ -640,7 +641,20 @@ public class TARDISRoomRunnable implements Runnable {
                     display.setItemStack(is);
                     display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
                     // save location to controls
-                    plugin.getQueryFactory().insertControl(tardis_id, 53, item.toString(), 0);
+                    plugin.getQueryFactory().insertSyncControl(tardis_id, 53, item.toString(), 0);
+                    data = TARDISConstants.BARRIER;
+                    // start a particle runnable
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        int task = new EyeOfHarmonyPartcles(plugin).stopStart(tardis_id, 1, uuid);
+                        if (task != -1) {
+                            // update eyes record
+                            HashMap<String, Object> set = new HashMap<>();
+                            set.put("task", task);
+                            HashMap<String, Object> where = new HashMap<>();
+                            where.put("tardis_id", tardis_id);
+                            plugin.getQueryFactory().doSyncUpdate("eyes", set, where);
+                        }
+                    }, 600L);
                 }
                 // eye of harmony storage
                 if (type.equals(Material.BARRIER) && room.equals("EYE")) {

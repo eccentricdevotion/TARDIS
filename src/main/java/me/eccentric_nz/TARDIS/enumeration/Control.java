@@ -75,7 +75,9 @@ public enum Control {
     EXTERIOR_LAMP(49, "exterior-lamp", false, true),
     LIGHT_LEVEL(50, "light-level", false, true),
     SCREEN(51, "screen", true, false),
-    JUNK_FIND(52, "", true, false);
+    JUNK_FIND(52, "", true, false),
+    EYE(53, "", true, false),
+    EYE_STORAGE(54, "", true, false);
 
 
     private static final HashMap<String, Integer> UPDATE_CONTROLS = new HashMap<>();

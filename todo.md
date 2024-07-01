@@ -15,7 +15,10 @@
 7. Exterior button door control [#839](https://github.com/eccentricdevotion/TARDIS/issues/839)
 8. Console lamp [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)
 9. Add new eye of harmony room [#781](https://github.com/eccentricdevotion/TARDIS/issues/781)
-    - with particle sphere
+   - with particle sphere
+     - add runnable to add sphere particles
+   - check how many capacitors are installed (and damaged) when adding artron energy with the condenser or storage cells, if there are none don't charge at all (even via rechargers)
+   - damage capacitors when there is a malfunction
 10. ?
 
 ## Future versions
