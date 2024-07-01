@@ -26,12 +26,12 @@ public class BiomeHelper {
     DedicatedServer dedicatedServer = ((CraftServer) Bukkit.getServer()).getServer();
 
     /**
-     * Set a chunk to a custom biome
+     * Set a cube to a custom biome - the bounds or the cube are the chunk borders and 16 blocks from startY.
      *
      * @param newBiomeName the name of the custom biome to set (such as tardis:skaro_lakes)
      * @param chunk        the chunk to set the biome for
      */
-    public void setCustomBiome(String newBiomeName, Chunk chunk) {
+    public void setCustomBiome(String newBiomeName, Chunk chunk, int startY) {
         WritableRegistry<Biome> registryWritable = (WritableRegistry<Biome>) dedicatedServer.registryAccess().registry(Registries.BIOME).get();
         ResourceKey<Biome> key = ResourceKey.create(Registries.BIOME, ResourceLocation.withDefaultNamespace(newBiomeName.toLowerCase()));
         Biome base = registryWritable.get(key);
@@ -48,10 +48,12 @@ public class BiomeHelper {
         }
         Holder<Biome> biomeHolder = Holder.direct(base);
         Level w = ((CraftWorld) chunk.getWorld()).getHandle();
+        int cx = chunk.getX() * 16;
+        int cz = chunk.getZ() * 16;
         for (int x = 0; x <= 15; x++) {
             for (int z = 0; z <= 15; z++) {
-                for (int y = 0; y <= chunk.getWorld().getMaxHeight(); y++) {
-                    setCustomBiome(chunk.getX() * 16 + x, y, chunk.getZ() * 16 + z, w, biomeHolder);
+                for (int y = startY; y < startY + 16; y++) {
+                    setCustomBiome(cx + x, y, cz + z, w, biomeHolder);
                 }
             }
         }

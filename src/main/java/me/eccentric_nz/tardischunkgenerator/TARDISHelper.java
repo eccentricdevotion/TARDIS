@@ -311,14 +311,12 @@ public class TARDISHelper {
         CustomBiomeData data;
         if (biome.equalsIgnoreCase("gallifrey")) {
             data = TARDISBiomeData.BADLANDS;
-        } else {
+        } else if (biome.equalsIgnoreCase("skaro")) {
             data = TARDISBiomeData.DESERT;
+        } else {
+            data = TARDISBiomeData.EYE;
         }
         CustomBiome.addCustomBiome(data);
-    }
-
-    public void setCustomBiome(String biome, Chunk chunk) {
-        new BiomeHelper().setCustomBiome(biome, chunk);
     }
 
     public void removeTileEntity(org.bukkit.block.BlockState tile) {

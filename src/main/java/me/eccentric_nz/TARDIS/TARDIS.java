@@ -1800,6 +1800,8 @@ public class TARDIS extends JavaPlugin {
         debug("Loading Helper module!");
         tardisHelper = new TARDISHelper(this);
         tardisHelper.enable();
+        // TODO put into own class with other eye methods
+        tardisHelper.addCustomBiome("eye");
     }
 
     private void loadPluginRespect() {
