@@ -55,17 +55,17 @@ public class TARDISARSInventory {
 
         ItemStack[] is = new ItemStack[54];
         // direction pad up
-        ItemStack pad_up = new ItemStack(Material.CYAN_WOOL, 1);
+        ItemStack pad_up = new ItemStack(GUIArs.BUTTON_UP.material(), 1);
         ItemMeta up = pad_up.getItemMeta();
         up.setDisplayName(plugin.getLanguage().getString("BUTTON_UP"));
-        up.setCustomModelData(GUIArs.BUTTON_UP.getCustomModelData());
+        up.setCustomModelData(GUIArs.BUTTON_UP.customModelData());
         pad_up.setItemMeta(up);
-        is[1] = pad_up;
+        is[GUIArs.BUTTON_UP.slot()] = pad_up;
         // black wool
-        ItemStack black = new ItemStack(Material.BLACK_WOOL, 1);
+        ItemStack black = new ItemStack(GUIArs.BUTTON_MAP_ON.material(), 1);
         ItemMeta wool = black.getItemMeta();
         wool.setDisplayName(plugin.getLanguage().getString("BUTTON_MAP_NO"));
-        wool.setCustomModelData(GUIArs.BUTTON_MAP_ON.getCustomModelData());
+        wool.setCustomModelData(GUIArs.BUTTON_MAP_ON.customModelData());
         black.setItemMeta(wool);
         for (int j = 0; j < 37; j += 9) {
             for (int k = 0; k < 5; k++) {
@@ -74,89 +74,89 @@ public class TARDISARSInventory {
             }
         }
         // direction pad left
-        ItemStack pad_left = new ItemStack(Material.CYAN_WOOL, 1);
+        ItemStack pad_left = new ItemStack(GUIArs.BUTTON_LEFT.material(), 1);
         ItemMeta left = pad_left.getItemMeta();
         left.setDisplayName(plugin.getLanguage().getString("BUTTON_LEFT"));
-        left.setCustomModelData(GUIArs.BUTTON_LEFT.getCustomModelData());
+        left.setCustomModelData(GUIArs.BUTTON_LEFT.customModelData());
         pad_left.setItemMeta(left);
-        is[9] = pad_left;
+        is[GUIArs.BUTTON_LEFT.slot()] = pad_left;
         // load map
-        ItemStack map = new ItemStack(Material.MAP, 1);
+        ItemStack map = new ItemStack(GUIArs.BUTTON_MAP.material(), 1);
         ItemMeta load = map.getItemMeta();
         load.setDisplayName(plugin.getLanguage().getString("BUTTON_MAP"));
-        load.setCustomModelData(GUIArs.BUTTON_MAP.getCustomModelData());
+        load.setCustomModelData(GUIArs.BUTTON_MAP.customModelData());
         map.setItemMeta(load);
-        is[10] = map;
+        is[GUIArs.BUTTON_MAP.slot()] = map;
         // direction pad right
-        ItemStack pad_right = new ItemStack(Material.CYAN_WOOL, 1);
+        ItemStack pad_right = new ItemStack(GUIArs.BUTTON_RIGHT.material(), 1);
         ItemMeta right = pad_right.getItemMeta();
         right.setDisplayName(plugin.getLanguage().getString("BUTTON_RIGHT"));
-        right.setCustomModelData(GUIArs.BUTTON_RIGHT.getCustomModelData());
+        right.setCustomModelData(GUIArs.BUTTON_RIGHT.customModelData());
         pad_right.setItemMeta(right);
-        is[11] = pad_right;
+        is[GUIArs.BUTTON_RIGHT.slot()] = pad_right;
         // set
-        ItemStack s = new ItemStack(Material.PINK_WOOL, 1);
+        ItemStack s = new ItemStack(GUIArs.BUTTON_RECON.material(), 1);
         ItemMeta sim = s.getItemMeta();
         sim.setDisplayName(plugin.getLanguage().getString("BUTTON_RECON"));
-        sim.setCustomModelData(GUIArs.BUTTON_RECON.getCustomModelData());
+        sim.setCustomModelData(GUIArs.BUTTON_RECON.customModelData());
         s.setItemMeta(sim);
-        is[12] = s;
+        is[GUIArs.BUTTON_RECON.slot()] = s;
         // direction pad down
-        ItemStack pad_down = new ItemStack(Material.CYAN_WOOL, 1);
+        ItemStack pad_down = new ItemStack(GUIArs.BUTTON_DOWN.material(), 1);
         ItemMeta down = pad_down.getItemMeta();
         down.setDisplayName(plugin.getLanguage().getString("BUTTON_DOWN"));
-        down.setCustomModelData(GUIArs.BUTTON_DOWN.getCustomModelData());
+        down.setCustomModelData(GUIArs.BUTTON_DOWN.customModelData());
         pad_down.setItemMeta(down);
-        is[19] = pad_down;
+        is[GUIArs.BUTTON_DOWN.slot()] = pad_down;
         // level bottom
-        ItemStack level_bot = new ItemStack(Material.WHITE_WOOL, 1);
+        ItemStack level_bot = new ItemStack(GUIArs.BUTTON_LEVEL_B.material(), 1);
         ItemMeta bot = level_bot.getItemMeta();
         bot.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL_B"));
-        bot.setCustomModelData(GUIArs.BUTTON_LEVEL_B.getCustomModelData());
+        bot.setCustomModelData(GUIArs.BUTTON_LEVEL_B.customModelData());
         level_bot.setItemMeta(bot);
-        is[27] = level_bot;
+        is[GUIArs.BUTTON_LEVEL_B.slot()] = level_bot;
         // level selected
-        ItemStack level_sel = new ItemStack(Material.YELLOW_WOOL, 1);
+        ItemStack level_sel = new ItemStack(GUIArs.BUTTON_LEVEL.material(), 1);
         ItemMeta main = level_sel.getItemMeta();
         main.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL"));
-        main.setCustomModelData(GUIArs.BUTTON_LEVEL.getCustomModelData());
+        main.setCustomModelData(GUIArs.BUTTON_LEVEL.customModelData());
         level_sel.setItemMeta(main);
-        is[28] = level_sel;
+        is[GUIArs.BUTTON_LEVEL.slot()] = level_sel;
         // level top
-        ItemStack level_top = new ItemStack(Material.WHITE_WOOL, 1);
+        ItemStack level_top = new ItemStack(GUIArs.BUTTON_LEVEL_T.material(), 1);
         ItemMeta top = level_top.getItemMeta();
         top.setDisplayName(plugin.getLanguage().getString("BUTTON_LEVEL_T"));
-        top.setCustomModelData(GUIArs.BUTTON_LEVEL_T.getCustomModelData());
+        top.setCustomModelData(GUIArs.BUTTON_LEVEL_T.customModelData());
         level_top.setItemMeta(top);
-        is[29] = level_top;
+        is[GUIArs.BUTTON_LEVEL_T.slot()] = level_top;
         // reset
-        ItemStack reset = new ItemStack(Material.COBBLESTONE, 1);
+        ItemStack reset = new ItemStack(GUIArs.BUTTON_RESET.material(), 1);
         ItemMeta cobble = reset.getItemMeta();
         cobble.setDisplayName(plugin.getLanguage().getString("BUTTON_RESET"));
-        cobble.setCustomModelData(GUIArs.BUTTON_RESET.getCustomModelData());
+        cobble.setCustomModelData(GUIArs.BUTTON_RESET.customModelData());
         reset.setItemMeta(cobble);
-        is[30] = reset;
+        is[GUIArs.BUTTON_RESET.slot()] = reset;
         // scroll left
-        ItemStack scroll_left = new ItemStack(Material.RED_WOOL, 1);
+        ItemStack scroll_left = new ItemStack(GUIArs.BUTTON_SCROLL_L.material(), 1);
         ItemMeta nim = scroll_left.getItemMeta();
         nim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_L"));
-        nim.setCustomModelData(GUIArs.BUTTON_SCROLL_L.getCustomModelData());
+        nim.setCustomModelData(GUIArs.BUTTON_SCROLL_L.customModelData());
         scroll_left.setItemMeta(nim);
-        is[36] = scroll_left;
+        is[GUIArs.BUTTON_SCROLL_L.slot()] = scroll_left;
         // scroll right
-        ItemStack scroll_right = new ItemStack(Material.LIME_WOOL, 1);
+        ItemStack scroll_right = new ItemStack(GUIArs.BUTTON_SCROLL_R.material(), 1);
         ItemMeta pim = scroll_right.getItemMeta();
         pim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_R"));
-        pim.setCustomModelData(GUIArs.BUTTON_SCROLL_R.getCustomModelData());
+        pim.setCustomModelData(GUIArs.BUTTON_SCROLL_R.customModelData());
         scroll_right.setItemMeta(pim);
-        is[38] = scroll_right;
+        is[GUIArs.BUTTON_SCROLL_R.slot()] = scroll_right;
         // jettison
-        ItemStack jettison = new ItemStack(Material.TNT, 1);
+        ItemStack jettison = new ItemStack(GUIArs.BUTTON_JETT.material(), 1);
         ItemMeta tnt = jettison.getItemMeta();
         tnt.setDisplayName(plugin.getLanguage().getString("BUTTON_JETT"));
-        tnt.setCustomModelData(GUIArs.BUTTON_JETT.getCustomModelData());
+        tnt.setCustomModelData(GUIArs.BUTTON_JETT.customModelData());
         jettison.setItemMeta(tnt);
-        is[39] = jettison;
+        is[GUIArs.BUTTON_JETT.slot()] = jettison;
 
         int i = 45;
         for (TARDISARS a : TARDISARS.values()) {

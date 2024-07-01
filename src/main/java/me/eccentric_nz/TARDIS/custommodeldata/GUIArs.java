@@ -16,53 +16,25 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 
-public enum GUIArs {
+public record GUIArs() {
 
     // Architectural Reconfiguration
 
-    BUTTON_UP(1, 1, Material.CYAN_WOOL),
-    BUTTON_DOWN(2, 18, Material.CYAN_WOOL),
-    BUTTON_LEFT(3, 9, Material.CYAN_WOOL),
-    BUTTON_RIGHT(4, 11, Material.CYAN_WOOL),
-    BUTTON_MAP(2, 10, Material.MAP),
-    BUTTON_RECON(1, 12, Material.PINK_WOOL),
-    BUTTON_LEVEL_B(1, 27, Material.WHITE_WOOL),
-    BUTTON_LEVEL(2, 28, Material.YELLOW_WOOL),
-    BUTTON_LEVEL_T(3, 29, Material.WHITE_WOOL),
-    BUTTON_RESET(1, 30, Material.COBBLESTONE),
-    BUTTON_SCROLL_L(1, 36, Material.RED_WOOL),
-    BUTTON_SCROLL_R(1, 38, Material.LIME_WOOL),
-    BUTTON_JETT(1, 39, Material.TNT),
-    BUTTON_MAP_ON(1, -1, Material.BLACK_WOOL),
-    EMPTY_SLOT(1, -1, Material.STONE);
-
-    private final int customModelData;
-    private final int slot;
-    private final Material material;
-
-    GUIArs(int customModelData, int slot, Material material) {
-        this.customModelData = customModelData;
-        this.slot = slot;
-        this.material = material;
-    }
-
-    public int getCustomModelData() {
-        return customModelData;
-    }
-
-    public int getSlot() {
-        return slot;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public String getName() {
-        String s = toString();
-        return (this == EMPTY_SLOT) ? "Empty Slot" : TARDIS.plugin.getLanguage().getString(s);
-    }
+    public static GUIData BUTTON_UP = new GUIData(1, 1, Material.CYAN_WOOL);
+    public static GUIData BUTTON_DOWN = new GUIData(2, 19, Material.CYAN_WOOL);
+    public static GUIData BUTTON_LEFT = new GUIData(3, 9, Material.CYAN_WOOL);
+    public static GUIData BUTTON_RIGHT = new GUIData(4, 11, Material.CYAN_WOOL);
+    public static GUIData BUTTON_MAP = new GUIData(2, 10, Material.MAP);
+    public static GUIData BUTTON_RECON = new GUIData(1, 12, Material.PINK_WOOL);
+    public static GUIData BUTTON_LEVEL_B = new GUIData(1, 27, Material.WHITE_WOOL);
+    public static GUIData BUTTON_LEVEL = new GUIData(2, 28, Material.YELLOW_WOOL);
+    public static GUIData BUTTON_LEVEL_T = new GUIData(3, 29, Material.WHITE_WOOL);
+    public static GUIData BUTTON_RESET = new GUIData(1, 30, Material.COBBLESTONE);
+    public static GUIData BUTTON_SCROLL_L = new GUIData(1, 36, Material.RED_WOOL);
+    public static GUIData BUTTON_SCROLL_R = new GUIData(1, 38, Material.LIME_WOOL);
+    public static GUIData BUTTON_JETT = new GUIData(1, 39, Material.TNT);
+    public static GUIData BUTTON_MAP_ON = new GUIData(1, -1, Material.BLACK_WOOL);
+    public static GUIData EMPTY_SLOT = new GUIData(1, -1, Material.STONE);
 }

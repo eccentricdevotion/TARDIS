@@ -40,7 +40,7 @@ public class TARDISRecipeCategoryInventory {
         ItemMeta info_im = info.getItemMeta();
         info_im.setDisplayName("Info");
         info_im.setLore(Arrays.asList("Click a button below", "to see the items", "in that recipe category"));
-        info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
+        info_im.setCustomModelData(GUIChemistry.INFO.customModelData());
         info.setItemMeta(info_im);
         stack[0] = info;
         for (RecipeCategory category : RecipeCategory.values()) {

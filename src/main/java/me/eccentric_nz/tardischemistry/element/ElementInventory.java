@@ -18,7 +18,6 @@ package me.eccentric_nz.tardischemistry.element;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -49,38 +48,38 @@ public class ElementInventory {
             }
         }
         // scroll up
-        ItemStack scroll_up = new ItemStack(Material.ARROW, 1);
+        ItemStack scroll_up = new ItemStack(GUIChemistry.SCROLL_UP.material(), 1);
         ItemMeta uim = scroll_up.getItemMeta();
         uim.setDisplayName("Scroll up");
-        uim.setCustomModelData(GUIChemistry.SCROLL_UP.getCustomModelData());
+        uim.setCustomModelData(GUIChemistry.SCROLL_UP.customModelData());
         scroll_up.setItemMeta(uim);
         stack[8] = scroll_up;
         // scroll down
-        ItemStack scroll_down = new ItemStack(Material.ARROW, 1);
+        ItemStack scroll_down = new ItemStack(GUIChemistry.SCROLL_DOWN.material(), 1);
         ItemMeta dim = scroll_down.getItemMeta();
         dim.setDisplayName("Scroll down");
-        dim.setCustomModelData(GUIChemistry.SCROLL_DOWN.getCustomModelData());
+        dim.setCustomModelData(GUIChemistry.SCROLL_DOWN.customModelData());
         scroll_down.setItemMeta(dim);
         stack[17] = scroll_down;
         // compounds
-        ItemStack compounds = new ItemStack(GUIChemistry.COMPOUNDS.getMaterial(), 1);
+        ItemStack compounds = new ItemStack(GUIChemistry.COMPOUNDS.material(), 1);
         ItemMeta cim = compounds.getItemMeta();
         cim.setDisplayName("Compounds");
-        cim.setCustomModelData(GUIChemistry.COMPOUNDS.getCustomModelData());
+        cim.setCustomModelData(GUIChemistry.COMPOUNDS.customModelData());
         compounds.setItemMeta(cim);
         stack[35] = compounds;
         // products
-        ItemStack products = new ItemStack(GUIChemistry.PRODUCTS.getMaterial(), 1);
+        ItemStack products = new ItemStack(GUIChemistry.PRODUCTS.material(), 1);
         ItemMeta pim = products.getItemMeta();
         pim.setDisplayName("Products");
-        pim.setCustomModelData(GUIChemistry.PRODUCTS.getCustomModelData());
+        pim.setCustomModelData(GUIChemistry.PRODUCTS.customModelData());
         products.setItemMeta(pim);
-        stack[44] = products;
+        stack[GUIChemistry.PRODUCTS.slot()] = products;
         // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIChemistry.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GUIChemistry.CLOSE.customModelData());
         close.setItemMeta(close_im);
         stack[53] = close;
         return stack;

@@ -82,14 +82,14 @@ class TARDISHowtoWallsInventory {
         ItemStack back = new ItemStack(Material.BOWL, 1);
         ItemMeta back_im = back.getItemMeta();
         back_im.setDisplayName("Back");
-        back_im.setCustomModelData(GUIChameleonPresets.BACK.getCustomModelData());
+        back_im.setCustomModelData(GUIChameleonPresets.BACK.customModelData());
         back.setItemMeta(back_im);
         stack[44] = back;
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChameleonPresets.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GUIChameleonPresets.CLOSE.customModelData());
         close.setItemMeta(close_im);
         stack[53] = close;
 

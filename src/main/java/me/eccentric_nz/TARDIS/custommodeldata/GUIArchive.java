@@ -16,45 +16,31 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
-public enum GUIArchive {
+public record GUIArchive() {
 
     // TARDIS Archive
-    BACK(8, 18, Material.BOWL),
-    SET_SIZE(77, 19, Material.BOWL),
-    SCAN_CONSOLE(75, 20, Material.BOWL),
-    ARCHIVE_CURRENT_CONSOLE(5, 0, Material.BOWL),
-    SMALL(79, 22, Material.BOWL),
-    MEDIUM(62, 23, Material.BOWL),
-    TALL(81, 24, Material.BOWL),
-    CLOSE(1, 26, Material.BOWL);
+    public static GUIData BACK = new GUIData(8, 18, Material.BOWL);
+    public static GUIData SET_SIZE = new GUIData(77, 19, Material.BOWL);
+    public static GUIData SCAN_CONSOLE = new GUIData(75, 20, Material.BOWL);
+    public static GUIData ARCHIVE_CURRENT_CONSOLE = new GUIData(5, 0, Material.BOWL);
+    public static GUIData SMALL = new GUIData(79, 22, Material.BOWL);
+    public static GUIData MEDIUM = new GUIData(62, 23, Material.BOWL);
+    public static GUIData TALL = new GUIData(81, 24, Material.BOWL);
+    public static GUIData CLOSE = new GUIData(1, 26, Material.BOWL);
 
-    private final int customModelData;
-    private final int slot;
-    private final Material material;
-
-    GUIArchive(int customModelData, int slot, Material material) {
-        this.customModelData = customModelData;
-        this.slot = slot;
-        this.material = material;
-    }
-
-    public int getCustomModelData() {
-        return customModelData;
-    }
-
-    public int getSlot() {
-        return slot;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public String getName() {
-        String s = toString();
-        return TARDISStringUtils.sentenceCase(s);
+    public static GUIData getByName(String name) {
+        switch (name) {
+            case "MEDIUM" -> {
+                return MEDIUM;
+            }
+            case "TALL" -> {
+                return TALL;
+            }
+            default -> {
+                return SMALL;
+            }
+        }
     }
 }

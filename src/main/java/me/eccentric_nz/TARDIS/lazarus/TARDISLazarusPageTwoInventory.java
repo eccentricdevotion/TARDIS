@@ -123,7 +123,7 @@ class TARDISLazarusPageTwoInventory {
         ItemStack page = new ItemStack(Material.ARROW, 1);
         ItemMeta one = page.getItemMeta();
         one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
-        one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.getCustomModelData());
+        one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.customModelData());
         page.setItemMeta(one);
         stacks[43] = page;
         // if TARDISWeepingAngels is enabled angels, cybermen and ice warriors will be available

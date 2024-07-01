@@ -16,52 +16,24 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
-public enum GUIChemistry {
+public record GUIChemistry() {
 
     // TARDIS Areas
-    CLOSE(1, 1, Material.BOWL),
-    INFO(57, 1, Material.BOWL),
-    CHECK(89, 1, Material.BOWL),
-    CRAFT(90, 1, Material.BOWL),
-    ELECTRONS(91, 1, Material.BOWL),
-    NEUTRONS(92, 1, Material.BOWL),
-    PROTONS(93, 1, Material.BOWL),
-    REDUCE(94, 1, Material.BOWL),
-    SCROLL_DOWN(7, 1, Material.ARROW),
-    SCROLL_UP(8, 1, Material.ARROW),
-    PLUS(9, 1, Material.ARROW),
-    MINUS(10, 1, Material.ARROW),
-    ELEMENTS(10000999, 1, Material.FEATHER),
-    COMPOUNDS(1, 1, Material.GLASS_BOTTLE),
-    PRODUCTS(1, 1, Material.CRAFTING_TABLE);
-
-    private final int customModelData;
-    private final int slot;
-    private final Material material;
-
-    GUIChemistry(int customModelData, int slot, Material material) {
-        this.customModelData = customModelData;
-        this.slot = slot;
-        this.material = material;
-    }
-
-    public int getCustomModelData() {
-        return customModelData;
-    }
-
-    public int getSlot() {
-        return slot;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public String getName() {
-        String s = toString();
-        return TARDISStringUtils.sentenceCase(s);
-    }
+    public static GUIData CLOSE = new GUIData(1, 26, Material.BOWL);
+    public static GUIData INFO = new GUIData(57, 8, Material.BOWL);
+    public static GUIData CHECK = new GUIData(89, 17, Material.BOWL);
+    public static GUIData CRAFT = new GUIData(90, 17, Material.BOWL);
+    public static GUIData ELECTRONS = new GUIData(91, 22, Material.BOWL);
+    public static GUIData NEUTRONS = new GUIData(92, 13, Material.BOWL);
+    public static GUIData PROTONS = new GUIData(93, 4, Material.BOWL);
+    public static GUIData REDUCE = new GUIData(94, 17, Material.BOWL);
+    public static GUIData SCROLL_DOWN = new GUIData(7, 1, Material.ARROW);
+    public static GUIData SCROLL_UP = new GUIData(8, 1, Material.ARROW);
+    public static GUIData PLUS = new GUIData(9, 24, Material.ARROW);
+    public static GUIData MINUS = new GUIData(10, 23, Material.ARROW);
+    public static GUIData ELEMENTS = new GUIData(10000999, 35, Material.FEATHER);
+    public static GUIData COMPOUNDS = new GUIData(1, 44, Material.GLASS_BOTTLE);
+    public static GUIData PRODUCTS = new GUIData(1, 44, Material.CRAFTING_TABLE);
 }

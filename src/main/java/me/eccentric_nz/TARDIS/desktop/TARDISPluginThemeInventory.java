@@ -100,19 +100,19 @@ public class TARDISPluginThemeInventory extends TARDISThemeInventory {
             }
         }
         // custom consoles page
-        ItemStack custom = new ItemStack(Material.ARROW, 1);
+        ItemStack custom = new ItemStack(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
         ItemMeta custom_im = custom.getItemMeta();
         custom_im.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
-        custom_im.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.getCustomModelData());
+        custom_im.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.customModelData());
         custom.setItemMeta(custom_im);
         stack[51] = custom;
         // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIChameleonPresets.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIUpgrade.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GUIChameleonPresets.CLOSE.customModelData());
         close.setItemMeta(close_im);
-        stack[53] = close;
+        stack[GUIChameleonPresets.CLOSE.slot()] = close;
 
         return stack;
     }

@@ -16,70 +16,41 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
-public enum GUIControlCentre {
+public record GUIControlCentre() {
 
     // Control Centre
     // 1st column
-    BUTTON_RANDOM(24, 0, Material.BOWL),
-    BUTTON_SAVES(26, 9, Material.BOWL),
-    BUTTON_BACK(15, 18, Material.BOWL),
-    BUTTON_AREAS(12, 27, Material.BOWL),
-    BUTTON_TERM(30, 36, Material.BOWL),
-    BUTTON_THROTTLE(149, 45, Material.BOWL),
-    // 2nd column,
-    BUTTON_ARS(13, 2, Material.BOWL),
-    BUTTON_THEME(31, 11, Material.BOWL),
-    BUTTON_POWER(17, 20, Material.REPEATER),
-    BUTTON_LIGHTS(16, 29, Material.REPEATER),
-    BUTTON_TOGGLE(19, 38, Material.REPEATER),
-    BUTTON_TARDIS_MAP(3, 47, Material.MAP),
+    public static GUIData BUTTON_RANDOM = new GUIData(24, 0, Material.BOWL);
+    public static GUIData BUTTON_SAVES = new GUIData(26, 9, Material.BOWL);
+    public static GUIData BUTTON_BACK = new GUIData(15, 18, Material.BOWL);
+    public static GUIData BUTTON_AREAS = new GUIData(12, 27, Material.BOWL);
+    public static GUIData BUTTON_TERM = new GUIData(30, 36, Material.BOWL);
+    public static GUIData BUTTON_THROTTLE = new GUIData(149, 45, Material.BOWL);
+    // 2nd column
+    public static GUIData BUTTON_ARS = new GUIData(13, 2, Material.BOWL);
+    public static GUIData BUTTON_THEME = new GUIData(31, 11, Material.BOWL);
+    public static GUIData BUTTON_POWER = new GUIData(17, 20, Material.REPEATER);
+    public static GUIData BUTTON_LIGHTS = new GUIData(16, 29, Material.REPEATER);
+    public static GUIData BUTTON_TOGGLE = new GUIData(19, 38, Material.REPEATER);
+    public static GUIData BUTTON_TARDIS_MAP = new GUIData(3, 47, Material.MAP);
     // 3rd column
-    BUTTON_CHAMELEON(17, 4, Material.BOWL),
-    BUTTON_SIEGE(18, 13, Material.REPEATER),
-    BUTTON_HIDE(20, 22, Material.BOWL),
-    BUTTON_REBUILD(25, 31, Material.BOWL),
-    BUTTON_DIRECTION(19, 40, Material.BOWL),
-    BUTTON_TEMP(29, 49, Material.BOWL),
+    public static GUIData BUTTON_CHAMELEON = new GUIData(17, 4, Material.BOWL);
+    public static GUIData BUTTON_SIEGE = new GUIData(18, 13, Material.REPEATER);
+    public static GUIData BUTTON_HIDE = new GUIData(20, 22, Material.BOWL);
+    public static GUIData BUTTON_REBUILD = new GUIData(25, 31, Material.BOWL);
+    public static GUIData BUTTON_DIRECTION = new GUIData(19, 40, Material.BOWL);
+    public static GUIData BUTTON_TEMP = new GUIData(29, 49, Material.BOWL);
     // 4th column
-    BUTTON_ARTRON(14, 6, Material.BOWL),
-    BUTTON_SCANNER(27, 15, Material.BOWL),
-    BUTTON_INFO(21, 24, Material.BOWL),
-    BUTTON_TRANSMAT(133, 33, Material.BOWL),
+    public static GUIData BUTTON_ARTRON = new GUIData(14, 6, Material.BOWL);
+    public static GUIData BUTTON_SCANNER = new GUIData(27, 15, Material.BOWL);
+    public static GUIData BUTTON_INFO = new GUIData(21, 24, Material.BOWL);
+    public static GUIData BUTTON_TRANSMAT = new GUIData(133, 33, Material.BOWL);
     // 5th column
-    BUTTON_ZERO(32, 8, Material.BOWL),
-    BUTTON_PREFS(23, 17, Material.BOWL),
-    COMPANIONS_MENU(45, 26, Material.BOWL),
-    BUTTON_SYSTEM_UPGRADES(156, 35, Material.BOWL),
-    BUTTON_CLOSE(1, 53, Material.BOWL);
-
-
-    private final int customModelData;
-    private final int slot;
-    private final Material material;
-
-    GUIControlCentre(int customModelData, int slot, Material material) {
-        this.customModelData = customModelData;
-        this.slot = slot;
-        this.material = material;
-    }
-
-    public int getCustomModelData() {
-        return customModelData;
-    }
-
-    public int getSlot() {
-        return slot;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public String getName() {
-        String s = toString();
-        return TARDISStringUtils.sentenceCase(s);
-    }
+    public static GUIData BUTTON_ZERO = new GUIData(32, 8, Material.BOWL);
+    public static GUIData BUTTON_PREFS = new GUIData(23, 17, Material.BOWL);
+    public static GUIData COMPANIONS_MENU = new GUIData(45, 26, Material.BOWL);
+    public static GUIData BUTTON_SYSTEM_UPGRADES = new GUIData(156, 35, Material.BOWL);
+    public static GUIData BUTTON_CLOSE = new GUIData(1, 53, Material.BOWL);
 }

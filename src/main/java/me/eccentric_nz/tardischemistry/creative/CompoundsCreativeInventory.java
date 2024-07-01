@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
 import me.eccentric_nz.tardischemistry.compound.Compound;
 import me.eccentric_nz.tardischemistry.compound.CompoundBuilder;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -50,24 +49,24 @@ public class CompoundsCreativeInventory {
             }
         }
         // elements
-        ItemStack elements = new ItemStack(GUIChemistry.ELEMENTS.getMaterial(), 1);
+        ItemStack elements = new ItemStack(GUIChemistry.ELEMENTS.material(), 1);
         ItemMeta eim = elements.getItemMeta();
         eim.setDisplayName("Elements");
-        eim.setCustomModelData(GUIChemistry.ELEMENTS.getCustomModelData());
+        eim.setCustomModelData(GUIChemistry.ELEMENTS.customModelData());
         elements.setItemMeta(eim);
-        stack[35] = elements;
+        stack[GUIChemistry.ELEMENTS.slot()] = elements;
         // products
-        ItemStack products = new ItemStack(GUIChemistry.PRODUCTS.getMaterial(), 1);
+        ItemStack products = new ItemStack(GUIChemistry.PRODUCTS.material(), 1);
         ItemMeta pim = products.getItemMeta();
         pim.setDisplayName("Products");
-        pim.setCustomModelData(GUIChemistry.PRODUCTS.getCustomModelData());
+        pim.setCustomModelData(GUIChemistry.PRODUCTS.customModelData());
         products.setItemMeta(pim);
-        stack[44] = products;
+        stack[GUIChemistry.PRODUCTS.slot()] = products;
         // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIChemistry.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GUIChemistry.CLOSE.customModelData());
         close.setItemMeta(close_im);
         stack[53] = close;
         return stack;

@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.desktop;
 
-import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIArchive;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisSize;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveButtons;
@@ -27,6 +27,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
 
 /**
  * By the time of his eleventh incarnation, the Doctor's console room had gone through at least twelve redesigns, though
@@ -65,17 +67,17 @@ class TARDISArchiveInventory {
             }
         }
         // back
-        ItemStack back = new ItemStack(Material.BOWL, 1);
+        ItemStack back = new ItemStack(GUIArchive.BACK.material(), 1);
         ItemMeta back_im = back.getItemMeta();
         back_im.setDisplayName("Back");
-        back_im.setCustomModelData(GUIArchive.BACK.getCustomModelData());
+        back_im.setCustomModelData(GUIArchive.BACK.customModelData());
         back.setItemMeta(back_im);
         stack[17] = back;
         // size
-        ItemStack size = new ItemStack(Material.BOWL, 1);
+        ItemStack size = new ItemStack(GUIArchive.SET_SIZE.material(), 1);
         ItemMeta size_im = size.getItemMeta();
         size_im.setDisplayName("Set size");
-        size_im.setCustomModelData(GUIArchive.SET_SIZE.getCustomModelData());
+        size_im.setCustomModelData(GUIArchive.SET_SIZE.customModelData());
         String s = "SMALL";
         String b = "16 x 16 x 16 blocks";
 
@@ -89,28 +91,29 @@ class TARDISArchiveInventory {
         size.setItemMeta(size_im);
         stack[18] = size;
         // scan
-        ItemStack scan = new ItemStack(Material.BOWL, 1);
+        ItemStack scan = new ItemStack(GUIArchive.SCAN_CONSOLE.material(), 1);
         ItemMeta but_im = scan.getItemMeta();
         but_im.setDisplayName("Scan console");
-        but_im.setCustomModelData(GUIArchive.SCAN_CONSOLE.getCustomModelData());
+        but_im.setCustomModelData(GUIArchive.SCAN_CONSOLE.customModelData());
         scan.setItemMeta(but_im);
         stack[19] = scan;
         // archive
-        ItemStack arc = new ItemStack(Material.BOWL, 1);
+        ItemStack arc = new ItemStack(GUIArchive.ARCHIVE_CURRENT_CONSOLE.material(), 1);
         ItemMeta hive_im = arc.getItemMeta();
         hive_im.setDisplayName("Archive current console");
         hive_im.setLore(Arrays.asList("A random name will", "be generated - use the", "/tardis archive command", "to set your own."));
-        hive_im.setCustomModelData(GUIArchive.ARCHIVE_CURRENT_CONSOLE.getCustomModelData());
+        hive_im.setCustomModelData(GUIArchive.ARCHIVE_CURRENT_CONSOLE.customModelData());
         arc.setItemMeta(hive_im);
         stack[20] = arc;
         // templates
         int t = 22;
         for (ConsoleSize c : ConsoleSize.values()) {
             if (!c.equals(ConsoleSize.MASSIVE)) {
-                ItemStack temp = new ItemStack(Material.BOWL, 1);
+                GUIData data = GUIArchive.getByName(c.toString());
+                ItemStack temp = new ItemStack(GUIArchive.SMALL.material(), 1);
                 ItemMeta late = temp.getItemMeta();
                 late.setDisplayName(c.toString());
-                late.setCustomModelData(GUIArchive.valueOf(c.toString()).getCustomModelData());
+                late.setCustomModelData(data.customModelData());
                 late.setLore(Arrays.asList("Cobblestone template", c.getBlocks()));
                 temp.setItemMeta(late);
                 stack[t] = temp;
@@ -121,7 +124,7 @@ class TARDISArchiveInventory {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIArchive.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GUIArchive.CLOSE.customModelData());
         close.setItemMeta(close_im);
         stack[26] = close;
 

@@ -112,10 +112,10 @@ class TARDISLazarusInventory {
             i++;
         }
         // page two
-        ItemStack page = new ItemStack(Material.ARROW, 1);
+        ItemStack page = new ItemStack(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
         ItemMeta two = page.getItemMeta();
         two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
-        two.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.getCustomModelData());
+        two.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.customModelData());
         page.setItemMeta(two);
         stacks[43] = page;
         // if TARDISWeepingAngels is enabled add TARDIS monsters

@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.companionGUI;
 
-import java.util.ArrayList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUICompanion;
 import org.bukkit.Material;
@@ -24,6 +23,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+
+import java.util.ArrayList;
 
 public class TARDISEveryoneCompanionInventory {
 
@@ -85,7 +86,7 @@ public class TARDISEveryoneCompanionInventory {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUICompanion.BUTTON_CLOSE.getCustomModelData());
+        can.setCustomModelData(GUICompanion.BUTTON_CLOSE.customModelData());
         close.setItemMeta(can);
         heads[53] = close;
 

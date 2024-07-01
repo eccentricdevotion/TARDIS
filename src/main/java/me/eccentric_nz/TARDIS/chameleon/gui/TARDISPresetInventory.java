@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -64,26 +63,26 @@ public class TARDISPresetInventory {
             }
         }
         // back
-        ItemStack back = new ItemStack(Material.BOWL, 1);
+        ItemStack back = new ItemStack(GUIChameleonPresets.BACK.material(), 1);
         ItemMeta but = back.getItemMeta();
         but.setDisplayName("Back");
-        but.setCustomModelData(GUIChameleonPresets.BACK.getCustomModelData());
+        but.setCustomModelData(GUIChameleonPresets.BACK.customModelData());
         back.setItemMeta(but);
-        stacks[51] = back;
+        stacks[GUIChameleonPresets.BACK.slot()] = back;
         // page two
-        ItemStack page = new ItemStack(Material.ARROW, 1);
+        ItemStack page = new ItemStack(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
         ItemMeta two = page.getItemMeta();
         two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
-        two.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.getCustomModelData());
+        two.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.customModelData());
         page.setItemMeta(two);
-        stacks[52] = page;
+        stacks[GUIChameleonPresets.GO_TO_PAGE_2.slot()] = page;
         // Cancel / close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIChameleonPresets.CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUIChameleonPresets.CLOSE.getCustomModelData());
+        can.setCustomModelData(GUIChameleonPresets.CLOSE.customModelData());
         close.setItemMeta(can);
-        stacks[53] = close;
+        stacks[GUIChameleonPresets.CLOSE.slot()] = close;
         return stacks;
     }
 

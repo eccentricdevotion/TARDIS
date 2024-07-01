@@ -40,48 +40,48 @@ public class TARDISChameleonConstructorGUI {
         ItemStack[] is = new ItemStack[54];
 
         // back
-        ItemStack back = new ItemStack(Material.BOWL, 1);
+        ItemStack back = new ItemStack(GUIChameleonConstructor.BACK_TO_CHAMELEON_CIRCUIT.material(), 1);
         ItemMeta bk = back.getItemMeta();
         bk.setDisplayName(plugin.getChameleonGuis().getString("BACK_CHAM_OPTS"));
-        bk.setCustomModelData(GUIChameleonConstructor.BACK_TO_CHAMELEON_CIRCUIT.getCustomModelData());
+        bk.setCustomModelData(GUIChameleonConstructor.BACK_TO_CHAMELEON_CIRCUIT.customModelData());
         back.setItemMeta(bk);
-        is[0] = back;
+        is[GUIChameleonConstructor.BACK_TO_CHAMELEON_CIRCUIT.slot()] = back;
         // help
-        ItemStack help = new ItemStack(Material.BOWL, 1);
+        ItemStack help = new ItemStack(GUIChameleonConstructor.HELP.material(), 1);
         ItemMeta hp = help.getItemMeta();
         hp.setDisplayName(plugin.getChameleonGuis().getString("HELP"));
-        hp.setCustomModelData(GUIChameleonConstructor.HELP.getCustomModelData());
+        hp.setCustomModelData(GUIChameleonConstructor.HELP.customModelData());
         help.setItemMeta(hp);
-        is[2] = help;
+        is[GUIChameleonConstructor.HELP.slot()] = help;
         // info
-        ItemStack info = new ItemStack(Material.BOWL, 1);
+        ItemStack info = new ItemStack(GUIChameleonConstructor.INFO.material(), 1);
         ItemMeta io = info.getItemMeta();
         io.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
         io.setLore(plugin.getChameleonGuis().getStringList("INFO_CONSTRUCT"));
-        io.setCustomModelData(GUIChameleonConstructor.INFO.getCustomModelData());
+        io.setCustomModelData(GUIChameleonConstructor.INFO.customModelData());
         info.setItemMeta(io);
-        is[3] = info;
+        is[GUIChameleonConstructor.INFO.slot()] = info;
         // abort
-        ItemStack abort = new ItemStack(Material.BOWL, 1);
+        ItemStack abort = new ItemStack(GUIChameleonConstructor.ABORT.material(), 1);
         ItemMeta at = abort.getItemMeta();
         at.setDisplayName(plugin.getChameleonGuis().getString("ABORT"));
-        at.setCustomModelData(GUIChameleonConstructor.ABORT.getCustomModelData());
+        at.setCustomModelData(GUIChameleonConstructor.ABORT.customModelData());
         abort.setItemMeta(at);
-        is[5] = abort;
+        is[GUIChameleonConstructor.ABORT.slot()] = abort;
         // load button
-        ItemStack load = new ItemStack(Material.BOWL, 1);
+        ItemStack load = new ItemStack(GUIChameleonConstructor.USE_LAST_SAVED_CONSTRUCT.material(), 1);
         ItemMeta ld = load.getItemMeta();
         ld.setDisplayName(plugin.getChameleonGuis().getString("USE_PREV"));
-        ld.setCustomModelData(GUIChameleonConstructor.USE_LAST_SAVED_CONSTRUCT.getCustomModelData());
+        ld.setCustomModelData(GUIChameleonConstructor.USE_LAST_SAVED_CONSTRUCT.customModelData());
         load.setItemMeta(ld);
-        is[7] = load;
+        is[GUIChameleonConstructor.USE_LAST_SAVED_CONSTRUCT.slot()] = load;
         // save button
-        ItemStack save = new ItemStack(Material.BOWL, 1);
+        ItemStack save = new ItemStack(GUIChameleonConstructor.SAVE_CONSTRUCT.material(), 1);
         ItemMeta se = save.getItemMeta();
         se.setDisplayName(plugin.getChameleonGuis().getString("SAVE"));
-        se.setCustomModelData(GUIChameleonConstructor.SAVE_CONSTRUCT.getCustomModelData());
+        se.setCustomModelData(GUIChameleonConstructor.SAVE_CONSTRUCT.customModelData());
         save.setItemMeta(se);
-        is[8] = save;
+        is[GUIChameleonConstructor.SAVE_CONSTRUCT.slot()] = save;
         // lamp button
         ItemStack lamp = new ItemStack(Material.TORCH, 1);
         is[26] = lamp;

@@ -89,7 +89,7 @@ public class TARDISShellInventory {
                     }
                 }
                 if (material == null) {
-                    material = Material.BOWL;
+                    material = GUIChameleonPresets.SAVED.material();
                 }
                 ItemStack saved = new ItemStack(material, 1);
                 ItemMeta con = saved.getItemMeta();
@@ -104,7 +104,7 @@ public class TARDISShellInventory {
                 }
                 con.setLore(lore);
                 if (material == Material.BOWL) {
-                    con.setCustomModelData(GUIChameleonPresets.SAVED.getCustomModelData());
+                    con.setCustomModelData(GUIChameleonPresets.SAVED.customModelData());
                 }
                 con.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, TARDISNumberParsers.parseInt(map.get("chameleon_id")));
                 saved.setItemMeta(con);
@@ -117,50 +117,50 @@ public class TARDISShellInventory {
             }
         }
         // use selected shell
-        ItemStack use = new ItemStack(Material.BOWL, 1);
+        ItemStack use = new ItemStack(GUIChameleonPresets.USE_SELECTED.material(), 1);
         ItemMeta uim = use.getItemMeta();
         uim.setDisplayName("Use selected shell");
         uim.setLore(List.of("Will apply shell to", "the Chameleon Circuit", "and rebuild the exterior."));
-        uim.setCustomModelData(GUIChameleonPresets.USE_SELECTED.getCustomModelData());
+        uim.setCustomModelData(GUIChameleonPresets.USE_SELECTED.customModelData());
         use.setItemMeta(uim);
-        stacks[45] = use;
+        stacks[GUIChameleonPresets.USE_SELECTED.slot()] = use;
         // delete selected shell
-        ItemStack delete = new ItemStack(Material.BUCKET, 1);
+        ItemStack delete = new ItemStack(GUIChameleonPresets.DELETE_SELECTED.material(), 1);
         ItemMeta dim = delete.getItemMeta();
         dim.setDisplayName("Delete selected shell");
-        dim.setCustomModelData(GUIChameleonPresets.DELETE_SELECTED.getCustomModelData());
+        dim.setCustomModelData(GUIChameleonPresets.DELETE_SELECTED.customModelData());
         delete.setItemMeta(dim);
-        stacks[46] = delete;
+        stacks[GUIChameleonPresets.DELETE_SELECTED.slot()] = delete;
         // update selected shell
-        ItemStack update = new ItemStack(Material.BOWL, 1);
+        ItemStack update = new ItemStack(GUIChameleonPresets.UPDATE_SELECTED.material(), 1);
         ItemMeta upim = update.getItemMeta();
         upim.setDisplayName("Update selected shell");
-        upim.setCustomModelData(GUIChameleonPresets.UPDATE_SELECTED.getCustomModelData());
+        upim.setCustomModelData(GUIChameleonPresets.UPDATE_SELECTED.customModelData());
         update.setItemMeta(upim);
-        stacks[47] = update;
+        stacks[GUIChameleonPresets.UPDATE_SELECTED.slot()] = update;
         // clear shell on platform
-        ItemStack newShell = new ItemStack(Material.BOWL, 1);
+        ItemStack newShell = new ItemStack(GUIChameleonPresets.NEW.material(), 1);
         ItemMeta ns = newShell.getItemMeta();
         ns.setDisplayName("New Chameleon shell");
         ns.setLore(List.of("Will clear the shell platform", "ready for building."));
-        ns.setCustomModelData(GUIChameleonPresets.NEW.getCustomModelData());
+        ns.setCustomModelData(GUIChameleonPresets.NEW.customModelData());
         newShell.setItemMeta(ns);
-        stacks[49] = newShell;
+        stacks[GUIChameleonPresets.NEW.slot()] = newShell;
         // Save current shell on platform
-        ItemStack save = new ItemStack(Material.BOWL, 1);
+        ItemStack save = new ItemStack(GUIChameleonPresets.SAVE.material(), 1);
         ItemMeta pre = save.getItemMeta();
         pre.setDisplayName("Save Chameleon shell");
         ns.setLore(List.of("Will save shell and", "rebuild the exterior."));
-        pre.setCustomModelData(GUIChameleonPresets.SAVE.getCustomModelData());
+        pre.setCustomModelData(GUIChameleonPresets.SAVE.customModelData());
         save.setItemMeta(pre);
-        stacks[50] = save;
+        stacks[GUIChameleonPresets.SAVE.slot()] = save;
         // Cancel / close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIChameleonPresets.CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUIChameleonPresets.CLOSE.getCustomModelData());
+        can.setCustomModelData(GUIChameleonPresets.CLOSE.customModelData());
         close.setItemMeta(can);
-        stacks[53] = close;
+        stacks[GUIChameleonPresets.CLOSE.slot()] = close;
 
         return stacks;
     }

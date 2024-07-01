@@ -76,35 +76,35 @@ public class TARDISCompanionAddInventory {
             }
         }
         // add buttons
-        ItemStack info = new ItemStack(Material.BOOK, 1);
+        ItemStack info = new ItemStack(GUICompanion.INFO.material(), 1);
         ItemMeta ii = info.getItemMeta();
         ii.setDisplayName("Info");
         ArrayList<String> info_lore = new ArrayList<>();
         info_lore.add("Click a player head to");
         info_lore.add("add them as a companion.");
         ii.setLore(info_lore);
-        ii.setCustomModelData(GUICompanion.INFO.getCustomModelData());
+        ii.setCustomModelData(GUICompanion.INFO.customModelData());
         info.setItemMeta(ii);
-        heads[45] = info;
-        ItemStack list = new ItemStack(Material.WRITABLE_BOOK, 1);
+        heads[GUICompanion.INFO.slot()] = info;
+        ItemStack list = new ItemStack(GUICompanion.LIST_COMPANIONS.material(), 1);
         ItemMeta ll = list.getItemMeta();
         ll.setDisplayName("List companions");
-        ll.setCustomModelData(GUICompanion.LIST_COMPANIONS.getCustomModelData());
+        ll.setCustomModelData(GUICompanion.LIST_COMPANIONS.customModelData());
         list.setItemMeta(ll);
-        heads[47] = list;
-        ItemStack every = new ItemStack(Material.WRITABLE_BOOK, 1);
+        heads[GUICompanion.LIST_COMPANIONS.slot()] = list;
+        ItemStack every = new ItemStack(GUICompanion.ALL_COMPANIONS.material(), 1);
         ItemMeta one = every.getItemMeta();
         one.setDisplayName("Add all online players");
-        one.setCustomModelData(GUICompanion.ALL_COMPANIONS.getCustomModelData());
+        one.setCustomModelData(GUICompanion.ALL_COMPANIONS.customModelData());
         every.setItemMeta(one);
-        heads[49] = every;
+        heads[GUICompanion.ALL_COMPANIONS.slot()] = every;
         // Cancel / close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUICompanion.BUTTON_CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUICompanion.BUTTON_CLOSE.getCustomModelData());
+        can.setCustomModelData(GUICompanion.BUTTON_CLOSE.customModelData());
         close.setItemMeta(can);
-        heads[53] = close;
+        heads[GUICompanion.BUTTON_CLOSE.slot()] = close;
 
         return heads;
     }

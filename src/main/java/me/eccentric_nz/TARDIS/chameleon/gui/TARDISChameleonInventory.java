@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleon;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
@@ -25,6 +24,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.List;
 
 /**
  * A TARDIS with a functioning chameleon circuit can appear as almost anything
@@ -68,30 +69,30 @@ public class TARDISChameleonInventory {
     private ItemStack[] getItemStack() {
 
         // Apply now
-        ItemStack apply = new ItemStack(Material.COMPARATOR, 1);
+        ItemStack apply = new ItemStack(GUIChameleon.BUTTON_APPLY.material(), 1);
         ItemMeta now = apply.getItemMeta();
         now.setDisplayName(plugin.getChameleonGuis().getString("APPLY"));
         now.setLore(plugin.getChameleonGuis().getStringList("APPLY_LORE"));
-        now.setCustomModelData(GUIChameleon.BUTTON_APPLY.getCustomModelData());
+        now.setCustomModelData(GUIChameleon.BUTTON_APPLY.customModelData());
         apply.setItemMeta(now);
         // Disabled
-        ItemStack dis = new ItemStack(Material.BOWL, 1);
+        ItemStack dis = new ItemStack(GUIChameleon.BUTTON_CHAMELEON.material(), 1);
         ItemMeta abled = dis.getItemMeta();
         abled.setDisplayName("Chameleon Circuit");
         abled.setLore(plugin.getChameleonGuis().getStringList("DISABLED_LORE"));
-        abled.setCustomModelData(GUIChameleon.BUTTON_CHAMELEON.getCustomModelData());
+        abled.setCustomModelData(GUIChameleon.BUTTON_CHAMELEON.customModelData());
         dis.setItemMeta(abled);
         // Adaptive
-        ItemStack adap = new ItemStack(Material.BOWL, 1);
+        ItemStack adap = new ItemStack(GUIChameleon.BUTTON_ADAPT.material(), 1);
         ItemMeta tive = adap.getItemMeta();
         tive.setDisplayName(plugin.getChameleonGuis().getString("ADAPT"));
         tive.setLore(plugin.getChameleonGuis().getStringList("ADAPT_LORE"));
-        tive.setCustomModelData(GUIChameleon.BUTTON_ADAPT.getCustomModelData());
+        tive.setCustomModelData(GUIChameleon.BUTTON_ADAPT.customModelData());
         adap.setItemMeta(tive);
         // Invisible
         ItemStack invis;
         if (plugin.getConfig().getBoolean("allow.invisibility")) {
-            invis = new ItemStack(Material.BOWL, 1);
+            invis = new ItemStack(GUIChameleon.BUTTON_INVISIBLE.material(), 1);
             ItemMeta ible = invis.getItemMeta();
             ible.setDisplayName(plugin.getChameleonGuis().getString("INVISIBLE"));
             List<String> ilore = plugin.getChameleonGuis().getStringList("INVISIBLE_LORE");
@@ -100,33 +101,33 @@ public class TARDISChameleonInventory {
                 ilore.add(plugin.getLanguage().getString("INVISIBILITY_LORE_2"));
             }
             ible.setLore(ilore);
-            ible.setCustomModelData(GUIChameleon.BUTTON_INVISIBLE.getCustomModelData());
+            ible.setCustomModelData(GUIChameleon.BUTTON_INVISIBLE.customModelData());
             invis.setItemMeta(ible);
         } else {
             invis = null;
         }
         // Shorted out
-        ItemStack shor = new ItemStack(Material.BOWL, 1);
+        ItemStack shor = new ItemStack(GUIChameleon.BUTTON_SHORT.material(), 1);
         ItemMeta tout = shor.getItemMeta();
         tout.setDisplayName(plugin.getChameleonGuis().getString("SHORT"));
         tout.setLore(plugin.getChameleonGuis().getStringList("SHORT_LORE"));
-        tout.setCustomModelData(GUIChameleon.BUTTON_SHORT.getCustomModelData());
+        tout.setCustomModelData(GUIChameleon.BUTTON_SHORT.customModelData());
         shor.setItemMeta(tout);
         // construction GUI
-        ItemStack cons = new ItemStack(Material.BOWL, 1);
+        ItemStack cons = new ItemStack(GUIChameleon.BUTTON_CONSTRUCT.material(), 1);
         ItemMeta truct = cons.getItemMeta();
         truct.setDisplayName(plugin.getChameleonGuis().getString("CONSTRUCT"));
         truct.setLore(plugin.getChameleonGuis().getStringList("CONSTRUCT_LORE"));
-        truct.setCustomModelData(GUIChameleon.BUTTON_CONSTRUCT.getCustomModelData());
+        truct.setCustomModelData(GUIChameleon.BUTTON_CONSTRUCT.customModelData());
         cons.setItemMeta(truct);
         // lock current preset
         ItemStack lock = null;
         if (adapt.equals(Adaption.BIOME)) {
-            lock = new ItemStack(Material.BOWL, 1);
+            lock = new ItemStack(GUIChameleon.BUTTON_LOCK.material(), 1);
             ItemMeta circuit = lock.getItemMeta();
             circuit.setDisplayName(plugin.getChameleonGuis().getString("LOCK"));
             circuit.setLore(plugin.getChameleonGuis().getStringList("LOCK_LORE"));
-            circuit.setCustomModelData(GUIChameleon.BUTTON_LOCK.getCustomModelData());
+            circuit.setCustomModelData(GUIChameleon.BUTTON_LOCK.customModelData());
             lock.setItemMeta(circuit);
         }
         // Disabled radio button
@@ -171,10 +172,10 @@ public class TARDISChameleonInventory {
         lder.setDisplayName(conoff);
         bui.setItemMeta(lder);
         // Cancel / close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIChameleon.BUTTON_CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUIChameleon.BUTTON_CLOSE.getCustomModelData());
+        can.setCustomModelData(GUIChameleon.BUTTON_CLOSE.customModelData());
         close.setItemMeta(can);
 
         return new ItemStack[]{

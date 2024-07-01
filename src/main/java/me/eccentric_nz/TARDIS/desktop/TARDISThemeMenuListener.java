@@ -91,7 +91,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
                 TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(p.getUniqueId());
                 ItemStack[] consoles;
                 // switch page
-                if (choice.getItemMeta().getCustomModelData() == GUIChameleonPresets.GO_TO_PAGE_2.getCustomModelData()) {
+                if (choice.getItemMeta().getCustomModelData() == GUIChameleonPresets.GO_TO_PAGE_2.customModelData()) {
                     // page 2
                     consoles = new TARDISCustomThemeInventory(plugin, p, tud.getPrevious().getPermission(), tud.getLevel()).getMenu();
                 } else {

@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.shell;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetChameleon;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
 
 /**
  * A TARDIS with a functioning chameleon circuit can appear as almost anything desired. The owner can program the
@@ -72,31 +72,31 @@ public class TARDISShellPresetInventory {
             }
         }
         // load current preset
-        ItemStack current = new ItemStack(Material.BOWL, 1);
+        ItemStack current = new ItemStack(GUIChameleonPresets.CURRENT.material(), 1);
         ItemMeta pre = current.getItemMeta();
         pre.setDisplayName("Current Chameleon preset");
-        pre.setCustomModelData(GUIChameleonPresets.CURRENT.getCustomModelData());
+        pre.setCustomModelData(GUIChameleonPresets.CURRENT.customModelData());
         current.setItemMeta(pre);
-        stacks[50] = current;
+        stacks[GUIChameleonPresets.CURRENT.slot()] = current;
         // saved construct
         HashMap<String, Object> wherec = new HashMap<>();
         wherec.put("tardis_id", id);
         ResultSetChameleon rsc = new ResultSetChameleon(plugin, wherec);
         if (rsc.resultSet()) {
-            ItemStack saved = new ItemStack(Material.BOWL, 1);
+            ItemStack saved = new ItemStack(GUIChameleonPresets.SAVED.material(), 1);
             ItemMeta con = saved.getItemMeta();
             con.setDisplayName("Saved Construct");
-            con.setCustomModelData(GUIChameleonPresets.SAVED.getCustomModelData());
+            con.setCustomModelData(GUIChameleonPresets.SAVED.customModelData());
             saved.setItemMeta(con);
-            stacks[51] = saved;
+            stacks[GUIChameleonPresets.SAVED.slot()] = saved;
         }
         // Cancel / close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIChameleonPresets.CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUIChameleonPresets.CLOSE.getCustomModelData());
+        can.setCustomModelData(GUIChameleonPresets.CLOSE.customModelData());
         close.setItemMeta(can);
-        stacks[53] = close;
+        stacks[GUIChameleonPresets.CLOSE.slot()] = close;
 
         return stacks;
     }

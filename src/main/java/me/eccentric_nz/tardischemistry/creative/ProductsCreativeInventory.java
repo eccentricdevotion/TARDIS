@@ -22,7 +22,6 @@ import me.eccentric_nz.tardischemistry.lab.Lab;
 import me.eccentric_nz.tardischemistry.lab.LabBuilder;
 import me.eccentric_nz.tardischemistry.product.Product;
 import me.eccentric_nz.tardischemistry.product.ProductBuilder;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -64,24 +63,24 @@ public class ProductsCreativeInventory {
             }
         }
         // elements
-        ItemStack elements = new ItemStack(GUIChemistry.ELEMENTS.getMaterial(), 1);
+        ItemStack elements = new ItemStack(GUIChemistry.ELEMENTS.material(), 1);
         ItemMeta eim = elements.getItemMeta();
         eim.setDisplayName("Elements");
-        eim.setCustomModelData(GUIChemistry.ELEMENTS.getCustomModelData());
+        eim.setCustomModelData(GUIChemistry.ELEMENTS.customModelData());
         elements.setItemMeta(eim);
-        stack[35] = elements;
+        stack[GUIChemistry.ELEMENTS.slot()] = elements;
         // compounds
-        ItemStack compounds = new ItemStack(GUIChemistry.COMPOUNDS.getMaterial(), 1);
+        ItemStack compounds = new ItemStack(GUIChemistry.COMPOUNDS.material(), 1);
         ItemMeta cim = compounds.getItemMeta();
         cim.setDisplayName("Compounds");
-        cim.setCustomModelData(GUIChemistry.COMPOUNDS.getCustomModelData());
+        cim.setCustomModelData(GUIChemistry.COMPOUNDS.customModelData());
         compounds.setItemMeta(cim);
-        stack[44] = compounds;
+        stack[GUIChemistry.COMPOUNDS.slot()] = compounds;
         // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIChemistry.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GUIChemistry.CLOSE.customModelData());
         close.setItemMeta(close_im);
         stack[53] = close;
         return stack;

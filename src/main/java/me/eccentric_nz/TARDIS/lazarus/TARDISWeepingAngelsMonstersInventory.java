@@ -45,14 +45,14 @@ public class TARDISWeepingAngelsMonstersInventory {
         ItemStack page1 = new ItemStack(Material.ARROW, 1);
         ItemMeta one = page1.getItemMeta();
         one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
-        one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.getCustomModelData());
+        one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.customModelData());
         page1.setItemMeta(one);
         stacks[43] = page1;
         // page two
-        ItemStack page2 = new ItemStack(Material.ARROW, 1);
+        ItemStack page2 = new ItemStack(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
         ItemMeta two = page2.getItemMeta();
         two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
-        two.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.getCustomModelData());
+        two.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.customModelData());
         page2.setItemMeta(two);
         stacks[44] = page2;
         // master

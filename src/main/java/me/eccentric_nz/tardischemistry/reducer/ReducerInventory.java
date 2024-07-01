@@ -18,7 +18,6 @@ package me.eccentric_nz.tardischemistry.reducer;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -37,27 +36,27 @@ public class ReducerInventory {
     private ItemStack[] getItemStack() {
         ItemStack[] stack = new ItemStack[27];
         // info
-        ItemStack info = new ItemStack(Material.BOWL, 1);
+        ItemStack info = new ItemStack(GUIChemistry.INFO.material(), 1);
         ItemMeta info_im = info.getItemMeta();
         info_im.setDisplayName("Info");
         info_im.setLore(Arrays.asList("Reduce a substance to its", "component elements.", "Place an item in the first slot,", "then click the reduce button."));
-        info_im.setCustomModelData(GUIChemistry.INFO.getCustomModelData());
+        info_im.setCustomModelData(GUIChemistry.INFO.customModelData());
         info.setItemMeta(info_im);
-        stack[8] = info;
+        stack[GUIChemistry.INFO.slot()] = info;
         // check formula
-        ItemStack check = new ItemStack(Material.BOWL, 1);
+        ItemStack check = new ItemStack(GUIChemistry.REDUCE.material(), 1);
         ItemMeta check_im = check.getItemMeta();
         check_im.setDisplayName("Reduce");
-        check_im.setCustomModelData(GUIChemistry.REDUCE.getCustomModelData());
+        check_im.setCustomModelData(GUIChemistry.REDUCE.customModelData());
         check.setItemMeta(check_im);
-        stack[17] = check;
+        stack[GUIChemistry.REDUCE.slot()] = check;
         // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIChemistry.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChemistry.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GUIChemistry.CLOSE.customModelData());
         close.setItemMeta(close_im);
-        stack[26] = close;
+        stack[GUIChemistry.CLOSE.slot()] = close;
         return stack;
     }
 

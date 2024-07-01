@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
 public enum GUIConfiguration {
@@ -63,10 +62,5 @@ public enum GUIConfiguration {
 
     public Material getMaterial() {
         return material;
-    }
-
-    public String getName() {
-        String s = toString();
-        return TARDISStringUtils.sentenceCase(s);
     }
 }

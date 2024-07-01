@@ -119,26 +119,26 @@ public class TARDISPoliceBoxInventory {
             }
         }
         // page one
-        ItemStack page = new ItemStack(Material.ARROW, 1);
+        ItemStack page = new ItemStack(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.material(), 1);
         ItemMeta one = page.getItemMeta();
         one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
-        one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.getCustomModelData());
+        one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.customModelData());
         page.setItemMeta(one);
-        boxes[51] = page;
+        boxes[GUIChameleonPoliceBoxes.GO_TO_PAGE_1.slot()] = page;
         // back
-        ItemStack back = new ItemStack(Material.BOWL, 1);
+        ItemStack back = new ItemStack(GUIChameleonPoliceBoxes.BACK.material(), 1);
         ItemMeta but = back.getItemMeta();
         but.setDisplayName("Back");
-        but.setCustomModelData(GUIChameleonPoliceBoxes.BACK.getCustomModelData());
+        but.setCustomModelData(GUIChameleonPoliceBoxes.BACK.customModelData());
         back.setItemMeta(but);
-        boxes[52] = back;
+        boxes[GUIChameleonPoliceBoxes.BACK.slot()] = back;
         // Cancel / close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIChameleonPoliceBoxes.CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUIChameleonPoliceBoxes.CLOSE.getCustomModelData());
+        can.setCustomModelData(GUIChameleonPoliceBoxes.CLOSE.customModelData());
         close.setItemMeta(can);
-        boxes[53] = close;
+        boxes[GUIChameleonPoliceBoxes.CLOSE.slot()] = close;
         return boxes;
     }
 

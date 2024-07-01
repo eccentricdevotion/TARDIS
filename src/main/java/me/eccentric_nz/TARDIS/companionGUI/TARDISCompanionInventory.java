@@ -61,7 +61,7 @@ public class TARDISCompanionInventory {
             }
         }
         // add buttons
-        ItemStack info = new ItemStack(Material.BOOK, 1);
+        ItemStack info = new ItemStack(GUICompanion.INFO.material(), 1);
         ItemMeta ii = info.getItemMeta();
         ii.setDisplayName("Info");
         ArrayList<String> info_lore = new ArrayList<>();
@@ -73,28 +73,28 @@ public class TARDISCompanionInventory {
         info_lore.add("click the Add button");
         info_lore.add("(nether star).");
         ii.setLore(info_lore);
-        ii.setCustomModelData(GUICompanion.INFO.getCustomModelData());
+        ii.setCustomModelData(GUICompanion.INFO.customModelData());
         info.setItemMeta(ii);
-        heads[45] = info;
-        ItemStack add = new ItemStack(Material.NETHER_STAR, 1);
+        heads[GUICompanion.INFO.slot()] = info;
+        ItemStack add = new ItemStack(GUICompanion.ADD_COMPANION.material(), 1);
         ItemMeta aa = add.getItemMeta();
         aa.setDisplayName("Add");
-        aa.setCustomModelData(GUICompanion.ADD_COMPANION.getCustomModelData());
+        aa.setCustomModelData(GUICompanion.ADD_COMPANION.customModelData());
         add.setItemMeta(aa);
-        heads[48] = add;
-        ItemStack del = new ItemStack(Material.BUCKET, 1);
+        heads[GUICompanion.ADD_COMPANION.slot()] = add;
+        ItemStack del = new ItemStack(GUICompanion.DELETE_COMPANION.material(), 1);
         ItemMeta dd = del.getItemMeta();
         dd.setDisplayName("Remove");
-        dd.setCustomModelData(GUICompanion.DELETE_COMPANION.getCustomModelData());
+        dd.setCustomModelData(GUICompanion.DELETE_COMPANION.customModelData());
         del.setItemMeta(dd);
-        heads[51] = del;
+        heads[GUICompanion.DELETE_COMPANION.slot()] = del;
         // Cancel / close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUICompanion.BUTTON_CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUICompanion.BUTTON_CLOSE.getCustomModelData());
+        can.setCustomModelData(GUICompanion.BUTTON_CLOSE.customModelData());
         close.setItemMeta(can);
-        heads[53] = close;
+        heads[GUICompanion.BUTTON_CLOSE.slot()] = close;
 
         return heads;
     }

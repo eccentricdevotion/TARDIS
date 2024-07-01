@@ -16,43 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
-public enum GUIChameleonConstructor {
+public record GUIChameleonConstructor() {
 
     // Chameleon Constructor
-    BACK_TO_CHAMELEON_CIRCUIT(8, 0, Material.ARROW),
-    HELP(55, 2, Material.BOWL),
-    INFO(57, 3, Material.BOWL),
-    ABORT(2, 5, Material.BOWL),
-    USE_LAST_SAVED_CONSTRUCT(82, 7, Material.BOWL),
-    SAVE_CONSTRUCT(74, 8, Material.BOWL);
+    public static GUIData BACK_TO_CHAMELEON_CIRCUIT = new GUIData(8, 0, Material.ARROW);
+    public static GUIData HELP = new GUIData(55, 2, Material.BOWL);
+    public static GUIData INFO = new GUIData(57, 3, Material.BOWL);
+    public static GUIData ABORT = new GUIData(2, 5, Material.BOWL);
+    public static GUIData USE_LAST_SAVED_CONSTRUCT = new GUIData(82, 7, Material.BOWL);
+    public static GUIData SAVE_CONSTRUCT = new GUIData(74, 8, Material.BOWL);
 
-    private final int customModelData;
-    private final int slot;
-    private final Material material;
-
-    GUIChameleonConstructor(int customModelData, int slot, Material material) {
-        this.customModelData = customModelData;
-        this.slot = slot;
-        this.material = material;
-    }
-
-    public int getCustomModelData() {
-        return customModelData;
-    }
-
-    public int getSlot() {
-        return slot;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public String getName() {
-        String s = toString();
-        return TARDISStringUtils.sentenceCase(s);
-    }
 }

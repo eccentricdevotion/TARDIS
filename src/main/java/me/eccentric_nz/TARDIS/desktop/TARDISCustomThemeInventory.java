@@ -18,10 +18,8 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIUpgrade;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -70,19 +68,19 @@ public class TARDISCustomThemeInventory extends TARDISThemeInventory {
             }
         }
         // built-in consoles page
-        ItemStack custom = new ItemStack(Material.ARROW, 1);
+        ItemStack custom = new ItemStack(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.material(), 1);
         ItemMeta custom_im = custom.getItemMeta();
         custom_im.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
-        custom_im.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.getCustomModelData());
+        custom_im.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.customModelData());
         custom.setItemMeta(custom_im);
-        stack[51] = custom;
+        stack[GUIChameleonPoliceBoxes.GO_TO_PAGE_1.slot()] = custom;
         // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIChameleonPoliceBoxes.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIUpgrade.CLOSE.getCustomModelData());
+        close_im.setCustomModelData(GUIChameleonPoliceBoxes.CLOSE.customModelData());
         close.setItemMeta(close_im);
-        stack[53] = close;
+        stack[GUIChameleonPoliceBoxes.CLOSE.customModelData()] = close;
 
         return stack;
     }
