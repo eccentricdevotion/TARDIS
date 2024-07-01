@@ -38,7 +38,21 @@ import java.util.List;
  */
 public class TARDISDevTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("add_regions", "advancements", "chunks", "chunky", "dismount", "furnace", "list", "plurals", "stats", "systree", "tree", "snapshot", "displayitem", "frame", "brushable", "box", "nms", "circuit", "label", "recipe", "interaction", "effect");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of(
+            "add_regions", "advancements",
+            "brushable", "box",
+            "chunks", "chunky", "circuit",
+            "dismount", "displayitem",
+            "effect",
+            "frame", "furnace",
+            "interaction",
+            "label", "list",
+            "nms",
+            "plurals",
+            "recipe",
+            "stats", "systree", "snapshot",
+            "tree"
+    );
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints", "commands", "block_colours", "change", "consoles");
     private final ImmutableList<String> SNAPSHOT_SUBS = ImmutableList.of("in", "out", "c");
     private final ImmutableList<String> STATE_SUBS = ImmutableList.of("closed", "open", "stained", "glass", "fly");

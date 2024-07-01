@@ -83,6 +83,9 @@ public enum TARDISInfoMenu {
     REMOTE_KEY("TIS|Items|TARDIS Remote Key", "ITEMS", "m"),
     REMOTE_KEY_INFO("TIS|Items|TARDIS Remote Key|Info", "REMOTE_KEY", "I"),
     REMOTE_KEY_RECIPE("TIS|Items|TARDIS Remote Key|Recipe", "REMOTE_KEY", "R"),
+    ARTRON_CAPACITOR("TIS|Items|Artron Capacitor", "ITEMS", "C"),
+    ARTRON_CAPACITOR_INFO("TIS|Items|Artron Capacitor|Info", "ARTRON_CAPACITOR", "I"),
+    ARTRON_CAPACITOR_RECIPE("TIS|Items|Artron Capacitor|Recipe", "ARTRON_CAPACITOR", "R"),
     ARTRON_STORAGE_CELL("TIS|Items|Artron Storage Cell", "ITEMS", "A"),
     ARTRON_STORAGE_CELL_INFO("TIS|Items|Artron Storage Cell|Info", "ARTRON_STORAGE_CELL", "I"),
     ARTRON_STORAGE_CELL_RECIPE("TIS|Items|Artron Storage Cell|Recipe", "ARTRON_STORAGE_CELL", "R"),
@@ -239,7 +242,7 @@ public enum TARDISInfoMenu {
     CUSTOM("TIS|TARDIS Types|Custom", "TYPES", "C"),
     ROOMS("TIS|Rooms", "TIS", "R"),
     ROOMS_2("TIS|Rooms 2", "TIS", "2"),
-    ALLAY("TIS|Rooms|Allay", "ROOMS", "y"),
+    ALLAY("TIS|Rooms|Allay^", "ROOMS", "^"),
     ANTIGRAVITY("TIS|Rooms|Anti-gravity", "ROOMS", "A"),
     APIARY("TIS|Rooms|Apiary", "ROOMS", "ia"),
     AQUARIUM("TIS|Rooms|Aquarium", "ROOMS", "q"),
@@ -250,6 +253,7 @@ public enum TARDISInfoMenu {
     BIRDCAGE("TIS|Rooms|Bird Cage", "ROOMS", "c"),
     CHEMISTRY("TIS|Rooms|Chemistry", "ROOMS", "he"),
     EMPTY("TIS|Rooms|Empty", "ROOMS", "y"),
+    EYE("TIS|Rooms|Eye*", "ROOMS", "*"),
     FARM("TIS|Rooms|Farm", "ROOMS", "F"),
     GARDEN("TIS|Rooms|Garden", "ROOMS", "de"),
     GEODE("TIS|Rooms|Geode", "ROOMS", "eo"),
@@ -587,7 +591,7 @@ public enum TARDISInfoMenu {
 
     public boolean isItem() {
         switch (this) {
-            case KEY, SONIC_SCREWDRIVER, LOCATOR, STATTENHEIM_REMOTE, BIOME_READER, REMOTE_KEY, ARTRON_STORAGE_CELL,
+            case KEY, SONIC_SCREWDRIVER, LOCATOR, STATTENHEIM_REMOTE, BIOME_READER, REMOTE_KEY, ARTRON_CAPACITOR, ARTRON_STORAGE_CELL,
                     ARTRON_FURNACE, PERCEPTION_FILTER, SONIC_GENERATOR, SONIC_BLASTER, VORTEX_MANIPULATOR, HANDLES -> {
                 return true;
             }
@@ -661,7 +665,7 @@ public enum TARDISInfoMenu {
 
     public boolean isRoom() {
         switch (this) {
-            case ALLAY, ANTIGRAVITY, APIARY, AQUARIUM, ARBORETUM, BAKER, BAMBOO, BEDROOM, BIRDCAGE, CHEMISTRY, EMPTY,
+            case ALLAY, ANTIGRAVITY, APIARY, AQUARIUM, ARBORETUM, BAKER, BAMBOO, BEDROOM, BIRDCAGE, CHEMISTRY, EMPTY, EYE,
                     FARM, GARDEN, GEODE, GRAVITY, GREENHOUSE, HARMONY, HUTCH, IGLOO, IISTUBIL, KITCHEN, LAZARUS, LAVA,
                     LIBRARY, MANGROVE, MAZE, MUSHROOM, NETHER, PASSAGE, PEN, POOL, RAIL, RENDERER, SHELL, SMELTER, STABLE,
                     STALL, SURGERY, TRENZALORE, VAULT, VILLAGE, WOOD, WORKSHOP, ZERO -> {

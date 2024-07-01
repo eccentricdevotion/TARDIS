@@ -313,6 +313,9 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 if (chat.equalsIgnoreCase("A")) {
                     processKey(p, TARDISInfoMenu.ARTRON_STORAGE_CELL);
                 }
+                if (chat.equalsIgnoreCase("C")) {
+                    processKey(p, TARDISInfoMenu.ARTRON_CAPACITOR);
+                }
                 if (chat.equalsIgnoreCase("B")) {
                     processKey(p, TARDISInfoMenu.BIOME_READER);
                 }
@@ -614,7 +617,7 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 }
             }
             case ROOMS -> {
-                if (chat.equalsIgnoreCase("y")) {
+                if (chat.equalsIgnoreCase("^")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.ALLAY);
                 }
                 if (chat.equalsIgnoreCase("ia")) {
@@ -664,6 +667,9 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 }
                 if (chat.equalsIgnoreCase("y")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.EMPTY);
+                }
+                if (chat.equalsIgnoreCase("*")) {
+                    new TISRoomInfo(plugin).show(p, TARDISInfoMenu.EYE);
                 }
                 if (chat.equalsIgnoreCase("F")) {
                     new TISRoomInfo(plugin).show(p, TARDISInfoMenu.FARM);
@@ -1135,6 +1141,15 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 }
                 if (chat.equalsIgnoreCase("R")) {
                     new TISRecipe(plugin).show(p, TARDISInfoMenu.EMERALD_ENVIRONMENT_CIRCUIT_RECIPE);
+                }
+                exit(p);
+            }
+            case ARTRON_CAPACITOR -> {
+                if (chat.equalsIgnoreCase("I")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.ARTRON_CAPACITOR_INFO);
+                }
+                if (chat.equalsIgnoreCase("R")) {
+                    new TISRecipe(plugin).show(p, TARDISInfoMenu.ARTRON_CAPACITOR_RECIPE);
                 }
                 exit(p);
             }

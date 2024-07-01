@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 public enum RecipeItem {
     // shaped recipes start here
     ACID_BATTERY(10000001, RecipeCategory.PLANETS),
+    ARTRON_CAPACITOR(10000003, RecipeCategory.ITEMS),
     ARTRON_STORAGE_CELL(10000001, RecipeCategory.ITEMS),
     AUTHORISED_CONTROL_DISK(10000001, RecipeCategory.STORAGE_DISKS),
     BIO_SCANNER_CIRCUIT(10001969, RecipeCategory.SONIC_CIRCUITS),
