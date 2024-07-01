@@ -37,6 +37,7 @@ import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemDisplaySetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemFrameSetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISSignSetter;
 import me.eccentric_nz.TARDIS.utility.*;
+import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeHelper;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -46,16 +47,18 @@ import org.bukkit.block.data.Directional;
 import org.bukkit.block.data.type.Farmland;
 import org.bukkit.block.data.type.SeaPickle;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 
 /**
- * The TARDIS had a swimming pool. After the TARDIS' crash following the
- * Doctor's tenth regeneration, the pool's water - or perhaps the pool itself -
- * fell into the library. After the TARDIS had fixed itself, the swimming pool
- * was restored but the Doctor did not know where it was.
+ * The TARDIS had a swimming pool. After the TARDIS' crash following the Doctor's tenth regeneration, the pool's water -
+ * or perhaps the pool itself - fell into the library. After the TARDIS had fixed itself, the swimming pool was restored
+ * but the Doctor did not know where it was.
  *
  * @author eccentric_nz
  */
@@ -238,6 +241,9 @@ public class TARDISRoomRunnable implements Runnable {
                 }
                 if (player != null) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_START", grammar);
+                }
+                if (room.equals("EYE")) {
+                    new BiomeHelper().setCustomBiome("tardis:eye_of_harmony", l.getChunk(), starty);
                 }
             }
             if (level == h && row == w && col == (c - 1)) {
@@ -491,7 +497,7 @@ public class TARDISRoomRunnable implements Runnable {
                 if (player != null) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_POWER");
                 }
-                if(plugin.getConfig().getBoolean("allow.dynamic_lamps")) {
+                if (plugin.getConfig().getBoolean("allow.dynamic_lamps")) {
                     // get lamp preference
                     ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
                     if (rsp.resultSet() && rsp.isDynamicLightsOn()) {
@@ -618,7 +624,29 @@ public class TARDISRoomRunnable implements Runnable {
                     setl.put("location", pos.toString());
                     setl.put("chest_type", "LIBRARY");
                     plugin.getQueryFactory().doInsert("vaults", setl);
-                    library = pos.clone().add(-8,-4,-8);
+                    library = pos.clone().add(-8, -4, -8);
+                }
+                // eye of harmony item display
+                if (type.equals(Material.SHROOMLIGHT) && room.equals("EYE")) {
+                    double sx = startx + 0.5d;
+                    double sy = starty + 0.5d;
+                    double sz = startz + 0.5d;
+                    Location item = new Location(world, sx, sy, sz);
+                    ItemDisplay display = (ItemDisplay) world.spawnEntity(item, EntityType.ITEM_DISPLAY);
+                    ItemStack is = new ItemStack(Material.MAGMA_BLOCK);
+                    ItemMeta im = is.getItemMeta();
+                    im.setCustomModelData(1000);
+                    is.setItemMeta(im);
+                    display.setItemStack(is);
+                    display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
+                    // save location to controls
+                    plugin.getQueryFactory().insertControl(tardis_id, 53, item.toString(), 0);
+                }
+                // eye of harmony storage
+                if (type.equals(Material.BARRIER) && room.equals("EYE")) {
+                    String dbStr = new Location(world, startx, starty, startz).toString();
+                    // save location to controls
+                    plugin.getQueryFactory().insertControl(tardis_id, 54, dbStr, 0);
                 }
                 // set drop chest
                 if (type.equals(Material.TRAPPED_CHEST) && room.equals("VAULT") && player != null && TARDISPermission.hasPermission(player, "tardis.vault")) {
@@ -670,11 +698,7 @@ public class TARDISRoomRunnable implements Runnable {
                     plugin.getQueryFactory().insertControl(tardis_id, 19, plate, 0);
                 }
                 // set stable
-                if (type.equals(Material.SOUL_SAND) &&
-                        (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("LAVA") || room.equals("ALLAY") ||
-                                room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO") ||
-                                room.equals("IISTUBIL") || room.equals("MANGROVE") || room.equals("PEN") || room.equals("STALL") ||
-                                room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE") || room.equals("GARDEN"))) {
+                if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER") || room.equals("LAVA") || room.equals("ALLAY") || room.equals("ZERO") || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("IISTUBIL") || room.equals("MANGROVE") || room.equals("PEN") || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("MAZE") || room.equals("GARDEN"))) {
                     HashMap<String, Object> sets = new HashMap<>();
                     sets.put(room.toLowerCase(Locale.ENGLISH), world.getName() + ":" + startx + ":" + starty + ":" + startz);
                     HashMap<String, Object> wheres = new HashMap<>();

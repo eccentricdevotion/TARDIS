@@ -32,6 +32,7 @@ public enum Room {
     BIRDCAGE,
     CHEMISTRY,
     EMPTY,
+    EYE,
     FARM,
     GARDEN,
     GEODE,

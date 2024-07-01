@@ -437,6 +437,7 @@ permissions:
       tardis.room.birdcage: true
       tardis.room.chemistry: true
       tardis.room.empty: true
+      tardis.room.eye: true
       tardis.room.farm: true
       tardis.room.gravity: true
       tardis.room.geode: true

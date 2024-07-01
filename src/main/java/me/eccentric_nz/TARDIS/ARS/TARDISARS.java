@@ -36,6 +36,7 @@ public enum TARDISARS implements ARS {
     BIRDCAGE("YELLOW_GLAZED_TERRACOTTA", "Bird Cage", 1),
     CHEMISTRY("BLAST_FURNACE", "Chemistry Lab", 1),
     EMPTY("GLASS", "Empty", 1),
+    EYE("SHROOMLIGHT", "Eye of Harmony", 1),
     FARM("DIRT", "Mob Farm", 1),
     GARDEN("CHERRY_LEAVES", "Flower Garden", 1),
     GEODE("AMETHYST_BLOCK", "Geode", 1),

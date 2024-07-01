@@ -126,6 +126,12 @@ rooms:
     offset: -4
     seed: GLASS
     user: false
+  EYE:
+    enabled: true
+    cost: 350
+    offset: -4
+    seed: SHROOMLIGHT
+    user: false
   GRAVITY:
     enabled: true
     cost: 625

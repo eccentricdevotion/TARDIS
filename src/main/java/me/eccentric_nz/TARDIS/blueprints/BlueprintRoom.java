@@ -38,6 +38,7 @@ public enum BlueprintRoom {
     BIRDCAGE("tardis.room.birdcage", BlueprintFeature.FARM),
     CHEMISTRY("tardis.room.chemistry"),
     EMPTY("tardis.room.empty"),
+    EYE("tardis.room.eye"),
     FARM("tardis.room.farm", BlueprintFeature.FARM),
     GEODE("tardis.room.geode"),
     GRAVITY("tardis.room.gravity"),
