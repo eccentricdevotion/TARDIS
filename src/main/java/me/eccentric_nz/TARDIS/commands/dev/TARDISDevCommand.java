@@ -52,7 +52,7 @@ public class TARDISDevCommand implements CommandExecutor {
 
     private final Set<String> firstsStr = Sets.newHashSet(
             "add_regions", "advancements",
-            "box", "brushable",
+            "biome", "box", "brushable",
             "chunks", "chunky", "circuit",
             "dismount", "displayitem",
             "effect",
@@ -89,6 +89,9 @@ public class TARDISDevCommand implements CommandExecutor {
                     switch (first) {
                         case "add_regions" -> {
                             return new TARDISAddRegionsCommand(plugin).doCheck(sender);
+                        }
+                        case "biome" -> {
+                            return new TARDISBiomeCommand(plugin).reset(sender);
                         }
                         case "furnace" -> {
                             return new TARDISFurnaceCommand(plugin).list(sender);

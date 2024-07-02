@@ -40,7 +40,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
 
     private final ImmutableList<String> ROOT_SUBS = ImmutableList.of(
             "add_regions", "advancements",
-            "brushable", "box",
+            "biome", "box", "brushable",
             "chunks", "chunky", "circuit",
             "dismount", "displayitem",
             "effect",
@@ -51,7 +51,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
             "plurals",
             "recipe",
             "stats", "systree", "snapshot",
-            "tree"
+            "tis", "tree"
     );
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints", "commands", "block_colours", "change", "consoles");
     private final ImmutableList<String> SNAPSHOT_SUBS = ImmutableList.of("in", "out", "c");
