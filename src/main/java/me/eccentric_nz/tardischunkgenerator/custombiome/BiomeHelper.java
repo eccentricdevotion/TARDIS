@@ -33,7 +33,7 @@ public class BiomeHelper {
      */
     public void setCustomBiome(String newBiomeName, Chunk chunk, int startY) {
         WritableRegistry<Biome> registryWritable = (WritableRegistry<Biome>) dedicatedServer.registryAccess().registry(Registries.BIOME).get();
-        ResourceKey<Biome> key = ResourceKey.create(Registries.BIOME, ResourceLocation.withDefaultNamespace(newBiomeName.toLowerCase()));
+        ResourceKey<Biome> key = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("tardis", newBiomeName.toLowerCase()));
         Biome base = registryWritable.get(key);
         if (base == null) {
             if (newBiomeName.contains(":")) {

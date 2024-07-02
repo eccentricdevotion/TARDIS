@@ -244,7 +244,7 @@ public class TARDISRoomRunnable implements Runnable {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_START", grammar);
                 }
                 if (room.equals("EYE")) {
-                    new BiomeHelper().setCustomBiome("tardis:eye_of_harmony", l.getChunk(), starty);
+                    new BiomeHelper().setCustomBiome("eye_of_harmony", l.getChunk(), starty);
                 }
             }
             if (level == h && row == w && col == (c - 1)) {

@@ -1809,6 +1809,7 @@ public class TARDIS extends JavaPlugin {
         tardisHelper.enable();
         // TODO put into own class with other eye methods
         tardisHelper.addCustomBiome("eye");
+        debug("Adding custom biome for Eye of Harmony room...");
     }
 
     private void loadPluginRespect() {
