@@ -18,7 +18,7 @@
    - restart particle runnables after server restart
    - reset biome when jettisoning the room
 10. Add new 1.21 block colours to `MaterialColour`
-11. Fix Rustic console size in ARS
+11. Fix Rustic console size in ARS + add seed block texture
 12. ?
 
 ## Next version `5.8.0`

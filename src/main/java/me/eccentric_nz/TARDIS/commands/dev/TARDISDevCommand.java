@@ -91,7 +91,7 @@ public class TARDISDevCommand implements CommandExecutor {
                             return new TARDISAddRegionsCommand(plugin).doCheck(sender);
                         }
                         case "biome" -> {
-                            return new TARDISBiomeCommand(plugin).reset(sender);
+                            return new TARDISBiomeCommand().reset(sender);
                         }
                         case "furnace" -> {
                             return new TARDISFurnaceCommand(plugin).list(sender);

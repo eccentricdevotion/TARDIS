@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import org.bukkit.Chunk;
@@ -13,15 +12,9 @@ import java.util.List;
 
 public class TARDISBiomeCommand {
 
-    private final TARDIS plugin;
-
-    public TARDISBiomeCommand(TARDIS plugin) {
-        this.plugin = plugin;
-    }
-
     public boolean reset(CommandSender sender) {
         if (sender instanceof Player player) {
-            Chunk chunk = player.getChunk();
+            Chunk chunk = player.getLocation().getChunk();
             int cx = chunk.getX() * 16;
             int cz = chunk.getZ() * 16;
             for (int x = 0; x <= 15; x++) {
