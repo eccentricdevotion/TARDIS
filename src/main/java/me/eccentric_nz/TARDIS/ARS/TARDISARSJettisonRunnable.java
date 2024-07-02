@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.rooms.RoomCleaner;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
@@ -78,6 +79,10 @@ class TARDISARSJettisonRunnable implements Runnable {
                         } else {
                             plugin.getGeneralKeeper().getGravityDownList().remove(l);
                         }
+                    }
+                    if (r.equals("EYE")) {
+                        // reset biome
+                        world.setBiome(xx, yy, zz, Biome.THE_VOID);
                     }
                     BlockState state = b.getState();
                     if (state instanceof BlockState) {

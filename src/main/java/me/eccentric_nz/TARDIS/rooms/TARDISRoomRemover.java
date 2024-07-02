@@ -17,17 +17,20 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import com.google.gson.JsonObject;
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.ClearEyeControls;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+
+import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * When the Eleventh Doctor was trying to get out of his universe, he said he
@@ -114,6 +117,10 @@ class TARDISRoomRemover {
                             plugin.getQueryFactory().doDelete("gravity_well", where);
                         }
                     }
+                    if (r.equals("EYE")) {
+                        // reset biome
+                        w.setBiome(x, y, z, Biome.THE_VOID);
+                    }
                 }
             }
         }
@@ -124,6 +131,10 @@ class TARDISRoomRemover {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("farming", set, where);
+        }
+        // remove eye controls, set capacitors to 1
+        if (r.equals("EYE")) {
+            new ClearEyeControls(plugin).removeRecords(id);
         }
         return true;
     }

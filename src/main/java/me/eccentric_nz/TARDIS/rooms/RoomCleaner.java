@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.ClearEyeControls;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -9,11 +10,11 @@ import java.util.Locale;
 
 public class RoomCleaner {
 
+    private final TARDIS plugin;
+
     public RoomCleaner(TARDIS plugin) {
         this.plugin = plugin;
     }
-
-    private final TARDIS plugin;
 
     public void removeRecords(String room, int id, World world, Player player) {
         // if it is a secondary console room remove the controls
@@ -68,6 +69,10 @@ public class RoomCleaner {
             HashMap<String, Object> setf = new HashMap<>();
             setf.put(room.toLowerCase(Locale.ENGLISH), "");
             plugin.getQueryFactory().doUpdate("farming", setf, wheref);
+        }
+        // remove eye controls, set capacitors to 1
+        if (room.equals("EYE")) {
+            new ClearEyeControls(plugin).removeRecords(id);
         }
     }
 }
