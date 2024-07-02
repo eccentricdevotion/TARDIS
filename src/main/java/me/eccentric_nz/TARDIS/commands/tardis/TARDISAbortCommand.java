@@ -31,7 +31,7 @@ class TARDISAbortCommand {
         this.plugin = plugin;
     }
 
-    boolean doAbort(Player player, String[] args) {
+    boolean doAbort(Player player, String[] args, int id) {
         if (args.length < 2) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_ABORT");
             return false;
@@ -41,6 +41,7 @@ class TARDISAbortCommand {
             plugin.getServer().getScheduler().cancelTask(task);
             plugin.getTrackerKeeper().getRoomTasks().remove(task);
             plugin.getBuildKeeper().getRoomProgress().remove(player.getUniqueId());
+            plugin.getTrackerKeeper().getIsGrowingRooms().remove(id);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TASK_ABORT");
             return true;
         } catch (NumberFormatException nfe) {

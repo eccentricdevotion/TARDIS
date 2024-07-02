@@ -265,7 +265,7 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISUpdateCommand(plugin).startUpdate(player, args);
                 }
                 case abort -> {
-                    return new TARDISAbortCommand(plugin).doAbort(player, args);
+                    return new TARDISAbortCommand(plugin).doAbort(player, args, rs.getTardisId());
                 }
                 case exterminate -> { // delete the TARDIS
                     boolean messagePlayer = args.length != 2 || !args[1].equals("6z@3=V!Q7*/O_OB^");

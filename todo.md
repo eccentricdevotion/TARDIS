@@ -18,7 +18,7 @@
    - restart particle runnables after server restart
    - reset biome when jettisoning the room
 10. Add new 1.21 block colours to `MaterialColour`
-11. When aborting room growing, also remove the tracker - `plugin.getTrackerKeeper().getIsGrowingRooms().contains(id)`
+11. Fix Rustic console size in ARS
 12. ?
 
 ## Next version `5.8.0`
