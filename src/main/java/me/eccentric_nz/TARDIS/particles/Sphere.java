@@ -49,21 +49,22 @@ public class Sphere extends TARDISParticleRunnable {
         is.setItemMeta(im);
         display.setItemStack(is);
         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
+        // TODO remove the shroomlight?
     }
 
     @Override
     public void run() {
         // check for player in chunk
         if (playerInChunk(location)) {
-            t += 0.25;
+//            t += 0.25;
             for (Vector v : coords) {
                 location.add(v.getX(), v.getY(), v.getZ());
                 spawnParticle(Particle.ENTITY_EFFECT, location, 3, 0, TARDISConstants.RANDOM.nextBoolean() ? Color.ORANGE : Color.YELLOW);
                 location.subtract(v.getX(), v.getY(), v.getZ());
             }
-            if (t > 6) {
-                cancel();
-            }
+//            if (t > 6) {
+//                cancel();
+//            }
         }
     }
 

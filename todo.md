@@ -12,11 +12,9 @@
 8. Console lamp [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)
 9. Add new eye of harmony room [#781](https://github.com/eccentricdevotion/TARDIS/issues/781)
    - with particle sphere
-     - add runnable to add sphere particles
+     - set sphere particle/item display sizes
    - check how many capacitors are installed (and damaged) when adding artron energy with the condenser or storage cells, if there are none don't charge at all (even via rechargers)
    - damage capacitors when there is a malfunction
-   - restart particle runnables after server restart
-   - reset biome when jettisoning the room
 10. Add new 1.21 block colours to `MaterialColour`
 11. Fix Rustic console size in ARS + add seed block texture
 12. ?

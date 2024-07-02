@@ -67,6 +67,7 @@ import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import me.eccentric_nz.TARDIS.recipes.*;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomPersister;
 import me.eccentric_nz.TARDIS.rooms.TARDISZeroRoomRunnable;
+import me.eccentric_nz.TARDIS.rooms.eye.EyeLoader;
 import me.eccentric_nz.TARDIS.rooms.eye.EyePopulator;
 import me.eccentric_nz.TARDIS.rotors.TARDISCustomRotorLoader;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
@@ -1807,9 +1808,7 @@ public class TARDIS extends JavaPlugin {
         debug("Loading Helper module!");
         tardisHelper = new TARDISHelper(this);
         tardisHelper.enable();
-        // TODO put into own class with other eye methods
-        tardisHelper.addCustomBiome("eye");
-        debug("Adding custom biome for Eye of Harmony room...");
+        new EyeLoader(this).enable();
     }
 
     private void loadPluginRespect() {
