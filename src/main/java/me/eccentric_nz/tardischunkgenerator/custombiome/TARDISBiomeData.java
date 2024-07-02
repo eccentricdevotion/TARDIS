@@ -1,5 +1,7 @@
 package me.eccentric_nz.tardischunkgenerator.custombiome;
 
+import net.minecraft.core.particles.ParticleTypes;
+
 public class TARDISBiomeData {
 
     public static final CustomBiomeData BADLANDS = new CustomBiomeData(
@@ -13,6 +15,8 @@ public class TARDISBiomeData {
             16763002,
             16309733,
             16714324,
+            null,
+            0.025f,
             false
     );
 
@@ -27,6 +31,8 @@ public class TARDISBiomeData {
             10648061,
             16750848, // foliage
             16776960, // grass
+            ParticleTypes.ASH,
+            0.00625f,
             false
     );
 
@@ -41,6 +47,8 @@ public class TARDISBiomeData {
             16744448, // sky colour
             16744448, // foliage
             16744448, // grass
+            ParticleTypes.CRIMSON_SPORE,
+            0.025f,
             false
     );
 }

@@ -2,6 +2,7 @@ package me.eccentric_nz.tardischunkgenerator.custombiome;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.core.WritableRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -25,6 +26,11 @@ public class BiomeHelper {
 
     DedicatedServer dedicatedServer = ((CraftServer) Bukkit.getServer()).getServer();
 
+    public static Registry<Biome> getRegistry() {
+        DedicatedServer dedicatedServer = ((CraftServer) Bukkit.getServer()).getServer();
+        return dedicatedServer.registryAccess().registry(Registries.BIOME).get();
+    }
+
     /**
      * Set a cube to a custom biome - the bounds or the cube are the chunk borders and 16 blocks from startY.
      *
@@ -32,7 +38,7 @@ public class BiomeHelper {
      * @param chunk        the chunk to set the biome for
      */
     public void setCustomBiome(String newBiomeName, Chunk chunk, int startY) {
-        WritableRegistry<Biome> registryWritable = (WritableRegistry<Biome>) dedicatedServer.registryAccess().registry(Registries.BIOME).get();
+        WritableRegistry<Biome> registryWritable = (WritableRegistry<Biome>) getRegistry();
         ResourceKey<Biome> key = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("tardis", newBiomeName.toLowerCase()));
         Biome base = registryWritable.get(key);
         if (base == null) {
@@ -46,7 +52,7 @@ public class BiomeHelper {
                 return;
             }
         }
-        Holder<Biome> biomeHolder = Holder.direct(base);
+        Holder<Biome> biomeHolder = registryWritable.wrapAsHolder(base);
         Level w = ((CraftWorld) chunk.getWorld()).getHandle();
         int cx = chunk.getX() * 16;
         int cz = chunk.getZ() * 16;
@@ -69,7 +75,7 @@ public class BiomeHelper {
      */
     public boolean setCustomBiome(String newBiomeName, Location location) {
         Biome base;
-        WritableRegistry<Biome> registrywritable = (WritableRegistry<Biome>) dedicatedServer.registryAccess().registry(Registries.BIOME).get();
+        WritableRegistry<Biome> registrywritable = (WritableRegistry<Biome>) getRegistry();
         ResourceKey<Biome> key = ResourceKey.create(Registries.BIOME, ResourceLocation.withDefaultNamespace(newBiomeName.toLowerCase()));
         base = registrywritable.get(key);
         if (base == null) {
@@ -83,7 +89,7 @@ public class BiomeHelper {
                 return false;
             }
         }
-        setCustomBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ(), ((CraftWorld) location.getWorld()).getHandle(), Holder.direct(base));
+        setCustomBiome(location.getBlockX(), location.getBlockY(), location.getBlockZ(), ((CraftWorld) location.getWorld()).getHandle(), registrywritable.wrapAsHolder(base));
         refreshChunk(location.getChunk());
         return true;
     }

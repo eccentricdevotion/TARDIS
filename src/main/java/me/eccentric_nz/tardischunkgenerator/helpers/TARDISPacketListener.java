@@ -21,9 +21,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.flight.TARDISExteriorFlight;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
+import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeHelper;
 import me.eccentric_nz.tardischunkgenerator.disguise.TARDISDisguiseTracker;
 import me.eccentric_nz.tardischunkgenerator.disguise.TARDISDisguiser;
-import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
@@ -159,12 +160,13 @@ public class TARDISPacketListener {
                         LevelChunk levelChunk = cloneChunk((LevelChunk) ((CraftChunk) player.getWorld().getChunkAt(chunkPacket.getX(), chunkPacket.getZ())).getHandle(ChunkStatus.BIOMES));
                         String key = (world.endsWith("gallifrey")) ? "gallifrey_badlands" : "skaro_desert";
                         Biome biome = TARDISHelper.biomeMap.get(key);
+                        Registry<Biome> registry = BiomeHelper.getRegistry();
                         if (biome != null) {
                             for (LevelChunkSection section : levelChunk.getSections()) {
                                 for (int x = 0; x < 4; ++x) {
                                     for (int z = 0; z < 4; ++z) {
                                         for (int y = 0; y < 4; ++y) {
-                                            section.setBiome(x, y, z, Holder.direct(biome));
+                                            section.setBiome(x, y, z, registry.wrapAsHolder(biome));
                                         }
                                     }
                                 }

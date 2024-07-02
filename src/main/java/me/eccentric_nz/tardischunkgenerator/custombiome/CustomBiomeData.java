@@ -1,5 +1,7 @@
 package me.eccentric_nz.tardischunkgenerator.custombiome;
 
+import net.minecraft.core.particles.SimpleParticleType;
+
 public class CustomBiomeData {
 
     private final String minecraftName;
@@ -12,9 +14,11 @@ public class CustomBiomeData {
     private final int skyColour;
     private final int foliageColour;
     private final int grassColour;
+    private final SimpleParticleType particle;
+    private final float ambience;
     private final boolean frozen;
 
-    public CustomBiomeData(String minecraftName, String customName, float temperature, float downfall, int fogColour, int waterColour, int waterFogColour, int skyColour, int foliageColour, int grassColour, boolean frozen) {
+    public CustomBiomeData(String minecraftName, String customName, float temperature, float downfall, int fogColour, int waterColour, int waterFogColour, int skyColour, int foliageColour, int grassColour, SimpleParticleType particle, float ambience, boolean frozen) {
         this.minecraftName = minecraftName;
         this.customName = customName;
         this.temperature = temperature;
@@ -25,6 +29,8 @@ public class CustomBiomeData {
         this.skyColour = skyColour;
         this.foliageColour = foliageColour;
         this.grassColour = grassColour;
+        this.particle = particle;
+        this.ambience = ambience;
         this.frozen = frozen;
     }
 
@@ -70,6 +76,14 @@ public class CustomBiomeData {
 
     public int getGrassColour() {
         return grassColour;
+    }
+
+    public SimpleParticleType getParticle() {
+        return particle;
+    }
+
+    public float getAmbience() {
+        return ambience;
     }
 
     public boolean isFrozen() {
