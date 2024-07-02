@@ -23,16 +23,16 @@ public class EyePopulator {
         Statement statement = null;
         ResultSet rs = null;
         String insert = "INSERT INTO " + prefix + "eyes (tardis_id) VALUES (?)";
-        String query = "SELECT tardis_id " + prefix + "tardis";
+        String query = "SELECT tardis_id FROM " + prefix + "tardis";
         try {
             service.testConnection(connection);
             connection.setAutoCommit(false);
+            ps = connection.prepareStatement(insert);
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
             int i = 0;
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    ps = connection.prepareStatement(query);
                     ps.setInt(1, rs.getInt("tardis_id"));
                     ps.addBatch();
                     i++;
