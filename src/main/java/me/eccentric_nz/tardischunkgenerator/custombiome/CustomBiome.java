@@ -6,14 +6,12 @@ import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.RegistrationInfo;
 import net.minecraft.core.WritableRegistry;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.dedicated.DedicatedServer;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.BiomeGenerationSettings;
-import net.minecraft.world.level.biome.BiomeSpecialEffects;
-import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.biome.*;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_21_R1.CraftServer;
 
@@ -45,6 +43,12 @@ public class CustomBiome {
         newFog.skyColor(data.getSkyColour());
         newFog.foliageColorOverride(data.getFoliageColour());
         newFog.grassColorOverride(data.getGrassColour());
+        if (data.getCustomName().equals("eye_of_harmony")) {
+            newFog.ambientParticle(new AmbientParticleSettings(ParticleTypes.CRIMSON_SPORE, 0.025F));
+        }
+        if (data.getCustomName().equals("skaro_desert")) {
+            newFog.ambientParticle(new AmbientParticleSettings(ParticleTypes.ASH, 0.00625F));
+        }
         newBiome.specialEffects(newFog.build());
         Biome biome = newBiome.build();
         TARDISHelper.biomeMap.put(data.getCustomName(), biome);

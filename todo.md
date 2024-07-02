@@ -15,7 +15,9 @@
      - add runnable to add sphere particles
    - check how many capacitors are installed (and damaged) when adding artron energy with the condenser or storage cells, if there are none don't charge at all (even via rechargers)
    - damage capacitors when there is a malfunction
-10. ?
+   - restart particle runnables after server restart
+10. Add new 1.21 block colours to `MaterialColour`
+11. ?
 
 ## Next version `5.8.0`
 
