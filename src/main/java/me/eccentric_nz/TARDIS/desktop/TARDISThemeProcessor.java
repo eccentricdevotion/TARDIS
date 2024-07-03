@@ -155,7 +155,6 @@ public class TARDISThemeProcessor {
         }
         // check if there are any rooms that need to be jettisoned
         if (nextWidth > previousWidth || nextHeight > previousHeight) {
-            plugin.debug("nextWidth > previousWidth || nextHeight > previousHeight");
             // we need more space!
             if (checkARSGrid(size_prev, size_next, uuid)) {
                 plugin.getMessenger().send(plugin.getServer().getPlayer(uuid), TardisModule.TARDIS, "UPGRADE_ABORT_SPACE");

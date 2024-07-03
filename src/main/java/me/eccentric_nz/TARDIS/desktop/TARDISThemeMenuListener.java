@@ -109,14 +109,12 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
                 }
                 // get material of selected console
                 String perm = Consoles.schematicFor(choice.getType()).getPermission();
-                plugin.debug("[TARDISThemeMenuListener] selected = " + perm);
                 if (!TARDISPermission.hasPermission(p, "tardis." + perm)) {
                     return;
                 }
                 // remember the upgrade choice
                 Schematic schm = Consoles.schematicFor(perm);
                 TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(p.getUniqueId());
-                plugin.debug("[TARDISThemeMenuListener] previous = " + tud.getPrevious().getPermission());
                 int upgrade = plugin.getArtronConfig().getInt("upgrades." + perm);
                 int needed = (tud.getPrevious().getPermission().equals(schm.getPermission())) ? upgrade / 2 : upgrade;
                 if (tud.getLevel() >= needed) {

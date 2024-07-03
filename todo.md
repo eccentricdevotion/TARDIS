@@ -11,8 +11,7 @@
 7. Exterior button door control [#839](https://github.com/eccentricdevotion/TARDIS/issues/839)
 8. Console lamp [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)
 9. Add new eye of harmony room [#781](https://github.com/eccentricdevotion/TARDIS/issues/781)
-10. Fix Rustic console size in ARS + add seed block texture
-11. ?
+10. ?
 
 ## Next version `5.8.0`
 

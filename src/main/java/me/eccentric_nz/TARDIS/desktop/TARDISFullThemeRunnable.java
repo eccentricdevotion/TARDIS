@@ -178,7 +178,6 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 obj = archive_next.getJSON();
                 size_next = archive_next.getConsoleSize();
             }
-            plugin.debug("[TARDISFullThemeRunnable] size next = " + size_next);
             // get previous schematic dimensions
             int previousWidth;
             if (archive_prev == null) {
@@ -199,7 +198,6 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 previousWidth = dimensions.get("width").getAsInt();
                 size_prev = archive_prev.getConsoleSize();
             }
-            plugin.debug("[TARDISFullThemeRunnable] size prev = " + size_prev);
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             height = dimensions.get("height").getAsInt();
