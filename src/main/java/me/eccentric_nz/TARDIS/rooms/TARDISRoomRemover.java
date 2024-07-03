@@ -106,7 +106,6 @@ class TARDISRoomRemover {
             for (int x = sx; x <= ex; x++) {
                 for (int z = sz; z <= ez; z++) {
                     Block block = w.getBlockAt(x, y, z);
-                    block.setBlockData(TARDISConstants.AIR);
                     // if it is a GRAVITY or ANTIGRAVITY well remove it from the database
                     if (r.equals("GRAVITY") || r.equals("ANTIGRAVITY")) {
                         if (block.getType().equals(Material.LIME_WOOL) || block.getType().equals(Material.PINK_WOOL)) {
@@ -118,9 +117,14 @@ class TARDISRoomRemover {
                         }
                     }
                     if (r.equals("EYE")) {
+                        if (block.getType() == Material.IRON_DOOR) {
+                            block.setBlockData(TARDISConstants.AIR);
+                            block.getRelative(BlockFace.DOWN).setBlockData(TARDISConstants.AIR);
+                        }
                         // reset biome
                         w.setBiome(x, y, z, Biome.THE_VOID);
                     }
+                    block.setBlockData(TARDISConstants.AIR);
                 }
             }
         }
