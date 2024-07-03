@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronStorage;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import org.bukkit.Location;
@@ -47,11 +48,18 @@ class TARDISArtronRunnable implements Runnable {
      */
     @Override
     public void run() {
+        // is there a capacitor?
+        // TARDISes come with 1 capacitor when grown, but players could remove them from the eye storage
+        int capacitors = 0;
+        ResultSetArtronStorage rsa = new ResultSetArtronStorage(plugin);
+        if (rsa.fromID(id)) {
+            capacitors = rsa.getCapacitorCount();
+        }
         int level = isFull(id);
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         boolean charged =  level > (plugin.getArtronConfig().getInt("full_charge") - 1);
-        if (!isNearCharger(id) || charged) {
+        if (!isNearCharger(id) || charged || capacitors == 0) {
             plugin.getServer().getScheduler().cancelTask(task);
             task = 0;
             HashMap<String, Object> set = new HashMap<>();

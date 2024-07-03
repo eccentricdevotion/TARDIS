@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronStorage;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
@@ -73,11 +74,26 @@ public class ArtronChargeAction {
                     return;
                 }
                 amount = current_level + charge;
-                lore.set(1, "0");
-                im.setLore(lore);
-                is.setItemMeta(im);
-                is.getEnchantments().keySet().forEach(is::removeEnchantment);
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_TRANSFER");
+                // only add energy up to capacitors * max level - damage
+                ResultSetArtronStorage rsas = new ResultSetArtronStorage(plugin);
+                if (rsas.fromID(id)) {
+                    int damage = (fc / 2) * rsas.getDamageCount();
+                    int max = (fc * rsas.getCapacitorCount()) - damage;
+                    if (amount <= max) {
+                        lore.set(1, "0");
+                        im.setLore(lore);
+                        is.setItemMeta(im);
+                        is.getEnchantments().keySet().forEach(is::removeEnchantment);
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_TRANSFER");
+                    } else {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_TRANSFER", max);
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_ADD");
+                        // give items back
+                        return;
+                    }
+                } else {
+                    return;
+                }
             }
         }
         // update charge
