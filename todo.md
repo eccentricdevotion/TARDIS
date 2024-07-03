@@ -14,9 +14,8 @@
    - with particle sphere
      - check sphere particle/item display sizes
      - remove shroomlight?
-10. Add new 1.21 block colours to `MaterialColour`
-11. Fix Rustic console size in ARS + add seed block texture
-12. ?
+10. Fix Rustic console size in ARS + add seed block texture
+11. ?
 
 ## Next version `5.8.0`
 
