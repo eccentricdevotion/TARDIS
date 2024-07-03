@@ -31,7 +31,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.rooms.eye.EyeOfHarmonyPartcles;
+import me.eccentric_nz.TARDIS.rooms.eye.EyeOfHarmonyParticles;
 import me.eccentric_nz.TARDIS.rooms.library.LibraryCatalogue;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemDisplaySetter;
@@ -645,7 +645,7 @@ public class TARDISRoomRunnable implements Runnable {
                     data = TARDISConstants.BARRIER;
                     // start a particle runnable
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        int task = new EyeOfHarmonyPartcles(plugin).stopStart(tardis_id, 1, uuid);
+                        int task = new EyeOfHarmonyParticles(plugin).stopStart(tardis_id, 1, uuid);
                         if (task != -1) {
                             // update eyes record
                             HashMap<String, Object> set = new HashMap<>();

@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.particles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.rooms.eye.Capacitor;
 import org.bukkit.Color;
 import org.bukkit.Location;
@@ -42,7 +43,11 @@ public class Sphere extends TARDISParticleRunnable {
                 coords.add(new Vector(x, y, z));
             }
         }
-        ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location, EntityType.ITEM_DISPLAY);
+        ItemDisplay display = TARDISDisplayItemUtils.get(location.getBlock());
+        // check if there is a display there already
+        if (display == null) {
+            display = (ItemDisplay) location.getWorld().spawnEntity(location, EntityType.ITEM_DISPLAY);
+        }
         ItemStack is = new ItemStack(Material.MAGMA_BLOCK);
         ItemMeta im = is.getItemMeta();
         im.setCustomModelData(capacitor.getCustomModelData());

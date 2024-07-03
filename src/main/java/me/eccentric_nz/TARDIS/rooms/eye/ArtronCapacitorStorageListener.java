@@ -61,17 +61,19 @@ public class ArtronCapacitorStorageListener extends TARDISMenuListener {
                 }
             }
             // stop and start the particles
-            int task = new EyeOfHarmonyPartcles(plugin).stopStart(id, capacitors, event.getPlayer().getUniqueId());
+            int task = new EyeOfHarmonyParticles(plugin).stopStart(id, capacitors, event.getPlayer().getUniqueId());
             // update eyes record
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
             HashMap<String, Object> set = new HashMap<>();
             set.put("capacitors", capacitors);
             set.put("damaged", damaged);
-            if (task != -1) {
-                set.put("task", task);
-            }
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("tardis_id", id);
-            plugin.getQueryFactory().doSyncUpdate("eyes", set, where);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                if (task != -1) {
+                    set.put("task", task);
+                }
+                plugin.getQueryFactory().doSyncUpdate("eyes", set, where);
+            }, 2L);
             // not a real inventory, so any random items left in there will be vapourised
         }
     }

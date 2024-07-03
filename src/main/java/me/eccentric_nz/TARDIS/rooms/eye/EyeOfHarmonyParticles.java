@@ -10,10 +10,11 @@ import org.bukkit.Location;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class EyeOfHarmonyPartcles {
+public class EyeOfHarmonyParticles {
 
     private final TARDIS plugin;
-    public EyeOfHarmonyPartcles(TARDIS plugin) {
+
+    public EyeOfHarmonyParticles(TARDIS plugin) {
         this.plugin = plugin;
     }
 
