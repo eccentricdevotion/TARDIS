@@ -688,9 +688,21 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     /*
                      * This block will be converted to a lever by setBlock(),
                      * but remember it so we can use it as the handbrake!
+                     * Bone and Rustic have modelled consoles, not a lever handbrake,
+                     * so remove it to avoid unintentional bugs.
                      */
-                    String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                    plugin.getQueryFactory().insertSyncControl(id, 0, handbrakeloc, 0);
+                    if (tud.getSchematic().getPermission().equals("rustic") || tud.getSchematic().getPermission().equals("bone")) {
+                        // delete handbrake record
+                        HashMap<String, Object> whered = new HashMap<>();
+                        whered.put("tardis_id", id);
+                        whered.put("type", 0);
+                        whered.put("secondary", 0);
+                        plugin.getQueryFactory().doDelete("controls", whered);
+                    } else {
+                        // upsert handbrake record
+                        String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                        plugin.getQueryFactory().insertSyncControl(id, 0, handbrakeloc, 0);
+                    }
                     // get current ARS json
                     HashMap<String, Object> wherer = new HashMap<>();
                     wherer.put("tardis_id", id);
@@ -780,7 +792,6 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                                 existing[2][5][5] = control;
                             }
                             case MEDIUM -> {
-                                plugin.debug("Adding control blocks for MEDIUM console size.");
                                 // the 3 slots on the same level
                                 existing[1][4][5] = control;
                                 existing[1][5][4] = control;

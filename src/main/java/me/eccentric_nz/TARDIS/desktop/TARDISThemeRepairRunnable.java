@@ -533,10 +533,11 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     data = TARDISConstants.BARRIER;
                     TARDISDisplayItemUtils.set(TARDISDisplayItem.ADVANCED_CONSOLE, world, x, y, z);
                 }
-                if (type.equals(Material.CAKE)) {
+                if (type.equals(Material.CAKE) && !tud.getSchematic().getPermission().equals("rustic") && !tud.getSchematic().getPermission().equals("bone")) {
                     /*
                      * This block will be converted to a lever by setBlock(),
                      * but remember it so we can use it as the handbrake!
+                     * Bone and Rustic have modelled consoles, not a lever handbrake.
                      */
                     String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                     plugin.getQueryFactory().insertSyncControl(id, 0, handbrakeloc, 0);

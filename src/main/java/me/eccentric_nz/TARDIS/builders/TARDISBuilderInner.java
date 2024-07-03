@@ -540,10 +540,12 @@ public class TARDISBuilderInner implements Runnable {
                 /*
                  * This block will be converted to a lever by
                  * setBlock(), but remember it, so we can use it as the
-                 * handbrake!
+                 * handbrake! Bone and Rustic have modelled consoles, not a lever handbrake.
                  */
-                String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                plugin.getQueryFactory().insertSyncControl(dbID, 0, handbrakeloc, 0);
+                if (!schm.getPermission().equals("rustic") && !schm.getPermission().equals("bone")) {
+                    String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    plugin.getQueryFactory().insertSyncControl(dbID, 0, handbrakeloc, 0);
+                }
                 // create default json for ARS
                 String[][][] empty = new String[3][9][9];
                 for (int ars_y = 0; ars_y < 3; ars_y++) {

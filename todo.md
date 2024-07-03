@@ -11,13 +11,15 @@
 7. Exterior button door control [#839](https://github.com/eccentricdevotion/TARDIS/issues/839)
 8. Console lamp [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)
 9. Add new eye of harmony room [#781](https://github.com/eccentricdevotion/TARDIS/issues/781)
+   - players take damage when in the room
+   - add new monster to spawn if player dies in the room
 10. ?
 
 ## Next version `5.8.0`
 
 1. Sonic Blaster - used to temporarily remove blocks only
 2. Microscope as an addition to Chemistry?
-3. Regeneration - make a bunch of timelord disguises and the Elixir Of Life item.
+3. Regeneration - make a bunch of time lord disguises and the Elixir Of Life item.
    - Regenerations to use particle effects, maybe a couple of shapes, and configurable like particle like materialisation
    - Configurable number of regenerations - classic 12 or new Who 15 for example? Could be permission based `tardis.regenerations.12`
    - Regenerations upon death or when elixir is drunk
