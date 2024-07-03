@@ -49,7 +49,6 @@ public class Sphere extends TARDISParticleRunnable {
         is.setItemMeta(im);
         display.setItemStack(is);
         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
-        // TODO remove the shroomlight?
     }
 
     @Override

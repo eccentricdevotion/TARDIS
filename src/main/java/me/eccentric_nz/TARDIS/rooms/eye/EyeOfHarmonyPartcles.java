@@ -17,11 +17,9 @@ public class EyeOfHarmonyPartcles {
         this.plugin = plugin;
     }
 
-    public int stopStart(int id, int capacitors, UUID uuid) {
+    public static int stopTask(TARDIS plugin, int id) {
         int task = -1;
         // stop the current particles
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
         ResultSetArtronStorage rs = new ResultSetArtronStorage(plugin);
         if (rs.fromID(id)) {
             task = rs.getTask();
@@ -29,17 +27,25 @@ public class EyeOfHarmonyPartcles {
                 plugin.getServer().getScheduler().cancelTask(task);
             }
         }
-        // get the new settings
-        HashMap<String, Object> wherec = new HashMap<>();
-        wherec.put("tardis_id", id);
-        wherec.put("type", 53);
-        ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
-        if (rsc.resultSet()) {
-            Location s = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
-            Capacitor capacitor = Capacitor.values()[capacitors-1];
-            Sphere sphere = new Sphere(plugin, uuid, s, capacitor);
-            task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, sphere, 0, 10);
-            sphere.setTaskID(task);
+        return task;
+    }
+
+    public int stopStart(int id, int capacitors, UUID uuid) {
+        int task = stopTask(plugin, id);
+        // only restart if there are capacitors in storage
+        if (capacitors > 0) {
+            // get the new settings
+            HashMap<String, Object> wherec = new HashMap<>();
+            wherec.put("tardis_id", id);
+            wherec.put("type", 53);
+            ResultSetControls rsc = new ResultSetControls(plugin, wherec, false);
+            if (rsc.resultSet()) {
+                Location s = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+                Capacitor capacitor = Capacitor.values()[capacitors - 1];
+                Sphere sphere = new Sphere(plugin, uuid, s, capacitor);
+                task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, sphere, 0, 10);
+                sphere.setTaskID(task);
+            }
         }
         return task;
     }

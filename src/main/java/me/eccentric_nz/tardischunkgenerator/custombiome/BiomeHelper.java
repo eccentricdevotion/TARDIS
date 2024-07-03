@@ -31,6 +31,12 @@ public class BiomeHelper {
         return dedicatedServer.registryAccess().registry(Registries.BIOME).get();
     }
 
+    public static void refreshChunk(Chunk chunk) {
+        CraftChunk craftChunk = (CraftChunk) chunk;
+        ServerLevel level = craftChunk.getCraftWorld().getHandle();
+        level.getChunkSource().chunkMap.resendBiomesForChunks(List.of(craftChunk.getHandle(ChunkStatus.BIOMES)));
+    }
+
     /**
      * Set a cube to a custom biome - the bounds or the cube are the chunk borders and 16 blocks from startY.
      *
@@ -102,11 +108,5 @@ public class BiomeHelper {
                 chunk.setBiome(x >> 2, y >> 2, z >> 2, bb);
             }
         }
-    }
-
-    private void refreshChunk(Chunk chunk) {
-        CraftChunk craftChunk = (CraftChunk) chunk;
-        ServerLevel level = craftChunk.getCraftWorld().getHandle();
-        level.getChunkSource().chunkMap.resendBiomesForChunks(List.of(craftChunk.getHandle(ChunkStatus.BIOMES)));
     }
 }

@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.RoomCleaner;
+import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -91,6 +92,10 @@ class TARDISARSJettisonRunnable implements Runnable {
                     b.setBlockData(TARDISConstants.AIR);
                 }
             }
+        }
+        if (r.equals("EYE")) {
+            // refresh chunk
+            BiomeHelper.refreshChunk(slot.getChunk());
         }
         // give them their energy!
         if (room != TARDISARS.SLOT) {

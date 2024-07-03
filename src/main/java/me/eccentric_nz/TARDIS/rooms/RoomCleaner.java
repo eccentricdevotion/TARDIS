@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.ClearEyeControls;
+import me.eccentric_nz.TARDIS.rooms.eye.EyeOfHarmonyPartcles;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -72,6 +73,9 @@ public class RoomCleaner {
         }
         // remove eye controls, set capacitors to 1
         if (room.equals("EYE")) {
+            // stop eye particles runnable
+            EyeOfHarmonyPartcles.stopTask(plugin, id);
+            // remove database records
             new ClearEyeControls(plugin).removeRecords(id);
         }
     }
