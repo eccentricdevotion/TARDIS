@@ -95,7 +95,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
     private final List<Block> iceBlocks = new ArrayList<>();
     private final List<Block> postLightBlocks = new ArrayList<>();
     private boolean running;
-    private int id, slot, c, h, ph, w, level = 0, row = 0, startx, starty, startz, resetx, resetz, j = 2;
+    private int id, slot, c, height, previousHeight, width, level = 0, row = 0, startx, starty, startz, resetx, resetz, j = 2;
     private World world;
     private List<Chunk> chunks;
     private List<Chunk> previousChunks;
@@ -178,8 +178,9 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 obj = archive_next.getJSON();
                 size_next = archive_next.getConsoleSize();
             }
+            plugin.debug("[TARDISFullThemeRunnable] size next = " + size_next);
             // get previous schematic dimensions
-            int pw;
+            int previousWidth;
             if (archive_prev == null) {
                 // get JSON
                 JsonObject prevObj = TARDISSchematicGZip.getObject(plugin, "consoles", tud.getPrevious().getPermission(), tud.getPrevious().isCustom());
@@ -189,19 +190,20 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     return;
                 }
                 JsonObject prevDimensions = prevObj.get("dimensions").getAsJsonObject();
-                ph = prevDimensions.get("height").getAsInt();
-                pw = prevDimensions.get("width").getAsInt();
+                previousHeight = prevDimensions.get("height").getAsInt();
+                previousWidth = prevDimensions.get("width").getAsInt();
                 size_prev = tud.getPrevious().getConsoleSize();
             } else {
                 JsonObject dimensions = archive_next.getJSON().get("dimensions").getAsJsonObject();
-                ph = dimensions.get("height").getAsInt();
-                pw = dimensions.get("width").getAsInt();
+                previousHeight = dimensions.get("height").getAsInt();
+                previousWidth = dimensions.get("width").getAsInt();
                 size_prev = archive_prev.getConsoleSize();
             }
+            plugin.debug("[TARDISFullThemeRunnable] size prev = " + size_prev);
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
-            h = dimensions.get("height").getAsInt();
-            w = dimensions.get("width").getAsInt();
+            height = dimensions.get("height").getAsInt();
+            width = dimensions.get("width").getAsInt();
             c = dimensions.get("length").getAsInt();
             // calculate startx, starty, startz
             HashMap<String, Object> wheret = new HashMap<>();
@@ -302,7 +304,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             } else {
                 starty = 64;
             }
-            downgrade = (h < ph || w < pw);
+            downgrade = (height < previousHeight || width < previousWidth);
             world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             if (tud.getPrevious().getPermission().equals("cave")) {
                 // remove water source block
@@ -317,7 +319,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             }
             own_world = plugin.getConfig().getBoolean("creation.create_worlds");
             wg1 = new Location(world, startx, starty, startz);
-            wg2 = new Location(world, startx + (w - 1), starty + (h - 1), startz + (c - 1));
+            wg2 = new Location(world, startx + (width - 1), starty + (height - 1), startz + (c - 1));
             // wall/floor block prefs
             String[] wall = tud.getWall().split(":");
             String[] floor = tud.getFloor().split(":");
@@ -360,11 +362,11 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             plugin.getQueryFactory().doDelete("lamps", wherel);
             previousChunks.forEach((c) -> {
                 // remove any item display or interactions
-                TARDISDisplayItemUtils.removeDisplaysInChunk(c, 62, 64 + ph);
+                TARDISDisplayItemUtils.removeDisplaysInChunk(c, 62, 64 + previousHeight);
             });
             plugin.getPM().callEvent(new TARDISDesktopThemeEvent(player, tardis, tud));
         }
-        if (level == (h - 1) && row == (w - 1)) {
+        if (level == (height - 1) && row == (width - 1)) {
             // we're finished
             // remove items
             previousChunks.forEach((chink) -> {
@@ -498,8 +500,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     setAir(jet.getX(), jet.getY(), jet.getZ(), jet.getChunk().getWorld(), minusy, 16);
                 });
                 // also tidy up the space directly above the ARS centre slot
-                int tidy = starty + h;
-                int plus = 16 - h;
+                int tidy = starty + height;
+                int plus = 16 - height;
                 setAir(chunk.getBlock(0, 64, 0).getX(), tidy, chunk.getBlock(0, 64, 0).getZ(), chunk.getWorld(), 0, plus);
                 // remove dropped items
                 for (Entity e : chunk.getEntities()) {
@@ -519,8 +521,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 }
             } else if (tud.getSchematic().getPermission().equals("coral") && tud.getPrevious().getConsoleSize().equals(ConsoleSize.TALL)) {
                 // clean up space above coral console
-                int tidy = starty + h;
-                int plus = 32 - h;
+                int tidy = starty + height;
+                int plus = 32 - height;
                 chunks.forEach((chk) -> setAir(chk.getBlock(0, 64, 0).getX(), tidy, chk.getBlock(0, 64, 0).getZ(), chk.getWorld(), 0, plus));
             }
             // add / remove chunks from the chunks table
@@ -780,6 +782,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                                 existing[2][5][5] = control;
                             }
                             case MEDIUM -> {
+                                plugin.debug("Adding control blocks for MEDIUM console size.");
                                 // the 3 slots on the same level
                                 existing[1][4][5] = control;
                                 existing[1][5][4] = control;
@@ -960,10 +963,10 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     }
                 }
             });
-            if (row < w) {
+            if (row < width) {
                 row++;
             }
-            if (row == w && level < h) {
+            if (row == width && level < height) {
                 row = 0;
                 level++;
             }

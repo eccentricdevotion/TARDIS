@@ -17,9 +17,6 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import com.google.gson.JsonObject;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -34,6 +31,10 @@ import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchive;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -71,8 +72,8 @@ public class TARDISThemeProcessor {
         }
         // get Archive if necessary
         ConsoleSize size_next;
-        int h;
-        int w;
+        int nextHeight;
+        int nextWidth;
         if (tud.getSchematic().getPermission().equals("archive")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
@@ -81,8 +82,8 @@ public class TARDISThemeProcessor {
             if (rs.resultSet()) {
                 archive_next = rs.getArchive();
                 JsonObject dimensions = archive_next.getJSON().get("dimensions").getAsJsonObject();
-                h = dimensions.get("height").getAsInt();
-                w = dimensions.get("width").getAsInt();
+                nextHeight = dimensions.get("height").getAsInt();
+                nextWidth = dimensions.get("width").getAsInt();
                 size_next = archive_next.getConsoleSize();
             } else {
                 // abort
@@ -98,13 +99,14 @@ public class TARDISThemeProcessor {
             }
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
-            h = dimensions.get("height").getAsInt();
-            w = dimensions.get("width").getAsInt();
+            nextHeight = dimensions.get("height").getAsInt();
+            nextWidth = dimensions.get("width").getAsInt();
             size_next = tud.getSchematic().getConsoleSize();
         }
+
         ConsoleSize size_prev;
-        int ph;
-        int pw;
+        int previousHeight;
+        int previousWidth;
         if (tud.getPrevious().getPermission().equals("archive")) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
@@ -112,8 +114,8 @@ public class TARDISThemeProcessor {
             ResultSetArchive rs = new ResultSetArchive(plugin, where);
             if (rs.resultSet()) {
                 JsonObject dimensions = rs.getArchive().getJSON().get("dimensions").getAsJsonObject();
-                ph = dimensions.get("height").getAsInt();
-                pw = dimensions.get("width").getAsInt();
+                previousHeight = dimensions.get("height").getAsInt();
+                previousWidth = dimensions.get("width").getAsInt();
                 size_prev = rs.getArchive().getConsoleSize();
             } else {
                 // abort
@@ -129,8 +131,8 @@ public class TARDISThemeProcessor {
             }
             // get dimensions
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
-            ph = dimensions.get("height").getAsInt();
-            pw = dimensions.get("width").getAsInt();
+            previousHeight = dimensions.get("height").getAsInt();
+            previousWidth = dimensions.get("width").getAsInt();
             size_prev = tud.getSchematic().getConsoleSize();
         }
         // if configured check whether there are still any blocks left
@@ -152,7 +154,8 @@ public class TARDISThemeProcessor {
             }
         }
         // check if there are any rooms that need to be jettisoned
-        if (w < pw || h < ph) {
+        if (nextWidth > previousWidth || nextHeight > previousHeight) {
+            plugin.debug("nextWidth > previousWidth || nextHeight > previousHeight");
             // we need more space!
             if (checkARSGrid(size_prev, size_next, uuid)) {
                 plugin.getMessenger().send(plugin.getServer().getPlayer(uuid), TardisModule.TARDIS, "UPGRADE_ABORT_SPACE");
