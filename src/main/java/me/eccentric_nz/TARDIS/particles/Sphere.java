@@ -35,11 +35,11 @@ public class Sphere extends TARDISParticleRunnable {
 
     public void init() {
         for (double i = 0; i <= Math.PI; i += Math.PI / capacitor.getRings()) {
-            double r = Math.sin(i) * capacitor.getRadius();
-            double y = Math.cos(i);
-            for (double a = 0; a < Math.PI * 2; a += Math.PI / capacitor.getDensity()) {
-                double x = Math.cos(a) * r;
-                double z = Math.sin(a) * r;
+            double r = Math.sin(i);
+            double y = capacitor.getRadius() * Math.cos(i);
+            for (double a = 0; a < Math.PI * 2; a += Math.PI / capacitor.getRings()) {
+                double x = capacitor.getRadius() * Math.cos(a) * r;
+                double z = capacitor.getRadius() * Math.sin(a) * r;
                 coords.add(new Vector(x, y, z));
             }
         }
