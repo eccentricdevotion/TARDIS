@@ -100,6 +100,7 @@ public class TARDISRoomRunnable implements Runnable {
     private final HashMap<Block, BlockData> torchblocks = new HashMap<>();
     private final HashMap<Block, BlockData> trapdoorblocks = new HashMap<>();
     private final HashMap<Block, BlockFace> mushroomblocks = new HashMap<>();
+    private final HashMap<Block, BlockData> eyeBlocks = new HashMap<>();
     private final HashMap<Block, JsonObject> postSignBlocks = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> bannerblocks = new HashMap<>();
     private final BlockFace[] repeaterData = new BlockFace[6];
@@ -440,6 +441,10 @@ public class TARDISRoomRunnable implements Runnable {
                         TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), start, tardis_id);
                     }
                 }
+                if (room.equals("EYE")) {
+                    eyeBlocks.forEach((key, value) -> key.setBlockData(value, true));
+                    eyeBlocks.clear();
+                }
                 if (room.equals("BAKER") || room.equals("WOOD")) {
                     // set the repeaters
                     mushroomblocks.forEach((key, value) -> {
@@ -626,6 +631,11 @@ public class TARDISRoomRunnable implements Runnable {
                     setl.put("chest_type", "LIBRARY");
                     plugin.getQueryFactory().doInsert("vaults", setl);
                     library = pos.clone().add(-8, -4, -8);
+                }
+                // eye of harmony wall
+                if (type.equals(Material.RED_SANDSTONE_WALL) && room.equals("EYE")) {
+                    Block wall = world.getBlockAt(startx, starty, startz);
+                    eyeBlocks.put(wall, data);
                 }
                 // eye of harmony item display
                 if (type.equals(Material.SHROOMLIGHT) && room.equals("EYE")) {
