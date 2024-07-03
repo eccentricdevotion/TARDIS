@@ -16,6 +16,7 @@ lightning_recharge: 300
 creeper_recharge: 150
 full_charge: 5000
 full_charge_item: NETHER_STAR
+malfunction_damage: 15
 # siege mode
 siege_transfer: 10
 siege_deplete: 100

@@ -13,7 +13,6 @@
 9. Add new eye of harmony room [#781](https://github.com/eccentricdevotion/TARDIS/issues/781)
    - with particle sphere
      - set sphere particle/item display sizes
-   - damage capacitors when there is a malfunction
 10. Add new 1.21 block colours to `MaterialColour`
 11. Fix Rustic console size in ARS + add seed block texture
 12. ?

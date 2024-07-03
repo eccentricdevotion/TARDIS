@@ -57,6 +57,7 @@ public class TARDISArtronUpdater {
         integerOptions.put("jettison", 75);
         integerOptions.put("just_wall_floor", 50);
         integerOptions.put("lightning_recharge", 300);
+        integerOptions.put("malfunction_damage", 15);
         integerOptions.put("nether_min", 4250);
         integerOptions.put("player", 25);
         integerOptions.put("random", 75);

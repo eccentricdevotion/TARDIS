@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ItemDisplay;
@@ -189,6 +190,21 @@ public class TARDISMalfunction {
                     }
                     default -> {
                     }
+                }
+            }
+            // always a chance that a capacitor will be damaged
+            ResultSetArtronStorage rsa = new ResultSetArtronStorage(plugin);
+            if (rsa.fromID(id)) {
+                int c = rsa.getCapacitorCount();
+                int d = rsa.getDamageCount();
+                if (d < c && TARDISConstants.RANDOM.nextInt(100) < plugin.getArtronConfig().getInt("malfunction_damage")) {
+                    d++;
+                    HashMap<String, Object> setd = new HashMap<>();
+                    setd.put("damaged", d);
+                    HashMap<String, Object> whered = new HashMap<>();
+                    setd.put("tardis_id", id);
+                    plugin.getQueryFactory().doUpdate("eyes", setd, whered);
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "CAPACITOR_DAMAGE");
                 }
             }
             // get player prefs
