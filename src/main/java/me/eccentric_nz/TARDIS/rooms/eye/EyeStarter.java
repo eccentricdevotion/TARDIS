@@ -30,7 +30,7 @@ public class EyeStarter {
             ps = connection.prepareStatement(update);
             String query = "SELECT " + prefix + "controls.location, " + prefix + "eyes.capacitors, " + prefix + "tardis.uuid, " + prefix + "tardis.tardis_id " +
                     "FROM " + prefix + "controls, " + prefix + "eyes, " + prefix + "tardis " +
-                    "WHERE " + prefix + "controls.type` = 53" +
+                    "WHERE " + prefix + "controls.type` = 53 " +
                     "AND " + prefix + "controls.tardis_id = " + prefix + "eyes.tardis_id " +
                     "AND " + prefix + "eyes.tardis_id = " + prefix + "tardis.tardis_id";
             statement = connection.createStatement();

@@ -12,7 +12,8 @@
 8. Console lamp [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)
 9. Add new eye of harmony room [#781](https://github.com/eccentricdevotion/TARDIS/issues/781)
    - with particle sphere
-     - set sphere particle/item display sizes
+     - check sphere particle/item display sizes
+     - remove shroomlight?
 10. Add new 1.21 block colours to `MaterialColour`
 11. Fix Rustic console size in ARS + add seed block texture
 12. ?
