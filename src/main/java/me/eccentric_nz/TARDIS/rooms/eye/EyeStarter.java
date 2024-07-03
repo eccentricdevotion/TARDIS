@@ -37,17 +37,24 @@ public class EyeStarter {
             rs = statement.executeQuery(query);
             if (rs.isBeforeFirst()) {
                 connection.setAutoCommit(false);
+                int count = 0;
                 while (rs.next()) {
-                    Location s = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
-                    Capacitor capacitor = Capacitor.values()[rs.getInt("capacitors") - 1];
-                    Sphere sphere = new Sphere(plugin, UUID.fromString(rs.getString("uuid")), s, capacitor);
-                    int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, sphere, 0, 10);
-                    sphere.setTaskID(task);
-                    ps.setInt(1, task);
-                    ps.setInt(2, rs.getInt("tardis_id"));
-                    ps.addBatch();
+                    int capacitors = rs.getInt("capacitors");
+                    if (capacitors > 0) {
+                        Location s = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
+                        Capacitor capacitor = Capacitor.values()[rs.getInt("capacitors") - 1];
+                        Sphere sphere = new Sphere(plugin, UUID.fromString(rs.getString("uuid")), s, capacitor);
+                        int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, sphere, 0, 10);
+                        sphere.setTaskID(task);
+                        ps.setInt(1, task);
+                        ps.setInt(2, rs.getInt("tardis_id"));
+                        ps.addBatch();
+                        count++;
+                    }
                 }
-                ps.executeBatch();
+                if (count > 0) {
+                    ps.executeBatch();
+                }
                 connection.setAutoCommit(true);
             }
         } catch (SQLException ex) {
