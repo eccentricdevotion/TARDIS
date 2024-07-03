@@ -23,6 +23,6 @@ public record GUIArtronStorage() {
     // Artron Storage
     public static GUIData INFO = new GUIData(57, 0, Material.BOWL);
     public static GUIData ARROW_RIGHT = new GUIData(15, 1, Material.ARROW);
-    public static GUIData ARROW_LEFT = new GUIData(14, 8, Material.ARROW);
-    public static GUIData CLOSE = new GUIData(1, 9, Material.BOWL);
+    public static GUIData ARROW_LEFT = new GUIData(14, 7, Material.ARROW);
+    public static GUIData CLOSE = new GUIData(1, 8, Material.BOWL);
 }

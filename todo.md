@@ -13,7 +13,8 @@
 9. Add new eye of harmony room [#781](https://github.com/eccentricdevotion/TARDIS/issues/781)
    - with particle sphere
      - check sphere particle/item display sizes
-     - remove shroomlight?
+   - fix door dropping when jettisoning
+   - fix red sandstone wall shape (do at end)
 10. Fix Rustic console size in ARS + add seed block texture
 11. ?
 

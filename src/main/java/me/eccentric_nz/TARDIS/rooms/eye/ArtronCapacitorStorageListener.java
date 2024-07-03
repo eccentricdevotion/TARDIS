@@ -5,6 +5,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -41,7 +42,7 @@ public class ArtronCapacitorStorageListener extends TARDISMenuListener {
             // scan the inventory for capacitors
             int capacitors = 0;
             int damaged = 0;
-            for (int i = 2; i < 8; i++) {
+            for (int i = 2; i < 7; i++) {
                 ItemStack stack = view.getItem(i);
                 if (stack == null || !stack.getType().equals(Material.BUCKET) || !stack.hasItemMeta()) {
                     continue;
@@ -80,8 +81,12 @@ public class ArtronCapacitorStorageListener extends TARDISMenuListener {
         InventoryView view = event.getView();
         if (view.getTitle().equals(ChatColor.DARK_RED + "Artron Capacitor Storage")) {
             int slot = event.getRawSlot();
-            if ((slot < 2 || slot > 7) || event.isShiftClick()) {
+            if ((slot < 2 || slot == 7 || slot == 8) || event.isShiftClick()) {
                 event.setCancelled(true);
+                if (slot == 8) {
+                    // close
+                    close((Player) event.getWhoClicked());
+                }
             }
         }
     }

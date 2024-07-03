@@ -39,7 +39,7 @@ public class TARDISEyeStorage {
         if (rs.fromID(id)) {
             int count = rs.getCapacitorCount();
             // capacitors
-            for (int i = 2; i < count; i++) {
+            for (int i = 2; i < 2 + count; i++) {
                 ItemStack is = new ItemStack(Material.BUCKET, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName("Artron Capacitor");
