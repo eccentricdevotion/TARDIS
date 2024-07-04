@@ -125,6 +125,9 @@ public class TARDISDevCommand implements CommandExecutor {
                         TARDISAchievementFactory.checkAdvancement(args[1]);
                         return true;
                     }
+                    case "biome" -> {
+                        return new TARDISBiomeCommand().getName(sender);
+                    }
                     case "box" -> {
                         return new TARDISDevBoxCommand(plugin).setPreset(sender, args);
                     }

@@ -1,8 +1,11 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_21_R1.CraftChunk;
 import org.bukkit.craftbukkit.v1_21_R1.CraftWorld;
@@ -27,6 +30,15 @@ public class TARDISBiomeCommand {
             ServerLevel w = ((CraftWorld) chunk.getWorld()).getHandle();
             CraftChunk craftChunk = (CraftChunk) chunk;
             w.getChunkSource().chunkMap.resendBiomesForChunks(List.of(craftChunk.getHandle(ChunkStatus.BIOMES)));
+        }
+        return true;
+    }
+
+    public boolean getName(CommandSender sender) {
+        if (sender instanceof Player player) {
+            Location location = player.getLocation();
+            String biome = BiomeHelper.getBiomeName(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
+            TARDIS.plugin.getMessenger().message(player, "Biome: "+biome);
         }
         return true;
     }

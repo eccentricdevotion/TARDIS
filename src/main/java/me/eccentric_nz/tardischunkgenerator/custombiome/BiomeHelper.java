@@ -16,6 +16,7 @@ import net.minecraft.world.level.chunk.status.ChunkStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_21_R1.CraftChunk;
 import org.bukkit.craftbukkit.v1_21_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_21_R1.CraftWorld;
@@ -35,6 +36,15 @@ public class BiomeHelper {
         CraftChunk craftChunk = (CraftChunk) chunk;
         ServerLevel level = craftChunk.getCraftWorld().getHandle();
         level.getChunkSource().chunkMap.resendBiomesForChunks(List.of(craftChunk.getHandle(ChunkStatus.BIOMES)));
+    }
+
+    public static String getBiomeName(World w, int x, int y, int z) {
+        DedicatedServer dedicatedServer = ((CraftServer) Bukkit.getServer()).getServer();
+        ServerLevel nmsWorld = ((CraftWorld) w).getHandle();
+        Biome biome = nmsWorld.getNoiseBiome(x >> 2, y >> 2, z >> 2).value();
+        Registry<Biome> registry = getRegistry();
+        ResourceLocation key = registry.getKey(biome);
+        return key.getPath();
     }
 
     /**
