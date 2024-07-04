@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -43,6 +44,7 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
     private final ImmutableList<String> GIVE_KNOWLEDGE = ImmutableList.of("knowledge", "1", "2", "64");
     private final ImmutableList<String> KIT_SUBS;
     private final List<String> SEED_SUBS = new ArrayList<>();
+    private final List<String> SYSUPS_SUBS = new ArrayList<>();
     private final List<String> MAT_SUBS = new ArrayList<>();
 
     public TARDISGiveTabComplete(TARDIS plugin) {
@@ -51,6 +53,7 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
         GIVE_SUBS.add("kit");
         GIVE_SUBS.add("recipes");
         GIVE_SUBS.add("seed");
+        GIVE_SUBS.add("system-upgrade");
         GIVE_SUBS.add("tachyon");
         GIVE_SUBS.add("acid-bucket");
         GIVE_SUBS.add("rust-bucket");
@@ -93,6 +96,9 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
                 SEED_SUBS.add(seed);
             }
         }
+        for (SystemTree st: SystemTree.values()) {
+            SYSUPS_SUBS.add(st.toString());
+        }
         TARDISWalls.BLOCKS.forEach((m) -> MAT_SUBS.add(m.toString()));
     }
 
@@ -117,6 +123,9 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
             }
             if (sub.equals("seed")) {
                 return partial(lastArg, SEED_SUBS);
+            }
+            if (sub.equals("system-upgrade")) {
+                return partial(lastArg, SYSUPS_SUBS);
             }
             return partial(lastArg, GIVE_KNOWLEDGE);
         } else if (args[1].equalsIgnoreCase("seed")) {
