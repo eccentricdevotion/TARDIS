@@ -12,7 +12,8 @@
 8. Console lamp [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)
 9. Add new eye of harmony room [#781](https://github.com/eccentricdevotion/TARDIS/issues/781)
    - players take damage when in the room
-   - add new monster to spawn if player dies in the room
+   - add new monster _Ossified [Time Zombie](https://tardis.fandom.com/wiki/Time_zombie)_ to spawn if player dies in the room
+   - config options
 10. ?
 
 ## Next version `5.8.0`

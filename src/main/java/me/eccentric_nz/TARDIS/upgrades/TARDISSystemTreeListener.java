@@ -37,14 +37,14 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
         }
         event.setCancelled(true);
         int slot = event.getRawSlot();
-        if (slot < 0 || slot >= 63) {
+        if (slot < 0 || slot >= 53) {
             return;
         }
         ItemStack is = view.getItem(slot);
         if (is == null) {
             return;
         }
-        if (is.getType() != Material.LIME_GLAZED_TERRACOTTA && slot != 8) {
+        if (is.getType() != Material.LIME_GLAZED_TERRACOTTA && slot != 45) {
             return;
         }
         Player player = (Player) event.getWhoClicked();
