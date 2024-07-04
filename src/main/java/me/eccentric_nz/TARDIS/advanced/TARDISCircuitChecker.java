@@ -132,8 +132,8 @@ public class TARDISCircuitChecker {
                                 scannerUses = getUses(im);
                             }
                             if (dn.equals("TARDIS Telepathic Circuit")) {
-                                temporal = true;
-                                temporalUses = getUses(im);
+                                telepathic = true;
+                                telepathicUses = getUses(im);
                             }
                             if (dn.equals("TARDIS Temporal Circuit")) {
                                 temporal = true;
