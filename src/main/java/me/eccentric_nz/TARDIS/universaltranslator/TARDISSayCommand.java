@@ -72,8 +72,12 @@ public class TARDISSayCommand implements CommandExecutor {
                 Language from = Language.valueOf(preferedLang);
                 Language to = Language.valueOf(lang);
                 try {
-                    String translatedText = LingvaTranslate.fetch(from.getCode(), to.getCode(), whatToTranslate);
-                    plugin.getServer().dispatchCommand(sender, "say [" + TardisModule.TRANSLATOR.getName() + "] " + translatedText);
+                    LingvaTranslate translate = new LingvaTranslate(plugin, from.getCode(), to.getCode(), whatToTranslate);
+                    translate.fetchAsync((hasResult, translated) -> {
+                        if (hasResult) {
+                            plugin.getServer().dispatchCommand(sender, "say [" + TardisModule.TRANSLATOR.getName() + "] " + translated.getTranslated());
+                        }
+                    });
                     return true;
                 } catch (CommandException ex) {
                     plugin.debug("Could not get translation! " + ex.getMessage());

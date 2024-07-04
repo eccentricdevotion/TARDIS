@@ -54,8 +54,12 @@ public class TARDISTranslateChatListener implements Listener {
 
     private void translateChat(Player p, Language from, Language to, String message) {
         try {
-            String translatedText = LingvaTranslate.fetch(from.getCode(), to.getCode(), message);
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getMessenger().message(p, TardisModule.TRANSLATOR, translatedText), 2L);
+            LingvaTranslate translate = new LingvaTranslate(plugin, from.getCode(), to.getCode(), message);
+            translate.fetchAsync((hasResult, translated) -> {
+                if (hasResult) {
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getMessenger().message(p, TardisModule.TRANSLATOR, translated.getTranslated()), 2L);
+                }
+            });
         } catch (Exception ex) {
             plugin.debug("Could not get translation! " + ex.getMessage());
         }

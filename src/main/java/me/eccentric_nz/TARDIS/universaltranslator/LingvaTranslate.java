@@ -18,46 +18,102 @@ package me.eccentric_nz.TARDIS.universaltranslator;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Bukkit;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 public class LingvaTranslate {
 
-    private static List<String> domains = Arrays.asList("lingva.ml", "translate.dr460nf1r3.org", "lingva.garudalinux.org");
+    private static final List<String> domains = List.of("lingva.lunar.icu", "translate.projectsegfau.lt", "translate.dr460nf1r3.org", "translate.plausibility.cloud", "lingva.ml");
+    private final TARDIS plugin;
+    private final String from, to, message;
+    private String translated;
+
+    public LingvaTranslate(TARDIS plugin, String from, String to, String message) {
+        this.plugin = plugin;
+        this.from = from;
+        this.to = to;
+        this.message = message;
+    }
+
+    /**
+     * Pings an HTTP URL. This effectively sends a HEAD request and returns <code>true</code> if the response code is in
+     * the 200-399 range.
+     *
+     * @param url The HTTP URL to be pinged.
+     * @return <code>true</code> if the given HTTP URL has returned response code 200-399 on a HEAD request within the
+     * given timeout, otherwise <code>false</code>.
+     */
+    private static boolean pingURL(String url) {
+//        url = url.replaceFirst("^https", "http"); // Otherwise an exception may be thrown on invalid SSL certificates.
+        try {
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setConnectTimeout(3000);
+            connection.setReadTimeout(3000);
+            connection.setRequestMethod("HEAD");
+            int responseCode = connection.getResponseCode();
+            return (200 <= responseCode && responseCode <= 399);
+        } catch (IOException exception) {
+            return false;
+        }
+    }
+
+    public void fetchAsync(final TranslateCallback callback) {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            boolean hasResult = fetch();
+            // go back to the tick loop
+            Bukkit.getScheduler().runTask(plugin, () -> {
+                // call the callback with the result
+                callback.onDone(hasResult, this);
+            });
+        });
+    }
 
     /**
      * Fetches a translation from a Lingva instance
      */
-    public static String fetch(String from, String to, String message) {
-        // get random domain
-        String host = domains.get(ThreadLocalRandom.current().nextInt(domains.size()));
+    public boolean fetch() {
         try {
             String encoded = message.replace(" ", "%20");
-            // We're connecting to a random Lingva host's REST api
-            URI uri = URI.create("https://" + host + "/api/v1/" + from + "/" + to + "/" + encoded);
-            // Create a client, request and response
-            HttpClient client = HttpClient.newBuilder()
-                    .version(HttpClient.Version.HTTP_2)
-                    .connectTimeout(Duration.ofSeconds(10))
-                    .build();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .GET()
-                    .uri(uri)
-                    .header("User-Agent", "TARDISPlugin")
-                    .build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            JsonElement root = JsonParser.parseString((String) response.body());
-            return root.getAsJsonObject().get("translation").getAsString();
+            for (String host : domains) {
+                // ping the host
+                if (!pingURL("http://" + host)) {
+                    continue;
+                }
+                // We're connecting to a random Lingva host's REST api
+                URI uri = URI.create("https://" + host + "/api/v1/" + from + "/" + to + "/" + encoded);
+                // Create a client, request and response
+                HttpResponse<String> response;
+                try (HttpClient client = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).connectTimeout(Duration.ofSeconds(10)).build()) {
+                    HttpRequest request = HttpRequest.newBuilder().GET().uri(uri).header("User-Agent", "TARDISPlugin").build();
+                    response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                }
+                JsonElement root = JsonParser.parseString(response.body());
+                translated = root.getAsJsonObject().get("translation").getAsString();
+                return true;
+            }
         } catch (Exception ex) {
-            TARDIS.plugin.debug("Failed to fetch a translation from " + host + ". " + ex.getMessage());
+            plugin.debug("Failed to fetch a translation from Lingva hosts" + ex.getMessage());
         }
-        return "Translation failed :(";
+        translated = "Translation failed :(";
+        return false;
+    }
+
+    public String getTranslated() {
+        return translated;
+    }
+
+    public interface TranslateCallback {
+
+        void onDone(boolean hasResult, LingvaTranslate translated);
     }
 }
