@@ -62,6 +62,7 @@ public class Death implements Listener {
     private final List<Material> headless_drops = new ArrayList<>();
     private final List<Material> ice_drops = new ArrayList<>();
     private final List<Material> mire_drops = new ArrayList<>();
+    private final List<Material> ossified_drops = new ArrayList<>();
     private final List<Material> silent_drops = new ArrayList<>();
     private final List<Material> silurian_drops = new ArrayList<>();
     private final List<Material> slitheen_drops = new ArrayList<>();
@@ -88,6 +89,7 @@ public class Death implements Listener {
         plugin.getMonstersConfig().getStringList("the_mire.drops").forEach((e) -> mire_drops.add(Material.valueOf(e)));
         plugin.getMonstersConfig().getStringList("vashta_nerada.drops").forEach((v) -> vashta_drops.add(Material.valueOf(v)));
         plugin.getMonstersConfig().getStringList("zygons.drops").forEach((z) -> zygon_drops.add(Material.valueOf(z)));
+        plugin.getMonstersConfig().getStringList("ossified.drops").forEach((o) -> ossified_drops.add(Material.valueOf(o)));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -272,6 +274,16 @@ public class Death implements Listener {
                         stack.setItemMeta(potionMeta);
                     } else {
                         stack = new ItemStack(empty_drops.get(TARDISConstants.RANDOM.nextInt(empty_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
+                    }
+                    event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
+                    return;
+                }
+                if (pdc.has(TARDISWeepingAngels.OSSIFIED, PersistentDataType.INTEGER)) {
+                    event.getDrops().clear();
+                    if (TARDISConstants.RANDOM.nextInt(100) < 3) {
+                        stack = HeadBuilder.getItemStack(Monster.OSSIFIED);
+                    } else {
+                        stack = new ItemStack(ossified_drops.get(TARDISConstants.RANDOM.nextInt(ossified_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                     }
                     event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                     return;

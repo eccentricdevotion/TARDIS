@@ -98,6 +98,13 @@ difficulty:
   stattenheim_remote: false
   tardis_locator: false
   system_upgrades: false
+# eye of harmony preferences
+eye_of_harmony:
+  player_damage: true
+  damage_amount: 0.5
+  damage_period: 20
+  ossified: true
+  particles: true
 # general preferences
 # https://tardis.pages.dev/configuration/prefs
 preferences:

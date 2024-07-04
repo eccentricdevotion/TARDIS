@@ -141,6 +141,7 @@ public class TARDISTrackerInstanceKeeper {
     private final Set<UUID> constructors = new HashSet<>();
     private final Set<UUID> eggs = new HashSet<>();
     private final Set<UUID> excitation = new HashSet<>();
+    private final Set<UUID> eyeDamage = new HashSet<>();
     private final Set<UUID> farming = new HashSet<>();
     private final Set<UUID> frozenPlayers = new HashSet<>();
     private final Set<UUID> geneticallyModified = new HashSet<>();
@@ -987,6 +988,15 @@ public class TARDISTrackerInstanceKeeper {
      */
     public Set<UUID> getExcitation() {
         return excitation;
+    }
+
+    /**
+     * Tracks players in the Eye of Harmony room so that they can be damaged.
+     *
+     * @return a collection of player UUIDs
+     */
+    public Set<UUID> getEyeDamage() {
+        return eyeDamage;
     }
 
     /**

@@ -39,6 +39,7 @@ public class MonsterEquipment {
         } else if (entity instanceof Zombie) {
             return (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)
                     || pdc.has(TARDISWeepingAngels.EMPTY, PersistentDataType.INTEGER)
+                    || pdc.has(TARDISWeepingAngels.OSSIFIED, PersistentDataType.INTEGER)
                     || pdc.has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)
                     || pdc.has(TARDISWeepingAngels.SONTARAN, PersistentDataType.INTEGER)
                     || pdc.has(TARDISWeepingAngels.VASHTA, PersistentDataType.INTEGER)
@@ -101,6 +102,9 @@ public class MonsterEquipment {
             }
             if (pdc.has(TARDISWeepingAngels.EMPTY, PersistentDataType.INTEGER)) {
                 return Monster.EMPTY_CHILD;
+            }
+            if (pdc.has(TARDISWeepingAngels.OSSIFIED, PersistentDataType.INTEGER)) {
+                return Monster.OSSIFIED;
             }
             if (pdc.has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)) {
                 return Monster.SLITHEEN;

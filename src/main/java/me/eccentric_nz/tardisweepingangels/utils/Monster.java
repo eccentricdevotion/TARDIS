@@ -34,6 +34,7 @@ public enum Monster {
     K9("K9", EntityType.HUSK, "k9", 15, 1, Material.BONE),
     MIRE("Mire", EntityType.SKELETON, "mire", 18, 4, Material.NETHERITE_SCRAP),
     OOD("Ood", EntityType.HUSK, "ood", 12, 29, Material.ROTTEN_FLESH, 30),
+    OSSIFIED("Ossified Time Zombie", EntityType.ZOMBIE, "ossified", 24, 4, Material.CHARCOAL),
     RACNOSS("Racnoss", EntityType.PIGLIN_BRUTE, "racnoss", 21, 5, Material.SPIDER_EYE, 4),
     SEA_DEVIL("Sea Devil", EntityType.DROWNED, "devil", 19, 4, Material.KELP),
     SILENT("Silent", EntityType.SKELETON, "silent", 6, 11, Material.END_STONE, 5),

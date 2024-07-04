@@ -73,6 +73,7 @@ public class MonstersConfig {
         listOptions.put("ice_warriors.drops", Arrays.asList("ICE", "PACKED_ICE", "SNOW_BLOCK"));
         listOptions.put("silent.drops", Arrays.asList("INK_SAC", "FLOWER_POT"));
         listOptions.put("ood.drops", List.of("NAME_TAG"));
+        listOptions.put("ossified.drops", List.of("CHARCOAL", "FIREWORK_STAR", "DEAD_BRAIN_CORAL"));
         listOptions.put("racnoss.drops", Arrays.asList("NETHERITE_INGOT", "ECHO_SHARD"));
         listOptions.put("sea_devils.drops", Arrays.asList("COD", "KELP"));
         listOptions.put("silurians.drops", Arrays.asList("GOLD_NUGGET", "FEATHER"));

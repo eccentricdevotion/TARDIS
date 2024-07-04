@@ -40,10 +40,16 @@ import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
 import me.eccentric_nz.TARDIS.travel.TARDISEPSRunnable;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
+import me.eccentric_nz.tardisweepingangels.equip.Equipper;
+import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
+import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -413,6 +419,18 @@ public class TARDISTimeLordDeathListener implements Listener {
                     }
                 }
             }
+        }
+        if (plugin.getConfig().getBoolean("modules.weeping_angels")
+                && plugin.getConfig().getBoolean("eye_of_harmony.ossified")
+                && plugin.getTrackerKeeper().getEyeDamage().contains(uuid)) {
+            // spawn an ossified at the player's location
+            Location l = player.getLocation();
+            LivingEntity e = new MonsterSpawner().create(l, Monster.OSSIFIED);
+            new Equipper(Monster.CYBERMAN, e, false, false).setHelmetAndInvisibilty();
+            plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.ZOMBIE, Monster.OSSIFIED, l));
+            String name = player.getName();
+            e.setCustomName(name);
+            e.setCustomNameVisible(true);
         }
         // save arched status
         if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {

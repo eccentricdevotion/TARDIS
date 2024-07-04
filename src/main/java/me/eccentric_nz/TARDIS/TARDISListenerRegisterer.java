@@ -79,6 +79,7 @@ import me.eccentric_nz.TARDIS.recipes.TARDISRecipeInventoryListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISJettisonSeeder;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomSeeder;
 import me.eccentric_nz.TARDIS.rooms.eye.ArtronCapacitorStorageListener;
+import me.eccentric_nz.TARDIS.rooms.eye.TARDISEyeDamageListener;
 import me.eccentric_nz.TARDIS.rooms.library.TARDISLibraryListener;
 import me.eccentric_nz.TARDIS.rooms.smelter.TARDISSmelterListener;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicListener;
@@ -204,6 +205,9 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISEjectListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISEntityGriefListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISExplosionAndDamageListener(plugin), plugin);
+        if (plugin.getConfig().getBoolean("eye_of_harmony.player_damage")) {
+            plugin.getPM().registerEvents(new TARDISEyeDamageListener(plugin), plugin);
+        }
         plugin.getPM().registerEvents(new TARDISFakeChatListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISFarmBlockListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISFireListener(plugin), plugin);

@@ -654,17 +654,19 @@ public class TARDISRoomRunnable implements Runnable {
                     plugin.getQueryFactory().insertSyncControl(tardis_id, 53, item.toString(), 0);
                     data = TARDISConstants.BARRIER;
                     // start a particle runnable
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        int task = new EyeOfHarmonyParticles(plugin).stopStart(tardis_id, 1, uuid);
-                        if (task != -1) {
-                            // update eyes record
-                            HashMap<String, Object> set = new HashMap<>();
-                            set.put("task", task);
-                            HashMap<String, Object> where = new HashMap<>();
-                            where.put("tardis_id", tardis_id);
-                            plugin.getQueryFactory().doSyncUpdate("eyes", set, where);
-                        }
-                    }, 600L);
+                    if (plugin.getConfig().getBoolean("eye_of_harmony.particles")) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            int task = new EyeOfHarmonyParticles(plugin).stopStart(tardis_id, 1, uuid);
+                            if (task != -1) {
+                                // update eyes record
+                                HashMap<String, Object> set = new HashMap<>();
+                                set.put("task", task);
+                                HashMap<String, Object> where = new HashMap<>();
+                                where.put("tardis_id", tardis_id);
+                                plugin.getQueryFactory().doSyncUpdate("eyes", set, where);
+                            }
+                        }, 600L);
+                    }
                 }
                 // eye of harmony storage
                 if (type.equals(Material.BARRIER) && room.equals("EYE")) {

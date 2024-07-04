@@ -92,6 +92,11 @@ ood:
     - NAME_TAG
   spawn_from_villager: 20
   spawn_from_cured: 5
+ossified:
+  drops:
+    - CHARCOAL
+    - FIREWORK_STAR
+    - DEAD_BRAIN_CORAL
 racnoss:
   worlds:
     world_nether: 5

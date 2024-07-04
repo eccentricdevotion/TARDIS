@@ -39,6 +39,7 @@ public class TARDISConfiguration {
     private final TARDIS plugin;
     private final FileConfiguration config;
     private final HashMap<String, List<String>> comments = new HashMap<>();
+    private final HashMap<String, Double> doubleOptions = new HashMap<>();
     private final HashMap<String, String> stringOptions = new HashMap<>();
     private final HashMap<String, Integer> integerOptions = new HashMap<>();
     private final HashMap<String, Boolean> booleanOptions = new HashMap<>();
@@ -116,6 +117,9 @@ public class TARDISConfiguration {
         booleanOptions.put("difficulty.biome_reader", true);
         booleanOptions.put("difficulty.stattenheim_remote", false);
         booleanOptions.put("difficulty.tardis_locator", false);
+        booleanOptions.put("eye_of_harmony.player_damage", true);
+        booleanOptions.put("eye_of_harmony.ossified", true);
+        booleanOptions.put("eye_of_harmony.particles", true);
         booleanOptions.put("growth.return_room_seed", true);
         booleanOptions.put("growth.rooms_require_blocks", false);
         booleanOptions.put("junk.enabled", true);
@@ -187,6 +191,7 @@ public class TARDISConfiguration {
         integerOptions.put("creation.inventory_group", 0);
         integerOptions.put("creation.tips_limit", 400);
         integerOptions.put("desktop.block_change_percent", 25);
+        integerOptions.put("eye_of_harmony.damage_period", 20);
         integerOptions.put("growth.ars_limit", 1);
         integerOptions.put("growth.delay_factor", 1);
         integerOptions.put("growth.gravity_max_distance", 15);
@@ -251,6 +256,8 @@ public class TARDISConfiguration {
         stringOptions.put("storage.mysql.user", "bukkit");
         stringOptions.put("travel.terminal.nether", "world");
         stringOptions.put("travel.terminal.the_end", "world");
+        // doubles
+        doubleOptions.put("damage_amount", 0.5);
         // comments
         comments.put("abandon", Arrays.asList("abandoned TARDISes", "https://tardis.pages.dev/abandon#config-options"));
         comments.put("allow", Arrays.asList("restrictions", "https://tardis.pages.dev/configuration/allow"));
@@ -259,7 +266,8 @@ public class TARDISConfiguration {
         comments.put("circuits", Arrays.asList("circuits", "https://tardis.pages.dev/circuit-use#configuration-options"));
         comments.put("creation", Arrays.asList("inner TARDIS", "https://tardis.pages.dev/configuration/creation"));
         comments.put("desktop", Arrays.asList("desktop theme", "https://tardis.pages.dev/desktop-theme#config-options"));
-        comments.put("display", List.of("HUD display"));
+        comments.put("display", List.of("HUD display", "https://tardis.pages.dev/display"));
+        comments.put("eye_of_harmony", List.of("eye of harmony preferences", "https://tardis.pages.dev/eye-of-harmony"));
         comments.put("growth", Arrays.asList("room related", "https://tardis.pages.dev/configuration/growth"));
         comments.put("junk", Arrays.asList("junk TARDIS", "https://tardis.pages.dev/junk-tardis#configuration-options"));
         comments.put("mapping", Arrays.asList("mapping", "https://tardis.pages.dev/modules/mapping#configuration-options"));
@@ -326,6 +334,14 @@ public class TARDISConfiguration {
         }
         // int values
         for (Map.Entry<String, Integer> entry : integerOptions.entrySet()) {
+            if (!config.contains(entry.getKey())) {
+                plugin.debug("Missing entry: " + entry.getKey());
+                plugin.getConfig().set(entry.getKey(), entry.getValue());
+                i++;
+            }
+        }
+        // double values
+        for (Map.Entry<String, Double> entry : doubleOptions.entrySet()) {
             if (!config.contains(entry.getKey())) {
                 plugin.debug("Missing entry: " + entry.getKey());
                 plugin.getConfig().set(entry.getKey(), entry.getValue());
