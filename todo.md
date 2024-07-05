@@ -12,6 +12,7 @@
 8. Console lamp [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)
 9. Add new eye of harmony room [#781](https://github.com/eccentricdevotion/TARDIS/issues/781)
    - players take damage when in the room _done_ - intercept the hurt animation packet and cancel it?
+   - add space suit (armour) that mitigates damage from the eye of harmony star
    - add new monster _Ossified [Time Zombie](https://tardis.fandom.com/wiki/Time_zombie)_ to spawn if player dies in the room
 10. ?
 
