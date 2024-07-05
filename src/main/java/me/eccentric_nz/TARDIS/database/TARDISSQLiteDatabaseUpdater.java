@@ -164,11 +164,14 @@ class TARDISSQLiteDatabaseUpdater {
         sonicupdates.add("scan_type INTEGER DEFAULT 0");
         flightupdates.add("chicken TEXT DEFAULT ''");
         flightupdates.add("stand TEXT DEFAULT ''");
+        systemupdates.add("monitor INTEGER DEFAULT 0");
+        systemupdates.add("telepathic INTEGER DEFAULT 0");
         systemupdates.add("feature INTEGER DEFAULT 0");
         systemupdates.add("throttle INTEGER DEFAULT 0");
         systemupdates.add("faster INTEGER DEFAULT 0");
         systemupdates.add("rapid INTEGER DEFAULT 0");
         systemupdates.add("warp INTEGER DEFAULT 0");
+        systemupdates.add("flight INTEGER DEFAULT 0");
     }
 
     /**

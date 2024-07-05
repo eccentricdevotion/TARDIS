@@ -134,11 +134,14 @@ class TARDISMySQLDatabaseUpdater {
         sonicupdates.add("scan_type int(1) DEFAULT '0'");
         flightupdates.add("chicken varchar(48) DEFAULT ''");
         flightupdates.add("stand varchar(48) DEFAULT ''");
+        systemupdates.add("monitor int(1) DEFAULT '0'");
+        systemupdates.add("telepathic int(1) DEFAULT '0'");
         systemupdates.add("feature int(1) DEFAULT '0'");
         systemupdates.add("throttle int(1) DEFAULT '0'");
         systemupdates.add("faster int(1) DEFAULT '0'");
         systemupdates.add("rapid int(1) DEFAULT '0'");
         systemupdates.add("warp int(1) DEFAULT '0'");
+        systemupdates.add("flight int(1) DEFAULT '0'");
     }
 
     /**
