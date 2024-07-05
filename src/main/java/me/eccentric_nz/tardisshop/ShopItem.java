@@ -10,6 +10,7 @@ public enum ShopItem {
     APPLE_JELLY_BABY("Apple Jelly Baby", Material.MELON_SLICE, 10000014),
     ARS_SEED("ARS Seed", Material.QUARTZ_BLOCK, 1, ShopItemRecipe.SEED),
     ARTRON_CAPACITOR("Artron Capacitor", Material.BUCKET, 10000003),
+    ARTRON_CAPACITOR_STORAGE("Artron Capacitor Storage", Material.GRAY_SHULKER_BOX, 1),
     ARTRON_STORAGE_CELL("Artron Storage Cell", Material.BUCKET, 10000001),
     AUTHORISED_CONTROL_DISK("Authorised Control Disk", Material.MUSIC_DISC_FAR, 10000001),
     BIGGER_SEED("Bigger Seed", Material.GOLD_BLOCK, 1, ShopItemRecipe.SEED),

@@ -92,6 +92,7 @@ public enum TARDISDescription {
     PRESET_STORAGE_DISK_INFO("A Preset Storage Disk is a craftable disk that lets you set the TARDIS exterior preset."),
     SAVE_STORAGE_DISK_INFO("A Save Storage Disk is a craftable disk that lets you travel to a saved location."),
     ARTRON_CAPACITOR_INFO("An Artron Capacitor lets you overcharge your TARDIS with Artron Energy."),
+    ARTRON_CAPACITOR_STORAGE_INFO("An Artron Capacitor Storage block lets you charge an Artron Furnace using TARDIS energy. It is also found in the Eye of Harmony room, where you can store Artron Capacitors."),
     ARTRON_STORAGE_CELL_INFO("An Artron Storage Cell lets you store and transfer Artron Energy."),
     ARTRON_FURNACE_INFO("An Artron Furnace is a special furnace that can use Artron Storage Cells for fuel. The Artron Furnace cooks quickly but doesn't burn as long as a regular furnace."),
     BOW_TIE_INFO("Bow ties are cool."),

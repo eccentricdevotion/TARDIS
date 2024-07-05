@@ -38,6 +38,7 @@ public class TARDISShapedRecipe {
     public void addShapedRecipes() {
         new AcidBatteryRecipe(plugin).addRecipe();
         new ArtronCapacitorRecipe(plugin).addRecipe();
+        new ArtronCapacitorStorageRecipe(plugin).addRecipe();
         new ArtronStorageCellRecipe(plugin).addRecipe();
         new AuthorisedControlDiskRecipe(plugin).addRecipe();
         new BioscannerCircuitRecipe(plugin).addRecipe();

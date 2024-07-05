@@ -316,6 +316,9 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 if (chat.equalsIgnoreCase("C")) {
                     processKey(p, TARDISInfoMenu.ARTRON_CAPACITOR);
                 }
+                if (chat.equalsIgnoreCase("n")) {
+                    processKey(p, TARDISInfoMenu.ARTRON_CAPACITOR_STORAGE);
+                }
                 if (chat.equalsIgnoreCase("B")) {
                     processKey(p, TARDISInfoMenu.BIOME_READER);
                 }
@@ -1150,6 +1153,15 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 }
                 if (chat.equalsIgnoreCase("R")) {
                     new TISRecipe(plugin).show(p, TARDISInfoMenu.ARTRON_CAPACITOR_RECIPE);
+                }
+                exit(p);
+            }
+            case ARTRON_CAPACITOR_STORAGE -> {
+                if (chat.equalsIgnoreCase("I")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.ARTRON_CAPACITOR_STORAGE_INFO);
+                }
+                if (chat.equalsIgnoreCase("R")) {
+                    new TISRecipe(plugin).show(p, TARDISInfoMenu.ARTRON_CAPACITOR_STORAGE_RECIPE);
                 }
                 exit(p);
             }
