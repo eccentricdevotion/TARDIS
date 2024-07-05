@@ -18,7 +18,7 @@ public class SystemUpgrades {
     }
 
     public boolean give(CommandSender sender, String player, String upgrade) {
-        if (plugin.getConfig().getBoolean("difficulty.system_upgrades")) {
+        if (!plugin.getConfig().getBoolean("difficulty.system_upgrades")) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "SYS_DISABLED");
             return true;
         }
