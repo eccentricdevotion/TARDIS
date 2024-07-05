@@ -6,7 +6,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.BookMeta;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 
@@ -97,13 +97,13 @@ public class ShapedPageBuilder extends PageBuilder {
         Map<Character, RecipeChoice> choices = shapedRecipe.getChoiceMap();
         String[] shape = shapedRecipe.getShape();
         for (String row : shape) {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < row.length(); i++) {
                 Character c = row.charAt(i);
                 switch (c) {
                     case ',' -> {
                         // do nothing
                     }
-                    case '-' -> tableBuilder.append("'air',");
+                    case ' ' -> tableBuilder.append("'air',");
                     default -> {
                         // get ingredient
                         String dashed = "";
@@ -120,7 +120,7 @@ public class ShapedPageBuilder extends PageBuilder {
                                     dashed = TARDISStringUtils.toLowercaseDashed("Potion of " + TARDISStringUtils.capitalise(potion));
                                 }
                                 case ENCHANTED_BOOK -> {
-                                    BookMeta bm = (BookMeta) is.getItemMeta();
+                                    EnchantmentStorageMeta bm = (EnchantmentStorageMeta) is.getItemMeta();
                                     String enchant = bm.getEnchants().keySet().stream().findFirst().toString();
                                     String cap = TARDISStringUtils.capitalise(enchant);
                                     dashed = TARDISStringUtils.toLowercaseDashed("Enchanted Book of " + cap);

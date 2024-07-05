@@ -6,7 +6,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
-import org.bukkit.inventory.meta.BookMeta;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 
@@ -62,7 +62,7 @@ public class PageBuilder {
                     link = String.format(MINECRAFT, ingredient, ingredient.replaceAll(" ", "_"));
                 }
                 case ENCHANTED_BOOK -> {
-                    BookMeta bm = (BookMeta) is.getItemMeta();
+                    EnchantmentStorageMeta bm = (EnchantmentStorageMeta) is.getItemMeta();
                     String enchant = bm.getEnchants().keySet().stream().findFirst().toString();
                     String cap = TARDISStringUtils.capitalise(enchant);
                     ingredient = "Enchanted Book of " + cap;

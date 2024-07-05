@@ -38,7 +38,7 @@ public class TARDISBiomeCommand {
         if (sender instanceof Player player) {
             Location location = player.getLocation();
             String biome = BiomeHelper.getBiomeName(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
-            TARDIS.plugin.getMessenger().message(player, "Biome: "+biome);
+            TARDIS.plugin.getMessenger().message(player, "Biome: " + biome);
         }
         return true;
     }
