@@ -615,7 +615,7 @@ public class TARDISCondensables {
             condensables.put("NETHER_BRICK", 4);
             condensables.put("NETHER_BRICK_FENCE", 10);
             condensables.put("NETHER_BRICK_SLAB", 2);
-            condensables.put("NETHER_BRICK_STAIRS", 121);
+            condensables.put("NETHER_BRICK_STAIRS", 24);
             condensables.put("NETHER_BRICK_WALL", 2);
             condensables.put("NETHER_BRICKS", 16);
             condensables.put("NETHER_GOLD_ORE", 105);
@@ -745,13 +745,13 @@ public class TARDISCondensables {
             condensables.put("PURPUR_BLOCK", 22);
             condensables.put("PURPUR_PILLAR", 22);
             condensables.put("PURPUR_SLAB", 26);
-            condensables.put("PURPUR_STAIRS", 122);
+            condensables.put("PURPUR_STAIRS", 33);
             condensables.put("QUARTZ", 15);
             condensables.put("QUARTZ_BLOCK", 60);
             condensables.put("QUARTZ_BRICKS", 1);
             condensables.put("QUARTZ_PILLAR", 60);
             condensables.put("QUARTZ_SLAB", 30);
-            condensables.put("QUARTZ_STAIRS", 122);
+            condensables.put("QUARTZ_STAIRS", 90);
             condensables.put("RABBIT", 3);
             condensables.put("RABBIT_FOOT", 100);
             condensables.put("RABBIT_HIDE", 10);
@@ -766,13 +766,13 @@ public class TARDISCondensables {
             condensables.put("RED_GLAZED_TERRACOTTA", 20);
             condensables.put("RED_MUSHROOM", 2);
             condensables.put("RED_NETHER_BRICK_SLAB", 12);
-            condensables.put("RED_NETHER_BRICK_STAIRS", 12);
+            condensables.put("RED_NETHER_BRICK_STAIRS", 24);
             condensables.put("RED_NETHER_BRICK_WALL", 12);
             condensables.put("RED_NETHER_BRICKS", 12);
             condensables.put("RED_SAND", 1);
             condensables.put("RED_SANDSTONE", 3);
             condensables.put("RED_SANDSTONE_SLAB", 2);
-            condensables.put("RED_SANDSTONE_STAIRS", 119);
+            condensables.put("RED_SANDSTONE_STAIRS", 4);
             condensables.put("RED_SANDSTONE_WALL", 2);
             condensables.put("RED_SHULKER_BOX", 120);
             condensables.put("RED_STAINED_GLASS", 32);
@@ -796,7 +796,7 @@ public class TARDISCondensables {
             condensables.put("SAND", 1);
             condensables.put("SANDSTONE", 3);
             condensables.put("SANDSTONE_SLAB", 2);
-            condensables.put("SANDSTONE_STAIRS", 118);
+            condensables.put("SANDSTONE_STAIRS", 4);
             condensables.put("SANDSTONE_WALL", 2);
             condensables.put("SCAFFOLDING", 18);
             condensables.put("TURTLE_SCUTE", 20);
@@ -854,7 +854,7 @@ public class TARDISCondensables {
             condensables.put("STONE", 30);
             condensables.put("STONE_AXE", 3);
             condensables.put("STONE_BRICK_SLAB", 2);
-            condensables.put("STONE_BRICK_STAIRS", 124);
+            condensables.put("STONE_BRICK_STAIRS", 40);
             condensables.put("STONE_BRICK_WALL", 2);
             condensables.put("STONE_BRICKS", 4);
             condensables.put("STONE_BUTTON", 16);

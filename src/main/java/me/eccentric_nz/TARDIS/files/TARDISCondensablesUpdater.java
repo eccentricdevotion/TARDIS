@@ -544,6 +544,22 @@ public class TARDISCondensablesUpdater {
                 plugin.getCondensablesConfig().set("BRICK_WALL", 20);
                 i++;
             }
+            // nerf some other _STAIRS
+            if (plugin.getCondensablesConfig().getInt("NETHER_BRICK_STAIRS") == 121) {
+                plugin.getCondensablesConfig().set("NETHER_BRICK_STAIRS", 24);
+                plugin.getCondensablesConfig().set("MAGMA_BLOCK", 60);
+                plugin.getCondensablesConfig().set("PURPUR_STAIRS", 33);
+                plugin.getCondensablesConfig().set("QUARTZ_STAIRS", 90);
+                plugin.getCondensablesConfig().set("RED_NETHER_BRICK_STAIRS", 24);
+                plugin.getCondensablesConfig().set("RED_SANDSTONE_STAIRS", 4);
+                plugin.getCondensablesConfig().set("SANDSTONE_STAIRS", 4);
+                plugin.getCondensablesConfig().set("STONE_BRICK_STAIRS", 40);
+                i++;
+            }
+            // nerf MAGMA_BLOCK
+            if (plugin.getCondensablesConfig().getInt("MAGMA_BLOCK") == 600) {
+                plugin.getCondensablesConfig().set("MAGMA_BLOCK", 60);
+            }
             if (plugin.getCondensablesConfig().contains("Material.TADPOLE_BUCKET")) {
                 // remove
                 plugin.getCondensablesConfig().set("Material m = Material.TADPOLE_BUCKET", null);
