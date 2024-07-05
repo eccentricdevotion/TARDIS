@@ -34,16 +34,25 @@ public class SystemUpgrades {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NO_TARDIS");
             return true;
         }
-        SystemTree systemTree;
-        try {
-            systemTree = SystemTree.valueOf(upgrade);
-        } catch (IllegalArgumentException e) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "SYS_INVALID");
-            return true;
+        if (upgrade.equalsIgnoreCase("all")) {
+            for (SystemTree st : SystemTree.values()) {
+                if (st.getSlot() != -1 && st != SystemTree.UPGRADE_TREE) {
+                    new SystemUpgradeUpdate(plugin).set(uuid, rst.getTardisId(), st);
+                }
+            }
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "SYS_SUCCESS", "full TARDIS");
+        } else {
+            SystemTree systemTree;
+            try {
+                systemTree = SystemTree.valueOf(upgrade);
+            } catch (IllegalArgumentException e) {
+                plugin.getMessenger().send(sender, TardisModule.TARDIS, "SYS_INVALID");
+                return true;
+            }
+            // update system upgrade record
+            new SystemUpgradeUpdate(plugin).set(uuid, rst.getTardisId(), systemTree);
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "SYS_SUCCESS", systemTree.getName());
         }
-        // update system upgrade record
-        new SystemUpgradeUpdate(plugin).set(uuid, rst.getTardisId(), systemTree);
-        plugin.getMessenger().send(sender, TardisModule.TARDIS, "SYS_SUCCESS", systemTree.getName());
         return true;
     }
 }
