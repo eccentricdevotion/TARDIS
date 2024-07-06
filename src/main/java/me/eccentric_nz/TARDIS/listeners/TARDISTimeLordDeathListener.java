@@ -420,6 +420,9 @@ public class TARDISTimeLordDeathListener implements Listener {
                 }
             }
         }
+        // always remove player from eye damage list
+        plugin.getTrackerKeeper().getEyeDamage().remove(uuid);
+        // spawn an ossified if configured
         if (plugin.getConfig().getBoolean("modules.weeping_angels")
                 && plugin.getConfig().getBoolean("eye_of_harmony.ossified")
                 && plugin.getTrackerKeeper().getEyeDamage().contains(uuid)) {
