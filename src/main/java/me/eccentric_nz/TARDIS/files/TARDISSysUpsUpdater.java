@@ -70,6 +70,13 @@ public class TARDISSysUpsUpdater {
             system_upgrades_config.set("throttle.exterior_flight", 4000);
             i++;
         }
+        if (system_upgrades_config.contains("tools.telepathic_circuit") && system_upgrades_config.getInt("tools.telepathic_circuit") == 0) {
+            system_upgrades_config.set("tools.telepathic_circuit", 2000);
+            system_upgrades_config.set("feature.saves", 1000);
+            system_upgrades_config.set("feature.monitor", 2000);
+            system_upgrades_config.set("feature.force_field", 3000);
+            i++;
+        }
         try {
             system_upgrades_config.save(new File(plugin.getDataFolder(), "system_upgrades.yml"));
             if (i > 0) {

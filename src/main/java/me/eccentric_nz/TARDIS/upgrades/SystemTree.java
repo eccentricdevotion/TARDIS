@@ -47,7 +47,7 @@ public enum SystemTree {
     DISTANCE_3(1004, 42, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 4x", "distance multiplier."), "DISTANCE_2", "navigation"),
     INTER_DIMENSIONAL_TRAVEL(1005, 51, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks travel to", "the Nether and End."), "DISTANCE_3", "navigation"),
     THROTTLE(1002, 17, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the", "flight branch."), "UPGRADE_TREE", "branch"),
-    FASTER(1004, 26, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks faster", "travel speed."), "FLIGHT", "throttle"),
+    FASTER(1004, 26, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks faster", "travel speed."), "THROTTLE", "throttle"),
     RAPID(1004, 35, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks rapid", "travel speed."), "FASTER", "throttle"),
     WARP(1004, 44, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks warp", "travel speed."), "RAPID", "throttle"),
     EXTERIOR_FLIGHT(1005, 53, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks flying the", "TARDIS exterior."), "WARP", "throttle"),
@@ -126,6 +126,9 @@ public enum SystemTree {
             }
             case TARDIS_LOCATOR -> {
                 return "locator";
+            }
+            case TELEPATHIC_CIRCUIT -> {
+                return "telepathic";
             }
             default -> {
                 return toString().toLowerCase();
