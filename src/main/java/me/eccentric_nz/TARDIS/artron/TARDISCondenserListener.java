@@ -188,8 +188,6 @@ public class TARDISCondenserListener implements Listener {
                 }
                 // don't condense enchanted items so players don't accidentally condense their
                 // gear ignores curse enchantments
-                // note: i would really love to use Enchantment#isCursed() here for forwards
-                // compatibility but it's deprecated with no good alternative
                 if (plugin.getConfig().getBoolean("preferences.no_enchanted_condense")) {
                     if (!is.getEnchantments().keySet().stream().allMatch(ench -> ench.equals(Enchantment.BINDING_CURSE) || ench.equals(Enchantment.VANISHING_CURSE))) {
                         savedEnchantedItems++;
@@ -312,10 +310,14 @@ public class TARDISCondenserListener implements Listener {
             int maxStack = material.getMaxStackSize();
             int amount = entry.getValue();
             int remainder = amount % maxStack;
+            plugin.debug("remainder = " +remainder);
             int stacks = amount / maxStack;
-            // always drop the remainder
-            ItemStack rem = new ItemStack(material, remainder);
-            player.getInventory().addItem(rem);
+            plugin.debug("stacks = "+stacks);
+            // drop the remainder if not a whole stack
+            if (remainder > 0) {
+                ItemStack rem = new ItemStack(material, remainder);
+                player.getInventory().addItem(rem);
+            }
             if (stacks > 0) {
                 for (int i = 0; i < stacks; i++) {
                     ItemStack is = new ItemStack(material, maxStack);
