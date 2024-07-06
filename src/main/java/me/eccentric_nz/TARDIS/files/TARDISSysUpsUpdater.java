@@ -23,6 +23,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,6 +34,7 @@ public class TARDISSysUpsUpdater {
     private final TARDIS plugin;
     private final FileConfiguration system_upgrades_config;
     private final HashMap<String, Integer> integerOptions = new HashMap<>();
+    private final HashMap<String, List<String>> comments = new HashMap<>();
 
     public TARDISSysUpsUpdater(TARDIS plugin) {
         this.plugin = plugin;
@@ -41,6 +43,14 @@ public class TARDISSysUpsUpdater {
         integerOptions.put("throttle.faster", 1000);
         integerOptions.put("throttle.rapid", 2000);
         integerOptions.put("throttle.warp", 3000);
+        // comments
+        comments.put("branch", List.of("system upgrade costs", "https://tardis.pages.dev/system-upgrades#configuration-options"));
+        comments.put("architecture", List.of("architecture branch"));
+        comments.put("feature", List.of("feature branch"));
+        comments.put("tools", List.of("tools branch"));
+        comments.put("navigation", List.of("navigation branch"));
+        comments.put("throttle", List.of("# throttle branch"));
+
     }
 
     public void checkSystemUpgradesConfig() {
@@ -75,6 +85,11 @@ public class TARDISSysUpsUpdater {
             system_upgrades_config.set("feature.saves", 1000);
             system_upgrades_config.set("feature.monitor", 2000);
             system_upgrades_config.set("feature.force_field", 3000);
+            i++;
+        }
+        // add comments
+        for (Map.Entry<String, List<String>> entry : comments.entrySet()) {
+            plugin.getConfig().setComments(entry.getKey(), entry.getValue());
             i++;
         }
         try {

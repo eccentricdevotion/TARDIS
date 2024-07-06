@@ -1,3 +1,5 @@
+# system upgrade costs
+# https://tardis.pages.dev/system-upgrades#configuration-options
 branch: 100
 # architecture branch
 architecture:

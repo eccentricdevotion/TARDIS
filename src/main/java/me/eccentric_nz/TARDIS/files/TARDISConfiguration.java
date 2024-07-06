@@ -23,7 +23,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -259,25 +258,25 @@ public class TARDISConfiguration {
         // doubles
         doubleOptions.put("damage_amount", 0.5);
         // comments
-        comments.put("abandon", Arrays.asList("abandoned TARDISes", "https://tardis.pages.dev/abandon#config-options"));
-        comments.put("allow", Arrays.asList("restrictions", "https://tardis.pages.dev/configuration/allow"));
-        comments.put("arch", Arrays.asList("chameleon arch", "https://tardis.pages.dev/chameleon-arch#chameleon-arch-configuration"));
-        comments.put("archive", Arrays.asList("console archives", "https://tardis.pages.dev/archive#config-options"));
-        comments.put("circuits", Arrays.asList("circuits", "https://tardis.pages.dev/circuit-use#configuration-options"));
-        comments.put("creation", Arrays.asList("inner TARDIS", "https://tardis.pages.dev/configuration/creation"));
-        comments.put("desktop", Arrays.asList("desktop theme", "https://tardis.pages.dev/desktop-theme#config-options"));
+        comments.put("abandon", List.of("abandoned TARDISes", "https://tardis.pages.dev/abandon#config-options"));
+        comments.put("allow", List.of("restrictions", "https://tardis.pages.dev/configuration/allow"));
+        comments.put("arch", List.of("chameleon arch", "https://tardis.pages.dev/chameleon-arch#chameleon-arch-configuration"));
+        comments.put("archive", List.of("console archives", "https://tardis.pages.dev/archive#config-options"));
+        comments.put("circuits", List.of("circuits", "https://tardis.pages.dev/circuit-use#configuration-options"));
+        comments.put("creation", List.of("inner TARDIS", "https://tardis.pages.dev/configuration/creation"));
+        comments.put("desktop", List.of("desktop theme", "https://tardis.pages.dev/desktop-theme#config-options"));
         comments.put("display", List.of("HUD display", "https://tardis.pages.dev/display"));
         comments.put("eye_of_harmony", List.of("eye of harmony preferences", "https://tardis.pages.dev/eye-of-harmony"));
-        comments.put("growth", Arrays.asList("room related", "https://tardis.pages.dev/configuration/growth"));
-        comments.put("junk", Arrays.asList("junk TARDIS", "https://tardis.pages.dev/junk-tardis#configuration-options"));
-        comments.put("mapping", Arrays.asList("mapping", "https://tardis.pages.dev/modules/mapping#configuration-options"));
-        comments.put("modules", Arrays.asList("modules are disabled by default", "https://tardis.pages.dev/modules"));
-        comments.put("police_box", Arrays.asList("outer TARDIS", "https://tardis.pages.dev/configuration/preset"));
-        comments.put("preferences", Arrays.asList("general preferences", "https://tardis.pages.dev/configuration/prefs"));
-        comments.put("siege", Arrays.asList("siege mode", "https://tardis.pages.dev/siege-mode#configuration"));
-        comments.put("sonic", Arrays.asList("sonic screwdriver preferences", "https://tardis.pages.dev/sonic-dock#configuration"));
-        comments.put("storage", Arrays.asList("how the plugin persists data", "https://tardis.pages.dev/configuration/storage"));
-        comments.put("travel", Arrays.asList("travel settings", "https://tardis.pages.dev/configuration/travel"));
+        comments.put("growth", List.of("room related", "https://tardis.pages.dev/configuration/growth"));
+        comments.put("junk", List.of("junk TARDIS", "https://tardis.pages.dev/junk-tardis#configuration-options"));
+        comments.put("mapping", List.of("mapping", "https://tardis.pages.dev/modules/mapping#configuration-options"));
+        comments.put("modules", List.of("modules are disabled by default", "https://tardis.pages.dev/modules"));
+        comments.put("police_box", List.of("outer TARDIS", "https://tardis.pages.dev/configuration/preset"));
+        comments.put("preferences", List.of("general preferences", "https://tardis.pages.dev/configuration/prefs"));
+        comments.put("siege", List.of("siege mode", "https://tardis.pages.dev/siege-mode#configuration"));
+        comments.put("sonic", List.of("sonic screwdriver preferences", "https://tardis.pages.dev/sonic-dock#configuration"));
+        comments.put("storage", List.of("how the plugin persists data", "https://tardis.pages.dev/configuration/storage"));
+        comments.put("travel", List.of("travel settings", "https://tardis.pages.dev/configuration/travel"));
         comments.put("conversions", List.of("don't touch!"));
     }
 
