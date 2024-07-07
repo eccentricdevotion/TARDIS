@@ -96,6 +96,7 @@ public enum TARDISDescription {
     ARTRON_STORAGE_CELL_INFO("An Artron Storage Cell lets you store and transfer Artron Energy."),
     ARTRON_FURNACE_INFO("An Artron Furnace is a special furnace that can use Artron Storage Cells for fuel. The Artron Furnace cooks quickly but doesn't burn as long as a regular furnace."),
     BOW_TIE_INFO("Bow ties are cool."),
+    SPACE_HELMET_INFO("A TARDIS Space Helmet - wear it to prevent player damage when inside the Eye of Harmony room."),
     CUSTARD_INFO("Part of the Eleventh Doctor's regeneration food, good for dipping fish fingers in."),
     CUSTARD_CREAM_INFO("The thirteenth Doctor thought that Custard Creams were 'the best' type of biscuit."),
     FISH_FINGER_INFO("One half of the Eleventh Doctor's regeneration food. Best eaten with custard."),

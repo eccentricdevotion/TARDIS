@@ -10,11 +10,9 @@
 6. Modelled controls [#836](https://github.com/eccentricdevotion/TARDIS/issues/836)
 7. Exterior button door control [#839](https://github.com/eccentricdevotion/TARDIS/issues/839)
 8. Console lamp [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)
-9. Add new eye of harmony room [#781](https://github.com/eccentricdevotion/TARDIS/issues/781)
-   - players take damage when in the room _done_ - intercept the hurt animation packet and cancel it?
-   - add space suit (armour) that mitigates damage from the eye of harmony star
-   - add new monster _Ossified [Time Zombie](https://tardis.fandom.com/wiki/Time_zombie)_ to spawn if player dies in the room
-10. ?
+9. Increase the number of slots in the Advanced console
+10. Artron Capacitor Storage placed next to an Artron Furnace will power it with TARDIS energy
+11. ?
 
 ## Next version `5.8.0`
 

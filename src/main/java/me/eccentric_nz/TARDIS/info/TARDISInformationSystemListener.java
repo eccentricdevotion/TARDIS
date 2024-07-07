@@ -887,6 +887,9 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 if (chat.equalsIgnoreCase("u")) {
                     processKey(p, TARDISInfoMenu.COMMUNICATOR);
                 }
+                if (chat.equalsIgnoreCase("H")) {
+                    processKey(p, TARDISInfoMenu.SPACE_HELMET);
+                }
             }
             case PLANETS -> {
                 if (chat.equalsIgnoreCase("S")) {
@@ -1045,6 +1048,15 @@ public class TARDISInformationSystemListener implements Listener, CommandExecuto
                 }
                 if (chat.equalsIgnoreCase("R")) {
                     new TISRecipe(plugin).show(p, TARDISInfoMenu.COMMUNICATOR_RECIPE);
+                }
+                exit(p);
+            }
+            case SPACE_HELMET -> {
+                if (chat.equalsIgnoreCase("I")) {
+                    new TISInfo(plugin).show(p, TARDISInfoMenu.SPACE_HELMET_INFO);
+                }
+                if (chat.equalsIgnoreCase("R")) {
+                    new TISRecipe(plugin).show(p, TARDISInfoMenu.SPACE_HELMET_RECIPE);
                 }
                 exit(p);
             }
