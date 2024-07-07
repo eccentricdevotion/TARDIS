@@ -226,7 +226,10 @@ public class TARDISControlListener implements Listener {
                                 case 39 -> new ThrottleAction(plugin).setSpaceTime(block, player);
                                 // relativity differentiator
                                 case 47 -> new DifferentiatorAction(plugin).bleep(block, id, player);
-                                case 54 -> new EyeOfHarmonyAction(plugin, id).openGUI(id, player);
+                                case 54 -> {
+                                    event.setCancelled(true);
+                                    new EyeOfHarmonyAction(plugin, id).openGUI(id, player);
+                                }
                                 default -> {
                                 }
                             }
