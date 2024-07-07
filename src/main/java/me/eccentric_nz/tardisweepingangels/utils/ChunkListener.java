@@ -97,7 +97,9 @@ public class ChunkListener implements Listener {
                         } else if (pdc.has(TARDISWeepingAngels.EMPTY, PersistentDataType.INTEGER)) {
                             new Equipper(Monster.EMPTY_CHILD, zombie, false, false).setHelmetAndInvisibilty();
                             EmptyChildEquipment.setSpeed(zombie);
-                        } else if (zombie.getPersistentDataContainer().has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)) {
+                        } else if (pdc.has(TARDISWeepingAngels.OSSIFIED, PersistentDataType.INTEGER)) {
+                            new Equipper(Monster.OSSIFIED, zombie, false, false).setHelmetAndInvisibilty();
+                        } else if (pdc.has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)) {
                             new Equipper(Monster.SLITHEEN, zombie, false).setHelmetAndInvisibilty();
                         } else if (pdc.has(TARDISWeepingAngels.SONTARAN, PersistentDataType.INTEGER)) {
                             new Equipper(Monster.SONTARAN, zombie, false, false).setHelmetAndInvisibilty();

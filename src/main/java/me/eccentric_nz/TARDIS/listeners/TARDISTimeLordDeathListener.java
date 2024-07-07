@@ -424,12 +424,11 @@ public class TARDISTimeLordDeathListener implements Listener {
         plugin.getTrackerKeeper().getEyeDamage().remove(uuid);
         // spawn an ossified if configured
         if (plugin.getConfig().getBoolean("modules.weeping_angels")
-                && plugin.getConfig().getBoolean("eye_of_harmony.ossified")
-                && plugin.getTrackerKeeper().getEyeDamage().contains(uuid)) {
+                && plugin.getConfig().getBoolean("eye_of_harmony.ossified")) {
             // spawn an ossified at the player's location
             Location l = player.getLocation();
             LivingEntity e = new MonsterSpawner().create(l, Monster.OSSIFIED);
-            new Equipper(Monster.CYBERMAN, e, false, false).setHelmetAndInvisibilty();
+            new Equipper(Monster.OSSIFIED, e, false, false).setHelmetAndInvisibilty();
             plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.ZOMBIE, Monster.OSSIFIED, l));
             String name = player.getName();
             e.setCustomName(name);

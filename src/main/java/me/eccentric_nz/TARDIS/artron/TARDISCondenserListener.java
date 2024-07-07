@@ -310,9 +310,7 @@ public class TARDISCondenserListener implements Listener {
             int maxStack = material.getMaxStackSize();
             int amount = entry.getValue();
             int remainder = amount % maxStack;
-            plugin.debug("remainder = " +remainder);
             int stacks = amount / maxStack;
-            plugin.debug("stacks = "+stacks);
             // drop the remainder if not a whole stack
             if (remainder > 0) {
                 ItemStack rem = new ItemStack(material, remainder);

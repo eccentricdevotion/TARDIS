@@ -125,6 +125,7 @@ public class Equipper {
             // make silent
             le.setSilent(true);
             le.setCollidable(true);
+            le.setPersistent(true);
             // set TWA data
             le.getPersistentDataContainer().set(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER, monster.getPersist());
         } else {
