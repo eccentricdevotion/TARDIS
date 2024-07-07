@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.TARDISScanner;
-import me.eccentric_nz.tardischunkgenerator.disguise.*;
+import me.eccentric_nz.TARDIS.lazarus.disguise.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.*;

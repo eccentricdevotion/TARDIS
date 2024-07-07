@@ -14,24 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardischunkgenerator.disguise;
+package me.eccentric_nz.TARDIS.lazarus.disguise;
 
-public enum AGE {
+import net.minecraft.world.entity.animal.MushroomCow;
 
-    BABY(-24000),
-    ADULT(1);
+public enum MUSHROOM_COW {
 
-    private final int age;
+    BROWN(MushroomCow.MushroomType.BROWN), // BROWN
+    RED(MushroomCow.MushroomType.RED); // RED
 
-    AGE(int age) {
-        this.age = age;
+    private final MushroomCow.MushroomType nmsType;
+
+    MUSHROOM_COW(MushroomCow.MushroomType nmsType) {
+        this.nmsType = nmsType;
     }
 
-    public static AGE getFromBoolean(boolean b) {
-        return (b) ? BABY : ADULT;
+    public static MUSHROOM_COW getFromMushroomCowType(org.bukkit.entity.MushroomCow.Variant variant) {
+        return MUSHROOM_COW.valueOf(variant.toString());
     }
 
-    public int getAge() {
-        return age;
+    public MushroomCow.MushroomType getNmsType() {
+        return nmsType;
     }
 }

@@ -14,31 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardischunkgenerator.disguise;
+package me.eccentric_nz.TARDIS.lazarus.disguise;
 
-import net.minecraft.world.entity.animal.Panda;
+import net.minecraft.world.entity.animal.Fox;
 
-public enum GENE {
+public enum FOX {
 
-    NORMAL(Panda.Gene.NORMAL), // NORMAL
-    LAZY(Panda.Gene.LAZY), // LAZY
-    WORRIED(Panda.Gene.WORRIED), // WORRIED
-    PLAYFUL(Panda.Gene.PLAYFUL), // PLAYFUL
-    BROWN(Panda.Gene.BROWN), // BROWN
-    WEAK(Panda.Gene.WEAK), // WEAK
-    AGGRESSIVE(Panda.Gene.AGGRESSIVE); // AGGRESSIVE
+    RED(Fox.Type.RED), // RED
+    SNOW(Fox.Type.SNOW); // SNOW
 
-    private final Panda.Gene nmsGene;
+    private final Fox.Type nmsType;
 
-    GENE(Panda.Gene nmsGene) {
-        this.nmsGene = nmsGene;
+    FOX(Fox.Type nmsType) {
+        this.nmsType = nmsType;
     }
 
-    public static GENE getFromPandaGene(org.bukkit.entity.Panda.Gene gene) {
-        return GENE.valueOf(gene.toString());
+    public static FOX getFromFoxType(org.bukkit.entity.Fox.Type type) {
+        return FOX.valueOf(type.toString());
     }
 
-    public Panda.Gene getNmsGene() {
-        return nmsGene;
+    public Fox.Type getNmsType() {
+        return nmsType;
     }
 }

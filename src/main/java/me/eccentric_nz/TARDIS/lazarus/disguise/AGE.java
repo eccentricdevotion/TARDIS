@@ -14,26 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardischunkgenerator.disguise;
+package me.eccentric_nz.TARDIS.lazarus.disguise;
 
-import net.minecraft.world.entity.animal.Fox;
+public enum AGE {
 
-public enum FOX {
+    BABY(-24000),
+    ADULT(1);
 
-    RED(Fox.Type.RED), // RED
-    SNOW(Fox.Type.SNOW); // SNOW
+    private final int age;
 
-    private final Fox.Type nmsType;
-
-    FOX(Fox.Type nmsType) {
-        this.nmsType = nmsType;
+    AGE(int age) {
+        this.age = age;
     }
 
-    public static FOX getFromFoxType(org.bukkit.entity.Fox.Type type) {
-        return FOX.valueOf(type.toString());
+    public static AGE getFromBoolean(boolean b) {
+        return (b) ? BABY : ADULT;
     }
 
-    public Fox.Type getNmsType() {
-        return nmsType;
+    public int getAge() {
+        return age;
     }
 }

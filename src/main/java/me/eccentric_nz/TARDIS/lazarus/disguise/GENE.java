@@ -14,26 +14,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardischunkgenerator.disguise;
+package me.eccentric_nz.TARDIS.lazarus.disguise;
 
-import net.minecraft.world.entity.animal.MushroomCow;
+import net.minecraft.world.entity.animal.Panda;
 
-public enum MUSHROOM_COW {
+public enum GENE {
 
-    BROWN(MushroomCow.MushroomType.BROWN), // BROWN
-    RED(MushroomCow.MushroomType.RED); // RED
+    NORMAL(Panda.Gene.NORMAL), // NORMAL
+    LAZY(Panda.Gene.LAZY), // LAZY
+    WORRIED(Panda.Gene.WORRIED), // WORRIED
+    PLAYFUL(Panda.Gene.PLAYFUL), // PLAYFUL
+    BROWN(Panda.Gene.BROWN), // BROWN
+    WEAK(Panda.Gene.WEAK), // WEAK
+    AGGRESSIVE(Panda.Gene.AGGRESSIVE); // AGGRESSIVE
 
-    private final MushroomCow.MushroomType nmsType;
+    private final Panda.Gene nmsGene;
 
-    MUSHROOM_COW(MushroomCow.MushroomType nmsType) {
-        this.nmsType = nmsType;
+    GENE(Panda.Gene nmsGene) {
+        this.nmsGene = nmsGene;
     }
 
-    public static MUSHROOM_COW getFromMushroomCowType(org.bukkit.entity.MushroomCow.Variant variant) {
-        return MUSHROOM_COW.valueOf(variant.toString());
+    public static GENE getFromPandaGene(org.bukkit.entity.Panda.Gene gene) {
+        return GENE.valueOf(gene.toString());
     }
 
-    public MushroomCow.MushroomType getNmsType() {
-        return nmsType;
+    public Panda.Gene getNmsGene() {
+        return nmsGene;
     }
 }
