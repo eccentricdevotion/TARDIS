@@ -19,7 +19,7 @@
 1. Sonic Blaster - used to temporarily remove blocks only
 2. Microscope as an addition to Chemistry?
 3. Regeneration - make a bunch of time lord disguises and the Elixir Of Life item.
-   - Regenerations to use particle effects, maybe a couple of shapes, and configurable like particle like materialisation
+   - Regenerations to use particle effects, maybe a couple of shapes, and configurable like particle materialisation
    - Configurable number of regenerations - classic 12 or new Who 15 for example? Could be permission based `tardis.regenerations.12`
    - Regenerations upon death or when elixir is drunk
    - Add potion effects both buff/debuff e.g. healing but also mining fatigue

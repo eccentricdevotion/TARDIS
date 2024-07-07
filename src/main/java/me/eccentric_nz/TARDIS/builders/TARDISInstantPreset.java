@@ -229,213 +229,239 @@ public class TARDISInstantPreset {
                     // if tardis is in the air add under door
                     TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), true);
                 }
-                switch (mat) {
-                    case GRASS_BLOCK, DIRT -> {
-                        BlockData subi = (preset.equals(ChameleonPreset.SUBMERGED)) ? chameleonBlockData : colData[yy];
-                        TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, subi, bd.getTardisID());
-                    }
-                    case BEDROCK -> {
-                        if (preset.equals(ChameleonPreset.THEEND)) {
-                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
-                            world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
-                        } else {
-                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+                if (Tag.STANDING_SIGNS.isTagged(mat) &&preset.equals(ChameleonPreset.APPERTURE)) {
+                    TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
+                } else if (Tag.WALL_SIGNS.isTagged(mat)) {
+                    // sign - if there is one
+                    if (preset.equals(ChameleonPreset.JUNK_MODE)) {
+                        // add a sign
+                        TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
+                        // remember its location
+                        String location = new Location(world, xx, (y + yy), zz).toString();
+                        plugin.getGeneralKeeper().getProtectBlockMap().put(location, bd.getTardisID());
+                        TARDISMaterialisePreset.saveJunkControl(location, "save_sign", bd.getTardisID());
+                        // make it a save_sign
+                        Block sign = world.getBlockAt(xx, (y + yy), zz);
+                        if (Tag.WALL_SIGNS.isTagged(sign.getType())) {
+                            Sign s = (Sign) sign.getState();
+                            SignSide front = s.getSide(Side.FRONT);
+                            SignSide back = s.getSide(Side.BACK);
+                            front.setLine(0, "TARDIS");
+                            front.setLine(1, plugin.getSigns().getStringList("saves").get(0));
+                            front.setLine(2, plugin.getSigns().getStringList("saves").get(1));
+                            front.setLine(3, "");
+                            back.setLine(0, "TARDIS");
+                            back.setLine(1, plugin.getSigns().getStringList("saves").get(0));
+                            back.setLine(2, plugin.getSigns().getStringList("saves").get(1));
+                            back.setLine(3, "");
+                            s.setWaxed(true);
+                            s.update();
                         }
-                    }
-                    case WHITE_WOOL, ORANGE_WOOL, MAGENTA_WOOL, LIGHT_BLUE_WOOL, YELLOW_WOOL, LIME_WOOL, PINK_WOOL, GRAY_WOOL, LIGHT_GRAY_WOOL, CYAN_WOOL, PURPLE_WOOL, BLUE_WOOL, BROWN_WOOL, GREEN_WOOL, RED_WOOL, BLACK_WOOL -> {
-                        if (preset.equals(ChameleonPreset.PARTY) || (preset.equals(ChameleonPreset.FLOWER) && mat.equals(Material.WHITE_WOOL))) {
-                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, random_colour, bd.getTardisID());
-                        }
-                        if ((preset.equals(ChameleonPreset.JUNK_MODE) || preset.equals(ChameleonPreset.JUNK)) && mat.equals(Material.ORANGE_WOOL)) {
-                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, TARDISConstants.BARRIER, bd.getTardisID());
-                            TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, xx, (y + yy), zz);
-                        }
-                    }
-                    case TORCH, GLOWSTONE, REDSTONE_LAMP -> { // lamps, glowstone and torches
-                        BlockData light;
-                        if (bd.isSubmarine() && mat.equals(Material.TORCH)) {
-                            light = Material.GLOWSTONE.createBlockData();
-                        } else {
-                            light = colData[yy];
-                        }
-                        if (mat.equals(Material.TORCH)) {
-                            do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), light));
-                        } else {
-                            if (light instanceof Lightable lit) {
-                                lit.setLit(true);
-                                TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, lit, bd.getTardisID());
+                    } else if (bd.shouldAddSign()) {
+                        TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
+                        Block sign = world.getBlockAt(xx, (y + yy), zz);
+                        plugin.getGeneralKeeper().getProtectBlockMap().put(sign.getLocation().toString(), bd.getTardisID());
+                        if (Tag.SIGNS.isTagged(sign.getType())) {
+                            Sign s = (Sign) sign.getState();
+                            SignSide front = s.getSide(Side.FRONT);
+                            if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
+                                HashMap<String, Object> wheret = new HashMap<>();
+                                wheret.put("tardis_id", bd.getTardisID());
+                                ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
+                                if (rst.resultSet()) {
+                                    Tardis tardis = rst.getTardis();
+                                    String player_name = TARDISStaticUtils.getNick(tardis.getUuid());
+                                    if (player_name == null) {
+                                        player_name = tardis.getOwner();
+                                    }
+                                    if (plugin.getServer().getPluginManager().getPlugin("Essentials") != null) {
+                                        Essentials essentials = (Essentials) plugin.getServer().getPluginManager().getPlugin("Essentials");
+                                        User user = essentials.getUser(tardis.getUuid());
+                                        player_name = ChatColor.stripColor(user.getNick(false));
+                                    }
+                                    String owner;
+                                    if (preset.equals(ChameleonPreset.GRAVESTONE) || preset.equals(ChameleonPreset.PUNKED) || preset.equals(ChameleonPreset.ROBOT)) {
+                                        owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;
+                                    } else {
+                                        owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
+                                    }
+                                    switch (preset) {
+                                        case GRAVESTONE -> front.setLine(3, owner);
+                                        case ANGEL, JAIL -> front.setLine(2, owner);
+                                        default -> front.setLine(0, owner);
+                                    }
+                                }
+                            }
+                            String line1;
+                            String line2;
+                            if (preset.equals(ChameleonPreset.CUSTOM)) {
+                                line1 = plugin.getPresets().custom.getFirstLine();
+                                line2 = plugin.getPresets().custom.getSecondLine();
                             } else {
-                                TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, light, bd.getTardisID());
+                                line1 = preset.getFirstLine();
+                                line2 = preset.getSecondLine();
                             }
-                        }
-                    }
-                    case IRON_DOOR, RAIL, ACACIA_DOOR, ACACIA_TRAPDOOR, BAMBOO_DOOR, BAMBOO_TRAPDOOR, BIRCH_DOOR, BIRCH_TRAPDOOR, CHERRY_DOOR, CHERRY_TRAPDOOR, CRIMSON_DOOR, CRIMSON_TRAPDOOR, DARK_OAK_DOOR, DARK_OAK_TRAPDOOR, JUNGLE_DOOR, JUNGLE_TRAPDOOR, MANGROVE_DOOR, MANGROVE_TRAPDOOR, OAK_DOOR, OAK_TRAPDOOR, SPRUCE_DOOR, SPRUCE_TRAPDOOR, WARPED_DOOR, WARPED_TRAPDOOR -> { // wood, iron & trap doors, rails
-                        boolean door = false;
-                        if (Tag.DOORS.isTagged(mat)) {
-                            Bisected bisected = (Bisected) colData[yy];
-                            door = bisected.getHalf().equals(Half.BOTTOM);
-                        }
-                        if (Tag.TRAPDOORS.isTagged(mat)) {
-                            door = true;
-                        }
-                        if (door) {
-                            // remember the door location
-                            String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
-                            Block doorBlock = world.getBlockAt(xx, y + yy, zz);
-                            String doorStr = doorBlock.getLocation().toString();
-                            plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
-                            // also remember the underdoor block
-                            String under = doorBlock.getRelative(BlockFace.DOWN).getLocation().toString();
-                            plugin.getGeneralKeeper().getProtectBlockMap().put(under, bd.getTardisID());
-                            TARDISBlockSetters.rememberBlock(world, xx, (y - 1), zz, bd.getTardisID());
-                            // save the door location in the database
-                            processDoor(doorloc);
-                            // place block under door if block is in list of blocks an iron door cannot go on
-                            if (yy == 0) {
-                                if (bd.isSubmarine() && plugin.isWorldGuardOnServer()) {
-                                    int sy = y - 1;
-                                    TARDISBlockSetters.setBlockAndRemember(world, xx, sy, zz, Material.SPONGE, bd.getTardisID());
-                                    Block sponge = world.getBlockAt(xx, sy, zz);
-                                    TARDISSponge.removeWater(sponge);
-                                } else if (!plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
-                                    TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
+                            switch (preset) {
+                                case ANGEL -> {
+                                    front.setLine(0, sign_colour + line1);
+                                    front.setLine(1, sign_colour + line2);
+                                    front.setLine(3, sign_colour + "TARDIS");
                                 }
-                            }
-                        } else {
-                            String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
-                            plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
-                        }
-                        if (mat.equals(Material.RAIL)) {
-                            do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colData[yy]));
-                        } else {
-                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
-                        }
-                    }
-                    case ACACIA_SIGN, BIRCH_SIGN, DARK_OAK_SIGN, JUNGLE_SIGN, OAK_SIGN, SPRUCE_SIGN -> {
-                        if (preset.equals(ChameleonPreset.APPERTURE)) {
-                            TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
-                        }
-                    }
-                    case ACACIA_WALL_SIGN, BIRCH_WALL_SIGN, DARK_OAK_WALL_SIGN, JUNGLE_WALL_SIGN, OAK_WALL_SIGN, SPRUCE_WALL_SIGN -> {
-                        // sign - if there is one
-                        if (bd.shouldAddSign()) {
-                            TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, colData[yy]);
-                            Block sign = world.getBlockAt(xx, (y + yy), zz);
-                            plugin.getGeneralKeeper().getProtectBlockMap().put(sign.getLocation().toString(), bd.getTardisID());
-                            if (Tag.SIGNS.isTagged(sign.getType())) {
-                                Sign s = (Sign) sign.getState();
-                                SignSide front = s.getSide(Side.FRONT);
-                                if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
-                                    HashMap<String, Object> wheret = new HashMap<>();
-                                    wheret.put("tardis_id", bd.getTardisID());
-                                    ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
-                                    if (rst.resultSet()) {
-                                        Tardis tardis = rst.getTardis();
-                                        String player_name = TARDISStaticUtils.getNick(tardis.getUuid());
-                                        if (player_name == null) {
-                                            player_name = tardis.getOwner();
-                                        }
-                                        if (plugin.getServer().getPluginManager().getPlugin("Essentials") != null) {
-                                            Essentials essentials = (Essentials) plugin.getServer().getPluginManager().getPlugin("Essentials");
-                                            User user = essentials.getUser(tardis.getUuid());
-                                            player_name = ChatColor.stripColor(user.getNick(false));
-                                        }
-                                        String owner;
-                                        if (preset.equals(ChameleonPreset.GRAVESTONE) || preset.equals(ChameleonPreset.PUNKED) || preset.equals(ChameleonPreset.ROBOT)) {
-                                            owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;
+                                case APPERTURE -> {
+                                    front.setLine(1, sign_colour + line1);
+                                    front.setLine(2, sign_colour + line2);
+                                    front.setLine(3, sign_colour + "LAB");
+                                }
+                                case JAIL -> {
+                                    front.setLine(0, sign_colour + line1);
+                                    front.setLine(1, sign_colour + line2);
+                                    front.setLine(3, sign_colour + "CAPTURE");
+                                }
+                                case THEEND -> {
+                                    front.setLine(1, sign_colour + line1);
+                                    front.setLine(2, sign_colour + line2);
+                                    front.setLine(3, sign_colour + "HOT ROD");
+                                }
+                                case CONSTRUCT -> {
+                                    // get sign text from database
+                                    ResultSetConstructSign rscs = new ResultSetConstructSign(plugin, bd.getTardisID());
+                                    if (rscs.resultSet()) {
+                                        if (rscs.getLine1().isEmpty() && rscs.getLine2().isEmpty() && rscs.getLine3().isEmpty() && rscs.getLine4().isEmpty()) {
+                                            front.setLine(1, sign_colour + line1);
+                                            front.setLine(2, sign_colour + line2);
                                         } else {
-                                            owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
-                                        }
-                                        switch (preset) {
-                                            case GRAVESTONE -> front.setLine(3, owner);
-                                            case ANGEL, JAIL -> front.setLine(2, owner);
-                                            default -> front.setLine(0, owner);
+                                            front.setLine(0, rscs.getLine1());
+                                            front.setLine(1, rscs.getLine2());
+                                            front.setLine(2, rscs.getLine3());
+                                            front.setLine(3, rscs.getLine4());
                                         }
                                     }
                                 }
-                                String line1;
-                                String line2;
-                                if (preset.equals(ChameleonPreset.CUSTOM)) {
-                                    line1 = plugin.getPresets().custom.getFirstLine();
-                                    line2 = plugin.getPresets().custom.getSecondLine();
-                                } else {
-                                    line1 = preset.getFirstLine();
-                                    line2 = preset.getSecondLine();
+                                default -> {
+                                    front.setLine(1, sign_colour + line1);
+                                    front.setLine(2, sign_colour + line2);
                                 }
-                                switch (preset) {
-                                    case ANGEL -> {
-                                        front.setLine(0, sign_colour + line1);
-                                        front.setLine(1, sign_colour + line2);
-                                        front.setLine(3, sign_colour + "TARDIS");
-                                    }
-                                    case APPERTURE -> {
-                                        front.setLine(1, sign_colour + line1);
-                                        front.setLine(2, sign_colour + line2);
-                                        front.setLine(3, sign_colour + "LAB");
-                                    }
-                                    case JAIL -> {
-                                        front.setLine(0, sign_colour + line1);
-                                        front.setLine(1, sign_colour + line2);
-                                        front.setLine(3, sign_colour + "CAPTURE");
-                                    }
-                                    case THEEND -> {
-                                        front.setLine(1, sign_colour + line1);
-                                        front.setLine(2, sign_colour + line2);
-                                        front.setLine(3, sign_colour + "HOT ROD");
-                                    }
-                                    case CONSTRUCT -> {
-                                        // get sign text from database
-                                        ResultSetConstructSign rscs = new ResultSetConstructSign(plugin, bd.getTardisID());
-                                        if (rscs.resultSet()) {
-                                            if (rscs.getLine1().isEmpty() && rscs.getLine2().isEmpty() && rscs.getLine3().isEmpty() && rscs.getLine4().isEmpty()) {
-                                                front.setLine(1, sign_colour + line1);
-                                                front.setLine(2, sign_colour + line2);
-                                            } else {
-                                                front.setLine(0, rscs.getLine1());
-                                                front.setLine(1, rscs.getLine2());
-                                                front.setLine(2, rscs.getLine3());
-                                                front.setLine(3, rscs.getLine4());
-                                            }
-                                        }
-                                    }
-                                    default -> {
-                                        front.setLine(1, sign_colour + line1);
-                                        front.setLine(2, sign_colour + line2);
-                                    }
-                                }
-                                s.update();
+                            }
+                            s.setWaxed(true);
+                            s.update();
+                        }
+                    }
+                } else if (Tag.DOORS.isTagged(mat) || Tag.TRAPDOORS.isTagged(mat) || mat == Material.RAIL) {
+                    // wood, iron & trap doors, rails
+                    boolean door = false;
+                    if (Tag.DOORS.isTagged(mat)) {
+                        Bisected bisected = (Bisected) colData[yy];
+                        door = bisected.getHalf().equals(Half.BOTTOM);
+                    }
+                    if (Tag.TRAPDOORS.isTagged(mat)) {
+                        door = true;
+                    }
+                    if (door) {
+                        // remember the door location
+                        String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
+                        Block doorBlock = world.getBlockAt(xx, y + yy, zz);
+                        String doorStr = doorBlock.getLocation().toString();
+                        plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
+                        // also remember the underdoor block
+                        String under = doorBlock.getRelative(BlockFace.DOWN).getLocation().toString();
+                        plugin.getGeneralKeeper().getProtectBlockMap().put(under, bd.getTardisID());
+                        TARDISBlockSetters.rememberBlock(world, xx, (y - 1), zz, bd.getTardisID());
+                        // save the door location in the database
+                        processDoor(doorloc);
+                        // place block under door if block is in list of blocks an iron door cannot go on
+                        if (yy == 0) {
+                            if (bd.isSubmarine() && plugin.isWorldGuardOnServer()) {
+                                int sy = y - 1;
+                                TARDISBlockSetters.setBlockAndRemember(world, xx, sy, zz, Material.SPONGE, bd.getTardisID());
+                                Block sponge = world.getBlockAt(xx, sy, zz);
+                                TARDISSponge.removeWater(sponge);
+                            } else if (!plugin.getPresetBuilder().no_block_under_door.contains(preset)) {
+                                TARDISBlockSetters.setUnderDoorBlock(world, xx, (y - 1), zz, bd.getTardisID(), false);
                             }
                         }
+                    } else {
+                        String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
+                        plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
                     }
-                    case NETHERRACK -> {
-                        TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
-                        if (preset.equals(ChameleonPreset.TORCH)) {
-                            world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
-                        }
-                    }
-                    case NETHER_PORTAL -> {
-                        TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy + 1), zz, Material.OBSIDIAN, bd.getTardisID());
+                    if (mat.equals(Material.RAIL)) {
+                        do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colData[yy]));
+                    } else {
                         TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
                     }
-                    case SKELETON_SKULL -> {
-                        if (bd.isSubmarine()) {
-                            TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.GLOWSTONE);
-                        } else {
-                            Rotatable rotatable = (Rotatable) colData[yy];
-                            rotatable.setRotation(plugin.getPresetBuilder().getSkullDirection(bd.getDirection().forPreset()));
-                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, rotatable, bd.getTardisID());
+                } else {
+                    switch (mat) {
+                        case GRASS_BLOCK, DIRT -> {
+                            BlockData subi = (preset.equals(ChameleonPreset.SUBMERGED)) ? chameleonBlockData : colData[yy];
+                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, subi, bd.getTardisID());
                         }
-                    }
-                    case WHITE_TERRACOTTA, ORANGE_TERRACOTTA, MAGENTA_TERRACOTTA, LIGHT_BLUE_TERRACOTTA, YELLOW_TERRACOTTA, LIME_TERRACOTTA, PINK_TERRACOTTA, GRAY_TERRACOTTA, LIGHT_GRAY_TERRACOTTA, CYAN_TERRACOTTA, PURPLE_TERRACOTTA, BLUE_TERRACOTTA, BROWN_TERRACOTTA, GREEN_TERRACOTTA, RED_TERRACOTTA, BLACK_TERRACOTTA -> {
-                        BlockData chai = (preset.equals(ChameleonPreset.FACTORY)) ? chameleonBlockData : colData[yy];
-                        TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, chai, bd.getTardisID());
-                    }
-                    default -> { // everything else
-                        if (change) {
-                            if (mat.equals(Material.LEVER) || mat.equals(Material.STONE_BUTTON) || mat.equals(Material.OAK_BUTTON)) {
-                                do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colData[yy]));
+                        case BEDROCK -> {
+                            if (preset.equals(ChameleonPreset.THEEND)) {
+                                TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+                                world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
                             } else {
                                 TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+                            }
+                        }
+                        case WHITE_WOOL, ORANGE_WOOL, MAGENTA_WOOL, LIGHT_BLUE_WOOL, YELLOW_WOOL, LIME_WOOL, PINK_WOOL, GRAY_WOOL, LIGHT_GRAY_WOOL, CYAN_WOOL, PURPLE_WOOL, BLUE_WOOL, BROWN_WOOL, GREEN_WOOL, RED_WOOL, BLACK_WOOL -> {
+                            if (preset.equals(ChameleonPreset.PARTY) || (preset.equals(ChameleonPreset.FLOWER) && mat.equals(Material.WHITE_WOOL))) {
+                                TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, random_colour, bd.getTardisID());
+                            }
+                            if ((preset.equals(ChameleonPreset.JUNK_MODE) || preset.equals(ChameleonPreset.JUNK)) && mat.equals(Material.ORANGE_WOOL)) {
+                                TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, TARDISConstants.BARRIER, bd.getTardisID());
+                                TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, xx, (y + yy), zz);
+                            }
+                        }
+                        case TORCH, GLOWSTONE, REDSTONE_LAMP -> { // lamps, glowstone and torches
+                            BlockData light;
+                            if (bd.isSubmarine() && mat.equals(Material.TORCH)) {
+                                light = Material.GLOWSTONE.createBlockData();
+                            } else {
+                                light = colData[yy];
+                            }
+                            if (mat.equals(Material.TORCH)) {
+                                do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), light));
+                            } else {
+                                if (light instanceof Lightable lit) {
+                                    lit.setLit(true);
+                                    TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, lit, bd.getTardisID());
+                                } else {
+                                    TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, light, bd.getTardisID());
+                                }
+                            }
+                        }
+                        case NETHERRACK -> {
+                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+                            if (preset.equals(ChameleonPreset.TORCH)) {
+                                world.getBlockAt(xx, (y + yy + 1), zz).setBlockData(TARDISConstants.FIRE);
+                            }
+                        }
+                        case NETHER_PORTAL -> {
+                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy + 1), zz, Material.OBSIDIAN, bd.getTardisID());
+                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+                        }
+                        case SKELETON_SKULL -> {
+                            if (bd.isSubmarine()) {
+                                TARDISBlockSetters.setBlock(world, xx, (y + yy), zz, Material.GLOWSTONE);
+                            } else {
+                                Rotatable rotatable = (Rotatable) colData[yy];
+                                rotatable.setRotation(plugin.getPresetBuilder().getSkullDirection(bd.getDirection().forPreset()));
+                                TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, rotatable, bd.getTardisID());
+                            }
+                        }
+                        case WHITE_TERRACOTTA, ORANGE_TERRACOTTA, MAGENTA_TERRACOTTA, LIGHT_BLUE_TERRACOTTA,
+                             YELLOW_TERRACOTTA, LIME_TERRACOTTA, PINK_TERRACOTTA, GRAY_TERRACOTTA,
+                             LIGHT_GRAY_TERRACOTTA, CYAN_TERRACOTTA, PURPLE_TERRACOTTA, BLUE_TERRACOTTA,
+                             BROWN_TERRACOTTA, GREEN_TERRACOTTA, RED_TERRACOTTA, BLACK_TERRACOTTA -> {
+                            BlockData chai = (preset.equals(ChameleonPreset.FACTORY)) ? chameleonBlockData : colData[yy];
+                            TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, chai, bd.getTardisID());
+                        }
+                        default -> { // everything else
+                            if (change) {
+                                if (mat.equals(Material.LEVER) || mat.equals(Material.STONE_BUTTON) || mat.equals(Material.OAK_BUTTON)) {
+                                    do_at_end.add(new ProblemBlock(new Location(world, xx, (y + yy), zz), colData[yy]));
+                                } else {
+                                    TARDISBlockSetters.setBlockAndRemember(world, xx, (y + yy), zz, colData[yy], bd.getTardisID());
+                                }
                             }
                         }
                     }

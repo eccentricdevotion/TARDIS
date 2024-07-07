@@ -222,7 +222,7 @@ class TARDISDematerialisePreset implements Runnable {
                         world.playSound(dd.getLocation(), Sound.ENTITY_MINECART_INSIDE, 1.0F, 0.0F);
                     }
                 }
-                if (dd.hasParticles()) {
+                if (dd.hasParticles() && preset != ChameleonPreset.JUNK_MODE) {
                     ResultSetParticlePrefs rspp = new ResultSetParticlePrefs(plugin);
                     UUID uuid = dd.getPlayer().getUniqueId();
                     if (rspp.fromUUID(uuid.toString())) {
