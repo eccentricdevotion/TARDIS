@@ -120,7 +120,7 @@ public class TARDISConsoleListener implements Listener {
                 plugin.getMessenger().send(p, TardisModule.TARDIS, "POWER_DOWN");
                 return;
             }
-            Inventory inv = plugin.getServer().createInventory(p, 9, ChatColor.DARK_RED + "TARDIS Console");
+            Inventory inv = plugin.getServer().createInventory(p, 18, ChatColor.DARK_RED + "TARDIS Console");
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             ResultSetDiskStorage rsds = new ResultSetDiskStorage(plugin, where);

@@ -87,7 +87,7 @@ public class TARDISConsoleCloseListener implements Listener {
         }
         int id = rst.getTardis_id();
         // loop through inventory contents and remove any items that are not disks or circuits
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 18; i++) {
             ItemStack is = view.getItem(i);
             if (is != null) {
                 Material mat = is.getType();
@@ -118,7 +118,7 @@ public class TARDISConsoleCloseListener implements Listener {
         }
         Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
         // loop through remaining inventory items and process the disks
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 18; i++) {
             ItemStack is = view.getItem(i);
             if (is != null) {
                 Material mat = is.getType();

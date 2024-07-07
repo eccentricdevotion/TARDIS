@@ -82,7 +82,7 @@ public class TARDISConsoleSwitchListener implements Listener {
         }
         event.setCancelled(true);
         int slot = event.getRawSlot();
-        if (slot < 0 || slot >= 9) {
+        if (slot < 0 || slot >= 18) {
             return;
         }
         ItemStack item = view.getItem(slot);
