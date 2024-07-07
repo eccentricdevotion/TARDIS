@@ -318,6 +318,7 @@ public class TARDISCondenserListener implements Listener {
                 ItemStack rem = new ItemStack(material, remainder);
                 player.getInventory().addItem(rem);
             }
+            // return full stacks
             if (stacks > 0) {
                 for (int i = 0; i < stacks; i++) {
                     ItemStack is = new ItemStack(material, maxStack);

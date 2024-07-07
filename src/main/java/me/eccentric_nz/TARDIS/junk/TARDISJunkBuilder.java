@@ -87,6 +87,10 @@ public class TARDISJunkBuilder implements Runnable {
                     fryTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISJunkItsDangerousRunnable(plugin, loc), 0, 1L);
                 }
                 if (i == 1) {
+                    // set chunk as force loaded
+                    if (plugin.getConfig().getInt("junk.return") > 0) {
+                        loc.getChunk().setForceLoaded(true);
+                    }
                     // get wall and floor prefs
                     Material floor_type;
                     Material wall_type;
@@ -126,9 +130,9 @@ public class TARDISJunkBuilder implements Runnable {
                                     type = data.getMaterial();
                                     if (type.equals(Material.CAKE)) {
                                         /*
-                                     * This block will be converted to a lever
-                                     * by setBlockAndRemember(), but remember it
-                                     * so we can use it as the handbrake!
+                                         * This block will be converted to a lever
+                                         * by setBlockAndRemember(), but remember it
+                                         * so we can use it as the handbrake!
                                          */
                                         String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
                                         plugin.getQueryFactory().insertSyncControl(bd.getTardisID(), 0, handbrakeloc, 0);
@@ -188,8 +192,10 @@ public class TARDISJunkBuilder implements Runnable {
                                             }
                                             TARDISBlockSetters.setBlockAndRemember(world, x, y, z, wall, bd.getTardisID());
                                         }
-                                        case LIGHT_GRAY_WOOL -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisID());
-                                        default -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, data, bd.getTardisID());
+                                        case LIGHT_GRAY_WOOL ->
+                                                TARDISBlockSetters.setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisID());
+                                        default ->
+                                                TARDISBlockSetters.setBlockAndRemember(world, x, y, z, data, bd.getTardisID());
                                     }
                                 }
                             }
