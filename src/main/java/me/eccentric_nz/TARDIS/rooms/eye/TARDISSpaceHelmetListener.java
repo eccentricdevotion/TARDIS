@@ -18,6 +18,17 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TARDISSpaceHelmetListener implements Listener {
 
+    public static boolean isSpaceHelmet(ItemStack helmet) {
+        if (helmet == null || helmet.getType() != Material.GLASS || !helmet.hasItemMeta()) {
+            return false;
+        }
+        ItemMeta im = helmet.getItemMeta();
+        if (!im.hasDisplayName() || !im.hasCustomModelData() || !im.hasMaxStackSize()) {
+            return false;
+        }
+        return im.getDisplayName().equals("TARDIS Space Helmet") && im.getCustomModelData() == 5 && im.getMaxStackSize() == 1;
+    }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onSpaceHelmetInteract(PlayerInteractEvent event) {
         Action action = event.getAction();
@@ -30,16 +41,5 @@ public class TARDISSpaceHelmetListener implements Listener {
             player.getInventory().setHelmet(is);
             player.getInventory().setItemInMainHand(new ItemStack(Material.AIR));
         }
-    }
-
-    private boolean isSpaceHelmet(ItemStack helmet) {
-        if (helmet == null || helmet.getType() != Material.GLASS || !helmet.hasItemMeta()) {
-            return false;
-        }
-        ItemMeta im = helmet.getItemMeta();
-        if (!im.hasDisplayName() || !im.hasCustomModelData() || !im.hasMaxStackSize()) {
-            return false;
-        }
-        return im.getDisplayName().equals("TARDIS Space Helmet") && im.getCustomModelData() == 5 && im.getMaxStackSize() == 1;
     }
 }

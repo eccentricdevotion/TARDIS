@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.rooms.eye.TARDISSpaceHelmetListener;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -77,6 +78,11 @@ public class TARDISBlockPlaceListener implements Listener {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PLACE");
         }
         ItemStack is = event.getItemInHand();
+        // if it's a space helmet cancel
+        if (TARDISSpaceHelmetListener.isSpaceHelmet(is)) {
+            event.setCancelled(true);
+            return;
+        }
         // convert old custom mushroom blocks
         if ((is.getType().equals(Material.BROWN_MUSHROOM_BLOCK) || is.getType().equals(Material.RED_MUSHROOM_BLOCK) || is.getType().equals(Material.MUSHROOM_STEM))) {
             if (is.hasItemMeta()) {
