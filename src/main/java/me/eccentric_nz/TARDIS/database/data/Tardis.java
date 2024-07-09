@@ -61,8 +61,9 @@ public class Tardis {
     private final boolean lights_on;
     private final boolean siege_on;
     private final int monsters;
+    private final int furnaces;
 
-    public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, Schematic schematic, boolean abandoned, String companions, ChameleonPreset preset, ChameleonPreset demat, String itemPreset, String itemDemat, int adapt, int artron_level, String creeper, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String renderer, String zero, UUID rotor, boolean powered_on, boolean lights_on, boolean siege_on, int monsters) {
+    public Tardis(int tardis_id, UUID uuid, String owner, String lastKnownName, String chunk, int tips, Schematic schematic, boolean abandoned, String companions, ChameleonPreset preset, ChameleonPreset demat, String itemPreset, String itemDemat, int adapt, int artron_level, String creeper, String beacon, boolean handbrake_on, boolean tardis_init, boolean recharging, boolean hidden, long lastuse, boolean iso_on, String eps, String rail, String renderer, String zero, UUID rotor, boolean powered_on, boolean lights_on, boolean siege_on, int monsters, int furnaces) {
         this.tardis_id = tardis_id;
         this.uuid = uuid;
         this.owner = owner;
@@ -95,6 +96,7 @@ public class Tardis {
         this.lights_on = lights_on;
         this.siege_on = siege_on;
         this.monsters = monsters;
+        this.furnaces = furnaces;
     }
 
     /**
@@ -397,5 +399,14 @@ public class Tardis {
      */
     public int getMonsters() {
         return monsters;
+    }
+
+    /**
+     * Returns the number of powered furnaces in this TARDIS.
+     *
+     * @return the number of powered furnaces
+     */
+    public int getFurnaces() {
+        return furnaces;
     }
 }

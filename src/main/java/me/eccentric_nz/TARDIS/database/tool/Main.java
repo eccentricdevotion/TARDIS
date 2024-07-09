@@ -158,6 +158,10 @@ public class Main {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("ars_id"), rs.getInt("tardis_id"), rs.getString("uuid"), ars_player, rs.getInt("ars_x_east"), rs.getInt("ars_z_south"), rs.getInt("ars_y_layer"), rs.getString("json")) + end;
                                         bw.write(str);
                                     }
+                                    case artron_powered -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("a_id"), rs.getInt("tardis_id"), rs.getString("location")) + end;
+                                        bw.write(str);
+                                    }
                                     case back -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("back_id"), rs.getInt("tardis_id"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("direction"), rs.getInt("submarine")) + end;
                                         bw.write(str);
@@ -335,7 +339,7 @@ public class Main {
                                         if (rs.wasNull()) {
                                             companions = "";
                                         }
-                                        str = String.format(SQL.VALUES.get(i), rs.getInt("tardis_id"), rs.getString("uuid"), rs.getString("owner"), rs.getString("last_known_name"), rs.getString("chunk"), rs.getInt("tips"), rs.getString("size"), rs.getInt("abandoned"), rs.getInt("artron_level"), replaced, companions, rs.getInt("handbrake_on"), rs.getInt("iso_on"), rs.getInt("hidden"), rs.getInt("recharging"), rs.getInt("tardis_init"), rs.getInt("adapti_on"), rs.getString("chameleon_preset"), rs.getString("chameleon_demat"), rs.getString("creeper"), rs.getString("beacon"), rs.getString("eps"), rs.getString("rail"), rs.getString("renderer"), rs.getString("zero"), rs.getString("rotor"), rs.getInt("powered_on"), rs.getInt("lights_on"), rs.getInt("siege_on"), rs.getLong("lastuse"), rs.getInt("monsters"), rs.getInt("bedrock")) + end;
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("tardis_id"), rs.getString("uuid"), rs.getString("owner"), rs.getString("last_known_name"), rs.getString("chunk"), rs.getInt("tips"), rs.getString("size"), rs.getInt("abandoned"), rs.getInt("artron_level"), replaced, companions, rs.getInt("handbrake_on"), rs.getInt("iso_on"), rs.getInt("hidden"), rs.getInt("recharging"), rs.getInt("tardis_init"), rs.getInt("adapti_on"), rs.getString("chameleon_preset"), rs.getString("chameleon_demat"), rs.getString("creeper"), rs.getString("beacon"), rs.getString("eps"), rs.getString("rail"), rs.getString("renderer"), rs.getString("zero"), rs.getString("rotor"), rs.getInt("powered_on"), rs.getInt("lights_on"), rs.getInt("siege_on"), rs.getLong("lastuse"), rs.getInt("monsters"), rs.getInt("furnaces"), rs.getInt("bedrock")) + end;
                                         bw.write(str);
                                     }
                                     case transmats -> {

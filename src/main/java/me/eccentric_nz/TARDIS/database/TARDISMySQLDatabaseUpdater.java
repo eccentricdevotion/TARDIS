@@ -68,11 +68,12 @@ class TARDISMySQLDatabaseUpdater {
         areaupdates.add("invisibility varchar(32) DEFAULT 'ALLOW'");
         areaupdates.add("direction varchar(5) DEFAULT ''");
         areaupdates.add("grid int(1) DEFAULT '1'");
+        tardisupdates.add("abandoned int(1) DEFAULT '0'");
         tardisupdates.add("bedrock int(1) DEFAULT '0'");
+        tardisupdates.add("furnaces int(2) DEFAULT '0'");
         tardisupdates.add("last_known_name varchar(32) DEFAULT ''");
         tardisupdates.add("lights_on int(1) DEFAULT '1'");
         tardisupdates.add("monsters int(2) DEFAULT '0'");
-        tardisupdates.add("abandoned int(1) DEFAULT '0'");
         tardisupdates.add("powered_on int(1) DEFAULT '0'");
         tardisupdates.add("renderer varchar(512) DEFAULT ''");
         tardisupdates.add("rotor varchar(48) DEFAULT ''");

@@ -75,6 +75,10 @@ public class TARDISSQLiteDatabase {
             String queryARS = "CREATE TABLE IF NOT EXISTS " + prefix + "ars (ars_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, uuid TEXT DEFAULT '', player TEXT COLLATE NOCASE DEFAULT '', ars_x_east INTEGER DEFAULT 2, ars_z_south INTEGER DEFAULT 2, ars_y_layer INTEGER DEFAULT 1, json TEXT DEFAULT '')";
             statement.executeUpdate(queryARS);
 
+            // Table structure for table 'artron_powered'
+            String queryAPowered = "CREATE TABLE IF NOT EXISTS " + prefix + "artron_powered (a_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT DEFAULT '')";
+            statement.executeUpdate(queryAPowered);
+
             // Table structure for table 'back'
             String queryBack = "CREATE TABLE IF NOT EXISTS " + prefix + "back (back_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, world TEXT COLLATE NOCASE DEFAULT '', x INTEGER, y INTEGER, z INTEGER, direction TEXT DEFAULT '', submarine INTEGER DEFAULT 0)";
             statement.executeUpdate(queryBack);
@@ -255,7 +259,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryTag);
 
             // Table structure for table 'tardis'
-            String queryTARDIS = "CREATE TABLE IF NOT EXISTS " + prefix + "tardis (tardis_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', owner TEXT COLLATE NOCASE DEFAULT '', last_known_name TEXT COLLATE NOCASE DEFAULT '', chunk TEXT, tips INTEGER DEFAULT '-1', replaced TEXT DEFAULT '', companions TEXT, chameleon_preset TEXT DEFAULT 'FACTORY', chameleon_demat TEXT DEFAULT 'FACTORY', adapti_on INTEGER DEFAULT 0, size TEXT DEFAULT '', abandoned INTEGER DEFAULT 0, artron_level INTEGER DEFAULT 0, creeper TEXT DEFAULT '', handbrake_on INTEGER DEFAULT 1, tardis_init INTEGER DEFAULT 0, recharging INTEGER DEFAULT 0, hidden INTEGER DEFAULT 0, powered_on INTEGER DEFAULT 0, lights_on INTEGER DEFAULT 1, siege_on INTEGER DEFAULT 0, lastuse INTEGER DEFAULT (strftime('%s', 'now')), iso_on INTEGER DEFAULT 0, beacon TEXT DEFAULT '', eps TEXT DEFAULT '', rail TEXT DEFAULT '', renderer TEXT DEFAULT '', zero TEXT DEFAULT '', rotor TEXT DEFAULT '', monsters INTEGER DEFAULT 0, bedrock INTEGER DEFAULT 0)";
+            String queryTARDIS = "CREATE TABLE IF NOT EXISTS " + prefix + "tardis (tardis_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', owner TEXT COLLATE NOCASE DEFAULT '', last_known_name TEXT COLLATE NOCASE DEFAULT '', chunk TEXT, tips INTEGER DEFAULT '-1', replaced TEXT DEFAULT '', companions TEXT, chameleon_preset TEXT DEFAULT 'FACTORY', chameleon_demat TEXT DEFAULT 'FACTORY', adapti_on INTEGER DEFAULT 0, size TEXT DEFAULT '', abandoned INTEGER DEFAULT 0, artron_level INTEGER DEFAULT 0, creeper TEXT DEFAULT '', handbrake_on INTEGER DEFAULT 1, tardis_init INTEGER DEFAULT 0, recharging INTEGER DEFAULT 0, hidden INTEGER DEFAULT 0, powered_on INTEGER DEFAULT 0, lights_on INTEGER DEFAULT 1, siege_on INTEGER DEFAULT 0, lastuse INTEGER DEFAULT (strftime('%s', 'now')), iso_on INTEGER DEFAULT 0, beacon TEXT DEFAULT '', eps TEXT DEFAULT '', rail TEXT DEFAULT '', renderer TEXT DEFAULT '', zero TEXT DEFAULT '', rotor TEXT DEFAULT '', monsters INTEGER DEFAULT 0, furnaces INTEGER DEFAULT 0, bedrock INTEGER DEFAULT 0)";
             statement.executeUpdate(queryTARDIS);
 
             // Table structure for table 'transmats'

@@ -3,7 +3,7 @@
 ## Current version `5.7.0`
 
 1. Fix fifteenth console redstone piston door
-2. Fix follower persistence
+2. Fix follower persistence - [not possible right now?](https://www.spigotmc.org/threads/impossible-to-register-custom-nms-entities-in-1-21-due-to-chunk-crash.654410/)
 3. Add doors to shop items
 4. Allow 3D Police Boxes to land on slabs [#777](https://github.com/eccentricdevotion/TARDIS/issues/777)
 5. Animated models for TWA player disguises

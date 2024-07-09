@@ -202,7 +202,8 @@ public class ResultSetTardis {
                             rs.getBoolean("powered_on"),
                             rs.getBoolean("lights_on"),
                             rs.getBoolean("siege_on"),
-                            rs.getInt("monsters")
+                            rs.getInt("monsters"),
+                            rs.getInt("furnaces")
                     );
                     if (multiple) {
                         data.add(tardis);

@@ -125,6 +125,14 @@ public class TARDISDisplayBlockListener implements Listener {
             // set display rotation
             display.setRotation(yaw, 0);
         }
+        if (which == TARDISDisplayItem.EYE_STORAGE) {
+            // is there an Artron Furnace in the surrounding blocks?
+            Block furnace = ArtronFurnaceUtils.find(event.getBlock(), plugin);
+            if (furnace != null) {
+                // remember this Artron Capacitor Storage block
+                ArtronFurnaceUtils.register(furnace.getLocation().toString(), player, plugin);
+            }
+        }
         if (player.getGameMode() != GameMode.CREATIVE) {
             int amount = is.getAmount() - 1;
             if (amount < 1) {
@@ -150,6 +158,9 @@ public class TARDISDisplayBlockListener implements Listener {
         Block block = event.getBlock();
         if (block.getType() != Material.LIGHT && block.getType() != Material.BARRIER) {
             return;
+        }
+        if (plugin.getArtronConfig().getBoolean("artron_furnace.tardis_powered")) {
+            ArtronFurnaceUtils.removeFromCapacitor(block, event.getPlayer(), plugin);
         }
         TARDISDisplayItemUtils.remove(block);
     }
@@ -446,7 +457,7 @@ public class TARDISDisplayBlockListener implements Listener {
             return false;
         }
         ItemMeta im = is.getItemMeta();
-        int cmd = im.hasCustomModelData()? im.getCustomModelData() : -1;
+        int cmd = im.hasCustomModelData() ? im.getCustomModelData() : -1;
         return cmd == 10000;
     }
 
@@ -499,6 +510,10 @@ public class TARDISDisplayBlockListener implements Listener {
                     TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(fake);
                     if (tdi != null && tdi.isLight()) {
                         new TARDISSonicLight(plugin).removeLamp(block, player);
+                    }
+                    // remove furnace record
+                    if (plugin.getArtronConfig().getBoolean("artron_furnace.tardis_powered")) {
+                        ArtronFurnaceUtils.removeFromCapacitor(block, player, plugin);
                     }
                 } else {
                     // update breaking item stack

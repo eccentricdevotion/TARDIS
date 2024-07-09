@@ -16,10 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISRunnables;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
+
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -48,7 +50,7 @@ class TARDISPowerDownCommand {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "STANDBY_STOP");
         } else {
             // if true, start the repeating task
-            plugin.startStandBy();
+            TARDISRunnables.startStandBy(plugin);
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "STANDBY_START");
         }
         return true;

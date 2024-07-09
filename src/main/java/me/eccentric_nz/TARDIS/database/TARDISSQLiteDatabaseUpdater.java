@@ -122,6 +122,7 @@ class TARDISSQLiteDatabaseUpdater {
         tardisupdates.add("chameleon_preset TEXT DEFAULT 'FACTORY'");
         tardisupdates.add("creeper TEXT DEFAULT ''");
         tardisupdates.add("eps TEXT DEFAULT ''");
+        tardisupdates.add("furnaces INTEGER DEFAULT 0");
         tardisupdates.add("handbrake_on INTEGER DEFAULT 1");
         tardisupdates.add("hidden INTEGER DEFAULT 0");
         tardisupdates.add("iso_on INTEGER DEFAULT 0");

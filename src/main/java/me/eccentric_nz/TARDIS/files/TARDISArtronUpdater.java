@@ -42,11 +42,15 @@ public class TARDISArtronUpdater {
         artron_config = plugin.getArtronConfig();
         // boolean
         booleanOptions.put("artron_furnace.particles", false);
+        booleanOptions.put("artron_furnace.tardis_powered", true);
         // double
         doubleOptions.put("artron_furnace.burn_time", 0.5);
         doubleOptions.put("artron_furnace.cook_time", 0.5);
         // integer
         integerOptions.put("artron_furnace.burn_limit", 100000);
+        integerOptions.put("artron_furnace.power_drain", 200);
+        integerOptions.put("artron_furnace.power_cycle", 400);
+        integerOptions.put("artron_furnace.power_limit", 4);
         integerOptions.put("autonomous", 100);
         integerOptions.put("backdoor", 100);
         integerOptions.put("comehere", 400);

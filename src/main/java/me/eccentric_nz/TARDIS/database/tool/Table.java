@@ -25,6 +25,7 @@ public enum Table {
     areas,
     area_locations,
     ars,
+    artron_powered("a_id"),
     back,
     bind("bind_id"),
     blocks("b_id"),
