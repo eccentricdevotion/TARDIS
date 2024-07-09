@@ -42,6 +42,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -161,32 +162,11 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     bd.setTardisID(id);
                     bd.setThrottle(spaceTimeThrottle);
                     bd.setParticles(throticle.getParticles());
+                    // get sound effects
+                    String landSFX = (spaceTimeThrottle != SpaceTimeThrottle.NORMAL) ? "tardis_land_" + spaceTimeThrottle.toString().toLowerCase(Locale.ROOT) : "tardis_land";
                     // determine delay values
-                    long flight_mode_delay;
-                    long travel_time;
-                    String landSFX;
-                    switch (spaceTimeThrottle) {
-                        case WARP -> {
-                            flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 130L);
-                            travel_time = (malfunction) ? 400L : 94L;
-                            landSFX = "tardis_land_warp";
-                        }
-                        case RAPID -> {
-                            flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 259L);
-                            travel_time = (malfunction) ? 400L : 188L;
-                            landSFX = "tardis_land_rapid";
-                        }
-                        case FASTER -> {
-                            flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 388L);
-                            travel_time = (malfunction) ? 400L : 282L;
-                            landSFX = "tardis_land_faster";
-                        }
-                        default -> { // NORMAL
-                            flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : 518L);
-                            travel_time = (malfunction) ? 400L : 375L;
-                            landSFX = "tardis_land";
-                        }
-                    }
+                    long travel_time = (malfunction) ? 400L : (long) (spaceTimeThrottle.getFlightTime() * 0.75d) + 4L;
+                    long flight_mode_delay = ((plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) ? 0L : spaceTimeThrottle.getFlightTime());
                     // remember flight data
                     plugin.getTrackerKeeper().getFlightData().put(uuid, bd);
                     long materialisation_delay = flight_mode_delay;

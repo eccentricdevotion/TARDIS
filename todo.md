@@ -10,8 +10,7 @@
 6. Modelled controls [#836](https://github.com/eccentricdevotion/TARDIS/issues/836)
 7. Exterior button door control [#839](https://github.com/eccentricdevotion/TARDIS/issues/839)
 8. Console lamp [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)
-9. Artron Capacitor Storage placed next to an Artron Furnace will power it with TARDIS energy
-10. ?
+9. ?
 
 ## Next version `5.8.0`
 
