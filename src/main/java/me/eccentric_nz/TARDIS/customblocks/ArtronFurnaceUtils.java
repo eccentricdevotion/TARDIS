@@ -1,6 +1,5 @@
 package me.eccentric_nz.TARDIS.customblocks;
 
-import com.mojang.datafixers.util.Pair;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronPowered;
@@ -10,7 +9,6 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.Furnace;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 
@@ -28,13 +26,7 @@ public class ArtronFurnaceUtils {
         return null;
     }
 
-    public static Pair<Boolean, Integer> isTARDISPowered(Furnace furnace, TARDIS plugin) {
-        String location = furnace.getLocation().toString();
-        ResultSetArtronPowered rs = new ResultSetArtronPowered(plugin);
-        return rs.fromLocation(location);
-    }
-
-    public static boolean isAlreadyTARDISPowered(String location, TARDIS plugin) {
+    public static boolean isTARDISPowered(String location, TARDIS plugin) {
         ResultSetArtronPowered rs = new ResultSetArtronPowered(plugin);
         return rs.fromLocation(location).getFirst();
     }
@@ -74,7 +66,7 @@ public class ArtronFurnaceUtils {
             return;
         }
         // check there is no capacitor associated with this furnace
-        if (isAlreadyTARDISPowered(location, plugin)) {
+        if (isTARDISPowered(location, plugin)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_ALREADY_POWERED", "furnace");
             return;
         }
@@ -102,7 +94,7 @@ public class ArtronFurnaceUtils {
                 //  is there an Artron Furnace in the surrounding blocks?
                 Block furnace = find(block, plugin);
                 if (furnace != null) {
-                    remove(block.getLocation().toString(), player, plugin);
+                    remove(furnace.getLocation().toString(), player, plugin);
                 }
             }
         }

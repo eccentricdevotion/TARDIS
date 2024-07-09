@@ -31,7 +31,6 @@ public class ResultSetArtronPowered {
             statement = connection.prepareStatement(query);
             statement.setString(1, location);
             rs = statement.executeQuery();
-
             if (rs.isBeforeFirst()) {
                 rs.next();
                 return new Pair<>(true, rs.getInt("tardis_id"));
