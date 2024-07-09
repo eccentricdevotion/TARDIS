@@ -37,7 +37,7 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
         }
         event.setCancelled(true);
         int slot = event.getRawSlot();
-        if (slot < 0 || slot >= 53) {
+        if (slot < 0 || slot > 53) {
             return;
         }
         ItemStack is = view.getItem(slot);
