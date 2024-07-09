@@ -38,6 +38,8 @@ import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmingInventory;
 import me.eccentric_nz.TARDIS.particles.TARDISParticleInventory;
 import me.eccentric_nz.TARDIS.sonic.TARDISSonicConfiguratorInventory;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
+import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -108,6 +110,11 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         if (slot == GUIPlayerPreferences.FORCE_FIELD.getSlot() && im.getDisplayName().equals("Force Field")) {
             // toggle force field on / off
             if (TARDISPermission.hasPermission(p, "tardis.forcefield")) {
+                // check they have upgrade
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(p.getUniqueId().toString(), SystemTree.FORCE_FIELD)) {
+                    plugin.getMessenger().send(p, TardisModule.TARDIS, "SYS_NEED", "Force Field");
+                    return;
+                }
                 List<String> lore = im.getLore();
                 boolean bool = (lore.getFirst().equals(plugin.getLanguage().getString("SET_OFF")));
                 if (bool) {
