@@ -17,39 +17,23 @@
 package me.eccentric_nz.TARDIS;
 
 import io.papermc.lib.PaperLib;
-import me.eccentric_nz.TARDIS.ARS.ARSConverter;
-import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.TARDII;
-import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
-import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceParticle;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
-import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
 import me.eccentric_nz.TARDIS.bStats.TARDISStats;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
-import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockPersister;
-import me.eccentric_nz.TARDIS.camera.CameraPersister;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
-import me.eccentric_nz.TARDIS.chameleon.construct.ConstructsConverter;
 import me.eccentric_nz.TARDIS.chatGUI.*;
-import me.eccentric_nz.TARDIS.control.TARDISControlRunnable;
-import me.eccentric_nz.TARDIS.database.*;
-import me.eccentric_nz.TARDIS.database.converters.*;
+import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.TARDISMySQLDatabase;
+import me.eccentric_nz.TARDIS.database.TARDISSQLiteDatabase;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTIPS;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDestroyerInner;
 import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
 import me.eccentric_nz.TARDIS.doors.TARDISCustomDoorLoader;
-import me.eccentric_nz.TARDIS.doors.TARDISInteractionDoorUpdater;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.files.*;
-import me.eccentric_nz.TARDIS.flight.FlightPersister;
-import me.eccentric_nz.TARDIS.flight.TARDISVortexPersister;
-import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
-import me.eccentric_nz.TARDIS.forcefield.TARDISForceFieldPersister;
-import me.eccentric_nz.TARDIS.hads.TARDISHadsPersister;
-import me.eccentric_nz.TARDIS.handles.TARDISHandlesRunnable;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesUpdater;
-import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
-import me.eccentric_nz.TARDIS.junk.TARDISJunkReturnRunnable;
 import me.eccentric_nz.TARDIS.mapping.TARDISBlueMap;
 import me.eccentric_nz.TARDIS.mapping.TARDISDynmap;
 import me.eccentric_nz.TARDIS.mapping.TARDISMapper;
@@ -58,40 +42,21 @@ import me.eccentric_nz.TARDIS.messaging.AdventureMessage;
 import me.eccentric_nz.TARDIS.messaging.SpigotMessage;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.monitor.SnapshotLoader;
-import me.eccentric_nz.TARDIS.move.TARDISMonsterRunnable;
-import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
-import me.eccentric_nz.TARDIS.move.TARDISSpectaclesRunnable;
 import me.eccentric_nz.TARDIS.placeholders.TARDISPlaceholderExpansion;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import me.eccentric_nz.TARDIS.recipes.*;
-import me.eccentric_nz.TARDIS.rooms.TARDISRoomPersister;
-import me.eccentric_nz.TARDIS.rooms.TARDISZeroRoomRunnable;
 import me.eccentric_nz.TARDIS.rooms.eye.EyeLoader;
-import me.eccentric_nz.TARDIS.rooms.eye.EyePopulator;
 import me.eccentric_nz.TARDIS.rotors.TARDISCustomRotorLoader;
-import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
-import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeRunnable;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
 import me.eccentric_nz.TARDIS.utility.*;
 import me.eccentric_nz.TARDIS.utility.logging.TARDISBlockLogger;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISWorldGuardUtils;
-import me.eccentric_nz.tardischemistry.block.ChemistryBlockRecipes;
-import me.eccentric_nz.tardischemistry.lab.BleachRecipe;
-import me.eccentric_nz.tardischemistry.lab.HeatBlockRunnable;
-import me.eccentric_nz.tardischemistry.product.GlowStickRunnable;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import me.eccentric_nz.tardischunkgenerator.worldgen.*;
 import me.eccentric_nz.tardisshop.ShopSettings;
-import me.eccentric_nz.tardisshop.TARDISShop;
-import me.eccentric_nz.tardisshop.TARDISShopDisplayConverter;
 import me.eccentric_nz.tardissonicblaster.BlasterSettings;
-import me.eccentric_nz.tardissonicblaster.TARDISSonicBlaster;
-import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
 import me.eccentric_nz.tardisvortexmanipulator.TVMSettings;
-import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
-import me.eccentric_nz.tardisweepingangels.nms.FollowerSaver;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.ConsoleCommandSender;
@@ -260,32 +225,9 @@ public class TARDIS extends JavaPlugin {
             // only try to persist data if the plugin was enabled properly
             boolean hasDatabase = TARDISDatabaseConnection.getINSTANCE().connection != null;
             if (hasDatabase) {
-                // persist any room growing
-                new TARDISRoomPersister(this).saveProgress();
                 TARDISPerceptionFilter.removePerceptionFilter();
                 debug("Perception Filters removed");
-                if (getConfig().getBoolean("preferences.walk_in_tardis")) {
-                    new TARDISPortalPersister(this).save();
-                }
-                if (disguisesOnServer && getConfig().getBoolean("arch.enabled")) {
-                    new TARDISArchPersister(this).saveAll();
-                }
-                if (getConfig().getBoolean("siege.enabled")) {
-                    new TARDISSiegePersister(this).saveCubes();
-                }
-                if (getConfig().getBoolean("allow.hads")) {
-                    new TARDISHadsPersister(this).save();
-                }
-                new TARDISVortexPersister(this).save();
-                new FlightPersister(this).save();
-                new CameraPersister(this).save();
-                if (getConfig().getInt("allow.force_field") > 0) {
-                    new TARDISForceFieldPersister(this).save();
-                }
-                new TARDISSeedBlockPersister(this).save();
-                if (getConfig().getBoolean("modules.weeping_angels")) {
-                    new FollowerSaver(this).persist();
-                }
+                new TARDISPersister(this).save();
             }
             getServer().getScheduler().cancelTasks(this);
             debug("Cancelling all scheduled tasks");
@@ -359,59 +301,8 @@ public class TARDIS extends JavaPlugin {
             prefix = getConfig().getString("storage.mysql.prefix");
             loadDatabase();
             queryFactory = new QueryFactory(this);
-            int conversions = 0;
-            // insert eye records
-            if (!getConfig().getBoolean("conversions.eyes")) {
-                new EyePopulator(this).insert();
-                getConfig().set("conversions.eyes", true);
-                conversions++;
-            }
-            // update database materials
-            if (!getConfig().getBoolean("conversions.ars_materials")) {
-                new ARSConverter(this).convertARS();
-                getConfig().set("conversions.ars_materials", true);
-                conversions++;
-            }
-            if (!getConfig().getBoolean("conversions.constructs")) {
-                new ConstructsConverter(this).convertConstructs();
-                getConfig().set("conversions.constructs", true);
-                conversions++;
-            }
-            if (!getConfig().getBoolean("conversions.controls")) {
-                new TARDISControlsConverter(this).update();
-                getConfig().set("conversions.controls", true);
-                conversions++;
-            }
-            if (!getConfig().getBoolean("conversions.bind")) {
-                new TARDISBindConverter(this).update();
-                getConfig().set("conversions.bind", true);
-                conversions++;
-            }
-            if (!getConfig().getBoolean("conversions.icons")) {
-                new TARDISSaveIconUpdate(this).addIcons();
-                getConfig().set("conversions.icons", true);
-                conversions++;
-            }
-            if (!getConfig().getBoolean("conversions.archive_wall_data")) {
-                new TARDISWallConverter(this).processArchives();
-                getConfig().set("conversions.archive_wall_data", true);
-                conversions++;
-            }
-            if (!getConfig().getBoolean("conversions.legacy_default")) {
-                new TARDISLegacyConverter(this).setOriginal();
-                getConfig().set("conversions.legacy_default", true);
-                conversions++;
-            }
-            if (!getConfig().getBoolean("conversions.all_in_one.helper")) {
-                if (new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.HELPER)) {
-                    getConfig().set("conversions.all_in_one.helper", true);
-                    conversions++;
-                }
-            }
             loadInventoryManager();
-            checkTCG();
-            checkDefaultWorld();
-            cleanUpWorlds();
+            new TARDISWorldConfig(this).check();
             TARDISAliasResolver.createAliasMap();
             utils = new TARDISUtils(this);
             locationUtils = new TARDISLocationGetters(this);
@@ -441,14 +332,12 @@ public class TARDIS extends JavaPlugin {
             }
             new TARDISSmithingRecipe(this).addSmithingRecipes();
             new TARDISDisplayItemRecipe(this).addDisplayItemRecipes();
-            TARDISInformationSystemListener info = new TARDISListenerRegisterer(this).registerListeners();
-            new TARDISCommandSetter(this, info).loadCommands();
-            startSound();
-            startReminders();
+            // add listeners
+            new TARDISListenerRegisterer(this).registerListeners();
+            // register commands
+            new TARDISCommandSetter(this).loadCommands();
             loadWorldGuard();
             loadPluginRespect();
-            startZeroHealing();
-            startSiegeTicks();
             String mapper = getConfig().getString("mapping.provider");
             if (pm.isPluginEnabled(mapper) && getConfig().getBoolean("modules.mapping")) {
                 getMessenger().message(console, TardisModule.TARDIS, "Loading Mapping Module");
@@ -461,66 +350,10 @@ public class TARDIS extends JavaPlugin {
                 }
                 tardisMapper.enable();
             }
-            if (getConfig().getBoolean("modules.weeping_angels")) {
-                    getMessenger().message(console, TardisModule.TARDIS, "Loading Weeping Angels Module");
-                    new TARDISWeepingAngels(this).enable();
-                    if (!getConfig().getBoolean("conversions.all_in_one.weeping_angels")) {
-                        if (new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.MONSTERS)) {
-                            getConfig().set("conversions.all_in_one.weeping_angels", true);
-                            conversions++;
-                        }
-                    }
-            }
-            if (getConfig().getBoolean("modules.vortex_manipulator")) {
-                getMessenger().message(console, TardisModule.TARDIS, "Loading Vortex Manipulator Module");
-                new TARDISVortexManipulator(this).enable();
-                if (!getConfig().getBoolean("conversions.all_in_one.vortex_manipulator")) {
-                    boolean cvm = new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.VORTEX_MANIPULATOR);
-                    boolean dvm = new TARDISVortexManipulatorTransfer(this).transferData();
-                    if (cvm && dvm) {
-                        getConfig().set("conversions.all_in_one.vortex_manipulator", true);
-                        conversions++;
-                    }
-                }
-            }
-            if (getConfig().getBoolean("modules.shop")) {
-                getMessenger().message(console, TardisModule.TARDIS, "Loading Shop Module");
-                new TARDISShop(this).enable();
-                if (!getConfig().getBoolean("conversions.all_in_one.shop")) {
-                    boolean cs = new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.SHOP);
-                    boolean ds = new TARDISShopTransfer(this).transferData();
-                    getServer().getScheduler().scheduleSyncDelayedTask(this, new TARDISShopDisplayConverter(this), 300L);
-                    if (cs && ds) {
-                        getConfig().set("conversions.all_in_one.shop", true);
-                        conversions++;
-                    }
-                }
-            }
-            if (getConfig().getBoolean("modules.sonic_blaster")) {
-                getMessenger().message(console, TardisModule.TARDIS, "Loading Sonic Blaster Module");
-                new TARDISSonicBlaster(this).enable();
-                if (!getConfig().getBoolean("conversions.all_in_one.sonic_blaster")) {
-                    if (new TARDISAllInOneConfigConverter(this).transferConfig(TardisModule.BLASTER)) {
-                        getConfig().set("conversions.all_in_one.sonic_blaster", true);
-                        conversions++;
-                    }
-                }
-            }
-            if (!getConfig().getBoolean("conversions.condenser_materials") || !getConfig().getBoolean("conversions.player_prefs_materials") || !getConfig().getBoolean("conversions.block_materials")) {
-                TARDISMaterialIDConverter tmic = new TARDISMaterialIDConverter(this);
-                tmic.checkCondenserData();
-                tmic.checkPlayerPrefsData();
-                tmic.checkBlockData();
-                new TARDISFarmingConverter(this).update();
-            }
-            if (!getConfig().getBoolean("conversions.block_wall_signs")) {
-                new TARDISWallSignConverter(this).convertSignBlocks();
-                getConfig().set("conversions.block_wall_signs", true);
-            }
-            if (!getConfig().getBoolean("conversions.short_grass")) {
-                new TARDISGrassConverter(this).checkBlockData();
-                getConfig().set("conversions.short_grass", true);
-            }
+            // modules
+            new TARDISModuleLoader(this).enable();
+            // conversions
+            new TARDISConversions(this).convert();
             TARDISBlockLoader bl = new TARDISBlockLoader(this);
             bl.loadGravityWells();
             bl.loadProtectedBlocks();
@@ -533,50 +366,17 @@ public class TARDIS extends JavaPlugin {
             new TARDISChecker(this).checkAdvancements();
             presets = new TARDISChameleonPreset();
             presets.makePresets();
-            if (getConfig().getBoolean("preferences.walk_in_tardis")) {
-                new TARDISPortalPersister(this).load();
-                getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISMonsterRunnable(this), 2400, 2400);
-            }
-            if (getConfig().getBoolean("allow.3d_doors")) {
-                getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISSpectaclesRunnable(this), 120, 100);
-            }
-            if (disguisesOnServer && getConfig().getBoolean("arch.enabled")) {
-                new TARDISArchPersister(this).checkAll();
-            }
-            if (getConfig().getBoolean("siege.enabled")) {
-                TARDISSiegePersister tsp = new TARDISSiegePersister(this);
-                tsp.loadSiege();
-                tsp.loadCubes();
-            }
-            if (getConfig().getBoolean("allow.hads")) {
-                TARDISHadsPersister thp = new TARDISHadsPersister(this);
-                thp.load();
-            }
-            new TARDISTimeRotorLoader(this).load();
+            // load persistent data
+            new TARDISPersister(this).load();
             // load the custom map renderer for TARDIS monitor maps
             new SnapshotLoader(this).load();
-            if (getConfig().getBoolean("modules.chemistry")) {
-                new ChemistryBlockRecipes(this).addRecipes();
-                new BleachRecipe(this).setRecipes();
-                getServer().getScheduler().scheduleSyncRepeatingTask(this, new GlowStickRunnable(this), 200, 200);
-                getServer().getScheduler().scheduleSyncRepeatingTask(this, new HeatBlockRunnable(this), 200, 80);
-            }
-            if (getConfig().getInt("allow.force_field") > 0) {
-                getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISForceField(this), 20, 5);
-            }
             // hook CoreProtectAPI
             blockLogger = new TARDISBlockLogger(this);
             if (pm.getPlugin("CoreProtect") != null) {
                 debug("Logging block changes with CoreProtect.");
                 blockLogger.enableLogger();
             }
-            new TARDISVortexPersister(this).load();
-            new FlightPersister(this).load();
-            new CameraPersister(this).load();
-            new TARDISJunkPlayerPersister(this).load();
-            new TARDISSeedBlockPersister(this).load();
             setDates();
-            startStandBy();
             if (getConfig().getBoolean("allow.perception_filter")) {
                 filter = new TARDISPerceptionFilter(this);
                 filter.createPerceptionFilter();
@@ -584,57 +384,15 @@ public class TARDIS extends JavaPlugin {
             TARDISCondensables cond = new TARDISCondensables(this);
             cond.makeCondensables();
             condensables = cond.getCondensables();
-            checkDropChests();
-            if (artronConfig.getBoolean("artron_furnace.particles")) {
-                new TARDISArtronFurnaceParticle(this).addParticles();
-            }
-            if (getConfig().getBoolean("junk.enabled") && getConfig().getLong("junk.return") > 0) {
-                generalKeeper.setJunkTime(System.currentTimeMillis());
-                long delay = getConfig().getLong("junk.return") * 20;
-                getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISJunkReturnRunnable(this), delay, delay);
-            }
-            startRecorderTask();
-            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISControlRunnable(this), 200, 200);
-            getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
-                if (!TARDISAchievementFactory.checkAdvancement("tardis")) {
-                    getMessenger().message(console, TardisModule.TARDIS, getLanguage().getString("ADVANCEMENT_RELOAD"));
-                }
-            }, 199);
-            // check TARDIS build
-            if (getConfig().getBoolean("preferences.update.notify")) {
-                getServer().getScheduler().runTaskAsynchronously(this, new TARDISUpdateChecker(this, null));
-            }
-            // check Spigot build
-            getServer().getScheduler().runTaskAsynchronously(this, new TARDISSpigotChecker(this));
-            // resume any room growing
-            new TARDISRoomPersister(this).resume();
-            if (getConfig().getInt("allow.force_field") > 0) {
-                new TARDISForceFieldPersister(this).load();
-            }
+            // start runnable tasks
+            new TARDISRunnables(this).start();
             // hook PlaceholderAPI
             if (pm.getPlugin("PlaceholderAPI") != null) {
                 debug("Registering expansion with PlaceholderAPI.");
                 new TARDISPlaceholderExpansion(this).register();
             }
-            if (!getConfig().getBoolean("conversions.restore_biomes")) {
-                getServer().getScheduler().scheduleSyncDelayedTask(this, () -> new TARDISBiomeConverter(this).convertBiomes(), 1200);
-                getConfig().set("conversions.restore_biomes", true);
-                conversions++;
-            }
-            if (!getConfig().getBoolean("conversions.interior_door_id")) {
-                if (new TARDISInteractionDoorUpdater(this).addIds()) {
-                    getConfig().set("conversions.interior_door_id", true);
-                    conversions++;
-                }
-            }
-            if (conversions > 0) {
-                saveConfig();
-            }
             // start bStats metrics
             new TARDISStats(this).startMetrics();
-//            if (getConfig().getBoolean("debug")) {
-//                getServer().getScheduler().scheduleSyncDelayedTask(this, new RecipeChecker(), 100L);
-//            }
         } else {
             getLogger().log(Level.SEVERE, "This plugin requires Spigot/Paper " + minVersion + " or higher, disabling...");
             pm.disablePlugin(this);
@@ -673,20 +431,6 @@ public class TARDIS extends JavaPlugin {
         return prefix;
     }
 
-    /**
-     * Starts a repeating task that removes Artron Energy from the TARDIS while it is in standby mode (ie not
-     * travelling). Only runs if `standby_time` in artron.yml is greater than 0 (the default is 6000 or every 5
-     * minutes).
-     */
-    public void startStandBy() {
-        if (getConfig().getBoolean("allow.power_down")) {
-            long repeat = getArtronConfig().getLong("standby_time");
-            if (repeat <= 0) {
-                return;
-            }
-            standbyTask = getServer().getScheduler().runTaskTimerAsynchronously(this, new TARDISStandbyMode(this), 6000, repeat);
-        }
-    }
 
     /**
      * Gets the inventory manager that the server is using
@@ -1231,6 +975,13 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
+     * Sets the TARDIS Artron Energy Standby Task
+     */
+    public void setStandbyTask(BukkitTask task) {
+        standbyTask = task;
+    }
+
+    /**
      * Gets a list of worlds to clean up from the planets configuration
      *
      * @return a list of world names
@@ -1732,45 +1483,6 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Starts a repeating task that plays TARDIS sound effects to players while they are inside the TARDIS.
-     */
-    private void startSound() {
-        getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> new TARDISHumSounds().playTARDISHum(), 60, 1500);
-    }
-
-    /**
-     * Starts a repeating task that schedules reminders added to a players Handles cyberhead companion.
-     */
-    private void startReminders() {
-        if (getHandlesConfig().getBoolean("reminders.enabled")) {
-            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISHandlesRunnable(this), 120, getHandlesConfig().getLong("reminders.schedule"));
-        }
-    }
-
-    /**
-     * Starts a repeating task that removes Artron Energy from the TARDIS while it is in Siege Mode. Only runs if
-     * `siege_ticks` in artron.yml is greater than 0 (the default is 1500 or every 1 minute 15 seconds).
-     */
-    private void startSiegeTicks() {
-        if (getConfig().getBoolean("siege.enabled")) {
-            long ticks = getArtronConfig().getLong("siege_ticks");
-            if (ticks <= 0) {
-                return;
-            }
-            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISSiegeRunnable(this), 1500, ticks);
-        }
-    }
-
-    /**
-     * Starts a repeating task that heals players 1/2 a heart per cycle when they are in the Zero room.
-     */
-    private void startZeroHealing() {
-        if (getConfig().getBoolean("allow.zero_room")) {
-            getServer().getScheduler().scheduleSyncRepeatingTask(this, new TARDISZeroRoomRunnable(this), 20, getConfig().getLong("preferences.heal_speed"));
-        }
-    }
-
-    /**
      * Checks if the WorldGuard plugin is available, and loads support if it is.
      */
     private void loadWorldGuard() {
@@ -1900,36 +1612,7 @@ public class TARDIS extends JavaPlugin {
         return map;
     }
 
-    private void checkTCG() {
-        if (getConfig().getBoolean("creation.create_worlds")) {
-            if (getConfig().getBoolean("abandon.enabled")) {
-                getConfig().set("abandon.enabled", false);
-                saveConfig();
-                getLogger().log(Level.SEVERE, "Abandoned TARDISes were disabled as create_worlds is true!");
-            }
-            if (getConfig().getBoolean("creation.default_world")) {
-                getConfig().set("creation.default_world", false);
-                saveConfig();
-                getLogger().log(Level.SEVERE, "default_world was disabled as create_worlds is true!");
-            }
-            // disable TARDIS_TimeVortex world
-            getPlanetsConfig().set("planets.TARDIS_TimeVortex.enabled", false);
-            try {
-                getPlanetsConfig().save(new File(getDataFolder(), "planets.yml"));
-            } catch (IOException ex) {
-                getLogger().log(Level.SEVERE, "Couldn't save planets.yml!");
-            }
-        }
-        if (getConfig().getBoolean("creation.create_worlds_with_perms") && getConfig().getBoolean("abandon.enabled")) {
-            getConfig().set("abandon.enabled", false);
-            saveConfig();
-            getLogger().log(Level.SEVERE, "Abandoned TARDISes were disabled as create_worlds_with_perms is true!");
-        }
-    }
 
-    private void cleanUpWorlds() {
-        getCleanUpWorlds().forEach((w) -> new TARDISWorldRemover(plugin).cleanWorld(w));
-    }
 
     /**
      * Resets any player who is 'Temporally Located' back to normal time.
@@ -1973,29 +1656,7 @@ public class TARDIS extends JavaPlugin {
         }
     }
 
-    private void checkDefaultWorld() {
-        if (!getConfig().getBoolean("creation.default_world")) {
-            return;
-        }
-        String defWorld = getConfig().getString("creation.default_world_name", "TARDIS_TimeVortex");
-        if (getServer().getWorld(defWorld) == null) {
-            getMessenger().message(console, TardisModule.TARDIS, "Default world specified, but it doesn't exist! Trying to create it now...");
-            new TARDISSpace(this).createDefaultWorld(defWorld);
-        }
-    }
 
-    /**
-     * Removes unused drop chest database records from the vaults table.
-     */
-    private void checkDropChests() {
-        getServer().getScheduler().scheduleSyncDelayedTask(this, new TARDISVaultChecker(this), 2400);
-    }
-
-    private void startRecorderTask() {
-        int recorder_tick_delay = 5;
-        // we schedule it once, it will reschedule itself
-        recordingTask = getServer().getScheduler().runTaskLaterAsynchronously(this, new TARDISRecordingTask(this), recorder_tick_delay);
-    }
 
     public String getServerStr() {
         return serverStr;

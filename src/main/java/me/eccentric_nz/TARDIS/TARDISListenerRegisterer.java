@@ -133,7 +133,7 @@ class TARDISListenerRegisterer {
      * Registers all the listeners for the various events required to use the
      * TARDIS.
      */
-    TARDISInformationSystemListener registerListeners() {
+    void registerListeners() {
         plugin.getPM().registerEvents(new TARDISBonemealListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISEditAreasGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockBreakListener(plugin), plugin);
@@ -230,8 +230,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISHotbarListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISHumListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISIceMeltListener(plugin), plugin);
-        TARDISInformationSystemListener info = new TARDISInformationSystemListener(plugin);
-        plugin.getPM().registerEvents(info, plugin);
+        plugin.getPM().registerEvents(new TARDISInformationSystemListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISIndexFileListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISIndexFileSectionListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISIndexFileEntryListener(plugin), plugin);
@@ -391,6 +390,5 @@ class TARDISListenerRegisterer {
         if (plugin.getPM().isPluginEnabled("ProtocolLib")) {
             new ProtocolLibPacketListener().enable(plugin);
         }
-        return info;
     }
 }

@@ -44,7 +44,7 @@ import me.eccentric_nz.TARDIS.commands.travel.TARDISTravelTabComplete;
 import me.eccentric_nz.TARDIS.commands.utils.*;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayCommand;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
+import me.eccentric_nz.TARDIS.info.TARDISInformationSystemCommand;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkCommands;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkTabComplete;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicCommand;
@@ -67,11 +67,9 @@ import java.io.File;
 class TARDISCommandSetter {
 
     private final TARDIS plugin;
-    private final TARDISInformationSystemListener info;
 
-    TARDISCommandSetter(TARDIS plugin, TARDISInformationSystemListener info) {
+    TARDISCommandSetter(TARDIS plugin) {
         this.plugin = plugin;
-        this.info = info;
     }
 
     /**
@@ -144,7 +142,7 @@ class TARDISCommandSetter {
         plugin.getCommand("tardisnetherportal").setTabCompleter(tardisNetherPortalCommand);
         plugin.getCommand("tardis?").setExecutor(new TARDISQuestionMarkCommand(plugin));
         plugin.getCommand("tardis?").setTabCompleter(new TARDISQuestionTabComplete(plugin));
-        plugin.getCommand("tardisinfo").setExecutor(info);
+        plugin.getCommand("tardisinfo").setExecutor(new TARDISInformationSystemCommand(plugin));
         plugin.getCommand("handles").setExecutor(new TARDISHandlesCommand(plugin));
         plugin.getCommand("handles").setTabCompleter(new TARDISHandlesTabComplete());
         if (plugin.getConfig().getBoolean("modules.chemistry")) {
