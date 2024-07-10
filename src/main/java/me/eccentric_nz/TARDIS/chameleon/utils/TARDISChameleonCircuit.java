@@ -46,7 +46,7 @@ public class TARDISChameleonCircuit {
         if (plugin.getBlocksConfig().getStringList("chameleon_blocks").contains(chameleonType.toString())) {
             wall_block = chameleonType;
         }
-        if (TARDISConstants.CHAMELEON_BLOCKS_BAD.contains(chameleonType)) {
+        if (TARDISConstants.CHAMELEON_BLOCKS_BAD.contains(chameleonType) && p != null) {
             plugin.getMessenger().send(p.getPlayer(), TardisModule.TARDIS, "CHAM_NOT_ENGAGE");
         }
         if (TARDISConstants.CHAMELEON_BLOCKS_CHANGE.contains(chameleonType)) {

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.particles;
 
+import com.mojang.datafixers.util.Pair;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
@@ -23,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetParticlePrefs;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.util.Vector;
 
@@ -33,16 +35,26 @@ import java.util.UUID;
  */
 public class TARDISParticleRunnable implements Runnable {
 
+    protected final TARDIS plugin;
     protected final UUID uuid;
     protected double t = 0;
     protected double speed = 0;
+    protected boolean adaptive;
+    protected BlockData adaptiveData = null;
     int taskID;
 
     public TARDISParticleRunnable(TARDIS plugin, UUID uuid) {
+        this.plugin = plugin;
         this.uuid = uuid;
         ResultSetParticlePrefs rs = new ResultSetParticlePrefs(plugin);
         if (rs.fromUUID(uuid.toString())) {
             this.speed = rs.getData().getSpeed();
+        }
+        // adaptive preset
+        Pair<Boolean, Integer> pair = ParticleAdaptive.isAdaptive(plugin, uuid);
+        adaptive = pair.getFirst();
+        if (adaptive) {
+            adaptiveData = ParticleAdaptive.getAdaptiveData(plugin, pair.getSecond());
         }
     }
 
@@ -52,11 +64,17 @@ public class TARDISParticleRunnable implements Runnable {
 
     public void spawnParticle(Location location, int count, ParticleData data) {
         Particle particle = data.getEffect().getParticle();
+        if (particle == Particle.FLAME && location.getWorld().getEnvironment() == World.Environment.NETHER) {
+            particle = Particle.SOUL_FIRE_FLAME;
+        }
+        if (adaptive) {
+            particle = Particle.BLOCK;
+        }
         double speed = data.getSpeed();
         switch (particle) {
             case BLOCK -> {
                 // get material from prefs
-                BlockData block = data.getBlockData();
+                BlockData block = (adaptive && adaptiveData != null) ? adaptiveData : data.getBlockData();
                 location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, block, false);
             }
             case DUST -> {
@@ -98,7 +116,7 @@ public class TARDISParticleRunnable implements Runnable {
     }
 
     public void cancel() {
-        TARDIS.plugin.getServer().getScheduler().cancelTask(taskID);
+        plugin.getServer().getScheduler().cancelTask(taskID);
         taskID = 0;
     }
 
