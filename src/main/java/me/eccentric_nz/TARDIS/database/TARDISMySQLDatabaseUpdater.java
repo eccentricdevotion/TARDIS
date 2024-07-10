@@ -48,6 +48,7 @@ class TARDISMySQLDatabaseUpdater {
     private final List<String> sonicupdates = new ArrayList<>();
     private final List<String> flightupdates = new ArrayList<>();
     private final List<String> systemupdates = new ArrayList<>();
+    private final List<String> particleupdates = new ArrayList<>();
     private final HashMap<String, String> uuidUpdates = new HashMap<>();
     private final Statement statement;
     private final TARDIS plugin;
@@ -79,6 +80,8 @@ class TARDISMySQLDatabaseUpdater {
         tardisupdates.add("rotor varchar(48) DEFAULT ''");
         tardisupdates.add("siege_on int(1) DEFAULT '0'");
         tardisupdates.add("zero varchar(512) DEFAULT ''");
+        particleupdates.add("colour varchar(16) DEFAULT 'WHITE'");
+        particleupdates.add("block varchar(48) DEFAULT 'STONE'");
         prefsupdates.add("announce_repeaters_on int(1) DEFAULT '0'");
         prefsupdates.add("auto_type varchar(32) DEFAULT 'CLOSEST'");
         prefsupdates.add("auto_default varchar(12) DEFAULT 'HOME'");
@@ -187,6 +190,16 @@ class TARDISMySQLDatabaseUpdater {
                 if (!rsp.next()) {
                     i++;
                     String p_alter = "ALTER TABLE " + prefix + "player_prefs ADD " + p;
+                    statement.executeUpdate(p_alter);
+                }
+            }
+            for (String p : particleupdates) {
+                String[] psplit = p.split(" ");
+                String p_query = "SHOW COLUMNS FROM " + prefix + "particle_prefs LIKE '" + psplit[0] + "'";
+                ResultSet rsp = statement.executeQuery(p_query);
+                if (!rsp.next()) {
+                    i++;
+                    String p_alter = "ALTER TABLE " + prefix + "particle_prefs ADD " + p;
                     statement.executeUpdate(p_alter);
                 }
             }

@@ -18,10 +18,12 @@ package me.eccentric_nz.TARDIS.particles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetParticlePrefs;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.util.Vector;
 
 import java.util.UUID;
@@ -48,15 +50,28 @@ public class TARDISParticleRunnable implements Runnable {
         this.taskID = taskID;
     }
 
-    public void spawnParticle(Particle particle, Location location, int count, double speed) {
+    public void spawnParticle(Location location, int count, ParticleData data) {
+        Particle particle = data.getEffect().getParticle();
+        double speed = data.getSpeed();
         switch (particle) {
+            case BLOCK -> {
+                // get material from prefs
+                BlockData block = data.getBlockData();
+                location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, block, false);
+            }
             case DUST -> {
-                Particle.DustOptions options = new Particle.DustOptions(Color.BLUE, 1.0f);
+                // get colour from prefs
+                Color colour = data.getColour();
+                Particle.DustOptions options = new Particle.DustOptions(colour, 1.0f);
                 location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, options, false);
             }
             case SHRIEK -> location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, 1, false);
             case SCULK_CHARGE -> location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, 1.0f, false);
-            case ENTITY_EFFECT -> location.getWorld().spawnParticle(particle, location, count, 0, 0, 0, 0, Color.WHITE, false);
+            case ENTITY_EFFECT -> {
+                // get colour from prefs
+                Color colour = data.getColour();
+                location.getWorld().spawnParticle(particle, location, count, 0, 0, 0, 0, colour, false);
+            }
             default -> location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, null, false);
         }
     }

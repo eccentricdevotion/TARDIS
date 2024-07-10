@@ -50,6 +50,7 @@ class TARDISSQLiteDatabaseUpdater {
     private final List<String> sonicupdates = new ArrayList<>();
     private final List<String> flightupdates = new ArrayList<>();
     private final List<String> systemupdates = new ArrayList<>();
+    private final List<String> particleupdates = new ArrayList<>();
     private final List<String> uuidUpdates = Arrays.asList("achievements", "ars", "player_prefs", "storage", "t_count", "tardis", "travellers");
     private final Statement statement;
     private final TARDIS plugin;
@@ -77,6 +78,8 @@ class TARDISSQLiteDatabaseUpdater {
         doorupdates.add("locked INTEGER DEFAULT 0");
         gravityupdates.add("distance INTEGER DEFAULT 11");
         gravityupdates.add("velocity REAL DEFAULT 0.5");
+        particleupdates.add("colour TEXT DEFAULT 'WHITE'");
+        particleupdates.add("block TEXT DEFAULT 'STONE'");
         portalsupdates.add("abandoned INTEGER DEFAULT 0");
         prefsupdates.add("announce_repeaters_on INTEGER DEFAULT 0");
         prefsupdates.add("artron_level INTEGER DEFAULT 0");
@@ -270,6 +273,17 @@ class TARDISSQLiteDatabaseUpdater {
                 if (!rsp.next()) {
                     i++;
                     String p_alter = "ALTER TABLE " + prefix + "player_prefs ADD " + p;
+                    statement.executeUpdate(p_alter);
+                }
+            }
+            for (String p : particleupdates) {
+                String[] psplit = p.split(" ");
+                String pcheck = psplit[0] + " " + psplit[1].substring(0, 3);
+                String p_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "particle_prefs' AND sql LIKE '%" + pcheck + "%'";
+                ResultSet rsp = statement.executeQuery(p_query);
+                if (!rsp.next()) {
+                    i++;
+                    String p_alter = "ALTER TABLE " + prefix + "particle_prefs ADD " + p;
                     statement.executeUpdate(p_alter);
                 }
             }

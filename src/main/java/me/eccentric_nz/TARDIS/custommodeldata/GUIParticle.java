@@ -25,8 +25,12 @@ public record GUIParticle() {
     public static GUIData SHAPE = new GUIData(1, -1, Material.LAPIS_LAZULI);
     public static GUIData EFFECT_INFO = new GUIData(2, 9, Material.REDSTONE_BLOCK);
     public static GUIData EFFECT = new GUIData(1, -1, Material.REDSTONE);
-    public static GUIData TOGGLE = new GUIData(19, 27, Material.REPEATER);
-    public static GUIData TEST = new GUIData(1, 35, Material.COPPER_INGOT);
+    public static GUIData COLOUR_INFO = new GUIData(2, 8, Material.EMERALD_BLOCK);
+    public static GUIData COLOUR = new GUIData(1, 17,Material.EMERALD);
+    public static GUIData BLOCK_INFO = new GUIData(2, 26, Material.COAL_BLOCK);
+    public static GUIData BLOCK = new GUIData(1, 35, Material.COAL);
+    public static GUIData TOGGLE = new GUIData(19, 44, Material.REPEATER);
+    public static GUIData TEST = new GUIData(1, 48, Material.COPPER_INGOT);
     public static GUIData MINUS = new GUIData(40, -1, Material.PAPER);
     public static GUIData PLUS = new GUIData(39, -1, Material.PAPER);
     public static GUIData DENSITY = new GUIData(5, 46, Material.IRON_INGOT);

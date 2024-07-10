@@ -65,7 +65,7 @@ public class TARDISParticleInventory {
             HashMap<String, Object> set = new HashMap<>();
             set.put("uuid", uuid);
             plugin.getQueryFactory().doSyncInsert("particle_prefs", set);
-            data = new ParticleData(ParticleEffect.ASH, ParticleShape.RANDOM, 16, 0, false);
+            data = new ParticleData(ParticleEffect.ASH, ParticleShape.RANDOM, 16, 0, "WHITE", "STONE", false);
         }
         // shape
         ItemStack shape = new ItemStack(GUIParticle.SHAPE_INFO.material(), 1);
@@ -75,7 +75,7 @@ public class TARDISParticleInventory {
         sim.setCustomModelData(GUIParticle.SHAPE_INFO.customModelData());
         shape.setItemMeta(sim);
         stacks[GUIParticle.SHAPE_INFO.slot()] = shape;
-        int i = 2;
+        int i = 1;
         // shapes
         for (ParticleShape ps : ParticleShape.values()) {
             Material sm = (data.getShape() == ps) ? Material.LAPIS_ORE : GUIParticle.SHAPE.material();
@@ -95,7 +95,7 @@ public class TARDISParticleInventory {
         eim.setCustomModelData(GUIParticle.EFFECT_INFO.customModelData());
         effect.setItemMeta(eim);
         stacks[GUIParticle.EFFECT_INFO.slot()] = effect;
-        i = 11;
+        i = 10;
         // effects
         for (ParticleEffect pe : ParticleEffect.values()) {
             Material pm = (data.getEffect() == pe) ? Material.REDSTONE_ORE : GUIParticle.EFFECT.material();
@@ -104,13 +104,53 @@ public class TARDISParticleInventory {
             pim.setDisplayName(TARDISStringUtils.capitalise(pe.toString()));
             pim.setCustomModelData(GUIParticle.EFFECT.customModelData());
             peffect.setItemMeta(pim);
-            stacks[i] = peffect;
-            if (i % 9 == 7) {
-                i += 4;
+            if (pe == ParticleEffect.BLOCK) {
+                stacks[16] = peffect;
             } else {
-                i++;
+                stacks[i] = peffect;
+                if (i % 9 == 6) {
+                    i += 4;
+                } else {
+                    i++;
+                }
             }
         }
+        // colour info
+        ItemStack colour_info = new ItemStack(GUIParticle.COLOUR_INFO.material(), 1);
+        ItemMeta ciim = colour_info.getItemMeta();
+        ciim.setDisplayName("Effect Colour");
+        ciim.setLore(List.of("Only affects DUST", "and EFFECT particles.", "Click below to cycle through", "the 16 Minecraft colours."));
+        ciim.setCustomModelData(GUIParticle.COLOUR_INFO.customModelData());
+        colour_info.setItemMeta(ciim);
+        stacks[GUIParticle.COLOUR_INFO.slot()] = colour_info;
+        // colour
+        ItemStack colour = new ItemStack(GUIParticle.COLOUR.material(), 1);
+        ItemMeta cim = colour.getItemMeta();
+        cim.setDisplayName("Particle Colour");
+        // set to colour pref
+        ChatColor chatColor = ParticleColour.fromColor(data.getColour());
+        String col = ParticleColour.toString(chatColor);
+        cim.setLore(List.of(chatColor + col));
+        cim.setCustomModelData(GUIParticle.COLOUR.customModelData());
+        colour.setItemMeta(cim);
+        stacks[GUIParticle.COLOUR.slot()] = colour;
+        // block info
+        ItemStack block_info = new ItemStack(GUIParticle.BLOCK_INFO.material(), 1);
+        ItemMeta blim = block_info.getItemMeta();
+        blim.setDisplayName("Effect Block");
+        blim.setLore(List.of("Only affects BLOCK particles.", "Click below to cycle", "through different blocks."));
+        blim.setCustomModelData(GUIParticle.BLOCK_INFO.customModelData());
+        block_info.setItemMeta(blim);
+        stacks[GUIParticle.BLOCK_INFO.slot()] = block_info;
+        // block
+        ItemStack block = new ItemStack(GUIParticle.BLOCK.material(), 1);
+        ItemMeta bim = block.getItemMeta();
+        bim.setDisplayName("Block Type");
+        // set to material pref
+        bim.setLore(List.of(data.getBlockData().getMaterial().toString()));
+        bim.setCustomModelData(GUIParticle.BLOCK.customModelData());
+        block.setItemMeta(bim);
+        stacks[GUIParticle.BLOCK.slot()] = block;
         // toggle on/off
         ItemStack toggle = new ItemStack(GUIParticle.TOGGLE.material(), 1);
         ItemMeta tim = toggle.getItemMeta();
@@ -140,7 +180,7 @@ public class TARDISParticleInventory {
         ItemStack speed = new ItemStack(GUIParticle.SPEED.material(), 1);
         ItemMeta spim = speed.getItemMeta();
         spim.setDisplayName("Particle Speed");
-        spim.setLore(List.of(ChatColor.AQUA + "" + String.format("%.0f", data.getSpeed() * 10), "Range: 0 - 10."));
+        spim.setLore(List.of(ChatColor.AQUA + String.format("%.0f", data.getSpeed() * 10), "Range: 0 - 10."));
         spim.setCustomModelData(GUIParticle.SPEED.customModelData());
         speed.setItemMeta(spim);
         stacks[GUIParticle.SPEED.slot()] = speed;
@@ -162,10 +202,10 @@ public class TARDISParticleInventory {
         stacks[51] = plus;
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
-        ItemMeta cim = close.getItemMeta();
-        cim.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        cim.setCustomModelData(GUIParticle.CLOSE.customModelData());
-        close.setItemMeta(cim);
+        ItemMeta clim = close.getItemMeta();
+        clim.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+        clim.setCustomModelData(GUIParticle.CLOSE.customModelData());
+        close.setItemMeta(clim);
         stacks[GUIParticle.CLOSE.slot()] = close;
         return stacks;
     }

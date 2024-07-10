@@ -196,7 +196,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryPaperBag);
 
             // Table structure for table 'particle_prefs'
-            String queryParticlePrefs = "CREATE TABLE IF NOT EXISTS " + prefix + "particle_prefs (pp_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', effect TEXT DEFAULT 'ASH', shape TEXT DEFAULT 'RANDOM', density INTEGER DEFAULT 16, speed INTEGER DEFAULT 0, particles_on INTEGER DEFAULT 0)";
+            String queryParticlePrefs = "CREATE TABLE IF NOT EXISTS " + prefix + "particle_prefs (pp_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', effect TEXT DEFAULT 'ASH', shape TEXT DEFAULT 'RANDOM', density INTEGER DEFAULT 16, speed INTEGER DEFAULT 0, colour TEXT DEFAULT 'WHITE', block TEXT DEFAULT 'STONE', particles_on INTEGER DEFAULT 0)";
             statement.executeUpdate(queryParticlePrefs);
 
             // Table structure for table 'player_prefs'

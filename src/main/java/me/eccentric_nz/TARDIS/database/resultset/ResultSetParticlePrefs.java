@@ -43,7 +43,15 @@ public class ResultSetParticlePrefs {
                 try {
                     ParticleEffect effect = ParticleEffect.valueOf(rs.getString("effect"));
                     ParticleShape shape = ParticleShape.valueOf(rs.getString("shape"));
-                    data = new ParticleData(effect, shape, rs.getInt("density"), rs.getDouble("speed")/10.0d, rs.getBoolean("particles_on"));
+                    data = new ParticleData(
+                            effect,
+                            shape,
+                            rs.getInt("density"),
+                            rs.getDouble("speed") / 10.0d,
+                            rs.getString("colour"),
+                            rs.getString("block"),
+                            rs.getBoolean("particles_on")
+                    );
                     return true;
                 } catch (IllegalArgumentException ignored) {
                 }

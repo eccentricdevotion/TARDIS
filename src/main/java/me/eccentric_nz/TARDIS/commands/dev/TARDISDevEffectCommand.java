@@ -75,13 +75,21 @@ public class TARDISDevEffectCommand {
                 // get density and speed
                 int density = 16;
                 double speed = 0;
+                String colour = "White";
+                String block = "STONE";
                 if (args.length > 3) {
                     density = TARDISNumberParsers.parseInt(args[3]);
                 }
                 if (args.length > 4) {
                     speed = TARDISNumberParsers.parseDouble(args[4]);
                 }
-                Emitter emitter = new Emitter(plugin, player.getUniqueId(), player.getLocation().add(3, 0, 3), new ParticleData(particle, shape, density, speed, true), SpaceTimeThrottle.RAPID.getFlightTime());
+                if (args.length > 5) {
+                    colour = args[5];
+                }
+                if (args.length > 6) {
+                    block = args[6];
+                }
+                Emitter emitter = new Emitter(plugin, player.getUniqueId(), player.getLocation().add(3, 0, 3), new ParticleData(particle, shape, density, speed, colour, block, true), SpaceTimeThrottle.RAPID.getFlightTime());
                 int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, shape.getPeriod());
                 emitter.setTaskID(task);
             }

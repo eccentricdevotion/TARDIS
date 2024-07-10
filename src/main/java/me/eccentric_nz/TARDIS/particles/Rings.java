@@ -27,7 +27,7 @@ public class Rings extends TARDISParticleRunnable {
             double z = radius * Math.sin(theta);
             location.add(x, y, z);
             // spawn particle
-            spawnParticle(data.getEffect().getParticle(), location, 1, speed);
+            spawnParticle(location, 1, data);
             location.subtract(x, y, z);
         }
         if (t > Math.PI) {

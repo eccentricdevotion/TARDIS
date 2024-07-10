@@ -5,12 +5,13 @@ import org.bukkit.Particle;
 public enum ParticleEffect {
 
     ASH(Particle.ASH),
+    BLOCK(Particle.BLOCK),
     BOOM(Particle.SONIC_BOOM),
     BREATH(Particle.DRAGON_BREATH),
     BUBBLES(Particle.BUBBLE_POP),
     CLOUDS(Particle.CLOUD),
     DUST(Particle.DUST),
-    EFFECT(Particle.EFFECT),
+    EFFECT(Particle.ENTITY_EFFECT),
     FLAMES(Particle.FLAME),
     GLOW(Particle.GLOW),
     GUST(Particle.SMALL_GUST),

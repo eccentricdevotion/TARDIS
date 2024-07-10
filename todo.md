@@ -10,7 +10,8 @@
 6. Modelled controls [#836](https://github.com/eccentricdevotion/TARDIS/issues/836)
 7. Exterior button door control [#839](https://github.com/eccentricdevotion/TARDIS/issues/839)
 8. Console lamp [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)
-9. ?
+9. Adaptive particles [#878](https://github.com/eccentricdevotion/TARDIS/issues/878)
+10. ?
 
 ## Next version `5.8.0`
 
@@ -21,6 +22,7 @@
    - Configurable number of regenerations - classic 12 or new Who 15 for example? Could be permission based `tardis.regenerations.12`
    - Regenerations upon death or when elixir is drunk
    - Add potion effects both buff/debuff e.g. healing but also mining fatigue
+4. Floodgate forms for TIS
 
 ## Future versions
 

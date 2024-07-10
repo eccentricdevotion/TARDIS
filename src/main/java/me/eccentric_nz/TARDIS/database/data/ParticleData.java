@@ -1,7 +1,11 @@
 package me.eccentric_nz.TARDIS.database.data;
 
+import me.eccentric_nz.TARDIS.particles.ParticleBlock;
+import me.eccentric_nz.TARDIS.particles.ParticleColour;
 import me.eccentric_nz.TARDIS.particles.ParticleEffect;
 import me.eccentric_nz.TARDIS.particles.ParticleShape;
+import org.bukkit.Color;
+import org.bukkit.block.data.BlockData;
 
 public class ParticleData {
 
@@ -9,13 +13,17 @@ public class ParticleData {
     private final ParticleShape shape;
     private final int density;
     private final double speed;
+    private final Color colour;
+    private final BlockData blockData;
     private final boolean on;
 
-    public ParticleData(ParticleEffect effect, ParticleShape shape, int density, double speed, boolean on) {
+    public ParticleData(ParticleEffect effect, ParticleShape shape, int density, double speed, String colour, String block, boolean on) {
         this.effect = effect;
         this.shape = shape;
         this.density = density;
         this.speed = speed;
+        this.colour = ParticleColour.fromDatabase(colour);
+        this.blockData = ParticleBlock.fromString(block);
         this.on = on;
     }
 
@@ -33,6 +41,14 @@ public class ParticleData {
 
     public double getSpeed() {
         return speed;
+    }
+
+    public Color getColour() {
+        return colour;
+    }
+
+    public BlockData getBlockData() {
+        return blockData;
     }
 
     public boolean isOn() {

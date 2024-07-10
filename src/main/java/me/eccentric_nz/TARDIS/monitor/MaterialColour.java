@@ -22,8 +22,6 @@ import java.awt.*;
 
 public enum MaterialColour {
 
-    // TODO add new 1.21 block colours
-
     AIR(new Color(0, 0, 0, 0)),
     ACACIA_BUTTON(new Color(216, 127, 51)),
     ACACIA_DOOR(new Color(216, 127, 51)),

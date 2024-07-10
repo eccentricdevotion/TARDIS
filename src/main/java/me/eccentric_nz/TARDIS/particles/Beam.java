@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.particles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
@@ -8,13 +9,13 @@ import java.util.UUID;
 
 public class Beam extends TARDISParticleRunnable {
 
-    private final ParticleEffect particle;
+    private final ParticleData data;
     private final Location location;
     private final Vector[] directions;
 
-    public Beam(TARDIS plugin, UUID uuid, ParticleEffect particle, Location location) {
+    public Beam(TARDIS plugin, UUID uuid, ParticleData data, Location location) {
         super(plugin, uuid);
-        this.particle = particle;
+        this.data = data;
         this.location = location;
         this.directions = generateVectors(false);
     }
@@ -23,12 +24,12 @@ public class Beam extends TARDISParticleRunnable {
     public void run() {
         t = t + 0.1;
         for (int v = 0; v < 10; v++) {
-            double x = t * directions[v].getX() + 0.5d;
+            double x = t * directions[v].getX();
             double y = t * directions[v].getY();
-            double z = t * directions[v].getZ() + 0.5d;
+            double z = t * directions[v].getZ();
             location.add(x, y, z);
             // spawn particle
-            spawnParticle(particle.getParticle(), location, 1, speed);
+            spawnParticle(location, 1, data);
             location.subtract(x, y, z);
         }
         if (t > 6) {

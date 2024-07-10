@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.particles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
@@ -8,12 +9,12 @@ import java.util.UUID;
 
 public class Randomish extends TARDISParticleRunnable implements Runnable {
 
-    private final ParticleEffect particle;
+    private final ParticleData data;
     private final Location location;
 
-    public Randomish(TARDIS plugin, UUID uuid, ParticleEffect particle, Location location) {
+    public Randomish(TARDIS plugin, UUID uuid, ParticleData data, Location location) {
         super(plugin, uuid);
-        this.particle = particle;
+        this.data = data;
         this.location = location;
     }
 
@@ -22,12 +23,12 @@ public class Randomish extends TARDISParticleRunnable implements Runnable {
         t = t + 0.5;
         for (double theta = 0; theta <= 2 * Math.PI; theta += Math.PI / 4) {
             for (Vector vector : generateVectors(true)) {
-                double x = t * vector.getX() + 0.5d;
+                double x = t * vector.getX();
                 double y = t * vector.getY() + 1.5d;
-                double z = t * vector.getZ() + 0.5d;
+                double z = t * vector.getZ();
                 location.add(x, y, z);
                 // spawn particle
-                spawnParticle(particle.getParticle(), location, 1, speed);
+                spawnParticle(location, 1, data);
                 location.subtract(x, y, z);
             }
         }

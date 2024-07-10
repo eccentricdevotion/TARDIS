@@ -75,27 +75,30 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
                 ItemMeta im = is.getItemMeta();
                 String display = im.getDisplayName();
                 switch (slot) {
-                    case 2, 3, 4, 5, 6, 7 -> setShape(view, slot, display, uuid); // particle shape
-                    case 11, 12, 13, 14, 15, 16,
-                         20, 21, 22, 23, 24, 25,
-                         29, 30, 31, 32, 33, 34,
-                         38, 39, 40, 41, 42, 43 -> setEffect(view, slot, display, uuid); // particle effect
-                    case 27 -> toggle(view, is, uuid); // set enabled/disabled
-                    case 35 -> test(view, player, uuid); // test
+                    case 1, 2, 3, 4, 5, 6 -> setShape(view, slot, display, uuid); // particle shape
+                    case 10, 11, 12, 13, 14, 15, 16,
+                         19, 20, 21, 22, 23, 24,
+                         28, 29, 30, 31, 32, 33,
+                         37, 38, 39, 40, 41, 42 -> setEffect(view, slot, display, uuid); // particle effect
+                    case 17 -> cycleColour(view, uuid); // colour
+                    case 35 -> cycleBlocks(view, uuid); // block
+                    case 44 -> toggle(view, is, uuid); // set enabled/disabled
                     case 45 -> less(view, true, uuid); // less density
                     case 47 -> more(view, true, uuid); // more density
+                    case 48 -> test(view, player, uuid); // test
                     case 49 -> less(view, false, uuid); // less speed
                     case 51 -> more(view, false, uuid); // more speed
                     case 53 -> close(player);
                     default -> {
-                    } // do nothing
+                        // do nothing
+                    }
                 }
             }
         }
     }
 
     private void setShape(InventoryView view, int slot, String display, UUID uuid) {
-        for (int s = 2; s < 8; s++) {
+        for (int s = 1; s < 7; s++) {
             ItemStack is = view.getItem(s);
             if (is != null) {
                 is.setType(s == slot ? Material.LAPIS_ORE : Material.LAPIS_LAZULI);
@@ -110,15 +113,57 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
     }
 
     private void setEffect(InventoryView view, int slot, String display, UUID uuid) {
-        for (int s = 11; s < 44; s++) {
+        for (int s = 10; s < 43; s++) {
             ItemStack is = view.getItem(s);
-            if (is != null && s != GUIParticle.TOGGLE.slot() && s != GUIParticle.TEST.slot()) {
+            if (is != null && s != GUIParticle.COLOUR.slot() && s != GUIParticle.BLOCK_INFO.slot() && s != GUIParticle.BLOCK.slot() && s != GUIParticle.TOGGLE.slot()) {
                 is.setType(s == slot ? Material.REDSTONE_ORE : Material.REDSTONE);
                 view.setItem(s, is);
             }
         }
         HashMap<String, Object> set = new HashMap<>();
         set.put("effect", display.toUpperCase(Locale.ROOT));
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid.toString());
+        plugin.getQueryFactory().doSyncUpdate("particle_prefs", set, where);
+    }
+
+    private void cycleColour(InventoryView view, UUID uuid) {
+        ItemStack is = view.getItem(GUIParticle.COLOUR.slot());
+        ItemMeta im = is.getItemMeta();
+        String lore = im.getLore().get(0);
+        ChatColor current = ParticleColour.fromString(lore);
+        int index = ParticleColour.colours.indexOf(current) + 1;
+        if (index > 15) {
+            index = 0;
+        }
+        ChatColor next = ParticleColour.colours.get(index);
+        String colour = ParticleColour.toString(next);
+        List<String> newLore = List.of(next + colour);
+        im.setLore(newLore);
+        is.setItemMeta(im);
+        view.setItem(GUIParticle.COLOUR.slot(), is);
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("colour", colour);
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid.toString());
+        plugin.getQueryFactory().doSyncUpdate("particle_prefs", set, where);
+    }
+
+    private void cycleBlocks(InventoryView view, UUID uuid) {
+        ItemStack is = view.getItem(GUIParticle.BLOCK.slot());
+        ItemMeta im = is.getItemMeta();
+        String lore = im.getLore().get(0);
+        int index = ParticleBlock.blocks.indexOf(lore) + 1;
+        if (index > ParticleBlock.blocks.size() - 1) {
+            index = 0;
+        }
+        String block = ParticleBlock.blocks.get(index);
+        List<String> newLore = List.of(block);
+        im.setLore(newLore);
+        is.setItemMeta(im);
+        view.setItem(GUIParticle.BLOCK.slot(), is);
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("block", block);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         plugin.getQueryFactory().doSyncUpdate("particle_prefs", set, where);
@@ -132,7 +177,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         lore.set(0, cmd > 100 ? "ON" : "OFF");
         im.setLore(lore);
         is.setItemMeta(im);
-        view.setItem(27, is);
+        view.setItem(GUIParticle.TOGGLE.slot(), is);
         HashMap<String, Object> set = new HashMap<>();
         set.put("particles_on", cmd > 100 ? 1 : 0);
         HashMap<String, Object> where = new HashMap<>();
@@ -154,7 +199,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
                 Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ()).add(0.5, 0, 0.5);
                 // get throttle setting
                 ResultSetThrottle rs = new ResultSetThrottle(plugin);
-                Throticle throticle  = rs.getSpeedAndParticles(uuid.toString());
+                Throticle throticle = rs.getSpeedAndParticles(uuid.toString());
                 // read current settings
                 ParticleData data = getParticleData(view);
                 // display particles
@@ -170,17 +215,15 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
     private ParticleData getParticleData(InventoryView view) {
         ParticleEffect effect = ParticleEffect.ASH;
         ParticleShape shape = ParticleShape.RANDOM;
-        int density = 16;
-        double speed = 0;
         boolean b = false;
         try {
-            for (int s = 11; s < 44; s++) {
+            for (int s = 10; s < 43; s++) {
                 ItemStack eis = view.getItem(s);
                 if (eis != null && eis.getType() == Material.REDSTONE_ORE) {
                     effect = ParticleEffect.valueOf(eis.getItemMeta().getDisplayName().toUpperCase(Locale.ROOT));
                 }
             }
-            for (int s = 2; s < 8; s++) {
+            for (int s = 1; s < 7; s++) {
                 ItemStack sis = view.getItem(s);
                 if (sis != null && sis.getType() == Material.LAPIS_ORE) {
                     shape = ParticleShape.valueOf(sis.getItemMeta().getDisplayName().toUpperCase(Locale.ROOT));
@@ -190,11 +233,15 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         }
         ItemStack dis = view.getItem(GUIParticle.DENSITY.slot());
         String d = ChatColor.stripColor(dis.getItemMeta().getLore().getFirst());
-        density = TARDISNumberParsers.parseInt(d);
+        int density = TARDISNumberParsers.parseInt(d);
         ItemStack spis = view.getItem(GUIParticle.SPEED.slot());
         String s = ChatColor.stripColor(spis.getItemMeta().getLore().getFirst());
-        speed = TARDISNumberParsers.parseInt(s) / 10.0d;
-        return new ParticleData(effect, shape, density, speed, b);
+        ItemStack cis = view.getItem(GUIParticle.COLOUR.slot());
+        String colour = ChatColor.stripColor(cis.getItemMeta().getLore().getFirst());
+        ItemStack bis = view.getItem(GUIParticle.BLOCK.slot());
+        String block = ChatColor.stripColor(bis.getItemMeta().getLore().getFirst());
+        double speed = TARDISNumberParsers.parseInt(s) / 10.0d;
+        return new ParticleData(effect, shape, density, speed, colour, block, b);
     }
 
     private void less(InventoryView view, boolean b, UUID uuid) {

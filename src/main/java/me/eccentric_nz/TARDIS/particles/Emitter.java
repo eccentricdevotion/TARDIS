@@ -11,29 +11,29 @@ public class Emitter extends TARDISParticleRunnable implements Runnable {
     private final TARDIS plugin;
     private final UUID uuid;
     private final Location location;
-    private final ParticleData particle;
+    private final ParticleData data;
     private final long loops;
 
-    public Emitter(TARDIS plugin, UUID uuid, Location location, ParticleData particle, long end) {
+    public Emitter(TARDIS plugin, UUID uuid, Location location, ParticleData data, long end) {
         super(plugin, uuid);
         this.plugin = plugin;
         this.uuid = uuid;
-        this.location = location.add(0.5d, particle.getShape().getY(), 0.5d);
-        this.particle = particle;
-        this.loops = end / particle.getShape().getPeriod() + 1;
+        this.location = location.add(0, data.getShape().getY(), 0);
+        this.data = data;
+        this.loops = end / data.getShape().getPeriod() + 1;
     }
 
     @Override
     public void run() {
         if (t < loops) {
             TARDISParticleRunnable runnable;
-            switch (particle.getShape()) {
-                case BEAM -> runnable = new Beam(plugin, uuid, particle.getEffect(), location);
-                case HELIX -> runnable = new Helix(plugin, uuid, particle.getEffect(), location);
-                case RINGS -> runnable = new Rings(plugin, uuid, particle, location);
-                case VACUUM -> runnable = new Vacuum(plugin, uuid, particle, location);
-                case WAVE -> runnable = new Wave(plugin, uuid, particle, location);
-                default -> runnable = new Randomish(plugin, uuid, particle.getEffect(), location);
+            switch (data.getShape()) {
+                case BEAM -> runnable = new Beam(plugin, uuid, data, location);
+                case HELIX -> runnable = new Helix(plugin, uuid, data, location);
+                case RINGS -> runnable = new Rings(plugin, uuid, data, location);
+                case VACUUM -> runnable = new Vacuum(plugin, uuid, data, location);
+                case WAVE -> runnable = new Wave(plugin, uuid, data, location);
+                default -> runnable = new Randomish(plugin, uuid, data, location);
             }
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 0, 1);
             runnable.setTaskID(task);
