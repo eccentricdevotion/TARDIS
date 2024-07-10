@@ -104,15 +104,11 @@ public class TARDISParticleInventory {
             pim.setDisplayName(TARDISStringUtils.capitalise(pe.toString()));
             pim.setCustomModelData(GUIParticle.EFFECT.customModelData());
             peffect.setItemMeta(pim);
-            if (pe == ParticleEffect.BLOCK) {
-                stacks[16] = peffect;
+            stacks[i] = peffect;
+            if (i % 9 == 7) {
+                i += 3;
             } else {
-                stacks[i] = peffect;
-                if (i % 9 == 6) {
-                    i += 4;
-                } else {
-                    i++;
-                }
+                i++;
             }
         }
         // colour info

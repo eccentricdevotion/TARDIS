@@ -7,7 +7,8 @@ public enum ParticleShape {
     RANDOM(20L, 1.0d),
     RINGS(10L, 2.0d),
     VACUUM(12L, 0.5d),
-    WAVE(32L, 0.5d);
+    WAVE(32L, 0.5d),
+    FALLING(20L, 0);
 
     private final long period;
     private final double y;

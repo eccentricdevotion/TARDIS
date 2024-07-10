@@ -20,6 +20,7 @@ public enum ParticleEffect {
     HONEY(Particle.DRIPPING_HONEY),
     INFESTED(Particle.INFESTED),
     MUSIC(Particle.NOTE),
+    NAUTILUS(Particle.NAUTILUS),
     OMEN(Particle.TRIAL_OMEN),
     PETALS(Particle.CHERRY_LEAVES),
     SCULK(Particle.SCULK_CHARGE),
@@ -29,7 +30,8 @@ public enum ParticleEffect {
     SPLASH(Particle.SPLASH),
     SPAWNER(Particle.TRIAL_SPAWNER_DETECTION),
     SPELL(Particle.WITCH),
-    SPORE(Particle.CRIMSON_SPORE);
+    SPORE(Particle.CRIMSON_SPORE),
+    TOTEM(Particle.TOTEM_OF_UNDYING);
 
     private final Particle particle;
 

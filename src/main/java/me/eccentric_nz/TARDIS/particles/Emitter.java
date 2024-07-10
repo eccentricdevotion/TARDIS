@@ -33,6 +33,7 @@ public class Emitter extends TARDISParticleRunnable implements Runnable {
                 case RINGS -> runnable = new Rings(plugin, uuid, data, location);
                 case VACUUM -> runnable = new Vacuum(plugin, uuid, data, location);
                 case WAVE -> runnable = new Wave(plugin, uuid, data, location);
+                case FALLING -> runnable = new Falling(plugin, uuid, data, location);
                 default -> runnable = new Randomish(plugin, uuid, data, location);
             }
             int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 0, 1);

@@ -75,11 +75,11 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
                 ItemMeta im = is.getItemMeta();
                 String display = im.getDisplayName();
                 switch (slot) {
-                    case 1, 2, 3, 4, 5, 6 -> setShape(view, slot, display, uuid); // particle shape
+                    case 1, 2, 3, 4, 5, 6, 7 -> setShape(view, slot, display, uuid); // particle shape
                     case 10, 11, 12, 13, 14, 15, 16,
-                         19, 20, 21, 22, 23, 24,
-                         28, 29, 30, 31, 32, 33,
-                         37, 38, 39, 40, 41, 42 -> setEffect(view, slot, display, uuid); // particle effect
+                         19, 20, 21, 22, 23, 24, 25,
+                         28, 29, 30, 31, 32, 33, 34,
+                         37, 38, 39, 40, 41, 42, 43 -> setEffect(view, slot, display, uuid); // particle effect
                     case 17 -> cycleColour(view, uuid); // colour
                     case 35 -> cycleBlocks(view, uuid); // block
                     case 44 -> toggle(view, is, uuid); // set enabled/disabled
@@ -98,7 +98,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
     }
 
     private void setShape(InventoryView view, int slot, String display, UUID uuid) {
-        for (int s = 1; s < 7; s++) {
+        for (int s = 1; s < 8; s++) {
             ItemStack is = view.getItem(s);
             if (is != null) {
                 is.setType(s == slot ? Material.LAPIS_ORE : Material.LAPIS_LAZULI);
@@ -113,7 +113,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
     }
 
     private void setEffect(InventoryView view, int slot, String display, UUID uuid) {
-        for (int s = 10; s < 43; s++) {
+        for (int s = 10; s < 44; s++) {
             ItemStack is = view.getItem(s);
             if (is != null && s != GUIParticle.COLOUR.slot() && s != GUIParticle.BLOCK_INFO.slot() && s != GUIParticle.BLOCK.slot() && s != GUIParticle.TOGGLE.slot()) {
                 is.setType(s == slot ? Material.REDSTONE_ORE : Material.REDSTONE);
@@ -217,13 +217,13 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         ParticleShape shape = ParticleShape.RANDOM;
         boolean b = false;
         try {
-            for (int s = 10; s < 43; s++) {
+            for (int s = 10; s < 44; s++) {
                 ItemStack eis = view.getItem(s);
                 if (eis != null && eis.getType() == Material.REDSTONE_ORE) {
                     effect = ParticleEffect.valueOf(eis.getItemMeta().getDisplayName().toUpperCase(Locale.ROOT));
                 }
             }
-            for (int s = 1; s < 7; s++) {
+            for (int s = 1; s < 8; s++) {
                 ItemStack sis = view.getItem(s);
                 if (sis != null && sis.getType() == Material.LAPIS_ORE) {
                     shape = ParticleShape.valueOf(sis.getItemMeta().getDisplayName().toUpperCase(Locale.ROOT));
