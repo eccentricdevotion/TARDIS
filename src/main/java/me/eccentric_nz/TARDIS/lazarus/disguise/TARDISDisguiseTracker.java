@@ -18,14 +18,14 @@ package me.eccentric_nz.TARDIS.lazarus.disguise;
 
 import com.mojang.authlib.properties.PropertyMap;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class TARDISDisguiseTracker {
 
-    public static final List<UUID> DISGUISED_AS_PLAYER = new ArrayList<>();
+    public static final Set<UUID> DISGUISED_AS_PLAYER = new HashSet<>();
     public static final HashMap<Integer, UUID> DISGUISED_NPCS = new HashMap<>();
     public static final HashMap<UUID, TARDISDisguise> DISGUISED_ARMOR_STANDS = new HashMap<>();
     public static final HashMap<UUID, TARDISDisguise> DISGUISED_AS_MOB = new HashMap<>();

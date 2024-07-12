@@ -32,6 +32,8 @@ import org.bukkit.craftbukkit.v1_21_R1.entity.CraftPlayer;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class TARDISChameleonArchDisguiser {
 
@@ -80,7 +82,7 @@ public class TARDISChameleonArchDisguiser {
         }
     }
 
-    public void resetSkin() {
+    public void resetSkin(HashMap<UUID, TARDISDisguiseTracker.ProfileData> tracker) {
         ServerPlayer entityPlayer = ((CraftPlayer) player).getHandle();
         // set name
         for (org.bukkit.entity.Player p : Bukkit.getOnlinePlayers()) {
@@ -89,7 +91,7 @@ public class TARDISChameleonArchDisguiser {
                 ep.connection.send(new ClientboundPlayerInfoRemovePacket(Arrays.asList(entityPlayer.getUUID())));
             }
         }
-        TARDISDisguiseTracker.ProfileData map = TARDISDisguiseTracker.ARCHED.get(player.getUniqueId());
+        TARDISDisguiseTracker.ProfileData map = tracker.get(player.getUniqueId());
         if (map == null) {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER_WARNING, "Could not get backed up profile data from tracker!");
             return;

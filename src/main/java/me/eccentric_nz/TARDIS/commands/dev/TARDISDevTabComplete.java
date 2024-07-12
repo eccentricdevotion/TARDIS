@@ -50,7 +50,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
             "nms",
             "plurals",
             "recipe",
-            "stats", "systree", "snapshot",
+            "skin", "snapshot", "stats", "systree",
             "tis", "tree"
     );
     private final ImmutableList<String> LIST_SUBS = ImmutableList.of("preset_perms", "perms", "recipes", "blueprints", "commands", "block_colours", "change", "consoles");

@@ -55,7 +55,7 @@ public class TARDISPlayerDisguiser {
     public void disguisePlayer() {
         ServerPlayer entityPlayer = ((CraftPlayer) player).getHandle();
         // set skin
-        if (setSkin(entityPlayer.getGameProfile(), uuid) && !TARDISDisguiseTracker.DISGUISED_AS_PLAYER.contains(player.getUniqueId())) {
+        if (setSkin(entityPlayer.getGameProfile(), uuid)) {
             TARDISDisguiseTracker.DISGUISED_AS_PLAYER.add(player.getUniqueId());
         }
     }
@@ -66,10 +66,9 @@ public class TARDISPlayerDisguiser {
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.connect();
             if (connection.getResponseCode() == HttpsURLConnection.HTTP_OK) {
-                JsonParser jp = new JsonParser();
-                JsonElement root = jp.parse(new InputStreamReader((InputStream) connection.getContent())); // convert the input stream to a json element
-                JsonObject rootobj = root.getAsJsonObject();
-                JsonArray jsonArray = rootobj.getAsJsonArray("properties");
+                JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) connection.getContent())); // convert the input stream to a json element
+                JsonObject rootObj = root.getAsJsonObject();
+                JsonArray jsonArray = rootObj.getAsJsonArray("properties");
                 JsonObject properties = jsonArray.get(0).getAsJsonObject();
                 String skin = properties.get("value").getAsString();
                 String signature = properties.get("signature").getAsString();

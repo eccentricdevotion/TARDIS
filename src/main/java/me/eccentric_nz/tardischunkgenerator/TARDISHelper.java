@@ -280,7 +280,7 @@ public class TARDISHelper {
     }
 
     public void reset(Player player) {
-        new TARDISChameleonArchDisguiser(plugin, player).resetSkin();
+        new TARDISChameleonArchDisguiser(plugin, player).resetSkin(TARDISDisguiseTracker.ARCHED);
     }
 
     public int spawnEmergencyProgrammeOne(Player player, Location location) {

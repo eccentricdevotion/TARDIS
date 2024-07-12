@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.lazarus.disguise;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.regeneration.SkinChanger;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPacketListener;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -85,19 +86,14 @@ public class TARDISDisguiseListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(PlayerQuitEvent event) {
+        UUID uuid = event.getPlayer().getUniqueId();
         if (!plugin.getServer().getPluginManager().isPluginEnabled("LibsDisguises")) {
-            UUID uuid = event.getPlayer().getUniqueId();
             // stop tracking the disguise
-            if (TARDISDisguiseTracker.DISGUISED_AS_MOB.containsKey(uuid)) {
-                TARDISDisguiseTracker.DISGUISED_AS_MOB.remove(uuid);
-            }
-            if (TARDISDisguiseTracker.DISGUISED_AS_PLAYER.contains(uuid)) {
-                TARDISDisguiseTracker.DISGUISED_AS_PLAYER.remove(uuid);
-            }
-            if (TARDISDisguiseTracker.ARCHED.containsKey(uuid)) {
-                TARDISDisguiseTracker.ARCHED.remove(uuid);
-            }
+            TARDISDisguiseTracker.DISGUISED_AS_MOB.remove(uuid);
+            TARDISDisguiseTracker.DISGUISED_AS_PLAYER.remove(uuid);
+            TARDISDisguiseTracker.ARCHED.remove(uuid);
         }
+        SkinChanger.REGENERATED.remove(uuid);
         TARDISPacketListener.removePlayer(event.getPlayer());
     }
 }

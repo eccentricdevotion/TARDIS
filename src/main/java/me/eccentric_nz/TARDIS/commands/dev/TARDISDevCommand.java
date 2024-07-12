@@ -17,12 +17,16 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
 import com.google.common.collect.Sets;
+import io.papermc.lib.PaperLib;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
+import me.eccentric_nz.TARDIS.regeneration.SkinChanger;
+import me.eccentric_nz.TARDIS.regeneration.SkinChangerPaper;
+import me.eccentric_nz.TARDIS.regeneration.Skins;
 import me.eccentric_nz.TARDIS.utility.Pluraliser;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -62,7 +66,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "nms",
             "plurals",
             "recipe",
-            "snapshot", "stats", "systree",
+            "skin", "snapshot", "stats", "systree",
             "tis", "tree"
     );
     private final TARDIS plugin;
@@ -101,6 +105,12 @@ public class TARDISDevCommand implements CommandExecutor {
                                 return new TARDISInteractionCommand(plugin).process(player.getUniqueId());
                             }
                             return false;
+                        }
+                        case "skin" -> {
+                            if (sender instanceof Player player) {
+                                SkinChanger.remove(player);
+                            }
+                            return true;
                         }
                         case "stats" -> {
                             ARSRoomCounts arsRoomCounts = new ARSRoomCounts(plugin);
@@ -173,6 +183,36 @@ public class TARDISDevCommand implements CommandExecutor {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky spawn");
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky start");
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky confirm");
+                        return true;
+                    }
+                    case "skin" -> {
+                        if (sender instanceof Player player && args.length > 1) {
+                            String which;
+                            switch (args[1]) {
+                                case "1" -> which = Skins.FIRST;
+                                case "2" -> which = Skins.SECOND;
+                                case "3" -> which = Skins.THIRD;
+                                case "4" -> which = Skins.FOURTH;
+                                case "5" -> which = Skins.FIFTH;
+                                case "6" -> which = Skins.SIXTH;
+                                case "7" -> which = Skins.SEVENTH;
+                                case "8" -> which = Skins.EIGHTH;
+                                case "9" -> which = Skins.NINTH;
+                                case "10" -> which = Skins.TENTH;
+                                case "11" -> which = Skins.ELEVENTH;
+                                case "12" -> which = Skins.TWELFTH;
+                                case "13" -> which = Skins.THIRTEENTH;
+                                case "14" -> which = Skins.FOURTEENTH;
+                                case "15" -> which = Skins.FIFTEENTH;
+                                case "16" -> which = Skins.WAR;
+                                default -> which = Skins.RASSILON;
+                            }
+                            if (PaperLib.isPaper()) {
+                                SkinChangerPaper.set(player, which);
+                            } else {
+                                SkinChanger.set(player, which);
+                            }
+                        }
                         return true;
                     }
                     case "snapshot" -> {
