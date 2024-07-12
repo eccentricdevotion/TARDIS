@@ -1,79 +1,115 @@
 package me.eccentric_nz.TARDIS.regeneration;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISChameleonArchDisguiser;
-import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISDisguiseTracker;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
-import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
-import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
+import net.minecraft.network.protocol.game.*;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ChunkMap;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.players.PlayerList;
+import net.minecraft.world.effect.MobEffectInstance;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_21_R1.entity.CraftPlayer;
-import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerHideEntityEvent;
+import org.bukkit.event.player.PlayerShowEntityEvent;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 public class SkinChanger {
 
-    public static final HashMap<UUID, TARDISDisguiseTracker.ProfileData> REGENERATED = new HashMap<>();
+    public static void setPlayerProfile(CraftPlayer cp, GameProfile profile) {
+        ServerPlayer self = cp.getHandle();
+        if (!self.sentListPacket) {
+            setGameProfile(self, profile);
+            return;
+        }
+        List<ServerPlayer> players = MinecraftServer.getServer().getPlayerList().players;
+        // first unregister the player for all players with the old game profile
+        for (ServerPlayer player : players) {
+            CraftPlayer bukkitPlayer = player.getBukkitEntity();
+            if (bukkitPlayer.canSee(cp)) {
+                untrackAndHideEntity(bukkitPlayer, self);
+            }
+        }
+        // set the game profile here, we should have unregistered the entity via iterating all player entities above
+        setGameProfile(self, profile);
+        // re-register the game profile for all players
+        for (ServerPlayer player : players) {
+            CraftPlayer bukkitPlayer = player.getBukkitEntity();
+            if (bukkitPlayer.canSee(cp)) {
+                trackAndShowEntity(bukkitPlayer, self, profile.getId());
+            }
+        }
+        // refresh misc player things after sending game profile
+        refreshPlayer(self, cp.getLocation());
+    }
 
-    public static void set(Player player, String json) {
-        ServerPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-        GameProfile profile = entityPlayer.getGameProfile();
-        REGENERATED.put(player.getUniqueId(), new TARDISDisguiseTracker.ProfileData(profile.getProperties(), player.getName()));
-        // convert the string to a json element
-        JsonElement root = JsonParser.parseString(json);
-        JsonObject skin = root.getAsJsonObject();
-        String texture = skin.get("value").getAsString();
-        String signature = skin.get("signature").getAsString();
-        profile.getProperties().removeAll("textures");
-        profile.getProperties().put("textures", new Property("textures", texture, signature));
-        // set the game profile
+    private static void setGameProfile(ServerPlayer player, GameProfile profile) {
         try {
             // set GameProfile accessible
             Field gpField = net.minecraft.world.entity.player.Player.class.getDeclaredField("cD"); // cD = GameProfile
             gpField.setAccessible(true);
-            gpField.set(entityPlayer, profile);
+            gpField.set(player, profile);
             gpField.setAccessible(false);
         } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException ignored) {
             TARDIS.plugin.debug("Failed to set GameProfile");
         }
-        // refresh misc player things AFTER sending game profile
-        ClientboundPlayerInfoUpdatePacket playerInfoUpdatePacket = new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, entityPlayer);
-        ClientboundRemoveEntitiesPacket removeEntitiesPacket = new ClientboundRemoveEntitiesPacket(player.getEntityId());
-        ClientboundAddEntityPacket addEntityPacket = new ClientboundAddEntityPacket(entityPlayer, 0, entityPlayer.blockPosition());
-        for (org.bukkit.entity.Player p : Bukkit.getOnlinePlayers()) {
-            ServerPlayer ep = ((CraftPlayer) p).getHandle();
-            if (ep != entityPlayer && p.canSee(player)) {
-                ep.connection.send(playerInfoUpdatePacket);
-                ep.connection.send(removeEntitiesPacket);
-                ep.connection.send(addEntityPacket);
-            }
-        }
-        // re-register the game profile for all players
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.canSee(player)) {
-                p.hidePlayer(TARDIS.plugin, player);
-                p.showPlayer(TARDIS.plugin, player);
-            }
-        }
-        TARDISDisguiseTracker.DISGUISED_AS_PLAYER.add(player.getUniqueId());
     }
 
-    public static void remove(Player player) {
-        new TARDISChameleonArchDisguiser(TARDIS.plugin, player).resetSkin(REGENERATED);
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p != player && player.getWorld() == p.getWorld()) {
-                p.hidePlayer(TARDIS.plugin, player);
-                p.showPlayer(TARDIS.plugin, player);
-            }
+    private static void untrackAndHideEntity(CraftPlayer cp, ServerPlayer other) {
+        Bukkit.getPluginManager().callEvent(new PlayerHideEntityEvent(cp, other.getBukkitEntity()));
+        ServerPlayer sp = cp.getHandle();
+        // remove this entity from the hidden player's EntityTrackerEntry
+        ChunkMap tracker = ((ServerLevel) sp.level()).getChunkSource().chunkMap;
+        ChunkMap.TrackedEntity entry = tracker.entityMap.get(other.getId());
+        if (entry != null) {
+            entry.removePlayer(sp);
+        }
+        // remove the hidden entity from this player user list, if they're on it
+        if (other.sentListPacket) {
+            sp.connection.send(new ClientboundPlayerInfoRemovePacket(List.of(other.getUUID())));
+        }
+    }
+
+    private static void trackAndShowEntity(CraftPlayer cp, ServerPlayer other, UUID uuidOverride) {
+        ServerPlayer sp = cp.getHandle();
+        ChunkMap tracker = ((ServerLevel) sp.level()).getChunkSource().chunkMap;
+        // uuid override
+        UUID original = null;
+        if (uuidOverride != null) {
+            original = other.getUUID();
+            other.setUUID(uuidOverride);
+        }
+        sp.connection.send(ClientboundPlayerInfoUpdatePacket.createPlayerInitializing(List.of(other)));
+        if (original != null) {
+            other.setUUID(original);
+        }
+        ChunkMap.TrackedEntity entry = tracker.entityMap.get(other.getId());
+        if (entry != null && !entry.seenBy.contains(sp.connection)) {
+            entry.updatePlayer(sp);
+        }
+        Bukkit.getServer().getPluginManager().callEvent(new PlayerShowEntityEvent(cp, other.getBukkitEntity()));
+    }
+
+    private static void refreshPlayer(ServerPlayer sp, Location loc) {
+        // respawn the player then update their position and selected slot
+        ServerLevel worldserver = sp.serverLevel();
+        sp.connection.send(new ClientboundRespawnPacket(sp.createCommonSpawnInfo(worldserver), ClientboundRespawnPacket.KEEP_ALL_DATA));
+        sp.onUpdateAbilities();
+        sp.connection.send(new ClientboundPlayerPositionPacket(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch(), Collections.emptySet(), 0));
+        PlayerList playerList = sp.server.getPlayerList();
+        playerList.sendPlayerPermissionLevel(sp);
+        playerList.sendLevelInfo(sp, worldserver);
+        playerList.sendAllPlayerInfo(sp);
+        // Resend their XP and effects because the respawn packet resets it
+        sp.connection.send(new ClientboundSetExperiencePacket(sp.experienceProgress, sp.totalExperience, sp.experienceLevel));
+        for (MobEffectInstance mobEffect : sp.getActiveEffects()) {
+            sp.connection.send(new ClientboundUpdateMobEffectPacket(sp.getId(), mobEffect, false));
         }
     }
 }

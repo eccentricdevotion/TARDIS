@@ -33,12 +33,14 @@ import org.bukkit.craftbukkit.v1_21_R1.entity.CraftPlayer;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class TARDISChameleonArchDisguiser {
 
     private final TARDIS plugin;
     private final org.bukkit.entity.Player player;
+    // TODO choose a random default Minecraft player skin
     private final String archSkin = "eyJ0aW1lc3RhbXAiOjE1NjY3OTQ5MTM4MjMsInByb2ZpbGVJZCI6ImY3NjdhNmIyMDgzZTQwMzhhM2ViMTAxNmI3Yjk3NDNjIiwicHJvZmlsZU5hbWUiOiJSb2JiaWUiLCJzaWduYXR1cmVSZXF1aXJlZCI6dHJ1ZSwidGV4dHVyZXMiOnsiU0tJTiI6eyJ1cmwiOiJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2FkZWIyMjQzMDBmMmYxNjEyYWM0ZmQ4NWQwNjBlYzljMmY4NDNkYmRlZjMyNGVkMzgzZDRjMGM2ZjgxNGVjNGUifX19";
     private final String archSignature = "Spsq7rec2UB8x7SBBjDQ/hguC8Nt5XvyGUmw58Z7ZXVBbVqVLjMXMGD9MY25dy9HuWC1sMO1svrz35lJlsZArwI2Mm1c1LXTTYffrWGu7DLS2ONVDH26Cp5DB/buVLU/FTdyqB6OcZGU6zliU7sHlLBVcgv7FdS8Enoq9k9CQXUYacEyTDTQJGKgV3FDow7jDcLOQYdFTVaZsImOqhadhEmmQUZyGWtZqbKI+diIrFbUBNtIiMz14Lk3f3u7z8OQG/cabIEiKUvHZz6yCtt8LCQimHe9oEPPREQYH2ztOp3vrOli+6zvnu8GOspB4tWs8zIZZ86FQbD1PNdodrrYcG0vEKQ5zX8fuCDCPngiz5GbvJzku4SleHcx3iAdP9FeUie46ILKlBIUyvnjzBmubQVhBDB9jA+RcrYMpLz/EBU5kpAanz1M7BECsdWLqtrLD7tvYxsRfGdUmOlDT2TcpDmNeQHD0kgS8WBIXZhGa7FnnC/J1UXfNJSHKbnZ6AIfTplCnhZTI4BNGzwNdiM1rPoLE5HpRJ+2fyQn3bD6jssvZuI7S9UW1gvDfiaMG10RPiFVntjkWQVrZZ6qXbMqF1S6FbYvTTJOnjtrYqeXcLSqjCPPkcTHCn/2igl1V0D3A+NukxEFJLCXcpcW0Zx4bzQ0AWdNqcU1bHU9G3GN0QE=";
 
@@ -88,7 +90,7 @@ public class TARDISChameleonArchDisguiser {
         for (org.bukkit.entity.Player p : Bukkit.getOnlinePlayers()) {
             ServerPlayer ep = ((CraftPlayer) p).getHandle();
             if (ep != entityPlayer && p.getWorld() == player.getWorld() && p.canSee(player)) {
-                ep.connection.send(new ClientboundPlayerInfoRemovePacket(Arrays.asList(entityPlayer.getUUID())));
+                ep.connection.send(new ClientboundPlayerInfoRemovePacket(List.of(entityPlayer.getUUID())));
             }
         }
         TARDISDisguiseTracker.ProfileData map = tracker.get(player.getUniqueId());
@@ -109,9 +111,8 @@ public class TARDISChameleonArchDisguiser {
             gpField.setAccessible(true);
             gpField.set(entityPlayer, arch);
             gpField.setAccessible(false);
-            arch.getProperties().put("textures", new Property("textures", archSkin, archSignature));
         } catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException | SecurityException e) {
-            TARDISDisguiseTracker.ARCHED.remove(player.getUniqueId());
+            tracker.remove(player.getUniqueId());
             return;
         }
         ClientboundPlayerInfoUpdatePacket packetPlayOutPlayerInfo = new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, entityPlayer);
@@ -125,6 +126,6 @@ public class TARDISChameleonArchDisguiser {
                 ep.connection.send(packetPlayOutNamedEntitySpawn);
             }
         }
-        TARDISDisguiseTracker.ARCHED.remove(player.getUniqueId());
+        tracker.remove(player.getUniqueId());
     }
 }

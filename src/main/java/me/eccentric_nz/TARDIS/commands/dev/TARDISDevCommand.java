@@ -24,8 +24,8 @@ import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
-import me.eccentric_nz.TARDIS.regeneration.SkinChanger;
 import me.eccentric_nz.TARDIS.regeneration.SkinChangerPaper;
+import me.eccentric_nz.TARDIS.regeneration.SkinChangerSpigot;
 import me.eccentric_nz.TARDIS.regeneration.Skins;
 import me.eccentric_nz.TARDIS.utility.Pluraliser;
 import org.bukkit.Material;
@@ -108,7 +108,11 @@ public class TARDISDevCommand implements CommandExecutor {
                         }
                         case "skin" -> {
                             if (sender instanceof Player player) {
-                                SkinChanger.remove(player);
+                                if (PaperLib.isPaper()) {
+                                    SkinChangerPaper.remove(player);
+                                } else {
+                                    SkinChangerSpigot.remove(player);
+                                }
                             }
                             return true;
                         }
@@ -210,7 +214,7 @@ public class TARDISDevCommand implements CommandExecutor {
                             if (PaperLib.isPaper()) {
                                 SkinChangerPaper.set(player, which);
                             } else {
-                                SkinChanger.set(player, which);
+                                SkinChangerSpigot.set(player, which);
                             }
                         }
                         return true;

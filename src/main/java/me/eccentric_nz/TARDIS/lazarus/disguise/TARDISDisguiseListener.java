@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.lazarus.disguise;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.regeneration.SkinChanger;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPacketListener;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -93,7 +92,6 @@ public class TARDISDisguiseListener implements Listener {
             TARDISDisguiseTracker.DISGUISED_AS_PLAYER.remove(uuid);
             TARDISDisguiseTracker.ARCHED.remove(uuid);
         }
-        SkinChanger.REGENERATED.remove(uuid);
         TARDISPacketListener.removePlayer(event.getPlayer());
     }
 }
