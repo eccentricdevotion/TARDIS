@@ -20,6 +20,7 @@
 2. Microscope as an addition to Chemistry?
 3. Regeneration
     - Make a bunch of time lord disguises
+    - Implement arch and lazarus player skins with Paper API
     - Add the Elixir Of Life item - gold chalice
     - Regenerations to use particle effects, maybe a couple of shapes, and configurable like particle materialisation
     - Configurable number of regenerations - classic 12 or new Who 15 for example? Could be permission based `tardis.regenerations.12`
