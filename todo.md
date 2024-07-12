@@ -2,26 +2,29 @@
 
 ## Current version `5.7.0`
 
-1. Fix fifteenth console redstone piston door
-2. Fix follower persistence - [not possible right now?](https://www.spigotmc.org/threads/impossible-to-register-custom-nms-entities-in-1-21-due-to-chunk-crash.654410/)
-3. Add doors to shop items
-4. Allow 3D Police Boxes to land on slabs [#777](https://github.com/eccentricdevotion/TARDIS/issues/777)
-5. Animated models for TWA player disguises
-6. Modelled controls [#836](https://github.com/eccentricdevotion/TARDIS/issues/836)
-7. Exterior button door control [#839](https://github.com/eccentricdevotion/TARDIS/issues/839)
-8. Console lamp [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)
-9. Adaptive particles [#878](https://github.com/eccentricdevotion/TARDIS/issues/878)
-10. ?
+| Priority | Feature | Link |
+|--------- |-------- | ---- |
+| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | Fix bugs | - |
+| ![Static Badge](https://img.shields.io/badge/on%20hold-999?style=flat-square) | Fix follower persistence| [Not possible right now on Spigot?](https://www.spigotmc.org/threads/impossible-to-register-custom-nms-entities-in-1-21-due-to-chunk-crash.654410/) |
+| ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square)| Fix fifteenth console redstone piston door| - |
+| ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square)| Add doors to shop items | - |
+| ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square)| Animated models for TWA player disguises<br>- Add new time lord models at same time | - |
+| ![Static Badge](https://img.shields.io/badge/2-390?style=flat-square)| Allow 3D Police Boxes to land on slabs | [#777](https://github.com/eccentricdevotion/TARDIS/issues/777)|
+| ![Static Badge](https://img.shields.io/badge/2-390?style=flat-square)| Exterior button door control| [#839](https://github.com/eccentricdevotion/TARDIS/issues/839)|
+| ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square)| **Modelled controls**<br>- Add new console lamp at same time as adding existing controls | [#836](https://github.com/eccentricdevotion/TARDIS/issues/836)|
+| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square)| **Console lamp**<br>- Add new button to modelled console or use an existing unused button<br>- Add command to add interaction entity to console lamp button | [#837](https://github.com/eccentricdevotion/TARDIS/issues/837)|
 
 ## Next version `5.8.0`
 
 1. Sonic Blaster - used to temporarily remove blocks only
 2. Microscope as an addition to Chemistry?
-3. Regeneration - make a bunch of time lord disguises and the Elixir Of Life item.
-   - Regenerations to use particle effects, maybe a couple of shapes, and configurable like particle materialisation
-   - Configurable number of regenerations - classic 12 or new Who 15 for example? Could be permission based `tardis.regenerations.12`
-   - Regenerations upon death or when elixir is drunk
-   - Add potion effects both buff/debuff e.g. healing but also mining fatigue
+3. Regeneration
+    - Make a bunch of time lord disguises
+    - Add the Elixir Of Life item - gold chalice
+    - Regenerations to use particle effects, maybe a couple of shapes, and configurable like particle materialisation
+    - Configurable number of regenerations - classic 12 or new Who 15 for example? Could be permission based `tardis.regenerations.12`
+    - Regenerations upon death or when elixir is drunk
+    - Add potion effects both buff/debuff e.g. healing but also mining fatigue
 4. Floodgate forms for TIS
 
 ## Future versions

@@ -245,6 +245,12 @@
                                         <exclude>META-INF/*.MF</exclude>
                                     </excludes>
                                 </filter>
+                                <filter>
+                                    <artifact>com.formdev:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.MF</exclude>
+                                    </excludes>
+                                </filter>
                             </filters>
                         </configuration>
                     </execution>
