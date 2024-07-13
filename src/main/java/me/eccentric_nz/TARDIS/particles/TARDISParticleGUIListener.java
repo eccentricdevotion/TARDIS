@@ -196,7 +196,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
             // get TARDIS location
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rst.getTardisId());
             if (rsc.resultSet()) {
-                Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ()).add(0.5, 0, 0.5);
+                Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                 // get throttle setting
                 ResultSetThrottle rs = new ResultSetThrottle(plugin);
                 Throticle throticle = rs.getSpeedAndParticles(uuid.toString());
