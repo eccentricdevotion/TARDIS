@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.lazarus.disguise;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
@@ -72,7 +73,7 @@ public class TARDISDisguiser {
                         // set location
                         setEntityLocationIdAndName(mob, p.getLocation(), p);
                         ClientboundRemoveEntitiesPacket packetPlayOutEntityDestroy = new ClientboundRemoveEntitiesPacket(p.getEntityId());
-                        ServerLevel level = ((CraftWorld)world).getHandle();
+                        ServerLevel level = ((CraftWorld) world).getHandle();
                         level.addFreshEntity(mob, CreatureSpawnEvent.SpawnReason.CUSTOM);
                         ClientboundAddEntityPacket packetPlayOutSpawnLivingEntity = new ClientboundAddEntityPacket(mob, 0, mob.blockPosition());
                         ClientboundSetEntityDataPacket packetPlayOutEntityMetadata = new ClientboundSetEntityDataPacket(mob.getId(), mob.getEntityData().getNonDefaultValues());
@@ -137,8 +138,8 @@ public class TARDISDisguiser {
 
     public void removeDisguise() {
         if (TARDISDisguiseTracker.DISGUISED_AS_PLAYER.contains(player.getUniqueId())) {
-            new TARDISPlayerDisguiser(player, player.getUniqueId()).disguiseToAll();
-            TARDISDisguiseTracker.DISGUISED_AS_PLAYER.remove(player.getUniqueId());
+            new TARDISPlayerDisguiser(player, player.getUniqueId());
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISDisguiseTracker.DISGUISED_AS_PLAYER.remove(player.getUniqueId()), 5L);
         } else {
             TARDISDisguiseTracker.DISGUISED_AS_MOB.remove(player.getUniqueId());
             ClientboundRemoveEntitiesPacket packetPlayOutEntityDestroy = new ClientboundRemoveEntitiesPacket(player.getEntityId());

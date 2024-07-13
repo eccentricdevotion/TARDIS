@@ -30,6 +30,19 @@ public class SkinChangerSpigot {
         TARDISDisguiseTracker.DISGUISED_AS_PLAYER.add(player.getUniqueId());
     }
 
+    public static void set(Player player, JsonObject properties) {
+        ServerPlayer entityPlayer = ((CraftPlayer) player).getHandle();
+        GameProfile profile = entityPlayer.getGameProfile();
+        // get value and signature
+        String value = properties.get("value").getAsString();
+        String signature = properties.get("signature").getAsString();
+        profile.getProperties().removeAll("textures");
+        profile.getProperties().put("textures", new Property("textures", value, signature));
+        // set the game profile
+        SkinChanger.setPlayerProfile((CraftPlayer) player, profile);
+        TARDISDisguiseTracker.DISGUISED_AS_PLAYER.add(player.getUniqueId());
+    }
+
     public static void remove(Player player) {
         GameProfile profile = ((CraftPlayer) player).getProfile();
         UUID uuid = player.getUniqueId();

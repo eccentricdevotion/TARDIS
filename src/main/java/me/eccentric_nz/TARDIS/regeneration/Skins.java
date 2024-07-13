@@ -2,27 +2,25 @@ package me.eccentric_nz.TARDIS.regeneration;
 
 public class Skins {
 
-    public static final String FIRST =
-            """
+    public static final String FIRST = """
             {
                 "skinName":"first_doctor_william_hartnell",
                 "value":"ewogICJ0aW1lc3RhbXAiIDogMTY4MDIxNTg5OTcwNywKICAicHJvZmlsZUlkIiA6ICJlOWRlMDE0NjExZDI0NGY5OTVjNmNiMjhkMDk5MWExNSIsCiAgInByb2ZpbGVOYW1lIiA6ICJFbGl6YWJldGhUcnVzcyIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS80NWU3MjljMzhlYjI4NzJlOTc5NjUyZjcwN2VjMTU2ZGEwYjk2MTVlZTNjODc4MzI4MjlkN2NhMGViZGI3ZjkyIgogICAgfQogIH0KfQ==",
                 "signature":"LMMIqylX/us7oTpZc5uHMhd2scDLNb9TZ+3pae4772Y9K2iLyumy1iMQFdq/WFDXFw57S2B6OkerjjLq+kHku2RZWkhQuYgV/W9FQ9IMTccV3UAqfL7yofiLCAQM8Z3Wcwej2xkX/S0N0lzV6WuOd/ap9JcRbBfdodCQ0z1dC7nhfIfYipousrk+ipT0ZMUCVpDNg7yBQY3Nzar7ST4iDfvg+l2CuTqeHzKpBWraKvsY+x9lyNzvIL2b81Yd5dA9cJn5BH/SGhq6UlOk4IwRZ/KC/KsqOptdCMkChjDzAerBTAxflrTVcP+q0Z5lKohJlJE2vEFHGVr7/lqQ9yfZes6ygula/eZajrLHcBw7iNFAntwgeiub/mDTyc0TkRrXbrNuHvb3A7kmLRNb+dhds1BL2LEni9SqJoU1Mmd9tk6bmb1KSEeYGILRYnBpxaYPr8RxdbglzCmdDUAao+NU0hoB2082v2wHTvy4HucRGU/F11Wph0XekMoy083Wgb5Qk6iY3mg2RQOVxwXkSvfBofMIO2BGr9tDLOmFmNvUB67aDhK7s6mZVcbKRHrAiVj6Wo3eGTxn7AXkKa/D5iETy76LCxuT5QXVAaWdsKsN4iSS0ym/RG3/I0Dx7z6WlWf4VA8RilMO3IC7crIpVlr84efpBvqHPqTsi4HNg39TUh8=",
                 "dataVersion":1,
                 "model":"slim"
-             }""";
-    public static final String SECOND =
-            """
+            }""";
+
+    public static final String SECOND = """
             {
                 "skinName":"second_doctor_patrick_troughton",
                 "value":"ewogICJ0aW1lc3RhbXAiIDogMTU5ODkxODE1MzE0MywKICAicHJvZmlsZUlkIiA6ICIzM2ViZDMyYmIzMzk0YWQ5YWM2NzBjOTZjNTQ5YmE3ZSIsCiAgInByb2ZpbGVOYW1lIiA6ICJEYW5ub0JhbmFubm9YRCIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS84OGJhNjM2MjYzYjQwYTU4Y2Q5MzcwOTJkZTk1OGE2MTNkZDU3NTM2Yjc1OGQ2MjI4MTEzMWJmMmJmM2Y1ZjJkIgogICAgfQogIH0KfQ==",
                 "signature":"lEhIBLrbVG5OE8VaXvO2E2Ca9a4Pf8DXJdADBMo10YtrGIGHsiG37DFskvuXM98w+XevQ2fvVGWfD20/LB4HzRCvY/3TaTY4ZlgQY1jViteHf3bM4JWIjP3UwBvECpgxmHduEIuuUlOKPJDI/V/okSRXEb+Rqom4Ct3py5hcza3yZYiDxBCG2xqnkJxyGYbIBStotRO95APplA0Hlig95gK1+fP3i27Hbv2Gsfd8Dw/UctplqmaqWsh6sFUo3u0X9qSrtUPEYNYmrDUh/HIw+ZM+yKtxugNA8i2EcxNQ15NRtp8kFjTiTW7kAPAPJNSASGMnXs2apf+sLpF9049PGAibjQJ9wQKCty5sgTGmN6yFpg3TF1x7NDFvqDL1GA0gAXFGnHxlWbJp2xeSmQWl04M2T/cbcuDalZSTnC+7hLSd0vZC5vS/z18H7eQBCiGZOBGb+69MWi0hGHKIsjtHMGmDA8kC4L26q1SxoTPUQpGYdXce71AYXeSsvVRSHqGeKxlVvRR9pHnSWMFey0j9oSJRezlfcHBQGRlmXeQjiNqx1SjxUzK7N5RKH/55QWnZRNIE1i/J4pxeMziK2E1CabTRHeKYtE0+WhO5XXHj//Ir1wg2GJ3x+Qd/MuMl2i3hLJTiC76NRROKq3VTNl6UkcmHczNzXcYSKke6GPn0ZMY=",
                 "dataVersion":1,
                 "model":"wide"
-             }""";
+            }""";
 
-    public static final String THIRD =
-            """
+    public static final String THIRD = """
             {
                "skinName":"third_doctor_jon_pertwee",
                "value":"ewogICJ0aW1lc3RhbXAiIDogMTcyMDY5MTk1OTI0NywKICAicHJvZmlsZUlkIiA6ICI2ZjhlYWI1MTVmNTc0MmRhOWYxZDYzMzY1ODAxMDU4YyIsCiAgInByb2ZpbGVOYW1lIiA6ICJDaW5kZXJGb3hfMjAwNiIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS85MDA3OTc5ZGIxNmQzZWVkNzNiNGZiYWE2YWFkMTY0YjhjOTFmYjMwNjhhY2NhZWQ5YmIzOGZmMmRjOGQ1MWQwIgogICAgfQogIH0KfQ==",
@@ -31,8 +29,7 @@ public class Skins {
                "model":"wide"
             }""";
 
-    public static final String FOURTH =
-            """
+    public static final String FOURTH = """
             {
                "skinName":"fourth_doctor_tom_baker",
                "value":"eyJ0aW1lc3RhbXAiOjE1MjY5NjEwNTYzMTksInByb2ZpbGVJZCI6ImEwYzk4ZTM3NjJlZTQ4MTBiYzQ5NzQxYTVlNTEzZjFiIiwicHJvZmlsZU5hbWUiOiJfSG9ib18iLCJzaWduYXR1cmVSZXF1aXJlZCI6dHJ1ZSwidGV4dHVyZXMiOnsiU0tJTiI6eyJ1cmwiOiJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzZlNjI5OWE1MmE5ZDBiMzU1M2E1NjY3ZDE5NjBlMmM2NGE0NTg3NzllOGU2OTNiODRmMDU0MTcxMzk5NzY1YjEifX19",
@@ -41,8 +38,7 @@ public class Skins {
                "model":"wide"
             }""";
 
-    public static final String FIFTH =
-            """
+    public static final String FIFTH = """
             {
                "skinName":"fifth_doctor_peter_davison",
                "value":"ewogICJ0aW1lc3RhbXAiIDogMTY4MTAxOTMyNzgwMCwKICAicHJvZmlsZUlkIiA6ICJjNzBiZjg2MTZmYWQ0ZWNiYjU3MTZkMjFmNWFiYjE2ZiIsCiAgInByb2ZpbGVOYW1lIiA6ICJqYXNzcGlzIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzU1ZjRjYzk4Y2ZiYWEwODc3ZDQ1MTJkYmUzNTg0ZTk2MDczZGEyNjNkYTY3ZWZkNmQ3OTA4ZTI1NzYwMGQ2NzIiCiAgICB9CiAgfQp9",
@@ -51,8 +47,7 @@ public class Skins {
                "model":"wide"
             }""";
 
-    public static final String SIXTH =
-            """
+    public static final String SIXTH = """
             {
                "skinName":"sixth_doctor_colin_baker",
                "value":"ewogICJ0aW1lc3RhbXAiIDogMTY4MDMwMDQwNTg3MSwKICAicHJvZmlsZUlkIiA6ICJhNWZlYWViNDdhYjA0ZDZiYTk2ZjMyOGJjMDQ3MDZjMyIsCiAgInByb2ZpbGVOYW1lIiA6ICJYeW5kcmEyIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2QwYzNhYjk0YmFkOWMyNTAwZWU2OGFkMGRhZWJhMWZiZGVjM2QzMjk0NTFiMzkyYmE0MmU2YzVjZDU5Y2Q5MDYiCiAgICB9CiAgfQp9",
@@ -61,8 +56,7 @@ public class Skins {
                "model":"wide"
             }""";
 
-    public static final String SEVENTH =
-            """
+    public static final String SEVENTH = """
             {
                "skinName":"seventh_doctor_sylvester_mccoy",
                "value":"ewogICJ0aW1lc3RhbXAiIDogMTcyMDY5MjA3ODM1MSwKICAicHJvZmlsZUlkIiA6ICI1ODc5MjNlNDkxMzM0ZDMzYWE4ZjQ3ZWJkZTljOTc3MiIsCiAgInByb2ZpbGVOYW1lIiA6ICJFbGV2ZW5mb3VyMTAiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjU5OTVlMGNjYWRmZGRlZTNjNTlhNDkwNzg5MGZlZDEyM2MxNTAxZWIwNzZjNjM0MTVkZDVlNThlNjAxZjNhYyIKICAgIH0KICB9Cn0=",
@@ -71,8 +65,7 @@ public class Skins {
                "model":"wide"
             }""";
 
-    public static final String EIGHTH =
-            """
+    public static final String EIGHTH = """
             {
                "skinName":"eighth_doctor_paul_mcgann",
                "value":"ewogICJ0aW1lc3RhbXAiIDogMTY4MDI1ODg4MDc4MiwKICAicHJvZmlsZUlkIiA6ICJkNzU2OTc4MWUyYjY0OWIyYjVlMjVlYTJhNDZkOGQxOSIsCiAgInByb2ZpbGVOYW1lIiA6ICJEckthcGRvciIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9mYmM3NTc2OTQ4NDAwZWUwZDBlOGE1NzI1MzdmZmNjNzE5MGRjMmU3MzQyNjRiNjQxMTQ5YjAyNzFkOTY4YjJiIgogICAgfQogIH0KfQ==",
@@ -81,8 +74,7 @@ public class Skins {
                "model":"wide"
             }""";
 
-    public static final String NINTH =
-            """
+    public static final String NINTH = """
             {
                "skinName":"ninth_doctor_christopher_eccleston",
                "value":"ewogICJ0aW1lc3RhbXAiIDogMTY3NjA0NDk4NDM2NCwKICAicHJvZmlsZUlkIiA6ICJlOWRlMDE0NjExZDI0NGY5OTVjNmNiMjhkMDk5MWExNSIsCiAgInByb2ZpbGVOYW1lIiA6ICJFbGl6YWJldGhUcnVzcyIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS82MjMyMzJjNzk2ZmRjZTBlYjcyOGQ4NGNmY2Q5MzkwZjg0YjcxMTJiMzVlMTE1NmFjOWViNmU4NzQyMTkxYzFlIgogICAgfQogIH0KfQ==",
@@ -91,8 +83,7 @@ public class Skins {
                "model":"wide"
             }""";
 
-    public static final String TENTH =
-            """
+    public static final String TENTH = """
             {
                "skinName":"tenth_doctor_who_david_tennant",
                "value":"ewogICJ0aW1lc3RhbXAiIDogMTcyMDcyODMzNjYxMywKICAicHJvZmlsZUlkIiA6ICIyMDJiZWVlYWY4NTk0MmQ0ODI3NGJjNzYwM2VhYWZhZSIsCiAgInByb2ZpbGVOYW1lIiA6ICJSaWtvcjk4NiIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9lOWRmMWI3Yzk2ZDMzNDcxM2Q2NWQzZjVmZTIxNjliMzc1NTMzNDkxMTVlZDIxNjQwMzM3ZjBiNmI0YzNlNDkyIgogICAgfQogIH0KfQ==",
@@ -101,8 +92,7 @@ public class Skins {
                "model":"wide"
             }""";
 
-    public static final String ELEVENTH =
-            """
+    public static final String ELEVENTH = """
             {
                "skinName":"eleventh_doctor_matt_smith",
                "value":"ewogICJ0aW1lc3RhbXAiIDogMTcyMDY5MjE4ODk1NCwKICAicHJvZmlsZUlkIiA6ICJkYjZlZDMzMDMzMWQ0MWIxOGE3MGY0N2JkNDk2ZmUyNiIsCiAgInByb2ZpbGVOYW1lIiA6ICJEeWFtb25pYyIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS8zNWQ4ZTkzNzdjOTQ3ZjZmYjAyMDk5ZTUwYjUzNzdiYTlkOGMxMGY0YmYwYTA4OWIzNzhlOGIwZjNhYTI2Y2ZkIgogICAgfQogIH0KfQ==",
@@ -111,8 +101,7 @@ public class Skins {
                "model":"wide"
             }""";
 
-    public static final String TWELFTH =
-            """
+    public static final String TWELFTH = """
             {
                "skinName":"twelfth_doctor_peter_capaldi",
                "value":"eyJ0aW1lc3RhbXAiOjE1MTgxOTExMzgyMTUsInByb2ZpbGVJZCI6IjIzZjFhNTlmNDY5YjQzZGRiZGI1MzdiZmVjMTA0NzFmIiwicHJvZmlsZU5hbWUiOiIyODA3Iiwic2lnbmF0dXJlUmVxdWlyZWQiOnRydWUsInRleHR1cmVzIjp7IlNLSU4iOnsidXJsIjoiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9lZTZlM2VkYzEwMjBjMjRkNzk2MmEzNzU5YTE4OWYxMGMzODY4ZWJiYTc5ZjRlYTE5OWM4MjM5OGQ2ZWRkZWIifX19",
@@ -121,8 +110,7 @@ public class Skins {
                "model":"wide"
             }""";
 
-    public static final String THIRTEENTH =
-            """
+    public static final String THIRTEENTH = """
             {
                "skinName":"thirteenth_doctor_jodie_whittaker",
                "value":"ewogICJ0aW1lc3RhbXAiIDogMTYxMjI2MzU4MjAyMSwKICAicHJvZmlsZUlkIiA6ICJkZTU3MWExMDJjYjg0ODgwOGZlN2M5ZjQ0OTZlY2RhZCIsCiAgInByb2ZpbGVOYW1lIiA6ICJNSEZfTWluZXNraW4iLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDE2NGE5MGVmZGNlNmVmMGNmN2Q3NDRkMGM4ZmRkZTBkOWY0NWY2ODllMzI0ZTU5ODE0NjM1ZTBiYjBkN2RlMiIKICAgIH0KICB9Cn0=",
@@ -131,8 +119,7 @@ public class Skins {
                "model":"slim"
             }""";
 
-    public static final String FOURTEENTH =
-            """
+    public static final String FOURTEENTH = """
             {
                "skinName":"fourteenth_doctor_david_tennant",
                "value":"ewogICJ0aW1lc3RhbXAiIDogMTY3OTE1MTcwOTA2NSwKICAicHJvZmlsZUlkIiA6ICJkYjYzNWE3MWI4N2U0MzQ5YThhYTgwOTMwOWFhODA3NyIsCiAgInByb2ZpbGVOYW1lIiA6ICJFbmdlbHMxNzQiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmQ3YWViMTIyODZjNGE2ZDM2NjFmMDU3YjJlZTZkNDY4OTZkMzgwNjBiMjI4MDhiYmM0ZWRiZTM3YjJkYzMwMiIKICAgIH0KICB9Cn0=",
@@ -141,8 +128,7 @@ public class Skins {
                "model":"wide"
             }""";
 
-    public static final String FIFTEENTH =
-            """
+    public static final String FIFTEENTH = """
             {
                 "skinName":"fifteenth_doctor_ncuti_gatwa",
                 "value":"ewogICJ0aW1lc3RhbXAiIDogMTY4MTA5ODM3MTQ5MSwKICAicHJvZmlsZUlkIiA6ICI0NDcyYzcwMjgwY2Q0NjZhODkxYjcyMzQwMGQ5MDUyNiIsCiAgInByb2ZpbGVOYW1lIiA6ICJTaGFkb3dNWCIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS83MDM3NWJjNDdlYjgzODk4MzVkYjA5ZDlhZDYyMjkzZDg3ZjdhMmQ2YjliNTVlYmU1M2ZmMmY2NzU3MDcyZmVlIgogICAgfQogIH0KfQ==",
@@ -151,8 +137,7 @@ public class Skins {
                 "model":"wide"
              }""";
 
-    public static final String WAR =
-            """
+    public static final String WAR = """
             {
                "skinName":"war_doctor_john_hurt",
                "value":"ewogICJ0aW1lc3RhbXAiIDogMTcyMDY5MjM3MDE4NCwKICAicHJvZmlsZUlkIiA6ICI4ZjllYTBhNWJhOGE0NTNkYTgzNTBmYjRmNzVmOTJiOSIsCiAgInByb2ZpbGVOYW1lIiA6ICJDeWJlck1pbm55IiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzYzODkwMjNmMjYxODEwYmY0MDFiMWM3ZDk1Mjg4MmZlZTc1ZTBlNzE5OTc1MTc4M2ZkNTk1ZWViYWQzNDA3NTEiCiAgICB9CiAgfQp9",
@@ -161,8 +146,7 @@ public class Skins {
                "model":"wide"
             }""";
 
-    public static final String RASSILON =
-            """
+    public static final String RASSILON = """
             {
                "skinName":"time_lord",
                "value":"ewogICJ0aW1lc3RhbXAiIDogMTcyMDY5Mjk0NDUyNiwKICAicHJvZmlsZUlkIiA6ICJlYTA4ZjhlZTdiOTg0YmFlYWM3N2JhYzk3ZWVkYzE4NSIsCiAgInByb2ZpbGVOYW1lIiA6ICJXYXlkZXJUTSIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9lZjgwMjE4ZjYyY2VkZWM4NDE3MTQ1YWUyOTliYTE1MzcxNjcxOTIxM2JjNjc5YThhZWM2NGFlZTZhNzllZjFmIgogICAgfQogIH0KfQ==",

@@ -27,6 +27,18 @@ public class SkinChangerPaper {
         TARDISDisguiseTracker.DISGUISED_AS_PLAYER.add(player.getUniqueId());
     }
 
+    public static void set(Player player, JsonObject properties) {
+        PlayerProfile profile = player.getPlayerProfile();
+        // get value and signature
+        String value = properties.get("value").getAsString();
+        String signature = properties.get("signature").getAsString();
+        profile.getProperties().removeIf(profileProperty -> profileProperty.getName().equals("textures"));
+        profile.getProperties().add(new ProfileProperty("textures", value, signature));
+        // set the game profile
+        player.setPlayerProfile(profile);
+        TARDISDisguiseTracker.DISGUISED_AS_PLAYER.add(player.getUniqueId());
+    }
+
     public static void remove(Player player) {
         PlayerProfile profile = player.getPlayerProfile();
         UUID uuid = player.getUniqueId();

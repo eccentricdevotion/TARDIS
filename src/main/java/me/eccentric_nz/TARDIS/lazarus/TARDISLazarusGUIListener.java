@@ -112,7 +112,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
             return;
         }
         int max_slot = 40;
-        if (slot >= 0 && slot < max_slot) {
+        if (slot >= 0 && slot <= max_slot) {
             // get selection
             ItemStack is = view.getItem(slot);
             if (is != null) {
@@ -123,7 +123,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     im.setLore(List.of("Genetic modification not available!"));
                     is.setItemMeta(im);
                 } else {
-                    if (display.equals("HEROBRINE")) {
+                    if (is.getType() == Material.PLAYER_HEAD) {
                         display = "PLAYER";
                     }
                     disguises.put(uuid, display);

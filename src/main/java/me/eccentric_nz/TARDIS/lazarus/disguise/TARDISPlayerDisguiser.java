@@ -16,24 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.lazarus.disguise;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
+import io.papermc.lib.PaperLib;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import net.minecraft.server.level.ServerPlayer;
-import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_21_R1.entity.CraftPlayer;
+import me.eccentric_nz.TARDIS.regeneration.SkinChangerPaper;
+import me.eccentric_nz.TARDIS.regeneration.SkinChangerSpigot;
+import me.eccentric_nz.TARDIS.regeneration.SkinFetcher;
 import org.bukkit.entity.Player;
 
-import javax.net.ssl.HttpsURLConnection;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.UUID;
 
 public class TARDISPlayerDisguiser {
@@ -53,48 +43,22 @@ public class TARDISPlayerDisguiser {
     }
 
     public void disguisePlayer() {
-        ServerPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-        // set skin
-        if (setSkin(entityPlayer.getGameProfile(), uuid)) {
-            TARDISDisguiseTracker.DISGUISED_AS_PLAYER.add(player.getUniqueId());
-        }
-    }
-
-    private boolean setSkin(GameProfile profile, UUID uuid) {
-        try {
-            URL url = new URL(String.format("https://sessionserver.mojang.com/session/minecraft/profile/%s?unsigned=false", fromUUID(uuid)));
-            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-            connection.connect();
-            if (connection.getResponseCode() == HttpsURLConnection.HTTP_OK) {
-                JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) connection.getContent())); // convert the input stream to a json element
-                JsonObject rootObj = root.getAsJsonObject();
-                JsonArray jsonArray = rootObj.getAsJsonArray("properties");
-                JsonObject properties = jsonArray.get(0).getAsJsonObject();
-                String skin = properties.get("value").getAsString();
-                String signature = properties.get("signature").getAsString();
-                profile.getProperties().removeAll("textures");
-                return profile.getProperties().put("textures", new Property("textures", skin, signature));
+        // get skin
+        SkinFetcher getter = new SkinFetcher(TARDIS.plugin, uuid);
+        getter.fetchAsync((hasResult, fetched) -> {
+            if (hasResult) {
+                JsonObject properties = fetched.getSkin();
+                if (properties != null) {
+                    // set skin
+                    if (PaperLib.isPaper()) {
+                        SkinChangerPaper.set(player, properties);
+                    } else {
+                        SkinChangerSpigot.set(player, properties);
+                    }
+                }
             } else {
-                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.HELPER_WARNING, "Connection could not be opened (Response code " + connection.getResponseCode() + ", " + connection.getResponseMessage() + ")");
-                return false;
+                TARDIS.plugin.debug("Player disguiser failed to fetch skin!");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public void disguiseToAll() {
-        TARDISDisguiseTracker.DISGUISED_AS_PLAYER.add(player.getUniqueId());
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p != player && player.getWorld() == p.getWorld()) {
-                p.hidePlayer(player);
-                p.showPlayer(player);
-            }
-        }
-    }
-
-    private String fromUUID(final UUID value) {
-        return value.toString().replace("-", "");
+        });
     }
 }

@@ -16,7 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.arch;
 
+import io.papermc.lib.PaperLib;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.regeneration.SkinChangerPaper;
+import me.eccentric_nz.TARDIS.regeneration.SkinChangerSpigot;
 import org.bukkit.entity.Player;
 
 public class TARDISArchDisguise {
@@ -26,6 +29,10 @@ public class TARDISArchDisguise {
     }
 
     public static void undisguise(Player player) {
-        TARDIS.plugin.getTardisHelper().reset(player);
+        if (PaperLib.isPaper()) {
+            SkinChangerPaper.remove(player);
+        } else {
+            SkinChangerSpigot.remove(player);
+        }
     }
 }

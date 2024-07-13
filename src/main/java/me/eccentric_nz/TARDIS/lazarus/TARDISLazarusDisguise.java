@@ -16,8 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
-import java.util.UUID;
+import io.papermc.lib.PaperLib;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.lazarus.disguise.ArchSkins;
+import me.eccentric_nz.TARDIS.regeneration.SkinChangerPaper;
+import me.eccentric_nz.TARDIS.regeneration.SkinChangerSpigot;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
@@ -48,8 +51,14 @@ public class TARDISLazarusDisguise {
     }
 
     public void createDisguise() {
+        plugin.debug(entityType.toString());
         if (entityType.equals(EntityType.PLAYER)) {
-            plugin.getTardisHelper().disguise(player, UUID.fromString("f84c6a79-0a4e-45e0-879b-cd49ebd4c4e2")); // or 91f25eb5-2b0e-46bc-8437-401c6017f369
+            if (PaperLib.isPaper()) {
+                SkinChangerPaper.set(player, ArchSkins.HEROBRINE);
+            } else {
+                plugin.debug("SkinChangerSpigot.set");
+                SkinChangerSpigot.set(player, ArchSkins.HEROBRINE);
+            }
         } else {
             plugin.getTardisHelper().disguise(entityType, player, options);
         }

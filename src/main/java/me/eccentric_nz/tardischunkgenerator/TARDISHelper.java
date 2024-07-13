@@ -272,7 +272,7 @@ public class TARDISHelper {
     }
 
     public void disguise(Player player, UUID uuid) {
-        new TARDISPlayerDisguiser(player, uuid).disguiseToAll();
+        new TARDISPlayerDisguiser(player, uuid);
     }
 
     public void undisguise(Player player) {
@@ -280,7 +280,7 @@ public class TARDISHelper {
     }
 
     public void reset(Player player) {
-        new TARDISChameleonArchDisguiser(plugin, player).resetSkin(TARDISDisguiseTracker.ARCHED);
+        new TARDISChameleonArchDisguiser(plugin, player).resetSkin();
     }
 
     public int spawnEmergencyProgrammeOne(Player player, Location location) {

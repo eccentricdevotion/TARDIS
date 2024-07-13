@@ -29,7 +29,7 @@ public class TARDISDisguiseTracker {
     public static final HashMap<Integer, UUID> DISGUISED_NPCS = new HashMap<>();
     public static final HashMap<UUID, TARDISDisguise> DISGUISED_ARMOR_STANDS = new HashMap<>();
     public static final HashMap<UUID, TARDISDisguise> DISGUISED_AS_MOB = new HashMap<>();
-    public static final HashMap<UUID, ProfileData> ARCHED = new HashMap<>();
+    public static final HashMap<UUID, String> ARCHED = new HashMap<>();
 
     public static class ProfileData {
 

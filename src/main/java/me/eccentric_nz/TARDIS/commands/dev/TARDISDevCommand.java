@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.lazarus.disguise.ArchSkins;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.regeneration.SkinChangerPaper;
 import me.eccentric_nz.TARDIS.regeneration.SkinChangerSpigot;
@@ -190,7 +191,7 @@ public class TARDISDevCommand implements CommandExecutor {
                         return true;
                     }
                     case "skin" -> {
-                        if (sender instanceof Player player && args.length > 1) {
+                        if (sender instanceof Player player) {
                             String which;
                             switch (args[1]) {
                                 case "1" -> which = Skins.FIRST;
@@ -209,7 +210,8 @@ public class TARDISDevCommand implements CommandExecutor {
                                 case "14" -> which = Skins.FOURTEENTH;
                                 case "15" -> which = Skins.FIFTEENTH;
                                 case "16" -> which = Skins.WAR;
-                                default -> which = Skins.RASSILON;
+                                case "17" -> which = Skins.RASSILON;
+                                default -> which = ArchSkins.HEROBRINE;
                             }
                             if (PaperLib.isPaper()) {
                                 SkinChangerPaper.set(player, which);
