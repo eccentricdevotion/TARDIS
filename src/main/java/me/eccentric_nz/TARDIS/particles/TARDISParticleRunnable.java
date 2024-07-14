@@ -41,7 +41,7 @@ public class TARDISParticleRunnable implements Runnable {
     protected double speed = 0;
     protected boolean adaptive;
     protected BlockData adaptiveData = null;
-    int taskID;
+    protected int taskID;
 
     public TARDISParticleRunnable(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;

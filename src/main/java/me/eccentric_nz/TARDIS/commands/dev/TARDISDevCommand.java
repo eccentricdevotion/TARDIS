@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.lazarus.disguise.ArchSkins;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
+import me.eccentric_nz.TARDIS.regeneration.Regenerator;
 import me.eccentric_nz.TARDIS.regeneration.SkinChangerPaper;
 import me.eccentric_nz.TARDIS.regeneration.SkinChangerSpigot;
 import me.eccentric_nz.TARDIS.regeneration.Skins;
@@ -66,7 +67,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "label", "list",
             "nms",
             "plurals",
-            "recipe",
+            "recipe", "regen",
             "skin", "snapshot", "stats", "systree",
             "tis", "tree"
     );
@@ -106,6 +107,12 @@ public class TARDISDevCommand implements CommandExecutor {
                                 return new TARDISInteractionCommand(plugin).process(player.getUniqueId());
                             }
                             return false;
+                        }
+                        case "regen" -> {
+                            if (sender instanceof Player player) {
+                                new Regenerator().dev(plugin, player, args);
+                            }
+                            return true;
                         }
                         case "skin" -> {
                             if (sender instanceof Player player) {

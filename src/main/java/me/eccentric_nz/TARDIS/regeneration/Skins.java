@@ -1,5 +1,7 @@
 package me.eccentric_nz.TARDIS.regeneration;
 
+import java.util.List;
+
 public class Skins {
 
     public static final String FIRST = """
@@ -154,4 +156,6 @@ public class Skins {
                "dataVersion":1,
                "model":"wide"
             }""";
+
+    public static final List<String> DOCTORS = List.of(FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH, SEVENTH, EIGHTH, NINTH, TENTH, ELEVENTH, TWELFTH, THIRTEENTH, FOURTEENTH, FIFTEENTH, WAR);
 }

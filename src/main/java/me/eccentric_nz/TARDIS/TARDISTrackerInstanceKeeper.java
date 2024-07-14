@@ -205,7 +205,7 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Tracks who is using the the immortality gate
+     * Tracks who is using the immortality gate
      *
      * @return the name of the player using the immortality gate or an empty
      * string if not in use
@@ -368,7 +368,7 @@ public class TARDISTrackerInstanceKeeper {
      *
      * @return a Map of player UUIDs and the TARDIS {@link BuildData}. The
      * location stored in the BuildData is adjusted depending on how well the
-     * player flys their TARDIS
+     * player flies their TARDIS
      */
     public HashMap<UUID, BuildData> getFlightData() {
         return flightData;
@@ -508,7 +508,7 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Tracks players who logged out while traveklling in the Junk TARDIS
+     * Tracks players who logged out while travelling in the Junk TARDIS
      *
      * @return a Map of player UUIDs and the location the Junk TARDIS was
      * travelling to
@@ -536,7 +536,7 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Remembers a player's interior location so we can return them to it after
+     * Remembers a player's interior location, so we can return them to it after
      * flying the TARDIS exterior
      *
      * @return a Map of player UUIDs and the player location
@@ -546,7 +546,7 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Tracks players using the sonc screwdriver freeze player function
+     * Tracks players using the sonic screwdriver freeze player function
      *
      * @return a Map of player UUIDs and the time in milliseconds they last used
      * the freeze function
@@ -679,7 +679,7 @@ public class TARDISTrackerInstanceKeeper {
     /**
      * Tracks players placing TARDIS telepathic circuits
      *
-     * @return a Map of player UUIDs and the location of the placed circut
+     * @return a Map of player UUIDs and the location of the placed circuit
      */
     public HashMap<UUID, String> getTelepathicPlacements() {
         return telepathicPlacements;
@@ -917,7 +917,7 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Tracks TARDISes that have a mincart entering the RAil room
+     * Tracks TARDISes that have a mine cart entering the RAil room
      *
      * @return a collection of TARDIS ids
      */
@@ -971,7 +971,7 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Tracks players that have discovered the TARDIS easter egg. Used for
+     * Tracks players that have discovered the TARDIS Easter egg. Used for
      * cooldown purposes
      *
      * @return a collection of player UUIDs
@@ -1081,7 +1081,7 @@ public class TARDISTrackerInstanceKeeper {
     }
 
     /**
-     * Tracks players that are sonicing doors
+     * Tracks players that are using the sonic on doors
      *
      * @return a collection of player UUIDs
      */
@@ -1128,5 +1128,4 @@ public class TARDISTrackerInstanceKeeper {
     public HashMap<Integer, Integer> getShriekers() {
         return shriekers;
     }
-
 }
