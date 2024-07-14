@@ -49,9 +49,9 @@ public class RegenerationEmitter extends TARDISParticleRunnable implements Runna
                 }
             }
             // add potion effects
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 180, 1));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 180, 1));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 180, 1));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 1800, 1));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 1800, 1));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 1800, 1));
             // reset skin
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 if (PaperLib.isPaper()) {
@@ -63,7 +63,7 @@ public class RegenerationEmitter extends TARDISParticleRunnable implements Runna
                 player.removePotionEffect(PotionEffectType.SLOWNESS);
                 player.removePotionEffect(PotionEffectType.WEAKNESS);
                 player.removePotionEffect(PotionEffectType.REGENERATION);
-            }, 180L);
+            }, 1800L);
         }
     }
 
