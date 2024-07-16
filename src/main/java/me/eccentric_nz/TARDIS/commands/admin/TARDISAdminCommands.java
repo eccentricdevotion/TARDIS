@@ -55,6 +55,7 @@ public class TARDISAdminCommands implements CommandExecutor {
         this.plugin = plugin;
         // add first arguments
         firstsStr.add("arch");
+        firstsStr.add("armor_stand");
         firstsStr.add("assemble");
         firstsStr.add("condenser");
         firstsStr.add("convert_database");
@@ -101,6 +102,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return false;
                 }
                 if (args.length == 1) {
+                    if (first.equals("armor_stand")) {
+                        return new TARDISArmorStandCommand(plugin).checkAndRemove(sender);
+                    }
                     if (first.equals("condenser")) {
                         return new TARDISCondenserCommand(plugin).set(sender);
                     }

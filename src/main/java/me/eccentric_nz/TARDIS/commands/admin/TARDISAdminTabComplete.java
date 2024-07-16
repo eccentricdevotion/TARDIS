@@ -38,7 +38,7 @@ import java.util.List;
  */
 public class TARDISAdminTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("arch", "assemble", "condenser", "config", "convert_database", "create", "decharge", "delete", "disguise", "dispersed", "enter", "find", "list", "make_preset", "maze", "mvimport", "playercount", "prune", "prunelist", "purge", "purge_portals", "recharger", "region_flag", "reload", "repair", "revoke", "set_size", "spawn_abandoned", "undisguise", "update_plugins");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("arch", "armor_stand", "assemble", "condenser", "config", "convert_database", "create", "decharge", "delete", "disguise", "dispersed", "enter", "find", "list", "make_preset", "maze", "mvimport", "playercount", "prune", "prunelist", "purge", "purge_portals", "recharger", "region_flag", "reload", "repair", "revoke", "set_size", "spawn_abandoned", "undisguise", "update_plugins");
     private final ImmutableList<String> ASS_SUBS = ImmutableList.of("clear", "list");
     private final ImmutableList<String> COMPASS_SUBS = ImmutableList.of("NORTH", "EAST", "SOUTH", "WEST");
     private final ImmutableList<String> ENTITY_SUBS;
