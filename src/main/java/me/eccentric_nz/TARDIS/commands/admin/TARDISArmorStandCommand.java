@@ -40,7 +40,7 @@ public class TARDISArmorStandCommand {
                 }
             }
             if (i > 0) {
-                plugin.getMessenger().message(sender, TardisModule.TARDIS, "Removed " + i + "armour stands in " + world.getName());
+                plugin.getMessenger().message(sender, TardisModule.TARDIS, "Removed " + i + " armour stands in " + world.getName());
             }
         }
         return true;
