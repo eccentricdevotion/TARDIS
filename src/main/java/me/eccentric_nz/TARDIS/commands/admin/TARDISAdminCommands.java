@@ -102,119 +102,125 @@ public class TARDISAdminCommands implements CommandExecutor {
                     return false;
                 }
                 if (args.length == 1) {
-                    if (first.equals("armor_stand")) {
-                        return new TARDISArmorStandCommand(plugin).checkAndRemove(sender);
-                    }
-                    if (first.equals("condenser")) {
-                        return new TARDISCondenserCommand(plugin).set(sender);
-                    }
-                    if (first.equals("convert_database")) {
-                        try {
-                            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Converter(plugin, sender));
+                    switch (first) {
+                        case "clean" -> {
+                            return new TARDISCleanEntitiesCommand(plugin).checkAndRemove(sender);
+                        }
+                        case "condenser" -> {
+                            return new TARDISCondenserCommand(plugin).set(sender);
+                        }
+                        case "convert_database" -> {
+                            try {
+                                plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Converter(plugin, sender));
+                                return true;
+                            } catch (Exception e) {
+                                plugin.getMessenger().message(sender, "Database conversion failed! " + e.getMessage());
+                                return true;
+                            }
+                        }
+                        case "update_plugins" -> {
+                            if (!sender.isOp()) {
+                                plugin.getMessenger().message(sender, "You must be a server operator to run this command!");
+                                return true;
+                            }
+                            return new UpdateTARDISPlugins(plugin).fetchFromJenkins(sender);
+                        }
+                        case "maze" -> {
+                            if (sender instanceof Player p) {
+                                Location l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation();
+                                TARDISMazeGenerator generator = new TARDISMazeGenerator();
+                                generator.makeMaze();
+                                TARDISMazeBuilder builder = new TARDISMazeBuilder(generator.getMaze(), l);
+                                builder.build(false);
+                            }
                             return true;
-                        } catch (Exception e) {
-                            plugin.getMessenger().message(sender, "Database conversion failed! " + e.getMessage());
+                        }
+                        case "mvimport" -> {
+                            if (!plugin.getServer().getPluginManager().isPluginEnabled("Multiverse-Core")) {
+                                plugin.getMessenger().send(sender, TardisModule.TARDIS, "MULTIVERSE_ENABLED");
+                            }
+                            plugin.getMVHelper().importWorlds(sender);
                             return true;
                         }
                     }
-                    if (first.equals("update_plugins")) {
-                        if (!sender.isOp()) {
-                            plugin.getMessenger().message(sender, "You must be a server operator to run this command!");
-                            return true;
-                        }
-                        return new UpdateTARDISPlugins(plugin).fetchFromJenkins(sender);
+                }
+                switch (first) {
+                    case "create" -> {
+                        return new TARDISCreateCommand(plugin).buildTARDIS(sender, args);
                     }
-                    if (first.equals("maze")) {
-                        if (sender instanceof Player p) {
-                            Location l = p.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getRelative(BlockFace.UP).getLocation();
-                            TARDISMazeGenerator generator = new TARDISMazeGenerator();
-                            generator.makeMaze();
-                            TARDISMazeBuilder builder = new TARDISMazeBuilder(generator.getMaze(), l);
-                            builder.build(false);
-                        }
-                        return true;
+                    case "find" -> {
+                        return new TARDISFindHiddenCommand().search(plugin, sender, args);
                     }
-                    if (first.equals("mvimport")) {
-                        if (!plugin.getServer().getPluginManager().isPluginEnabled("Multiverse-Core")) {
-                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "MULTIVERSE_ENABLED");
-                        }
-                        plugin.getMVHelper().importWorlds(sender);
-                        return true;
+                    case "remove_protection" -> {
+                        return new TARDISRemoveProtectionCommand(plugin).remove(args);
                     }
-                }
-                if (first.equals("create")) {
-                    return new TARDISCreateCommand(plugin).buildTARDIS(sender, args);
-                }
-                if (first.equals("find")) {
-                    return new TARDISFindHiddenCommand().search(plugin, sender, args);
-                }
-                if (first.equals("remove_protection")) {
-                    return new TARDISRemoveProtectionCommand(plugin).remove(args);
-                }
-                if (first.equals("list")) {
-                    return new TARDISListCommand(plugin).listStuff(sender, args);
-                }
-                if (first.equals("purge_portals")) {
-                    return new TARDISPortalCommand(plugin).clearAll(sender);
-                }
-                if (first.equals("undisguise")) {
-                    return new TARDISDisguiseCommand(plugin).disguise(sender, args);
+                    case "list" -> {
+                        return new TARDISListCommand(plugin).listStuff(sender, args);
+                    }
+                    case "purge_portals" -> {
+                        return new TARDISPortalCommand(plugin).clearAll(sender);
+                    }
+                    case "undisguise" -> {
+                        return new TARDISDisguiseCommand(plugin).disguise(sender, args);
+                    }
                 }
                 if (args.length < 2) {
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
                     return false;
                 }
-                if (first.equals("arch")) {
-                    if (args.length > 2) {
-                        return new TARDISArchCommand(plugin).force(sender, args);
-                    } else {
-                        return new TARDISArchCommand(plugin).whois(sender, args);
+                switch (first) {
+                    case "arch" -> {
+                        if (args.length > 2) {
+                            return new TARDISArchCommand(plugin).force(sender, args);
+                        } else {
+                            return new TARDISArchCommand(plugin).whois(sender, args);
+                        }
                     }
-                }
-                if (first.equals("assemble") || first.equals("dispersed")) {
-                    return new TARDISDispersedCommand(plugin).assemble(sender, args[1]);
-                }
-                if (first.equals("set_size")) {
-                    return new TARDISSetSizeCommand(plugin).overwrite(sender, args);
-                }
-                if (first.equals("spawn_abandoned")) {
-                    return new TARDISAbandonedCommand(plugin).spawn(sender, args);
-                }
-                if (first.equals("make_preset")) {
-                    return new TARDISMakePresetCommand(plugin).scanBlocks(sender, args);
-                }
-                if (first.equals("playercount")) {
-                    return new TARDISPlayerCountCommand(plugin).countPlayers(sender, args);
-                }
-                if (first.equals("prune")) {
-                    return new TARDISPruneCommand(plugin).startPruning(sender, args);
-                }
-                if (first.equals("prunelist")) {
-                    return new TARDISPruneCommand(plugin).listPrunes(sender, args);
-                }
-                if (first.equals("purge")) {
-                    return new TARDISPurgeCommand(plugin).clearAll(sender, args);
-                }
-                if (first.equals("recharger")) {
-                    return new TARDISRechargerCommand(plugin).setRecharger(sender, args);
-                }
-                if (first.equals("decharge")) {
-                    return new TARDISDechargeCommand(plugin).removeChargerStatus(sender, args);
-                }
-                if (first.equals("disguise")) {
-                    return new TARDISDisguiseCommand(plugin).disguise(sender, args);
-                }
-                if (first.equals("enter")) {
-                    return new TARDISEnterCommand(plugin).enterTARDIS(sender, args);
-                }
-                if (first.equals("delete")) {
-                    return new TARDISDeleteCommand(plugin).deleteTARDIS(sender, args);
-                }
-                if (first.equals("repair")) {
-                    return new TARDISRepairCommand(plugin).setFreeCount(sender, args);
-                }
-                if (first.equals("revoke")) {
-                    return new TARDISRevokeCommand(plugin).removePermission(sender, args);
+                    case "assemble", "dispersed" -> {
+                        return new TARDISDispersedCommand(plugin).assemble(sender, args[1]);
+                    }
+                    case "set_size" -> {
+                        return new TARDISSetSizeCommand(plugin).overwrite(sender, args);
+                    }
+                    case "spawn_abandoned" -> {
+                        return new TARDISAbandonedCommand(plugin).spawn(sender, args);
+                    }
+                    case "make_preset" -> {
+                        return new TARDISMakePresetCommand(plugin).scanBlocks(sender, args);
+                    }
+                    case "playercount" -> {
+                        return new TARDISPlayerCountCommand(plugin).countPlayers(sender, args);
+                    }
+                    case "prune" -> {
+                        return new TARDISPruneCommand(plugin).startPruning(sender, args);
+                    }
+                    case "prunelist" -> {
+                        return new TARDISPruneCommand(plugin).listPrunes(sender, args);
+                    }
+                    case "purge" -> {
+                        return new TARDISPurgeCommand(plugin).clearAll(sender, args);
+                    }
+                    case "recharger" -> {
+                        return new TARDISRechargerCommand(plugin).setRecharger(sender, args);
+                    }
+                    case "decharge" -> {
+                        return new TARDISDechargeCommand(plugin).removeChargerStatus(sender, args);
+                    }
+                    case "disguise" -> {
+                        return new TARDISDisguiseCommand(plugin).disguise(sender, args);
+                    }
+                    case "enter" -> {
+                        return new TARDISEnterCommand(plugin).enterTARDIS(sender, args);
+                    }
+                    case "delete" -> {
+                        return new TARDISDeleteCommand(plugin).deleteTARDIS(sender, args);
+                    }
+                    case "repair" -> {
+                        return new TARDISRepairCommand(plugin).setFreeCount(sender, args);
+                    }
+                    case "revoke" -> {
+                        return new TARDISRevokeCommand(plugin).removePermission(sender, args);
+                    }
                 }
                 return true;
             } else {
