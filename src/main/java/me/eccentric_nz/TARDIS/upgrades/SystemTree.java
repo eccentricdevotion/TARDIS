@@ -121,6 +121,9 @@ public enum SystemTree {
             case DESKTOP_THEME -> {
                 return "desktop";
             }
+            case EXTERIOR_FLIGHT -> {
+                return "flight";
+            }
             case INTER_DIMENSIONAL_TRAVEL -> {
                 return "inter_dimension";
             }
