@@ -55,8 +55,8 @@ public class TARDISAdminCommands implements CommandExecutor {
         this.plugin = plugin;
         // add first arguments
         firstsStr.add("arch");
-        firstsStr.add("armor_stand");
         firstsStr.add("assemble");
+        firstsStr.add("clean");
         firstsStr.add("condenser");
         firstsStr.add("convert_database");
         firstsStr.add("create");
