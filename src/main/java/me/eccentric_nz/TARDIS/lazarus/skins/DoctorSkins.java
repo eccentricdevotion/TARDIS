@@ -1,8 +1,8 @@
-package me.eccentric_nz.TARDIS.regeneration;
+package me.eccentric_nz.TARDIS.lazarus.skins;
 
 import java.util.List;
 
-public class Skins {
+public class DoctorSkins {
 
     public static final String FIRST = """
             {

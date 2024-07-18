@@ -14,13 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.lazarus.disguise;
+package me.eccentric_nz.TARDIS.lazarus.skins;
 
 import com.mojang.authlib.GameProfile;
 import io.papermc.lib.PaperLib;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISDisguiseTracker;
 import me.eccentric_nz.TARDIS.regeneration.SkinChangerPaper;
 import me.eccentric_nz.TARDIS.regeneration.SkinChangerSpigot;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoRemovePacket;

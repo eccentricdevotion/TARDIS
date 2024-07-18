@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.lazarus;
 
 import io.papermc.lib.PaperLib;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.lazarus.disguise.ArchSkins;
+import me.eccentric_nz.TARDIS.lazarus.skins.ArchSkins;
 import me.eccentric_nz.TARDIS.regeneration.SkinChangerPaper;
 import me.eccentric_nz.TARDIS.regeneration.SkinChangerSpigot;
 import org.bukkit.entity.EntityType;

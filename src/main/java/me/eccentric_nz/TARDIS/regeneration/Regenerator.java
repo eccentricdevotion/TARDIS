@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.regeneration;
 import io.papermc.lib.PaperLib;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.lazarus.skins.DoctorSkins;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,13 +27,13 @@ public class Regenerator {
         ItemMeta im = totem.getItemMeta();
         int cmd;
         String skin;
-        int random = TARDISConstants.RANDOM.nextInt(Skins.DOCTORS.size());
+        int random = TARDISConstants.RANDOM.nextInt(DoctorSkins.DOCTORS.size());
         if (args.length == 1) {
             cmd = random + 1001;
-            skin = Skins.DOCTORS.get(random);
+            skin = DoctorSkins.DOCTORS.get(random);
         } else {
             cmd = TARDISNumberParsers.parseInt(args[1]) + 1000;
-            skin = Skins.DOCTORS.get(cmd - 1);
+            skin = DoctorSkins.DOCTORS.get(cmd - 1);
         }
         if (cmd != 999) {
             // hide player

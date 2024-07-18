@@ -1,4 +1,4 @@
-package me.eccentric_nz.TARDIS.lazarus.disguise;
+package me.eccentric_nz.TARDIS.lazarus.skins;
 
 import java.util.List;
 

@@ -122,7 +122,6 @@ public class TARDISNumberParsers {
 
                         ++i;
                     }
-
                     return true;
                 }
             } else {
@@ -135,28 +134,23 @@ public class TARDISNumberParsers {
                         if (hasDecPoint || hasExp) {
                             return false;
                         }
-
                         hasDecPoint = true;
                     } else if (chars[i] != 'e' && chars[i] != 'E') {
                         if (chars[i] != '+' && chars[i] != '-') {
                             return false;
                         }
-
                         if (!allowSigns) {
                             return false;
                         }
-
                         allowSigns = false;
                         foundDigit = false;
                     } else {
                         if (hasExp) {
                             return false;
                         }
-
                         if (!foundDigit) {
                             return false;
                         }
-
                         hasExp = true;
                         allowSigns = true;
                     }

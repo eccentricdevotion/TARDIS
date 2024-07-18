@@ -23,13 +23,15 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.lazarus.disguise.ArchSkins;
+import me.eccentric_nz.TARDIS.lazarus.skins.ArchSkins;
+import me.eccentric_nz.TARDIS.lazarus.skins.DoctorSkins;
+import me.eccentric_nz.TARDIS.lazarus.skins.SkinUtils;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.regeneration.Regenerator;
 import me.eccentric_nz.TARDIS.regeneration.SkinChangerPaper;
 import me.eccentric_nz.TARDIS.regeneration.SkinChangerSpigot;
-import me.eccentric_nz.TARDIS.regeneration.Skins;
 import me.eccentric_nz.TARDIS.utility.Pluraliser;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BrushableBlock;
@@ -199,31 +201,35 @@ public class TARDISDevCommand implements CommandExecutor {
                     }
                     case "skin" -> {
                         if (sender instanceof Player player) {
-                            String which;
-                            switch (args[1]) {
-                                case "1" -> which = Skins.FIRST;
-                                case "2" -> which = Skins.SECOND;
-                                case "3" -> which = Skins.THIRD;
-                                case "4" -> which = Skins.FOURTH;
-                                case "5" -> which = Skins.FIFTH;
-                                case "6" -> which = Skins.SIXTH;
-                                case "7" -> which = Skins.SEVENTH;
-                                case "8" -> which = Skins.EIGHTH;
-                                case "9" -> which = Skins.NINTH;
-                                case "10" -> which = Skins.TENTH;
-                                case "11" -> which = Skins.ELEVENTH;
-                                case "12" -> which = Skins.TWELFTH;
-                                case "13" -> which = Skins.THIRTEENTH;
-                                case "14" -> which = Skins.FOURTEENTH;
-                                case "15" -> which = Skins.FIFTEENTH;
-                                case "16" -> which = Skins.WAR;
-                                case "17" -> which = Skins.RASSILON;
-                                default -> which = ArchSkins.HEROBRINE;
-                            }
-                            if (PaperLib.isPaper()) {
-                                SkinChangerPaper.set(player, which);
+                            if (TARDISNumberParsers.isSimpleNumber(args[1])) {
+                                String which;
+                                switch (args[1]) {
+                                    case "1" -> which = DoctorSkins.FIRST;
+                                    case "2" -> which = DoctorSkins.SECOND;
+                                    case "3" -> which = DoctorSkins.THIRD;
+                                    case "4" -> which = DoctorSkins.FOURTH;
+                                    case "5" -> which = DoctorSkins.FIFTH;
+                                    case "6" -> which = DoctorSkins.SIXTH;
+                                    case "7" -> which = DoctorSkins.SEVENTH;
+                                    case "8" -> which = DoctorSkins.EIGHTH;
+                                    case "9" -> which = DoctorSkins.NINTH;
+                                    case "10" -> which = DoctorSkins.TENTH;
+                                    case "11" -> which = DoctorSkins.ELEVENTH;
+                                    case "12" -> which = DoctorSkins.TWELFTH;
+                                    case "13" -> which = DoctorSkins.THIRTEENTH;
+                                    case "14" -> which = DoctorSkins.FOURTEENTH;
+                                    case "15" -> which = DoctorSkins.FIFTEENTH;
+                                    case "16" -> which = DoctorSkins.WAR;
+                                    case "17" -> which = DoctorSkins.RASSILON;
+                                    default -> which = ArchSkins.HEROBRINE;
+                                }
+                                if (PaperLib.isPaper()) {
+                                    SkinChangerPaper.set(player, which);
+                                } else {
+                                    SkinChangerSpigot.set(player, which);
+                                }
                             } else {
-                                SkinChangerSpigot.set(player, which);
+                                SkinUtils.debug(player);
                             }
                         }
                         return true;

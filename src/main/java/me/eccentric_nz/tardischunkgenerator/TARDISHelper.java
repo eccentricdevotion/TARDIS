@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.lazarus.disguise.*;
+import me.eccentric_nz.TARDIS.lazarus.skins.TARDISChameleonArchDisguiser;
 import me.eccentric_nz.tardischunkgenerator.custombiome.*;
 import me.eccentric_nz.tardischunkgenerator.helpers.GetBlockColours;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISItemFrameFaker;

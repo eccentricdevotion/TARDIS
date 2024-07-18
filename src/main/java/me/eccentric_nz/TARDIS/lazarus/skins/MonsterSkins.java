@@ -1,8 +1,8 @@
-package me.eccentric_nz.TARDIS.lazarus.disguise;
+package me.eccentric_nz.TARDIS.lazarus.skins;
 
 public class MonsterSkins {
 
-    public static final String CLOCKWORK_DROID = """
+    public static final String CLOCKWORK_DROID_MALE = """
             {
                "skinName":"lazarus_clockwork_droid",
                "value":"ewogICJ0aW1lc3RhbXAiIDogMTcyMTAzNjMyMjAwNSwKICAicHJvZmlsZUlkIiA6ICJkNzU2OTc4MWUyYjY0OWIyYjVlMjVlYTJhNDZkOGQxOSIsCiAgInByb2ZpbGVOYW1lIiA6ICJEckthcGRvciIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9hNDZhYTk5ZTAyZDFiY2MyMjEyOTg1MDdjNDMxNjU4OTc1MWY5MTdlNTI4NWM3MWJiN2Y2MGFkYTI3ZjkxODIzIgogICAgfQogIH0KfQ==",
@@ -10,11 +10,11 @@ public class MonsterSkins {
                "dataVersion":1
             }""";
 
-    public static final String THE_MASTER_CLASSIC = """
+    public static final String CLOCKWORK_DROID_FEMALE = """
             {
-               "skinName":"lazarus_the_master_classic",
-               "value":"ewogICJ0aW1lc3RhbXAiIDogMTcyMTAzNjI2OTE4NCwKICAicHJvZmlsZUlkIiA6ICI1MzgyNzM1OGIzOTc0ZmJiOTg0OTY5MWM5Yzg3NTA1YiIsCiAgInByb2ZpbGVOYW1lIiA6ICJPdmVyQmlnYm95MTIzIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzMwYTdmMWUwN2I4OTRhZjVlMWUyNGE4MmYxOWRkYWE3YzM3MjAwMzZhYmExYzAxMTgwMzY0OTRmNjFjYWI1MzMiCiAgICB9CiAgfQp9",
-               "signature":"vXGW8xvXfb2TMap6EupNrRBgRCgssV9Gbrd9ugv/kcV+V8IDNgFIjL5yTdld+HV4/8bAWDnRz1XWpK3Hnd48Xhzw1ZvwNFnVlJs+6y9xHkjAsZt93tq8xsZBrILk+fEopMZc9lV0+bSvv2PTgApzUttZqNPupD8gboW85S4yrB/6zT1y/qVoBSl5cc1nc2fOEGVD1uxiZrA8vzjxS/w3y2oM7GwbY635skoYI4YpyeoXVW9W5HNTIHrX7UExLHF/1qagPJNWf1Qa5iOOOjm9RGcwITbQMu5NXB3bsxOYIPNngpJu6viNoB0Cz5Yw7IsM1xkbxZPsvmXIk1eeSvq6DeNEqvz0jHtWqy1WgHMjTudZ3rm9ULs/1yh7984jDt7iRYVl+Ae1NNN71Z7mTouet3seKGoZBwR12yne4F8ezZMtBKhOnDEXArvDfx59lxWCJBXfF3s0ip2WlWj8B3qtstzAIEBXrykCAj+1cCTIeWmqP2aT2Y9d8QbmT/4ZxG/tpsiMDeWv+c4lDhOTZbMQCa1apnK6qVpMNybjkXQ9J2DNXVlN1YHF5Ch5KawmC8nPMf2SLCWSrREiy6JysDKWheAxZHzBcA0zMKgsJIRZdxf+YWVmWxi1m0/OWeOhO3JJwviaIvXAYXFkidPZadQIjl6iIQq0a9pugOPlnDOFE0o=",
+               "skinName":"lazarus_clockwork_droid_female",
+               "value":"ewogICJ0aW1lc3RhbXAiIDogMTcyMTI2MDQ2MDU2MCwKICAicHJvZmlsZUlkIiA6ICI0OWIzODUyNDdhMWY0NTM3YjBmN2MwZTFmMTVjMTc2NCIsCiAgInByb2ZpbGVOYW1lIiA6ICJiY2QyMDMzYzYzZWM0YmY4IiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2UwZWU2Y2Y0Y2IzYWNhYTRkNGRmNWZlNDllMWFhNjI4Y2QzN2Y2YzM1NTc1OGQzZDYxZWNmODhhYTkyYTUzNWYiCiAgICB9CiAgfQp9",
+               "signature":"aD16JiIEVrLTrdw+ITRZk0sUQDo+DP8nUEYOF+7q3/Kvo9CNlhWT9pEMbX4/t3Q3hFYugVcKKvEgwDfz3wVmTft8GnKpfeFZm11xXonii6mJuVtk7llDlEuqz0ian8yA7IKiK7KNJUmcmhcw6H/9O1uNb8OwcC3E2d9OKPMwWtFbwzk48Kvz0Ec6TDvP95EuwpM2oKlzIieixBXLQ6S0IrVWN1KNfd5BqtGUJ+aeLQjrg9JJqB54l/jHLtM8300uKnMARKeCn7NgdFy68y/hl1GzQvUgdCCuGfl6qheOC7ZNvyrPV55knErlMjtHUBvI2ioBikX8VLYwQ6/QMLrqd1UQvZONgnibktKBBQWxP6XpjVfiBXYQPeO+m3G26MlaABsua3m5cVXg3zyFx8cZykMhnUXF6XTGPjZ8Bielsy70CsHOM15p8Q/9Ky2wryoBe5Nj5l9mvKFzsqeJLG4/45d0Hm9J3mJ2Ivg+xNLrWZIg0xXW84hvbA5frfAXnMa44W3SkaEFHpRVIqV/7bXOIHZlCHapC3b2AGZw579eZF1FSBLwURmFpmIsWNnWE4iQ+rAJ6PG7NTP+jXBFGxB8+eCNXjjz5SRFxAQei/DyBs7oMCW2u7ikhm/kHkEkHHcs8okqDiOXaAlF7oki/xAFGFk9GI0RD2LN6+fkyNpOL0E=",
                "dataVersion":1
             }""";
 
@@ -50,6 +50,22 @@ public class MonsterSkins {
                "dataVersion":1
             }""";
 
+    public static final String JUDOON = """
+            {
+               "skinName":"lazarus_judoon",
+               "value":"ewogICJ0aW1lc3RhbXAiIDogMTcyMTI0NTE1OTI4NCwKICAicHJvZmlsZUlkIiA6ICJmNTBjOGRkN2FiN2Y0ZmUyYWI4ZGI1M2NjYzRiYWQxMiIsCiAgInByb2ZpbGVOYW1lIiA6ICJtYWNoYWRvVF9UIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzc1NjFiYmFkNTc0YTQ0ZmM0NzIzYjhlY2NlZGM4YTM5MTQ4OTk0YjFlY2U1ZDc3OGM1NWZjY2QwOTE4MWE0ODAiCiAgICB9CiAgfQp9",
+               "signature":"jr3C/i7sdIIM6V4m6JDBbjZgfsbPK2ARNgFVm2Rg8giFc9E7ArVB2UBgdsbHwX9Bx4LOu7Kcx3WlWVejPdaG5FHTm/pL+e6NrBhSUIGvb5r5C0YlJ4O99VZwY1AAgKqx4nSfc86n9jWnIRehR7aQ+IibZ7VqaON2G2pF6sxYCuLnz/Mu96Oy030oKKrbhcSfNTK1Sz7wqwo2xI/J0ggI2aBRsqFjTEFl8MmQTRTpPPJHhR1lsAa7936z/NOBojKCd3C+p7LYLBsvUVJsZ+gAj5IRydwCjcgWiBb5C3WOOdDVxqD7IMvwedAsjFrqrAAjJa8TTt67nDfvV4yObLdZAEIdliT1+qA8qt0iNvv5gyVtgNMU3lCWO+O9Y6rwC79NSKhKepRRYZRhHvQtqmjV6ykue/9UgR0wcYz3fgHolvjbjehJAI3DDJYueL6aAvVZw4AblkYuuSjgJOKS3AAjCobZFoENwmofV+DmJ/KWQ6D31+i6PlAy65NeTvi9cnqnGS5PN++WZspsQ6vW8Bz7vVeBfOm+lmDlGRQqVsg0ODCKcxXq+xSnHdvoeWICBOGQo6/AECqoP7l3HX71rUtd6Dk2NugoKkeaQPdJ1jMt+LM8n5Ks9No3IQAX/xaKm9WCN9sLWZ6n6+hdkM1ri5F2DeDA6xAlQWFq4MN43CQeLS4=",
+               "dataVersion":1
+            }""";
+
+    public static final String SCARECROW = """
+            {
+               "skinName":"lazarus_scarecrow",
+               "value":"ewogICJ0aW1lc3RhbXAiIDogMTcyMTI3MzcwMjc2NCwKICAicHJvZmlsZUlkIiA6ICI5YjhhN2NlMmJlYjI0NjdkYTJjZmU4MzQ1YTNjOTZkOCIsCiAgInByb2ZpbGVOYW1lIiA6ICJTdGFyR2FtZXJTaGFsb20iLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWY3YTc3ZmY2YTYyMmI5NTYzNjJkMjkxNDQ2MDU4MzljMmRkNWI1NWEwNDQwZmFjY2UyZjg5YzYyODAyZGNlMCIKICAgIH0KICB9Cn0=",
+               "signature":"FrafHU4Ja3WsMJCQGVBD8SfDZUQbfqxES8arVnNIjesfGSquyXa0WxgxprLv/1zWkaUkr/fsjUUHY+/sdWnERXeK7Mo+r4qDteRyUWW5ktrhxJCdzijnGH1Cs0xL9+46o9f2D25JRbqIcHEMxoF+7VcQSCyVbie4bBkM70ukoxHm2g/xfpQioOoe7bdWieBRhp26w+f87bFluDBcPKqD+97h4Wg94yPv0Jk8g0Sz4QmtP4F62an7cKP01OhdPmg1XRb3cJoksTxycRMzGv4p38VNxhwrRlidLpTprLjtwoVSmwgPhMwySi6YwakER2c/D1pvfK/wmJqHbsSs6VPRfVzNNqauHyL8bgcMZcjapL8oDpng/M2dTZlYxbg1P4RXGAEzWbdFF9Ab4UFcPyBkjCJCDSP8JiCxhUC0ylsZlWLBG6e1DNxe7TMsQj5sZvwYW8DmAz/C1keVKdqW5sfonQ0SlMuHlMwJ031JfLz7cZH3SmleIA9eh+qubSL4fY+/Y+dvKQF12vBturT8vakMS+XkZP23VgeUpmwj/m5y4le/NrcCHhxayL3btU8ByKXn5a1nDURkLm1Zxrl/EgJe+OKDFMcFn8IVFiECv55DY0lzj01+ZqOan+Jhlvj+fkR75FVINFU82VUO/iMvFc+ylf8xv+SW1C5g1gGnXZokYHU=",
+               "dataVersion":1
+            }""";
+
     public static final String SILENCE = """
             {
                "skinName":"lazarus_silence",
@@ -66,11 +82,27 @@ public class MonsterSkins {
                "dataVersion":1
             }""";
 
+    public static final String SLITHEEN = """
+            {
+               "skinName":"lazarus_slitheen",
+               "value":"ewogICJ0aW1lc3RhbXAiIDogMTcyMTI3MzcxOTcyMiwKICAicHJvZmlsZUlkIiA6ICIzY2I3YTA3YWY3ZjM0ZWZiYTlkNGI4ODQ3NDM4Mzc0ZSIsCiAgInByb2ZpbGVOYW1lIiA6ICJZb3VUdWJlX0RFRkZZIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzc0N2YzMjg1OGJkMzY3MzUzZjQ2YjMwODdhZDJmMzFmZjg5NmY2YmVhNDI5YzNhZGYzZjc0ZmFhMTgxYzRjZCIKICAgIH0KICB9Cn0=",
+               "signature":"lnIauelj46Z0stk8eNQRrdY1Yl3ZWNlFXjXNqq5z2TpUJAL54ELZeyOvcse9qiFjZP2JK6MDV0G+3TGm5ZaYUI26GBzFlgi1/tekEWFZ7RpRT6qPnjyTko6itbtd7DxYeQMIv5kcsRUWZY+I14aoyEsYejUMVB/kBLw3dcossx4u7CilKVFkf/ybAs+1c0XFFBjE3SM5RwnHX6fiyrshNQIEZsPdkk9QXDzpaUYSDQcr1ohKqGinUN5bXt0QcmMkNKUPholDUceTF2DYa+AwQHktVoCapye2rPRLyCCwh33jY3nFVacU5lKTvaPtir2LDP9+q0z2p9TmQ4O8z1ehQEFDNAsXMSAvZGVJZ0jvmLZSfVXHHygRIajmdqWHbUaXxGxs0mGS6+M4SPy/lva4LKC7AZZx8K+m8oKVj1jwRR0E3BuubQfVgF7m81wL9Yz3E4US1p8yAx59OXVko/eAmShHmRyRcXWhr6IZ0Yh4E/pNsn0uVwDOLUrGgZpM26kmJPBvTZKpl5B16mTBCHzE5Fv8LXMpbJL1veThOoRfzmlCMFUb42yeZu8AIbrfPwCn9lw4RG4mHuxtMWFyVOM3FDoAKJJOXncUm6Jx7eCS0dMlfN0vNV5OTaFwcDFjev9C8JM1hEDZ7edM+Nx8CRQZ3/0IdDFrS+G1ffd+DM46kog=",
+               "dataVersion":1
+            }""";
+
     public static final String SMILER = """
             {
                "skinName":"lazarus_smiler",
                "value":"ewogICJ0aW1lc3RhbXAiIDogMTcyMTExMzg2MzQzNywKICAicHJvZmlsZUlkIiA6ICI4MDBmNmU2ZGNiMTk0Yzc2OGE1OWU1Y2Q2MzFlNjI2YyIsCiAgInByb2ZpbGVOYW1lIiA6ICJ5dXl1dXUxIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2ZjMjQxM2Y0NmNiOWZlYWNlYzkzNjU1NGNiN2ZhMzI0MGRlZTRlNTZjMTU0NGJkODE5ODZiZTRlZjJmZDEzNTkiCiAgICB9CiAgfQp9",
                "signature":"MSPoRkxE42uP7WvRCso5o8k8a56HRnZFPxD30ozCVwNKHloyLuG30uOLCNQ2blkwy1mvNhlRFxjDwqh7vb6JFVuAbbQB7X2yXvMdm0PsHhh3c8E+Fj2LTxY6hJMxwMNvQF/ZgNPZ6oGCcBiLv8gs0TzMFXHfuPD+NAYlGxNiLBpIA+5btebJBkay/27ZJDrGF8CX9AyS96EImt04V4hy1tIiw7E2EtOy47tcr6fg03+3gp8YYvtvfP8pv2wfxW4bmKUEe1IULQ8WqiRJPkp5EKf4QWdDOhhYnCW1r4SAxcGHTp6wCHW+giCzQRCEKoEZ+A5sROBbV5Dy2QMtB0zrGeDczcVvQR5AFzl++kBJKpTGSPNEeNiEiNnnhU+3FGOZTDr4CosMIcFyNoCb4yD/FD96Y58YSOmvV6YHTN6f3EZJUczWpIzfrGC64nO2NND/ZWjM/2Ml29OaqdOogrSauOJk/aeS3dAfS5b4pjh6glxbcTg0loNMRorFs/GYJwa95KFpLqqQEDUlmob1pp89AF4dBuJkpODutn+7FwU8i4VnlMUbDXGVvZXO4u1vH0ffaBKnvd8CxldfzqfGTSLABzeVnLF+lILGbxZXPK+qXxZEaYM2o6pyxJDfCnBm1T56eSJwtausdkAtxUVEcSttQIfd1WLjKztJG6+vcjlWkz4=",
+               "dataVersion":1
+            }""";
+
+    public static final String SONTARAN = """
+            {
+               "skinName":"lazarus_sontaran",
+               "value":"ewogICJ0aW1lc3RhbXAiIDogMTcyMTI0NTEyNjcwMSwKICAicHJvZmlsZUlkIiA6ICI4YmM3MjdlYThjZjA0YWUzYTI4MDVhY2YzNjRjMmQyNCIsCiAgInByb2ZpbGVOYW1lIiA6ICJub3RpbnZlbnRpdmUiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDRhNGM4ZjkyMTg2ZGY2ZWM3MTEzOWUxMGEyNzYwMjg0M2I4YWY1M2Q0N2FiMmE3NTZjOTA3OTFhNzcwNDI3ZSIKICAgIH0KICB9Cn0=",
+               "signature":"GKGp5rnLAAXIB0U3c2PG64UvSGg2JaNRNHOoTjaH1IPqfPslA0t52tI7Da7IrWoBwbneuGzRuUCmb0v5gyCp5ZXry9pgA2839040s9bv8zSn7h8So2nSEWGfqsua7WQcuVwBtDTSGSLGIgzL3UPBtjeb7g3+QmRFHjGMa/yqSDBzsNwkCjKR8i/Hk0eWNS9Ifb8sjp2cSQ5O8YMIh8VIO8K1DEm84y7NUnMAbG6vknAaKs1Oaz6vuaodSRcd2k5FaIId7pmLAkjmuXBA5aHhba6G9IijPrWbaqPKcGuIv+aAGXNXoMCN8TqTZPWy8qq/saA/VnKdfOZ2KbEn8EHV1sQ3/HxX/WIXFn+ATl9cHJYY8ZNpzWTdOTlSxXuCneU45eGNw9bbHuu2lLdTs/FWZXf5/iy6obIz/6NU9RujzoglpPrVJj5Hk/USjE8wWuFC/hDRu067NCnwi6JzKcLrElmcTCOx2288gZk8Caq8JGEylJXgMSHOVTTf96t7ZMZIZd7ipIiIl2xSaFAsmwhFDpQhsWriUsU8XX2RpaM7jUnDAN1mg6I1M30O32gV0F+I028DdkcHGFBC9eH6inZ7AmaYKkvNBn3H3/tKFvmYklWKSqkTC1VZq6P1SsTNKxb5cRUEPoOY05uQxBlj4V9K+WNhUBBwWa3VsoSMhdQBjsY=",
                "dataVersion":1
             }""";
 
@@ -87,6 +119,14 @@ public class MonsterSkins {
                "skinName":"lazarus_vashta_nerada",
                "value":"ewogICJ0aW1lc3RhbXAiIDogMTcyMTExMzg5ODc3MCwKICAicHJvZmlsZUlkIiA6ICJkZTE0MGFmM2NmMjM0ZmM0OTJiZTE3M2Y2NjA3MzViYiIsCiAgInByb2ZpbGVOYW1lIiA6ICJTUlRlYW0iLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWIyNTA3NTU1YjVhMWMyMGQ2MjE2MzZlNTE0ZjlhNzEwZjVkNTA3ZjA4NDFjYmZhYTZiYmE3N2ZmNThjMDI2YyIKICAgIH0KICB9Cn0=",
                "signature":"cOcRmu9ci9UDJY2cZXRkKb9cNIIvbI8YUCvle+sK0xXXTV1t9PmHBB7MgnThYC8lmr4umU1MKrnIpakvstmbLE0AdbOqo2mGjWmpBV5EK8K0jChpelbZbxZmtnonu1tMXMCkr+z36PhqBlsDeim69zniN2yRnMQwgiXOMZF/jThp3MvLWUZgaHJCyI5SiijKmYoI6EBT8ksYltNTA+u5hJOvyNkkPRGmUCc/Bcoi0t42NN/ycg4kcocCBPW+ydetUvjYcLlwyzU/RKUcKDvr4lsLlkQiQHuLPMpVz6gnC2GNRdKIFYI2oTzg/GNhJ768QUyQh7sFf+oe4pkcFFH5PsHNUCO/4tMvR/OsKO8fT5LgrDzs/HvuWIXpG+ktDYJuyVOgXvx5fm3i9h2GjYQ6k787eFFlBZGUBbmrDDcfUSgQXcGxRzuAXULNJEn+HP/iG0KFyycXBJUMkGKYPjueiQ0+chhNPUYykUkRtMe89sGQT8KrF5gMsI1DlpwljiHWDMGtuJZcgSVgsuBcycVC5NA5YZfW8pLcpbvsIa/Jjol2sU9l4SbTjHVTA8RhbhFbksSkHFUcqYfxDpzoK+bwB+EruSmZ57CO7KF9JW/YqEupzIB64B59ZtKOa30l9bW3dcc03B5ToN/dmYKzCJgPvSS6S5l3Xj12HJXBKc5yZyE=",
+               "dataVersion":1
+            }""";
+
+    public static final String WEEPING_ANGEL = """
+            {
+               "skinName":"lazarus_weeping_angel",
+               "value":"ewogICJ0aW1lc3RhbXAiIDogMTcyMTI0NTI4OTExOSwKICAicHJvZmlsZUlkIiA6ICJkMDlkOTg1NzRiNjM0ZmNiOWNiN2I5MWZhYmE4ZGIzYSIsCiAgInByb2ZpbGVOYW1lIiA6ICJEdWNrVGVsbHoiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWNkMGY4NjNiNjgyOWY3NjJiNGU4YjZmZDJjZWMyZTZhYWM1OTI3MGNhZDA3MzkyODE3Mzk0YWY3OWU4YjZkZSIKICAgIH0KICB9Cn0=",
+               "signature":"KZ2jTZsJ+NHaYM6VmlUkH6boR76bhhUJqonSL6i070M7D0mY57SvfjvIjStIc+OpVki55kmLZqzCd3dwyXw0nb06a1Mko4Dl8s3KkoumWxLUc+NjL0SpCzNJ8WzlcBajMRrmB9PKrqqmHux2QJXuWJ0soMxptEUjSDwDlHuGRzRgpTidbM1qkgAP9AmdYVS0voUBeBGxVpkUq0hF3gADCkFUXfHhD9dJQ6UgnOA1qRrtFPekBGAkZ2o7j4Xhlzy8HuUn70Rf5QIdMTGoPkO52ZvJ5X/gEss8Q4TTDkXlB6Dx4+6L5bjPoCgcxtfZwusrH6UAXZFYNrgCFEMR/c04gyxdoEPWoabH5B6mep18uU0C9w3Pr/AcFey0w6na5Oo1PLCPh2DNSPXYfw0+mQolLuFaa0mjwz/RQGIGk6XmUR5o2ROKj7ArotYv6o5SqntDFBOuYHgpHaVpH9TDN/V1MM1aZQS5TUkyWV6+AirC2fVODv7JNEMfjyKJ1ZzZ/X92ypuKiJAU1ziKnF+OWOynp5FuqwCI+IldRfca2NtbVNunB/LCfpY5TcPgcHA+URAS53waVCbRnyQfA4f2Xa5QbKdsLdGdiZ/LDc9UA2LYlc/kPcGXg4Ietm0p8p0V1Mv+brWkwyZPAWuedXCCB2f2griVe/S2AyaAqVp7Wi+6VyM=",
                "dataVersion":1
             }""";
 
