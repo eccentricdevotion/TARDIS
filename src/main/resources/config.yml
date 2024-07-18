@@ -108,6 +108,7 @@ eye_of_harmony:
 # general preferences
 # https://tardis.pages.dev/configuration/prefs
 preferences:
+  clean: true
   update:
     notify: true
     auto_update: false

@@ -96,6 +96,7 @@ import me.eccentric_nz.TARDIS.travel.save.TARDISSavesPlanetListener;
 import me.eccentric_nz.TARDIS.universaltranslator.TARDISTranslateChatListener;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateListener;
 import me.eccentric_nz.TARDIS.upgrades.TARDISSystemTreeListener;
+import me.eccentric_nz.TARDIS.utility.ChunkCleanListener;
 import me.eccentric_nz.tardischemistry.block.ChemistryBlockListener;
 import me.eccentric_nz.tardischemistry.compound.CompoundGUIListener;
 import me.eccentric_nz.tardischemistry.compound.GlueListener;
@@ -138,6 +139,9 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISEditAreasGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockBreakListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockPlaceListener(plugin), plugin);
+        if (plugin.getConfig().getBoolean("preferences.clean")) {
+            plugin.getPM().registerEvents(new ChunkCleanListener(plugin), plugin);
+        }
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
             plugin.getPM().registerEvents(new TARDISPoliceBoxDoorListener(plugin), plugin);
             if (plugin.getConfig().getBoolean("preferences.open_door_policy")) {
