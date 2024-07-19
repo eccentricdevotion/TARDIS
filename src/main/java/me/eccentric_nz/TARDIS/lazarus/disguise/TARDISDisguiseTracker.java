@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.lazarus.disguise;
 
-import com.mojang.authlib.properties.PropertyMap;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,23 +28,4 @@ public class TARDISDisguiseTracker {
     public static final HashMap<UUID, TARDISDisguise> DISGUISED_ARMOR_STANDS = new HashMap<>();
     public static final HashMap<UUID, TARDISDisguise> DISGUISED_AS_MOB = new HashMap<>();
     public static final HashMap<UUID, String> ARCHED = new HashMap<>();
-
-    public static class ProfileData {
-
-        PropertyMap properties;
-        String name;
-
-        public ProfileData(PropertyMap properties, String name) {
-            this.properties = properties;
-            this.name = name;
-        }
-
-        public PropertyMap getProperties() {
-            return properties;
-        }
-
-        public String getName() {
-            return name;
-        }
-    }
 }
