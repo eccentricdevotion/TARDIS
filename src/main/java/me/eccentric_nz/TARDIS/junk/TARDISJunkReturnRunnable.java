@@ -30,7 +30,7 @@ public class TARDISJunkReturnRunnable implements Runnable {
 
     public TARDISJunkReturnRunnable(TARDIS plugin) {
         this.plugin = plugin;
-        waitTime = this.plugin.getConfig().getLong("junk.return") * 1000;
+        waitTime = (this.plugin.getConfig().getLong("junk.return") * 1000) + 30000;
     }
 
     @Override

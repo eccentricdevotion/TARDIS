@@ -88,13 +88,19 @@ public class TARDISSysUpsUpdater {
             i++;
         }
         // add comments
-        for (Map.Entry<String, List<String>> entry : comments.entrySet()) {
-            plugin.getConfig().setComments(entry.getKey(), entry.getValue());
-            i++;
+        if (system_upgrades_config.getInlineComments("feature").isEmpty()) {
+            for (Map.Entry<String, List<String>> entry : comments.entrySet()) {
+                plugin.getConfig().setComments(entry.getKey(), entry.getValue());
+                i++;
+            }
+        } else {
+            for (String s : system_upgrades_config.getComments("feature")) {
+                plugin.debug("'" + s + "'");
+            }
         }
         try {
-            system_upgrades_config.save(new File(plugin.getDataFolder(), "system_upgrades.yml"));
             if (i > 0) {
+                system_upgrades_config.save(new File(plugin.getDataFolder(), "system_upgrades.yml"));
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + i + " new items to system_upgrades.yml");
             }
         } catch (IOException io) {
