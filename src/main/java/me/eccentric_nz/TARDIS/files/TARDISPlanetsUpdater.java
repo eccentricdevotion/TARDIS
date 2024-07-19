@@ -68,6 +68,14 @@ public class TARDISPlanetsUpdater {
             }
             plugin.getConfig().set("worlds", null);
             plugin.saveConfig();
+            // check there is a gamemode config option for all worlds
+            for (String g : planets_config.getConfigurationSection("planets").getKeys(false)) {
+                if (!planets_config.contains("planets." + g + ".gamemode")) {
+                    TARDISPlanetData data = plugin.getTardisHelper().getLevelData(g);
+                    planets_config.set("planets." + g + ".gamemode", data.getGameMode().toString());
+                    save++;
+                }
+            }
             if (!planets_config.contains("planets.TARDIS_Zero_Room")) {
                 planets_config.set("planets.TARDIS_Zero_Room.enabled", false);
                 planets_config.set("planets.TARDIS_Zero_Room.time_travel", false);
