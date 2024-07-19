@@ -49,7 +49,7 @@ public class TARDISSysUpsUpdater {
         comments.put("feature", List.of("feature branch"));
         comments.put("tools", List.of("tools branch"));
         comments.put("navigation", List.of("navigation branch"));
-        comments.put("throttle", List.of("# throttle branch"));
+        comments.put("throttle", List.of("throttle branch"));
 
     }
 
@@ -88,13 +88,16 @@ public class TARDISSysUpsUpdater {
             i++;
         }
         // add comments
-        for (Map.Entry<String, List<String>> entry : comments.entrySet()) {
-            plugin.getConfig().setComments(entry.getKey(), entry.getValue());
-            i++;
+        List<String> feature = system_upgrades_config.getComments("feature");
+        if (feature.isEmpty()) {
+            for (Map.Entry<String, List<String>> entry : comments.entrySet()) {
+                system_upgrades_config.setComments(entry.getKey(), entry.getValue());
+                i++;
+            }
         }
         try {
-            system_upgrades_config.save(new File(plugin.getDataFolder(), "system_upgrades.yml"));
             if (i > 0) {
+                system_upgrades_config.save(new File(plugin.getDataFolder(), "system_upgrades.yml"));
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Added " + i + " new items to system_upgrades.yml");
             }
         } catch (IOException io) {
