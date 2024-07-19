@@ -77,7 +77,7 @@ public class TARDISDisguiseListener implements Listener {
         if (!plugin.getServer().getPluginManager().isPluginEnabled("LibsDisguises")) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 TARDISDisguiser.disguiseToPlayer(player, world);
-                TARDISEPSDisguiser.disguiseToPlayer(player, world);
+//                TARDISEPSDisguiser.disguiseToPlayer(player, world);
                 TARDISArmourStandDisguiser.disguiseToPlayer(player, world);
             }, 5L);
         }

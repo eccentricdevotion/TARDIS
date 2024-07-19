@@ -16,19 +16,21 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
+import me.eccentric_nz.TARDIS.lazarus.disguise.npc.EmergencyProgramOneSpawner;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.command.CommandException;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Emergency Programme One was a feature of the Doctor's TARDIS designed to return a companion to a designated place in
@@ -75,26 +77,26 @@ public class TARDISEPSRunnable implements Runnable {
 
     @Override
     public void run() {
-        Location l = getSpawnLocation(id);
-        if (l != null) {
+        Location location = getSpawnLocation(id);
+        if (location != null) {
             try {
-                TARDISSounds.playTARDISSound(l, "tardis_takeoff");
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> TARDISSounds.playTARDISSound(l, "tardis_land"), 490L);
+                TARDISSounds.playTARDISSound(location, "tardis_takeoff");
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> TARDISSounds.playTARDISSound(location, "tardis_land"), 490L);
                 plugin.setTardisSpawn(true);
                 // set yaw if npc spawn location has been changed
                 if (!eps.isEmpty()) {
                     String[] creep = creeper.split(":");
                     double cx = TARDISNumberParsers.parseDouble(creep[1]);
                     double cz = TARDISNumberParsers.parseDouble(creep[3]);
-                    float yaw = getCorrectYaw(cx, cz, l.getX(), l.getZ());
-                    l.setYaw(yaw);
+                    float yaw = getCorrectYaw(cx, cz, location.getX(), location.getZ());
+                    location.setYaw(yaw);
                 }
                 // create NPC
-                int npcID = plugin.getTardisHelper().spawnEmergencyProgrammeOne(tl, l);
+                int npcID = new EmergencyProgramOneSpawner(tl, location).create();
                 players.forEach((p) -> {
                     Player pp = plugin.getServer().getPlayer(p);
                     if (pp != null) {
-                        plugin.getMessenger().message(pp, TardisModule.EMERGENCY_PROGRAM + message);
+                        plugin.getMessenger().message(pp, TardisModule.EMERGENCY_PROGRAM, message);
                     }
                 });
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -104,7 +106,7 @@ public class TARDISEPSRunnable implements Runnable {
                             plugin.getMessenger().message(pp, TardisModule.EMERGENCY_PROGRAM, plugin.getLanguage().getString("EP1_BYE"));
                         }
                     });
-                    plugin.getTardisHelper().removeNPC(npcID, l.getWorld());
+                    plugin.getTardisHelper().removeNPC(npcID, location.getWorld());
                 }, 1000L);
             } catch (CommandException e) {
                 plugin.debug(e.getMessage());

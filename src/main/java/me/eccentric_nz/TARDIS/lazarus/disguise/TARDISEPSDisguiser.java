@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.lazarus.disguise;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.network.protocol.game.*;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ClientInformation;
+import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
@@ -35,6 +37,7 @@ import org.bukkit.craftbukkit.v1_21_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public class TARDISEPSDisguiser {
@@ -46,19 +49,19 @@ public class TARDISEPSDisguiser {
     public TARDISEPSDisguiser(Player player, Location location) {
         this.player = player;
         this.location = location;
-        disguiseStand();
+        disguiseNPC();
     }
 
     public static void disguiseToPlayer(Player player, World world) {
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         ServerLevel nmsWorld = ((CraftWorld) world).getHandle();
         for (Map.Entry<Integer, UUID> map : TARDISDisguiseTracker.DISGUISED_NPCS.entrySet()) {
-            Entity stand = nmsWorld.getEntity(map.getKey());
-            if (stand != null && stand.level().getWorld() == world) {
+            Entity tracked = nmsWorld.getEntity(map.getKey());
+            if (tracked != null && tracked.level().getWorld() == world) {
                 ServerPlayer entityPlayer = ((CraftPlayer) Bukkit.getOfflinePlayer(map.getValue())).getHandle();
-                ServerPlayer npc = new ServerPlayer(server, nmsWorld, entityPlayer.getGameProfile(), null);
+                ServerPlayer npc = new ServerPlayer(server, nmsWorld, entityPlayer.getGameProfile(), ClientInformation.createDefault());
                 // set location
-                setEntityLocation(npc, new Location(world, stand.getX(), stand.getY(), stand.getZ()));
+                setEntityLocation(npc, new Location(world, tracked.getX(), tracked.getY(), tracked.getZ()));
                 // send packets
                 ClientboundPlayerInfoUpdatePacket packetPlayOutPlayerInfo = new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, npc);
                 ClientboundAddEntityPacket packetPlayOutNamedEntitySpawn = new ClientboundAddEntityPacket(npc, 0, npc.blockPosition());
@@ -97,12 +100,12 @@ public class TARDISEPSDisguiser {
         }
     }
 
-    public void disguiseStand() {
+    public void disguiseNPC() {
         ServerPlayer entityPlayer = ((CraftPlayer) player).getHandle();
         // set skin
         MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
         ServerLevel world = ((CraftWorld) location.getWorld()).getHandle();
-        npc = new ServerPlayer(server, world, entityPlayer.getGameProfile(), null);
+        npc = new ServerPlayer(server, world, entityPlayer.getGameProfile(), ClientInformation.createDefault());
         // set location
         setEntityLocation(npc, location);
         // get Player equipment
@@ -123,17 +126,19 @@ public class TARDISEPSDisguiser {
 
     public int showToAll() {
         TARDISDisguiseTracker.DISGUISED_NPCS.put(npc.getId(), player.getUniqueId());
-        ClientboundPlayerInfoUpdatePacket packetPlayOutPlayerInfo = new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, npc);
-        ClientboundAddEntityPacket packetPlayOutNamedEntitySpawn = new ClientboundAddEntityPacket(npc, 0, npc.blockPosition());
+        ServerEntity npcServerEntity = new ServerEntity(npc.serverLevel(), npc, 0, false, packet -> {
+        }, Set.of());
+        ClientboundAddEntityPacket packetPlayOutNamedEntitySpawn = new ClientboundAddEntityPacket(npc, npcServerEntity);
         ClientboundRotateHeadPacket packetPlayOutEntityHeadRotation = new ClientboundRotateHeadPacket(npc, (byte) npc.getYRot());
         ClientboundPlayerLookAtPacket packetPlayOutEntityLook = new ClientboundPlayerLookAtPacket(EntityAnchorArgument.Anchor.FEET, npc.blockPosition().getX(), npc.blockPosition().getY(), npc.blockPosition().getZ());
+        ClientboundPlayerInfoUpdatePacket packetPlayOutPlayerInfo = new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, npc);
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.getWorld() == location.getWorld()) {
                 ServerGamePacketListenerImpl connection = ((CraftPlayer) p).getHandle().connection;
-                connection.send(packetPlayOutPlayerInfo);
                 connection.send(packetPlayOutNamedEntitySpawn);
                 connection.send(packetPlayOutEntityHeadRotation);
                 connection.send(packetPlayOutEntityLook);
+                connection.send(packetPlayOutPlayerInfo);
             }
         }
         return npc.getId();
