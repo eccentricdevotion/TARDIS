@@ -42,7 +42,7 @@ public enum SystemTree {
     FORCE_FIELD(1006, 38, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "to have a monster", "repelling force field."), "FEATURE", "feature"),
 //    QUESTION(1005, 47, Material.LIME_GLAZED_TERRACOTTA, List.of("Don't know", "what this is yet."), "FEATURE", "feature"),
     NAVIGATION(1002, 15, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the", "navigation branch."), "UPGRADE_TREE", "branch"),
-    DISTANCE_1(1004, 24, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 2x", "distance multiplier."), "SAVES", "navigation"),
+    DISTANCE_1(1004, 24, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 2x", "distance multiplier."), "NAVIGATION", "navigation"),
     DISTANCE_2(1004, 33, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 3x", "distance multiplier."), "DISTANCE_1", "navigation"),
     DISTANCE_3(1004, 42, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 4x", "distance multiplier."), "DISTANCE_2", "navigation"),
     INTER_DIMENSIONAL_TRAVEL(1005, 51, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks travel to", "the Nether and End."), "DISTANCE_3", "navigation"),
