@@ -65,6 +65,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "dismount", "displayitem",
             "effect",
             "frame", "furnace",
+            "gravity",
             "interaction",
             "label", "list",
             "nms",
@@ -103,6 +104,12 @@ public class TARDISDevCommand implements CommandExecutor {
                         }
                         case "furnace" -> {
                             return new TARDISFurnaceCommand(plugin).list(sender);
+                        }
+                        case "gravity" -> {
+                            if (sender instanceof Player player) {
+                                player.setGravity(!player.hasGravity());
+                            }
+                            return true;
                         }
                         case "interaction" -> {
                             if (sender instanceof Player player) {
@@ -230,6 +237,7 @@ public class TARDISDevCommand implements CommandExecutor {
                                 }
                             } else {
                                 SkinUtils.debug(player);
+                                SkinUtils.setSkinModel(player, true);
                             }
                         }
                         return true;
