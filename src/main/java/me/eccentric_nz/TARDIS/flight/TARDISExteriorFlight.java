@@ -156,40 +156,43 @@ public class TARDISExteriorFlight {
         plugin.getMessenger().sendStatus(player, "HANDBRAKE_OFF");
         plugin.getTrackerKeeper().getInVortex().add(id);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            // teleport player to exterior
+            // set no gravity to player so that they don't fall out of a floating Police Box
             player.setGravity(false);
+            // teleport player to exterior
             player.teleport(current.clone().add(0.5, 0.25, 0.5));
-            // get the armour stand
-            for (Entity e : current.getWorld().getNearbyEntities(current, 1, 1, 1, (s) -> s.getType() == EntityType.ARMOR_STAND)) {
-                if (e instanceof ArmorStand stand) {
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(plugin, stand, player, pandorica), 5L, 3L);
-                        int sound = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> TARDISSounds.playTARDISSound(player.getLocation(), "time_rotor_flying", 4f), 5L, 33L);
-                        player.getPersistentDataContainer().set(plugin.getLoopKey(), PersistentDataType.INTEGER, sound);
-                        // spawn a chicken
-                        LivingEntity chicken = new MonsterSpawner().create(stand.getLocation(), Monster.FLYER);
-                        chicken.setGravity(false);
-                        stand.addPassenger(player);
-                        stand.setGravity(false);
-                        chicken.addPassenger(stand);
-                        chicken.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
-                        chicken.setSilent(true);
-                        chicken.setInvulnerable(true);
-                        chicken.setNoDamageTicks(Integer.MAX_VALUE);
-                        chicken.setFireTicks(0);
-                        // remove the light
-                        current.getBlock().getRelative(BlockFace.UP, 2).setBlockData(TARDISConstants.AIR);
-                        // save player's current location, so we can teleport them back to it when they finish flying
-                        plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(id, interior, sound, animation, chicken.getUniqueId(), stand.getUniqueId()));
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                // get the armour stand
+                for (Entity e : current.getWorld().getNearbyEntities(current, 1.5d, 1.5d, 1.5d, (s) -> s.getType() == EntityType.ARMOR_STAND)) {
+                    if (e instanceof ArmorStand stand) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            player.setGravity(true);
-                            chicken.setGravity(true);
-                        }, 1L);
-                    }, 2L);
-                    break;
+                            int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(plugin, stand, player, pandorica), 5L, 3L);
+                            int sound = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> TARDISSounds.playTARDISSound(player.getLocation(), "time_rotor_flying", 4f), 5L, 33L);
+                            player.getPersistentDataContainer().set(plugin.getLoopKey(), PersistentDataType.INTEGER, sound);
+                            // spawn a chicken
+                            LivingEntity chicken = new MonsterSpawner().create(stand.getLocation(), Monster.FLYER);
+                            chicken.setGravity(false);
+                            stand.addPassenger(player);
+                            stand.setGravity(false);
+                            chicken.addPassenger(stand);
+                            chicken.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
+                            chicken.setSilent(true);
+                            chicken.setInvulnerable(true);
+                            chicken.setNoDamageTicks(Integer.MAX_VALUE);
+                            chicken.setFireTicks(0);
+                            // remove the light
+                            current.getBlock().getRelative(BlockFace.UP, 2).setBlockData(TARDISConstants.AIR);
+                            // save player's current location, so we can teleport them back to it when they finish flying
+                            plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(id, interior, sound, animation, chicken.getUniqueId(), stand.getUniqueId()));
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                player.setGravity(true);
+                                chicken.setGravity(true);
+                            }, 1L);
+                        }, 5L);
+                        break;
+                    }
                 }
-            }
-        }, 2L);
+            }, 3L);
+        }, 5L);
         // check protected blocks - if block has data stored then put the block back!
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);

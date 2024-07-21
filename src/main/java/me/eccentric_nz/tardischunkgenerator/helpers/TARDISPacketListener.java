@@ -132,7 +132,7 @@ public class TARDISPacketListener {
                                     ArmorStand as = (ArmorStand) stand;
                                     // teleport player back to the TARDIS interior
                                     new TARDISExteriorFlight(TARDIS.plugin).stopFlying(player, as);
-                                });
+                                }, 3L);
                             }
                         }
                     }
