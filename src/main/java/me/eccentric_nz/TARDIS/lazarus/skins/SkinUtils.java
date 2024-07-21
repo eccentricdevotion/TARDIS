@@ -5,10 +5,12 @@ import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.regeneration.SkinChanger;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.craftbukkit.v1_21_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class SkinUtils {
@@ -37,22 +39,28 @@ public class SkinUtils {
         String decodedValue = new String(Base64.getDecoder().decode(base64));
         JsonObject json = JsonParser.parseString(decodedValue).getAsJsonObject();
         JsonObject textures = json.getAsJsonObject("textures");
+        JsonObject skin = textures.get("SKIN").getAsJsonObject();
         if (slim) {
             JsonObject metadata = new JsonObject();
             metadata.addProperty("model", "slim");
-            JsonObject skin = textures.get("SKIN").getAsJsonObject();
             // add metadata property
             skin.add("metadata", metadata);
-            String value = skin.getAsString();
-            // TODO base64-encode value?
-            // will the signature change if a new property is added to the textures object?
-            String signature = textures.get("signature").getAsString();
-            profile.getProperties().removeAll("textures");
-            profile.getProperties().put("textures", new Property("textures", value, signature));
         } else {
+            skin.remove("metadata");
             // remove metadata object
             // probably don't need to set this when skin is removed as the SkinChanger#remove implementation will reset the textures
         }
+        textures.add("SKIN", skin);
+        json.add("textures", textures);
+        String value = json.toString();
+        TARDIS.plugin.debug(value);
+        String encoded = Base64.getEncoder().encodeToString(value.getBytes(StandardCharsets.UTF_8));
+        // will the signature change if a new property is added to the textures object?
+        String signature = textures.get("signature").getAsString();
+        profile.getProperties().removeAll("textures");
+        profile.getProperties().put("textures", new Property("textures", encoded, signature));
+        // set profile back to player
+        SkinChanger.setPlayerProfile(((CraftPlayer) player), profile);
     }
 
     public static void debug(Player player) {
@@ -76,6 +84,6 @@ public class SkinUtils {
             }
           }
         }
-         */
+        */
     }
 }

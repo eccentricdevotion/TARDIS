@@ -1,6 +1,6 @@
 package me.eccentric_nz.TARDIS.lazarus.skins;
 
-public class ChraracterSkins {
+public class CharacterSkins {
 
     public static final String BANNAKAFFALATTA = """
             {
@@ -23,6 +23,14 @@ public class ChraracterSkins {
                "skinName":"lazarus_captain_jack_harkness",
                "value":"ewogICJ0aW1lc3RhbXAiIDogMTcyMTI0NDg4MDA4NywKICAicHJvZmlsZUlkIiA6ICIzOThiZGM3NWVhYzQ0ZjMzYWEyMDBiMTYyNTRmMDhlOSIsCiAgInByb2ZpbGVOYW1lIiA6ICJJa2h3YW4wNTEwIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlL2FhY2E5ZTNmYWYzOTRmZjVjNzkzNjNmZDE2ZTBiZWU5NjQ3YjE3ODk5MWY1ZTlmNjA5ZWZlMzlkZGE3MDkwOWYiCiAgICB9CiAgfQp9",
                "signature":"sK6Jock3KhWM6uUSkFoo0u324os8aXc+SFRJsKb1WgKPOBJzTaCuiMm26rp1hM5cvApJ2KI73uvx6Z17sjEJCrd/WSPp3ERaCCHT8hD0ZXf3S+E3SJI4S+86vM1hZTdjJamllm0jK7W74gYXr+Ab/eF/NmvfC0+pMiiMEH3wrVf91l1qlkKm7sDTzJsdM7pJ+3pP5dXAykXnur5QJt4qy33LE8nuZPisC8EA15aURsQuUgxPCCHdFKZdbYVf2Duwyf6F9/mppzUWOCQNp0Rx6Nb0ORgLUVjLir4UjK2OR1ooOJjrdGMkfd31fBHlPOYRpWtT90uVz7xFiy4i5WiZwTqXvwFQ6jrl1/epc/RQBt4dxioskgLpDP5fYKPxQ9Z6/I1JR62nJwVnE+4pGh8oAdKbzt2/wVVQZfItEDTGIuXPlB61todG5o2uw6cL68MFNkOhWfIDyiYcFdPbge9FXqGQKhTaKWjQksxt5T32Wa/SJmuWAYdmiZK51KfwYwRe5SkX78wcz/UMyo9m1aBBUyTDK/UwNjoXMGjQ1frmWT85eJroWutnmfqOk6chB73MSrh6oEmIn0KCbxa3CgcmGNe/M2l8+SLNVkPnrqjgLgbHRaet+q/+tInGlZvStRujpJllCseS46SJu6XyHAW+ovgs23aXXTDDURf4I3K3QKs=",
+               "dataVersion":1
+            }""";
+
+    public static final String IMPOSSIBLE_ASTRONAUT = """
+            {
+               "skinName":"lazarus_impossible_astronaut",
+               "value":"ewogICJ0aW1lc3RhbXAiIDogMTcyMTA4OTA5NTAzMywKICAicHJvZmlsZUlkIiA6ICJiZmMyODE3ZWRhZWM0OWY5YTVmMWVkNTdjODZhMGFjOSIsCiAgInByb2ZpbGVOYW1lIiA6ICJFYm95UmV6YSIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS9lMTBlNjExOTNlNzI1ZGQ2MWU5NDMxZjk5ZWYxMjNiODRmNmM3NzI5OWNlY2UyZmRiMjNkMWE5M2IyMGM3Y2EwIgogICAgfQogIH0KfQ==",
+               "signature":"CcGrAiEQ/3VPJaAufAwDXULIJ9INJ1SzbKtZE5fcD1f6jtSAftJyTbl5z3zeSX0f28kSC4BAUIvKqRFVuygjMP/nPKPSPnfEYT2EBVyIGxzZ2I8217oFVDbBxo2MvPnNXmOmLeo/USh27AsCwN4y8ZwmPI0JEZSfpFK15BGTMbPOp3OakbwYvMydffV2jfEGioRgZLnT5yq+eiLExTprMSOMYtpIV5ksDFpiZddJzhs1N8nNHBAKthMX/HXBRecpReuV5jK5hSC8NTDIl7FtiL5vTOgjyxzhX49lEFAIJhAK+g3wkXsiNSENBaGTCX401edT5phT/PNlrLG0avGHKbnDvbgkGym+48w3GBw6RUUGi86VbfNcvcO+orE6+oCVcCB0kPzGOFfAIlElHbhaN4lDDa2xUj+AaH2VXZ3LJ97lThD1LydECLYgDdAGX85v1nYyqwpirH8RwDttif6Awa/+L5TnsUWF3mCxiZZMqDOXI5O5+1QqHi/lwMW4jTpPThNVDomF7q6+UDhqLS/CyCRNO9tPEbDfeb531s1XyU0KD57GbWuI5fvDE7pCAkuHuQp2KWc+0IdVXr2K4OmkOvm4TuF2yvEPAbm8CMQKdLnHfN5U671dpKpKblzCvlCO8TPsVF0DdxZN6ctg39JnXH53Q6gSSEYoNy3myiP4RWA=",
                "dataVersion":1
             }""";
 
