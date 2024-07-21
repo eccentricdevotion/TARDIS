@@ -107,6 +107,7 @@ public enum TARDISDescription {
     COMMUNICATOR_INFO("You can craft a communicator to talk to Handles when he is inside the TARDIS."),
     EXTERIOR_LAMP_LEVEL_SWITCH_INFO("Allows you to set the light level for the TARDIS's exterior lamp. Levels are 2, 4, 6, and 8. The Chameleon Preset must be using an armour stand model e.g. a coloured Police Box."),
     INTERIOR_LIGHT_LEVEL_SWITCH_INFO("Allows you to set the light level of the custom lights inside the TARDIS."),
+    TARDIS_TELEVISION("Allows you to change your player skin to a character for the Doctor Who universe."),
     CHARGING_SENSOR("""
             INFO: The Charging Sensor changes to a Redstone block when the TARDIS is charging.
             USAGE: Automatic.
@@ -144,7 +145,7 @@ public enum TARDISDescription {
             BLOCK: ITEM_FRAME with placed monitor frame item"""),
     RELATIVITY_DIFFERENTIATOR("""
             INFO: The Relativity Differentiator is a comparator that controls whether the TARDIS automatically enters exterior flight mode when the handbrake is released.
-            USAGE: Set the comparator to pp and powered ("subtraction mode") to engage exterior flying mode.
+            USAGE: Set the comparator to "subtraction" mode to engage exterior flying mode.
             UPDATING: /tardis update relativity-differentiator
             BLOCK: COMPARATOR"""),
     HANDLES_INFO("You can craft and place Handles - a Cyberman head from the Maldovarium Market - so that he can interact with you and the TARDIS."),

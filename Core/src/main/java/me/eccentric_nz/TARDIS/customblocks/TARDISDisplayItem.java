@@ -59,6 +59,7 @@ public enum TARDISDisplayItem {
     ROTOR(Material.HONEYCOMB_BLOCK),
     RUSTIC(Material.COPPER_BULB),
     STEAMPUNK(Material.COAL_BLOCK),
+    TELEVISION(Material.BROWN_STAINED_GLASS),
     THIRTEENTH(10001, Material.HORN_CORAL_BLOCK, null),
     TOM(Material.LAPIS_BLOCK),
     TWELFTH(Material.PRISMARINE),

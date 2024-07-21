@@ -281,6 +281,9 @@ public class TARDISInformationSystemListener implements Listener {
                 if (chat.equalsIgnoreCase("R")) {
                     processKey(p, TARDISInfoMenu.STATTENHEIM_REMOTE, plugin);
                 }
+                if (chat.equalsIgnoreCase("T")) {
+                    processKey(p, TARDISInfoMenu.TARDIS_TELEVISION, plugin);
+                }
                 if (chat.equalsIgnoreCase("u")) {
                     processKey(p, TARDISInfoMenu.ARTRON_FURNACE, plugin);
                 }
