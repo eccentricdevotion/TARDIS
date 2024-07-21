@@ -20,6 +20,10 @@ xcuserdata
 .svn
 CVS
 /target/
+/Core/target/
+/Spigot/target/
+/Paper/target/
+/Distribution/target/
 /sounds/
 /psd/
 /nbproject/
