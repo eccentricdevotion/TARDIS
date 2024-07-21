@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>TARDIS-Paper</artifactId>
-    <version>${project.parent.version}</version>
+    <version>5.7.0</version>
     <packaging>jar</packaging>
     <parent>
         <groupId>me.eccentric_nz.TARDIS</groupId>

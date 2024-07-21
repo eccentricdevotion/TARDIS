@@ -7,7 +7,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>TARDIS-Distribution</artifactId>
-  <version>${project.parent.version}</version>
+  <version>5.7.0</version>
   <build>
     <directory>../target</directory>
     <finalName>TARDIS</finalName>
