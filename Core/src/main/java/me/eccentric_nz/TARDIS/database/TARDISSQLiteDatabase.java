@@ -231,6 +231,10 @@ public class TARDISSQLiteDatabase {
             String querySiege = "CREATE TABLE IF NOT EXISTS " + prefix + "siege (siege_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', tardis_id INTEGER DEFAULT 0)";
             statement.executeUpdate(querySiege);
 
+            // Table structure for table 'skins'
+            String querySkins = "CREATE TABLE IF NOT EXISTS " + prefix + "skins (skin_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', skin TEXT DEFAULT '')";
+            statement.executeUpdate(querySkins);
+
             // Table structure for table 'sonic'
             String querySonic = "CREATE TABLE IF NOT EXISTS " + prefix + "sonic (sonic_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', activated INTEGER DEFAULT 0, bio INTEGER DEFAULT 0, diamond INTEGER DEFAULT 0, emerald INTEGER DEFAULT 0, redstone INTEGER DEFAULT 0, painter INTEGER DEFAULT 0, ignite INTEGER DEFAULT 0, arrow INTEGER DEFAULT 0, knockback INTEGER DEFAULT 0, brush INTEGER DEFAULT 0, conversion INTEGER DEFAULT 0, model INTEGER DEFAULT 10000011, sonic_uuid TEXT DEFAULT '', last_scanned TEXT DEFAULT '', scan_type INTEGER DEFAULT 0)";
             statement.executeUpdate(querySonic);

@@ -16,18 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.move;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Map;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -126,7 +127,7 @@ public class TARDISPortalPersister {
             if (counta > 0) {
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Loaded " + counta + " abandoned portals.");
             }
-            // clear the portals table so we don't get any duplicates when saving them
+            // clear the portals table, so we don't get any duplicates when saving them
             ps = connection.prepareStatement("DELETE FROM " + prefix + "portals");
             ps.executeUpdate();
             // load the players associated with the portals
@@ -137,7 +138,7 @@ public class TARDISPortalPersister {
                     plugin.getTrackerKeeper().getMover().add(UUID.fromString(rs.getString("uuid")));
                 }
             }
-            // clear the movers table so we don't get any duplicates when saving them
+            // clear the movers table, so we don't get any duplicates when saving them
             ps = connection.prepareStatement("DELETE FROM " + prefix + "movers");
             ps.executeUpdate();
         } catch (SQLException ex) {

@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.flight.FlightReturnData;
 import me.eccentric_nz.TARDIS.flight.FlyingAnimation;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
+import me.eccentric_nz.TARDIS.skins.SkinUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
@@ -190,6 +191,10 @@ public class TARDISJoinListener implements Listener {
             if (player.getLocation().getWorld().getName().equals("TARDIS_Zero_Room")) {
                 plugin.getTrackerKeeper().getZeroRoomOccupants().add(player.getUniqueId());
             }
+        }
+        // re-skin player
+        if (SkinUtils.SKINNED.containsKey(player.getUniqueId())) {
+            plugin.getSkinChanger().set(player, SkinUtils.SKINNED.get(player.getUniqueId()));
         }
         // recreate custom flying chicken if player was flying the TARDIS exterior
         if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {

@@ -64,6 +64,7 @@ public enum Table {
     seeds,
     sensors,
     siege,
+    skins,
     sonic,
     storage,
     system_upgrades("sys_id"),

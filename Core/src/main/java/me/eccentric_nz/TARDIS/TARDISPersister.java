@@ -11,6 +11,7 @@ import me.eccentric_nz.TARDIS.hads.TARDISHadsPersister;
 import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomPersister;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
+import me.eccentric_nz.TARDIS.skins.SkinPersister;
 import me.eccentric_nz.TARDIS.utility.TARDISJunkPlayerPersister;
 import me.eccentric_nz.tardisweepingangels.nms.FollowerSaver;
 
@@ -49,6 +50,8 @@ public class TARDISPersister {
         new TARDISSeedBlockPersister(plugin).load();
         // resume any room growing
         new TARDISRoomPersister(plugin).resume();
+        // load skins
+        new SkinPersister(plugin).load();
     }
 
     public void save() {
@@ -76,5 +79,7 @@ public class TARDISPersister {
         if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
             new FollowerSaver(plugin).persist();
         }
+        // save skins
+        new SkinPersister(plugin).save();
     }
 }
