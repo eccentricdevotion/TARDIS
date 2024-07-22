@@ -44,7 +44,8 @@ public class SkinFetcher {
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.connect();
             if (connection.getResponseCode() == HttpsURLConnection.HTTP_OK) {
-                JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) connection.getContent())); // convert the input stream to a json element
+                // convert the input stream to a json element
+                JsonElement root = JsonParser.parseReader(new InputStreamReader((InputStream) connection.getContent()));
                 JsonObject rootObj = root.getAsJsonObject();
                 JsonArray jsonArray = rootObj.getAsJsonArray("properties");
                 skin = jsonArray.get(0).getAsJsonObject();

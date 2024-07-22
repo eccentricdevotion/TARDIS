@@ -9,6 +9,11 @@ public class WikiLink {
         this.URL = "https://tardis.pages.dev" + URL;
     }
 
+    public WikiLink(String title, String URL, boolean skin) {
+        this.title = title;
+        this.URL = URL;
+    }
+
     public String getTitle() {
         return title;
     }

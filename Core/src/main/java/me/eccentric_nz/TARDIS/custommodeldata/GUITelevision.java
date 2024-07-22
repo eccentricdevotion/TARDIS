@@ -27,10 +27,12 @@ public record GUITelevision() {
     public static GUIData COMPANIONS = new GUIData(1001, 3, Material.BROWN_STAINED_GLASS_PANE, "Companions");
     public static GUIData CHARACTERS = new GUIData(1002, 5, Material.BROWN_STAINED_GLASS_PANE, "Characters");
     public static GUIData MONSTERS = new GUIData(1003, 7, Material.BROWN_STAINED_GLASS_PANE, "Monsters");
-    public static GUIData BACK = new GUIData(8, 25, Material.BOWL);
-    public static GUIData CLOSE = new GUIData(1, 26, Material.BOWL);
+    public static GUIData DOWNLOAD = new GUIData(157, 29, Material.REPEATER);
+    public static GUIData REMOVE = new GUIData(8, 31, Material.BUCKET);
+    public static GUIData BACK = new GUIData(8, 33, Material.BOWL);
+    public static GUIData CLOSE = new GUIData(1, 35, Material.BOWL);
 
     public static List<GUIData> values() {
-        return List.of(DOCTORS, COMPANIONS, CHARACTERS, MONSTERS, CLOSE);
+        return List.of(DOCTORS, COMPANIONS, CHARACTERS, MONSTERS, REMOVE, CLOSE);
     }
 }

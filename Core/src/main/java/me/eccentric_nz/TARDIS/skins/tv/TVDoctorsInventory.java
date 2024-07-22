@@ -1,19 +1,16 @@
 package me.eccentric_nz.TARDIS.skins.tv;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUITelevision;
 import me.eccentric_nz.TARDIS.skins.DoctorSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
 import me.eccentric_nz.TARDIS.skins.SkinUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.profile.PlayerProfile;
 
 import java.util.List;
 
-public class TVDoctorsInventory {
+public class TVDoctorsInventory extends TVGUI {
 
     private final ItemStack[] menu;
 
@@ -27,7 +24,7 @@ public class TVDoctorsInventory {
      * @return an Array of item stacks (an inventory)
      */
     private ItemStack[] getItemStack() {
-        ItemStack[] stack = new ItemStack[27];
+        ItemStack[] stack = new ItemStack[36];
         int i = 0;
         if (PlayerHeadCache.DOCTORS.isEmpty()) {
             for (Skin doctor : DoctorSkins.DOCTORS) {
@@ -50,6 +47,22 @@ public class TVDoctorsInventory {
                 i++;
             }
         }
+        addDefaults(stack);
+        /*
+        // download
+        ItemStack down = new ItemStack(GUITelevision.DOWNLOAD.material(), 1);
+        ItemMeta load = down.getItemMeta();
+        load.setDisplayName("Toggle skin download");
+        load.setCustomModelData(GUITelevision.DOWNLOAD.customModelData());
+        down.setItemMeta(load);
+        stack[GUITelevision.DOWNLOAD.slot()] = down;
+        // remove
+        ItemStack remove = new ItemStack(GUITelevision.REMOVE.material(), 1);
+        ItemMeta rim = remove.getItemMeta();
+        rim.setDisplayName("Remove skin");
+        rim.setCustomModelData(GUITelevision.REMOVE.customModelData());
+        remove.setItemMeta(rim);
+        stack[GUITelevision.REMOVE.slot()] = remove;
         // back
         ItemStack back = new ItemStack(GUITelevision.BACK.material(), 1);
         ItemMeta but = back.getItemMeta();
@@ -64,6 +77,7 @@ public class TVDoctorsInventory {
         close_im.setCustomModelData(GUITelevision.CLOSE.customModelData());
         close.setItemMeta(close_im);
         stack[GUITelevision.CLOSE.slot()] = close;
+         */
         return stack;
     }
 

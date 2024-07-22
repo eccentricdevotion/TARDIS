@@ -17,7 +17,7 @@ public class TelevisionAction {
 
     public void openGUI(Player player) {
         ItemStack[] items = new TVInventory().getMenu();
-        Inventory tvinv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS Television");
+        Inventory tvinv = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "TARDIS Television");
         tvinv.setContents(items);
         player.openInventory(tvinv);
     }

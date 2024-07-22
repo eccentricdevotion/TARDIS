@@ -19,7 +19,7 @@ public class TVInventory {
      * @return an Array of item stacks (an inventory)
      */
     private ItemStack[] getItemStack() {
-        ItemStack[] stack = new ItemStack[27];
+        ItemStack[] stack = new ItemStack[36];
         /*
         Doctors,
         Companions,

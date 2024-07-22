@@ -139,10 +139,10 @@ public class TARDISMenuListener implements Listener {
         map.put(ChatColor.DARK_RED + "TARDIS Shell Loader", 54);
         map.put(ChatColor.DARK_RED + "TARDIS System Upgrades", 54);
         map.put(ChatColor.DARK_RED + "TARDIS Telepathic Circuit", 54);
-        map.put(ChatColor.DARK_RED + "TARDIS Television", 27);
-        map.put(ChatColor.DARK_RED + "Doctor Skins", 27);
-        map.put(ChatColor.DARK_RED + "Companion Skins", 27);
-        map.put(ChatColor.DARK_RED + "Character Skins", 27);
+        map.put(ChatColor.DARK_RED + "TARDIS Television", 36);
+        map.put(ChatColor.DARK_RED + "Doctor Skins", 36);
+        map.put(ChatColor.DARK_RED + "Companion Skins", 36);
+        map.put(ChatColor.DARK_RED + "Character Skins", 36);
         map.put(ChatColor.DARK_RED + "Monster Skins", 27);
         map.put(ChatColor.DARK_RED + "TARDIS Upgrade Menu", 54);
         map.put(ChatColor.DARK_RED + "TARDIS Wall & Floor Menu", 90);
