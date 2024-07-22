@@ -1,4 +1,4 @@
-package me.eccentric_nz.TARDIS.spigot;/*
+/*
  * Copyright (C) 2024 eccentric_nz
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,6 +14,7 @@ package me.eccentric_nz.TARDIS.spigot;/*
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+package me.eccentric_nz.TARDIS.spigot;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;

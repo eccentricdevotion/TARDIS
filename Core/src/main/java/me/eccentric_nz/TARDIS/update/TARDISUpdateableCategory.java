@@ -16,13 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.update;
 
-
 public enum TARDISUpdateableCategory {
 
     CONTROLS("#55FF55", "TARDIS Controls"),
     INTERFACES("#FF5555", "TARDIS User Interfaces"),
     LOCATIONS("#55FFFF", "TARDIS Internal Spawn Locations"),
-
     SENSORS("#5555FF", "TARDIS Sensors"),
     OTHERS("#FF55FF", "Others");
 

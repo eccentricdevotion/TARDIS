@@ -77,8 +77,8 @@ public enum Control {
     SCREEN(51, "screen", true, false),
     JUNK_FIND(52, "", true, false),
     EYE(53, "", true, false),
-    EYE_STORAGE(54, "", true, false);
-
+    EYE_STORAGE(54, "", true, false),
+    TELEVISION(55, "television", false, false);
 
     private static final HashMap<String, Integer> UPDATE_CONTROLS = new HashMap<>();
     private static final HashMap<Integer, Control> BY_ID = new HashMap<>();

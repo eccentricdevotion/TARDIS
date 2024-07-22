@@ -85,6 +85,7 @@ public enum Updateable {
     STALL(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Llama Stall room"),
     STORAGE(true, false, new RecipeChoice.MaterialChoice(Material.MUSHROOM_STEM, Material.NOTE_BLOCK, Material.BARRIER), TARDISUpdateableCategory.INTERFACES, "Disk Storage Container"),
     TELEPATHIC(true, true, new RecipeChoice.MaterialChoice(Material.DAYLIGHT_DETECTOR), TARDISUpdateableCategory.INTERFACES, "Telepathic Circuit"),
+    TELEVISION(true, false, new RecipeChoice.MaterialChoice(Material.BARRIER), TARDISUpdateableCategory.INTERFACES, "TARDIS Television"),
     TEMPORAL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "Temporal Relocation"),
     TERMINAL(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "Destination Terminal"),
     THROTTLE(true, true, new RecipeChoice.MaterialChoice(Material.REPEATER), TARDISUpdateableCategory.CONTROLS, "Space Time Throttle"),
