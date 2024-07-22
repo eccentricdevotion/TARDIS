@@ -1,14 +1,21 @@
 package me.eccentric_nz.TARDIS.skins;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import me.eccentric_nz.TARDIS.TARDIS;
 import net.minecraft.server.level.ServerPlayer;
+import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_21_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_21_R1.profile.CraftPlayerProfile;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
 
@@ -16,10 +23,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class SkinUtils {
 
+    public static final HashMap<UUID, Skin> SKINNED = new HashMap<>();
     private static final UUID uuid = UUID.fromString("622bb234-0a3e-46d7-9e1d-ed1f03c76011");
 
     public static PlayerProfile getHeadProfile(Skin skin) {
@@ -107,5 +116,142 @@ public class SkinUtils {
           }
         }
         */
+    }
+
+    public static void setExtras(Player player, Skin skin) {
+        Material material = Material.LEATHER;
+        int cmd = 5;
+        switch (skin.name()) {
+            case "Ace" -> cmd = 6;
+            case "Bannakaffalatta" -> material = Material.NETHER_WART;
+            case "Brigadier Lethbridge-Stewart" -> {}
+            case "Cyberman" -> {
+                material = Material.IRON_INGOT;
+                cmd = 6;
+                // + 7 weapon
+                ItemStack weapon = new ItemStack(material, 1);
+                ItemMeta cwim = weapon.getItemMeta();
+                cwim.setDisplayName("Cyber Weapon");
+                cwim.setCustomModelData(7);
+                weapon.setItemMeta(cwim);
+                setOrSwapItem(weapon, player, EquipmentSlot.HAND);
+            }
+            case "Cybershade" -> cmd = 13;
+            case "Dalek Sec" -> material = Material.MANGROVE_PROPAGULE;
+            case "Empty Child" -> {
+                material = Material.SUGAR;
+                // set generic scale
+                player.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(0.5d);
+            }
+            case "Ice Warrior" -> {
+                material = Material.SNOWBALL;
+                cmd = 6;
+            }
+            case "Impossible Astronaut" -> material = Material.ORANGE_STAINED_GLASS_PANE;
+            case "Jo Grant" -> cmd = 7;
+            case "Judoon" -> material = Material.YELLOW_DYE;
+            case "Martha Jones" -> cmd = 8;
+            case "Omega" -> cmd = 14;
+            case "Ood" -> material = Material.ROTTEN_FLESH;
+            case "Scarecrow" -> material = Material.WHEAT;
+            case "Sea Devil" -> material = Material.KELP;
+            case "Silence" -> {
+                material = Material.END_STONE;
+                cmd = 9;
+            }
+            case "Silurian" -> material = Material.FEATHER;
+            case "Slitheen" -> {
+                material = Material.TURTLE_EGG;
+                cmd = 6;
+                // + 7, 8 left, right claws
+                ItemStack leftClaw = new ItemStack(material, 1);
+                ItemMeta lhim = leftClaw.getItemMeta();
+                lhim.setDisplayName(skin.name());
+                lhim.setCustomModelData(7);
+                leftClaw.setItemMeta(lhim);
+                ItemStack rightClaw = new ItemStack(material, 1);
+                ItemMeta rhim = rightClaw.getItemMeta();
+                rhim.setDisplayName(skin.name());
+                rhim.setCustomModelData(8);
+                rightClaw.setItemMeta(rhim);
+                setOrSwapItem(leftClaw, player, EquipmentSlot.OFF_HAND);
+                setOrSwapItem(rightClaw, player, EquipmentSlot.HAND);
+            }
+            case "Sontaran" -> {
+                material = Material.POTATO;
+                cmd = 6;
+            }
+            case "Sutekh" -> cmd = 11;
+            case "Sycorax" -> cmd = 10;
+            case "Tegan" -> cmd = 9;
+            case "The Beast" -> cmd = 12;
+            case "Vampire of Venice" -> material = Material.COD;
+            case "Weeping Angel" -> {
+                material = Material.BRICK;
+                cmd = 6;
+            }
+            case "Zygon" -> material = Material.PAINTING;
+            default -> {
+                // return
+                return;
+            }
+        }
+        ItemStack head = new ItemStack(material, 1);
+        ItemMeta im = head.getItemMeta();
+        im.setDisplayName(skin.name());
+        im.setCustomModelData(cmd);
+        head.setItemMeta(im);
+        setOrSwapItem(head, player, EquipmentSlot.HEAD);
+    }
+
+    private static void setOrSwapItem(ItemStack item, Player player, EquipmentSlot slot) {
+        PlayerInventory inventory = player.getInventory();
+        ItemStack current = inventory.getItem(slot);
+        if (current != null && !current.getType().isAir()) {
+            HashMap<Integer, ItemStack> remainder = inventory.addItem(current);
+            if (!remainder.isEmpty()) {
+                player.getWorld().dropItem(player.getLocation(), current);
+            }
+        }
+        inventory.setItem(slot, item);
+        player.updateInventory();
+    }
+
+    public static String serializeSkin(Skin skin) {
+        Gson gson = new Gson();
+        return gson.toJson(skin);
+    }
+
+    public static Skin deserializeSkin(String json) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, Skin.class);
+    }
+
+    public static void removeExtras(Player player, Skin skin) {
+        switch (skin.name()) {
+            case "Cyberman" -> {
+                // head & main hand
+                player.getInventory().setItem(EquipmentSlot.HEAD, null);
+                player.getInventory().setItem(EquipmentSlot.HAND, null);
+            }
+            case "Empty Child" -> {
+                // head & reset generic scale
+                player.getInventory().setItem(EquipmentSlot.HEAD, null);
+                player.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(1.0d);
+            }
+            case "Slitheen" -> {
+                // head & both hands
+                player.getInventory().setItem(EquipmentSlot.HEAD, null);
+                player.getInventory().setItem(EquipmentSlot.HAND, null);
+                player.getInventory().setItem(EquipmentSlot.OFF_HAND, null);
+            }
+            case "Ace", "Bannakaffalatta", "Brigadier Lethbridge-Stewart", "Dalek Sec", "Ice Warrior", "Impossible Astronaut", "Jo Grant", "Judoon", "Martha Jones", "Omega", "Ood", "Scarecrow", "Sea Devil", "Silence", "Silurian", "Sontaran", "Sutekh", "Sycorax", "Tegan", "The Beast", "Vampire of Venice", "Weeping Angel", "Zygon" -> {
+                // just head
+                player.getInventory().setItem(EquipmentSlot.HEAD, null);
+            }
+            default -> {
+                // nothing to remove
+            }
+        }
     }
 }
