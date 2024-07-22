@@ -42,7 +42,6 @@ public class TVSkinListener extends TARDISMenuListener {
         }
         event.setCancelled(true);
         int slot = event.getRawSlot();
-        plugin.debug("onSkinMenuClick " + slot);
         if (slot < 0 || slot > 35) {
             return;
         }
