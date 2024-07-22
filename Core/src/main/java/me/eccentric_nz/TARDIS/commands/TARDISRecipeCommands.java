@@ -385,7 +385,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
             case "Sonic Screwdriver", "Server Admin Circuit", "Sonic Dock" -> {
                 return "Sonic Oscillator"; // 1967
             }
-            case "Fob Watch", "Preset Storage Disk" -> {
+            case "Fob Watch", "Preset Storage Disk", "TARDIS Television" -> {
                 return "TARDIS Chameleon Circuit"; // 1966
             }
             case "TARDIS Biome Reader", "Emerald Upgrade" -> {
