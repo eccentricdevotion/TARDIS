@@ -6,8 +6,8 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import me.eccentric_nz.TARDIS.TARDIS;
 import net.minecraft.server.level.ServerPlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_21_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_21_R1.profile.CraftPlayerProfile;
 import org.bukkit.entity.Player;
 import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
@@ -23,15 +23,18 @@ public class SkinUtils {
     private static final UUID uuid = UUID.fromString("622bb234-0a3e-46d7-9e1d-ed1f03c76011");
 
     public static PlayerProfile getHeadProfile(Skin skin) {
-        PlayerProfile profile = Bukkit.createPlayerProfile(uuid);
-        PlayerTextures textures = profile.getTextures();
+        GameProfile profile = new GameProfile(uuid, "TARDIS_Skin");
+        profile.getProperties().removeAll("textures");
+        profile.getProperties().put("textures", new Property("textures", skin.value(), skin.signature()));
+        PlayerProfile playerProfile = new CraftPlayerProfile(profile);
+        PlayerTextures textures = playerProfile.getTextures();
         PlayerTextures.SkinModel model = (skin.slim()) ? PlayerTextures.SkinModel.SLIM : PlayerTextures.SkinModel.CLASSIC;
         try {
             textures.setSkin(new URL(skin.url()), model);
         } catch (MalformedURLException e) {
             TARDIS.plugin.debug("Bad URL: " + skin.url());
         }
-        return profile;
+        return playerProfile;
     }
 
     public static boolean isAlexSkin(Player player) {
