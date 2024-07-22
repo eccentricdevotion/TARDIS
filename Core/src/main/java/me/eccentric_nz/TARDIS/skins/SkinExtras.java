@@ -3,6 +3,8 @@ package me.eccentric_nz.TARDIS.skins;
 import com.mojang.datafixers.util.Pair;
 import org.bukkit.Material;
 
+import java.util.List;
+
 public class SkinExtras {
 
     public static final Pair<Material, Integer> ACE = new Pair<>(Material.LEATHER, 6);
@@ -32,4 +34,6 @@ public class SkinExtras {
     public static final Pair<Material, Integer> VAMPIRE_OF_VENICE = new Pair<>(Material.COD, 5);
     public static final Pair<Material, Integer> WEEPING_ANGEL = new Pair<>(Material.BRICK, 6);
     public static final Pair<Material, Integer> ZYGON = new Pair<>(Material.PAINTING, 5);
+
+    public static List<Material> MATERIALS = List.of(Material.BRICK, Material.COD, Material.END_STONE, Material.FEATHER, Material.IRON_INGOT, Material.KELP, Material.LEATHER, Material.LEATHER, Material.MANGROVE_PROPAGULE, Material.NETHER_WART, Material.ORANGE_STAINED_GLASS_PANE, Material.PAINTING, Material.POTATO, Material.ROTTEN_FLESH, Material.SNOWBALL, Material.SUGAR, Material.TURTLE_EGG, Material.WHEAT, Material.YELLOW_DYE);
 }

@@ -209,17 +209,17 @@ public class TARDISStorageListener extends TARDISMenuListener {
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerDropAreaDisk(PlayerDropItemEvent event) {
-        ItemStack stack = event.getItemDrop().getItemStack();
-        if (!stack.getType().equals(Material.MUSIC_DISC_BLOCKS) || !stack.hasItemMeta()) {
+        Player player = event.getPlayer();
+        ItemStack is = event.getItemDrop().getItemStack();
+        if (!is.getType().equals(Material.MUSIC_DISC_BLOCKS) || !is.hasItemMeta()) {
             return;
         }
-        ItemMeta ims = stack.getItemMeta();
-        if (!ims.hasDisplayName() || !ims.getDisplayName().equals("Area Storage Disk")) {
+        ItemMeta im = is.getItemMeta();
+        if (im == null || !im.hasDisplayName() || !im.getDisplayName().equals("Area Storage Disk")) {
             return;
         }
         event.setCancelled(true);
-        Player p = event.getPlayer();
-        plugin.getMessenger().send(p, TardisModule.TARDIS, "ADV_NO_DROP");
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "ADV_NO_DROP");
     }
 
     private void saveCurrentStorage(Inventory inv, String column, Player p) {

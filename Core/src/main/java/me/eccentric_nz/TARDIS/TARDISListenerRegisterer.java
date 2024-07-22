@@ -87,6 +87,7 @@ import me.eccentric_nz.TARDIS.schematic.TARDISSchematicListener;
 import me.eccentric_nz.TARDIS.siegemode.TARDISBreedingListener;
 import me.eccentric_nz.TARDIS.siegemode.TARDISGrowthListener;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeListener;
+import me.eccentric_nz.TARDIS.skins.SkinListener;
 import me.eccentric_nz.TARDIS.skins.tv.TVListener;
 import me.eccentric_nz.TARDIS.skins.tv.TVSkinListener;
 import me.eccentric_nz.TARDIS.sonic.*;
@@ -302,6 +303,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISTeleportListener(plugin), plugin);
         plugin.getPM().registerEvents(new TVListener(plugin), plugin);
         plugin.getPM().registerEvents(new TVSkinListener(plugin), plugin);
+        plugin.getPM().registerEvents(new SkinListener(), plugin);
         plugin.getPM().registerEvents(new TARDISTemporalListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTemporalLocatorListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISThemeMenuListener(plugin), plugin);
