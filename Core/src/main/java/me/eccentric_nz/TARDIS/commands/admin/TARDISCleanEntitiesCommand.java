@@ -1,8 +1,10 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetChunkContainsTARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.ArmorStand;
@@ -21,8 +23,8 @@ public class TARDISCleanEntitiesCommand {
 
     public boolean checkAndRemove(CommandSender sender) {
         for (World world : plugin.getServer().getWorlds()) {
-            int i = 0;
-            int j = 0;
+            int stands = 0;
+            int interactions = 0;
             for (Entity entity : world.getEntities()) {
                 if (entity instanceof ArmorStand stand) {
                     if (stand.isInvisible() && stand.isInvulnerable()) {
@@ -38,7 +40,7 @@ public class TARDISCleanEntitiesCommand {
                             continue;
                         }
                         stand.remove();
-                        i++;
+                        stands++;
                     }
                 }
                 if (entity instanceof Interaction interaction) {
@@ -55,15 +57,30 @@ public class TARDISCleanEntitiesCommand {
                             continue;
                         }
                         interaction.remove();
-                        j++;
+                        interactions++;
                     }
                 }
             }
-            if (i > 0) {
-                plugin.getMessenger().message(sender, TardisModule.TARDIS, "Removed " + i + " armour stands in " + world.getName());
+            // set chunks to be not force loaded
+            int forced = 0;
+            for (Chunk chunk : world.getForceLoadedChunks()) {
+//                if (chunk.getPluginChunkTickets().contains(plugin)) {
+                // check if a tardis is in this chunk
+                ResultSetChunkContainsTARDIS rsc = new ResultSetChunkContainsTARDIS(plugin, world.getName(), chunk.getX() * 16, chunk.getZ() * 16);
+                if (!rsc.resultSet()) {
+                    chunk.removePluginChunkTicket(plugin);
+                    forced++;
+//                    }
+                }
             }
-            if (j > 0) {
-                plugin.getMessenger().message(sender, TardisModule.TARDIS, "Removed " + j + " interactions in " + world.getName());
+            if (stands > 0) {
+                plugin.getMessenger().message(sender, TardisModule.TARDIS, "Removed " + stands + " armour stands in " + world.getName());
+            }
+            if (interactions > 0) {
+                plugin.getMessenger().message(sender, TardisModule.TARDIS, "Removed " + interactions + " interactions in " + world.getName());
+            }
+            if (forced > 0) {
+                plugin.getMessenger().message(sender, TardisModule.TARDIS, "Removed " + forced + " force loaded chunks in " + world.getName());
             }
         }
         return true;
