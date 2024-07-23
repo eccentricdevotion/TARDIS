@@ -130,7 +130,7 @@ public class TARDISPresetBuilderFactory {
                 thisChunk.load();
             }
             if (plugin.getConfig().getBoolean("police_box.keep_chunk_force_loaded")) {
-                thisChunk.setForceLoaded(true);
+                thisChunk.addPluginChunkTicket(plugin);
             }
             if (bd.isRebuild()) {
                 bd.setThrottle(SpaceTimeThrottle.REBUILD);

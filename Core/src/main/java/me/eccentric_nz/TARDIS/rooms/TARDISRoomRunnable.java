@@ -526,7 +526,7 @@ public class TARDISRoomRunnable implements Runnable {
                 TARDISBannerSetter.setBanners(bannerblocks);
                 // remove the chunks, so they can unload as normal again
                 if (!chunkList.isEmpty()) {
-                    chunkList.forEach((ch) -> ch.setForceLoaded(false));
+                    chunkList.forEach((ch) -> ch.removePluginChunkTicket(plugin));
                 }
                 plugin.getTrackerKeeper().getRoomTasks().remove(task);
                 // cancel the task
@@ -1012,7 +1012,7 @@ public class TARDISRoomRunnable implements Runnable {
                     }
                 }
                 Chunk thisChunk = world.getChunkAt(world.getBlockAt(startx, starty, startz));
-                thisChunk.setForceLoaded(true);
+                thisChunk.addPluginChunkTicket(plugin);
                 chunkList.add(thisChunk);
                 if (!notThese.contains(type) && !type.equals(Material.MUSHROOM_STEM)) {
                     if (type.equals(Material.WATER)) {

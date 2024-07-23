@@ -131,7 +131,7 @@ class TARDISHostileDispersal {
             }
         }
         plugin.getTrackerKeeper().getDematerialising().remove(id);
-        l.getChunk().setForceLoaded(false);
+        l.getChunk().removePluginChunkTicket(plugin);
         // remove door
         plugin.getPresetDestroyer().destroyDoor(id);
         // remove torch

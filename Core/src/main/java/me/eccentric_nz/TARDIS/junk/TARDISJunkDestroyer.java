@@ -74,7 +74,7 @@ public class TARDISJunkDestroyer implements Runnable {
             if (i == 1) {
                 // set chunk not to be force loaded
                 if (plugin.getConfig().getInt("junk.return") > 0) {
-                    junkLoc.getChunk().setForceLoaded(false);
+                    junkLoc.getChunk().removePluginChunkTicket(plugin);
                 }
                 getJunkTravellers().forEach((e) -> {
                     if (e instanceof Player p) {

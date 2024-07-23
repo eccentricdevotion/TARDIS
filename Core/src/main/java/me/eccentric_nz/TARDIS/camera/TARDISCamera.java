@@ -28,7 +28,7 @@ public class TARDISCamera {
         Location playerLocation = player.getLocation();
         TARDISCameraTracker.SPECTATING.put(player.getUniqueId(), new CameraLocation(playerLocation, id, playerLocation.getChunk().isForceLoaded()));
         TARDISCameraTracker.CAMERA_IN_USE.add(id);
-        playerLocation.getChunk().setForceLoaded(true);
+        playerLocation.getChunk().addPluginChunkTicket(plugin);
         // get the TARDIS's current location
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (!rsc.resultSet()) {
@@ -61,6 +61,8 @@ public class TARDISCamera {
         UUID uuid = player.getUniqueId();
         CameraLocation data = TARDISCameraTracker.SPECTATING.get(uuid);
         if (data != null) {
+            // stop force loading chunk
+            player.getLocation().getChunk().removePluginChunkTicket(plugin);
             // reset police box model
             EntityEquipment ee = stand.getEquipment();
             ItemStack is = ee.getHelmet();
@@ -85,7 +87,11 @@ public class TARDISCamera {
             plugin.getQueryFactory().doSyncInsert("travellers", sett);
             TARDISCameraTracker.SPECTATING.remove(uuid);
             TARDISCameraTracker.CAMERA_IN_USE.remove(data.getId());
-            interior.getChunk().setForceLoaded(data.isForceLoaded());
+            if (data.isForceLoaded()) {
+                interior.getChunk().addPluginChunkTicket(plugin);
+            } else {
+                interior.getChunk().removePluginChunkTicket(plugin);
+            }
         }
     }
 }

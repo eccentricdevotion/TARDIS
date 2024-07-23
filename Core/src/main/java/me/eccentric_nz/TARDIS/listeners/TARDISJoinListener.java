@@ -151,7 +151,7 @@ public class TARDISJoinListener implements Listener {
                         while (!chunk.isLoaded()) {
                             chunk.load();
                         }
-                        chunk.setForceLoaded(true);
+                        chunk.addPluginChunkTicket(plugin);
                     }
                 }
             }

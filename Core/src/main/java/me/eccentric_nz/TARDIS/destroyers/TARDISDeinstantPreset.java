@@ -171,7 +171,7 @@ public class TARDISDeinstantPreset {
                     }
                 }
             }
-            l.getChunk().setForceLoaded(false);
+            l.getChunk().removePluginChunkTicket(plugin);
             if (sub && plugin.isWorldGuardOnServer()) {
                 // replace the block under the door if there is one
                 HashMap<String, Object> where = new HashMap<>();

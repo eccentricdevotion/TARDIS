@@ -89,7 +89,7 @@ public class TARDISJunkBuilder implements Runnable {
                 if (i == 1) {
                     // set chunk as force loaded
                     if (plugin.getConfig().getInt("junk.return") > 0) {
-                        loc.getChunk().setForceLoaded(true);
+                        loc.getChunk().addPluginChunkTicket(plugin);
                     }
                     // get wall and floor prefs
                     Material floor_type;
