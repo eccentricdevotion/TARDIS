@@ -235,8 +235,8 @@ public class QueryFactory {
      * @param type     the type of sensor to insert.
      * @param location the string location of the sensor
      */
-    public void insertSensor(int id, String type, String location) {
-        TARDISSQLInsertSensor sensor = new TARDISSQLInsertSensor(plugin, id, type, location);
+    public void upsertSensor(int id, String type, String location) {
+        TARDISSQLUpsertSensor sensor = new TARDISSQLUpsertSensor(plugin, id, type, location);
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, sensor);
     }
 

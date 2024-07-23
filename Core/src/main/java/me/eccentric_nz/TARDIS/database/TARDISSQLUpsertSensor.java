@@ -26,7 +26,7 @@ import java.sql.Statement;
 /**
  * @author eccentric_nz
  */
-class TARDISSQLInsertSensor implements Runnable {
+class TARDISSQLUpsertSensor implements Runnable {
 
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
@@ -45,7 +45,7 @@ class TARDISSQLInsertSensor implements Runnable {
      * @param type     the type of sensor to insert
      * @param location the location of the sensor
      */
-    TARDISSQLInsertSensor(TARDIS plugin, int id, String type, String location) {
+    TARDISSQLUpsertSensor(TARDIS plugin, int id, String type, String location) {
         this.plugin = plugin;
         this.id = id;
         this.type = type;
