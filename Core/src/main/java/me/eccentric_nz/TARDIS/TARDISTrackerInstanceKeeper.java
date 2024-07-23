@@ -155,6 +155,7 @@ public class TARDISTrackerInstanceKeeper {
     private final Set<UUID> sonicDoors = new HashSet<>();
     private final Set<UUID> sonicDoorToggle = new HashSet<>();
     private final Set<UUID> spectacleWearers = new HashSet<>();
+    private final Set<UUID> stillFlyingNotReturning = new HashSet<>();
     private final Set<UUID> temporallyLocated = new HashSet<>();
     private final Set<UUID> zeroRoomOccupants = new HashSet<>();
     private String immortalityGate = "";
@@ -1127,5 +1128,9 @@ public class TARDISTrackerInstanceKeeper {
 
     public HashMap<Integer, Integer> getShriekers() {
         return shriekers;
+    }
+
+    public Set<UUID> getStillFlyingNotReturning() {
+        return stillFlyingNotReturning;
     }
 }

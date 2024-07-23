@@ -61,8 +61,8 @@ public class TARDISExteriorFlight {
         if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
             player.removePotionEffect(PotionEffectType.INVISIBILITY);
         }
-        plugin.getTrackerKeeper().getHiddenFlight().remove(player.getUniqueId());
         UUID uuid = player.getUniqueId();
+        plugin.getTrackerKeeper().getHiddenFlight().remove(uuid);
         Location location = stand.getLocation();
         String direction = player.getFacing().getOppositeFace().toString();
         FlightReturnData data = plugin.getTrackerKeeper().getFlyingReturnLocation().get(uuid);
@@ -155,6 +155,8 @@ public class TARDISExteriorFlight {
         plugin.getQueryFactory().doUpdate("tardis", set, whereh);
         plugin.getMessenger().sendStatus(player, "HANDBRAKE_OFF");
         plugin.getTrackerKeeper().getInVortex().add(id);
+        UUID uuid = player.getUniqueId();
+        plugin.getTrackerKeeper().getStillFlyingNotReturning().add(uuid);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             // set no gravity to player so that they don't fall out of a floating Police Box
             player.setGravity(false);
@@ -182,7 +184,7 @@ public class TARDISExteriorFlight {
                             // remove the light
                             current.getBlock().getRelative(BlockFace.UP, 2).setBlockData(TARDISConstants.AIR);
                             // save player's current location, so we can teleport them back to it when they finish flying
-                            plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(id, interior, sound, animation, chicken.getUniqueId(), stand.getUniqueId()));
+                            plugin.getTrackerKeeper().getFlyingReturnLocation().put(uuid, new FlightReturnData(id, interior, sound, animation, chicken.getUniqueId(), stand.getUniqueId()));
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 player.setGravity(true);
                                 chicken.setGravity(true);

@@ -49,17 +49,22 @@ public class TARDISTeleportListener implements Listener {
         causes.add(TeleportCause.UNKNOWN);
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onTeleport(PlayerTeleportEvent event) {
         TeleportCause cause = event.getCause();
         if (causes.contains(cause)) {
-            String world_from = event.getFrom().getWorld().getName();
-            String world_to = event.getTo().getWorld().getName();
             Player player = event.getPlayer();
             if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {
-                player.resetPlayerTime();
+                if (plugin.getTrackerKeeper().getStillFlyingNotReturning().contains(player.getUniqueId())) {
+                    // dis-allow teleporting while flying
+                    event.setCancelled(true);
+                } else {
+                    player.resetPlayerTime();
+                }
                 return;
             }
+            String world_from = event.getFrom().getWorld().getName();
+            String world_to = event.getTo().getWorld().getName();
             String uuid = player.getUniqueId().toString();
             if (world_from.contains("TARDIS") && !world_to.contains("TARDIS")) {
                 HashMap<String, Object> where = new HashMap<>();
