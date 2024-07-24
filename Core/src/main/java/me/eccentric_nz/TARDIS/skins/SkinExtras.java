@@ -8,6 +8,7 @@ import java.util.List;
 public class SkinExtras {
 
     public static final Pair<Material, Integer> ACE = new Pair<>(Material.LEATHER, 6);
+    public static final Pair<Material, Integer> ANGEL_OF_LIBERTY = new Pair<>(Material.LEATHER, 15); // + 5 torch
     public static final Pair<Material, Integer> BANNAKAFFALATTA = new Pair<>(Material.NETHER_WART, 5);
     public static final Pair<Material, Integer> BRIGADIER_LETHBRIDGE_STEWART = new Pair<>(Material.LEATHER, 5);
     public static final Pair<Material, Integer> CYBERMAN = new Pair<>(Material.IRON_INGOT, 6); // + 7 weapon
@@ -21,6 +22,7 @@ public class SkinExtras {
     public static final Pair<Material, Integer> MARTHA_JONES = new Pair<>(Material.LEATHER, 8);
     public static final Pair<Material, Integer> OMEGA = new Pair<>(Material.LEATHER, 14);
     public static final Pair<Material, Integer> OOD = new Pair<>(Material.ROTTEN_FLESH, 5);
+    public static final Pair<Material, Integer> RACNOSS = new Pair<>(Material.LEATHER, 16);
     public static final Pair<Material, Integer> SCARECROW = new Pair<>(Material.WHEAT, 5);
     public static final Pair<Material, Integer> SEA_DEVIL = new Pair<>(Material.KELP, 5);
     public static final Pair<Material, Integer> SILENCE = new Pair<>(Material.END_STONE, 9);
@@ -35,5 +37,5 @@ public class SkinExtras {
     public static final Pair<Material, Integer> WEEPING_ANGEL = new Pair<>(Material.BRICK, 6);
     public static final Pair<Material, Integer> ZYGON = new Pair<>(Material.PAINTING, 5);
 
-    public static List<Material> MATERIALS = List.of(Material.BRICK, Material.COD, Material.END_STONE, Material.FEATHER, Material.IRON_INGOT, Material.KELP, Material.LEATHER, Material.LEATHER, Material.MANGROVE_PROPAGULE, Material.NETHER_WART, Material.ORANGE_STAINED_GLASS_PANE, Material.PAINTING, Material.POTATO, Material.ROTTEN_FLESH, Material.SNOWBALL, Material.SUGAR, Material.TURTLE_EGG, Material.WHEAT, Material.YELLOW_DYE);
+    public static List<Material> MATERIALS = List.of(Material.BRICK, Material.COD, Material.END_STONE, Material.FEATHER, Material.IRON_INGOT, Material.KELP, Material.LEATHER, Material.LEATHER, Material.MANGROVE_PROPAGULE, Material.NETHER_WART, Material.ORANGE_STAINED_GLASS_PANE, Material.PAINTING, Material.POTATO, Material.ROTTEN_FLESH, Material.SNOWBALL, Material.SUGAR, Material.TORCH, Material.TURTLE_EGG, Material.WHEAT, Material.YELLOW_DYE);
 }

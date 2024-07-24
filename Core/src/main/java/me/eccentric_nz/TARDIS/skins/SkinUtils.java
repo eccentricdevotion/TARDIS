@@ -123,6 +123,16 @@ public class SkinUtils {
         int cmd = 5;
         switch (skin.name()) {
             case "Ace" -> cmd = 6;
+            case "Angel of Liberty" -> {
+                cmd = 15;
+                // + 5 torch
+                ItemStack torch = new ItemStack(Material.TORCH, 1);
+                ItemMeta tim = torch.getItemMeta();
+                tim.setDisplayName("Liberty Torch");
+                tim.setCustomModelData(5);
+                torch.setItemMeta(tim);
+                setOrSwapItem(torch, player, EquipmentSlot.HAND);
+            }
             case "Bannakaffalatta" -> material = Material.NETHER_WART;
             case "Brigadier Lethbridge-Stewart" -> {}
             case "Cyberman" -> {
@@ -153,6 +163,7 @@ public class SkinUtils {
             case "Martha Jones" -> cmd = 8;
             case "Omega" -> cmd = 14;
             case "Ood" -> material = Material.ROTTEN_FLESH;
+            case "Racnoss" -> cmd = 16;
             case "Scarecrow" -> material = Material.WHEAT;
             case "Sea Devil" -> material = Material.KELP;
             case "Silence" -> {
@@ -229,7 +240,7 @@ public class SkinUtils {
 
     public static void removeExtras(Player player, Skin skin) {
         switch (skin.name()) {
-            case "Cyberman" -> {
+            case "Angel of Liberty", "Cyberman" -> {
                 // head & main hand
                 player.getInventory().setItem(EquipmentSlot.HEAD, null);
                 player.getInventory().setItem(EquipmentSlot.HAND, null);

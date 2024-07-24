@@ -78,12 +78,17 @@ public class SkinListener implements Listener {
         UUID uuid = event.getPlayer().getUniqueId();
         if (SkinUtils.SKINNED.containsKey(uuid)) {
             Skin skin = SkinUtils.SKINNED.get(uuid);
-            event.setCancelled((skin.name().equals("Slitheen") && event.getItemInHand().getType() == Material.TURTLE_EGG));
+            event.setCancelled(isSkinPlaceable(skin.name(), event.getItemInHand()));
         }
     }
 
     private boolean isSkinItem(String skin, ItemStack is) {
         return (skin.equals("Cyberman") && is.getType() == Material.IRON_INGOT)
+                || (skin.equals("Slitheen") && is.getType() == Material.TURTLE_EGG);
+    }
+
+    private boolean isSkinPlaceable(String skin, ItemStack is) {
+        return (skin.equals("Angel of Liberty") && is.getType() == Material.TORCH)
                 || (skin.equals("Slitheen") && is.getType() == Material.TURTLE_EGG);
     }
 }
