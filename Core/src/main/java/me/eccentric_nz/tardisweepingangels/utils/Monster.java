@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.utils;
 
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.skins.CharacterSkins;
 import me.eccentric_nz.TARDIS.skins.MonsterSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
 import org.bukkit.Material;
@@ -32,10 +33,10 @@ public enum Monster {
     HATH("Hath", EntityType.ZOMBIFIED_PIGLIN, "hath", 16, 5, Material.PUFFERFISH, 4, null),
     HEADLESS_MONK("Headless Monk", EntityType.SKELETON, "monk", 17, 4, Material.RED_CANDLE, MonsterSkins.HEADLESS_MONK),
     ICE_WARRIOR("Ice Warrior", EntityType.ZOMBIFIED_PIGLIN, "ice", 5, 5, Material.SNOWBALL, 4, MonsterSkins.ICE_WARRIOR),
-    JUDOON("Judoon", EntityType.HUSK, "judoon", 14, 10, Material.YELLOW_DYE, 11, MonsterSkins.JUDOON),
+    JUDOON("Judoon", EntityType.HUSK, "judoon", 14, 10, Material.YELLOW_DYE, 11, CharacterSkins.JUDOON),
     K9("K9", EntityType.HUSK, "k9", 15, 1, Material.BONE, null),
     MIRE("Mire", EntityType.SKELETON, "mire", 18, 4, Material.NETHERITE_SCRAP, null),
-    OOD("Ood", EntityType.HUSK, "ood", 12, 29, Material.ROTTEN_FLESH, 30, MonsterSkins.OOD),
+    OOD("Ood", EntityType.HUSK, "ood", 12, 29, Material.ROTTEN_FLESH, 30, CharacterSkins.OOD),
     OSSIFIED("Ossified Time Zombie", EntityType.ZOMBIE, "ossified", 24, 4, Material.CHARCOAL, null),
     RACNOSS("Racnoss", EntityType.PIGLIN_BRUTE, "racnoss", 21, 5, Material.SPIDER_EYE, 4, MonsterSkins.RACNOSS),
     SEA_DEVIL("Sea Devil", EntityType.DROWNED, "devil", 19, 4, Material.KELP, MonsterSkins.SEA_DEVIL),
