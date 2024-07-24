@@ -17,6 +17,7 @@ public class SkinExtras {
     public static final Pair<Material, Integer> EMPTY_CHILD = new Pair<>(Material.SUGAR, 5);
     public static final Pair<Material, Integer> ICE_WARRIOR = new Pair<>(Material.SNOWBALL, 6);
     public static final Pair<Material, Integer> IMPOSSIBLE_ASTRONAUT = new Pair<>(Material.ORANGE_STAINED_GLASS_PANE, 5);
+    public static final Pair<Material, Integer> JENNY_FLINT = new Pair<>(Material.LEATHER, 17);
     public static final Pair<Material, Integer> JO_GRANT = new Pair<>(Material.LEATHER, 7);
     public static final Pair<Material, Integer> JUDOON = new Pair<>(Material.YELLOW_DYE, 5);
     public static final Pair<Material, Integer> MARTHA_JONES = new Pair<>(Material.LEATHER, 8);
