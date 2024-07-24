@@ -37,9 +37,9 @@ public class SkinUtils {
         profile.getProperties().put("textures", new Property("textures", skin.value(), skin.signature()));
         PlayerProfile playerProfile = new CraftPlayerProfile(profile);
         PlayerTextures textures = playerProfile.getTextures();
-        PlayerTextures.SkinModel model = (skin.slim()) ? PlayerTextures.SkinModel.SLIM : PlayerTextures.SkinModel.CLASSIC;
+//        PlayerTextures.SkinModel model = (skin.slim()) ? PlayerTextures.SkinModel.SLIM : PlayerTextures.SkinModel.CLASSIC;
         try {
-            textures.setSkin(new URL(skin.url()), model);
+            textures.setSkin(new URL(skin.url()), PlayerTextures.SkinModel.CLASSIC);
         } catch (MalformedURLException e) {
             TARDIS.plugin.debug("Bad URL: " + skin.url());
         }

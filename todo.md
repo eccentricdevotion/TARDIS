@@ -13,7 +13,7 @@
 | ![Static Badge](https://img.shields.io/badge/2-390?style=flat-square) | Exterior button door control as alternative to shift-clicking for exteriors without doors | [#839](https://github.com/eccentricdevotion/TARDIS/issues/839) |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | **Modelled controls**<br>- Add new console lamp at same time as adding existing controls | [#836](https://github.com/eccentricdevotion/TARDIS/issues/836) |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | **Console lamp**<br>- Add new button to modelled console or use an existing unused button<br>- Add command to add interaction entity to console lamp button | [#837](https://github.com/eccentricdevotion/TARDIS/issues/837) |
-| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Skins** <br>- Rotate TV block when placed<br>- Add button to Lazarus GUI<br>- Use skins for TWA monsters in Lazarus GUI<br>- Make all Doctor skins wide<br>- Add: Hath, Mire, Ossified, Strax, Madame Va'stra, Jenny Flint | - |
+| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Skins** <br>- Add: Hath, Mire, Ossified, Strax, Madame Va'stra, Jenny Flint | - |
 
 ## Next version `5.8.0`
 
