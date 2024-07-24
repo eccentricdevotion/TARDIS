@@ -119,8 +119,10 @@ public class TARDISDisplayBlockListener implements Listener {
         display.setItemStack(single);
         display.setPersistent(true);
         display.setInvulnerable(true);
-        if (which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR || which == TARDISDisplayItem.BONE_DOOR) {
-            display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
+        if (which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR || which == TARDISDisplayItem.BONE_DOOR || which == TARDISDisplayItem.TELEVISION) {
+            if (which != TARDISDisplayItem.TELEVISION) {
+                display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
+            }
             float yaw = DoorUtility.getLookAtYaw(player);
             // set display rotation
             display.setRotation(yaw, 0);
