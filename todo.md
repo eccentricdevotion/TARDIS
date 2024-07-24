@@ -8,12 +8,12 @@
 | ![Static Badge](https://img.shields.io/badge/on%20hold-999?style=flat-square) | Fix follower persistence | [Not possible right now on Spigot?](https://www.spigotmc.org/threads/impossible-to-register-custom-nms-entities-in-1-21-due-to-chunk-crash.654410/) |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Fix fifteenth console redstone piston door | - |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Add doors to shop items | - |
+| ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Add a back (to the TARDIS Index File) button to the TIS GUI screens | - |
 | ![Static Badge](https://img.shields.io/badge/2-390?style=flat-square) | Allow 3D Police Boxes to land on slabs | [#777](https://github.com/eccentricdevotion/TARDIS/issues/777) |
 | ![Static Badge](https://img.shields.io/badge/2-390?style=flat-square) | Exterior button door control as alternative to shift-clicking for exteriors without doors | [#839](https://github.com/eccentricdevotion/TARDIS/issues/839) |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | **Modelled controls**<br>- Add new console lamp at same time as adding existing controls | [#836](https://github.com/eccentricdevotion/TARDIS/issues/836) |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | **Console lamp**<br>- Add new button to modelled console or use an existing unused button<br>- Add command to add interaction entity to console lamp button | [#837](https://github.com/eccentricdevotion/TARDIS/issues/837) |
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Skins** <br>- Rotate TV block when placed<br>- Add button to Lazarus GUI<br>- Use skins for TWA monsters in Lazarus GUI<br>- Make all Doctor skins wide | - |
-| ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Add a back (to the TARDIS Index File) button to the TIS GUI screens | - |
 
 ## Next version `5.8.0`
 

@@ -38,10 +38,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.Tag;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -56,10 +53,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * The handheld Recall Button on the TARDIS Stattenheim remote broadcasts a
@@ -189,7 +183,13 @@ public class TARDISStattenheimListener implements Listener {
                             new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
                         }
                         // decrement uses
-                        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, uses - 1);
+                        int decremented = uses - 1;
+                        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, decremented);
+                        // set the lore
+                        List<String> lore = im.hasLore() ? im.getLore() : Arrays.asList("Uses left", "");
+                        String stripped = ChatColor.YELLOW + "" + decremented;
+                        lore.set(1, stripped);
+                        im.setLore(lore);
                         is.setItemMeta(im);
                         boolean hidden = tardis.isHidden();
                         int level = tardis.getArtronLevel();
