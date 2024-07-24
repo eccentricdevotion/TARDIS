@@ -134,6 +134,11 @@ public class HandbrakeInteraction {
                                 plugin.getMessenger().sendStatus(player, "FLIGHT_CAMERA");
                                 return;
                             }
+                            // make sure it's a 3D modelled preset
+                            if (!preset.usesArmourStand()) {
+                                plugin.getMessenger().sendStatus(player, "FLIGHT_PRESET");
+                                return;
+                            }
                             // fly the TARDIS exterior
                             Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), player.getLocation().getYaw(), player.getLocation().getPitch());
                             new TARDISExteriorFlight(plugin).startFlying(player, id, null, current, beac_on, beacon, preset.equals(ChameleonPreset.PANDORICA));
