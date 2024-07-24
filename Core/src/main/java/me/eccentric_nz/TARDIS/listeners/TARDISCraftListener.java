@@ -184,9 +184,9 @@ public class TARDISCraftListener implements Listener {
                         is.setItemMeta(im);
                         ci.setResult(is);
                     } else if (dn.contains("Stattenheim")) {
-                        int uses = plugin.getConfig().getInt("circuits.uses.stattenheim");
+                        int uses = plugin.getConfig().getInt("circuits.uses.stattenheim", 15);
                         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, uses > 0 ? uses : 1000);
-                        im.setLore(List.of("Uses left", ChatColor.YELLOW + "" + uses));
+//                        im.setLore(List.of("Right-click block", "to call TARDIS", "Uses left", ChatColor.YELLOW + "" + uses));
                         is.setItemMeta(im);
                         ci.setResult(is);
                     }

@@ -56,9 +56,8 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.*;
 
 /**
- * The handheld Recall Button on the TARDIS Stattenheim remote broadcasts a
- * Stattenheim signal through the Vortex, which summons the operator's TARDIS
- * when the operator is in the field.
+ * The handheld Recall Button on the TARDIS Stattenheim remote broadcasts a Stattenheim signal through the Vortex, which
+ * summons the operator's TARDIS when the operator is in the field.
  *
  * @author eccentric_nz
  */
@@ -186,9 +185,8 @@ public class TARDISStattenheimListener implements Listener {
                         int decremented = uses - 1;
                         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, decremented);
                         // set the lore
-                        List<String> lore = im.hasLore() ? im.getLore() : Arrays.asList("Uses left", "");
-                        String stripped = ChatColor.YELLOW + "" + decremented;
-                        lore.set(1, stripped);
+                        String coloured = ChatColor.YELLOW + "" + decremented;
+                        List<String> lore = Arrays.asList("Right-click block", "to call TARDIS", "Uses left", coloured);
                         im.setLore(lore);
                         is.setItemMeta(im);
                         boolean hidden = tardis.isHidden();

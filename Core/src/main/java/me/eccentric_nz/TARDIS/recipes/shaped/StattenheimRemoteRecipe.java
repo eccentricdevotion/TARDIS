@@ -41,7 +41,11 @@ public class StattenheimRemoteRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Stattenheim Remote");
         im.setCustomModelData(10000001);
-        im.setLore(List.of("Right-click block", "to call TARDIS"));
+        String uses = plugin.getConfig().getString("circuits.uses.stattenheim", "15");
+        if (uses.equals("0")) {
+            uses = "1000";
+        }
+        im.setLore(List.of("Right-click block", "to call TARDIS", "Uses left", uses));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "stattenheim_remote");
         ShapedRecipe r = new ShapedRecipe(key, is);
