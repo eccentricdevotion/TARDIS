@@ -43,7 +43,10 @@ public class TARDISChameleonCircuitRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Chameleon Circuit");
         im.setCustomModelData(10001966);
-        im.setLore(List.of("Uses left", "25"));
+        String uses = (plugin.getConfig().getString("circuits.uses.chameleon").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
+                ? ChatColor.YELLOW + "unlimited"
+                : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.chameleon");
+        im.setLore(List.of("Uses left", uses));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_chameleon_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
@@ -56,10 +59,10 @@ public class TARDISChameleonCircuitRecipe {
             em.setCustomModelData(RecipeItem.TARDIS_MATERIALISATION_CIRCUIT.getCustomModelData());
             // set the second line of lore
             List<String> circuit;
-            String uses = (plugin.getConfig().getString("circuits.uses.materialisation").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
+            String mat_uses = (plugin.getConfig().getString("circuits.uses.materialisation").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                     ? ChatColor.YELLOW + "unlimited"
                     : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.materialisation");
-            circuit = Arrays.asList("Uses left", uses);
+            circuit = Arrays.asList("Uses left", mat_uses);
             em.setLore(circuit);
             exact.setItemMeta(em);
             r.setIngredient('M', new RecipeChoice.ExactChoice(exact));

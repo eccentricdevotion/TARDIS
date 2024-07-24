@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -38,7 +39,10 @@ public class TARDISTemporalCircuitRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Temporal Circuit");
         im.setCustomModelData(10001974);
-        im.setLore(List.of("Uses left", "20"));
+        String uses = (plugin.getConfig().getString("circuits.uses.temporal").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
+                ? ChatColor.YELLOW + "unlimited"
+                : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.temporal");
+        im.setLore(List.of("Uses left", uses));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_temporal_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

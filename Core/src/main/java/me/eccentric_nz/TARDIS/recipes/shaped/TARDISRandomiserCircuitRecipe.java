@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -40,7 +41,10 @@ public class TARDISRandomiserCircuitRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Randomiser Circuit");
         im.setCustomModelData(10001980);
-        im.setLore(List.of("Uses left", "50"));
+        String uses = (plugin.getConfig().getString("circuits.uses.randomiser").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
+                ? ChatColor.YELLOW + "unlimited"
+                : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.randomiser");
+        im.setLore(List.of("Uses left", uses));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_randomiser_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -10,6 +11,8 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionType;
+
+import java.util.List;
 
 /*
 easy_shape:-S-,SES,-S-
@@ -37,6 +40,10 @@ public class TARDISTelepathicCircuitRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Telepathic Circuit");
         im.setCustomModelData(10001962);
+        String uses = (plugin.getConfig().getString("circuits.uses.telepathic").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
+                ? ChatColor.YELLOW + "unlimited"
+                : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.telepathic");
+        im.setLore(List.of("Uses left", uses));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_telepathic_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
