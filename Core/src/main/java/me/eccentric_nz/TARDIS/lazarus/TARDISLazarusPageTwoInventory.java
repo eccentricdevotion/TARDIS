@@ -127,14 +127,14 @@ class TARDISLazarusPageTwoInventory {
         page.setItemMeta(one);
         stacks[43] = page;
         // if TARDISWeepingAngels is enabled angels, cybermen and ice warriors will be available
-        if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
-            ItemStack weep = new ItemStack(GUIGeneticManipulator.BUTTON_TWA.material(), 1);
-            ItemMeta ing = weep.getItemMeta();
-            ing.setDisplayName("TARDIS Monsters");
-            ing.setCustomModelData(GUIGeneticManipulator.BUTTON_TWA.customModelData());
-            weep.setItemMeta(ing);
-            stacks[GUIGeneticManipulator.BUTTON_TWA.slot()] = weep;
-        }
+//        if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
+        ItemStack weep = new ItemStack(GUIGeneticManipulator.BUTTON_TWA.material(), 1);
+        ItemMeta ing = weep.getItemMeta();
+        ing.setDisplayName("TARDIS Monsters");
+        ing.setCustomModelData(GUIGeneticManipulator.BUTTON_TWA.customModelData());
+        weep.setItemMeta(ing);
+        stacks[GUIGeneticManipulator.BUTTON_TWA.slot()] = weep;
+//        }
         // add options
         ItemStack the = new ItemStack(GUIGeneticManipulator.BUTTON_MASTER.material(), 1);
         ItemMeta master = the.getItemMeta();

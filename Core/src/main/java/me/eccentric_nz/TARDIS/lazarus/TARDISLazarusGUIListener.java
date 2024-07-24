@@ -23,8 +23,11 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.lazarus.disguise.*;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.skins.Skin;
+import me.eccentric_nz.TARDIS.skins.SkinUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -69,21 +72,9 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     private final HashMap<UUID, String> disguises = new HashMap<>();
     private final List<Integer> slimeSizes = Arrays.asList(1, 2, 4);
     private final List<Integer> pufferStates = Arrays.asList(0, 1, 2);
-    private final List<String> twaMonsters = Arrays.asList(
-            "CYBERMAN", "DALEK", "DALEK_SEC", "DAVROS", "EMPTY CHILD",
-            "HATH", "HEADLESS_MONK", "ICE WARRIOR", "JUDOON", "K9",
-            "MIRE", "OOD", "RACNOSS", "SEA_DEVIL", "SILENT", "SILURIAN",
-            "SLITHEEN", "SONTARAN", "STRAX", "TOCLAFANE", "VASHTA NERADA",
-            "WEEPING ANGEL", "ZYGON"
-    );
-    private final List<String> twaHelmets = Arrays.asList(
-            "Cyberman Head", "Dalek Head", "Dalek Sec Head", "Davros Head",
-            "Empty Child Head", "Hath Head", "Headless Monk Head",
-            "Ice Warrior Head", "Judoon Head", "K9 Head", "Mire Head",
-            "Ood Head", "Racnoss Head", "Silent Head", "Silurian Head",
-            "Slitheen Head", "Sontaran Head", "Strax Head", "Toclafane",
-            "Vashta Nerada Head", "Weeping Angel Head", "Zygon Head"
-    );
+    private final List<String> twaMonsters = Arrays.asList("CYBERMAN", "DALEK", "DALEK_SEC", "DAVROS", "EMPTY_CHILD", "HATH", "HEADLESS_MONK", "ICE WARRIOR", "JUDOON", "K9", "OOD", "RACNOSS", "SEA_DEVIL", "SILENT", "SILURIAN", "SLITHEEN", "SONTARAN", "STRAX", "TOCLAFANE", "VASHTA_NERADA", "WEEPING_ANGEL", "ZYGON");
+    private final List<String> twaOnly = Arrays.asList("DALEK", "DAVROS", "HATH", "K9", "MIRE", "STRAX", "TOCLAFANE");
+    private final List<String> twaHelmets = Arrays.asList("Dalek Head", "Davros Head", "Hath Head", "K9 Head", "Mire Head", "Strax Head", "Toclafane");
     private final Set<UUID> pagers = new HashSet<>();
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
@@ -119,7 +110,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                 ItemMeta im = is.getItemMeta();
                 // remember selection
                 String display = im.getDisplayName();
-                if (twaMonsters.contains(display) && !plugin.getConfig().getBoolean("modules.weeping_angels")) {
+                if (twaOnly.contains(display) && !plugin.getConfig().getBoolean("modules.weeping_angels")) {
                     im.setLore(List.of("Genetic modification not available!"));
                     is.setItemMeta(im);
                 } else {
@@ -148,19 +139,19 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     player.openInventory(inv);
                 }
                 case 44 -> {
-                    if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
-                        pagers.add(uuid);
-                        ItemStack monstersButton = view.getItem(slot);
-                        ItemMeta monstersMeta = monstersButton.getItemMeta();
-                        // go to monsters or page two
-                        Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
-                        if (monstersMeta.getDisplayName().equals(plugin.getLanguage().getString("BUTTON_PAGE_2"))) {
-                            inv.setContents(new TARDISLazarusPageTwoInventory(plugin).getPageTwo());
-                        } else {
-                            inv.setContents(new TARDISWeepingAngelsMonstersInventory(plugin).getMonsters());
-                        }
-                        player.openInventory(inv);
+//                    if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
+                    pagers.add(uuid);
+                    ItemStack monstersButton = view.getItem(slot);
+                    ItemMeta monstersMeta = monstersButton.getItemMeta();
+                    // go to monsters or page two
+                    Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
+                    if (monstersMeta.getDisplayName().equals(plugin.getLanguage().getString("BUTTON_PAGE_2"))) {
+                        inv.setContents(new TARDISLazarusPageTwoInventory(plugin).getPageTwo());
+                    } else {
+                        inv.setContents(new TARDISWeepingAngelsMonstersInventory(plugin).getMonsters());
                     }
+                    player.openInventory(inv);
+//                    }
                 }
                 case 45 -> { // The Master Switch : ON | OFF
                     ItemStack masterButton = view.getItem(slot);
@@ -273,7 +264,15 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                             // undisguise first
                             twaOff(player);
                             if (twaMonsters.contains(disguise)) {
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise " + disguise + " on " + player.getUniqueId());
+                                if (twaOnly.contains(disguise)) {
+                                    plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise " + disguise + " on " + player.getUniqueId());
+                                } else {
+                                    // put on a skin
+                                    Skin skin = Monster.valueOf(disguise).getSkin();
+                                    plugin.getSkinChanger().set(player, skin);
+                                    SkinUtils.setExtras(player, skin);
+                                    SkinUtils.SKINNED.put(uuid, skin);
+                                }
                             } else {
                                 EntityType dt = EntityType.valueOf(disguise);
                                 Object[] options = null;
@@ -821,11 +820,20 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     }
 
     private void twaOff(Player player) {
-        ItemStack helmet = player.getInventory().getHelmet();
-        if (helmet != null && helmet.hasItemMeta() && helmet.getItemMeta().hasDisplayName()) {
-            String metaName = helmet.getItemMeta().getDisplayName();
-            if (twaHelmets.contains(metaName)) {
-                plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise WEEPING_ANGEL off " + player.getUniqueId());
+        UUID uuid = player.getUniqueId();
+        if (SkinUtils.SKINNED.containsKey(uuid)) {
+            // remove skin
+            plugin.getSkinChanger().remove(player);
+            Skin skin = SkinUtils.SKINNED.get(uuid);
+            SkinUtils.removeExtras(player, skin);
+            SkinUtils.SKINNED.remove(uuid);
+        } else {
+            ItemStack helmet = player.getInventory().getHelmet();
+            if (helmet != null && helmet.hasItemMeta() && helmet.getItemMeta().hasDisplayName()) {
+                String metaName = helmet.getItemMeta().getDisplayName();
+                if (twaHelmets.contains(metaName)) {
+                    plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise WEEPING_ANGEL off " + uuid);
+                }
             }
         }
     }

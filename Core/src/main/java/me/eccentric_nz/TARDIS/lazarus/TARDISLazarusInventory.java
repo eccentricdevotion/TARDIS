@@ -119,14 +119,14 @@ class TARDISLazarusInventory {
         page.setItemMeta(two);
         stacks[43] = page;
         // if TARDISWeepingAngels is enabled add TARDIS monsters
-        if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
-            ItemStack weep = new ItemStack(GUIGeneticManipulator.BUTTON_TWA.material(), 1);
-            ItemMeta ing = weep.getItemMeta();
-            ing.setDisplayName("TARDIS Monsters");
-            ing.setCustomModelData(GUIGeneticManipulator.BUTTON_TWA.customModelData());
-            weep.setItemMeta(ing);
-            stacks[GUIGeneticManipulator.BUTTON_TWA.slot()] = weep;
-        }
+//        if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
+        ItemStack weep = new ItemStack(GUIGeneticManipulator.BUTTON_TWA.material(), 1);
+        ItemMeta ing = weep.getItemMeta();
+        ing.setDisplayName("TARDIS Monsters");
+        ing.setCustomModelData(GUIGeneticManipulator.BUTTON_TWA.customModelData());
+        weep.setItemMeta(ing);
+        stacks[GUIGeneticManipulator.BUTTON_TWA.slot()] = weep;
+//        }
         // add options
         // master
         ItemStack the = new ItemStack(GUIGeneticManipulator.BUTTON_MASTER.material(), 1);
