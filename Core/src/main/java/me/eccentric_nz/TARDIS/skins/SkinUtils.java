@@ -153,11 +153,24 @@ public class SkinUtils {
                 // set generic scale
                 player.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(0.5d);
             }
+            case "Hath" -> {
+                material = Material.PUFFERFISH;
+                cmd = 6;
+            }
             case "Ice Warrior" -> {
                 material = Material.SNOWBALL;
                 cmd = 6;
             }
             case "Impossible Astronaut" -> material = Material.ORANGE_STAINED_GLASS_PANE;
+            case "Jenny Flint" -> {
+                // 17 off-hand katana
+                ItemStack katana = new ItemStack(material, 1);
+                ItemMeta kim = katana.getItemMeta();
+                kim.setDisplayName("Katana");
+                kim.setCustomModelData(7);
+                katana.setItemMeta(kim);
+                setOrSwapItem(katana, player, EquipmentSlot.OFF_HAND);
+            }
             case "Jo Grant" -> cmd = 7;
             case "Judoon" -> material = Material.YELLOW_DYE;
             case "Martha Jones" -> cmd = 8;
@@ -192,6 +205,10 @@ public class SkinUtils {
                 material = Material.POTATO;
                 cmd = 6;
             }
+            case "Strax" -> {
+                material = Material.POTATO;
+                cmd = 7;
+            }
             case "Sutekh" -> cmd = 11;
             case "Sycorax" -> cmd = 10;
             case "Tegan" -> cmd = 9;
@@ -207,12 +224,14 @@ public class SkinUtils {
                 return;
             }
         }
-        ItemStack head = new ItemStack(material, 1);
-        ItemMeta im = head.getItemMeta();
-        im.setDisplayName(skin.name());
-        im.setCustomModelData(cmd);
-        head.setItemMeta(im);
-        setOrSwapItem(head, player, EquipmentSlot.HEAD);
+        if (!skin.name().equals("Jenny Flint")) {
+            ItemStack head = new ItemStack(material, 1);
+            ItemMeta im = head.getItemMeta();
+            im.setDisplayName(skin.name());
+            im.setCustomModelData(cmd);
+            head.setItemMeta(im);
+            setOrSwapItem(head, player, EquipmentSlot.HEAD);
+        }
     }
 
     private static void setOrSwapItem(ItemStack item, Player player, EquipmentSlot slot) {
@@ -245,6 +264,10 @@ public class SkinUtils {
                 player.getInventory().setItem(EquipmentSlot.HEAD, null);
                 player.getInventory().setItem(EquipmentSlot.HAND, null);
             }
+            case "Jenny Flint" -> {
+                // off-hand
+                player.getInventory().setItem(EquipmentSlot.OFF_HAND, null);
+            }
             case "Empty Child" -> {
                 // head & reset generic scale
                 player.getInventory().setItem(EquipmentSlot.HEAD, null);
@@ -256,7 +279,10 @@ public class SkinUtils {
                 player.getInventory().setItem(EquipmentSlot.HAND, null);
                 player.getInventory().setItem(EquipmentSlot.OFF_HAND, null);
             }
-            case "Ace", "Bannakaffalatta", "Brigadier Lethbridge-Stewart", "Dalek Sec", "Ice Warrior", "Impossible Astronaut", "Jo Grant", "Judoon", "Martha Jones", "Omega", "Ood", "Scarecrow", "Sea Devil", "Silence", "Silurian", "Sontaran", "Sutekh", "Sycorax", "Tegan", "The Beast", "Vampire of Venice", "Weeping Angel", "Zygon" -> {
+            case "Ace", "Bannakaffalatta", "Brigadier Lethbridge-Stewart", "Dalek Sec", "Hath", "Ice Warrior",
+                 "Impossible Astronaut", "Jo Grant", "Judoon", "Martha Jones", "Omega", "Ood", "Scarecrow",
+                 "Sea Devil", "Silence", "Silurian", "Sontaran", "Strax", "Sutekh", "Sycorax", "Tegan",
+                 "The Beast", "Vampire of Venice", "Weeping Angel", "Zygon" -> {
                 // just head
                 player.getInventory().setItem(EquipmentSlot.HEAD, null);
             }

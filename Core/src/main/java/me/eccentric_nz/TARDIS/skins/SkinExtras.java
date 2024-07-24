@@ -15,9 +15,10 @@ public class SkinExtras {
     public static final Pair<Material, Integer> CYBERSHADE = new Pair<>(Material.LEATHER, 13);
     public static final Pair<Material, Integer> DALEK_SEC = new Pair<>(Material.MANGROVE_PROPAGULE, 5);
     public static final Pair<Material, Integer> EMPTY_CHILD = new Pair<>(Material.SUGAR, 5);
+    public static final Pair<Material, Integer> HATH = new Pair<>(Material.PUFFERFISH, 6);
     public static final Pair<Material, Integer> ICE_WARRIOR = new Pair<>(Material.SNOWBALL, 6);
     public static final Pair<Material, Integer> IMPOSSIBLE_ASTRONAUT = new Pair<>(Material.ORANGE_STAINED_GLASS_PANE, 5);
-    public static final Pair<Material, Integer> JENNY_FLINT = new Pair<>(Material.LEATHER, 17);
+    public static final Pair<Material, Integer> JENNY_FLINT = new Pair<>(Material.LEATHER, 17); // katana
     public static final Pair<Material, Integer> JO_GRANT = new Pair<>(Material.LEATHER, 7);
     public static final Pair<Material, Integer> JUDOON = new Pair<>(Material.YELLOW_DYE, 5);
     public static final Pair<Material, Integer> MARTHA_JONES = new Pair<>(Material.LEATHER, 8);
@@ -30,6 +31,7 @@ public class SkinExtras {
     public static final Pair<Material, Integer> SILURIAN = new Pair<>(Material.FEATHER, 5);
     public static final Pair<Material, Integer> SLITHEEN = new Pair<>(Material.TURTLE_EGG, 6); // + 7, 8 left, right claws
     public static final Pair<Material, Integer> SONTARAN = new Pair<>(Material.POTATO, 6);
+    public static final Pair<Material, Integer> STRAX = new Pair<>(Material.POTATO, 7);
     public static final Pair<Material, Integer> SUTEKH = new Pair<>(Material.LEATHER, 11);
     public static final Pair<Material, Integer> SYCORAX = new Pair<>(Material.LEATHER, 10);
     public static final Pair<Material, Integer> TEGAN = new Pair<>(Material.LEATHER, 9);
@@ -38,5 +40,5 @@ public class SkinExtras {
     public static final Pair<Material, Integer> WEEPING_ANGEL = new Pair<>(Material.BRICK, 6);
     public static final Pair<Material, Integer> ZYGON = new Pair<>(Material.PAINTING, 5);
 
-    public static List<Material> MATERIALS = List.of(Material.BRICK, Material.COD, Material.END_STONE, Material.FEATHER, Material.IRON_INGOT, Material.KELP, Material.LEATHER, Material.LEATHER, Material.MANGROVE_PROPAGULE, Material.NETHER_WART, Material.ORANGE_STAINED_GLASS_PANE, Material.PAINTING, Material.POTATO, Material.ROTTEN_FLESH, Material.SNOWBALL, Material.SUGAR, Material.TORCH, Material.TURTLE_EGG, Material.WHEAT, Material.YELLOW_DYE);
+    public static List<Material> MATERIALS = List.of(Material.BRICK, Material.COD, Material.END_STONE, Material.FEATHER, Material.IRON_INGOT, Material.KELP, Material.LEATHER, Material.LEATHER, Material.MANGROVE_PROPAGULE, Material.NETHER_WART, Material.ORANGE_STAINED_GLASS_PANE, Material.PAINTING, Material.POTATO, Material.PUFFERFISH, Material.ROTTEN_FLESH, Material.SNOWBALL, Material.SUGAR, Material.TORCH, Material.TURTLE_EGG, Material.WHEAT, Material.YELLOW_DYE);
 }
