@@ -52,7 +52,7 @@ import java.util.UUID;
 public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
 
     private final HashMap<UUID, String> selectedLocation = new HashMap<>();
-    private final HashMap<UUID, Integer> selectedSlot = new HashMap<>();
+    private final HashMap<UUID, SelectedSlot> selectedSlot = new HashMap<>();
 
     public TARDISARSMapListener(TARDIS plugin) {
         super(plugin);
@@ -125,20 +125,16 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             default -> {
                 if (map_data.containsKey(playerUUID)) {
                     TARDISARSMapData md = map_data.get(playerUUID);
-                    // get selected slot
-                    int row = (slot % 9) - md.getE();
-                    plugin.debug("row = " + row);
-                    int col = (slot % 9) - md.getS() - 1;
-                    plugin.debug("col = " + col);
-                    plugin.debug("[" + md.getY() + "][" + row + "][" + col + "]");
-                    plugin.debug(md.getData()[md.getY()][row][col]);
                     ItemStack is = view.getItem(slot);
                     if (is != null) {
                         ItemMeta im = is.getItemMeta();
                         String dn = im.getDisplayName();
                         if (!dn.equals("Empty slot")) {
                             selectedLocation.put(playerUUID, is.getType().toString());
-//                            selectedSlot.put(playerUUID, slot);
+                            // get selected slot
+                            int col = (slot / 9) + md.getS();
+                            int row = (slot % 9) - (4 - md.getE());
+                            selectedSlot.put(playerUUID, new SelectedSlot(md.getY(), row, col));
                         }
                     }
                 } else {
@@ -223,28 +219,15 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                 TARDISDoorLocation idl = TARDISDoorListener.getDoor(1, id);
                 return idl.getL();
             } else {
-                TARDISARSSlot a = null;
-                TARDISARSMapData md = map_data.get(playerUUID);
-                for (int l = 0; l < 3; l++) {
-                    if (l != md.getY()) {
-                        // skip levels that are not currently showing on the map because they can't be selected
-                        continue;
-                    }
-                    for (int r = 0; r < 9; r++) {
-                        for (int c = 0; c < 9; c++) {
-                            if (md.getData()[l][r][c].equals(room)) {
-                                // will always get the first room of this type on this level
-                                a = new TARDISARSSlot();
-                                a.setChunk(plugin.getLocationUtils().getTARDISChunk(id));
-                                a.setY(l);
-                                a.setX(r);
-                                a.setZ(c);
-                                break;
-                            }
-                        }
-                    }
+                SelectedSlot selected = selectedSlot.get(uuid);
+                if (selected != null) {
+                    TARDISARSSlot a = new TARDISARSSlot();
+                    a.setChunk(plugin.getLocationUtils().getTARDISChunk(id));
+                    a.setY(selected.level());
+                    a.setX(selected.row());
+                    a.setZ(selected.column());
+                    return new Location(a.getChunk().getWorld(), a.getX(), a.getY(), a.getZ()).add(3.5d, 5.0d, 8.5d);
                 }
-                return (a != null) ? new Location(a.getChunk().getWorld(), a.getX(), a.getY(), a.getZ()).add(3.5d, 5.0d, 8.5d) : null;
             }
         }
         // should never get here
