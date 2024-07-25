@@ -68,14 +68,6 @@ public class TARDISPlanetsUpdater {
             }
             plugin.getConfig().set("worlds", null);
             plugin.saveConfig();
-            // check there is a gamemode config option for all worlds
-            for (String g : planets_config.getConfigurationSection("planets").getKeys(false)) {
-                if (!planets_config.contains("planets." + g + ".gamemode")) {
-                    TARDISPlanetData data = plugin.getTardisHelper().getLevelData(g);
-                    planets_config.set("planets." + g + ".gamemode", data.getGameMode().toString());
-                    save++;
-                }
-            }
             if (!planets_config.contains("planets.TARDIS_Zero_Room")) {
                 planets_config.set("planets.TARDIS_Zero_Room.enabled", false);
                 planets_config.set("planets.TARDIS_Zero_Room.time_travel", false);
@@ -112,6 +104,14 @@ public class TARDISPlanetsUpdater {
             for (String w : worlds) {
                 planets_config.set("planets." + w + ".spawn_chunk_radius", planets_config.getBoolean("planets." + dn + ".keep_spawn_in_memory") ? 2 : 0);
                 planets_config.set("planets." + w + ".keep_spawn_in_memory", null);
+            }
+        }
+        // check there is a gamemode config option for all worlds
+        for (String g : planets_config.getConfigurationSection("planets").getKeys(false)) {
+            if (!planets_config.contains("planets." + g + ".gamemode")) {
+                TARDISPlanetData data = plugin.getTardisHelper().getLevelData(g);
+                planets_config.set("planets." + g + ".gamemode", data.getGameMode().toString());
+                save++;
             }
         }
         if (!planets_config.contains("planets.TARDIS_Zero_Room.alias")) {
@@ -243,7 +243,7 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.TARDIS_Zero_Room.generator", "TARDIS:void");
             save++;
         }
-        if (planets_config.contains("planets.TARDIS_TimeVortex.gamerules.doWardenSpawning")) {
+        if (!planets_config.contains("planets.TARDIS_TimeVortex.gamerules.doWardenSpawning")) {
             planets_config.set("planets.TARDIS_TimeVortex.gamerules.doWardenSpawning", false);
             planets_config.set("planets.TARDIS_Zero_Room.gamerules.doWardenSpawning", false);
             save++;
