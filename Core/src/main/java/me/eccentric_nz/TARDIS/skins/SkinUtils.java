@@ -167,7 +167,7 @@ public class SkinUtils {
                 ItemStack katana = new ItemStack(material, 1);
                 ItemMeta kim = katana.getItemMeta();
                 kim.setDisplayName("Katana");
-                kim.setCustomModelData(7);
+                kim.setCustomModelData(17);
                 katana.setItemMeta(kim);
                 setOrSwapItem(katana, player, EquipmentSlot.OFF_HAND);
             }
