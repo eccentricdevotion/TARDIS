@@ -174,6 +174,23 @@ public class SkinUtils {
             case "Jo Grant" -> cmd = 7;
             case "Judoon" -> material = Material.YELLOW_DYE;
             case "Martha Jones" -> cmd = 8;
+            case "Mire" -> {
+                material = Material.NETHERITE_SCRAP;
+                cmd = 6;
+                // + 7, 8 left, right arms
+                ItemStack leftArm = new ItemStack(material, 1);
+                ItemMeta laim = leftArm.getItemMeta();
+                laim.setDisplayName(skin.name());
+                laim.setCustomModelData(7);
+                leftArm.setItemMeta(laim);
+                ItemStack rightArm = new ItemStack(material, 1);
+                ItemMeta raim = rightArm.getItemMeta();
+                raim.setDisplayName(skin.name());
+                raim.setCustomModelData(8);
+                rightArm.setItemMeta(raim);
+                setOrSwapItem(leftArm, player, EquipmentSlot.OFF_HAND);
+                setOrSwapItem(rightArm, player, EquipmentSlot.HAND);
+            }
             case "Omega" -> cmd = 14;
             case "Ood" -> material = Material.ROTTEN_FLESH;
             case "Racnoss" -> cmd = 16;
@@ -273,7 +290,7 @@ public class SkinUtils {
                 player.getInventory().setItem(EquipmentSlot.HEAD, null);
                 player.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(1.0d);
             }
-            case "Slitheen" -> {
+            case "Mire", "Slitheen" -> {
                 // head & both hands
                 player.getInventory().setItem(EquipmentSlot.HEAD, null);
                 player.getInventory().setItem(EquipmentSlot.HAND, null);
