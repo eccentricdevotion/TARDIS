@@ -563,6 +563,7 @@ public class TARDISFarmer {
                                     pet.setAge(wolf.getAge());
                                     pet.setSitting(wolf.isSitting());
                                     pet.setColour(wolf.getCollarColor());
+                                    pet.setWolfType(wolf.getVariant());
                                     health = Math.min(wolf.getHealth(), 8D);
                                     pet.setHealth(health);
                                     pet.setBaby(!wolf.isAdult());
@@ -1296,6 +1297,7 @@ public class TARDISFarmer {
                             pet.setAge(wolf.getAge());
                             pet.setSitting(wolf.isSitting());
                             pet.setColour(wolf.getCollarColor());
+                            pet.setWolfType(wolf.getVariant());
                             health = Math.min(wolf.getHealth(), 8D);
                             pet.setHealth(health);
                             pet.setBaby(!wolf.isAdult());

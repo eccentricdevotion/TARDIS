@@ -4,7 +4,7 @@
 
 | Priority | Feature | Link |
 | -------- | ------- | ---- |
-| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | Fix bugs<br>- Wolf variants change when bringing into TARDIS<br>- Rename legacy Harmony room to 'Condenser'<br>- Don't rotate Handles when clicking on him (unless `/tardis handles rotate` command has been used)<br>- Transmat to selected room if there is more than one of the same kind<br>-  | - |
+| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | Fix bugs<br>- Don't rotate Handles when clicking on him (unless `/tardis handles rotate` command has been used) | - |
 | ![Static Badge](https://img.shields.io/badge/on%20hold-999?style=flat-square) | Fix follower persistence | [Not possible right now on Spigot?](https://www.spigotmc.org/threads/impossible-to-register-custom-nms-entities-in-1-21-due-to-chunk-crash.654410/) |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Fix fifteenth console redstone piston door | - |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Add doors to shop items | - |

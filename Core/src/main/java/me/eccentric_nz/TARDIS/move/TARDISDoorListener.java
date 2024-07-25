@@ -290,6 +290,7 @@ public class TARDISDoorListener {
                     wolf.setCollarColor(pet.getColour());
                     wolf.setSitting(pet.getSitting());
                     wolf.setAge(pet.getAge());
+                    wolf.setVariant(pet.getWolfType());
                     if (pet.isBaby()) {
                         wolf.setBaby();
                     }

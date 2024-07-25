@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.mobfarming;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Cat.Type;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Wolf;
 
 /**
  * Alien is a broad, subjective term. It can be applied as a noun or an adjective for any entity, object, place or
@@ -33,6 +34,7 @@ public class TARDISMob {
 
     private EntityType type;
     private Type catType; // should be moved to TARDISCat.java
+    private Wolf.Variant wolfType;
     private int age;
     private double health;
     private boolean sitting; // used by parrots, cats and wolves
@@ -55,6 +57,14 @@ public class TARDISMob {
 
     void setCatType(Type catType) {
         this.catType = catType;
+    }
+
+    public Wolf.Variant getWolfType() {
+        return wolfType;
+    }
+
+    public void setWolfType(Wolf.Variant wolfType) {
+        this.wolfType = wolfType;
     }
 
     public int getAge() {
