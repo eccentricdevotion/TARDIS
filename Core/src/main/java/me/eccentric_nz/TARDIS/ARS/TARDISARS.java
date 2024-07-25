@@ -42,7 +42,7 @@ public enum TARDISARS implements ARS {
     GEODE("AMETHYST_BLOCK", "Geode", 1),
     GRAVITY("MOSSY_COBBLESTONE", "Gravity Well", 1),
     GREENHOUSE("MELON", "Greenhouse", 1),
-    HARMONY("STONE_BRICK_STAIRS", "Eye of Harmony", 1),
+    HARMONY("STONE_BRICK_STAIRS", "Condenser", 1),
     HUTCH("ACACIA_LOG", "Rabbit Hutch", 1),
     IGLOO("PACKED_ICE", "Igloo", 1),
     IISTUBIL("WHITE_GLAZED_TERRACOTTA", "Camel Stable", 1),
