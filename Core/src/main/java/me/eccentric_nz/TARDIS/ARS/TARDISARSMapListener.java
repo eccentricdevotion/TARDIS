@@ -52,6 +52,7 @@ import java.util.UUID;
 public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
 
     private final HashMap<UUID, String> selectedLocation = new HashMap<>();
+    private final HashMap<UUID, Integer> selectedSlot = new HashMap<>();
 
     public TARDISARSMapListener(TARDIS plugin) {
         super(plugin);
@@ -84,7 +85,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             return;
         }
         switch (slot) {
-            case 1, 9, 11, 19 -> moveMap(playerUUID, view, slot); // up
+            case 1, 9, 11, 19 -> moveMap(playerUUID, view, slot); // up, left, right, down
             case 10 -> loadMap(view, playerUUID); // load map
             case 45 -> close(player); // close
             case 47 -> findPlayer(player, view); // where am I?
@@ -123,12 +124,21 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             }
             default -> {
                 if (map_data.containsKey(playerUUID)) {
+                    TARDISARSMapData md = map_data.get(playerUUID);
+                    // get selected slot
+                    int row = (slot % 9) - md.getE();
+                    plugin.debug("row = " + row);
+                    int col = (slot % 9) - md.getS() - 1;
+                    plugin.debug("col = " + col);
+                    plugin.debug("[" + md.getY() + "][" + row + "][" + col + "]");
+                    plugin.debug(md.getData()[md.getY()][row][col]);
                     ItemStack is = view.getItem(slot);
                     if (is != null) {
                         ItemMeta im = is.getItemMeta();
                         String dn = im.getDisplayName();
                         if (!dn.equals("Empty slot")) {
                             selectedLocation.put(playerUUID, is.getType().toString());
+//                            selectedSlot.put(playerUUID, slot);
                         }
                     }
                 } else {
@@ -202,7 +212,8 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
     }
 
     private Location getRoomLocation(Player player) {
-        if (map_data.containsKey(player.getUniqueId())) {
+        UUID uuid = player.getUniqueId();
+        if (map_data.containsKey(uuid)) {
             UUID playerUUID = player.getUniqueId();
             int id = ids.get(playerUUID);
             // determine row and col
@@ -212,8 +223,8 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                 TARDISDoorLocation idl = TARDISDoorListener.getDoor(1, id);
                 return idl.getL();
             } else {
-                TARDISARSMapData md = map_data.get(playerUUID);
                 TARDISARSSlot a = null;
+                TARDISARSMapData md = map_data.get(playerUUID);
                 for (int l = 0; l < 3; l++) {
                     if (l != md.getY()) {
                         // skip levels that are not currently showing on the map because they can't be selected
