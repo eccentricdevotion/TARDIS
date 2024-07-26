@@ -70,6 +70,9 @@ public class TARDISRecipeCommands implements CommandExecutor {
         if (!plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
             recipeItems.remove("vortex-manipulator");
         }
+        if (!plugin.getConfig().getBoolean("modules.regeneration")) {
+            recipeItems.remove("elixir-of-life");
+        }
         if (!plugin.getConfig().getBoolean("modules.sonic_blaster")) {
             recipeItems.remove("sonic-blaster");
             recipeItems.remove("blaster-battery");
