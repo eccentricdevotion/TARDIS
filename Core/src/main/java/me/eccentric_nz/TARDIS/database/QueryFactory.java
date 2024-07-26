@@ -538,4 +538,26 @@ public class QueryFactory {
             }
         }
     }
+
+    public void doRegenerationDecrement(UUID uuid, int reduced) {
+        PreparedStatement ps = null;
+        String query = "UPDATE " + prefix + "player_prefs SET regenerations = ? WHERE uuid = ?";
+        try {
+            service.testConnection(connection);
+            ps = connection.prepareStatement(query);
+            ps.setInt(1, reduced);
+            ps.setString(2, uuid.toString());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            plugin.debug("Update error for tardis regeneration -1! " + e.getMessage());
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing tardis regeneration -1! " + e.getMessage());
+            }
+        }
+    }
 }

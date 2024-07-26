@@ -11,6 +11,7 @@ public enum TardisModule {
     HANDLES("Handles", "#00AAAA"),
     HELPER("TARDIS Helper", "#55FFFF"),
     MONSTERS("Weeping Angels", "#FF5555"),
+    REGENERATION("Regeneration", "#FFAA00"),
     SHOP("TARDIS Shop", "#FFFF55"),
     TARDIS("TARDIS", "#FFAA00"),
     TRANSLATOR("Universal Translator", "#0000AA"),

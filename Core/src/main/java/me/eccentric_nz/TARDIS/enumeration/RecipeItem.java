@@ -31,6 +31,7 @@ public enum RecipeItem {
     CONVERSION_CIRCUIT(10001988, RecipeCategory.SONIC_CIRCUITS),
     CUSTARD_CREAM(10000002, RecipeCategory.FOOD),
     DIAMOND_DISRUPTOR_CIRCUIT(10001971, RecipeCategory.SONIC_CIRCUITS),
+    ELIXIR_OF_LIFE(2,RecipeCategory.ACCESSORIES),
     EMERALD_ENVIRONMENT_CIRCUIT(10001972, RecipeCategory.SONIC_CIRCUITS),
     EXTERIOR_LAMP_LEVEL_SWITCH(1000, RecipeCategory.MISC),
     FISH_FINGER(10000001, RecipeCategory.FOOD),
@@ -247,6 +248,7 @@ public enum RecipeItem {
             case BIO_SCANNER_CIRCUIT -> "Bio-scanner Circuit";
             case BIO_SCANNER_UPGRADE -> "Bio-scanner Upgrade";
             case BOWL_OF_CUSTARD -> "Bowl of Custard";
+            case ELIXIR_OF_LIFE -> "Elixir of Life";
             case TARDIS_ARS_CIRCUIT -> "TARDIS ARS Circuit";
             default -> TARDISStringUtils.capitalise(toString()).replace("Tardis", "TARDIS");
         };

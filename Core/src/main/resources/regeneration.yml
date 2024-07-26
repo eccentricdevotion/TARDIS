@@ -1,0 +1,14 @@
+# the number of times a player can regenerate
+regens: 15
+# whether the player regains full health / food
+restore:
+  health: true
+  food: true
+# whether regeneration use stored time lord energy
+artron:
+  consume: true
+  amount: 1000
+# whether to apply effects after regeneration
+effects:
+  positive: true
+  negative: true

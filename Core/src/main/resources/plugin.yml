@@ -667,6 +667,9 @@ permissions:
   tardis.mushroom:
     description: Allow a player to use the /tardismushroom command.
     default: op
+  tardis.regenerate:
+    description: Allow a player to regenerate.
+    default: op
   # vortex manipulator
   vm.teleport:
     description: Allow crafting and using of a Vortex Manipulator

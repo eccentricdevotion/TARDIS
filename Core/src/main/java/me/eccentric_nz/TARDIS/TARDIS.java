@@ -140,6 +140,7 @@ public class TARDIS extends JavaPlugin {
     private FileConfiguration blasterConfig;
     private FileConfiguration customModelConfig;
     private FileConfiguration systemUpgradesConfig;
+    private FileConfiguration regenerationConfig;
     private HashMap<String, Integer> condensables;
     private BukkitTask standbyTask;
     private TARDISChameleonPreset presets;
@@ -163,7 +164,6 @@ public class TARDIS extends JavaPlugin {
     private String prefix;
     private CraftingDifficulty craftingDifficulty;
     private WorldManager worldManager;
-    private BukkitTask recordingTask;
     private NamespacedKey oldBlockKey;
     private NamespacedKey customBlockKey;
     private NamespacedKey destroyKey;
@@ -274,9 +274,6 @@ public class TARDIS extends JavaPlugin {
                 pm.disablePlugin(this);
                 return;
             }
-//            messenger = (PaperLib.isPaper()) ? new AdventureMessage() : new SpigotMessage();
-//            jsonKeeper = (PaperLib.isPaper()) ? new TARDISChatGUIAdventure() : new TARDISChatGUISpigot();
-//            updateChatGUI = (PaperLib.isPaper()) ? new TARDISUpdateChatGUIAdventure(this) : new TARDISUpdateChatGUISpigot(this);
             Class<?> m;
             Class<?> j;
             Class<?> u;
@@ -307,7 +304,7 @@ public class TARDIS extends JavaPlugin {
                 }
             } catch (final Exception e) {
                 getLogger().severe("Could not find support for this server version.");
-                e.printStackTrace();
+//                e.printStackTrace();
                 this.setEnabled(false);
                 return;
             }
@@ -375,7 +372,7 @@ public class TARDIS extends JavaPlugin {
             new TARDISCommandSetter(this).loadCommands();
             loadWorldGuard();
             loadPluginRespect();
-            String mapper = getConfig().getString("mapping.provider");
+            String mapper = getConfig().getString("mapping.provider", "dynmap");
             if (pm.isPluginEnabled(mapper) && getConfig().getBoolean("modules.mapping")) {
                 getMessenger().message(console, TardisModule.TARDIS, "Loading Mapping Module");
                 if (mapper.equals("dynmap")) {
@@ -679,6 +676,15 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
+     * Gets the regeneration configuration
+     *
+     * @return the system upgrades configuration
+     */
+    public FileConfiguration getRegenerationConfig() {
+        return regenerationConfig;
+    }
+
+    /**
      * Gets the language configuration
      *
      * @return the language configuration
@@ -940,15 +946,6 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
-     * Gets the formatted TARDIS plugin name for messaging
-     *
-     * @return the formatted TARDIS plugin name
-     */
-    public String getPluginName() {
-        return "[" + TardisModule.TARDIS.getName() + "] ";
-    }
-
-    /**
      * Gets whether there is a TARDIS plugin spawn
      *
      * @return true if it is a TARDIS plugin spawn
@@ -1061,15 +1058,6 @@ public class TARDIS extends JavaPlugin {
      */
     public WorldManager getWorldManager() {
         return worldManager;
-    }
-
-    /**
-     * Sets the TARDIS Block RecordingTask
-     *
-     * @param recordingTask the BukkitTask to set
-     */
-    public void setRecordingTask(BukkitTask recordingTask) {
-        this.recordingTask = recordingTask;
     }
 
     /**
@@ -1347,9 +1335,9 @@ public class TARDIS extends JavaPlugin {
      * Sets up the database.
      */
     private void loadDatabase() {
-        String dbtype = getConfig().getString("storage.database");
+        String databaseType = getConfig().getString("storage.database", "sqlite");
         try {
-            if (dbtype.equals("sqlite")) {
+            if (databaseType.equals("sqlite")) {
                 String path = getDataFolder() + File.separator + "TARDIS.db";
                 service.setConnection(path);
                 TARDISSQLiteDatabase sqlite = new TARDISSQLiteDatabase(this);
@@ -1456,7 +1444,7 @@ public class TARDIS extends JavaPlugin {
                 "kits.yml",
                 "monsters.yml",
                 "planets.yml",
-                "recipes.yml", "rooms.yml",
+                "recipes.yml", "regeneration.yml", "rooms.yml",
                 "shop.yml", "system_upgrades.yml",
                 "tag.yml",
                 "vortex_manipulator.yml"
@@ -1501,6 +1489,9 @@ public class TARDIS extends JavaPlugin {
         customModelConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "custom_models.yml"));
         systemUpgradesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "system_upgrades.yml"));
         new TARDISSysUpsUpdater(this).checkSystemUpgradesConfig();
+        if (getConfig().getBoolean("modules.regeneration")) {
+            regenerationConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "regeneration.yml"));
+        }
     }
 
     /**
@@ -1524,8 +1515,8 @@ public class TARDIS extends JavaPlugin {
                 getMessenger().message(console, TardisModule.TARDIS, "Created books directory.");
             }
         }
-        Set<String> booknames = achievementConfig.getKeys(false);
-        booknames.forEach((b) -> TARDISFileCopier.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"), false));
+        Set<String> bookNames = achievementConfig.getKeys(false);
+        bookNames.forEach((b) -> TARDISFileCopier.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"), false));
     }
 
     /**
@@ -1608,7 +1599,7 @@ public class TARDIS extends JavaPlugin {
                 while ((line = bufRdr.readLine()) != null) {
                     quotes.add(line);
                 }
-                if (quotes.size() < 1) {
+                if (quotes.isEmpty()) {
                     quotes.add("");
                 }
             } catch (IOException io) {
@@ -1692,8 +1683,8 @@ public class TARDIS extends JavaPlugin {
     }
 
     private void updateTagStats() {
-        String it = getTagConfig().getString("it");
-        if (!it.equals("")) {
+        String it = getTagConfig().getString("it", "");
+        if (!it.isEmpty()) {
             HashMap<String, Object> set = new HashMap<>();
             set.put("player", getTagConfig().getString("it"));
             long time = System.currentTimeMillis() - getTagConfig().getLong("time");
@@ -1701,8 +1692,6 @@ public class TARDIS extends JavaPlugin {
             getQueryFactory().doSyncInsert("tag", set);
         }
     }
-
-
 
     public String getServerStr() {
         return serverStr;

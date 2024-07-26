@@ -128,6 +128,7 @@ public class TARDISConfiguration {
         booleanOptions.put("modules.weeping_angels", false);
         booleanOptions.put("modules.vortex_manipulator", false);
         booleanOptions.put("modules.shop", false);
+        booleanOptions.put("modules.regeneration", false);
         booleanOptions.put("modules.sonic_blaster", false);
         booleanOptions.put("police_box.animated_door", true);
         booleanOptions.put("police_box.load_shells", false);
