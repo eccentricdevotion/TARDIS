@@ -1911,6 +1911,19 @@ commands:
       description: Remove the Handles record from the TARDIS database
       permission: tardis.handles.use
       usage: /<command> remove
+  # regeneration
+  tardisregeneration:
+    aliases: [ regeneration, regen ]
+    description: Manage player regenerations.
+    usage: /<command> [add|remove] [player] [amount]
+    permission: tardis.admin
+    permission-message: You don't have the permission <permission> to use this command
+    add:
+      description: Add regenerations to a player.
+      usage: /<command> add [player] [amount]
+    remove:
+      description: Remove regenerations from a player.
+      usage: /<command> remove [player] [amount]
   # vortex manipulator
   vm:
     aliases: [ vortexmainpulator, tvm ]
