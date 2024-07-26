@@ -126,13 +126,16 @@ class TARDISUpdateCommand {
             UUID playerUUID = player.getUniqueId();
             if (args[1].equalsIgnoreCase("handles")) {
                 if (args.length > 2) {
-                    plugin.getTrackerKeeper().getHandlesRotation().remove(playerUUID);
-                    plugin.getMessenger().send(player, TardisModule.HANDLES, "HANDLES_LOCKED");
-               } else {
-                   plugin.getTrackerKeeper().getHandlesRotation().add(playerUUID);
-                    plugin.getMessenger().send(player, TardisModule.HANDLES, "HANDLES_ROTATE");
-               }
-                return true;
+                    if (args[2].equalsIgnoreCase("lock")) {
+                        plugin.getTrackerKeeper().getHandlesRotation().remove(playerUUID);
+                        plugin.getMessenger().send(player, TardisModule.HANDLES, "HANDLES_LOCKED");
+                    } else {
+                        plugin.getTrackerKeeper().getHandlesRotation().add(playerUUID);
+                        plugin.getMessenger().send(player, TardisModule.HANDLES, "HANDLES_ROTATE");
+                    }
+                    return true;
+                }
+                return false;
             }
             HashMap<String, Object> where = new HashMap<>();
             String uuid = (TARDISSudoTracker.SUDOERS.containsKey(playerUUID)) ? TARDISSudoTracker.SUDOERS.get(playerUUID).toString() : playerUUID.toString();

@@ -66,16 +66,16 @@ public class TARDISHandlesFrameListener implements Listener {
             whereh.put("type", 26);
             ResultSetControls rsh = new ResultSetControls(plugin, whereh, false);
             if (rsh.resultSet()) {
-                // cancel item rotation unless player has run TODO `/tardis update handles unlock`
-                if (!plugin.getTrackerKeeper().getHandlesRotation().contains(player.getUniqueId())) {
-                    event.setCancelled(true);
-                }
                 if (!TARDISPermission.hasPermission(player, "tardis.handles.use")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                     return;
                 }
                 ItemStack is = frame.getItem();
                 if (isHandles(is)) {
+                    // cancel item rotation unless player has run `/tardis update handles rotate`
+                    if (!plugin.getTrackerKeeper().getHandlesRotation().contains(player.getUniqueId())) {
+                        event.setCancelled(true);
+                    }
                     Integer handlesId = rsh.getTardis_id();
                     // play sound
                     talkingHandles.add(handlesId); // add this handles to the list of currently talking handleses (by tardis id)
