@@ -14,7 +14,7 @@
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | **Modelled controls**<br>- Add new console lamp at same time as adding existing controls | [#836](https://github.com/eccentricdevotion/TARDIS/issues/836) |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | **Console lamp**<br>- Add new button to modelled console or use an existing unused button<br>- Add command to add interaction entity to console lamp button | [#837](https://github.com/eccentricdevotion/TARDIS/issues/837) |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | ***Microscope*** as an addition to Chemistry or separate module<br>- Add science lab / observatory room | - |
-| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Regeneration**<br>- Add the Elixir Of Life item - gold chalice - use new component system to make another item drinkable<br>- Configurable number of regenerations - classic 12 or new Who 15 for example? Could be permission based `tardis.regenerations.12`<br>- Regenerations upon death or when elixir is drunk, add listeners<br>- Add module<br>- Add database table<br>- Regenerations use Time Lord Artron energy | - |
+| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Regeneration**<br>- Add an item to renew regenerations when they are all gone<br>- Regenerations could be permission based `tardis.regenerations.12`?<br>- Add database field | - |
 
 ## Future versions
 

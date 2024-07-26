@@ -31,7 +31,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -61,6 +60,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
     private final List<String> PRESET_SUBS = new ArrayList<>();
     private final List<String> DIM_SUBS = new ArrayList<>();
     private final List<String> SECTION_SUBS = new ArrayList<>();
+    private final List<String> HANDLES_SUBS = ImmutableList.of("rotate", "lock");
 
     public TARDISTabComplete(TARDIS plugin) {
         this.plugin = plugin;
@@ -76,6 +76,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
             if (u.isSecondary()) {
                 SEC_SUBS.add(u.getName());
             }
+            UPD_SUBS.add("handles");
         }
         SEC_SUBS.add("remove");
         TARDISWalls.BLOCKS.forEach((m) -> MAT_SUBS.add(m.toString()));
@@ -159,7 +160,11 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
                 return partial(lastArg, PRESET_SUBS);
             }
             if (args[0].equals("update")) {
+                if (sub.equals("handles")) {
+                    return partial(lastArg, HANDLES_SUBS);
+                } else {
                 return partial(lastArg, EXTRA_SUBS);
+                }
             }
             if (args[0].equals("saveicon")) {
                 return partial(lastArg, MAT_SUBS);

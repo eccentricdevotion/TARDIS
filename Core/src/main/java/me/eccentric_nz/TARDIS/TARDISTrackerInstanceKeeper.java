@@ -146,6 +146,7 @@ public class TARDISTrackerInstanceKeeper {
     private final Set<UUID> frozenPlayers = new HashSet<>();
     private final Set<UUID> geneticallyModified = new HashSet<>();
     private final Set<UUID> geneticManipulation = new HashSet<>();
+    private final Set<UUID> handlesRotation = new HashSet<>();
     private final Set<UUID> hasTravelled = new HashSet<>();
     private final HashMap<UUID, ItemStack> hiddenFlight = new HashMap<>();
     private final Set<UUID> howTo = new HashSet<>();
@@ -1132,5 +1133,9 @@ public class TARDISTrackerInstanceKeeper {
 
     public Set<UUID> getStillFlyingNotReturning() {
         return stillFlyingNotReturning;
+    }
+
+    public Set<UUID> getHandlesRotation() {
+        return handlesRotation;
     }
 }
