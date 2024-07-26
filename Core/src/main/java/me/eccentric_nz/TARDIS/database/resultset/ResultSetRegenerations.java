@@ -41,11 +41,7 @@ public class ResultSetRegenerations {
     public boolean fromUUID(String uuid) {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        // TODO do we actually need a separate table?
-        String query = "SELECT " + prefix + "player_prefs.artron_level " + prefix + "regeneration.regens " +
-                "FROM " + prefix + "player_prefs, " + prefix + "regeneration" +
-                "WHERE " + prefix + "player_prefs.uuid = ?" +
-                "AND " + prefix + "player_prefs.uuid = " + prefix + "regeneration.uuid";
+        String query = "SELECT artron_level, regenerations FROM " + prefix + "player_prefs WHERE " + prefix + "player_prefs.uuid = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -54,12 +50,12 @@ public class ResultSetRegenerations {
             if (rs.isBeforeFirst()) {
                 rs.next();
                 artronLevel = rs.getInt("artron_level");
-                count = rs.getInt("regens");
+                count = rs.getInt("regenerations");
             } else {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for player_prefs (artron level from UUID) table! " + e.getMessage());
+            plugin.debug("ResultSet error for player_prefs (regenerations from UUID) table! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -70,7 +66,7 @@ public class ResultSetRegenerations {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing player_prefs (artron level from UUID) statement! " + e.getMessage());
+                plugin.debug("Error closing player_prefs (regenerations from UUID) statement! " + e.getMessage());
             }
         }
         return true;

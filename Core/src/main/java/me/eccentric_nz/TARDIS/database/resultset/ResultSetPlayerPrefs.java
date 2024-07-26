@@ -72,6 +72,7 @@ public class ResultSetPlayerPrefs {
     private int artronLevel;
     private int flightMode;
     private int throttle;
+    private int regenerations;
     private String epsMessage;
     private String floor;
     private String hum;
@@ -168,6 +169,7 @@ public class ResultSetPlayerPrefs {
                     throttle = rs.getInt("throttle");
                     autoPowerUp = rs.getBoolean("auto_powerup_on");
                     hum = rs.getString("hum");
+                    regenerations = rs.getInt("regenerations");
                 } else {
                     return false;
                 }
@@ -333,5 +335,9 @@ public class ResultSetPlayerPrefs {
 
     public String getHum() {
         return hum;
+    }
+
+    public int getRegenerations() {
+        return regenerations;
     }
 }
