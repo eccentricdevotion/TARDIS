@@ -139,6 +139,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("power_down", "allow");
         firstsBool.put("power_down_on_quit", "allow");
         firstsBool.put("reduce_count", "abandon");
+        firstsBool.put("regeneration", "modules");
         firstsBool.put("render_entities", "preferences");
         firstsBool.put("respect_factions", "preferences");
         firstsBool.put("respect_grief_prevention", "preferences");

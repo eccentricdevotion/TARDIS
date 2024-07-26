@@ -5,6 +5,7 @@ debug: false
 modules:
   weeping_angels: false
   vortex_manipulator: false
+  regeneration: false
   mapping: false
   chemistry: false
   shop: false
