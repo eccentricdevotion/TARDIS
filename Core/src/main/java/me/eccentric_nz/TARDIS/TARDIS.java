@@ -54,6 +54,7 @@ import me.eccentric_nz.TARDIS.utility.logging.TARDISBlockLogger;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISWorldGuardUtils;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import me.eccentric_nz.tardischunkgenerator.worldgen.*;
+import me.eccentric_nz.tardisregeneration.TARDISRegenerationUpdater;
 import me.eccentric_nz.tardisshop.ShopSettings;
 import me.eccentric_nz.tardissonicblaster.BlasterSettings;
 import me.eccentric_nz.tardisvortexmanipulator.TVMSettings;
@@ -1491,6 +1492,7 @@ public class TARDIS extends JavaPlugin {
         new TARDISSysUpsUpdater(this).checkSystemUpgradesConfig();
         if (getConfig().getBoolean("modules.regeneration")) {
             regenerationConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "regeneration.yml"));
+            new TARDISRegenerationUpdater(this).checkConfig();
         }
     }
 

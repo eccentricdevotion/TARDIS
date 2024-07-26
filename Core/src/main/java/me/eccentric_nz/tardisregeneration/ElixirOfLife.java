@@ -1,8 +1,6 @@
 package me.eccentric_nz.tardisregeneration;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.FoodComponent;
@@ -12,9 +10,10 @@ import java.util.List;
 /**
  * With special preparation, a variant of the Elixir of Life can trigger a Time Lord's regeneration, if they are injured
  * too severely to regenerate normally. This variant can also influence both the physical and personality traits of the
- * new incarnation. After the Eighth Doctor died in a spaceship crash on Karn during the Time War, the Sisterhood revived
- * him long enough for him to consume one of a number of prepared Elixir that would enable him to select his personality,
- * appearance, and gender of his next incarnation; he ultimately selected one that would return to him to life as a warrior.
+ * new incarnation. After the Eighth Doctor died in a spaceship crash on Karn during the Time War, the Sisterhood
+ * revived him long enough for him to consume one of a number of prepared Elixir that would enable him to select his
+ * personality, appearance, and gender of his next incarnation; he ultimately selected one that would return to him to
+ * life as a warrior.
  */
 public class ElixirOfLife {
 
@@ -44,9 +43,5 @@ public class ElixirOfLife {
             return false;
         }
         return im.getDisplayName().equals("Elixir of Life");
-    }
-
-    public static void trigger(TARDIS plugin, Player player) {
-
     }
 }

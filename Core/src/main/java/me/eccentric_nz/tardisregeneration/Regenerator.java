@@ -19,10 +19,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.HashMap;
+
 /**
- * Sometimes it's like playing pin the tail on the donkey during an earthquake.
- * If you come out the other side with the right number of eyes, that counts as a win.
- * - Missy
+ * Sometimes it's like playing pin the tail on the donkey during an earthquake. If you come out the other side with the
+ * right number of eyes, that counts as a win. - Missy
  */
 public class Regenerator {
 
@@ -67,11 +68,9 @@ public class Regenerator {
             skin = DoctorSkins.DOCTORS.get(random);
         } else {
             cmd = TARDISNumberParsers.parseInt(args[1]) + 1000;
-            skin = DoctorSkins.DOCTORS.get(cmd - 1);
+            skin = DoctorSkins.DOCTORS.get(cmd - 1001);
         }
-        if (cmd != 999) {
-            display(plugin, player, cmd, skin);
-        }
+        display(plugin, player, cmd, skin);
     }
 
     public void processPlayer(TARDIS plugin, Player player) {
@@ -79,23 +78,32 @@ public class Regenerator {
             plugin.getMessenger().send(player, TardisModule.REGENERATION, "NO_PERM_REGENERATION");
             return;
         }
+        String uuid = player.getUniqueId().toString();
         ResultSetRegenerations rsr = new ResultSetRegenerations(plugin);
-        if (rsr.fromUUID(player.getUniqueId().toString())) {
+        if (rsr.fromUUID(uuid)) {
             // does the player have any regenerations left?
             if (rsr.getCount() <= 0) {
                 plugin.getMessenger().send(player, TardisModule.REGENERATION, "REGENERATION_COUNT");
                 return;
             }
             // does the player have enough time lord energy?
-            if (plugin.getRegenerationConfig().getBoolean("regeneration.artron.consume") && rsr.getArtronLevel() < plugin.getRegenerationConfig().getInt("regeneration.artron.amount")) {
-                plugin.getMessenger().send(player, TardisModule.REGENERATION, "REGENERATION_ARTRON");
-                return;
+            if (plugin.getRegenerationConfig().getBoolean("artron.consume")) {
+                int cost = plugin.getRegenerationConfig().getInt("artron.amount");
+                if (rsr.getArtronLevel() < cost) {
+                    plugin.getMessenger().send(player, TardisModule.REGENERATION, "REGENERATION_ARTRON");
+                    return;
+                } else {
+                    // take the energy
+                    HashMap<String, Object> wheretl = new HashMap<>();
+                    wheretl.put("uuid", uuid);
+                    plugin.getQueryFactory().alterEnergyLevel("player_prefs", -cost, wheretl, player);
+                }
             }
             // get which regeneration this is
-            int which = (plugin.getRegenerationConfig().getInt("regeneration.regens") + 1) - rsr.getCount();
+            int which = (plugin.getRegenerationConfig().getInt("regenerations")) - rsr.getCount();
             // trigger regeneration
-            Skin skin = DoctorSkins.DOCTORS.get(which - 1);
-            display(plugin, player, which, skin);
+            Skin skin = DoctorSkins.DOCTORS.get(which);
+            display(plugin, player, which + 1001, skin);
             // reduce regen count
             int reduced = rsr.getCount() - 1;
             plugin.getQueryFactory().doRegenerationDecrement(player.getUniqueId(), reduced);
