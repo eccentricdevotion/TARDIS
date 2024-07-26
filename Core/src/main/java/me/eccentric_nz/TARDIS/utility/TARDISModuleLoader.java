@@ -9,6 +9,7 @@ import me.eccentric_nz.tardischemistry.block.ChemistryBlockRecipes;
 import me.eccentric_nz.tardischemistry.lab.BleachRecipe;
 import me.eccentric_nz.tardischemistry.lab.HeatBlockRunnable;
 import me.eccentric_nz.tardischemistry.product.GlowStickRunnable;
+import me.eccentric_nz.tardisregeneration.TARDISRegeneration;
 import me.eccentric_nz.tardisshop.TARDISShop;
 import me.eccentric_nz.tardisshop.TARDISShopDisplayConverter;
 import me.eccentric_nz.tardissonicblaster.TARDISSonicBlaster;
@@ -52,6 +53,10 @@ public class TARDISModuleLoader {
                     conversions++;
                 }
             }
+        }
+        if (plugin.getConfig().getBoolean("modules.regeneration")) {
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Loading Regeneration Module");
+            new TARDISRegeneration(plugin).enable();
         }
         if (plugin.getConfig().getBoolean("modules.shop")) {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Loading Shop Module");
