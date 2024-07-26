@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 
 public class TARDISRecordingTask implements Runnable {
 
@@ -134,6 +135,6 @@ public class TARDISRecordingTask implements Runnable {
             plugin.debug("Can't schedule new recording tasks as plugin is now disabled. If you're shutting down the server, ignore me.");
             return;
         }
-        plugin.setRecordingTask(plugin.getServer().getScheduler().runTaskLaterAsynchronously(plugin, new TARDISRecordingTask(plugin), getTickDelayForNextBatch()));
+        plugin.getServer().getScheduler().runTaskLaterAsynchronously(plugin, new TARDISRecordingTask(plugin), getTickDelayForNextBatch());
     }
 }

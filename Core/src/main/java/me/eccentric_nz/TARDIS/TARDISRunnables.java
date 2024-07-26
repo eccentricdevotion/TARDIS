@@ -73,10 +73,8 @@ public class TARDISRunnables {
         }
         // removes unused drop chest database records from the vaults table.
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISVaultChecker(plugin), 2400);
-
-        int recorder_tick_delay = 5;
         // we schedule it once, it will reschedule itself
-        plugin.setRecordingTask(plugin.getServer().getScheduler().runTaskLaterAsynchronously(plugin, new TARDISRecordingTask(plugin), recorder_tick_delay));
+        plugin.getServer().getScheduler().runTaskLaterAsynchronously(plugin, new TARDISRecordingTask(plugin), 5);
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
             plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISMonsterRunnable(plugin), 2400, 2400);
         }

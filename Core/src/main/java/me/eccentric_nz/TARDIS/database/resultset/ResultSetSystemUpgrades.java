@@ -45,7 +45,11 @@ public class ResultSetSystemUpgrades {
     public boolean resultset() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT " + prefix + "player_prefs.artron_level, " + prefix + "system_upgrades.* FROM " + prefix + "player_prefs, " + prefix + "system_upgrades WHERE " + prefix + "system_upgrades.uuid = ? AND " + prefix + "system_upgrades.tardis_id = ? AND " + prefix + "system_upgrades.uuid = " + prefix + "player_prefs.uuid";
+        String query = "SELECT " + prefix + "player_prefs.artron_level, " + prefix + "system_upgrades.* " +
+                "FROM " + prefix + "player_prefs, " + prefix + "system_upgrades " +
+                "WHERE " + prefix + "system_upgrades.uuid = ? " +
+                "AND " + prefix + "system_upgrades.tardis_id = ? " +
+                "AND " + prefix + "system_upgrades.uuid = " + prefix + "player_prefs.uuid";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -83,7 +87,7 @@ public class ResultSetSystemUpgrades {
                 return false;
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for player_prefs (artron level from UUID) table! " + e.getMessage());
+            plugin.debug("ResultSet error for player_prefs (system upgrades from UUID) table! " + e.getMessage());
             return false;
         } finally {
             try {
@@ -94,7 +98,7 @@ public class ResultSetSystemUpgrades {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing player_prefs (artron level from UUID) statement! " + e.getMessage());
+                plugin.debug("Error closing player_prefs (system upgrades from UUID) statement! " + e.getMessage());
             }
         }
         return true;

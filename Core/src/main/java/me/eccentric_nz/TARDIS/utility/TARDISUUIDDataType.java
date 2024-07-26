@@ -14,12 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.recipes;
+package me.eccentric_nz.TARDIS.utility;
+
+import org.bukkit.persistence.PersistentDataAdapterContext;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.nio.ByteBuffer;
 import java.util.UUID;
-import org.bukkit.persistence.PersistentDataAdapterContext;
-import org.bukkit.persistence.PersistentDataType;
 
 public class TARDISUUIDDataType implements PersistentDataType<byte[], UUID> {
 
