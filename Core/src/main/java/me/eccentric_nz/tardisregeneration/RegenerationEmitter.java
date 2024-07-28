@@ -30,6 +30,7 @@ public class RegenerationEmitter extends TARDISParticleRunnable implements Runna
         plugin.getServer().getScheduler().cancelTask(taskID);
         taskID = 0;
         if (player.isOnline()) {
+            player.setInvulnerable(false);
             // eject the player
             Entity vehicle = player.getVehicle();
             if (vehicle != null) {
@@ -50,10 +51,12 @@ public class RegenerationEmitter extends TARDISParticleRunnable implements Runna
             // add potion effects
             if (plugin.getRegenerationConfig().getBoolean("effects.negative")) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 1800, 1));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 1800, 1));
                 player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 1800, 1));
             }
             if (plugin.getRegenerationConfig().getBoolean("effects.positive")) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 1800, 1));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 1800, 1));
             }
             if (plugin.getRegenerationConfig().getBoolean("restore.health")) {
                 player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());

@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.autonomous.TARDISAutonomousDeath;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.flight.FlightReturnData;
-import me.eccentric_nz.tardisregeneration.Regenerator;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
@@ -65,9 +64,6 @@ public class TARDISTimeLordDeathListener implements Listener {
     public void onTimeLordDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
         UUID uuid = player.getUniqueId();
-        if (plugin.getConfig().getBoolean("modules.regeneration") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
-            new Regenerator().processPlayer(plugin, player);
-        }
         if (plugin.getConfig().getBoolean("allow.autonomous") && TARDISPermission.hasPermission(player, "tardis.autonomous")) {
             new TARDISAutonomousDeath(plugin).automate(player);
         }

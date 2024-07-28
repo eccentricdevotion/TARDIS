@@ -74,6 +74,10 @@ public class TARDISJoinListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        if (plugin.getConfig().getBoolean("modules.regeneration")) {
+            // reset invulnerability as player may have logged out during regeneration
+            player.setInvulnerable(false);
+        }
         String uuid = player.getUniqueId().toString();
         if (plugin.getKitsConfig().getBoolean("give.join.enabled")) {
             if (TARDISPermission.hasPermission(player, "tardis.kit.join")) {

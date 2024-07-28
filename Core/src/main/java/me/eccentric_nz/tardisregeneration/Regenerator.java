@@ -28,6 +28,9 @@ import java.util.HashMap;
 public class Regenerator {
 
     private static void display(TARDIS plugin, Player player, int cmd, Skin skin) {
+        // make player invulnerable
+        player.setInvulnerable(true);
+        // create the regeneration item model
         ItemStack totem = new ItemStack(Material.TOTEM_OF_UNDYING, 1);
         ItemMeta im = totem.getItemMeta();
         // hide player
