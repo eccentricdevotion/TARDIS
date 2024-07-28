@@ -27,7 +27,7 @@ public enum Monster {
 
     CYBERMAN("Cyberman", EntityType.ZOMBIE, "cyberman", 2, 4, Material.IRON_INGOT, MonsterSkins.CYBERMAN),
     DALEK("Dalek", EntityType.SKELETON, "dalek", 3, 10000005, Material.SLIME_BALL, 10000004, null),
-    DALEK_SEC("Dalek Sec", EntityType.ZOMBIFIED_PIGLIN, "dalek_sec", 22, 4, Material.MANGROVE_PROPAGULE, MonsterSkins.DALEK_SEC),
+    DALEK_SEC("Dalek Sec", EntityType.ZOMBIFIED_PIGLIN, "dalek_sec", 22, 4, Material.MANGROVE_PROPAGULE, CharacterSkins.DALEK_SEC),
     DAVROS("Davros", EntityType.ZOMBIFIED_PIGLIN, "davros", 23, 4, Material.CRIMSON_BUTTON, null),
     EMPTY_CHILD("Empty Child", EntityType.ZOMBIE, "empty", 4, 4, Material.SUGAR, MonsterSkins.EMPTY_CHILD),
     HATH("Hath", EntityType.ZOMBIFIED_PIGLIN, "hath", 16, 5, Material.PUFFERFISH, 4, null),
