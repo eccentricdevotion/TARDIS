@@ -36,6 +36,7 @@ import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.messaging.TARDISUpdateLister;
 import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
 import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
+import me.eccentric_nz.TARDIS.sonic.TARDISSonicDock;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateBlocks;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateableChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -186,7 +187,7 @@ class TARDISUpdateCommand {
                 }
             }
             if (new TARDISUpdateableChecker(plugin, updateable, player, tardis, tardis_block).canUpdate()) {
-                if ((updateable.equals(Updateable.ROTOR) || updateable.equals(Updateable.MONITOR) || updateable.equals(Updateable.MONITOR_FRAME))
+                if ((updateable.equals(Updateable.ROTOR) || updateable.equals(Updateable.MONITOR) || updateable.equals(Updateable.MONITOR_FRAME) || updateable.equals(Updateable.SONIC_DOCK))
                         && args.length == 3 && args[2].equalsIgnoreCase("unlock")) {
                     // get frame location
                     ItemFrame itemFrame = null;
@@ -201,6 +202,7 @@ class TARDISUpdateCommand {
                             im.setDisplayName("Monitor Frame");
                             glass.setItemMeta(im);
                         }
+                        case SONIC_DOCK -> itemFrame = TARDISSonicDock.getItemFrame(tardis.getTardisId());
                     }
                     if (itemFrame != null) {
                         TARDISTimeRotor.unlockItemFrame(itemFrame);

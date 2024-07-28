@@ -32,6 +32,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
 import java.util.Collections;
@@ -44,6 +45,25 @@ public class TARDISSonicDock {
 
     public TARDISSonicDock(TARDIS plugin) {
         this.plugin = plugin;
+    }
+
+    public static ItemFrame getItemFrame(int id) {
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        where.put("type", 48);
+        ResultSetControls rsc = new ResultSetControls(TARDIS.plugin, where, false);
+        if (rsc.resultSet()) {
+            Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+            if (location != null) {
+                BoundingBox box = new BoundingBox(location.getBlockX(), location.getBlockY(), location.getBlockZ(), location.getBlockX() + 1, location.getBlockY() + 1, location.getBlockZ() + 1);
+                for (Entity e : location.getWorld().getNearbyEntities(box, (e) -> e.getType() == EntityType.ITEM_FRAME)) {
+                    if (e instanceof ItemFrame frame && frame.getItem().getType() == Material.FLOWER_POT) {
+                        return frame;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     public void dock(int id, Interaction interaction, Player player, ItemStack sonic) {
