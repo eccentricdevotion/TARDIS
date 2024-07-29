@@ -17,7 +17,6 @@
 package me.eccentric_nz.tardisweepingangels.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicFreeze;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
@@ -102,7 +101,7 @@ public class EquipCommand {
                         meta.setCustomModelData(5);
                     }
                     if (monster == Monster.CLOCKWORK_DROID) {
-                        meta.setCustomModelData(TARDISConstants.RANDOM.nextBoolean() ? 7 : 4);
+                        meta.setCustomModelData(7);
                     }
                     head.setItemMeta(meta);
                     ee.setHelmet(head);
