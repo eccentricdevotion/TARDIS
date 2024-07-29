@@ -25,6 +25,7 @@ import org.bukkit.entity.EntityType;
 
 public enum Monster {
 
+    CLOCKWORK_DROID("Clockwork Droid", EntityType.ZOMBIE, "clockwork", 27, 4, Material.HOST_ARMOR_TRIM_SMITHING_TEMPLATE, MonsterSkins.CLOCKWORK_DROID_MALE),
     CYBERMAN("Cyberman", EntityType.ZOMBIE, "cyberman", 2, 4, Material.IRON_INGOT, MonsterSkins.CYBERMAN),
     DALEK("Dalek", EntityType.SKELETON, "dalek", 3, 10000005, Material.SLIME_BALL, 10000004, null),
     DALEK_SEC("Dalek Sec", EntityType.ZOMBIFIED_PIGLIN, "dalek_sec", 22, 4, Material.MANGROVE_PROPAGULE, CharacterSkins.DALEK_SEC),
@@ -39,12 +40,14 @@ public enum Monster {
     OOD("Ood", EntityType.HUSK, "ood", 12, 29, Material.ROTTEN_FLESH, 30, CharacterSkins.OOD),
     OSSIFIED("Ossified Time Zombie", EntityType.ZOMBIE, "ossified", 24, 4, Material.CHARCOAL, null),
     RACNOSS("Racnoss", EntityType.PIGLIN_BRUTE, "racnoss", 21, 5, Material.SPIDER_EYE, 4, MonsterSkins.RACNOSS),
+    SCARECROW("Scarecrow", EntityType.ZOMBIE, "scarecrow", 26, 4, Material.WHEAT, MonsterSkins.SCARECROW),
     SEA_DEVIL("Sea Devil", EntityType.DROWNED, "devil", 19, 4, Material.KELP, MonsterSkins.SEA_DEVIL),
     SILENT("Silent", EntityType.SKELETON, "silent", 6, 11, Material.END_STONE, 5, MonsterSkins.SILENCE),
     SILURIAN("Silurian", EntityType.SKELETON, "silurian", 7, 4, Material.FEATHER, MonsterSkins.SILURIAN),
     SLITHEEN("Slitheen", EntityType.ZOMBIE, "slitheen", 20, 4, Material.TURTLE_EGG, MonsterSkins.SLITHEEN),
     SONTARAN("Sontaran", EntityType.ZOMBIE, "sontaran", 8, 5, Material.POTATO, 4, MonsterSkins.SONTARAN),
     STRAX("Strax", EntityType.ZOMBIFIED_PIGLIN, "strax", 9, 4, Material.BAKED_POTATO, null),
+    SYCORAX("Sycorax", EntityType.ZOMBIE, "sycorax", 25, 4, Material.BONE_MEAL, MonsterSkins.SYCORAX),
     TOCLAFANE("Toclafane", EntityType.ZOMBIE, "toclafane", 13, 2, Material.GUNPOWDER, null),
     VASHTA_NERADA("Vashta Nerada", EntityType.ZOMBIE, "vashta", 10, 5, Material.BOOK, 4, MonsterSkins.VASHTA_NERADA),
     WEEPING_ANGEL("Weeping Angel", EntityType.SKELETON, "angel", 1, 5, Material.BRICK, MonsterSkins.WEEPING_ANGEL),

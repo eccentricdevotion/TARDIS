@@ -35,6 +35,7 @@ public class TWAZombie extends Zombie {
     private double oldX;
     private double oldZ;
     private int i = 0;
+    private int variant = 0;
 
     public TWAZombie(EntityType<? extends Zombie> type, Level level) {
         super(type, level);
@@ -47,11 +48,11 @@ public class TWAZombie extends Zombie {
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
             ItemMeta im = bukkit.getItemMeta();
             if (oldX == getX() && oldZ == getZ()) {
-                im.setCustomModelData(405);
+                im.setCustomModelData(405 + variant);
                 i = 0;
             } else {
                 // play move animation
-                int cmd = getTarget() != null ? 406 : 400;
+                int cmd = getTarget() != null ? 406 + variant : 400 + variant;
                 im.setCustomModelData(cmd + frames[i]);
                 i++;
                 if (i == frames.length) {
@@ -64,5 +65,9 @@ public class TWAZombie extends Zombie {
             oldZ = getZ();
         }
         super.aiStep();
+    }
+
+    public void setVariant(int variant) {
+        this.variant = variant;
     }
 }

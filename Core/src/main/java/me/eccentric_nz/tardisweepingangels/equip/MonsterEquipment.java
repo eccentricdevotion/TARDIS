@@ -37,11 +37,14 @@ public class MonsterEquipment {
         } else if (entity instanceof Husk || entity instanceof ArmorStand) {
             return entity.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
         } else if (entity instanceof Zombie) {
-            return (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)
+            return (pdc.has(TARDISWeepingAngels.CLOCKWORK_DROID, PersistentDataType.INTEGER)
+                    || pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)
                     || pdc.has(TARDISWeepingAngels.EMPTY, PersistentDataType.INTEGER)
                     || pdc.has(TARDISWeepingAngels.OSSIFIED, PersistentDataType.INTEGER)
+                    || pdc.has(TARDISWeepingAngels.SCARECROW, PersistentDataType.INTEGER)
                     || pdc.has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)
                     || pdc.has(TARDISWeepingAngels.SONTARAN, PersistentDataType.INTEGER)
+                    || pdc.has(TARDISWeepingAngels.SYCORAX, PersistentDataType.INTEGER)
                     || pdc.has(TARDISWeepingAngels.VASHTA, PersistentDataType.INTEGER)
                     || pdc.has(TARDISWeepingAngels.ZYGON, PersistentDataType.INTEGER));
         } else if (entity instanceof Skeleton) {
@@ -97,6 +100,9 @@ public class MonsterEquipment {
             }
         }
         if (entity instanceof Zombie) {
+            if (pdc.has(TARDISWeepingAngels.CLOCKWORK_DROID, PersistentDataType.INTEGER)) {
+                return Monster.CLOCKWORK_DROID;
+            }
             if (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)) {
                 return Monster.CYBERMAN;
             }
@@ -106,11 +112,17 @@ public class MonsterEquipment {
             if (pdc.has(TARDISWeepingAngels.OSSIFIED, PersistentDataType.INTEGER)) {
                 return Monster.OSSIFIED;
             }
+            if (pdc.has(TARDISWeepingAngels.SCARECROW, PersistentDataType.INTEGER)) {
+                return Monster.SCARECROW;
+            }
             if (pdc.has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)) {
                 return Monster.SLITHEEN;
             }
             if (pdc.has(TARDISWeepingAngels.SONTARAN, PersistentDataType.INTEGER)) {
                 return Monster.SONTARAN;
+            }
+            if (pdc.has(TARDISWeepingAngels.SYCORAX, PersistentDataType.INTEGER)) {
+                return Monster.SYCORAX;
             }
             if (pdc.has(TARDISWeepingAngels.VASHTA, PersistentDataType.INTEGER)) {
                 return Monster.VASHTA_NERADA;

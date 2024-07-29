@@ -23,6 +23,7 @@ import me.eccentric_nz.tardisweepingangels.death.Death;
 import me.eccentric_nz.tardisweepingangels.death.PlayerDeath;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
 import me.eccentric_nz.tardisweepingangels.equip.PlayerUndisguise;
+import me.eccentric_nz.tardisweepingangels.monsters.clockwork_droids.ClockworkDroidRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.cybermen.CybermanRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekGlideListener;
 import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekRunnable;
@@ -42,6 +43,7 @@ import me.eccentric_nz.tardisweepingangels.monsters.ood.OodListener;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.VillagerCuredListener;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.VillagerSpawnListener;
 import me.eccentric_nz.tardisweepingangels.monsters.racnoss.RacnossRunnable;
+import me.eccentric_nz.tardisweepingangels.monsters.scarecrows.ScarecrowRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.sea_devils.SeaDevilRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.silent.CleanGuardians;
 import me.eccentric_nz.tardisweepingangels.monsters.silent.SilentRunnable;
@@ -49,6 +51,7 @@ import me.eccentric_nz.tardisweepingangels.monsters.silurians.SilurianRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.silurians.SilurianSpawnerListener;
 import me.eccentric_nz.tardisweepingangels.monsters.slitheen.SlitheenRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.sontarans.SontaranRunnable;
+import me.eccentric_nz.tardisweepingangels.monsters.sycorax.SycoraxRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.BeeSpawnListener;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.ToclafaneListener;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.ToclafaneRunnable;
@@ -70,6 +73,7 @@ public class TARDISWeepingAngels {
     private static final List<UUID> guards = new ArrayList<>();
     private static final List<UUID> playersWithGuards = new ArrayList<>();
     public static NamespacedKey ANGEL;
+    public static NamespacedKey CLOCKWORK_DROID;
     public static NamespacedKey CYBERMAN;
     public static NamespacedKey DALEK;
     public static NamespacedKey DALEK_SEC;
@@ -88,11 +92,13 @@ public class TARDISWeepingAngels {
     public static NamespacedKey OWNER_UUID;
     public static NamespacedKey FOLLOW;
     public static NamespacedKey RACNOSS;
+    public static NamespacedKey SCARECROW;
     public static NamespacedKey SILENT;
     public static NamespacedKey SILURIAN;
     public static NamespacedKey SLITHEEN;
     public static NamespacedKey SONTARAN;
     public static NamespacedKey STRAX;
+    public static NamespacedKey SYCORAX;
     public static NamespacedKey TOCLAFANE;
     public static NamespacedKey VASHTA;
     public static NamespacedKey WARRIOR;
@@ -196,6 +202,7 @@ public class TARDISWeepingAngels {
         // start repeating spawn tasks
         long delay = plugin.getMonstersConfig().getLong("spawn_rate.how_often");
         List<Runnable> spawners = Arrays.asList(
+                new ClockworkDroidRunnable(plugin),
                 new CybermanRunnable(plugin),
                 new DalekRunnable(plugin),
                 new EmptyChildRunnable(plugin),
@@ -205,11 +212,13 @@ public class TARDISWeepingAngels {
                 new JudoonRunnable(plugin),
                 new MireRunnable(plugin),
                 new RacnossRunnable(plugin),
+                new ScarecrowRunnable(plugin),
                 new SeaDevilRunnable(plugin),
                 new SilentRunnable(plugin),
                 new SilurianRunnable(plugin),
                 new SlitheenRunnable(plugin),
                 new SontaranRunnable(plugin),
+                new SycoraxRunnable(plugin),
                 new ToclafaneRunnable(plugin),
                 new WeepingAngelsRunnable(plugin),
                 new ZygonRunnable(plugin)
@@ -241,6 +250,8 @@ public class TARDISWeepingAngels {
     private void initKeys(TARDIS plugin) {
         ANGEL = new NamespacedKey(plugin, "angel");
         PDC_KEYS.put(Monster.WEEPING_ANGEL, ANGEL);
+        CLOCKWORK_DROID = new NamespacedKey(plugin, "clockwork_droid");
+        PDC_KEYS.put(Monster.CLOCKWORK_DROID, CLOCKWORK_DROID);
         CYBERMAN = new NamespacedKey(plugin, "cyberman");
         PDC_KEYS.put(Monster.CYBERMAN, CYBERMAN);
         DALEK = new NamespacedKey(plugin, "dalek");
@@ -273,6 +284,8 @@ public class TARDISWeepingAngels {
         FOLLOW = new NamespacedKey(plugin, "follow");
         RACNOSS = new NamespacedKey(plugin, "racnoss");
         PDC_KEYS.put(Monster.RACNOSS, RACNOSS);
+        SCARECROW = new NamespacedKey(plugin, "scarecrow");
+        PDC_KEYS.put(Monster.SCARECROW, SCARECROW);
         SILENT = new NamespacedKey(plugin, "silent");
         PDC_KEYS.put(Monster.SILENT, SILENT);
         SILURIAN = new NamespacedKey(plugin, "silurian");
@@ -283,6 +296,8 @@ public class TARDISWeepingAngels {
         PDC_KEYS.put(Monster.SONTARAN, SONTARAN);
         STRAX = new NamespacedKey(plugin, "strax");
         PDC_KEYS.put(Monster.STRAX, STRAX);
+        SYCORAX = new NamespacedKey(plugin, "sycorax");
+        PDC_KEYS.put(Monster.SYCORAX, SYCORAX);
         TOCLAFANE = new NamespacedKey(plugin, "toclafane");
         PDC_KEYS.put(Monster.TOCLAFANE, TOCLAFANE);
         VASHTA = new NamespacedKey(plugin, "vashta");

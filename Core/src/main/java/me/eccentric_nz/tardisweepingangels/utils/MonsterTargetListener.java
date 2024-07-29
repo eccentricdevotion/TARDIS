@@ -44,6 +44,10 @@ public class MonsterTargetListener implements Listener {
         boolean ignore = false;
         switch (entity.getType()) {
             case ZOMBIE -> {
+                // clockwork droid
+                if (pdc.has(TARDISWeepingAngels.CLOCKWORK_DROID, PersistentDataType.INTEGER)) {
+                    ignore = isWearingMonsterHead(player, Monster.CLOCKWORK_DROID.getMaterial());
+                }
                 // cyberman
                 if (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)) {
                     ignore = isWearingMonsterHead(player, Monster.CYBERMAN.getMaterial());
@@ -52,6 +56,10 @@ public class MonsterTargetListener implements Listener {
                 if (pdc.has(TARDISWeepingAngels.EMPTY, PersistentDataType.INTEGER)) {
                     ignore = isWearingMonsterHead(player, Monster.EMPTY_CHILD.getMaterial());
                 }
+                // scarecrow
+                if (pdc.has(TARDISWeepingAngels.SCARECROW, PersistentDataType.INTEGER)) {
+                    ignore = isWearingMonsterHead(player, Monster.SCARECROW.getMaterial());
+                }
                 // slitheen
                 if (pdc.has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)) {
                     ignore = isWearingMonsterHead(player, Monster.SLITHEEN.getMaterial());
@@ -59,6 +67,10 @@ public class MonsterTargetListener implements Listener {
                 // sontaran
                 if (pdc.has(TARDISWeepingAngels.SONTARAN, PersistentDataType.INTEGER)) {
                     ignore = isWearingMonsterHead(player, Monster.SONTARAN.getMaterial());
+                }
+                // sycorax
+                if (pdc.has(TARDISWeepingAngels.SYCORAX, PersistentDataType.INTEGER)) {
+                    ignore = isWearingMonsterHead(player, Monster.SYCORAX.getMaterial());
                 }
                 // vashta nerada
                 if (pdc.has(TARDISWeepingAngels.VASHTA, PersistentDataType.INTEGER)) {

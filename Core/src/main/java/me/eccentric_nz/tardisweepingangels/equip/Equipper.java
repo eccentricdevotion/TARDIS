@@ -66,12 +66,16 @@ public class Equipper {
     }
 
     public void setHelmetAndInvisibilty() {
+        setHelmetAndInvisibilty(0);
+    }
+
+    public void setHelmetAndInvisibilty(int variant) {
         // make a monster item
         ItemStack helmet = new ItemStack(monster.getMaterial(), 1);
         ItemMeta headMeta = helmet.getItemMeta();
         headMeta.setDisplayName(monster.getName() + " Head");
         // 405 = static model
-        headMeta.setCustomModelData(405);
+        headMeta.setCustomModelData(405 + variant);
         helmet.setItemMeta(headMeta);
         // set equipment
         EntityEquipment ee = le.getEquipment();
@@ -120,7 +124,7 @@ public class Equipper {
             ee.setItemInMainHandDropChance(0);
             ee.setItemInOffHandDropChance(0);
             ee.setHelmetDropChance(0);
-            // don't pickup items
+            // don't pick up items
             le.setCanPickupItems(false);
             // make silent
             le.setSilent(true);

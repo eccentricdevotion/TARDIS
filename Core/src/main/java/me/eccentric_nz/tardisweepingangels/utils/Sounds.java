@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
@@ -31,6 +28,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class Sounds implements Listener {
 
@@ -53,6 +54,11 @@ public class Sounds implements Listener {
             PersistentDataContainer pdc = entity.getPersistentDataContainer();
             String which = "";
             long delay = 50L;
+            // TODO get delay for clockwork, scarecrow, sycorax
+            if (pdc.has(TARDISWeepingAngels.CLOCKWORK_DROID, PersistentDataType.INTEGER)) {
+                delay = 180L;
+                which = "clockwork_droid";
+            }
             if (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)) {
                 which = "cyberman";
                 delay = 80L;
@@ -89,6 +95,10 @@ public class Sounds implements Listener {
                 delay = 180L;
                 which = "racnoss";
             }
+            if (pdc.has(TARDISWeepingAngels.SCARECROW, PersistentDataType.INTEGER)) {
+                delay = 180L;
+                which = "scarecrow";
+            }
             if (pdc.has(TARDISWeepingAngels.SILURIAN, PersistentDataType.INTEGER)) {
                 which = "silurian";
             }
@@ -98,6 +108,10 @@ public class Sounds implements Listener {
             if (pdc.has(TARDISWeepingAngels.SONTARAN, PersistentDataType.INTEGER)) {
                 which = "sontaran";
                 delay = 55L;
+            }
+            if (pdc.has(TARDISWeepingAngels.SYCORAX, PersistentDataType.INTEGER)) {
+                delay = 180L;
+                which = "sycorax";
             }
             if (pdc.has(TARDISWeepingAngels.VASHTA, PersistentDataType.INTEGER)) {
                 which = "vashta";

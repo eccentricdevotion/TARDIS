@@ -92,17 +92,23 @@ public class ChunkListener implements Listener {
                     if (d instanceof Husk husk) {
                         new ResetMonster(plugin, husk).reset();
                     } else {
-                        if (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)) {
+                        if (pdc.has(TARDISWeepingAngels.CLOCKWORK_DROID, PersistentDataType.INTEGER)) {
+                            new Equipper(Monster.CLOCKWORK_DROID, zombie, false, false).setHelmetAndInvisibilty();
+                        } else if (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)) {
                             new Equipper(Monster.CYBERMAN, zombie, false, false).setHelmetAndInvisibilty();
                         } else if (pdc.has(TARDISWeepingAngels.EMPTY, PersistentDataType.INTEGER)) {
                             new Equipper(Monster.EMPTY_CHILD, zombie, false, false).setHelmetAndInvisibilty();
                             EmptyChildEquipment.setSpeed(zombie);
                         } else if (pdc.has(TARDISWeepingAngels.OSSIFIED, PersistentDataType.INTEGER)) {
                             new Equipper(Monster.OSSIFIED, zombie, false, false).setHelmetAndInvisibilty();
+                        } else if (pdc.has(TARDISWeepingAngels.SCARECROW, PersistentDataType.INTEGER)) {
+                            new Equipper(Monster.SCARECROW, zombie, false, false).setHelmetAndInvisibilty();
                         } else if (pdc.has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)) {
                             new Equipper(Monster.SLITHEEN, zombie, false).setHelmetAndInvisibilty();
                         } else if (pdc.has(TARDISWeepingAngels.SONTARAN, PersistentDataType.INTEGER)) {
                             new Equipper(Monster.SONTARAN, zombie, false, false).setHelmetAndInvisibilty();
+                        } else if (pdc.has(TARDISWeepingAngels.SYCORAX, PersistentDataType.INTEGER)) {
+                            new Equipper(Monster.SYCORAX, zombie, false, false).setHelmetAndInvisibilty();
                         } else if (pdc.has(TARDISWeepingAngels.VASHTA, PersistentDataType.INTEGER)) {
                             new Equipper(Monster.VASHTA_NERADA, zombie, false, false).setHelmetAndInvisibilty();
                         } else if (pdc.has(TARDISWeepingAngels.ZYGON, PersistentDataType.INTEGER)) {

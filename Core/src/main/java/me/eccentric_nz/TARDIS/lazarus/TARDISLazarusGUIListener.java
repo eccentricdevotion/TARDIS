@@ -72,9 +72,9 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     private final HashMap<UUID, String> disguises = new HashMap<>();
     private final List<Integer> slimeSizes = Arrays.asList(1, 2, 4);
     private final List<Integer> pufferStates = Arrays.asList(0, 1, 2);
-    private final List<String> twaMonsters = Arrays.asList("CYBERMAN", "DALEK", "DALEK_SEC", "DAVROS", "EMPTY_CHILD", "HATH", "HEADLESS_MONK", "ICE WARRIOR", "JUDOON", "K9", "OOD", "RACNOSS", "SEA_DEVIL", "SILENT", "SILURIAN", "SLITHEEN", "SONTARAN", "STRAX", "TOCLAFANE", "VASHTA_NERADA", "WEEPING_ANGEL", "ZYGON");
-    private final List<String> twaOnly = Arrays.asList("DALEK", "DAVROS", "HATH", "K9", "MIRE", "STRAX", "TOCLAFANE");
-    private final List<String> twaHelmets = Arrays.asList("Dalek Head", "Davros Head", "Hath Head", "K9 Head", "Mire Head", "Strax Head", "Toclafane");
+    private final List<String> twaMonsters = Arrays.asList("CLOCKWORK_DROID", "CYBERMAN", "DALEK", "DALEK_SEC", "DAVROS", "EMPTY_CHILD", "HATH", "HEADLESS_MONK", "ICE WARRIOR", "JUDOON", "K9", "OOD", "RACNOSS", "SCARECROW", "SEA_DEVIL", "SILENT", "SILURIAN", "SLITHEEN", "SONTARAN", "STRAX", "SYCORAX", "TOCLAFANE", "VASHTA_NERADA", "WEEPING_ANGEL", "ZYGON");
+    private final List<String> twaOnly = Arrays.asList("DALEK", "DAVROS", "K9", "TOCLAFANE");
+    private final List<String> twaHelmets = Arrays.asList("Dalek Head", "Davros Head", "K9 Head", "Toclafane");
     private final Set<UUID> pagers = new HashSet<>();
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
@@ -139,7 +139,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     player.openInventory(inv);
                 }
                 case 44 -> {
-//                    if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                     pagers.add(uuid);
                     ItemStack monstersButton = view.getItem(slot);
                     ItemMeta monstersMeta = monstersButton.getItemMeta();
@@ -151,7 +150,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                         inv.setContents(new TARDISWeepingAngelsMonstersInventory(plugin).getMonsters());
                     }
                     player.openInventory(inv);
-//                    }
                 }
                 case 45 -> { // The Master Switch : ON | OFF
                     ItemStack masterButton = view.getItem(slot);

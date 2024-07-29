@@ -47,6 +47,10 @@ public class PlayerDeath implements Listener {
                     PersistentDataContainer pdc = attacker.getPersistentDataContainer();
                     String name = event.getEntity().getName();
                     if (attacker instanceof Zombie) {
+                        if (pdc.has(TARDISWeepingAngels.CLOCKWORK_DROID, PersistentDataType.INTEGER)) {
+                            event.setDeathMessage(name + " was slain by a Clockwork Droid");
+                            return;
+                        }
                         if (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)) {
                             String what_happened = (plugin.getMonstersConfig().getBoolean("cybermen.can_upgrade")) ? "upgraded" : "slain";
                             event.setDeathMessage(name + " was " + what_happened + " by a Cyberman");
@@ -56,8 +60,8 @@ public class PlayerDeath implements Listener {
                             event.setDeathMessage(name + " was slain by an Empty Child");
                             return;
                         }
-                        if (pdc.has(TARDISWeepingAngels.ZYGON, PersistentDataType.INTEGER)) {
-                            event.setDeathMessage(name + " was slain by a Zygon");
+                        if (pdc.has(TARDISWeepingAngels.SCARECROW, PersistentDataType.INTEGER)) {
+                            event.setDeathMessage(name + " was slain by a Scarecrow");
                             return;
                         }
                         if (pdc.has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)) {
@@ -68,8 +72,16 @@ public class PlayerDeath implements Listener {
                             event.setDeathMessage(name + " was slain by a Sontaran");
                             return;
                         }
+                        if (pdc.has(TARDISWeepingAngels.SYCORAX, PersistentDataType.INTEGER)) {
+                            event.setDeathMessage(name + " was slain by a Sycorax");
+                            return;
+                        }
                         if (pdc.has(TARDISWeepingAngels.VASHTA, PersistentDataType.INTEGER)) {
                             event.setDeathMessage(name + " was eaten by a Vashta Nerada");
+                            return;
+                        }
+                        if (pdc.has(TARDISWeepingAngels.ZYGON, PersistentDataType.INTEGER)) {
+                            event.setDeathMessage(name + " was slain by a Zygon");
                             return;
                         }
                     }
