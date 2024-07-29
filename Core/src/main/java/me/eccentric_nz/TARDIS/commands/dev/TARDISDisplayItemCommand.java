@@ -161,7 +161,7 @@ public class TARDISDisplayItemCommand {
                     display.setItemStack(is);
                     display.setPersistent(true);
                     display.setInvulnerable(true);
-                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) {
+                    if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR || tdi == TARDISDisplayItem.UNTEMPERED_SCHISM) {
                         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
                     }
                     if (tdi.getMaterial() == Material.AMETHYST_SHARD) {

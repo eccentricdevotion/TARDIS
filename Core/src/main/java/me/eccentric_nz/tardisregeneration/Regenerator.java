@@ -109,7 +109,7 @@ public class Regenerator {
             display(plugin, player, which + 1001, skin);
             // reduce regen count
             int reduced = rsr.getCount() - 1;
-            plugin.getQueryFactory().doRegenerationDecrement(player.getUniqueId(), reduced);
+            plugin.getQueryFactory().setRegenerationCount(player.getUniqueId(), reduced);
             plugin.getMessenger().send(player, TardisModule.REGENERATION, "REGENERATION_REMAINING", reduced);
         }
     }

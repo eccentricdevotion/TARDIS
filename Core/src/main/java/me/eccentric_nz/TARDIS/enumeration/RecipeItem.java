@@ -133,6 +133,7 @@ public enum RecipeItem {
     JUDOON_AMMUNITION(13, RecipeCategory.MISC),
     K9(1, RecipeCategory.MISC),
     // custom block recipes start here
+    UNTEMPERED_SCHISM(1, RecipeCategory.ITEMS),
     GROW(10001, RecipeCategory.CUSTOM_BLOCKS),
     BLUE_BOX(10001, RecipeCategory.CUSTOM_BLOCKS),
     COG(10001, RecipeCategory.CUSTOM_BLOCKS),

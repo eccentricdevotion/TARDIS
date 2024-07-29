@@ -193,7 +193,7 @@ public class TARDISDisplayItemUtils {
      * @param tdi   the TARDISDisplayItem to determine the ItemStack to display
      * @param block the block location to spawn the entity at
      */
-    public static void set(TARDISDisplayItem tdi, Block block, int id) {
+    public static ItemDisplay set(TARDISDisplayItem tdi, Block block, int id) {
         // spawn an item display entity
         if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR || tdi.isLight()) {
             // also set an interaction entity
@@ -234,7 +234,7 @@ public class TARDISDisplayItemUtils {
         double ay = (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
-        if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) {
+        if (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR || tdi == TARDISDisplayItem.UNTEMPERED_SCHISM) {
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
         }
         display.setPersistent(true);
@@ -243,6 +243,7 @@ public class TARDISDisplayItemUtils {
         if (tdi == TARDISDisplayItem.ARTRON_FURNACE) {
             display.setBrightness(new Display.Brightness(15, 15));
         }
+        return display;
     }
 
     /**
