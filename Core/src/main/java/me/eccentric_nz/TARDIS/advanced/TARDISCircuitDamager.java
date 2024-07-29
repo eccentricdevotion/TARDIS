@@ -74,7 +74,7 @@ public class TARDISCircuitDamager {
         ResultSetDiskStorage rs = new ResultSetDiskStorage(plugin, where);
         if (rs.resultSet()) {
             ItemStack[] items;
-            ItemStack[] clone = new ItemStack[9];
+            ItemStack[] clone = new ItemStack[18];
             int i = 0;
             try {
                 items = TARDISSerializeInventory.itemStacksFromString(rs.getConsole());
