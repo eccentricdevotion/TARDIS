@@ -1916,14 +1916,19 @@ commands:
     aliases: [ regeneration, regen ]
     description: Manage player regenerations.
     usage: /<command> [add|remove] [player] [amount]
-    permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
     add:
       description: Add regenerations to a player.
       usage: /<command> add [player] [amount]
+      permission: tardis.admin
     remove:
       description: Remove regenerations from a player.
       usage: /<command> remove [player] [amount]
+      permission: tardis.admin
+    block:
+      description: Remove regenerations from a player.
+      usage: /<command> block [on|off]
+      permission: tardis.regeneration
   # vortex manipulator
   vm:
     aliases: [ vortexmainpulator, tvm ]

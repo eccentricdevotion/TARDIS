@@ -539,7 +539,7 @@ public class QueryFactory {
         }
     }
 
-    public void doRegenerationDecrement(UUID uuid, int reduced) {
+    public void setRegenerationCount(UUID uuid, int reduced) {
         PreparedStatement ps = null;
         String query = "UPDATE " + prefix + "player_prefs SET regenerations = ? WHERE uuid = ?";
         try {
