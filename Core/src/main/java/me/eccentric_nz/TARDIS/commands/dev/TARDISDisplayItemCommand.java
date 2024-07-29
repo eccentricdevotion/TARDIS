@@ -226,7 +226,7 @@ public class TARDISDisplayItemCommand {
             case "chunk" -> {
                 Chunk chunk = player.getLocation().getChunk();
                 for (Entity entity : chunk.getEntities()) {
-                    if (entity instanceof ItemDisplay || entity instanceof Interaction) {
+                    if (entity instanceof ItemDisplay || entity instanceof Interaction || entity instanceof TextDisplay) {
                         entity.remove();
                     }
                 }

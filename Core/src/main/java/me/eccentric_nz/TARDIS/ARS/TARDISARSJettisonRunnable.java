@@ -22,13 +22,14 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.RoomCleaner;
 import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeHelper;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 
 import java.util.HashMap;
 
@@ -96,6 +97,15 @@ class TARDISARSJettisonRunnable implements Runnable {
         if (r.equals("EYE")) {
             // refresh chunk
             BiomeHelper.refreshChunk(slot.getChunk());
+        }
+        if (r.equals("LIBRARY")) {
+            // remove entities
+            Chunk chunk = slot.getChunk();
+            for (Entity entity : chunk.getEntities()) {
+                if (entity instanceof ItemDisplay || entity instanceof Interaction || entity instanceof TextDisplay) {
+                    entity.remove();
+                }
+            }
         }
         // give them their energy!
         if (room != TARDISARS.SLOT) {
