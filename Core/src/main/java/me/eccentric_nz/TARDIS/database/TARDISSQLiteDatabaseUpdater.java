@@ -117,6 +117,7 @@ class TARDISSQLiteDatabaseUpdater {
         prefsupdates.add("wall TEXT DEFAULT 'ORANGE_WOOL'");
         prefsupdates.add("auto_powerup_on INTEGER DEFAULT 0");
         prefsupdates.add("regenerations INTEGER DEFAULT 15");
+        prefsupdates.add("regen_block_on INTEGER DEFAULT 0");
         tardisupdates.add("abandoned INTEGER DEFAULT 0");
         tardisupdates.add("adapti_on INTEGER DEFAULT 0");
         tardisupdates.add("artron_level INTEGER DEFAULT 0");

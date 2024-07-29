@@ -68,6 +68,7 @@ public class ResultSetPlayerPrefs {
     private boolean telepathyOn;
     private boolean travelbarOn;
     private boolean infoOn;
+    private boolean regenBlockOn;
     private HADS hadsType;
     private int artronLevel;
     private int flightMode;
@@ -170,6 +171,7 @@ public class ResultSetPlayerPrefs {
                     autoPowerUp = rs.getBoolean("auto_powerup_on");
                     hum = rs.getString("hum");
                     regenerations = rs.getInt("regenerations");
+                    regenBlockOn = rs.getBoolean("regen_block_on");
                 } else {
                     return false;
                 }
@@ -339,5 +341,9 @@ public class ResultSetPlayerPrefs {
 
     public int getRegenerations() {
         return regenerations;
+    }
+
+    public boolean isRegenBlockOn() {
+        return regenBlockOn;
     }
 }

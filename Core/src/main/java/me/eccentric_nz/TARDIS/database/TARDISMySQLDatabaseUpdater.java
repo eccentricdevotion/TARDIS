@@ -108,6 +108,7 @@ class TARDISMySQLDatabaseUpdater {
         prefsupdates.add("info_on int(1) DEFAULT '0'");
         prefsupdates.add("auto_powerup_on int(1) DEFAULT '0'");
         prefsupdates.add("regenerations int(2) DEFAULT '15'");
+        prefsupdates.add("regen_block_on int(1) DEFAULT '0'");
         destsupdates.add("preset varchar(32) DEFAULT ''");
         destsupdates.add("slot int(1) DEFAULT '-1'");
         destsupdates.add("icon varchar(64) DEFAULT ''");

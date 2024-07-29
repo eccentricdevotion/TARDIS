@@ -80,8 +80,8 @@ public class TARDISRegenerationCommand extends TARDISCompleter implements Comman
                         return true;
                     }
                     HashMap<String, Object> set = new HashMap<>();
-                    set.put("regen_block", tf.equals("on")? 1: 0);
-                    HashMap<String, Object> where= new HashMap<>();
+                    set.put("regen_block_on", tf.equals("on") ? 1 : 0);
+                    HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", player.getUniqueId().toString());
                     plugin.getQueryFactory().doUpdate("player_prefs", set, where);
                     plugin.getMessenger().send(player, TardisModule.REGENERATION, "REGENERATION_BLOCK", tf);

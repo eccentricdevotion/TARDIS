@@ -32,6 +32,7 @@ public class ResultSetRegenerations {
     private final String prefix;
     private int artronLevel = 0;
     private int count = 0;
+    private boolean regenBlockOn = false;
 
     public ResultSetRegenerations(TARDIS plugin) {
         this.plugin = plugin;
@@ -41,7 +42,7 @@ public class ResultSetRegenerations {
     public boolean fromUUID(String uuid) {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT artron_level, regenerations FROM " + prefix + "player_prefs WHERE " + prefix + "player_prefs.uuid = ?";
+        String query = "SELECT artron_level, regenerations, regen_block_on FROM " + prefix + "player_prefs WHERE " + prefix + "player_prefs.uuid = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -51,6 +52,7 @@ public class ResultSetRegenerations {
                 rs.next();
                 artronLevel = rs.getInt("artron_level");
                 count = rs.getInt("regenerations");
+                regenBlockOn = rs.getBoolean("regen_block_on");
             } else {
                 return false;
             }
@@ -78,5 +80,9 @@ public class ResultSetRegenerations {
 
     public int getCount() {
         return count;
+    }
+
+    public boolean isRegenBlockOn() {
+        return regenBlockOn;
     }
 }
