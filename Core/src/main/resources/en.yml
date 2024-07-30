@@ -825,6 +825,7 @@ RECIPE_VORTEX: "The TARDIS Vortex Manipulator module is not enabled on this serv
 REDPROTECT: "That location is in another player's region!"
 REGENERATION_ARTRON: "You don't have enough Time Lord energy to regenerate!"
 REGENERATION_BLOCK: "Regeneration block has been turned %s."
+REGENERATION_BLOCKED: "You are currently blocking regenerations, use %s to turn them back on."
 REGENERATION_COUNT: "You don't have any regenerations left!"
 REGENERATION_REMAINING: "You have %s regenerations remaining."
 REGENERATION_SET: "%s's regeneration count was set to %s."

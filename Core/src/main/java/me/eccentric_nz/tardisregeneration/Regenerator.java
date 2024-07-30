@@ -84,6 +84,11 @@ public class Regenerator {
         String uuid = player.getUniqueId().toString();
         ResultSetRegenerations rsr = new ResultSetRegenerations(plugin);
         if (rsr.fromUUID(uuid)) {
+            // is the player blocking regenerations?
+            if (rsr.isRegenBlockOn()) {
+                plugin.getMessenger().sendColouredCommand(player, "REGENERATION_BLOCKED", "/regeneration block off", plugin);
+                return;
+            }
             // does the player have any regenerations left?
             if (rsr.getCount() <= 0) {
                 plugin.getMessenger().send(player, TardisModule.REGENERATION, "REGENERATION_COUNT");
