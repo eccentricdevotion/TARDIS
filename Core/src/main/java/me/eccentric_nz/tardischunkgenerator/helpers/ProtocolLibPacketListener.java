@@ -74,6 +74,7 @@ public class ProtocolLibPacketListener {
                                 chicken.removePassenger(stand);
                                 chicken.remove();
                                 ArmorStand as = (ArmorStand) stand;
+                                TARDIS.plugin.getTrackerKeeper().getStillFlyingNotReturning().remove(player.getUniqueId());
                                 // teleport player back to the TARDIS interior
                                 new TARDISExteriorFlight(TARDIS.plugin).stopFlying(player, as);
                             });
