@@ -18,13 +18,13 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicFreeze;
+import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.util.Vector;
 
 /**
  * @author eccentric_nz
@@ -38,22 +38,22 @@ public class TARDISFrameCommand {
     }
 
     public static ItemFrame getItemFrame(Player player) {
-//        ItemFrame frame = null;
+        ItemFrame frame = null;
         // get the item frame player is looking at
         Location observerPos = player.getEyeLocation();
-        Vector observerDir = observerPos.getDirection();
-        Vector observerStart = observerPos.toVector();
-        Vector observerEnd = observerStart.add(observerDir.multiply(16));
+        TARDISVector3D observerDir = new TARDISVector3D(observerPos.getDirection());
+        TARDISVector3D observerStart = new TARDISVector3D(observerPos);
+        TARDISVector3D observerEnd = observerStart.add(observerDir.multiply(16));
         // Get nearby entities
         for (Entity target : player.getNearbyEntities(8.0d, 8.0d, 8.0d)) {
             // Bounding box of the given player
-            Vector targetPos = target.getLocation().toVector();
-            Vector minimum = targetPos.add(new Vector(-0.5, 0, -0.5));
-            Vector maximum = targetPos.add(new Vector(0.5, 1.67, 0.5));
+            TARDISVector3D targetPos = new TARDISVector3D(target.getLocation());
+            TARDISVector3D minimum = targetPos.add(-0.5, 0, -0.5);
+            TARDISVector3D maximum = targetPos.add(0.5, 1.67, 0.5);
             if (target.getType().equals(EntityType.ITEM_FRAME) && TARDISSonicFreeze.hasIntersection(observerStart, observerEnd, minimum, maximum)) {
-//                if (frame == null || frame.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
-                return (ItemFrame) target;
-//                }
+                if (frame == null || frame.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
+                    return (ItemFrame) target;
+                }
             }
         }
         return null;

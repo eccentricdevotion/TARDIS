@@ -19,6 +19,7 @@ package me.eccentric_nz.tardisweepingangels.commands;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicFreeze;
+import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.ArmourStandEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessFlameRunnable;
@@ -33,7 +34,6 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.util.Vector;
 
 public class EquipCommand {
 
@@ -66,16 +66,16 @@ public class EquipCommand {
         }
         // get the armour stand player is looking at
         Location observerPos = player.getEyeLocation();
-        Vector observerDir = observerPos.getDirection();
-        Vector observerStart = observerPos.toVector();
-        Vector observerEnd = observerStart.add(observerDir.multiply(16));
+        TARDISVector3D observerDir = new TARDISVector3D(observerPos.getDirection());
+        TARDISVector3D observerStart = new TARDISVector3D(observerPos);
+        TARDISVector3D observerEnd = observerStart.add(observerDir.multiply(16));
         ArmorStand as = null;
         // Get nearby entities
         for (Entity target : player.getNearbyEntities(8.0d, 8.0d, 8.0d)) {
             // Bounding box of the given player
-            Vector targetPos = target.getLocation().toVector();
-            Vector minimum = targetPos.add(new Vector(-0.5, 0, -0.5));
-            Vector maximum = targetPos.add(new Vector(0.5, 1.67, 0.5));
+            TARDISVector3D targetPos = new TARDISVector3D(target.getLocation());
+            TARDISVector3D minimum = targetPos.add(-0.5, 0, -0.5);
+            TARDISVector3D maximum = targetPos.add(0.5, 1.67, 0.5);
             if (target.getType().equals(EntityType.ARMOR_STAND) && TARDISSonicFreeze.hasIntersection(observerStart, observerEnd, minimum, maximum)) {
                 if (as == null || as.getLocation().distanceSquared(observerPos) > target.getLocation().distanceSquared(observerPos)) {
                     as = (ArmorStand) target;
