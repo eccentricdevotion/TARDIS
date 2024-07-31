@@ -54,9 +54,8 @@ public class Sounds implements Listener {
             PersistentDataContainer pdc = entity.getPersistentDataContainer();
             String which = "";
             long delay = 50L;
-            // TODO get delay for clockwork, scarecrow, sycorax
             if (pdc.has(TARDISWeepingAngels.CLOCKWORK_DROID, PersistentDataType.INTEGER)) {
-                delay = 180L;
+                delay = 80L;
                 which = "clockwork_droid";
             }
             if (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)) {
@@ -96,7 +95,7 @@ public class Sounds implements Listener {
                 which = "racnoss";
             }
             if (pdc.has(TARDISWeepingAngels.SCARECROW, PersistentDataType.INTEGER)) {
-                delay = 180L;
+                delay = 70L;
                 which = "scarecrow";
             }
             if (pdc.has(TARDISWeepingAngels.SILURIAN, PersistentDataType.INTEGER)) {
@@ -110,7 +109,7 @@ public class Sounds implements Listener {
                 delay = 55L;
             }
             if (pdc.has(TARDISWeepingAngels.SYCORAX, PersistentDataType.INTEGER)) {
-                delay = 180L;
+                delay = 70L;
                 which = "sycorax";
             }
             if (pdc.has(TARDISWeepingAngels.VASHTA, PersistentDataType.INTEGER)) {

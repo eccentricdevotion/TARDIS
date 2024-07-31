@@ -38,7 +38,10 @@
 ## Resource Pack / Monsters
 
 1. New mobs and sounds for Resource pack
-   * Whispermen
-   * Endermites -> Cybermats
-   * Iron Golem -> Gunslinger
-   * Slimes -> Adipose
+    * Clockwork Droid (add sfx)
+    * Husk -> Sycorax (add sfx)
+    * Stray -> Scarecrows (add sfx)
+    * Whispermen
+    * Endermites -> Cybermats
+    * Iron Golem -> Gunslinger
+    * Slimes -> Adipose
