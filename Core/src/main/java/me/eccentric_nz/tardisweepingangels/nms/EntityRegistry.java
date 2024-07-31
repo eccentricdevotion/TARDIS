@@ -16,28 +16,19 @@
  */
 package me.eccentric_nz.tardisweepingangels.nms;
 
-import com.mojang.datafixers.DataFixUtils;
-import com.mojang.datafixers.types.Type;
-import net.minecraft.SharedConstants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.MappedRegistry;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.datafix.DataFixers;
-import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
 
 import java.lang.reflect.Field;
 import java.util.IdentityHashMap;
-import java.util.Map;
 
 public class EntityRegistry {
 
     private final String[] all = new String[]{"judoon", "ood", "k9"};
 
-    public static void unfreezeEntityRegistry() throws NoSuchFieldException, IllegalAccessException {
+    public static void unfreeze() throws NoSuchFieldException, IllegalAccessException {
         Field unregisteredIntrusiveHolders = MappedRegistry.class.getDeclaredField("m");
         unregisteredIntrusiveHolders.setAccessible(true);
         unregisteredIntrusiveHolders.set(BuiltInRegistries.ENTITY_TYPE, new IdentityHashMap<EntityType<?>, Holder.Reference<EntityType<?>>>());
@@ -46,19 +37,19 @@ public class EntityRegistry {
         frozen.set(BuiltInRegistries.ENTITY_TYPE, false);
     }
 
-    public void init() {
-        try {
-            unfreezeEntityRegistry();
-            for (String ENTITY_ID : all) {
-                ResourceLocation mcKey = ResourceLocation.withDefaultNamespace(ENTITY_ID);
-                if (BuiltInRegistries.ENTITY_TYPE.getOptional(mcKey).isEmpty()) {
-                    @SuppressWarnings("unchecked") Map<String, Type<?>> types = (Map<String, Type<?>>) DataFixers.getDataFixer().getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion())).findChoiceType(References.ENTITY).types();
-                    types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.HUSK).toString()));
-                    Registry.register(BuiltInRegistries.ENTITY_TYPE, ENTITY_ID, EntityType.Builder.of(EntityType::create, MobCategory.MONSTER).noSummon().build(ENTITY_ID));
-                }
-            }
-            BuiltInRegistries.ENTITY_TYPE.freeze();
-        } catch (NoSuchFieldException | IllegalAccessException ignore) {
-        }
-    }
+//    public void init() {
+//        try {
+//            unfreezeEntityRegistry();
+//            for (String ENTITY_ID : all) {
+//                ResourceLocation mcKey = ResourceLocation.parse(ENTITY_ID);
+//                if (BuiltInRegistries.ENTITY_TYPE.getOptional(mcKey).isEmpty()) {
+//                    @SuppressWarnings("unchecked") Map<String, Type<?>> types = (Map<String, Type<?>>) DataFixers.getDataFixer().getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion())).findChoiceType(References.ENTITY).types();
+//                    types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.HUSK).toString()));
+//                    Registry.register(BuiltInRegistries.ENTITY_TYPE, ENTITY_ID, EntityType.Builder.of(EntityType::create, MobCategory.MONSTER).noSummon().build(ENTITY_ID));
+//                }
+//            }
+//            BuiltInRegistries.ENTITY_TYPE.freeze();
+//        } catch (NoSuchFieldException | IllegalAccessException ignore) {
+//        }
+//    }
 }

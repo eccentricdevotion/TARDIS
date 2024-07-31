@@ -34,10 +34,11 @@ public class MonsterSpawner {
         ServerLevel world = ((CraftWorld) location.getWorld()).getHandle();
         TWAFollower entity;
         switch (follower.getSpecies()) {
-            case OOD -> entity = new TWAOod(world, follower.getOwner());
-            case JUDOON -> entity = new TWAJudoon(world, follower.getOwner());
-            default -> entity = new TWAK9(world, follower.getOwner());
+            case OOD -> entity = new TWAOod(world);
+            case JUDOON -> entity = new TWAJudoon(world);
+            default -> entity = new TWAK9(world);
         }
+        entity.setOwnerUUID(follower.getOwner());
         entity.setPosRaw(location.getX(), location.getY() + 0.5d, location.getZ());
         entity.setPersistenceRequired();
         world.addFreshEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);

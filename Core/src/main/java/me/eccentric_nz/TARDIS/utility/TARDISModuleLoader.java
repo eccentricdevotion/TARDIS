@@ -33,7 +33,7 @@ public class TARDISModuleLoader {
             plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeatBlockRunnable(plugin), 200, 80);
         }
         if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Loading Weeping Angels Module");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.MONSTERS, "Loading Weeping Angels Module");
             new TARDISWeepingAngels(plugin).enable();
             if (!plugin.getConfig().getBoolean("conversions.all_in_one.weeping_angels")) {
                 if (new TARDISAllInOneConfigConverter(plugin).transferConfig(TardisModule.MONSTERS)) {
@@ -43,7 +43,7 @@ public class TARDISModuleLoader {
             }
         }
         if (plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Loading Vortex Manipulator Module");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.VORTEX_MANIPULATOR, "Loading Vortex Manipulator Module");
             new TARDISVortexManipulator(plugin).enable();
             if (!plugin.getConfig().getBoolean("conversions.all_in_one.vortex_manipulator")) {
                 boolean cvm = new TARDISAllInOneConfigConverter(plugin).transferConfig(TardisModule.VORTEX_MANIPULATOR);
@@ -55,11 +55,11 @@ public class TARDISModuleLoader {
             }
         }
         if (plugin.getConfig().getBoolean("modules.regeneration")) {
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Loading Regeneration Module");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.REGENERATION, "Loading Regeneration Module");
             new TARDISRegeneration(plugin).enable();
         }
         if (plugin.getConfig().getBoolean("modules.shop")) {
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Loading Shop Module");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.SHOP, "Loading Shop Module");
             new TARDISShop(plugin).enable();
             if (!plugin.getConfig().getBoolean("conversions.all_in_one.shop")) {
                 boolean cs = new TARDISAllInOneConfigConverter(plugin).transferConfig(TardisModule.SHOP);
@@ -72,7 +72,7 @@ public class TARDISModuleLoader {
             }
         }
         if (plugin.getConfig().getBoolean("modules.sonic_blaster")) {
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Loading Sonic Blaster Module");
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.BLASTER, "Loading Sonic Blaster Module");
             new TARDISSonicBlaster(plugin).enable();
             if (!plugin.getConfig().getBoolean("conversions.all_in_one.sonic_blaster")) {
                 if (new TARDISAllInOneConfigConverter(plugin).transferConfig(TardisModule.BLASTER)) {

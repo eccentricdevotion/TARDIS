@@ -58,7 +58,6 @@ import me.eccentric_nz.tardisweepingangels.monsters.toclafane.ToclafaneRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.vashta_nerada.VashtaNeradaListener;
 import me.eccentric_nz.tardisweepingangels.monsters.weeping_angels.*;
 import me.eccentric_nz.tardisweepingangels.monsters.zygons.ZygonRunnable;
-import me.eccentric_nz.tardisweepingangels.nms.EntityRegistry;
 import me.eccentric_nz.tardisweepingangels.utils.*;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataType;
@@ -142,7 +141,6 @@ public class TARDISWeepingAngels {
     }
 
     public void enable() {
-        new EntityRegistry().init();
         citizensEnabled = plugin.getPM().isPluginEnabled("Citizens");
         // TODO add TWA api to TARDIS API
         api = new MonsterEquipment();

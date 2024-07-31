@@ -33,10 +33,8 @@ public class TWAFollower extends Husk implements OwnableEntity {
     protected double oldX;
     protected double oldZ;
 
-    public TWAFollower(Level world, UUID owner) {
-        super(EntityType.HUSK, world);
-        this.uuid = owner;
-        setOwnerUUID(this.uuid);
+    public TWAFollower(EntityType<? extends Husk> entityType, Level world) {
+        super(entityType, world);
     }
 
     @Override
@@ -89,6 +87,7 @@ public class TWAFollower extends Husk implements OwnableEntity {
     }
 
     public void setOwnerUUID(UUID uuid) {
+        this.uuid = uuid;
         this.getBukkitEntity().getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, uuid);
     }
 
