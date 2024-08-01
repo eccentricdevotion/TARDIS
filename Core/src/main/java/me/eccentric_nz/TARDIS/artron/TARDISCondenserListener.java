@@ -375,7 +375,7 @@ public class TARDISCondenserListener implements Listener {
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName()) {
-                return im.getDisplayName().equals("TARDIS Blueprint Disk");
+                return im.getDisplayName().endsWith("TARDIS Blueprint Disk");
             }
         }
         return false;

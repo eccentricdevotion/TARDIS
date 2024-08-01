@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -39,7 +40,7 @@ public class StattenheimRemoteRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.FLINT, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Stattenheim Remote");
+        im.setDisplayName(ChatColor.WHITE + "Stattenheim Remote");
         im.setCustomModelData(10000001);
         String uses = plugin.getConfig().getString("circuits.uses.stattenheim", "15");
         if (uses.equals("0")) {
@@ -53,7 +54,7 @@ public class StattenheimRemoteRecipe {
             r.shape("OBO", "OLO", "RRR");
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
-            em.setDisplayName("TARDIS Stattenheim Circuit");
+            em.setDisplayName(ChatColor.WHITE + "TARDIS Stattenheim Circuit");
             em.setCustomModelData(RecipeItem.TARDIS_STATTENHEIM_CIRCUIT.getCustomModelData());
             exact.setItemMeta(em);
             r.setIngredient('L', new RecipeChoice.ExactChoice(exact));

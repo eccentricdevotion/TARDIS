@@ -79,7 +79,7 @@ public class TARDISBiomeReaderListener implements Listener {
         ItemStack is = player.getInventory().getItemInMainHand();
         if (is.getType().equals(Material.BRICK) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (im.hasDisplayName() && im.getDisplayName().equals("TARDIS Biome Reader")) {
+            if (im.hasDisplayName() && im.getDisplayName().endsWith("TARDIS Biome Reader")) {
                 UUID uuid = player.getUniqueId();
                 Biome biome = event.getClickedBlock().getBiome();
                 if (biome.equals(Biome.THE_VOID)) {

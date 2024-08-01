@@ -103,11 +103,11 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
                 choice.setType(wool);
                 ChatColor display = TARDISKeyMenuListener.COLOUR_LOOKUP.get(wool);
                 ItemMeta sonic_im = sonic.getItemMeta();
-                if (display != ChatColor.WHITE) {
-                    sonic_im.setDisplayName(display + "Sonic Screwdriver");
-                } else {
-                    sonic_im.setDisplayName("Sonic Screwdriver");
-                }
+//                if (display != ChatColor.WHITE) {
+                sonic_im.setDisplayName(display + "Sonic Screwdriver");
+//                } else {
+//                    sonic_im.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");
+//                }
                 sonic.setItemMeta(sonic_im);
             }
             case 35 -> {

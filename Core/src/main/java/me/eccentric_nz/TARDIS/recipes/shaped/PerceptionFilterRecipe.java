@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -36,7 +37,7 @@ public class PerceptionFilterRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GOLD_NUGGET, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Perception Filter");
+        im.setDisplayName(ChatColor.WHITE + "Perception Filter");
         im.setCustomModelData(14);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "perception_filter");
@@ -48,7 +49,7 @@ public class PerceptionFilterRecipe {
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
-            em.setDisplayName("Perception Circuit");
+            em.setDisplayName(ChatColor.WHITE + "Perception Circuit");
             em.setCustomModelData(RecipeItem.PERCEPTION_CIRCUIT.getCustomModelData());
             exact.setItemMeta(em);
             r.setIngredient('C', new RecipeChoice.ExactChoice(exact));

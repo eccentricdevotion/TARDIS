@@ -38,7 +38,7 @@ public class TARDISARSCircuitRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("TARDIS ARS Circuit");
+        im.setDisplayName(ChatColor.WHITE + "TARDIS ARS Circuit");
         im.setCustomModelData(10001973);
         String uses = (plugin.getConfig().getString("circuits.uses.ars").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? ChatColor.YELLOW + "unlimited"

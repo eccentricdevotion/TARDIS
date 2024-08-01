@@ -39,7 +39,7 @@ public class TVMCommand implements CommandExecutor {
                     return true;
                 }
                 ItemStack is = player.getInventory().getItemInMainHand();
-                if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().equals("Vortex Manipulator")) {
+                if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().endsWith("Vortex Manipulator")) {
                     switch (args[0].toLowerCase()) {
                         case "gui" -> {
                             return new TVMCommandGUI(plugin).open(player);

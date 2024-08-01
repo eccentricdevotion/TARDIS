@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -34,7 +35,7 @@ public class JudoonAmmoRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.ARROW, 2);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Judoon Ammunition");
+        im.setDisplayName(ChatColor.WHITE + "Judoon Ammunition");
         im.setCustomModelData(13);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "judoon_ammunition");

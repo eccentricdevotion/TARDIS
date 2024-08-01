@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -38,7 +39,7 @@ public class RustPlagueSwordRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.IRON_SWORD, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Rust Plague Sword");
+        im.setDisplayName(ChatColor.WHITE + "Rust Plague Sword");
         im.setCustomModelData(10000001);
         im.setLore(List.of("Dalek Virus Dispenser"));
         is.setItemMeta(im);
@@ -46,7 +47,7 @@ public class RustPlagueSwordRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = new ItemStack(Material.LAVA_BUCKET, 1);
         ItemMeta em = exact.getItemMeta();
-        em.setDisplayName("Rust Bucket");
+        em.setDisplayName(ChatColor.WHITE + "Rust Bucket");
         em.setCustomModelData(RecipeItem.RUST_BUCKET.getCustomModelData());
         exact.setItemMeta(em);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {

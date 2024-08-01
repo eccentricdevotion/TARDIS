@@ -5,6 +5,7 @@ package me.eccentric_nz.tardisvortexmanipulator;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -31,7 +32,7 @@ public class TVMRecipe {
         int amount = plugin.getVortexConfig().getInt("recipe.amount");
         ItemStack is = new ItemStack(mat, amount);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Vortex Manipulator");
+        im.setDisplayName(ChatColor.WHITE + "Vortex Manipulator");
         if (!plugin.getVortexConfig().getString("recipe.lore").equals("")) {
             im.setLore(Arrays.asList(plugin.getVortexConfig().getString("recipe.lore").split("~")));
         }

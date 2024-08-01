@@ -61,7 +61,7 @@ public class TARDISSystemTreeGUI {
         // left_down
         ItemStack ld = new ItemStack(SystemTree.LEFT_DOWN.getMaterial(), 1);
         ItemMeta eft = ld.getItemMeta();
-        eft.setDisplayName(ChatColor.RESET + "");
+        eft.setDisplayName(ChatColor.WHITE + "");
         eft.setCustomModelData(SystemTree.LEFT_DOWN.getCustomModelData());
         ld.setItemMeta(eft);
         stacks[0] = ld;
@@ -70,7 +70,7 @@ public class TARDISSystemTreeGUI {
         for (int h : horizontal) {
             ItemStack is = new ItemStack(SystemTree.H_LINE.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
-            im.setDisplayName(ChatColor.RESET + "");
+            im.setDisplayName(ChatColor.WHITE + "");
             im.setCustomModelData(SystemTree.H_LINE.getCustomModelData());
             is.setItemMeta(im);
             stacks[h] = is;
@@ -80,7 +80,7 @@ public class TARDISSystemTreeGUI {
         for (int d : both_down) {
             ItemStack is = new ItemStack(SystemTree.BOTH_DOWN.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
-            im.setDisplayName(ChatColor.RESET + "");
+            im.setDisplayName(ChatColor.WHITE + "");
             im.setCustomModelData(SystemTree.BOTH_DOWN.getCustomModelData());
             is.setItemMeta(im);
             stacks[d] = is;
@@ -88,21 +88,21 @@ public class TARDISSystemTreeGUI {
         // right_down
         ItemStack rd = new ItemStack(SystemTree.RIGHT_DOWN.getMaterial(), 1);
         ItemMeta own = rd.getItemMeta();
-        own.setDisplayName(ChatColor.RESET + "");
+        own.setDisplayName(ChatColor.WHITE + "");
         own.setCustomModelData(SystemTree.RIGHT_DOWN.getCustomModelData());
         rd.setItemMeta(own);
         stacks[8] = rd;
         // background
         ItemStack is = new ItemStack(SystemTree.BLANK.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.RESET + "");
+        im.setDisplayName(ChatColor.WHITE + "");
         im.setCustomModelData(SystemTree.BLANK.getCustomModelData());
         is.setItemMeta(im);
         stacks[10] = is;
         // vertical
         ItemStack vert = new ItemStack(SystemTree.VERTICAL.getMaterial(), 1);
         ItemMeta ical = vert.getItemMeta();
-        ical.setDisplayName(ChatColor.RESET + "");
+        ical.setDisplayName(ChatColor.WHITE + "");
         ical.setCustomModelData(SystemTree.VERTICAL.getCustomModelData());
         vert.setItemMeta(ical);
         stacks[13] = vert;

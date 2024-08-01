@@ -37,7 +37,7 @@ public class TARDISTemporalCircuitRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("TARDIS Temporal Circuit");
+        im.setDisplayName(ChatColor.WHITE + "TARDIS Temporal Circuit");
         im.setCustomModelData(10001974);
         String uses = (plugin.getConfig().getString("circuits.uses.temporal").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? ChatColor.YELLOW + "unlimited"

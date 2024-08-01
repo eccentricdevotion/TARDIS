@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -50,7 +51,7 @@ public class TARDISKeyRecipe {
         int keyModel = keyModelLookup.getOrDefault(plugin.getConfig().getString("preferences.default_key").toLowerCase(Locale.ENGLISH), 1);
         ItemStack is = new ItemStack(Material.GOLD_NUGGET, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("TARDIS Key");
+        im.setDisplayName(ChatColor.WHITE + "TARDIS Key");
         im.setCustomModelData(keyModel);
         im.setLore(List.of("Enter and exit your TARDIS"));
         is.setItemMeta(im);

@@ -18,10 +18,7 @@ package me.eccentric_nz.tardischemistry.lab;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
@@ -175,19 +172,19 @@ public class CureBrewingListener implements Listener {
                                             ItemMeta im = is.getItemMeta();
                                             switch (potionType) {
                                                 case AWKWARD -> {
-                                                    im.setDisplayName("Antidote");
+                                                    im.setDisplayName(ChatColor.WHITE + "Antidote");
                                                     im.setCustomModelData(1);
                                                 }
                                                 case MUNDANE -> {
-                                                    im.setDisplayName("Elixir");
+                                                    im.setDisplayName(ChatColor.WHITE + "Elixir");
                                                     im.setCustomModelData(2);
                                                 }
                                                 case THICK -> {
-                                                    im.setDisplayName("Eye drops");
+                                                    im.setDisplayName(ChatColor.WHITE + "Eye drops");
                                                     im.setCustomModelData(3);
                                                 }
                                                 default -> { // UNCRAFTABLE
-                                                    im.setDisplayName("Tonic");
+                                                    im.setDisplayName(ChatColor.WHITE + "Tonic");
                                                     im.setCustomModelData(4);
                                                 }
                                             }

@@ -1,5 +1,6 @@
 package me.eccentric_nz.tardisregeneration;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -28,7 +29,7 @@ public class ElixirOfLife {
         foodComponent.setUsingConvertsTo(null);
         im.setFood(foodComponent);
         im.setCustomModelData(2);
-        im.setDisplayName("Elixir of Life");
+        im.setDisplayName(ChatColor.WHITE + "Elixir of Life");
         im.setLore(List.of("Use to trigger a", "Time Lord regeneration"));
         goblet.setItemMeta(im);
         return goblet;
@@ -42,6 +43,6 @@ public class ElixirOfLife {
         if (!im.hasDisplayName() || !im.hasCustomModelData()) {
             return false;
         }
-        return im.getDisplayName().equals("Elixir of Life");
+        return im.getDisplayName().endsWith("Elixir of Life");
     }
 }

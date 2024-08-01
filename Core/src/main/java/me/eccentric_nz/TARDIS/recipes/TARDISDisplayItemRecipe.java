@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.recipes;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -47,7 +48,7 @@ public class TARDISDisplayItemRecipe {
                     is = new ItemStack(tdi.getMaterial(), 1);
                 }
                 ItemMeta im = is.getItemMeta();
-                im.setDisplayName(tdi.getDisplayName());
+                im.setDisplayName(ChatColor.WHITE + tdi.getDisplayName());
                 if (tdi.getCustomModelData() != -1) {
                     im.setCustomModelData(tdi.getCustomModelData());
                 }

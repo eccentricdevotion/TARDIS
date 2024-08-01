@@ -4,6 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.models.ColourType;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -44,7 +45,7 @@ public class ConsoleRecipe {
             Material material = Material.valueOf(name + "_CONCRETE");
             ItemStack is = new ItemStack(material, 1);
             ItemMeta im = is.getItemMeta();
-            String dn = TARDISStringUtils.capitalise(name) + " Console";
+            String dn = ChatColor.RESET + TARDISStringUtils.capitalise(name) + " Console";
             im.setDisplayName(dn);
             im.setLore(List.of("Integration with interaction"));
             im.setCustomModelData(1001);

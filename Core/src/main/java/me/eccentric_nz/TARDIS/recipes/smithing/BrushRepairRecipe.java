@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.smithing;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -35,7 +36,7 @@ public class BrushRepairRecipe {
         // addition
         ItemStack isa = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
-        ima.setDisplayName("Brush Circuit");
+        ima.setDisplayName(ChatColor.WHITE + "Brush Circuit");
         ima.setCustomModelData(RecipeItem.BRUSH_CIRCUIT.getCustomModelData());
         isa.setItemMeta(ima);
         RecipeChoice addition = new RecipeChoice.ExactChoice(isa);

@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -35,7 +36,7 @@ public class PaperBagRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.PAPER, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Paper Bag");
+        im.setDisplayName(ChatColor.WHITE + "Paper Bag");
         im.setCustomModelData(10000001);
         im.setLore(List.of("Smaller on the outside"));
         is.setItemMeta(im);

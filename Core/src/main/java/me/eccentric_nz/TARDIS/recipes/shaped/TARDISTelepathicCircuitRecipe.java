@@ -38,7 +38,7 @@ public class TARDISTelepathicCircuitRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("TARDIS Telepathic Circuit");
+        im.setDisplayName(ChatColor.WHITE + "TARDIS Telepathic Circuit");
         im.setCustomModelData(10001962);
         String uses = (plugin.getConfig().getString("circuits.uses.telepathic").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? ChatColor.YELLOW + "unlimited"

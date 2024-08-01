@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +30,7 @@ public class RiftCircuitRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Rift Circuit");
+        im.setDisplayName(ChatColor.WHITE + "Rift Circuit");
         im.setCustomModelData(10001983);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "rift_circuit");

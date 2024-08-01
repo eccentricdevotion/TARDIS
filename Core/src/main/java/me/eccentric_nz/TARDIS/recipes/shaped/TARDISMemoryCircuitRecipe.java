@@ -35,7 +35,7 @@ public class TARDISMemoryCircuitRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("TARDIS Memory Circuit");
+        im.setDisplayName(ChatColor.WHITE + "TARDIS Memory Circuit");
         im.setCustomModelData(10001975);
         String uses = (plugin.getConfig().getString("circuits.uses.memory").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? ChatColor.YELLOW + "unlimited"

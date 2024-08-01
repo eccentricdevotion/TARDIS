@@ -135,7 +135,7 @@ public class TARDISSmithingListener implements Listener {
         if (!im.hasDisplayName() || !im.hasCustomModelData()) {
             return false;
         }
-        if (!im.getDisplayName().equalsIgnoreCase("Artron Capacitor") || im.getCustomModelData() != 10000004) {
+        if (!im.getDisplayName().endsWith("Artron Capacitor") || im.getCustomModelData() != 10000004) {
             return false;
         }
         return true;

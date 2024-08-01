@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -34,7 +35,7 @@ public class TimeEngineRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.LIGHT_GRAY_DYE, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Time Engine");
+        im.setDisplayName(ChatColor.WHITE + "Time Engine");
         im.setCustomModelData(10000007);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "time_engine");

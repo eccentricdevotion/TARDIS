@@ -45,12 +45,12 @@ public class TARDISSonicBlasterCraftListener implements Listener {
         Recipe recipe = ci.getRecipe();
         ItemStack is = ci.getResult();
         if (recipe instanceof ShapedRecipe) {
-            if (is == null || !is.hasItemMeta() || !is.getItemMeta().hasDisplayName() || !is.getItemMeta().getDisplayName().equals("Sonic Blaster")) {
+            if (is == null || !is.hasItemMeta() || !is.getItemMeta().hasDisplayName() || !is.getItemMeta().getDisplayName().endsWith("Sonic Blaster")) {
                 return;
             }
             ItemStack b1 = ci.getItem(7);
             ItemStack b2 = ci.getItem(9);
-            if ((!b1.hasItemMeta() || !b2.hasItemMeta()) || (!b1.getItemMeta().hasDisplayName() || !b2.getItemMeta().hasDisplayName()) || (!b1.getItemMeta().getDisplayName().equals("Blaster Battery") || !b2.getItemMeta().getDisplayName().equals("Blaster Battery"))) {
+            if ((!b1.hasItemMeta() || !b2.hasItemMeta()) || (!b1.getItemMeta().hasDisplayName() || !b2.getItemMeta().hasDisplayName()) || (!b1.getItemMeta().getDisplayName().endsWith("Blaster Battery") || !b2.getItemMeta().getDisplayName().endsWith("Blaster Battery"))) {
                 ci.setResult(null);
             }
         }

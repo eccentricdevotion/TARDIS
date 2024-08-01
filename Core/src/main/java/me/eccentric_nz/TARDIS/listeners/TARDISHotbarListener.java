@@ -60,7 +60,7 @@ public class TARDISHotbarListener implements Listener {
                     im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which);
                     is.setItemMeta(im);
                 }
-                if (is.getType().equals(Material.COMPASS) && im.getDisplayName().equals("TARDIS Locator")) {
+                if (is.getType().equals(Material.COMPASS) && im.getDisplayName().endsWith("TARDIS Locator")) {
                     // get TARDIS location
                     ResultSetTardisID rs = new ResultSetTardisID(plugin);
                     if (rs.fromUUID(player.getUniqueId().toString())) {
