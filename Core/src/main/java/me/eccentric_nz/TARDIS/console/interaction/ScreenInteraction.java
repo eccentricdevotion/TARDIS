@@ -15,6 +15,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
+import java.util.HashMap;
+
 public class ScreenInteraction {
 
     private final TARDIS plugin;
@@ -30,7 +32,7 @@ public class ScreenInteraction {
         // if shift-click change display else open Control Menu GUI
         if (player.isSneaking()) {
             // get the text display
-            TextDisplay display = getTextDisplay(interaction.getLocation(), coords);
+            TextDisplay display = getTextDisplay(interaction.getLocation(), coords, id);
             if (display != null) {
                 display.setRotation(Location.normalizeYaw(120), -7.5f);
                 new ControlMonitor(plugin).update(id, display.getUniqueId(), coords);
@@ -77,7 +79,7 @@ public class ScreenInteraction {
         }
     }
 
-    private TextDisplay getTextDisplay(Location location, boolean coords) {
+    private TextDisplay getTextDisplay(Location location, boolean coords, int id) {
         TextDisplay textDisplay = null;
         for (Entity entity : location.getWorld().getNearbyEntities(location, 1.0d, 1.0d, 1.0d, (e) -> e.getType() == EntityType.TEXT_DISPLAY)) {
             textDisplay = (TextDisplay) entity;
@@ -91,6 +93,13 @@ public class ScreenInteraction {
             plugin.setTardisSpawn(true);
             textDisplay = (TextDisplay) location.getWorld().spawnEntity(adjusted, EntityType.TEXT_DISPLAY);
             textDisplay.getPersistentDataContainer().set(plugin.getInteractionUuidKey(), PersistentDataType.BOOLEAN, true);
+            // insert record into database
+            HashMap<String, Object> data = new HashMap<>();
+            data.put("tardis_id", id);
+            data.put("uuid", textDisplay.getUniqueId().toString());
+            data.put("control", "SCREEN");
+            data.put("state", 0);
+            plugin.getQueryFactory().doInsert("interactions", data);
         }
         return textDisplay;
     }

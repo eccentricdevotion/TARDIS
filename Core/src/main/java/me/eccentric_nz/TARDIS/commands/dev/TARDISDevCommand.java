@@ -71,7 +71,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "nms",
             "plurals",
             "recipe", "regen",
-            "skin", "snapshot", "stats", "systree",
+            "screen", "skin", "snapshot", "stats", "systree",
             "tis", "tree",
             "zero"
     );
@@ -208,6 +208,12 @@ public class TARDISDevCommand implements CommandExecutor {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky start");
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "chunky confirm");
                         return true;
+                    }
+                    case "screen" -> {
+                        if (sender instanceof Player player) {
+                            // get the console text display
+                            return new ConsoleTextCommand(plugin).move(player, args);
+                        }
                     }
                     case "skin" -> {
                         if (sender instanceof Player player) {
