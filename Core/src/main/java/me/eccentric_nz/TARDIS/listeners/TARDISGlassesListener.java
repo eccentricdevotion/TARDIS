@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
@@ -33,6 +32,8 @@ import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -103,7 +104,7 @@ public class TARDISGlassesListener implements Listener {
     private boolean is3DGlasses(ItemStack is) {
         if (is != null && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            return im.hasDisplayName() && im.getDisplayName().equals("3-D Glasses");
+            return im.hasDisplayName() && im.getDisplayName().endsWith("3-D Glasses");
         }
         return false;
     }

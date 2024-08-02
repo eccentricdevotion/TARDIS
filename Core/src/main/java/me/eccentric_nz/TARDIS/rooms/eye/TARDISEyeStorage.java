@@ -31,7 +31,7 @@ public class TARDISEyeStorage {
         // right arrow
         ItemStack r_arrow = new ItemStack(GUIArtronStorage.ARROW_RIGHT.material(), 1);
         ItemMeta r_arrow_im = r_arrow.getItemMeta();
-        r_arrow_im.setDisplayName(ChatColor.RESET + "");
+        r_arrow_im.setDisplayName(ChatColor.WHITE + "");
         r_arrow_im.setCustomModelData(GUIArtronStorage.ARROW_RIGHT.customModelData());
         r_arrow.setItemMeta(r_arrow_im);
         stacks[GUIArtronStorage.ARROW_RIGHT.slot()] = r_arrow;
@@ -51,7 +51,7 @@ public class TARDISEyeStorage {
         // left arrow
         ItemStack l_arrow = new ItemStack(GUIArtronStorage.ARROW_LEFT.material(), 1);
         ItemMeta l_arrow_im = l_arrow.getItemMeta();
-        l_arrow_im.setDisplayName(ChatColor.RESET + "");
+        l_arrow_im.setDisplayName(ChatColor.WHITE + "");
         l_arrow_im.setCustomModelData(GUIArtronStorage.ARROW_LEFT.customModelData());
         l_arrow.setItemMeta(l_arrow_im);
         stacks[GUIArtronStorage.ARROW_LEFT.slot()] = l_arrow;

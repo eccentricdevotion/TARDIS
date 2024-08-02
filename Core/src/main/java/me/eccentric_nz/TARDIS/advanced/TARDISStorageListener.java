@@ -90,7 +90,7 @@ public class TARDISStorageListener extends TARDISMenuListener {
                     return;
                 }
                 ItemMeta ims = stack.getItemMeta();
-                if (!ims.hasDisplayName() || !ims.getDisplayName().equals("Area Storage Disk")) {
+                if (!ims.hasDisplayName() || !ims.getDisplayName().endsWith("Area Storage Disk")) {
                     return;
                 }
                 Player p = (Player) event.getPlayer();
@@ -215,7 +215,7 @@ public class TARDISStorageListener extends TARDISMenuListener {
             return;
         }
         ItemMeta im = is.getItemMeta();
-        if (im == null || !im.hasDisplayName() || !im.getDisplayName().equals("Area Storage Disk")) {
+        if (im == null || !im.hasDisplayName() || !im.getDisplayName().endsWith("Area Storage Disk")) {
             return;
         }
         event.setCancelled(true);
@@ -278,7 +278,7 @@ public class TARDISStorageListener extends TARDISMenuListener {
                                     im.setCustomModelData(87);
                                     is.setType(Material.BOWL);
                                     is.setItemMeta(im);
-                                } else if (is.getType().equals(Material.GLOWSTONE_DUST) && !im.hasCustomModelData() && im.getDisplayName().equals("Circuits")) {
+                                } else if (is.getType().equals(Material.GLOWSTONE_DUST) && !im.hasCustomModelData() && im.getDisplayName().endsWith("Circuits")) {
                                     im.setCustomModelData(10001985);
                                 }
                                 is.setItemMeta(im);

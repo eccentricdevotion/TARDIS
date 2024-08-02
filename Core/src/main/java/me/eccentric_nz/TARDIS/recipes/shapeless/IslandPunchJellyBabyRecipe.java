@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shapeless;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -24,7 +25,7 @@ public class IslandPunchJellyBabyRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.MELON_SLICE, 4);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Island Punch Jelly Baby");
+        im.setDisplayName(ChatColor.WHITE + "Island Punch Jelly Baby");
         im.setCustomModelData(10000010);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "island_punch_jelly_baby");

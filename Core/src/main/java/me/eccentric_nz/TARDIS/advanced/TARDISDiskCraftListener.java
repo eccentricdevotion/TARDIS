@@ -33,7 +33,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -74,7 +73,7 @@ public class TARDISDiskCraftListener implements Listener {
                     return;
                 }
                 ItemMeta im = is.getItemMeta();
-                if (!im.hasDisplayName() || !im.getDisplayName().equals("Biome Storage Disk") || !im.hasLore()) {
+                if (!im.hasDisplayName() || !im.getDisplayName().endsWith("Biome Storage Disk") || !im.hasLore()) {
                     return;
                 }
                 List<String> lore = im.getLore();
@@ -107,7 +106,7 @@ public class TARDISDiskCraftListener implements Listener {
                     return;
                 }
                 ItemMeta im = is.getItemMeta();
-                if (!im.hasDisplayName() || !im.getDisplayName().equals("Preset Storage Disk") || !im.hasLore()) {
+                if (!im.hasDisplayName() || !im.getDisplayName().endsWith("Preset Storage Disk") || !im.hasLore()) {
                     return;
                 }
                 List<String> lore = im.getLore();

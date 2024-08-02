@@ -161,7 +161,7 @@ public class TARDISConsoleListener implements Listener {
             p.openInventory(inv);
         } else if (disk.getType().equals(Material.MUSIC_DISC_FAR)) {
             ItemMeta im = disk.getItemMeta();
-            if (im.hasDisplayName() && im.getDisplayName().equals("Authorised Control Disk")) {
+            if (im.hasDisplayName() && im.getDisplayName().endsWith("Authorised Control Disk")) {
                 // get the UUID from the disk
                 if (im.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
                     UUID diskUuid = im.getPersistentDataContainer().get(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID());

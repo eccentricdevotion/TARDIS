@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -37,7 +38,7 @@ public class ConsoleRusticRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.WAXED_OXIDIZED_COPPER, 1);
         ItemMeta im = is.getItemMeta();
-        String dn = "Rustic Console";
+        String dn = ChatColor.RESET + "Rustic Console";
         im.setDisplayName(dn);
         im.setLore(List.of("Integration with interaction"));
         im.setCustomModelData(1001);

@@ -39,14 +39,14 @@ public class TARDISStattenheimCircuitRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("TARDIS Stattenheim Circuit");
+        im.setDisplayName(ChatColor.WHITE + "TARDIS Stattenheim Circuit");
         im.setCustomModelData(10001963);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_stattenheim_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.setDisplayName("TARDIS Materialisation Circuit");
+        em.setDisplayName(ChatColor.WHITE + "TARDIS Materialisation Circuit");
         em.setCustomModelData(RecipeItem.TARDIS_MATERIALISATION_CIRCUIT.getCustomModelData());
         // set the second line of lore
         List<String> circuit;
@@ -58,7 +58,7 @@ public class TARDISStattenheimCircuitRecipe {
         exact.setItemMeta(em);
         ItemStack locator = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta lim = locator.getItemMeta();
-        lim.setDisplayName("TARDIS Locator Circuit");
+        lim.setDisplayName(ChatColor.WHITE + "TARDIS Locator Circuit");
         lim.setCustomModelData(RecipeItem.TARDIS_LOCATOR_CIRCUIT.getCustomModelData());
         locator.setItemMeta(lim);
         r.shape("LRM", "QQQ");

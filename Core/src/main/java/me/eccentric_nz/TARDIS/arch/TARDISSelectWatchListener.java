@@ -53,7 +53,7 @@ public class TARDISSelectWatchListener implements Listener {
             return;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName() || !im.getDisplayName().equals("Fob Watch")) {
+        if (!im.hasDisplayName() || !im.getDisplayName().endsWith("Fob Watch")) {
             return;
         }
         // move the fob watch

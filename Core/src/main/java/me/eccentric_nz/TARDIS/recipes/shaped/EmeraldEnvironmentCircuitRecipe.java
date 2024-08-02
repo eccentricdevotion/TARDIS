@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -32,7 +33,7 @@ public class EmeraldEnvironmentCircuitRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Emerald Environment Circuit");
+        im.setDisplayName(ChatColor.WHITE + "Emerald Environment Circuit");
         im.setCustomModelData(10001972);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "emerald_environment_circuit");

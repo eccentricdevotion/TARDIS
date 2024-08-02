@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shapeless;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -27,7 +28,7 @@ public class PlayerStorageDiskRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.MUSIC_DISC_WAIT, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Player Storage Disk");
+        im.setDisplayName(ChatColor.WHITE + "Player Storage Disk");
         im.setCustomModelData(10000001);
         im.setLore(List.of("Blank"));
         is.setItemMeta(im);

@@ -86,7 +86,7 @@ public class TARDISStattenheimListener implements Listener {
         if (is.getType().equals(Material.FLINT) && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             int uses;
-            if (im.getDisplayName().equals("Stattenheim Remote")) {
+            if (im.getDisplayName().endsWith("Stattenheim Remote")) {
                 UUID uuid = player.getUniqueId();
                 if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.STATTENHEIM_REMOTE)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Stattenheim Remote");

@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -35,7 +36,7 @@ public class MonitorFrameRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLASS, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Monitor Frame");
+        im.setDisplayName(ChatColor.WHITE + "Monitor Frame");
         im.setCustomModelData(2);
         im.setLore(List.of("Place in an upwards", "facing item frame"));
         is.setItemMeta(im);

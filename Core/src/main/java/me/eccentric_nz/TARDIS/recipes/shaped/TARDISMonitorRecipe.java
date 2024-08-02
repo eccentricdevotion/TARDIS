@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -32,7 +33,7 @@ public class TARDISMonitorRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.MAP, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("TARDIS Monitor");
+        im.setDisplayName(ChatColor.WHITE + "TARDIS Monitor");
         im.setCustomModelData(5);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_monitor");

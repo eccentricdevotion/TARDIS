@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -36,7 +37,7 @@ public class InteriorLightLevelSwitchRecipe {
         // add interior recipe
         ItemStack is = new ItemStack(Material.LEVER, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Interior Light Level Switch");
+        im.setDisplayName(ChatColor.WHITE + "Interior Light Level Switch");
         im.setCustomModelData(RecipeItem.INTERIOR_LIGHT_LEVEL_SWITCH.getCustomModelData());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "interior_light_level_switch");

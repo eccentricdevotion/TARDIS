@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -60,7 +61,7 @@ public class SonicScrewdriverRecipe {
         int sonicModel = sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ENGLISH), 10000011);
         ItemStack is = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Sonic Screwdriver");
+        im.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");
         im.setCustomModelData(sonicModel);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "sonic_screwdriver");
@@ -69,7 +70,7 @@ public class SonicScrewdriverRecipe {
             r.shape("Q", "I", "O");
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
-            em.setDisplayName("Sonic Oscillator");
+            em.setDisplayName(ChatColor.WHITE + "Sonic Oscillator");
             em.setCustomModelData(RecipeItem.SONIC_OSCILLATOR.getCustomModelData());
             exact.setItemMeta(em);
             r.setIngredient('O', new RecipeChoice.ExactChoice(exact));

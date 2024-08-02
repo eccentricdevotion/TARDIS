@@ -39,7 +39,7 @@ public class TARDISMaterialisationCircuitRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("TARDIS Materialisation Circuit");
+        im.setDisplayName(ChatColor.WHITE + "TARDIS Materialisation Circuit");
         im.setCustomModelData(10001964);
         String uses = (plugin.getConfig().getString("circuits.uses.materialisation").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? ChatColor.YELLOW + "unlimited"

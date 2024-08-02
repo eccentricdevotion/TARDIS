@@ -33,7 +33,7 @@ public class TARDISInputCircuitRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("TARDIS Input Circuit");
+        im.setDisplayName(ChatColor.WHITE + "TARDIS Input Circuit");
         im.setCustomModelData(10001976);
         String uses = (plugin.getConfig().getString("circuits.uses.input").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? ChatColor.YELLOW + "unlimited"

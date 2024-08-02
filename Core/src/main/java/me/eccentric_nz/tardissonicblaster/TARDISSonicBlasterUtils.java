@@ -37,7 +37,7 @@ public class TARDISSonicBlasterUtils {
         if (!im.hasDisplayName()) {
             return false;
         }
-        return im.getDisplayName().equals("Sonic Blaster");
+        return im.getDisplayName().endsWith("Sonic Blaster");
     }
 
     public static float getLineOfSightAngle(Player p) {

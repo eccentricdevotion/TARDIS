@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -34,7 +35,7 @@ public class TimeRotorEleventhRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.LIGHT_GRAY_DYE, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Time Rotor Eleventh");
+        im.setDisplayName(ChatColor.WHITE + "Time Rotor Eleventh");
         im.setCustomModelData(10000004);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "time_rotor_eleventh");

@@ -81,7 +81,7 @@ public class TARDISArtronFurnaceListener implements Listener {
             ItemStack is = event.getFuel().clone();
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName() && im.getDisplayName().equals("Artron Storage Cell")) {
+                if (im.hasDisplayName() && im.getDisplayName().endsWith("Artron Storage Cell")) {
                     List<String> lore = im.getLore();
                     if (!lore.get(1).equals("0")) {
                         // track furnace
@@ -148,7 +148,7 @@ public class TARDISArtronFurnaceListener implements Listener {
         if (!event.getItemInHand().getItemMeta().hasDisplayName()) {
             return;
         }
-        if (!event.getItemInHand().getItemMeta().getDisplayName().equals("TARDIS Artron Furnace")) {
+        if (!event.getItemInHand().getItemMeta().getDisplayName().endsWith("TARDIS Artron Furnace")) {
             return;
         }
         Player player = event.getPlayer();

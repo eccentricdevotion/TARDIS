@@ -39,14 +39,14 @@ public class FobWatchRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.CLOCK, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Fob Watch");
+        im.setDisplayName(ChatColor.WHITE + "Fob Watch");
         im.setCustomModelData(10000001);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "fob_watch");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.setDisplayName("TARDIS Chameleon Circuit");
+        em.setDisplayName(ChatColor.WHITE + "TARDIS Chameleon Circuit");
         em.setCustomModelData(RecipeItem.TARDIS_CHAMELEON_CIRCUIT.getCustomModelData());
         // set the second line of lore
         List<String> circuit;

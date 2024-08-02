@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shapeless;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -26,7 +27,7 @@ public class DiamondUpgradeRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Diamond Upgrade");
+        im.setDisplayName(ChatColor.WHITE + "Diamond Upgrade");
         im.setCustomModelData(10000010);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "diamond_upgrade");
@@ -34,7 +35,7 @@ public class DiamondUpgradeRecipe {
         r.addIngredient(Material.BLAZE_ROD);
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.setDisplayName("Diamond Disruptor Circuit");
+        em.setDisplayName(ChatColor.WHITE + "Diamond Disruptor Circuit");
         em.setCustomModelData(RecipeItem.DIAMOND_DISRUPTOR_CIRCUIT.getCustomModelData());
         exact.setItemMeta(em);
         r.addIngredient(new RecipeChoice.ExactChoice(exact));

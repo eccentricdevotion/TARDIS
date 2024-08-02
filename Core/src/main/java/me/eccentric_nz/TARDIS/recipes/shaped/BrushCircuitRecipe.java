@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -32,7 +33,7 @@ public class BrushCircuitRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Brush Circuit");
+        im.setDisplayName(ChatColor.WHITE + "Brush Circuit");
         im.setCustomModelData(10001987);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "brush_circuit");

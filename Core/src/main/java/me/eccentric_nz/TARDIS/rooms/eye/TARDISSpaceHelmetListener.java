@@ -26,7 +26,7 @@ public class TARDISSpaceHelmetListener implements Listener {
         if (!im.hasDisplayName() || !im.hasCustomModelData() || !im.hasMaxStackSize()) {
             return false;
         }
-        return im.getDisplayName().equals("TARDIS Space Helmet") && im.getCustomModelData() == 5 && im.getMaxStackSize() == 1;
+        return im.getDisplayName().endsWith("TARDIS Space Helmet") && im.getCustomModelData() == 5 && im.getMaxStackSize() == 1;
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

@@ -41,7 +41,7 @@ public class TARDISInvisibilityCircuitRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("TARDIS Invisibility Circuit");
+        im.setDisplayName(ChatColor.WHITE + "TARDIS Invisibility Circuit");
         im.setCustomModelData(10001981);
         String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? ChatColor.YELLOW + "unlimited"
@@ -52,7 +52,7 @@ public class TARDISInvisibilityCircuitRecipe {
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.setDisplayName("Perception Circuit");
+        em.setDisplayName(ChatColor.WHITE + "Perception Circuit");
         em.setCustomModelData(RecipeItem.PERCEPTION_CIRCUIT.getCustomModelData());
         exact.setItemMeta(em);
         ItemStack potion = new ItemStack(Material.POTION, 1);

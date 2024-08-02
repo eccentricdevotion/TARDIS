@@ -60,7 +60,7 @@ public class TARDISPaperBagListener implements Listener {
             return;
         }
         ItemMeta im = is.getItemMeta();
-        if (im == null || !im.hasDisplayName() || !im.getDisplayName().equals("Paper Bag")) {
+        if (im == null || !im.hasDisplayName() || !im.getDisplayName().endsWith("Paper Bag")) {
             return;
         }
         if (event.isRightClick()) {

@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -31,14 +32,14 @@ public class ServerAdminCircuitRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Server Admin Circuit");
+        im.setDisplayName(ChatColor.WHITE + "Server Admin Circuit");
         im.setCustomModelData(10001968);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "server_admin_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.setDisplayName("Sonic Oscillator");
+        em.setDisplayName(ChatColor.WHITE + "Sonic Oscillator");
         em.setCustomModelData(RecipeItem.SONIC_OSCILLATOR.getCustomModelData());
         exact.setItemMeta(em);
         r.shape("BBB", "BOB", "BBB");

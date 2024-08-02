@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -32,7 +33,7 @@ public class FishFingerRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.COOKED_COD, 3);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Fish Finger");
+        im.setDisplayName(ChatColor.WHITE + "Fish Finger");
         im.setCustomModelData(10000001);
         im.setLore(List.of("Best eaten with custard!"));
         is.setItemMeta(im);

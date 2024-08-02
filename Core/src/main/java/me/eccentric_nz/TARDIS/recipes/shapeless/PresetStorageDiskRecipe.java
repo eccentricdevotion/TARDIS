@@ -31,7 +31,7 @@ public class PresetStorageDiskRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.MUSIC_DISC_MALL, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Preset Storage Disk");
+        im.setDisplayName(ChatColor.WHITE + "Preset Storage Disk");
         im.setCustomModelData(10000001);
         im.setLore(List.of("Blank"));
         is.setItemMeta(im);
@@ -40,7 +40,7 @@ public class PresetStorageDiskRecipe {
         r.addIngredient(Material.MUSIC_DISC_STRAD);
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.setDisplayName("TARDIS Chameleon Circuit");
+        em.setDisplayName(ChatColor.WHITE + "TARDIS Chameleon Circuit");
         em.setCustomModelData(RecipeItem.TARDIS_CHAMELEON_CIRCUIT.getCustomModelData());
         // set the second line of lore
         List<String> circuit;

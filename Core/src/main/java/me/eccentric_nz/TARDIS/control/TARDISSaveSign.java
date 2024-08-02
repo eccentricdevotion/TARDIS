@@ -59,7 +59,7 @@ class TARDISSaveSign {
         }
         if (plugin.getTrackerKeeper().getJunkPlayers().containsKey(uuid) && plugin.getConfig().getBoolean("difficulty.disks")) {
             ItemStack disk = player.getInventory().getItemInMainHand();
-            if (disk.hasItemMeta() && disk.getItemMeta().hasDisplayName() && disk.getItemMeta().getDisplayName().equals("Save Storage Disk")) {
+            if (disk.hasItemMeta() && disk.getItemMeta().hasDisplayName() && disk.getItemMeta().getDisplayName().endsWith("Save Storage Disk")) {
                 List<String> lore = disk.getItemMeta().getLore();
                 if (!lore.get(0).equals("Blank")) {
                     // read the lore from the disk

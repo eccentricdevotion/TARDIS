@@ -310,7 +310,7 @@ public class TARDISCommands implements CommandExecutor {
             complexBool = true;
         } else if (!is.getItemMeta().hasDisplayName()) {
             complexBool = true;
-        } else if (!is.getItemMeta().getDisplayName().equals(dn)) {
+        } else if (!is.getItemMeta().getDisplayName().endsWith(dn)) {
             complexBool = true;
         }
         return complexBool;

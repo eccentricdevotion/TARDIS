@@ -41,7 +41,7 @@ public class TARDISChameleonCircuitRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("TARDIS Chameleon Circuit");
+        im.setDisplayName(ChatColor.WHITE + "TARDIS Chameleon Circuit");
         im.setCustomModelData(10001966);
         String uses = (plugin.getConfig().getString("circuits.uses.chameleon").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? ChatColor.YELLOW + "unlimited"
@@ -55,7 +55,7 @@ public class TARDISChameleonCircuitRecipe {
             r.setIngredient('D', Material.REPEATER);
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
-            em.setDisplayName("TARDIS Materialisation Circuit");
+            em.setDisplayName(ChatColor.WHITE + "TARDIS Materialisation Circuit");
             em.setCustomModelData(RecipeItem.TARDIS_MATERIALISATION_CIRCUIT.getCustomModelData());
             // set the second line of lore
             List<String> circuit;

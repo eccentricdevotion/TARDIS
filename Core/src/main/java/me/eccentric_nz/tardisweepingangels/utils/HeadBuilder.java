@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.utils;
 
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -42,7 +43,7 @@ public class HeadBuilder {
             case MIRE -> "Mire Helmet";
             default -> monster.getName() + " Head";
         };
-        im.setDisplayName(head);
+        im.setDisplayName(ChatColor.WHITE + head);
         im.setCustomModelData(cmd);
         is.setItemMeta(im);
         return is;
@@ -51,7 +52,7 @@ public class HeadBuilder {
     public static ItemStack getK9() {
         ItemStack is = new ItemStack(Material.BONE);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("K9");
+        im.setDisplayName(ChatColor.WHITE + "K9");
         im.setCustomModelData(1);
         is.setItemMeta(im);
         return is;

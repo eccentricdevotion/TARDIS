@@ -35,7 +35,7 @@ public class TARDISScannerCircuitRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("TARDIS Scanner Circuit");
+        im.setDisplayName(ChatColor.WHITE + "TARDIS Scanner Circuit");
         im.setCustomModelData(10001977);
         String uses = (plugin.getConfig().getString("circuits.uses.scanner").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? ChatColor.YELLOW + "unlimited"

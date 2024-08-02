@@ -1,5 +1,6 @@
 package me.eccentric_nz.tardisregeneration;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -19,7 +20,7 @@ public class UntemperedSchism {
         ItemStack untempered = new ItemStack(Material.ANCIENT_DEBRIS);
         ItemMeta im = untempered.getItemMeta();
         im.setCustomModelData(1);
-        im.setDisplayName("Untempered Schism");
+        im.setDisplayName(ChatColor.WHITE + "Untempered Schism");
         im.setLore(List.of("Renew regenerations when", "you have used them all."));
         untempered.setItemMeta(im);
         return untempered;
@@ -33,6 +34,6 @@ public class UntemperedSchism {
         if (!im.hasDisplayName() || !im.hasCustomModelData()) {
             return false;
         }
-        return im.getDisplayName().equals("Untempered Schism");
+        return im.getDisplayName().endsWith("Untempered Schism");
     }
 }

@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -34,7 +35,7 @@ public class ThreeDGlassesRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.LEATHER_HELMET, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("3-D Glasses");
+        im.setDisplayName(ChatColor.WHITE + "3-D Glasses");
         im.setCustomModelData(10000039);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "3-d_glasses");
