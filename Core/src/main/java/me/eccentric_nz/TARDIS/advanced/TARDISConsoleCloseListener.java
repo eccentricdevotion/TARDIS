@@ -340,9 +340,8 @@ public class TARDISConsoleCloseListener implements Listener {
                     } else {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "ADV_BLANK");
                     }
-                } else if (mat.equals(Material.GLOWSTONE_DUST) && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().endsWith("TARDIS Randomiser Circuit")) {
-                    // Randomiser Circuit
-                    // TODO change Randomiser Circuit to blank disk for getting a random location
+                } else if (mat.equals(Material.MUSIC_DISC_STRAD) && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().endsWith("Blank Storage Disk")) {
+                    // Blank Disk - get a random location
                     Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(p, rsc.getDirection());
                     if (l == null) {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "PROTECTED");
