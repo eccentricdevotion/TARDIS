@@ -16,12 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import java.util.UUID;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... a list of locations the TARDIS can
@@ -29,13 +31,14 @@ import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
  *
  * @author eccentric_nz
  */
-public class ResultSetHidden {
+public class ResultSetForceFieldCheck {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final int id;
     private final String prefix;
+    private UUID uuid;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
@@ -43,7 +46,7 @@ public class ResultSetHidden {
      * @param plugin an instance of the main class.
      * @param id     the TARDIS id to get the hidden status for.
      */
-    public ResultSetHidden(TARDIS plugin, int id) {
+    public ResultSetForceFieldCheck(TARDIS plugin, int id) {
         this.plugin = plugin;
         this.id = id;
         prefix = this.plugin.getPrefix();
@@ -54,16 +57,17 @@ public class ResultSetHidden {
      *
      * @return true if visible, false if hidden.
      */
-    public boolean isVisible() {
+    public boolean isHidden() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT hidden, chameleon_preset FROM " + prefix + "tardis WHERE tardis_id =" + id;
+        String query = "SELECT uuid, hidden, chameleon_preset FROM " + prefix + "tardis WHERE tardis_id =" + id;
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
+                uuid = UUID.fromString(rs.getString("uuid"));
                 return rs.getBoolean("hidden") || rs.getString("chameleon_preset").equals("INVISIBLE");
             }
         } catch (SQLException e) {
@@ -81,5 +85,9 @@ public class ResultSetHidden {
             }
         }
         return true;
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 }

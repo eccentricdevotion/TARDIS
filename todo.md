@@ -2,7 +2,7 @@
 
 | Priority | Feature | Link |
 | -------- | ------- | ---- |
-| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | Fix bugs<br>- Force field should prevent random mobs from spawning in the TARDIS if the door is open<br>- Fix modelled console screen text; possibly add a command to move the text display entity forwards/backwards |
+| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | Fix bugs<br>- Fix modelled console screen text; possibly add a command to move the text display entity forwards/backwards |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | Fix follower persistence | [Possible fix](https://github.com/EricLangezaal/PetDragon/blob/master/core/src/main/java/com/ericdebouwer/petdragon/listeners/EntitiesLoadListener.java) |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Floodgate forms for TIS | - |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Fix fifteenth console redstone piston door | - |

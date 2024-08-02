@@ -87,8 +87,12 @@ public class TARDISMonsterRunnable implements Runnable {
                 continue;
             }
             // only police boxes that are not hidden
-            boolean hidden = new ResultSetHidden(plugin, map.getValue().getTardisId()).isVisible();
-            if (hidden) {
+            ResultSetForceFieldCheck hidden = new ResultSetForceFieldCheck(plugin, map.getValue().getTardisId());
+            if (hidden.isHidden()) {
+                continue;
+            }
+            // skip if the forcefield is on
+            if (plugin.getConfig().getInt("allow.force_field") > 0 && plugin.getTrackerKeeper().getActiveForceFields().containsKey(hidden.getUuid())) {
                 continue;
             }
             Entity ent = map.getKey().getWorld().spawnEntity(map.getKey(), EntityType.EXPERIENCE_ORB);
