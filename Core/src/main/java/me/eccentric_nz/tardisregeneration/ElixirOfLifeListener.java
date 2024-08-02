@@ -6,8 +6,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDismountEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
 public class ElixirOfLifeListener implements Listener {
 
@@ -47,6 +49,15 @@ public class ElixirOfLifeListener implements Listener {
             }
             // regenerate!
             new Regenerator().processPlayer(plugin, player);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerDismount(EntityDismountEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            if (player.hasPotionEffect(PotionEffectType.INVISIBILITY) && player.isInvulnerable()) {
+                event.setCancelled(true);
+            }
         }
     }
 }
