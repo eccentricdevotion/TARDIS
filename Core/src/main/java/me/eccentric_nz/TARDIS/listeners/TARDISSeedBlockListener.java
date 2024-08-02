@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.customblocks.VariableLight;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetInteractionCheck;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -129,6 +130,11 @@ public class TARDISSeedBlockListener implements Listener {
             if (rs.fromUUID(uuid)) {
                 new ConsoleBuilder(plugin).create(event.getBlockPlaced(), type, rs.getTardisId(), uuid);
             }
+        } else if (dn.endsWith("Variable Light") && is.getType() == Material.GLASS) {
+            List<String> lore = im.getLore();
+            Material variable = Material.valueOf(lore.get(0));
+            // place the variable light
+            new VariableLight(variable, event.getBlockPlaced().getLocation().add(0.5d, 0.5d, 0.5d)).set();
         }
     }
 

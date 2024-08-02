@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.HashMap;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetChunks;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -26,9 +24,12 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Enemy;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -75,7 +76,7 @@ public class TARDISMonstersCommand {
                         chunk.load();
                     }
                     for (Entity entity : chunk.getEntities()) {
-                        if (entity instanceof Monster) {
+                        if (entity instanceof Enemy) {
                             entity.remove();
                         }
                     }

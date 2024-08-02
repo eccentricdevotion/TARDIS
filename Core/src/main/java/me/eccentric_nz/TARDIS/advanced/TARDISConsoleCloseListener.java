@@ -342,6 +342,7 @@ public class TARDISConsoleCloseListener implements Listener {
                     }
                 } else if (mat.equals(Material.GLOWSTONE_DUST) && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().endsWith("TARDIS Randomiser Circuit")) {
                     // Randomiser Circuit
+                    // TODO change Randomiser Circuit to blank disk for getting a random location
                     Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(p, rsc.getDirection());
                     if (l == null) {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "PROTECTED");

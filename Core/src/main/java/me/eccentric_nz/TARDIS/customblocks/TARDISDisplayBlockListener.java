@@ -489,8 +489,14 @@ public class TARDISDisplayBlockListener implements Listener {
             block.setType(Material.AIR);
             // remove lamp record if light
             TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(fake);
-            if (tdi != null && tdi.isLight()) {
-                new TARDISSonicLight(plugin).removeLamp(block, player);
+            if (tdi != null) {
+                if (tdi.isLight()) {
+                    new TARDISSonicLight(plugin).removeLamp(block, player);
+                }
+                if (tdi.isVariable()) {
+                    // remove all item displays
+                    TARDISDisplayItemUtils.remove(l.getBlock());
+                }
             }
             return;
         }

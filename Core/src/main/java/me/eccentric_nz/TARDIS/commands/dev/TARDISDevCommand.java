@@ -72,7 +72,8 @@ public class TARDISDevCommand implements CommandExecutor {
             "plurals",
             "recipe", "regen",
             "skin", "snapshot", "stats", "systree",
-            "tis", "tree"
+            "tis", "tree",
+            "zero"
     );
     private final TARDIS plugin;
 
@@ -140,6 +141,12 @@ public class TARDISDevCommand implements CommandExecutor {
                         case "systree" -> {
                             if (sender instanceof Player player) {
                                 return new SystemTreeCommand(plugin).open(player);
+                            }
+                            return false;
+                        }
+                        case "zero" -> {
+                            if (sender instanceof Player player) {
+                                return new ZeroCommand().spiral(player);
                             }
                             return false;
                         }

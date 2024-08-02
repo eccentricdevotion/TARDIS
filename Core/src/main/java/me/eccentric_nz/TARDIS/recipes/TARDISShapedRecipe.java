@@ -109,6 +109,7 @@ public class TARDISShapedRecipe {
         new TARDISTelepathicCircuitRecipe(plugin).addRecipe();
         new TARDISTelevisionRecipe(plugin).addRecipe();
         new TARDISTemporalCircuitRecipe(plugin).addRecipe();
+        new TARDISVariableLightRecipe(plugin).addRecipe();
         new ThreeDGlassesRecipe(plugin).addRecipe();
         new TimeEngineRecipe(plugin).addRecipe();
         new TimeRotorConsoleRecipe(plugin).addRecipe();
