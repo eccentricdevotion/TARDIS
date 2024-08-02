@@ -48,6 +48,7 @@ public class TARDISMonsterRunnable implements Runnable {
 
     public TARDISMonsterRunnable(TARDIS plugin) {
         this.plugin = plugin;
+        monsters.add(EntityType.BOGGED);
         monsters.add(EntityType.CAVE_SPIDER);
         monsters.add(EntityType.CREEPER);
         monsters.add(EntityType.ENDERMAN);
