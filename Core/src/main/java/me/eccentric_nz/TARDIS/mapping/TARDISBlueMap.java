@@ -127,7 +127,7 @@ public class TARDISBlueMap implements TARDISMapper {
                                     String label = String.format("%s (TARDIS)", data.getOwner());
                                     String desc = formatInfoWindow(data);
                                     POIMarker marker = new POIMarker(label, new Vector3d(loc.getX(), loc.getY(), loc.getZ()));
-                                    marker.setIcon("https://raw.githubusercontent.com/eccentricdevotion/TARDIS/master/src/main/resources/tardis.png", 0, 0);
+                                    marker.setIcon("https://raw.githubusercontent.com/eccentricdevotion/TARDIS/master/Core/src/main/resources/tardis.png", 0, 0);
                                     marker.setDetail(desc);
                                     markerSet.put(id, marker);
                                 }
