@@ -68,7 +68,7 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %sdoors (door_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', door_type int(1) DEFAULT '0', door_location varchar(512) DEFAULT '', door_direction varchar(5) DEFAULT 'SOUTH', locked int(1) DEFAULT '0', PRIMARY KEY (door_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %seyes (eye_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', capacitors int(1) DEFAULT '1', damaged int(1) DEFAULT '0' task int(11) DEFAULT '-1', PRIMARY KEY (eye_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %seyes (eye_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', capacitors int(1) DEFAULT '1', damaged int(1) DEFAULT '0', task int(11) DEFAULT '-1', PRIMARY KEY (eye_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %sfarming (farm_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', allay varchar(512) DEFAULT '', apiary varchar(512) DEFAULT '', aquarium varchar(512) DEFAULT '', bamboo varchar(512) DEFAULT '', birdcage varchar(512) DEFAULT '', farm varchar(512) DEFAULT '', geode varchar(512) DEFAULT '', hutch varchar(512) DEFAULT '', igloo varchar(512) DEFAULT '', iistubil varchar(512) DEFAULT '', lava varchar(512) DEFAULT '', mangrove varchar(512) DEFAULT '', pen varchar(512) DEFAULT '', stable varchar(512) DEFAULT '', stall varchar(512) DEFAULT '', village varchar(512) DEFAULT '', PRIMARY KEY (farm_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
