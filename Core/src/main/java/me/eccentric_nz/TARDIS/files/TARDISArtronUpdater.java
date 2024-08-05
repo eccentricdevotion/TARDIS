@@ -67,6 +67,7 @@ public class TARDISArtronUpdater {
         integerOptions.put("random", 75);
         integerOptions.put("random_circuit", 150);
         integerOptions.put("recharge_distance", 20);
+        integerOptions.put("recharge_interval", 24);
         integerOptions.put("render", 250);
         integerOptions.put("siege_creeper", 150);
         integerOptions.put("siege_deplete", 100);

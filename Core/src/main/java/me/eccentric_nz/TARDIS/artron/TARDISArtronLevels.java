@@ -50,8 +50,9 @@ public class TARDISArtronLevels {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("tardis", set, where);
+        long interval = plugin.getArtronConfig().getLong("recharge_interval", 24) * 20;
         TARDISArtronRunnable runnable = new TARDISArtronRunnable(plugin, id);
-        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 480L, 480L);
+        int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, interval, interval);
         runnable.setTask(taskID);
     }
 
