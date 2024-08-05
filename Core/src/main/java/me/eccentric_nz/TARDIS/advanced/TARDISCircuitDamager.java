@@ -83,7 +83,7 @@ public class TARDISCircuitDamager {
                         ItemMeta im = is.getItemMeta();
                         if (im.hasDisplayName()) {
                             String dn = im.getDisplayName();
-                            if (dn.equals(c)) {
+                            if (dn.endsWith(c)) {
                                 if (destroy) {
                                     clone[i] = null;
                                 } else {
@@ -92,8 +92,8 @@ public class TARDISCircuitDamager {
                                     if (lore == null) {
                                         lore = Arrays.asList("Uses left", "");
                                     }
-                                    String stripped = ChatColor.YELLOW + "" + decremented;
-                                    lore.set(1, stripped);
+                                    String yellow = ChatColor.YELLOW + "" + decremented;
+                                    lore.set(1, yellow);
                                     im.setLore(lore);
                                     is.setItemMeta(im);
                                     clone[i] = is;

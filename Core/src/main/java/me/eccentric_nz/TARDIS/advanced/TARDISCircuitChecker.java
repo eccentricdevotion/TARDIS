@@ -99,43 +99,43 @@ public class TARDISCircuitChecker {
                         ItemMeta im = is.getItemMeta();
                         if (im.hasDisplayName()) {
                             String dn = im.getDisplayName();
-                            if (dn.equals("TARDIS ARS Circuit")) {
+                            if (dn.endsWith("TARDIS ARS Circuit")) {
                                 ars = true;
                                 arsUses = getUses(im);
                             }
-                            if (dn.equals("TARDIS Chameleon Circuit")) {
+                            if (dn.endsWith("TARDIS Chameleon Circuit")) {
                                 chameleon = true;
                                 chameleonUses = getUses(im);
                             }
-                            if (dn.equals("TARDIS Input Circuit")) {
+                            if (dn.endsWith("TARDIS Input Circuit")) {
                                 input = true;
                                 inputUses = getUses(im);
                             }
-                            if (dn.equals("TARDIS Invisibility Circuit")) {
+                            if (dn.endsWith("TARDIS Invisibility Circuit")) {
                                 invisibility = true;
                                 invisibilityUses = getUses(im);
                             }
-                            if (dn.equals("TARDIS Materialisation Circuit")) {
+                            if (dn.endsWith("TARDIS Materialisation Circuit")) {
                                 materialisation = true;
                                 materialisationUses = getUses(im);
                             }
-                            if (dn.equals("TARDIS Memory Circuit")) {
+                            if (dn.endsWith("TARDIS Memory Circuit")) {
                                 memory = true;
                                 memoryUses = getUses(im);
                             }
-                            if (dn.equals("TARDIS Randomiser Circuit")) {
+                            if (dn.endsWith("TARDIS Randomiser Circuit")) {
                                 randomiser = true;
                                 randomiserUses = getUses(im);
                             }
-                            if (dn.equals("TARDIS Scanner Circuit")) {
+                            if (dn.endsWith("TARDIS Scanner Circuit")) {
                                 scanner = true;
                                 scannerUses = getUses(im);
                             }
-                            if (dn.equals("TARDIS Telepathic Circuit")) {
+                            if (dn.endsWith("TARDIS Telepathic Circuit")) {
                                 telepathic = true;
                                 telepathicUses = getUses(im);
                             }
-                            if (dn.equals("TARDIS Temporal Circuit")) {
+                            if (dn.endsWith("TARDIS Temporal Circuit")) {
                                 temporal = true;
                                 temporalUses = getUses(im);
                             }

@@ -153,11 +153,11 @@ public class TARDISCraftListener implements Listener {
                             is.setItemMeta(im);
                             ci.setResult(is);
                         }
-                    } else if (is.getType().equals(Material.IRON_SWORD) && dn.equals("Rust Plague Sword")) {
+                    } else if (is.getType().equals(Material.IRON_SWORD) && dn.endsWith("Rust Plague Sword")) {
                         // enchant the result
                         is.addEnchantment(Enchantment.SMITE, 2);
                         ci.setResult(is);
-                    } else if (is.getType().equals(Material.LEATHER_HELMET) && dn.equals("3-D Glasses") || dn.equals("TARDIS Communicator")) {
+                    } else if (is.getType().equals(Material.LEATHER_HELMET) && dn.endsWith("3-D Glasses") || dn.endsWith("TARDIS Communicator")) {
                         LeatherArmorMeta lam = (LeatherArmorMeta) im;
                         lam.setColor(Color.WHITE);
                         is.setItemMeta(lam);

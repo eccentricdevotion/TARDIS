@@ -185,7 +185,7 @@ public class TARDII implements TardisAPI {
             // choose random environment - weighted towards normal!
             environment = weightedChoice.next();
             // check if environment is enabled
-            if ((environment.equals(Environment.NETHER) && !TARDIS.plugin.getConfig().getBoolean("travel.nether")) || (environment.equals(Environment.THE_END) && !TARDIS.plugin.getConfig().getBoolean("travel.the_end"))) {
+            if ((environment == Environment.NETHER && !TARDIS.plugin.getConfig().getBoolean("travel.nether")) || (environment == Environment.THE_END && !TARDIS.plugin.getConfig().getBoolean("travel.the_end"))) {
                 environment = Environment.NORMAL;
             }
         }
@@ -242,7 +242,7 @@ public class TARDII implements TardisAPI {
         Bukkit.getWorlds().forEach((w) -> {
             String name = w.getName();
             if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".time_travel")) {
-                if (!TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".enabled") && TARDIS.plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
+                if (!TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".enabled") && TARDIS.plugin.getWorldManager() == WorldManager.MULTIVERSE) {
                     worlds.add(TARDIS.plugin.getMVHelper().getAlias(name));
                 } else {
                     worlds.add(TARDISAliasResolver.getWorldAlias(name));
@@ -257,8 +257,8 @@ public class TARDII implements TardisAPI {
         List<String> worlds = new ArrayList<>();
         Bukkit.getWorlds().forEach((w) -> {
             String name = w.getName();
-            if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".time_travel") && !w.getEnvironment().equals(Environment.NETHER) && !w.getEnvironment().equals(Environment.THE_END)) {
-                if (!TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".enabled") && TARDIS.plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
+            if (TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".time_travel") && w.getEnvironment() != Environment.NETHER && w.getEnvironment() != Environment.THE_END) {
+                if (!TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + name + ".enabled") && TARDIS.plugin.getWorldManager() == WorldManager.MULTIVERSE) {
                     worlds.add(TARDIS.plugin.getMVHelper().getAlias(name));
                 } else {
                     worlds.add(TARDISAliasResolver.getWorldAlias(name));
@@ -435,7 +435,7 @@ public class TARDII implements TardisAPI {
     @Override
     public ItemStack getTARDISShapeItem(String item, Player player) {
         ItemStack result;
-        if (item.equals("Save Storage Disk") || item.equals("Preset Storage Disk") || item.equals("Biome Storage Disk") || item.equals("Player Storage Disk") || item.equals("Bowl of Custard") || item.endsWith("Jelly Baby")) {
+        if (item.endsWith("Save Storage Disk") || item.endsWith("Preset Storage Disk") || item.endsWith("Biome Storage Disk") || item.endsWith("Player Storage Disk") || item.endsWith("Bowl of Custard") || item.endsWith("Jelly Baby")) {
             ShapelessRecipe recipe = TARDIS.plugin.getIncomposita().getShapelessRecipes().get(item);
             result = recipe.getResult();
         } else {
@@ -445,21 +445,21 @@ public class TARDII implements TardisAPI {
             }
             result = recipe.getResult();
         }
-        if (item.equals("TARDIS Invisibility Circuit")) {
+        if (item.endsWith("TARDIS Invisibility Circuit")) {
             // set the second line of lore
             ItemMeta im = result.getItemMeta();
             List<String> lore = im.getLore();
-            String uses = (TARDIS.plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !TARDIS.plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + TARDIS.plugin.getConfig().getString("circuits.uses.invisibility");
+            String uses = (TARDIS.plugin.getConfig().getInt("circuits.uses.invisibility", 5) == 0 || !TARDIS.plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + TARDIS.plugin.getConfig().getString("circuits.uses.invisibility");
             lore.set(1, uses);
             im.setLore(lore);
             result.setItemMeta(im);
         }
-        if (item.equals("Blank Storage Disk") || item.equals("Save Storage Disk") || item.equals("Preset Storage Disk") || item.equals("Biome Storage Disk") || item.equals("Player Storage Disk") || item.equals("Authorised Control Disk")) {
+        if (item.endsWith("Blank Storage Disk") || item.endsWith("Save Storage Disk") || item.endsWith("Preset Storage Disk") || item.endsWith("Biome Storage Disk") || item.endsWith("Player Storage Disk") || item.endsWith("Authorised Control Disk")) {
             ItemMeta im = result.getItemMeta();
             im.addItemFlags(ItemFlag.values());
             result.setItemMeta(im);
         }
-        if (item.equals("TARDIS Key") || item.equals("Authorised Control Disk")) {
+        if (item.endsWith("TARDIS Key") || item.endsWith("Authorised Control Disk")) {
             ItemMeta im = result.getItemMeta();
             im.getPersistentDataContainer().set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
             List<String> lore = im.getLore();
@@ -467,7 +467,7 @@ public class TARDII implements TardisAPI {
                 lore = new ArrayList<>();
             }
             String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
-            String what = item.equals("TARDIS Key") ? "key" : "disk";
+            String what = item.endsWith("TARDIS Key") ? "key" : "disk";
             lore.add(format + "This " + what + " belongs to");
             lore.add(format + player.getName());
             im.setLore(lore);
