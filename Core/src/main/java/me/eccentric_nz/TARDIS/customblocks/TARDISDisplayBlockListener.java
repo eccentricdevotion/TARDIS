@@ -505,8 +505,31 @@ public class TARDISDisplayBlockListener implements Listener {
             if (is != null) {
                 int destroy = is.getItemMeta().getPersistentDataContainer().get(plugin.getDestroyKey(), PersistentDataType.INTEGER);
                 if (destroy == 9) {
+                    TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(fake);
                     if (player.getGameMode().equals(GameMode.SURVIVAL) && fake.getItemStack() != null) {
-                        l.getWorld().dropItemNaturally(l, fake.getItemStack());
+                        if (tdi != null && tdi.isVariable()) {
+                            // get material
+                            for (Entity e : block.getWorld().getNearbyEntities(block.getLocation().add(0.5d, 0.5d, 0.5d), 0.55d, 0.55d, 0.55d, (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
+                                if (e != fake && e != breaking) {
+                                    ItemDisplay vd = (ItemDisplay) e;
+                                    ItemStack vis = vd.getItemStack();
+                                    if (vis != null) {
+                                        Material variable = vis.getType();
+                                        ItemStack ret;
+                                        ret = new ItemStack(Material.GLASS, 1);
+                                        ItemMeta im = ret.getItemMeta();
+                                        im.setDisplayName(ChatColor.WHITE + "Variable Light");
+                                        im.setLore(List.of(variable.toString()));
+                                        im.setCustomModelData(1003);
+                                        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1003);
+                                        ret.setItemMeta(im);
+                                        l.getWorld().dropItemNaturally(l, ret);
+                                    }
+                                }
+                            }
+                        } else {
+                            l.getWorld().dropItemNaturally(l, fake.getItemStack());
+                        }
                     }
                     breaking.remove();
                     fake.remove();
@@ -515,9 +538,14 @@ public class TARDISDisplayBlockListener implements Listener {
                     }
                     block.setType(Material.AIR);
                     // remove lamp record if light
-                    TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(fake);
-                    if (tdi != null && tdi.isLight()) {
-                        new TARDISSonicLight(plugin).removeLamp(block, player);
+                    if (tdi != null) {
+                        if (tdi.isLight()) {
+                            new TARDISSonicLight(plugin).removeLamp(block, player);
+                        }
+                        if (tdi.isVariable()) {
+                            // remove all item displays
+                            TARDISDisplayItemUtils.remove(l.getBlock());
+                        }
                     }
                     // remove furnace record
                     if (plugin.getArtronConfig().getBoolean("artron_furnace.tardis_powered")) {

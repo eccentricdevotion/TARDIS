@@ -43,7 +43,7 @@ public class VariableLight {
         light.setLevel(15);
         location.getBlock().setBlockData(light);
         // also set an interaction entity
-        Interaction interaction = (Interaction) world.spawnEntity(location, EntityType.INTERACTION);
+        Interaction interaction = (Interaction) world.spawnEntity(location.clone().subtract(0, 0.5d, 0), EntityType.INTERACTION);
         interaction.setResponsive(true);
         interaction.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1001);
         interaction.setPersistent(true);
