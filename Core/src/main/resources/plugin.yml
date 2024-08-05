@@ -87,8 +87,6 @@ permissions:
       tardis.preset.lighthouse: true
       tardis.preset.mineshaft: true
       tardis.preset.nether: true
-      tardis.preset.new: true
-      tardis.preset.old: true
       tardis.preset.pandorica: true
       tardis.preset.party: true
       tardis.preset.peanut: true
