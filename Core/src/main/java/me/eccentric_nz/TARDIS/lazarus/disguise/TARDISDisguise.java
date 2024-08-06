@@ -161,10 +161,14 @@ public class TARDISDisguise {
                 str = "PigZombie";
                 packagePath += "monster.";
             }
-            case BLAZE, CAVE_SPIDER, CREEPER, DROWNED, ENDERMAN, ENDERMITE, EVOKER, GHAST, GUARDIAN, MAGMA_CUBE,
+            case BLAZE, CREEPER, DROWNED, ENDERMAN, ENDERMITE, EVOKER, GHAST, GUARDIAN, MAGMA_CUBE,
                  PHANTOM, PILLAGER, RAVAGER, SHULKER, SILVERFISH, SKELETON, SLIME, SPIDER, STRIDER, VEX, VINDICATOR,
-                 WITCH, ZOGLIN, ZOMBIE, ZOMBIE_VILLAGER -> {
+                 WITCH, ZOGLIN, ZOMBIE -> {
                 str = TARDISStringUtils.capitalise(disguise.getEntityType().toString());
+                packagePath += "monster.";
+            }
+            case CAVE_SPIDER, ZOMBIE_VILLAGER -> {
+                str = TARDISStringUtils.capitalise(disguise.getEntityType().toString()).replace(" ", "");
                 packagePath += "monster.";
             }
             case HOGLIN -> {

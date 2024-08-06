@@ -21,6 +21,8 @@ import org.bukkit.Material;
 public record GUIGeneticManipulator() {
 
     // Genetic Manipulator
+    public static GUIData BUTTON_SKINS = new GUIData(160, 43, Material.BOWL);
+    public static GUIData BUTTON_TWA = new GUIData(147, 44, Material.BOWL);
     public static GUIData BUTTON_MASTER = new GUIData(3, 45, Material.COMPARATOR);
     public static GUIData BUTTON_AGE = new GUIData(2, 47, Material.HOPPER);
     public static GUIData BUTTON_TYPE = new GUIData(1, 48, Material.CYAN_DYE);
@@ -28,5 +30,4 @@ public record GUIGeneticManipulator() {
     public static GUIData BUTTON_RESTORE = new GUIData(1, 51, Material.APPLE);
     public static GUIData BUTTON_DNA = new GUIData(1, 52, Material.WRITABLE_BOOK);
     public static GUIData BUTTON_CANCEL = new GUIData(16, 53, Material.BOWL);
-    public static GUIData BUTTON_TWA = new GUIData(147, 44, Material.BOWL);
 }

@@ -53,14 +53,21 @@ public class TARDISWeepingAngelsMonstersInventory {
         one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
         one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.customModelData());
         page1.setItemMeta(one);
-        stacks[43] = page1;
+        stacks[42] = page1;
         // page two
         ItemStack page2 = new ItemStack(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
         ItemMeta two = page2.getItemMeta();
         two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
         two.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.customModelData());
         page2.setItemMeta(two);
-        stacks[44] = page2;
+        stacks[43] = page2;
+        // add skins
+        ItemStack down = new ItemStack(GUIGeneticManipulator.BUTTON_SKINS.material(), 1);
+        ItemMeta load = down.getItemMeta();
+        load.setDisplayName("TARDIS Television");
+        load.setCustomModelData(GUIGeneticManipulator.BUTTON_SKINS.customModelData());
+        down.setItemMeta(load);
+        stacks[44] = down;
         // master
         ItemStack the = new ItemStack(GUIGeneticManipulator.BUTTON_MASTER.material(), 1);
         ItemMeta master = the.getItemMeta();

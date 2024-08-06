@@ -44,7 +44,10 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -74,8 +77,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     private final List<Integer> pufferStates = Arrays.asList(0, 1, 2);
     private final List<String> twaMonsters = Arrays.asList("CLOCKWORK_DROID", "CYBERMAN", "DALEK", "DALEK_SEC", "DAVROS", "EMPTY_CHILD", "HATH", "HEADLESS_MONK", "ICE WARRIOR", "JUDOON", "K9", "OOD", "RACNOSS", "SCARECROW", "SEA_DEVIL", "SILENT", "SILURIAN", "SLITHEEN", "SONTARAN", "STRAX", "SYCORAX", "TOCLAFANE", "VASHTA_NERADA", "WEEPING_ANGEL", "ZYGON");
     private final List<String> twaOnly = Arrays.asList("DALEK", "DAVROS", "K9", "TOCLAFANE");
-    private final List<String> twaHelmets = Arrays.asList("Dalek Head", "Davros Head", "K9 Head", "Toclafane");
-    private final Set<UUID> pagers = new HashSet<>();
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
         super(plugin);
@@ -125,8 +126,8 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
             }
         } else {
             switch (slot) {
-                case 43 -> {
-                    pagers.add(uuid);
+                case 42 -> {
+                    LazarusUtils.pagers.add(uuid);
                     ItemStack pageButton = view.getItem(slot);
                     ItemMeta pageMeta = pageButton.getItemMeta();
                     // go to page one or two
@@ -138,15 +139,46 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     }
                     player.openInventory(inv);
                 }
+                case 43 -> {
+                    LazarusUtils.pagers.add(uuid);
+                    ItemStack skinsButton = view.getItem(slot);
+                    ItemMeta skinsMeta = skinsButton.getItemMeta();
+                    // go to skins or page two
+                    Inventory inv;
+                    if (skinsMeta.getDisplayName().equals(plugin.getLanguage().getString("BUTTON_PAGE_2"))) {
+                        inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
+                        inv.setContents(new TARDISLazarusPageTwoInventory(plugin).getPageTwo());
+                    } else {
+                        if (plugin.isDisguisesOnServer()) {
+                            TARDISLazarusLibs.removeDisguise(player);
+                        } else {
+                            TARDISLazarusDisguise.removeDisguise(player);
+                        }
+                        LazarusUtils.twaOff(player);
+                        untrack(uuid, true);
+                        inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Skins");
+                        inv.setContents(new TARDISTelevisionInventory(plugin).getSkins());
+                    }
+                    player.openInventory(inv);
+                }
                 case 44 -> {
-                    pagers.add(uuid);
+                    LazarusUtils.pagers.add(uuid);
                     ItemStack monstersButton = view.getItem(slot);
                     ItemMeta monstersMeta = monstersButton.getItemMeta();
                     // go to monsters or page two
-                    Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
-                    if (monstersMeta.getDisplayName().equals(plugin.getLanguage().getString("BUTTON_PAGE_2"))) {
-                        inv.setContents(new TARDISLazarusPageTwoInventory(plugin).getPageTwo());
+                    Inventory inv;
+                    if (monstersMeta.getDisplayName().equals("TARDIS Television")) {
+                        if (plugin.isDisguisesOnServer()) {
+                            TARDISLazarusLibs.removeDisguise(player);
+                        } else {
+                            TARDISLazarusDisguise.removeDisguise(player);
+                        }
+                        LazarusUtils.twaOff(player);
+                        untrack(uuid, true);
+                        inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Skins");
+                        inv.setContents(new TARDISTelevisionInventory(plugin).getSkins());
                     } else {
+                        inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
                         inv.setContents(new TARDISWeepingAngelsMonstersInventory(plugin).getMonsters());
                     }
                     player.openInventory(inv);
@@ -192,7 +224,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     optionsButton.setItemMeta(optionsMeta);
                 }
                 case 51 -> { // remove disguise
-                    pagers.remove(uuid);
+                    LazarusUtils.pagers.remove(uuid);
                     plugin.getTrackerKeeper().getGeneticManipulation().add(uuid);
                     close(player);
                     // animate the manipulator walls
@@ -203,7 +235,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     // undisguise the player
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         if (twaMonsters.contains(disguises.get(uuid))) {
-                            twaOff(player);
+                            LazarusUtils.twaOff(player);
                         } else if (plugin.isDisguisesOnServer()) {
                             TARDISLazarusLibs.removeDisguise(player);
                         } else {
@@ -214,13 +246,13 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     }, 80L);
                     // open the door
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        openDoor(b);
+                        LazarusUtils.openDoor(b);
                         untrack(uuid, true);
                         plugin.getTrackerKeeper().getGeneticallyModified().remove(uuid);
                     }, 100L);
                 }
                 case 52 -> { // add disguise
-                    pagers.remove(uuid);
+                    LazarusUtils.pagers.remove(uuid);
                     plugin.getTrackerKeeper().getGeneticManipulation().add(uuid);
                     close(player);
                     // animate the manipulator walls
@@ -260,7 +292,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                         } else if (disguises.containsKey(uuid)) {
                             String disguise = disguises.get(uuid);
                             // undisguise first
-                            twaOff(player);
+                            LazarusUtils.twaOff(player);
                             if (twaMonsters.contains(disguise)) {
                                 if (twaOnly.contains(disguise)) {
                                     plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise " + disguise + " on " + player.getUniqueId());
@@ -438,15 +470,15 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     }, 80L);
                     // open the door
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        openDoor(b);
+                        LazarusUtils.openDoor(b);
                         untrack(uuid, false);
                         plugin.getTrackerKeeper().getGeneticallyModified().add(uuid);
                     }, 100L);
                 }
                 case 53 -> {
-                    pagers.remove(uuid);
+                    LazarusUtils.pagers.remove(uuid);
                     close(player);
-                    openDoor(b);
+                    LazarusUtils.openDoor(b);
                     untrack(uuid, false);
                 }
                 default -> { // do nothing
@@ -459,19 +491,19 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     public void onLazarusClose(InventoryCloseEvent event) {
         String name = event.getView().getTitle();
         UUID uuid = event.getPlayer().getUniqueId();
-        if (name.equals(ChatColor.DARK_RED + "Genetic Manipulator") && !plugin.getTrackerKeeper().getGeneticManipulation().contains(uuid)) {
+        if ((name.equals(ChatColor.DARK_RED + "Genetic Manipulator") || name.equals(ChatColor.DARK_RED + "Genetic Skins")) && !plugin.getTrackerKeeper().getGeneticManipulation().contains(uuid)) {
             Block b = plugin.getTrackerKeeper().getLazarus().get(uuid);
             if (b != null && b.getRelative(BlockFace.SOUTH).getType().equals(Material.COBBLESTONE_WALL)) {
                 b.getRelative(BlockFace.SOUTH).setType(Material.AIR);
                 b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.AIR);
             }
             untrack(uuid, false);
-            pagers.remove(uuid);
+            LazarusUtils.pagers.remove(uuid);
         }
     }
 
     private void untrack(UUID uuid, boolean remove) {
-        if (!pagers.contains(uuid)) {
+        if (!LazarusUtils.pagers.contains(uuid)) {
             // stop tracking player
             plugin.getTrackerKeeper().getLazarus().remove(uuid);
         }
@@ -484,11 +516,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
         professions.remove(uuid);
         slimes.remove(uuid);
         plugin.getTrackerKeeper().getGeneticManipulation().remove(uuid);
-    }
-
-    private void openDoor(Block b) {
-        b.getRelative(BlockFace.SOUTH).setType(Material.AIR);
-        b.getRelative(BlockFace.SOUTH).getRelative(BlockFace.UP).setType(Material.AIR);
     }
 
     private void setSlotFortyEight(InventoryView i, String d, UUID uuid) {
@@ -815,24 +842,5 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
         List<String> lore = im.getLore();
         int pos = lore.size() - 1;
         return ChatColor.stripColor(lore.get(pos)).equals("TRUE");
-    }
-
-    private void twaOff(Player player) {
-        UUID uuid = player.getUniqueId();
-        if (SkinUtils.SKINNED.containsKey(uuid)) {
-            // remove skin
-            plugin.getSkinChanger().remove(player);
-            Skin skin = SkinUtils.SKINNED.get(uuid);
-            SkinUtils.removeExtras(player, skin);
-            SkinUtils.SKINNED.remove(uuid);
-        } else {
-            ItemStack helmet = player.getInventory().getHelmet();
-            if (helmet != null && helmet.hasItemMeta() && helmet.getItemMeta().hasDisplayName()) {
-                String metaName = helmet.getItemMeta().getDisplayName();
-                if (twaHelmets.contains(metaName)) {
-                    plugin.getServer().dispatchCommand(plugin.getConsole(), "twa disguise WEEPING_ANGEL off " + uuid);
-                }
-            }
-        }
     }
 }

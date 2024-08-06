@@ -117,16 +117,21 @@ class TARDISLazarusInventory {
         two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
         two.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.customModelData());
         page.setItemMeta(two);
-        stacks[43] = page;
-        // if TARDISWeepingAngels is enabled add TARDIS monsters
-//        if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
+        stacks[42] = page;
+        // add skins
+        ItemStack down = new ItemStack(GUIGeneticManipulator.BUTTON_SKINS.material(), 1);
+        ItemMeta load = down.getItemMeta();
+        load.setDisplayName("TARDIS Television");
+        load.setCustomModelData(GUIGeneticManipulator.BUTTON_SKINS.customModelData());
+        down.setItemMeta(load);
+        stacks[GUIGeneticManipulator.BUTTON_SKINS.slot()] = down;
+        // TARDISWeepingAngels monsters
         ItemStack weep = new ItemStack(GUIGeneticManipulator.BUTTON_TWA.material(), 1);
         ItemMeta ing = weep.getItemMeta();
         ing.setDisplayName("TARDIS Monsters");
         ing.setCustomModelData(GUIGeneticManipulator.BUTTON_TWA.customModelData());
         weep.setItemMeta(ing);
         stacks[GUIGeneticManipulator.BUTTON_TWA.slot()] = weep;
-//        }
         // add options
         // master
         ItemStack the = new ItemStack(GUIGeneticManipulator.BUTTON_MASTER.material(), 1);

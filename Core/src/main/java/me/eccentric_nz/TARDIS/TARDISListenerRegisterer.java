@@ -68,6 +68,7 @@ import me.eccentric_nz.TARDIS.info.TARDISInformationSystemListener;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkControlListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusGUIListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusListener;
+import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusSkinsListener;
 import me.eccentric_nz.TARDIS.listeners.*;
 import me.eccentric_nz.TARDIS.listeners.controls.*;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmingMenuListener;
@@ -334,6 +335,7 @@ class TARDISListenerRegisterer {
         }
         plugin.getPM().registerEvents(new TARDISLazarusListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISLazarusGUIListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISLazarusSkinsListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISItemFrameUpdateListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISDirectionFrameListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISHandlesFrameListener(plugin), plugin);
