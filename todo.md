@@ -2,8 +2,8 @@
 
 | Priority | Feature | Link |
 | -------- | ------- | ---- |
-| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | Fix bugs<br>- Fix modelled console screen text; possibly add a command to move the text display entity forwards/backwards |
-| ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | Fix follower persistence | [Possible fix](https://github.com/EricLangezaal/PetDragon/blob/master/core/src/main/java/com/ericdebouwer/petdragon/listeners/EntitiesLoadListener.java) |
+| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | Fix bugs<br>- Fix modelled console screen text |
+| ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | Fix follower persistence + monsters losing their animation when reloaded | [Possible fix](https://github.com/EricLangezaal/PetDragon/blob/master/core/src/main/java/com/ericdebouwer/petdragon/listeners/EntitiesLoadListener.java) |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Floodgate forms for TIS | - |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Fix fifteenth console redstone piston door | - |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Add doors to shop items | - |
@@ -18,6 +18,7 @@
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Lights GUI**<br>- Add a GUI that will allow a Time Lord to change the light type in their TARDIS<br>- Add all the light types<br>- Add light switch<br>- Add light levels page (interior and exterior)<br>- Add Console lamp (#837)<br>- All lights in the ARS grid will be changed to the selected light<br>- Add 6 new coloured roundel light blocks<br>- Add a button to cycle through all the different coloured lights (only in the TARDIS console)<br>- Finish variable lights<br><br>![Lights](https://dl.dropboxusercontent.com/scl/fi/6duhc1y83hvs9drhd54bq/lights.gif?rlkey=kois7oikjzt04ap18vlofze7l&st=lsc5aovx&dl=1) | [#895](https://github.com/eccentricdevotion/TARDIS/issues/895) |
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Paintings**<br>- Make chemistry room paintings custom ones from datapack<br>- Add some Whovian themed paintings | [Painting variants](https://minecraft.wiki/w/Tutorials/Adding_custom_paintings)<br>+ [Example packs](https://github.com/cassiancc/painting-variant-example) |
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **No-italics**<br>- Add command to fix legacy items | [#898](https://github.com/eccentricdevotion/TARDIS/issues/898) |
+| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Skins**<br>- Add button to Lazarus GUI | - |
 
 ## Future versions
 
