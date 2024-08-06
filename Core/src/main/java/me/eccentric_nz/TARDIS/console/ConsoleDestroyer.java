@@ -35,9 +35,9 @@ public class ConsoleDestroyer {
             // interactions
             for (UUID u : rs.getUuids()) {
                 Entity e = plugin.getServer().getEntity(u);
-                if (e != null) {
+                if (e instanceof Interaction interaction) {
                     // check for sonic
-                    ItemDisplay docked = TARDISDisplayItemUtils.getSonic((Interaction) e);
+                    ItemDisplay docked = TARDISDisplayItemUtils.getSonic(interaction);
                     if (docked != null) {
                         ItemStack sonic = docked.getItemStack();
                         // set the charge level in lore
@@ -55,6 +55,9 @@ public class ConsoleDestroyer {
                     }
                     // remove
                     e.remove();
+                }
+                if (e instanceof TextDisplay display) {
+                    display.remove();
                 }
             }
             // remove the centre block
