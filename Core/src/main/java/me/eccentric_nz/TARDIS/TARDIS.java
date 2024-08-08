@@ -401,16 +401,16 @@ public class TARDIS extends JavaPlugin {
             new TARDISChecker(this).checkAdvancements();
             presets = new TARDISChameleonPreset();
             presets.makePresets();
-            // load persistent data
-            new TARDISPersister(this).load();
-            // load the custom map renderer for TARDIS monitor maps
-            new SnapshotLoader(this).load();
             // hook CoreProtectAPI
             blockLogger = new TARDISBlockLogger(this);
             if (pm.getPlugin("CoreProtect") != null) {
                 debug("Logging block changes with CoreProtect.");
                 blockLogger.enableLogger();
             }
+            // load the custom map renderer for TARDIS monitor maps
+            new SnapshotLoader(this).load();
+            // load persistent data
+            new TARDISPersister(this).load();
             setDates();
             if (getConfig().getBoolean("allow.perception_filter")) {
                 filter = new TARDISPerceptionFilter(this);
