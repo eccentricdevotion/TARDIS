@@ -5,7 +5,6 @@ import me.eccentric_nz.TARDIS.artron.ArtronPoweredRunnable;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceParticle;
 import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
 import me.eccentric_nz.TARDIS.control.TARDISControlRunnable;
-import me.eccentric_nz.TARDIS.database.TARDISRecordingTask;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesRunnable;
@@ -73,8 +72,6 @@ public class TARDISRunnables {
         }
         // removes unused drop chest database records from the vaults table.
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISVaultChecker(plugin), 2400);
-        // we schedule it once, it will reschedule itself
-        plugin.getServer().getScheduler().runTaskLaterAsynchronously(plugin, new TARDISRecordingTask(plugin), 5);
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
             plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISMonsterRunnable(plugin), 2400, 2400);
         }

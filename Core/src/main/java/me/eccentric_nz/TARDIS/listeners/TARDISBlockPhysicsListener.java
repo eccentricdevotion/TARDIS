@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISRecordingQueue;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -44,12 +43,8 @@ public class TARDISBlockPhysicsListener implements Listener {
     // prevent hatches from breaking
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onBlockPhysics(BlockPhysicsEvent event) {
-        Block block = event.getBlock();
-        if (block.getType().equals(Material.DIRT_PATH)) {
-            String loc = block.getRelative(BlockFace.UP).getLocation().toString();
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> TARDISRecordingQueue.addToQueue(loc), 7L);
-        }
         if (!plugin.getTrackerKeeper().getMaterialising().isEmpty()) {
+            Block block = event.getBlock();
             BlockData state = block.getBlockData();
             if (state instanceof TrapDoor trapDoor) {
                 Block blockBehind = getBlockBehindAttachable(block, trapDoor.getFacing());
