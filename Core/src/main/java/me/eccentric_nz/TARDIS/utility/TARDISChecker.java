@@ -21,6 +21,8 @@ import com.google.gson.GsonBuilder;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.tardischemistry.block.Painting;
+import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
@@ -71,14 +73,15 @@ public class TARDISChecker {
         }
     }
 
-    public void checkAdvancements() {
+    public void checkDataPack() {
         // get server's main world folder
         // is there a world container?
         File container = plugin.getServer().getWorldContainer();
         String s_world = plugin.getServer().getWorlds().get(0).getName();
         // check if directories exist
-        String dataPacksRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis" + File.separator + "data" + File.separator + "tardis" + File.separator + "advancements";
-        File tardisOldDir = new File(dataPacksRoot);
+        String dataPacksTardis = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis" + File.separator + "data" + File.separator + "tardis" + File.separator;
+        String dataPacksAdvancement = dataPacksTardis + "advancements";
+        File tardisOldDir = new File(dataPacksAdvancement);
         boolean update = false;
         if (tardisOldDir.exists()) {
             // delete directory and files as they need updating
@@ -89,19 +92,36 @@ public class TARDISChecker {
                 throw new RuntimeException(e);
             }
         }
-        dataPacksRoot = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis" + File.separator + "data" + File.separator + "tardis" + File.separator + "advancement";
-        File tardisDir = new File(dataPacksRoot);
-        if (!tardisDir.exists()) {
-            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, plugin.getLanguage().getString("ADVANCEMENT_DIRECTORIES"));
-            tardisDir.mkdirs();
+        String dataPacksMinecraft = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis" + File.separator + "data" + File.separator + "minecraft" + File.separator + "tags" + File.separator + "painting_variant" + File.separator;
+        File placeableDir = new File(dataPacksMinecraft);
+        if (!placeableDir.exists()) {
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_DIRECTORIES", "%s"), "placeable"));
+            placeableDir.mkdirs();
+        }
+        dataPacksAdvancement = dataPacksTardis + "advancement";
+        String dataPacksTrim = dataPacksTardis + "trim_pattern";
+        String dataPacksPaintings = dataPacksTardis + "painting_variant";
+        File advancementDir = new File(dataPacksAdvancement);
+        if (!advancementDir.exists()) {
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_DIRECTORIES", "%s"), "advancements"));
+            advancementDir.mkdirs();
+        }
+        File trimsDir = new File(dataPacksTrim);
+        if (!trimsDir.exists()) {
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_DIRECTORIES", "%s"), "trim patterns"));
+            trimsDir.mkdirs();
+        }
+        File paintingsDir = new File(dataPacksPaintings);
+        if (!paintingsDir.exists()) {
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_DIRECTORIES", "%s"), "painting variants"));
+            paintingsDir.mkdirs();
         }
         String dataPacksMeta = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis";
         File mcmeta = new File(dataPacksMeta, "pack.mcmeta");
         if (!mcmeta.exists() || update) {
-            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), "pack.mcmeta"));
-            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), "pack.mcmeta"));
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_NOT_FOUND", "%s"), "pack.mcmeta", "datapack"));
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_COPYING", "%s"), "datapack", "pack.mcmeta"));
             copy("pack.mcmeta", mcmeta);
-            write(dataPacksRoot, false);
         } else {
             // update the format - 48 is the latest for 1.21
             // it's a json file, so load it and check the value
@@ -124,8 +144,6 @@ public class TARDISChecker {
                                     FileWriter writer = new FileWriter(mcmeta);
                                     gson.toJson(mcmap, writer);
                                     writer.close();
-                                    // update json files
-                                    write(dataPacksRoot, true);
                                 }
                             }
                         }
@@ -134,18 +152,44 @@ public class TARDISChecker {
             } catch (IOException ignored) {
             }
         }
+        File placeable = new File(dataPacksMinecraft, "placeable.json");
+        if (!placeable.exists()) {
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_NOT_FOUND", "%s"), "placeable.json", "painting variant"));
+            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_COPYING", "%s"), "painting variant", "placeable.json"));
+            copy("painting_variant/placeable.json", placeable);
+        }
+        // update json files
+        write(dataPacksTardis);
     }
 
-    private void write(String dataPacksRoot, boolean overwrite) {
+    private void write(String rootFolder) {
         for (Advancement advancement : Advancement.values()) {
             String json = advancement.getConfigName() + ".json";
-            File jfile = new File(dataPacksRoot, json);
-            if (!jfile.exists() || overwrite) {
-                if (!overwrite) {
-                    TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("ADVANCEMENT_NOT_FOUND"), json));
+            File jfile = new File(rootFolder + "advancement", json);
+            if (!jfile.exists()) {
+                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_NOT_FOUND", "%s"), json, "advancement"));
+                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_COPYING", "%s, %s"), "advancement", json));
+                copy("advancement/" + json, jfile);
+            }
+        }
+        for (Monster monster : Monster.values()) {
+            if (monster.hasTrim()) {
+                String json = monster.getPermission() + ".json";
+                File jfile = new File(rootFolder + "trim_pattern", json);
+                if (!jfile.exists()) {
+                    TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_NOT_FOUND", "%s"), json, "trim pattern"));
+                    TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_COPYING", "%s"), "trim pattern", json));
+                    copy("trim_pattern/" + json, jfile);
                 }
-                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("ADVANCEMENT_COPYING"), json));
-                copy(json, jfile);
+            }
+        }
+        for (Painting painting : Painting.values()) {
+            String json = painting.getName() + ".json";
+            File jfile = new File(rootFolder + "painting_variant", json);
+            if (!jfile.exists()) {
+                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_NOT_FOUND", "%s"), json, "painting variant"));
+                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_COPYING", "%s"), "painting variant", json));
+                copy("painting_variant/" + json, jfile);
             }
         }
     }

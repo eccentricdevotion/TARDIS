@@ -1,0 +1,8 @@
+{
+  "asset_id": "tardis:silurian",
+  "decal": false,
+  "description": {
+    "translate": "trim_pattern.tardis.silurian"
+  },
+  "template_item": "minecraft:feather"
+}

@@ -13,10 +13,14 @@ import org.bukkit.inventory.meta.trim.TrimPattern;
 
 public class ArmourTrim {
 
-    public void giveCustomArmour(Player player) {
+    public void giveCustomArmour(Player player, String[] args) {
+        String key = "cyberman";
+        if (args.length == 2) {
+            key = args[1].toLowerCase();
+        }
         // make some custom armour trim
         TrimMaterial material = TrimMaterial.IRON;
-        TrimPattern pattern = getCustomTrimPattern("tardis:cyberman");
+        TrimPattern pattern = getCustomTrimPattern("tardis:" + key);
         ArmorTrim trim = new ArmorTrim(material, pattern);
         // make a chestplate
         ItemStack chestplate = new ItemStack(Material.CHAINMAIL_CHESTPLATE);

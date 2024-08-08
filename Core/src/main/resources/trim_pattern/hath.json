@@ -1,0 +1,8 @@
+{
+  "asset_id": "tardis:hath",
+  "decal": false,
+  "description": {
+    "translate": "trim_pattern.tardis.hath"
+  },
+  "template_item": "minecraft:pufferfish"
+}

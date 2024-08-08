@@ -1,0 +1,8 @@
+{
+  "asset_id": "tardis:vashta_nerada",
+  "decal": false,
+  "description": {
+    "translate": "trim_pattern.tardis.vashta_nerada"
+  },
+  "template_item": "minecraft:book"
+}

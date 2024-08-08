@@ -1,0 +1,8 @@
+{
+  "asset_id": "tardis:zygon",
+  "decal": false,
+  "description": {
+    "translate": "trim_pattern.tardis.zygon"
+  },
+  "template_item": "minecraft:painting"
+}

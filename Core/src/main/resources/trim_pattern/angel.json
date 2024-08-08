@@ -1,0 +1,8 @@
+{
+  "asset_id": "tardis:weeping_angel",
+  "decal": false,
+  "description": {
+    "translate": "trim_pattern.tardis.weeping_angel"
+  },
+  "template_item": "minecraft:brick"
+}

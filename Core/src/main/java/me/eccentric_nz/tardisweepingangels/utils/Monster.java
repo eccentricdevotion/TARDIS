@@ -138,4 +138,16 @@ public enum Monster {
     public Skin getSkin() {
         return skin;
     }
+
+    public boolean hasTrim() {
+        switch (this) {
+//            case DALEK, DAVROS, FLYER, HEADLESS_MONK, JUDOON, K9, MIRE, OOD, OSSIFIED, RACNOSS, SILENT, SLITHEEN, TOCLAFANE -> {
+            case CYBERMAN, EMPTY_CHILD, HATH, ICE_WARRIOR, SILENT, SILURIAN, SONTARAN, STRAX, VASHTA_NERADA, WEEPING_ANGEL, ZYGON -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
+    }
 }

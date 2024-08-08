@@ -145,12 +145,6 @@ public class TARDISDevCommand implements CommandExecutor {
                             }
                             return false;
                         }
-                        case "trim" -> {
-                            if (sender instanceof Player player) {
-                                new ArmourTrim().giveCustomArmour(player);
-                            }
-                            return true;
-                        }
                         case "zero" -> {
                             if (sender instanceof Player player) {
                                 return new ZeroCommand().spiral(player);
@@ -313,6 +307,12 @@ public class TARDISDevCommand implements CommandExecutor {
                         if (sender instanceof Player player) {
                             return new TARDISDevEffectCommand(plugin).show(player, args);
                         }
+                    }
+                    case "trim" -> {
+                        if (sender instanceof Player player) {
+                            new ArmourTrim().giveCustomArmour(player, args);
+                        }
+                        return true;
                     }
                     default -> {
                         return false;

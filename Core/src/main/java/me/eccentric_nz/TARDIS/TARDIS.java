@@ -398,7 +398,7 @@ public class TARDIS extends JavaPlugin {
             loadPerms();
             loadBooks();
             // copy advancements to tardis datapack
-            new TARDISChecker(this).checkAdvancements();
+            new TARDISChecker(this).checkDataPack();
             presets = new TARDISChameleonPreset();
             presets.makePresets();
             // load persistent data
@@ -465,7 +465,6 @@ public class TARDIS extends JavaPlugin {
     public String getPrefix() {
         return prefix;
     }
-
 
     /**
      * Gets the inventory manager that the server is using
@@ -1435,21 +1434,7 @@ public class TARDIS extends JavaPlugin {
      * Loads the custom configuration files.
      */
     private void loadCustomConfigs() {
-        List<String> files = Arrays.asList(
-                "achievements.yml", "adaptive.yml", "artron.yml",
-                "blaster.yml", "blocks.yml",
-                "condensables.yml", "custom_consoles.yml", "custom_models.yml", "custom_doors.yml", "custom_time_rotors.yml",
-                "flat_world.yml",
-                "handles.yml",
-                "items.yml",
-                "kits.yml",
-                "monsters.yml",
-                "planets.yml",
-                "recipes.yml", "regeneration.yml", "rooms.yml",
-                "shop.yml", "system_upgrades.yml",
-                "tag.yml",
-                "vortex_manipulator.yml"
-        );
+        List<String> files = Arrays.asList("achievements.yml", "adaptive.yml", "artron.yml", "blaster.yml", "blocks.yml", "condensables.yml", "custom_consoles.yml", "custom_models.yml", "custom_doors.yml", "custom_time_rotors.yml", "flat_world.yml", "handles.yml", "items.yml", "kits.yml", "monsters.yml", "planets.yml", "recipes.yml", "regeneration.yml", "rooms.yml", "shop.yml", "system_upgrades.yml", "tag.yml", "vortex_manipulator.yml");
         for (String f : files) {
 //            debug(f);
             tardisCopier.copy(f);
@@ -1518,7 +1503,7 @@ public class TARDIS extends JavaPlugin {
             }
         }
         Set<String> bookNames = achievementConfig.getKeys(false);
-        bookNames.forEach((b) -> TARDISFileCopier.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource(b + ".txt"), false));
+        bookNames.forEach((b) -> TARDISFileCopier.copy(getDataFolder() + File.separator + "books" + File.separator + b + ".txt", getResource("books/" + b + ".txt"), false));
     }
 
     /**
@@ -1650,8 +1635,6 @@ public class TARDIS extends JavaPlugin {
         }
         return map;
     }
-
-
 
     /**
      * Resets any player who is 'Temporally Located' back to normal time.
