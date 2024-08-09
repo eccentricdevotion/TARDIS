@@ -226,6 +226,8 @@ public class TARDISWeepingAngels {
             plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, r, delay + d, delay);
             d += 6;
         }
+//        // cleaner every 10 minutes
+//        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Cleaner(plugin), 12000, 12000);
         steal = (plugin.getMonstersConfig().getBoolean("angels.angels_can_steal"));
         if (plugin.getMonstersConfig().getBoolean("judoon.guards")) {
             // add recipe
