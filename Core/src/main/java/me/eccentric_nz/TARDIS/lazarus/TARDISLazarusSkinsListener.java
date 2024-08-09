@@ -14,7 +14,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -48,7 +47,6 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
             // get selection
             ItemStack is = view.getItem(slot);
             if (is != null) {
-                ItemMeta im = is.getItemMeta();
                 // remember selection
                 skins.put(uuid, slot);
             }
@@ -86,16 +84,16 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
                     // undisguise the player
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         // remove skin
-                        plugin.getSkinChanger().remove(player);
                         Skin skin = SkinUtils.SKINNED.get(uuid);
-                        SkinUtils.removeExtras(player, skin);
-                        SkinUtils.SKINNED.remove(uuid);
+                        if (skin != null) {
+                            plugin.getSkinChanger().remove(player);
+                            SkinUtils.removeExtras(player, skin);
+                            SkinUtils.SKINNED.remove(uuid);
+                        }
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "GENETICS_RESTORED");
                     }, 80L);
                     // open the door
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        LazarusUtils.openDoor(b);
-                    }, 100L);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> LazarusUtils.openDoor(b), 100L);
                 }
                 case 52 -> {
                     close(player);
@@ -106,6 +104,11 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
                     TARDISSounds.playTARDISSound(player.getLocation(), "lazarus_machine");
                     // disguise the player
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        Skin previous = SkinUtils.SKINNED.get(uuid);
+                        if (previous != null) {
+                            plugin.getSkinChanger().remove(player);
+                            SkinUtils.removeExtras(player, previous);
+                        }
                         int rememberedSlot = skins.get(uuid);
                         // put on a skin
                         Skin skin = LazarusUtils.skinForSlot(rememberedSlot);
@@ -116,9 +119,7 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
                         }
                     }, 80L);
                     // open the door
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        LazarusUtils.openDoor(b);
-                    }, 100L);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> LazarusUtils.openDoor(b), 100L);
                 }
                 case 53 -> {
                     close(player);
