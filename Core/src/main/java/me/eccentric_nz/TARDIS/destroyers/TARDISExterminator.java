@@ -241,7 +241,7 @@ public class TARDISExterminator {
         if (w.getName().toUpperCase(Locale.ENGLISH).contains("TARDIS_WORLD_")) {
             String name = w.getName();
             List<Player> players = w.getPlayers();
-            Location spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
+            Location spawn = plugin.getServer().getWorlds().getFirst().getSpawnLocation();
             players.forEach((p) -> {
                 plugin.getMessenger().send(p, TardisModule.TARDIS, "WORLD_RESET");
                 p.teleport(spawn);

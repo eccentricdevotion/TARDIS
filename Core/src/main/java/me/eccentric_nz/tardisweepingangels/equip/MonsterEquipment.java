@@ -49,7 +49,7 @@ public class MonsterEquipment {
                     || pdc.has(TARDISWeepingAngels.ZYGON, PersistentDataType.INTEGER));
         } else if (entity instanceof Skeleton) {
             if (!entity.getPassengers().isEmpty()) {
-                Entity passenger = entity.getPassengers().get(0);
+                Entity passenger = entity.getPassengers().getFirst();
                 if (passenger != null && passenger.getType().equals(EntityType.GUARDIAN)) {
                     return true;
                 }
@@ -62,7 +62,7 @@ public class MonsterEquipment {
                     || pdc.has(TARDISWeepingAngels.SILURIAN, PersistentDataType.INTEGER));
         } else if (entity instanceof Bee) {
             if (!entity.getPassengers().isEmpty()) {
-                Entity passenger = entity.getPassengers().get(0);
+                Entity passenger = entity.getPassengers().getFirst();
                 return passenger != null && passenger.getType().equals(EntityType.ARMOR_STAND);
             }
         } else if (entity instanceof Guardian) {

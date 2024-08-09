@@ -145,7 +145,7 @@ public class TARDISWorlds {
     }
 
     private boolean worldFolderExists(String world) {
-        String worldZero = plugin.getServer().getWorlds().get(0).getName();
+        String worldZero = plugin.getServer().getWorlds().getFirst().getName();
         File container = plugin.getServer().getWorldContainer();
         File[] dirs = container.listFiles();
         if (dirs != null) {

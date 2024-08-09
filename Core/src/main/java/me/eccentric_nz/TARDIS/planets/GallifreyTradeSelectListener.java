@@ -49,7 +49,7 @@ public class GallifreyTradeSelectListener implements Listener {
                 im.setLore(lore);
                 trade.getResult().setItemMeta(im);
                 MerchantRecipe newRecipe = new MerchantRecipe(trade.getResult(), 1);
-                newRecipe.addIngredient(trade.getIngredients().get(0));
+                newRecipe.addIngredient(trade.getIngredients().getFirst());
                 merchant.setRecipe(index, newRecipe);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, player::closeInventory, 1L);
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "BLUEPRINT_REFRESH");
@@ -86,7 +86,7 @@ public class GallifreyTradeSelectListener implements Listener {
                     ItemStack is = result.clone();
                     is.setItemMeta(im);
                     MerchantRecipe newRecipe = new MerchantRecipe(is, 1);
-                    newRecipe.addIngredient(recipe.getIngredients().get(0));
+                    newRecipe.addIngredient(recipe.getIngredients().getFirst());
                     villager.setRecipe(i, newRecipe);
                 }
                 i++;

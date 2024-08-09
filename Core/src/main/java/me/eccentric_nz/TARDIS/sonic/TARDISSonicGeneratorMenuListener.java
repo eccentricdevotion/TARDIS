@@ -249,7 +249,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
     private int getCost(InventoryView view) {
         ItemStack is = view.getItem(45);
         ItemMeta im = is.getItemMeta();
-        String c = im.getLore().get(0);
+        String c = im.getLore().getFirst();
         return TARDISNumberParsers.parseInt(c);
     }
 

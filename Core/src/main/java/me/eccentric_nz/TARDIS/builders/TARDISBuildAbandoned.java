@@ -178,7 +178,7 @@ class TARDISBuildAbandoned implements Runnable {
                 arr = obj.get("input").getAsJsonArray();
                 if (player != null) {
                     // start progress bar
-                    bb = Bukkit.createBossBar(TARDISConstants.GROWTH_STATES.get(0), BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
+                    bb = Bukkit.createBossBar(TARDISConstants.GROWTH_STATES.getFirst(), BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
                     bb.setProgress(0);
                     bb.addPlayer(player);
                     bb.setVisible(true);

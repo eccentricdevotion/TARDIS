@@ -341,11 +341,11 @@ class TARDISMaterialisePreset implements Runnable {
                                         SignSide front = s.getSide(Side.FRONT);
                                         SignSide back = s.getSide(Side.BACK);
                                         front.setLine(0, "TARDIS");
-                                        front.setLine(1, plugin.getSigns().getStringList("saves").get(0));
+                                        front.setLine(1, plugin.getSigns().getStringList("saves").getFirst());
                                         front.setLine(2, plugin.getSigns().getStringList("saves").get(1));
                                         front.setLine(3, "");
                                         back.setLine(0, "TARDIS");
-                                        back.setLine(1, plugin.getSigns().getStringList("saves").get(0));
+                                        back.setLine(1, plugin.getSigns().getStringList("saves").getFirst());
                                         back.setLine(2, plugin.getSigns().getStringList("saves").get(1));
                                         back.setLine(3, "");
                                         s.setWaxed(true);

@@ -38,7 +38,7 @@ public class VoidListener implements Listener {
         Location location = player.getRespawnLocation();
         if (location == null) {
             // get the main server world
-            World world = plugin.getServer().getWorlds().get(0);
+            World world = plugin.getServer().getWorlds().getFirst();
             location = world.getSpawnLocation();
         }
         player.teleport(location);

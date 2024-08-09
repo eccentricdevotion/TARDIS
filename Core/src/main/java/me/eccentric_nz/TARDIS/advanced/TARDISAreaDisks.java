@@ -113,7 +113,7 @@ class TARDISAreaDisks {
                     if (a != null && a.getType().equals(Material.MUSIC_DISC_BLOCKS) && a.hasItemMeta()) {
                         ItemMeta ima = a.getItemMeta();
                         if (ima.hasLore()) {
-                            player_has.add(ima.getLore().get(0));
+                            player_has.add(ima.getLore().getFirst());
                         }
                     }
                 }
@@ -123,7 +123,7 @@ class TARDISAreaDisks {
                     if (c != null && c.getType().equals(Material.MUSIC_DISC_BLOCKS) && c.hasItemMeta()) {
                         ItemMeta imc = c.getItemMeta();
                         if (imc.hasLore()) {
-                            player_has.add(imc.getLore().get(0));
+                            player_has.add(imc.getLore().getFirst());
                         }
                     }
                 }
@@ -133,7 +133,7 @@ class TARDISAreaDisks {
                     if (y != null && y.getType().equals(Material.MUSIC_DISC_BLOCKS) && y.hasItemMeta()) {
                         ItemMeta imy = y.getItemMeta();
                         if (imy.hasLore()) {
-                            player_has.add(imy.getLore().get(0));
+                            player_has.add(imy.getLore().getFirst());
                         }
                     }
                 }

@@ -132,6 +132,6 @@ public class TARDISHumListener extends TARDISMenuListener {
     private boolean isPlay(InventoryView view) {
         ItemStack play = view.getItem(15);
         ItemMeta save = play.getItemMeta();
-        return (save.getLore().get(0).endsWith("PLAY"));
+        return (save.getLore().getFirst().endsWith("PLAY"));
     }
 }

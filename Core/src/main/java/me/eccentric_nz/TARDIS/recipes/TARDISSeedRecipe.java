@@ -89,7 +89,7 @@ public class TARDISSeedRecipe {
         Material torch = Material.REDSTONE_TORCH;
         if (!plugin.getConfig().getBoolean("creation.seed_block.legacy")) {
             String difficulty;
-            World world = plugin.getServer().getWorlds().get(0);
+            World world = plugin.getServer().getWorlds().getFirst();
             switch (world.getDifficulty()) {
                 case HARD -> difficulty = "hard";
                 case NORMAL -> difficulty = "normal";

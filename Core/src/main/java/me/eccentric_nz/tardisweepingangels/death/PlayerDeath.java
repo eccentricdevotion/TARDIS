@@ -94,7 +94,7 @@ public class PlayerDeath implements Listener {
                     }
                     if (attacker instanceof Bee) {
                         if (!attacker.getPassengers().isEmpty()) {
-                            Entity passenger = attacker.getPassengers().get(0);
+                            Entity passenger = attacker.getPassengers().getFirst();
                             if (passenger != null && passenger.getType().equals(EntityType.ARMOR_STAND)) {
                                 event.setDeathMessage(name + " was slain by a Toclafane");
                                 return;
@@ -145,7 +145,7 @@ public class PlayerDeath implements Listener {
                             return;
                         }
                         if (!attacker.getPassengers().isEmpty()) {
-                            Entity passenger = attacker.getPassengers().get(0);
+                            Entity passenger = attacker.getPassengers().getFirst();
                             if (passenger != null && passenger.getType().equals(EntityType.GUARDIAN)) {
                                 event.setDeathMessage(name + " was slain by a Silent");
                                 return;

@@ -146,7 +146,7 @@ public class TARDISScanner {
                             }
                         }
                     }
-                    if (et.equals(EntityType.ENDERMAN) && !k.getPassengers().isEmpty() && k.getPassengers().get(0) != null && k.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
+                    if (et.equals(EntityType.ENDERMAN) && !k.getPassengers().isEmpty() && k.getPassengers().getFirst() != null && k.getPassengers().getFirst().getType().equals(EntityType.GUARDIAN)) {
                         // silent
                         et = EntityType.POTION;
                     }

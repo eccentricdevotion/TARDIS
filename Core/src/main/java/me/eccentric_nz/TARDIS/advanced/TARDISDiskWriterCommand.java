@@ -67,7 +67,7 @@ public class TARDISDiskWriterCommand {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName() && im.getDisplayName().endsWith("Save Storage Disk")) {
                 List<String> lore = im.getLore();
-                if (!lore.get(0).equals("Blank")) {
+                if (!lore.getFirst().equals("Blank")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_ONLY_BLANK");
                     return true;
                 }
@@ -191,7 +191,7 @@ public class TARDISDiskWriterCommand {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName() && im.getDisplayName().endsWith("Player Storage Disk")) {
                 List<String> lore = im.getLore();
-                if (!lore.get(0).equals("Blank")) {
+                if (!lore.getFirst().equals("Blank")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_ONLY_BLANK");
                     return true;
                 }

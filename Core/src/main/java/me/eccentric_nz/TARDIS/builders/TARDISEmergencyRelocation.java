@@ -48,7 +48,7 @@ public class TARDISEmergencyRelocation {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         if (rs.resultSet()) {
             // get the servers main world
-            World w = plugin.getServer().getWorlds().get(0);
+            World w = plugin.getServer().getWorlds().getFirst();
             Location emergency = new TARDISTimeTravel(plugin).randomDestination(p, 4, 4, 4, COMPASS.EAST, "THIS", w, false, w.getSpawnLocation());
             if (emergency != null) {
                 BuildData bd = new BuildData(p.getUniqueId().toString());

@@ -83,7 +83,7 @@ public class UpdateARS {
             Sign as = (Sign) block.getState();
             SignSide front = as.getSide(Side.FRONT);
             front.setLine(0, "TARDIS");
-            front.setLine(1, plugin.getSigns().getStringList("ars").get(0));
+            front.setLine(1, plugin.getSigns().getStringList("ars").getFirst());
             front.setLine(2, plugin.getSigns().getStringList("ars").get(1));
             front.setLine(3, plugin.getSigns().getStringList("ars").get(2));
             as.setWaxed(true);

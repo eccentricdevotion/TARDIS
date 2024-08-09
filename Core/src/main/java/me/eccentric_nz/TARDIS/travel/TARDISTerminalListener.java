@@ -393,7 +393,7 @@ public class TARDISTerminalListener implements Listener {
         boolean found = false;
         for (int i : slots) {
             if (view.getItem(i).getItemMeta().hasLore()) {
-                String world = view.getItem(i).getItemMeta().getLore().get(0);
+                String world = view.getItem(i).getItemMeta().getLore().getFirst();
                 if (!world.equals("No permission")) {
                     found = true;
                     World w = (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getWorld(world) : TARDISAliasResolver.getWorldFromAlias(world);
@@ -458,7 +458,7 @@ public class TARDISTerminalListener implements Listener {
                             // check submarine
                             ItemMeta subim = view.getItem(44).getItemMeta();
                             loc.setY(starty);
-                            if (subim.hasLore() && subim.getLore().get(0).equals("true") && TARDISStaticUtils.isOceanBiome(loc.getBlock().getBiome())) {
+                            if (subim.hasLore() && subim.getLore().getFirst().equals("true") && TARDISStaticUtils.isOceanBiome(loc.getBlock().getBiome())) {
                                 Location subloc = tt.submarine(loc.getBlock(), d);
                                 if (subloc != null) {
                                     safe = 0;

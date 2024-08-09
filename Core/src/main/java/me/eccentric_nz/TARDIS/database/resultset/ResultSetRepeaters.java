@@ -106,7 +106,7 @@ public class ResultSetRepeaters {
     public int[] getRepeaters() {
         if (locations.size() == 4) {
             // get repeaters
-            BlockData r0 = locations.get(0).getBlock().getBlockData();
+            BlockData r0 = locations.getFirst().getBlock().getBlockData();
             BlockData r1 = locations.get(1).getBlock().getBlockData();
             BlockData r2 = locations.get(2).getBlock().getBlockData();
             BlockData r3 = locations.get(3).getBlock().getBlockData();

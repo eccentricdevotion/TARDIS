@@ -130,7 +130,7 @@ public class TARDISMonsterRunnable implements Runnable {
                         case ENDERMAN -> {
                             Enderman enderman = (Enderman) e;
                             tm.setCarried(enderman.getCarriedBlock());
-                            if (twa && !e.getPassengers().isEmpty() && e.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
+                            if (twa && !e.getPassengers().isEmpty() && e.getPassengers().getFirst().getType().equals(EntityType.GUARDIAN)) {
                                 dn = "Silent";
                             }
                         }
@@ -196,7 +196,7 @@ public class TARDISMonsterRunnable implements Runnable {
                     tm.setHealth(((LivingEntity) e).getHealth());
                     tm.setName(e.getCustomName());
                     if (!e.getPassengers().isEmpty()) {
-                        tm.setPassenger(e.getPassengers().get(0).getType());
+                        tm.setPassenger(e.getPassengers().getFirst().getType());
                     }
                     moveMonster(map.getValue(), tm, e, type.equals(EntityType.GUARDIAN));
                 }

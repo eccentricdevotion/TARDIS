@@ -53,7 +53,7 @@ public class FlightVisibility {
         if (uuid != null) {
             Entity chicken = plugin.getServer().getEntity(uuid);
             if (chicken != null && !chicken.getPassengers().isEmpty()) {
-                Entity as = chicken.getPassengers().get(0);
+                Entity as = chicken.getPassengers().getFirst();
                 if (as instanceof ArmorStand stand) {
                     // restore the original item stack
                     net.minecraft.world.item.ItemStack head = CraftItemStack.asNMSCopy(plugin.getTrackerKeeper().getHiddenFlight().get(player.getUniqueId()));

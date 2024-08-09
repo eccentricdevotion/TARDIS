@@ -130,7 +130,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_DISABLED_RESTART");
                     }
                     // remove players from world
-                    Location spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
+                    Location spawn = plugin.getServer().getWorlds().getFirst().getSpawnLocation();
                     for (Player player : world.getPlayers()) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "WORLD_DISABLED_TELEPORT");
                         player.teleport(spawn);
@@ -146,7 +146,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     }
                     // remove players from world
                     List<Player> players = world.getPlayers();
-                    Location spawn = plugin.getServer().getWorlds().get(0).getSpawnLocation();
+                    Location spawn = plugin.getServer().getWorlds().getFirst().getSpawnLocation();
                     players.forEach((p) -> {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "WORLD_RENAME");
                         p.teleport(spawn);

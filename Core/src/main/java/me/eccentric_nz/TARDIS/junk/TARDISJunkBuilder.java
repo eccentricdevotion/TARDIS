@@ -206,7 +206,7 @@ public class TARDISJunkBuilder implements Runnable {
                             postTerminalBlock.setBlockData(sign);
                             if (Tag.WALL_SIGNS.isTagged(postTerminalBlock.getType())) {
                                 Sign ts = (Sign) postTerminalBlock.getState();
-                                ts.getSide(Side.FRONT).setLine(0, plugin.getSigns().getStringList("junk").get(0));
+                                ts.getSide(Side.FRONT).setLine(0, plugin.getSigns().getStringList("junk").getFirst());
                                 ts.update();
                             }
                         }

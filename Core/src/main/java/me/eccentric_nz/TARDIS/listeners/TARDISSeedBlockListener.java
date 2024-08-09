@@ -91,7 +91,7 @@ public class TARDISSeedBlockListener implements Listener {
                 TARDISDisplayItemUtils.setSeed(tdi, block, im);
             }
             List<String> lore = im.getLore();
-            Schematic schm = Consoles.getBY_NAMES().get(lore.get(0));
+            Schematic schm = Consoles.getBY_NAMES().get(lore.getFirst());
             Material wall = Material.valueOf(TARDISStringUtils.getValuesFromWallString(lore.get(1)));
             Material floor = Material.valueOf(TARDISStringUtils.getValuesFromWallString(lore.get(2)));
             TARDISBuildData seed = new TARDISBuildData();
@@ -132,7 +132,7 @@ public class TARDISSeedBlockListener implements Listener {
             }
         } else if (dn.endsWith("Variable Light") && is.getType() == Material.GLASS) {
             List<String> lore = im.getLore();
-            Material variable = Material.valueOf(lore.get(0));
+            Material variable = Material.valueOf(lore.getFirst());
             // place the variable light
             new VariableLight(variable, event.getBlockPlaced().getLocation().add(0.5d, 0.5d, 0.5d)).set();
         }

@@ -474,7 +474,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 // update the lore
                 ItemStack spt = view.getItem(51);
                 ItemMeta im = spt.getItemMeta();
-                String currentThrottle = im.getLore().get(0);
+                String currentThrottle = im.getLore().getFirst();
                 int delay = SpaceTimeThrottle.valueOf(currentThrottle).getDelay() - 1;
                 if (delay < 1) {
                     delay = 4;

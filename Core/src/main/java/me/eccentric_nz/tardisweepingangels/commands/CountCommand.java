@@ -133,7 +133,7 @@ public class CountCommand {
                     what = monster.getName();
                     Collection<Bee> bees = w.getEntitiesByClass(Bee.class);
                     for (Bee b : bees) {
-                        if (b.getPassengers() != null && !b.getPassengers().isEmpty() && b.getPassengers().get(0) instanceof ArmorStand) {
+                        if (b.getPassengers() != null && !b.getPassengers().isEmpty() && b.getPassengers().getFirst() instanceof ArmorStand) {
                             count++;
                         }
                     }

@@ -35,7 +35,7 @@ public class TARDISStainedGlassLookup {
 
     public static Material stainedGlassFromMaterial(World world, Material material) {
         if (world == null) {
-            world = Bukkit.getWorlds().get(0);
+            world = Bukkit.getWorlds().getFirst();
         }
         ServerLevel level = ((CraftWorld) world).getHandle();
         Block nmsBlock = CraftMagicNumbers.getBlock(material);

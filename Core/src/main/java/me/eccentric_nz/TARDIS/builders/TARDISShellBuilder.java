@@ -169,7 +169,7 @@ public class TARDISShellBuilder {
                                 where.put("chameleon_id", cid);
                                 ResultSetShells rss = new ResultSetShells(plugin, where);
                                 if (rss.resultSet()) {
-                                    HashMap<String, String> map = rss.getData().get(0);
+                                    HashMap<String, String> map = rss.getData().getFirst();
                                     Sign sign = (Sign) world.getBlockAt(xx, (y + yy), zz).getState();
                                     SignSide front = sign.getSide(Side.FRONT);
                                     front.setLine(0, map.get("line1"));

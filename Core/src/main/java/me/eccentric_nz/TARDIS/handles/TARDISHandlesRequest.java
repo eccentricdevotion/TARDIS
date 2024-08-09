@@ -144,7 +144,7 @@ public class TARDISHandlesRequest {
                             } else {
                                 // tardis seed block
                                 for (String seed : TARDISRecipeTabComplete.TARDIS_TYPES) {
-                                    if (groups.get(0).equalsIgnoreCase(seed)) {
+                                    if (groups.getFirst().equalsIgnoreCase(seed)) {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardisrecipe tardis " + seed), 1L);
                                         return;
                                     }
@@ -163,7 +163,7 @@ public class TARDISHandlesRequest {
                             return;
                         }
                         if (groups != null) {
-                            String reminder = groups.get(0);
+                            String reminder = groups.getFirst();
                             String time = groups.get(1);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles remind " + uuid + " " + reminder + " " + time), 1L);
                             return;
@@ -171,7 +171,7 @@ public class TARDISHandlesRequest {
                     }
                     case "say" -> {
                         if (groups != null) {
-                            String g = groups.get(0);
+                            String g = groups.getFirst();
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getServer().dispatchCommand(plugin.getConsole(), "handles say " + uuid + " " + TARDISStringUtils.normalizeSpace(g)), 1L);
                         }
                     }
@@ -186,13 +186,13 @@ public class TARDISHandlesRequest {
                     case "direction" -> {
                         if (groups != null) {
                             COMPASS direction = null;
-                            if (groups.get(0).equalsIgnoreCase("east")) {
+                            if (groups.getFirst().equalsIgnoreCase("east")) {
                                 direction = COMPASS.EAST;
-                            } else if (groups.get(0).equalsIgnoreCase("north")) {
+                            } else if (groups.getFirst().equalsIgnoreCase("north")) {
                                 direction = COMPASS.NORTH;
-                            } else if (groups.get(0).equalsIgnoreCase("west")) {
+                            } else if (groups.getFirst().equalsIgnoreCase("west")) {
                                 direction = COMPASS.WEST;
-                            } else if (groups.get(0).equalsIgnoreCase("south")) {
+                            } else if (groups.getFirst().equalsIgnoreCase("south")) {
                                 direction = COMPASS.SOUTH;
                             }
                             if (direction != null) {
@@ -203,7 +203,7 @@ public class TARDISHandlesRequest {
                     }
                     case "lights" -> {
                         if (groups != null) {
-                            boolean onoff = groups.get(0).equalsIgnoreCase("on");
+                            boolean onoff = groups.getFirst().equalsIgnoreCase("on");
                             // get tardis
                             HashMap<String, Object> wherel = new HashMap<>();
                             wherel.put("tardis_id", id);
@@ -218,7 +218,7 @@ public class TARDISHandlesRequest {
                     }
                     case "power" -> {
                         if (groups != null) {
-                            boolean onoff = groups.get(0).equalsIgnoreCase("off");
+                            boolean onoff = groups.getFirst().equalsIgnoreCase("off");
                             // get tardis
                             HashMap<String, Object> wherel = new HashMap<>();
                             wherel.put("tardis_id", id);
@@ -241,7 +241,7 @@ public class TARDISHandlesRequest {
                             if (rsd.resultSet()) {
                                 for (HashMap<String, String> map : rsd.getData()) {
                                     String dest = map.get("dest_name");
-                                    if (groups.get(0).equalsIgnoreCase(dest) && TARDISPermission.hasPermission(player, "tardis.timetravel")) {
+                                    if (groups.getFirst().equalsIgnoreCase(dest) && TARDISPermission.hasPermission(player, "tardis.timetravel")) {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel dest " + dest), 1L);
                                         return;
                                     }
@@ -269,7 +269,7 @@ public class TARDISHandlesRequest {
                             }
                             for (Player p : plugin.getServer().getOnlinePlayers()) {
                                 String name = p.getName();
-                                if (groups.get(0).equalsIgnoreCase(name)) {
+                                if (groups.getFirst().equalsIgnoreCase(name)) {
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel " + name), 1L);
                                     return;
                                 }
@@ -280,7 +280,7 @@ public class TARDISHandlesRequest {
                     }
                     case "travel.area" -> {
                         if (groups != null) {
-                            String area = (groups.get(0) == null || groups.get(0).isEmpty()) ? groups.get(1) : groups.get(0);
+                            String area = (groups.getFirst() == null || groups.getFirst().isEmpty()) ? groups.get(1) : groups.getFirst();
                             ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
                             if (rsa.resultSet()) {
                                 // cycle through areas
@@ -301,7 +301,7 @@ public class TARDISHandlesRequest {
                                 plugin.getMessenger().handlesSend(player, "TRAVEL_NO_PERM_BIOME");
                                 return;
                             }
-                            String gb = (groups.get(0) == null || groups.get(0).isEmpty()) ? groups.get(1) : groups.get(0);
+                            String gb = (groups.getFirst() == null || groups.getFirst().isEmpty()) ? groups.get(1) : groups.getFirst();
                             // cycle through biomes
                             for (Biome biome : Biome.values()) {
                                 String b = biome.toString();
@@ -347,7 +347,7 @@ public class TARDISHandlesRequest {
                                 return;
                             }
                             ResultSetHandlesTransmat rst = new ResultSetHandlesTransmat(plugin, id);
-                            if (rst.findSite(groups.get(0))) {
+                            if (rst.findSite(groups.getFirst())) {
                                 new TARDISHandlesTransmatCommand(plugin).siteToSiteTransport(player, rst.getLocation());
                             } else {
                                 plugin.getMessenger().handlesSend(player, "HANDLES_NO_TRANSMAT");

@@ -109,7 +109,7 @@ public class ShapedPageBuilder extends PageBuilder {
                         String dashed = "";
                         RecipeChoice choice = choices.get(c);
                         if (choice instanceof RecipeChoice.MaterialChoice mat) {
-                            dashed = TARDISStringUtils.toLowercaseDashed(TARDISStringUtils.capitalise(mat.getChoices().get(0).toString()));
+                            dashed = TARDISStringUtils.toLowercaseDashed(TARDISStringUtils.capitalise(mat.getChoices().getFirst().toString()));
                         }
                         if (choice instanceof RecipeChoice.ExactChoice exact) {
                             ItemStack is = exact.getItemStack();

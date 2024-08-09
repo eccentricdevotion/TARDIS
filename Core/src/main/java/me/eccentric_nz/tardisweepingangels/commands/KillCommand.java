@@ -57,8 +57,8 @@ public class KillCommand {
             if (which.equals("OLD_SILENT")) {
                 Collection<Enderman> silence = w.getEntitiesByClass(Enderman.class);
                 for (Enderman m : silence) {
-                    if (!m.getPassengers().isEmpty() && m.getPassengers().get(0) != null && m.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
-                        m.getPassengers().get(0).remove();
+                    if (!m.getPassengers().isEmpty() && m.getPassengers().getFirst() != null && m.getPassengers().getFirst().getType().equals(EntityType.GUARDIAN)) {
+                        m.getPassengers().getFirst().remove();
                         m.remove();
                         count++;
                     }
@@ -121,8 +121,8 @@ public class KillCommand {
                 what = "Silence";
                 Collection<Skeleton> silence = w.getEntitiesByClass(Skeleton.class);
                 for (Skeleton m : silence) {
-                    if (!m.getPassengers().isEmpty() && m.getPassengers().get(0) != null && m.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
-                        m.getPassengers().get(0).remove();
+                    if (!m.getPassengers().isEmpty() && m.getPassengers().getFirst() != null && m.getPassengers().getFirst().getType().equals(EntityType.GUARDIAN)) {
+                        m.getPassengers().getFirst().remove();
                         m.remove();
                         count++;
                     }

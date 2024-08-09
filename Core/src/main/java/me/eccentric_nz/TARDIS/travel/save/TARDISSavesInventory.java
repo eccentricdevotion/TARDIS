@@ -83,7 +83,7 @@ public class TARDISSavesInventory {
                             highest = slot;
                         }
                     } else {
-                        slot = slots.get(0);
+                        slot = slots.getFirst();
                     }
                     slots.remove(Integer.valueOf(slot));
                     if (slot < 45) {

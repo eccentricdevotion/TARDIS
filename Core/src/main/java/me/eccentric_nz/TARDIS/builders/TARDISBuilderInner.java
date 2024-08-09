@@ -220,7 +220,7 @@ public class TARDISBuilderInner implements Runnable {
                 // get input array
                 arr = obj.get("input").getAsJsonArray();
                 // start progress bar
-                bb = Bukkit.createBossBar(TARDISConstants.GROWTH_STATES.get(0), BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
+                bb = Bukkit.createBossBar(TARDISConstants.GROWTH_STATES.getFirst(), BarColor.WHITE, BarStyle.SOLID, TARDISConstants.EMPTY_ARRAY);
                 bb.setProgress(0);
                 bb.addPlayer(player);
                 bb.setVisible(true);

@@ -229,7 +229,7 @@ public class TVMGUIListener extends TARDISMenuListener {
             case 40 -> updateDisplay(view, '0'); //zero
             case 41 -> {
                 // hash
-                if (letters.contains(which) || components.get(0).startsWith("~")) {
+                if (letters.contains(which) || components.getFirst().startsWith("~")) {
                     updateDisplay(view, hash[th]);
                     th++;
                     if (th == hash.length) {
@@ -275,7 +275,7 @@ public class TVMGUIListener extends TARDISMenuListener {
     private void usePredictive(InventoryView view) {
         ItemStack is = view.getItem(6);
         ItemMeta im = is.getItemMeta();
-        String world = im.getLore().get(0);
+        String world = im.getLore().getFirst();
         components.set(0, world);
         ItemStack display = view.getItem(4);
         ItemMeta dim = display.getItemMeta();
@@ -321,9 +321,9 @@ public class TVMGUIListener extends TARDISMenuListener {
                 setPredictive(comp.toLowerCase(), view);
                 combined = comp + " " + components.get(1) + " " + components.get(2) + " " + components.get(3);
             }
-            case 1 -> combined = components.get(0) + " " + comp + " " + components.get(2) + " " + components.get(3);
-            case 2 -> combined = components.get(0) + " " + components.get(1) + " " + comp + " " + components.get(3);
-            case 3 -> combined = components.get(0) + " " + components.get(1) + " " + components.get(2) + " " + comp;
+            case 1 -> combined = components.getFirst() + " " + comp + " " + components.get(2) + " " + components.get(3);
+            case 2 -> combined = components.getFirst() + " " + components.get(1) + " " + comp + " " + components.get(3);
+            case 3 -> combined = components.getFirst() + " " + components.get(1) + " " + components.get(2) + " " + comp;
             default -> combined = comp;
         }
         components.set(which, comp);
@@ -349,7 +349,7 @@ public class TVMGUIListener extends TARDISMenuListener {
         ItemStack display = view.getItem(4);
         ItemMeta dim = display.getItemMeta();
         List<String> lore = dim.getLore();
-        String name = lore.get(0);
+        String name = lore.getFirst();
         if (name.isEmpty()) {
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NEED");
             return;
@@ -357,7 +357,7 @@ public class TVMGUIListener extends TARDISMenuListener {
         Location l = player.getLocation();
         HashMap<String, Object> set = new HashMap<>();
         set.put("uuid", player.getUniqueId().toString());
-        set.put("save_name", lore.get(0));
+        set.put("save_name", lore.getFirst());
         set.put("world", l.getWorld().getName());
         set.put("x", l.getX());
         set.put("y", l.getY());
@@ -386,7 +386,7 @@ public class TVMGUIListener extends TARDISMenuListener {
         ItemStack display = view.getItem(4);
         ItemMeta dim = display.getItemMeta();
         List<String> lore = dim.getLore();
-        String pname = lore.get(0).trim();
+        String pname = lore.getFirst().trim();
         if (pname.isEmpty()) {
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "SCAN_ENTS");
             // scan nearby entities
@@ -536,8 +536,8 @@ public class TVMGUIListener extends TARDISMenuListener {
         ItemMeta dim = display.getItemMeta();
         List<String> lore = dim.getLore();
         List<String> dest;
-        if (!lore.get(0).trim().isEmpty()) {
-            dest = Arrays.asList(lore.get(0).trim().split(" "));
+        if (!lore.getFirst().trim().isEmpty()) {
+            dest = Arrays.asList(lore.getFirst().trim().split(" "));
         } else {
             dest = new ArrayList<>();
         }
@@ -571,36 +571,36 @@ public class TVMGUIListener extends TARDISMenuListener {
                 required = plugin.getVortexConfig().getInt("tachyon_use.travel.world");
                 // only world specified (or incomplete setting)
                 // check world is an actual world
-                if (plugin.getServer().getWorld(dest.get(0)) == null) {
+                if (plugin.getServer().getWorld(dest.getFirst()) == null) {
                     close(player);
                     plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_WORLD");
                     return;
                 }
                 // check world is enabled for travel
-                if (!plugin.getTardisAPI().getWorlds().contains(dest.get(0))) {
+                if (!plugin.getTardisAPI().getWorlds().contains(dest.getFirst())) {
                     close(player);
                     plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_TRAVEL");
                     return;
                 }
-                worlds.add(dest.get(0));
+                worlds.add(dest.getFirst());
                 l = plugin.getTardisAPI().getRandomLocation(worlds, null, params);
             }
             case 4 -> {
                 required = plugin.getVortexConfig().getInt("tachyon_use.travel.coords");
                 // world, x, y, z specified
                 World w;
-                if (dest.get(0).contains("~")) {
+                if (dest.getFirst().contains("~")) {
                     // relative location
                     w = player.getLocation().getWorld();
                 } else {
-                    w = plugin.getServer().getWorld(dest.get(0));
+                    w = plugin.getServer().getWorld(dest.getFirst());
                     if (w == null) {
                         close(player);
                         plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_WORLD");
                         return;
                     }
                     // check world is enabled for travel
-                    if (!plugin.getTardisAPI().getWorlds().contains(dest.get(0))) {
+                    if (!plugin.getTardisAPI().getWorlds().contains(dest.getFirst())) {
                         close(player);
                         plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_NO_TRAVEL");
                         return;

@@ -89,7 +89,7 @@ public class TARDISTemporalLocatorListener extends TARDISMenuListener {
      * @return the destination string
      */
     private long getTime(List<String> lore) {
-        String[] data = lore.get(0).split(" ");
+        String[] data = lore.getFirst().split(" ");
         return TARDISNumberParsers.parseLong(data[0]);
     }
 }

@@ -130,7 +130,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
     private void cycleColour(InventoryView view, UUID uuid) {
         ItemStack is = view.getItem(GUIParticle.COLOUR.slot());
         ItemMeta im = is.getItemMeta();
-        String lore = im.getLore().get(0);
+        String lore = im.getLore().getFirst();
         ChatColor current = ParticleColour.fromString(lore);
         int index = ParticleColour.colours.indexOf(current) + 1;
         if (index > 15) {
@@ -152,7 +152,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
     private void cycleBlocks(InventoryView view, UUID uuid) {
         ItemStack is = view.getItem(GUIParticle.BLOCK.slot());
         ItemMeta im = is.getItemMeta();
-        String lore = im.getLore().get(0);
+        String lore = im.getLore().getFirst();
         int index = ParticleBlock.blocks.indexOf(lore) + 1;
         if (index > ParticleBlock.blocks.size() - 1) {
             index = 0;
@@ -250,7 +250,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
         List<String> lore = im.getLore();
-        int level = TARDISNumberParsers.parseInt(ChatColor.stripColor(lore.get(0)));
+        int level = TARDISNumberParsers.parseInt(ChatColor.stripColor(lore.getFirst()));
         level -= 1;
         if (level >= min) {
             lore.set(0, ChatColor.AQUA + "" + level);
@@ -272,7 +272,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
         List<String> lore = im.getLore();
-        int level = TARDISNumberParsers.parseInt(ChatColor.stripColor(lore.get(0)));
+        int level = TARDISNumberParsers.parseInt(ChatColor.stripColor(lore.getFirst()));
         level += 1;
         if (level <= max) {
             lore.set(0, ChatColor.AQUA + "" + level);

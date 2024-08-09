@@ -42,7 +42,7 @@ class TARDISSetWorldInclusionCommand {
         for (String a : arguments.getArguments()) {
             plugin.debug(a);
         }
-        String first = arguments.getArguments().get(0);
+        String first = arguments.getArguments().getFirst();
         // get world name with no periods(.)
         String name = arguments.getArguments().get(1).replace(".", "_");;
         // check the world actually exists!

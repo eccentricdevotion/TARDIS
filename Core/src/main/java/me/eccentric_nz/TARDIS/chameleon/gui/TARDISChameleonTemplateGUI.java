@@ -126,7 +126,7 @@ class TARDISChameleonTemplateGUI {
         ItemStack lamp = new ItemStack(Material.REDSTONE_LAMP, 1);
         ItemMeta lp = lamp.getItemMeta();
         List<String> lampList = plugin.getChameleonGuis().getStringList("PB_LAMP");
-        lp.setDisplayName(lampList.get(0));
+        lp.setDisplayName(lampList.getFirst());
         lp.setLore(Arrays.asList(lampList.get(1), lampList.get(2)));
         lamp.setItemMeta(lp);
         // redstone block
@@ -148,7 +148,7 @@ class TARDISChameleonTemplateGUI {
         ItemStack door = new ItemStack(Material.IRON_DOOR, 1);
         ItemMeta dr = door.getItemMeta();
         List<String> doorList = plugin.getChameleonGuis().getStringList("PB_DOOR");
-        dr.setDisplayName(doorList.get(0));
+        dr.setDisplayName(doorList.getFirst());
         dr.setLore(Arrays.asList(doorList.get(1), doorList.get(2)));
         door.setItemMeta(dr);
 

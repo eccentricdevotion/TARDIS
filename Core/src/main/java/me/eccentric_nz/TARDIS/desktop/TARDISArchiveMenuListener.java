@@ -89,7 +89,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener {
                 String t;
                 String b;
                 int s;
-                int o = ConsoleSize.valueOf(lores.get(0)).ordinal();
+                int o = ConsoleSize.valueOf(lores.getFirst()).ordinal();
                 s = (o < 2) ? o + 1 : 0;
                 t = ConsoleSize.values()[s].toString();
                 b = ConsoleSize.values()[s].getBlocks();
@@ -179,7 +179,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener {
     private void scan(Player p, InventoryView view) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             List<String> lore = getSizeLore(view);
-            String size = lore.get(0);
+            String size = lore.getFirst();
             p.closeInventory();
             p.performCommand("tardis archive scan " + size);
         }, 1L);
@@ -193,7 +193,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener {
     private void archive(Player p, InventoryView view) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             List<String> lore = getSizeLore(view);
-            String size = lore.get(0);
+            String size = lore.getFirst();
             p.closeInventory();
             // generate random name
             String name = TARDISRandomArchiveName.getRandomName();

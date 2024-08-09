@@ -77,13 +77,13 @@ public class TARDISDiskCraftListener implements Listener {
                     return;
                 }
                 List<String> lore = im.getLore();
-                if (!lore.get(0).equals("Blank")) {
+                if (!lore.getFirst().equals("Blank")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_BLANK_BIOME");
                     return;
                 }
                 List<String> disk_lore = new ArrayList<>();
                 // biome disk
-                Material lookup = items.get(0).getType();
+                Material lookup = items.getFirst().getType();
                 Biome biome = BiomeLookup.MATERIALS.get(lookup);
                 if (biome != null) {
                     disk_lore.add(biome.toString());
@@ -110,7 +110,7 @@ public class TARDISDiskCraftListener implements Listener {
                     return;
                 }
                 List<String> lore = im.getLore();
-                if (!lore.get(0).equals("Blank")) {
+                if (!lore.getFirst().equals("Blank")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_BLANK_PRESET");
                     return;
                 }
@@ -118,7 +118,7 @@ public class TARDISDiskCraftListener implements Listener {
                 if (items.isEmpty()) {
                     return;
                 }
-                Material m = items.get(0).getType();
+                Material m = items.getFirst().getType();
                 String preset = "";
                 if (ChameleonPreset.getPreset(m) != null) {
                     preset = ChameleonPreset.getPreset(m).toString();

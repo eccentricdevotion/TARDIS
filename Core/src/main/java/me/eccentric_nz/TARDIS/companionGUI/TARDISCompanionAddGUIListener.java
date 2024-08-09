@@ -126,7 +126,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener {
 //                    ItemStack h = view.getItem(slot);
                     ItemMeta m = is.getItemMeta();
                     List<String> l = m.getLore();
-                    String u = l.get(0);
+                    String u = l.getFirst();
                     addCompanion(id, comps, u);
                     if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                         String[] data = tardis.getChunk().split(":");

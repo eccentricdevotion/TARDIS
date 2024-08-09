@@ -56,7 +56,7 @@ public class TARDISEditAreasGUIListener extends TARDISMenuListener {
          */
         HashMap<String, Object> where = new HashMap<>();
         where.put("area_id", getValueFromLore(lore.get(4)));
-        where.put("world", lore.get(0));
+        where.put("world", lore.getFirst());
         where.put("x", getValueFromLore(lore.get(1)));
         where.put("y", getValueFromLore(lore.get(2)));
         where.put("z", getValueFromLore(lore.get(3)));
@@ -86,7 +86,7 @@ public class TARDISEditAreasGUIListener extends TARDISMenuListener {
             case 48 -> {
                 // add
                 ItemMeta meta = is.getItemMeta();
-                Object area_id = getValueFromLore(meta.getLore().get(0));
+                Object area_id = getValueFromLore(meta.getLore().getFirst());
                 // get player's location
                 Location location = player.getLocation();
                 HashMap<String, Object> add = new HashMap<>();

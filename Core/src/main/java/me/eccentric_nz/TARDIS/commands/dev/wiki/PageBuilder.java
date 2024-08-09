@@ -48,7 +48,7 @@ public class PageBuilder {
         String MINECRAFT = "[%s](https://minecraft.wiki/w/%s)";
         String link = MINECRAFT;
         if (choice instanceof RecipeChoice.MaterialChoice mat) {
-            ingredient = TARDISStringUtils.capitalise(mat.getChoices().get(0).toString());
+            ingredient = TARDISStringUtils.capitalise(mat.getChoices().getFirst().toString());
             // MINECRAFT = "[%s](https://minecraft.wiki/w/%s)";
             link = String.format(MINECRAFT, ingredient, ingredient.replaceAll(" ", "_"));
         }

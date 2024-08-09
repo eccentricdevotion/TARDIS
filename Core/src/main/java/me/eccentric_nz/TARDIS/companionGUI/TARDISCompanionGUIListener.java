@@ -126,7 +126,7 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener {
                         ItemStack h = view.getItem(selected_head.get(uuid));
                         ItemMeta m = h.getItemMeta();
                         List<String> l = m.getLore();
-                        String u = l.get(0);
+                        String u = l.getFirst();
                         removeCompanion(id, comps, u, player);
                         if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
                             if (!comps.equalsIgnoreCase("everyone")) {

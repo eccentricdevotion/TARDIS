@@ -92,7 +92,7 @@ public class TARDISSavesPlanetListener extends TARDISMenuListener {
                 ItemStack is = view.getItem(slot);
                 ItemMeta im = is.getItemMeta();
                 List<String> lore = im.getLore();
-                World w = TARDISAliasResolver.getWorldFromAlias(lore.get(0));
+                World w = TARDISAliasResolver.getWorldFromAlias(lore.getFirst());
                 if (w == null) {
                     close(player);
                     return;
@@ -121,7 +121,7 @@ public class TARDISSavesPlanetListener extends TARDISMenuListener {
                 }
                 if (!save_dest.equals(current) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                     HashMap<String, Object> set = new HashMap<>();
-                    set.put("world", lore.get(0));
+                    set.put("world", lore.getFirst());
                     set.put("x", TARDISNumberParsers.parseInt(lore.get(1)));
                     set.put("y", TARDISNumberParsers.parseInt(lore.get(2)));
                     set.put("z", TARDISNumberParsers.parseInt(lore.get(3)));

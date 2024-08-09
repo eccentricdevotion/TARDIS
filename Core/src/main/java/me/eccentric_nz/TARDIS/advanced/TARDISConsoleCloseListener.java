@@ -133,7 +133,7 @@ public class TARDISConsoleCloseListener implements Listener {
                     if (lore == null) {
                         return;
                     }
-                    String first = lore.get(0);
+                    String first = lore.getFirst();
                     if (!first.equals("Blank")) {
                         TravelType travelType = TravelType.SAVE;
                         switch (mat) {

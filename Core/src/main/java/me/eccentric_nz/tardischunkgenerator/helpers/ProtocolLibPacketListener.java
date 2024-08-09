@@ -52,7 +52,7 @@ public class ProtocolLibPacketListener {
                                 if (!Double.isFinite(velocity.getZ())) {
                                     velocity.setZ(0);
                                 }
-                                if (!e.getPacket().getBooleans().getValues().get(0)) { // space bar not pressed
+                                if (!e.getPacket().getBooleans().getValues().getFirst()) { // space bar not pressed
                                     if (pitch < 0) {
                                         // go up
                                         double up = Math.abs(pitch / 100.0d);

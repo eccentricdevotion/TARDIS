@@ -209,7 +209,7 @@ public class TARDISUpdateListener implements Listener {
                     // add text to sign
                     Sign cs = (Sign) block.getState();
                     SignSide front = cs.getSide(Side.FRONT);
-                    front.setLine(0, plugin.getSigns().getStringList("chameleon").get(0));
+                    front.setLine(0, plugin.getSigns().getStringList("chameleon").getFirst());
                     front.setLine(1, plugin.getSigns().getStringList("chameleon").get(1));
                     front.setLine(2, "");
                     front.setLine(3, tardis.getPreset().toString());
@@ -221,7 +221,7 @@ public class TARDISUpdateListener implements Listener {
                     // add text to sign
                     Sign ks = (Sign) block.getState();
                     SignSide front = ks.getSide(Side.FRONT);
-                    front.setLine(0, plugin.getSigns().getStringList("keyboard").get(0));
+                    front.setLine(0, plugin.getSigns().getStringList("keyboard").getFirst());
                     for (int i = 1; i < 4; i++) {
                         front.setLine(i, "");
                     }
@@ -233,7 +233,7 @@ public class TARDISUpdateListener implements Listener {
                     Sign ss = (Sign) block.getState();
                     SignSide front = ss.getSide(Side.FRONT);
                     front.setLine(0, "TARDIS");
-                    front.setLine(1, plugin.getSigns().getStringList("saves").get(0));
+                    front.setLine(1, plugin.getSigns().getStringList("saves").getFirst());
                     front.setLine(2, plugin.getSigns().getStringList("saves").get(1));
                     front.setLine(3, "");
                     ss.setWaxed(true);
@@ -245,7 +245,7 @@ public class TARDISUpdateListener implements Listener {
                     Sign ts = (Sign) block.getState();
                     SignSide front = ts.getSide(Side.FRONT);
                     front.setLine(0, "");
-                    front.setLine(1, plugin.getSigns().getStringList("terminal").get(0));
+                    front.setLine(1, plugin.getSigns().getStringList("terminal").getFirst());
                     front.setLine(2, plugin.getSigns().getStringList("terminal").get(1));
                     front.setLine(3, "");
                     ts.setWaxed(true);
@@ -257,7 +257,7 @@ public class TARDISUpdateListener implements Listener {
                     Sign os = (Sign) block.getState();
                     SignSide front = os.getSide(Side.FRONT);
                     front.setLine(0, "");
-                    front.setLine(1, plugin.getSigns().getStringList("control").get(0));
+                    front.setLine(1, plugin.getSigns().getStringList("control").getFirst());
                     front.setLine(2, plugin.getSigns().getStringList("control").get(1));
                     front.setLine(3, "");
                     os.setWaxed(true);
@@ -287,7 +287,7 @@ public class TARDISUpdateListener implements Listener {
                     Sign es = (Sign) block.getState();
                     SignSide front = es.getSide(Side.FRONT);
                     front.setLine(0, "");
-                    front.setLine(1, plugin.getSigns().getStringList("temporal").get(0));
+                    front.setLine(1, plugin.getSigns().getStringList("temporal").getFirst());
                     front.setLine(2, plugin.getSigns().getStringList("temporal").get(1));
                     front.setLine(3, "");
                     es.setWaxed(true);
@@ -310,7 +310,7 @@ public class TARDISUpdateListener implements Listener {
                     SignSide front = s.getSide(Side.FRONT);
                     front.setLine(0, "-----");
                     front.setLine(1, "TARDIS");
-                    front.setLine(2, plugin.getSigns().getStringList("info").get(0));
+                    front.setLine(2, plugin.getSigns().getStringList("info").getFirst());
                     front.setLine(3, plugin.getSigns().getStringList("info").get(1));
                     s.setWaxed(true);
                     s.update();

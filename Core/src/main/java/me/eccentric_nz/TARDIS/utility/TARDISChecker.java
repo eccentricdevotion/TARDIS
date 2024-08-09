@@ -77,7 +77,7 @@ public class TARDISChecker {
         // get server's main world folder
         // is there a world container?
         File container = plugin.getServer().getWorldContainer();
-        String s_world = plugin.getServer().getWorlds().get(0).getName();
+        String s_world = plugin.getServer().getWorlds().getFirst().getName();
         // check if directories exist
         String dataPacksTardis = container.getAbsolutePath() + File.separator + s_world + File.separator + "datapacks" + File.separator + "tardis" + File.separator + "data" + File.separator + "tardis" + File.separator;
         String dataPacksAdvancement = dataPacksTardis + "advancements";

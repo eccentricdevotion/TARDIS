@@ -207,7 +207,7 @@ public class TARDISPlayerShellListener extends TARDISMenuListener {
                 ResultSetShells rsc = new ResultSetShells(plugin, wherec);
                 if (rsc.resultSet()) {
                     // convert to String[][] array
-                    String data = rsc.getData().get(0).get("blueprintData");
+                    String data = rsc.getData().getFirst().get("blueprintData");
                     if (data != null) {
                         JsonArray json = JsonParser.parseString(data).getAsJsonArray();
                         String[][] strings = new String[10][4];

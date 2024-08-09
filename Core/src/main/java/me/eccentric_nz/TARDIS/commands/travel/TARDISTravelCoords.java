@@ -259,8 +259,8 @@ public class TARDISTravelCoords {
         ArgumentParser parser = new ArgumentParser();
         String command = parser.join(args);
         Arguments arguments = parser.parse(command);
-        String w_str = arguments.getArguments().get(0);
-        if (TARDISNumberParsers.isSimpleNumber(arguments.getArguments().get(0))) {
+        String w_str = arguments.getArguments().getFirst();
+        if (TARDISNumberParsers.isSimpleNumber(arguments.getArguments().getFirst())) {
             plugin.getMessenger().sendColouredCommand(player, "WORLD_NOT_FOUND", "/tardisworld", plugin);
             return null;
         }
@@ -277,7 +277,7 @@ public class TARDISTravelCoords {
         // must be a location then
         int x, y, z;
         World w;
-        if (arguments.getArguments().get(0).equals("~")) {
+        if (arguments.getArguments().getFirst().equals("~")) {
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             if (!rsc.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
@@ -299,7 +299,7 @@ public class TARDISTravelCoords {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
             return null;
         }
-        if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && arguments.getArguments().get(0).equals(plugin.getConfig().getString("creation.default_world_name"))) {
+        if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && arguments.getArguments().getFirst().equals(plugin.getConfig().getString("creation.default_world_name"))) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
             return null;
         }

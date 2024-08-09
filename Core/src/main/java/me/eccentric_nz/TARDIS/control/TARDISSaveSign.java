@@ -61,7 +61,7 @@ class TARDISSaveSign {
             ItemStack disk = player.getInventory().getItemInMainHand();
             if (disk.hasItemMeta() && disk.getItemMeta().hasDisplayName() && disk.getItemMeta().getDisplayName().endsWith("Save Storage Disk")) {
                 List<String> lore = disk.getItemMeta().getLore();
-                if (!lore.get(0).equals("Blank")) {
+                if (!lore.getFirst().equals("Blank")) {
                     // read the lore from the disk
                     String world = lore.get(1);
                     int x = TARDISNumberParsers.parseInt(lore.get(2));

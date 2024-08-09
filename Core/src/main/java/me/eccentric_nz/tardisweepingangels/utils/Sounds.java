@@ -123,7 +123,7 @@ public class Sounds implements Listener {
                 which = "zygon";
                 delay = 100L;
             }
-            if (!entity.getPassengers().isEmpty() && entity.getPassengers().get(0).getType().equals(EntityType.GUARDIAN)) {
+            if (!entity.getPassengers().isEmpty() && entity.getPassengers().getFirst().getType().equals(EntityType.GUARDIAN)) {
                 delay = 90L;
                 which = "silence";
             }

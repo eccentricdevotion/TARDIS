@@ -208,7 +208,7 @@ public class TARDISHandlesProcessor {
                                 ItemStack after = program.getInventory()[i + 1];
                                 List<String> lore = after.getItemMeta().getLore();
                                 if (lore != null) {
-                                    String first = lore.get(0);
+                                    String first = lore.getFirst();
                                     // get current location
                                     ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                                     if (rsc.resultSet()) {

@@ -138,7 +138,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                         if (is != null) {
                             ItemMeta im = is.getItemMeta();
                             List<String> lore = im.getLore();
-                            if (lore.get(0).startsWith("TARDIS_")) {
+                            if (lore.getFirst().startsWith("TARDIS_")) {
                                 close(player);
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NO_TARDIS");
                                 return;
@@ -167,7 +167,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                 if (tac.isInArea()) {
                                     // save is in a TARDIS area, so check that the spot is not occupied
                                     HashMap<String, Object> wheresave = new HashMap<>();
-                                    wheresave.put("world", lore.get(0));
+                                    wheresave.put("world", lore.getFirst());
                                     wheresave.put("x", lore.get(1));
                                     wheresave.put("y", lore.get(2));
                                     wheresave.put("z", lore.get(3));
@@ -209,7 +209,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                         new TARDISCircuitDamager(plugin, DiskCircuit.MEMORY, uses_left, occupiedTardisId, player).damage();
                                     }
                                     HashMap<String, Object> set = new HashMap<>();
-                                    set.put("world", lore.get(0));
+                                    set.put("world", lore.getFirst());
                                     set.put("x", TARDISNumberParsers.parseInt(lore.get(1)));
                                     set.put("y", TARDISNumberParsers.parseInt(lore.get(2)));
                                     set.put("z", TARDISNumberParsers.parseInt(lore.get(3)));
@@ -327,7 +327,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
      * @return a Location
      */
     private Location getLocation(List<String> lore) {
-        World w = TARDISAliasResolver.getWorldFromAlias(lore.get(0));
+        World w = TARDISAliasResolver.getWorldFromAlias(lore.getFirst());
         if (w == null) {
             return null;
         }

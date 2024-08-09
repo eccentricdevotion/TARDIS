@@ -90,8 +90,8 @@ public class TARDISChatPaginator {
             lines.add(line.toString());
         }
         // Iterate over the wrapped lines, applying the last color from one line to the beginning of the next
-        if (lines.get(0).length() == 0 || lines.get(0).charAt(0) != ChatColor.COLOR_CHAR) {
-            lines.set(0, ChatColor.WHITE + lines.get(0));
+        if (lines.getFirst().length() == 0 || lines.getFirst().charAt(0) != ChatColor.COLOR_CHAR) {
+            lines.set(0, ChatColor.WHITE + lines.getFirst());
         }
         for (int i = 1; i < lines.size(); i++) {
             String pLine = lines.get(i - 1);
