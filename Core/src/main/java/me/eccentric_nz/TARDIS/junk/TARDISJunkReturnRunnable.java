@@ -47,16 +47,20 @@ public class TARDISJunkReturnRunnable implements Runnable {
                 Location current = tjl.getCurrent();
                 Location home = tjl.getHome();
                 // load chunks first
-                Chunk cChunk = current.getChunk();
-                while (!cChunk.isLoaded()) {
-                    cChunk.load();
+                if (current != null) {
+                    Chunk cChunk = current.getChunk();
+                    while (!cChunk.isLoaded()) {
+                        cChunk.load();
+                    }
                 }
-                Chunk hChunk = home.getChunk();
-                while (!hChunk.isLoaded()) {
-                    hChunk.load();
+                if (home != null) {
+                    Chunk hChunk = home.getChunk();
+                    while (!hChunk.isLoaded()) {
+                        hChunk.load();
+                    }
+                    // bring her home
+                    new TARDISJunkReturn(plugin).recall(plugin.getConsole());
                 }
-                // bring her home
-                new TARDISJunkReturn(plugin).recall(plugin.getConsole());
             }
         }
     }
