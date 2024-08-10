@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.enumeration.UseClay;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.rooms.eye.EyeOfHarmonyParticles;
 import me.eccentric_nz.TARDIS.rooms.library.LibraryCatalogue;
+import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISBannerSetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemDisplaySetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemFrameSetter;
@@ -415,14 +416,26 @@ public class TARDISRoomRunnable implements Runnable {
                         int px = rel.get("x").getAsInt();
                         int py = rel.get("y").getAsInt();
                         int pz = rel.get("z").getAsInt();
-                        Art art = Art.valueOf(painting.get("art").getAsString());
                         BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
-                        Location pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetx + px, resety + py, resetz + pz));
+                        Location pl;
+                        String which = painting.get("art").getAsString();
+                        Art art = null;
+                        if (which.contains(":")) {
+                            // custom datapack painting
+                            pl = TARDISPainting.calculatePosition(which.split(":")[1], facing, new Location(world, resetx + px, resety + py, resetz + pz));
+                        } else {
+                            art = Art.valueOf(which);
+                            pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetx + px, resety + py, resetz + pz));
+                        }
                         try {
                             Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
                             ent.teleport(pl);
                             ent.setFacingDirection(facing, true);
-                            ent.setArt(art, true);
+                            if (art != null) {
+                                ent.setArt(art, true);
+                            } else {
+                                DataPackPainting.setCustomVariant(ent, which);
+                            }
                         } catch (IllegalArgumentException e) {
                             plugin.debug("Invalid painting location!" + pl);
                         }

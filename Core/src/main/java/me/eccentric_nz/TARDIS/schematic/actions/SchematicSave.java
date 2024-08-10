@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
+import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -148,7 +149,12 @@ public class SchematicSave {
                                 loc.addProperty("y", eloc.getBlockY() - miny);
                                 loc.addProperty("z", eloc.getBlockZ() - minz);
                                 painting.add("rel_location", loc);
-                                painting.addProperty("art", art.getArt().toString());
+                                try {
+                                    painting.addProperty("art", art.getArt().toString());
+                                } catch (IllegalArgumentException e) {
+                                    // custom datapack painting
+                                    painting.addProperty("art", DataPackPainting.getCustomVariant(art));
+                                }
                                 painting.addProperty("facing", art.getFacing().toString());
                                 paintings.add(painting);
                                 entities.add(entity);
