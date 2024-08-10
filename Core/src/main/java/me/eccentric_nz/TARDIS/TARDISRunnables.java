@@ -4,6 +4,7 @@ import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.artron.ArtronPoweredRunnable;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceParticle;
 import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
+import me.eccentric_nz.TARDIS.console.ControlMonitor;
 import me.eccentric_nz.TARDIS.control.TARDISControlRunnable;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
@@ -86,7 +87,11 @@ public class TARDISRunnables {
             long delay = plugin.getConfig().getLong("junk.return") * 20;
             plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISJunkReturnRunnable(plugin), delay, delay);
         }
+        // update control menu signs
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISControlRunnable(plugin), 200, 200);
+        // update modelled console screens
+        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new ControlMonitor(plugin), 300, 200);
+        // check TARDIS advancements
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             if (!TARDISAchievementFactory.checkAdvancement("tardis")) {
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, plugin.getLanguage().getString("ADVANCEMENT_RELOAD"));
