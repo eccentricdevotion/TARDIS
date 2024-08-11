@@ -43,6 +43,7 @@ public class TARDISItem {
         } catch (IllegalArgumentException ignored) {
         }
         ItemStack result = null;
+        ItemMeta im = null;
         if (category == RecipeCategory.CHEMISTRY) {
             if (!plugin.getConfig().getBoolean("modules.chemistry")) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "RECIPE_CHEMISTRY");
@@ -75,10 +76,8 @@ public class TARDISItem {
             }
             if (item.equals("acid-bucket") || item.equals("rust-bucket")) {
                 result = new ItemStack((item.equals("acid-bucket") ? Material.WATER_BUCKET : Material.LAVA_BUCKET), 1);
-                ItemMeta im = result.getItemMeta();
-                im.setDisplayName(Give.items.get(item));
+                im = result.getItemMeta();
                 im.setCustomModelData(1);
-                result.setItemMeta(im);
             } else if (item.equals("save-storage-disk") || item.equals("preset-storage-disk") || item.equals("biome-storage-disk") || item.equals("player-storage-disk") || item.equals("bowl-of-custard") || item.equals("jelly-baby") || item.equals("schematic-wand") || item.equals("judoon-ammunition")) {
                 result = plugin.getIncomposita().getShapelessRecipes().get(item_to_give).getResult();
             } else if (Give.custom.contains(item)) {
@@ -91,20 +90,18 @@ public class TARDISItem {
             }
             if (item.equals("invisibility-circuit")) {
                 // set the second line of lore
-                ItemMeta im = result.getItemMeta();
+                im = result.getItemMeta();
                 List<String> lore = im.getLore();
                 String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
                 lore.set(1, uses);
                 im.setLore(lore);
-                result.setItemMeta(im);
             }
             if (item.equals("blank") || item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk") || item.equals("blaster") || item.equals("control")) {
-                ItemMeta im = result.getItemMeta();
+                im = result.getItemMeta();
                 im.addItemFlags(ItemFlag.values());
-                result.setItemMeta(im);
             }
             if (item.equals("key") || item.equals("control")) {
-                ItemMeta im = result.getItemMeta();
+                im = result.getItemMeta();
                 im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
                 List<String> lore = im.getLore();
                 if (lore == null) {
@@ -115,10 +112,14 @@ public class TARDISItem {
                 lore.add(format + "This " + what + " belongs to");
                 lore.add(format + player.getName());
                 im.setLore(lore);
-                result.setItemMeta(im);
             }
         }
         if (result != null) {
+            if (im == null) {
+                im = result.getItemMeta();
+            }
+            im.setDisplayName(ChatColor.WHITE + Give.items.get(item));
+            result.setItemMeta(im);
             result.setAmount(amount);
             player.getInventory().addItem(result);
             player.updateInventory();

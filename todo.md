@@ -13,10 +13,9 @@
 | ![Static Badge](https://img.shields.io/badge/2-390?style=flat-square) | Exterior button door control as alternative to shift-clicking for exteriors without doors | [#839](https://github.com/eccentricdevotion/TARDIS/issues/839) |
 | ![Static Badge](https://img.shields.io/badge/2-390?style=flat-square) | Zero-G room & TARDIS Debug room | [#868](https://github.com/eccentricdevotion/TARDIS/issues/868) |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | **Modelled controls**<br>- Add new console lamp at same time as adding existing controls | [#836](https://github.com/eccentricdevotion/TARDIS/issues/836) |
-| ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | **Console lamp**<br>- Add new button to modelled console or use an existing unused button<br>- Add command to add interaction entity to console lamp button | [#837](https://github.com/eccentricdevotion/TARDIS/issues/837) |
+| ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | **Console lamp**<br>- Add control, + update command / listener | [#837](https://github.com/eccentricdevotion/TARDIS/issues/837) |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | **Microscope** as an addition to Chemistry or separate module<br>- Add science lab / observatory room | - |
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Lights GUI**<br>- Add a GUI that will allow a Time Lord to change the light type in their TARDIS<br>- Add all the light types<br>- Add light switch<br>- Add light levels page (interior and exterior)<br>- Add Console lamp (#837)<br>- All lights in the ARS grid will be changed to the selected light<br>- Add 6 new coloured roundel light blocks<br>- Add a button to cycle through all the different coloured lights (only in the TARDIS console)<br>- Finish variable lights<br><br>![Lights](https://dl.dropboxusercontent.com/scl/fi/6duhc1y83hvs9drhd54bq/lights.gif?rlkey=kois7oikjzt04ap18vlofze7l&st=lsc5aovx&dl=1) | [#895](https://github.com/eccentricdevotion/TARDIS/issues/895) |
-| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **No-italics**<br>- Add command to fix legacy items | [#898](https://github.com/eccentricdevotion/TARDIS/issues/898) |
 
 ## Future versions
 

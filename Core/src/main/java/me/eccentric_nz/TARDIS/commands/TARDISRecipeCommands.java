@@ -188,7 +188,11 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return true;
             }
             switch (which) {
-                case "bowl-of-custard", "jelly-baby", "biome-storage-disk", "player-storage-disk", "preset-storage-disk", "save-storage-disk", "schematic-wand", "admin-upgrade", "bio-scanner-upgrade", "redstone-upgrade", "diamond-upgrade", "emerald-upgrade", "painter-upgrade", "ignite-upgrade", "pickup-arrows-upgrade", "knockback-upgrade", "brush-upgrade", "judoon-ammunition" -> {
+                case "bowl-of-custard", "jelly-baby", "biome-storage-disk", "player-storage-disk",
+                     "preset-storage-disk", "save-storage-disk", "schematic-wand", "admin-upgrade",
+                     "bio-scanner-upgrade", "redstone-upgrade", "diamond-upgrade", "emerald-upgrade", "painter-upgrade",
+                     "ignite-upgrade", "pickup-arrows-upgrade", "knockback-upgrade", "brush-upgrade",
+                     "judoon-ammunition" -> {
                     showShapelessRecipe(player, recipeItems.get(which));
                     return true;
                 }
@@ -220,24 +224,24 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 ItemMeta im = item.getItemMeta();
                 if (item.getType().equals(Material.GLOWSTONE_DUST) && !str.endsWith("Tie")) {
                     String dn = getDisplayName(str, glowstoneCount);
-                    im.setDisplayName(dn);
+                    im.setDisplayName(ChatColor.WHITE + dn);
                     im.setCustomModelData(RecipeItem.getByName(dn).getCustomModelData());
                     glowstoneCount++;
                 }
                 if (str.endsWith("TARDIS Remote Key") && item.getType().equals(Material.GOLD_NUGGET)) {
-                    im.setDisplayName("TARDIS Key");
+                    im.setDisplayName(ChatColor.WHITE + "TARDIS Key");
                     im.setCustomModelData(1);
                 }
                 if (str.equals("Acid Battery") && item.getType().equals(Material.WATER_BUCKET)) {
-                    im.setDisplayName("Acid Bucket");
+                    im.setDisplayName(ChatColor.WHITE + "Acid Bucket");
                     im.setCustomModelData(1);
                 }
                 if (str.equals("Rift Manipulator") && item.getType().equals(Material.NETHER_BRICK)) {
-                    im.setDisplayName("Acid Battery");
+                    im.setDisplayName(ChatColor.WHITE + "Acid Battery");
                     im.setCustomModelData(10000001);
                 }
                 if (str.equals("Rust Plague Sword") && item.getType().equals(Material.LAVA_BUCKET)) {
-                    im.setDisplayName("Rust Bucket");
+                    im.setDisplayName(ChatColor.WHITE + "Rust Bucket");
                     im.setCustomModelData(1);
                 }
                 item.setItemMeta(im);
@@ -246,7 +250,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         }
         ItemStack result = recipe.getResult();
         ItemMeta im = result.getItemMeta();
-        im.setDisplayName(str);
+        im.setDisplayName(ChatColor.WHITE + str);
         RecipeItem recipeItem = RecipeItem.getByName(str);
         if (recipeItem != RecipeItem.NOT_FOUND) {
             im.setCustomModelData(recipeItem.getCustomModelData());
@@ -296,7 +300,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         }
         ItemStack result = recipe.getResult();
         ItemMeta im = result.getItemMeta();
-        im.setDisplayName(str);
+        im.setDisplayName(ChatColor.WHITE + str);
         if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk")) {
             im.addItemFlags(ItemFlag.values());
         }
@@ -304,7 +308,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         if (recipeItem != RecipeItem.NOT_FOUND) {
             im.setCustomModelData(recipeItem.getCustomModelData());
             if (recipeItem.getCategory().equals(RecipeCategory.SONIC_UPGRADES)) {
-                im.setDisplayName("Sonic Screwdriver");
+                im.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");
                 im.setLore(Arrays.asList("Upgrades:", str));
             }
         }
