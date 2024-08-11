@@ -17,11 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -59,20 +57,8 @@ public class TARDISItemCommand {
             // look up display name
             RecipeItem recipeItem = RecipeItem.getByName(stripped);
             if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
-                int cmd = recipeItem.getCustomModelData();
-                im.setCustomModelData(cmd);
-                if (inHand.getType().equals(Material.FILLED_MAP)) {
-                    GlowstoneCircuit circuit = GlowstoneCircuit.getByName().get(stripped);
-                    if (circuit != null) {
-                        inHand.setType(Material.GLOWSTONE_DUST);
-                    }
-                } else {
-                    if (im.hasCustomModelData()) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ITEM_HAS_DATA");
-                        return true;
-                    }
-                    inHand.setItemMeta(im);
-                }
+                im.setDisplayName(ChatColor.WHITE + stripped);
+                inHand.setItemMeta(im);
                 player.updateInventory();
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ITEM_UPDATED");
             }
@@ -80,32 +66,16 @@ public class TARDISItemCommand {
             int i = 0;
             for (ItemStack is : player.getInventory()) {
                 if (is != null && is.hasItemMeta()) {
-                    plugin.getMessenger().message(player, is.getType().toString());
                     ItemMeta im = is.getItemMeta();
                     if (im.hasDisplayName()) {
                         // strip color codes
                         String stripped = ChatColor.stripColor(im.getDisplayName());
-                        plugin.getMessenger().message(player, stripped);
                         // look up display name
                         RecipeItem recipeItem = RecipeItem.getByName(stripped);
-                        plugin.getMessenger().message(player, recipeItem.toString());
                         if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
-                            if (is.getType().equals(Material.FILLED_MAP)) {
-                                plugin.getMessenger().message(player, "Filled Map!");
-                                GlowstoneCircuit glowstone = GlowstoneCircuit.getByName().get(im.getDisplayName());
-                                if (glowstone != null) {
-                                    plugin.getMessenger().message(player, "Found '" + glowstone.getDisplayName() + "' converting to GLOWSTONE_DUST");
-                                    is.setType(Material.GLOWSTONE_DUST);
-                                    i++;
-                                } else {
-                                    plugin.getMessenger().message(player, "IllegalArgumentException for " + stripped);
-                                }
-                            }
-                            if (!im.hasCustomModelData()) {
-                                im.setCustomModelData(recipeItem.getCustomModelData());
-                                is.setItemMeta(im);
-                                i++;
-                            }
+                            im.setDisplayName(ChatColor.WHITE + stripped);
+                            is.setItemMeta(im);
+                            i++;
                         }
                     }
                 }
