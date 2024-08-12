@@ -25,7 +25,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashMap;
 
 /**
- *
  * @author eccentric_nz
  */
 public enum TARDISDisplayItem {
@@ -163,6 +162,8 @@ public enum TARDISDisplayItem {
     LIGHT_LAMP_CLOISTER(-1, Material.REDSTONE_LAMP, null),
     LIGHT_LANTERN_CLOISTER(-1, Material.SEA_LANTERN, null),
     LIGHT_VARIABLE_CLOISTER(1002, Material.GLASS, null),
+    // console lamp
+    CONSOLE_LAMP(-1, Material.GLASS, Material.REDSTONE_LAMP),
     // console sides
     CONSOLE_1(1001, Material.AMETHYST_SHARD, null),
     CONSOLE_2(1002, Material.AMETHYST_SHARD, null),
@@ -305,7 +306,7 @@ public enum TARDISDisplayItem {
             case LIGHT_BULB_ON, LIGHT_CLASSIC_ON, LIGHT_CLASSIC_OFFSET_ON, LIGHT_TENTH_ON, LIGHT_ELEVENTH_ON,
                  LIGHT_TWELFTH_ON, LIGHT_THIRTEENTH_ON, LIGHT_LAMP_ON, LIGHT_LANTERN_ON, UNTEMPERED_SCHISM,
                  LIGHT_VARIABLE_ON, LIGHT_VARIABLE_BLUE_ON, LIGHT_VARIABLE_GREEN_ON, LIGHT_VARIABLE_ORANGE_ON,
-                 LIGHT_VARIABLE_PINK_ON, LIGHT_VARIABLE_PURPLE_ON, LIGHT_VARIABLE_YELLOW_ON -> {
+                 LIGHT_VARIABLE_PINK_ON, LIGHT_VARIABLE_PURPLE_ON, LIGHT_VARIABLE_YELLOW_ON, CONSOLE_LAMP -> {
                 return true;
             }
             default -> {

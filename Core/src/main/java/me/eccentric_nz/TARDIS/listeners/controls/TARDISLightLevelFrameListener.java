@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners.controls;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.control.actions.ConsoleLampAction;
 import me.eccentric_nz.TARDIS.control.actions.LightLevelAction;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightLevel;
 import org.bukkit.Location;
@@ -46,7 +47,12 @@ public class TARDISLightLevelFrameListener implements Listener {
             ResultSetLightLevel rs = new ResultSetLightLevel(plugin, location.toString());
             if (rs.resultSet()) {
                 // which switch is it?
-                int start = (rs.getType() == 49) ? 1000 : 3000;
+                int type = rs.getType();
+                int start = switch (type) {
+                    case 49 -> 1000; // exterior
+                    case 50 -> 3000; // interior
+                    default -> 9000; // console
+                };
                 // is the power off?
                 if (!rs.isPowered()) {
                     start += 1000;
@@ -57,9 +63,7 @@ public class TARDISLightLevelFrameListener implements Listener {
                 if (im.hasCustomModelData()) {
                     // switch the switches
                     int current = im.getCustomModelData();
-                    if (!rs.isPowered()
-                            && ((rs.getType() == 49 && current < 2000)
-                            || (rs.getType() == 50 && current < 4000))) {
+                    if (!rs.isPowered() && ((type == 49 && current < 2000) || (type == 50 && current < 4000) || (type == 57 && current < 10000))) {
                         current += 1000;
                     }
                     int cmd = current + 1;
@@ -69,7 +73,11 @@ public class TARDISLightLevelFrameListener implements Listener {
                     im.setCustomModelData(cmd);
                     is.setItemMeta(im);
                     frame.setItem(is);
-                    new LightLevelAction(plugin).illuminate(rs.getLevel(), rs.getControlId(), rs.isPowered(), rs.getType(), rs.isPoliceBox(), rs.getTardis_id(), rs.isLightsOn());
+                    if (type == 49 || type == 50) {
+                        new LightLevelAction(plugin).illuminate(rs.getLevel(), rs.getControlId(), rs.isPowered(), type, rs.isPoliceBox(), rs.getTardis_id(), rs.isLightsOn());
+                    } else {
+                        new ConsoleLampAction(plugin).illuminate(rs.getTardis_id(), rs.getLevel(), rs.getControlId());
+                    }
                 }
             }
         }

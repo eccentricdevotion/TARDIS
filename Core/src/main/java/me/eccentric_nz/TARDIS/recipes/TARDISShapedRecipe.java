@@ -49,6 +49,7 @@ public class TARDISShapedRecipe {
         new BrushCircuitRecipe(plugin).addRecipe();
         new ConsoleRecipe(plugin).addRecipes();
         new ConsoleRusticRecipe(plugin).addRecipe();
+        new ConsoleLampSwitchRecipe(plugin).addRecipe();
         new ConversionCircuitRecipe(plugin).addRecipe();
         new CustardCreamRecipe(plugin).addRecipe();
         new CyanBowTieRecipe(plugin).addRecipe();

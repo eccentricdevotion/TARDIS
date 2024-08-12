@@ -61,6 +61,7 @@ public class ConsoleInteractionListener implements Listener {
                                 new LightLevelInteraction(plugin).setInterior(state, id, interaction, player);
                         case EXTERIOR_LAMP_LEVEL_SWITCH ->
                                 new LampLevelInteraction(plugin).setExterior(state, id, interaction, player);
+                        case CONSOLE_LAMP -> new ConsoleLampInteraction(plugin).setLevel(state, id, interaction, player);
                         case DOOR_TOGGLE -> new DoorToggleInteraction(plugin).toggle(id, player, interaction);
                         // section five
                         case SCREEN_LEFT, SCREEN_RIGHT ->

@@ -41,6 +41,7 @@ public enum Updateable {
     CHAMELEON(true, true, new RecipeChoice.MaterialChoice(Tag.SIGNS), TARDISUpdateableCategory.INTERFACES, "Chameleon Circuit"),
     CHARGING_SENSOR(false, false, new RecipeChoice.MaterialChoice(Material.REDSTONE_BLOCK), TARDISUpdateableCategory.SENSORS, "Senses if the TARDIS is recharging"),
     CONDENSER(true, true, new RecipeChoice.MaterialChoice(Material.CHEST), TARDISUpdateableCategory.OTHERS, "Artron Energy Condenser"),
+    CONSOLE_LAMP_SWITCH(false, false, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TARDISUpdateableCategory.CONTROLS, "Changes the light level of the Console Lamp"),
     CONTROL(true, true, new RecipeChoice.MaterialChoice(Tag.ALL_SIGNS), TARDISUpdateableCategory.CONTROLS, "TARDIS Control Centre Menu"),
     CREEPER(false, false, true, TARDISUpdateableCategory.LOCATIONS, "Artron Charged Creeper"),
     DIRECTION(false, true, new RecipeChoice.MaterialChoice(Material.ITEM_FRAME), TARDISUpdateableCategory.INTERFACES, "Direction item frame"),
@@ -105,13 +106,12 @@ public enum Updateable {
     private final RecipeChoice.MaterialChoice materialChoice;
     private final TARDISUpdateableCategory category;
     private final String description;
-    private final List<Material> choices = concat();
 
     Updateable(boolean control, boolean secondary, TARDISUpdateableCategory category, String description) {
         this.control = control;
         this.secondary = secondary;
         anyBlock = false;
-        materialChoice = new RecipeChoice.MaterialChoice(choices);
+        materialChoice = new RecipeChoice.MaterialChoice(concat());
         this.category = category;
         this.description = description;
     }

@@ -20,10 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDeadlock;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.doors.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
@@ -96,8 +93,8 @@ public class TARDISDisplayBlockListener implements Listener {
         Location location = event.getBlock().getLocation();
         event.setCancelled(true);
         BlockData data;
-        if (which.isLight() || which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR || which == TARDISDisplayItem.BONE_DOOR) {
-            if (which.isLight()) {
+        if (which.isLight() || which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR || which == TARDISDisplayItem.BONE_DOOR || which == TARDISDisplayItem.CONSOLE_LAMP) {
+            if (which.isLight() || which == TARDISDisplayItem.CONSOLE_LAMP) {
                 Levelled light = TARDISConstants.LIGHT;
                 light.setLevel((which.isLit() ? 15 : 0));
                 data = light;
@@ -133,6 +130,14 @@ public class TARDISDisplayBlockListener implements Listener {
             if (furnace != null) {
                 // remember this Artron Capacitor Storage block
                 ArtronFurnaceUtils.register(furnace.getLocation().toString(), player, plugin);
+            }
+        }
+        if (which == TARDISDisplayItem.CONSOLE_LAMP) {
+            // get player's tardis
+            ResultSetTardisID rst = new ResultSetTardisID(plugin);
+            if (rst.fromUUID(player.getUniqueId().toString())) {
+                // upsert a control record
+                plugin.getQueryFactory().insertSyncControl(rst.getTardisId(), 56, event.getBlockPlaced().getLocation().toString(), 0);
             }
         }
         if (player.getGameMode() != GameMode.CREATIVE) {

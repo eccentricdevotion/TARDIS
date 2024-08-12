@@ -63,6 +63,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
         onlyThese.add(Control.SONIC_DOCK);
         onlyThese.add(Control.EXTERIOR_LAMP);
         onlyThese.add(Control.LIGHT_LEVEL);
+        onlyThese.add(Control.CONSOLE_LAMP_SWITCH);
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -212,10 +213,14 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                 plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                                 which = "Sonic Dock";
                             }
-                            default -> { // EXTERIOR_LAMP && LIGHT_LEVEL
+                            default -> { // EXTERIOR_LAMP, LIGHT_LEVEL && CONSOLE_LAMP_SWITCH
                                 SwitchPair sp = isLevelSwitch(frame);
                                 if (!sp.isSwitch()) {
-                                    String what = (control == Control.EXTERIOR_LAMP) ? "exterior-lamp-level-switch" : "interior-light-level-switch";
+                                    String what = switch (control) {
+                                        case Control.EXTERIOR_LAMP -> "exterior-lamp-level-switch";
+                                        case Control.LIGHT_LEVEL -> "interior-light-level-switch";
+                                        default -> "console-lamp-switch";
+                                    };
                                     // they haven't placed a level switch in the frame first
                                     plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                                     plugin.getMessenger().sendColouredCommand(player, "LIGHT_LEVEL_PLACE_FRAME", "/trecipe " + what, plugin);
@@ -224,12 +229,21 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                 frame.setFixed(true);
                                 frame.setVisible(false);
                                 // set display to shorter version
-                                ItemMeta im  = sp.getLamp().getItemMeta();
-                                im.setDisplayName(control == Control.EXTERIOR_LAMP ? "Lamp" : "Light");
+                                ItemMeta im = sp.getLamp().getItemMeta();
+                                String dn = switch (control) {
+                                    case Control.EXTERIOR_LAMP -> "Lamp";
+                                    case Control.LIGHT_LEVEL -> "Light";
+                                    default -> "Console";
+                                };
+                                im.setDisplayName(dn);
                                 sp.getLamp().setItemMeta(im);
                                 frame.setItem(sp.getLamp());
                                 plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
-                                which = (control == Control.EXTERIOR_LAMP) ? "Exterior Lamp Level Switch" : "Interior Light Level Switch";
+                                which = switch (control) {
+                                    case Control.EXTERIOR_LAMP -> "Exterior Lamp Level Switch";
+                                    case Control.LIGHT_LEVEL -> "Interior Light Level Switch";
+                                    default -> "Console Lamp Switch";
+                                };
                             }
                         }
                         // check whether they have an item frame control of this type already
@@ -274,10 +288,11 @@ public class TARDISItemFrameUpdateListener implements Listener {
         if (!im.hasDisplayName()) {
             return new SwitchPair(false, lampSwitch);
         }
-        return new SwitchPair(im.hasCustomModelData() && im.getDisplayName().endsWith("Level Switch"), lampSwitch);
+        return new SwitchPair(im.hasCustomModelData() && im.getDisplayName().endsWith("Switch"), lampSwitch);
     }
 
     private class SwitchPair {
+
         final boolean b;
         final ItemStack lamp;
 

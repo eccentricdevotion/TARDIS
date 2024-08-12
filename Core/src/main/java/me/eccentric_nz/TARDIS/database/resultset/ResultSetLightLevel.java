@@ -70,7 +70,7 @@ public class ResultSetLightLevel {
     public boolean resultSet() {
         PreparedStatement statement = null;
         ResultSet rs = null;
-        String query = "SELECT " + prefix + "controls.*, " + prefix + "tardis.powered_on, " + prefix + "tardis.lights_on, " + prefix + "tardis.chameleon_preset FROM " + prefix + "controls, " + prefix + "tardis WHERE `type` IN (49, 50) AND location = ? AND " + prefix + "controls.tardis_id = " + prefix + "tardis.tardis_id";
+        String query = "SELECT " + prefix + "controls.*, " + prefix + "tardis.powered_on, " + prefix + "tardis.lights_on, " + prefix + "tardis.chameleon_preset FROM " + prefix + "controls, " + prefix + "tardis WHERE `type` IN (49, 50, 57) AND location = ? AND " + prefix + "controls.tardis_id = " + prefix + "tardis.tardis_id";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);

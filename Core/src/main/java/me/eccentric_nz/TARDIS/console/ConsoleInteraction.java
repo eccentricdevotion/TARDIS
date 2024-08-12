@@ -13,6 +13,8 @@ public enum ConsoleInteraction {
     LIGHT_SWITCH("Interior Light Switch", new Vector(-1.45d, 0.75d, 0.9d), 0.25f, 0.33f, 0, 60.0f, Material.BAMBOO_BUTTON, 1004),
     INTERIOR_LIGHT_LEVEL_SWITCH("Interior Light Level", new Vector(-0.85d, 0.75d, 1.05d), 0.25f, 0.5f, 0, 60.0f, Material.LEVER, 8000),
     EXTERIOR_LAMP_LEVEL_SWITCH("Exterior Lamp Level", new Vector(-0.65d, 0.75d, 1.45d), 0.25f, 0.5f, 0, 60.0f, Material.LEVER, 7000),
+    // new Vector(0.125d, 0.75d, 1.8d)
+    CONSOLE_LAMP("Console Lamp", new Vector(-0.55d, 0.75d, 1.8d), 0.15f, 0.5f, 0, 60.0f, Material.ARMADILLO_SCUTE, 1003),
     DOOR_TOGGLE("Toggle Wool Switch", new Vector(-0.775d, 0.75d, 2.0d), 0.25f, 0.33f, 0, 60.0f, Material.BAMBOO_BUTTON, 1005),
 
     // section two
