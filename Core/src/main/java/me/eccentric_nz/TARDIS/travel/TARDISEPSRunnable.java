@@ -106,6 +106,7 @@ public class TARDISEPSRunnable implements Runnable {
                             plugin.getMessenger().message(pp, TardisModule.EMERGENCY_PROGRAM, plugin.getLanguage().getString("EP1_BYE"));
                         }
                     });
+                    // TODO properly remove the NPC
                     plugin.getTardisHelper().removeNPC(npcID, location.getWorld());
                 }, 1000L);
             } catch (CommandException e) {

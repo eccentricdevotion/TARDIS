@@ -28,7 +28,6 @@ public class NPCPlayer extends ServerPlayer {
 
     @Override
     public void startSeenByPlayer(ServerPlayer serverPlayer) {
-        CraftPlayer player = serverPlayer.getBukkitEntity();
         ServerEntity serverEntity = new ServerEntity(serverPlayer.serverLevel(), serverPlayer, 0, false, packet -> {
         }, Set.of());
         // spawn packets

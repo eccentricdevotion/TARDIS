@@ -286,6 +286,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                         plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld load", plugin);
                         return true;
                     }
+                    // TODO add missing config options
                     plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
                     plugin.getPlanetsConfig().set("planets." + name + ".resource_pack", "default");
                     plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);

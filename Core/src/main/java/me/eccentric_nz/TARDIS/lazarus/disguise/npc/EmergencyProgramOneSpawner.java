@@ -60,7 +60,6 @@ public class EmergencyProgramOneSpawner {
                     MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
                     ServerLevel world = ((CraftWorld) location.getWorld()).getHandle();
                     ClientInformation info = ClientInformation.createDefault();
-//                    ServerPlayer entityPlayer = ((CraftPlayer) player).getHandle();
                     NPCPlayer npc = new NPCPlayer(server, world, gameProfile, ClientInformation.createDefault(), location);
                     npc.connection = new NPCPacketListener(server, new NPCConnection(PacketFlow.CLIENTBOUND), npc, new CommonListenerCookie(gameProfile, 0, info, false));
                     world.addNewPlayer(npc);
@@ -83,6 +82,7 @@ public class EmergencyProgramOneSpawner {
                     npc.setItemSlot(EquipmentSlot.HEAD, head);
                     npc.setItemSlot(EquipmentSlot.MAINHAND, mainHand);
                     npc.setItemSlot(EquipmentSlot.OFFHAND, offHand);
+                    npc.setInvulnerable(true);
                     showAll(npc, npc.getBukkitEntity().getLocation());
                 }
             }
@@ -125,6 +125,5 @@ public class EmergencyProgramOneSpawner {
                 }
             }
         }
-
     }
 }
