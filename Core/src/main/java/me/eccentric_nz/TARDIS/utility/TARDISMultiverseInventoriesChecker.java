@@ -21,8 +21,9 @@ import com.onarandombox.multiverseinventories.WorldGroup;
 import com.onarandombox.multiverseinventories.profile.WorldGroupManager;
 import com.onarandombox.multiverseinventories.share.Sharables;
 import com.onarandombox.multiverseinventories.share.Shares;
-import java.util.List;
 import org.bukkit.Bukkit;
+
+import java.util.List;
 
 /**
  * @author eccentric_nz

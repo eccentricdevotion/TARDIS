@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.*;
 import me.eccentric_nz.TARDIS.database.data.Program;
@@ -28,6 +27,8 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.UUID;
 
 public class TARDISHandlesEventListener implements Listener {
 

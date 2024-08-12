@@ -16,11 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.flight;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
+
+import java.util.UUID;
 
 /**
  *

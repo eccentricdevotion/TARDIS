@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.update;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
@@ -27,6 +26,8 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
 
 public class UpdateDoor {
 

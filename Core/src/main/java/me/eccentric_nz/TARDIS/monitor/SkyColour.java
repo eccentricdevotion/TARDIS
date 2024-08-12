@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.monitor;
 
-import java.awt.Color;
+import java.awt.*;
 
 /**
  *

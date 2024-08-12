@@ -16,9 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz

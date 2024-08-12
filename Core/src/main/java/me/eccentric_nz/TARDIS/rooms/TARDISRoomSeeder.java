@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
@@ -36,6 +34,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * The Doctor kept some of the clothes from his previous regenerations, as well as clothing for other people in the

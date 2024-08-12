@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
-import java.util.Arrays;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISavedPrograms;
 import me.eccentric_nz.TARDIS.database.data.Program;
@@ -26,6 +25,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
 
 /**
  * @author eccentric_nz

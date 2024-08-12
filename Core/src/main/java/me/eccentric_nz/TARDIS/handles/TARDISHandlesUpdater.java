@@ -16,11 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
-import java.io.File;
-import java.io.IOException;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.configuration.file.FileConfiguration;
+
+import java.io.File;
+import java.io.IOException;
 
 public class TARDISHandlesUpdater {
 

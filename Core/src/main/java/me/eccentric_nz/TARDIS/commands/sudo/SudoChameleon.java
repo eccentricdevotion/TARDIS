@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.commands.sudo;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.remote.TARDISRemoteRebuildCommand;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+
+import java.util.HashMap;
 
 /**
  * A chameleon conversion is a repair procedure that technicians perform on

@@ -17,8 +17,6 @@
 package me.eccentric_nz.TARDIS.sonic.actions;
 
 import com.google.common.collect.Iterables;
-import java.util.Collection;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.Material;
@@ -30,6 +28,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.loot.LootContext;
 import org.bukkit.loot.LootTable;
+
+import java.util.Collection;
+import java.util.UUID;
 
 public class TARDISSonicBrush {
 

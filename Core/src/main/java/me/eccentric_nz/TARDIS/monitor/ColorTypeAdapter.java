@@ -4,7 +4,8 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import java.awt.Color;
+
+import java.awt.*;
 import java.io.IOException;
 
 public class ColorTypeAdapter extends TypeAdapter<Color> {

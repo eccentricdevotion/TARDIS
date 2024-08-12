@@ -25,8 +25,6 @@ import java.util.List;
 
 public class BiomeHelper {
 
-    DedicatedServer dedicatedServer = ((CraftServer) Bukkit.getServer()).getServer();
-
     public static Registry<Biome> getRegistry() {
         DedicatedServer dedicatedServer = ((CraftServer) Bukkit.getServer()).getServer();
         return dedicatedServer.registryAccess().registry(Registries.BIOME).get();
@@ -39,7 +37,6 @@ public class BiomeHelper {
     }
 
     public static String getBiomeName(World w, int x, int y, int z) {
-        DedicatedServer dedicatedServer = ((CraftServer) Bukkit.getServer()).getServer();
         ServerLevel nmsWorld = ((CraftWorld) w).getHandle();
         Biome biome = nmsWorld.getNoiseBiome(x >> 2, y >> 2, z >> 2).value();
         Registry<Biome> registry = getRegistry();

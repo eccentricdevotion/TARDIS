@@ -16,11 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
-import java.util.HashMap;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import org.bukkit.Chunk;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Preprocessor for checking changes in the Architectural Reconfiguration System.

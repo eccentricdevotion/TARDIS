@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.api;
 
-import java.util.List;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 /**
  * @author eccentric_nz

@@ -17,11 +17,7 @@
 package me.eccentric_nz.TARDIS.sonic.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.protection.TARDISFactionsChecker;
-import me.eccentric_nz.TARDIS.utility.protection.TARDISGriefPreventionChecker;
-import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
-import me.eccentric_nz.TARDIS.utility.protection.TARDISRedProtectChecker;
-import me.eccentric_nz.TARDIS.utility.protection.TARDISTownyChecker;
+import me.eccentric_nz.TARDIS.utility.protection.*;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;

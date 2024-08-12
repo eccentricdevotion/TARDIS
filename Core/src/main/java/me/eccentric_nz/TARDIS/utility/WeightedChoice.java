@@ -16,9 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import me.eccentric_nz.TARDIS.TARDISConstants;
+
 import java.util.NavigableMap;
 import java.util.TreeMap;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 
 public class WeightedChoice<E> {
 

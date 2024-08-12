@@ -16,8 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.maze;
 
-import java.util.ArrayDeque;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+
+import java.util.ArrayDeque;
 
 public class TARDISMazeGenerator {
 

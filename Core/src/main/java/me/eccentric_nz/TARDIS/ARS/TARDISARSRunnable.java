@@ -17,9 +17,6 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 import com.google.gson.JsonObject;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISRoomGrowEvent;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -35,6 +32,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Builds rooms determined by the Architectural Reconfiguration System.

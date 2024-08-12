@@ -18,12 +18,13 @@ package me.eccentric_nz.TARDIS.monitor;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+
 import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 
 public class SnapshotStorage {
 

@@ -16,9 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.util.HashMap;
 import java.util.regex.Pattern;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 public class TARDISHandlesPattern {
 

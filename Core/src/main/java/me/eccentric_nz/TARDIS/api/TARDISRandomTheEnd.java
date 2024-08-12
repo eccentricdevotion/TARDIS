@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.api;
 
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -24,6 +23,8 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+
+import java.util.List;
 
 /**
  * @author eccentric_nz
