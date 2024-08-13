@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
+import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
@@ -46,7 +47,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Following his disrupted resurrection, the Master was able to offensively use energy - presumably his own artron
@@ -260,8 +260,8 @@ public class TARDISCondenserListener implements Listener {
             amount = Math.round(amount / 2.0F);
             // only add energy up to capacitors * max level - damage
             ResultSetArtronStorageAndLevel rsas = new ResultSetArtronStorageAndLevel(plugin);
+            int full = plugin.getArtronConfig().getInt("full_charge", 5000);
             if (rsas.fromID(id)) {
-                int full = plugin.getArtronConfig().getInt("full_charge", 5000);
                 int damage = (full / 2) * rsas.getDamageCount();
                 int max = (full * rsas.getCapacitorCount()) - damage;
                 int current = rsas.getCurrentLevel();
@@ -272,15 +272,15 @@ public class TARDISCondenserListener implements Listener {
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_CONDENSE", max);
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_ADD");
-                    // give items back
-                    giveBack(player, item_counts);
+                    // give artron cells back
+                    giveBack(player, amount, full);
                     return;
                 }
             } else {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_NOT_FOUND");
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_ADD");
-                // give items back
-                giveBack(player, item_counts);
+                // give artron cells back
+                giveBack(player, amount, full);
                 return;
             }
             if (amount > 0) {
@@ -304,25 +304,50 @@ public class TARDISCondenserListener implements Listener {
         }
     }
 
-    private void giveBack(Player player, HashMap<String, Integer> itemCounts) {
-        for (Map.Entry<String, Integer> entry : itemCounts.entrySet()) {
-            Material material = Material.valueOf(entry.getKey());
-            int maxStack = material.getMaxStackSize();
-            int amount = entry.getValue();
-            int remainder = amount % maxStack;
-            int stacks = amount / maxStack;
-            // drop the remainder if not a whole stack
-            if (remainder > 0) {
-                ItemStack rem = new ItemStack(material, remainder);
-                player.getInventory().addItem(rem);
-            }
-            // return full stacks
-            if (stacks > 0) {
-                for (int i = 0; i < stacks; i++) {
-                    ItemStack is = new ItemStack(material, maxStack);
-                    player.getInventory().addItem(is);
-                }
-            }
+    private void giveBack(Player player, int amount, int full) {
+        // create an artron storage cell
+        ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get("Artron Storage Cell");
+        ItemStack result = recipe.getResult();
+        // determine cost per cell
+        int cellCost = (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) ? 406 : 86;
+        // calculate how many artron storage cells we should give
+        int initialFullCellCount = amount / full;
+        int totalCost = cellCost * (initialFullCellCount + 1);
+        int remainder = 0;
+        int finalFullCellCount = 0;
+        // subtract the cost of the cells
+        if (amount - totalCost > 0) {
+            amount -= totalCost;
+            // recalculate number of cells to give
+            finalFullCellCount = amount / full;
+            remainder = amount % full;
+        }
+        if (remainder > 0) {
+            // give one partially filled cell
+            ItemStack leftover = result.clone();
+            ItemMeta lim = leftover.getItemMeta();
+            List<String> lore = lim.getLore();
+            lore.set(1, "" + remainder);
+            lim.setLore(lore);
+            lim.addEnchant(Enchantment.UNBREAKING, 1, true);
+            lim.addItemFlags(ItemFlag.values());
+            leftover.setItemMeta(lim);
+            player.getInventory().addItem(leftover);
+        }
+        if (finalFullCellCount > 0) {
+            // give full cells
+            result.setAmount(finalFullCellCount);
+            ItemMeta im = result.getItemMeta();
+            List<String> lore = im.getLore();
+            lore.set(1, "" + full);
+            im.setLore(lore);
+            im.addEnchant(Enchantment.UNBREAKING, 1, true);
+            im.addItemFlags(ItemFlag.values());
+            result.setItemMeta(im);
+            player.getInventory().addItem(result);
+        }
+        if (finalFullCellCount > 0 || remainder > 0) {
+            player.updateInventory();
         }
     }
 
