@@ -118,7 +118,7 @@ public class TARDISWorlds {
                 plugin.getPlanetsConfig().set("planets." + worldName + ".spawn_other_mobs", true);
                 plugin.getPlanetsConfig().set("planets." + worldName + ".gamerules", List.of());
                 plugin.getPlanetsConfig().set("planets." + worldName + ".allow_portals", false);
-                plugin.getPlanetsConfig().set("planets." + worldName + ".helmic_regultor_order", -1);
+                plugin.getPlanetsConfig().set("planets." + worldName + ".helmic_regulator_order", -1);
                 String icon;
                 switch (data.getEnvironment()) {
                     case NETHER -> icon = "NETHERRACK";

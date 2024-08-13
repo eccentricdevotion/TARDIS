@@ -85,7 +85,7 @@ public class TARDISPlanetsUpdater {
                 planets_config.set("planets.TARDIS_Zero_Room.allow_portals", false);
                 planets_config.set("planets.TARDIS_Zero_Room.alias", "ZeroRoom");
                 planets_config.set("planets.TARDIS_Zero_Room.icon", "PINK_WOOL");
-                planets_config.set("planets.TARDIS_Zero_Room.helmic_regultor_order", -1);
+                planets_config.set("planets.TARDIS_Zero_Room.helmic_regulator_order", -1);
                 save++;
             }
             planets_config.set("planets." + dn + ".enabled", true);
@@ -103,7 +103,7 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets." + dn + ".allow_portals", false);
             planets_config.set("planets." + dn + ".alias", "TimeVortex");
             planets_config.set("planets." + dn + ".icon", "CRYING_OBSIDIAN");
-            planets_config.set("planets." + dn + ".helmic_regultor_order", -1);
+            planets_config.set("planets." + dn + ".helmic_regulator_order", -1);
             save++;
         }
         // add colour_skies
@@ -151,7 +151,7 @@ public class TARDISPlanetsUpdater {
         }
         // get server.properties value
         String d = getDifficulty();
-        // check there is an `difficulty` config option for all worlds
+        // check there is a `difficulty` config option for all worlds
         for (String w : worlds) {
             if (!planets_config.contains("planets." + w + ".difficulty")) {
                 planets_config.set("planets." + w + ".difficulty", d);
@@ -172,12 +172,12 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.TARDIS_Zero_Room.gamerules.announceAdvancements", false);
             save++;
         }
-        // check there is an `helmic_regulator_order` config option for all worlds
+        // check there is a `helmic_regulator_order` config option for all worlds
         for (String w : worlds) {
             if (!planets_config.contains("planets." + w + ".helmic_regulator_order")) {
                 planets_config.set("planets." + w + ".helmic_regulator_order", -1);
+                save++;
             }
-            save++;
         }
         if (planets_config.contains("default_resource_pack") && planets_config.getString("default_resource_pack").equalsIgnoreCase("https://dl.dropboxusercontent.com/u/53758864/rp/Default.zip")) {
             planets_config.set("default_resource_pack", "https://www.dropbox.com/s/utka3zxmer7f19g/Default.zip?dl=1");
@@ -211,7 +211,7 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.skaro.allow_portals", false);
             planets_config.set("planets.skaro.alias", "Skaro");
             planets_config.set("planets.skaro.icon", "FIRE_CORAL_BLOCK");
-            planets_config.set("planets.skaro.helmic_regultor_order", -1);
+            planets_config.set("planets.skaro.helmic_regulator_order", -1);
             // Siluria
             planets_config.set("planets.siluria.enabled", false);
             planets_config.set("planets.siluria.resource_pack", "default");
@@ -227,7 +227,7 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.siluria.allow_portals", false);
             planets_config.set("planets.siluria.alias", "Siluria");
             planets_config.set("planets.siluria.icon", "BAMBOO_MOSAIC");
-            planets_config.set("planets.siluria.helmic_regultor_order", -1);
+            planets_config.set("planets.siluria.helmic_regulator_order", -1);
             // Gallifrey:
             planets_config.set("planets.gallifrey.enabled", false);
             planets_config.set("planets.gallifrey.resource_pack", "default");
@@ -243,7 +243,7 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.gallifrey.allow_portals", false);
             planets_config.set("planets.gallifrey.alias", "Gallifrey");
             planets_config.set("planets.gallifrey.icon", "RED_SAND");
-            planets_config.set("planets.gallifrey.helmic_regultor_order", -1);
+            planets_config.set("planets.gallifrey.helmic_regulator_order", -1);
             planets_config.set("planets.gallifrey.villager_blueprints.enabled", true);
             planets_config.set("planets.gallifrey.villager_blueprints.uses", 1);
             planets_config.set("planets.gallifrey.villager_blueprints.chance", 20);
@@ -282,6 +282,13 @@ public class TARDISPlanetsUpdater {
                 }
             }
             save++;
+        }
+        // remove bung `helmic_regultor_order` - missing 'a'
+        for (String w : worlds) {
+            if (planets_config.contains("planets." + w + ".helmic_regultor_order")) {
+                planets_config.set("planets." + w + ".helmic_regultor_order", null);
+                save++;
+            }
         }
         // remove datapack dimension worlds
         String levelName = getLevelName();

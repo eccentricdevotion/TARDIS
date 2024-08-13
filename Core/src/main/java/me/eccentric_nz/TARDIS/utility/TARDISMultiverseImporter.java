@@ -49,7 +49,7 @@ public class TARDISMultiverseImporter {
                 }
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".allow_portals", mvw.getAllowedPortals() != AllowedPortalType.NONE);
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".alias", mvw.getAlias());
-                plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".helmic_regultor_order", -1);
+                plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".helmic_regulator_order", -1);
                 String icon;
                 switch (mvw.getEnvironment()) {
                     case NETHER -> icon = "NETHERRACK";

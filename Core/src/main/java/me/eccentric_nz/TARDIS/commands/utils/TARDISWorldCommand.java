@@ -305,7 +305,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                         default -> icon = "STONE";
                     }
                     plugin.getPlanetsConfig().set("planets." + name + ".icon", icon);
-                    plugin.getPlanetsConfig().set("planets." + name + ".helmic_regultor_order", -1);
+                    plugin.getPlanetsConfig().set("planets." + name + ".helmic_regulator_order", -1);
                     // don't set siluria/gallifrey/skaro generator
                     if (!TARDISConstants.isTARDISPlanetExact(name)) {
                         plugin.getPlanetsConfig().set("planets." + name + ".generator", args.length > 4 ? arguments.getArguments().get(4) : "DEFAULT");
