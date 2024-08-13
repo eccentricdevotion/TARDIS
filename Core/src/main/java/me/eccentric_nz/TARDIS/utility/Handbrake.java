@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.control.SensorToggle;
+import me.eccentric_nz.TARDIS.sensor.SensorToggle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -19,11 +19,6 @@ public class Handbrake {
 
     public Handbrake(TARDIS plugin) {
         this.plugin = plugin;
-    }
-
-    public void toggleBeacon(String str, boolean on) {
-        Block b = TARDISStaticLocationGetters.getLocationFromDB(str).getBlock();
-        b.setBlockData((on) ? TARDISConstants.GLASS : TARDISConstants.POWER);
     }
 
     public boolean isRelativityDifferentiated(int id) {

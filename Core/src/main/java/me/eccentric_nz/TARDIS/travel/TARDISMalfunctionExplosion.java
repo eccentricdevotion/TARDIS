@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetFlightControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.particles.TARDISFirework;
+import me.eccentric_nz.TARDIS.sensor.MalfunctionSensor;
 import org.bukkit.Location;
 
 import java.util.HashMap;
@@ -80,7 +81,7 @@ public class TARDISMalfunctionExplosion implements Runnable {
         if (time > end) {
             plugin.getServer().getScheduler().cancelTask(task);
             // toggle the malfunction sensor
-            TARDISMalfunction.handleSensor(id);
+            new MalfunctionSensor(plugin, id).toggle();
         } else {
             Location l = locations.get(TARDISConstants.RANDOM.nextInt(4));
             TARDISFirework.randomize().displayEffects(plugin, l.add(0.5, 0.5, 0.5));

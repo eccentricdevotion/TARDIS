@@ -1,4 +1,4 @@
-package me.eccentric_nz.TARDIS.control;
+package me.eccentric_nz.TARDIS.sensor;
 
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;

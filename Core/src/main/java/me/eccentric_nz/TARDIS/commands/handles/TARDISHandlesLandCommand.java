@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
+import me.eccentric_nz.TARDIS.sensor.BeaconSensor;
 import me.eccentric_nz.TARDIS.travel.TARDISRandomiserCircuit;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.Handbrake;
@@ -115,7 +116,7 @@ class TARDISHandlesLandCommand {
                                 beac_on = rsp.isBeaconOn();
                             }
                             if (!beac_on && !beacon.isEmpty()) {
-                                new Handbrake(plugin).toggleBeacon(beacon, false);
+                                new BeaconSensor().toggle(beacon, false);
                             }
                             // Remove energy from TARDIS and sets database
                             plugin.getMessenger().sendStatus(player, "HANDBRAKE_ON");

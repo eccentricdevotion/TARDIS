@@ -23,6 +23,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
+import me.eccentric_nz.TARDIS.sensor.BeaconSensor;
+import me.eccentric_nz.TARDIS.sensor.HandbrakeSensor;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
 import me.eccentric_nz.TARDIS.utility.Handbrake;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -53,11 +55,10 @@ public class TARDISTakeoff {
             plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
         }
         TARDISSounds.playTARDISSound(handbrake, "tardis_handbrake_release");
-        Handbrake hb = new Handbrake(plugin);
         if (!beac_on && !beacon.isEmpty()) {
-            hb.toggleBeacon(beacon, true);
+            new BeaconSensor().toggle(beacon, true);
         }
-        hb.handleSensor(id);
+        new HandbrakeSensor(plugin, id).toggle();
         HashMap<String, Object> set = new HashMap<>();
         set.put("handbrake_on", 0);
         HashMap<String, Object> whereh = new HashMap<>();
@@ -111,11 +112,10 @@ public class TARDISTakeoff {
                 plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
             }
             TARDISSounds.playTARDISSound(handbrake, "tardis_handbrake_release");
-            Handbrake hb = new Handbrake(plugin);
             if (!beac_on && !beacon.isEmpty()) {
-                hb.toggleBeacon(beacon, true);
+                new BeaconSensor().toggle(beacon, true);
             }
-            hb.handleSensor(id);
+            new HandbrakeSensor(plugin, id).toggle();
             HashMap<String, Object> set = new HashMap<>();
             set.put("handbrake_on", 0);
             HashMap<String, Object> whereh = new HashMap<>();

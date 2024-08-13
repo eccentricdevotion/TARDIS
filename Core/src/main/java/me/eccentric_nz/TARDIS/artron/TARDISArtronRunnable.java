@@ -20,6 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronStorage;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
+import me.eccentric_nz.TARDIS.sensor.ChargingSensor;
+import me.eccentric_nz.TARDIS.sensor.SensorTracker;
 import org.bukkit.Location;
 
 import java.util.HashMap;
@@ -68,11 +70,13 @@ class TARDISArtronRunnable implements Runnable {
             if (charged) {
                 // toggle charging sensor
                 new ChargingSensor(plugin, id).toggle();
+                SensorTracker.isCharging.remove(id);
             }
         } else {
             if (sensor) {
                 new ChargingSensor(plugin, id).toggle();
                 sensor = false;
+                SensorTracker.isCharging.add(id);
             }
             // calculate percentage
             int onepercent = Math.round(plugin.getArtronConfig().getInt("full_charge") / 100.0F);

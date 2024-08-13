@@ -22,6 +22,8 @@ import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
+import me.eccentric_nz.TARDIS.sensor.BeaconSensor;
+import me.eccentric_nz.TARDIS.sensor.HandbrakeSensor;
 import me.eccentric_nz.TARDIS.utility.Handbrake;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -143,11 +145,10 @@ public class TARDISExteriorFlight {
         if (plugin.getConfig().getBoolean("circuits.damage")) {
             plugin.getTrackerKeeper().getHasNotClickedHandbrake().remove(id);
         }
-        Handbrake hb = new Handbrake(plugin);
         if (!beac_on && !beacon.isEmpty()) {
-            hb.toggleBeacon(beacon, true);
+            new BeaconSensor().toggle(beacon, true);
         }
-        hb.handleSensor(id);
+        new HandbrakeSensor(plugin, id).toggle();
         HashMap<String, Object> set = new HashMap<>();
         set.put("handbrake_on", 0);
         HashMap<String, Object> whereh = new HashMap<>();

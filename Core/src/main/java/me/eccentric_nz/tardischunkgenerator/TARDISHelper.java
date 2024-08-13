@@ -107,7 +107,6 @@ public class TARDISHelper {
             BlockPos bp = new BlockPos(block.getX(), block.getY(), block.getZ());
             BlockEntity tile = ws.getBlockEntity(bp);
             if (tile instanceof FurnaceBlockEntity furnace) {
-//                furnace.setCustomName(Component.literal(name));
                 furnace.name = Component.literal(name);
             }
         }
@@ -352,7 +351,7 @@ public class TARDISHelper {
         CustomTree.grow(location, base, hat, stem, decor);
     }
 
-    public List<Material> getTreeMatrials() {
+    public List<Material> getTreeMaterials() {
         return CubicMaterial.cubes;
     }
 

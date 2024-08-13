@@ -25,7 +25,8 @@ import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.control.SensorToggle;
+import me.eccentric_nz.TARDIS.sensor.PowerSensor;
+import me.eccentric_nz.TARDIS.sensor.SensorToggle;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -357,20 +358,9 @@ public class TARDISStattenheimListener implements Listener {
                         }
                         plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
                         // toggle power sensor
-                        handleSensor(id);
+                        new PowerSensor(plugin, id).toggle();
                     }
                 }
-            }
-        }
-    }
-
-    private void handleSensor(int id) {
-        ResultSetSensors rss = new ResultSetSensors(plugin, id);
-        if (rss.resultSet()) {
-            SensorToggle toggle = new SensorToggle();
-            Block block = toggle.getBlock(rss.getSensors().getPower());
-            if (block != null) {
-                toggle.setState(block);
             }
         }
     }

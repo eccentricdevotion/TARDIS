@@ -72,7 +72,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
     private final ImmutableList<String> RECIPE_SUBS = ImmutableList.of("shaped", "shapeless", "chest", "chemistry", "custom");
 
     public TARDISDevTabComplete(TARDIS plugin) {
-        plugin.getTardisHelper().getTreeMatrials().forEach((m) -> MAT_SUBS.add(m.toString()));
+        plugin.getTardisHelper().getTreeMaterials().forEach((m) -> MAT_SUBS.add(m.toString()));
         for (TARDISDisplayItem d : TARDISDisplayItem.values()) {
             STONE_SUBS.add(d.getName());
         }

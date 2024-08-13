@@ -46,6 +46,7 @@ import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.recipes.*;
 import me.eccentric_nz.TARDIS.rooms.eye.EyeLoader;
 import me.eccentric_nz.TARDIS.rotors.TARDISCustomRotorLoader;
+import me.eccentric_nz.TARDIS.sensor.SensorTracker;
 import me.eccentric_nz.TARDIS.skins.SkinChanger;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
@@ -215,6 +216,8 @@ public class TARDIS extends JavaPlugin {
             if (tardisMapper != null) {
                 tardisMapper.disable();
             }
+            // turn off charging sensors
+            SensorTracker.resetChargingSensors();
             // force TARDISes to materialise (next restart) if interrupted
             for (int id : getTrackerKeeper().getDematerialising()) {
                 if (getTrackerKeeper().getHasDestination().containsKey(id)) {

@@ -39,7 +39,7 @@ public class TARDISFactionsChecker {
     public static boolean isInFaction(Player p, Location l) {
         try {
             Class.forName("com.massivecraft.factions.entity.MPlayer");
-            // TODO add back support for official factions? I can't find whether it is 1.20 compatible...
+            // TODO add back support for official factions? Servers need to compile their own JARs so probably not...
             return false;
         } catch (ClassNotFoundException e) {
             return new TARDISFactionsUUID().isInFaction(p, l);

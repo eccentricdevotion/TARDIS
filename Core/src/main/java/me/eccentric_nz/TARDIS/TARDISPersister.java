@@ -10,6 +10,7 @@ import me.eccentric_nz.TARDIS.forcefield.TARDISForceFieldPersister;
 import me.eccentric_nz.TARDIS.hads.TARDISHadsPersister;
 import me.eccentric_nz.TARDIS.move.TARDISPortalPersister;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomPersister;
+import me.eccentric_nz.TARDIS.sensor.SensorTracker;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegePersister;
 import me.eccentric_nz.TARDIS.skins.SkinPersister;
 import me.eccentric_nz.TARDIS.utility.TARDISJunkPlayerPersister;
@@ -52,6 +53,8 @@ public class TARDISPersister {
         new TARDISRoomPersister(plugin).resume();
         // load skins
         new SkinPersister(plugin).load();
+        // resume recharging
+        SensorTracker.restartCharging(plugin);
     }
 
     public void save() {

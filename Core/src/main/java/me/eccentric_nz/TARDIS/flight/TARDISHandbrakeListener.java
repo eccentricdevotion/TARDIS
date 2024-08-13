@@ -32,6 +32,8 @@ import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rotors.Rotor;
 import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
+import me.eccentric_nz.TARDIS.sensor.BeaconSensor;
+import me.eccentric_nz.TARDIS.sensor.HandbrakeSensor;
 import me.eccentric_nz.TARDIS.utility.Handbrake;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
@@ -258,11 +260,10 @@ public class TARDISHandbrakeListener implements Listener {
                                     TARDISHandbrake.setLevers(block, true, inside, handbrake_loc.toString(), id, plugin);
                                     // Check if it's at a recharge point
                                     new TARDISArtronLevels(plugin).recharge(id);
-                                    Handbrake hb = new Handbrake(plugin);
                                     if (!beac_on && !beacon.isEmpty()) {
-                                        hb.toggleBeacon(beacon, false);
+                                        new BeaconSensor().toggle(beacon, false);
                                     }
-                                    hb.handleSensor(id);
+                                    new HandbrakeSensor(plugin, id).toggle();
                                     // Remove energy from TARDIS and sets database
                                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ON");
                                     if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {

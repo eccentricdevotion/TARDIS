@@ -21,7 +21,8 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.builders.LightLevel;
-import me.eccentric_nz.TARDIS.control.SensorToggle;
+import me.eccentric_nz.TARDIS.sensor.MalfunctionSensor;
+import me.eccentric_nz.TARDIS.sensor.SensorToggle;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -52,17 +53,6 @@ public class TARDISMalfunction {
 
     public TARDISMalfunction(TARDIS plugin) {
         this.plugin = plugin;
-    }
-
-    public static void handleSensor(int id) {
-        ResultSetSensors rss = new ResultSetSensors(TARDIS.plugin, id);
-        if (rss.resultSet()) {
-            SensorToggle toggle = new SensorToggle();
-            Block block = toggle.getBlock(rss.getSensors().getMalfunction());
-            if (block != null) {
-                toggle.setState(block);
-            }
-        }
     }
 
     public boolean isMalfunction() {
@@ -248,7 +238,7 @@ public class TARDISMalfunction {
                 explodeable.setTask(taskEx);
             }
             // toggle the malfunction sensor
-            handleSensor(id);
+            new MalfunctionSensor(plugin, id).toggle();
         }
     }
 

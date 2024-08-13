@@ -57,7 +57,7 @@ public class TARDISTreeCommand {
                     Material stem = Material.valueOf(args[1].toUpperCase(Locale.ROOT));
                     Material hat = Material.valueOf(args[2].toUpperCase(Locale.ROOT));
                     Material decor = Material.valueOf(args[3].toUpperCase(Locale.ROOT));
-                    if (!stem.isBlock() || !hat.isBlock() || !decor.isBlock() || !plugin.getTardisHelper().getTreeMatrials().contains(stem) || !plugin.getTardisHelper().getTreeMatrials().contains(hat) || !plugin.getTardisHelper().getTreeMatrials().contains(decor)) {
+                    if (!stem.isBlock() || !hat.isBlock() || !decor.isBlock() || !plugin.getTardisHelper().getTreeMaterials().contains(stem) || !plugin.getTardisHelper().getTreeMaterials().contains(hat) || !plugin.getTardisHelper().getTreeMaterials().contains(decor)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_NOT_BLOCK");
                         return true;
                     }

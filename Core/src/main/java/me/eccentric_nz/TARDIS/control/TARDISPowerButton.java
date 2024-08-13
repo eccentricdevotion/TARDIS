@@ -26,6 +26,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetSensors;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.sensor.PowerSensor;
+import me.eccentric_nz.TARDIS.sensor.SensorToggle;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -137,7 +139,7 @@ public class TARDISPowerButton {
             }
         }
         // toggle the power sensor
-        handleSensor(id);
+        new PowerSensor(plugin, id).toggle();
         plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
         // get light level switches
         // interior
@@ -162,17 +164,6 @@ public class TARDISPowerButton {
 
     private boolean isTravelling(int id) {
         return (plugin.getTrackerKeeper().getDematerialising().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getInVortex().contains(id));
-    }
-
-    private void handleSensor(int id) {
-        ResultSetSensors rss = new ResultSetSensors(plugin, id);
-        if (rss.resultSet()) {
-            SensorToggle toggle = new SensorToggle();
-            Block block = toggle.getBlock(rss.getSensors().getPower());
-            if (block != null) {
-                toggle.setState(block);
-            }
-        }
     }
 
     private ItemFrame getFrame(Block block) {
