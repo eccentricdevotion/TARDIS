@@ -41,12 +41,10 @@ public class TARDISSeedRecipe {
 
     private final TARDIS plugin;
     private final HashMap<Schematic, ShapedRecipe> seedRecipes;
-    private final RecipeChoice.MaterialChoice choices;
 
     public TARDISSeedRecipe(TARDIS plugin) {
         this.plugin = plugin;
         seedRecipes = new HashMap<>();
-        choices = new RecipeChoice.MaterialChoice(TARDISWalls.BLOCKS);
     }
 
     public void addSeedRecipes() {
@@ -103,9 +101,9 @@ public class TARDISSeedRecipe {
         // set ingredients
         r.setIngredient('T', torch);
         r.setIngredient('L', Material.LAPIS_BLOCK);
-        r.setIngredient('W', choices);
+        r.setIngredient('W', TARDISWalls.CHOICES);
         r.setIngredient('S', s.getSeedMaterial());
-        r.setIngredient('F', choices);
+        r.setIngredient('F', TARDISWalls.CHOICES);
         seedRecipes.put(s, r);
 
         return r;

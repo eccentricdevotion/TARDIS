@@ -23,7 +23,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -34,12 +33,9 @@ import org.bukkit.persistence.PersistentDataType;
 public class TARDISVariableLightRecipe {
 
     private final TARDIS plugin;
-    private final RecipeChoice.MaterialChoice choices;
 
     public TARDISVariableLightRecipe(TARDIS plugin) {
         this.plugin = plugin;
-        // TODO make a class for this as has multiple uses
-        choices = new RecipeChoice.MaterialChoice(TARDISWalls.BLOCKS);
     }
 
     public void addRecipe() {
@@ -55,7 +51,7 @@ public class TARDISVariableLightRecipe {
         r.shape("###", "TDT", "###");
         r.setIngredient('#', plugin.getCraftingDifficulty() == CraftingDifficulty.HARD ? Material.GLASS : Material.GLASS_PANE);
         r.setIngredient('T', Material.TORCH);
-        r.setIngredient('D', choices);
+        r.setIngredient('D', TARDISWalls.CHOICES);
         plugin.getServer().addRecipe(r);
         plugin.getFigura().getShapedRecipes().put("Variable Light", r);
     }

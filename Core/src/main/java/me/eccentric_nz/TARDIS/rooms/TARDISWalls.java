@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.rooms;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
+import org.bukkit.inventory.RecipeChoice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,4 +43,6 @@ public class TARDISWalls {
             }
         }
     }
+
+    public static final RecipeChoice.MaterialChoice CHOICES = new RecipeChoice.MaterialChoice(TARDISWalls.BLOCKS);
 }
