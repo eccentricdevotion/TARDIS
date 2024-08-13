@@ -16,7 +16,7 @@ planets:
       doWeatherCycle: false
       doDaylightCycle: false
       doWardenSpawning: false
-    keep_spawn_in_memory: false
+    spawn_chunk_radius: 0
     allow_portals: false
     alias: TimeVortex
     icon: CRYING_OBSIDIAN
@@ -35,7 +35,7 @@ planets:
       doDaylightCycle: false
       announceAdvancements: false
       doWardenSpawning: false
-    keep_spawn_in_memory: false
+    spawn_chunk_radius: 0
     allow_portals: false
     alias: ZeroRoom
     icon: PINK_WOOL
@@ -55,7 +55,7 @@ planets:
     world_type: NORMAL
     environment: NORMAL
     generator: TARDIS:skaro
-    keep_spawn_in_memory: false
+    spawn_chunk_radius: 0
     spawn_other_mobs: true
     gamerules:
       doTraderSpawning: false
@@ -72,7 +72,7 @@ planets:
     world_type: NORMAL
     environment: NORMAL
     generator: TARDIS:siluria
-    keep_spawn_in_memory: false
+    spawn_chunk_radius: 0
     spawn_other_mobs: true
     gamerules:
       doTraderSpawning: false
@@ -89,7 +89,7 @@ planets:
     world_type: NORMAL
     environment: NORMAL
     generator: TARDIS:gallifrey
-    keep_spawn_in_memory: false
+    spawn_chunk_radius: 0
     spawn_other_mobs: true
     gamerules:
       doTraderSpawning: false

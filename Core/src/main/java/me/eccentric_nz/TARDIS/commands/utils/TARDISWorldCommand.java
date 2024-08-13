@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.commands.tardis.TARDISSaveIconCommand;
 import me.eccentric_nz.TARDIS.database.converters.TARDISWorldNameConverter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.*;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -286,13 +287,25 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                         plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld load", plugin);
                         return true;
                     }
-                    // TODO add missing config options
-                    plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
-                    plugin.getPlanetsConfig().set("planets." + name + ".resource_pack", "default");
                     plugin.getPlanetsConfig().set("planets." + name + ".enabled", true);
+                    plugin.getPlanetsConfig().set("planets." + name + ".resource_pack", "default");
                     plugin.getPlanetsConfig().set("planets." + name + ".gamemode", "SURVIVAL");
+                    plugin.getPlanetsConfig().set("planets." + name + ".time_travel", false);
                     plugin.getPlanetsConfig().set("planets." + name + ".world_type", worldType.toString());
                     plugin.getPlanetsConfig().set("planets." + name + ".environment", environment.toString());
+                    plugin.getPlanetsConfig().set("planets." + name + ".spawn_chunk_radius", 0);
+                    plugin.getPlanetsConfig().set("planets." + name + ".spawn_other_mobs", true);
+                    plugin.getPlanetsConfig().set("planets." + name + ".gamerules", List.of());
+                    plugin.getPlanetsConfig().set("planets." + name + ".allow_portals", false);
+                    plugin.getPlanetsConfig().set("planets." + name + ".alias", TARDISStringUtils.uppercaseFirst(name));
+                    String icon;
+                    switch (environment) {
+                        case NETHER -> icon = "NETHERRACK";
+                        case THE_END -> icon = "END_STONE";
+                        default -> icon = "STONE";
+                    }
+                    plugin.getPlanetsConfig().set("planets." + name + ".icon", icon);
+                    plugin.getPlanetsConfig().set("planets." + name + ".helmic_regultor_order", -1);
                     // don't set siluria/gallifrey/skaro generator
                     if (!TARDISConstants.isTARDISPlanetExact(name)) {
                         plugin.getPlanetsConfig().set("planets." + name + ".generator", args.length > 4 ? arguments.getArguments().get(4) : "DEFAULT");

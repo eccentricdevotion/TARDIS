@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.planets;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISPlanetData;
 import org.bukkit.*;
 
@@ -112,8 +113,12 @@ public class TARDISWorlds {
                 plugin.getPlanetsConfig().set("planets." + worldName + ".environment", data.getEnvironment().toString());
                 plugin.getPlanetsConfig().set("planets." + worldName + ".difficulty", data.getDifficulty().toString());
                 plugin.getPlanetsConfig().set("planets." + worldName + ".generator", (worldName.startsWith("TARDIS_") || worldName.equals(plugin.getConfig().getString("creation.default_world_name"))) ? "TARDISChunkGenerator" : "DEFAULT");
-                plugin.getPlanetsConfig().set("planets." + worldName + ".keep_spawn_in_memory", false);
-                plugin.getPlanetsConfig().set("planets." + worldName + ".alias", worldName);
+                plugin.getPlanetsConfig().set("planets." + worldName + ".spawn_chunk_radius", 0);
+                plugin.getPlanetsConfig().set("planets." + worldName + ".alias", TARDISStringUtils.uppercaseFirst(worldName));
+                plugin.getPlanetsConfig().set("planets." + worldName + ".spawn_other_mobs", true);
+                plugin.getPlanetsConfig().set("planets." + worldName + ".gamerules", List.of());
+                plugin.getPlanetsConfig().set("planets." + worldName + ".allow_portals", false);
+                plugin.getPlanetsConfig().set("planets." + worldName + ".helmic_regultor_order", -1);
                 String icon;
                 switch (data.getEnvironment()) {
                     case NETHER -> icon = "NETHERRACK";

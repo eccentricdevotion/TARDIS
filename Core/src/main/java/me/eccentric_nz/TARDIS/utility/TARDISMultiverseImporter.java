@@ -37,7 +37,7 @@ public class TARDISMultiverseImporter {
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".world_type", mvw.getWorldType().toString());
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".environment", mvw.getEnvironment().toString());
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".generator", mvw.getGenerator());
-                plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".keep_spawn_in_memory", mvw.isKeepingSpawnInMemory());
+                plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".spawn_chunk_radius", mvw.isKeepingSpawnInMemory() ? 2 : 0);
                 if (!mvw.canAnimalsSpawn() || !mvw.canMonstersSpawn()) {
                     plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".gamerules.doMobSpawning", false);
                 }
@@ -49,6 +49,14 @@ public class TARDISMultiverseImporter {
                 }
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".allow_portals", mvw.getAllowedPortals() != AllowedPortalType.NONE);
                 plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".alias", mvw.getAlias());
+                plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".helmic_regultor_order", -1);
+                String icon;
+                switch (mvw.getEnvironment()) {
+                    case NETHER -> icon = "NETHERRACK";
+                    case THE_END -> icon = "END_STONE";
+                    default -> icon = "STONE";
+                }
+                plugin.getPlanetsConfig().set("planets." + mvw.getName() + ".icon", icon);
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "MULTIVERSE_TRANSFER", mvw.getName());
                 i++;
             } else {
