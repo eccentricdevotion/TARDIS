@@ -63,7 +63,7 @@ public class ArtronChargeAction {
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
                 String name = im.getDisplayName();
-                if (!name.equals("Artron Storage Cell")) {
+                if (!name.endsWith("Artron Storage Cell")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_NOT_VALID");
                     return;
                 }

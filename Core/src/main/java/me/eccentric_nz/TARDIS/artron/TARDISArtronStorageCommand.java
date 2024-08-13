@@ -81,7 +81,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             }
             ItemMeta im = is.getItemMeta();
             String name = im.getDisplayName();
-            if (!name.equals("Artron Storage Cell")) {
+            if (!name.endsWith("Artron Storage Cell")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_IN_HAND");
                 return true;
             }
