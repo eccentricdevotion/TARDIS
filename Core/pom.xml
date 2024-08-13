@@ -88,7 +88,7 @@
         </repository>
         <repository>
             <id>factions</id>
-            <url>https://repo.dustplanet.de/artifactory/ext-release-local/</url>
+            <url>https://dependency.download/releases</url>
         </repository>
         <repository>
             <id>bluemap</id>
@@ -371,9 +371,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.massivecraft</groupId>
-            <artifactId>Factions</artifactId>
-            <version>1.6.9.5-U0.6.8</version>
+            <groupId>dev.kitteh</groupId>
+            <artifactId>factionsuuid</artifactId>
+            <version>0.7.0</version>
             <type>jar</type>
             <scope>provided</scope>
             <exclusions>
