@@ -70,7 +70,7 @@ public class HelmicRegulatorInteraction {
 
     private String getWorldFromState(int state) {
         for (String w : plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false)) {
-            if (plugin.getPlanetsConfig().getBoolean("planets." + w + ".enabled") && plugin.getPlanetsConfig().getBoolean("planets." + w + ".time_travel") && plugin.getPlanetsConfig().getInt("planets." + w + ".helmic_regulator_order") == state) {
+            if (plugin.getPlanetsConfig().getBoolean("planets." + w + ".time_travel") && plugin.getPlanetsConfig().getInt("planets." + w + ".helmic_regulator_order") == state) {
                 return w;
             }
         }
