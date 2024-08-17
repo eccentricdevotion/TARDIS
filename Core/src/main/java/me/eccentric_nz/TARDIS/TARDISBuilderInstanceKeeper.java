@@ -129,6 +129,7 @@ public class TARDISBuilderInstanceKeeper {
         conversions.put("TALL_GRASS", "WHEAT_SEEDS");
         conversions.put("TALL_SEAGRASS", "SEAGRASS");
         conversions.put("TORCHFLOWER_CROP", "TORCHFLOWER");
+        conversions.put("TRIPWIRE", "STRING");
         conversions.put("TWISTING_VINES_PLANT", "TWISTING_VINES");
         conversions.put("WALL_TORCH", "TORCH");
         conversions.put("WATER_CAULDRON", "CAULDRON");
