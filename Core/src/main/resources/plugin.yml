@@ -106,6 +106,7 @@ permissions:
       tardis.preset.police_box_purple: true
       tardis.preset.police_box_red: true
       tardis.preset.police_box_tennant: true
+      tardis.preset.police_box_tinted: true
       tardis.preset.police_box_white: true
       tardis.preset.police_box_yellow: true
       tardis.preset.portal: true

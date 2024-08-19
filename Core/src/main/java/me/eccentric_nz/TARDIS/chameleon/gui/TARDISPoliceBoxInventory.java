@@ -71,37 +71,45 @@ public class TARDISPoliceBoxInventory {
             i++;
         }
         // tennant
-        ItemStack david = new ItemStack(Material.CYAN_STAINED_GLASS_PANE, 1);
-        ItemMeta tennant = david.getItemMeta();
-        tennant.setDisplayName("Tennant Era Police Box");
-        tennant.setCustomModelData(1001);
-        david.setItemMeta(tennant);
-        boxes[i] = david;
-        i++;
+        if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_tennant")) {
+            ItemStack david = new ItemStack(Material.CYAN_STAINED_GLASS_PANE, 1);
+            ItemMeta tennant = david.getItemMeta();
+            tennant.setDisplayName("Tennant Era Police Box");
+            tennant.setCustomModelData(1001);
+            david.setItemMeta(tennant);
+            boxes[i] = david;
+            i++;
+        }
         // weeping angel
-        ItemStack is = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1);
-        ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Weeping Angel");
-        im.setCustomModelData(1001);
-        is.setItemMeta(im);
-        boxes[i] = is;
-        i++;
+        if (TARDISPermission.hasPermission(player, "tardis.preset.weeping_angel")) {
+            ItemStack is = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1);
+            ItemMeta im = is.getItemMeta();
+            im.setDisplayName("Weeping Angel");
+            im.setCustomModelData(1001);
+            is.setItemMeta(im);
+            boxes[i] = is;
+            i++;
+        }
         // pandorica
-        ItemStack pan = new ItemStack(Material.ENDER_PEARL, 1);
-        ItemMeta ica = pan.getItemMeta();
-        ica.setDisplayName("Pandorica");
-        ica.setCustomModelData(1001);
-        pan.setItemMeta(ica);
-        boxes[i] = pan;
-        i++;
+        if (TARDISPermission.hasPermission(player, "tardis.preset.pandorica")) {
+            ItemStack pan = new ItemStack(Material.ENDER_PEARL, 1);
+            ItemMeta ica = pan.getItemMeta();
+            ica.setDisplayName("Pandorica");
+            ica.setCustomModelData(1001);
+            pan.setItemMeta(ica);
+            boxes[i] = pan;
+            i++;
+        }
         // any colour
-        ItemStack any = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
-        ItemMeta colour = any.getItemMeta();
-        colour.setDisplayName("Pick a colour Police Box");
-        colour.setCustomModelData(1001);
-        any.setItemMeta(colour);
-        boxes[i] = any;
-        i++;
+        if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_tinted")) {
+            ItemStack any = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
+            ItemMeta colour = any.getItemMeta();
+            colour.setDisplayName("Pick a colour Police Box");
+            colour.setCustomModelData(1001);
+            any.setItemMeta(colour);
+            boxes[i] = any;
+            i++;
+        }
         for (String custom : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
             if (i < 50) {
                 try {
