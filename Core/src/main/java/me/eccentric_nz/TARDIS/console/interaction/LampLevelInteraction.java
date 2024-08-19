@@ -43,8 +43,8 @@ public class LampLevelInteraction {
             new LightLevelModel().setState(display, setLevel, false);
         }
         // get light level record
-        ResultSetLightLevel rs = new ResultSetLightLevel(plugin, interaction.getLocation().toString());
-        if (rs.resultSet()) {
+        ResultSetLightLevel rs = new ResultSetLightLevel(plugin);
+        if (rs.fromLocation(interaction.getLocation().toString())) {
             new LightLevelAction(plugin).illuminate(setLevel - 1, rs.getControlId(), rs.isPowered(), 49, rs.isPoliceBox(), id, rs.isLightsOn());
             new InteractionStateSaver(plugin).write("EXTERIOR_LAMP_LEVEL_SWITCH", setLevel, id);
             plugin.getMessenger().announceRepeater(player, "Lamp level: " + InteractionResponse.levels.get(setLevel));

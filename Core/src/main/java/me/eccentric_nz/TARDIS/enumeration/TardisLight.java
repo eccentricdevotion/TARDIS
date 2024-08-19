@@ -24,6 +24,7 @@ public enum TardisLight {
     VARIABLE_ORANGE(TARDISDisplayItem.LIGHT_VARIABLE_ORANGE_ON, TARDISDisplayItem.LIGHT_VARIABLE_ORANGE),
     VARIABLE_PINK(TARDISDisplayItem.LIGHT_VARIABLE_PINK_ON, TARDISDisplayItem.LIGHT_VARIABLE_PINK),
     VARIABLE_PURPLE(TARDISDisplayItem.LIGHT_VARIABLE_PURPLE_ON, TARDISDisplayItem.LIGHT_VARIABLE_PURPLE),
+    VARIABLE_RED(TARDISDisplayItem.LIGHT_VARIABLE_CLOISTER, TARDISDisplayItem.LIGHT_VARIABLE),
     VARIABLE_YELLOW(TARDISDisplayItem.LIGHT_VARIABLE_YELLOW_ON, TARDISDisplayItem.LIGHT_VARIABLE_YELLOW);
 
     private final Material material;
@@ -75,9 +76,13 @@ public enum TardisLight {
         String s = tdi.toString();
         return switch (tdi) {
             case RED_LAMP, GREEN_LAMP, PURPLE_LAMP, BLUE_LAMP -> TardisLight.valueOf(s);
-            case RED_LAMP_ON, GREEN_LAMP_ON, PURPLE_LAMP_ON, BLUE_LAMP_ON -> TardisLight.valueOf(s.substring(0, s.length() - 3)); // remove _ON
-            case LIGHT_BULB, LIGHT_CLASSIC, LIGHT_CLASSIC_OFFSET, LIGHT_TENTH, LIGHT_ELEVENTH, LIGHT_TWELFTH, LIGHT_THIRTEENTH, LIGHT_LAMP, LIGHT_LANTERN -> TardisLight.valueOf(s.substring(6)); // remove LIGHT_
-            case LIGHT_BULB_ON, LIGHT_CLASSIC_ON, LIGHT_CLASSIC_OFFSET_ON, LIGHT_TENTH_ON, LIGHT_ELEVENTH_ON, LIGHT_TWELFTH_ON, LIGHT_THIRTEENTH_ON, LIGHT_LAMP_ON, LIGHT_LANTERN_ON -> TardisLight.valueOf(s.substring(6, s.length() - 3));
+            // remove _ON
+            case RED_LAMP_ON, GREEN_LAMP_ON, PURPLE_LAMP_ON, BLUE_LAMP_ON -> TardisLight.valueOf(s.substring(0, s.length() - 3));
+            // remove LIGHT_
+            case LIGHT_BULB, LIGHT_CLASSIC, LIGHT_CLASSIC_OFFSET, LIGHT_TENTH, LIGHT_ELEVENTH, LIGHT_TWELFTH, LIGHT_THIRTEENTH, LIGHT_LAMP, LIGHT_LANTERN, LIGHT_VARIABLE -> TardisLight.valueOf(s.substring(6));
+            // remove LIGHT_ and _ON
+            case LIGHT_BULB_ON, LIGHT_CLASSIC_ON, LIGHT_CLASSIC_OFFSET_ON, LIGHT_TENTH_ON, LIGHT_ELEVENTH_ON, LIGHT_TWELFTH_ON, LIGHT_THIRTEENTH_ON, LIGHT_LAMP_ON, LIGHT_LANTERN_ON, LIGHT_VARIABLE_ON, LIGHT_VARIABLE_BLUE_ON, LIGHT_VARIABLE_GREEN_ON,
+                 LIGHT_VARIABLE_ORANGE_ON, LIGHT_VARIABLE_PINK_ON, LIGHT_VARIABLE_PURPLE_ON, LIGHT_VARIABLE_YELLOW_ON -> TardisLight.valueOf(s.substring(6, s.length() - 3));
             default -> TENTH;
         };
     }

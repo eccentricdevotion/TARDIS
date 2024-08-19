@@ -44,8 +44,8 @@ public class TARDISLightLevelFrameListener implements Listener {
         if (event.getRightClicked() instanceof ItemFrame frame) {
             // check if it is a light level item frame
             Location location = frame.getLocation();
-            ResultSetLightLevel rs = new ResultSetLightLevel(plugin, location.toString());
-            if (rs.resultSet()) {
+            ResultSetLightLevel rs = new ResultSetLightLevel(plugin);
+            if (rs.fromLocation(location.toString())) {
                 // which switch is it?
                 int type = rs.getType();
                 int start = switch (type) {

@@ -31,12 +31,12 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author eccentric_nz
  */
-class TARDISWallsInventory {
+public class TARDISWallsInventory {
 
     private final ItemStack[] menu;
     private final TARDIS plugin;
 
-    TARDISWallsInventory(TARDIS plugin) {
+    public TARDISWallsInventory(TARDIS plugin) {
         this.plugin = plugin;
         menu = getItemStack();
     }

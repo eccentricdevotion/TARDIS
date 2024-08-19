@@ -126,7 +126,7 @@ public class TARDISARSMethods {
     /**
      * Gets a 5x5 2D slice from a 3D array
      *
-     * @param layer the level to to get
+     * @param layer the level to get
      * @param x     the x position of the slice
      * @param z     the z position of the slice
      * @return a slice of the larger array

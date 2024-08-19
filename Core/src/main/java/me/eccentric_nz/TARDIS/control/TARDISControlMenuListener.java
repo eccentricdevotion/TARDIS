@@ -40,6 +40,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.lights.TARDISLightsInventory;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
 import me.eccentric_nz.TARDIS.rooms.TARDISExteriorRenderer;
@@ -363,17 +364,10 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 new FastReturnAction(plugin).clickButton(player, id, tardis);
             }
             case 29 -> {
-                // light switch
-                if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
-                    return;
-                }
-                if (!lights && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
-                    return;
-                }
-                close(player, true);
-                new LightSwitchAction(plugin, id, lights, player, tardis.getSchematic().getLights()).flickSwitch();
+                ItemStack[] lightStacks = new TARDISLightsInventory(plugin, id).getGUI();
+                Inventory lightGUI = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Lights");
+                lightGUI.setContents(lightStacks);
+                player.openInventory(lightGUI);
             }
             case 31 -> {
                 // rebuild

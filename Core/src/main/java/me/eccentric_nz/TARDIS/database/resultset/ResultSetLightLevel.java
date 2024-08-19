@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.database.resultset;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import org.bukkit.Location;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,9 +30,6 @@ import java.sql.SQLException;
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... the locations of the TARDIS
  * controls.
- * <p>
- * Control types: 0 = handbrake 1 = random button 2 = x-repeater 3 = z-repeater 4 = multiplier-repeater 5 =
- * environment-repeater 6 = artron button
  *
  * @author eccentric_nz
  */
@@ -40,7 +39,7 @@ public class ResultSetLightLevel {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
-    private final String location;
+    private Location location;
     private int c_id;
     private int tardis_id;
     private int type;
@@ -53,11 +52,9 @@ public class ResultSetLightLevel {
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the controls table.
      *
      * @param plugin   an instance of the main class.
-     * @param location the location of the control
      */
-    public ResultSetLightLevel(TARDIS plugin, String location) {
+    public ResultSetLightLevel(TARDIS plugin) {
         this.plugin = plugin;
-        this.location = location;
         prefix = this.plugin.getPrefix();
     }
 
@@ -67,14 +64,14 @@ public class ResultSetLightLevel {
      *
      * @return true or false depending on whether any data matches the query
      */
-    public boolean resultSet() {
+    public boolean fromLocation(String loc) {
         PreparedStatement statement = null;
         ResultSet rs = null;
         String query = "SELECT " + prefix + "controls.*, " + prefix + "tardis.powered_on, " + prefix + "tardis.lights_on, " + prefix + "tardis.chameleon_preset FROM " + prefix + "controls, " + prefix + "tardis WHERE `type` IN (49, 50, 57) AND location = ? AND " + prefix + "controls.tardis_id = " + prefix + "tardis.tardis_id";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
-            statement.setString(1, location);
+            statement.setString(1, loc);
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
@@ -113,6 +110,54 @@ public class ResultSetLightLevel {
         return true;
     }
 
+    public boolean fromTypeAndID(int which, int id) {
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+        String query = "SELECT " + prefix + "controls.*, " + prefix + "tardis.powered_on, " + prefix + "tardis.lights_on, " + prefix + "tardis.chameleon_preset FROM " + prefix + "controls, " + prefix + "tardis WHERE `type` = ? AND " + prefix + "controls.tardis_id = ? AND " + prefix + "controls.tardis_id = " + prefix + "tardis.tardis_id";
+        try {
+            service.testConnection(connection);
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, which);
+            statement.setInt(2, id);
+            rs = statement.executeQuery();
+            if (rs.isBeforeFirst()) {
+                rs.next();
+                c_id = rs.getInt("c_id");
+                tardis_id = rs.getInt("tardis_id");
+                type = rs.getInt("type");
+                location = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
+                level = rs.getInt("secondary");
+                powered = rs.getBoolean("powered_on");
+                lightsOn = rs.getBoolean("lights_on");
+                String[] split = rs.getString("chameleon_preset").split(":");
+                ChameleonPreset preset;
+                try {
+                    preset = ChameleonPreset.valueOf(split[0]);
+                } catch (IllegalArgumentException e) {
+                    preset = ChameleonPreset.FACTORY;
+                }
+                policeBox = preset.usesArmourStand();
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            plugin.debug("ResultSet error for light level control [type,id] table! " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                plugin.debug("Error closing light level control [type,id] table! " + e.getMessage());
+            }
+        }
+        return true;
+    }
+
     public int getControlId() {
         return c_id;
     }
@@ -125,7 +170,7 @@ public class ResultSetLightLevel {
         return type;
     }
 
-    public String getLocation() {
+    public Location getLocation() {
         return location;
     }
 

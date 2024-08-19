@@ -28,6 +28,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author eccentric_nz
  */
@@ -67,6 +70,42 @@ public class TARDISDisplayItemUtils {
             }
         }
         return null;
+    }
+
+    /**
+     * Get all item display entities from a block. Used for TARDIS variable lights.
+     *
+     * @param block the block to use as the search location
+     * @return All the Item Display entities at the block's location or an empty set if there aren't any
+     */
+    public static Set<ItemDisplay> getAll(Block block) {
+        Set<ItemDisplay> displays = new HashSet<>();
+        int x = block.getLocation().getBlockX();
+        int y = block.getLocation().getBlockY();
+        int z = block.getLocation().getBlockZ();
+        BoundingBox box = new BoundingBox(x, y, z, x + 1, y + 1, z + 1);
+        for (Entity e : block.getWorld().getNearbyEntities(box.expand(0.1d), (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
+            if (e instanceof ItemDisplay display) {
+                displays.add(display);
+            }
+        }
+        return displays;
+    }
+
+    /**
+     * Get all item display entities from a block. Used for TARDIS variable lights.
+     *
+     * @param interaction the Interaction to use as the search location
+     * @return All the Item Display entities at the interaction's location or an empty set if there aren't any
+     */
+    public static Set<ItemDisplay> getAll(Interaction interaction) {
+        Set<ItemDisplay> displays = new HashSet<>();
+        for (Entity e : interaction.getWorld().getNearbyEntities(interaction.getBoundingBox().expand(0.1d), (d) -> d.getType() == EntityType.ITEM_DISPLAY)) {
+            if (e instanceof ItemDisplay display) {
+                displays.add(display);
+            }
+        }
+        return displays;
     }
 
     /**
@@ -144,7 +183,7 @@ public class TARDISDisplayItemUtils {
     public static TextDisplay getText(Interaction interaction) {
         for (Entity e : interaction.getWorld().getNearbyEntities(interaction.getBoundingBox().expand(0.1d), (d) -> d.getType() == EntityType.TEXT_DISPLAY)) {
             if (e instanceof TextDisplay display) {
-                    return display;
+                return display;
             }
         }
         return null;

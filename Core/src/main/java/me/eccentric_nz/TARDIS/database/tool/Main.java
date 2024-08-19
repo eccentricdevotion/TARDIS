@@ -262,6 +262,10 @@ public class Main {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("l_id"), rs.getInt("tardis_id"), rs.getString("location")) + end;
                                         bw.write(str);
                                     }
+                                    case light_prefs -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getInt("lp_id"), rs.getInt("tardis_id"), rs.getString("light"), rs.getString("material"), rs.getString("pattern"), rs.getString("delays"), rs.getString("levels")) + end;
+                                        bw.write(str);
+                                    }
                                     case movers -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getString("uuid")) + end;
                                         bw.write(str);

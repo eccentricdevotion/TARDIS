@@ -150,6 +150,7 @@ public class TARDISTrackerInstanceKeeper {
     private final Set<UUID> hasTravelled = new HashSet<>();
     private final HashMap<UUID, ItemStack> hiddenFlight = new HashMap<>();
     private final Set<UUID> howTo = new HashSet<>();
+    private final Set<UUID> lightChangers = new HashSet<>();
     private final Set<UUID> mover = new HashSet<>();
     private final Set<UUID> recipeViewers = new HashSet<>();
     private final Set<UUID> renderRoomOccupants = new HashSet<>();
@@ -1053,6 +1054,15 @@ public class TARDISTrackerInstanceKeeper {
      */
     public Set<UUID> getHowTo() {
         return howTo;
+    }
+
+    /**
+     * Tracks players changing TARDIS lights
+     *
+     * @return a collection of player UUIDs
+     */
+    public Set<UUID> getLightChangers() {
+        return lightChangers;
     }
 
     /**

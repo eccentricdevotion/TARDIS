@@ -28,7 +28,7 @@ import java.sql.Statement;
  * SQLite database creator and updater.
  * <p>
  * Many facts, figures, and formulas are contained within the Matrix - a supercomputer and micro-universe used by the
- * High Council of the Time Lords as a storehouse of knowle
+ * High Council of the Time Lords as a storehouse of knowledge.
  */
 public class TARDISSQLiteDatabase {
 
@@ -182,6 +182,10 @@ public class TARDISSQLiteDatabase {
             // Table structure for table 'lamps'
             String queryLamps = "CREATE TABLE IF NOT EXISTS " + prefix + "lamps (l_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, location TEXT COLLATE NOCASE DEFAULT '')";
             statement.executeUpdate(queryLamps);
+
+            // Table structure for table 'light_prefs'
+            String queryLightPrefs = "CREATE TABLE IF NOT EXISTS " + prefix + "light_prefs (lp_id INTEGER PRIMARY KEY NOT NULL, tardis_id INTEGER, light TEXT COLLATE NOCASE DEFAULT '', material TEXT COLLATE NOCASE DEFAULT '', pattern TEXT COLLATE NOCASE DEFAULT 'BLUE:GREEN:ORANGE:PINK:PURPLE:YELLOW:RED:WHITE:BLACK', delays TEXT COLLATE NOCASE DEFAULT '20:20:20:20:20:20:20:20:20', levels TEXT COLLATE NOCASE DEFAULT '15:15:15:15:15:15:15:15:15')";
+            statement.executeUpdate(queryLightPrefs);
 
             // Table structure for table 'movers'
             String moversQuery = "CREATE TABLE IF NOT EXISTS " + prefix + "movers (uuid TEXT PRIMARY KEY NOT NULL)";

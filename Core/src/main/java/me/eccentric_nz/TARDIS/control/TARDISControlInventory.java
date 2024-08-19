@@ -58,7 +58,6 @@ public class TARDISControlInventory {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        String lights_onoff = "";
         String siege_onoff = "";
         String toggle_openclosed = "";
         String power_onoff = "";
@@ -70,7 +69,6 @@ public class TARDISControlInventory {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             siege_onoff = (tardis.isSiegeOn()) ? on : off;
-            lights_onoff = (tardis.isLightsOn()) ? on : off;
             open = new TARDISBlackWoolToggler(plugin).isOpen(tardis.getTardisId());
             toggle_openclosed = (open) ? plugin.getLanguage().getString("SET_OPEN") : plugin.getLanguage().getString("SET_CLOSED");
             power_onoff = (tardis.isPoweredOn()) ? on : off;
@@ -162,11 +160,7 @@ public class TARDISControlInventory {
         ItemStack lig = new ItemStack(GUIControlCentre.BUTTON_LIGHTS.material(), 1);
         ItemMeta swi = lig.getItemMeta();
         swi.setDisplayName(plugin.getLanguage().getString("BUTTON_LIGHTS"));
-        swi.setLore(List.of(lights_onoff));
         int lcmd = GUIControlCentre.BUTTON_LIGHTS.customModelData();
-        if (lights_onoff.equals(off)) {
-            lcmd += 100;
-        }
         swi.setCustomModelData(lcmd);
         lig.setItemMeta(swi);
         // toggle wool

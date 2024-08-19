@@ -230,9 +230,7 @@ public class TARDISControlListener implements Listener {
                                     event.setCancelled(true);
                                     new EyeOfHarmonyAction(plugin, id).openGUI(id, player);
                                 }
-                                case 55 -> {
-                                    new TelevisionAction(plugin).openGUI(player);
-                                }
+                                case 55 -> new TelevisionAction(plugin).openGUI(player);
                                 default -> {
                                 }
                             }

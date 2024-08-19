@@ -197,7 +197,7 @@ public class TARDISParticleInventory {
         stacks[47] = plus;
         stacks[51] = plus;
         // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIParticle.CLOSE.material(), 1);
         ItemMeta clim = close.getItemMeta();
         clim.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         clim.setCustomModelData(GUIParticle.CLOSE.customModelData());

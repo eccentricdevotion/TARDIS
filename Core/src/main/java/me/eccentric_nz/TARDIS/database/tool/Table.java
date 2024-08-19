@@ -52,6 +52,7 @@ public enum Table {
     inventories("id"),
     junk("id"),
     lamps("l_id"),
+    light_prefs("lp_id"),
     movers("uuid"),
     next,
     paper_bag,

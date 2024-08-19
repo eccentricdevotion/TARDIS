@@ -92,6 +92,8 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %slamps (l_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', location varchar(512) DEFAULT '', PRIMARY KEY (l_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
+            "CREATE TABLE IF NOT EXISTS %slight_prefs (lp_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', light varchar(32) DEFAULT '', material varchar(64) DEFAULT '', pattern varchar(512) DEFAULT 'BLUE:GREEN:ORANGE:PINK:PURPLE:YELLOW:RED:WHITE:BLACK', delays varchar(64) DEFAULT '20:20:20:20:20:20:20:20:20', levels varchar(64) DEFAULT '15:15:15:15:15:15:15:15:15', PRIMARY KEY (lp_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
             "CREATE TABLE IF NOT EXISTS %smovers (uuid varchar(48) NOT NULL, PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %snext (next_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', world varchar(64) DEFAULT '', x int(7) DEFAULT '0', y int(3) DEFAULT '0', z int(7) DEFAULT '0', direction varchar(5) DEFAULT '', submarine int(1) DEFAULT '0', PRIMARY KEY (next_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
@@ -226,6 +228,8 @@ public class SQL {
 
             "(%s, %s, '%s')",
 
+            "(%s, %s, '%s', '%s', '%s', '%s', '%s')",
+
             "('%s')",
 
             "(%s, %s, '%s', %s, %s, %s, '%s', %s)",
@@ -359,6 +363,8 @@ public class SQL {
             "INSERT INTO `%sjunk` (`id`, `uuid`, `tardis_id`, `save_sign`, `handbrake`, `wall`, `floor`, `preset`) VALUES ",
 
             "INSERT INTO `%slamps` (`l_id`, `tardis_id`, `location`) VALUES ",
+
+            "INSERT INTO `%slight_prefs` (`lp_id`, `tardis_id`, `light`, `material`, `pattern`, `delays`, `levels`) VALUES ",
 
             "INSERT INTO `%smovers` (`uuid`) VALUES ",
 

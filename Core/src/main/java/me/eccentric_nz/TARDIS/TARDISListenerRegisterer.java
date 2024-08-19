@@ -69,6 +69,10 @@ import me.eccentric_nz.TARDIS.junk.TARDISJunkControlListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusGUIListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusSkinsListener;
+import me.eccentric_nz.TARDIS.lights.TARDISLightLevelsGUIListener;
+import me.eccentric_nz.TARDIS.lights.TARDISLightSequenceGUIListener;
+import me.eccentric_nz.TARDIS.lights.TARDISLightsGUIListener;
+import me.eccentric_nz.TARDIS.lights.TARDISVariableLightBlocksListener;
 import me.eccentric_nz.TARDIS.listeners.*;
 import me.eccentric_nz.TARDIS.listeners.controls.*;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmingMenuListener;
@@ -248,6 +252,11 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISKeyboardListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISKeyMenuListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISLightningListener(plugin), plugin);
+        // lights GUI
+        plugin.getPM().registerEvents(new TARDISLightsGUIListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISLightLevelsGUIListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISLightSequenceGUIListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISVariableLightBlocksListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISMakePresetListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISManualFlightListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISMinecartListener(plugin), plugin);
