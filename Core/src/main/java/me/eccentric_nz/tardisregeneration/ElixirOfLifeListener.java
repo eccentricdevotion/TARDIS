@@ -39,7 +39,7 @@ public class ElixirOfLifeListener implements Listener {
                 // not dying yet
                 return;
             }
-            if (!TARDISPermission.hasPermission(player, "tardis.regeneration")) {
+            if (!TARDISPermission.hasPermission(player, "tardis.regenerate")) {
                 // no permission
                 return;
             }
