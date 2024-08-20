@@ -32,7 +32,7 @@ public record GUIControlCentre() {
     public static GUIData BUTTON_ARS = new GUIData(13, 2, Material.BOWL);
     public static GUIData BUTTON_THEME = new GUIData(31, 11, Material.BOWL);
     public static GUIData BUTTON_POWER = new GUIData(17, 20, Material.REPEATER);
-    public static GUIData BUTTON_LIGHTS = new GUIData(11, 29, Material.COAL_BLOCK);
+    public static GUIData BUTTON_LIGHTS = new GUIData(8, 29, Material.COAL_BLOCK);
     public static GUIData BUTTON_TOGGLE = new GUIData(19, 38, Material.REPEATER);
     public static GUIData BUTTON_TARDIS_MAP = new GUIData(3, 47, Material.MAP);
     // 3rd column

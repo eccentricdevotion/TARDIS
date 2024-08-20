@@ -163,17 +163,17 @@ public class TARDISLightsInventory {
         con.setItemMeta(vert);
         stacks[GUILights.CONVERT_LIGHTS.slot()] = con;
         // 45 light switch
-        ItemStack lig = new ItemStack(GUILights.BUTTON_LIGHTS.material(), 1);
+        ItemStack lig = new ItemStack(GUILights.LIGHT_SWITCH.material(), 1);
         ItemMeta swi = lig.getItemMeta();
         swi.setDisplayName(plugin.getLanguage().getString("BUTTON_LIGHTS"));
         swi.setLore(List.of(lights_onoff));
-        int lcmd = GUILights.BUTTON_LIGHTS.customModelData();
+        int lcmd = GUILights.LIGHT_SWITCH.customModelData();
         if (lights_onoff.equals(off)) {
             lcmd += 100;
         }
         swi.setCustomModelData(lcmd);
         lig.setItemMeta(swi);
-        stacks[GUILights.BUTTON_LIGHTS.slot()] = lig;
+        stacks[GUILights.LIGHT_SWITCH.slot()] = lig;
         // 47 light levels page
         ItemStack llis = new ItemStack(GUILights.BUTTON_LIGHT_LEVELS.material(), 1);
         ItemMeta llim = llis.getItemMeta();

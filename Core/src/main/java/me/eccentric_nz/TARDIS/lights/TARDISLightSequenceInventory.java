@@ -81,7 +81,7 @@ public class TARDISLightSequenceInventory {
             }
         }
         // 36 preset (cycle)
-        ItemStack preset = new ItemStack(GUILights.LIGHT_INFO.material(), 1);
+        ItemStack preset = new ItemStack(GUILights.BUTTON_LIGHT_SEQUENCE.material(), 1);
         ItemMeta pim = preset.getItemMeta();
         pim.setDisplayName("Preset Sequence");
         pim.setLore(List.of("Click to cycle through", "various light sequences.", "1"));
@@ -91,7 +91,7 @@ public class TARDISLightSequenceInventory {
         // 40 save
         ItemStack save = new ItemStack(GUIChameleonConstructor.SAVE_CONSTRUCT.material(), 1);
         ItemMeta se = save.getItemMeta();
-        se.setDisplayName(plugin.getChameleonGuis().getString("SAVE"));
+        se.setDisplayName("Save Sequence");
         se.setCustomModelData(GUIChameleonConstructor.SAVE_CONSTRUCT.customModelData());
         save.setItemMeta(se);
         stacks[40] = save;
