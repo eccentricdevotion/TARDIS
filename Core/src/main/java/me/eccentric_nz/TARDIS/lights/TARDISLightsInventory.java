@@ -20,16 +20,19 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class TARDISLightsInventory {
 
     private final TARDIS plugin;
     private final int id;
+    private final UUID uuid;
     private final ItemStack[] GUI;
 
-    public TARDISLightsInventory(TARDIS plugin, int id) {
+    public TARDISLightsInventory(TARDIS plugin, int id, UUID uuid) {
         this.plugin = plugin;
         this.id = id;
+        this.uuid = uuid;
         this.GUI = getItemStack();
     }
 
@@ -114,6 +117,14 @@ public class TARDISLightsInventory {
         // 29 populate with block choice if available
         ItemStack block = new ItemStack(material, 1);
         stacks[29] = block;
+        // 34 change info
+        ItemStack ch_info = new ItemStack(GUILights.CHANGE_INFO.material(), 1);
+        ItemMeta chim = ch_info.getItemMeta();
+        chim.setDisplayName("Change your light type");
+        chim.setLore(List.of("Select a light from above,", "if the light is variable", "also select a block type.", "Click the button to start."));
+        chim.setCustomModelData(GUILights.CHANGE_INFO.customModelData());
+        ch_info.setItemMeta(chim);
+        stacks[GUILights.CHANGE_INFO.slot()] = ch_info;
         // 35 change lights
         ItemStack chan = new ItemStack(GUILights.CHANGE_LIGHTS.material(), 1);
         ItemMeta geim = chan.getItemMeta();
@@ -121,6 +132,36 @@ public class TARDISLightsInventory {
         geim.setCustomModelData(GUILights.CHANGE_LIGHTS.customModelData());
         chan.setItemMeta(geim);
         stacks[GUILights.CHANGE_LIGHTS.slot()] = chan;
+        // 41 convert lights info
+        ItemStack c_info = new ItemStack(GUILights.CONVERT_INFO.material(), 1);
+        ItemMeta ciim = c_info.getItemMeta();
+        ciim.setDisplayName("Convert blocks to lights");
+        ciim.setLore(List.of("Click the button to the", "right to select a block", "type to convert."));
+        ciim.setCustomModelData(GUILights.CONVERT_INFO.customModelData());
+        c_info.setItemMeta(ciim);
+        stacks[GUILights.CONVERT_INFO.slot()] = c_info;
+        // 42 light emitting selection
+        ItemStack emitting = new ItemStack(GUILights.SELECT_LIGHT.material(), 1);
+        ItemMeta emim = emitting.getItemMeta();
+        emim.setDisplayName("Select block to convert");
+        emim.setCustomModelData(GUILights.SELECT_LIGHT.customModelData());
+        emitting.setItemMeta(emim);
+        stacks[GUILights.SELECT_LIGHT.slot()] = emitting;
+        // 43 light emitting choice
+        Material lightEmitting = Material.REDSTONE_LAMP;
+        if (Sequences.CONVERTERS.containsKey(uuid)) {
+            lightEmitting = Material.valueOf(Sequences.CONVERTERS.get(uuid));
+        }
+        ItemStack lit = new ItemStack(lightEmitting, 1);
+        stacks[43] = lit;
+        // 44 convert lights
+        ItemStack con = new ItemStack(GUILights.CONVERT_LIGHTS.material(), 1);
+        ItemMeta vert = con.getItemMeta();
+        vert.setDisplayName("Convert blocks to lights");
+        vert.setLore(List.of("Will change the block", "type to the left to", "the TARDIS light you", "have selected above."));
+        vert.setCustomModelData(GUILights.CONVERT_LIGHTS.customModelData());
+        con.setItemMeta(vert);
+        stacks[GUILights.CONVERT_LIGHTS.slot()] = con;
         // 45 light switch
         ItemStack lig = new ItemStack(GUILights.BUTTON_LIGHTS.material(), 1);
         ItemMeta swi = lig.getItemMeta();

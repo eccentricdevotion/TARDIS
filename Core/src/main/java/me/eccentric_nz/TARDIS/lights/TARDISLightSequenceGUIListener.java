@@ -20,6 +20,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class TARDISLightSequenceGUIListener extends TARDISMenuListener {
 
@@ -47,7 +48,7 @@ public class TARDISLightSequenceGUIListener extends TARDISMenuListener {
         event.setCancelled(true);
         int slot = event.getRawSlot();
         Player player = (Player) event.getWhoClicked();
-        String uuid = player.getUniqueId().toString();
+        UUID uuid = player.getUniqueId();
         if (slot >= 0 && slot < 45) {
             // get selection
             ItemStack is = view.getItem(slot);
@@ -63,12 +64,12 @@ public class TARDISLightSequenceGUIListener extends TARDISMenuListener {
                     // cycle through presets
                     case 36 -> cyclePresets(view);
                     // save
-                    case 40 -> save(view, uuid);
+                    case 40 -> save(view, uuid.toString());
                     // back
                     case 42 -> {
                         ResultSetTardisID rst = new ResultSetTardisID(plugin);
-                        if (rst.fromUUID(player.getUniqueId().toString())) {
-                            ItemStack[] lightStacks = new TARDISLightsInventory(plugin, rst.getTardisId()).getGUI();
+                        if (rst.fromUUID(uuid.toString())) {
+                            ItemStack[] lightStacks = new TARDISLightsInventory(plugin, rst.getTardisId(), uuid).getGUI();
                             Inventory lightGUI = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Lights");
                             lightGUI.setContents(lightStacks);
                             player.openInventory(lightGUI);

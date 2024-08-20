@@ -69,10 +69,7 @@ import me.eccentric_nz.TARDIS.junk.TARDISJunkControlListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusGUIListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusListener;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusSkinsListener;
-import me.eccentric_nz.TARDIS.lights.TARDISLightLevelsGUIListener;
-import me.eccentric_nz.TARDIS.lights.TARDISLightSequenceGUIListener;
-import me.eccentric_nz.TARDIS.lights.TARDISLightsGUIListener;
-import me.eccentric_nz.TARDIS.lights.TARDISVariableLightBlocksListener;
+import me.eccentric_nz.TARDIS.lights.*;
 import me.eccentric_nz.TARDIS.listeners.*;
 import me.eccentric_nz.TARDIS.listeners.controls.*;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmingMenuListener;
@@ -257,6 +254,8 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TARDISLightLevelsGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISLightSequenceGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISVariableLightBlocksListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISVariableLightBlocksListener(plugin), plugin);
+        plugin.getPM().registerEvents(new TARDISLightEmittingListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISMakePresetListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISManualFlightListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISMinecartListener(plugin), plugin);
@@ -293,7 +292,7 @@ class TARDISListenerRegisterer {
         }
         plugin.getPM().registerEvents(new TARDISSleepListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSmelterListener(plugin), plugin);
-        plugin.getPM().registerEvents(new TARDISSpaceHelmetListener(),plugin);
+        plugin.getPM().registerEvents(new TARDISSpaceHelmetListener(), plugin);
         plugin.getPM().registerEvents(new TARDISLibraryListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSmithingListener(), plugin);
         plugin.getPM().registerEvents(new TARDISSonicEntityListener(plugin), plugin);

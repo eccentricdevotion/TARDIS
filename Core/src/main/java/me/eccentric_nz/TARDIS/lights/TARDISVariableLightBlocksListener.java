@@ -89,7 +89,8 @@ public class TARDISVariableLightBlocksListener extends TARDISWallListener {
     private void setVariableLightBlock(Player player, String block) {
         // get player's TARDIS
         ResultSetTardisID rst = new ResultSetTardisID(plugin);
-        if (rst.fromUUID(player.getUniqueId().toString())) {
+        UUID uuid = player.getUniqueId();
+        if (rst.fromUUID(uuid.toString())) {
             int id = rst.getTardisId();
             // remember choice
             HashMap<String, Object> set = new HashMap<>();
@@ -105,7 +106,7 @@ public class TARDISVariableLightBlocksListener extends TARDISWallListener {
             }
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 // go back to Lights GUI
-                ItemStack[] lightStacks = new TARDISLightsInventory(plugin, id).getGUI();
+                ItemStack[] lightStacks = new TARDISLightsInventory(plugin, id, uuid).getGUI();
                 Inventory lightGUI = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Lights");
                 lightGUI.setContents(lightStacks);
                 player.openInventory(lightGUI);

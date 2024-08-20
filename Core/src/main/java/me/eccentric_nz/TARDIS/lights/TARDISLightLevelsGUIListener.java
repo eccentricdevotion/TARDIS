@@ -125,7 +125,8 @@ public class TARDISLightLevelsGUIListener extends TARDISMenuListener {
                         }
                     }
                     case 45 -> {
-                        ItemStack[] lightStacks = new TARDISLightsInventory(plugin, id).getGUI();
+                        // back
+                        ItemStack[] lightStacks = new TARDISLightsInventory(plugin, id, uuid).getGUI();
                         Inventory lightGUI = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Lights");
                         lightGUI.setContents(lightStacks);
                         player.openInventory(lightGUI);

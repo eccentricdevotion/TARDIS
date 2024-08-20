@@ -160,6 +160,7 @@ public class TARDISControlInventory {
         ItemStack lig = new ItemStack(GUIControlCentre.BUTTON_LIGHTS.material(), 1);
         ItemMeta swi = lig.getItemMeta();
         swi.setDisplayName(plugin.getLanguage().getString("BUTTON_LIGHTS"));
+        swi.setLore(List.of("All the light things!"));
         int lcmd = GUIControlCentre.BUTTON_LIGHTS.customModelData();
         swi.setCustomModelData(lcmd);
         lig.setItemMeta(swi);

@@ -106,6 +106,7 @@ public class TARDISMenuListener implements Listener {
         map.put(ChatColor.DARK_RED + "Destination Terminal", 54);
         map.put(ChatColor.DARK_RED + "Chemical compounds", 27);
         map.put(ChatColor.DARK_RED + "Element constructor", 27);
+        map.put(ChatColor.DARK_RED + "Light Emitting Blocks", 27);
         map.put(ChatColor.DARK_RED + "Material reducer", 27);
         map.put(ChatColor.DARK_RED + "Product crafting", 27);
         map.put(ChatColor.DARK_RED + "Lab table", 27);

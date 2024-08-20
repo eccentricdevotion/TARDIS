@@ -21,8 +21,8 @@ import org.bukkit.Material;
 public record GUILights() {
 
     // TARDIS Autonomous
-    public static GUIData LIGHT_INFO = new GUIData(7, 0, Material.COAL_BLOCK);
-    public static GUIData BLOCK_INFO = new GUIData(2, 27, Material.COAL_BLOCK);
+    public static GUIData LIGHT_INFO = new GUIData(57, 0, Material.BOWL);
+    public static GUIData BLOCK_INFO = new GUIData(57, 27, Material.BOWL);
     public static GUIData BLOCK_BUTTON = new GUIData(3, 28, Material.COAL_BLOCK);
     public static GUIData BUTTON_LIGHTS = new GUIData(16, 45, Material.REPEATER);
     public static GUIData BUTTON_LIGHT_LEVELS = new GUIData(4, 47, Material.COAL_BLOCK);
@@ -31,6 +31,7 @@ public record GUILights() {
     public static GUIData SEQUENCE_INFO = new GUIData(57, 4, Material.BOWL);
     public static GUIData DELAY = new GUIData(9, -1, Material.COAL_BLOCK);
     public static GUIData LEVEL = new GUIData(10, -1, Material.COAL_BLOCK);
+    public static GUIData CHANGE_INFO = new GUIData(57, 34, Material.BOWL);
     public static GUIData CHANGE_LIGHTS = new GUIData(12, 35, Material.COAL_BLOCK);
     public static GUIData INTERIOR_INFO = new GUIData(6, 1, Material.BOOK);
     public static GUIData EXTERIOR_INFO = new GUIData(7, 7, Material.BOOK);
@@ -38,5 +39,8 @@ public record GUILights() {
     public static GUIData INTERIOR = new GUIData(1, 42, Material.LANTERN);
     public static GUIData EXTERIOR = new GUIData(1, 42, Material.SOUL_LANTERN);
     public static GUIData CONSOLE = new GUIData(4, 42, Material.COMPARATOR);
+    public static GUIData CONVERT_INFO = new GUIData(57, 41, Material.BOWL);
+    public static GUIData SELECT_LIGHT = new GUIData(13, 42, Material.COAL_BLOCK);
+    public static GUIData CONVERT_LIGHTS = new GUIData(14, 44, Material.COAL_BLOCK);
     public static GUIData CLOSE = new GUIData(1, 53, Material.BOWL);
 }

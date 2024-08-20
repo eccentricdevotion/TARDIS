@@ -30,7 +30,6 @@ import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddInventory;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionInventory;
 import me.eccentric_nz.TARDIS.control.actions.DirectionAction;
 import me.eccentric_nz.TARDIS.control.actions.FastReturnAction;
-import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
 import me.eccentric_nz.TARDIS.control.actions.SiegeAction;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -364,7 +363,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 new FastReturnAction(plugin).clickButton(player, id, tardis);
             }
             case 29 -> {
-                ItemStack[] lightStacks = new TARDISLightsInventory(plugin, id).getGUI();
+                ItemStack[] lightStacks = new TARDISLightsInventory(plugin, id, player.getUniqueId()).getGUI();
                 Inventory lightGUI = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Lights");
                 lightGUI.setContents(lightStacks);
                 player.openInventory(lightGUI);

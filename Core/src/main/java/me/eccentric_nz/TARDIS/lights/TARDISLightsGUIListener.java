@@ -58,7 +58,7 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
                 if (rs.resultSet()) {
                     Tardis data = rs.getTardis();
                     switch (slot) {
-                        case 0, 27, 29 -> {
+                        case 0, 27, 29, 41, 43 -> {
                         }
                         // variable block menu
                         case 28 -> {
@@ -74,7 +74,7 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
                                 ResultSetLightPrefs rslp = new ResultSetLightPrefs(plugin);
                                 if (rslp.fromID(data.getTardisId())) {
                                     // update lights in the ARS grid
-                                    TARDISLightChanger changer = new TARDISLightChanger(plugin, rslp.getLight(), data.getChunk(), data.isLightsOn(), getMaterialFromSlot(view), player);
+                                    TARDISLightChanger changer = new TARDISLightChanger(plugin, rslp.getLight(), data.getChunk(), data.isLightsOn(), getMaterialFromSlot(view, 29), player);
                                     int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, changer, 2L, 100L);
                                     changer.setTaskID(task);
                                 }
@@ -82,6 +82,29 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "LIGHT_CHANGE");
                             }
                             close(player);
+                        }
+                        // select light emitting block
+                        case 42 -> {
+                            ItemStack[] emitting = new TARDISLightEmittingInventory(plugin).getGUI();
+                            Inventory emittingGUI = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Light Emitting Blocks");
+                            emittingGUI.setContents(emitting);
+                            player.openInventory(emittingGUI);
+                        }
+                        // convert lights
+                        case 44 -> {
+                            if (!plugin.getTrackerKeeper().getLightChangers().contains(player.getUniqueId())) {
+                                // get light prefs
+                                ResultSetLightPrefs rslp = new ResultSetLightPrefs(plugin);
+                                if (rslp.fromID(data.getTardisId())) {
+                                    // get variable block
+                                    Material variable = getMaterialFromSlot(view, 29);
+                                    // get selected block
+                                    Material emitting = getMaterialFromSlot(view, 43);
+                                    new TARDISLightConverter(plugin, data.getTardisId()).apply(rslp.getLight(), emitting, player, variable);
+                                }
+                            } else {
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "LIGHT_CHANGE");
+                            }
                         }
                         // light switch
                         case 45 -> {
@@ -151,8 +174,8 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
         }
     }
 
-    private Material getMaterialFromSlot(InventoryView view) {
-        ItemStack is = view.getItem(29);
+    private Material getMaterialFromSlot(InventoryView view, int slot) {
+        ItemStack is = view.getItem(slot);
         return is.getType();
     }
 }
