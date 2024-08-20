@@ -327,9 +327,12 @@ public class TARDIS extends JavaPlugin {
             worldManager = WorldManager.getWorldManager();
             saveDefaultConfig();
             reloadConfig();
-            loadCustomConfigs();
-            // load TARDISChunkGenerator
+            // load planets config
+            tardisCopier.copy("planets.yml");
+            planetsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "planets.yml"));
+            // load TARDISChunkGenerator module
             loadHelper();
+            loadCustomConfigs();
             // load Multiverse
             loadMultiverse();
             loadLanguage();
@@ -1437,12 +1440,11 @@ public class TARDIS extends JavaPlugin {
      * Loads the custom configuration files.
      */
     private void loadCustomConfigs() {
-        List<String> files = Arrays.asList("achievements.yml", "adaptive.yml", "artron.yml", "blaster.yml", "blocks.yml", "condensables.yml", "custom_consoles.yml", "custom_models.yml", "custom_doors.yml", "custom_time_rotors.yml", "flat_world.yml", "handles.yml", "items.yml", "kits.yml", "monsters.yml", "planets.yml", "recipes.yml", "regeneration.yml", "rooms.yml", "shop.yml", "system_upgrades.yml", "tag.yml", "vortex_manipulator.yml");
+        List<String> files = Arrays.asList("achievements.yml", "adaptive.yml", "artron.yml", "blaster.yml", "blocks.yml", "condensables.yml", "custom_consoles.yml", "custom_models.yml", "custom_doors.yml", "custom_time_rotors.yml", "flat_world.yml", "handles.yml", "items.yml", "kits.yml", "monsters.yml", "recipes.yml", "regeneration.yml", "rooms.yml", "shop.yml", "system_upgrades.yml", "tag.yml", "vortex_manipulator.yml");
         for (String f : files) {
 //            debug(f);
             tardisCopier.copy(f);
         }
-        planetsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "planets.yml"));
         new TARDISPlanetsUpdater(this, planetsConfig).checkPlanetsConfig();
         roomsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "rooms.yml"));
         new TARDISRoomsUpdater(this, roomsConfig).checkRoomsConfig();
