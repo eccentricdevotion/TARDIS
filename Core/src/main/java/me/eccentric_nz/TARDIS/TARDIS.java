@@ -111,6 +111,7 @@ public class TARDIS extends JavaPlugin {
     private final String versionRegex = "(\\d+[.])+\\d+";
     private final Pattern versionPattern = Pattern.compile(versionRegex);
     private final String serverStr = "1.21";
+    private TARDISMessage messenger;
     private TARDISChatGUI<?> jsonKeeper;
     private TARDISUpdateChatGUI updateChatGUI;
     private SkinChanger skinChanger;
@@ -189,7 +190,6 @@ public class TARDIS extends JavaPlugin {
     private ShopSettings shopSettings;
     private TVMSettings tvmSettings;
     private BlasterSettings blasterSettings;
-    private TARDISMessage messenger;
 
     /**
      * Constructor
@@ -295,16 +295,16 @@ public class TARDIS extends JavaPlugin {
                     s = Class.forName("me.eccentric_nz.TARDIS.spigot.SkinChangerSpigot");
                 }
                 if (TARDISMessage.class.isAssignableFrom(m)) { // Make sure it actually implements TARDISMessage
-                    this.messenger = (TARDISMessage) m.getConstructor().newInstance();
+                    messenger = (TARDISMessage) m.getConstructor().newInstance();
                 }
                 if (TARDISChatGUI.class.isAssignableFrom(j)) { // Make sure it actually implements TARDISChatGUI
-                    this.jsonKeeper = (TARDISChatGUI<?>) j.getConstructor().newInstance();
+                    jsonKeeper = (TARDISChatGUI<?>) j.getConstructor().newInstance();
                 }
                 if (TARDISUpdateChatGUI.class.isAssignableFrom(u)) { // Make sure it actually implements TARDISUpdateChatGUI
-                    this.updateChatGUI = (TARDISUpdateChatGUI) u.getConstructor().newInstance();
+                    updateChatGUI = (TARDISUpdateChatGUI) u.getConstructor().newInstance();
                 }
                 if (SkinChanger.class.isAssignableFrom(s)) { // Make sure it actually implements SkinChanger
-                    this.skinChanger = (SkinChanger) s.getConstructor().newInstance();
+                    skinChanger = (SkinChanger) s.getConstructor().newInstance();
                 }
             } catch (final Exception e) {
                 getLogger().severe("Could not find support for this server version.");

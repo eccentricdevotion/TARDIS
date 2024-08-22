@@ -1,16 +1,21 @@
 package me.eccentric_nz.TARDIS.skins;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.UUID;
 
@@ -24,6 +29,36 @@ public class SkinListener implements Listener {
         if (SkinUtils.SKINNED.containsKey(uuid) && SkinExtras.MATERIALS.contains(stack.getType())) {
             ItemMeta im = stack.getItemMeta();
             event.setCancelled(im != null && im.hasCustomModelData());
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
+            return;
+        }
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK && event.getAction() != Action.RIGHT_CLICK_AIR) {
+            return;
+        }
+        ItemStack stack = event.getItem();
+        if (stack == null) {
+            return;
+        }
+        Player p = event.getPlayer();
+        UUID uuid = p.getUniqueId();
+        if (!SkinUtils.SKINNED.containsKey(uuid)) {
+            return;
+        }
+        if (!SkinExtras.MATERIALS.contains(stack.getType())) {
+            return;
+        }
+        ItemMeta im = stack.getItemMeta();
+        if (im == null || !im.hasCustomModelData()) {
+            return;
+        }
+        if (im.getPersistentDataContainer().has(TARDIS.plugin.getTimeLordUuidKey(), PersistentDataType.BOOLEAN)) {
+            SkinUtils.setOrSwapItem(stack, p, EquipmentSlot.HEAD);
+            p.getInventory().setItemInMainHand(null);
         }
     }
 
@@ -83,12 +118,10 @@ public class SkinListener implements Listener {
     }
 
     private boolean isSkinItem(String skin, ItemStack is) {
-        return (skin.equals("Cyberman") && is.getType() == Material.IRON_INGOT)
-                || (skin.equals("Slitheen") && is.getType() == Material.TURTLE_EGG);
+        return (skin.equals("Cyberman") && is.getType() == Material.IRON_INGOT) || (skin.equals("Slitheen") && is.getType() == Material.TURTLE_EGG);
     }
 
     private boolean isSkinPlaceable(String skin, ItemStack is) {
-        return (skin.equals("Angel of Liberty") && is.getType() == Material.TORCH)
-                || (skin.equals("Slitheen") && is.getType() == Material.TURTLE_EGG);
+        return (skin.equals("Angel of Liberty") && is.getType() == Material.TORCH) || (skin.equals("Slitheen") && is.getType() == Material.TURTLE_EGG);
     }
 }

@@ -16,6 +16,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
 
@@ -246,12 +247,13 @@ public class SkinUtils {
             ItemMeta im = head.getItemMeta();
             im.setDisplayName(skin.name());
             im.setCustomModelData(cmd);
+            im.getPersistentDataContainer().set(TARDIS.plugin.getTimeLordUuidKey(), PersistentDataType.BOOLEAN, true);
             head.setItemMeta(im);
             setOrSwapItem(head, player, EquipmentSlot.HEAD);
         }
     }
 
-    private static void setOrSwapItem(ItemStack item, Player player, EquipmentSlot slot) {
+    public static void setOrSwapItem(ItemStack item, Player player, EquipmentSlot slot) {
         PlayerInventory inventory = player.getInventory();
         ItemStack current = inventory.getItem(slot);
         if (current != null && !current.getType().isAir()) {

@@ -122,8 +122,7 @@ import me.eccentric_nz.tardischemistry.reducer.ReducerGUIListener;
 import me.eccentric_nz.tardischunkgenerator.helpers.ProtocolLibPacketListener;
 
 /**
- * Registers all the listeners for the various events required to use the
- * TARDIS.
+ * Registers all the listeners for the various events required to use the TARDIS.
  *
  * @author eccentric_nz
  */
@@ -136,8 +135,7 @@ class TARDISListenerRegisterer {
     }
 
     /**
-     * Registers all the listeners for the various events required to use the
-     * TARDIS.
+     * Registers all the listeners for the various events required to use the TARDIS.
      */
     void registerListeners() {
         plugin.getPM().registerEvents(new TARDISBonemealListener(plugin), plugin);
