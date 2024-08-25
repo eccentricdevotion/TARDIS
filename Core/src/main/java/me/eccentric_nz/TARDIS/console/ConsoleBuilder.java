@@ -98,6 +98,9 @@ public class ConsoleBuilder {
                 int cid = (i == ConsoleInteraction.EXTERIOR_LAMP_LEVEL_SWITCH) ? 49 : 50;
                 plugin.getQueryFactory().insertControl(id, cid, location.toString(), 0);
             }
+            if (i == ConsoleInteraction.HANDBRAKE) {
+                plugin.getQueryFactory().insertControl(id, 0, location.toString(), 0);
+            }
             if (i == ConsoleInteraction.SCREEN_RIGHT || i == ConsoleInteraction.SCREEN_LEFT) {
                 interaction.getPersistentDataContainer().set(plugin.getUnaryKey(), PersistentDataType.STRING, builder.toString());
             }
