@@ -86,6 +86,7 @@ public class TARDISLightConverter {
                     }
                 }
                 plugin.getMessenger().message(player, TardisModule.TARDIS, "Light conversion complete");
+                plugin.getTrackerKeeper().getLightChangers().remove(player.getUniqueId());
             }
         }
     }
