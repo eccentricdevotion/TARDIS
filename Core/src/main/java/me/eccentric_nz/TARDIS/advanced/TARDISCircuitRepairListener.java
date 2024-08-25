@@ -67,7 +67,7 @@ public class TARDISCircuitRepairListener implements Listener {
         AnvilInventory anvil = (AnvilInventory) event.getInventory();
         ItemStack[] items = anvil.getContents();
         ItemStack first = items[0];
-        // is it a redstone with item meta?
+        // is it a glowstone dust with item meta?
         if (first == null || !first.getType().equals(Material.GLOWSTONE_DUST) || !first.hasItemMeta() || first.getAmount() != 1) {
             return;
         }
@@ -77,7 +77,7 @@ public class TARDISCircuitRepairListener implements Listener {
             return;
         }
         // get the display name
-        String dnf = fim.getDisplayName();
+        String dnf = ChatColor.stripColor(fim.getDisplayName());
         if (dnf.startsWith("TARDIS") && dnf.endsWith("Circuit") && fim.hasLore()) {
             // get the lore
             List<String> flore = fim.getLore();
