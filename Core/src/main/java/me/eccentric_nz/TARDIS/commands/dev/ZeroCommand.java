@@ -67,7 +67,6 @@ public class ZeroCommand {
             Vector v = vectors.get(i);
             location.add(v.getX(), v.getY(), v.getZ());
             threeByThree(location.getBlock(), i);
-            location.getBlock().setBlockData(slab);
             location.subtract(v.getX(), v.getY(), v.getZ());
         }
     }
@@ -76,6 +75,10 @@ public class ZeroCommand {
         slab.setType((i % 2 == 1) ? Slab.Type.TOP : Slab.Type.BOTTOM);
         block.setBlockData(slab);
         for (BlockFace face: TARDIS.plugin.getGeneralKeeper().getSurrounding()) {
+            slab.setType((i % 2 == 1) ? Slab.Type.TOP : Slab.Type.BOTTOM);
+            if (!block.getRelative(face).getType().isAir()) {
+                slab.setType(Slab.Type.DOUBLE);
+            }
             block.getRelative(face).setBlockData(slab);
         }
     }
