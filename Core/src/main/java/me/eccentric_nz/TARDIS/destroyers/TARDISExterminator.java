@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.database.tool.Table;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -222,13 +223,14 @@ public class TARDISExterminator {
     }
 
     public void cleanDatabase(int id) {
-        List<String> tables = Arrays.asList("ars", "back", "bind","chameleon", "chunks", "condenser", "controls", "current", "destinations", "dispersed", "doors", "farming", "gravity_well", "homes", "junk", "lamps", "next", "room_progress", "tardis", "thevoid", "travellers", "vaults");
-        // remove record from database tables
-        tables.forEach((table) -> {
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("tardis_id", id);
-            plugin.getQueryFactory().doDelete(table, where);
-        });
+        // remove records from database tables
+        for (Table table : Table.values()) {
+            if (table.shouldClean()) {
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("tardis_id", id);
+                plugin.getQueryFactory().doDelete(table.toString(), where);
+            }
+        }
     }
 
     private void cleanWorlds(World w, String owner) {

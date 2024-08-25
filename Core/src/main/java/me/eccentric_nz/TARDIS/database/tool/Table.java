@@ -18,67 +18,71 @@ package me.eccentric_nz.TARDIS.database.tool;
 
 public enum Table {
 
+    /*
+    "ars", "back", "bind", "blocks", "chameleon", "chunks", "condenser", "controls", "current", "destinations", "dispersed", "doors", "eyes", "farming", "gardens", "gravity_well", "homes", "interactions", "junk", "lamps", "next", "room_progress", "tardis", "thevoid", "transmats", "travellers", "vaults"
+     */
+
     // tardis
     achievements("a_id"),
     arched("uuid"),
     archive,
     areas,
     area_locations,
-    ars,
-    artron_powered("a_id"),
-    back,
-    bind("bind_id"),
-    blocks("b_id"),
+    ars(true),
+    artron_powered("a_id", true),
+    back(true),
+    bind("bind_id", true),
+    blocks("b_id", true),
     blueprint("bp_id"),
     camera("c_id"),
-    chameleon,
+    chameleon(true),
     colour,
-    chunks,
-    condenser("c_id"),
-    controls("c_id"),
-    current,
-    destinations("dest_id"),
-    dispersed("d_id"),
-    doors,
-    eyes("eye_id"),
-    farming("farm_id"),
+    chunks(true),
+    condenser("c_id", true),
+    controls("c_id", true),
+    current(true),
+    destinations("dest_id", true),
+    dispersed("d_id", true),
+    doors(true),
+    eyes("eye_id", true),
+    farming("farm_id", true),
     farming_prefs("farm_id"),
     flight("f_id"),
     forcefield("uuid"),
-    gardens("garden_id"),
-    gravity_well("g_id"),
-    homes,
-    interactions("i_id"),
+    gardens("garden_id", true),
+    gravity_well("g_id", true),
+    homes(true),
+    interactions("i_id", true),
     inventories("id"),
-    junk("id"),
-    lamps("l_id"),
+    junk("id", true),
+    lamps("l_id", true),
     light_prefs("lp_id"),
     movers("uuid"),
-    next,
+    next(true),
     paper_bag,
     particle_prefs("pp_id"),
     player_prefs("pp_id"),
-    portals,
+    portals(true),
     programs,
     reminders,
-    room_progress("progress_id"),
+    room_progress("progress_id", true),
     seeds,
-    sensors,
-    siege,
+    sensors(true),
+    siege(true),
     skins,
     sonic,
     storage,
     system_upgrades("sys_id"),
     t_count("t_id"),
     tag,
-    tardis("tardis_id"),
-    transmats,
+    tardis("tardis_id", true),
+    transmats(true),
     travel_stats("travel_stats_id"),
     traveled_to("uuid"),
-    travellers,
-    vaults("v_id"),
-    thevoid("tardis_id"),
-    vortex("tardis_id"),
+    travellers(true),
+    vaults("v_id", true),
+    thevoid("tardis_id", true),
+    vortex("tardis_id", true),
     // shop
     items,
     // vortex manipulator
@@ -90,17 +94,35 @@ public enum Table {
     followers("uuid");
 
     private final String rowId;
+    private final boolean clean;
+
+    Table(String rowId, boolean clean) {
+        this.rowId = rowId;
+        this.clean = clean;
+    }
 
     Table(String rowId) {
         this.rowId = rowId;
+        this.clean = false;
+    }
+
+    Table(boolean clean) {
+        String name = this.toString();
+        this.rowId = name.endsWith("s") ? name.substring(0, name.length() - 1) + "_id" : name + "_id";
+        this.clean = clean;
     }
 
     Table() {
         String name = this.toString();
         this.rowId = name.endsWith("s") ? name.substring(0, name.length() - 1) + "_id" : name + "_id";
+        this.clean = false;
     }
 
     public String getRowId() {
         return rowId;
+    }
+
+    public boolean shouldClean() {
+        return clean;
     }
 }
