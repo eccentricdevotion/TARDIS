@@ -2,6 +2,7 @@ package me.eccentric_nz.tardisregeneration;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -47,9 +48,18 @@ public class ElixirOfLifeListener implements Listener {
                 // not while chameleon arched
                 return;
             }
+            if (hasTotem(player)) {
+                // totem of undying
+                return;
+            }
             // regenerate!
             new Regenerator().processPlayer(plugin, player);
         }
+    }
+
+    private boolean hasTotem(Player player) {
+        ItemStack totem = player.getInventory().getItemInMainHand();
+        return totem.getType() == Material.TOTEM_OF_UNDYING;
     }
 
     @EventHandler
