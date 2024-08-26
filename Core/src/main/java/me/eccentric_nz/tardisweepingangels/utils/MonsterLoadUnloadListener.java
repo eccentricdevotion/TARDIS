@@ -21,7 +21,7 @@ import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
 import me.eccentric_nz.tardisweepingangels.nms.FollowerPersister;
 import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
-import org.bukkit.craftbukkit.v1_21_R1.entity.CraftZombie;
+import org.bukkit.craftbukkit.v1_21_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
@@ -39,15 +39,7 @@ import java.util.List;
 public class MonsterLoadUnloadListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<EntityType> justThese = Arrays.asList(
-            EntityType.DROWNED,
-            EntityType.PIGLIN_BRUTE,
-            EntityType.SKELETON,
-            EntityType.ZOMBIE,
-            EntityType.HUSK,
-            EntityType.ZOMBIFIED_PIGLIN,
-            EntityType.ARMOR_STAND
-    );
+    private final List<EntityType> justThese = Arrays.asList(EntityType.DROWNED, EntityType.PIGLIN_BRUTE, EntityType.SKELETON, EntityType.ZOMBIE, EntityType.HUSK, EntityType.ZOMBIFIED_PIGLIN, EntityType.ARMOR_STAND);
 
     public MonsterLoadUnloadListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -66,14 +58,14 @@ public class MonsterLoadUnloadListener implements Listener {
     @EventHandler
     public void onEntityUnload(EntitiesUnloadEvent event) {
         for (Entity e : event.getEntities()) {
-            if (e.getType() != EntityType.HUSK) {
-                return;
-            }
-            PersistentDataContainer pdc = e.getPersistentDataContainer();
-            if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
-                TWAFollower follower = (TWAFollower) ((CraftZombie) e).getHandle();
-                // save entity in followers table
-                new FollowerPersister(plugin).save(follower);
+            if (e.getType() == EntityType.HUSK) {
+                PersistentDataContainer pdc = e.getPersistentDataContainer();
+                if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)
+                        && ((CraftEntity) e).getHandle() instanceof TWAFollower follower) {
+//                        TWAFollower follower = (TWAFollower) ((CraftHusk) e).getHandle();
+                    // save entity in followers table
+                    new FollowerPersister(plugin).save(follower);
+                }
             }
         }
     }

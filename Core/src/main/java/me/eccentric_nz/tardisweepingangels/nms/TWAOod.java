@@ -2,8 +2,6 @@ package me.eccentric_nz.tardisweepingangels.nms;
 
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.OodColour;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
@@ -28,19 +26,6 @@ import java.util.Map;
 public class TWAOod extends TWAFollower {
 
     private static final String entityId = "ood";
-
-    static {
-        ResourceLocation mcKey = ResourceLocation.parse(entityId);
-        try {
-            if (!BuiltInRegistries.ENTITY_TYPE.getOptional(mcKey).isPresent()) {
-                TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.MONSTERS, "Injecting Ood into ENTITY_TYPE registry.");
-                injectEntity(mcKey);
-            }
-        } catch (NoSuchFieldException | IllegalAccessException ex) {
-            TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.MONSTERS, "Failed to inject custom Ood entity! The plugin will still work, but Ood followers might not persist.");
-        }
-    }
-
     private boolean redeye;
     private OodColour colour;
 
@@ -56,10 +41,9 @@ public class TWAOod extends TWAFollower {
         this.colour = OodColour.BLACK;
     }
 
-    private static void injectEntity(ResourceLocation mcKey) throws NoSuchFieldException, IllegalAccessException {
+    public static void injectEntity(ResourceLocation mcKey) throws NoSuchFieldException, IllegalAccessException {
         Registry<EntityType<?>> entityReg = ((CraftServer) Bukkit.getServer()).getServer().registryAccess().registry(Registries.ENTITY_TYPE).orElseThrow(NoSuchFieldException::new);
         EntityRegistry.unfreeze();
-
         try {
             // Paper wants this, Spigot this causes a crash
             Class.forName("com.destroystokyo.paper.ParticleBuilder");
@@ -67,7 +51,6 @@ public class TWAOod extends TWAFollower {
             types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.HUSK).toString()));
         } catch (ClassNotFoundException ignored) {
         }
-
         entityReg.createIntrusiveHolder(EntityType.Builder.of(TWAOod::new, MobCategory.MONSTER).noSummon().build(entityId));
         Registry.register(entityReg, entityId, EntityType.Builder.of(TWAOod::new, MobCategory.MONSTER).noSummon().build(entityId));
     }
