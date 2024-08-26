@@ -180,6 +180,7 @@ public class TARDIS extends JavaPlugin {
     private NamespacedKey blueprintKey;
     private NamespacedKey sonicUuidKey;
     private NamespacedKey sonicChargeKey;
+    private NamespacedKey microscopeKey;
     private PersistentDataType<byte[], UUID> persistentDataTypeUUID;
     private QueryFactory queryFactory;
     private boolean updateFound = false;
@@ -265,6 +266,7 @@ public class TARDIS extends JavaPlugin {
         blueprintKey = new NamespacedKey(this, "blueprint");
         sonicUuidKey = new NamespacedKey(this, "sonic_uuid");
         sonicChargeKey = new NamespacedKey(this, "sonic_charge");
+        microscopeKey = new NamespacedKey(this, "microscope");
         persistentDataTypeUUID = new TARDISUUIDDataType();
         console = getServer().getConsoleSender();
         ModuleDescriptor.Version serverVersion = getServerVersion(getServer().getVersion());
@@ -1181,6 +1183,15 @@ public class TARDIS extends JavaPlugin {
      */
     public NamespacedKey getSonicChargeKey() {
         return sonicChargeKey;
+    }
+
+    /**
+     * Gets the Microscope NamespacedKey
+     *
+     * @return the Microscope NamespacedKey
+     */
+    public NamespacedKey getMicroscopeKey() {
+        return microscopeKey;
     }
 
     /**

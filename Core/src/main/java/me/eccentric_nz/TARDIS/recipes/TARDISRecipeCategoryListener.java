@@ -48,7 +48,7 @@ public class TARDISRecipeCategoryListener extends TARDISMenuListener {
         event.setCancelled(true);
         int slot = event.getRawSlot();
         Player player = (Player) event.getWhoClicked();
-        if (slot < 2 || slot > 26) {
+        if (slot < 2 || slot > 35) {
             return;
         }
         ItemStack is = view.getItem(slot);

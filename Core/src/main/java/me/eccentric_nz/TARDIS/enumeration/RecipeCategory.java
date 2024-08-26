@@ -37,6 +37,7 @@ public enum RecipeCategory {
     SONIC_UPGRADES(Material.BLAZE_ROD, 10000009, 22, "#FF55FF"),
     STORAGE_DISKS(Material.MUSIC_DISC_STRAD, 10000001, 24, "#55FFFF"),
     MISC(Material.WATER_BUCKET, 1, 26, "#AAAAAA"),
+    MICROSCOPE(Material.SPYGLASS, 1, 27, "#FFFFAA"),
     UNCRAFTABLE(Material.CRAFTING_TABLE, 1, -1, "#AA0000"),
     UNUSED(Material.STONE, 1, -1, "#000000");
 

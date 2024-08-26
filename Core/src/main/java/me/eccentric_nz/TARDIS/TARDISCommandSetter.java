@@ -148,6 +148,7 @@ class TARDISCommandSetter {
         if (plugin.getConfig().getBoolean("modules.chemistry")) {
             plugin.getCommand("tardischemistry").setExecutor(new TARDISChemistryCommand(plugin));
             plugin.getCommand("tardischemistry").setTabCompleter(new TARDISChemistryTabComplete());
+
         } else {
             plugin.getCommand("tardischemistry").setExecutor(new FallbackCommandHandler("Chemistry", TardisModule.CHEMISTRY));
         }

@@ -8,6 +8,7 @@ import me.eccentric_nz.TARDIS.files.TARDISAllInOneConfigConverter;
 import me.eccentric_nz.tardischemistry.block.ChemistryBlockRecipes;
 import me.eccentric_nz.tardischemistry.lab.BleachRecipe;
 import me.eccentric_nz.tardischemistry.lab.HeatBlockRunnable;
+import me.eccentric_nz.tardischemistry.microscope.Microscope;
 import me.eccentric_nz.tardischemistry.product.GlowStickRunnable;
 import me.eccentric_nz.tardisregeneration.TARDISRegeneration;
 import me.eccentric_nz.tardisshop.TARDISShop;
@@ -15,6 +16,7 @@ import me.eccentric_nz.tardisshop.TARDISShopDisplayConverter;
 import me.eccentric_nz.tardissonicblaster.TARDISSonicBlaster;
 import me.eccentric_nz.tardisvortexmanipulator.TARDISVortexManipulator;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.tardisweepingangels.nms.TARDISEntityRegister;
 
 public class TARDISModuleLoader {
 
@@ -27,6 +29,8 @@ public class TARDISModuleLoader {
 
     public void enable() {
         if (plugin.getConfig().getBoolean("modules.chemistry")) {
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.CHEMISTRY, "Loading Chemistry Module");
+            new Microscope(plugin).enable();
             new ChemistryBlockRecipes(plugin).addRecipes();
             new BleachRecipe(plugin).setRecipes();
             plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new GlowStickRunnable(plugin), 200, 200);
@@ -34,6 +38,8 @@ public class TARDISModuleLoader {
         }
         if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.MONSTERS, "Loading Weeping Angels Module");
+            // inject custom entity classes
+            new TARDISEntityRegister().inject();
             new TARDISWeepingAngels(plugin).enable();
             if (!plugin.getConfig().getBoolean("conversions.all_in_one.weeping_angels")) {
                 if (new TARDISAllInOneConfigConverter(plugin).transferConfig(TardisModule.MONSTERS)) {

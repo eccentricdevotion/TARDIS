@@ -212,6 +212,13 @@ public enum RecipeItem {
     ICE_BOMB(3, RecipeCategory.CHEMISTRY),
     SPARKLER(10000035, RecipeCategory.CHEMISTRY),
     SUPER_FERTILISER(4, RecipeCategory.CHEMISTRY),
+    // microscope
+    COMPUTER_MONITOR(10000, RecipeCategory.MICROSCOPE),
+    ELECTRON_MICROSCOPE(10000, RecipeCategory.MICROSCOPE),
+    FILING_CABINET(10000, RecipeCategory.MICROSCOPE),
+    MICROSCOPE(10000, RecipeCategory.MICROSCOPE),
+    SLIDE_RACK(10000, RecipeCategory.MICROSCOPE),
+    TELESCOPE(10000, RecipeCategory.MICROSCOPE),
     // not found
     NOT_FOUND(-1, RecipeCategory.UNCRAFTABLE);
 

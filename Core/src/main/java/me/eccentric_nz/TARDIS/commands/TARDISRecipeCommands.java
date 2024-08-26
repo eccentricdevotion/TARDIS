@@ -155,7 +155,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
             if (args.length == 0) {
                 // open recipe GUI
                 ItemStack[] emenu = new TARDISRecipeCategoryInventory().getMenu();
-                Inventory categories = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Recipe Categories");
+                Inventory categories = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "Recipe Categories");
                 categories.setContents(emenu);
                 player.openInventory(categories);
                 return true;
