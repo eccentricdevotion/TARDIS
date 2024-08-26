@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.info;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -66,6 +67,13 @@ public class TARDISIndexFileSection {
                 i++;
             }
         }
+        // back
+        ItemStack back = new ItemStack(GUIChameleonPoliceBoxes.BACK.material(), 1);
+        ItemMeta but = back.getItemMeta();
+        but.setDisplayName("Back");
+        but.setCustomModelData(GUIChameleonPoliceBoxes.BACK.customModelData());
+        back.setItemMeta(but);
+        stack[45] = back;
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();

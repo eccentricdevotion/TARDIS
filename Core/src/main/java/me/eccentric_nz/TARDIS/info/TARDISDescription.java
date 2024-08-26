@@ -447,10 +447,10 @@ public enum TARDISDescription {
             BLOCK: REPEATER"""),
     CYBERMAN("Cybermen will upgrade villagers and players when they have killed them (a new Cyberman) spawns in their place."),
     DALEK("Daleks come in different colours, but mostly spawn in their typical bronze colour. Exterminate!"),
-    DALEK_SEC("Dalek Sec just looks fabulous! He’s passive unless you annoy him."),
-    DAVROS("Davros doesn’t do much yet, but probably best not to get in his way."),
-    EMPTY_CHILD("If you are killed by an Empty Child you get a gas mask applied to your head when you respawn that you can’t remove for 30 seconds."),
-    HATH("Hath don’t do much yet, but they look pretty cool."),
+    DALEK_SEC("Dalek Sec just looks fabulous! He's passive unless you annoy him."),
+    DAVROS("Davros doesn't do much yet, but probably best not to get in his way."),
+    EMPTY_CHILD("If you are killed by an Empty Child you get a gas mask applied to your head when you respawn that you can't remove for 30 seconds."),
+    HATH("Hath don't do much yet, but they look pretty cool."),
     HEADLESS_MONK("Headless Monks fire energy blasts from their hands as well as channelling that energy into their swords."),
     ICE_WARRIOR("Ice Warriors are really angry."),
     JUDOON("Judoon are the police force of the Whoniverse. Left-click a Judoon to claim it as your own."),
@@ -458,16 +458,16 @@ public enum TARDISDescription {
     MIRE("The Mire will distill you down to your essential nectar."),
     OOD("Ood spawn randomly around villagers. Left-click an Ood to claim it as your own."),
     RACNOSS("Racnoss spawn randomly in the Nether."),
-    SEA_DEVIL("Found in the sea and on land, best if they don’t find you!"),
+    SEA_DEVIL("Found in the sea and on land, best if they don't find you!"),
     SILENT("Silent spawn anywhere. Beware their deadly energy discharges!"),
     SILURIAN("Only spawn underground in caves. Watch out for their Silurian guns!"),
     SLITHEEN("A nasty flatulent surprise, best avoided if you want to survive."),
     SONTARAN("Sontarans will try to kill you (as any good Sontaran should). If you manage to right-click a Sontaran with a Weakness Potion before he kills you, he will transform into Strax.n"),
-    STRAX("If you right-click Strax he’ll talk to you, and if you right-click him with an empty bucket, you’ll be able to milk him."),
+    STRAX("If you right-click Strax he'll talk to you, and if you right-click him with an empty bucket, you'll be able to milk him."),
     TOCLAFANE("Toclafane fly around passively until you hit them, then watch out as they get angry with you."),
     VASHTA_NERADA("Vashta Nerada have a random chance of spawning when a bookshelf is broken."),
     WEEPING_ANGEL("Weeping Angels can only be killed with the configured weapon - by default a DIAMOND_PICKAXE. You can freeze them in place by looking at them and quickly pressing the sneak key."),
-    ZYGON("Zygons don’t do much yet (except try to kill you), but they look pretty cool.");
+    ZYGON("Zygons don't do much yet (except try to kill you), but they look pretty cool.");
     private final String desc;
 
     TARDISDescription(String desc) {

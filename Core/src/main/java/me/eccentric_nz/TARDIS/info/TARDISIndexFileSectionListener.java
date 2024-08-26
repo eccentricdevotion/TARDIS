@@ -38,29 +38,41 @@ public class TARDISIndexFileSectionListener extends TARDISMenuListener {
         if (is == null) {
             return;
         }
-        if (slot == 53) {
-            close(p);
-        } else {
-            ItemMeta im = is.getItemMeta();
-            String name = TARDISStringUtils.toEnumUppercase(im.getDisplayName());
-            try {
-                TARDISInfoMenu tim = TARDISInfoMenu.valueOf(name);
-                TISCategory category = plugin.getTrackerKeeper().getInfoGUI().get(p.getUniqueId());
-                if (category == TISCategory.ROOMS) {
-                    new TISRoomInfo(plugin).show(p, tim);
-                    close(p);
-                } else if ((category.isFirstLevel() && !hasRecipe(tim)) || (category == TISCategory.MONSTERS && tim != TARDISInfoMenu.K9)) {
-                    new TISInfo(plugin).show(p, tim);
-                    close(p);
-                } else {
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        ItemStack[] entries = new TARDISIndexFileEntry(plugin, tim).getMenu();
-                        Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Info Entry");
-                        gui.setContents(entries);
-                        p.openInventory(gui);
-                    }, 2L);
+        switch (slot) {
+            case 45 -> {
+                Player player = (Player) event.getWhoClicked();
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    ItemStack[] cats = new TARDISIndexFileInventory(plugin).getMenu();
+                    Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS Index File");
+                    gui.setContents(cats);
+                    player.openInventory(gui);
+                }, 2L);
+            }
+            case 53 -> {
+                close(p);
+            }
+            default -> {
+                ItemMeta im = is.getItemMeta();
+                String name = TARDISStringUtils.toEnumUppercase(im.getDisplayName());
+                try {
+                    TARDISInfoMenu tim = TARDISInfoMenu.valueOf(name);
+                    TISCategory category = plugin.getTrackerKeeper().getInfoGUI().get(p.getUniqueId());
+                    if (category == TISCategory.ROOMS) {
+                        new TISRoomInfo(plugin).show(p, tim);
+                        close(p);
+                    } else if ((category.isFirstLevel() && !hasRecipe(tim)) || (category == TISCategory.MONSTERS && tim != TARDISInfoMenu.K9)) {
+                        new TISInfo(plugin).show(p, tim);
+                        close(p);
+                    } else {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            ItemStack[] entries = new TARDISIndexFileEntry(plugin, tim).getMenu();
+                            Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Info Entry");
+                            gui.setContents(entries);
+                            p.openInventory(gui);
+                        }, 2L);
+                    }
+                } catch (IllegalArgumentException ignored) {
                 }
-            } catch (IllegalArgumentException ignored) {
             }
         }
     }

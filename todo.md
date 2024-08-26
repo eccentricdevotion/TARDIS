@@ -12,7 +12,6 @@
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Floodgate forms for TIS | - |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Fix fifteenth console redstone piston door | - |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Add doors to shop items | - |
-| ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Add a back (to the TARDIS Index File) button to the TIS GUI screens | - |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | **Sonic Blaster**<br>- used to temporarily remove blocks only | - |
 
 ## Future versions
