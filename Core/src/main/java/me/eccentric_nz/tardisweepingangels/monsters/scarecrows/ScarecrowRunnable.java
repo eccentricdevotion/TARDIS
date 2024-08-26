@@ -91,7 +91,7 @@ public class ScarecrowRunnable implements Runnable {
                 }
                 LivingEntity scarecrow = new MonsterSpawner().create(l, Monster.SCARECROW);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.SCARECROW, scarecrow, false, false).setHelmetAndInvisibilty();
+                    new Equipper(Monster.SCARECROW, scarecrow, false, false).setHelmetAndInvisibility();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(scarecrow, EntityType.ZOMBIE, Monster.SCARECROW, l));
                 }, 5L);
             }

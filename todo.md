@@ -2,7 +2,7 @@
 
 | Priority | Feature | Link |
 | -------- | ------- | ---- |
-| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | Fix bugs<br>- Fix modelled console screen text |
+| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | Fix bugs<br>- Fix modelled console screen text (cannot reproduce) |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | Fix follower persistence + monsters losing their animation when reloaded<br>- Switch to using custom armour trims instead of custom entities for non-follower, regular armour wearing monsters? | [Possible fix](https://github.com/EricLangezaal/PetDragon/blob/master/core/src/main/java/com/ericdebouwer/petdragon/listeners/EntitiesLoadListener.java) |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | **Modelled controls**<br>- Console lamp done | [#836](https://github.com/eccentricdevotion/TARDIS/issues/836) |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | **Microscope** as an addition to Chemistry or separate module<br>- Add science lab / observatory room | - |

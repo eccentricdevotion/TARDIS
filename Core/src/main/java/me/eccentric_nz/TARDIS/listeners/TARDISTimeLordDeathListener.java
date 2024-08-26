@@ -74,7 +74,7 @@ public class TARDISTimeLordDeathListener implements Listener {
             // spawn an ossified at the player's location
             Location l = player.getLocation();
             LivingEntity e = new MonsterSpawner().create(l, Monster.OSSIFIED);
-            new Equipper(Monster.OSSIFIED, e, false, false).setHelmetAndInvisibilty();
+            new Equipper(Monster.OSSIFIED, e, false, false).setHelmetAndInvisibility();
             plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.ZOMBIE, Monster.OSSIFIED, l));
             String name = player.getName();
             e.setCustomName(name);

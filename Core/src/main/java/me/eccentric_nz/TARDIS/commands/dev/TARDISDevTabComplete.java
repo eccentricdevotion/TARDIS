@@ -50,7 +50,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
             "label", "list",
             "nms",
             "plurals",
-            "recipe", "regen",
+            "recipe", "regen", "reset",
             "screen", "skin", "snapshot", "stats", "systree",
             "tis", "tree", "trim",
             "zero"

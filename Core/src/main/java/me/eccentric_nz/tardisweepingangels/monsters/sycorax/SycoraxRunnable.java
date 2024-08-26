@@ -91,7 +91,7 @@ public class SycoraxRunnable implements Runnable {
                 }
                 LivingEntity sycorax = new MonsterSpawner().create(l, Monster.SYCORAX);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.SYCORAX, sycorax, false, false).setHelmetAndInvisibilty();
+                    new Equipper(Monster.SYCORAX, sycorax, false, false).setHelmetAndInvisibility();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(sycorax, EntityType.ZOMBIE, Monster.SYCORAX, l));
                 }, 5L);
             }

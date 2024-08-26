@@ -90,7 +90,7 @@ public class SilurianRunnable implements Runnable {
                 }
                 LivingEntity silurian = new MonsterSpawner().create(cave, Monster.SILURIAN);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.SILURIAN, silurian, false, true).setHelmetAndInvisibilty();
+                    new Equipper(Monster.SILURIAN, silurian, false, true).setHelmetAndInvisibility();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(silurian, EntityType.SKELETON, Monster.SILURIAN, cave));
                 }, 5L);
             }

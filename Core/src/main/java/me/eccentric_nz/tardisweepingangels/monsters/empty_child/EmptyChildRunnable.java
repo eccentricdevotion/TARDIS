@@ -92,7 +92,7 @@ public class EmptyChildRunnable implements Runnable {
                 }
                 LivingEntity child = new MonsterSpawner().create(l, Monster.EMPTY_CHILD);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.EMPTY_CHILD, child, false, false).setHelmetAndInvisibilty();
+                    new Equipper(Monster.EMPTY_CHILD, child, false, false).setHelmetAndInvisibility();
                     EmptyChildEquipment.setSpeed(child);
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(child, EntityType.ZOMBIE, Monster.EMPTY_CHILD, l));
                 }, 5L);

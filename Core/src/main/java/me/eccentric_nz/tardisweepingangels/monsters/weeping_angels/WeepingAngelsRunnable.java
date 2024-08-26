@@ -96,7 +96,7 @@ public class WeepingAngelsRunnable implements Runnable {
                 }
                 LivingEntity angel = new MonsterSpawner().create(l, Monster.WEEPING_ANGEL);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.WEEPING_ANGEL, angel, false, false).setHelmetAndInvisibilty();
+                    new Equipper(Monster.WEEPING_ANGEL, angel, false, false).setHelmetAndInvisibility();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(angel, EntityType.SKELETON, Monster.WEEPING_ANGEL, l));
                 }, 5L);
             }

@@ -89,7 +89,7 @@ public class SeaDevilRunnable implements Runnable {
             }
             LivingEntity devil = new MonsterSpawner().create(l, Monster.SEA_DEVIL);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                new Equipper(Monster.SEA_DEVIL, devil, false, false).setHelmetAndInvisibilty();
+                new Equipper(Monster.SEA_DEVIL, devil, false, false).setHelmetAndInvisibility();
                 plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(devil, EntityType.DROWNED, Monster.SEA_DEVIL, l));
             }, 5L);
         }

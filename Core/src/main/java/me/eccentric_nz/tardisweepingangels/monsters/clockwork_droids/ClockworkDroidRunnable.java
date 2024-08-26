@@ -94,7 +94,7 @@ public class ClockworkDroidRunnable implements Runnable {
                 LivingEntity clockwork_droid = new MonsterSpawner().create(l, Monster.CLOCKWORK_DROID);
                 ((TWAZombie) clockwork_droid).setVariant(variant);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.CLOCKWORK_DROID, clockwork_droid, false, false).setHelmetAndInvisibilty(variant);
+                    new Equipper(Monster.CLOCKWORK_DROID, clockwork_droid, false, false).setHelmetAndInvisibility(variant);
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(clockwork_droid, EntityType.ZOMBIE, Monster.CLOCKWORK_DROID, l));
                 }, 5L);
             }

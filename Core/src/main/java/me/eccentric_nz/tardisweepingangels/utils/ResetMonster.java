@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class ResetMonster {
-    
+
     private final TARDIS plugin;
     private final Entity entity;
 
@@ -37,7 +37,7 @@ public class ResetMonster {
         this.plugin = plugin;
         this.entity = entity;
     }
-    
+
     public void reset() {
         Monster monster = MonsterEquipment.getMonsterType(entity);
         if (monster == null || !monster.isAnimated()) {
@@ -110,7 +110,9 @@ public class ResetMonster {
             }
         } else {
             // set monster equipment
-            new Equipper(monster, a, false).setHelmetAndInvisibilty();
+            if (monster != Monster.DALEK) {
+                new Equipper(monster, a, false).setHelmetAndInvisibility();
+            }
             switch (monster) {
                 case EMPTY_CHILD -> EmptyChildEquipment.setSpeed(a);
                 case HEADLESS_MONK -> {
@@ -124,8 +126,8 @@ public class ResetMonster {
                     pigman.setAngry(true);
                     pigman.setAnger(Integer.MAX_VALUE);
                 }
-                case MIRE, SILURIAN -> new Equipper(monster, a, false, true).setHelmetAndInvisibilty();
-                case SEA_DEVIL -> new Equipper(monster, a, false, false, true).setHelmetAndInvisibilty();
+                case MIRE, SILURIAN -> new Equipper(monster, a, false, true).setHelmetAndInvisibility();
+                case SEA_DEVIL -> new Equipper(monster, a, false, false, true).setHelmetAndInvisibility();
                 case SILENT -> SilentEquipment.setGuardian(a);
                 case STRAX -> {
                     PigZombie strax = (PigZombie) a;

@@ -109,7 +109,7 @@ public class IceWarriorRunnable implements Runnable {
                 }
                 LivingEntity warrior = new MonsterSpawner().create(l, Monster.ICE_WARRIOR);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.ICE_WARRIOR, warrior, false, false).setHelmetAndInvisibilty();
+                    new Equipper(Monster.ICE_WARRIOR, warrior, false, false).setHelmetAndInvisibility();
                     IceWarriorEquipment.setAnger(warrior);
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(warrior, EntityType.ZOMBIFIED_PIGLIN, Monster.ICE_WARRIOR, l));
                 }, 5L);

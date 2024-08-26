@@ -851,17 +851,17 @@ public class TARDII implements TardisAPI {
      */
     @Override
     public void setAngelEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.WEEPING_ANGEL, le, disguise, false).setHelmetAndInvisibilty();
+        new Equipper(Monster.WEEPING_ANGEL, le, disguise, false).setHelmetAndInvisibility();
     }
 
     @Override
     public void setWarriorEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.ICE_WARRIOR, le, disguise, false).setHelmetAndInvisibilty();
+        new Equipper(Monster.ICE_WARRIOR, le, disguise, false).setHelmetAndInvisibility();
     }
 
     @Override
     public void setCyberEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.CYBERMAN, le, disguise, false).setHelmetAndInvisibilty();
+        new Equipper(Monster.CYBERMAN, le, disguise, false).setHelmetAndInvisibility();
     }
 
     @Override
@@ -871,17 +871,17 @@ public class TARDII implements TardisAPI {
 
     @Override
     public void setDalekSecEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.DALEK_SEC, le, disguise, false).setHelmetAndInvisibilty();
+        new Equipper(Monster.DALEK_SEC, le, disguise, false).setHelmetAndInvisibility();
     }
 
     @Override
     public void setDavrosEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.DAVROS, le, disguise, false).setHelmetAndInvisibilty();
+        new Equipper(Monster.DAVROS, le, disguise, false).setHelmetAndInvisibility();
     }
 
     @Override
     public void setEmptyChildEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.EMPTY_CHILD, le, disguise, false).setHelmetAndInvisibilty();
+        new Equipper(Monster.EMPTY_CHILD, le, disguise, false).setHelmetAndInvisibility();
         if (!disguise) {
             EmptyChildEquipment.setSpeed(le);
         }
@@ -889,28 +889,28 @@ public class TARDII implements TardisAPI {
 
     @Override
     public void setHathEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.HATH, le, disguise, false).setHelmetAndInvisibilty();
+        new Equipper(Monster.HATH, le, disguise, false).setHelmetAndInvisibility();
     }
 
     @Override
     public void setHeadlessMonkEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.HEADLESS_MONK, le, disguise, false).setHelmetAndInvisibilty();
+        new Equipper(Monster.HEADLESS_MONK, le, disguise, false).setHelmetAndInvisibility();
         HeadlessMonkEquipment.setTasks(le);
     }
 
     @Override
     public void setMireEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.MIRE, le, disguise, true).setHelmetAndInvisibilty();
+        new Equipper(Monster.MIRE, le, disguise, true).setHelmetAndInvisibility();
     }
 
     @Override
     public void setSeaDevilEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.SEA_DEVIL, le, disguise, true).setHelmetAndInvisibilty();
+        new Equipper(Monster.SEA_DEVIL, le, disguise, true).setHelmetAndInvisibility();
     }
 
     @Override
     public void setSlitheenEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.SLITHEEN, le, disguise, true).setHelmetAndInvisibilty();
+        new Equipper(Monster.SLITHEEN, le, disguise, true).setHelmetAndInvisibility();
     }
 
     // TODO
@@ -933,28 +933,28 @@ public class TARDII implements TardisAPI {
 
     @Override
     public void setRacnossEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.RACNOSS, le, disguise, true).setHelmetAndInvisibilty();
+        new Equipper(Monster.RACNOSS, le, disguise, true).setHelmetAndInvisibility();
     }
 
     @Override
     public void setSilentEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.SILENT, le, disguise, false).setHelmetAndInvisibilty();
+        new Equipper(Monster.SILENT, le, disguise, false).setHelmetAndInvisibility();
         SilentEquipment.setGuardian(le);
     }
 
     @Override
     public void setSilurianEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.SILURIAN, le, disguise, true).setHelmetAndInvisibilty();
+        new Equipper(Monster.SILURIAN, le, disguise, true).setHelmetAndInvisibility();
     }
 
     @Override
     public void setSontaranEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.SONTARAN, le, disguise, false).setHelmetAndInvisibilty();
+        new Equipper(Monster.SONTARAN, le, disguise, false).setHelmetAndInvisibility();
     }
 
     @Override
     public void setStraxEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.STRAX, le, disguise, false).setHelmetAndInvisibilty();
+        new Equipper(Monster.STRAX, le, disguise, false).setHelmetAndInvisibility();
         if (!disguise) {
             le.setCustomName("Strax");
         }
@@ -967,12 +967,12 @@ public class TARDII implements TardisAPI {
 
     @Override
     public void setVashtaNeradaEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.VASHTA_NERADA, le, disguise, false).setHelmetAndInvisibilty();
+        new Equipper(Monster.VASHTA_NERADA, le, disguise, false).setHelmetAndInvisibility();
     }
 
     @Override
     public void setZygonEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.ZYGON, le, disguise, false).setHelmetAndInvisibilty();
+        new Equipper(Monster.ZYGON, le, disguise, false).setHelmetAndInvisibility();
     }
 
     @Override

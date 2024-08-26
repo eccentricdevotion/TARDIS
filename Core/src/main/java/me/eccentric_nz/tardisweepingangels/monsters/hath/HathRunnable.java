@@ -91,7 +91,7 @@ public class HathRunnable implements Runnable {
                 }
                 LivingEntity hath = new MonsterSpawner().create(l, Monster.HATH);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.HATH, hath, false, false).setHelmetAndInvisibilty();
+                    new Equipper(Monster.HATH, hath, false, false).setHelmetAndInvisibility();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(hath, EntityType.ZOMBIFIED_PIGLIN, Monster.HATH, l));
                 }, 5L);
             }

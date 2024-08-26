@@ -65,11 +65,11 @@ public class Equipper {
         this.trident = trident;
     }
 
-    public void setHelmetAndInvisibilty() {
-        setHelmetAndInvisibilty(0);
+    public void setHelmetAndInvisibility() {
+        setHelmetAndInvisibility(0);
     }
 
-    public void setHelmetAndInvisibilty(int variant) {
+    public void setHelmetAndInvisibility(int variant) {
         // make a monster item
         ItemStack helmet = new ItemStack(monster.getMaterial(), 1);
         ItemMeta headMeta = helmet.getItemMeta();
