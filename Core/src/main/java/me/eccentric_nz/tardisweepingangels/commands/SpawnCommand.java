@@ -37,6 +37,7 @@ import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Player;
@@ -81,6 +82,8 @@ public class SpawnCommand {
             LivingEntity a;
             if (monster.isFollower()) {
                 a = (LivingEntity) new MonsterSpawner().createFollower(eyeLocation, new Follower(UUID.randomUUID(), player.getUniqueId(), monster)).getBukkitEntity();
+            } else if (monster == Monster.DALEK) {
+                a = (LivingEntity) eyeLocation.getWorld().spawnEntity(eyeLocation, EntityType.SKELETON);
             } else {
                 a = new MonsterSpawner().create(eyeLocation, monster);
             }
@@ -100,40 +103,40 @@ public class SpawnCommand {
                     }
                 }
                 case EMPTY_CHILD -> {
-                    new Equipper(monster, a, false).setHelmetAndInvisibilty();
+                    new Equipper(monster, a, false).setHelmetAndInvisibility();
                     EmptyChildEquipment.setSpeed(a);
                 }
                 case HEADLESS_MONK -> {
-                    new Equipper(monster, a, false).setHelmetAndInvisibilty();
+                    new Equipper(monster, a, false).setHelmetAndInvisibility();
                     HeadlessMonkEquipment.setTasks(a);
                     // start flame runnable
                     int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(a), 1, 20);
                     a.getPersistentDataContainer().set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
                 }
                 case ICE_WARRIOR -> {
-                    new Equipper(monster, a, false).setHelmetAndInvisibilty();
+                    new Equipper(monster, a, false).setHelmetAndInvisibility();
                     PigZombie pigman = (PigZombie) a;
                     pigman.setAngry(true);
                     pigman.setAnger(Integer.MAX_VALUE);
                 }
                 case JUDOON -> JudoonEquipment.set(null, a, false);
                 case K9 -> K9Equipment.set(player, a, false);
-                case MIRE, SILURIAN -> new Equipper(monster, a, false, true).setHelmetAndInvisibilty();
+                case MIRE, SILURIAN -> new Equipper(monster, a, false, true).setHelmetAndInvisibility();
                 case OOD -> OodEquipment.set(player, a, false, true);
-                case SEA_DEVIL -> new Equipper(monster, a, false, false, true).setHelmetAndInvisibilty();
+                case SEA_DEVIL -> new Equipper(monster, a, false, false, true).setHelmetAndInvisibility();
                 case SILENT -> {
-                    new Equipper(monster, a, false, false).setHelmetAndInvisibilty();
+                    new Equipper(monster, a, false, false).setHelmetAndInvisibility();
                     SilentEquipment.setGuardian(a);
                 }
                 case STRAX -> {
                     PigZombie strax = (PigZombie) a;
                     strax.setAngry(false);
-                    new Equipper(monster, a, false, false).setHelmetAndInvisibilty();
+                    new Equipper(monster, a, false, false).setHelmetAndInvisibility();
                     a.setCustomName("Strax");
                 }
                 case TOCLAFANE -> ToclafaneEquipment.set(a, false);
                 // WEEPING_ANGEL, CYBERMAN, HATH, SLITHEEN, SONTARAN, VASHTA_NERADA, ZYGON
-                default -> new Equipper(monster, a, false).setHelmetAndInvisibilty();
+                default -> new Equipper(monster, a, false).setHelmetAndInvisibility();
             }
             String sound = switch (monster) {
                 case EMPTY_CHILD -> "empty";
