@@ -105,7 +105,6 @@ public class TARDISWeepingAngels {
     public static NamespacedKey MONSTER_HEAD;
     public static PersistentDataType<byte[], UUID> PersistentDataTypeUUID;
     public static UUID UNCLAIMED = UUID.fromString("00000000-aaaa-bbbb-cccc-000000000000");
-    public static MonsterEquipment api;
     private static boolean steal;
     private static boolean citizensEnabled = false;
     private final TARDIS plugin;
@@ -142,8 +141,6 @@ public class TARDISWeepingAngels {
 
     public void enable() {
         citizensEnabled = plugin.getPM().isPluginEnabled("Citizens");
-        // TODO add TWA api to TARDIS API
-        api = new MonsterEquipment();
         // update the config
         new MonstersConfig(plugin).updateConfig();
         // register listeners
@@ -240,11 +237,6 @@ public class TARDISWeepingAngels {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new WorldProcessor(plugin), 200L);
         // reset followers
         new FollowerReset(plugin).tame();
-    }
-
-    // TODO
-    public MonsterEquipment getWeepingAngelsAPI() {
-        return api;
     }
 
     private void initKeys(TARDIS plugin) {

@@ -19,13 +19,9 @@ package me.eccentric_nz.tardisweepingangels.utils;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
-import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.empty_child.EmptyChildEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessFlameRunnable;
-import me.eccentric_nz.tardisweepingangels.nms.FollowerPersister;
-import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_21_R1.entity.CraftZombie;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -50,38 +46,19 @@ public class ChunkListener implements Listener {
             PersistentDataContainer pdc = d.getPersistentDataContainer();
             switch (d) {
                 case Skeleton skeleton -> {
-                    if (pdc.has(TARDISWeepingAngels.DALEK, PersistentDataType.INTEGER)) {
-                        DalekEquipment.set(skeleton, false);
-                    } else if (pdc.has(TARDISWeepingAngels.ANGEL, PersistentDataType.INTEGER)) {
-                        new Equipper(Monster.WEEPING_ANGEL, skeleton, false, false).setHelmetAndInvisibilty();
-                    } else if (pdc.has(TARDISWeepingAngels.SILURIAN, PersistentDataType.INTEGER)) {
-                        new Equipper(Monster.SILURIAN, skeleton, false, false).setHelmetAndInvisibilty();
-                    } else if (pdc.has(TARDISWeepingAngels.MONK, PersistentDataType.INTEGER)) {
-                        new Equipper(Monster.HEADLESS_MONK, skeleton, false, false).setHelmetAndInvisibilty();
+                    if (pdc.has(TARDISWeepingAngels.MONK, PersistentDataType.INTEGER)) {
+                        new Equipper(Monster.HEADLESS_MONK, skeleton, false, false).setHelmetAndInvisibility();
                         // restart flame runnable?
                         int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(skeleton), 1, 20);
                         pdc.set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
                     }
                 }
-                case PigZombie pigZombie -> {
-                    if (pdc.has(TARDISWeepingAngels.WARRIOR, PersistentDataType.INTEGER)) {
-                        new Equipper(Monster.ICE_WARRIOR, pigZombie, false, false).setHelmetAndInvisibilty();
-                    } else if (pdc.has(TARDISWeepingAngels.STRAX, PersistentDataType.INTEGER)) {
-                        new Equipper(Monster.STRAX, pigZombie, false, false).setHelmetAndInvisibilty();
-                    } else if (pdc.has(TARDISWeepingAngels.HATH, PersistentDataType.INTEGER)) {
-                        new Equipper(Monster.HATH, pigZombie, false, false).setHelmetAndInvisibilty();
-                    } else if (pdc.has(TARDISWeepingAngels.DALEK_SEC, PersistentDataType.INTEGER)) {
-                        new Equipper(Monster.DALEK_SEC, pigZombie, false, false).setHelmetAndInvisibilty();
-                    } else if (pdc.has(TARDISWeepingAngels.DAVROS, PersistentDataType.INTEGER)) {
-                        new Equipper(Monster.DAVROS, pigZombie, false, false).setHelmetAndInvisibilty();
-                    }
-                }
                 case Drowned drowned -> {
                     if (drowned.getEquipment().getHelmet() != null) {
                         ItemMeta im = drowned.getEquipment().getHelmet().getItemMeta();
-                        if (im != null && im.hasDisplayName() && im.getDisplayName().endsWith(" Head" )) {
+                        if (im != null && im.hasDisplayName() && im.getDisplayName().endsWith(" Head")) {
                             if (pdc.has(TARDISWeepingAngels.DEVIL, PersistentDataType.INTEGER)) {
-                                new Equipper(Monster.SEA_DEVIL, drowned, false, false, true).setHelmetAndInvisibilty();
+                                new Equipper(Monster.SEA_DEVIL, drowned, false, false, true).setHelmetAndInvisibility();
                             } else {
                                 Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, drowned::remove, 2L);
                             }
@@ -89,31 +66,9 @@ public class ChunkListener implements Listener {
                     }
                 }
                 case Zombie zombie -> {
-                    if (d instanceof Husk husk) {
-                        new ResetMonster(plugin, husk).reset();
-                    } else {
-                        if (pdc.has(TARDISWeepingAngels.CLOCKWORK_DROID, PersistentDataType.INTEGER)) {
-                            new Equipper(Monster.CLOCKWORK_DROID, zombie, false, false).setHelmetAndInvisibilty();
-                        } else if (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)) {
-                            new Equipper(Monster.CYBERMAN, zombie, false, false).setHelmetAndInvisibilty();
-                        } else if (pdc.has(TARDISWeepingAngels.EMPTY, PersistentDataType.INTEGER)) {
-                            new Equipper(Monster.EMPTY_CHILD, zombie, false, false).setHelmetAndInvisibilty();
-                            EmptyChildEquipment.setSpeed(zombie);
-                        } else if (pdc.has(TARDISWeepingAngels.OSSIFIED, PersistentDataType.INTEGER)) {
-                            new Equipper(Monster.OSSIFIED, zombie, false, false).setHelmetAndInvisibilty();
-                        } else if (pdc.has(TARDISWeepingAngels.SCARECROW, PersistentDataType.INTEGER)) {
-                            new Equipper(Monster.SCARECROW, zombie, false, false).setHelmetAndInvisibilty();
-                        } else if (pdc.has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)) {
-                            new Equipper(Monster.SLITHEEN, zombie, false).setHelmetAndInvisibilty();
-                        } else if (pdc.has(TARDISWeepingAngels.SONTARAN, PersistentDataType.INTEGER)) {
-                            new Equipper(Monster.SONTARAN, zombie, false, false).setHelmetAndInvisibilty();
-                        } else if (pdc.has(TARDISWeepingAngels.SYCORAX, PersistentDataType.INTEGER)) {
-                            new Equipper(Monster.SYCORAX, zombie, false, false).setHelmetAndInvisibilty();
-                        } else if (pdc.has(TARDISWeepingAngels.VASHTA, PersistentDataType.INTEGER)) {
-                            new Equipper(Monster.VASHTA_NERADA, zombie, false, false).setHelmetAndInvisibilty();
-                        } else if (pdc.has(TARDISWeepingAngels.ZYGON, PersistentDataType.INTEGER)) {
-                            new Equipper(Monster.ZYGON, zombie, false, false).setHelmetAndInvisibilty();
-                        }
+                    if (pdc.has(TARDISWeepingAngels.EMPTY, PersistentDataType.INTEGER)) {
+                        new Equipper(Monster.EMPTY_CHILD, zombie, false, false).setHelmetAndInvisibility();
+                        EmptyChildEquipment.setSpeed(zombie);
                     }
                 }
                 case ArmorStand stand when stand.getPersistentDataContainer().has(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER) -> {
@@ -121,8 +76,7 @@ public class ChunkListener implements Listener {
                     int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(stand), 1, 20);
                     pdc.set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
                 }
-                default -> {
-                }
+                default -> { }
             }
         }
     }
@@ -139,13 +93,14 @@ public class ChunkListener implements Listener {
                         plugin.getServer().getScheduler().cancelTask(f);
                     }
                 }
-            } else if (monk instanceof Husk) {
-                if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
-                    // save or update this follower
-                    TWAFollower follower = (TWAFollower) ((CraftZombie) monk).getHandle();
-                    new FollowerPersister(plugin).save(follower);
-                }
             }
+//            else if (monk instanceof Husk) {
+//                if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
+//                    // save or update this follower
+//                    TWAFollower follower = (TWAFollower) ((CraftZombie) monk).getHandle();
+//                    new FollowerPersister(plugin).save(follower);
+//                }
+//            }
         }
     }
 }
