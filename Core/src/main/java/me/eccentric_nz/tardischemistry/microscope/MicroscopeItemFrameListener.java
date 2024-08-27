@@ -51,9 +51,6 @@ public class MicroscopeItemFrameListener implements Listener {
             }
             ItemStack is = player.getInventory().getItemInMainHand();
             ItemMeta im = is.getItemMeta();
-            if (im == null) {
-                return;
-            }
             LabEquipment equipment = LabEquipment.getByMaterial().get(dye.getType());
             switch (equipment) {
                 case SLIDE_RACK -> {
@@ -124,7 +121,7 @@ public class MicroscopeItemFrameListener implements Listener {
                 }
                 case FILING_CABINET -> {
                     // filing cabinet
-                    if (MicroscopeUtils.hasItemInHand(is, Material.BLACK_STAINED_GLASS, plugin)) {
+                    if (MicroscopeUtils.hasItemInHand(is, Material.GRAY_STAINED_GLASS, plugin)) {
                         MicroscopeUtils.reduceInHand(player);
                     } else {
                         // open filing cabinet GUI
@@ -137,7 +134,7 @@ public class MicroscopeItemFrameListener implements Listener {
                 default -> {
                     // telescope
                     int cmd;
-                    if (MicroscopeUtils.hasItemInHand(is, Material.BLACK_STAINED_GLASS, plugin)) {
+                    if (MicroscopeUtils.hasItemInHand(is, Material.GRAY_STAINED_GLASS, plugin)) {
                         // set microscope screen
                         cmd = im.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.INTEGER);
                         frame.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.INTEGER, cmd);
@@ -148,7 +145,7 @@ public class MicroscopeItemFrameListener implements Listener {
                     // remember item in hand for restoration
                     MicroscopeUtils.STORED_STACKS.put(player.getUniqueId(), is);
                     // set item in hand
-                    ItemStack helmet = new ItemStack(Material.BLACK_STAINED_GLASS, 1);
+                    ItemStack helmet = new ItemStack(Material.GRAY_STAINED_GLASS, 1);
                     ItemMeta helmetMeta = helmet.getItemMeta();
                     helmetMeta.setDisplayName(ScopeView.values()[cmd >= 10000 ? cmd - 10000 : cmd].getName());
                     helmetMeta.setCustomModelData(cmd);
