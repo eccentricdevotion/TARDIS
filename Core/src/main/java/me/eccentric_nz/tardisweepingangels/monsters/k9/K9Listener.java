@@ -82,6 +82,7 @@ public class K9Listener implements Listener {
                     // claim this K9
                     k9.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, player.getUniqueId());
                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_CLAIMED", "K-9");
+                    // TODO update follower record if there is one
                 }
             }
         }

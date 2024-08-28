@@ -21,8 +21,10 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.nms.TWAOod;
+import me.eccentric_nz.tardisweepingangels.utils.ResetMonster;
+import net.minecraft.world.entity.Entity;
 import org.bukkit.craftbukkit.v1_21_R1.entity.CraftEntity;
-import org.bukkit.entity.Entity;
+import org.bukkit.entity.Husk;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -41,30 +43,33 @@ public class OodListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDamageOod(EntityDamageByEntityEvent event) {
-        Entity entity = event.getEntity();
-        if (((CraftEntity) entity).getHandle() instanceof TWAOod ood && event.getDamager() instanceof Player player) {
-            if (entity.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, TARDISWeepingAngels.PersistentDataTypeUUID) && entity.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
+        if (event.getEntity() instanceof Husk husk && event.getDamager() instanceof Player player) {
+            if (husk.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, TARDISWeepingAngels.PersistentDataTypeUUID) && husk.getPersistentDataContainer().has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                 event.setCancelled(true);
-                player.playSound(entity.getLocation(), "ood", 1.0f, 1.0f);
+                player.playSound(husk.getLocation(), "ood", 1.0f, 1.0f);
                 if (!TARDISPermission.hasPermission(player, "tardisweepingangels.ood")) {
                     return;
                 }
-                UUID oodId = entity.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
+                UUID oodId = husk.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
+                Entity entity = ((CraftEntity) husk).getHandle();
                 if (player.getUniqueId().equals(oodId)) {
-                    // set redeye
-                    ood.setRedeye(!ood.isRedeye());
-//                    ood.getOwnerUUID();
+                    if (entity instanceof TWAOod ood) {
+                        // set redeye
+                        ood.setRedeye(!ood.isRedeye());
+                    } else {
+                        // reset because it had all the correct PDC
+                        new ResetMonster(plugin, husk).reset();
+                    }
                 } else if (TARDISWeepingAngels.UNCLAIMED.equals(oodId)) {
                     // claim the Ood
                     UUID pid = player.getUniqueId();
-                    entity.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, pid);
+                    husk.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, pid);
                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_CLAIMED", "Ood");
-                    ood.setOwnerUUID(pid);
-//                    ood.getOwnerUUID();
+                    if (entity instanceof TWAOod ood) {
+                        ood.setOwnerUUID(pid);
+                    }
+                    // TODO update follower record if there is one
                 }
-//                else {
-//                    ood.getOwnerUUID();
-//                }
             }
         }
     }

@@ -58,8 +58,8 @@ public class JudoonListener implements Listener {
                     return;
                 }
                 UUID judoonId = husk.getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
+                Entity entity = ((CraftEntity) husk).getHandle();
                 if (player.getUniqueId().equals(judoonId)) {
-                    Entity entity = ((CraftEntity) husk).getHandle();
                     if (entity instanceof TWAJudoon judoon) {
                         int ammo = judoon.getAmmo();
                         if (Tag.SHULKER_BOXES.isTagged(player.getInventory().getItemInMainHand().getType())) {
@@ -123,8 +123,12 @@ public class JudoonListener implements Listener {
                     }
                 } else if (TARDISWeepingAngels.UNCLAIMED.equals(judoonId)) {
                     // claim the Judoon
-                    husk.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, player.getUniqueId());
+                    UUID pid = player.getUniqueId();
+                    husk.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, pid);
                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_CLAIMED", "Judoon");
+                    if (entity instanceof TWAJudoon judoon) {
+                        judoon.setOwnerUUID(pid);
+                    }
                     // TODO update follower record if there is one
                 }
             }
