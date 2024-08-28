@@ -68,17 +68,39 @@ public class ArtronChargeAction {
                     return;
                 }
                 List<String> lore = im.getLore();
-                int charge = TARDISNumberParsers.parseInt(lore.get(1)) * is.getAmount();
+                int charge = TARDISNumberParsers.parseInt(lore.get(1));
                 if (charge <= 0) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_NOT_CHARGED");
                     return;
                 }
-                amount = current_level + charge;
-                // only add energy up to capacitors * max level - damage
+                int max;
                 ResultSetArtronStorage rsas = new ResultSetArtronStorage(plugin);
                 if (rsas.fromID(id)) {
                     int damage = (fc / 2) * rsas.getDamageCount();
-                    int max = (fc * rsas.getCapacitorCount()) - damage;
+                    max = (fc * rsas.getCapacitorCount()) - damage;
+                } else {
+                    return;
+                }
+                // if only one cell
+                if (is.getAmount() == 1) {
+                    amount = current_level + charge;
+                    boolean removeEnchant = true;
+                    if (amount > max) {
+                        // just take as much as we can
+                        amount = max - current_level;
+                        removeEnchant = false;
+                    }
+                    lore.set(1, "" + (charge - amount));
+                    im.setLore(lore);
+                    is.setItemMeta(im);
+                    if (removeEnchant) {
+                        is.getEnchantments().keySet().forEach(is::removeEnchantment);
+                    }
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_TRANSFER");
+                } else {
+                    charge *= is.getAmount();
+                    amount = current_level + charge;
+                    // only add energy up to capacitors * max level - damage
                     if (amount <= max) {
                         lore.set(1, "0");
                         im.setLore(lore);
@@ -91,8 +113,6 @@ public class ArtronChargeAction {
                         // give items back
                         return;
                     }
-                } else {
-                    return;
                 }
             }
         }
