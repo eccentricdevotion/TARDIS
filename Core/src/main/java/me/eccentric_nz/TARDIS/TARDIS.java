@@ -310,7 +310,7 @@ public class TARDIS extends JavaPlugin {
                 }
             } catch (final Exception e) {
                 getLogger().severe("Could not find support for this server version.");
-//                e.printStackTrace();
+                e.printStackTrace();
                 this.setEnabled(false);
                 return;
             }

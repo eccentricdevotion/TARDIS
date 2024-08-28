@@ -77,7 +77,7 @@ class TARDISUpdateCommand {
             if (args[1].equalsIgnoreCase("list")) {
                 for (Updateable u : Updateable.values()) {
                     System.out.println(u.getName() + " valid blocks:");
-                    for (Material m : u.getMaterialChoice().getChoices()) {
+                    for (Material m : u.getMaterialChoices()) {
                         String s = m.toString();
                         if (s.equals("SPAWNER")) {
                             System.out.println("   ANY BLOCK");
@@ -187,8 +187,7 @@ class TARDISUpdateCommand {
                 }
             }
             if (new TARDISUpdateableChecker(plugin, updateable, player, tardis, tardis_block).canUpdate()) {
-                if ((updateable.equals(Updateable.ROTOR) || updateable.equals(Updateable.MONITOR) || updateable.equals(Updateable.MONITOR_FRAME) || updateable.equals(Updateable.SONIC_DOCK))
-                        && args.length == 3 && args[2].equalsIgnoreCase("unlock")) {
+                if ((updateable.equals(Updateable.ROTOR) || updateable.equals(Updateable.MONITOR) || updateable.equals(Updateable.MONITOR_FRAME) || updateable.equals(Updateable.SONIC_DOCK)) && args.length == 3 && args[2].equalsIgnoreCase("unlock")) {
                     // get frame location
                     ItemFrame itemFrame = null;
                     switch (updateable) {

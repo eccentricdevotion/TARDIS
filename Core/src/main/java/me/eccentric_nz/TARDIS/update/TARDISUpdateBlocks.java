@@ -27,7 +27,7 @@ public class TARDISUpdateBlocks {
 
     public static void showOptions(Player player, Updateable updateable) {
         TARDIS.plugin.getMessenger().sendWithColours(player, TardisModule.TARDIS, "'" + updateable.getName() + "'", "#55FFFF", " valid blocks:", "#FFFFFF");
-        for (Material m : updateable.getMaterialChoice().getChoices()) {
+        for (Material m : updateable.getMaterialChoices()) {
             String s = m.toString();
             if (s.equals("SPAWNER")) {
                 TARDIS.plugin.getMessenger().message(player, "   ANY BLOCK");

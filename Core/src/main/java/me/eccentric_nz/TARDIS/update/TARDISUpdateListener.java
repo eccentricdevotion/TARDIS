@@ -55,11 +55,10 @@ import java.util.Locale;
 import java.util.UUID;
 
 /**
- * The TARDIS interior goes through occasional metamorphoses, sometimes by
- * choice, sometimes for other reasons, such as the Doctor's own regeneration.
- * Some of these changes were physical in nature (involving secondary control
- * rooms, etc.), but it was also possible to re-arrange the interior design of
- * the TARDIS with ease, using the Architectural Configuration system.
+ * The TARDIS interior goes through occasional metamorphoses, sometimes by choice, sometimes for other reasons, such as
+ * the Doctor's own regeneration. Some of these changes were physical in nature (involving secondary control rooms,
+ * etc.), but it was also possible to re-arrange the interior design of the TARDIS with ease, using the Architectural
+ * Configuration system.
  *
  * @author eccentric_nz
  */
@@ -72,10 +71,8 @@ public class TARDISUpdateListener implements Listener {
     }
 
     /**
-     * Listens for player interaction with the TARDIS console and other specific
-     * items. If the block is clicked and players name is contained in the
-     * appropriate HashMap, then the block's position is recorded in the
-     * database.
+     * Listens for player interaction with the TARDIS console and other specific items. If the block is clicked and
+     * players name is contained in the appropriate HashMap, then the block's position is recorded in the database.
      *
      * @param event a player clicking on a block
      */
@@ -157,7 +154,7 @@ public class TARDISUpdateListener implements Listener {
             } else {
                 plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
             }
-            if (!updateable.isAnyBlock() && !updateable.getMaterialChoice().getChoices().contains(blockType)) {
+            if (!updateable.isAnyBlock() && !updateable.getMaterialChoices().contains(blockType)) {
                 plugin.debug(player.getName() + " tried to update a " + updateable + "... the type of block clicked was " + blockType);
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_BAD_CLICK", updateable.getName());
                 return;
@@ -183,8 +180,7 @@ public class TARDISUpdateListener implements Listener {
                     String type = tmp.substring(0, tmp.length() - 7);
                     plugin.getQueryFactory().upsertSensor(tardis.getTardisId(), type, blockLocStr);
                     // set default state of sensor - OFF
-                    if ((updateable == Updateable.HANDBRAKE_SENSOR && !tardis.isHandbrakeOn())
-                            || (updateable == Updateable.POWER_SENSOR && tardis.isPoweredOn())) {
+                    if ((updateable == Updateable.HANDBRAKE_SENSOR && !tardis.isHandbrakeOn()) || (updateable == Updateable.POWER_SENSOR && tardis.isPoweredOn())) {
                         block.setType(Material.REDSTONE_BLOCK);
                     } else {
                         block.setType(Material.STONE);
@@ -328,7 +324,8 @@ public class TARDISUpdateListener implements Listener {
                 case SMELT, FUEL -> new TARDISSmelterCommand(plugin).addDropChest(player, updateable, id, block);
                 case VAULT -> new TARDISVaultCommand(plugin).addDropChest(player, id, block);
                 // GENERATOR, DISPENSER, HANDBRAKE, ZERO, RELATIVITY_DIFFERENTIATOR
-                default -> plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
+                default ->
+                        plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
             }
             if (!updateable.equals(Updateable.FUEL) && !updateable.equals(Updateable.SMELT)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_SET", updateable.getName());
