@@ -20,12 +20,12 @@ import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
+import org.bukkit.DyeColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -37,6 +37,7 @@ public class TabComplete extends TARDISCompleter implements TabCompleter {
     private final ImmutableList<String> TP_SUBS = ImmutableList.of("replace", "true", "false");
     private final ImmutableList<String> WORLD_SUBS;
     private final ImmutableList<String> MONSTER_SUBS;
+    private final List<String> COLOUR_SUBS = new ArrayList<>();
     ImmutableList<String> CMD_SUBS = ImmutableList.of("spawn", "equip", "disguise", "kill", "count", "follow", "stay", "remove", "set", "give", "teleport");
 
     public TabComplete(TARDIS plugin) {
@@ -50,6 +51,11 @@ public class TabComplete extends TARDISCompleter implements TabCompleter {
         List<String> worlds = new ArrayList<>();
         plugin.getServer().getWorlds().forEach((w) -> worlds.add(w.getName()));
         WORLD_SUBS = ImmutableList.copyOf(worlds);
+        for (DyeColor dye : DyeColor.values()) {
+            COLOUR_SUBS.add(dye.toString());
+        }
+        COLOUR_SUBS.add("flying");
+        COLOUR_SUBS.add("true");
     }
 
     @Override
@@ -72,6 +78,7 @@ public class TabComplete extends TARDISCompleter implements TabCompleter {
                     case "disguise" -> partial(args[2], ONOFF_SUBS);
                     case "give" -> partial(args[2], MONSTER_SUBS);
                     case "follow" -> List.of("15");
+                    case "spawn", "equip" -> partial(args[2], COLOUR_SUBS);
                     default -> partial(args[2], WORLD_SUBS);
                 };
             }

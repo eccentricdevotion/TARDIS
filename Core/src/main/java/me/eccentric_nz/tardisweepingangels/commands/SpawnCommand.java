@@ -34,6 +34,7 @@ import me.eccentric_nz.tardisweepingangels.monsters.silent.SilentEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.ToclafaneEquipment;
 import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
+import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -43,6 +44,7 @@ import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Set;
@@ -91,15 +93,32 @@ public class SpawnCommand {
             switch (monster) {
                 case DALEK -> {
                     DalekEquipment.set(a, false);
-                    if (args.length > 2 && args[2].equalsIgnoreCase("flying")) {
-                        // make the Dalek fly
-                        EntityEquipment ee = a.getEquipment();
-                        ee.setChestplate(new ItemStack(Material.ELYTRA, 1));
-                        // teleport them straight up
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            a.teleport(a.getLocation().add(0.0d, 20.0d, 0.0d));
-                            a.setGliding(true);
-                        }, 2L);
+                    if (args.length > 2) {
+                        if (args[2].equalsIgnoreCase("flying")) {
+                            // make the Dalek fly
+                            EntityEquipment ee = a.getEquipment();
+                            ee.setChestplate(new ItemStack(Material.ELYTRA, 1));
+                            // teleport them straight up
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                a.teleport(a.getLocation().add(0.0d, 20.0d, 0.0d));
+                                a.setGliding(true);
+                            }, 2L);
+                        } else {
+                            try {
+                                DyeColor colour = DyeColor.valueOf(args[2].toUpperCase());
+                                int c = colour.ordinal() + 10000006;
+                                ItemStack helmet = new ItemStack(Material.SLIME_BALL, 1);
+                                ItemMeta headMeta = helmet.getItemMeta();
+                                headMeta.setDisplayName("Dalek Head");
+                                headMeta.setCustomModelData(c);
+                                helmet.setItemMeta(headMeta);
+                                EntityEquipment ee = a.getEquipment();
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                    ee.setHelmet(helmet);
+                                }, 2L);
+                            } catch (IllegalArgumentException ignored) {
+                            }
+                        }
                     }
                 }
                 case EMPTY_CHILD -> {

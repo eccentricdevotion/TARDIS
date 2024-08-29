@@ -24,6 +24,7 @@ import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.ArmourStandEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessFlameRunnable;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
+import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.ArmorStand;
@@ -102,6 +103,14 @@ public class EquipCommand {
                     }
                     if (monster == Monster.CLOCKWORK_DROID) {
                         meta.setCustomModelData(7);
+                    }
+                    if (monster == Monster.DALEK) {
+                        try {
+                            DyeColor colour = DyeColor.valueOf(args[2].toUpperCase());
+                            int c = colour.ordinal() + 10000006;
+                            meta.setCustomModelData(c);
+                        } catch (IllegalArgumentException ignored) {
+                        }
                     }
                     head.setItemMeta(meta);
                     ee.setHelmet(head);
