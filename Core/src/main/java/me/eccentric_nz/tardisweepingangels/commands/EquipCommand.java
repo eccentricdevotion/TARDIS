@@ -36,6 +36,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Locale;
+
 public class EquipCommand {
 
     private final TARDIS plugin;
@@ -49,7 +51,7 @@ public class EquipCommand {
             return false;
         }
         // check monster type
-        String upper = args[1].toUpperCase();
+        String upper = args[1].toUpperCase(Locale.ROOT);
         Monster monster;
         try {
             monster = Monster.valueOf(upper);
@@ -106,7 +108,7 @@ public class EquipCommand {
                     }
                     if (monster == Monster.DALEK) {
                         try {
-                            DyeColor colour = DyeColor.valueOf(args[2].toUpperCase());
+                            DyeColor colour = DyeColor.valueOf(args[2].toUpperCase(Locale.ROOT));
                             int c = colour.ordinal() + 10000006;
                             meta.setCustomModelData(c);
                         } catch (IllegalArgumentException ignored) {

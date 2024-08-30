@@ -32,6 +32,7 @@ import org.bukkit.command.TabCompleter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * TabCompleter for /tardisschematic
@@ -57,7 +58,7 @@ public class TARDISSchematicTabComplete extends TARDISCompleter implements TabCo
             }
         }
         for (String r : TARDIS.plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false)) {
-            ROOM_SUBS.add(r.toLowerCase());
+            ROOM_SUBS.add(r.toLowerCase(Locale.ROOT));
         }
         for (String g : GallifeyStructureUtility.structures) {
             STRUCTURE_SUBS.add("gallifrey_" + g);
@@ -93,7 +94,7 @@ public class TARDISSchematicTabComplete extends TARDISCompleter implements TabCo
         } else if (args.length == 2 && args[0].equalsIgnoreCase("liquid")) {
             return partial(args[1], LIQUID_SUBS);
         } else if (args.length == 3 && args[0].equalsIgnoreCase("load")) {
-            switch (args[1].toLowerCase()) {
+            switch (args[1].toLowerCase(Locale.ROOT)) {
                 case "console" -> {
                     return partial(args[2], CONSOLE_SUBS);
                 }

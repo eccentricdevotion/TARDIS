@@ -17,6 +17,8 @@
 package me.eccentric_nz.tardisweepingangels.commands;
 
 import java.util.HashMap;
+import java.util.Locale;
+
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
@@ -67,7 +69,7 @@ public class AdminCommand {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "ARG_LAST_NUMBER");
             return false;
         }
-        String which = args[1].toUpperCase();
+        String which = args[1].toUpperCase(Locale.ROOT);
         Monster monster;
         try {
             monster = Monster.valueOf(which);

@@ -491,7 +491,7 @@ public class TARDII implements TardisAPI {
                 is = new ItemStack(s.getSeedMaterial(), 1);
             } else {
                 try {
-                    TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(s.getPermission().toUpperCase());
+                    TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(s.getPermission().toUpperCase(Locale.ROOT));
                     model = tdi.getCustomModelData();
                     is = new ItemStack(tdi.getMaterial(), 1);
                 } catch (IllegalArgumentException e) {
@@ -529,9 +529,9 @@ public class TARDII implements TardisAPI {
             return null;
         }
         try {
-            BlueprintType type = BlueprintType.valueOf(split[1].toUpperCase());
+            BlueprintType type = BlueprintType.valueOf(split[1].toUpperCase(Locale.ROOT));
             int sub = 11 + split[1].length(); // BLUEPRINT_+length()+_
-            String upper = item.toUpperCase().substring(sub);
+            String upper = item.toUpperCase(Locale.ROOT).substring(sub);
             String perm;
             switch (type) {
                 case CONSOLE -> {

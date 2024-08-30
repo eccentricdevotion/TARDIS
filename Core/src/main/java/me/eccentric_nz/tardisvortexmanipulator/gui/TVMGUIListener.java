@@ -291,7 +291,7 @@ public class TVMGUIListener extends TARDISMenuListener {
         ItemMeta im = is.getItemMeta();
         for (World w : plugin.getServer().getWorlds()) {
             String world = w.getName();
-            if (w.getName().toLowerCase().startsWith(stub)) {
+            if (w.getName().toLowerCase(Locale.ROOT).startsWith(stub)) {
                 List<String> lore = List.of(world);
                 im.setLore(lore);
                 is.setItemMeta(im);
@@ -318,7 +318,7 @@ public class TVMGUIListener extends TARDISMenuListener {
         String combined;
         switch (which) {
             case 0 -> {
-                setPredictive(comp.toLowerCase(), view);
+                setPredictive(comp.toLowerCase(Locale.ROOT), view);
                 combined = comp + " " + components.get(1) + " " + components.get(2) + " " + components.get(3);
             }
             case 1 -> combined = components.getFirst() + " " + comp + " " + components.get(2) + " " + components.get(3);

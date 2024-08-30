@@ -51,9 +51,9 @@ public class TARDISStringUtils {
 
     public static String uppercaseFirst(String s) {
         if (s.equalsIgnoreCase("ii") || s.equalsIgnoreCase("iii") || s.equalsIgnoreCase("iv")) {
-            return s.toUpperCase();
+            return s.toUpperCase(Locale.ROOT);
         }
-        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase().replace("tardis", "TARDIS");
+        return s.substring(0, 1).toUpperCase(Locale.ROOT) + s.substring(1).toLowerCase(Locale.ROOT).replace("tardis", "TARDIS");
     }
 
     public static String titleCase(String s) {
@@ -90,19 +90,19 @@ public class TARDISStringUtils {
     }
 
     public static String toDashedLowercase(String s) {
-        return s.toLowerCase().replace("_", "-");
+        return s.toLowerCase(Locale.ROOT).replace("_", "-");
     }
 
     public static String toLowercaseDashed(String s) {
-        return s.toLowerCase().replace(" ", "-");
+        return s.toLowerCase(Locale.ROOT).replace(" ", "-");
     }
 
     public static String toScoredUppercase(String s) {
-        return s.toUpperCase().replace("-", "_");
+        return s.toUpperCase(Locale.ROOT).replace("-", "_");
     }
 
     public static String toUnderscoredUppercase(String s) {
-        return s.toUpperCase().replace(" ", "_");
+        return s.toUpperCase(Locale.ROOT).replace(" ", "_");
     }
 
     public static String toEnumUppercase(String s) {

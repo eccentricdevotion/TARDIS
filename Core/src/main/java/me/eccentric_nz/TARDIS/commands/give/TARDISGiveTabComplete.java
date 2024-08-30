@@ -29,10 +29,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * TabCompleter for /tardisgive
@@ -63,10 +60,10 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
             }
         }
         for (String r : TARDIS.plugin.getCustomDoorsConfig().getKeys(false)) {
-            GIVE_SUBS.add("door-" + r.toLowerCase());
+            GIVE_SUBS.add("door-" + r.toLowerCase(Locale.ROOT));
         }
         for (String r : TARDIS.plugin.getCustomRotorsConfig().getKeys(false)) {
-            GIVE_SUBS.add("time-rotor-" + r.toLowerCase());
+            GIVE_SUBS.add("time-rotor-" + r.toLowerCase(Locale.ROOT));
         }
         Set<String> kits = plugin.getKitsConfig().getConfigurationSection("kits").getKeys(false);
         KIT_SUBS = ImmutableList.copyOf(kits);

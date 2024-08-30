@@ -39,10 +39,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * A dematerialisation circuit was an essential part of a Type 40 TARDIS which enabled it to dematerialise from normal
@@ -213,7 +210,7 @@ class TARDISDematerialisePreset implements Runnable {
                             sound = "junk_takeoff";
                         } else {
                             sound = switch (dd.getThrottle()) {
-                                case WARP, RAPID, FASTER -> "tardis_takeoff_" + dd.getThrottle().toString().toLowerCase();
+                                case WARP, RAPID, FASTER -> "tardis_takeoff_" + dd.getThrottle().toString().toLowerCase(Locale.ROOT);
                                 default -> "tardis_takeoff"; // NORMAL
                             };
                         }
@@ -404,7 +401,7 @@ class TARDISDematerialisePreset implements Runnable {
                 Block b = TARDISStaticLocationGetters.getLocationFromDB(rs.getDoor_location()).getBlock();
                 if (p.equals(ChameleonPreset.FLOWER)) {
                     the_colour = b.getRelative(BlockFace.UP, 3).getBlockData();
-                    String[] split = the_colour.getMaterial().toString().toLowerCase().split("_");
+                    String[] split = the_colour.getMaterial().toString().toLowerCase(Locale.ROOT).split("_");
                     String colour = (split.length > 2) ? split[0] + "_" + split[1] : split[0];
                     stain_colour = plugin.getServer().createBlockData("minecraft:" + colour + "_stained_glass");
                     return;
@@ -412,7 +409,7 @@ class TARDISDematerialisePreset implements Runnable {
                     for (BlockFace f : plugin.getGeneralKeeper().getFaces()) {
                         if (Tag.WOOL.isTagged(b.getRelative(f).getType())) {
                             the_colour = b.getRelative(f).getBlockData();
-                            String[] split = the_colour.getMaterial().toString().toLowerCase().split("_");
+                            String[] split = the_colour.getMaterial().toString().toLowerCase(Locale.ROOT).split("_");
                             String colour = (split.length > 2) ? split[0] + "_" + split[1] : split[0];
                             stain_colour = plugin.getServer().createBlockData("minecraft:" + colour + "_stained_glass");
                             return;

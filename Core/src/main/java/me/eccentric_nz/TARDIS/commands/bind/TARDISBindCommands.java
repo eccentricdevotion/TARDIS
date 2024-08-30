@@ -29,6 +29,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * A Time Control Unit is a golden sphere about the size of a Cricket ball. It is stored in the Secondary Control Room.
@@ -67,7 +68,7 @@ public class TARDISBindCommands implements CommandExecutor {
             }
             Bind bind;
             try {
-                bind = Bind.valueOf(args[1].toUpperCase());
+                bind = Bind.valueOf(args[1].toUpperCase(Locale.ROOT));
             } catch (IllegalArgumentException e) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "BIND_NOT_VALID");
                 return false;

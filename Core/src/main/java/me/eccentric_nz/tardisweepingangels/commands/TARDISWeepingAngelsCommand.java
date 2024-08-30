@@ -22,6 +22,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import java.util.Locale;
+
 public class TARDISWeepingAngelsCommand implements CommandExecutor {
 
     private final TARDIS plugin;
@@ -36,7 +38,7 @@ public class TARDISWeepingAngelsCommand implements CommandExecutor {
             if (args.length == 0) {
                 return false;
             }
-            String sub = args[0].toLowerCase();
+            String sub = args[0].toLowerCase(Locale.ROOT);
             switch (sub) {
                 case "spawn" -> {
                     return new SpawnCommand(plugin).spawn(sender, args);

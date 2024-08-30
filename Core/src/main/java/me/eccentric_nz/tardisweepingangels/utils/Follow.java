@@ -25,12 +25,13 @@ import org.bukkit.craftbukkit.v1_21_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import java.util.Locale;
 import java.util.UUID;
 
 public class Follow {
 
     public static void toggle(TARDIS plugin, Player player, Entity husk, String which, boolean follow) {
-        if (!TARDISPermission.hasPermission(player, "tardisweepingangels.follow." + which.toLowerCase())) {
+        if (!TARDISPermission.hasPermission(player, "tardisweepingangels.follow." + which.toLowerCase(Locale.ROOT))) {
             plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_PERM_FOLLOW", which);
             return;
         }

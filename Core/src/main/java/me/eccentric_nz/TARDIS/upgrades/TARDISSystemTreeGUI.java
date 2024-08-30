@@ -8,6 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class TARDISSystemTreeGUI {
 
@@ -41,7 +42,7 @@ public class TARDISSystemTreeGUI {
                     if (g.getBranch().equals("branch")) {
                         cost = plugin.getSystemUpgradesConfig().getString("branch");
                     } else {
-                        cost = plugin.getSystemUpgradesConfig().getString(g.getBranch() + "." + g.toString().toLowerCase());
+                        cost = plugin.getSystemUpgradesConfig().getString(g.getBranch() + "." + g.toString().toLowerCase(Locale.ROOT));
                     }
                     lore.add(ChatColor.AQUA + "" + ChatColor.ITALIC + "Cost: " + cost);
                 } else if (g != SystemTree.UPGRADE_TREE) {

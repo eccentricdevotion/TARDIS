@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 public class TeleportCommand {
 
@@ -20,7 +21,7 @@ public class TeleportCommand {
 
     public boolean add(CommandSender sender, String[] args) {
         String message = "Added a weeping angels' teleport location successfully.";
-        String a = (args.length > 1) ? args[1].toLowerCase() : "";
+        String a = (args.length > 1) ? args[1].toLowerCase(Locale.ROOT) : "";
         if (a.equals("true") || a.equals("false")) {
             message = "Set 'angels.teleport_to_location' to " + a;
             plugin.getMonstersConfig().set("angels.teleport_to_location", Boolean.valueOf(a));

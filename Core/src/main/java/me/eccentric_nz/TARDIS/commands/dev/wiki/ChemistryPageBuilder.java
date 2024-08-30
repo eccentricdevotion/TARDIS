@@ -13,6 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.RecipeChoice;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -149,7 +150,7 @@ public class ChemistryPageBuilder extends PageBuilder {
                             try {
                                 Element element = Element.valueOf(data[i][j]);
                                 ingredients.add(data[i][j]);
-                                dashed = data[i][j].toLowerCase();
+                                dashed = data[i][j].toLowerCase(Locale.ROOT);
                             } catch (IllegalArgumentException ee) {
                                 // don't know what it is
                             }

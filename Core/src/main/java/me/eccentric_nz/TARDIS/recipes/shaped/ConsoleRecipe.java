@@ -13,6 +13,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /*
@@ -52,7 +53,7 @@ public class ConsoleRecipe {
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, colour.getValue()
             );
             is.setItemMeta(im);
-            NamespacedKey key = new NamespacedKey(plugin, name.toLowerCase() + "_console");
+            NamespacedKey key = new NamespacedKey(plugin, name.toLowerCase(Locale.ROOT) + "_console");
             ShapedRecipe r = new ShapedRecipe(key, is);
             if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
                 r.shape("CBC", "LRL", "CBC");

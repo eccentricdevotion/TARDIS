@@ -24,6 +24,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Locale;
+
 /**
  * Time travel is, as the name suggests, the (usually controlled) process of travelling through time, even in a
  * non-linear direction. In the 26th century individuals who time travel are sometimes known as persons of meta-temporal
@@ -53,7 +55,7 @@ public class TARDISPresetInventory {
 
         for (ChameleonPreset preset : ChameleonPreset.values()) {
             if (!ChameleonPreset.NOT_THESE.contains(preset.getCraftMaterial()) && !preset.usesArmourStand()) {
-                if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase())) {
+                if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase(Locale.ROOT))) {
                     ItemStack is = new ItemStack(preset.getGuiDisplay(), 1);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName(preset.getDisplayName());

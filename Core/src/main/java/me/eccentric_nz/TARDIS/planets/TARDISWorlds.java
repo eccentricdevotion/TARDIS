@@ -87,7 +87,7 @@ public class TARDISWorlds {
                 String d = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".difficulty");
                 if (d != null) {
                     try {
-                        Difficulty difficulty = Difficulty.valueOf(d.toUpperCase());
+                        Difficulty difficulty = Difficulty.valueOf(d.toUpperCase(Locale.ROOT));
                         w.setDifficulty(difficulty);
                     } catch (IllegalArgumentException ignored) {
                     }

@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import java.util.HashMap;
+import java.util.Locale;
+
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlueprint;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -42,7 +44,7 @@ class TARDISRevokeCommand {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
             return true;
         }
-        int id = new ResultSetBlueprint(plugin).getRecordId(player.getUniqueId().toString(), args[2].toLowerCase());
+        int id = new ResultSetBlueprint(plugin).getRecordId(player.getUniqueId().toString(), args[2].toLowerCase(Locale.ROOT));
         if (id != -1) {
             // delete record
             HashMap<String, Object> where = new HashMap<>();

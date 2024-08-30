@@ -21,13 +21,15 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
+import java.util.Locale;
+
 public class TARDISPresetPermissionLister {
 
     public void list(CommandSender sender) {
         TARDIS.plugin.getMessenger().message(sender, TardisModule.TARDIS, " Chameleon Preset Permissions:");
         for (ChameleonPreset preset : ChameleonPreset.values()) {
             if (preset.getSlot() != -1) {
-                sender.sendMessage("tardis.preset." + preset.toString().toLowerCase());
+                sender.sendMessage("tardis.preset." + preset.toString().toLowerCase(Locale.ROOT));
             }
         }
     }

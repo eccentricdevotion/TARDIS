@@ -32,6 +32,7 @@ import org.bukkit.permissions.Permission;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * TabCompleter for /tardisadmin
@@ -81,7 +82,7 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
         if (args.length == 1) {
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
-            String sub = args[0].toLowerCase();
+            String sub = args[0].toLowerCase(Locale.ROOT);
             if (sub.equals("assemble") || sub.equals("dispersed")) {
                 return partial(lastArg, ASS_SUBS);
             }

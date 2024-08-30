@@ -36,6 +36,7 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -57,7 +58,7 @@ public class TARDISDirectionCommand {
             }
             COMPASS compass;
             try {
-                compass = COMPASS.valueOf(args[1].toUpperCase());
+                compass = COMPASS.valueOf(args[1].toUpperCase(Locale.ROOT));
             } catch (IllegalArgumentException e) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_NEED");
                 return true;

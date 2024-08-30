@@ -9,6 +9,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Locale;
+
 public class TVMCommand implements CommandExecutor {
 
     private final TARDIS plugin;
@@ -40,7 +42,7 @@ public class TVMCommand implements CommandExecutor {
                 }
                 ItemStack is = player.getInventory().getItemInMainHand();
                 if (is != null && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().endsWith("Vortex Manipulator")) {
-                    switch (args[0].toLowerCase()) {
+                    switch (args[0].toLowerCase(Locale.ROOT)) {
                         case "gui" -> {
                             return new TVMCommandGUI(plugin).open(player);
                         }

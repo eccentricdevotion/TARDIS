@@ -28,6 +28,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Collection;
+import java.util.Locale;
 
 public class KillCommand {
 
@@ -41,7 +42,7 @@ public class KillCommand {
         if (args.length < 3) {
             return false;
         }
-        String which = args[1].toUpperCase();
+        String which = args[1].toUpperCase(Locale.ROOT);
         World w = plugin.getServer().getWorld(args[2]);
         if (w == null) {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "COULD_NOT_FIND_WORLD");

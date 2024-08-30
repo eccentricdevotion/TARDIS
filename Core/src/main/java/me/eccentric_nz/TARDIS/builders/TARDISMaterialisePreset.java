@@ -51,10 +51,7 @@ import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * A dematerialisation circuit was an essential part of a Type 40 TARDIS which enabled it to dematerialise from normal
@@ -205,7 +202,7 @@ class TARDISMaterialisePreset implements Runnable {
                             } else {
                                 sound = switch (bd.getThrottle()) {
                                     case WARP, RAPID, FASTER ->
-                                            "tardis_land_" + bd.getThrottle().toString().toLowerCase();
+                                            "tardis_land_" + bd.getThrottle().toString().toLowerCase(Locale.ROOT);
                                     default -> "tardis_land";
                                 };
                             }

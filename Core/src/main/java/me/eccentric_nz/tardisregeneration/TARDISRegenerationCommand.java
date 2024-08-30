@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class TARDISRegenerationCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
@@ -74,7 +75,7 @@ public class TARDISRegenerationCommand extends TARDISCompleter implements Comman
             }
             if (args[0].equalsIgnoreCase("block")) {
                 if (sender instanceof Player player) {
-                    String tf = args[1].toLowerCase();
+                    String tf = args[1].toLowerCase(Locale.ROOT);
                     if (!tf.equals("on") && !tf.equals("off")) {
                         plugin.getMessenger().send(player, TardisModule.REGENERATION, "PREF_ON_OFF", "regeneration block");
                         return true;

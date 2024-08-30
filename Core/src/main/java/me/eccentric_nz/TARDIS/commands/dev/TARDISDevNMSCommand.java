@@ -23,6 +23,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
+import java.util.Locale;
 import java.util.UUID;
 
 public class TARDISDevNMSCommand {
@@ -36,7 +37,7 @@ public class TARDISDevNMSCommand {
     public boolean spawn(CommandSender sender, String[] args) {
         if (sender instanceof Player player) {
             try {
-                Monster monster = Monster.valueOf(args[1].toUpperCase());
+                Monster monster = Monster.valueOf(args[1].toUpperCase(Locale.ROOT));
                 UUID uuid = (args.length>2) ? TARDISWeepingAngels.UNCLAIMED: player.getUniqueId();
                 Location location = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 16).getLocation();
                 if (monster == Monster.OOD || monster == Monster.JUDOON || monster == Monster.K9) {

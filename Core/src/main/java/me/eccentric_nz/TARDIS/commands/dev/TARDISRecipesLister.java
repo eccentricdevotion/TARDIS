@@ -27,6 +27,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 
+import java.util.Locale;
 import java.util.Map;
 
 class TARDISRecipesLister {
@@ -65,14 +66,14 @@ class TARDISRecipesLister {
                         material = seed.getKey().getSeedMaterial().toString();
                     } else {
                         try {
-                            TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(seed.getKey().getPermission().toUpperCase());
+                            TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(seed.getKey().getPermission().toUpperCase(Locale.ROOT));
                             model = tdi.getCustomModelData();
                             material = tdi.getMaterial().toString();
                         } catch (IllegalArgumentException e) {
                             material = TARDISDisplayItem.CUSTOM.getMaterial().toString();
                         }
                     }
-                    sender.sendMessage(seed.getKey().getPermission().toUpperCase() + "_SEED(\"" + seed.getKey().getPermission() + "\", Material." + material + ", " + model + "),");
+                    sender.sendMessage(seed.getKey().getPermission().toUpperCase(Locale.ROOT) + "_SEED(\"" + seed.getKey().getPermission() + "\", Material." + material + ", " + model + "),");
                 }
             }
             if (plugin.getConfig().getBoolean("modules.weeping_angels")) {

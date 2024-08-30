@@ -29,6 +29,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Command /tardistravel [arguments].
@@ -113,7 +114,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                     return new TARDISTravelExile(plugin).action(player, id);
                 }
                 if (args.length == 1) {
-                    switch (args[0].toLowerCase()) {
+                    switch (args[0].toLowerCase(Locale.ROOT)) {
                         case "cancel" -> {
                             return new TARDISTravelCancel(plugin).action(player, id);
                         }
@@ -130,7 +131,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             return new TARDISTravelCave(plugin).action(player, id);
                         }
                         case "village", "structure", "biome" -> {
-                            return new TARDISTravelGUI(plugin).open(player,id, args[0].toLowerCase());
+                            return new TARDISTravelGUI(plugin).open(player,id, args[0].toLowerCase(Locale.ROOT));
                         }
                         default -> {
                             return new TARDISTravelPlayer(plugin).action(player, args[0], id);

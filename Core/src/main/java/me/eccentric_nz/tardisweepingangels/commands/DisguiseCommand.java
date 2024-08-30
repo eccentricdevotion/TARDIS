@@ -31,6 +31,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
 
+import java.util.Locale;
 import java.util.UUID;
 
 public class DisguiseCommand {
@@ -46,7 +47,7 @@ public class DisguiseCommand {
             return false;
         }
         // check monster type
-        String upper = args[1].toUpperCase();
+        String upper = args[1].toUpperCase(Locale.ROOT);
         Monster monster;
         try {
             monster = Monster.valueOf(upper);

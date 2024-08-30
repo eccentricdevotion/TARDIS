@@ -53,8 +53,8 @@ public class Seed {
             String floor = "LIGHT_GRAY_WOOL";
             if (args.length > 4) {
                 try {
-                    wall = Material.valueOf(args[3].toUpperCase()).toString();
-                    floor = Material.valueOf(args[4].toUpperCase()).toString();
+                    wall = Material.valueOf(args[3].toUpperCase(Locale.ROOT)).toString();
+                    floor = Material.valueOf(args[4].toUpperCase(Locale.ROOT)).toString();
                 } catch (IllegalArgumentException e) {
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "SEED_MAT_NOT_VALID");
                     return;

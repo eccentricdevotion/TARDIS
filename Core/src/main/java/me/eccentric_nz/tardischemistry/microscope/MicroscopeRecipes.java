@@ -9,6 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Locale;
+
 /*
 easy_shape:-A-,RER,GGG
 easy_ingredients.A:AMETHYST_SHARD
@@ -40,7 +42,7 @@ public class MicroscopeRecipes {
             im.setDisplayName(ChatColor.WHITE + name);
             im.setCustomModelData(10000);
             is.setItemMeta(im);
-            NamespacedKey key = new NamespacedKey(plugin, equipment.toString().toLowerCase());
+            NamespacedKey key = new NamespacedKey(plugin, equipment.toString().toLowerCase(Locale.ROOT));
             ShapedRecipe r = new ShapedRecipe(key, is);
             r.shape(" A ", "RER", "GGG");
             if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {

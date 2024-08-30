@@ -40,6 +40,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class TARDISChemistryCommand implements CommandExecutor {
 
@@ -72,7 +73,7 @@ public class TARDISChemistryCommand implements CommandExecutor {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CHEMISTRY_CMD_PERM");
                     return true;
                 }
-                switch (args[1].toLowerCase()) {
+                switch (args[1].toLowerCase(Locale.ROOT)) {
                     case "creative" -> {
                         if (args.length < 3) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
@@ -104,7 +105,7 @@ public class TARDISChemistryCommand implements CommandExecutor {
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
                     return true;
                 }
-                String which = args[1].toLowerCase();
+                String which = args[1].toLowerCase(Locale.ROOT);
                 if (!GUIS.contains(which)) {
                     plugin.getMessenger().message(player, "");
                     return false;

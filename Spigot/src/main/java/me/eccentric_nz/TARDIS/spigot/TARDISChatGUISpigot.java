@@ -26,6 +26,7 @@ import net.md_5.bungee.api.chat.hover.content.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -47,7 +48,7 @@ public class TARDISChatGUISpigot implements TARDISChatGUI<TextComponent> {
         int e = 1;
         int o = 1;
         for (TARDISUpdateableCategory category : TARDISUpdateableCategory.values()) {
-            sections.add(buildTextComponent(s, category.getName(), category.toString().toLowerCase(), "section"));
+            sections.add(buildTextComponent(s, category.getName(), category.toString().toLowerCase(Locale.ROOT), "section"));
             s++;
         }
         for (Updateable updateable : Updateable.values()) {

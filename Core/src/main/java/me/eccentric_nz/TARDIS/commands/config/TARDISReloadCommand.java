@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.commands.config;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
+
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Config;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -48,7 +50,7 @@ class TARDISReloadCommand {
 
     boolean reloadOtherConfig(CommandSender sender, String[] args) {
         try {
-            Config config = Config.valueOf(args[1].toLowerCase());
+            Config config = Config.valueOf(args[1].toLowerCase(Locale.ROOT));
             File file = new File(plugin.getDataFolder(), config + ".yml");
             switch (config) {
                 case achievements -> plugin.getAchievementConfig().load(file);

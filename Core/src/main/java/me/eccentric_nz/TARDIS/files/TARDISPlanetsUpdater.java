@@ -333,7 +333,7 @@ public class TARDISPlanetsUpdater {
             Properties props = new Properties();
             props.load(is);
             is.close();
-            return props.getProperty("difficulty").toUpperCase();
+            return props.getProperty("difficulty").toUpperCase(Locale.ROOT);
         } catch (IOException e) {
             return "EASY"; // minecraft / spigot default
         }

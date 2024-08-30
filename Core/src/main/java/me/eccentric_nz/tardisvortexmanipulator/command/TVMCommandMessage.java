@@ -1,6 +1,8 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
 import java.util.HashMap;
+import java.util.Locale;
+
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -27,7 +29,7 @@ public class TVMCommandMessage {
             plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_USAGE");
             return false;
         }
-        String first = args[1].toUpperCase();
+        String first = args[1].toUpperCase(Locale.ROOT);
         try {
             MessageAction f = MessageAction.valueOf(first);
             switch (f) {
@@ -142,7 +144,7 @@ public class TVMCommandMessage {
                 }
                 default -> {
                     // clear
-                    if (!args[2].toLowerCase().equals("in") && !args[2].toLowerCase().equals("out")) {
+                    if (!args[2].toLowerCase(Locale.ROOT).equals("in") && !args[2].toLowerCase(Locale.ROOT).equals("out")) {
                         plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_MSG_CLEAR");
                         return true;
                     }

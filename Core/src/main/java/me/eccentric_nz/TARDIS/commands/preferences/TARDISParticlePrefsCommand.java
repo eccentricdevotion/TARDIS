@@ -20,7 +20,7 @@ public class TARDISParticlePrefsCommand {
     }
 
     public boolean setPartclePref(Player player, String[] args) {
-        String which = args[0].toLowerCase();
+        String which = args[0].toLowerCase(Locale.ROOT);
         Object value;
         switch (which) {
             case "effect" -> {

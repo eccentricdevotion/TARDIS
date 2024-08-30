@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 
 import java.util.List;
+import java.util.Locale;
 
 public enum SystemTree {
 
@@ -134,7 +135,7 @@ public enum SystemTree {
                 return "telepathic";
             }
             default -> {
-                return toString().toLowerCase();
+                return toString().toLowerCase(Locale.ROOT);
             }
         }
     }

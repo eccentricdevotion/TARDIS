@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.schematic.actions;
 
 import com.google.gson.JsonObject;
 import java.io.File;
+import java.util.Locale;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Load;
@@ -35,7 +36,7 @@ public class SchematicLoad {
         }
         Load load;
         try {
-            load = Load.valueOf(args[1].toLowerCase());
+            load = Load.valueOf(args[1].toLowerCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             load = Load.user;
         }

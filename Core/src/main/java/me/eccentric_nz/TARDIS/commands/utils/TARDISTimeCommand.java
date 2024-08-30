@@ -31,6 +31,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Locale;
 
 public class TARDISTimeCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
@@ -69,7 +70,7 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
                     }
                 }
                 long ticks;
-                Time time = Time.getByName().get(args[0].toUpperCase());
+                Time time = Time.getByName().get(args[0].toUpperCase(Locale.ROOT));
                 if (time != null) {
                     ticks = time.getTicks();
                 } else {

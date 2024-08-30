@@ -54,7 +54,7 @@ public class FloodgateMapForm {
         builder.button("Console");
         // get rooms from ARS
         for (String room : getRooms(id)) {
-            builder.button(room, FormImage.Type.URL, String.format(path, room.toLowerCase()));
+            builder.button(room, FormImage.Type.URL, String.format(path, room.toLowerCase(Locale.ROOT)));
         }
         builder.validResultHandler(this::handleResponse);
         SimpleForm form = builder.build();

@@ -47,6 +47,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
@@ -63,7 +64,7 @@ public class SpawnCommand {
         if (args.length < 2) {
             return false;
         }
-        String upper = args[1].toUpperCase();
+        String upper = args[1].toUpperCase(Locale.ROOT);
         // check monster type
         Monster monster;
         try {
@@ -105,7 +106,7 @@ public class SpawnCommand {
                             }, 2L);
                         } else {
                             try {
-                                DyeColor colour = DyeColor.valueOf(args[2].toUpperCase());
+                                DyeColor colour = DyeColor.valueOf(args[2].toUpperCase(Locale.ROOT));
                                 int c = colour.ordinal() + 10000006;
                                 ItemStack helmet = new ItemStack(Material.SLIME_BALL, 1);
                                 ItemMeta headMeta = helmet.getItemMeta();

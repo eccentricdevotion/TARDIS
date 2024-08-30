@@ -28,6 +28,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 public class TARDISDisplayCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
@@ -61,7 +62,7 @@ public class TARDISDisplayCommand extends TARDISCompleter implements CommandExec
             }
             if (args.length == 1) {
                 try {
-                    TARDISDisplayType displayType = TARDISDisplayType.valueOf(args[0].toUpperCase());
+                    TARDISDisplayType displayType = TARDISDisplayType.valueOf(args[0].toUpperCase(Locale.ROOT));
                     plugin.getTrackerKeeper().getDisplay().put(uuid, displayType);
                     plugin.getMessenger().send(p, TardisModule.TARDIS, "DISPLAY_ENABLED");
                 } catch (IllegalArgumentException e) {

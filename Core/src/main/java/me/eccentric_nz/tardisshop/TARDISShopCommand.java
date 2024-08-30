@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -59,7 +61,7 @@ public class TARDISShopCommand extends TARDISCompleter implements CommandExecuto
                     ResultSetUpdateShop rs = new ResultSetUpdateShop(plugin);
                     if (rs.getAll()) {
                         for (TARDISShopItem item : rs.getShopItems()) {
-                            String lookup = item.getItem().replace(" ", "_").toLowerCase();
+                            String lookup = item.getItem().replace(" ", "_").toLowerCase(Locale.ROOT);
                             double cost = plugin.getItemsConfig().getDouble(lookup);
                             if (cost != item.getCost()) {
                                 // update database
@@ -81,7 +83,7 @@ public class TARDISShopCommand extends TARDISCompleter implements CommandExecuto
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("add")) {
-                    String name = args[1].toLowerCase();
+                    String name = args[1].toLowerCase(Locale.ROOT);
                     if (!plugin.getItemsConfig().contains(name)) {
                         plugin.getMessenger().send(player, TardisModule.SHOP, "TOO_FEW_ARGS");
                         return true;

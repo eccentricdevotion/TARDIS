@@ -18,6 +18,7 @@ import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
 public class FloodgateWeatherForm {
@@ -89,7 +90,7 @@ public class FloodgateWeatherForm {
                 } else {
                     // change weather
                     Weather weather = Weather.fromString(label);
-                    String perm = weather.toString().toLowerCase();
+                    String perm = weather.toString().toLowerCase(Locale.ROOT);
                     if (!TARDISPermission.hasPermission(player, "tardis.weather." + perm)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                     }

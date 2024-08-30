@@ -30,6 +30,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.Locale;
+
 public class ImageHolder implements Listener {
 
     private final TARDIS plugin;
@@ -41,7 +43,7 @@ public class ImageHolder implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onChatAboutWeepingAngel(AsyncPlayerChatEvent event) {
         String message = event.getMessage();
-        if (message.toLowerCase().contains("angel") && TARDISConstants.RANDOM.nextInt(100) < plugin.getMonstersConfig().getInt("angels.spawn_from_chat.chance")) {
+        if (message.toLowerCase(Locale.ROOT).contains("angel") && TARDISConstants.RANDOM.nextInt(100) < plugin.getMonstersConfig().getInt("angels.spawn_from_chat.chance")) {
             int dist = plugin.getMonstersConfig().getInt("angels.spawn_from_chat.distance_from_player");
             Block b = event.getPlayer().getLocation().getBlock().getRelative(plugin.getGeneralKeeper().getFaces().get(TARDISConstants.RANDOM.nextInt(4)), dist);
             // get the highest block in a random direction

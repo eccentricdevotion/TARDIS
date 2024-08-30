@@ -84,7 +84,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
                 return false;
             }
-            String first = args[0].toLowerCase();
+            String first = args[0].toLowerCase(Locale.ROOT);
             switch (first) {
                 case "start" -> {
                     // check name is unique and acceptable

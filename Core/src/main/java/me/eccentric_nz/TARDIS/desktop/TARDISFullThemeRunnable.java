@@ -61,10 +61,7 @@ import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.*;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * There was also a safety mechanism for when TARDIS rooms were deleted, automatically relocating any living beings in
@@ -579,7 +576,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     // minecraft:cobblestone_wall[east=false,north=false,south=false,up=true,waterlogged=false,west=false]
                     String[] split1 = bb.get("data").getAsString().split("\\[");
                     String[] split2 = split1[0].split(":");
-                    String upper = split2[1].toUpperCase();
+                    String upper = split2[1].toUpperCase(Locale.ROOT);
                     type = Material.valueOf(upper);
                     data = plugin.getServer().createBlockData(type);
                 }

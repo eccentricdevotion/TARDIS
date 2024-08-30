@@ -26,6 +26,7 @@ import org.bukkit.command.TabCompleter;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -61,10 +62,10 @@ public class TARDISRecipeTabComplete extends TARDISCompleter implements TabCompl
             }
         }
         for (String r : TARDIS.plugin.getCustomDoorsConfig().getKeys(false)) {
-            ROOT_SUBS.add("door-" + r.toLowerCase());
+            ROOT_SUBS.add("door-" + r.toLowerCase(Locale.ROOT));
         }
         for (String r : TARDIS.plugin.getCustomRotorsConfig().getKeys(false)) {
-            ROOT_SUBS.add("time-rotor-" + r.toLowerCase());
+            ROOT_SUBS.add("time-rotor-" + r.toLowerCase(Locale.ROOT));
         }
     }
 

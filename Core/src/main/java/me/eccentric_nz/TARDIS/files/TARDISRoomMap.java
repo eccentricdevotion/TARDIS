@@ -142,7 +142,7 @@ public class TARDISRoomMap {
                 Pattern regex = Pattern.compile(":([a-z_])+");
                 Matcher matcher = regex.matcher(data);
                 if (matcher.matches()) {
-                    String mat = matcher.group(0).toUpperCase();
+                    String mat = matcher.group(0).toUpperCase(Locale.ROOT);
                     bid = LegacyTypeTable.LOOKUP.getOrDefault(mat, "STONE");
                 }
             }

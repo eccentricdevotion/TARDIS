@@ -44,6 +44,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.Collections;
+import java.util.Locale;
 import java.util.UUID;
 
 public class TARDISMaterialisePoliceBox implements Runnable {
@@ -132,7 +133,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                             sound = "junk_land";
                         } else {
                             sound = switch (bd.getThrottle()) {
-                                case WARP, RAPID, FASTER -> "tardis_land_" + bd.getThrottle().toString().toLowerCase();
+                                case WARP, RAPID, FASTER -> "tardis_land_" + bd.getThrottle().toString().toLowerCase(Locale.ROOT);
                                 default -> "tardis_land"; // NORMAL
                             };
                         }

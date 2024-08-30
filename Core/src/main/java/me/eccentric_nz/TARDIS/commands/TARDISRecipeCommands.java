@@ -60,11 +60,11 @@ public class TARDISRecipeCommands implements CommandExecutor {
         }
         // custom time rotors
         for (String r : TARDIS.plugin.getCustomRotorsConfig().getKeys(false)) {
-            recipeItems.put("time-rotor-" + r.toLowerCase(), "Time Rotor " + TARDISStringUtils.capitalise(r));
+            recipeItems.put("time-rotor-" + r.toLowerCase(Locale.ROOT), "Time Rotor " + TARDISStringUtils.capitalise(r));
         }
         // custom doors
         for (String r : TARDIS.plugin.getCustomDoorsConfig().getKeys(false)) {
-            recipeItems.put("door-" + r.toLowerCase(), "Door " + TARDISStringUtils.capitalise(r));
+            recipeItems.put("door-" + r.toLowerCase(Locale.ROOT), "Door " + TARDISStringUtils.capitalise(r));
         }
         // remove recipes form modules that are not enabled
         if (!plugin.getConfig().getBoolean("modules.vortex_manipulator")) {
@@ -160,7 +160,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 player.openInventory(categories);
                 return true;
             }
-            String which = args[0].toLowerCase();
+            String which = args[0].toLowerCase(Locale.ROOT);
             if (CHEM_SUBS.contains(which)) {
                 // use `/tchemistry formula command`
                 String command = TARDISStringUtils.chemistryCase(which);

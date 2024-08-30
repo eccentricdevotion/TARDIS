@@ -54,7 +54,7 @@ public class FloodgateDesktopArchiveForm {
         }
         for (ConsoleSize c : ConsoleSize.values()) {
             if (!c.equals(ConsoleSize.MASSIVE)) {
-                String url = "https://raw.githubusercontent.com/eccentricdevotion/TARDIS-Resource-Pack/master/assets/tardis/textures/item/gui/archive/" + c.toString().toLowerCase() + ".png";
+                String url = "https://raw.githubusercontent.com/eccentricdevotion/TARDIS-Resource-Pack/master/assets/tardis/textures/item/gui/archive/" + c.toString().toLowerCase(Locale.ROOT) + ".png";
                 builder.button(c.toString(), FormImage.Type.URL, url);
             }
         }
@@ -114,7 +114,7 @@ public class FloodgateDesktopArchiveForm {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCHIVE_NOT_CURRENT");
                         return;
                     }
-                    int upgrade = plugin.getArtronConfig().getInt("upgrades.archive." + a.getConsoleSize().toString().toLowerCase());
+                    int upgrade = plugin.getArtronConfig().getInt("upgrades.archive." + a.getConsoleSize().toString().toLowerCase(Locale.ROOT));
                     if (tud.getLevel() >= upgrade) {
                         new ArchiveUpdate(plugin, uuid.toString(), label).setInUse();
                         tud.setSchematic(schm);

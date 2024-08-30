@@ -95,7 +95,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
         if (args.length == 1) {
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
-            String sub = args[0].toLowerCase();
+            String sub = args[0].toLowerCase(Locale.ROOT);
             switch (sub) {
                 case "add", "comehere", "remove", "rescue", "save_player" -> {
                     return null;
@@ -149,7 +149,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
                 }
             }
         } else if (args.length == 3) {
-            String sub = args[1].toLowerCase();
+            String sub = args[1].toLowerCase(Locale.ROOT);
             if (sub.equals("rechargers")) {
                 return partial(lastArg, RECHARGER_SUBS);
             }
@@ -170,7 +170,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
                 return partial(lastArg, MAT_SUBS);
             }
         } else if (args.length == 4) {
-            String sub = args[1].toLowerCase();
+            String sub = args[1].toLowerCase(Locale.ROOT);
             if (sub.equals("add") || sub.equals("update")) {
                 return partial(lastArg, CONSOLE_SIZE_SUBS);
             }

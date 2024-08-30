@@ -62,7 +62,7 @@ class BindAdd {
             } // type 1
             case CAVE, HIDE, HOME, MAKE_HER_BLUE, OCCUPY, REBUILD -> {
                 set.put("type", 1);
-                set.put("name", bind.toString().toLowerCase());
+                set.put("name", bind.toString().toLowerCase(Locale.ROOT));
                 bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
             }
             case PLAYER -> { // type 2

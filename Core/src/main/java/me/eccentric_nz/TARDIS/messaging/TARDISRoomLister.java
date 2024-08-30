@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.messaging;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
+
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -47,7 +49,7 @@ public class TARDISRoomLister {
             player.sendMessage(key);
             if (!value.isEmpty()) {
                 value.forEach((s) -> {
-                    plugin.getMessenger().sendRoom(player, s, (TARDISPermission.hasPermission(player, "tardis.room." + s.toLowerCase())));
+                    plugin.getMessenger().sendRoom(player, s, (TARDISPermission.hasPermission(player, "tardis.room." + s.toLowerCase(Locale.ROOT))));
                 });
             } else {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_NONE");

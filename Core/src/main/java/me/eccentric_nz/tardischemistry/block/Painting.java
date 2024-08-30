@@ -1,5 +1,7 @@
 package me.eccentric_nz.tardischemistry.block;
 
+import java.util.Locale;
+
 public enum Painting {
 
     AORTA,
@@ -20,6 +22,6 @@ public enum Painting {
     EXPLODING_TARDIS;
 
     public String getName() {
-        return toString().toLowerCase();
+        return toString().toLowerCase(Locale.ROOT);
     }
 }

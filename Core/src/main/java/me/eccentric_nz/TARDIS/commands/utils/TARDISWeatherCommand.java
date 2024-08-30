@@ -32,6 +32,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Locale;
 
 public class TARDISWeatherCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
@@ -70,7 +71,7 @@ public class TARDISWeatherCommand extends TARDISCompleter implements CommandExec
                     }
                 }
                 Weather weather = Weather.fromString(args[0]);
-                String perm = weather.toString().toLowerCase();
+                String perm = weather.toString().toLowerCase(Locale.ROOT);
                 if (!TARDISPermission.hasPermission(player, "tardis.weather." + perm)) {
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
                     return true;

@@ -106,7 +106,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
                                 return true;
                             }
-                            new Knowledge(plugin).give(sender, seed.toLowerCase() + "_seed", sp);
+                            new Knowledge(plugin).give(sender, seed.toLowerCase(Locale.ROOT) + "_seed", sp);
                         } else {
                             new Seed(plugin).give(sender, args);
                         }

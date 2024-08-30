@@ -43,6 +43,7 @@ import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Transformation;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -58,7 +59,7 @@ public class TARDISDisplayItemCommand {
     public boolean display(Player player, String[] args) {
         // spawn display entities
         Block block = player.getTargetBlock(null, 8);
-        switch (args[1].toLowerCase()) {
+        switch (args[1].toLowerCase(Locale.ROOT)) {
             case "add" -> {
                 if (args.length < 3) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");

@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class TARDISBlueprintLister {
 
@@ -19,7 +20,7 @@ public class TARDISBlueprintLister {
     public void list(CommandSender sender, String type) {
         String message = "%s -> %s";
         List<String> messages = new ArrayList<>();
-        switch (type.toUpperCase()) {
+        switch (type.toUpperCase(Locale.ROOT)) {
             case "BASE" -> {
                 for (BlueprintBase base : BlueprintBase.values()) {
                     messages.add(String.format(message, base.toString(), base.getPermission()));
@@ -80,7 +81,7 @@ public class TARDISBlueprintLister {
             }
         }
         if (!messages.isEmpty()) {
-            plugin.getMessenger().send(sender, TardisModule.TARDIS, "BLUEPRINTS_LIST", type.toUpperCase());
+            plugin.getMessenger().send(sender, TardisModule.TARDIS, "BLUEPRINTS_LIST", type.toUpperCase(Locale.ROOT));
             for (String s : messages) {
                 sender.sendMessage(s);
             }

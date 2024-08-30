@@ -19,6 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class TARDISSystemTreeListener extends TARDISMenuListener {
 
@@ -122,7 +123,7 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
                 if (clicked.getBranch().equals("branch")) {
                     cost = plugin.getSystemUpgradesConfig().getInt("branch");
                 } else {
-                    cost = plugin.getSystemUpgradesConfig().getInt(clicked.getBranch() + "." + clicked.toString().toLowerCase());
+                    cost = plugin.getSystemUpgradesConfig().getInt(clicked.getBranch() + "." + clicked.toString().toLowerCase(Locale.ROOT));
                 }
                 if (cost > current.getArtronLevel()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_COST", clicked.getName());

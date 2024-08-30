@@ -65,7 +65,7 @@ class TARDISConfigPageTwoInventory {
                 ItemStack is = new ItemStack(Material.REPEATER, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(c);
-                int cmd = GUIConfiguration.valueOf(c.split("\\.")[0].toUpperCase()).getCustomModelData();
+                int cmd = GUIConfiguration.valueOf(c.split("\\.")[0].toUpperCase(Locale.ROOT)).getCustomModelData();
                 if (value.equals("false")) {
                     cmd += 100; // xx -> 1xx
                 }

@@ -26,6 +26,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Time travel is, as the name suggests, the (usually controlled) process of
@@ -59,8 +60,8 @@ public class TARDISPoliceBoxInventory {
         // coloured police boxes
         for (String s : colours) {
             String underscored = s.replace(" ", "_");
-            if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_" + underscored.toLowerCase())) {
-                String dye = underscored.toUpperCase() + "_DYE";
+            if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_" + underscored.toLowerCase(Locale.ROOT))) {
+                String dye = underscored.toUpperCase(Locale.ROOT) + "_DYE";
                 ItemStack is = new ItemStack(Material.valueOf(dye), 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(s + " Police Box");

@@ -23,6 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -208,7 +209,7 @@ public enum TARDISDisplayItem {
 
     static {
         for (TARDISDisplayItem tdi : values()) {
-            BY_NAME.put(tdi.toString().toLowerCase(), tdi);
+            BY_NAME.put(tdi.toString().toLowerCase(Locale.ROOT), tdi);
         }
     }
 
@@ -267,7 +268,7 @@ public enum TARDISDisplayItem {
     }
 
     public String getName() {
-        return this.toString().toLowerCase();
+        return this.toString().toLowerCase(Locale.ROOT);
     }
 
     public String getDisplayName() {

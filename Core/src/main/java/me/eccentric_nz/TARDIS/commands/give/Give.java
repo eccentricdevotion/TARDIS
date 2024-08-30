@@ -7,6 +7,7 @@ import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class Give {
 
@@ -32,12 +33,12 @@ public class Give {
             }
         }
         for (String r : TARDIS.plugin.getCustomDoorsConfig().getKeys(false)) {
-            items.put("door-" + r.toLowerCase(), "DOOR_" + r.toUpperCase());
-            custom.add("door-" + r.toLowerCase());
+            items.put("door-" + r.toLowerCase(Locale.ROOT), "DOOR_" + r.toUpperCase(Locale.ROOT));
+            custom.add("door-" + r.toLowerCase(Locale.ROOT));
         }
         for (String r : TARDIS.plugin.getCustomRotorsConfig().getKeys(false)) {
-            items.put("time-rotor-" + r.toLowerCase(), "TIME_ROTOR_" + r.toUpperCase());
-            custom.add("time-rotor-" + r.toLowerCase());
+            items.put("time-rotor-" + r.toLowerCase(Locale.ROOT), "TIME_ROTOR_" + r.toUpperCase(Locale.ROOT));
+            custom.add("time-rotor-" + r.toLowerCase(Locale.ROOT));
         }
     }
 }

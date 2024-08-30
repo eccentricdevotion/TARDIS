@@ -24,6 +24,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * A chameleon conversion is a repair procedure that technicians perform on
@@ -47,7 +48,7 @@ public class SudoChameleon {
             chameleon = "ITEM:" + args[1];
         } else {
             try {
-                ChameleonPreset preset = ChameleonPreset.valueOf(args[2].toUpperCase());
+                ChameleonPreset preset = ChameleonPreset.valueOf(args[2].toUpperCase(Locale.ROOT));
                 if (preset.getSlot() == -1) {
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "CHAM_NOT_VALID", preset.toString());
                 } else {

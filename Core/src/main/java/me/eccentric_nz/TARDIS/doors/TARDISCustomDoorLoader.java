@@ -5,6 +5,8 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 
+import java.util.Locale;
+
 public class TARDISCustomDoorLoader {
 
     private final TARDIS plugin;
@@ -31,7 +33,7 @@ public class TARDISCustomDoorLoader {
                     int[] frames = getFrames(plugin.getCustomDoorsConfig().getString(r + ".animation_sequence", "0,1"));
                     Door door = new Door(r, material, frames, plugin.getCustomDoorsConfig().getInt(r + ".frame_rate"), plugin.getCustomDoorsConfig().getBoolean(r + ".extra"), plugin.getCustomDoorsConfig().getString(r + ".open_sound"), plugin.getCustomDoorsConfig().getString(r + ".close_sound"), true);
                     Door.byMaterial.put(material, door);
-                    Door.byName.put("DOOR_" + r.toUpperCase(), door);
+                    Door.byName.put("DOOR_" + r.toUpperCase(Locale.ROOT), door);
                 } else {
                     plugin.getMessenger().message(plugin.getConsole(), "Custom door [" + r + "] material must be a pottery sherd!");
                 }

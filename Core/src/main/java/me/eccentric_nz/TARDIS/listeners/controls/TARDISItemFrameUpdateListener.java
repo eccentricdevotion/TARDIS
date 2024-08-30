@@ -39,10 +39,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -76,7 +73,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                 event.setCancelled(true);
                 Control control;
                 try {
-                    control = Control.valueOf(plugin.getTrackerKeeper().getUpdatePlayers().get(uuid).toUpperCase());
+                    control = Control.valueOf(plugin.getTrackerKeeper().getUpdatePlayers().get(uuid).toUpperCase(Locale.ROOT));
                 } catch (IllegalArgumentException e) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_BAD_CLICK", plugin.getTrackerKeeper().getUpdatePlayers().get(uuid));
                     return;

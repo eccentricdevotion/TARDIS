@@ -11,12 +11,14 @@ import org.bukkit.inventory.meta.trim.ArmorTrim;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
 
+import java.util.Locale;
+
 public class ArmourTrim {
 
     public void giveCustomArmour(Player player, String[] args) {
         String key = "cyberman";
         if (args.length == 2) {
-            key = args[1].toLowerCase();
+            key = args[1].toLowerCase(Locale.ROOT);
         }
         // make some custom armour trim
         TrimMaterial material = TrimMaterial.IRON;

@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
+import java.util.Locale;
+
 public enum Weather {
 
     CLEAR,
@@ -23,7 +25,7 @@ public enum Weather {
     THUNDER;
 
     public static Weather fromString(String s) {
-        String lower = s.toLowerCase();
+        String lower = s.toLowerCase(Locale.ROOT);
         return switch (lower) {
             case "r", "rain", "w", "wet" -> RAIN;
             case "t", "thunder", "l", "lightning" -> THUNDER;

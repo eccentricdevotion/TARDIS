@@ -26,6 +26,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
+import java.util.Locale;
 import java.util.UUID;
 
 public class SchematicConvert {
@@ -37,13 +38,13 @@ public class SchematicConvert {
         }
         TardisLight light;
         try {
-            light = TardisLight.valueOf(args[1].toUpperCase());
+            light = TardisLight.valueOf(args[1].toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             light = TardisLight.TENTH;
         }
         Material lamp;
         try {
-            lamp = Material.valueOf(args[2].toUpperCase());
+            lamp = Material.valueOf(args[2].toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             lamp = Material.REDSTONE_LAMP;
         }

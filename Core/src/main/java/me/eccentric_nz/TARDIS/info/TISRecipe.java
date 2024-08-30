@@ -4,6 +4,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.entity.Player;
 
+import java.util.Locale;
+
 public class TISRecipe {
 
     private final TARDIS plugin;
@@ -26,7 +28,7 @@ public class TISRecipe {
             // remove "TARDIS_" and "_RECIPE" from the string and replace underscores with dashes
             String[] find = new String[]{"TARDIS_", "_RECIPE", "_"};
             String[] repl = new String[]{"", "", "-"};
-            recipe = StringUtils.replaceEach(item.toString(), find, repl).toLowerCase();
+            recipe = StringUtils.replaceEach(item.toString(), find, repl).toLowerCase(Locale.ROOT);
         }
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardisrecipe " + recipe));
     }

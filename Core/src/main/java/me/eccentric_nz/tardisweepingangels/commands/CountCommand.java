@@ -27,6 +27,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Collection;
+import java.util.Locale;
 
 public class CountCommand {
 
@@ -40,7 +41,7 @@ public class CountCommand {
         if (args.length < 3) {
             return false;
         }
-        String which = args[1].toUpperCase();
+        String which = args[1].toUpperCase(Locale.ROOT);
         String what = "Angels";
         int count = 0;
         World w = plugin.getServer().getWorld(args[2]);

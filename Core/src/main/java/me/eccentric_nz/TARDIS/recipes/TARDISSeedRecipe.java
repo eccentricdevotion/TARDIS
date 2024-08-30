@@ -63,7 +63,7 @@ public class TARDISSeedRecipe {
             is = new ItemStack(s.getSeedMaterial(), 1);
         } else {
             try {
-                TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(s.getPermission().toUpperCase());
+                TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(s.getPermission().toUpperCase(Locale.ROOT));
                 model = tdi.getCustomModelData();
                 is = new ItemStack(tdi.getMaterial(), 1);
             } catch (IllegalArgumentException e) {

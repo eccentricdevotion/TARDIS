@@ -86,7 +86,7 @@ public class TARDISSudoCommand extends TARDISCompleter implements CommandExecuto
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "PLAYER_NO_TARDIS");
                     return true;
                 }
-                String which = args[1].toLowerCase();
+                String which = args[1].toLowerCase(Locale.ROOT);
                 if (SUDOS.contains(which)) {
                     switch (which) {
                         case "ars" -> {

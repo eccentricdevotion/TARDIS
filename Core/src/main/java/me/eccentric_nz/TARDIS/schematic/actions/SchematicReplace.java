@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.schematic.actions;
 
+import java.util.Locale;
 import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -50,8 +51,8 @@ public class SchematicReplace {
             return true;
         }
         try {
-            Material from = Material.valueOf(args[1].toUpperCase());
-            Material to = Material.valueOf(args[2].toUpperCase());
+            Material from = Material.valueOf(args[1].toUpperCase(Locale.ROOT));
+            Material to = Material.valueOf(args[2].toUpperCase(Locale.ROOT));
             // get the raw coords
             int sx = plugin.getTrackerKeeper().getStartLocation().get(uuid).getBlockX();
             int sy = plugin.getTrackerKeeper().getStartLocation().get(uuid).getBlockY();

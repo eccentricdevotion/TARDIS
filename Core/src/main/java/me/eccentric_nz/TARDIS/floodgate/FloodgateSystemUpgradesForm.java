@@ -20,6 +20,7 @@ import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 public class FloodgateSystemUpgradesForm {
@@ -80,7 +81,7 @@ public class FloodgateSystemUpgradesForm {
                         cost = plugin.getSystemUpgradesConfig().getString("branch");
                         image = "sys_branch_locked";
                     } else {
-                        cost = plugin.getSystemUpgradesConfig().getString(g.getBranch() + "." + g.toString().toLowerCase());
+                        cost = plugin.getSystemUpgradesConfig().getString(g.getBranch() + "." + g.toString().toLowerCase(Locale.ROOT));
                     }
                     suffix = " " + ChatColor.BLUE + ChatColor.ITALIC + "Cost: " + cost;
                 } else {
@@ -140,7 +141,7 @@ public class FloodgateSystemUpgradesForm {
                 if (clicked.getBranch().equals("branch")) {
                     cost = plugin.getSystemUpgradesConfig().getInt("branch");
                 } else {
-                    cost = plugin.getSystemUpgradesConfig().getInt(clicked.getBranch() + "." + clicked.toString().toLowerCase());
+                    cost = plugin.getSystemUpgradesConfig().getInt(clicked.getBranch() + "." + clicked.toString().toLowerCase(Locale.ROOT));
                 }
                 if (cost > sysData.getArtronLevel()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_COST", clicked.getName());

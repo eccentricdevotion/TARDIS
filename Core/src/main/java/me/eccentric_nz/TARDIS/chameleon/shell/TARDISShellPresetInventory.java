@@ -26,6 +26,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * A TARDIS with a functioning chameleon circuit can appear as almost anything desired. The owner can program the
@@ -62,7 +63,7 @@ public class TARDISShellPresetInventory {
 
         for (ChameleonPreset preset : ChameleonPreset.values()) {
             if (!ChameleonPreset.NOT_THESE.contains(preset.getCraftMaterial()) && !preset.usesArmourStand()) {
-                if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase())) {
+                if (TARDISPermission.hasPermission(player, "tardis.preset." + preset.toString().toLowerCase(Locale.ROOT))) {
                     ItemStack is = new ItemStack(preset.getGuiDisplay(), 1);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName(preset.getDisplayName());

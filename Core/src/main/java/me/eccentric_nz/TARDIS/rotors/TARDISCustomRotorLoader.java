@@ -20,6 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 
+import java.util.Locale;
+
 /**
  * @author eccentric_nz
  */
@@ -84,7 +86,7 @@ public class TARDISCustomRotorLoader {
                 // add the rotor to look-ups
                 Rotor.byMaterial.put(material, column);
                 Rotor.byCustomModelData.put(cmd, column);
-                Rotor.byName.put("TIME_ROTOR_" + r.toUpperCase(), column);
+                Rotor.byName.put("TIME_ROTOR_" + r.toUpperCase(Locale.ROOT), column);
             } catch (IllegalArgumentException e) {
                 plugin.debug("Invalid custom rotor item material for " + r + "!");
             }

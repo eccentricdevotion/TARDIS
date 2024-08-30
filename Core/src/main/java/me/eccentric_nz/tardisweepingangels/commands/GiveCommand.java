@@ -24,6 +24,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Locale;
+
 public class GiveCommand {
 
     private final TARDIS plugin;
@@ -43,7 +45,7 @@ public class GiveCommand {
             return true;
         }
         // check monster type
-        String upper = args[2].toUpperCase();
+        String upper = args[2].toUpperCase(Locale.ROOT);
         Monster monster;
         try {
             monster = Monster.valueOf(upper);

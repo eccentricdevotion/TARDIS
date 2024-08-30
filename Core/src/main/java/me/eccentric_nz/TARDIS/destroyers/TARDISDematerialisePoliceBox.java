@@ -37,6 +37,7 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Locale;
 import java.util.UUID;
 
 public class TARDISDematerialisePoliceBox implements Runnable {
@@ -118,7 +119,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                     }
                     if (!minecart) {
                         String sound = switch (spaceTimeThrottle) {
-                            case WARP, RAPID, FASTER -> "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase();
+                            case WARP, RAPID, FASTER -> "tardis_takeoff_" + spaceTimeThrottle.toString().toLowerCase(Locale.ROOT);
                             default -> // NORMAL
                                     "tardis_takeoff";
                         };

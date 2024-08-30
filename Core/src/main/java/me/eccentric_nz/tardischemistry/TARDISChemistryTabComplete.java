@@ -28,6 +28,7 @@ import org.bukkit.command.TabCompleter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class TARDISChemistryTabComplete extends TARDISCompleter implements TabCompleter {
 
@@ -54,7 +55,7 @@ public class TARDISChemistryTabComplete extends TARDISCompleter implements TabCo
         if (args.length == 1) {
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
-            String sub = args[0].toLowerCase();
+            String sub = args[0].toLowerCase(Locale.ROOT);
             if (sub.equals("gui") || sub.equals("recipe")) {
                 return partial(lastArg, GUI_SUBS);
             }
