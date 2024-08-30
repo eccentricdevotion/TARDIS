@@ -105,9 +105,9 @@ class TARDISHostileDisplacement {
                         // sound the cloister bell at HADS location for materialisation
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             TARDISCloisterBell end = new TARDISCloisterBell(plugin, 6, id, fl, plugin.getServer().getPlayer(uuid), false, "", true);
-                            int endTask = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, end, 2L, 70L);
-                            bell.setTask(endTask);
-                            plugin.getTrackerKeeper().getCloisterBells().put(id, endTask);
+                            int endTaskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, end, 2L, 70L);
+                            end.setTask(endTaskID);
+                            plugin.getTrackerKeeper().getCloisterBells().put(id, endTaskID);
                         }, 420L);
                         // set current
                         HashMap<String, Object> tid = new HashMap<>();
