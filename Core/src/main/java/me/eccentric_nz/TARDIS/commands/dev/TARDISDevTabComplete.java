@@ -42,7 +42,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
             "add_regions", "advancements",
             "biome", "box", "brushable",
             "chunks", "chunky", "circuit",
-            "dismount", "displayitem",
+            "debug", "dismount", "displayitem",
             "effect",
             "frame", "furnace",
             "gravity",

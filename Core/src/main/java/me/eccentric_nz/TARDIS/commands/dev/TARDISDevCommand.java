@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.lazarus.disguise.ArmourTrim;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
+import me.eccentric_nz.TARDIS.rooms.debug.DebugPopulator;
 import me.eccentric_nz.TARDIS.skins.ArchSkins;
 import me.eccentric_nz.TARDIS.skins.DoctorSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
@@ -33,6 +34,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardisregeneration.Regenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BrushableBlock;
 import org.bukkit.command.Command;
@@ -63,7 +65,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "add_regions", "advancements",
             "biome", "box", "brushable",
             "chunks", "chunky", "circuit",
-            "dismount", "displayitem",
+            "debug", "dismount", "displayitem",
             "effect",
             "frame", "furnace",
             "gravity",
@@ -103,6 +105,18 @@ public class TARDISDevCommand implements CommandExecutor {
                         }
                         case "biome" -> {
                             return new TARDISBiomeCommand().reset(sender);
+                        }
+                        case "debug" -> {
+                            // get default world
+                            String dn = "TARDIS_TimeVortex";
+                            if (plugin.getConfig().getBoolean("creation.default_world")) {
+                                dn = plugin.getConfig().getString("creation.default_world_name");
+                            }
+                            World world = plugin.getServer().getWorld(dn);
+                            if (world != null) {
+                                new DebugPopulator(plugin, world).createBase();
+                            }
+                            return true;
                         }
                         case "furnace" -> {
                             return new TARDISFurnaceCommand(plugin).list(sender);

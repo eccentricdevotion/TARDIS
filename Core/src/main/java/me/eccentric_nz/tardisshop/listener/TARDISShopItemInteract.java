@@ -1,7 +1,5 @@
 package me.eccentric_nz.tardisshop.listener;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -15,12 +13,7 @@ import me.eccentric_nz.tardisshop.database.ResultSetShopItem;
 import me.eccentric_nz.tardisshop.database.UpdateShopItem;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.ItemDisplay;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.TextDisplay;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -30,6 +23,9 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class TARDISShopItemInteract implements Listener {
 
@@ -107,22 +103,13 @@ public class TARDISShopItemInteract implements Listener {
     private void giveItem(String item, Player player) {
         try {
             ShopItem recipe = ShopItem.valueOf(TARDISStringUtils.toEnumUppercase(item));
-            ItemStack is;
-            switch (recipe.getRecipeType()) {
-                case BLUEPRINT:
-                    is = ShopItemGetter.getBlueprintItem(recipe, player);
-                    break;
-                case TWA:
-                    is = ShopItemGetter.getTWAItem(recipe);
-                    break;
-                case SEED:
-                    is = ShopItemGetter.getSeedItem(recipe);
-                    break;
-                case SHAPELESS:
-                default:
-                    is = ShopItemGetter.getShapeItem(recipe, player);
-                    break;
-            }
+            ItemStack is = switch (recipe.getRecipeType()) {
+                case BLUEPRINT -> ShopItemGetter.getBlueprintItem(recipe, player);
+                case TWA -> ShopItemGetter.getTWAItem(recipe);
+                case SEED -> ShopItemGetter.getSeedItem(recipe);
+                // SHAPED & SHAPELESS
+                default -> ShopItemGetter.getShapeItem(recipe, player);
+            };
             if (is != null) {
                 HashMap<Integer, ItemStack> res = player.getInventory().addItem(is);
                 if (!res.isEmpty()) {
