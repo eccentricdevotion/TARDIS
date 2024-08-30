@@ -50,7 +50,7 @@ public class TARDISItemDisplaySetter {
             if (stack.has("cmd")) {
                 model = stack.get("cmd").getAsInt();
             }
-            if (stack.has("door")) {
+            if (id > 0 && stack.has("door")) {
                 HashMap<String, Object> setd = new HashMap<>();
                 String doorloc = block.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
                 setd.put("door_location", doorloc);

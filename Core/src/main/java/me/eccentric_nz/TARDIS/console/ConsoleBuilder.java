@@ -34,12 +34,14 @@ public class ConsoleBuilder {
         String prefix = "~";
         Block up = block.getRelative(BlockFace.UP);
         // save the block location
-        HashMap<String, Object> setb = new HashMap<>();
-        setb.put("tardis_id", id);
-        setb.put("uuid", TARDISStaticLocationGetters.makeLocationStr(block.getLocation()));
-        setb.put("control", "CENTRE");
-        setb.put("state", 0);
-        plugin.getQueryFactory().doInsert("interactions", setb);
+        if (id > 0) {
+            HashMap<String, Object> setb = new HashMap<>();
+            setb.put("tardis_id", id);
+            setb.put("uuid", TARDISStaticLocationGetters.makeLocationStr(block.getLocation()));
+            setb.put("control", "CENTRE");
+            setb.put("state", 0);
+            plugin.getQueryFactory().doInsert("interactions", setb);
+        }
         // spawn a centre display item
         UUID centre = spawnCentreDisplay(up.getLocation(), type);
         builder.append(centre);
@@ -95,10 +97,12 @@ public class ConsoleBuilder {
             if (i == ConsoleInteraction.EXTERIOR_LAMP_LEVEL_SWITCH || i == ConsoleInteraction.INTERIOR_LIGHT_LEVEL_SWITCH) {
                 interaction.getPersistentDataContainer().set(plugin.getUnaryKey(), PersistentDataType.INTEGER, 1);
                 // add a control record
-                int cid = (i == ConsoleInteraction.EXTERIOR_LAMP_LEVEL_SWITCH) ? 49 : 50;
-                plugin.getQueryFactory().insertControl(id, cid, location.toString(), 0);
+                if (id > 0) {
+                    int cid = (i == ConsoleInteraction.EXTERIOR_LAMP_LEVEL_SWITCH) ? 49 : 50;
+                    plugin.getQueryFactory().insertControl(id, cid, location.toString(), 0);
+                }
             }
-            if (i == ConsoleInteraction.HANDBRAKE) {
+            if (i == ConsoleInteraction.HANDBRAKE && id > 0) {
                 plugin.getQueryFactory().insertControl(id, 0, location.toString(), 0);
             }
             if (i == ConsoleInteraction.SCREEN_RIGHT || i == ConsoleInteraction.SCREEN_LEFT) {
@@ -109,12 +113,14 @@ public class ConsoleBuilder {
             interaction.setInteractionHeight(i.getHeight());
             interaction.setPersistent(true);
             interaction.setInvulnerable(true);
-            HashMap<String, Object> data = new HashMap<>();
-            data.put("tardis_id", id);
-            data.put("uuid", interaction.getUniqueId());
-            data.put("control", i.toString());
-            data.put("state", i.getDefaultState());
-            plugin.getQueryFactory().doInsert("interactions", data);
+            if (id > 0) {
+                HashMap<String, Object> data = new HashMap<>();
+                data.put("tardis_id", id);
+                data.put("uuid", interaction.getUniqueId());
+                data.put("control", i.toString());
+                data.put("state", i.getDefaultState());
+                plugin.getQueryFactory().doInsert("interactions", data);
+            }
         }
     }
 
@@ -127,7 +133,7 @@ public class ConsoleBuilder {
         }
         Material material = interaction.getMaterial();
         int cmd = interaction.getCustomModelData();
-        if (interaction == ConsoleInteraction.DIRECTION) {
+        if (interaction == ConsoleInteraction.DIRECTION && id > 0) {
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             cmd = (rsc.resultSet()) ? getCmd(rsc.getDirection()) + 10000 : 10000;
         }

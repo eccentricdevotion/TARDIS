@@ -46,6 +46,7 @@ creation:
     easy: REDSTONE_TORCH
     normal: SOUL_LANTERN
     hard: DRAGON_BREATH
+  previews: true
 # outer TARDIS
 # https://tardis.pages.dev/configuration/preset
 police_box:

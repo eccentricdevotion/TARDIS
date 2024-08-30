@@ -30,8 +30,9 @@ public class Schematic {
     private final boolean beacon;
     private final TardisLight light;
     private final boolean custom;
+    private final int preview;
 
-    public Schematic(String seed, String permission, String description, ConsoleSize consoleSize, boolean beacon, TardisLight light, boolean custom) {
+    public Schematic(String seed, String permission, String description, ConsoleSize consoleSize, boolean beacon, TardisLight light, boolean custom, int preview) {
         this.seed = seed;
         this.permission = permission;
         this.description = description;
@@ -39,6 +40,7 @@ public class Schematic {
         this.beacon = beacon;
         this.light = light;
         this.custom = custom;
+        this.preview = preview;
     }
 
     /**
@@ -111,6 +113,15 @@ public class Schematic {
      */
     public boolean isCustom() {
         return custom;
+    }
+
+    /**
+     * Gets the TIPS slot number for this console when built as a preview.
+     *
+     * @return the TIPS slot.
+     */
+    public int getPreview() {
+        return preview;
     }
 
     /**

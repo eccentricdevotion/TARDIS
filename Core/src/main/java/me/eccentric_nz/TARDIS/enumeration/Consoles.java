@@ -64,8 +64,8 @@ public class Consoles {
                 NO_BEACON.add(ts);
             }
         }
-        BY_PERMS.put("junk", new Schematic("MILK_BUCKET", "junk", "Junk Console", ConsoleSize.SMALL, false, TardisLight.TENTH, false));
-        Schematic archive = new Schematic("BONE_BLOCK", "archive", "Archived Console", ConsoleSize.MEDIUM, false, TardisLight.CLASSIC, true);
+        BY_PERMS.put("junk", new Schematic("MILK_BUCKET", "junk", "Junk Console", ConsoleSize.SMALL, false, TardisLight.TENTH, false, 0));
+        Schematic archive = new Schematic("BONE_BLOCK", "archive", "Archived Console", ConsoleSize.MEDIUM, false, TardisLight.CLASSIC, true, 0);
         BY_PERMS.put("archive", archive);
         BY_MATERIALS.put("BONE_BLOCK", archive);
     }

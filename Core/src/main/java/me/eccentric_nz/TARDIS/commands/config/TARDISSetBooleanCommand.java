@@ -74,13 +74,14 @@ class TARDISSetBooleanCommand {
                 plugin.debug("Could not save artron.yml, " + ex.getMessage());
             }
         } else {
-            if (first.equals("abandon")) {
+            if (first.equals("abandon") || first.equals("previews")) {
                 if (tf.equals("true") && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
-                    plugin.getMessenger().messageWithColour(sender, "Abandoned TARDISes cannot be enabled as TARDISes are not stored in a TIPS world!", "#FF55555");
+                    String which = first.equals("abandon") ? "Abandoned TARDISes" : "Desktop previews";
+                    plugin.getMessenger().messageWithColour(sender, which + " cannot be enabled as TARDISes are not stored in a TIPS world!", "#FF55555");
                     return true;
                 }
-                plugin.getConfig().set("abandon.enabled", bool);
-            } else if (first.equals("archive")) {
+            }
+            if (first.equals("archive") || first.equals("abandon")) {
                 plugin.getConfig().set(first + ".enabled", bool);
             } else {
                 plugin.getConfig().set(first, bool);

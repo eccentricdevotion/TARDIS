@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.arch.TARDISWatchData;
 import me.eccentric_nz.TARDIS.builders.BuildData;
+import me.eccentric_nz.TARDIS.desktop.PreviewData;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayType;
 import me.eccentric_nz.TARDIS.enumeration.Bind;
@@ -54,18 +55,15 @@ import java.util.*;
  */
 public class TARDISTrackerInstanceKeeper {
 
-    private final HashMap<UUID, CastData> casters = new HashMap<>();
-    private final HashMap<UUID, Set<Block>> castRestore = new HashMap<>();
-    private final HashMap<UUID, Integer> rotorRestore = new HashMap<>();
     private final HashMap<Integer, Boolean> malfunction = new HashMap<>();
     private final HashMap<Integer, Integer> cloisterBells = new HashMap<>();
-    private final HashMap<Integer, Integer> hadsDamage = new HashMap<>();
     private final HashMap<Integer, Integer> destinationVortex = new HashMap<>();
+    private final HashMap<Integer, Integer> hadsDamage = new HashMap<>();
     private final HashMap<Integer, Integer> shriekers = new HashMap<>();
-    private final HashMap<Integer, TravelCostAndType> hasDestination = new HashMap<>();
     private final HashMap<Integer, String> renderer = new HashMap<>();
     private final HashMap<Integer, TARDISAntiBuild> antiBuild = new HashMap<>();
     private final HashMap<Integer, TARDISRoomData> roomTasks = new HashMap<>();
+    private final HashMap<Integer, TravelCostAndType> hasDestination = new HashMap<>();
     private final HashMap<Integer, UUID> rescue = new HashMap<>();
     private final HashMap<Location, TARDISTeleportLocation> portals = new HashMap<>();
     private final HashMap<String, List<TARDISSiegeArea>> siegeBreedingAreas = new HashMap<>();
@@ -74,15 +72,19 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, Block> invisibleDoors = new HashMap<>();
     private final HashMap<UUID, Block> lazarus = new HashMap<>();
     private final HashMap<UUID, BuildData> flightData = new HashMap<>();
+    private final HashMap<UUID, CastData> casters = new HashMap<>();
     private final HashMap<UUID, ComehereRequest> comehereRequests = new HashMap<>();
     private final HashMap<UUID, Double[]> gravity = new HashMap<>();
+    private final HashMap<UUID, FlightReturnData> flyingReturnLocation = new HashMap<>();
     private final HashMap<UUID, Integer> binder = new HashMap<>();
     private final HashMap<UUID, Integer> count = new HashMap<>();
     private final HashMap<UUID, Integer> ejecting = new HashMap<>();
     private final HashMap<UUID, Integer> junkPlayers = new HashMap<>();
+    private final HashMap<UUID, Integer> rotorRestore = new HashMap<>();
     private final HashMap<UUID, Integer> savesIds = new HashMap<>();
     private final HashMap<UUID, Integer> secondaryRemovers = new HashMap<>();
     private final HashMap<UUID, Integer> siegeCarrying = new HashMap<>();
+    private final HashMap<UUID, ItemStack> hiddenFlight = new HashMap<>();
     private final HashMap<UUID, JsonObject> pastes = new HashMap<>();
     private final HashMap<UUID, List<Location>> manualFlightLocations = new HashMap<>();
     private final HashMap<UUID, List<UUID>> renderedNPCs = new HashMap<>();
@@ -92,37 +94,35 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, Location> junkRelog = new HashMap<>();
     private final HashMap<UUID, Location> sonicGenerators = new HashMap<>();
     private final HashMap<UUID, Location> startLocation = new HashMap<>();
-    private final HashMap<UUID, FlightReturnData> flyingReturnLocation = new HashMap<>();
-    private final HashMap<UUID, Long> cooldown = new HashMap<>();
     private final HashMap<UUID, Long> brushCooldown = new HashMap<>();
+    private final HashMap<UUID, Long> cooldown = new HashMap<>();
     private final HashMap<UUID, Long> hideCooldown = new HashMap<>();
     private final HashMap<UUID, Long> rebuildCooldown = new HashMap<>();
     private final HashMap<UUID, Long> setTime = new HashMap<>();
+    private final HashMap<UUID, PreviewData> previewers = new HashMap<>();
+    private final HashMap<UUID, Set<Block>> castRestore = new HashMap<>();
     private final HashMap<UUID, String> area = new HashMap<>();
-    private final HashMap<UUID, String> areaStartBlock = new HashMap<>();
     private final HashMap<UUID, String> areaEndBlock = new HashMap<>();
+    private final HashMap<UUID, String> areaStartBlock = new HashMap<>();
     private final HashMap<UUID, String> flight = new HashMap<>();
     private final HashMap<UUID, String> jettison = new HashMap<>();
     private final HashMap<UUID, String> perm = new HashMap<>();
-    private final HashMap<UUID, String> updatePlayers = new HashMap<>();
     private final HashMap<UUID, String> preset = new HashMap<>();
-    private final HashMap<UUID, TranslateData> translators = new HashMap<>();
     private final HashMap<UUID, String> telepathicPlacements = new HashMap<>();
+    private final HashMap<UUID, String> updatePlayers = new HashMap<>();
     private final HashMap<UUID, TARDISDisplayType> display = new HashMap<>();
     private final HashMap<UUID, TARDISInfoMenu> infoMenu = new HashMap<>();
-    private final HashMap<UUID, TISCategory> infoGUI = new HashMap<>();
     private final HashMap<UUID, TARDISMoveSession> moveSessions = new HashMap<>();
     private final HashMap<UUID, TARDISRegulatorRunnable> regulating = new HashMap<>();
     private final HashMap<UUID, TARDISSeedData> roomSeed = new HashMap<>();
     private final HashMap<UUID, TARDISUpgradeData> upgrades = new HashMap<>();
     private final HashMap<UUID, TARDISWatchData> johnSmith = new HashMap<>();
-    private final HashMap<UUID, Updateable> secondary = new HashMap<>();
+    private final HashMap<UUID, TISCategory> infoGUI = new HashMap<>();
+    private final HashMap<UUID, TranslateData> translators = new HashMap<>();
     private final HashMap<UUID, UUID> chatRescue = new HashMap<>();
     private final HashMap<UUID, UUID> telepathicRescue = new HashMap<>();
     private final HashMap<UUID, UUID> telepaths = new HashMap<>();
-    private final Set<String> artronFurnaces = new HashSet<>();
-    private final Set<String> heatBlocks = new HashSet<>();
-    private final Set<String> resetWorlds = new HashSet<>();
+    private final HashMap<UUID, Updateable> secondary = new HashMap<>();
     private final Set<Integer> dematerialising = new HashSet<>();
     private final Set<Integer> didDematToVortex = new HashSet<>();
     private final Set<Integer> dispersedTARDII = new HashSet<>();
@@ -131,11 +131,14 @@ public class TARDISTrackerInstanceKeeper {
     private final Set<Integer> hasRandomised = new HashSet<>();
     private final Set<Integer> inSiegeMode = new HashSet<>();
     private final Set<Integer> inVortex = new HashSet<>();
+    private final Set<Integer> isGrowingRooms = new HashSet<>();
     private final Set<Integer> isSiegeCube = new HashSet<>();
     private final Set<Integer> materialising = new HashSet<>();
     private final Set<Integer> minecart = new HashSet<>();
     private final Set<Integer> submarine = new HashSet<>();
-    private final Set<Integer> isGrowingRooms = new HashSet<>();
+    private final Set<String> artronFurnaces = new HashSet<>();
+    private final Set<String> heatBlocks = new HashSet<>();
+    private final Set<String> resetWorlds = new HashSet<>();
     private final Set<UUID> arrangers = new HashSet<>();
     private final Set<UUID> beaconColouring = new HashSet<>();
     private final Set<UUID> constructors = new HashSet<>();
@@ -144,18 +147,17 @@ public class TARDISTrackerInstanceKeeper {
     private final Set<UUID> eyeDamage = new HashSet<>();
     private final Set<UUID> farming = new HashSet<>();
     private final Set<UUID> frozenPlayers = new HashSet<>();
-    private final Set<UUID> geneticallyModified = new HashSet<>();
     private final Set<UUID> geneticManipulation = new HashSet<>();
+    private final Set<UUID> geneticallyModified = new HashSet<>();
     private final Set<UUID> handlesRotation = new HashSet<>();
     private final Set<UUID> hasTravelled = new HashSet<>();
-    private final HashMap<UUID, ItemStack> hiddenFlight = new HashMap<>();
     private final Set<UUID> howTo = new HashSet<>();
     private final Set<UUID> lightChangers = new HashSet<>();
     private final Set<UUID> mover = new HashSet<>();
     private final Set<UUID> recipeViewers = new HashSet<>();
     private final Set<UUID> renderRoomOccupants = new HashSet<>();
-    private final Set<UUID> sonicDoors = new HashSet<>();
     private final Set<UUID> sonicDoorToggle = new HashSet<>();
+    private final Set<UUID> sonicDoors = new HashSet<>();
     private final Set<UUID> spectacleWearers = new HashSet<>();
     private final Set<UUID> stillFlyingNotReturning = new HashSet<>();
     private final Set<UUID> temporallyLocated = new HashSet<>();
@@ -1072,6 +1074,16 @@ public class TARDISTrackerInstanceKeeper {
      */
     public Set<UUID> getMover() {
         return mover;
+    }
+
+
+    /**
+     * Tracks players previewing TARDIS desktops or the resource pack debug area
+     *
+     * @return a collection of player UUIDs
+     */
+    public HashMap<UUID, PreviewData> getPreviewers() {
+        return previewers;
     }
 
     /**

@@ -340,6 +340,7 @@ public class TARDIS extends JavaPlugin {
             loadLanguage();
             loadSigns();
             loadChameleonGUIs();
+            // world loading happens here
             new TARDISConfiguration(this).checkConfig();
             prefix = getConfig().getString("storage.mysql.prefix");
             loadDatabase();

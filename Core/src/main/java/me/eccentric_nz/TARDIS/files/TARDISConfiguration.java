@@ -25,6 +25,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -107,6 +108,7 @@ public class TARDISConfiguration {
         booleanOptions.put("creation.default_world", true);
         booleanOptions.put("creation.enable_legacy", true);
         booleanOptions.put("creation.keep_night", true);
+        booleanOptions.put("creation.previews", true);
         booleanOptions.put("creation.seed_block.crafting", true);
         booleanOptions.put("creation.seed_block.legacy", true);
         booleanOptions.put("debug", false);
@@ -374,7 +376,7 @@ public class TARDISConfiguration {
         }
         // transfer / remove difficulty settings
         if (config.contains("preferences.difficulty")) {
-            switch (config.getString("preferences.difficulty", "easy").toLowerCase()) {
+            switch (config.getString("preferences.difficulty", "easy").toLowerCase(Locale.ROOT)) {
                 case "medium" -> {
                     plugin.getConfig().set("difficulty.crafting", "easy");
                     plugin.getConfig().set("difficulty.circuits", false);

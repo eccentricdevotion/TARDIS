@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonConstructor;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIUpgrade;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
@@ -25,6 +26,8 @@ import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.List;
 
 /**
  * By the time of his eleventh incarnation, the Doctor's console room had gone
@@ -68,6 +71,16 @@ public class TARDISPluginThemeInventory extends TARDISThemeInventory {
                     i++;
                 }
             }
+        }
+        if (plugin.getConfig().getBoolean("creation.previews")) {
+            // info
+            ItemStack info = new ItemStack(GUIChameleonConstructor.INFO.material(), 1);
+            ItemMeta io = info.getItemMeta();
+            io.setDisplayName("Info");
+            io.setLore(List.of("Shift-left click", "a console block to", "transmat to a", "desktop preview."));
+            io.setCustomModelData(GUIUpgrade.INFO.customModelData());
+            info.setItemMeta(io);
+            stack[GUIUpgrade.INFO.slot()] = info;
         }
         // archive consoles
         if (TARDISPermission.hasPermission(player, "tardis.archive")) {

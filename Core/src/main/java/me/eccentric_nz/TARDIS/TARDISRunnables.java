@@ -6,6 +6,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceParticle;
 import me.eccentric_nz.TARDIS.artron.TARDISStandbyMode;
 import me.eccentric_nz.TARDIS.console.ControlMonitor;
 import me.eccentric_nz.TARDIS.control.TARDISControlRunnable;
+import me.eccentric_nz.TARDIS.desktop.TARDISDesktopPreview;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceField;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesRunnable;
@@ -115,6 +116,8 @@ public class TARDISRunnables {
             }
             startStandBy(plugin);
         }
+        // add desktop previews
+        new TARDISDesktopPreview(plugin).create();
 //        if (plugin.getConfig().getBoolean("debug")) {
 //            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new RecipeChecker(), 100L);
 //        }

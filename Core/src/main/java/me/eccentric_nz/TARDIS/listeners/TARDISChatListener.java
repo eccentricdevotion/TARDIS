@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISAcceptor;
+import me.eccentric_nz.TARDIS.desktop.PreviewData;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesPattern;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesRequest;
@@ -25,6 +26,9 @@ import me.eccentric_nz.TARDIS.howto.TARDISSeedsInventory;
 import me.eccentric_nz.TARDIS.travel.ComehereAction;
 import me.eccentric_nz.TARDIS.travel.ComehereRequest;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -64,17 +68,18 @@ public class TARDISChatListener implements Listener {
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChat(AsyncPlayerChatEvent event) {
-        UUID chatter = event.getPlayer().getUniqueId();
+        Player player = event.getPlayer();
+        UUID chatter = player.getUniqueId();
         String chat = event.getMessage().toLowerCase(Locale.ENGLISH);
         if (chat != null) {
             if (chat.equals("tardis rescue accept") || chat.equals("tardis request accept")) {
                 event.setCancelled(true);
                 boolean request = (chat.equals("tardis request accept"));
                 if (plugin.getTrackerKeeper().getChatRescue().containsKey(chatter)) {
-                    new TARDISAcceptor(plugin).doRequest(event.getPlayer(), request);
+                    new TARDISAcceptor(plugin).doRequest(player, request);
                 } else {
                     String message = (request) ? "REQUEST_TIMEOUT" : "RESCUE_TIMEOUT";
-                    plugin.getMessenger().send(event.getPlayer(), TardisModule.TARDIS, message);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, message);
                 }
             } else if (chat.equals("tardis call accept")) {
                 // process comehere request
@@ -84,14 +89,30 @@ public class TARDISChatListener implements Listener {
                     new ComehereAction(plugin).doTravel(request);
                     plugin.getTrackerKeeper().getComehereRequests().remove(chatter);
                 } else {
-                    plugin.getMessenger().send(event.getPlayer(), TardisModule.TARDIS, "REQUEST_TIMEOUT");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "REQUEST_TIMEOUT");
                 }
             } else if (handlesPattern.matcher(chat).lookingAt()) {
                 event.setCancelled(true);
                 // process handles request
                 new TARDISHandlesRequest(plugin).process(chatter, event.getMessage());
+            } else if (chat.equals("done") && plugin.getTrackerKeeper().getPreviewers().containsKey(chatter)) {
+                event.setCancelled(true);
+                // transmat back to TARDIS
+                PreviewData pd = plugin.getTrackerKeeper().getPreviewers().get(chatter);
+                Location transmat = pd.location();
+                if (transmat != null) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT");
+                    plugin.getTrackerKeeper().getPreviewers().remove(chatter);
+                    // transmat to preview desktop
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        // set gamemode
+                        player.playSound(transmat, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
+                        player.teleport(transmat);
+                        player.setGameMode(pd.gamemode());
+                    }, 10L);
+                }
             } else {
-                handleChat(event.getPlayer(), event.getMessage());
+                handleChat(player, event.getMessage());
             }
         }
     }

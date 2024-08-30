@@ -21,7 +21,7 @@ public class TARDISSignSetter {
             BlockData signData = plugin.getServer().createBlockData(signObject.get("data").getAsString());
             psb.setBlockData(signData);
             JsonObject text = signObject.has("sign") ? signObject.get("sign").getAsJsonObject() : null;
-            if (text != null) {
+            if (id > 0 && text != null) {
                 setSign(psb, text, plugin, id);
             }
         }
