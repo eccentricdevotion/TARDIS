@@ -97,7 +97,7 @@ public class EquipCommand {
                         int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(stand), 1, 20);
                         stand.getPersistentDataContainer().set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
                         // set helmet to sword version
-                        meta.setCustomModelData(9);
+                        meta.setCustomModelData(405);
                     }
                     if (monster == Monster.MIRE || monster == Monster.SLITHEEN) {
                         // set no helmet!
