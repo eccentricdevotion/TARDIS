@@ -106,6 +106,8 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %sportals (portal_id int(11) NOT NULL AUTO_INCREMENT, portal varchar(512) DEFAULT '', teleport varchar(512) DEFAULT '', direction varchar(5) DEFAULT '', tardis_id int(11) DEFAULT '0', abandoned int(1) DEFAULT '0', PRIMARY KEY (portal_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
+            "CREATE TABLE IF NOT EXISTS %spreviewers (uuid varchar(48) NOT NULL, world varchar(64) DEFAULT '', x float(7,1) DEFAULT '0', y float(3,1) DEFAULT '0', z float(7,1) DEFAULT '0', yaw float(7,1) DEFAULT '0.0', pitch float(7,1) DEFAULT '0.0', gamemode varchar(16) DEFAULT '', PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
             "CREATE TABLE IF NOT EXISTS %sprograms (program_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', name varchar(32) DEFAULT '', inventory text NULL, parsed text NULL, checked int(1) DEFAULT '1', PRIMARY KEY (program_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %sreminders (reminder_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', reminder text NULL, time int(11) DEFAULT '0', PRIMARY KEY (reminder_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
@@ -242,6 +244,8 @@ public class SQL {
 
             "(%s, '%s', '%s', '%s', %s, %s)",
 
+            "('%s', '%s', %s, %s, %s, %s, %s, '%s')",
+
             "(%s, '%s', '%s', '%s', '%s', %s)",
 
             "(%s, '%s', '%s', %s)",
@@ -377,6 +381,8 @@ public class SQL {
             "INSERT INTO `%splayer_prefs` (`pp_id`, `uuid`, `player`, `key_item`, `sfx_on`, `quotes_on`, `artron_level`, `wall`, `floor`,  `siege_wall`, `siege_floor`, `announce_repeaters_on`, `auto_on`, `auto_type`, `auto_default`, `beacon_on`, `hads_on`, `hads_type`, `build_on`, `close_gui_on`, `eps_on`, `eps_message`, `language`, `submarine_on`, `dnd_on`, `dynamic_lamps_on`, `minecart_on`, `renderer_on`, `sign_on`, `telepathy_on`, `travelbar_on`, `info_on`, `farm_on`,  `lights`, `auto_siege_on`, `flying_mode`, `throttle`, `auto_powerup_on`, `auto_rescue_on`, `hum`, `regenerations`, `regen_block_on`) VALUES ",
 
             "INSERT INTO `%sportals` (`portal_id`, `portal`, `teleport`, `direction`, `tardis_id`, `abandoned`) VALUES ",
+
+            "INSERT INTO `%spreviewers` (`uuid`, `world`, `x`, `y`, `z`, `yaw`, `pitch`, `gamemode`) VALUES ",
 
             "INSERT INTO `%sprograms` (`program_id`, `uuid`, `name`, `inventory`, `parsed`, `checked`) VALUES ",
 

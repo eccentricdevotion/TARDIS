@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.flight.FlightReturnData;
 import me.eccentric_nz.TARDIS.flight.FlyingAnimation;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
@@ -35,6 +36,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Chunk;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
@@ -77,6 +79,10 @@ public class TARDISJoinListener implements Listener {
         if (plugin.getConfig().getBoolean("modules.regeneration")) {
             // reset invulnerability as player may have logged out during regeneration
             player.setInvulnerable(false);
+        }
+        if (plugin.getConfig().getBoolean("creation.previews") && plugin.getTrackerKeeper().getPreviewers().containsKey(player.getUniqueId())) {
+            player.setGameMode(GameMode.ADVENTURE);
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "PREVIEW_DONE");
         }
         String uuid = player.getUniqueId().toString();
         if (plugin.getKitsConfig().getBoolean("give.join.enabled")) {

@@ -4,6 +4,7 @@ import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockPersister;
 import me.eccentric_nz.TARDIS.camera.CameraPersister;
 import me.eccentric_nz.TARDIS.database.TARDISTimeRotorLoader;
+import me.eccentric_nz.TARDIS.desktop.TARDISPreviewPersister;
 import me.eccentric_nz.TARDIS.flight.FlightPersister;
 import me.eccentric_nz.TARDIS.flight.TARDISVortexPersister;
 import me.eccentric_nz.TARDIS.forcefield.TARDISForceFieldPersister;
@@ -43,6 +44,9 @@ public class TARDISPersister {
         if (plugin.getConfig().getInt("allow.force_field") > 0) {
             new TARDISForceFieldPersister(plugin).load();
         }
+        if (plugin.getConfig().getBoolean("creation.previews")) {
+            new TARDISPreviewPersister(plugin).load();
+        }
         new TARDISTimeRotorLoader(plugin).load();
         new TARDISVortexPersister(plugin).load();
         new FlightPersister(plugin).load();
@@ -68,6 +72,9 @@ public class TARDISPersister {
         }
         if (plugin.getConfig().getBoolean("siege.enabled")) {
             new TARDISSiegePersister(plugin).saveCubes();
+        }
+        if (plugin.getConfig().getBoolean("creation.previews")) {
+            new TARDISPreviewPersister(plugin).save();
         }
         if (plugin.getConfig().getBoolean("allow.hads")) {
             new TARDISHadsPersister(plugin).save();

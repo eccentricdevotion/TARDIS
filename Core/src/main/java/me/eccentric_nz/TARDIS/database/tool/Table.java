@@ -63,6 +63,7 @@ public enum Table {
     particle_prefs("pp_id"),
     player_prefs("pp_id"),
     portals(true),
+    previewers("uuid"),
     programs,
     reminders,
     room_progress("progress_id", true),

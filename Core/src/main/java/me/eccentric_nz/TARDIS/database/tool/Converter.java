@@ -253,6 +253,10 @@ public class Converter implements Runnable {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("portal_id"), rs.getString("portal"), rs.getString("teleport"), rs.getString("direction"), rs.getInt("tardis_id"), rs.getInt("abandoned")) + end;
                                         sb.append(str);
                                     }
+                                    case previewers -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getString("uuid"), rs.getString("world"), rs.getFloat("x"), rs.getFloat("y"), rs.getFloat("z"), rs.getFloat("yaw"), rs.getFloat("pitch"), rs.getString("gamemode")) + end;
+                                        sb.append(str);
+                                    }
                                     case programs -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("program_id"), rs.getString("uuid"), rs.getString("name"), rs.getString("inventory"), rs.getString("parsed"), rs.getInt("checked")) + end;
                                         sb.append(str);

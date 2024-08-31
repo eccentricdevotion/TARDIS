@@ -219,6 +219,10 @@ public class TARDISSQLiteDatabase {
             String queryReminders = "CREATE TABLE IF NOT EXISTS " + prefix + "reminders (reminder_id INTEGER PRIMARY KEY NOT NULL, uuid TEXT DEFAULT '', reminder TEXT DEFAULT '', time INTEGER DEFAULT '0')";
             statement.executeUpdate(queryReminders);
 
+            // Table structure for table 'previewers'
+            String queryPreviewers = "CREATE TABLE IF NOT EXISTS " + prefix + "previewers (uuid TEXT PRIMARY KEY NOT NULL, world TEXT COLLATE NOCASE DEFAULT '', x REAL DEFAULT 0.0, y REAL DEFAULT 0.0, z REAL DEFAULT 0.0, yaw REAL DEFAULT 0.0, pitch REAL DEFAULT 0.0, gamemode TEXT COLLATE NOCASE DEFAULT '')";
+            statement.executeUpdate(queryPreviewers);
+
             // Table structure for table 'room_progress'
             String queryRoomProgress = "CREATE TABLE IF NOT EXISTS " + prefix + "room_progress (progress_id INTEGER PRIMARY KEY NOT NULL, direction TEXT DEFAULT '', room TEXT DEFAULT '', location TEXT DEFAULT '', tardis_id INTEGER DEFAULT 0, progress_row INTEGER DEFAULT 0, progress_column INTEGER DEFAULT 0, progress_level INTEGER DEFAULT 0, middle_type TEXT DEFAULT '', floor_type TEXT DEFAULT '', post_blocks TEXT DEFAULT '')";
             statement.executeUpdate(queryRoomProgress);

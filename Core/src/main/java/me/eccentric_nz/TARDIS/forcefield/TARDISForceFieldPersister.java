@@ -65,7 +65,7 @@ public class TARDISForceFieldPersister {
                         ps.close();
                     }
                 } catch (SQLException e) {
-                    plugin.debug("Error closing force field statement or resultset: " + e.getMessage());
+                    plugin.debug("Error closing force field statement: " + e.getMessage());
                 }
             }
         }
