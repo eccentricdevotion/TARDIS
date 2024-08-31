@@ -139,6 +139,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
                             player.setGameMode(GameMode.ADVENTURE);
                             player.playSound(transmat, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
                             player.teleport(transmat);
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "PREVIEW_DONE");
                         }, 10L);
                         close(player);
                     }

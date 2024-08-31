@@ -76,7 +76,7 @@ public class TARDISCustomThemeInventory extends TARDISThemeInventory {
             ItemStack info = new ItemStack(GUIChameleonConstructor.INFO.material(), 1);
             ItemMeta io = info.getItemMeta();
             io.setDisplayName("Info");
-            io.setLore(List.of("Shift-left click", "a console block to", "transmat to a", "desktop preview."));
+            io.setLore(List.of("Shift-left click", "a console block", "to transmat to a", "desktop preview.", "Type 'done' in", "chat to return."));
             io.setCustomModelData(GUIUpgrade.INFO.customModelData());
             info.setItemMeta(io);
             stack[GUIUpgrade.INFO.slot()] = info;

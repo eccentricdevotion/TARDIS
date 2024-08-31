@@ -117,9 +117,8 @@ public class TARDISRunnables {
             startStandBy(plugin);
         }
         // add desktop previews
-        new TARDISDesktopPreview(plugin).create();
-//        if (plugin.getConfig().getBoolean("debug")) {
-//            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new RecipeChecker(), 100L);
-//        }
+        if (plugin.getConfig().getBoolean("creation.previews") && plugin.getConfig().getBoolean("creation.default_world")) {
+            new TARDISDesktopPreview(plugin).create();
+        }
     }
 }

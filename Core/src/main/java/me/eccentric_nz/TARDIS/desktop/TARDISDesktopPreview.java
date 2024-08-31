@@ -21,10 +21,7 @@ public class TARDISDesktopPreview {
         // message start
         plugin.getMessenger().send(plugin.getConsole(), TardisModule.TARDIS, "PREVIEW_START");
         // get default world
-        String dn = "TARDIS_TimeVortex";
-        if (plugin.getConfig().getBoolean("creation.default_world")) {
-            dn = plugin.getConfig().getString("creation.default_world_name");
-        }
+        String dn = plugin.getConfig().getString("creation.default_world_name", "TARDIS_TimeVortex");
         World world = plugin.getServer().getWorld(dn);
         if (world != null) {
             for (Schematic schematic : Consoles.getBY_NAMES().values()) {
@@ -34,7 +31,6 @@ public class TARDISDesktopPreview {
                         TARDISBuilderPreview builder = new TARDISBuilderPreview(plugin, schematic, world);
                         int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
                         builder.setTask(task);
-                        // TODO fix records for consoles with no iron doors
                     }, delay);
                     delay += 1200;
                 }

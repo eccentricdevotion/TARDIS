@@ -108,13 +108,12 @@ public class TARDISDevCommand implements CommandExecutor {
                         }
                         case "debug" -> {
                             // get default world
-                            String dn = "TARDIS_TimeVortex";
                             if (plugin.getConfig().getBoolean("creation.default_world")) {
-                                dn = plugin.getConfig().getString("creation.default_world_name");
-                            }
-                            World world = plugin.getServer().getWorld(dn);
-                            if (world != null) {
-                                new DebugPopulator(plugin, world).createBase();
+                                String dn = plugin.getConfig().getString("creation.default_world_name", "TARDIS_TimeVortex");
+                                World world = plugin.getServer().getWorld(dn);
+                                if (world != null) {
+                                    new DebugPopulator(plugin, world).createBase();
+                                }
                             }
                             return true;
                         }
