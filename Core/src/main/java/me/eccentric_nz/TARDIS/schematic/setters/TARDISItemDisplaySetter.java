@@ -21,6 +21,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
+import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -50,31 +52,46 @@ public class TARDISItemDisplaySetter {
             if (stack.has("cmd")) {
                 model = stack.get("cmd").getAsInt();
             }
-            if (id > 0 && stack.has("door")) {
-                HashMap<String, Object> setd = new HashMap<>();
-                String doorloc = block.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
-                setd.put("door_location", doorloc);
-                setd.put("door_direction", "SOUTH");
-                // check if there is an existing record
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("tardis_id", id);
-                where.put("door_type", 1);
-                ResultSetDoors rsd = new ResultSetDoors(TARDIS.plugin, where, false);
-                if (rsd.resultSet()) {
-                    // update
-                    HashMap<String, Object> whered = new HashMap<>();
-                    whered.put("tardis_id", id);
-                    whered.put("door_type", 1);
-                    TARDIS.plugin.getQueryFactory().doUpdate("doors", setd, whered);
+            if (stack.has("door")) {
+                if (id > 0) {
+                    HashMap<String, Object> setd = new HashMap<>();
+                    String doorloc = block.getWorld().getName() + ":" + l.getBlockX() + ":" + l.getBlockY() + ":" + l.getBlockZ();
+                    setd.put("door_location", doorloc);
+                    setd.put("door_direction", "SOUTH");
+                    // check if there is an existing record
+                    HashMap<String, Object> where = new HashMap<>();
+                    where.put("tardis_id", id);
+                    where.put("door_type", 1);
+                    ResultSetDoors rsd = new ResultSetDoors(TARDIS.plugin, where, false);
+                    if (rsd.resultSet()) {
+                        // update
+                        HashMap<String, Object> whered = new HashMap<>();
+                        whered.put("tardis_id", id);
+                        whered.put("door_type", 1);
+                        TARDIS.plugin.getQueryFactory().doUpdate("doors", setd, whered);
+                    } else {
+                        // insert
+                        setd.put("tardis_id", id);
+                        setd.put("door_type", 1);
+                        TARDIS.plugin.getQueryFactory().doInsert("doors", setd);
+                    }
+                    // if create_worlds is true, set the world spawn
+                    if (TARDIS.plugin.getConfig().getBoolean("creation.create_worlds")) {
+                        block.getWorld().setSpawnLocation(l.getBlockX(), l.getBlockY(), (l.getBlockZ() + 1));
+                    }
                 } else {
-                    // insert
-                    setd.put("tardis_id", id);
-                    setd.put("door_type", 1);
-                    TARDIS.plugin.getQueryFactory().doInsert("doors", setd);
-                }
-                // if create_worlds is true, set the world spawn
-                if (TARDIS.plugin.getConfig().getBoolean("creation.create_worlds")) {
-                    block.getWorld().setSpawnLocation(l.getBlockX(), l.getBlockY(), (l.getBlockZ() + 1));
+                    String name = getSchematicName(id);
+                    if (!name.isEmpty()) {
+                        // remember spawn location for this console preview
+                        HashMap<String, Object> set = new HashMap<>();
+                        set.put("tardis_id", id);
+                        set.put("name", name);
+                        set.put("world", block.getWorld().getName());
+                        set.put("x", l.getBlockX() + 0.5d);
+                        set.put("y", l.getBlockY());
+                        set.put("z", (l.getBlockZ() + 1));
+                        TARDIS.plugin.getQueryFactory().doInsert("transmats", set);
+                    }
                 }
             }
             Material material = Material.valueOf(stack.get("type").getAsString());
@@ -85,6 +102,15 @@ public class TARDISItemDisplaySetter {
                 setInRoom(block, material, model);
             }
         }
+    }
+
+    private static String getSchematicName(int id) {
+        for (Schematic schematic : Consoles.getBY_NAMES().values()) {
+            if (schematic.getPreview() == id) {
+                return schematic.getPermission();
+            }
+        }
+        return "";
     }
 
     public static void setInRoom(Block block, Material material, int model) {

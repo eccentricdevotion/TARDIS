@@ -238,7 +238,7 @@ public class TARDISBuilderPreview implements Runnable {
             if (obj.has("item_displays")) {
                 JsonArray displays = obj.get("item_displays").getAsJsonArray();
                 for (int i = 0; i < displays.size(); i++) {
-                    TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), location, -1);
+                    TARDISItemDisplaySetter.fakeBlock(displays.get(i).getAsJsonObject(), location, tips);
                 }
             }
             plugin.getServer().getScheduler().cancelTask(task);
