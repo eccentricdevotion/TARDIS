@@ -26,6 +26,8 @@ public enum GUIConfiguration {
     ARCHIVE(3, 25, Material.REPEATER),
     BLUEPRINTS(48, 23, Material.REPEATER),
     CREATION(4, 26, Material.REPEATER),
+    DIFFICULTY(58, 38, Material.REPEATER),
+    EYE_OF_HARMONY(59, 45, Material.REPEATER),
     GROWTH(5, 36, Material.REPEATER),
     HANDLES(6, 37, Material.REPEATER),
     POLICE_BOX(7, 38, Material.REPEATER),

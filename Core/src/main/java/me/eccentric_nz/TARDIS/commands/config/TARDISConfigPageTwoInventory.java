@@ -55,6 +55,8 @@ class TARDISConfigPageTwoInventory {
                     c.startsWith("creation") ||
                     c.startsWith("debug") ||
                     c.startsWith("desktop") ||
+                    c.startsWith("difficulty") ||
+                    c.startsWith("eye_of_harmony") ||
                     c.startsWith("junk") ||
                     c.startsWith("siege") ||
                     c.startsWith("sonic") ||
