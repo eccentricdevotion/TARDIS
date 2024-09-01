@@ -377,6 +377,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                         sett.put("chameleon_demat", "JUNK_MODE");
                         message = "JUNK_PRESET_OFF";
                         cham_set = preset;
+                        plugin.getTrackerKeeper().getJunkPlayers().remove(uuid);
                     } else {
                         // save JUNK_MODE preset
                         sett.put("chameleon_preset", "JUNK_MODE");
@@ -384,6 +385,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                         // set chameleon adaption to OFF
                         sett.put("adapti_on", 0);
                         cham_set = "JUNK_MODE";
+                        plugin.getTrackerKeeper().getJunkPlayers().put(uuid, id);
                     }
                     plugin.getQueryFactory().doSyncUpdate("tardis", sett, whereu);
                     // set the Chameleon Circuit sign(s)
