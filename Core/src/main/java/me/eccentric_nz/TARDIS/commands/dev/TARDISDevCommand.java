@@ -114,11 +114,17 @@ public class TARDISDevCommand implements CommandExecutor {
                                 if (world != null) {
                                     DebugPopulator populator = new DebugPopulator(plugin, world);
 //                                    populator.createBase();
-//                                    populator.items();
-//                                    populator.blocks();
-//                                    populator.monsters();
-//                                    populator.chameleon();
+                                    populator.items();
+                                    populator.blocks();
+                                    populator.monsters();
+                                    populator.chameleon();
                                     populator.doors();
+                                    populator.rotors();
+                                    populator.gui();
+                                    populator.consoles();
+                                    populator.chemistry();
+                                    populator.sonicAndKeys();
+                                    populator.regeneration();
                                 }
                             }
                             return true;

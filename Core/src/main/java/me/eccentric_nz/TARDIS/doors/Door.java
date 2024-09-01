@@ -68,7 +68,7 @@ public class Door {
         return frames;
     }
 
-    public boolean isExtra() {
+    public boolean hasExtra() {
         return extra;
     }
 

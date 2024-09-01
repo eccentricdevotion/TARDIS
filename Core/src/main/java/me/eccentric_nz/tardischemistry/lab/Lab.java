@@ -46,4 +46,8 @@ public enum Lab {
     public int getCustomModelData() {
         return customModelData;
     }
+
+    public String getName() {
+        return this.toString().replace("_", " ");
+    }
 }

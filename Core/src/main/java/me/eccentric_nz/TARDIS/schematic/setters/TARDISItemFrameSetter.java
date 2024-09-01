@@ -55,7 +55,7 @@ public class TARDISItemFrameSetter {
         BlockFace facing = BlockFace.valueOf(json.get("facing").getAsString());
         Location l = new Location(start.getWorld(), start.getBlockX() + px, start.getBlockY() + py, start.getBlockZ() + pz);
         ItemFrame frame = (ItemFrame) start.getWorld().spawnEntity(l, (json.get("glowing").getAsBoolean()) ? EntityType.GLOW_ITEM_FRAME : EntityType.ITEM_FRAME);
-        frame.setFacingDirection(facing);
+        frame.setFacingDirection(facing, true);
         int cmd = 1;
         if (json.has("item")) {
             try {

@@ -75,4 +75,8 @@ public enum Product {
     public Material getItemMaterial() {
         return itemMaterial;
     }
+
+    public String getName() {
+        return this.toString().replace("_", " ");
+    }
 }

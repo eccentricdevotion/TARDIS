@@ -71,4 +71,8 @@ public enum Compound {
     public String getSymbol() {
         return symbol;
     }
+
+    public String getName() {
+        return this.toString().replace("_", " ");
+    }
 }
