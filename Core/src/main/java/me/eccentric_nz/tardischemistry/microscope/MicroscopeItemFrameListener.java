@@ -88,7 +88,7 @@ public class MicroscopeItemFrameListener implements Listener {
                 }
                 case COMPUTER_MONITOR -> {
                     // computer storage
-                    if (MicroscopeUtils.hasItemInHand(is, Material.LIGHT_BLUE_STAINED_GLASS, plugin)) {
+                    if (MicroscopeUtils.hasItemInHand(is, Material.LIME_STAINED_GLASS, plugin)) {
                         MicroscopeUtils.reduceInHand(player);
                     } else {
                         // open computer GUI
@@ -101,7 +101,7 @@ public class MicroscopeItemFrameListener implements Listener {
                 case ELECTRON_MICROSCOPE -> {
                     // electron microscope
                     int cmd;
-                    if (MicroscopeUtils.hasItemInHand(is, Material.LIGHT_BLUE_STAINED_GLASS, plugin)) {
+                    if (MicroscopeUtils.hasItemInHand(is, Material.LIME_STAINED_GLASS, plugin)) {
                         // set microscope screen
                         cmd = im.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.INTEGER);
                         frame.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.INTEGER, cmd);
@@ -112,7 +112,7 @@ public class MicroscopeItemFrameListener implements Listener {
                     // remember item in hand for restoration
                     MicroscopeUtils.STORED_STACKS.put(player.getUniqueId(), is);
                     // set item in hand
-                    ItemStack screen = new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS, 1);
+                    ItemStack screen = new ItemStack(Material.LIME_STAINED_GLASS, 1);
                     ItemMeta screenMeta = screen.getItemMeta();
                     screenMeta.setDisplayName(Screen.values()[cmd >= 10000 ? cmd - 10000 : cmd].getName());
                     screenMeta.setCustomModelData(cmd);

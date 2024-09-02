@@ -21,7 +21,7 @@ public class MicroscopePlaceListener implements Listener {
         this.plugin = plugin;
         MATS.add(Material.GLASS);
         MATS.add(Material.GRAY_STAINED_GLASS);
-        MATS.add(Material.LIGHT_BLUE_STAINED_GLASS);
+        MATS.add(Material.LIME_STAINED_GLASS);
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
