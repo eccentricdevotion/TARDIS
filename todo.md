@@ -24,9 +24,7 @@
 * Make all images tabbed
 * Vanilla/TARDIS screenshots for TabbedImage views
 * Add Handles rotation command
-* Finish regeneration module
-* Resource pack debug preview
-* Desktop previews
+* Microscope and other chemistry module additions
 * ?
 
 ## Resource Pack / Monsters

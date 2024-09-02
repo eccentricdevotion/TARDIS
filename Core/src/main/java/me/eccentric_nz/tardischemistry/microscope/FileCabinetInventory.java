@@ -30,7 +30,7 @@ class FileCabinetInventory {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName("Close");
-        can.setCustomModelData(10000);
+        can.setCustomModelData(1);
         close.setItemMeta(can);
         stacks[53] = close;
         return stacks;
