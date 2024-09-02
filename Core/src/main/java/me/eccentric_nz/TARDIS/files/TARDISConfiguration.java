@@ -108,11 +108,11 @@ public class TARDISConfiguration {
         booleanOptions.put("creation.default_world", true);
         booleanOptions.put("creation.enable_legacy", true);
         booleanOptions.put("creation.keep_night", true);
-        booleanOptions.put("creation.previews", false);
         booleanOptions.put("creation.seed_block.crafting", true);
         booleanOptions.put("creation.seed_block.legacy", true);
         booleanOptions.put("debug", false);
         booleanOptions.put("desktop.check_blocks_before_upgrade", false);
+        booleanOptions.put("desktop.previews", false);
         booleanOptions.put("difficulty.circuits", false);
         booleanOptions.put("difficulty.disks", false);
         booleanOptions.put("difficulty.disk_in_hand_for_write", true);
@@ -300,6 +300,11 @@ public class TARDISConfiguration {
             plugin.getConfig().createSection("rechargers");
             i++;
         }
+        if (config.contains("creation.previews")) {
+            plugin.getConfig().set("desktop.previews", config.getBoolean("creation.previews"));
+            plugin.getConfig().set("creation.previews", null);
+        }
+
         if (config.contains("travel.chameleon")) {
             plugin.getConfig().set("travel.chameleon", null);
         }

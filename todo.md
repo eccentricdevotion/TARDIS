@@ -6,7 +6,6 @@
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Fix follower persistence**<br>- Change entity type to PigZombie as they are neutral to players<br>- Switch to using custom armour trims instead of custom entities for non-follower, regular armour wearing monsters? | [Possible fix](https://github.com/EricLangezaal/PetDragon/blob/master/core/src/main/java/com/ericdebouwer/petdragon/listeners/EntitiesLoadListener.java) |
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Microscope** as an addition to Chemistry<br>- Add science lab / observatory room<br>- Add x-ray? | - |
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Zero-G room**<br>- Determine door level for door circuits and ring walkway<br>- Make schematic<br>- Add methods to stack rooms | [#868](https://github.com/eccentricdevotion/TARDIS/issues/868) |
-| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **TARDIS Resource pack debug preview**<br>- Determine locations for sections / blocks<br>- `/dev` command to create / enter / exit | - |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | **Modelled controls**<br>- Console lamp done | [#836](https://github.com/eccentricdevotion/TARDIS/issues/836) |
 | ![Static Badge](https://img.shields.io/badge/2-390?style=flat-square) | Allow 3D Police Boxes to land on slabs | [#777](https://github.com/eccentricdevotion/TARDIS/issues/777) |
 | ![Static Badge](https://img.shields.io/badge/2-390?style=flat-square) | Exterior button door control as alternative to shift-clicking for exteriors without doors | [#839](https://github.com/eccentricdevotion/TARDIS/issues/839) |
@@ -26,6 +25,8 @@
 * Vanilla/TARDIS screenshots for TabbedImage views
 * Add Handles rotation command
 * Finish regeneration module
+* Resource pack debug preview
+* Desktop previews
 * ?
 
 ## Resource Pack / Monsters

@@ -71,7 +71,7 @@ public class TARDISCustomThemeInventory extends TARDISThemeInventory {
                 }
             }
         }
-        if (plugin.getConfig().getBoolean("creation.previews")) {
+        if (plugin.getConfig().getBoolean("desktop.previews")) {
             // info
             ItemStack info = new ItemStack(GUIChameleonConstructor.INFO.material(), 1);
             ItemMeta io = info.getItemMeta();

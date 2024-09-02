@@ -117,7 +117,7 @@ public class TARDISRunnables {
             startStandBy(plugin);
         }
         // add desktop previews
-        if (plugin.getConfig().getBoolean("creation.previews") && plugin.getConfig().getBoolean("creation.default_world")) {
+        if (plugin.getConfig().getBoolean("desktop.previews") && plugin.getConfig().getBoolean("creation.default_world")) {
             new TARDISDesktopPreview(plugin).create();
         }
     }

@@ -80,7 +80,7 @@ public class TARDISJoinListener implements Listener {
             // reset invulnerability as player may have logged out during regeneration
             player.setInvulnerable(false);
         }
-        if (plugin.getConfig().getBoolean("creation.previews") && plugin.getTrackerKeeper().getPreviewers().containsKey(player.getUniqueId())) {
+        if (plugin.getConfig().getBoolean("desktop.previews") && plugin.getTrackerKeeper().getPreviewers().containsKey(player.getUniqueId())) {
             player.setGameMode(GameMode.ADVENTURE);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PREVIEW_DONE");
         }

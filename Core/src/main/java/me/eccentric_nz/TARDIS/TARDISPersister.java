@@ -44,7 +44,7 @@ public class TARDISPersister {
         if (plugin.getConfig().getInt("allow.force_field") > 0) {
             new TARDISForceFieldPersister(plugin).load();
         }
-        if (plugin.getConfig().getBoolean("creation.previews")) {
+        if (plugin.getConfig().getBoolean("desktop.previews")) {
             new TARDISPreviewPersister(plugin).load();
         }
         new TARDISTimeRotorLoader(plugin).load();
@@ -73,7 +73,7 @@ public class TARDISPersister {
         if (plugin.getConfig().getBoolean("siege.enabled")) {
             new TARDISSiegePersister(plugin).saveCubes();
         }
-        if (plugin.getConfig().getBoolean("creation.previews")) {
+        if (plugin.getConfig().getBoolean("desktop.previews")) {
             new TARDISPreviewPersister(plugin).save();
         }
         if (plugin.getConfig().getBoolean("allow.hads")) {

@@ -123,7 +123,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
                 // remember the upgrade choice
                 Schematic schematic = Consoles.schematicFor(perm);
                 UUID uuid = player.getUniqueId();
-                if (click.equals(ClickType.SHIFT_LEFT) && plugin.getConfig().getBoolean("creation.previews")) {
+                if (click.equals(ClickType.SHIFT_LEFT) && plugin.getConfig().getBoolean("desktop.previews")) {
                     // get the transmat location
                     ResultSetTransmat rst = new ResultSetTransmat(plugin, schematic.getPreview(), schematic.getPermission());
                     if (rst.resultSet()) {
