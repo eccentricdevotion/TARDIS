@@ -106,29 +106,6 @@ public class TARDISDevCommand implements CommandExecutor {
                         case "biome" -> {
                             return new TARDISBiomeCommand().reset(sender);
                         }
-                        case "debug" -> {
-                            // get default world
-                            if (plugin.getConfig().getBoolean("creation.default_world")) {
-                                String dn = plugin.getConfig().getString("creation.default_world_name", "TARDIS_TimeVortex");
-                                World world = plugin.getServer().getWorld(dn);
-                                if (world != null) {
-                                    DebugPopulator populator = new DebugPopulator(plugin, world);
-//                                    populator.createBase();
-                                    populator.items();
-                                    populator.blocks();
-                                    populator.monsters();
-                                    populator.chameleon();
-                                    populator.doors();
-                                    populator.rotors();
-                                    populator.gui();
-                                    populator.consoles();
-                                    populator.chemistry();
-                                    populator.sonicAndKeys();
-                                    populator.regeneration();
-                                }
-                            }
-                            return true;
-                        }
                         case "furnace" -> {
                             return new TARDISFurnaceCommand(plugin).list(sender);
                         }
@@ -190,6 +167,9 @@ public class TARDISDevCommand implements CommandExecutor {
                     }
                     case "box" -> {
                         return new TARDISDevBoxCommand(plugin).setPreset(sender, args);
+                    }
+                    case "debug" -> {
+                        return new DebugCommand(plugin).process(sender, args);
                     }
                     case "label" -> {
                         return new TARDISDevLabelCommand(plugin).catalog(sender);

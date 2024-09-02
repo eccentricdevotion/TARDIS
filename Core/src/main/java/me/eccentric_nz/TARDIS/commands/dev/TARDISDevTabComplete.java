@@ -60,6 +60,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
     private final ImmutableList<String> STATE_SUBS = ImmutableList.of("closed", "open", "stained", "glass", "fly");
     private final ImmutableList<String> FRAME_SUBS = ImmutableList.of("lock", "unlock");
     private final ImmutableList<String> SCREEN_SUBS = ImmutableList.of("forward", "backward", "left", "right");
+    private final ImmutableList<String> DEBUG_SUBS = ImmutableList.of("create", "update", "enter", "exit");
     private final ImmutableList<String> DISPLAY_SUBS = ImmutableList.of("add", "remove", "place", "break", "convert", "chunk", "block", "console");
     private final List<String> STONE_SUBS = new ArrayList<>();
     private final List<String> MAT_SUBS = new ArrayList<>();
@@ -114,6 +115,9 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
                 }
                 if (sub.equals("box")) {
                     return partial(lastArg, PRESET_SUBS);
+                }
+                if (sub.equals("debug")) {
+                    return partial(lastArg, DEBUG_SUBS);
                 }
                 if (sub.equals("nms")) {
                     return partial(lastArg, MONSTER_SUBS);

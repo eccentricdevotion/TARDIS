@@ -22,11 +22,11 @@ import me.eccentric_nz.tardischemistry.lab.LabBuilder;
 import me.eccentric_nz.tardischemistry.microscope.LabEquipment;
 import me.eccentric_nz.tardischemistry.product.Product;
 import me.eccentric_nz.tardischemistry.product.ProductBuilder;
+import me.eccentric_nz.tardisregeneration.ElixirOfLife;
 import me.eccentric_nz.tardisshop.ShopItem;
 import me.eccentric_nz.tardisshop.ShopItemRecipe;
 import me.eccentric_nz.tardisweepingangels.equip.ArmourStandEquipment;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -55,87 +55,36 @@ public class DebugPopulator {
         this.world = world;
     }
 
-    public void createBase() {
+    public void createBase(boolean clear) {
         // TIPS slot -50
         TARDISTIPSData tipsData = new TARDISInteriorPostioning(plugin).getTIPSData(-50);
         int x = tipsData.getCentreX();
         int z = tipsData.getCentreZ();
         plugin.debug("Debug Preview spawn => x" + x + ", y65, z" + z);
-        HashMap<String, Object> set = new HashMap<>();
-        set.put("tardis_id", -50);
-        set.put("name", "debug_preview");
-        set.put("world", world.getName());
-        set.put("x", x + 0.5d);
-        set.put("y", 65);
-        set.put("z", z + 0.5d);
-        plugin.getQueryFactory().doInsert("transmats", set);
+        if (clear) {
+            // clear all entities at the location
+            Location location = new Location(world, x, 65, z);
+            for (Entity entity : world.getNearbyEntities(location, 100, 10, 100)) {
+                if (!(entity instanceof Player)) {
+                    entity.remove();
+                }
+            }
+        } else {
+            HashMap<String, Object> set = new HashMap<>();
+            set.put("tardis_id", -50);
+            set.put("name", "debug_preview");
+            set.put("world", world.getName());
+            set.put("x", x + 0.5d);
+            set.put("y", 65);
+            set.put("z", z + 0.5d);
+            plugin.getQueryFactory().doInsert("transmats", set);
+        }
         for (int r = -100; r < 100; r++) {
             for (int c = -100; c < 100; c++) {
                 world.getBlockAt(x + r, 64, z + c).setType(Material.BLACK_CONCRETE);
+                world.getBlockAt(x + r, 65, z + c).setType(Material.AIR);
                 if (r % 2 == 0 && c % 2 == 0) {
                     world.getBlockAt(x + r, 70, z + c).setBlockData(TARDISConstants.LIGHT_DIV);
-                }
-            }
-        }
-    }
-
-    // TODO all sonics and keys
-    public void sonicAndKeys() {
-        int x = 28;
-        int z = -3;
-        for (GUISonicPreferences sonic : GUISonicPreferences.values()) {
-            if (sonic.getMaterial() == Material.BLAZE_ROD && sonic != GUISonicPreferences.COLOUR) {
-                Location location = new Location(world, rx + x, 65, rz + z);
-                // set block at location
-                location.getBlock().setType(Material.WHITE_CONCRETE);
-                ItemStack is = new ItemStack(sonic.getMaterial(), 1);
-                ItemMeta im = is.getItemMeta();
-                im.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");
-                im.setLore(List.of(sonic.getName()));
-                im.setCustomModelData(sonic.getCustomModelData());
-                is.setItemMeta(im);
-                ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
-                display.setItemStack(is);
-                display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
-                display.setInvulnerable(true);
-                // labels
-                TextDisplay text = (TextDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.65d, 0.5d), EntityType.TEXT_DISPLAY);
-                text.setAlignment(TextDisplay.TextAlignment.CENTER);
-                text.setText(sonic.getName());
-                text.setTransformation(new Transformation(TARDISConstants.VECTOR_ZERO, TARDISConstants.AXIS_ANGLE_ZERO, TARDISConstants.VECTOR_QUARTER, TARDISConstants.AXIS_ANGLE_ZERO));
-                text.setBillboard(Display.Billboard.VERTICAL);
-                x += 2;
-                if (x > 48) {
-                    x = 28;
-                    z -= 2;
-                }
-            }
-        }
-        for (GUIKeyPreferences key : GUIKeyPreferences.values()) {
-            if (key.getSlot() < 17) {
-                Location location = new Location(world, rx + x, 65, rz + z);
-                // set block at location
-                location.getBlock().setType(Material.WHITE_CONCRETE);
-                ItemStack is = new ItemStack(key.getMaterial(), 1);
-                ItemMeta im = is.getItemMeta();
-                im.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");
-                im.setLore(List.of(key.getName()));
-                im.setCustomModelData(key.getCustomModelData());
-                is.setItemMeta(im);
-                ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
-                display.setItemStack(is);
-                display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
-                display.setInvulnerable(true);
-                // labels
-                TextDisplay text = (TextDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.65d, 0.5d), EntityType.TEXT_DISPLAY);
-                text.setAlignment(TextDisplay.TextAlignment.CENTER);
-                text.setText(key.getName());
-                text.setTransformation(new Transformation(TARDISConstants.VECTOR_ZERO, TARDISConstants.AXIS_ANGLE_ZERO, TARDISConstants.VECTOR_QUARTER, TARDISConstants.AXIS_ANGLE_ZERO));
-                text.setBillboard(Display.Billboard.VERTICAL);
-                x += 2;
-                if (x > 48) {
-                    x = 28;
-                    z -= 2;
                 }
             }
         }
@@ -149,28 +98,41 @@ public class DebugPopulator {
             if (item.getRecipeType() == ShopItemRecipe.SHAPED || item.getRecipeType() == ShopItemRecipe.SHAPELESS) {
                 Location location = new Location(world, rx + x, 65, rz + z);
                 // set block at location
-                location.getBlock().setType(Material.WHITE_CONCRETE);
-                ItemStack is = new ItemStack(item.getMaterial(), 1);
-                ItemMeta im = is.getItemMeta();
-                im.setCustomModelData(item.getCustomModelData());
-                im.setDisplayName(item.getDisplayName());
-                is.setItemMeta(im);
-                ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
-                display.setItemStack(is);
-                display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
-                display.setInvulnerable(true);
-                // labels
-                TextDisplay text = (TextDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.65d, 0.5d), EntityType.TEXT_DISPLAY);
-                text.setAlignment(TextDisplay.TextAlignment.CENTER);
-                text.setText(item.getDisplayName());
-                text.setTransformation(new Transformation(TARDISConstants.VECTOR_ZERO, TARDISConstants.AXIS_ANGLE_ZERO, TARDISConstants.VECTOR_QUARTER, TARDISConstants.AXIS_ANGLE_ZERO));
-                text.setBillboard(Display.Billboard.VERTICAL);
+                setItemFromMaterial(location, item.getMaterial(), item.getCustomModelData(), item.getDisplayName());
                 // loop x z 24 x 24 blocks with empty blocks between
                 x -= 2;
                 if (x < -24) {
                     x = -2;
                     z += 2;
                 }
+            }
+        }
+        int[] data = new int[]{20001962, 20001963, 20001964, 20001965, 20001966, 20001967, 20001973, 20001974, 20001975, 20001976, 20001977, 20001978, 20001980, 20001981, 20001983};
+        String[] names = new String[]{"Telepathic", "Stattenheim", "Materialisation", "Locator", "Chameleon", "Sonic", "ARS", "Temporal", "Memory", "Input", "Scanner", "Perception", "Random", "Invisibility", "Rift"};
+        int c = 0;
+        for (String damaged : names) {
+            Location location = new Location(world, rx + x, 65, rz + z);
+            setItemFromMaterial(location, Material.GLOWSTONE_DUST, data[c], "Damaged " + damaged + " Circuit");
+            c++;
+            x -= 2;
+            if (x < -24) {
+                x = -2;
+                z += 2;
+            }
+        }
+        // rust/acid buckets, area disk
+        Material[] materials = new Material[]{Material.WATER_BUCKET, Material.LAVA_BUCKET, Material.MUSIC_DISC_BLOCKS};
+        int[] cmd = new int[]{1, 1, 10000001};
+        String[] misc = new String[]{"Acid Bucket", "Rust Bucket", "Area Storage Disk"};
+        int b = 0;
+        for (String m : misc) {
+            Location location = new Location(world, rx + x, 65, rz + z);
+            setItemFromMaterial(location, materials[b], cmd[b], m);
+            b++;
+            x -= 2;
+            if (x < -24) {
+                x = -2;
+                z += 2;
             }
         }
     }
@@ -185,16 +147,42 @@ public class DebugPopulator {
                 // set display item at location
                 TARDISDisplayItemUtils.set(tdi, world, rx + x, 65, rz + z);
                 //labels
-                TextDisplay text = (TextDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.65d, 0.5d), EntityType.TEXT_DISPLAY);
-                text.setAlignment(TextDisplay.TextAlignment.CENTER);
-                text.setText(tdi.getDisplayName());
-                text.setTransformation(new Transformation(TARDISConstants.VECTOR_ZERO, TARDISConstants.AXIS_ANGLE_ZERO, TARDISConstants.VECTOR_QUARTER, TARDISConstants.AXIS_ANGLE_ZERO));
-                text.setBillboard(Display.Billboard.VERTICAL);
+                addLabel(location, tdi.getDisplayName());
                 // loop x z - spaced over 24 x 24 with empty blocks between
                 x += 2;
                 if (x > 24) {
                     x = 2;
                     z += 2;
+                }
+            }
+        }
+    }
+
+    public void sonicAndKeys() {
+        // all sonics and keys
+        int x = 28;
+        int z = -3;
+        for (GUISonicPreferences sonic : GUISonicPreferences.values()) {
+            if (sonic.getMaterial() == Material.BLAZE_ROD && sonic != GUISonicPreferences.COLOUR) {
+                Location location = new Location(world, rx + x, 65, rz + z);
+                // set block at location
+                setItemFromMaterial(location, sonic.getMaterial(), sonic.getCustomModelData(), sonic.getName());
+                x += 2;
+                if (x > 48) {
+                    x = 28;
+                    z -= 2;
+                }
+            }
+        }
+        for (GUIKeyPreferences key : GUIKeyPreferences.values()) {
+            if (key.getSlot() < 17) {
+                Location location = new Location(world, rx + x, 65, rz + z);
+                // set block at location
+                setItemFromMaterial(location, key.getMaterial(), key.getCustomModelData(), key.getName());
+                x += 2;
+                if (x > 48) {
+                    x = 28;
+                    z -= 2;
                 }
             }
         }
@@ -465,22 +453,7 @@ public class DebugPopulator {
         for (GuiPreview gui : DebugGUI.ICONS) {
             Location location = new Location(world, rx + x, 65, rz + z);
             // set block at location
-            location.getBlock().setType(Material.WHITE_CONCRETE);
-            ItemStack is = new ItemStack(gui.material(), 1);
-            ItemMeta im = is.getItemMeta();
-            im.setCustomModelData(gui.customModelData());
-            im.setDisplayName(gui.name());
-            is.setItemMeta(im);
-            ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
-            display.setItemStack(is);
-            display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
-            display.setInvulnerable(true);
-            // labels
-            TextDisplay text = (TextDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.65d, 0.5d), EntityType.TEXT_DISPLAY);
-            text.setAlignment(TextDisplay.TextAlignment.CENTER);
-            text.setText(gui.name());
-            text.setTransformation(new Transformation(TARDISConstants.VECTOR_ZERO, TARDISConstants.AXIS_ANGLE_ZERO, TARDISConstants.VECTOR_QUARTER, TARDISConstants.AXIS_ANGLE_ZERO));
-            text.setBillboard(Display.Billboard.VERTICAL);
+            setItemFromMaterial(location, gui.material(), gui.customModelData(), gui.name());
             // loop x z 48 x 24 blocks with empty blocks between
             x -= 2;
             if (x < -48) {
@@ -488,6 +461,39 @@ public class DebugPopulator {
                 z += 2;
             }
         }
+    }
+
+    private void setItemFromMaterial(Location location, Material material, int cmd, String name) {
+        location.getBlock().setType(Material.WHITE_CONCRETE);
+        ItemStack is = new ItemStack(material, 1);
+        ItemMeta im = is.getItemMeta();
+        im.setCustomModelData(cmd);
+        im.setDisplayName(name);
+        is.setItemMeta(im);
+        ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
+        display.setItemStack(is);
+        display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
+        display.setInvulnerable(true);
+        // label
+        addLabel(location, name);
+    }
+
+    private void setItemFromStack(Location location, ItemStack is, String name) {
+        location.getBlock().setType(Material.WHITE_CONCRETE);
+        ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
+        display.setItemStack(is);
+        display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
+        display.setInvulnerable(true);
+        // label
+        addLabel(location, name);
+    }
+
+    private void addLabel(Location location, String name) {
+        TextDisplay text = (TextDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.65d, 0.5d), EntityType.TEXT_DISPLAY);
+        text.setAlignment(TextDisplay.TextAlignment.CENTER);
+        text.setText(name);
+        text.setTransformation(new Transformation(TARDISConstants.VECTOR_ZERO, TARDISConstants.AXIS_ANGLE_ZERO, TARDISConstants.VECTOR_QUARTER, TARDISConstants.AXIS_ANGLE_ZERO));
+        text.setBillboard(Display.Billboard.VERTICAL);
     }
 
     public void chemistry() {
@@ -514,21 +520,25 @@ public class DebugPopulator {
                 z += 3;
             }
         }
+        List<Material> slides = List.of(Material.GLASS, Material.GRAY_STAINED_GLASS, Material.LIGHT_BLUE_STAINED_GLASS);
+        String[] names = new String[]{"Slide", "Scope View", "Screen"};
+        int s = 0;
+        for (Material material : slides) {
+            Location location = new Location(world, rx + x, 65, rz + z);
+            // set block at location
+            setItemFromMaterial(location, material, 9999, names[s]);
+            s++;
+            x += 2;
+            if (x > 24) {
+                x = 3;
+                z += 2;
+            }
+        }
         for (Compound compound : Compound.values()) {
             ItemStack chemical = CompoundBuilder.getCompound(compound);
             Location location = new Location(world, rx + x, 65, rz + z);
             // set block at location
-            location.getBlock().setType(Material.WHITE_CONCRETE);
-            ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
-            display.setItemStack(chemical);
-            display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
-            display.setInvulnerable(true);
-            // labels
-            TextDisplay text = (TextDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.65d, 0.5d), EntityType.TEXT_DISPLAY);
-            text.setAlignment(TextDisplay.TextAlignment.CENTER);
-            text.setText(compound.getName());
-            text.setTransformation(new Transformation(TARDISConstants.VECTOR_ZERO, TARDISConstants.AXIS_ANGLE_ZERO, TARDISConstants.VECTOR_QUARTER, TARDISConstants.AXIS_ANGLE_ZERO));
-            text.setBillboard(Display.Billboard.VERTICAL);
+            setItemFromStack(location, chemical, compound.getName());
             x += 2;
             if (x > 24) {
                 x = 3;
@@ -539,17 +549,7 @@ public class DebugPopulator {
             ItemStack chemical = LabBuilder.getLabProduct(lab);
             Location location = new Location(world, rx + x, 65, rz + z);
             // set block at location
-            location.getBlock().setType(Material.WHITE_CONCRETE);
-            ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
-            display.setItemStack(chemical);
-            display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
-            display.setInvulnerable(true);
-            // labels
-            TextDisplay text = (TextDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.65d, 0.5d), EntityType.TEXT_DISPLAY);
-            text.setAlignment(TextDisplay.TextAlignment.CENTER);
-            text.setText(lab.getName());
-            text.setTransformation(new Transformation(TARDISConstants.VECTOR_ZERO, TARDISConstants.AXIS_ANGLE_ZERO, TARDISConstants.VECTOR_QUARTER, TARDISConstants.AXIS_ANGLE_ZERO));
-            text.setBillboard(Display.Billboard.VERTICAL);
+            setItemFromStack(location, chemical, lab.getName());
             x += 2;
             if (x > 24) {
                 x = 3;
@@ -560,17 +560,7 @@ public class DebugPopulator {
             ItemStack chemical = ProductBuilder.getProduct(product);
             Location location = new Location(world, rx + x, 65, rz + z);
             // set block at location
-            location.getBlock().setType(Material.WHITE_CONCRETE);
-            ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
-            display.setItemStack(chemical);
-            display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
-            display.setInvulnerable(true);
-            // labels
-            TextDisplay text = (TextDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.65d, 0.5d), EntityType.TEXT_DISPLAY);
-            text.setAlignment(TextDisplay.TextAlignment.CENTER);
-            text.setText(product.getName());
-            text.setTransformation(new Transformation(TARDISConstants.VECTOR_ZERO, TARDISConstants.AXIS_ANGLE_ZERO, TARDISConstants.VECTOR_QUARTER, TARDISConstants.AXIS_ANGLE_ZERO));
-            text.setBillboard(Display.Billboard.VERTICAL);
+            setItemFromStack(location, chemical, product.getName());
             x += 2;
             if (x > 24) {
                 x = 3;
@@ -581,17 +571,7 @@ public class DebugPopulator {
             ItemStack chemical = ElementBuilder.getElement(element);
             Location location = new Location(world, rx + x, 65, rz + z);
             // set block at location
-            location.getBlock().setType(Material.WHITE_CONCRETE);
-            ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
-            display.setItemStack(chemical);
-            display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
-            display.setInvulnerable(true);
-            // labels
-            TextDisplay text = (TextDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.65d, 0.5d), EntityType.TEXT_DISPLAY);
-            text.setAlignment(TextDisplay.TextAlignment.CENTER);
-            text.setText(element.toString());
-            text.setTransformation(new Transformation(TARDISConstants.VECTOR_ZERO, TARDISConstants.AXIS_ANGLE_ZERO, TARDISConstants.VECTOR_QUARTER, TARDISConstants.AXIS_ANGLE_ZERO));
-            text.setBillboard(Display.Billboard.VERTICAL);
+            setItemFromStack(location, chemical, element.toString());
             x += 2;
             if (x > 24) {
                 x = 3;
@@ -601,10 +581,17 @@ public class DebugPopulator {
     }
 
     public void regeneration() {
-        // TODO items 
-        int x = 0;
-        int z = 0;
-        // TODO regeneration items
+        int x = 3;
+        int z = -27;
+        // regeneration items
+        ItemStack elixir = ElixirOfLife.create();
+        Location loc = new Location(world, rx + x, 65, rz + z);
+        // set block at location
+        setItemFromStack(loc, elixir, "Elixir of Life");
+        x += 5;
+        Block block = world.getBlockAt(rx + x, 65, rz + z);
+        TARDISDisplayItemUtils.set(TARDISDisplayItem.UNTEMPERED_SCHISM, block, -1);
+        x += 5;
         // regeneration poses
         for (int p = 1001; p < 1017; p++) {
             Location location = new Location(world, rx + x + 0.5d, 65.725, rz + z + 0.5d);
@@ -613,15 +600,44 @@ public class DebugPopulator {
             ItemMeta im = totem.getItemMeta();
             im.setCustomModelData(p);
             totem.setItemMeta(im);
-            // get rotation
             // spawn a display entity
             ItemDisplay display = (ItemDisplay) world.spawnEntity(location, EntityType.ITEM_DISPLAY);
             display.setItemStack(totem);
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.HEAD);
-            x += 3;
+            x += 4;
             if (x > 24) {
                 x = 3;
-                z += 3;
+                z -= 3;
+            }
+        }
+    }
+
+    public void handles() {
+        int x = 27;
+        int z = -27;
+        for (GuiPreview gui : DebugHandles.ICONS) {
+            Location location = new Location(world, rx + x, 65, rz + z);
+            // set block at location
+            setItemFromMaterial(location, gui.material(), gui.customModelData(), gui.name());
+            x += 2;
+            if (x > 48) {
+                x = 27;
+                z -= 2;
+            }
+        }
+    }
+
+    public void lazarus() {
+        int x = 27;
+        int z = 27;
+        for (GuiPreview gui : DebugLazarus.ICONS) {
+            Location location = new Location(world, rx + x, 65, rz + z);
+            // set block at location
+            setItemFromMaterial(location, gui.material(), gui.customModelData(), gui.name());
+            x += 2;
+            if (x > 48) {
+                x = 27;
+                z += 2;
             }
         }
     }

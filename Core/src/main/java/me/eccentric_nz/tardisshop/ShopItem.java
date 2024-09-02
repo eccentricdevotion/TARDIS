@@ -1,5 +1,6 @@
 package me.eccentric_nz.tardisshop;
 
+import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Material;
 
@@ -29,6 +30,7 @@ public enum ShopItem {
     BUDGET_SEED("Budget Seed", Material.IRON_BLOCK, 1, ShopItemRecipe.SEED),
     CAPPUCCINO_JELLY_BABY("Cappuccino Jelly Baby", Material.MELON_SLICE, 10000013, ShopItemRecipe.SHAPELESS),
     CAVE_SEED("Cave Seed", Material.DRIPSTONE_BLOCK, 1, ShopItemRecipe.SEED),
+    CONSOLE_LAMP_SWITCH("Console Lamp Switch", Material.LEVER, 9000, ShopItemRecipe.SHAPED),
     CONVERSION_CIRCUIT("Conversion Circuit", Material.GLOWSTONE_DUST, 10001988),
     COPPER_SEED("Copper Seed", Material.COPPER_BLOCK, 10001, ShopItemRecipe.SEED),
     CORAL_SEED("Coral Seed", Material.FIRE_CORAL_BLOCK, 10001, ShopItemRecipe.SEED),
@@ -48,6 +50,7 @@ public enum ShopItem {
     EMERALD_ENVIRONMENT_CIRCUIT("Emerald Environment Circuit", Material.GLOWSTONE_DUST, 10001972),
     EMPTY_CHILD_HEAD("Empty Child Head", Material.SUGAR, Monster.EMPTY_CHILD.getHeadModelData(), ShopItemRecipe.TWA),
     ENDER_SEED("Ender Seed", Material.PURPUR_BLOCK, 1, ShopItemRecipe.SEED),
+    EXTERIOR_LAMP_LEVEL_SWITCH("Exterior Lamp Level Switch", Material.LEVER, 1000, ShopItemRecipe.SHAPED),
     FACTORY_SEED("Factory Seed", Material.GRAY_CONCRETE, 10001, ShopItemRecipe.SEED),
     FIFTEENTH_SEED("Fifteenth Seed", Material.OCHRE_FROGLIGHT, 1, ShopItemRecipe.SEED),
     FUGITIVE_SEED("Fugitive Seed", Material.POLISHED_DEEPSLATE, 1, ShopItemRecipe.SEED),
@@ -62,6 +65,7 @@ public enum ShopItem {
     HOSPITAL_SEED("Hospital Seed", Material.WHITE_CONCRETE, 1, ShopItemRecipe.SEED),
     ICE_WARRIOR_HEAD("Ice Warrior Head", Material.SNOWBALL, Monster.ICE_WARRIOR.getHeadModelData(), ShopItemRecipe.TWA),
     IGNITE_CIRCUIT("Ignite Circuit", Material.GLOWSTONE_DUST, 10001982),
+    INTERIOR_LIGHT_LEVEL_SWITCH("Interior Light Level Switch", Material.LEVER, 3000, ShopItemRecipe.SHAPED),
     ISLAND_PUNCH_JELLY_BABY("Island Punch Jelly Baby", Material.MELON_SLICE, 10000010, ShopItemRecipe.SHAPELESS),
     JAMMY_DODGER("Jammy Dodger", Material.COOKIE, 10000001),
     JUDOON_HEAD("Judoon Head", Material.YELLOW_DYE, Monster.JUDOON.getHeadModelData(), ShopItemRecipe.TWA),
