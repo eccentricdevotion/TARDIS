@@ -18,7 +18,7 @@ class ComputerInventory {
         ItemStack[] stacks = new ItemStack[54];
         // make screens
         for (Screen screen : Screen.values()) {
-            ItemStack is = new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS, 1);
+            ItemStack is = new ItemStack(Material.LIME_STAINED_GLASS, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(screen.getName());
             im.setCustomModelData(9999);
