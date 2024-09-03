@@ -67,10 +67,8 @@ public class TARDISTimeLordDeathListener implements Listener {
         if (plugin.getConfig().getBoolean("allow.autonomous") && TARDISPermission.hasPermission(player, "tardis.autonomous")) {
             new TARDISAutonomousDeath(plugin).automate(player);
         }
-        // always remove player from eye damage list
-        plugin.getTrackerKeeper().getEyeDamage().remove(uuid);
         // spawn an ossified if configured
-        if (plugin.getConfig().getBoolean("modules.weeping_angels") && plugin.getConfig().getBoolean("eye_of_harmony.ossified")) {
+        if (plugin.getConfig().getBoolean("modules.weeping_angels") && plugin.getConfig().getBoolean("eye_of_harmony.ossified") && plugin.getTrackerKeeper().getEyeDamage().contains(uuid)) {
             // spawn an ossified at the player's location
             Location l = player.getLocation();
             LivingEntity e = new MonsterSpawner().create(l, Monster.OSSIFIED);
@@ -80,6 +78,8 @@ public class TARDISTimeLordDeathListener implements Listener {
             e.setCustomName(name);
             e.setCustomNameVisible(true);
         }
+        // always remove player from eye damage list
+        plugin.getTrackerKeeper().getEyeDamage().remove(uuid);
         // save arched status
         if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled") && plugin.getTrackerKeeper().getJohnSmith().containsKey(uuid)) {
             new TARDISArchPersister(plugin).save(uuid);
