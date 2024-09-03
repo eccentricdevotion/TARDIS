@@ -27,6 +27,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -173,7 +175,7 @@ public class TARDISGravityWellListener implements Listener {
                 case VOID:
                     if (l.getBlockY() < 1 && plugin.getUtils().inTARDISWorld(p)) {
                         if (plugin.getConfig().getString("preferences.vortex_fall").equals("kill")) {
-                            p.setHealth(0);
+                            p.damage(Float.MAX_VALUE, DamageSource.builder(DamageType.GENERIC_KILL).build());
                         } else {
                             e.setCancelled(true);
                             new TARDISVoidFall(plugin).teleport(p);

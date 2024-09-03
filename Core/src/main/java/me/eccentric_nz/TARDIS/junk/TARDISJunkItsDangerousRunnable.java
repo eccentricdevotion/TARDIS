@@ -21,6 +21,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Lightable;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -59,7 +61,7 @@ class TARDISJunkItsDangerousRunnable implements Runnable {
         plugin.getGeneralKeeper().getJunkTravellers().forEach((uuid) -> {
             Player p = plugin.getServer().getPlayer(uuid);
             if (p != null && p.isOnline() && !isInside(p.getLocation())) {
-                p.setHealth(0);
+                p.damage(Float.MAX_VALUE, DamageSource.builder(DamageType.GENERIC_KILL).build());
                 remove.add(uuid);
             }
         });

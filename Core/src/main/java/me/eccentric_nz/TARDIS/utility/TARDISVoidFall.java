@@ -21,6 +21,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -84,7 +86,7 @@ public class TARDISVoidFall {
             p.setFallDistance(0.0f);
             plugin.getGeneralKeeper().getDoorListener().movePlayer(p, tardis_loc, false, playerWorld, false, 3, true, false);
         } else {
-            p.setHealth(0);
+            p.damage(Float.MAX_VALUE, DamageSource.builder(DamageType.GENERIC_KILL).build());
         }
     }
 }

@@ -25,6 +25,8 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -35,6 +37,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -151,13 +154,8 @@ public class TARDISAcidWater implements Listener {
                         // Apply damage if there is any
                         double ad = plugin.getPlanetsConfig().getDouble("planets.skaro.acid_damage");
                         if (ad > 0d) {
-                            double health = player.getHealth() - (ad - ad * getDamageReduced(player));
-                            if (health < 0D) {
-                                health = 0D;
-                            } else if (health > 20D) {
-                                health = 20D;
-                            }
-                            player.setHealth(health);
+                            double damage = (ad - ad * getDamageReduced(player)) / 2.5d;
+                            player.damage(damage, DamageSource.builder(DamageType.GENERIC).build());
                             player.getWorld().playSound(loc, Sound.ENTITY_CREEPER_PRIMED, 3F, 3F);
                         }
                     } else {
@@ -175,7 +173,7 @@ public class TARDISAcidWater implements Listener {
      * more protection they have.
      */
     private double getDamageReduced(Player player) {
-        org.bukkit.inventory.PlayerInventory inv = player.getInventory();
+        PlayerInventory inv = player.getInventory();
         ItemStack boots = inv.getBoots();
         ItemStack helmet = inv.getHelmet();
         ItemStack chest = inv.getChestplate();
