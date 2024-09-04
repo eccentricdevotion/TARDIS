@@ -285,6 +285,7 @@ conversions:
   interior_door_id: true
   legacy_budget: true
   paintings: true
+  exploding: true
   player_prefs_materials: true
   restore_biomes: true
   short_grass: true

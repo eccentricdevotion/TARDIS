@@ -44,6 +44,7 @@ public class TARDISChecker {
         broken.add("aorta.json");
         broken.add("chemistry.json");
         broken.add("lava.json");
+        broken.add("exploding_tardis.json");
     }
 
     public static void copy(String filename, File file) {
@@ -199,8 +200,11 @@ public class TARDISChecker {
             } else if (!plugin.getConfig().getBoolean("conversions.paintings") && broken.contains(json)) {
                 // fix broken paintings
                 copy("painting_variant/" + json, jfile);
+            } else if (!plugin.getConfig().getBoolean("conversions.exploding") && painting == Painting.EXPLODING_TARDIS) {
+                // fix exploding TARDIS
+                copy("painting_variant/" + json, jfile);
             }
-            plugin.getConfig().set("conversions.paintings", true);
+            plugin.getConfig().set("conversions.exploding", true);
             plugin.saveConfig();
         }
     }
