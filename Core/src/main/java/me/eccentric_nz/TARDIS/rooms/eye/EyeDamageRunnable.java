@@ -2,6 +2,8 @@ package me.eccentric_nz.TARDIS.rooms.eye;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
+import org.bukkit.damage.DamageSource;
+import org.bukkit.damage.DamageType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -22,7 +24,7 @@ public class EyeDamageRunnable implements Runnable {
         for (UUID uuid : plugin.getTrackerKeeper().getEyeDamage()) {
             Player player = plugin.getServer().getPlayer(uuid);
             if (player != null && player.isOnline() && !hasSpaceHelmet(player)) {
-                player.damage(plugin.getConfig().getDouble("eye_of_harmony.damage_amount"));
+                player.damage(plugin.getConfig().getDouble("eye_of_harmony.damage_amount"), DamageSource.builder(DamageType.GENERIC).build());
             }
         }
     }

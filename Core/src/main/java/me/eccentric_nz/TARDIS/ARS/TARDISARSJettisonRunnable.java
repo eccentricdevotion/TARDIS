@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.ARS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronStorage;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.RoomCleaner;
 import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeHelper;
@@ -97,6 +98,18 @@ class TARDISARSJettisonRunnable implements Runnable {
         if (r.equals("EYE")) {
             // refresh chunk
             BiomeHelper.refreshChunk(slot.getChunk());
+            // get current task and abort it
+            ResultSetArtronStorage rsa = new ResultSetArtronStorage(plugin);
+            if (rsa.fromID(id)) {
+                // abort
+                plugin.getServer().getScheduler().cancelTask(rsa.getTask());
+                // update eyes record
+                HashMap<String, Object> set = new HashMap<>();
+                set.put("task", -1);
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("tardis_id", id);
+                plugin.getQueryFactory().doSyncUpdate("eyes", set, where);
+            }
         }
         if (r.equals("LIBRARY")) {
             // remove entities
