@@ -82,7 +82,7 @@ public class TARDISDisplayBlockConverter implements Runnable {
                     h = dimensions.get("height").getAsInt();
                     w = dimensions.get("width").getAsInt();
                     c = dimensions.get("length").getAsInt();
-                    if (schm.getPermission().equals("mechanical")) {
+                    if (schm.getPermission().equals("mechanical") || schm.getPermission().equals("cursed")) {
                         starty = 62;
                     } else if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
                         starty = 65;

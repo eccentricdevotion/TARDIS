@@ -169,7 +169,7 @@ public class TARDISInteriorPostioning {
                 for (Entity e : u.getEntities()) {
                     removeEntity(e, exitLocation);
                 }
-                if (s.getPermission().equals("mechanical")) {
+                if (s.getPermission().equals("mechanical") || s.getPermission().equals("cursed")) {
                     // remove lower console blocks
                     int cx = u.getX() * 16;
                     int cz = u.getZ() * 16;

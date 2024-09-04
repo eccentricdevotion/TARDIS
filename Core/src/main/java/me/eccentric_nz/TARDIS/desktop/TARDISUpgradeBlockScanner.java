@@ -86,7 +86,7 @@ public class TARDISUpgradeBlockScanner {
                 startz = gsl[2];
             }
             int starty;
-            if (tud.getPrevious().getPermission().equals("mechanical")) {
+            if (tud.getPrevious().getPermission().equals("mechanical") || tud.getPrevious().getPermission().equals("cursed")) {
                 starty = 62;
             } else if (TARDISConstants.HIGHER.contains(tud.getPrevious().getPermission())) {
                 starty = 65;

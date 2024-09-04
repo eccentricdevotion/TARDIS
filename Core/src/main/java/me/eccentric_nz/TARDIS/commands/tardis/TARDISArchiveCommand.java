@@ -201,7 +201,7 @@ class TARDISArchiveCommand {
                             sz = gsl[2];
                         }
                         int sy;
-                        if (current.getPermission().equals("mechanical")) {
+                        if (current.getPermission().equals("mechanical") || current.getPermission().equals("cursed")) {
                             sy = 62;
                         } else if (TARDISConstants.HIGHER.contains(current.getPermission())) {
                             sy = 65;

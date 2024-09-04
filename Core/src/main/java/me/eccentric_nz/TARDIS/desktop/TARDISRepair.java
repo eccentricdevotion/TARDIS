@@ -125,7 +125,7 @@ public class TARDISRepair {
                     startz = gsl[2];
                 }
                 int starty;
-                if (tardis.getSchematic().getPermission().equals("mechanical")) {
+                if (tardis.getSchematic().getPermission().equals("mechanical") || tardis.getSchematic().getPermission().equals("cursed")) {
                     starty = 62;
                 } else if (TARDISConstants.HIGHER.contains(tardis.getSchematic().getPermission())) {
                     starty = 65;

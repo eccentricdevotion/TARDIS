@@ -128,7 +128,9 @@ class TARDISBuildAbandoned implements Runnable {
     @Override
     public void run() {
         if (!running) {
-            if (schm.getPermission().equals("redstone")) {
+            if (schm.getPermission().equals("mechanical") || schm.getPermission().equals("cursed")) {
+                starty = 62;
+            } else if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
                 starty = 65;
             } else {
                 starty = 64;
@@ -195,14 +197,8 @@ class TARDISBuildAbandoned implements Runnable {
             postTorchBlocks.forEach(Block::setBlockData);
             postLanternBlocks.forEach(Block::setBlockData);
             postRepeaterBlocks.forEach(Block::setBlockData);
-            postStickyPistonBaseBlocks.forEach((pspb, value) -> {
-                plugin.getGeneralKeeper().getDoorPistons().add(pspb);
-                pspb.setBlockData(value);
-            });
-            postPistonBaseBlocks.forEach((ppb, value) -> {
-                plugin.getGeneralKeeper().getDoorPistons().add(ppb);
-                ppb.setBlockData(value);
-            });
+            postStickyPistonBaseBlocks.forEach(Block::setBlockData);
+            postPistonBaseBlocks.forEach(Block::setBlockData);
             postPistonExtensionBlocks.forEach(Block::setBlockData);
             postLeverBlocks.forEach(Block::setBlockData);
             postDripstoneBlocks.forEach(Block::setBlockData);

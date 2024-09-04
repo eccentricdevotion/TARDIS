@@ -234,7 +234,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                 startz = gsl[2];
                 resetz = gsl[3];
             }
-            if (tud.getSchematic().getPermission().equals("mechanical")) {
+            if (tud.getSchematic().getPermission().equals("mechanical") || tud.getSchematic().getPermission().equals("cursed")) {
                 starty = 62;
             } else if (TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission())) {
                 starty = 65;
@@ -291,14 +291,8 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             postDripstoneBlocks.forEach(Block::setBlockData);
             postLichenBlocks.forEach(Block::setBlockData);
             postSculkVeinBlocks.forEach(Block::setBlockData);
-            postStickyPistonBaseBlocks.forEach((pspb, value) -> {
-                plugin.getGeneralKeeper().getDoorPistons().add(pspb);
-                pspb.setBlockData(value);
-            });
-            postPistonBaseBlocks.forEach((ppb, value) -> {
-                plugin.getGeneralKeeper().getDoorPistons().add(ppb);
-                ppb.setBlockData(value);
-            });
+            postStickyPistonBaseBlocks.forEach(Block::setBlockData);
+            postPistonBaseBlocks.forEach(Block::setBlockData);
             postPistonExtensionBlocks.forEach(Block::setBlockData);
             TARDISSignSetter.setSigns(postSignBlocks, plugin, id);
             TARDISBannerSetter.setBanners(postBannerBlocks);

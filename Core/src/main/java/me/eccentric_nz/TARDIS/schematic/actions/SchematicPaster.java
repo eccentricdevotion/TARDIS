@@ -55,6 +55,7 @@ public class SchematicPaster implements Runnable {
     private final boolean air;
     private final HashMap<Block, BlockData> postRedstoneTorches = new HashMap<>();
     private final HashMap<Block, BlockData> postRedstoneDust = new HashMap<>();
+    private final HashMap<Block, BlockData> postPistons = new HashMap<>();
     private final HashMap<Block, TARDISBannerData> postBanners = new HashMap<>();
     private int task, l, r, h, w, d, x, y, z;
     private int counter = 0;
@@ -116,6 +117,12 @@ public class SchematicPaster implements Runnable {
                 }
             }
             for (Map.Entry<Block, BlockData> map : postRedstoneDust.entrySet()) {
+                map.getKey().setBlockData(map.getValue());
+                if (TARDIS.plugin.getBlockLogger().isLogging()) {
+                    TARDIS.plugin.getBlockLogger().logPlacement(map.getKey());
+                }
+            }
+            for (Map.Entry<Block, BlockData> map : postPistons.entrySet()) {
                 map.getKey().setBlockData(map.getValue());
                 if (TARDIS.plugin.getBlockLogger().isLogging()) {
                     TARDIS.plugin.getBlockLogger().logPlacement(map.getKey());
@@ -194,6 +201,7 @@ public class SchematicPaster implements Runnable {
                 }
                 case REDSTONE_TORCH -> postRedstoneTorches.put(block, data);
                 case REDSTONE -> postRedstoneDust.put(block, data);
+                case STICKY_PISTON -> postPistons.put(block, data);
                 case PLAYER_HEAD, PLAYER_WALL_HEAD -> {
                     block.setBlockData(data, true);
                     JsonObject head = col.has("head") ? col.get("head").getAsJsonObject() : null;

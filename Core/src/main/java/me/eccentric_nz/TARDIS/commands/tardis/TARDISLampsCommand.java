@@ -94,7 +94,7 @@ class TARDISLampsCommand {
                 // get dimensions
                 JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
                 int h = dimensions.get("height").getAsInt();
-                if (schm.getPermission().equals("mechanical")) {
+                if (schm.getPermission().equals("mechanical") || schm.getPermission().equals("cursed")) {
                     starty = 62;
                 } else if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
                     starty = 65;

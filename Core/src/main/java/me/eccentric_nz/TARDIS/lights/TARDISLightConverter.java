@@ -49,7 +49,7 @@ public class TARDISLightConverter {
                 int h = dimensions.get("height").getAsInt();
                 int width = dimensions.get("width").getAsInt();
                 int d = dimensions.get("length").getAsInt() - 1;
-                if (schm.getPermission().equals("mechanical")) {
+                if (schm.getPermission().equals("mechanical") || schm.getPermission().equals("cursed")) {
                     starty = 62;
                 } else if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
                     starty = 65;

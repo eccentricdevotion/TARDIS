@@ -293,7 +293,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             }
             if (tud.getSchematic().getPermission().equals("archive")) {
                 starty = archive_next.getY();
-            } else if (tud.getSchematic().getPermission().equals("mechanical")) {
+            } else if (tud.getSchematic().getPermission().equals("mechanical") || tud.getSchematic().getPermission().equals("cursed")) {
                 starty = 62;
             } else if (TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission())) {
                 starty = 65;
@@ -384,14 +384,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             postDripstoneBlocks.forEach(Block::setBlockData);
             postLichenBlocks.forEach(Block::setBlockData);
             postSculkVeinBlocks.forEach(Block::setBlockData);
-            postStickyPistonBaseBlocks.forEach((pspb, value) -> {
-                plugin.getGeneralKeeper().getDoorPistons().add(pspb);
-                pspb.setBlockData(value);
-            });
-            postPistonBaseBlocks.forEach((ppb, value) -> {
-                plugin.getGeneralKeeper().getDoorPistons().add(ppb);
-                ppb.setBlockData(value);
-            });
+            postStickyPistonBaseBlocks.forEach(Block::setBlockData);
+            postPistonBaseBlocks.forEach(Block::setBlockData);
             postPistonExtensionBlocks.forEach(Block::setBlockData);
             TARDISSignSetter.setSigns(postSignBlocks, plugin, id);
             TARDISBannerSetter.setBanners(postBannerBlocks);
@@ -486,7 +480,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             }
             // jettison blocks if downgrading to smaller size
             if (downgrade) {
-                if (tud.getPrevious().getPermission().equals("mechanical")) {
+                if (tud.getPrevious().getPermission().equals("mechanical") || tud.getPrevious().getPermission().equals("cursed")) {
                     // remove the blocks at y = 62 & y = 63 under the console
                     for (Chunk u : previousChunks) {
                         // remove lower console blocks

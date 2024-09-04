@@ -72,7 +72,7 @@ public class TARDISChunksCommand {
 
     private Location getLocation(Schematic schematic, Tardis tardis, World world) {
         int starty;
-        if (schematic.getPermission().equals("mechanical")) {
+        if (schematic.getPermission().equals("mechanical") || schematic.getPermission().equals("cursed")) {
             starty = 62;
         } else if (TARDISConstants.HIGHER.contains(schematic.getPermission())) {
             starty = 65;

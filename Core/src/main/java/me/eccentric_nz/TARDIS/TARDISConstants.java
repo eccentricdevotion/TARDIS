@@ -56,7 +56,7 @@ public class TARDISConstants {
     /**
      * Consoles which need to be higher
      */
-    public static final List<String> HIGHER = Arrays.asList("redstone", "thirteenth", "factory", "copper", "fifteenth", "cursed");
+    public static final List<String> HIGHER = Arrays.asList("redstone", "thirteenth", "factory", "copper", "fifteenth");
 
     /**
      * GUI materials

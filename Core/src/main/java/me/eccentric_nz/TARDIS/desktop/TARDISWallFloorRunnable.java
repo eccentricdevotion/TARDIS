@@ -111,7 +111,7 @@ public class TARDISWallFloorRunnable extends TARDISThemeRunnable {
                 startx = gsl[0];
                 startz = gsl[2];
             }
-            if (tud.getSchematic().getPermission().equals("mechanical")) {
+            if (tud.getSchematic().getPermission().equals("mechanical") || tud.getSchematic().getPermission().equals("cursed")) {
                 starty = 62;
             } else if (TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission())) {
                 starty = 65;
