@@ -63,12 +63,9 @@
             <url>https://repo.essentialsx.net/snapshots/</url>
         </repository>
         <repository>
-            <id>blocklocker</id>
-            <url>https://repo.codemc.org/repository/maven-public/</url>
-        </repository>
-        <repository>
-            <id>lwcx</id>
-            <url>https://ci.ender.zone/plugin/repository/everything/</url>
+            <!--lwcx / blocklocker-->
+            <id>codemc</id>
+            <url>https://repo.codemc.io/repository/maven-public/</url>
         </repository>
         <repository>
             <id>coreprotect</id>
@@ -410,9 +407,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.griefcraft.lwc</groupId>
-            <artifactId>LWCX</artifactId>
-            <version>2.2.8</version>
+            <groupId>com.griefcraft</groupId>
+            <artifactId>lwc</artifactId>
+            <version>2.4.0</version>
             <type>jar</type>
             <scope>provided</scope>
             <exclusions>
