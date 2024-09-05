@@ -262,7 +262,7 @@ public class TARDISConfiguration {
         stringOptions.put("travel.terminal.nether", "world");
         stringOptions.put("travel.terminal.the_end", "world");
         // doubles
-        doubleOptions.put("damage_amount", 0.5);
+        doubleOptions.put("eye_of_harmony.damage_amount", 0.5);
         // comments
         comments.put("abandon", List.of("abandoned TARDISes", "https://tardis.pages.dev/abandon#config-options"));
         comments.put("allow", List.of("restrictions", "https://tardis.pages.dev/configuration/allow"));
@@ -304,8 +304,13 @@ public class TARDISConfiguration {
         if (config.contains("creation.previews")) {
             plugin.getConfig().set("desktop.previews", config.getBoolean("creation.previews"));
             plugin.getConfig().set("creation.previews", null);
+            i++;
         }
-
+        if (config.contains("damage_amount")) {
+            plugin.getConfig().set("eye_of_harmony.damage_amount", config.getDouble("damage_amount"));
+            plugin.getConfig().set("damage_amount", null);
+            i++;
+        }
         if (config.contains("travel.chameleon")) {
             plugin.getConfig().set("travel.chameleon", null);
         }
