@@ -50,7 +50,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
             "label", "list",
             "nms",
             "plurals",
-            "recipe", "regen", "reset",
+            "recipe", "regen"
             "screen", "skin", "snapshot", "stats", "systree",
             "tis", "tree", "trim",
             "zero"
@@ -119,7 +119,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
                 if (sub.equals("debug")) {
                     return partial(lastArg, DEBUG_SUBS);
                 }
-                if (sub.equals("nms")) {
+                if (sub.equals("nms") || sub.equals("trim")) {
                     return partial(lastArg, MONSTER_SUBS);
                 }
                 if (sub.equals("tree")) {

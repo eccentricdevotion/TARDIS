@@ -23,29 +23,31 @@ public class ArmourTrim {
         // make some custom armour trim
         TrimMaterial material = TrimMaterial.IRON;
         TrimPattern pattern = getCustomTrimPattern("tardis:" + key);
-        ArmorTrim trim = new ArmorTrim(material, pattern);
-        // make a chestplate
-        ItemStack chestplate = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
-        ArmorMeta chestMeta = (ArmorMeta) chestplate.getItemMeta();
-        // hide the "upgrade" text on the item
-        chestMeta.addItemFlags(ItemFlag.HIDE_ARMOR_TRIM);
-        chestMeta.setTrim(trim);
-        chestplate.setItemMeta(chestMeta);
-        player.getInventory().setChestplate(chestplate);
-        // make some leggings
-        ItemStack leggings = new ItemStack(Material.CHAINMAIL_LEGGINGS);
-        ArmorMeta legMeta = (ArmorMeta) leggings.getItemMeta();
-        legMeta.addItemFlags(ItemFlag.HIDE_ARMOR_TRIM);
-        legMeta.setTrim(trim);
-        leggings.setItemMeta(legMeta);
-        player.getInventory().setLeggings(leggings);
-        // make a helmet
-        ItemStack helmet = new ItemStack(Material.CHAINMAIL_HELMET);
-        ArmorMeta headMeta = (ArmorMeta) helmet.getItemMeta();
-        headMeta.addItemFlags(ItemFlag.HIDE_ARMOR_TRIM);
-        headMeta.setTrim(trim);
-        helmet.setItemMeta(headMeta);
-        player.getInventory().setHelmet(helmet);
+        if (pattern != null) {
+            ArmorTrim trim = new ArmorTrim(material, pattern);
+            // make a chestplate
+            ItemStack chestplate = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+            ArmorMeta chestMeta = (ArmorMeta) chestplate.getItemMeta();
+            // hide the "upgrade" text on the item
+            chestMeta.addItemFlags(ItemFlag.HIDE_ARMOR_TRIM);
+            chestMeta.setTrim(trim);
+            chestplate.setItemMeta(chestMeta);
+            player.getInventory().setChestplate(chestplate);
+            // make some leggings
+            ItemStack leggings = new ItemStack(Material.CHAINMAIL_LEGGINGS);
+            ArmorMeta legMeta = (ArmorMeta) leggings.getItemMeta();
+            legMeta.addItemFlags(ItemFlag.HIDE_ARMOR_TRIM);
+            legMeta.setTrim(trim);
+            leggings.setItemMeta(legMeta);
+            player.getInventory().setLeggings(leggings);
+            // make a helmet
+            ItemStack helmet = new ItemStack(Material.CHAINMAIL_HELMET);
+            ArmorMeta headMeta = (ArmorMeta) helmet.getItemMeta();
+            headMeta.addItemFlags(ItemFlag.HIDE_ARMOR_TRIM);
+            headMeta.setTrim(trim);
+            helmet.setItemMeta(headMeta);
+            player.getInventory().setHelmet(helmet);
+        }
     }
 
     private TrimPattern getCustomTrimPattern(String key) {
