@@ -484,31 +484,15 @@ public class TARDISBlocksUpdater {
             blocks.add("CHISELED_COPPER");
             blocks.add("CHISELED_TUFF");
             blocks.add("CHISELED_TUFF_BRICKS");
-            blocks.add("COPPER_BULB");
-            blocks.add("COPPER_GRATE");
             blocks.add("EXPOSED_CHISELED_COPPER");
-            blocks.add("EXPOSED_COPPER_BULB");
-            blocks.add("EXPOSED_COPPER_GRATE");
             blocks.add("OXIDIZED_CHISELED_COPPER");
-            blocks.add("OXIDIZED_COPPER_BULB");
-            blocks.add("OXIDIZED_COPPER_GRATE");
             blocks.add("POLISHED_TUFF");
             blocks.add("TUFF_BRICKS");
             blocks.add("WAXED_CHISELED_COPPER");
-            blocks.add("WAXED_COPPER_BULB");
-            blocks.add("WAXED_COPPER_GRATE");
             blocks.add("WAXED_EXPOSED_CHISELED_COPPER");
-            blocks.add("WAXED_EXPOSED_COPPER_BULB");
-            blocks.add("WAXED_EXPOSED_COPPER_GRATE");
             blocks.add("WAXED_OXIDIZED_CHISELED_COPPER");
-            blocks.add("WAXED_OXIDIZED_COPPER_BULB");
-            blocks.add("WAXED_OXIDIZED_COPPER_GRATE");
             blocks.add("WAXED_WEATHERED_CHISELED_COPPER");
-            blocks.add("WAXED_WEATHERED_COPPER_BULB");
-            blocks.add("WAXED_WEATHERED_COPPER_GRATE");
             blocks.add("WEATHERED_CHISELED_COPPER");
-            blocks.add("WEATHERED_COPPER_BULB");
-            blocks.add("WEATHERED_COPPER_GRATE");
             // tardis blocks
             tbs.addAll(blocks);
             tbs.sort(Comparator.naturalOrder());
@@ -562,6 +546,26 @@ public class TARDISBlocksUpdater {
             blocks_config.set("lamp_blocks", lamps);
             blocks_config.set("version", 15);
             i += 4;
+        }
+        // remove grates and bulbs from TARDIS blocks
+        if (tbs.contains("COPPER_BULB")) {
+            tbs.remove("COPPER_GRATE");
+            tbs.remove("EXPOSED_COPPER_GRATE");
+            tbs.remove("OXIDIZED_COPPER_GRATE");
+            tbs.remove("WAXED_COPPER_GRATE");
+            tbs.remove("WAXED_EXPOSED_COPPER_GRATE");
+            tbs.remove("WAXED_OXIDIZED_COPPER_GRATE");
+            tbs.remove("WAXED_WEATHERED_COPPER_GRATE");
+            tbs.remove("WEATHERED_COPPER_GRATE");
+            tbs.remove("COPPER_BULB");
+            tbs.remove("EXPOSED_COPPER_BULB");
+            tbs.remove("OXIDIZED_COPPER_BULB");
+            tbs.remove("WAXED_COPPER_BULB");
+            tbs.remove("WAXED_EXPOSED_COPPER_BULB");
+            tbs.remove("WAXED_OXIDIZED_COPPER_BULB");
+            tbs.remove("WAXED_WEATHERED_COPPER_BULB");
+            tbs.remove("WEATHERED_COPPER_BULB");
+            blocks_config.set("tardis_blocks", tbs);
         }
         try {
             blocks_config.save(new File(plugin.getDataFolder(), "blocks.yml"));
