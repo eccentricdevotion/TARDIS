@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.tardischunkgenerator.worldgen.RoomGenerator;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
@@ -76,11 +77,13 @@ public class TARDISTeleportCommand extends TARDISCompleter implements CommandExe
             World world = TARDISAliasResolver.getWorldFromAlias(args[0]);
             if (world != null) {
                 Location spawn;
-                if (args[args.length-1].equals("not_for_players")) {
+                if (args[args.length - 1].equals("not_for_players")) {
                     int x = TARDISNumberParsers.parseInt(args[1]);
                     int y = args.length == 5 ? TARDISNumberParsers.parseInt(args[2]) : 64;
                     int z = TARDISNumberParsers.parseInt(args.length == 5 ? args[3] : args[2]);
                     spawn = new Location(world, x, y, z);
+                } else if (world.getGenerator() instanceof RoomGenerator) {
+                    spawn = new Location(world, 8, 68, 8);
                 } else {
                     spawn = world.getSpawnLocation();
                 }
