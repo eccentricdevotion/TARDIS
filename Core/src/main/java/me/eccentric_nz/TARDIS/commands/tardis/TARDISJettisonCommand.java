@@ -43,7 +43,7 @@ class TARDISJettisonCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                 return false;
             }
-            String room = args[1].toUpperCase(Locale.ENGLISH);
+            String room = args[1].toUpperCase(Locale.ROOT);
             if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "GRAVITY_INFO /tardisgravity remove");
             }

@@ -16,11 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISSpace;
 import org.bukkit.command.CommandSender;
+
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -35,7 +36,7 @@ class TARDISSetZeroRoomCommand {
 
     boolean setConfigZero(CommandSender sender, String[] args) {
         // check they typed true of false
-        String tf = args[1].toLowerCase(Locale.ENGLISH);
+        String tf = args[1].toLowerCase(Locale.ROOT);
         if (!tf.equals("true") && !tf.equals("false")) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "TRUE_FALSE");
             return false;

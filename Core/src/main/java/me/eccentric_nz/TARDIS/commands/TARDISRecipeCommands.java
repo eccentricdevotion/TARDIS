@@ -123,7 +123,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         plugin.getCustomConsolesConfig().getKeys(false).forEach((console) -> {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
                 Material cmat = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
-                t.put(console.toUpperCase(Locale.ENGLISH), cmat);
+                t.put(console.toUpperCase(Locale.ROOT), cmat);
             }
         });
         for (RecipeItem recipeItem : RecipeItem.values()) {
@@ -180,11 +180,11 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 return true;
             }
             if ((args[0].equalsIgnoreCase("seed") || args[0].equalsIgnoreCase("tardis")) && args.length == 2) {
-                if (!t.containsKey(args[1].toUpperCase(Locale.ENGLISH))) {
+                if (!t.containsKey(args[1].toUpperCase(Locale.ROOT))) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_NOT_VALID");
                     return true;
                 }
-                showTARDISRecipe(player, args[1].toUpperCase(Locale.ENGLISH));
+                showTARDISRecipe(player, args[1].toUpperCase(Locale.ROOT));
                 return true;
             }
             switch (which) {

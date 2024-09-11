@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISZeroRoomBuilder;
-import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -28,6 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.messaging.TARDISRoomLister;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
 import me.eccentric_nz.TARDIS.rooms.TARDISSeedData;
+import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -58,12 +58,12 @@ class TARDISRoomCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return false;
         }
-        String room = args[1].toUpperCase(Locale.ENGLISH);
+        String room = args[1].toUpperCase(Locale.ROOT);
         if (room.equals("HELP") || !plugin.getGeneralKeeper().getRoomArgs().contains(room)) {
             new TARDISRoomLister(plugin, player).list();
             return true;
         }
-        String perm = "tardis.room." + args[1].toLowerCase(Locale.ENGLISH);
+        String perm = "tardis.room." + args[1].toLowerCase(Locale.ROOT);
         if (!TARDISPermission.hasPermission(player, perm) && !TARDISPermission.hasPermission(player, "tardis.room")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_ROOM_TYPE");
             return true;

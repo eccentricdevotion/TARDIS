@@ -52,7 +52,7 @@ public class TARDISCircuitDamager {
 
     public void damage() {
         if (uses_left == 0) {
-            uses_left = plugin.getConfig().getInt("circuits.uses." + circuit.toString().toLowerCase(Locale.ENGLISH));
+            uses_left = plugin.getConfig().getInt("circuits.uses." + circuit.toString().toLowerCase(Locale.ROOT));
         }
         int decremented = uses_left - 1;
         if (decremented <= 0) {

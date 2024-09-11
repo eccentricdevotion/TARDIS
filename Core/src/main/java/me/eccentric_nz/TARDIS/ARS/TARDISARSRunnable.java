@@ -93,7 +93,7 @@ class TARDISARSRunnable implements Runnable {
             Location l = new Location(w, slot.getX(), slot.getY(), slot.getZ());
             roomData.setDirection(COMPASS.SOUTH);
             // get JSON
-            JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", whichroom.toLowerCase(Locale.ENGLISH), plugin.getRoomsConfig().getBoolean("rooms." + whichroom + ".user"));
+            JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", whichroom.toLowerCase(Locale.ROOT), plugin.getRoomsConfig().getBoolean("rooms." + whichroom + ".user"));
             if (obj != null) {
                 // set y offset - this needs to be how many BLOCKS above ground 0 of the 16x16x16 chunk the room starts
                 l.setY(l.getY() + room.getOffset());

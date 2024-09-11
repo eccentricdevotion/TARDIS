@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
-import java.sql.*;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+
+import java.sql.*;
+import java.util.*;
 
 /**
  * Chronomium was a time-active element that displaced time around it. In its unprocessed form, chronomium slowed down
@@ -95,7 +96,7 @@ public class ResultSetAchievements {
                     ResultSetMetaData rsmd = rs.getMetaData();
                     int columns = rsmd.getColumnCount();
                     for (int i = 1; i < columns + 1; i++) {
-                        row.put(rsmd.getColumnName(i).toLowerCase(Locale.ENGLISH), rs.getString(i));
+                        row.put(rsmd.getColumnName(i).toLowerCase(Locale.ROOT), rs.getString(i));
                     }
                     data.add(row);
                 }

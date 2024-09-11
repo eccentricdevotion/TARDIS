@@ -106,7 +106,7 @@ public class TARDISStringUtils {
     }
 
     public static String toEnumUppercase(String s) {
-        return s.replace(" ", "_").replace("-", "_").replace("3", "THREE").toUpperCase(Locale.ENGLISH);
+        return s.replace(" ", "_").replace("-", "_").replace("3", "THREE").toUpperCase(Locale.ROOT);
     }
 
     /**

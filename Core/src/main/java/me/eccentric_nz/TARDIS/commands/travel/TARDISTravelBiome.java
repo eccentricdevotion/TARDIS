@@ -70,7 +70,7 @@ public class TARDISTravelBiome {
                 return true;
             }
         }
-        String upper = args[1].toUpperCase(Locale.ENGLISH);
+        String upper = args[1].toUpperCase(Locale.ROOT);
         if (plugin.getConfig().getBoolean("difficulty.disks") && !plugin.getUtils().inGracePeriod(player, false) && !upper.equals("LIST")) {
             if (plugin.getConfig().getBoolean("difficulty.biome_reader")) {
                 // check they have a biome disk in storage

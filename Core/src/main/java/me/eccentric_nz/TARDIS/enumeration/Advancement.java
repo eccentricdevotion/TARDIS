@@ -35,6 +35,6 @@ public enum Advancement {
     TRAVEL;
 
     public String getConfigName() {
-        return toString().toLowerCase(Locale.ENGLISH);
+        return toString().toLowerCase(Locale.ROOT);
     }
 }

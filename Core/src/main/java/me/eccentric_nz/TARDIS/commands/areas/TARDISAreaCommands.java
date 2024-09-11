@@ -196,9 +196,9 @@ public class TARDISAreaCommands implements CommandExecutor {
                     BlockData dock = Material.STONE_BRICKS.createBlockData();
                     if (args.length > 2) {
                         try {
-                            fill = Material.valueOf(args[2].toUpperCase(Locale.ENGLISH)).createBlockData();
+                            fill = Material.valueOf(args[2].toUpperCase(Locale.ROOT)).createBlockData();
                             if (args.length > 3) {
-                                dock = Material.valueOf(args[3].toUpperCase(Locale.ENGLISH)).createBlockData();
+                                dock = Material.valueOf(args[3].toUpperCase(Locale.ROOT)).createBlockData();
                             }
                         } catch (IllegalArgumentException e) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_MATERIAL");
@@ -250,7 +250,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                         plugin.getMessenger().sendColouredCommand(player, "AREA_NOT_FOUND", "/tardis list areas", plugin);
                         return false;
                     }
-                    String value = args[2].toUpperCase(Locale.ENGLISH);
+                    String value = args[2].toUpperCase(Locale.ROOT);
                     if (!value.equals("ALLOW") && !value.equals("DENY")) {
                         try {
                             ChameleonPreset.valueOf(value);
@@ -283,7 +283,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                         plugin.getMessenger().sendColouredCommand(player, "AREA_NOT_FOUND", "/tardis list areas", plugin);
                         return false;
                     }
-                    String dir = args[2].toUpperCase(Locale.ENGLISH);
+                    String dir = args[2].toUpperCase(Locale.ROOT);
                     try {
                         COMPASS.valueOf(dir);
                     } catch (IllegalArgumentException e) {

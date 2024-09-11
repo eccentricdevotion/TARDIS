@@ -257,7 +257,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     WorldCreator creator = new WorldCreator(name);
                     if (args.length > 2) {
                         try {
-                            worldType = WorldType.valueOf(arguments.getArguments().get(2).toUpperCase(Locale.ENGLISH));
+                            worldType = WorldType.valueOf(arguments.getArguments().get(2).toUpperCase(Locale.ROOT));
                         } catch (IllegalArgumentException e) {
                             plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_TYPE", arguments.getArguments().get(2));
                             return true;
@@ -266,7 +266,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     creator.type(worldType);
                     if (args.length > 3) {
                         try {
-                            environment = World.Environment.valueOf(arguments.getArguments().get(3).toUpperCase(Locale.ENGLISH));
+                            environment = World.Environment.valueOf(arguments.getArguments().get(3).toUpperCase(Locale.ROOT));
                         } catch (IllegalArgumentException e) {
                             plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_ENV", arguments.getArguments().get(3));
                             return true;

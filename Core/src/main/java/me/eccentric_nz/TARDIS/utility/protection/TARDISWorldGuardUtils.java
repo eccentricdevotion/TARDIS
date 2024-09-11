@@ -92,18 +92,18 @@ public class TARDISWorldGuardUtils {
     public boolean canLand(Player p, Location l) {
         // get the flag we should be checking
         String f = plugin.getConfig().getString("preferences.respect_worldguard");
-        if (f.toLowerCase(Locale.ENGLISH).equals("none")) {
+        if (f.toLowerCase(Locale.ROOT).equals("none")) {
             return true;
         }
         // WorldGuard will throw an IllegalArgumentException if the build flag is given to allows()
-        if (f.toLowerCase(Locale.ENGLISH).equals("build")) {
+        if (f.toLowerCase(Locale.ROOT).equals("build")) {
             BlockVector3 vector = BlockVector3.at(l.getX(), l.getY(), l.getZ());
             RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(l.getWorld()));
             ApplicableRegionSet rs = rm.getApplicableRegions(vector);
             return rs.testState(wgp.wrapPlayer(p), Flags.BUILD);
         }
         // get the flag to check
-        StateFlag flag = TARDISWorldGuardFlag.getFLAG_LOOKUP().get(f.toLowerCase(Locale.ENGLISH));
+        StateFlag flag = TARDISWorldGuardFlag.getFLAG_LOOKUP().get(f.toLowerCase(Locale.ROOT));
         if (flag == null) {
             return true;
         }

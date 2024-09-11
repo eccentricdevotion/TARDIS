@@ -1842,7 +1842,7 @@ public class TARDISInformationSystemListener implements Listener {
      * @param item the command to display
      */
     private static void showCommand(Player p, TARDISInfoMenu item, TARDIS plugin) {
-        String[] c = item.toString().toLowerCase(Locale.ENGLISH).split("_");
+        String[] c = item.toString().toLowerCase(Locale.ROOT).split("_");
         String desc;
         String usage;
         if (c.length > 1) {

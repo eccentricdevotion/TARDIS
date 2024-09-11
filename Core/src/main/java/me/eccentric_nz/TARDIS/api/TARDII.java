@@ -159,7 +159,7 @@ public class TARDII implements TardisAPI {
             Tardis tardis = rs.getTardis();
             String owner = tardis.getOwner();
             Location current = getTARDISCurrentLocation(id);
-            String console = tardis.getSchematic().getPermission().toUpperCase(Locale.ENGLISH);
+            String console = tardis.getSchematic().getPermission().toUpperCase(Locale.ROOT);
             String chameleon = tardis.getPreset().toString();
             String door = "Closed";
             for (Map.Entry<Location, TARDISTeleportLocation> map : TARDIS.plugin.getTrackerKeeper().getPortals().entrySet()) {
@@ -755,7 +755,7 @@ public class TARDII implements TardisAPI {
 
     @Override
     public void spawnAbandonedTARDIS(Location location, String type, ChameleonPreset preset, COMPASS direction) throws TARDISException {
-        if (!Consoles.getBY_NAMES().containsKey(type.toUpperCase(Locale.ENGLISH))) {
+        if (!Consoles.getBY_NAMES().containsKey(type.toUpperCase(Locale.ROOT))) {
             throw new TARDISException("Not a valid Console type");
         }
         if (preset == ChameleonPreset.ITEM) {
@@ -767,7 +767,7 @@ public class TARDII implements TardisAPI {
         if (!TARDIS.plugin.getConfig().getBoolean("creation.default_world")) {
             throw new TARDISException("TARDIS must be configured to create TARDISes in a default world");
         }
-        Schematic schm = Consoles.getBY_NAMES().get(type.toUpperCase(Locale.ENGLISH));
+        Schematic schm = Consoles.getBY_NAMES().get(type.toUpperCase(Locale.ROOT));
         new TARDISAbandoned(TARDIS.plugin).spawn(location, schm, preset, "", direction, null);
     }
 

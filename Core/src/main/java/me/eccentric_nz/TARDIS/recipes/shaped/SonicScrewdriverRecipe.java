@@ -58,7 +58,7 @@ public class SonicScrewdriverRecipe {
     }
 
     public void addRecipe() {
-        int sonicModel = sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ENGLISH), 10000011);
+        int sonicModel = sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), 10000011);
         ItemStack is = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");

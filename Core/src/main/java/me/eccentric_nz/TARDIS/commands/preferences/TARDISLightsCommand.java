@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -39,7 +40,7 @@ class TARDISLightsCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "LIGHT_NEED");
             return false;
         }
-        String set_light = args[1].toUpperCase(Locale.ENGLISH);
+        String set_light = args[1].toUpperCase(Locale.ROOT);
         try {
             TardisLight.valueOf(set_light);
         } catch (IllegalArgumentException e) {

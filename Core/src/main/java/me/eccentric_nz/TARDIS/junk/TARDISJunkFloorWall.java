@@ -40,7 +40,7 @@ class TARDISJunkFloorWall {
     }
 
     boolean setJunkWallOrFloor(CommandSender sender, String[] args) {
-        String pref = args[0].toLowerCase(Locale.ENGLISH);
+        String pref = args[0].toLowerCase(Locale.ROOT);
         // check args
         if (args.length < 2) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "PREF_WALL", pref);
@@ -49,9 +49,9 @@ class TARDISJunkFloorWall {
         String wall_mat;
         if (args.length > 2) {
             String t = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
-            wall_mat = t.toUpperCase(Locale.ENGLISH);
+            wall_mat = t.toUpperCase(Locale.ROOT);
         } else {
-            wall_mat = args[1].toUpperCase(Locale.ENGLISH);
+            wall_mat = args[1].toUpperCase(Locale.ROOT);
         }
         if (!TARDISWalls.BLOCKS.contains(Material.valueOf(wall_mat))) {
             String message = (wall_mat.equals("HELP")) ? "WALL_LIST" : "WALL_NOT_VALID";

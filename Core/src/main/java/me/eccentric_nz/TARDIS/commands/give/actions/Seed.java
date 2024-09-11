@@ -48,7 +48,7 @@ public class Seed {
             }
         }
         if (player != null) {
-            String type = args[2].toUpperCase(Locale.ENGLISH);
+            String type = args[2].toUpperCase(Locale.ROOT);
             String wall = "ORANGE_WOOL";
             String floor = "LIGHT_GRAY_WOOL";
             if (args.length > 4) {

@@ -165,7 +165,7 @@ public class TARDISARSMethods {
             if (showPerms) {
                 String roomName = TARDISARS.ARSFor(material.toString()).getConfigPath();
                 Player player = plugin.getServer().getPlayer(playerUUID);
-                if (player != null && !TARDISPermission.hasPermission(player, "tardis.room." + roomName.toLowerCase(Locale.ENGLISH))) {
+                if (player != null && !TARDISPermission.hasPermission(player, "tardis.room." + roomName.toLowerCase(Locale.ROOT))) {
                     lore.add(ChatColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
                 }
             }

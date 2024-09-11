@@ -92,7 +92,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     new TARDISCommandHelper(plugin).getCommand("tardisprefs", sender);
                     return true;
                 }
-                String pref = args[0].toLowerCase(Locale.ENGLISH);
+                String pref = args[0].toLowerCase(Locale.ROOT);
                 if (!firstArgs.contains(pref)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_NOT_VALID");
                     return true;

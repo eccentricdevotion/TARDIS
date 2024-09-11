@@ -86,7 +86,7 @@ class SudoUpdate {
                 if (block.getType().equals(Material.IRON_DOOR)) {
                     Door door = (Door) block.getBlockData();
                     if (args.length == 3) {
-                        Door.Hinge setHinge = Door.Hinge.valueOf(args[2].toUpperCase(Locale.ENGLISH));
+                        Door.Hinge setHinge = Door.Hinge.valueOf(args[2].toUpperCase(Locale.ROOT));
                         door.setHinge(setHinge);
                     } else {
                         Door.Hinge hinge = door.getHinge();

@@ -43,7 +43,7 @@ public class TARDISRecipe {
                         });
                     }
                     default -> {
-                        NamespacedKey nsk = new NamespacedKey(plugin, map.getValue().replace(" ", "_").toLowerCase(Locale.ENGLISH));
+                        NamespacedKey nsk = new NamespacedKey(plugin, map.getValue().replace(" ", "_").toLowerCase(Locale.ROOT));
                         keys.add(nsk);
                     }
                 }
@@ -80,7 +80,7 @@ public class TARDISRecipe {
                 });
             }
             default -> {
-                NamespacedKey nsk = new NamespacedKey(plugin, Give.items.get(item).replace(" ", "_").toLowerCase(Locale.ENGLISH));
+                NamespacedKey nsk = new NamespacedKey(plugin, Give.items.get(item).replace(" ", "_").toLowerCase(Locale.ROOT));
                 keys.add(nsk);
             }
         }

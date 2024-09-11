@@ -85,7 +85,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_IN_HAND");
                 return true;
             }
-            String which = args[0].toLowerCase(Locale.ENGLISH);
+            String which = args[0].toLowerCase(Locale.ROOT);
             if (!firstArgs.contains(which)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_WHICH");
                 return false;

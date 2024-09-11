@@ -154,7 +154,7 @@ public class TARDISSeedBlockListener implements Listener {
                 // drop a TARDIS Seed Block
                 World w = l.getWorld();
                 // give back a new display item
-                String console = data.getSchematic().getPermission().toUpperCase(Locale.ENGLISH);
+                String console = data.getSchematic().getPermission().toUpperCase(Locale.ROOT);
                 int model = 10001;
                 ItemStack is;
                 if (data.getSchematic().isCustom()) {

@@ -63,7 +63,7 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                 return true;
             }
             if (TARDISPermission.hasPermission(sender, "tardis.book")) {
-                String first = args[0].toLowerCase(Locale.ENGLISH);
+                String first = args[0].toLowerCase(Locale.ROOT);
                 if (first.equals("list")) {
                     int b = 1;
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "BOOK_RASS");
@@ -93,7 +93,7 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "BOOK_NOT_FOUND");
                     return true;
                 }
-                String second = args[1].toLowerCase(Locale.ENGLISH);
+                String second = args[1].toLowerCase(Locale.ROOT);
                 if (second.equals("get")) {
                     // need to check whether they already have been given the book
                     TARDISBook book = new TARDISBook(plugin);

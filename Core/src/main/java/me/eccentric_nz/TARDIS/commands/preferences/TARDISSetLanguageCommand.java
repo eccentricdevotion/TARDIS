@@ -46,7 +46,7 @@ class TARDISSetLanguageCommand {
             return false;
         }
         UUID uuid = player.getUniqueId();
-        String first = args[1].toUpperCase(Locale.ENGLISH);
+        String first = args[1].toUpperCase(Locale.ROOT);
         if (args[0].equalsIgnoreCase("translate") && args[1].equalsIgnoreCase("off")) {
             plugin.getTrackerKeeper().getTranslators().remove(uuid);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSLATE_OFF");
@@ -63,7 +63,7 @@ class TARDISSetLanguageCommand {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "PREF_NEED", "language to translate from");
                     return false;
                 }
-                String second = args[2].toUpperCase(Locale.ENGLISH);
+                String second = args[2].toUpperCase(Locale.ROOT);
                 Language langSecond;
                 try {
                     langSecond = Language.valueOf(second);

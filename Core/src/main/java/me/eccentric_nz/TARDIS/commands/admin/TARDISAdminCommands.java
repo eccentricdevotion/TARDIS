@@ -96,7 +96,7 @@ public class TARDISAdminCommands implements CommandExecutor {
                     new TARDISCommandHelper(plugin).getCommand("tardisadmin", sender);
                     return true;
                 }
-                String first = args[0].toLowerCase(Locale.ENGLISH);
+                String first = args[0].toLowerCase(Locale.ROOT);
                 if (!firstsStr.contains(first)) {
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_NOT_VALID");
                     return false;

@@ -67,7 +67,7 @@ public class TARDISSonicBlasterRecipe {
         im.setCustomModelData(modelData.get(s));
         im.addItemFlags(ItemFlag.values());
         is.setItemMeta(im);
-        NamespacedKey key = new NamespacedKey(TARDIS.plugin, s.replace(" ", "_").toLowerCase(Locale.ENGLISH));
+        NamespacedKey key = new NamespacedKey(TARDIS.plugin, s.replace(" ", "_").toLowerCase(Locale.ROOT));
         ShapedRecipe r = new ShapedRecipe(key, is);
         // get shape
         try {

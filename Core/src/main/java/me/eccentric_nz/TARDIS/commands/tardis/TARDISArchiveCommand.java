@@ -60,13 +60,13 @@ class TARDISArchiveCommand {
         if (args.length < 2) {
             return false;
         }
-        String sub = args[1].toLowerCase(Locale.ENGLISH);
+        String sub = args[1].toLowerCase(Locale.ROOT);
         if (!subs.contains(sub)) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_NOT_VALID");
             return true;
         }
         String uuid = player.getUniqueId().toString();
-        String name = (args.length > 2) ? args[2].toUpperCase(Locale.ENGLISH) : "ARCHIVE";
+        String name = (args.length > 2) ? args[2].toUpperCase(Locale.ROOT) : "ARCHIVE";
         if (sub.equals("add") || sub.equals("description") || sub.equals("remove") || sub.equals("update") || sub.equals("y")) {
             if (args.length < 3) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SCHM_NAME");
@@ -158,7 +158,7 @@ class TARDISArchiveCommand {
                             // size from args[2/3]
                             try {
                                 String size = (args[1].equalsIgnoreCase("scan")) ? args[2] : args[3];
-                                console_size = ConsoleSize.valueOf(size.toUpperCase(Locale.ENGLISH));
+                                console_size = ConsoleSize.valueOf(size.toUpperCase(Locale.ROOT));
                                 switch (console_size) {
                                     case MASSIVE -> {
                                         h = 31;

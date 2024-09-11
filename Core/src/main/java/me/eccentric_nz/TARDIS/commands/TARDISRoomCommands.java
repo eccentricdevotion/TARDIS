@@ -60,9 +60,9 @@ public class TARDISRoomCommands implements CommandExecutor {
                 new TARDISCommandHelper(plugin).getCommand("tardisroom", sender);
                 return true;
             }
-            switch (args[0].toLowerCase(Locale.ENGLISH)) {
+            switch (args[0].toLowerCase(Locale.ROOT)) {
                 case "blocks" -> {
-                    String name = args[1].toUpperCase(Locale.ENGLISH);
+                    String name = args[1].toUpperCase(Locale.ROOT);
                     Set<String> rooms = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
                     if (name.equals("SAVE")) {
                         if (!sender.hasPermission("tardis.admin")) {
@@ -136,7 +136,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_NO_CONSOLE");
                         return true;
                     }
-                    String name = args[1].toUpperCase(Locale.ENGLISH);
+                    String name = args[1].toUpperCase(Locale.ROOT);
                     Set<String> rooms = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
                     if (!rooms.contains(name)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "COULD_NOT_FIND_ROOM");
@@ -155,7 +155,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_LOWERCASE");
                         return true;
                     }
-                    String name = args[1].toUpperCase(Locale.ENGLISH);
+                    String name = args[1].toUpperCase(Locale.ROOT);
                     if (name.equals("ADD") || name.equals("BLOCKS")) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "ROOM_NO_NAME", args[1]);
                         return false;
@@ -164,7 +164,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "ROOM_EXISTS");
                         return true;
                     }
-                    String lower = name.toLowerCase(Locale.ENGLISH);
+                    String lower = name.toLowerCase(Locale.ROOT);
                     String filepath = plugin.getDataFolder() + File.separator + "user_schematics" + File.separator + lower + ".tschm";
                     File file = new File(filepath);
                     if (!file.exists()) {
@@ -192,12 +192,12 @@ public class TARDISRoomCommands implements CommandExecutor {
                         return false;
                     }
                     // check they have specified a valid room
-                    String name = args[0].toUpperCase(Locale.ENGLISH);
+                    String name = args[0].toUpperCase(Locale.ROOT);
                     if (!plugin.getRoomsConfig().contains("rooms." + name)) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_ROOM");
                         return false;
                     }
-                    String option = args[1].toLowerCase(Locale.ENGLISH);
+                    String option = args[1].toLowerCase(Locale.ROOT);
                     if (option.equals("true") || option.equals("false")) {
                         // boolean enable/disable
                         // check that the other options have been set first
@@ -240,7 +240,7 @@ public class TARDISRoomCommands implements CommandExecutor {
                             return true;
                         } catch (NumberFormatException nfe) {
                             // string seed
-                            String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
+                            String setMaterial = args[1].toUpperCase(Locale.ROOT);
                             try {
                                 Material.valueOf(setMaterial);
                             } catch (IllegalArgumentException e) {

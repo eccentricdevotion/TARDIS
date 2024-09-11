@@ -36,7 +36,7 @@ class TARDISPowerDownCommand {
 
     boolean togglePowerDown(CommandSender sender, String[] args) {
         // check they typed true of false
-        String tf = args[1].toLowerCase(Locale.ENGLISH);
+        String tf = args[1].toLowerCase(Locale.ROOT);
         if (!tf.equals("true") && !tf.equals("false")) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "TRUE_FALSE");
             return false;

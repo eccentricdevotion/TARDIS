@@ -54,7 +54,7 @@ public class TARDISAchievementFactory {
     }
 
     public static boolean checkAdvancement(String adv) {
-        NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, adv.toLowerCase(Locale.ENGLISH));
+        NamespacedKey nsk = new NamespacedKey(TARDIS.plugin, adv.toLowerCase(Locale.ROOT));
         org.bukkit.advancement.Advancement a = TARDIS.plugin.getServer().getAdvancement(nsk);
         if (a != null) {
             TARDIS.plugin.debug("Advancement 'tardis:" + adv + "' exists :)");

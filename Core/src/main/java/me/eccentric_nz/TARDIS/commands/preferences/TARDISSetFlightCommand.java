@@ -42,7 +42,7 @@ public class TARDISSetFlightCommand {
         }
         FlightMode fm;
         try {
-            fm = FlightMode.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+            fm = FlightMode.valueOf(args[1].toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_INFO");
             return true;

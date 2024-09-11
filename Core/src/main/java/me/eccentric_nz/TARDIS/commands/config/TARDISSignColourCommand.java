@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -36,7 +37,7 @@ class TARDISSignColourCommand {
     }
 
     boolean setColour(CommandSender sender, String[] args) {
-        String colour = args[1].toUpperCase(Locale.ENGLISH);
+        String colour = args[1].toUpperCase(Locale.ROOT);
         if (!COLOURS.contains(colour)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_COLOUR");
             return true;

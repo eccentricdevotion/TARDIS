@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import org.bukkit.command.CommandSender;
+
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -39,11 +40,11 @@ class TARDISHelpCommand {
             return true;
         }
         if (args.length == 2) {
-            tch.getCommand(args[1].toLowerCase(Locale.ENGLISH), sender);
+            tch.getCommand(args[1].toLowerCase(Locale.ROOT), sender);
             return true;
         }
         if (args.length > 2) {
-            String cmds = args[1].toLowerCase(Locale.ENGLISH) + " " + args[2].toLowerCase(Locale.ENGLISH);
+            String cmds = args[1].toLowerCase(Locale.ROOT) + " " + args[2].toLowerCase(Locale.ROOT);
             tch.getCommand(cmds, sender);
             return true;
         }

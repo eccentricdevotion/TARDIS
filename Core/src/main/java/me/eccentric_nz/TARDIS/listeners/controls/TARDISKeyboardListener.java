@@ -155,7 +155,7 @@ public class TARDISKeyboardListener implements Listener {
         }
         // biome ?
         try {
-            String upper = firstLine.toUpperCase(Locale.ENGLISH);
+            String upper = firstLine.toUpperCase(Locale.ROOT);
             Biome.valueOf(upper);
             if (!upper.equals("HELL") && !upper.equals("SKY") && !upper.equals("VOID")) {
                 p.performCommand("tardistravel biome " + upper);

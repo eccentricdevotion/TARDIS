@@ -91,9 +91,9 @@ public class TARDISCraftListener implements Listener {
         // custom seeds
         plugin.getCustomConsolesConfig().getKeys(false).forEach((console) -> {
             if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
-                if (plugin.getArtronConfig().contains("upgrades." + console.toLowerCase(Locale.ENGLISH))) {
+                if (plugin.getArtronConfig().contains("upgrades." + console.toLowerCase(Locale.ROOT))) {
                     Material cmat = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
-                    t.put(cmat, console.toUpperCase(Locale.ENGLISH));
+                    t.put(cmat, console.toUpperCase(Locale.ROOT));
                 } else {
                     plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, "The custom console '" + console + "' does not have a corresponding upgrade value in artron.yml");
                 }
@@ -139,7 +139,7 @@ public class TARDISCraftListener implements Listener {
                         if (DiskCircuit.getCircuitNames().contains(dn)) {
                             // which circuit is it?
                             String[] split = dn.split(" ");
-                            String which = split[1].toLowerCase(Locale.ENGLISH);
+                            String which = split[1].toLowerCase(Locale.ROOT);
                             // set the second line of lore
                             List<String> lore;
                             String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);

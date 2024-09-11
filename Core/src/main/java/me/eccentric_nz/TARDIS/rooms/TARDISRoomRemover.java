@@ -71,7 +71,7 @@ class TARDISRoomRemover {
         int sx, sy, sz, ex, ey, ez, downy, upy;
         // calculate values for downy and upy from schematic dimensions / config
         // get JSON
-        JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", r.toLowerCase(Locale.ENGLISH), plugin.getRoomsConfig().getBoolean("rooms." + r + ".user"));
+        JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", r.toLowerCase(Locale.ROOT), plugin.getRoomsConfig().getBoolean("rooms." + r + ".user"));
         if (obj == null) {
             return false;
         }
@@ -131,7 +131,7 @@ class TARDISRoomRemover {
         if (r.equals("FARM") || r.equals("APIARY") || r.equals("HUTCH") || r.equals("IGLOO") || r.equals("RAIL") || r.equals("STABLE") || r.equals("STALL") || r.equals("VILLAGE") || r.equals("BIRDCAGE") || r.equals("AQUARIUM") || r.equals("BAMBOO")) {
             // remove stored location from the database
             HashMap<String, Object> set = new HashMap<>();
-            set.put(r.toLowerCase(Locale.ENGLISH), "");
+            set.put(r.toLowerCase(Locale.ROOT), "");
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("farming", set, where);

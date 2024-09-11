@@ -68,7 +68,7 @@ public class RoomCleaner {
             HashMap<String, Object> wheref = new HashMap<>();
             wheref.put("tardis_id", id);
             HashMap<String, Object> setf = new HashMap<>();
-            setf.put(room.toLowerCase(Locale.ENGLISH), "");
+            setf.put(room.toLowerCase(Locale.ROOT), "");
             plugin.getQueryFactory().doUpdate("farming", setf, wheref);
         }
         // remove eye controls, set capacitors to 1

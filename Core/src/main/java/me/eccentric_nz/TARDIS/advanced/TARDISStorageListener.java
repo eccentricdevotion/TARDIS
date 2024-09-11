@@ -76,7 +76,7 @@ public class TARDISStorageListener extends TARDISMenuListener {
         if (inv_titles.contains(title)) {
             // which inventory screen is it?
             String[] split = title.split(" ");
-            String tmp = split[0].toUpperCase(Locale.ENGLISH);
+            String tmp = split[0].toUpperCase(Locale.ROOT);
             if (split.length > 2) {
                 tmp = tmp + "_" + split[2];
             }
@@ -123,7 +123,7 @@ public class TARDISStorageListener extends TARDISMenuListener {
         }
         // which inventory screen is it?
         String[] split = title.split(" ");
-        String tmp = split[0].toUpperCase(Locale.ENGLISH);
+        String tmp = split[0].toUpperCase(Locale.ROOT);
         if (split.length > 2) {
             tmp = tmp + "_" + split[2];
         }

@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
 /**
  * Anti-gravity was the process of creating objects free from or releasing objects from the force of gravity. The Time
@@ -107,7 +108,7 @@ public class ResultSetGravity {
                         ResultSetMetaData rsmd = rs.getMetaData();
                         int columns = rsmd.getColumnCount();
                         for (int i = 1; i < columns + 1; i++) {
-                            row.put(rsmd.getColumnName(i).toLowerCase(Locale.ENGLISH), rs.getString(i));
+                            row.put(rsmd.getColumnName(i).toLowerCase(Locale.ROOT), rs.getString(i));
                         }
                         data.add(row);
                     }
