@@ -39,9 +39,8 @@ public class TARDISBannerSetter {
         banners.forEach((key, tbd) -> {
             JsonObject state = tbd.getState();
             if (state != null) {
-                Block pbb = key.getLocation().getBlock();
-                pbb.setBlockData(tbd.getData(), true);
-                Banner banner = (Banner) pbb.getState();
+                key.setBlockData(tbd.getData(), true);
+                Banner banner = (Banner) key.getState();
                 List<Pattern> plist = new ArrayList<>();
                 JsonArray patterns = state.get("patterns").getAsJsonArray();
                 for (int j = 0; j < patterns.size(); j++) {
@@ -54,7 +53,7 @@ public class TARDISBannerSetter {
                 banner.setPatterns(plist);
                 banner.update();
                 if (TARDIS.plugin.getBlockLogger().isLogging()) {
-                    TARDIS.plugin.getBlockLogger().logPlacement(pbb);
+                    TARDIS.plugin.getBlockLogger().logPlacement(key);
                 }
             }
         });

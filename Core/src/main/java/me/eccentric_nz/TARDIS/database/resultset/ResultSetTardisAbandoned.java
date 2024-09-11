@@ -16,16 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Locale;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix,
@@ -81,7 +82,7 @@ public class ResultSetTardisAbandoned {
                 rs.next();
                 tardis_id = rs.getInt("tardis_id");
                 artron_level = rs.getInt("artron_level");
-                schematic = Consoles.schematicFor(rs.getString("size").toLowerCase(Locale.ENGLISH));
+                schematic = Consoles.schematicFor(rs.getString("size").toLowerCase(Locale.ROOT));
                 String p = rs.getString("chameleon_preset");
                 if (p.startsWith("ITEM:")) {
                     preset = ChameleonPreset.ITEM;

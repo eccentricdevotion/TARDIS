@@ -51,17 +51,17 @@ public class TARDISCommandHelper {
         } else {
             String[] split = c.split(" ");
             try {
-                RootCommand root = RootCommand.valueOf(split[0].toLowerCase(Locale.ENGLISH));
+                RootCommand root = RootCommand.valueOf(split[0].toLowerCase(Locale.ROOT));
                 if (split.length > 1) {
-                    if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root + "." + split[1].toLowerCase(Locale.ENGLISH))) {
+                    if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root + "." + split[1].toLowerCase(Locale.ROOT))) {
                         sender.sendMessage("------");
-                        plugin.getMessenger().sendWithColours(sender, "Command: ", "#FFFFFF", "/" + c.toLowerCase(Locale.ENGLISH), "#FFAA00");
-                        plugin.getMessenger().sendWithColours(sender, "Description: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + "." + split[1].toLowerCase(Locale.ENGLISH) + ".description"), "#FFFFFF");
-                        if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root + "." + split[1].toLowerCase(Locale.ENGLISH) + ".usage")) {
-                            plugin.getMessenger().sendWithColours(sender, "Usage: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + "." + split[1].toLowerCase(Locale.ENGLISH) + ".usage").replace("<command>", root.toString()), "#FFFFFF");
+                        plugin.getMessenger().sendWithColours(sender, "Command: ", "#FFFFFF", "/" + c.toLowerCase(Locale.ROOT), "#FFAA00");
+                        plugin.getMessenger().sendWithColours(sender, "Description: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + "." + split[1].toLowerCase(Locale.ROOT) + ".description"), "#FFFFFF");
+                        if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root + "." + split[1].toLowerCase(Locale.ROOT) + ".usage")) {
+                            plugin.getMessenger().sendWithColours(sender, "Usage: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + "." + split[1].toLowerCase(Locale.ROOT) + ".usage").replace("<command>", root.toString()), "#FFFFFF");
                         }
-                        if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root + "." + split[1].toLowerCase(Locale.ENGLISH) + ".permission")) {
-                            plugin.getMessenger().sendWithColours(sender, "Permission: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + "." + split[1].toLowerCase(Locale.ENGLISH) + ".permission"), "#FFFFFF");
+                        if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root + "." + split[1].toLowerCase(Locale.ROOT) + ".permission")) {
+                            plugin.getMessenger().sendWithColours(sender, "Permission: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + "." + split[1].toLowerCase(Locale.ROOT) + ".permission"), "#FFFFFF");
                         } else if (plugin.getGeneralKeeper().getPluginYAML().contains("commands." + root + ".permission")) {
                             plugin.getMessenger().sendWithColours(sender, "Permission: ", "#AAAAAA", plugin.getGeneralKeeper().getPluginYAML().getString("commands." + root + ".permission"), "#FFFFFF");
                         } else {

@@ -89,7 +89,7 @@ public class TARDISRoomBuilder {
             roomData.setBlock(b);
             roomData.setDirection(d);
             // get JSON
-            JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", r.toLowerCase(Locale.ENGLISH), plugin.getRoomsConfig().getBoolean("rooms." + r + ".user"));
+            JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", r.toLowerCase(Locale.ROOT), plugin.getRoomsConfig().getBoolean("rooms." + r + ".user"));
             if (obj == null) {
                 return false;
             }

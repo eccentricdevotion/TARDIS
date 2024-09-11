@@ -110,13 +110,13 @@ public class TARDISConsoleLoader {
                     continue;
                 }
                 // check there is an Artron value
-                String permission = console.toLowerCase(Locale.ENGLISH);
+                String permission = console.toLowerCase(Locale.ROOT);
                 if (plugin.getArtronConfig().get("upgrades." + permission) == null) {
                     plugin.debug("Could not find a corresponding config entry in artron.yml for " + permission + "!");
                     continue;
                 }
                 // check seed material
-                String seed = plugin.getCustomConsolesConfig().getString(console + ".seed").toUpperCase(Locale.ENGLISH);
+                String seed = plugin.getCustomConsolesConfig().getString(console + ".seed").toUpperCase(Locale.ROOT);
                 try {
                     Material.valueOf(seed);
                 } catch (IllegalArgumentException e) {
@@ -141,7 +141,7 @@ public class TARDISConsoleLoader {
                     save = true;
                 }
                 // add the schematic
-                Consoles.getBY_NAMES().put(console.toUpperCase(Locale.ENGLISH), new Schematic(seed, permission, description, consoleSize, beacon, light, true, p));
+                Consoles.getBY_NAMES().put(console.toUpperCase(Locale.ROOT), new Schematic(seed, permission, description, consoleSize, beacon, light, true, p));
                 p--;
             }
         }

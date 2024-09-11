@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -36,8 +37,8 @@ class TARDISSetMaterialCommand {
     }
 
     boolean setConfigMaterial(CommandSender sender, String[] args, String section) {
-        String first = (section.isEmpty()) ? args[0].toLowerCase(Locale.ENGLISH) : section + "." + args[0].toLowerCase(Locale.ENGLISH);
-        String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
+        String first = (section.isEmpty()) ? args[0].toLowerCase(Locale.ROOT) : section + "." + args[0].toLowerCase(Locale.ROOT);
+        String setMaterial = args[1].toUpperCase(Locale.ROOT);
         if (!checkMaterial(setMaterial)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "MATERIAL_NOT_VALID");
             return false;
@@ -50,8 +51,8 @@ class TARDISSetMaterialCommand {
     }
 
     public boolean setConfigMaterial(CommandSender sender, String[] args) {
-        String first = args[0].toLowerCase(Locale.ENGLISH);
-        String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
+        String first = args[0].toLowerCase(Locale.ROOT);
+        String setMaterial = args[1].toUpperCase(Locale.ROOT);
         if (!checkMaterial(setMaterial)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "MATERIAL_NOT_VALID");
             return false;

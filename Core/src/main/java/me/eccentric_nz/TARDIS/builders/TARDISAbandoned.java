@@ -56,7 +56,7 @@ public class TARDISAbandoned {
         set.put("uuid", UUID.randomUUID().toString());
         set.put("owner", "");
         set.put("chunk", chun);
-        set.put("size", schm.getPermission().toUpperCase(Locale.ENGLISH));
+        set.put("size", schm.getPermission().toUpperCase(Locale.ROOT));
         set.put("abandoned", 1);
         set.put("powered_on", 0);
         set.put("lastuse", Long.MAX_VALUE);

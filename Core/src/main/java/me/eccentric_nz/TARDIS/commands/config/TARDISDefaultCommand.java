@@ -16,11 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
-import java.util.Arrays;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
+
+import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -34,7 +35,7 @@ class TARDISDefaultCommand {
     }
 
     boolean setDefaultItem(CommandSender sender, String[] args) {
-        String which = args[0].toLowerCase(Locale.ENGLISH);
+        String which = args[0].toLowerCase(Locale.ROOT);
         String sonic = String.join("_", Arrays.copyOfRange(args, 1, args.length));
         plugin.getConfig().set("preferences." + which, sonic);
         plugin.saveConfig();

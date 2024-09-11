@@ -360,7 +360,7 @@ public class TARDIS extends JavaPlugin {
             generalKeeper = new TARDISGeneralInstanceKeeper(this);
             generalKeeper.setQuotes(quotes());
             try {
-                craftingDifficulty = CraftingDifficulty.valueOf(getConfig().getString("difficulty.crafting", "EASY").toUpperCase(Locale.ENGLISH));
+                craftingDifficulty = CraftingDifficulty.valueOf(getConfig().getString("difficulty.crafting", "EASY").toUpperCase(Locale.ROOT));
             } catch (IllegalArgumentException e) {
                 debug("Could not determine difficulty setting, using EASY");
                 craftingDifficulty = CraftingDifficulty.EASY;
@@ -460,6 +460,9 @@ public class TARDIS extends JavaPlugin {
             }
             if (id.equalsIgnoreCase("skaro")) {
                 return new SkaroGenerator(this);
+            }
+            if (id.equalsIgnoreCase("rooms")) {
+                return new RoomGenerator(this);
             }
             return new TARDISChunkGenerator();
         }

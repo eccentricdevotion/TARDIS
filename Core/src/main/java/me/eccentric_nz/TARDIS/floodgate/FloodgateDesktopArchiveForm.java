@@ -85,7 +85,7 @@ public class FloodgateDesktopArchiveForm {
             }
             case "SMALL", "MEDIUM", "TALL" -> {
                 TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
-                String size = label.toLowerCase(Locale.ENGLISH);
+                String size = label.toLowerCase(Locale.ROOT);
                 int upgrade = plugin.getArtronConfig().getInt("upgrades.template." + size);
                 if (tud.getLevel() >= upgrade) {
                     new ArchiveUpdate(plugin, uuid.toString(), label).setInUse();

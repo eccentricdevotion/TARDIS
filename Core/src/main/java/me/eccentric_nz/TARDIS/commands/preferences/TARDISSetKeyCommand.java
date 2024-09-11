@@ -16,14 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -49,7 +50,7 @@ class TARDISSetKeyCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_NEED");
             return false;
         }
-        String setMaterial = args[1].toUpperCase(Locale.ENGLISH);
+        String setMaterial = args[1].toUpperCase(Locale.ROOT);
         Material go;
         try {
             go = Material.valueOf(setMaterial);

@@ -54,7 +54,7 @@ public class TARDISJunkCommands implements CommandExecutor {
                 // find Junk TARDIS
                 return new TARDISJunkFind(plugin).find(sender);
             }
-            String first = args[0].toLowerCase(Locale.ENGLISH);
+            String first = args[0].toLowerCase(Locale.ROOT);
             if (args.length == 1 && firstArgs.contains(first)) {
                 if (first.equals("create")) {
                     Player p = null;

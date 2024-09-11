@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.commands.admin;
 
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -43,7 +44,7 @@ class TARDISSetSizeCommand {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "COULD_NOT_FIND_NAME");
             return true;
         }
-        String type = args[2].toUpperCase(Locale.ENGLISH);
+        String type = args[2].toUpperCase(Locale.ROOT);
         // check size
         if (!Consoles.getBY_NAMES().containsKey(type)) {
             plugin.getMessenger().message(sender, "Not a valid console size! Try using tab completion.");

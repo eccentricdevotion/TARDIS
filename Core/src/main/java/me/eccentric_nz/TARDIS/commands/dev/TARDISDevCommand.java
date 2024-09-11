@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.lazarus.disguise.ArmourTrim;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
-import me.eccentric_nz.TARDIS.rooms.debug.DebugPopulator;
 import me.eccentric_nz.TARDIS.skins.ArchSkins;
 import me.eccentric_nz.TARDIS.skins.DoctorSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
@@ -34,7 +33,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardisregeneration.Regenerator;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BrushableBlock;
 import org.bukkit.command.Command;
@@ -93,7 +91,7 @@ public class TARDISDevCommand implements CommandExecutor {
                     new TARDISCommandHelper(plugin).getCommand("tardisadmin", sender);
                     return true;
                 }
-                String first = args[0].toLowerCase(Locale.ENGLISH);
+                String first = args[0].toLowerCase(Locale.ROOT);
                 if (!firstsStr.contains(first)) {
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_NOT_VALID");
                     return false;

@@ -188,7 +188,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         ItemStack ris = view.getItem(slot);
                         String displayName = ris.getItemMeta().getDisplayName();
                         String room = TARDISARS.ARSFor(ris.getType().toString()).getConfigPath();
-                        if (!TARDISPermission.hasPermission(player, "tardis.room." + room.toLowerCase(Locale.ENGLISH))) {
+                        if (!TARDISPermission.hasPermission(player, "tardis.room." + room.toLowerCase(Locale.ROOT))) {
                             break;
                         }
                         if (room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) {

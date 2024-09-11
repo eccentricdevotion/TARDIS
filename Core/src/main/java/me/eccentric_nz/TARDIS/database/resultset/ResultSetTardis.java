@@ -177,7 +177,7 @@ public class ResultSetTardis {
                             rs.getString("last_known_name"),
                             rs.getString("chunk"),
                             rs.getInt("tips"),
-                            Consoles.schematicFor(rs.getString("size").toLowerCase(Locale.ENGLISH)),
+                            Consoles.schematicFor(rs.getString("size").toLowerCase(Locale.ROOT)),
                             rs.getBoolean("abandoned"),
                             companions,
                             preset,

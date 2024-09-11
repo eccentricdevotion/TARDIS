@@ -67,7 +67,7 @@ public class TARDISSayCommand implements CommandExecutor {
                 }
             }
             String whatToTranslate = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
-            String lang = args[0].toUpperCase(Locale.ENGLISH);
+            String lang = args[0].toUpperCase(Locale.ROOT);
             try {
                 Language from = Language.valueOf(preferedLang);
                 Language to = Language.valueOf(lang);

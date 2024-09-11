@@ -176,14 +176,14 @@ public class TARDISThemeProcessor {
         plugin.getQueryFactory().doUpdate("player_prefs", setp, wherep);
         // update TARDIS
         HashMap<String, Object> sett = new HashMap<>();
-        sett.put("size", tud.getSchematic().getPermission().toUpperCase(Locale.ENGLISH));
+        sett.put("size", tud.getSchematic().getPermission().toUpperCase(Locale.ROOT));
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("uuid", uuid.toString());
         plugin.getQueryFactory().doUpdate("tardis", sett, wheret);
         // take the Artron Energy
         HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("uuid", uuid.toString());
-        String config_path = (archive_next != null) ? "upgrades.archive." + archive_next.getConsoleSize().getConfigPath() : "upgrades." + tud.getSchematic().getPermission().toLowerCase(Locale.ENGLISH);
+        String config_path = (archive_next != null) ? "upgrades.archive." + archive_next.getConsoleSize().getConfigPath() : "upgrades." + tud.getSchematic().getPermission().toLowerCase(Locale.ROOT);
         int amount = plugin.getArtronConfig().getInt(config_path);
         TARDISThemeRunnable ttr;
         boolean hasLava = tud.getPrevious().getPermission().equals("master") || tud.getPrevious().getPermission().equals("delta");

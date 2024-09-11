@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
@@ -27,6 +24,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * In 21st century London, Rory has his father, Brian Williams, over to help fix a light bulb. After saying the fixture
@@ -69,7 +70,7 @@ public class TARDISZeroRoomChatListener implements Listener {
             return;
         }
         UUID uuid = player.getUniqueId();
-        String command = event.getMessage().toLowerCase(Locale.ENGLISH);
+        String command = event.getMessage().toLowerCase(Locale.ROOT);
         if (plugin.getTrackerKeeper().getTelepaths().containsKey(uuid)) {
             if (command.contains("tardis ") || command.contains("tardistravel ") || command.contains("ttravel ")) {
                 UUID owner = plugin.getTrackerKeeper().getTelepaths().get(uuid);
@@ -77,7 +78,7 @@ public class TARDISZeroRoomChatListener implements Listener {
                 if (timelord != null && timelord.isOnline()) {
                     // message console so it is logged
                     plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, " Companion [" + player.getName() + "] ran a telepathic command as Time Lord [" + timelord.getName() + "]");
-                    if (command.contains("rescue") && command.contains(timelord.getName().toLowerCase(Locale.ENGLISH))) {
+                    if (command.contains("rescue") && command.contains(timelord.getName().toLowerCase(Locale.ROOT))) {
                         // track the timelord
                         plugin.getTrackerKeeper().getTelepathicRescue().put(owner, uuid);
                     }

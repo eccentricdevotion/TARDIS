@@ -118,7 +118,7 @@ public class TARDISMonsterRunnable implements Runnable {
             for (Entity e : entities) {
                 EntityType type = e.getType();
                 TARDISMonster tm = new TARDISMonster();
-                String dn = TARDISStringUtils.uppercaseFirst(type.toString().toLowerCase(Locale.ENGLISH));
+                String dn = TARDISStringUtils.uppercaseFirst(type.toString().toLowerCase(Locale.ROOT));
                 if (monsters.contains(type)) {
                     found = true;
                     switch (type) {
@@ -213,11 +213,11 @@ public class TARDISMonsterRunnable implements Runnable {
                         // choose a random monster
                         EntityType type = monsters.get(TARDISConstants.RANDOM.nextInt(monsters.size()));
                         rtm.setType(type);
-                        String dn = TARDISStringUtils.uppercaseFirst(type.toString().toLowerCase(Locale.ENGLISH));
+                        String dn = TARDISStringUtils.uppercaseFirst(type.toString().toLowerCase(Locale.ROOT));
                         if (type.equals(EntityType.ZOMBIE_VILLAGER)) {
                             Profession prof = Profession.values()[TARDISConstants.RANDOM.nextInt(7)];
                             rtm.setProfession(prof);
-                            dn = "Zombie " + TARDISStringUtils.uppercaseFirst(prof.toString().toLowerCase(Locale.ENGLISH));
+                            dn = "Zombie " + TARDISStringUtils.uppercaseFirst(prof.toString().toLowerCase(Locale.ROOT));
                         }
                         rtm.setDisplayName(dn);
                         moveMonster(map.getValue(), rtm, null, type.equals(EntityType.GUARDIAN));

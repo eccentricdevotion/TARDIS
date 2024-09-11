@@ -247,7 +247,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                     new TARDISCommandHelper(plugin).getCommand("tardisconfig", sender);
                     return true;
                 }
-                String first = args[0].toLowerCase(Locale.ENGLISH);
+                String first = args[0].toLowerCase(Locale.ROOT);
                 if (!firstsStr.containsKey(first) && !firstsBool.containsKey(first) && !firstsInt.containsKey(first) && !firstsIntArtron.contains(first) && !firstsStrArtron.contains(first)) {
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_NOT_VALID");
                     return false;
@@ -305,7 +305,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                     return new TARDISPowerDownCommand(plugin).togglePowerDown(sender, args);
                 }
                 if (first.equals("database")) {
-                    String dbtype = args[1].toLowerCase(Locale.ENGLISH);
+                    String dbtype = args[1].toLowerCase(Locale.ROOT);
                     if (!dbtype.equals("mysql") && !dbtype.equals("sqlite")) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_DB");
                         return true;
@@ -344,30 +344,30 @@ public class TARDISConfigCommand implements CommandExecutor {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_DIFF");
                         return true;
                     }
-                    plugin.getConfig().set("difficulty.crafting", args[1].toLowerCase(Locale.ENGLISH));
-                    plugin.setDifficulty(CraftingDifficulty.valueOf(args[1].toUpperCase(Locale.ENGLISH)));
+                    plugin.getConfig().set("difficulty.crafting", args[1].toLowerCase(Locale.ROOT));
+                    plugin.setDifficulty(CraftingDifficulty.valueOf(args[1].toUpperCase(Locale.ROOT)));
                 }
                 if (first.equals("default_preset")) {
                     if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(args[1])) {
                         plugin.getConfig().set("police_box.default_preset", "ITEM:" + args[1]);
                     } else {
                         try {
-                            ChameleonPreset.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+                            ChameleonPreset.valueOf(args[1].toUpperCase(Locale.ROOT));
                         } catch (IllegalArgumentException e) {
                             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_PRESET");
                             return true;
                         }
-                        plugin.getConfig().set("police_box.default_preset", args[1].toUpperCase(Locale.ENGLISH));
+                        plugin.getConfig().set("police_box.default_preset", args[1].toUpperCase(Locale.ROOT));
                     }
                 }
                 if (first.equals("use_clay")) {
                     try {
-                        UseClay.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+                        UseClay.valueOf(args[1].toUpperCase(Locale.ROOT));
                     } catch (IllegalArgumentException e) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_USE_CLAY");
                         return true;
                     }
-                    plugin.getConfig().set("creation.use_clay", args[1].toUpperCase(Locale.ENGLISH));
+                    plugin.getConfig().set("creation.use_clay", args[1].toUpperCase(Locale.ROOT));
                 }
                 if (first.equals("inventory_group")) {
                     plugin.getConfig().set("creation.inventory_group", args[1]);
@@ -377,7 +377,7 @@ public class TARDISConfigCommand implements CommandExecutor {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_VORTEX");
                         return true;
                     }
-                    plugin.getConfig().set("preferences.vortex_fall", args[1].toLowerCase(Locale.ENGLISH));
+                    plugin.getConfig().set("preferences.vortex_fall", args[1].toLowerCase(Locale.ROOT));
                 }
                 // checks if it's a boolean config option
                 if (firstsBool.containsKey(first)) {

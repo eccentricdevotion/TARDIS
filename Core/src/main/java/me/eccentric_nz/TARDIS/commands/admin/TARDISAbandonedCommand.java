@@ -55,7 +55,7 @@ class TARDISAbandonedCommand {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_ARGS");
             return true;
         }
-        String schm = args[1].toUpperCase(Locale.ENGLISH);
+        String schm = args[1].toUpperCase(Locale.ROOT);
         if (!Consoles.getBY_NAMES().containsKey(schm)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return true;
@@ -66,7 +66,7 @@ class TARDISAbandonedCommand {
             preset = ChameleonPreset.ITEM;
         } else {
             try {
-                preset = ChameleonPreset.valueOf(args[2].toUpperCase(Locale.ENGLISH));
+                preset = ChameleonPreset.valueOf(args[2].toUpperCase(Locale.ROOT));
             } catch (IllegalArgumentException e) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_PRESET");
                 return true;
@@ -74,7 +74,7 @@ class TARDISAbandonedCommand {
         }
         COMPASS d;
         try {
-            d = COMPASS.valueOf(args[3].toUpperCase(Locale.ENGLISH));
+            d = COMPASS.valueOf(args[3].toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ABANDONED_COMPASS");
             return true;

@@ -106,7 +106,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener {
                     UUID uuid = p.getUniqueId();
                     TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
                     ItemMeta im = template.getItemMeta();
-                    String size = im.getDisplayName().toLowerCase(Locale.ENGLISH);
+                    String size = im.getDisplayName().toLowerCase(Locale.ROOT);
                     int upgrade = plugin.getArtronConfig().getInt("upgrades.template." + size);
                     if (tud.getLevel() >= upgrade) {
                         new ArchiveUpdate(plugin, uuid.toString(), im.getDisplayName()).setInUse();

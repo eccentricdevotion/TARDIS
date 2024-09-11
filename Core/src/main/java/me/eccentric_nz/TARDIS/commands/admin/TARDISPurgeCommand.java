@@ -41,7 +41,7 @@ class TARDISPurgeCommand {
     boolean clearAll(CommandSender sender, String[] args) {
         // Look up this player's UUID
         UUID uuid = null;
-        if (args[1].toLowerCase(Locale.ENGLISH).equals("junk")) {
+        if (args[1].toLowerCase(Locale.ROOT).equals("junk")) {
             uuid = UUID.fromString("00000000-aaaa-bbbb-cccc-000000000000");
         } else {
             OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);

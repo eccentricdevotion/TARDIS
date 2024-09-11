@@ -38,7 +38,7 @@ class TARDISRegionFlagCommand {
     }
 
     boolean toggleEntryExit(CommandSender sender, String[] args) {
-        String flag = args[1].toLowerCase(Locale.ENGLISH);
+        String flag = args[1].toLowerCase(Locale.ROOT);
         if (!which.contains(flag)) {
             plugin.getMessenger().message(sender, "You need to specify which flag type you want to change to - entry or exit.");
             return true;

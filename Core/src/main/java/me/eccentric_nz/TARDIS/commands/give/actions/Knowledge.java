@@ -44,7 +44,7 @@ public class Knowledge {
                         });
                     }
                     default -> {
-                        NamespacedKey nsk = new NamespacedKey(plugin, map.getValue().replace(" ", "_").toLowerCase(Locale.ENGLISH));
+                        NamespacedKey nsk = new NamespacedKey(plugin, map.getValue().replace(" ", "_").toLowerCase(Locale.ROOT));
                         kbm.addRecipe(nsk);
                     }
                 }
@@ -79,7 +79,7 @@ public class Knowledge {
                 message = "Jelly Babies";
             }
             default -> {
-                NamespacedKey nsk = new NamespacedKey(plugin, item_to_give.replace(" ", "_").toLowerCase(Locale.ENGLISH));
+                NamespacedKey nsk = new NamespacedKey(plugin, item_to_give.replace(" ", "_").toLowerCase(Locale.ROOT));
                 kbm.addRecipe(nsk);
             }
         }

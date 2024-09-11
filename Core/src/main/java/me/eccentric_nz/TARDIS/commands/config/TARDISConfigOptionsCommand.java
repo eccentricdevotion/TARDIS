@@ -40,7 +40,7 @@ class TARDISConfigOptionsCommand {
     }
 
     boolean showConfigOptions(CommandSender sender, String[] args) {
-        String section = args[1].toLowerCase(Locale.ENGLISH);
+        String section = args[1].toLowerCase(Locale.ROOT);
         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CONFIG");
         if (sections.contains(section)) {
             plugin.getMessenger().messageWithColour(sender, section + ":", "#55FFFF");

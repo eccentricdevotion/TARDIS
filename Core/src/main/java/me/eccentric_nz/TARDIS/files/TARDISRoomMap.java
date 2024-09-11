@@ -56,7 +56,7 @@ public class TARDISRoomMap {
     public void load() {
         plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false).forEach((r) -> {
             if (plugin.getRoomsConfig().getBoolean("rooms." + r + ".enabled")) {
-                boolean success = makeRoomMap(r.toLowerCase(Locale.ENGLISH), r, plugin.getRoomsConfig().getBoolean("rooms." + r + ".user"));
+                boolean success = makeRoomMap(r.toLowerCase(Locale.ROOT), r, plugin.getRoomsConfig().getBoolean("rooms." + r + ".user"));
                 if (!success) {
                     plugin.getRoomsConfig().set("rooms." + r + ".enabled", false);
                     try {

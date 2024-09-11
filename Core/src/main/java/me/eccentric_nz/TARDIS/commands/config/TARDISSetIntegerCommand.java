@@ -41,9 +41,9 @@ class TARDISSetIntegerCommand {
     }
 
     boolean setConfigInt(CommandSender sender, String[] args, String section) {
-        String first = (section.isEmpty()) ? args[0].toLowerCase(Locale.ENGLISH) : section + "." + args[0].toLowerCase(Locale.ENGLISH);
+        String first = (section.isEmpty()) ? args[0].toLowerCase(Locale.ROOT) : section + "." + args[0].toLowerCase(Locale.ROOT);
         String a = args[1];
-        if (args[0].toLowerCase(Locale.ENGLISH).equals("tips_limit") && !TIPS_SUBS.contains(a)) {
+        if (args[0].toLowerCase(Locale.ROOT).equals("tips_limit") && !TIPS_SUBS.contains(a)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_TIPS");
             return false;
         }

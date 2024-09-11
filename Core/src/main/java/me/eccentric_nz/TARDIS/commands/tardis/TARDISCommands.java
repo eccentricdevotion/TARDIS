@@ -69,7 +69,7 @@ public class TARDISCommands implements CommandExecutor {
             }
             // the command list - first argument MUST appear here!
             TardisCommand tc;
-            String first = args[0].toLowerCase(Locale.ENGLISH);
+            String first = args[0].toLowerCase(Locale.ROOT);
             try {
                 tc = TardisCommand.valueOf(first);
             } catch (IllegalArgumentException e) {

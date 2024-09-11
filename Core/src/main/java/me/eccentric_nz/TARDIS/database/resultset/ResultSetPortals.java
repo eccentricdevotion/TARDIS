@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
 /**
  * Many facts, figures, and formulas are contained within the Matrix, including... the location of the TARDIS doors in
@@ -68,7 +69,7 @@ public class ResultSetPortals {
                     ResultSetMetaData rsmd = rs.getMetaData();
                     int columns = rsmd.getColumnCount();
                     for (int i = 1; i < columns + 1; i++) {
-                        row.put(rsmd.getColumnName(i).toLowerCase(Locale.ENGLISH), rs.getString(i));
+                        row.put(rsmd.getColumnName(i).toLowerCase(Locale.ROOT), rs.getString(i));
                     }
                     data.add(row);
                 }

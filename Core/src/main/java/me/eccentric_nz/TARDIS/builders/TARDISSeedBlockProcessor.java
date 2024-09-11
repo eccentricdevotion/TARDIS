@@ -103,7 +103,7 @@ public class TARDISSeedBlockProcessor {
                 Schematic schm = seed.getSchematic();
                 // check perms
                 if (!schm.getPermission().equals("budget") && !TARDISPermission.hasPermission(player, "tardis." + schm.getPermission())) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_TARDIS_TYPE", schm.getPermission().toUpperCase(Locale.ENGLISH));
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_TARDIS_TYPE", schm.getPermission().toUpperCase(Locale.ROOT));
                     return false;
                 }
                 int cx;
@@ -171,7 +171,7 @@ public class TARDISSeedBlockProcessor {
                 set.put("uuid", uuid);
                 set.put("owner", playerNameStr);
                 set.put("chunk", chun);
-                set.put("size", schm.getPermission().toUpperCase(Locale.ENGLISH));
+                set.put("size", schm.getPermission().toUpperCase(Locale.ROOT));
                 HashMap<String, Object> setpp = new HashMap<>();
                 Material wall_type = seed.getWallType();
                 Material floor_type = seed.getFloorType();
@@ -183,7 +183,7 @@ public class TARDISSeedBlockProcessor {
                 }
                 set.put("lastuse", now);
                 // set preset if default is not 'FACTORY'
-                String preset = plugin.getConfig().getString("police_box.default_preset", "FACTORY").toUpperCase(Locale.ENGLISH);
+                String preset = plugin.getConfig().getString("police_box.default_preset", "FACTORY").toUpperCase(Locale.ROOT);
                 set.put("chameleon_preset", preset);
                 set.put("chameleon_demat", preset);
                 // determine wall block material from HashMap

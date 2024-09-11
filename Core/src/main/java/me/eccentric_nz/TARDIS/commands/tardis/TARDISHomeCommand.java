@@ -61,7 +61,7 @@ class TARDISHomeCommand {
                     which = args[2];
                 } else {
                     try {
-                        which = args[2].toUpperCase(Locale.ENGLISH);
+                        which = args[2].toUpperCase(Locale.ROOT);
                         ChameleonPreset.valueOf(which);
                     } catch (IllegalArgumentException e) {
                         // abort

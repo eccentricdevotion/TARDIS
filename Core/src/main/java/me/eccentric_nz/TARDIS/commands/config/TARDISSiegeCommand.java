@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -37,7 +38,7 @@ class TARDISSiegeCommand {
     }
 
     boolean setOption(CommandSender sender, String[] args) {
-        String first = args[1].toLowerCase(Locale.ENGLISH);
+        String first = args[1].toLowerCase(Locale.ROOT);
         if (args.length == 2 && first.equalsIgnoreCase("true") || first.equalsIgnoreCase("false")) {
             plugin.getConfig().set("siege.enabled", Boolean.valueOf(first));
             plugin.saveConfig();
@@ -52,7 +53,7 @@ class TARDISSiegeCommand {
             return true;
         }
         if (siegeBool.contains(first)) {
-            String tf = args[2].toLowerCase(Locale.ENGLISH);
+            String tf = args[2].toLowerCase(Locale.ROOT);
             if (!tf.equals("true") && !tf.equals("false")) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "TRUE_FALSE");
                 return true;

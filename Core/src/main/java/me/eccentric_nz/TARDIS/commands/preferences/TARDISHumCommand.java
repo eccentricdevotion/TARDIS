@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Hum;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -41,12 +42,12 @@ class TARDISHumCommand {
         }
         Hum go;
         try {
-            go = Hum.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+            go = Hum.valueOf(args[1].toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "HUM_NOT_VALID");
             return false;
         }
-        String hum_set = (go.equals(Hum.RANDOM)) ? "" : go.toString().toLowerCase(Locale.ENGLISH);
+        String hum_set = (go.equals(Hum.RANDOM)) ? "" : go.toString().toLowerCase(Locale.ROOT);
         HashMap<String, Object> set = new HashMap<>();
         set.put("hum", hum_set);
         HashMap<String, Object> where = new HashMap<>();

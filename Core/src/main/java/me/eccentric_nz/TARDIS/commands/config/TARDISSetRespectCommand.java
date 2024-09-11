@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS.commands.config;
 
 import com.google.common.collect.ImmutableList;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISWorldGuardFlag;
 import org.bukkit.command.CommandSender;
+
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -37,7 +38,7 @@ class TARDISSetRespectCommand {
     }
 
     boolean setRegion(CommandSender sender, String[] args) {
-        String region = args[1].toLowerCase(Locale.ENGLISH);
+        String region = args[1].toLowerCase(Locale.ROOT);
         if (!regions.contains(region)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_TOWNY");
             return false;
@@ -49,7 +50,7 @@ class TARDISSetRespectCommand {
     }
 
     boolean setFlag(CommandSender sender, String[] args) {
-        String flag = args[1].toLowerCase(Locale.ENGLISH);
+        String flag = args[1].toLowerCase(Locale.ROOT);
         if (!flags.contains(flag)) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_FLAG");
             return false;

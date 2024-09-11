@@ -16,11 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.database.converters;
 
-import java.sql.*;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+
+import java.sql.*;
+import java.util.Locale;
 
 public class TARDISBindConverter {
 
@@ -65,7 +66,7 @@ public class TARDISBindConverter {
                         ps.setInt(1, rsd.getInt("tardis_id"));
                         ps.setInt(2, 5);
                         ps.setString(3, rsd.getString("bind"));
-                        ps.setString(4, rsd.getString("preset").toUpperCase(Locale.ENGLISH));
+                        ps.setString(4, rsd.getString("preset").toUpperCase(Locale.ROOT));
                         ps.addBatch();
                         i++;
                     } else {

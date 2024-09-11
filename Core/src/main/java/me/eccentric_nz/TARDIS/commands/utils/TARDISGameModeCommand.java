@@ -88,7 +88,7 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
                     return true;
                 }
             } else if (gm != null && args.length == 1) {
-                if (ROOT_SUBS.contains(args[0].toUpperCase(Locale.ENGLISH))) {
+                if (ROOT_SUBS.contains(args[0].toUpperCase(Locale.ROOT))) {
                     player = (Player) sender;
                 } else {
                     player = plugin.getServer().getPlayer(args[0]);
@@ -105,7 +105,7 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
         if (gm == null) {
             // get GameMode from first argument
             if (args[0].length() <= 2) {
-                switch (args[0].toLowerCase(Locale.ENGLISH)) {
+                switch (args[0].toLowerCase(Locale.ROOT)) {
                     case "s" -> gm = GameMode.SURVIVAL;
                     case "c" -> gm = GameMode.CREATIVE;
                     case "a" -> gm = GameMode.ADVENTURE;
@@ -117,7 +117,7 @@ public class TARDISGameModeCommand extends TARDISCompleter implements CommandExe
                 }
             } else {
                 try {
-                    gm = GameMode.valueOf(args[0].toUpperCase(Locale.ENGLISH));
+                    gm = GameMode.valueOf(args[0].toUpperCase(Locale.ROOT));
                 } catch (IllegalArgumentException e) {
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARG_GAMEMODE");
                     return false;

@@ -48,7 +48,7 @@ public class TARDISKeyRecipe {
     }
 
     public void addRecipe() {
-        int keyModel = keyModelLookup.getOrDefault(plugin.getConfig().getString("preferences.default_key").toLowerCase(Locale.ENGLISH), 1);
+        int keyModel = keyModelLookup.getOrDefault(plugin.getConfig().getString("preferences.default_key").toLowerCase(Locale.ROOT), 1);
         ItemStack is = new ItemStack(Material.GOLD_NUGGET, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Key");

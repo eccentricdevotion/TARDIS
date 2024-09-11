@@ -71,7 +71,7 @@ public class TARDISPlanetsUpdater {
                 planets_config.set("planets.TARDIS_Zero_Room.enabled", false);
                 planets_config.set("planets.TARDIS_Zero_Room.time_travel", false);
                 planets_config.set("planets.TARDIS_Zero_Room.resource_pack", "default");
-                planets_config.set("planets.TARDIS_Zero_Room.gamemode", plugin.getConfig().getString("creation.gamemode").toUpperCase(Locale.ENGLISH));
+                planets_config.set("planets.TARDIS_Zero_Room.gamemode", plugin.getConfig().getString("creation.gamemode").toUpperCase(Locale.ROOT));
                 planets_config.set("planets.TARDIS_Zero_Room.world_type", "FLAT");
                 planets_config.set("planets.TARDIS_Zero_Room.environment", "NORMAL");
                 planets_config.set("planets.TARDIS_Zero_Room.difficulty", "NORMAL");
@@ -91,7 +91,7 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets." + dn + ".enabled", true);
             planets_config.set("planets." + dn + ".time_travel", false);
             planets_config.set("planets." + dn + ".resource_pack", "default");
-            planets_config.set("planets." + dn + ".gamemode", plugin.getConfig().getString("creation.gamemode").toUpperCase(Locale.ENGLISH));
+            planets_config.set("planets." + dn + ".gamemode", plugin.getConfig().getString("creation.gamemode").toUpperCase(Locale.ROOT));
             planets_config.set("planets." + dn + ".world_type", "FLAT");
             planets_config.set("planets." + dn + ".environment", "NORMAL");
             planets_config.set("planets." + dn + ".difficulty", "NORMAL");

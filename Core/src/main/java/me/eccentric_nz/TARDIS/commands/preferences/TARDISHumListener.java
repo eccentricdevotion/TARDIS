@@ -105,7 +105,7 @@ public class TARDISHumListener extends TARDISMenuListener {
                         close(p);
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "HUM_WAIT");
                     } else {
-                        TARDISSounds.playTARDISSound(p, "tardis_hum_" + im.getDisplayName().toLowerCase(Locale.ENGLISH), 5L);
+                        TARDISSounds.playTARDISSound(p, "tardis_hum_" + im.getDisplayName().toLowerCase(Locale.ROOT), 5L);
                         last.put(uuid, slot);
                         cooldown.put(uuid, System.currentTimeMillis());
                     }
@@ -113,7 +113,7 @@ public class TARDISHumListener extends TARDISMenuListener {
                     HashMap<String, Object> set = new HashMap<>();
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", uuid.toString());
-                    set.put("hum", im.getDisplayName().toLowerCase(Locale.ENGLISH));
+                    set.put("hum", im.getDisplayName().toLowerCase(Locale.ROOT));
                     plugin.getQueryFactory().doUpdate("player_prefs", set, where);
                     close(p);
                     plugin.getMessenger().send(p, TardisModule.TARDIS, "HUM_SAVED");

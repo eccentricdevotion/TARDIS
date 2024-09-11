@@ -95,7 +95,7 @@ public class TARDISRoomPersister {
                 while (rs.next()) {
                     String whichroom = rs.getString("room");
                     // get JSON
-                    JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", whichroom.toLowerCase(Locale.ENGLISH), plugin.getRoomsConfig().getBoolean("rooms." + whichroom + ".user"));
+                    JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", whichroom.toLowerCase(Locale.ROOT), plugin.getRoomsConfig().getBoolean("rooms." + whichroom + ".user"));
                     if (obj != null) {
                         TARDISRoomData rd = new TARDISRoomData();
                         rd.setSchematic(obj);

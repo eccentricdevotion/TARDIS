@@ -61,7 +61,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                     plugin.getMessenger().message(sender, "/tardisgive [player] [item] [amount]");
                     return true;
                 }
-                String item = args[1].toLowerCase(Locale.ENGLISH);
+                String item = args[1].toLowerCase(Locale.ROOT);
                 if (!Give.items.containsKey(item)) {
                     new TARDISGiveLister(plugin, sender).list();
                     return true;
@@ -81,7 +81,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                     return true;
                 }
                 if (item.equals("blueprint")) {
-                    String blueprint = args[2].toUpperCase(Locale.ENGLISH);
+                    String blueprint = args[2].toUpperCase(Locale.ROOT);
                     if (TARDISGiveTabComplete.getBlueprints().contains(blueprint)) {
                         new TARDISBlueprint(plugin).give(sender, args, blueprint);
                     } else {
@@ -98,7 +98,7 @@ public class TARDISGiveCommand implements CommandExecutor {
                     return true;
                 }
                 if (item.equals("seed")) {
-                    String seed = args[2].toUpperCase(Locale.ENGLISH);
+                    String seed = args[2].toUpperCase(Locale.ROOT);
                     if (Consoles.getBY_NAMES().containsKey(seed) && !seed.equals("SMALL") && !seed.equals("MEDIUM") && !seed.equals("TALL") && !seed.equals("ARCHIVE")) {
                         if (args.length > 3 && args[3].equalsIgnoreCase("knowledge")) {
                             Player sp = plugin.getServer().getPlayer(args[0]);

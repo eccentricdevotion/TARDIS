@@ -122,7 +122,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                 }
                 // what are we going to do?
                 try {
-                    Remote remote = Remote.valueOf(args[1].toUpperCase(Locale.ENGLISH));
+                    Remote remote = Remote.valueOf(args[1].toUpperCase(Locale.ROOT));
                     OfflinePlayer p = plugin.getServer().getOfflinePlayer(uuid);
                     // we can't get permissions for offline players!
                     if (sender instanceof BlockCommandSender && p.getPlayer() == null) {
@@ -189,7 +189,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                             }
                             // home, area or coords?
                             HashMap<String, Object> set = new HashMap<>();
-                            switch (args[2].toLowerCase(Locale.ENGLISH)) {
+                            switch (args[2].toLowerCase(Locale.ROOT)) {
                                 case "home" -> {
                                     // get home location
                                     HashMap<String, Object> wherehl = new HashMap<>();

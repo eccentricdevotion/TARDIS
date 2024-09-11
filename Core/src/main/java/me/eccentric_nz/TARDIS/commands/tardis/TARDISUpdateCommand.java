@@ -164,7 +164,7 @@ class TARDISUpdateCommand {
                 if (block.getType().equals(Material.IRON_DOOR)) {
                     Door door = (Door) block.getBlockData();
                     if (args.length == 3) {
-                        Hinge setHinge = Hinge.valueOf(args[2].toUpperCase(Locale.ENGLISH));
+                        Hinge setHinge = Hinge.valueOf(args[2].toUpperCase(Locale.ROOT));
                         door.setHinge(setHinge);
                     } else {
                         Hinge hinge = door.getHinge();

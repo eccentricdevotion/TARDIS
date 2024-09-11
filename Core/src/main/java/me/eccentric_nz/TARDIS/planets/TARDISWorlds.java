@@ -65,7 +65,7 @@ public class TARDISWorlds {
             World w = worldCreator.createWorld();
             if (w != null) {
                 String gm = TARDIS.plugin.getPlanetsConfig().getString("planets." + world + ".gamemode");
-                if (gm != null && gm.toUpperCase(Locale.ENGLISH).equals("CREATIVE")) {
+                if (gm != null && gm.toUpperCase(Locale.ROOT).equals("CREATIVE")) {
                     TARDIS.plugin.getTardisHelper().setWorldGameMode(world, GameMode.CREATIVE);
                 }
                 if (TARDIS.plugin.getPlanetsConfig().contains("planets." + world + ".gamerules")) {

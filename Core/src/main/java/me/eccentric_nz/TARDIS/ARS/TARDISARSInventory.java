@@ -167,7 +167,7 @@ public class TARDISARSInventory {
                 List<String> lore = new ArrayList<>();
                 lore.add("Cost: " + plugin.getRoomsConfig().getInt("rooms." + a + ".cost"));
                 String roomName = TARDISARS.ARSFor(room.getType().toString()).getConfigPath();
-                if (player != null && !TARDISPermission.hasPermission(player, "tardis.room." + roomName.toLowerCase(Locale.ENGLISH))) {
+                if (player != null && !TARDISPermission.hasPermission(player, "tardis.room." + roomName.toLowerCase(Locale.ROOT))) {
                     lore.add(ChatColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
                 }
                 im.setLore(lore);

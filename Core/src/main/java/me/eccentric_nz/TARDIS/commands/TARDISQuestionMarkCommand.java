@@ -40,12 +40,12 @@ public class TARDISQuestionMarkCommand implements CommandExecutor {
             TARDISCommandHelper tch = new TARDISCommandHelper(plugin);
             switch (args.length) {
                 case 2 -> {
-                    String cmds = args[0].toLowerCase(Locale.ENGLISH) + " " + args[1].toLowerCase(Locale.ENGLISH);
+                    String cmds = args[0].toLowerCase(Locale.ROOT) + " " + args[1].toLowerCase(Locale.ROOT);
                     tch.getCommand(cmds, sender);
                     return true;
                 }
                 case 1 -> {
-                    tch.getCommand(args[0].toLowerCase(Locale.ENGLISH), sender);
+                    tch.getCommand(args[0].toLowerCase(Locale.ROOT), sender);
                     return true;
                 }
                 default -> {

@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.howto.TARDISSeedsInventory;
 import me.eccentric_nz.TARDIS.travel.ComehereAction;
 import me.eccentric_nz.TARDIS.travel.ComehereRequest;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -70,7 +69,7 @@ public class TARDISChatListener implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         UUID chatter = player.getUniqueId();
-        String chat = event.getMessage().toLowerCase(Locale.ENGLISH);
+        String chat = event.getMessage().toLowerCase(Locale.ROOT);
         if (chat != null) {
             if (chat.equals("tardis rescue accept") || chat.equals("tardis request accept")) {
                 event.setCancelled(true);

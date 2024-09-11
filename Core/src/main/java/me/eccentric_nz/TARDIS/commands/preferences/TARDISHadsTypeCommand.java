@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import java.util.HashMap;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -39,7 +40,7 @@ class TARDISHadsTypeCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "HADS_NEED");
             return false;
         }
-        String hads_type = args[1].toUpperCase(Locale.ENGLISH);
+        String hads_type = args[1].toUpperCase(Locale.ROOT);
         try {
             HADS.valueOf(hads_type);
         } catch (IllegalArgumentException e) {

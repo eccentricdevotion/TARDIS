@@ -92,7 +92,7 @@ class BindAdd {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "BIND_NO_AREA_PERM", which);
                     return true;
                 }
-                set.put("name", which.toLowerCase(Locale.ENGLISH));
+                set.put("name", which.toLowerCase(Locale.ROOT));
                 set.put("type", 3);
                 bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
             }
@@ -100,7 +100,7 @@ class BindAdd {
                 // check valid biome
                 Biome biome;
                 try {
-                    biome = Biome.valueOf(which.toUpperCase(Locale.ENGLISH));
+                    biome = Biome.valueOf(which.toUpperCase(Locale.ROOT));
                     if (!biome.equals(Biome.THE_VOID)) {
                         set.put("type", 4);
                         set.put("name", biome.toString());
@@ -113,7 +113,7 @@ class BindAdd {
             }
             case CHAMELEON -> { // type 5
                 if (which.equalsIgnoreCase("OFF") || which.equalsIgnoreCase("ADAPT")) {
-                    set.put("name", which.toUpperCase(Locale.ENGLISH));
+                    set.put("name", which.toUpperCase(Locale.ROOT));
                 } else {
                     // check valid preset
                     ChameleonPreset preset;
@@ -121,7 +121,7 @@ class BindAdd {
                         set.put("name", "ITEM:" + which);
                     } else {
                         try {
-                            preset = ChameleonPreset.valueOf(which.toUpperCase(Locale.ENGLISH));
+                            preset = ChameleonPreset.valueOf(which.toUpperCase(Locale.ROOT));
                         } catch (IllegalArgumentException e) {
                             // abort
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_PRESET");

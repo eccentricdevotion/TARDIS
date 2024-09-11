@@ -27,7 +27,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -76,7 +75,7 @@ public class TARDISSeedRecipe {
         im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
         im.setCustomModelData(model);
         List<String> lore = new ArrayList<>();
-        lore.add(s.getPermission().toUpperCase(Locale.ENGLISH));
+        lore.add(s.getPermission().toUpperCase(Locale.ROOT));
         im.setLore(lore);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, s.getPermission() + "_seed");
