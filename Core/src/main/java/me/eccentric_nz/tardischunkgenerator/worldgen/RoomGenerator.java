@@ -22,13 +22,11 @@ public class RoomGenerator extends ChunkGenerator {
 
     @Override
     public void generateBedrock(WorldInfo worldInfo, Random random, int x, int z, ChunkData chunkData) {
-        if (chunkData.getMinHeight() == worldInfo.getMinHeight()) {
             for (int bx = 0; bx < 16; bx++) {
                 for (int bz = 0; bz < 16; bz++) {
-                    chunkData.setBlock(bx, chunkData.getMinHeight(), bz, Material.BEDROCK);
+                    chunkData.setBlock(bx, 63, bz, Material.BEDROCK);
                 }
             }
-        }
     }
 
     /**
@@ -44,7 +42,7 @@ public class RoomGenerator extends ChunkGenerator {
 
     @Override
     public Location getFixedSpawnLocation(World world, Random random) {
-        return new Location(world, 0, -60, 0);
+        return new Location(world, 8, 68, 8);
     }
 
     @Override

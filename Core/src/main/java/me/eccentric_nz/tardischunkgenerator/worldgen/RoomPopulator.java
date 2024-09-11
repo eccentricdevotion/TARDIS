@@ -39,7 +39,10 @@ public class RoomPopulator extends BlockPopulator {
 
     private final TARDIS plugin;
     private final HashMap<Block, TARDISBannerData> bannerBlocks = new HashMap<>();
-    private final List<String> rooms = List.of("ALLAY", "APIARY", "AQUARIUM", "ARBORETUM", "BAMBOO", "BEDROOM", "BIRDCAGE", "CHEMISTRY", "EMPTY", "FARM", "GARDEN", "GEODE", "GREENHOUSE", "HARMONY", "HUTCH", "IGLOO", "IISTUBIL", "KITCHEN", "LAVA", "LAZARUS", "LIBRARY", "MANGROVE", "MUSHROOM", "NETHER", "PEN", "POOL", "RAIL", "SHELL", "SMELTER", "STABLE", "STALL", "SURGERY", "TRENZALORE", "VAULT", "VILLAGE", "WORKSHOP");
+    private final List<String> rooms = List.of("ALLAY", "APIARY", "AQUARIUM", "ARBORETUM", "BAMBOO", "BEDROOM",
+            "BIRDCAGE", "CHEMISTRY", "EMPTY", "FARM", "GARDEN", "GEODE", "GREENHOUSE", "HARMONY", "HUTCH", "IGLOO",
+            "IISTUBIL", "KITCHEN", "LAVA", "LAZARUS", "LIBRARY", "MANGROVE", "MUSHROOM", "NETHER", "PEN", "POOL", "RAIL",
+            "SHELL", "SMELTER", "STABLE", "STALL", "SURGERY", "TRENZALORE", "VAULT", "VILLAGE", "WORKSHOP");
 
     public RoomPopulator(TARDIS plugin) {
         this.plugin = plugin;
