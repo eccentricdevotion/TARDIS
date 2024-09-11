@@ -26,23 +26,23 @@ public class TARDISPainting {
         switch (art) {
             // 1x2
             case GRAHAM, WANDERER -> {
-                return loc.getBlock().getLocation().add(0, -1, 0);
+                return loc.clone().add(0, -1, 0);
             }
             // 2x1 & 4x3
             case CREEBET, COURBET, POOL, SEA, SUNSET, DONKEY_KONG, SKELETON -> {
                 if (facing == BlockFace.WEST) {
-                    return loc.getBlock().getLocation().add(0, 0, -1);
+                    return loc.clone().add(0, 0, -1);
                 } else if (facing == BlockFace.SOUTH) {
-                    return loc.getBlock().getLocation().add(-1, 0, 0);
+                    return loc.clone().add(-1, 0, 0);
                 }
                 return loc;
             }
             // 2x2, 4x2 & 4x4
             case BUST, MATCH, SKULL_AND_ROSES, STAGE, VOID, WITHER, FIGHTERS, BURNING_SKULL, PIGSCENE, POINTER, EARTH, WIND, WATER, FIRE -> {
                 if (facing == BlockFace.WEST) {
-                    return loc.getBlock().getLocation().add(0, -1, -1);
+                    return loc.clone().add(0, -1, -1);
                 } else if (facing == BlockFace.SOUTH) {
-                    return loc.getBlock().getLocation().add(-1, -1, 0);
+                    return loc.clone().add(-1, -1, 0);
                 }
                 return loc.add(0, -1, 0);
             }
@@ -57,23 +57,23 @@ public class TARDISPainting {
         switch (art) {
             // 1x2
             case "eye_chart" -> {
-                return loc.getBlock().getLocation().add(0, -1, 0);
+                return loc.clone().add(0, -1, 0);
             }
             // 2x1 & 4x3
             case "magnatise", "melt", "periodic_table", "spectacles", "world" -> {
                 if (facing == BlockFace.WEST) {
-                    return loc.getBlock().getLocation().add(0, 0, -1);
+                    return loc.clone().add(0, 0, -1);
                 } else if (facing == BlockFace.SOUTH) {
-                    return loc.getBlock().getLocation().add(-1, 0, 0);
+                    return loc.clone().add(-1, 0, 0);
                 }
                 return loc;
             }
             // 2x2, 4x2 & 4x4
             case "aorta", "beaker", "chemistry", "gallifrey_falls_no_more", "lava", "pi", "sulphur" -> {
                 if (facing == BlockFace.WEST) {
-                    return loc.getBlock().getLocation().add(0, -1, -1);
+                    return loc.clone().add(0, -1, -1);
                 } else if (facing == BlockFace.SOUTH) {
-                    return loc.getBlock().getLocation().add(-1, -1, 0);
+                    return loc.clone().add(-1, -1, 0);
                 }
                 return loc.add(0, -1, 0);
             }
