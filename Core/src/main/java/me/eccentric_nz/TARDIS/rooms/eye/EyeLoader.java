@@ -18,7 +18,7 @@ public class EyeLoader {
         // start particles
         if (plugin.getConfig().getBoolean("eye_of_harmony.particles")) {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Firing up Eye of Harmony capture stars...");
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Firing up Eye of Harmony captured stars...");
                 new EyeStarter(plugin).goSuperNova();
             }, 600L);
         }
