@@ -151,7 +151,7 @@ public class SchematicSave {
                                 painting.add("rel_location", loc);
                                 try {
                                     painting.addProperty("art", art.getArt().toString());
-                                } catch (IllegalArgumentException e) {
+                                } catch (IllegalArgumentException | IllegalStateException e) {
                                     // custom datapack painting
                                     painting.addProperty("art", DataPackPainting.getCustomVariant(art));
                                 }
