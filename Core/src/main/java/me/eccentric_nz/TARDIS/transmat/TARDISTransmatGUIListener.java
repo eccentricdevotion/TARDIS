@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.transmat;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.desktop.PreviewData;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
@@ -80,8 +81,19 @@ public class TARDISTransmatGUIListener extends TARDISMenuListener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_SELECT");
                 } else {
                     // transmat to selected location
-                    ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, selectedLocation.get(player.getUniqueId()));
+                    ResultSetTransmat rsm;
+                    boolean isRoomsWorld;
+                    if (selectedLocation.get(player.getUniqueId()).equals("Rooms World")) {
+                        rsm = new ResultSetTransmat(plugin, -1, "rooms");
+                        isRoomsWorld = true;
+                    } else {
+                        rsm = new ResultSetTransmat(plugin, id, selectedLocation.get(player.getUniqueId()));
+                        isRoomsWorld = false;
+                    }
                     if (rsm.resultSet()) {
+                        if (isRoomsWorld) {
+                            plugin.getTrackerKeeper().getPreviewers().put(player.getUniqueId(), new PreviewData(player.getLocation().clone(), player.getGameMode(), id));
+                        }
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT");
                         Location tp_loc = rsm.getLocation();
                         tp_loc.setYaw(rsm.getYaw());
@@ -89,6 +101,9 @@ public class TARDISTransmatGUIListener extends TARDISMenuListener {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             player.playSound(tp_loc, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
                             player.teleport(tp_loc);
+                            if (isRoomsWorld) {
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "PREVIEW_DONE");
+                            }
                         }, 10L);
                         close(player);
                     }

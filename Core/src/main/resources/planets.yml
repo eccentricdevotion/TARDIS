@@ -103,3 +103,27 @@ planets:
       uses: 1
       chance: 20
     helmic_regulator_order: -1
+  rooms:
+    enabled: false
+    resource_pack: default
+    gamemode: SURVIVAL
+    time_travel: false
+    world_type: FLAT
+    environment: NORMAL
+    generator: TARDIS:rooms
+    spawn_chunk_radius: 0
+    spawn_other_mobs: false
+    gamerules:
+      doWeatherCycle: false
+      doDaylightCycle: false
+      doMobSpawning: false
+      doTraderSpawning: false
+      doPatrolSpawning: false
+      doWardenSpawning: false
+    allow_portals: false
+    alias: Roomy
+    icon: BOOKSHELF
+    transmat_location:
+      x: 8.5
+      y: 68.0
+      z: 2.5

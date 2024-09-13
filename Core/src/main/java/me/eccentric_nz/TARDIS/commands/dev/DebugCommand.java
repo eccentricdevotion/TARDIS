@@ -2,7 +2,9 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.desktop.PreviewData;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.debug.DebugPopulator;
@@ -13,6 +15,8 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.sql.ResultSet;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -25,20 +29,28 @@ public class DebugCommand {
     }
 
     public boolean process(CommandSender sender, String[] args) {
-        String param = args[1].toLowerCase(Locale.ROOT);
-        switch (param) {
-            case "enter" -> enter(sender);
-            case "exit" -> exit(sender);
-            default -> {
-                if (param.equals("create") || param.equals("update")) {
-                    create(param.equals("update"));
+        if (sender instanceof Player player) {
+            // must be in TARDIS
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("uuid", player.getUniqueId().toString());
+            ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
+            if (rs.resultSet()) {
+                String param = args[1].toLowerCase(Locale.ROOT);
+                switch (param) {
+                    case "enter" -> enter(sender, rs.getTardis_id());
+                    case "exit" -> exit(sender);
+                    default -> {
+                        if (param.equals("create") || param.equals("update")) {
+                            create(param.equals("update"));
+                        }
+                    }
                 }
             }
         }
         return true;
     }
 
-    private void enter(CommandSender sender) {
+    private void enter(CommandSender sender, int id) {
         if (sender instanceof Player player) {
             // get the transmat location
             ResultSetTransmat rst = new ResultSetTransmat(plugin, -50, "debug_preview");
@@ -48,7 +60,7 @@ public class DebugCommand {
                 transmat.setYaw(rst.getYaw());
                 transmat.setPitch(player.getLocation().getPitch());
                 // start tracking player
-                plugin.getTrackerKeeper().getPreviewers().put(player.getUniqueId(), new PreviewData(player.getLocation().clone(), player.getGameMode()));
+                plugin.getTrackerKeeper().getPreviewers().put(player.getUniqueId(), new PreviewData(player.getLocation().clone(), player.getGameMode(), id));
                 // transmat to preview desktop
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     // set gamemode

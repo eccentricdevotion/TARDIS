@@ -27,9 +27,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * TARDISes prefer the environment of the Space-Time Vortex to the four
- * dimensional world. They have Curiosity Circuits to encourage them to leave
- * the Vortex.
+ * TARDISes prefer the environment of the Space-Time Vortex to the four dimensional world. They have Curiosity Circuits
+ * to encourage them to leave the Vortex.
  *
  * @author eccentric_nz
  */
@@ -358,6 +357,14 @@ class TARDISSQLiteDatabaseUpdater {
                     String sys_alter = "ALTER TABLE " + prefix + "system_upgrades ADD " + sys;
                     statement.executeUpdate(sys_alter);
                 }
+            }
+            // add tardis_id to previewers
+            String pre_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "previewers' AND sql LIKE '%tardis_id%'";
+            ResultSet rspre = statement.executeQuery(pre_query);
+            if (!rspre.next()) {
+                i++;
+                String pre_alter = "ALTER TABLE " + prefix + "previewers ADD tardis_id INTEGER DEFAULT 0";
+                statement.executeUpdate(pre_alter);
             }
             // add biome to current location
             String bio_query = "SELECT sql FROM sqlite_master WHERE tbl_name = '" + prefix + "current' AND sql LIKE '%biome%'";

@@ -21,7 +21,9 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.TARDISBoundTransmatRemoval;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.desktop.PreviewData;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.planets.RoomsWorld;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -68,14 +70,26 @@ class TARDISTransmatCommand {
             return false;
         }
         if (args[1].equalsIgnoreCase("list")) {
+            Transmat transmat = null;
+            if (plugin.getPlanetsConfig().getBoolean("planets.rooms.enabled") && plugin.getServer().getWorld("rooms") != null) {
+                transmat = new RoomsWorld().getTransmat(plugin);
+            }
             ResultSetTransmatList rslist = new ResultSetTransmatList(plugin, id);
             if (rslist.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_LIST");
                 for (Transmat t : rslist.getData()) {
                     plugin.getMessenger().sendTransmat(player, t);
                 }
+                if (transmat != null) {
+                    plugin.getMessenger().sendTransmat(player, transmat);
+                }
             } else {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_NO_LIST");
+                if (transmat != null) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_LIST");
+                    plugin.getMessenger().sendTransmat(player, transmat);
+                } else {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_NO_LIST");
+                }
             }
             return true;
         }
@@ -89,8 +103,19 @@ class TARDISTransmatCommand {
                 // get internal door location
                 plugin.getGeneralKeeper().getRendererListener().transmat(player);
             } else {
-                ResultSetTransmat rsm = new ResultSetTransmat(plugin, id, args[2]);
+                ResultSetTransmat rsm;
+                boolean isRoomsWorld;
+                if (args[2].startsWith("Rooms") && args.length == 4 && TARDISPermission.hasPermission(player, "tardis.transmat.rooms")) {
+                    rsm = new ResultSetTransmat(plugin, -1, "rooms");
+                    isRoomsWorld = true;
+                } else {
+                    rsm = new ResultSetTransmat(plugin, id, args[2]);
+                    isRoomsWorld = false;
+                }
                 if (rsm.resultSet()) {
+                    if (isRoomsWorld) {
+                        plugin.getTrackerKeeper().getPreviewers().put(player.getUniqueId(), new PreviewData(player.getLocation().clone(), player.getGameMode(), id));
+                    }
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT");
                     Location tp_loc = rsm.getLocation();
                     tp_loc.setYaw(rsm.getYaw());
@@ -98,6 +123,9 @@ class TARDISTransmatCommand {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         player.playSound(tp_loc, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
                         player.teleport(tp_loc);
+                        if (isRoomsWorld) {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "PREVIEW_DONE");
+                        }
                     }, 10L);
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_NOT_FOUND");

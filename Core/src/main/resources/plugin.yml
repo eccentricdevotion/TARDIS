@@ -590,6 +590,9 @@ permissions:
   tardis.transmat:
     description: Allows a player to add internal transmat locations to their TARDIS.
     default: op
+  tardis.transmat.rooms:
+    description: Allows a player to transmat to the TARDIS Rooms world.
+    default: op
   tardis.handles:
     description: Allow players to use the Handles companion.
     children:

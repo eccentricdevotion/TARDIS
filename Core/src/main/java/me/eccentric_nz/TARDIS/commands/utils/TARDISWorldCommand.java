@@ -209,6 +209,10 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_ENABLED", arguments.getArguments().get(1));
                     if (TARDISConstants.isTARDISPlanetExact(arguments.getArguments().get(1))) {
                         switch (arguments.getArguments().get(1)) {
+                            case "rooms" -> {
+                                plugin.debug("Rooms world enabled, checking transmat location");
+                                new RoomsWorld().check(plugin);
+                            }
                             case "gallifrey" -> {
                                 plugin.debug("Gallifrey enabled, registering planet event listeners");
                                 plugin.getPM().registerEvents(new TARDISGallifreySpawnListener(plugin), plugin);

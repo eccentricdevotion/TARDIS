@@ -379,7 +379,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             }
             case 33 -> {
                 // transmat
-                ItemStack[] tran = new TARDISTransmatInventory(plugin, id).getMenu();
+                ItemStack[] tran = new TARDISTransmatInventory(plugin, id, player).getMenu();
                 Inventory smat = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS transmats");
                 smat.setContents(tran);
                 player.openInventory(smat);

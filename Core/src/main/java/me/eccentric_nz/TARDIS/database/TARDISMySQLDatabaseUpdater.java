@@ -309,6 +309,14 @@ class TARDISMySQLDatabaseUpdater {
                 String tagtime_query = "ALTER TABLE " + prefix + "tag CHANGE `time` `time` BIGINT NULL DEFAULT '0'";
                 statement.executeUpdate(tagtime_query);
             }
+            // add tardis_id to previewers
+            String pre_query = "SHOW COLUMNS FROM " + prefix + "previewers LIKE 'tardis_id'";
+            ResultSet rspre = statement.executeQuery(pre_query);
+            if (!rspre.next()) {
+                i++;
+                String pre_alter = "ALTER TABLE " + prefix + "previewers ADD tardis_id int(11) DEFAULT '0'";
+                statement.executeUpdate(pre_alter);
+            }
             // add biome to current location
             String bio_query = "SHOW COLUMNS FROM " + prefix + "current LIKE 'biome'";
             ResultSet rsbio = statement.executeQuery(bio_query);

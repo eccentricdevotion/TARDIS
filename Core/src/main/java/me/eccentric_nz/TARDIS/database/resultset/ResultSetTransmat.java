@@ -83,7 +83,7 @@ public class ResultSetTransmat {
                     y = rs.getFloat("y");
                     z = rs.getFloat("z");
                     yaw = rs.getFloat("yaw");
-                    location = new Location(TARDISAliasResolver.getWorldFromAlias(world), x, y, z);
+                    location = new Location(TARDISAliasResolver.getWorldFromAlias(world), x, y, z, yaw, 0);
                 }
             } else {
                 return false;

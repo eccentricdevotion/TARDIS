@@ -106,7 +106,7 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %sportals (portal_id int(11) NOT NULL AUTO_INCREMENT, portal varchar(512) DEFAULT '', teleport varchar(512) DEFAULT '', direction varchar(5) DEFAULT '', tardis_id int(11) DEFAULT '0', abandoned int(1) DEFAULT '0', PRIMARY KEY (portal_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %spreviewers (uuid varchar(48) NOT NULL, world varchar(64) DEFAULT '', x float(7,1) DEFAULT '0', y float(3,1) DEFAULT '0', z float(7,1) DEFAULT '0', yaw float(7,1) DEFAULT '0.0', pitch float(7,1) DEFAULT '0.0', gamemode varchar(16) DEFAULT '', PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %spreviewers (uuid varchar(48) NOT NULL, world varchar(64) DEFAULT '', x float(7,1) DEFAULT '0', y float(3,1) DEFAULT '0', z float(7,1) DEFAULT '0', yaw float(7,1) DEFAULT '0.0', pitch float(7,1) DEFAULT '0.0', gamemode varchar(16) DEFAULT '', tardis_id int(11) DEFAULT '0', PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %sprograms (program_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', name varchar(32) DEFAULT '', inventory text NULL, parsed text NULL, checked int(1) DEFAULT '1', PRIMARY KEY (program_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -244,7 +244,7 @@ public class SQL {
 
             "(%s, '%s', '%s', '%s', %s, %s)",
 
-            "('%s', '%s', %s, %s, %s, %s, %s, '%s')",
+            "('%s', '%s', %s, %s, %s, %s, %s, '%s', %s)",
 
             "(%s, '%s', '%s', '%s', '%s', %s)",
 
@@ -382,7 +382,7 @@ public class SQL {
 
             "INSERT INTO `%sportals` (`portal_id`, `portal`, `teleport`, `direction`, `tardis_id`, `abandoned`) VALUES ",
 
-            "INSERT INTO `%spreviewers` (`uuid`, `world`, `x`, `y`, `z`, `yaw`, `pitch`, `gamemode`) VALUES ",
+            "INSERT INTO `%spreviewers` (`uuid`, `world`, `x`, `y`, `z`, `yaw`, `pitch`, `gamemode`, `tardis_id`) VALUES ",
 
             "INSERT INTO `%sprograms` (`program_id`, `uuid`, `name`, `inventory`, `parsed`, `checked`) VALUES ",
 

@@ -220,7 +220,7 @@ public class TARDISSQLiteDatabase {
             statement.executeUpdate(queryReminders);
 
             // Table structure for table 'previewers'
-            String queryPreviewers = "CREATE TABLE IF NOT EXISTS " + prefix + "previewers (uuid TEXT PRIMARY KEY NOT NULL, world TEXT COLLATE NOCASE DEFAULT '', x REAL DEFAULT 0.0, y REAL DEFAULT 0.0, z REAL DEFAULT 0.0, yaw REAL DEFAULT 0.0, pitch REAL DEFAULT 0.0, gamemode TEXT COLLATE NOCASE DEFAULT '')";
+            String queryPreviewers = "CREATE TABLE IF NOT EXISTS " + prefix + "previewers (uuid TEXT PRIMARY KEY NOT NULL, world TEXT COLLATE NOCASE DEFAULT '', x REAL DEFAULT 0.0, y REAL DEFAULT 0.0, z REAL DEFAULT 0.0, yaw REAL DEFAULT 0.0, pitch REAL DEFAULT 0.0, gamemode TEXT COLLATE NOCASE DEFAULT '', tardis_id INTEGER DEFAULT 0)";
             statement.executeUpdate(queryPreviewers);
 
             // Table structure for table 'room_progress'

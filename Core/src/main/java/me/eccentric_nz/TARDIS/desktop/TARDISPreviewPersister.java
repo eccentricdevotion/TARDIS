@@ -82,7 +82,8 @@ public class TARDISPreviewPersister {
                         Location location = new Location(TARDISAliasResolver.getWorldFromAlias(world), x, y, z, yaw, pitch);
                         String gm = rs.getString("gamemode");
                         GameMode gamemode = GameMode.valueOf(gm);
-                        plugin.getTrackerKeeper().getPreviewers().put(uuid, new PreviewData(location, gamemode));
+                        int id = rs.getInt("tardis_id");
+                        plugin.getTrackerKeeper().getPreviewers().put(uuid, new PreviewData(location, gamemode, id));
                     } catch (IllegalArgumentException ignored) {
                     }
                 }

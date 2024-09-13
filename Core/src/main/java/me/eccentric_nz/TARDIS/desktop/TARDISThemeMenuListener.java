@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -131,8 +132,13 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT_PREVIEW", schematic.getPermission().toUpperCase(Locale.ROOT));
                         transmat.setYaw(rst.getYaw());
                         transmat.setPitch(player.getLocation().getPitch());
+                        // get tardis id
+                        HashMap<String, Object> where = new HashMap<>();
+                        where.put("uuid", uuid.toString());
+                        ResultSetTravellers rs = new ResultSetTravellers(plugin, where, false);
+                        rs.resultSet();
                         // start tracking player
-                        plugin.getTrackerKeeper().getPreviewers().put(uuid, new PreviewData(player.getLocation().clone(), player.getGameMode()));
+                        plugin.getTrackerKeeper().getPreviewers().put(uuid, new PreviewData(player.getLocation().clone(), player.getGameMode(), rs.getTardis_id()));
                         // transmat to preview desktop
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             // set gamemode

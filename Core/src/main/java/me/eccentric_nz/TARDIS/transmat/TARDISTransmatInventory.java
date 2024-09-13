@@ -17,10 +17,12 @@
 package me.eccentric_nz.TARDIS.transmat;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUITransmat;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmatList;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -32,10 +34,12 @@ public class TARDISTransmatInventory {
     private final ItemStack[] menu;
     private final TARDIS plugin;
     private final int id;
+    private final Player player;
 
-    public TARDISTransmatInventory(TARDIS plugin, int id) {
+    public TARDISTransmatInventory(TARDIS plugin, int id, Player player) {
         this.plugin = plugin;
         this.id = id;
+        this.player = player;
         menu = getItemStack();
     }
 
@@ -80,13 +84,6 @@ public class TARDISTransmatInventory {
             meta.setLore(plugin.getChameleonGuis().getStringList("INFO_TRANSMAT"));
             info.setItemMeta(meta);
             stack[GUITransmat.INFO.slot()] = info;
-            // teleport
-            ItemStack tele = new ItemStack(GUITransmat.TRANSMAT.material(), 1);
-            ItemMeta port = tele.getItemMeta();
-            port.setDisplayName(plugin.getLanguage().getString("BUTTON_TRANSMAT"));
-            port.setCustomModelData(GUITransmat.TRANSMAT.customModelData());
-            tele.setItemMeta(port);
-            stack[GUITransmat.TRANSMAT.slot()] = tele;
             // delete
             ItemStack delete = new ItemStack(GUITransmat.DELETE.material(), 1);
             ItemMeta dim = delete.getItemMeta();
@@ -94,6 +91,22 @@ public class TARDISTransmatInventory {
             dim.setCustomModelData(GUITransmat.DELETE.customModelData());
             delete.setItemMeta(dim);
             stack[GUITransmat.DELETE.slot()] = delete;
+        }
+        // teleport
+        ItemStack tele = new ItemStack(GUITransmat.TRANSMAT.material(), 1);
+        ItemMeta port = tele.getItemMeta();
+        port.setDisplayName(plugin.getLanguage().getString("BUTTON_TRANSMAT"));
+        port.setCustomModelData(GUITransmat.TRANSMAT.customModelData());
+        tele.setItemMeta(port);
+        stack[GUITransmat.TRANSMAT.slot()] = tele;
+        // rooms world
+        if (plugin.getPlanetsConfig().getBoolean("planets.rooms.enabled") && plugin.getServer().getWorld("rooms") != null && TARDISPermission.hasPermission(player, "tardis.transmat.rooms")) {
+            ItemStack rooms = new ItemStack(GUITransmat.ROOMS.material(), 1);
+            ItemMeta world = rooms.getItemMeta();
+            world.setDisplayName("Rooms World");
+            world.setCustomModelData(GUITransmat.ROOMS.customModelData());
+            rooms.setItemMeta(world);
+            stack[GUITransmat.ROOMS.slot()] = rooms;
         }
         // close
         ItemStack close = new ItemStack(GUITransmat.CLOSE.material(), 1);

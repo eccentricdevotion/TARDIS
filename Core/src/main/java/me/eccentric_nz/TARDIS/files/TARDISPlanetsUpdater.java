@@ -261,6 +261,30 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.skaro.generator", "TARDIS:skaro");
             save++;
         }
+        if (!planets_config.contains("planets.rooms")) {
+            planets_config.set("planets.rooms.enabled", false);
+            planets_config.set("planets.rooms.resource_pack", "default");
+            planets_config.set("planets.rooms.gamemode", "SURVIVAL");
+            planets_config.set("planets.rooms.time_travel", false);
+            planets_config.set("planets.rooms.world_type", "FLAT");
+            planets_config.set("planets.rooms.environment", "NORMAL");
+            planets_config.set("planets.rooms.generator", "TARDIS:rooms");
+            planets_config.set("planets.rooms.spawn_chunk_radius", 0);
+            planets_config.set("planets.rooms.spawn_other_mobs", false);
+            planets_config.set("planets.rooms.gamerules.doWeatherCycle", false);
+            planets_config.set("planets.rooms.gamerules.doDaylightCycle", false);
+            planets_config.set("planets.rooms.gamerules.doMobSpawning", false);
+            planets_config.set("planets.rooms.gamerules.doTraderSpawning", false);
+            planets_config.set("planets.rooms.gamerules.doPatrolSpawning", false);
+            planets_config.set("planets.rooms.gamerules.doWardenSpawning", false);
+            planets_config.set("planets.rooms.allow_portals", false);
+            planets_config.set("planets.rooms.alias", "TARDISRooms");
+            planets_config.set("planets.rooms.icon", "BOOKSHELF");
+            planets_config.set("planets.rooms.transmat_location.x", 8.5d);
+            planets_config.set("planets.rooms.transmat_location.y", 68.0d);
+            planets_config.set("planets.rooms.transmat_location.z", 2.5d);
+            save++;
+        }
         if (planets_config.getString("planets.TARDIS_TimeVortex.generator").equals("TARDISChunkGenerator")) {
             planets_config.set("planets.TARDIS_TimeVortex.generator", "TARDIS:void");
             planets_config.set("planets.TARDIS_Zero_Room.generator", "TARDIS:void");
