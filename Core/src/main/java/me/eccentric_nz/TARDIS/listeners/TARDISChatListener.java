@@ -36,6 +36,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -58,8 +59,8 @@ public class TARDISChatListener implements Listener {
     }
 
     /**
-     * Listens for player typing "tardis [rescue|request|call] accept". If the player types it within 60 seconds of a Time Lord sending
-     * a rescue|request|call, a player rescue|request|call attempt is made.
+     * Listens for player typing "tardis [rescue|request|call] accept". If the player types it within 60 seconds of a
+     * Time Lord sending a rescue|request|call, a player rescue|request|call attempt is made.
      * <p>
      * Also processes questions pertaining to "How to make a TARDIS?" and variations thereof.
      *
@@ -108,6 +109,13 @@ public class TARDISChatListener implements Listener {
                         player.playSound(transmat, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
                         player.teleport(transmat);
                         player.setGameMode(pd.gamemode());
+                        // set TARDIS occupied
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            HashMap<String, Object> set = new HashMap<>();
+                            set.put("tardis_id", pd.id());
+                            set.put("uuid", chatter.toString());
+                            plugin.getQueryFactory().doSyncInsert("travellers", set);
+                        }, 10L);
                     }, 10L);
                 }
             } else {
