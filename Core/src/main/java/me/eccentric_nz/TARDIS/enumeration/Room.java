@@ -50,6 +50,7 @@ public enum Room {
     MAZE,
     MUSHROOM,
     NETHER,
+    OBSERVATORY,
     PASSAGE,
     PEN,
     POOL,

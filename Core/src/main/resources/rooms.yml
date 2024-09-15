@@ -96,6 +96,12 @@ rooms:
     offset: -4
     seed: BLACKSTONE
     user: false
+  OBSERVATORY:
+    enabled: true
+    cost: 550
+    offset: -4
+    seed: POLISHED_BLACKSTONE_BRICKS
+    user: false
   PEN:
     enabled: true
     cost: 550

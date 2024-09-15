@@ -263,6 +263,7 @@ public class DebugGUI {
             new GuiPreview(Material.MAP, 3, "map_button_tardis_map"),
             new GuiPreview(Material.MAP, 4, "map_transmat_location"),
             new GuiPreview(Material.MELON, 1, "room_greenhouse"),
+            new GuiPreview(Material.POLISHED_BLACKSTONE_BRICKS, 1, "room_observatory"),
             new GuiPreview(Material.MOSS_BLOCK, 1, "room_pen"),
             new GuiPreview(Material.MOSSY_COBBLESTONE, 1, "room_gravity"),
             new GuiPreview(Material.MUDDY_MANGROVE_ROOTS, 1, "room_mangrove"),

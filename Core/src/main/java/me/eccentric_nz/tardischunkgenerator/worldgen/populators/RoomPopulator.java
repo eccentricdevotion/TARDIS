@@ -14,39 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardischunkgenerator.worldgen;
+package me.eccentric_nz.tardischunkgenerator.worldgen.populators;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.Room;
-import me.eccentric_nz.TARDIS.rooms.TARDISPainting;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
-import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
-import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemDisplaySetter;
-import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemFrameSetter;
-import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.RoomsUtility;
-import org.bukkit.Art;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Banner;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.FaceAttachable;
 import org.bukkit.block.data.type.Switch;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Painting;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -57,8 +45,8 @@ public class RoomPopulator extends BlockPopulator {
     private final List<String> rooms = List.of("ALLAY", "APIARY", "AQUARIUM", "ARBORETUM", "BAKER", "BAMBOO",
             "BEDROOM", "BIRDCAGE", "CHEMISTRY", "EMPTY", "EYE", "FARM", "GARDEN", "GEODE", "GREENHOUSE", "HARMONY",
             "HUTCH", "IGLOO", "IISTUBIL", "KITCHEN", "LAVA", "LAZARUS", "LIBRARY", "MANGROVE", "MUSHROOM", "NETHER",
-            "PASSAGE", "PEN", "POOL", "RAIL", "SHELL", "SMELTER", "STABLE", "STALL", "SURGERY", "TRENZALORE", "VAULT",
-            "VILLAGE", "WOOD", "WORKSHOP");
+            "OBSERVATORY", "PASSAGE", "PEN", "POOL", "RAIL", "SHELL", "SMELTER", "STABLE", "STALL", "SURGERY", "TRENZALORE",
+            "VAULT", "VILLAGE", "WOOD", "WORKSHOP");
 
     public RoomPopulator(TARDIS plugin) {
         this.plugin = plugin;
@@ -118,7 +106,13 @@ public class RoomPopulator extends BlockPopulator {
                             data = lever;
                         }
                         // set correct block for farm rooms
-                        if (type.equals(Material.SOUL_SAND) && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("LAVA") || room.equals("ALLAY") || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("IISTUBIL") || room.equals("MANGROVE") || room.equals("PEN") || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("GARDEN"))) {
+                        if (type.equals(Material.SOUL_SAND)
+                                && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("LAVA")
+                                            || room.equals("ALLAY") || room.equals("GEODE") || room.equals("HUTCH")
+                                            || room.equals("IGLOO") || room.equals("IISTUBIL") || room.equals("MANGROVE")
+                                            || room.equals("PEN") || room.equals("STALL") || room.equals("BAMBOO")
+                                            || room.equals("BIRDCAGE") || room.equals("GARDEN"))
+                        ) {
                             // replace with correct block
                             switch (Room.valueOf(room)) {
                                 case ALLAY -> data = Material.LIGHT_GRAY_WOOL.createBlockData();

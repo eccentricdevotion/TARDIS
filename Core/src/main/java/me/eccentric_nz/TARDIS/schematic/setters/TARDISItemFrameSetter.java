@@ -22,6 +22,7 @@ import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
+import me.eccentric_nz.tardischemistry.microscope.LabEquipment;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -59,7 +60,8 @@ public class TARDISItemFrameSetter {
         int cmd = 1;
         if (json.has("item")) {
             try {
-                ItemStack is = new ItemStack(Material.valueOf(json.get("item").getAsString()));
+                Material material = Material.valueOf(json.get("item").getAsString());
+                ItemStack is = new ItemStack(material);
                 ItemMeta im = is.getItemMeta();
                 if (json.has("cmd")) {
                     cmd = json.get("cmd").getAsInt();
@@ -103,6 +105,10 @@ public class TARDISItemFrameSetter {
             frame.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
             // update rotor record
             TARDISTimeRotor.updateRotorRecord(id, frame.getUniqueId().toString());
+        }
+        // check whether it is Lab Equipment
+        if (json.has("microscope")) {
+            frame.getPersistentDataContainer().set(TARDIS.plugin.getMicroscopeKey(), PersistentDataType.INTEGER, 10000);
         }
         frame.setFixed(json.get("fixed").getAsBoolean());
         frame.setVisible(json.get("visible").getAsBoolean());

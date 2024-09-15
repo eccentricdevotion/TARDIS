@@ -64,7 +64,11 @@ public class RoomCleaner {
             }
         }
         // remove mob farming locations
-        if (room.equals("ALLAY") || room.equals("APIARY") || room.equals("AQUARIUM") || room.equals("BAMBOO") || room.equals("BIRDCAGE") || room.equals("FARM") || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO") || room.equals("IISTUBIL") || room.equals("LAVA") || room.equals("MANGROVE") || room.equals("PEN") || room.equals("STABLE") || room.equals("STALL") || room.equals("VILLAGE")) {
+        if (room.equals("ALLAY") || room.equals("APIARY") || room.equals("AQUARIUM") || room.equals("BAMBOO")
+                || room.equals("BIRDCAGE") || room.equals("FARM") || room.equals("GEODE") || room.equals("HUTCH")
+                || room.equals("IGLOO") || room.equals("IISTUBIL") || room.equals("LAVA") || room.equals("MANGROVE")
+                || room.equals("PEN") || room.equals("STABLE") || room.equals("STALL") || room.equals("VILLAGE")
+        ) {
             HashMap<String, Object> wheref = new HashMap<>();
             wheref.put("tardis_id", id);
             HashMap<String, Object> setf = new HashMap<>();

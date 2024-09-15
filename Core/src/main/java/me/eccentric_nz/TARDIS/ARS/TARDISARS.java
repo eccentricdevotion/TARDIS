@@ -54,6 +54,7 @@ public enum TARDISARS implements ARS {
     MAZE("LODESTONE", "Maze", 1),
     MUSHROOM("GRAVEL", "Mycellium", 1),
     NETHER("BLACKSTONE", "Nether", 1),
+    OBSERVATORY("POLISHED_BLACKSTONE_BRICKS", "Astronomical Observatory", 1),
     PASSAGE("CLAY", "Passage", 1),
     PEN("MOSS_BLOCK", "Sniffer Pen", 1),
     POOL("SNOW_BLOCK", "Pool", 1),

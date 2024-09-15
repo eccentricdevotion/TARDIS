@@ -92,6 +92,8 @@ public class TARDISRoomsUpdater {
         booleanOptions.put("rooms.LIBRARY.user", false);
         booleanOptions.put("rooms.MANGROVE.enabled", true);
         booleanOptions.put("rooms.MANGROVE.user", false);
+        booleanOptions.put("rooms.OBSERVATORY.enabled", true);
+        booleanOptions.put("rooms.OBSERVATORY.user", false);
         booleanOptions.put("rooms.PEN.enabled", true);
         booleanOptions.put("rooms.PEN.user", false);
         booleanOptions.put("rooms.MAZE.enabled", true);
@@ -183,6 +185,8 @@ public class TARDISRoomsUpdater {
         integerOptions.put("rooms.LIBRARY.offset", -4);
         integerOptions.put("rooms.MANGROVE.cost", 450);
         integerOptions.put("rooms.MANGROVE.offset", -4);
+        integerOptions.put("rooms.OBSERVATORY.cost", 550);
+        integerOptions.put("rooms.OBSERVATORY.offset", -4);
         integerOptions.put("rooms.PEN.cost", 550);
         integerOptions.put("rooms.PEN.offset", -4);
         integerOptions.put("rooms.MAZE.cost", 650);
@@ -248,6 +252,7 @@ public class TARDISRoomsUpdater {
         stringOptions.put("rooms.LAZARUS.seed", "FURNACE");
         stringOptions.put("rooms.LIBRARY.seed", "ENCHANTMENT_TABLE");
         stringOptions.put("rooms.MANGROVE.seed", "MUDDY_MANGROVE_ROOTS");
+        stringOptions.put("rooms.OBSERVATORY.seed", "POLISHED_BLACKSTONE_BRICKS");
         stringOptions.put("rooms.PEN.seed", "MOSS_BLOCK");
         stringOptions.put("rooms.MAZE.seed", "LODESTONE");
         stringOptions.put("rooms.MUSHROOM.seed", "GRAVEL");

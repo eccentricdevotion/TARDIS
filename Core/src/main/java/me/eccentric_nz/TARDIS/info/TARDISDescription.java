@@ -213,6 +213,7 @@ public enum TARDISDescription {
     MAZE("Can you find your way through the maze?"),
     MUSHROOM("A small Mycellarium."),
     NETHER("Your own personal hell."),
+    OBSERVATORY("An astronomical and scientific study room."),
     PASSAGE("To get from here to there."),
     PEN("A cosy room for sniffers."),
     POOL("Grab your togs!"),

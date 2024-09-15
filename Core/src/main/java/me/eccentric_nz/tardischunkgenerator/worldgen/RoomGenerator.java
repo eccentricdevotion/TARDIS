@@ -2,6 +2,7 @@ package me.eccentric_nz.tardischunkgenerator.worldgen;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischunkgenerator.worldgen.biomeproviders.TARDISVoidBiomeProvider;
+import me.eccentric_nz.tardischunkgenerator.worldgen.populators.RoomPopulator;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;

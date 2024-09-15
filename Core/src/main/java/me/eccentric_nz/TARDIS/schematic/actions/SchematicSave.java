@@ -197,6 +197,9 @@ public class SchematicSave {
                                 if (f.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
                                     frame.addProperty("rotor", true);
                                 }
+                                if (f.getPersistentDataContainer().has(plugin.getMicroscopeKey(), PersistentDataType.INTEGER)) {
+                                    frame.addProperty("microscope", true);
+                                }
                                 frame.addProperty("fixed", f.isFixed());
                                 frame.addProperty("visible", f.isVisible());
                                 frame.addProperty("rotation", f.getRotation().toString());
