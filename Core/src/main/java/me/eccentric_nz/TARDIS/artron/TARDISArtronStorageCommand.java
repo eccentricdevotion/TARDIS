@@ -131,6 +131,9 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             }
             List<String> lore = im.getLore();
             int level = TARDISNumberParsers.parseInt(lore.get(1));
+            if (level < 0) {
+                level = 0;
+            }
             int new_amount = amount + level;
             int max = plugin.getArtronConfig().getInt("full_charge");
             if (new_amount > max) {

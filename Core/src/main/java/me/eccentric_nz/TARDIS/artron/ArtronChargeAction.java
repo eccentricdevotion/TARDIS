@@ -81,25 +81,24 @@ public class ArtronChargeAction {
                 } else {
                     return;
                 }
+                charge *= is.getAmount();
+                amount = current_level + charge;
                 // if only one cell
-                if (is.getAmount() == 1) {
-                    amount = current_level + charge;
-                    boolean removeEnchant = true;
-                    if (amount > max) {
-                        // just take as much as we can
-                        amount = max - current_level;
-                        removeEnchant = false;
+                if (is.getAmount() == 1 && amount > max) {
+                    if (current_level >= max) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_TRANSFER", max);
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_ADD");
+                        return;
                     }
-                    lore.set(1, "" + (charge - amount));
+                    // just take as much as we can
+                    amount = max;
+                    int remove = max - current_level;
+                    lore.set(1, "" + (charge - remove));
                     im.setLore(lore);
                     is.setItemMeta(im);
-                    if (removeEnchant) {
-                        is.getEnchantments().keySet().forEach(is::removeEnchantment);
-                    }
+                    is.getEnchantments().keySet().forEach(is::removeEnchantment);
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_TRANSFER");
                 } else {
-                    charge *= is.getAmount();
-                    amount = current_level + charge;
                     // only add energy up to capacitors * max level - damage
                     if (amount <= max) {
                         lore.set(1, "0");
