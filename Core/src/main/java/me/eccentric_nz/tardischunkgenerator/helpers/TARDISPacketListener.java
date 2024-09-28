@@ -124,6 +124,7 @@ public class TARDISPacketListener {
                                     chicken.setVelocity(velocity);
                                 }
                             } else {
+                                // TODO check block protection? - https://github.com/eccentricdevotion/TARDIS/issues/920
                                 chicken.setVelocity(new Vector(0, 0, 0));
                                 Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
                                     // kill chicken

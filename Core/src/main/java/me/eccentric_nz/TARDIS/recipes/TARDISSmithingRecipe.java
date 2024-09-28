@@ -25,11 +25,9 @@ import java.util.HashMap;
 public class TARDISSmithingRecipe {
 
     private final TARDIS plugin;
-    private final HashMap<String, SmithingRecipe> smithingRecipes;
 
     public TARDISSmithingRecipe(TARDIS plugin) {
         this.plugin = plugin;
-        smithingRecipes = new HashMap<>();
     }
 
     public void addSmithingRecipes() {
@@ -45,9 +43,5 @@ public class TARDISSmithingRecipe {
         new PickupArrowsRepairRecipe(plugin).addRecipe();
         new RedstoneRepairRecipe(plugin).addRecipe();
         new CapacitorRepairRecipe(plugin).addRecipe();
-    }
-
-    public HashMap<String, SmithingRecipe> getSmithingRecipes() {
-        return smithingRecipes;
     }
 }

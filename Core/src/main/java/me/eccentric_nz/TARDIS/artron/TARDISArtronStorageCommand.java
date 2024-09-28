@@ -48,6 +48,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
         this.plugin = plugin;
         firstArgs.add("tardis");
         firstArgs.add("timelord");
+        firstArgs.add("combine");
     }
 
     @Override
@@ -59,9 +60,6 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_PERMS");
                 return true;
             }
-            if (args.length < 2) {
-                return false;
-            }
             Player player = null;
             if (sender instanceof Player) {
                 player = (Player) sender;
@@ -71,7 +69,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 return true;
             }
             ItemStack is = player.getInventory().getItemInMainHand();
-            if (is == null || !is.hasItemMeta()) {
+            if (!is.hasItemMeta()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_IN_HAND");
                 return true;
             }
@@ -80,8 +78,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 return true;
             }
             ItemMeta im = is.getItemMeta();
-            String name = im.getDisplayName();
-            if (!name.endsWith("Artron Storage Cell")) {
+            if (!im.hasDisplayName() || !im.getDisplayName().endsWith("Artron Storage Cell")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_IN_HAND");
                 return true;
             }
@@ -90,75 +87,130 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_WHICH");
                 return false;
             }
-            // must be a timelord
-            String playerUUID = player.getUniqueId().toString();
-            int current_level;
-            if (which.equals("tardis")) {
-                ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
-                if (!rs.fromUUID(playerUUID)) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                    return true;
-                }
-                current_level = rs.getArtronLevel();
-            } else {
-                ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, playerUUID);
-                if (!rs.resultSet()) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
-                    return true;
-                }
-                current_level = rs.getArtronLevel();
-            }
-            int amount;
-            try {
-                amount = Integer.parseInt(args[1]);
-                if (amount < 0) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NOT_NEG");
-                    return true;
-                }
-            } catch (NumberFormatException n) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_SEC_NUMBER");
-                return false;
-            }
-            // must have sufficient energy
-            if (which.equals("tardis")) {
-                if (current_level - amount < plugin.getArtronConfig().getInt("comehere")) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_NO_TRANSFER");
-                    return true;
-                }
-            } else if (current_level - amount < 0) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_NOT_ENOUGH");
-                return true;
-            }
-            List<String> lore = im.getLore();
-            int level = TARDISNumberParsers.parseInt(lore.get(1));
-            if (level < 0) {
-                level = 0;
-            }
-            int new_amount = amount + level;
             int max = plugin.getArtronConfig().getInt("full_charge");
-            if (new_amount > max) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_NO_CHARGE", String.format("%d", (max - level)));
-                return false;
-            }
-            lore.set(1, "" + new_amount);
-            im.setLore(lore);
-            im.addEnchant(Enchantment.UNBREAKING, 1, true);
-            im.addItemFlags(ItemFlag.values());
-            is.setItemMeta(im);
-            // remove the energy from the tardis/timelord
-            HashMap<String, Object> where = new HashMap<>();
-            String table;
-            if (which.equals("tardis")) {
-                where.put("uuid", playerUUID);
-                table = "tardis";
+            if (args.length == 1 && args[0].equalsIgnoreCase("combine")) {
+                ItemStack offhand = player.getInventory().getItemInOffHand();
+                if (!offhand.hasItemMeta()) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_IN_HAND");
+                    return true;
+                }
+                if (is.getAmount() > 1) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_ONE");
+                    return true;
+                }
+                ItemMeta offMeta = offhand.getItemMeta();
+                if (!offMeta.hasDisplayName() || !offMeta.getDisplayName().endsWith("Artron Storage Cell")) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_IN_HAND");
+                    return true;
+                }
+                // get the artron levels of each storage cell
+                int mainLevel = getLevel(im);
+                int offLevel = getLevel(offMeta);
+                if (mainLevel <= 0 || offLevel <= 0) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_NOT_CHARGED");
+                    return true;
+                }
+                int combined = mainLevel + offLevel;
+                int remainder = 0;
+                if (combined > max) {
+                    remainder = combined - max;
+                    combined = max;
+                }
+                setLevel(is, im, combined, player, true);
+                setLevel(offhand, offMeta, remainder, player, false);
             } else {
-                where.put("uuid", playerUUID);
-                table = "player_prefs";
+                if (args.length < 2) {
+                    return false;
+                }
+                String playerUUID = player.getUniqueId().toString();
+                int current_level;
+                if (which.equals("tardis")) {
+                    ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
+                    if (!rs.fromUUID(playerUUID)) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
+                        return true;
+                    }
+                    current_level = rs.getArtronLevel();
+                } else {
+                    ResultSetPlayerPrefs rs = new ResultSetPlayerPrefs(plugin, playerUUID);
+                    if (!rs.resultSet()) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
+                        return true;
+                    }
+                    current_level = rs.getArtronLevel();
+                }
+                int amount;
+                try {
+                    amount = Integer.parseInt(args[1]);
+                    if (amount < 0) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NOT_NEG");
+                        return true;
+                    }
+                } catch (NumberFormatException n) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ARG_SEC_NUMBER");
+                    return false;
+                }
+                // must have sufficient energy
+                if (which.equals("tardis")) {
+                    if (current_level - amount < plugin.getArtronConfig().getInt("comehere")) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_NO_TRANSFER");
+                        return true;
+                    }
+                } else if (current_level - amount < 0) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_NOT_ENOUGH");
+                    return true;
+                }
+                List<String> lore = im.getLore();
+                int level = TARDISNumberParsers.parseInt(lore.get(1));
+                if (level < 0) {
+                    level = 0;
+                }
+                int new_amount = amount + level;
+                if (new_amount > max) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_NO_CHARGE", String.format("%d", (max - level)));
+                    return false;
+                }
+                lore.set(1, "" + new_amount);
+                im.setLore(lore);
+                im.addEnchant(Enchantment.UNBREAKING, 1, true);
+                im.addItemFlags(ItemFlag.values());
+                is.setItemMeta(im);
+                // remove the energy from the tardis/timelord
+                HashMap<String, Object> where = new HashMap<>();
+                String table;
+                if (which.equals("tardis")) {
+                    where.put("uuid", playerUUID);
+                    table = "tardis";
+                } else {
+                    where.put("uuid", playerUUID);
+                    table = "player_prefs";
+                }
+                plugin.getQueryFactory().alterEnergyLevel(table, -amount, where, player);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_CHARGED", String.format("%d", new_amount));
             }
-            plugin.getQueryFactory().alterEnergyLevel(table, -amount, where, player);
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_CHARGED", String.format("%d", new_amount));
             return true;
         }
         return false;
+    }
+
+    private int getLevel(ItemMeta im) {
+        String lore = im.getLore().get(1);
+        return TARDISNumberParsers.parseInt(lore);
+    }
+
+    private void setLevel(ItemStack is, ItemMeta im, int level, Player player, boolean main) {
+        List<String> lore = im.getLore();
+        lore.set(1, "" + level);
+        im.setLore(lore);
+        is.setItemMeta(im);
+        if (main) {
+            player.getInventory().setItemInMainHand(is);
+        } else {
+            // remove enchant if level <= 0
+            if (level <= 0) {
+                is.getEnchantments().keySet().forEach(is::removeEnchantment);
+            }
+            player.getInventory().setItemInOffHand(is);
+        }
     }
 }

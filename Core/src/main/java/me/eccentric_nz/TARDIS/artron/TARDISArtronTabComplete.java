@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class TARDISArtronTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("tardis", "timelord");
+    private final ImmutableList<String> ROOT_SUBS = ImmutableList.of("tardis", "timelord", "combine");
 
     public TARDISArtronTabComplete() {
     }
