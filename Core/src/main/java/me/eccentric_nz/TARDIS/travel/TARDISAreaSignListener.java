@@ -115,7 +115,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener {
                 wheres.put("uuid", uuid);
                 ResultSetTravellers rs = new ResultSetTravellers(plugin, wheres, false);
                 if (rs.resultSet()) {
-                    TARDISSavesPlanetInventory sst = new TARDISSavesPlanetInventory(plugin, rs.getTardis_id());
+                    TARDISSavesPlanetInventory sst = new TARDISSavesPlanetInventory(plugin, rs.getTardis_id(), player);
                     ItemStack[] items = sst.getPlanets();
                     Inventory saveinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
                     saveinv.setContents(items);

@@ -41,6 +41,7 @@ public enum Table {
     condenser("c_id", true),
     controls("c_id", true),
     current(true),
+    deaths("uuid"),
     destinations("dest_id", true),
     dispersed("d_id", true),
     doors(true),

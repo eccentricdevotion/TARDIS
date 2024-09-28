@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.autonomous.TARDISAutonomousDeath;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.flight.FlightReturnData;
+import me.eccentric_nz.TARDIS.travel.save.TARDISDeathLocation;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
@@ -39,9 +40,8 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.UUID;
 
 /**
- * Several events can trigger an Automatic Emergency Landing. Under these
- * circumstances a TARDIS will use the coordinate override to initiate an
- * Automatic Emergency Landing on the "nearest" available habitable planet.
+ * Several events can trigger an Automatic Emergency Landing. Under these circumstances a TARDIS will use the coordinate
+ * override to initiate an Automatic Emergency Landing on the "nearest" available habitable planet.
  *
  * @author eccentric_nz
  */
@@ -54,9 +54,8 @@ public class TARDISTimeLordDeathListener implements Listener {
     }
 
     /**
-     * Listens for player death. If the player is a time lord and the autonomous
-     * circuit is engaged, then the TARDIS will automatically return to its
-     * 'home' location, or the nearest Recharge area.
+     * Listens for player death. If the player is a time lord and the autonomous circuit is engaged, then the TARDIS
+     * will automatically return to its 'home' location, or the nearest Recharge area.
      *
      * @param event a player dying
      */
@@ -66,6 +65,12 @@ public class TARDISTimeLordDeathListener implements Listener {
         UUID uuid = player.getUniqueId();
         if (plugin.getConfig().getBoolean("allow.autonomous") && TARDISPermission.hasPermission(player, "tardis.autonomous")) {
             new TARDISAutonomousDeath(plugin).automate(player);
+        }
+        if (TARDISPermission.hasPermission(player, "tardis.save.death")) {
+            TARDISDeathLocation death = new TARDISDeathLocation(plugin);
+            // find valid location for TARDIS to land
+            Location location = death.getLocation(player);
+            death.record(player, location);
         }
         // spawn an ossified if configured
         if (plugin.getConfig().getBoolean("modules.weeping_angels") && plugin.getConfig().getBoolean("eye_of_harmony.ossified") && plugin.getTrackerKeeper().getEyeDamage().contains(uuid)) {

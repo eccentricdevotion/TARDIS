@@ -43,6 +43,7 @@ permissions:
       tardis.timetravel: true
       tardis.list: true
       tardis.save: true
+      tardis.save.death: true
       tardis.enter: true
       tardis.find: true
       tardis.add: true
@@ -240,6 +241,9 @@ permissions:
     default: op
   tardis.save:
     description: Allow players to save time travel destinations.
+    default: op
+  tardis.save.death:
+    description: Allow players to travel their last known death location.
     default: op
   tardis.home:
     description: Allow players to save a time travel destination as their home.

@@ -56,8 +56,8 @@ public class TARDISSavesPlanetListener extends TARDISMenuListener {
     }
 
     /**
-     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI, then the click is processed
-     * accordingly.
+     * Listens for player clicking inside an inventory. If the inventory is a TARDIS GUI,
+     * then the click is processed accordingly.
      *
      * @param event a player clicking an inventory slot
      */
@@ -87,9 +87,12 @@ public class TARDISSavesPlanetListener extends TARDISMenuListener {
             event.setCancelled(true);
             int slot = event.getRawSlot();
             event.setCancelled(true);
-            if (slot == 0) {
+            if (slot == 0 || slot == 2) {
                 // home location
                 ItemStack is = view.getItem(slot);
+                if (is == null) {
+                    return;
+                }
                 ItemMeta im = is.getItemMeta();
                 List<String> lore = im.getLore();
                 World w = TARDISAliasResolver.getWorldFromAlias(lore.getFirst());
@@ -163,7 +166,7 @@ public class TARDISSavesPlanetListener extends TARDISMenuListener {
                     is.setItemMeta(im);
                 }
             }
-            if (slot >= 2 && slot < 45) {
+            if (slot >= 8 && slot < 45) {
                 ItemStack is = view.getItem(slot);
                 if (is != null) {
                     ItemMeta im = is.getItemMeta();

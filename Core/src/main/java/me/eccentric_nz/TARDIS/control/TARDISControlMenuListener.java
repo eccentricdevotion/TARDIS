@@ -264,7 +264,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MEM_CIRCUIT");
                     return;
                 }
-                TARDISSavesPlanetInventory tssi = new TARDISSavesPlanetInventory(plugin, whichId);
+                TARDISSavesPlanetInventory tssi = new TARDISSavesPlanetInventory(plugin, whichId, player);
                 ItemStack[] saves = tssi.getPlanets();
                 Inventory saved = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
                 saved.setContents(saves);

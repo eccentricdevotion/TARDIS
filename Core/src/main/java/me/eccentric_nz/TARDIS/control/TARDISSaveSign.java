@@ -83,14 +83,14 @@ class TARDISSaveSign {
                     plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), TravelType.SAVE));
                 }
             } else {
-                TARDISSavesPlanetInventory sst = new TARDISSavesPlanetInventory(plugin, id);
+                TARDISSavesPlanetInventory sst = new TARDISSavesPlanetInventory(plugin, id, player);
                 ItemStack[] items = sst.getPlanets();
                 Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
                 inv.setContents(items);
                 player.openInventory(inv);
             }
         } else {
-            TARDISSavesPlanetInventory sst = new TARDISSavesPlanetInventory(plugin, id);
+            TARDISSavesPlanetInventory sst = new TARDISSavesPlanetInventory(plugin, id, player);
             ItemStack[] items = sst.getPlanets();
             Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
             inv.setContents(items);

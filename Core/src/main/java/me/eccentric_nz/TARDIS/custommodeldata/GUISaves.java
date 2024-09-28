@@ -22,6 +22,7 @@ public record GUISaves() {
 
     // TARDIS saves
     public static GUIData HOME = new GUIData(140, 0, Material.BOWL);
+    public static GUIData DEATH = new GUIData(170, 2, Material.BOWL);
     public static GUIData REARRANGE_SAVES = new GUIData(5, 45, Material.ARROW);
     public static GUIData LOAD_TARDIS_AREAS = new GUIData(1, 53, Material.MAP);
     public static GUIData DELETE_SAVE = new GUIData(1, 47, Material.BUCKET);

@@ -169,6 +169,10 @@ public class Converter implements Runnable {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("current_id"), rs.getInt("tardis_id"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("direction"), rs.getInt("submarine"), rs.getString("biome")) + end;
                                         sb.append(str);
                                     }
+                                    case deaths -> {
+                                        str = String.format(SQL.VALUES.get(i), rs.getString("uuid"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("direction"), rs.getInt("submarine")) + end;
+                                        sb.append(str);
+                                    }
                                     case destinations -> {
                                         str = String.format(SQL.VALUES.get(i), rs.getInt("dest_id"), rs.getInt("tardis_id"), rs.getString("dest_name"), rs.getString("world"), rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getString("direction"), rs.getString("preset"), rs.getString("bind"), rs.getInt("type"), rs.getInt("submarine"), rs.getInt("slot"), rs.getInt("icon")) + end;
                                         sb.append(str);

@@ -1,10 +1,13 @@
 package me.eccentric_nz.TARDIS.travel.save;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISaves;
 import me.eccentric_nz.TARDIS.database.data.Planet;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetDeathLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlanets;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -17,10 +20,12 @@ public class TARDISSavesPlanetInventory {
     private final TARDIS plugin;
     private final ItemStack[] planets;
     private final int id;
+    private final Player player;
 
-    public TARDISSavesPlanetInventory(TARDIS plugin, int id) {
+    public TARDISSavesPlanetInventory(TARDIS plugin, int id, Player player) {
         this.plugin = plugin;
         this.id = id;
+        this.player = player;
         this.planets = getWorlds();
     }
 
@@ -51,10 +56,32 @@ public class TARDISSavesPlanetInventory {
         him.setCustomModelData(GUISaves.HOME.customModelData());
         his.setItemMeta(him);
         stack[GUISaves.HOME.slot()] = his;
+        if (TARDISPermission.hasPermission(player, "tardis.save.death")) {
+            // home stack
+            ItemStack death = new ItemStack(GUISaves.DEATH.material(), 1);
+            ItemMeta dim = death.getItemMeta();
+            dim.setDisplayName("Death location");
+            List<String> dlore = new ArrayList<>();
+            ResultSetDeathLocation rsd = new ResultSetDeathLocation(plugin, player.getUniqueId().toString());
+            if (rsd.resultSet()) {
+                dlore.add(rsd.getWorld().getName());
+                dlore.add("" + rsd.getX());
+                dlore.add("" + rsd.getY());
+                dlore.add("" + rsd.getZ());
+                dlore.add(rsd.getDirection().toString());
+                dlore.add((rsd.isSubmarine()) ? "true" : "false");
+            } else {
+                dlore.add("Not found!");
+            }
+            dim.setLore(dlore);
+            dim.setCustomModelData(GUISaves.DEATH.customModelData());
+            death.setItemMeta(dim);
+            stack[GUISaves.DEATH.slot()] = death;
+        }
         // unique planets from saved destinations
         ResultSetPlanets rsd = new ResultSetPlanets(plugin, id);
         if (rsd.resultSet()) {
-            int i = 2;
+            int i = 9;
             for (Planet planet : rsd.getData()) {
                 ItemStack is = new ItemStack(planet.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();

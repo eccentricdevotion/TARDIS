@@ -62,6 +62,8 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %scurrent (current_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', world varchar(64) DEFAULT '', x int(7) DEFAULT '0', y int(3) DEFAULT '0', z int(7) DEFAULT '0', direction varchar(5) DEFAULT '', submarine int(1) DEFAULT '0', biome varchar(64) DEFAULT '', PRIMARY KEY (current_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
+            "CREATE TABLE IF NOT EXISTS %sdeaths (uuid varchar(48) NOT NULL, world varchar(64) DEFAULT '', x int(7) DEFAULT '0', y int(3) DEFAULT '0', z int(7) DEFAULT '0', direction varchar(5) DEFAULT '', submarine int(1) DEFAULT '0', PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+
             "CREATE TABLE IF NOT EXISTS %sdestinations (dest_id int(11) NOT NULL AUTO_INCREMENT, tardis_id int(11) DEFAULT '0', dest_name varchar(64) DEFAULT '', world varchar(64) DEFAULT '', x int(7) DEFAULT '0', y int(3) DEFAULT '0', z int(7) DEFAULT '0', direction varchar(5) DEFAULT '', preset varchar(32) DEFAULT '', bind varchar(64) DEFAULT '', `type` int(3) DEFAULT '0', submarine int(1) DEFAULT '0', slot int(1) DEFAULT '-1', icon varchar(64) DEFAULT '', autonomous int(1) DEFAULT '0', PRIMARY KEY (dest_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %sdispersed (d_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', world varchar(64) DEFAULT '', x int(7) DEFAULT '0', y int(3) DEFAULT '0', z int(7) DEFAULT '0', tardis_id int(11) DEFAULT '0', PRIMARY KEY (d_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
@@ -200,6 +202,8 @@ public class SQL {
 
             "(%s, %s, '%s', %s, %s, %s, '%s', %s, '%s')",
 
+            "'%s', '%s', %s, %s, %s, '%s', %s",
+
             "(%s, %s, '%s', '%s', %s, %s, %s, '%s', '%s', '%s', %s, %s, %s, '%s', %s)",
 
             "(%s, %s, '%s', '%s', %s, %s, %s)",
@@ -337,6 +341,8 @@ public class SQL {
             "INSERT INTO `%scontrols` (`c_id`, `tardis_id`, `type`, `location`, `secondary`) VALUES ",
 
             "INSERT INTO `%scurrent` (`current_id`, `tardis_id`, `world`, `x`, `y`, `z`, `direction`, `submarine`, `biome`) VALUES ",
+
+            "INSERT INTO `%sdeaths` (`uuid`, `world`, `x`, `y`, `z`, `direction`, `submarine`) VALUES ",
 
             "INSERT INTO `%sdestinations` (`dest_id`, `tardis_id`, `dest_name`, `world`, `x`, `y`, `z`, `direction`, `preset`, `bind`, `type`, `submarine`, `slot`, `icon`, `autonomous`) VALUES ",
 

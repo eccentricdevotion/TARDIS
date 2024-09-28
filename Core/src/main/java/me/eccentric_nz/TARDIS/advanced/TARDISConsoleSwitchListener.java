@@ -133,7 +133,7 @@ public class TARDISConsoleSwitchListener implements Listener {
                         return;
                     }
                     new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
-                    stack = new TARDISSavesPlanetInventory(plugin, tardis.getTardisId()).getPlanets();
+                    stack = new TARDISSavesPlanetInventory(plugin, tardis.getTardisId(), player).getPlanets();
                 }
                 // Input circuit (terminal)
                 case 10001976, 20001976 -> {

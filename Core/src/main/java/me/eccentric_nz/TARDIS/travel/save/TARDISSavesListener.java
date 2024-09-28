@@ -273,7 +273,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                         int finalId = playerTardisId != -1 ? playerTardisId : occupiedTardisId;
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
-                            TARDISSavesPlanetInventory tspi = new TARDISSavesPlanetInventory(plugin, finalId);
+                            TARDISSavesPlanetInventory tspi = new TARDISSavesPlanetInventory(plugin, finalId, player);
                             ItemStack[] items = tspi.getPlanets();
                             inv.setContents(items);
                             player.openInventory(inv);
