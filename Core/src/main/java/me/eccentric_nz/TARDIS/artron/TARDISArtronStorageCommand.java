@@ -202,6 +202,10 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
         List<String> lore = im.getLore();
         lore.set(1, "" + level);
         im.setLore(lore);
+        // add enchant if missing
+        if (main && !is.containsEnchantment(Enchantment.UNBREAKING)) {
+            im.addEnchant(Enchantment.UNBREAKING, 1, true);
+        }
         is.setItemMeta(im);
         if (main) {
             player.getInventory().setItemInMainHand(is);
