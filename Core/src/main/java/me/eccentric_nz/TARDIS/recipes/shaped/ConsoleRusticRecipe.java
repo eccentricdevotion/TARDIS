@@ -38,8 +38,8 @@ public class ConsoleRusticRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.WAXED_OXIDIZED_COPPER, 1);
         ItemMeta im = is.getItemMeta();
-        String dn = ChatColor.WHITE + "Rustic Console";
-        im.setDisplayName(dn);
+        String dn = "Rustic Console";
+        im.setDisplayName(ChatColor.WHITE + dn);
         im.setLore(List.of("Integration with interaction"));
         im.setCustomModelData(1001);
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 17);

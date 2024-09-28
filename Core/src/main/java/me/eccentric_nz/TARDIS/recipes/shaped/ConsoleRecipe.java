@@ -46,8 +46,8 @@ public class ConsoleRecipe {
             Material material = Material.valueOf(name + "_CONCRETE");
             ItemStack is = new ItemStack(material, 1);
             ItemMeta im = is.getItemMeta();
-            String dn = ChatColor.WHITE + TARDISStringUtils.capitalise(name) + " Console";
-            im.setDisplayName(dn);
+            String dn = TARDISStringUtils.capitalise(name) + " Console";
+            im.setDisplayName(ChatColor.WHITE + dn);
             im.setLore(List.of("Integration with interaction"));
             im.setCustomModelData(1001);
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, colour.getValue()
