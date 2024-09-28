@@ -5,6 +5,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConsole;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetOccupiedScreen;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetScreen;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -52,7 +53,7 @@ public class ControlMonitor implements Runnable {
         textDisplay.setBackgroundColor(Color.fromRGB(8, 10, 15));
         textDisplay.setSeeThrough(false);
         // get text
-        ResultSetConsole rsc = new ResultSetConsole(plugin, id);
+        ResultSetScreen rss = new ResultSetScreen(plugin, id);
         StringBuilder builder = new StringBuilder();
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             builder.append(ChatColor.DARK_PURPLE)
@@ -62,7 +63,7 @@ public class ControlMonitor implements Runnable {
                     .append("vortex...");
             textDisplay.setText(builder.toString());
         } else if (coords) {
-            rsc.locationAsync((hasResult, resultSetConsole) -> {
+            rss.locationAsync((hasResult, resultSetConsole) -> {
                 if (hasResult) {
                     String worldName = (resultSetConsole.getWorld() != null) ? TARDISAliasResolver.getWorldAlias(resultSetConsole.getWorld()) : "";
                     if (!plugin.getPlanetsConfig().getBoolean("planets." + resultSetConsole.getWorld() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE) && !worldName.isEmpty()) {
@@ -82,7 +83,7 @@ public class ControlMonitor implements Runnable {
             });
         } else {
             // get the artron data
-            rsc.artronAsync((hasResult, resultSetConsole) -> {
+            rss.artronAsync((hasResult, resultSetConsole) -> {
                 if (hasResult) {
                     builder.append(ChatColor.WHITE)
                             .append(plugin.getLanguage().getString("ARTRON_DISPLAY"))
