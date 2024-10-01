@@ -70,8 +70,6 @@ public class TARDISBlueMap implements TARDISMapper {
     }
 
     private class BlueMapMarkerUpdate implements Runnable {
-        // build new map
-        Map<String, Marker> newmap = new HashMap<>();
         ArrayList<World> worldsToDo = null;
         List<TARDISData> toDo = null;
         int tardisIndex = 0;

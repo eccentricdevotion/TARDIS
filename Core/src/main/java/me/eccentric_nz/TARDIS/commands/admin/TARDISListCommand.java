@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -99,8 +100,8 @@ class TARDISListCommand {
                 for (Tardis t : rsl.getData()) {
                     ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, t.getTardisId());
                     if (!rsc.resultSet()) {
-                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
-                        return true;
+                        plugin.getMessenger().message(sender, ChatColor.GREEN + "" + t.getTardisId() + " " + t.getOwner() + ChatColor.RESET + " TARDIS is in an unloaded world!");
+                        continue;
                     }
                     String world = (!plugin.getPlanetsConfig().getBoolean("planets." + rsc.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TARDISAliasResolver.getWorldAlias(rsc.getWorld());
                     plugin.getMessenger().sendTARDISForList(sender, t, world, rsc.getX(), rsc.getY(), rsc.getZ());
