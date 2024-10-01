@@ -50,8 +50,7 @@ public class FollowerEquipper {
         ee.setItemInMainHandDropChance(0);
         ee.setItemInOffHandDropChance(0);
         ee.setHelmetDropChance(0);
-        // don't pickup items
+        // don't pick up items
         husk.setCanPickupItems(false);
-        // make silent
     }
 }

@@ -64,7 +64,7 @@ public class KillCommand {
                         count++;
                     }
                 }
-                plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_SILENT", count,"Silent Endermen", w.getName());
+                plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_SILENT", count, "Silent Endermen", w.getName());
             } else {
                 plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_INVALID");
             }
@@ -129,9 +129,9 @@ public class KillCommand {
                     }
                 }
             }
-            case OOD, JUDOON, K9, TOCLAFANE -> {
-                Collection<ArmorStand> ood = w.getEntitiesByClass(ArmorStand.class);
-                for (ArmorStand o : ood) {
+            case OOD, JUDOON, K9 -> {
+                Collection<Husk> ood = w.getEntitiesByClass(Husk.class);
+                for (Husk o : ood) {
                     if (o.getPersistentDataContainer().has(TARDISWeepingAngels.OOD, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                         what = "Ood";
                         o.remove();
@@ -144,7 +144,13 @@ public class KillCommand {
                         what = "K9s";
                         o.remove();
                         count++;
-                    } else if (o.getPersistentDataContainer().has(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER)) {
+                    }
+                }
+            }
+            case TOCLAFANE -> {
+                Collection<ArmorStand> ood = w.getEntitiesByClass(ArmorStand.class);
+                for (ArmorStand o : ood) {
+                    if (o.getPersistentDataContainer().has(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER)) {
                         what = "Toclafane";
                         // also remove the bee
                         if (o.getVehicle() != null) {

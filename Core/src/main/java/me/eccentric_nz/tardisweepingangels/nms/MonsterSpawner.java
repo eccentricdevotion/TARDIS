@@ -25,7 +25,7 @@ public class MonsterSpawner {
             case CHICKEN -> entity = new TARDISChicken(EntityType.CHICKEN, world);
             default -> entity = new TWASkeleton(EntityType.SKELETON, world);
         }
-        entity.setPosRaw(location.getX(), location.getY() + 1.25d, location.getZ());
+        entity.setPosRaw(location.getX(), location.getY(), location.getZ());
         world.addFreshEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         return (LivingEntity) entity.getBukkitEntity();
     }
@@ -39,10 +39,11 @@ public class MonsterSpawner {
             default -> entity = new TWAK9(world);
         }
         entity.setOwnerUUID(follower.getOwner());
-        entity.setPosRaw(location.getX(), location.getY() + 0.5d, location.getZ());
+        entity.setPosRaw(location.getX(), location.getY(), location.getZ());
         entity.setPersistenceRequired();
         world.addFreshEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
         entity.getBukkitEntity().getPersistentDataContainer().set(TARDISWeepingAngels.PDC_KEYS.get(follower.getSpecies()), TARDISWeepingAngels.PersistentDataTypeUUID, entity.getUUID());
+        entity.getBukkitEntity().getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, TARDISWeepingAngels.UNCLAIMED);
         new FollowerPersister(TARDIS.plugin).save(follower, entity.getUUID());
         return entity;
     }

@@ -39,7 +39,8 @@ public class TWAK9 extends TWAFollower {
         try {
             // Paper wants this, Spigot this causes a crash
             Class.forName("com.destroystokyo.paper.ParticleBuilder");
-            @SuppressWarnings("unchecked") Map<String, Type<?>> types = (Map<String, Type<?>>) DataFixers.getDataFixer().getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion())).findChoiceType(References.ENTITY).types();
+            @SuppressWarnings("unchecked")
+            Map<String, Type<?>> types = (Map<String, Type<?>>) DataFixers.getDataFixer().getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion())).findChoiceType(References.ENTITY).types();
             types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.HUSK).toString()));
         } catch (ClassNotFoundException ignored) {
         }

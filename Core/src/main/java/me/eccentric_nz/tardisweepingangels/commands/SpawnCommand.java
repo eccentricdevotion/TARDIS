@@ -80,7 +80,7 @@ public class SpawnCommand {
                 return true;
             }
             Location eyeLocation = player.getTargetBlock(trans, 50).getLocation();
-            eyeLocation.add(0.5, 1.0, 0.5);
+            eyeLocation.add(0.5d, 1.25d, 0.5d);
             eyeLocation.setYaw(player.getLocation().getYaw() - 180.0f);
             LivingEntity a;
             if (monster.isFollower()) {
