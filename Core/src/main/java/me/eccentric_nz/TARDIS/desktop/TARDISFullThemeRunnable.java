@@ -51,6 +51,7 @@ import me.eccentric_nz.TARDIS.schematic.setters.*;
 import me.eccentric_nz.TARDIS.utility.*;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISProtectionRemover;
 import org.bukkit.*;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
@@ -1093,6 +1094,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             for (int xx = jx; xx < (jx + 16); xx++) {
                 for (int zz = jz; zz < (jz + 16); zz++) {
                     Block b = jw.getBlockAt(xx, yy, zz);
+                    // reset the biome in case it was an EYE room
+                    world.setBiome(xx, yy, zz, Biome.THE_VOID);
                     BlockState state = b.getState();
                     plugin.getTardisHelper().removeTileEntity(state);
                     b.setBlockData(TARDISConstants.AIR);
