@@ -94,7 +94,7 @@ public class TARDISCustomThemeInventory extends TARDISThemeInventory {
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close_im.setCustomModelData(GUIChameleonPoliceBoxes.CLOSE.customModelData());
         close.setItemMeta(close_im);
-        stack[GUIChameleonPoliceBoxes.CLOSE.customModelData()] = close;
+        stack[GUIChameleonPoliceBoxes.CLOSE.slot()] = close;
 
         return stack;
     }
