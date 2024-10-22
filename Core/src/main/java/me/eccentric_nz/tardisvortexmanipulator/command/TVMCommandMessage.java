@@ -1,8 +1,5 @@
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
-import java.util.HashMap;
-import java.util.Locale;
-
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -11,6 +8,9 @@ import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.*;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Locale;
 
 public class TVMCommandMessage {
 
@@ -34,7 +34,7 @@ public class TVMCommandMessage {
             MessageAction f = MessageAction.valueOf(first);
             switch (f) {
                 case MSG -> {
-                    OfflinePlayer ofp = plugin.getServer().getOfflinePlayer(args[1]);
+                    OfflinePlayer ofp = plugin.getServer().getOfflinePlayer(args[2]);
                     if (ofp == null) {
                         plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "COULD_NOT_FIND_NAME");
                         return true;
