@@ -3,7 +3,6 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator;
 
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetInbox;
@@ -13,6 +12,8 @@ import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetSaves;
 import me.eccentric_nz.tardisvortexmanipulator.storage.TVMMessage;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -100,7 +101,8 @@ public class TVMUtils {
         TARDIS.plugin.getMessenger().sendWithColour(p, TardisModule.VORTEX_MANIPULATOR, "Inbox (page " + page + "):", "#55FFFF");
         rsi.getMail().forEach((m) -> {
             String colour = (m.isRead()) ? "#555555" : "#AAAAAA";
-            TARDIS.plugin.getMessenger().messageWithColour(p, m.getId() + ": " + m.getDate() + " - " + m.getMessage().substring(0, 12), colour);
+            int len = Math.min(m.getMessage().length(), 12);
+            TARDIS.plugin.getMessenger().messageWithColour(p, m.getId() + ": " + m.getDate() + " - " + m.getMessage().substring(0, len), colour);
         });
     }
 
@@ -114,7 +116,8 @@ public class TVMUtils {
     public static void sendOutboxList(Player p, TVMResultSetOutbox rso, int page) {
         TARDIS.plugin.getMessenger().sendWithColour(p, TardisModule.VORTEX_MANIPULATOR, "Outbox (page " + page + "):", "#55FFFF");
         rso.getMail().forEach((m) -> {
-            p.sendMessage(m.getId() + " - " + m.getDate() + " - " + m.getMessage().substring(0, 12));
+            int len = Math.min(m.getMessage().length(), 12);
+            p.sendMessage(m.getId() + " - " + m.getDate() + " - " + m.getMessage().substring(0, len));
         });
     }
 
