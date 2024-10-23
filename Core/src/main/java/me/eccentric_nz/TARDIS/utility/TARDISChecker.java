@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
+import com.google.common.io.MoreFiles;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -23,7 +24,6 @@ import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischemistry.block.Painting;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
-import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.util.HashMap;
@@ -92,7 +92,7 @@ public class TARDISChecker {
         if (tardisOldDir.exists()) {
             // delete directory and files as they need updating
             try {
-                FileUtils.deleteDirectory(tardisOldDir);
+                MoreFiles.deleteRecursively(tardisOldDir.toPath());
                 update = true;
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -128,35 +128,34 @@ public class TARDISChecker {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_NOT_FOUND", "%s"), "pack.mcmeta", "datapack"));
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_COPYING", "%s"), "datapack", "pack.mcmeta"));
             copy("pack.mcmeta", mcmeta);
-        } else {
-            // update the format - 48 is the latest for 1.21
-            // it's a json file, so load it and check the value
-            Gson gson = new GsonBuilder().create();
-            try {
-                // convert JSON file to map
-                Map<?, ?> map = gson.fromJson(new FileReader(mcmeta), Map.class);
-                // loop map entries
-                for (Map.Entry<?, ?> entry : map.entrySet()) {
-                    if (entry.getKey().equals("pack") && entry.getValue() instanceof Map<?, ?> values) {
-                        for (Map.Entry<?, ?> data : values.entrySet()) {
-                            if (data.getKey().equals("pack_format")) {
-                                Double d = (Double) data.getValue();
-                                if (d < 48.0D) {
-                                    Map<String, Map<String, Object>> mcmap = new HashMap<>();
-                                    Map<String, Object> pack = new HashMap<>();
-                                    pack.put("description", "Data pack for the TARDIS plugin");
-                                    pack.put("pack_format", 48);
-                                    mcmap.put("pack", pack);
-                                    FileWriter writer = new FileWriter(mcmeta);
-                                    gson.toJson(mcmap, writer);
-                                    writer.close();
-                                }
+        }
+        // update the format - 57 is the latest for 1.21.3
+        // it's a json file, so load it and check the value
+        Gson gson = new GsonBuilder().create();
+        try {
+            // convert JSON file to map
+            Map<?, ?> map = gson.fromJson(new FileReader(mcmeta), Map.class);
+            // loop map entries
+            for (Map.Entry<?, ?> entry : map.entrySet()) {
+                if (entry.getKey().equals("pack") && entry.getValue() instanceof Map<?, ?> values) {
+                    for (Map.Entry<?, ?> data : values.entrySet()) {
+                        if (data.getKey().equals("pack_format")) {
+                            Double d = (Double) data.getValue();
+                            if (d < 57.0D) {
+                                Map<String, Map<String, Object>> mcmap = new HashMap<>();
+                                Map<String, Object> pack = new HashMap<>();
+                                pack.put("description", "Data pack for the TARDIS plugin");
+                                pack.put("pack_format", 57);
+                                mcmap.put("pack", pack);
+                                FileWriter writer = new FileWriter(mcmeta);
+                                gson.toJson(mcmap, writer);
+                                writer.close();
                             }
                         }
                     }
                 }
-            } catch (IOException ignored) {
             }
+        } catch (IOException ignored) {
         }
         File placeable = new File(dataPacksMinecraft, "placeable.json");
         if (!placeable.exists()) {

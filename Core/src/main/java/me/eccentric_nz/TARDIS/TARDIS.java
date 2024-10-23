@@ -1459,6 +1459,7 @@ public class TARDIS extends JavaPlugin {
         for (String f : files) {
 //            debug(f);
             tardisCopier.copy(f);
+            tardisCopier.copy(f);
         }
         new TARDISPlanetsUpdater(this, planetsConfig).checkPlanetsConfig();
         roomsConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "rooms.yml"));
