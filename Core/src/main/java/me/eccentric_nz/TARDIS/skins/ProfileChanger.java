@@ -9,9 +9,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.PositionMoveRotation;
+import net.minecraft.world.phys.Vec3;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_21_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_21_R2.entity.CraftPlayer;
 import org.bukkit.event.player.PlayerHideEntityEvent;
 import org.bukkit.event.player.PlayerShowEntityEvent;
 
@@ -52,7 +54,7 @@ public class ProfileChanger {
     private static void setGameProfile(ServerPlayer player, GameProfile profile) {
         try {
             // set GameProfile accessible
-            Field gpField = net.minecraft.world.entity.player.Player.class.getDeclaredField("cD"); // cD = GameProfile
+            Field gpField = net.minecraft.world.entity.player.Player.class.getDeclaredField("k"); // k = GameProfile
             gpField.setAccessible(true);
             gpField.set(player, profile);
             gpField.setAccessible(false);
@@ -101,7 +103,8 @@ public class ProfileChanger {
         ServerLevel worldserver = sp.serverLevel();
         sp.connection.send(new ClientboundRespawnPacket(sp.createCommonSpawnInfo(worldserver), ClientboundRespawnPacket.KEEP_ALL_DATA));
         sp.onUpdateAbilities();
-        sp.connection.send(new ClientboundPlayerPositionPacket(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch(), Collections.emptySet(), 0));
+        // TODO check this
+        sp.connection.send(new ClientboundPlayerPositionPacket(0, new PositionMoveRotation(new Vec3(loc.getX(), loc.getY(), loc.getZ()),new Vec3(loc.getX(), loc.getY(), loc.getZ()), loc.getYaw(), loc.getPitch()), Collections.emptySet()));
         PlayerList playerList = sp.server.getPlayerList();
         playerList.sendPlayerPermissionLevel(sp);
         playerList.sendLevelInfo(sp, worldserver);

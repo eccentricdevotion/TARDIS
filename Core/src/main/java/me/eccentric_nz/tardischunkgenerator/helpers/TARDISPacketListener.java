@@ -39,8 +39,8 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.ticks.LevelChunkTicks;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_21_R1.CraftChunk;
-import org.bukkit.craftbukkit.v1_21_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_21_R2.CraftChunk;
+import org.bukkit.craftbukkit.v1_21_R2.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -85,9 +85,10 @@ public class TARDISPacketListener {
                     if (stand != null && stand.getType() == EntityType.ARMOR_STAND) {
                         Entity chicken = stand.getVehicle();
                         if (chicken != null) {
-                            float sideways = steerPacket.getXxa();
-                            float forward = steerPacket.getZza();
-                            if (!steerPacket.isShiftKeyDown()) {
+                            // TODO check these values
+                            float sideways = steerPacket.input().left() ? 1 : -1;
+                            float forward = steerPacket.input().forward() ? 1 : -1;
+                            if (!steerPacket.input().shift()) {
                                 // don't move if the chicken is on the ground
                                 if (chicken.isOnGround()) {
                                     chicken.setVelocity(new Vector(0, 0, 0));
@@ -98,7 +99,7 @@ public class TARDISPacketListener {
                                     chicken.setRotation(yaw, pitch);
                                     stand.setRotation(yaw, pitch);
                                     double radians = Math.toRadians(yaw);
-                                    double x = -forward * Math.sin(radians) + sideways * Math.cos(radians);
+                                    double x = forward * Math.sin(radians) + sideways * Math.cos(radians);
                                     double z = forward * Math.cos(radians) + sideways * Math.sin(radians);
                                     Vector velocity = (new Vector(x, 0.0D, z)).normalize().multiply(0.5D);
                                     velocity.setY(chicken.getVelocity().getY());
@@ -108,7 +109,7 @@ public class TARDISPacketListener {
                                     if (!Double.isFinite(velocity.getZ())) {
                                         velocity.setZ(0);
                                     }
-                                    if (!steerPacket.isJumping()) {
+                                    if (!steerPacket.input().jump()) {
                                         if (pitch < 0) {
                                             // go up
                                             double up = Math.abs(pitch / 100.0d);

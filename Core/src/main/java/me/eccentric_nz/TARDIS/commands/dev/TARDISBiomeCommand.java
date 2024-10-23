@@ -7,8 +7,8 @@ import net.minecraft.world.level.chunk.status.ChunkStatus;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_21_R1.CraftChunk;
-import org.bukkit.craftbukkit.v1_21_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_21_R2.CraftChunk;
+import org.bukkit.craftbukkit.v1_21_R2.CraftWorld;
 import org.bukkit.entity.Player;
 
 import java.util.List;

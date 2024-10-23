@@ -12,15 +12,15 @@ public class TARDISEntityRegister {
         ResourceLocation judoonKey = ResourceLocation.parse("judoon");
         ResourceLocation k9Key = ResourceLocation.parse("k9");
         try {
-            if (!BuiltInRegistries.ENTITY_TYPE.getOptional(oodKey).isPresent()) {
+            if (BuiltInRegistries.ENTITY_TYPE.getOptional(oodKey).isEmpty()) {
                 TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.MONSTERS, "Injecting Ood into ENTITY_TYPE registry.");
                 TWAOod.injectEntity(oodKey);
             }
-            if (!BuiltInRegistries.ENTITY_TYPE.getOptional(judoonKey).isPresent()) {
+            if (BuiltInRegistries.ENTITY_TYPE.getOptional(judoonKey).isEmpty()) {
                 TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.MONSTERS, "Injecting Judoon into ENTITY_TYPE registry.");
                 TWAJudoon.injectEntity(judoonKey);
             }
-            if (!BuiltInRegistries.ENTITY_TYPE.getOptional(k9Key).isPresent()) {
+            if (BuiltInRegistries.ENTITY_TYPE.getOptional(k9Key).isEmpty()) {
                 TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.MONSTERS, "Injecting K9 into ENTITY_TYPE registry.");
                 TWAK9.injectEntity(k9Key);
             }

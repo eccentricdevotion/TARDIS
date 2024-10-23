@@ -20,12 +20,12 @@ import net.minecraft.world.entity.animal.MushroomCow;
 
 public enum MUSHROOM_COW {
 
-    BROWN(MushroomCow.MushroomType.BROWN), // BROWN
-    RED(MushroomCow.MushroomType.RED); // RED
+    BROWN(MushroomCow.Variant.BROWN), // BROWN
+    RED(MushroomCow.Variant.RED); // RED
 
-    private final MushroomCow.MushroomType nmsType;
+    private final MushroomCow.Variant nmsType;
 
-    MUSHROOM_COW(MushroomCow.MushroomType nmsType) {
+    MUSHROOM_COW(MushroomCow.Variant nmsType) {
         this.nmsType = nmsType;
     }
 
@@ -33,7 +33,7 @@ public enum MUSHROOM_COW {
         return MUSHROOM_COW.valueOf(variant.toString());
     }
 
-    public MushroomCow.MushroomType getNmsType() {
+    public MushroomCow.Variant getNmsType() {
         return nmsType;
     }
 }

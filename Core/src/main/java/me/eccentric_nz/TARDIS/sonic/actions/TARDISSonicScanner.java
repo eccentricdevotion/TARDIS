@@ -61,7 +61,7 @@ public class TARDISSonicScanner {
                                 case BAKED_POTATO -> et = EntityType.EGG; // Strax
                                 case BOOK -> et = EntityType.END_CRYSTAL; // Vashta Nerada
                                 case CRIMSON_BUTTON -> et = EntityType.BLOCK_DISPLAY; // davros
-                                case FEATHER -> et = EntityType.BOAT; // Silurian
+                                case FEATHER -> et = EntityType.JUNGLE_BOAT; // Silurian
                                 case IRON_INGOT -> et = EntityType.AREA_EFFECT_CLOUD; // Cyberman
                                 case KELP -> et = EntityType.EXPERIENCE_BOTTLE; // sea devil
                                 case MANGROVE_PROPAGULE -> et = EntityType.SMALL_FIREBALL; // dalek sec
@@ -148,7 +148,7 @@ public class TARDISSonicScanner {
                         case AREA_EFFECT_CLOUD -> player.sendMessage("    Cyberman: " + value);
                         case ARROW -> player.sendMessage("    Slitheen: " + value);
                         case BLOCK_DISPLAY -> player.sendMessage("    Davros: " + value);
-                        case BOAT -> player.sendMessage("    Silurian: " + value);
+                        case JUNGLE_BOAT -> player.sendMessage("    Silurian: " + value);
                         case DRAGON_FIREBALL -> player.sendMessage("    Weeping Angel: " + value);
                         case ITEM -> player.sendMessage("    Toclafane: " + value);
                         case EGG -> player.sendMessage("    Strax: " + value);

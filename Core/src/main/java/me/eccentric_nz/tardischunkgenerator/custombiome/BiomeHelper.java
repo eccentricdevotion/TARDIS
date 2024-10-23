@@ -17,9 +17,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_21_R1.CraftChunk;
-import org.bukkit.craftbukkit.v1_21_R1.CraftServer;
-import org.bukkit.craftbukkit.v1_21_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_21_R2.CraftChunk;
+import org.bukkit.craftbukkit.v1_21_R2.CraftServer;
+import org.bukkit.craftbukkit.v1_21_R2.CraftWorld;
 
 import java.util.List;
 import java.util.Locale;
@@ -28,7 +28,7 @@ public class BiomeHelper {
 
     public static Registry<Biome> getRegistry() {
         DedicatedServer dedicatedServer = ((CraftServer) Bukkit.getServer()).getServer();
-        return dedicatedServer.registryAccess().registry(Registries.BIOME).get();
+        return dedicatedServer.registryAccess().lookup(Registries.BIOME).get();
     }
 
     public static void refreshChunk(Chunk chunk) {
@@ -54,11 +54,11 @@ public class BiomeHelper {
     public void setCustomBiome(String newBiomeName, Chunk chunk, int startY) {
         WritableRegistry<Biome> registryWritable = (WritableRegistry<Biome>) getRegistry();
         ResourceKey<Biome> key = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("tardis", newBiomeName.toLowerCase(Locale.ROOT)));
-        Biome base = registryWritable.get(key);
+        Biome base = registryWritable.getValueOrThrow(key);
         if (base == null) {
             if (newBiomeName.contains(":")) {
                 ResourceKey<Biome> newKey = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(newBiomeName.split(":")[0].toLowerCase(Locale.ROOT), newBiomeName.split(":")[1].toLowerCase(Locale.ROOT)));
-                base = registryWritable.get(newKey);
+                base = registryWritable.getValueOrThrow(newKey);
                 if (base == null) {
                     return;
                 }
@@ -91,11 +91,11 @@ public class BiomeHelper {
         Biome base;
         WritableRegistry<Biome> registrywritable = (WritableRegistry<Biome>) getRegistry();
         ResourceKey<Biome> key = ResourceKey.create(Registries.BIOME, ResourceLocation.withDefaultNamespace(newBiomeName.toLowerCase(Locale.ROOT)));
-        base = registrywritable.get(key);
+        base = registrywritable.getValueOrThrow(key);
         if (base == null) {
             if (newBiomeName.contains(":")) {
                 ResourceKey<Biome> newKey = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(newBiomeName.split(":")[0].toLowerCase(Locale.ROOT), newBiomeName.split(":")[1].toLowerCase(Locale.ROOT)));
-                base = registrywritable.get(newKey);
+                base = registrywritable.getValueOrThrow(newKey);
                 if (base == null) {
                     return false;
                 }

@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISDisguiseTracker;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoRemovePacket;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_21_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_21_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Field;
@@ -40,7 +40,7 @@ public class TARDISChameleonArchDisguiser {
         this.plugin = plugin;
         this.player = player;
         try {
-            gpField = net.minecraft.world.entity.player.Player.class.getDeclaredField("cD"); // cD = GameProfile
+            gpField = net.minecraft.world.entity.player.Player.class.getDeclaredField("k"); // k = GameProfile
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(e);
         }

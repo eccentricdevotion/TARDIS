@@ -24,7 +24,7 @@ public class CustomBiome {
         // get the biome registry
         WritableRegistry<Biome> registrywritable = (WritableRegistry<Biome>) BiomeHelper.getRegistry();
         // get the minecraft biome
-        Biome minecraftbiome = registrywritable.get(minecraftKey);
+        Biome minecraftbiome = registrywritable.getValueOrThrow(minecraftKey);
         // build the custom biome
         Biome.BiomeBuilder newBiome = new Biome.BiomeBuilder();
         // copy some minecraft biome settings to the custom biome
