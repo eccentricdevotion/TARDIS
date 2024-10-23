@@ -54,6 +54,7 @@ public class EnvironmentBiomes {
         put(Biome.OLD_GROWTH_BIRCH_FOREST, Material.STRIPPED_BIRCH_WOOD);
         put(Biome.OLD_GROWTH_PINE_TAIGA, Material.SPRUCE_LOG);
         put(Biome.OLD_GROWTH_SPRUCE_TAIGA, Material.STRIPPED_SPRUCE_WOOD);
+        put(Biome.PALE_GARDEN, Material.PALE_OAK_PLANKS);
         put(Biome.PLAINS, Material.GRASS_BLOCK);
         put(Biome.RIVER, Material.FISHING_ROD);
         put(Biome.SAVANNA, Material.ACACIA_PLANKS);
