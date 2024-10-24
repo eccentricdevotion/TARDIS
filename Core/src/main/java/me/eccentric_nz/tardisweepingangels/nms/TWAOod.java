@@ -7,11 +7,13 @@ import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.datafix.DataFixers;
 import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.monster.Husk;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -50,8 +52,10 @@ public class TWAOod extends TWAFollower {
             types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.HUSK).toString()));
         } catch (ClassNotFoundException ignored) {
         }
-//        entityReg.createIntrusiveHolder(EntityType.Builder.of(TWAOod::new, MobCategory.MONSTER).noSummon().build(entityId));
-//        Registry.register(entityReg, entityId, EntityType.Builder.of(TWAOod::new, MobCategory.MONSTER).noSummon().build(entityId));
+        ResourceKey<EntityType<?>> resourceKey = ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("tardis", entityId));
+        EntityType<?> type = EntityType.Builder.of(TWAOod::new, MobCategory.MONSTER).noSummon().build(resourceKey);
+        entityReg.createIntrusiveHolder(type);
+        Registry.register(entityReg, entityId, type);
     }
 
     @Override
