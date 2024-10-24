@@ -6,12 +6,12 @@ import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.datafix.DataFixers;
 import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EntityType.Builder;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.ItemStack;
@@ -38,16 +38,11 @@ public class TWAK9 extends TWAFollower {
     public static void injectEntity(ResourceLocation mcKey) throws NoSuchFieldException, IllegalAccessException {
         Registry<EntityType<?>> entityReg = ((CraftServer) Bukkit.getServer()).getServer().registryAccess().lookup(Registries.ENTITY_TYPE).orElseThrow(NoSuchFieldException::new);
         EntityRegistry.unfreeze();
-        try {
-            // Paper wants this, Spigot this causes a crash
-            Class.forName("com.destroystokyo.paper.ParticleBuilder");
-            @SuppressWarnings("unchecked")
-            Map<String, Type<?>> types = (Map<String, Type<?>>) DataFixers.getDataFixer().getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion())).findChoiceType(References.ENTITY).types();
-            types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.HUSK).toString()));
-        } catch (ClassNotFoundException ignored) {
-        }
+        @SuppressWarnings("unchecked")
+        Map<String, Type<?>> types = (Map<String, Type<?>>) DataFixers.getDataFixer().getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion())).findChoiceType(References.ENTITY).types();
+        types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.HUSK).toString()));
         ResourceKey<EntityType<?>> resourceKey = ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("tardis", entityId));
-        EntityType<?> type = Builder.of(TWAK9::new, MobCategory.MONSTER).noSummon().build(resourceKey);
+        EntityType<?> type = EntityType.Builder.of(TWAK9::new, MobCategory.MONSTER).noSummon().build(resourceKey);
         entityReg.createIntrusiveHolder(type);
         Registry.register(entityReg, entityId, type);
     }
@@ -75,5 +70,11 @@ public class TWAK9 extends TWAFollower {
             oldZ = getZ();
         }
         super.aiStep();
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag nbttagcompound) {
+        super.addAdditionalSaveData(nbttagcompound);
+        nbttagcompound.putString("id", "minecraft:k9");
     }
 }

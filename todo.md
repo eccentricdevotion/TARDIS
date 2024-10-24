@@ -3,7 +3,7 @@
 | Priority | Feature | Link |
 | -------- | ------- | ---- |
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Update to 1.21.3**<br>- Use new Player input API instead of packet listener for external flying<br>- Switch to using custom armour for weeping angel module monster disguises<br>- Test, test, test | - |
-| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | Fix bugs<br>- Custom door desync, portal not working / being removed leading to monsters entering even when door is closed | - |
+| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | Fix bugs<br>- Custom door desync, portal not working / being removed leading to monsters entering even when door is closed<br>- Debug bigger desktop change not checking for rooms | - |
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Fix follower persistence**<br>- Change entity type to PigZombie as they are neutral to players | - |
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Microscope** as an addition to Chemistry<br>- Add x-ray? | - |
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Zero-G room**<br>- Determine door level for door circuits and ring walkway<br>- Make schematic<br>- Add methods to stack rooms | [#868](https://github.com/eccentricdevotion/TARDIS/issues/868) |
