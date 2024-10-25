@@ -29,6 +29,7 @@ public class ProtocolLibPacketListener {
                 if (stand != null && stand.getType() == EntityType.ARMOR_STAND) {
                     Entity chicken = stand.getVehicle();
                     if (chicken != null) {
+                        // TODO get values from input
                         float sideways = e.getPacket().getFloat().read(0);
                         float forward = e.getPacket().getFloat().read(1);
                         if (!e.getPacket().getBooleans().getValues().get(1)) { // shift key not pressed

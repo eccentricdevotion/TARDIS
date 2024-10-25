@@ -86,11 +86,26 @@ public class TARDISPacketListener {
                         Entity chicken = stand.getVehicle();
                         if (chicken != null) {
                             // TODO check these values
-                            float sideways = steerPacket.input().left() ? 1 : -1;
-                            float forward = steerPacket.input().forward() ? 1 : -1;
+                            float sideways = 0.0f;
+                            if (steerPacket.input().left()) {
+                                sideways = 0.98f;
+                            }
+                            if (steerPacket.input().right()) {
+                                sideways = -0.98f;
+                            }
+                            TARDIS.plugin.debug("sideways = "+sideways);
+                            float forward = 0.0f;
+                            if (steerPacket.input().forward()) {
+                                forward = 0.98f;
+                            }
+                            if (steerPacket.input().backward()) {
+                                forward = -0.98f;
+                            }
+                            TARDIS.plugin.debug("forward = "+forward);
                             if (!steerPacket.input().shift()) {
                                 // don't move if the chicken is on the ground
                                 if (chicken.isOnGround()) {
+                                    TARDIS.plugin.debug("chicken.isOnGround()");
                                     chicken.setVelocity(new Vector(0, 0, 0));
                                 } else {
                                     Location playerLocation = player.getLocation();
@@ -100,7 +115,9 @@ public class TARDISPacketListener {
                                     stand.setRotation(yaw, pitch);
                                     double radians = Math.toRadians(yaw);
                                     double x = forward * Math.sin(radians) + sideways * Math.cos(radians);
+                                    TARDIS.plugin.debug("x = "+x);
                                     double z = forward * Math.cos(radians) + sideways * Math.sin(radians);
+                                    TARDIS.plugin.debug("z = "+z);
                                     Vector velocity = (new Vector(x, 0.0D, z)).normalize().multiply(0.5D);
                                     velocity.setY(chicken.getVelocity().getY());
                                     if (!Double.isFinite(velocity.getX())) {
@@ -113,18 +130,22 @@ public class TARDISPacketListener {
                                         if (pitch < 0) {
                                             // go up
                                             double up = Math.abs(pitch / 100.0d);
+                                            TARDIS.plugin.debug("up = "+up);
                                             velocity.setY(up);
                                         } else {
                                             double down = -Math.abs(pitch / 100.0d);
+                                            TARDIS.plugin.debug("down = "+down);
                                             velocity.setY(down);
                                         }
                                     } else {
+                                        TARDIS.plugin.debug("y = 0");
                                         velocity.setY(0);
                                     }
                                     velocity.checkFinite();
                                     chicken.setVelocity(velocity);
                                 }
                             } else {
+                                TARDIS.plugin.debug("steerPacket.input().shift()");
                                 chicken.setVelocity(new Vector(0, 0, 0));
                                 Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
                                     // kill chicken
