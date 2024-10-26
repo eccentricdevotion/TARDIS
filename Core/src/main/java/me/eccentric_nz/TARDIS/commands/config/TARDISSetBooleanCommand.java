@@ -77,7 +77,7 @@ class TARDISSetBooleanCommand {
             if (first.equals("abandon") || first.equals("previews")) {
                 if (tf.equals("true") && (plugin.getConfig().getBoolean("creation.create_worlds") || plugin.getConfig().getBoolean("creation.create_worlds_with_perms"))) {
                     String which = first.equals("abandon") ? "Abandoned TARDISes" : "Desktop previews";
-                    plugin.getMessenger().messageWithColour(sender, which + " cannot be enabled as TARDISes are not stored in a TIPS world!", "#FF55555");
+                    plugin.getMessenger().messageWithColour(sender, which + " cannot be enabled as TARDISes are not stored in a TIPS world!", "#FF5555");
                     return true;
                 }
             }
