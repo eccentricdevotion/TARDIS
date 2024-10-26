@@ -28,6 +28,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
+import net.minecraft.network.protocol.game.ServerboundMoveVehiclePacket;
 import net.minecraft.network.protocol.game.ServerboundPlayerInputPacket;
 import net.minecraft.server.network.ServerCommonPacketListenerImpl;
 import net.minecraft.world.level.biome.Biome;
@@ -93,7 +94,6 @@ public class TARDISPacketListener {
                             if (steerPacket.input().right()) {
                                 sideways = -0.98f;
                             }
-                            TARDIS.plugin.debug("sideways = "+sideways);
                             float forward = 0.0f;
                             if (steerPacket.input().forward()) {
                                 forward = 0.98f;
@@ -101,11 +101,20 @@ public class TARDISPacketListener {
                             if (steerPacket.input().backward()) {
                                 forward = -0.98f;
                             }
-                            TARDIS.plugin.debug("forward = "+forward);
-                            if (!steerPacket.input().shift()) {
+                            if (steerPacket.input().shift()) {
+                                chicken.setVelocity(new Vector(0, 0, 0));
+                                Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
+                                    // kill chicken
+                                    chicken.removePassenger(stand);
+                                    chicken.remove();
+                                    ArmorStand as = (ArmorStand) stand;
+                                    TARDIS.plugin.getTrackerKeeper().getStillFlyingNotReturning().remove(player.getUniqueId());
+                                    // teleport player back to the TARDIS interior
+                                    new TARDISExteriorFlight(TARDIS.plugin).stopFlying(player, as);
+                                }, 3L);
+                            } else {
                                 // don't move if the chicken is on the ground
                                 if (chicken.isOnGround()) {
-                                    TARDIS.plugin.debug("chicken.isOnGround()");
                                     chicken.setVelocity(new Vector(0, 0, 0));
                                 } else {
                                     Location playerLocation = player.getLocation();
@@ -115,9 +124,7 @@ public class TARDISPacketListener {
                                     stand.setRotation(yaw, pitch);
                                     double radians = Math.toRadians(yaw);
                                     double x = forward * Math.sin(radians) + sideways * Math.cos(radians);
-                                    TARDIS.plugin.debug("x = "+x);
                                     double z = forward * Math.cos(radians) + sideways * Math.sin(radians);
-                                    TARDIS.plugin.debug("z = "+z);
                                     Vector velocity = (new Vector(x, 0.0D, z)).normalize().multiply(0.5D);
                                     velocity.setY(chicken.getVelocity().getY());
                                     if (!Double.isFinite(velocity.getX())) {
@@ -130,32 +137,17 @@ public class TARDISPacketListener {
                                         if (pitch < 0) {
                                             // go up
                                             double up = Math.abs(pitch / 100.0d);
-                                            TARDIS.plugin.debug("up = "+up);
                                             velocity.setY(up);
                                         } else {
                                             double down = -Math.abs(pitch / 100.0d);
-                                            TARDIS.plugin.debug("down = "+down);
                                             velocity.setY(down);
                                         }
                                     } else {
-                                        TARDIS.plugin.debug("y = 0");
                                         velocity.setY(0);
                                     }
                                     velocity.checkFinite();
                                     chicken.setVelocity(velocity);
                                 }
-                            } else {
-                                TARDIS.plugin.debug("steerPacket.input().shift()");
-                                chicken.setVelocity(new Vector(0, 0, 0));
-                                Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
-                                    // kill chicken
-                                    chicken.removePassenger(stand);
-                                    chicken.remove();
-                                    ArmorStand as = (ArmorStand) stand;
-                                    TARDIS.plugin.getTrackerKeeper().getStillFlyingNotReturning().remove(player.getUniqueId());
-                                    // teleport player back to the TARDIS interior
-                                    new TARDISExteriorFlight(TARDIS.plugin).stopFlying(player, as);
-                                }, 3L);
                             }
                         }
                     }
