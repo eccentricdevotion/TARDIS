@@ -212,7 +212,7 @@ public class TARDISCommands implements CommandExecutor {
                     return new TARDISNameKeyCommand(plugin).nameKey(player, args);
                 }
                 case occupy -> {
-                    return new TARDISOccupyCommand(plugin).toggleOccupancy(player);
+                    return new TARDISOccupyCommand(plugin).toggleOccupancy(player, args);
                 }
                 case decommission -> {
                     return new TARDISDecommissionCommand(plugin).withdraw(player, args);
