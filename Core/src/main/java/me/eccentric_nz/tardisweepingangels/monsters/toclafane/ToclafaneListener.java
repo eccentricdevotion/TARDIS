@@ -80,7 +80,7 @@ public class ToclafaneListener implements Listener {
                         head.setItemMeta(im);
                         ee.setHelmet(head);
                         bee.setHasStung(false);
-                        bee.setHealth(bee.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+                        bee.setHealth(bee.getAttribute(Attribute.MAX_HEALTH).getValue());
                         bee.setAnger(500);
                         bee.setTarget(player);
                         bee.setSilent(true);
@@ -131,7 +131,7 @@ public class ToclafaneListener implements Listener {
                 Entity passenger = damager.getPassengers().getFirst();
                 if (passenger instanceof ArmorStand && passenger.getPersistentDataContainer().has(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER)) {
                     bee.setHasStung(false);
-                    bee.setHealth(bee.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+                    bee.setHealth(bee.getAttribute(Attribute.MAX_HEALTH).getValue());
                     bee.setTarget(player);
                 }
             }

@@ -189,7 +189,7 @@ public class TARDISEjectListener implements Listener {
                 TARDISLlama tmlla = new TARDISLlama();
                 tmlla.setAge(ll.getAge());
                 tmlla.setBaby(!ll.isAdult());
-                double mh = ll.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                double mh = ll.getAttribute(Attribute.MAX_HEALTH).getValue();
                 tmlla.setHorseHealth(mh);
                 tmlla.setHealth(ll.getHealth());
                 // get horse colour, style and variant
@@ -204,7 +204,7 @@ public class TARDISEjectListener implements Listener {
                 tmlla.setHorseInventory(ll.getInventory().getContents());
                 tmlla.setDomesticity(ll.getDomestication());
                 tmlla.setJumpStrength(ll.getJumpStrength());
-                tmlla.setSpeed(ll.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue());
+                tmlla.setSpeed(ll.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue());
                 // check the leash
                 if (ll.isLeashed()) {
                     Entity leash = ll.getLeashHolder();
@@ -222,7 +222,7 @@ public class TARDISEjectListener implements Listener {
                 if (tmlla.isBaby()) {
                     llama.setBaby();
                 }
-                AttributeInstance attribute = llama.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                AttributeInstance attribute = llama.getAttribute(Attribute.MAX_HEALTH);
                 attribute.setBaseValue(tmlla.getHorseHealth());
                 String name = tmlla.getName();
                 if (name != null && !name.isEmpty()) {
@@ -246,7 +246,7 @@ public class TARDISEjectListener implements Listener {
                     pinv.addItem(leash);
                     player.updateInventory();
                 }
-                llama.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(tmlla.getSpeed());
+                llama.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(tmlla.getSpeed());
                 ent.remove();
             }
             case MOOSHROOM -> {

@@ -152,7 +152,7 @@ public class SkinUtils {
             case "Empty Child" -> {
                 material = Material.SUGAR;
                 // set generic scale
-                player.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(0.5d);
+                player.getAttribute(Attribute.SCALE).setBaseValue(0.5d);
             }
             case "Hath" -> {
                 material = Material.PUFFERFISH;
@@ -290,7 +290,7 @@ public class SkinUtils {
             case "Empty Child" -> {
                 // head & reset generic scale
                 player.getInventory().setItem(EquipmentSlot.HEAD, null);
-                player.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(1.0d);
+                player.getAttribute(Attribute.SCALE).setBaseValue(1.0d);
             }
             case "Mire", "Slitheen" -> {
                 // head & both hands

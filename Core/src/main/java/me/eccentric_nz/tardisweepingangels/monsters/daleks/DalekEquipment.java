@@ -63,7 +63,7 @@ public class DalekEquipment {
             Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
                 PotionEffect resistance = new PotionEffect(PotionEffectType.RESISTANCE, 360000, 1, true, false);
                 le.addPotionEffect(resistance);
-                AttributeInstance attribute = le.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                AttributeInstance attribute = le.getAttribute(Attribute.MAX_HEALTH);
                 attribute.setBaseValue(30.0d);
                 le.setHealth(30.0d);
                 le.setCanPickupItems(false);
