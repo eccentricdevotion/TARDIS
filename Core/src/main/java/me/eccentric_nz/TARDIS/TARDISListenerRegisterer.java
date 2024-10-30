@@ -50,10 +50,7 @@ import me.eccentric_nz.TARDIS.desktop.TARDISThemeMenuListener;
 import me.eccentric_nz.TARDIS.desktop.TARDISWallMenuListener;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayListener;
 import me.eccentric_nz.TARDIS.enumeration.InventoryManager;
-import me.eccentric_nz.TARDIS.flight.FlightGamemodeListener;
-import me.eccentric_nz.TARDIS.flight.TARDISHandbrakeListener;
-import me.eccentric_nz.TARDIS.flight.TARDISManualFlightListener;
-import me.eccentric_nz.TARDIS.flight.TARDISRegulatorListener;
+import me.eccentric_nz.TARDIS.flight.*;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesEventListener;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesListener;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramListener;
@@ -138,6 +135,7 @@ class TARDISListenerRegisterer {
      * Registers all the listeners for the various events required to use the TARDIS.
      */
     void registerListeners() {
+        plugin.getPM().registerEvents(new PlayerInputListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBonemealListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISEditAreasGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockBreakListener(plugin), plugin);

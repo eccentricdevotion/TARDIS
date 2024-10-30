@@ -29,4 +29,9 @@ public class TARDISChicken extends Chicken {
     public boolean isSensitiveToWater() {
         return false;
     }
+
+    @Override
+    protected void registerGoals() {
+        // don't register any goals
+    }
 }
