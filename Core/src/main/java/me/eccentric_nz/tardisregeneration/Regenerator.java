@@ -90,7 +90,8 @@ public class Regenerator {
                 return;
             }
             // does the player have any regenerations left?
-            if (rsr.getCount() <= 0) {
+            int playerRemaining = rsr.getCount();
+            if (playerRemaining <= 0) {
                 plugin.getMessenger().send(player, TardisModule.REGENERATION, "REGENERATION_COUNT");
                 return;
             }
@@ -107,16 +108,22 @@ public class Regenerator {
                     plugin.getQueryFactory().alterEnergyLevel("player_prefs", -cost, wheretl, player);
                 }
             }
+            int maxRegenerations = plugin.getRegenerationConfig().getInt("regenerations");
+            int decrement = 1;
+            // player regenerations default is 15, but configured max regenerations may be less e.g. 12
+            if (playerRemaining > maxRegenerations) {
+                decrement = (playerRemaining - maxRegenerations) + 1;
+            }
             // get which regeneration this is
-            int which = (plugin.getRegenerationConfig().getInt("regenerations")) - rsr.getCount();
-            // trigger regeneration
+            int which = maxRegenerations - playerRemaining;
             if (which < 0 || which > 15) {
                 which = 0;
             }
+            // trigger regeneration
             Skin skin = DoctorSkins.DOCTORS.get(which);
             display(plugin, player, which + 1001, skin);
-            // reduce regen count
-            int reduced = rsr.getCount() - 1;
+            // reduce regeneration count, taking into account disparity between configured and default
+            int reduced = playerRemaining - decrement;
             plugin.getQueryFactory().setRegenerationCount(player.getUniqueId(), reduced);
             plugin.getMessenger().send(player, TardisModule.REGENERATION, "REGENERATION_REMAINING", reduced);
         }
