@@ -49,37 +49,33 @@ public class FlightVisibility {
 
     public void show(Player player) {
         FlightReturnData frd = plugin.getTrackerKeeper().getFlyingReturnLocation().get(player.getUniqueId());
-        UUID uuid = frd.getChicken();
-        if (uuid != null) {
-            Entity chicken = plugin.getServer().getEntity(uuid);
-            if (chicken != null && !chicken.getPassengers().isEmpty()) {
-                Entity as = chicken.getPassengers().getFirst();
-                if (as instanceof ArmorStand stand) {
-                    // restore the original item stack
-                    net.minecraft.world.item.ItemStack head = CraftItemStack.asNMSCopy(plugin.getTrackerKeeper().getHiddenFlight().get(player.getUniqueId()));
-                    ClientboundSetEquipmentPacket equipmentPacket = new ClientboundSetEquipmentPacket(stand.getEntityId(), List.of(new Pair<>(EquipmentSlot.HEAD, head)));
-                    ServerGamePacketListenerImpl connection = ((CraftPlayer) player).getHandle().connection;
-                    connection.send(equipmentPacket);
-                    if (stand.getCustomName() != null) {
-                        // set name visible
-                        stand.setCustomNameVisible(true);
-                    }
-                    player.removePotionEffect(PotionEffectType.INVISIBILITY);
-                    // get the TARDIS
-                    HashMap<String, Object> wherei = new HashMap<>();
-                    wherei.put("tardis_id", frd.getId());
-                    ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-                    if (rs.resultSet()) {
-                        Tardis tardis = rs.getTardis();
-                        // restart animation
-                        int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(plugin, stand, player, tardis.getPreset().equals(ChameleonPreset.PANDORICA)), 5L, 3L);
-                        // save flight data
-                        plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(frd.getId(), frd.getLocation(), frd.getSound(), animation, chicken.getUniqueId(), stand.getUniqueId()));
-                        // remove tracker
-                        plugin.getTrackerKeeper().getHiddenFlight().remove(player.getUniqueId());
-                    }
-                }
+        UUID uuid = frd.getStand();
+        Entity as = plugin.getServer().getEntity(uuid);
+        if (as instanceof ArmorStand stand) {
+            // restore the original item stack
+            net.minecraft.world.item.ItemStack head = CraftItemStack.asNMSCopy(plugin.getTrackerKeeper().getHiddenFlight().get(player.getUniqueId()));
+            ClientboundSetEquipmentPacket equipmentPacket = new ClientboundSetEquipmentPacket(stand.getEntityId(), List.of(new Pair<>(EquipmentSlot.HEAD, head)));
+            ServerGamePacketListenerImpl connection = ((CraftPlayer) player).getHandle().connection;
+            connection.send(equipmentPacket);
+            if (stand.getCustomName() != null) {
+                // set name visible
+                stand.setCustomNameVisible(true);
+            }
+            player.removePotionEffect(PotionEffectType.INVISIBILITY);
+            // get the TARDIS
+            HashMap<String, Object> wherei = new HashMap<>();
+            wherei.put("tardis_id", frd.getId());
+            ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
+            if (rs.resultSet()) {
+                Tardis tardis = rs.getTardis();
+                // restart animation
+                int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(plugin, stand, player, tardis.getPreset().equals(ChameleonPreset.PANDORICA)), 5L, 3L);
+                // save flight data
+                plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(frd.getId(), frd.getLocation(), frd.getSound(), animation, stand.getUniqueId()));
+                // remove tracker
+                plugin.getTrackerKeeper().getHiddenFlight().remove(player.getUniqueId());
             }
         }
+
     }
 }

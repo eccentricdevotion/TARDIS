@@ -241,7 +241,7 @@ public class TARDISJoinListener implements Listener {
                     chicken.setNoDamageTicks(Integer.MAX_VALUE);
                     chicken.setFireTicks(0);
                     // re-save flight data
-                    plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(data.getId(), data.getLocation(), sound, animation, chicken.getUniqueId(), stand.getUniqueId()));
+                    plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(data.getId(), data.getLocation(), sound, animation, stand.getUniqueId()));
                 }
             }
         }

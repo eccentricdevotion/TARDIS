@@ -20,30 +20,30 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
-import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.flight.vehicle.TARDISArmourStand;
 import me.eccentric_nz.TARDIS.sensor.BeaconSensor;
 import me.eccentric_nz.TARDIS.sensor.HandbrakeSensor;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
-import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
-import org.bukkit.entity.*;
+import org.bukkit.craftbukkit.v1_21_R2.entity.CraftArmorStand;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Collections;
@@ -190,28 +190,20 @@ public class TARDISExteriorFlight {
                 for (Entity e : current.getWorld().getNearbyEntities(current, 1.5d, 1.5d, 1.5d, (s) -> s.getType() == EntityType.ARMOR_STAND)) {
                     if (e instanceof ArmorStand stand) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(plugin, stand, player, pandorica), 5L, 3L);
+                            int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(plugin, (ArmorStand) stand, player, pandorica), 5L, 3L);
                             int sound = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> TARDISSounds.playTARDISSound(player.getLocation(), "time_rotor_flying", 4f), 5L, 33L);
                             player.getPersistentDataContainer().set(plugin.getLoopKey(), PersistentDataType.INTEGER, sound);
-                            // spawn a chicken
-                            LivingEntity chicken = new MonsterSpawner().create(stand.getLocation(), Monster.FLYER);
-                            chicken.setGravity(false);
                             stand.addPassenger(player);
-                            stand.setGravity(false);
-                            chicken.addPassenger(stand);
-                            chicken.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 15));
-                            chicken.setSilent(true);
-                            chicken.setInvulnerable(true);
-                            chicken.setNoDamageTicks(Integer.MAX_VALUE);
-                            chicken.setFireTicks(0);
+                            TARDISArmourStand tas = (TARDISArmourStand) ((CraftArmorStand) stand).getHandle();
+                            tas.setPlayer(player);
+                            player.setInvulnerable(true);
+                            player.setAllowFlight(true);
+                            player.setFlying(true);
                             // remove the light
                             current.getBlock().getRelative(BlockFace.UP, 2).setBlockData(TARDISConstants.AIR);
                             // save player's current location, so we can teleport them back to it when they finish flying
-                            plugin.getTrackerKeeper().getFlyingReturnLocation().put(uuid, new FlightReturnData(id, interior, sound, animation, chicken.getUniqueId(), stand.getUniqueId()));
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                player.setGravity(true);
-                                chicken.setGravity(true);
-                            }, 1L);
+                            plugin.getTrackerKeeper().getFlyingReturnLocation().put(uuid, new FlightReturnData(id, interior, sound, animation, stand.getUniqueId()));
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.setGravity(true), 1L);
                         }, 5L);
                         break;
                     }

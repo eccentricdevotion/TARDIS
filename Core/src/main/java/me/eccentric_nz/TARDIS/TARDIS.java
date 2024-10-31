@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.destroyers.TARDISPresetDestroyerFactory;
 import me.eccentric_nz.TARDIS.doors.TARDISCustomDoorLoader;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.files.*;
+import me.eccentric_nz.TARDIS.flight.vehicle.VehicleLoader;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesUpdater;
 import me.eccentric_nz.TARDIS.mapping.TARDISBlueMap;
 import me.eccentric_nz.TARDIS.mapping.TARDISDynmap;
@@ -1566,6 +1567,7 @@ public class TARDIS extends JavaPlugin {
         tardisHelper = new TARDISHelper(this);
         tardisHelper.enable();
         new EyeLoader(this).enable();
+        new VehicleLoader().injectEntity();
     }
 
     private void loadPluginRespect() {
