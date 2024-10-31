@@ -110,6 +110,9 @@ public class Regenerator {
             // get which regeneration this is
             int which = (plugin.getRegenerationConfig().getInt("regenerations")) - rsr.getCount();
             // trigger regeneration
+            if (which < 0 || which > 15) {
+                which = 0;
+            }
             Skin skin = DoctorSkins.DOCTORS.get(which);
             display(plugin, player, which + 1001, skin);
             // reduce regen count
