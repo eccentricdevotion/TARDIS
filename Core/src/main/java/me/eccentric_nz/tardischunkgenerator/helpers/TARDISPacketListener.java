@@ -76,75 +76,7 @@ public class TARDISPacketListener {
 //            @Override
 //            public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
 //                if (packet instanceof ServerboundPlayerInputPacket steerPacket) {
-//                    Entity stand = player.getVehicle();
-//                    if (stand != null && stand.getType() == EntityType.ARMOR_STAND) {
-//                        Entity chicken = stand.getVehicle();
-//                        if (chicken != null) {
-//                            // TODO check these values
-//                            float sideways = 0.0f;
-//                            if (steerPacket.input().left()) {
-//                                sideways = 0.98f;
-//                            }
-//                            if (steerPacket.input().right()) {
-//                                sideways = -0.98f;
-//                            }
-//                            float forward = 0.0f;
-//                            if (steerPacket.input().forward()) {
-//                                forward = 0.98f;
-//                            }
-//                            if (steerPacket.input().backward()) {
-//                                forward = -0.98f;
-//                            }
-//                            if (steerPacket.input().shift()) {
-//                                chicken.setVelocity(new Vector(0, 0, 0));
-//                                Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
-//                                    // kill chicken
-//                                    chicken.removePassenger(stand);
-//                                    chicken.remove();
-//                                    ArmorStand as = (ArmorStand) stand;
-//                                    TARDIS.plugin.getTrackerKeeper().getStillFlyingNotReturning().remove(player.getUniqueId());
-//                                    // teleport player back to the TARDIS interior
-//                                    new TARDISExteriorFlight(TARDIS.plugin).stopFlying(player, as);
-//                                }, 3L);
-//                            } else {
-//                                // don't move if the chicken is on the ground
-//                                if (chicken.isOnGround()) {
-//                                    chicken.setVelocity(new Vector(0, 0, 0));
-//                                } else {
-//                                    Location playerLocation = player.getLocation();
-//                                    float yaw = playerLocation.getYaw();
-//                                    float pitch = playerLocation.getPitch();
-//                                    chicken.setRotation(yaw, pitch);
-//                                    stand.setRotation(yaw, pitch);
-//                                    double radians = Math.toRadians(yaw);
-//                                    double x = forward * Math.sin(radians) + sideways * Math.cos(radians);
-//                                    double z = forward * Math.cos(radians) + sideways * Math.sin(radians);
-//                                    Vector velocity = (new Vector(x, 0.0D, z)).normalize().multiply(0.5D);
-//                                    velocity.setY(chicken.getVelocity().getY());
-//                                    if (!Double.isFinite(velocity.getX())) {
-//                                        velocity.setX(0);
-//                                    }
-//                                    if (!Double.isFinite(velocity.getZ())) {
-//                                        velocity.setZ(0);
-//                                    }
-//                                    if (!steerPacket.input().jump()) {
-//                                        if (pitch < 0) {
-//                                            // go up
-//                                            double up = Math.abs(pitch / 100.0d);
-//                                            velocity.setY(up);
-//                                        } else {
-//                                            double down = -Math.abs(pitch / 100.0d);
-//                                            velocity.setY(down);
-//                                        }
-//                                    } else {
-//                                        velocity.setY(0);
-//                                    }
-//                                    velocity.checkFinite();
-//                                    chicken.setVelocity(velocity);
-//                                }
-//                            }
-//                        }
-//                    }
+//
 //                }
 //                super.channelRead(channelHandlerContext, packet);
 //            }
@@ -157,9 +89,7 @@ public class TARDISPacketListener {
                         Entity entity = Bukkit.getEntity(uuid);
                         if (entity.getType().equals(EntityType.PLAYER)) {
                             Player player = (Player) entity;
-                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
-                                TARDISDisguiser.redisguise(player, entity.getWorld());
-                            }, 5L);
+                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDISDisguiser.redisguise(player, entity.getWorld()), 5L);
                         }
                     }
                 }

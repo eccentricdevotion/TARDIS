@@ -45,7 +45,7 @@ public class TWAJudoon extends TWAFollower {
         @SuppressWarnings("unchecked")
         Map<String, Type<?>> types = (Map<String, Type<?>>) DataFixers.getDataFixer().getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion())).findChoiceType(References.ENTITY).types();
         types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.HUSK).toString()));
-        ResourceKey<EntityType<?>> resourceKey = ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("tardis", entityId));
+        ResourceKey<EntityType<?>> resourceKey = ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.withDefaultNamespace(entityId));
         EntityType<?> type = EntityType.Builder.of(TWAJudoon::new, MobCategory.MONSTER).noSummon().build(resourceKey);
         entityReg.createIntrusiveHolder(type);
         Registry.register(entityReg, entityId, type);
@@ -79,7 +79,7 @@ public class TWAJudoon extends TWAFollower {
     @Override
     public void addAdditionalSaveData(CompoundTag nbttagcompound) {
         super.addAdditionalSaveData(nbttagcompound);
-        nbttagcompound.putString("id", "tardis:judoon");
+        nbttagcompound.putString("id", "minecraft:judoon");
     }
 
     public int getAmmo() {

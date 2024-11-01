@@ -45,7 +45,7 @@ public class TARDISArmourStand extends ArmorStand {
         @SuppressWarnings("unchecked")
         Map<String, Type<?>> types = (Map<String, Type<?>>) DataFixers.getDataFixer().getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion())).findChoiceType(References.ENTITY).types();
         types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.ARMOR_STAND).toString()));
-        ResourceKey<EntityType<?>> resourceKey = ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("tardis", entityId));
+        ResourceKey<EntityType<?>> resourceKey = ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.withDefaultNamespace(entityId));
         EntityType<?> type = EntityType.Builder.of(TARDISArmourStand::new, MobCategory.MISC).noSummon().build(resourceKey);
         entityReg.createIntrusiveHolder(type);
         Registry.register(entityReg, entityId, type);
@@ -69,7 +69,7 @@ public class TARDISArmourStand extends ArmorStand {
     @Override
     public void addAdditionalSaveData(CompoundTag nbttagcompound) {
         super.addAdditionalSaveData(nbttagcompound);
-        nbttagcompound.putString("id", "tardis:flight_vehicle");
+        nbttagcompound.putString("id", "minecraft:flight_vehicle");
     }
 
     public Player getPlayer() {

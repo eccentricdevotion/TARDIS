@@ -49,7 +49,7 @@ public class TWAOod extends TWAFollower {
         @SuppressWarnings("unchecked")
         Map<String, Type<?>> types = (Map<String, Type<?>>) DataFixers.getDataFixer().getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion())).findChoiceType(References.ENTITY).types();
         types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.HUSK).toString()));
-        ResourceKey<EntityType<?>> resourceKey = ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("tardis", entityId));
+        ResourceKey<EntityType<?>> resourceKey = ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.withDefaultNamespace(entityId));
         EntityType<?> type = EntityType.Builder.of(TWAOod::new, MobCategory.MONSTER).noSummon().build(resourceKey);
         entityReg.createIntrusiveHolder(type);
         Registry.register(entityReg, entityId, type);
@@ -91,7 +91,7 @@ public class TWAOod extends TWAFollower {
     @Override
     public void addAdditionalSaveData(CompoundTag nbttagcompound) {
         super.addAdditionalSaveData(nbttagcompound);
-        nbttagcompound.putString("id", "tardis:ood");
+        nbttagcompound.putString("id", "minecraft:ood");
     }
 
     public boolean isRedeye() {
