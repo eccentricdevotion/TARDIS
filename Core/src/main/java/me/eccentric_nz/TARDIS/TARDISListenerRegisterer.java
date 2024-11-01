@@ -120,7 +120,6 @@ import me.eccentric_nz.tardischemistry.product.GlowStickListener;
 import me.eccentric_nz.tardischemistry.product.ProductGUIListener;
 import me.eccentric_nz.tardischemistry.product.SparklerListener;
 import me.eccentric_nz.tardischemistry.reducer.ReducerGUIListener;
-import me.eccentric_nz.tardischunkgenerator.helpers.ProtocolLibPacketListener;
 
 /**
  * Registers all the listeners for the various events required to use the TARDIS.
@@ -406,8 +405,5 @@ class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new TARDISShellLoaderListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISWeatherListener(plugin), plugin);
-        if (plugin.getPM().isPluginEnabled("ProtocolLib")) {
-            new ProtocolLibPacketListener().enable(plugin);
-        }
     }
 }
