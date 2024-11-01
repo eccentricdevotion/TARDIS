@@ -20,6 +20,9 @@ public class VehicleUtility {
                 if (((CraftArmorStand) as).getHandle() instanceof TARDISArmourStand) {
                     TARDIS.plugin.debug("Found TARDISArmourStand");
                     return false;
+                } else {
+                    convertStand(as, location);
+                    return false;
                 }
             }
         }
@@ -44,15 +47,19 @@ public class VehicleUtility {
             }
         }
         if (old != null) {
-            // spawn a custom armour stand at the location
-            ServerLevel world = ((CraftWorld) location.getWorld()).getHandle();
-            TARDISArmourStand entity = new TARDISArmourStand(net.minecraft.world.entity.EntityType.ARMOR_STAND, world);
-            entity.setPosRaw(location.getX() + 0.5d, location.getY(), location.getZ() + 0.5d);
-            world.addFreshEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
-            ArmorStand stand = (ArmorStand) entity.getBukkitEntity();
-            ItemStack is = old.getEquipment().getHelmet();
-            stand.getEquipment().setHelmet(is, true);
-            old.remove();
+            convertStand(old, location);
         }
+    }
+
+    public static void convertStand(ArmorStand old, Location location) {
+        // spawn a custom armour stand at the location
+        ServerLevel world = ((CraftWorld) location.getWorld()).getHandle();
+        TARDISArmourStand entity = new TARDISArmourStand(net.minecraft.world.entity.EntityType.ARMOR_STAND, world);
+        entity.setPosRaw(location.getX() + 0.5d, location.getY(), location.getZ() + 0.5d);
+        world.addFreshEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        ArmorStand stand = (ArmorStand) entity.getBukkitEntity();
+        ItemStack is = old.getEquipment().getHelmet();
+        stand.getEquipment().setHelmet(is, true);
+        old.remove();
     }
 }

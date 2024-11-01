@@ -225,7 +225,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
             TARDISDisplayItemUtils.setInteraction(stand, bd.getTardisID());
             // message travellers in tardis
             if (loops > 3) {
-                new FlightEnd(plugin).process(bd.getTardisID(), bd.getPlayer().getPlayer(), bd.isMalfunction());
+                new FlightEnd(plugin).process(bd.getTardisID(), bd.getPlayer().getPlayer(), bd.isMalfunction(), bd.isRebuild());
                 // update demat field in database
                 String update = preset.toString();
                 if (preset == ChameleonPreset.ITEM) {

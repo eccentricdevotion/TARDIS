@@ -34,6 +34,7 @@ import org.bukkit.util.Vector;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -65,9 +66,11 @@ public class TARDISTravelStop {
             plugin.getTrackerKeeper().getDestinationVortex().remove(id);
         }
         // is player flying?
-        if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {
+        UUID uuid = player.getUniqueId();
+        if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(uuid)) {
+            plugin.getTrackerKeeper().getStillFlyingNotReturning().remove(uuid);
             // land TARDIS
-            FlightReturnData frd = plugin.getTrackerKeeper().getFlyingReturnLocation().get(player.getUniqueId());
+            FlightReturnData frd = plugin.getTrackerKeeper().getFlyingReturnLocation().get(uuid);
             Entity stand = plugin.getServer().getEntity(frd.getStand());
             if (stand != null) {
                 stand.setVelocity(new Vector(0, 0, 0));
@@ -76,7 +79,7 @@ public class TARDISTravelStop {
                     new TARDISExteriorFlight(plugin).stopFlying(player, (ArmorStand) stand);
                 });
             } else {
-                // scan for nearby chickens in case player teleport fails due to lag
+                // scan for nearby armour stands in case player teleport fails due to lag
                 for (Entity e : player.getLocation().getWorld().getNearbyEntities(player.getLocation(), 4, 4, 4, (s) -> s.getType() == EntityType.ARMOR_STAND)) {
                     if (e instanceof ArmorStand armorStand) {
                         e.setVelocity(new Vector(0, 0, 0));
@@ -107,7 +110,7 @@ public class TARDISTravelStop {
             Location l = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
             plugin.getQueryFactory().updateLocations(setlocs, id);
             // rebuild the exterior
-            BuildData bd = new BuildData(player.getUniqueId().toString());
+            BuildData bd = new BuildData(uuid.toString());
             bd.setDirection(rsh.getDirection());
             bd.setLocation(l);
             bd.setMalfunction(false);

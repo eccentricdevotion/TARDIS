@@ -142,7 +142,7 @@ public class TARDISExteriorFlight {
                     plugin.getServer().getScheduler().cancelTask(taskID);
                     plugin.getTrackerKeeper().getDestinationVortex().remove(data.getId());
                 }
-                new FlightEnd(plugin).process(data.getId(), player, false);
+                new FlightEnd(plugin).process(data.getId(), player, false, true);
             }
         }
         Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
@@ -196,6 +196,7 @@ public class TARDISExteriorFlight {
                             stand.addPassenger(player);
                             TARDISArmourStand tas = (TARDISArmourStand) ((CraftArmorStand) stand).getHandle();
                             tas.setPlayer(player);
+                            tas.setStationary(false);
                             player.setInvulnerable(true);
                             player.setAllowFlight(true);
                             player.setFlying(true);
