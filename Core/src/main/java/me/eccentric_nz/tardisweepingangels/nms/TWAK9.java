@@ -75,6 +75,6 @@ public class TWAK9 extends TWAFollower {
     @Override
     public void addAdditionalSaveData(CompoundTag nbttagcompound) {
         super.addAdditionalSaveData(nbttagcompound);
-        nbttagcompound.putString("id", "minecraft:k9");
+        nbttagcompound.putString("id", "tardis:k9");
     }
 }

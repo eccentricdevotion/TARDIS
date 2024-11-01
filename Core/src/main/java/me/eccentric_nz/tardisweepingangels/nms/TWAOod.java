@@ -91,7 +91,7 @@ public class TWAOod extends TWAFollower {
     @Override
     public void addAdditionalSaveData(CompoundTag nbttagcompound) {
         super.addAdditionalSaveData(nbttagcompound);
-        nbttagcompound.putString("id", "minecraft:ood");
+        nbttagcompound.putString("id", "tardis:ood");
     }
 
     public boolean isRedeye() {

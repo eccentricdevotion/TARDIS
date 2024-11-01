@@ -79,7 +79,7 @@ public class TWAJudoon extends TWAFollower {
     @Override
     public void addAdditionalSaveData(CompoundTag nbttagcompound) {
         super.addAdditionalSaveData(nbttagcompound);
-        nbttagcompound.putString("id", "minecraft:judoon");
+        nbttagcompound.putString("id", "tardis:judoon");
     }
 
     public int getAmmo() {
