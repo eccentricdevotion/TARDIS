@@ -4,6 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -123,15 +124,18 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
         int r = 0;
         int c = 0;
         for (Biome biome : EnvironmentBiomes.OVERWORLD) {
-            ItemStack is = new ItemStack(EnvironmentBiomes.BIOME_BLOCKS.get(biome), 1);
-            ItemMeta im = is.getItemMeta();
-            im.setDisplayName(TARDISStringUtils.capitalise(biome.toString()));
-            is.setItemMeta(im);
-            stacks[r][c] = is;
-            c++;
-            if (c == 8) {
-                r++;
-                c = 0;
+            Material material = EnvironmentBiomes.BIOME_BLOCKS.get(biome.getKey().getKey());
+            if (material != null) {
+                ItemStack is = new ItemStack(material, 1);
+                ItemMeta im = is.getItemMeta();
+                im.setDisplayName(TARDISStringUtils.capitalise(biome.toString()));
+                is.setItemMeta(im);
+                stacks[r][c] = is;
+                c++;
+                if (c == 8) {
+                    r++;
+                    c = 0;
+                }
             }
         }
         return stacks;

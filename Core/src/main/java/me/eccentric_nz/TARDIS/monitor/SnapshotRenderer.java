@@ -88,11 +88,11 @@ public class SnapshotRenderer extends MapRenderer {
                     if (!world.getName().contains("TARDIS")) {
                         switch (world.getEnvironment()) {
                             case NETHER -> {
-                                switch (location.getBlock().getBiome()) {
-                                    case BASALT_DELTAS -> c = new Color(90, 80, 95);
-                                    case CRIMSON_FOREST -> c = new Color(35, 5, 5);
-                                    case WARPED_FOREST -> c = new Color(10, 10, 50);
-                                    case SOUL_SAND_VALLEY -> c = new Color(35, 90, 80);
+                                switch (location.getBlock().getBiome().getKey().getKey()) {
+                                    case "basalt_deltas" -> c = new Color(90, 80, 95);
+                                    case "crimson_forest" -> c = new Color(35, 5, 5);
+                                    case "warped_forest" -> c = new Color(10, 10, 50);
+                                    case "soul_sand_valley" -> c = new Color(35, 90, 80);
                                     // NETHER_WASTES
                                     default -> c = new Color(50, 15, 15);
                                 }

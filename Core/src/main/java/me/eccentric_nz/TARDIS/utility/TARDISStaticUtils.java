@@ -148,11 +148,7 @@ public class TARDISStaticUtils {
      * @return true if it is ocean
      */
     public static boolean isOceanBiome(Biome b) {
-        return switch (b) {
-            case OCEAN, COLD_OCEAN, DEEP_COLD_OCEAN, DEEP_FROZEN_OCEAN, DEEP_LUKEWARM_OCEAN, DEEP_OCEAN, FROZEN_OCEAN, LUKEWARM_OCEAN, WARM_OCEAN ->
-                    true;
-            default -> false;
-        };
+        return b.getKey().getKey().endsWith("ocean");
     }
 
     /**
