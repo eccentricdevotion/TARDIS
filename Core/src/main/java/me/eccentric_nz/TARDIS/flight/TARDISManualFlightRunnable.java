@@ -62,7 +62,7 @@ class TARDISManualFlightRunnable implements Runnable {
         plugin.getTrackerKeeper().getCount().put(uuid, 0);
         if (i < LOOPS) {
             i++;
-            if (target.size() < 4) {
+            if (target == null || target.size() < 4) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_BAD");
                 return;
             }
