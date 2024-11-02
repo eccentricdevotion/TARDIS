@@ -68,7 +68,7 @@ public class TARDISWorlds {
                 if (gm != null && gm.toUpperCase(Locale.ROOT).equals("CREATIVE")) {
                     TARDIS.plugin.getTardisHelper().setWorldGameMode(world, GameMode.CREATIVE);
                 }
-                if (TARDIS.plugin.getPlanetsConfig().contains("planets." + world + ".gamerules")) {
+                if (TARDIS.plugin.getPlanetsConfig().contains("planets." + world + ".gamerules") && TARDIS.plugin.getPlanetsConfig().getConfigurationSection("planets." + world + ".gamerules") != null) {
                     for (String rule : TARDIS.plugin.getPlanetsConfig().getConfigurationSection("planets." + world + ".gamerules").getKeys(false)) {
                         GameRule gameRule = GameRule.getByName(rule);
                         if (gameRule != null) {
