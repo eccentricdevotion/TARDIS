@@ -23,13 +23,13 @@ import org.bukkit.block.BlockFace;
 public class TARDISPainting {
 
     public static Location calculatePosition(Art art, BlockFace facing, Location loc) {
-        switch (art) {
+        switch (art.getKey().getKey()) {
             // 1x2
-            case GRAHAM, WANDERER -> {
+            case "graham", "wanderer" -> {
                 return loc.clone().add(0, -1, 0);
             }
             // 2x1 & 4x3
-            case CREEBET, COURBET, POOL, SEA, SUNSET, DONKEY_KONG, SKELETON -> {
+            case "creebet", "courbet", "pool", "sea", "sunset", "donkey_kong", "skeleton" -> {
                 if (facing == BlockFace.WEST) {
                     return loc.clone().add(0, 0, -1);
                 } else if (facing == BlockFace.SOUTH) {
@@ -38,7 +38,7 @@ public class TARDISPainting {
                 return loc;
             }
             // 2x2, 4x2 & 4x4
-            case BUST, MATCH, SKULL_AND_ROSES, STAGE, VOID, WITHER, FIGHTERS, BURNING_SKULL, PIGSCENE, POINTER, EARTH, WIND, WATER, FIRE -> {
+            case "bust", "match", "skull_and_roses", "stage", "void", "wither", "fighters", "burning_skull", "pigscene", "pointer", "earth", "wind", "water", "fire" -> {
                 if (facing == BlockFace.WEST) {
                     return loc.clone().add(0, -1, -1);
                 } else if (facing == BlockFace.SOUTH) {
