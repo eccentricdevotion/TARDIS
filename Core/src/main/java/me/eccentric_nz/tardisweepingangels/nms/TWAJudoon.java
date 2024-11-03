@@ -14,6 +14,7 @@ import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.monster.Husk;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.bukkit.Bukkit;
@@ -34,8 +35,8 @@ public class TWAJudoon extends TWAFollower {
         this.guard = false;
     }
 
-    public TWAJudoon(EntityType entityType, Level level) {
-        super(entityType, level);
+    public TWAJudoon(EntityType<? extends Husk> entityType, Level level) {
+        super(EntityType.HUSK, level);
         this.guard = false;
     }
 

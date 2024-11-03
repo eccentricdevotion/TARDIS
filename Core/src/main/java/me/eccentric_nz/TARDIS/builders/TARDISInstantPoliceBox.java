@@ -114,46 +114,7 @@ public class TARDISInstantPoliceBox {
             stand = (ArmorStand) VehicleUtility.spawnStand(bd.getLocation()).getBukkitEntity();
         }
         stand.setRotation(bd.getDirection().getYaw(), 0.0f);
-        Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, bd.getTardisID(), true);
-        ItemStack is = new ItemStack(dye, 1);
-        ItemMeta im = is.getItemMeta();
-        im.setCustomModelData(1001);
-        if (bd.shouldAddSign()) {
-            String pb = "";
-            switch (preset) {
-                case WEEPING_ANGEL -> pb = "Weeping Angel";
-                case PANDORICA -> pb = "Pandorica";
-                case ITEM -> {
-                    for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
-                        if (plugin.getCustomModelConfig().getString("models." + k + ".item").equals(dye.toString())) {
-                            pb = k;
-                            break;
-                        }
-                    }
-                }
-                default -> pb = "Police Box";
-            }
-            String name = bd.getPlayer().getName() + "'s " + pb;
-            im.setDisplayName(name);
-            stand.setCustomName(name);
-            stand.setCustomNameVisible(true);
-        }
-        if (preset == ChameleonPreset.COLOURED) {
-            // get the colour
-            ResultSetColour rsc = new ResultSetColour(plugin, bd.getTardisID());
-            if (rsc.resultSet()) {
-                LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) im;
-                leatherArmorMeta.setColor(Color.fromRGB(rsc.getRed(), rsc.getGreen(), rsc.getBlue()));
-                is.setItemMeta(leatherArmorMeta);
-            }
-        } else {
-            is.setItemMeta(im);
-        }
-        EntityEquipment ee = stand.getEquipment();
-        ee.setHelmet(is, true);
-//        stand.setInvulnerable(true);
-//        stand.setInvisible(true);
-//        stand.setGravity(false);
+        TARDISBuilderUtility.setPoliceBoxHelmet(plugin, preset, bd, stand);
         // set a light block
         Levelled levelled = TARDISConstants.LIGHT;
         // set light level from exterior lamp control
@@ -162,4 +123,5 @@ public class TARDISInstantPoliceBox {
         // add an interaction entity
         TARDISDisplayItemUtils.setInteraction(stand, bd.getTardisID());
     }
+
 }

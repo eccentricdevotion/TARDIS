@@ -17,12 +17,19 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisModel;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.HashMap;
 
@@ -112,6 +119,46 @@ public class TARDISBuilderUtility {
                 return Material.valueOf(dye);
             }
         }
+    }
+
+    public static void setPoliceBoxHelmet(TARDIS plugin, ChameleonPreset preset, BuildData bd, ArmorStand stand) {
+        Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, bd.getTardisID(), true);
+        ItemStack is = new ItemStack(dye, 1);
+        ItemMeta im = is.getItemMeta();
+        im.setCustomModelData(1001);
+        if (bd.shouldAddSign()) {
+            String pb = "";
+            switch (preset) {
+                case WEEPING_ANGEL -> pb = "Weeping Angel";
+                case PANDORICA -> pb = "Pandorica";
+                case ITEM -> {
+                    for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
+                        if (plugin.getCustomModelConfig().getString("models." + k + ".item").equals(dye.toString())) {
+                            pb = k;
+                            break;
+                        }
+                    }
+                }
+                default -> pb = "Police Box";
+            }
+            String name = bd.getPlayer().getName() + "'s " + pb;
+            im.setDisplayName(name);
+            stand.setCustomName(name);
+            stand.setCustomNameVisible(true);
+        }
+        if (preset == ChameleonPreset.COLOURED) {
+            // get the colour
+            ResultSetColour rsc = new ResultSetColour(plugin, bd.getTardisID());
+            if (rsc.resultSet()) {
+                LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) im;
+                leatherArmorMeta.setColor(Color.fromRGB(rsc.getRed(), rsc.getGreen(), rsc.getBlue()));
+                is.setItemMeta(leatherArmorMeta);
+            }
+        } else {
+            is.setItemMeta(im);
+        }
+        EntityEquipment ee = stand.getEquipment();
+        ee.setHelmet(is, true);
     }
 
     static void updateChameleonDemat(String preset, int id) {

@@ -31,12 +31,13 @@ public class TARDISArmourStand extends ArmorStand {
     private Player player;
     private boolean stationary = false;
 
-    public TARDISArmourStand(EntityType<? extends ArmorStand> entitytypes, Level world) {
-        super(entitytypes, world);
+    public TARDISArmourStand(EntityType<? extends ArmorStand> entityType, Level world) {
+        super(EntityType.ARMOR_STAND, world);
         this.player = null;
         this.setNoGravity(false);
         this.setInvisible(true);
         this.setInvulnerable(true);
+        this.persist = true;
     }
 
     public static void injectEntity(ResourceLocation mcKey) throws NoSuchFieldException, IllegalAccessException {

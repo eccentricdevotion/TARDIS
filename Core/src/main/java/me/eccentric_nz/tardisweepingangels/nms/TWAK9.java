@@ -14,6 +14,7 @@ import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.monster.Husk;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.bukkit.Bukkit;
@@ -31,8 +32,8 @@ public class TWAK9 extends TWAFollower {
         super(EntityType.HUSK, world);
     }
 
-    public TWAK9(EntityType entityType, Level level) {
-        super(entityType, level);
+    public TWAK9(EntityType<? extends Husk> entityType, Level level) {
+        super(EntityType.HUSK, level);
     }
 
     public static void injectEntity(ResourceLocation mcKey) throws NoSuchFieldException, IllegalAccessException {

@@ -59,6 +59,10 @@ public final class BuildData extends MaterialisationData {
         this.rebuild = rebuild;
     }
 
+    public void setAddSign(boolean addSign) {
+        this.addSign = addSign;
+    }
+
     private void setPlayerDefaults(String uuid) {
         if (uuid == null) {
             // sane defaults

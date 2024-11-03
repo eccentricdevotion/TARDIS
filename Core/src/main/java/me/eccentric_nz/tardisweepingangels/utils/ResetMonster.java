@@ -66,6 +66,7 @@ public class ResetMonster {
                 if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                     uuid = pdc.get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
                 }
+                plugin.setTardisSpawn(true);
                 a = (LivingEntity) new MonsterSpawner().createFollower(entity.getLocation(), new Follower(UUID.randomUUID(), uuid, monster)).getBukkitEntity();
             }
             if (follower != null) {
@@ -98,6 +99,7 @@ public class ResetMonster {
                 plugin.getQueryFactory().doDelete("followers", where);
             }
         } else {
+            plugin.setTardisSpawn(true);
             a = new MonsterSpawner().create(location, monster);
         }
         entity.remove();

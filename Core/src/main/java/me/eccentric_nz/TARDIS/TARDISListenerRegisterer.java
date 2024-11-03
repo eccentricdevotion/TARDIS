@@ -55,6 +55,7 @@ import me.eccentric_nz.TARDIS.flight.TARDISHandbrakeListener;
 import me.eccentric_nz.TARDIS.flight.TARDISManualFlightListener;
 import me.eccentric_nz.TARDIS.flight.TARDISRegulatorListener;
 import me.eccentric_nz.TARDIS.flight.vehicle.PlayerInputListener;
+import me.eccentric_nz.TARDIS.flight.vehicle.VehicleLoadListener;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesEventListener;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesListener;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramListener;
@@ -139,6 +140,7 @@ class TARDISListenerRegisterer {
      */
     void registerListeners() {
         plugin.getPM().registerEvents(new PlayerInputListener(plugin), plugin);
+        plugin.getPM().registerEvents(new VehicleLoadListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBonemealListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISEditAreasGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockBreakListener(plugin), plugin);

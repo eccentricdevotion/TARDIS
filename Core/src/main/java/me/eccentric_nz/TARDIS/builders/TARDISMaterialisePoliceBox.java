@@ -128,7 +128,6 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     block.setBlockData(TARDISConstants.AIR);
                     TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisID(), false);
                     // spawn an armour stand
-//                    stand = (ArmorStand) world.spawnEntity(bd.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.ARMOR_STAND);
                     stand = (ArmorStand) VehicleUtility.spawnStand(bd.getLocation()).getBukkitEntity();
                 }
                 stand.setRotation(bd.getDirection().getYaw(), 0.0f);
@@ -200,9 +199,6 @@ public class TARDISMaterialisePoliceBox implements Runnable {
             }
             EntityEquipment ee = stand.getEquipment();
             ee.setHelmet(is, true);
-//            stand.setInvulnerable(true);
-//            stand.setInvisible(true);
-//            stand.setGravity(false);
         } else {
             // remove trackers
             plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisID()));
