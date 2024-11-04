@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -36,10 +37,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.craftbukkit.v1_21_R2.entity.CraftArmorStand;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -121,6 +119,9 @@ public class TARDISExteriorFlight {
                 Levelled light = TARDISConstants.LIGHT;
                 light.setLevel(7);
                 location.getBlock().getRelative(BlockFace.UP, 2).setBlockData(light);
+                // add an interaction entity
+                TARDISDisplayItemUtils.setInteraction(stand, data.getId());
+                // TODO snap stand to centre of block?
             }
             // teleport player to interior
             player.teleport(interior);
@@ -205,6 +206,11 @@ public class TARDISExteriorFlight {
                             // save player's current location, so we can teleport them back to it when they finish flying
                             plugin.getTrackerKeeper().getFlyingReturnLocation().put(uuid, new FlightReturnData(id, interior, sound, animation, stand.getUniqueId()));
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.setGravity(true), 1L);
+                            // remove interaction entity
+                            Interaction interaction = TARDISDisplayItemUtils.getInteraction(current);
+                            if (interaction != null) {
+                                interaction.remove();
+                            }
                         }, 5L);
                         break;
                     }
