@@ -133,7 +133,7 @@ public class TARDISThemeProcessor {
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             previousHeight = dimensions.get("height").getAsInt();
             previousWidth = dimensions.get("width").getAsInt();
-            size_prev = tud.getSchematic().getConsoleSize();
+            size_prev = tud.getPrevious().getConsoleSize();
         }
         // if configured check whether there are still any blocks left
         if (plugin.getConfig().getBoolean("desktop.check_blocks_before_upgrade")) {
