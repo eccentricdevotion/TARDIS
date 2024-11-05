@@ -103,7 +103,6 @@ public class TARDISThemeProcessor {
             nextWidth = dimensions.get("width").getAsInt();
             size_next = tud.getSchematic().getConsoleSize();
         }
-
         ConsoleSize size_prev;
         int previousHeight;
         int previousWidth;
@@ -133,7 +132,7 @@ public class TARDISThemeProcessor {
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             previousHeight = dimensions.get("height").getAsInt();
             previousWidth = dimensions.get("width").getAsInt();
-            size_prev = tud.getSchematic().getConsoleSize();
+            size_prev = tud.getPrevious().getConsoleSize();
         }
         // if configured check whether there are still any blocks left
         if (plugin.getConfig().getBoolean("desktop.check_blocks_before_upgrade")) {
@@ -219,40 +218,98 @@ public class TARDISThemeProcessor {
                 case SMALL -> {
                     switch (next) {
                         case MEDIUM -> {
-                            return (!grid[1][4][5].equals("STONE") || !grid[1][5][4].equals("STONE") || !grid[1][5][5].equals("STONE"));
+                            return (!grid[1][4][5].equals("STONE")
+                                    || !grid[1][5][4].equals("STONE")
+                                    || !grid[1][5][5].equals("STONE")
+                            );
                         }
                         case TALL -> {
-                            return (!grid[1][4][5].equals("STONE") || !grid[1][5][4].equals("STONE") || !grid[1][5][5].equals("STONE") || !grid[2][4][4].equals("STONE") || !grid[2][4][5].equals("STONE") || !grid[2][5][4].equals("STONE") || !grid[2][5][5].equals("STONE"));
+                            return (!grid[1][4][5].equals("STONE")
+                                    || !grid[1][5][4].equals("STONE")
+                                    || !grid[1][5][5].equals("STONE")
+                                    || !grid[2][4][4].equals("STONE")
+                                    || !grid[2][4][5].equals("STONE")
+                                    || !grid[2][5][4].equals("STONE")
+                                    || !grid[2][5][5].equals("STONE")
+                            );
                         }
                         case MASSIVE -> {
-                            return (!grid[1][4][5].equals("STONE") || !grid[1][4][6].equals("STONE") || !grid[1][5][4].equals("STONE") || !grid[1][5][5].equals("STONE") || !grid[1][5][6].equals("STONE") || !grid[1][6][4].equals("STONE") || !grid[1][6][5].equals("STONE") || !grid[1][6][6].equals("STONE") || !grid[2][4][4].equals("STONE") || !grid[2][4][5].equals("STONE") || !grid[2][4][6].equals("STONE") || !grid[2][5][4].equals("STONE") || !grid[2][5][5].equals("STONE") || !grid[2][5][6].equals("STONE") || !grid[2][6][4].equals("STONE") || !grid[2][6][5].equals("STONE") || !grid[2][6][6].equals("STONE"));
+                            return (!grid[1][4][5].equals("STONE")
+                                    || !grid[1][4][6].equals("STONE")
+                                    || !grid[1][5][4].equals("STONE")
+                                    || !grid[1][5][5].equals("STONE")
+                                    || !grid[1][5][6].equals("STONE")
+                                    || !grid[1][6][4].equals("STONE")
+                                    || !grid[1][6][5].equals("STONE")
+                                    || !grid[1][6][6].equals("STONE")
+                                    || !grid[2][4][4].equals("STONE")
+                                    || !grid[2][4][5].equals("STONE")
+                                    || !grid[2][4][6].equals("STONE")
+                                    || !grid[2][5][4].equals("STONE")
+                                    || !grid[2][5][5].equals("STONE")
+                                    || !grid[2][5][6].equals("STONE")
+                                    || !grid[2][6][4].equals("STONE")
+                                    || !grid[2][6][5].equals("STONE")
+                                    || !grid[2][6][6].equals("STONE")
+                            );
                         }
                         default -> {
                             // same size do nothing
+                            return false;
                         }
                     }
                 }
                 case MEDIUM -> {
                     switch (next) {
                         case TALL -> {
-                            return (!grid[2][4][4].equals("STONE") || !grid[2][4][5].equals("STONE") || !grid[2][5][4].equals("STONE") || !grid[2][5][5].equals("STONE"));
+                            return (!grid[2][4][4].equals("STONE")
+                                    || !grid[2][4][5].equals("STONE")
+                                    || !grid[2][5][4].equals("STONE")
+                                    || !grid[2][5][5].equals("STONE")
+                            );
                         }
                         case MASSIVE -> {
-                            return (!grid[1][4][6].equals("STONE") || !grid[1][5][6].equals("STONE") || !grid[1][6][4].equals("STONE") || !grid[1][6][5].equals("STONE") || !grid[1][6][6].equals("STONE") || !grid[2][4][4].equals("STONE") || !grid[2][4][5].equals("STONE") || !grid[2][4][6].equals("STONE") || !grid[2][5][4].equals("STONE") || !grid[2][5][5].equals("STONE") || !grid[2][5][6].equals("STONE") || !grid[2][6][4].equals("STONE") || !grid[2][6][5].equals("STONE") || !grid[2][6][6].equals("STONE"));
+                            return (!grid[1][4][6].equals("STONE")
+                                    || !grid[1][5][6].equals("STONE")
+                                    || !grid[1][6][4].equals("STONE")
+                                    || !grid[1][6][5].equals("STONE")
+                                    || !grid[1][6][6].equals("STONE")
+                                    || !grid[2][4][4].equals("STONE")
+                                    || !grid[2][4][5].equals("STONE")
+                                    || !grid[2][4][6].equals("STONE")
+                                    || !grid[2][5][4].equals("STONE")
+                                    || !grid[2][5][5].equals("STONE")
+                                    || !grid[2][5][6].equals("STONE")
+                                    || !grid[2][6][4].equals("STONE")
+                                    || !grid[2][6][5].equals("STONE")
+                                    || !grid[2][6][6].equals("STONE")
+                            );
                         }
                         default -> {
                             // same or smaller size do nothing
+                            return false;
                         }
                     }
                 }
                 case TALL -> {
                     // same or smaller size do nothing
                     if (next == ConsoleSize.MASSIVE) {
-                        return (!grid[1][4][6].equals("STONE") || !grid[1][5][6].equals("STONE") || !grid[1][6][4].equals("STONE") || !grid[1][6][5].equals("STONE") || !grid[1][6][6].equals("STONE") || !grid[2][4][6].equals("STONE") || !grid[2][5][6].equals("STONE") || !grid[2][6][4].equals("STONE") || !grid[2][6][5].equals("STONE") || !grid[2][6][6].equals("STONE"));
+                        return (!grid[1][4][6].equals("STONE")
+                                || !grid[1][5][6].equals("STONE")
+                                || !grid[1][6][4].equals("STONE")
+                                || !grid[1][6][5].equals("STONE")
+                                || !grid[1][6][6].equals("STONE")
+                                || !grid[2][4][6].equals("STONE")
+                                || !grid[2][5][6].equals("STONE")
+                                || !grid[2][6][4].equals("STONE")
+                                || !grid[2][6][5].equals("STONE")
+                                || !grid[2][6][6].equals("STONE")
+                        );
                     }
                 }
                 default -> {
                     // MASSIVE size do nothing
+                    return false;
                 }
             }
         }
