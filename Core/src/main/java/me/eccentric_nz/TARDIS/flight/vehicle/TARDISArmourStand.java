@@ -30,6 +30,7 @@ public class TARDISArmourStand extends ArmorStand {
     private static final String entityId = "flight_vehicle";
     private Player player;
     private boolean stationary = false;
+    private double speedFactor = 3.0d;
 
     public TARDISArmourStand(EntityType<? extends ArmorStand> entityType, Level world) {
         super(EntityType.ARMOR_STAND, world);
@@ -63,7 +64,7 @@ public class TARDISArmourStand extends ArmorStand {
             } else {
                 direction = player.getLocation().getDirection();
             }
-            move(MoverType.SELF, new Vec3(direction.getX() / 3.0d, direction.getY() / 3.0d, direction.getZ() / 3.0d));
+            move(MoverType.SELF, new Vec3(direction.getX() / speedFactor, direction.getY() / speedFactor, direction.getZ() / speedFactor));
         }
     }
 
@@ -87,5 +88,13 @@ public class TARDISArmourStand extends ArmorStand {
 
     public void setStationary(boolean stationary) {
         this.stationary = stationary;
+    }
+
+    public double getSpeedFactor() {
+        return speedFactor;
+    }
+
+    public void setSpeedFactor(double speedFactor) {
+        this.speedFactor = speedFactor;
     }
 }

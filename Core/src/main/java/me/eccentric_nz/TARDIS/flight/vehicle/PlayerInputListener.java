@@ -41,6 +41,18 @@ public class PlayerInputListener implements Listener {
             if (input.isJump()) {
                 stand.setStationary(!stand.isStationary());
             }
+            if (input.isForward()) {
+                double factor = stand.getSpeedFactor();
+                if (factor > 1d) {
+                    stand.setSpeedFactor(factor - 0.25d);
+                }
+            }
+            if (input.isBackward()) {
+                double factor = stand.getSpeedFactor();
+                if (factor < 5d) {
+                    stand.setSpeedFactor(factor + 0.25d);
+                }
+            }
         }
     }
 }
