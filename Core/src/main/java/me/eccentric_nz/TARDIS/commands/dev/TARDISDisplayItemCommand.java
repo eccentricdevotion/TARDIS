@@ -41,6 +41,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Transformation;
+import org.joml.AxisAngle4f;
+import org.joml.Vector3f;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -93,6 +95,48 @@ public class TARDISDisplayItemCommand {
                     text.setText(TARDISStringUtils.capitalise(material.toString()) + ", Cost: 25.00");
                     text.setTransformation(new Transformation(TARDISConstants.VECTOR_ZERO, TARDISConstants.AXIS_ANGLE_ZERO, TARDISConstants.VECTOR_QUARTER, TARDISConstants.AXIS_ANGLE_ZERO));
                     text.setBillboard(Display.Billboard.VERTICAL);
+                }
+            }
+            case "animate" -> {
+                if (player.getPassengers().isEmpty()) {
+                    ItemDisplay display = (ItemDisplay) player.getWorld().spawnEntity(player.getLocation().add(0, 1.5, 0), EntityType.ITEM_DISPLAY);
+                    ItemStack box = new ItemStack(Material.BLUE_DYE, 1);
+                    ItemMeta im = box.getItemMeta();
+                    im.setCustomModelData(1005);
+                    box.setItemMeta(im);
+                    display.setItemStack(box);
+                    player.addPassenger(display);
+                    float scale = 1.75f;
+                    Vector3f size = new Vector3f(scale, scale, scale);
+                    Vector3f position = new Vector3f(0, -1, 0);
+                    // set initial scale and position
+                    Transformation initial = new Transformation(
+                            position,
+                            TARDISConstants.AXIS_ANGLE_ZERO,
+                            size,
+                            TARDISConstants.AXIS_ANGLE_ZERO
+                    );
+                    display.setTransformation(initial);
+                    int period = 40;
+                    float angle = (float) Math.PI;
+                    AxisAngle4f axisAngleRotMat = new AxisAngle4f(angle, new Vector3f(0, 1, 0));
+                    plugin.getTrackerKeeper().setAnimateTask(plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+                        display.setInterpolationDelay(-1);
+                        Transformation transformation = new Transformation(
+                                position,
+                                axisAngleRotMat,
+                                size,
+                                axisAngleRotMat
+                        );
+                        display.setInterpolationDuration(period);
+                        display.setTransformation(transformation);
+                    }, 5, period));
+                } else {
+                    for (Entity e : player.getPassengers()) {
+                        e.eject();
+                        e.remove();
+                    }
+                    plugin.getServer().getScheduler().cancelTask(plugin.getTrackerKeeper().getAnimateTask());
                 }
             }
             case "block" -> {
