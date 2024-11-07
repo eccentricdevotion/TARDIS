@@ -107,8 +107,8 @@ public class TARDISDevCommand implements CommandExecutor {
                         }
                         case "armour" -> {
                             if (sender instanceof Player player) {
-                                ItemStack a = MonsterArmour.makeEquippable(Monster.CYBERMAN, EquipmentSlot.BODY, TARDISWeepingAngels.CYBERMAN);
-                                player.getInventory().setChestplate(a);
+                                ItemStack a = MonsterArmour.makeEquippable(Monster.CYBERMAN, EquipmentSlot.CHEST, TARDISWeepingAngels.CYBERMAN);
+                                player.getInventory().addItem(a);
                             }
                             return true;
                         }

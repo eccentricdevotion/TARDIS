@@ -1,5 +1,6 @@
 package me.eccentric_nz.tardisweepingangels.equip;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.NamespacedKey;
@@ -14,10 +15,11 @@ import java.util.List;
 public class MonsterArmour {
 
     public static ItemStack makeEquippable(Monster monster, EquipmentSlot slot, NamespacedKey key) {
+        TARDIS.plugin.debug(key.toString());
         ItemStack armour = new ItemStack(monster.getMaterial(), 1);
         ItemMeta meta = armour.getItemMeta();
         meta.setDisplayName(monster.getName() + " " + TARDISStringUtils.uppercaseFirst(slot.name()));
-        meta.setCustomModelData(3000 + slot.ordinal());
+        meta.setItemModel(new NamespacedKey(TARDIS.plugin, "monster/cyberman/cyberman_head"));
         EquippableComponent equippable = meta.getEquippable();
         equippable.setAllowedEntities(List.of(monster.getEntityType(), EntityType.PLAYER));
         equippable.setSlot(slot);
