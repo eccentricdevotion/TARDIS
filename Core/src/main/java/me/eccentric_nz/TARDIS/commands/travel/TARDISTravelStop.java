@@ -34,6 +34,7 @@ import org.bukkit.util.Vector;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -65,36 +66,24 @@ public class TARDISTravelStop {
             plugin.getTrackerKeeper().getDestinationVortex().remove(id);
         }
         // is player flying?
-        if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {
+        UUID uuid = player.getUniqueId();
+        if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(uuid)) {
+            plugin.getTrackerKeeper().getStillFlyingNotReturning().remove(uuid);
             // land TARDIS
-            FlightReturnData frd = plugin.getTrackerKeeper().getFlyingReturnLocation().get(player.getUniqueId());
-            Entity chicken = plugin.getServer().getEntity(frd.getChicken());
+            FlightReturnData frd = plugin.getTrackerKeeper().getFlyingReturnLocation().get(uuid);
             Entity stand = plugin.getServer().getEntity(frd.getStand());
-            if (chicken != null) {
-                chicken.setVelocity(new Vector(0, 0, 0));
+            if (stand != null) {
+                stand.setVelocity(new Vector(0, 0, 0));
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    Entity as = stand;
-                    if (as == null) {
-                        // attempt to find stand
-                        as = findStand(chicken);
-                    }
-                    if (as != null) {
-                        chicken.removePassenger(as);
-                    }
-                    // kill chicken
-                    chicken.remove();
                     // teleport player back to the TARDIS interior
-                    new TARDISExteriorFlight(plugin).stopFlying(player, (ArmorStand) as);
+                    new TARDISExteriorFlight(plugin).stopFlying(player, (ArmorStand) stand);
                 });
             } else {
-                // scan for nearby chickens in case player teleport fails due to lag
-                for (Entity e : player.getLocation().getWorld().getNearbyEntities(player.getLocation(), 4, 4, 4, (s) -> s.getType() == EntityType.CHICKEN)) {
-                    if (!e.getPassengers().isEmpty() && e.getPassengers().getFirst() instanceof ArmorStand armorStand) {
+                // scan for nearby armour stands in case player teleport fails due to lag
+                for (Entity e : player.getLocation().getWorld().getNearbyEntities(player.getLocation(), 4, 4, 4, (s) -> s.getType() == EntityType.ARMOR_STAND)) {
+                    if (e instanceof ArmorStand armorStand) {
                         e.setVelocity(new Vector(0, 0, 0));
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            // kill chicken
-                            e.removePassenger(armorStand);
-                            e.remove();
                             // teleport player back to the TARDIS interior
                             new TARDISExteriorFlight(plugin).stopFlying(player, armorStand);
                         });
@@ -121,7 +110,7 @@ public class TARDISTravelStop {
             Location l = new Location(rsh.getWorld(), rsh.getX(), rsh.getY(), rsh.getZ());
             plugin.getQueryFactory().updateLocations(setlocs, id);
             // rebuild the exterior
-            BuildData bd = new BuildData(player.getUniqueId().toString());
+            BuildData bd = new BuildData(uuid.toString());
             bd.setDirection(rsh.getDirection());
             bd.setLocation(l);
             bd.setMalfunction(false);

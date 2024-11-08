@@ -76,49 +76,49 @@ public class TARDISAcidWater implements Listener {
 
         TARDISMoveSession tms = plugin.getTrackerKeeper().getTARDISMoveSession(player);
 
-        // If the location is stale, ie: the player isn't actually moving xyz coords, they're looking around
+        // if the location is stale, ie: the player isn't actually moving xyz coords, they're looking around
         if (tms.isStaleLocation()) {
             return;
         }
-        // Fast checks
+        // fast checks
         if (player.isDead()) {
             return;
         }
-        // Check that they are in the Skaro world
+        // check that they are in the Skaro world
         if (!player.getWorld().getName().equalsIgnoreCase("skaro")) {
             return;
         }
-        // Return if players are immune
+        // return if players are immune
         if (TARDISPermission.hasPermission(player, "tardis.acid.bypass")) {
             return;
         }
         if (player.getGameMode().equals(GameMode.CREATIVE)) {
             return;
         }
-        // Slow checks
+        // slow checks
         Block block = loc.getBlock();
         Block head = block.getRelative(BlockFace.UP);
 
-        // If they are not in liquid, then return
+        // if they are not in liquid, then return
         if (!block.isLiquid() && !head.isLiquid()) {
             return;
         }
-        // If they are already burning in acid then return
+        // if they are already burning in acid then return
         if (burningPlayers.contains(player)) {
             return;
         }
-        // Check if they are in water
+        // check if they are in water
         if (block.getType().equals(Material.WATER) || head.getType().equals(Material.WATER)) {
-            // Check if player is in a boat
+            // check if player is in a boat
             Entity playersVehicle = player.getVehicle();
             if (playersVehicle != null) {
-                // They are in a Vehicle
-                if (playersVehicle.getType().equals(EntityType.BOAT)) {
+                // they are in a Vehicle
+                if (isBoat(playersVehicle.getType())) {
                     // I'M ON A BOAT! I'M ON A BOAT! A %^&&* BOAT!
                     return;
                 }
             }
-            // Check if player has an active water potion or not
+            // check if player has an active water potion or not
             Collection<PotionEffect> activePotions = player.getActivePotionEffects();
             for (PotionEffect s : activePotions) {
                 if (s.getType().equals(PotionEffectType.WATER_BREATHING)) {
@@ -127,9 +127,9 @@ public class TARDISAcidWater implements Listener {
                 }
             }
             // ACID!
-            // Put the player into the acid list
+            // put the player into the acid list
             burningPlayers.add(player);
-            // This runnable continuously hurts the player even if they are not moving but are in acid.
+            // this runnable continuously hurts the player even if they are not moving but are in acid.
             new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -137,7 +137,7 @@ public class TARDISAcidWater implements Listener {
                         burningPlayers.remove(player);
                         cancel();
                     } else if ((player.getLocation().getBlock().isLiquid() || player.getLocation().getBlock().getRelative(BlockFace.UP).isLiquid()) && player.getLocation().getWorld().getName().equalsIgnoreCase("skaro")) {
-                        // Apply additional potion effects
+                        // apply additional potion effects
                         if (!plugin.getPlanetsConfig().getStringList("planets.skaro.acid_potions").isEmpty()) {
                             plugin.getPlanetsConfig().getStringList("planets.skaro.acid_potions").forEach((t) -> {
                                 PotionEffectType pet = PotionEffectType.getByName(t);
@@ -145,13 +145,13 @@ public class TARDISAcidWater implements Listener {
                                     if (pet.equals(PotionEffectType.BLINDNESS) || pet.equals(PotionEffectType.NAUSEA) || pet.equals(PotionEffectType.HUNGER) || pet.equals(PotionEffectType.SLOWNESS) || pet.equals(PotionEffectType.MINING_FATIGUE) || pet.equals(PotionEffectType.WEAKNESS)) {
                                         player.addPotionEffect(new PotionEffect(pet, 200, 1));
                                     } else {
-                                        // Poison
+                                        // poison
                                         player.addPotionEffect(new PotionEffect(pet, 50, 1));
                                     }
                                 }
                             });
                         }
-                        // Apply damage if there is any
+                        // apply damage if there is any
                         double ad = plugin.getPlanetsConfig().getDouble("planets.skaro.acid_damage");
                         if (ad > 0d) {
                             double damage = (ad - ad * getDamageReduced(player)) / 2.5d;
@@ -252,5 +252,18 @@ public class TARDISAcidWater implements Listener {
         }
         bucket.setItemMeta(im);
         p.updateInventory();
+    }
+
+    private boolean isBoat(EntityType type) {
+        switch (type) {
+            case ACACIA_BOAT, BIRCH_BOAT, CHERRY_BOAT,
+                 DARK_OAK_BOAT, JUNGLE_BOAT, MANGROVE_BOAT,
+                 OAK_BOAT, PALE_OAK_BOAT, SPRUCE_BOAT -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
     }
 }

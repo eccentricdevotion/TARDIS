@@ -51,7 +51,7 @@ public class Regenerator {
         // set player skin
         plugin.getSkinChanger().set(player, skin);
         // make player smaller
-        player.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(0.5d);
+        player.getAttribute(Attribute.SCALE).setBaseValue(0.5d);
         // make player invisible
         player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, PotionEffect.INFINITE_DURATION, 1, false, false, false));
         // prevent player from moving

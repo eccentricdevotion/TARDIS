@@ -32,31 +32,26 @@ public class TVMUtils {
         l.setX(l.getBlockX() + 0.5);
         l.setY(l.getY() + 0.2);
         l.setZ(l.getBlockZ() + 0.5);
-        Location theLocation = l;
-        World to = theLocation.getWorld();
+        World to = l.getWorld();
         boolean crossWorlds = from != to;
 
-        players.stream().map((p) -> {
-            Player thePlayer = p;
+        players.stream().peek((p) -> {
             TARDIS.plugin.getTvmSettings().getTravellers().add(p.getUniqueId());
-            boolean allowFlight = thePlayer.getAllowFlight();
+            boolean allowFlight = p.getAllowFlight();
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
-                thePlayer.teleport(theLocation);
-                thePlayer.getWorld().playSound(theLocation, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
+                p.teleport(l);
+                p.getWorld().playSound(l, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
             }, 10L);
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
-                thePlayer.teleport(theLocation);
-                thePlayer.setNoDamageTicks(200);
-                if (thePlayer.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds)) {
-                    thePlayer.setAllowFlight(true);
+                p.teleport(l);
+                p.setNoDamageTicks(200);
+                if (p.getGameMode() == GameMode.CREATIVE || (allowFlight && crossWorlds)) {
+                    p.setAllowFlight(true);
                 }
             }, 15L);
-            return thePlayer;
         }).forEachOrdered((thePlayer) -> {
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
-                if (TARDIS.plugin.getTvmSettings().getTravellers().contains(thePlayer.getUniqueId())) {
-                    TARDIS.plugin.getTvmSettings().getTravellers().remove(thePlayer.getUniqueId());
-                }
+                TARDIS.plugin.getTvmSettings().getTravellers().remove(thePlayer.getUniqueId());
             }, 100L);
         });
     }
@@ -133,10 +128,10 @@ public class TVMUtils {
     }
 
     /**
-     * Convert ticks to human readable time.
+     * Convert ticks to human-readable time.
      *
      * @param time the time in ticks to convert
-     * @return the human readable time
+     * @return the human-readable time
      */
     public static String convertTicksToTime(int time) {
         // convert to seconds

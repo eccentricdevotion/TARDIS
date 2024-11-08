@@ -81,7 +81,7 @@ public class TARDISFobWatchListener implements Listener {
                 TARDISArchDisguise.undisguise(player);
             }
             player.getWorld().strikeLightningEffect(player.getLocation());
-            double mh = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+            double mh = player.getAttribute(Attribute.MAX_HEALTH).getValue();
             player.setHealth(mh / 10.0d);
             if (inv) {
                 new TARDISArchInventory().switchInventories(player, 0);

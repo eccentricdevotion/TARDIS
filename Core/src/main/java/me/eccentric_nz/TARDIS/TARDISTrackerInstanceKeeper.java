@@ -163,6 +163,7 @@ public class TARDISTrackerInstanceKeeper {
     private final Set<UUID> temporallyLocated = new HashSet<>();
     private final Set<UUID> zeroRoomOccupants = new HashSet<>();
     private String immortalityGate = "";
+    private int task = -1;
 
     /**
      * Gets the Move Session for a player, this is used to see if they have
@@ -1159,5 +1160,13 @@ public class TARDISTrackerInstanceKeeper {
 
     public Set<UUID> getHandlesRotation() {
         return handlesRotation;
+    }
+
+    public int getAnimateTask() {
+        return task;
+    }
+
+    public void setAnimateTask(int task) {
+        this.task = task;
     }
 }

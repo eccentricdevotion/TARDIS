@@ -17,17 +17,22 @@
 package me.eccentric_nz.tardisweepingangels.utils;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.builders.BuildData;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentWithPreset;
+import me.eccentric_nz.TARDIS.flight.vehicle.VehicleUtility;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
 import me.eccentric_nz.tardisweepingangels.nms.FollowerPersister;
 import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
-import org.bukkit.craftbukkit.v1_21_R1.entity.CraftEntity;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_21_R2.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.EntitiesLoadEvent;
 import org.bukkit.event.world.EntitiesUnloadEvent;
+import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 
 import java.util.Arrays;
@@ -39,7 +44,7 @@ import java.util.List;
 public class MonsterLoadUnloadListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<EntityType> justThese = Arrays.asList(EntityType.DROWNED, EntityType.PIGLIN_BRUTE, EntityType.SKELETON, EntityType.ZOMBIE, EntityType.HUSK, EntityType.ZOMBIFIED_PIGLIN, EntityType.ARMOR_STAND);
+    private final List<EntityType> justThese = Arrays.asList(EntityType.DROWNED, EntityType.PIGLIN_BRUTE, EntityType.SKELETON, EntityType.ZOMBIE, EntityType.HUSK, EntityType.ZOMBIFIED_PIGLIN);
 
     public MonsterLoadUnloadListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -48,10 +53,9 @@ public class MonsterLoadUnloadListener implements Listener {
     @EventHandler
     public void onMonsterLoad(EntitiesLoadEvent event) {
         for (Entity e : event.getEntities()) {
-            if (!justThese.contains(e.getType()) || !MonsterEquipment.isMonster(e)) {
-                return;
+            if (justThese.contains(e.getType()) && MonsterEquipment.isMonster(e)) {
+                new ResetMonster(plugin, e).reset();
             }
-            new ResetMonster(plugin, e).reset();
         }
     }
 
@@ -60,12 +64,19 @@ public class MonsterLoadUnloadListener implements Listener {
         for (Entity e : event.getEntities()) {
             if (e.getType() == EntityType.HUSK) {
                 PersistentDataContainer pdc = e.getPersistentDataContainer();
-                if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)
-                        && ((CraftEntity) e).getHandle() instanceof TWAFollower follower) {
-//                        TWAFollower follower = (TWAFollower) ((CraftHusk) e).getHandle();
+                if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID) && ((CraftEntity) e).getHandle() instanceof TWAFollower follower) {
                     // save entity in followers table
                     new FollowerPersister(plugin).save(follower);
                 }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onWorldLoad(WorldLoadEvent event) {
+        for (Entity e : event.getWorld().getEntities()) {
+            if (justThese.contains(e.getType()) && MonsterEquipment.isMonster(e)) {
+                new ResetMonster(plugin, e).reset();
             }
         }
     }

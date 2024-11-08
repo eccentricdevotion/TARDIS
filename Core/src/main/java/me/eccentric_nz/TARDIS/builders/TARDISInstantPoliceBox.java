@@ -21,6 +21,8 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.flight.vehicle.TARDISArmourStand;
+import me.eccentric_nz.TARDIS.flight.vehicle.VehicleUtility;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -31,7 +33,11 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
-import org.bukkit.entity.*;
+import org.bukkit.craftbukkit.v1_21_R2.entity.CraftArmorStand;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -81,7 +87,12 @@ public class TARDISInstantPoliceBox {
         boolean found = false;
         for (Entity e : world.getNearbyEntities(bd.getLocation(), 1.0d, 1.0d, 1.0d)) {
             if (e instanceof ArmorStand a) {
-                stand = a;
+                if (((CraftArmorStand) a).getHandle() instanceof TARDISArmourStand) {
+                    stand = a;
+                } else {
+                    stand = (ArmorStand) VehicleUtility.spawnStand(bd.getLocation()).getBukkitEntity();
+                    a.remove();
+                }
                 found = true;
                 break;
             }
@@ -100,49 +111,10 @@ public class TARDISInstantPoliceBox {
             block.setBlockData(TARDISConstants.AIR);
             TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisID(), false);
             // spawn armour stand
-            stand = (ArmorStand) world.spawnEntity(bd.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.ARMOR_STAND);
+            stand = (ArmorStand) VehicleUtility.spawnStand(bd.getLocation()).getBukkitEntity();
         }
         stand.setRotation(bd.getDirection().getYaw(), 0.0f);
-        Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, bd.getTardisID(), true);
-        ItemStack is = new ItemStack(dye, 1);
-        ItemMeta im = is.getItemMeta();
-        im.setCustomModelData(1001);
-        if (bd.shouldAddSign()) {
-            String pb = "";
-            switch (preset) {
-                case WEEPING_ANGEL -> pb = "Weeping Angel";
-                case PANDORICA -> pb = "Pandorica";
-                case ITEM -> {
-                    for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
-                        if (plugin.getCustomModelConfig().getString("models." + k + ".item").equals(dye.toString())) {
-                            pb = k;
-                            break;
-                        }
-                    }
-                }
-                default -> pb = "Police Box";
-            }
-            String name = bd.getPlayer().getName() + "'s " + pb;
-            im.setDisplayName(name);
-            stand.setCustomName(name);
-            stand.setCustomNameVisible(true);
-        }
-        if (preset == ChameleonPreset.COLOURED) {
-            // get the colour
-            ResultSetColour rsc = new ResultSetColour(plugin, bd.getTardisID());
-            if (rsc.resultSet()) {
-                LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) im;
-                leatherArmorMeta.setColor(Color.fromRGB(rsc.getRed(), rsc.getGreen(), rsc.getBlue()));
-                is.setItemMeta(leatherArmorMeta);
-            }
-        } else {
-            is.setItemMeta(im);
-        }
-        EntityEquipment ee = stand.getEquipment();
-        ee.setHelmet(is, true);
-        stand.setInvulnerable(true);
-        stand.setInvisible(true);
-        stand.setGravity(false);
+        TARDISBuilderUtility.setPoliceBoxHelmet(plugin, preset, bd, stand);
         // set a light block
         Levelled levelled = TARDISConstants.LIGHT;
         // set light level from exterior lamp control
@@ -151,4 +123,5 @@ public class TARDISInstantPoliceBox {
         // add an interaction entity
         TARDISDisplayItemUtils.setInteraction(stand, bd.getTardisID());
     }
+
 }

@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.FoodComponent;
+import org.bukkit.inventory.meta.components.UseCooldownComponent;
 
 import java.util.List;
 
@@ -21,12 +22,14 @@ public class ElixirOfLife {
     public static ItemStack create() {
         ItemStack goblet = new ItemStack(Material.GOLD_INGOT);
         ItemMeta im = goblet.getItemMeta();
+        im.setUseRemainder(null);
+        UseCooldownComponent cooldown = im.getUseCooldown();
+        cooldown.setCooldownSeconds(1.0f);
+        im.setUseCooldown(cooldown);
         FoodComponent foodComponent = im.getFood();
         foodComponent.setCanAlwaysEat(true);
-        foodComponent.setEatSeconds(1.0f);
         foodComponent.setNutrition(4);
         foodComponent.setSaturation(1.0f);
-        foodComponent.setUsingConvertsTo(null);
         im.setFood(foodComponent);
         im.setCustomModelData(2);
         im.setDisplayName(ChatColor.WHITE + "Elixir of Life");

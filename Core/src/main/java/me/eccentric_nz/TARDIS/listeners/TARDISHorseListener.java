@@ -111,10 +111,10 @@ public class TARDISHorseListener implements Listener {
                         tmhor.setHorseInventory(h.getInventory().getContents());
                         tmhor.setDomesticity(h.getDomestication());
                         tmhor.setJumpStrength(h.getJumpStrength());
-                        double mh = h.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                        double mh = h.getAttribute(Attribute.MAX_HEALTH).getValue();
                         tmhor.setHorseHealth(mh);
                         tmhor.setHealth(h.getHealth());
-                        tmhor.setSpeed(h.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue());
+                        tmhor.setSpeed(h.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue());
                         // eject player
                         if (h.eject()) {
                             // remove horse
@@ -138,7 +138,7 @@ public class TARDISHorseListener implements Listener {
                                 ChestedHorse chested = (ChestedHorse) equine;
                                 chested.setCarryingChest(true);
                             }
-                            AttributeInstance attribute = equine.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                            AttributeInstance attribute = equine.getAttribute(Attribute.MAX_HEALTH);
                             attribute.setBaseValue(tmhor.getHorseHealth());
                             equine.setHealth(tmhor.getHealth());
                             Inventory inv = equine.getInventory();
@@ -148,7 +148,7 @@ public class TARDISHorseListener implements Listener {
                                 ee.setColor(tmhor.getHorseColour());
                                 ee.setStyle(tmhor.getHorseStyle());
                             }
-                            equine.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(tmhor.getSpeed());
+                            equine.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(tmhor.getSpeed());
                             equine.setTamed(true);
                             equine.setOwner(p);
 

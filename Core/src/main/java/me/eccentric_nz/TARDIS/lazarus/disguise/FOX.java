@@ -20,12 +20,12 @@ import net.minecraft.world.entity.animal.Fox;
 
 public enum FOX {
 
-    RED(Fox.Type.RED), // RED
-    SNOW(Fox.Type.SNOW); // SNOW
+    RED(Fox.Variant.RED), // RED
+    SNOW(Fox.Variant.SNOW); // SNOW
 
-    private final Fox.Type nmsType;
+    private final Fox.Variant nmsType;
 
-    FOX(Fox.Type nmsType) {
+    FOX(Fox.Variant nmsType) {
         this.nmsType = nmsType;
     }
 
@@ -33,7 +33,7 @@ public enum FOX {
         return FOX.valueOf(type.toString());
     }
 
-    public Fox.Type getNmsType() {
+    public Fox.Variant getNmsType() {
         return nmsType;
     }
 }

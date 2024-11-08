@@ -438,7 +438,7 @@ public class TVMGUIListener extends TARDISMenuListener {
                 return;
             }
             // getHealth() / getMaxHealth() * getHealthScale()
-            double mh = scanned.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+            double mh = scanned.getAttribute(Attribute.MAX_HEALTH).getValue();
             double health = scanned.getHealth() / mh * scanned.getHealthScale();
             float hunger = (scanned.getFoodLevel() / 20F) * 100;
             int air = scanned.getRemainingAir();

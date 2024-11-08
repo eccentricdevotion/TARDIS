@@ -38,7 +38,7 @@ class TARDISOccupyCommand {
         this.plugin = plugin;
     }
 
-    boolean toggleOccupancy(Player player) {
+    boolean toggleOccupancy(Player player, String[] args) {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel")) {
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("uuid", player.getUniqueId().toString());
@@ -78,7 +78,9 @@ class TARDISOccupyCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "OCCUPY_MUST_BE_IN");
                 return true;
             }
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "OCCUPY_SET", occupied);
+            if (args.length < 2) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "OCCUPY_SET", occupied);
+            }
             return true;
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");

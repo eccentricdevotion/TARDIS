@@ -3,16 +3,23 @@ package me.eccentric_nz.tardischunkgenerator.custombiome;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
+import net.minecraft.core.Holder;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.RegistrationInfo;
 import net.minecraft.core.WritableRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.*;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.IdentityHashMap;
+import java.util.Set;
 
 public class CustomBiome {
 
@@ -24,7 +31,7 @@ public class CustomBiome {
         // get the biome registry
         WritableRegistry<Biome> registrywritable = (WritableRegistry<Biome>) BiomeHelper.getRegistry();
         // get the minecraft biome
-        Biome minecraftbiome = registrywritable.get(minecraftKey);
+        Biome minecraftbiome = registrywritable.getValueOrThrow(minecraftKey);
         // build the custom biome
         Biome.BiomeBuilder newBiome = new Biome.BiomeBuilder();
         // copy some minecraft biome settings to the custom biome
@@ -52,10 +59,11 @@ public class CustomBiome {
         }
         newBiome.specialEffects(newFog.build());
         Biome biome = newBiome.build();
-        // put the biome into the TARDIS biome map
-        TARDISHelper.biomeMap.put(data.getCustomName(), biome);
-        // inject into the biome registry
+
         try {
+            // put the biome into the TARDIS biome map
+            TARDISHelper.biomeMap.put(data.getCustomName(), biome);
+            // inject into the biome registry
             // unfreeze Biome Registry
             Field frozen = MappedRegistry.class.getDeclaredField("l");
             frozen.setAccessible(true);
@@ -65,13 +73,24 @@ public class CustomBiome {
             unregisteredIntrusiveHolders.setAccessible(true);
             unregisteredIntrusiveHolders.set(registrywritable, new IdentityHashMap<>());
             registrywritable.createIntrusiveHolder(biome);
-            registrywritable.register(customKey, biome, RegistrationInfo.BUILT_IN);
+            Holder<Biome> holder = registrywritable.register(customKey, biome, RegistrationInfo.BUILT_IN);
+
+            // Biomes also have TagKeys (see minecraft.tags.BiomeTags)
+            // clone the minecraft biome's tag keys
+            Set<TagKey<Biome>> tags = new HashSet<>();
+            Holder<Biome> minecraftHolder = Holder.direct(minecraftbiome);
+            minecraftHolder.tags().forEach(tags::add);
+            // Holder.Reference.bindTags
+            Method bindTags = Holder.Reference.class.getDeclaredMethod("a", Collection.class);
+            bindTags.setAccessible(true);
+            bindTags.invoke(holder, tags);
+
             // make unregisteredIntrusiveHolders null again to remove potential for undefined behaviour
             unregisteredIntrusiveHolders.set(registrywritable, null);
             // refreeze biome registry
             frozen.setAccessible(true);
             frozen.set(registrywritable, true);
-        } catch (IllegalAccessException | NoSuchFieldException ignored) {
+        } catch (IllegalAccessException | NoSuchFieldException | NoSuchMethodException | InvocationTargetException ignored) {
             TARDIS.plugin.getMessenger().message(TARDIS.plugin.getConsole(), TardisModule.WARNING, "Could not unlock biome registry!");
         }
     }

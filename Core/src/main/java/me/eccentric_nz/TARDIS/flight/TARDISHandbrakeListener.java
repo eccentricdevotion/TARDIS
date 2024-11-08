@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.flight.vehicle.VehicleUtility;
 import me.eccentric_nz.TARDIS.rotors.Rotor;
 import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
 import me.eccentric_nz.TARDIS.sensor.BeaconSensor;
@@ -209,7 +210,13 @@ public class TARDISHandbrakeListener implements Listener {
                                         }
                                         // fly the TARDIS exterior
                                         Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), player.getLocation().getYaw(), player.getLocation().getPitch());
-                                        new TARDISExteriorFlight(plugin).startFlying(player, id, block, current, beac_on, beacon, preset.equals(ChameleonPreset.PANDORICA));
+                                        // check the armour stand is a custom one
+                                        if (VehicleUtility.isNotFlightReady(current)) {
+                                            plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_REBUILD");
+                                            return;
+                                        } else {
+                                            new TARDISExteriorFlight(plugin).startFlying(player, id, block, current, beac_on, beacon, preset.equals(ChameleonPreset.PANDORICA));
+                                        }
                                     } else {
                                         new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, throticle);
                                     }

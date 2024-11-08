@@ -5,6 +5,7 @@ import me.eccentric_nz.TARDIS.custommodeldata.GUIMap;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIWallFloor;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import org.bukkit.Material;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Biome;
 import org.bukkit.inventory.ItemStack;
@@ -40,15 +41,18 @@ public class TARDISTelepathicBiome {
                 if (i > 52) {
                     break;
                 }
-                ItemStack is = new ItemStack(EnvironmentBiomes.BIOME_BLOCKS.get(biome));
-                ItemMeta im = is.getItemMeta();
-                im.setDisplayName(TARDISStringUtils.capitalise(biome.toString()));
-                is.setItemMeta(im);
-                stack[i] = is;
-                if (i % 9 == 7) {
-                    i += 2;
-                } else {
-                    i++;
+                Material material = EnvironmentBiomes.BIOME_BLOCKS.get(biome.getKey().getKey());
+                if (material != null) {
+                    ItemStack is = new ItemStack(material, 1);
+                    ItemMeta im = is.getItemMeta();
+                    im.setDisplayName(TARDISStringUtils.capitalise(biome.toString()));
+                    is.setItemMeta(im);
+                    stack[i] = is;
+                    if (i % 9 == 7) {
+                        i += 2;
+                    } else {
+                        i++;
+                    }
                 }
             }
             if (environment == Environment.NORMAL) {

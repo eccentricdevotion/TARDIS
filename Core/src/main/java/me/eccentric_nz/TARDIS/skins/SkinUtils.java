@@ -9,8 +9,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.craftbukkit.v1_21_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_21_R1.profile.CraftPlayerProfile;
+import org.bukkit.craftbukkit.v1_21_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_21_R2.profile.CraftPlayerProfile;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -152,7 +152,7 @@ public class SkinUtils {
             case "Empty Child" -> {
                 material = Material.SUGAR;
                 // set generic scale
-                player.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(0.5d);
+                player.getAttribute(Attribute.SCALE).setBaseValue(0.5d);
             }
             case "Hath" -> {
                 material = Material.PUFFERFISH;
@@ -290,7 +290,7 @@ public class SkinUtils {
             case "Empty Child" -> {
                 // head & reset generic scale
                 player.getInventory().setItem(EquipmentSlot.HEAD, null);
-                player.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(1.0d);
+                player.getAttribute(Attribute.SCALE).setBaseValue(1.0d);
             }
             case "Mire", "Slitheen" -> {
                 // head & both hands

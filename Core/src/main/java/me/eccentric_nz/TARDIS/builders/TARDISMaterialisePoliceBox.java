@@ -24,6 +24,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetParticlePrefs;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.flight.FlightEnd;
+import me.eccentric_nz.TARDIS.flight.vehicle.TARDISArmourStand;
+import me.eccentric_nz.TARDIS.flight.vehicle.VehicleUtility;
 import me.eccentric_nz.TARDIS.particles.Emitter;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -34,9 +36,9 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
+import org.bukkit.craftbukkit.v1_21_R2.entity.CraftArmorStand;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
@@ -103,7 +105,12 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                 boolean found = false;
                 for (Entity e : world.getNearbyEntities(bd.getLocation(), 1.0d, 1.0d, 1.0d)) {
                     if (e instanceof ArmorStand a) {
-                        stand = a;
+                        if (((CraftArmorStand) a).getHandle() instanceof TARDISArmourStand) {
+                            stand = a;
+                        } else {
+                            stand = (ArmorStand) VehicleUtility.spawnStand(bd.getLocation()).getBukkitEntity();
+                            a.remove();
+                        }
                         found = true;
                         break;
                     }
@@ -120,8 +127,8 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     Block under = block.getRelative(BlockFace.DOWN);
                     block.setBlockData(TARDISConstants.AIR);
                     TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisID(), false);
-                    // spawn armour stand
-                    stand = (ArmorStand) world.spawnEntity(bd.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.ARMOR_STAND);
+                    // spawn an armour stand
+                    stand = (ArmorStand) VehicleUtility.spawnStand(bd.getLocation()).getBukkitEntity();
                 }
                 stand.setRotation(bd.getDirection().getYaw(), 0.0f);
                 Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, bd.getTardisID(), true);
@@ -192,9 +199,6 @@ public class TARDISMaterialisePoliceBox implements Runnable {
             }
             EntityEquipment ee = stand.getEquipment();
             ee.setHelmet(is, true);
-            stand.setInvulnerable(true);
-            stand.setInvisible(true);
-            stand.setGravity(false);
         } else {
             // remove trackers
             plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(bd.getTardisID()));
@@ -217,7 +221,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
             TARDISDisplayItemUtils.setInteraction(stand, bd.getTardisID());
             // message travellers in tardis
             if (loops > 3) {
-                new FlightEnd(plugin).process(bd.getTardisID(), bd.getPlayer().getPlayer(), bd.isMalfunction());
+                new FlightEnd(plugin).process(bd.getTardisID(), bd.getPlayer().getPlayer(), bd.isMalfunction(), bd.isRebuild());
                 // update demat field in database
                 String update = preset.toString();
                 if (preset == ChameleonPreset.ITEM) {

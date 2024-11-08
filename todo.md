@@ -2,8 +2,8 @@
 
 | Priority | Feature | Link |
 | -------- | ------- | ---- |
-| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | Fix bugs<br>-Custom door desync, portal not working / being removed leading to monsters entering even when door is closed | - |
-| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Fix follower persistence**<br>- Change entity type to PigZombie as they are neutral to players<br>- Switch to using custom armour when 1.21.2 releases | - |
+| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **1.21.3+**<br>- Switch to using custom armour for weeping angel module monster disguises<br>- Use 'camera_overlay' in equippable components for 3D glasses and Empty Child mask, maybe add a HUD to Handles communicator, space helmet<br>- Use Item Model components<br>- Test, test, test | - |
+| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | Fix bugs<br>- Custom door desync, portal not working / being removed leading to monsters entering even when door is closed | - |
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Microscope** as an addition to Chemistry<br>- Add x-ray? | - |
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Zero-G room**<br>- Determine door level for door circuits and ring walkway<br>- Make schematic<br>- Add methods to stack rooms | [#868](https://github.com/eccentricdevotion/TARDIS/issues/868) |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | **Modelled controls**<br>- Console lamp done | [#836](https://github.com/eccentricdevotion/TARDIS/issues/836) |
@@ -13,7 +13,7 @@
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Floodgate forms for TIS | - |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Add doors to shop items | - |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | **Sonic Blaster**<br>- Used to temporarily remove blocks only | - |
-| ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) |  Use the Vortex Manipulator to teleport past force fields | - |
+| ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Use the Vortex Manipulator to teleport past force fields | - |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Optional world name in `/tardistravel` | [#306](https://github.com/eccentricdevotion/TARDIS/issues/306) |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Time travel | [#305](https://github.com/eccentricdevotion/TARDIS/issues/305) |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Charge players a fee (via Vault) for using the Junk TARDIS (buy ticket at the TARDISShop?) | - |

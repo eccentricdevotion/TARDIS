@@ -49,9 +49,9 @@ import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
-import org.bukkit.craftbukkit.v1_21_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_21_R1.block.CraftBlock;
-import org.bukkit.craftbukkit.v1_21_R1.entity.CraftVillager;
+import org.bukkit.craftbukkit.v1_21_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_21_R2.block.CraftBlock;
+import org.bukkit.craftbukkit.v1_21_R2.entity.CraftVillager;
 import org.bukkit.entity.*;
 import org.bukkit.map.MapView;
 import org.bukkit.util.Vector;
@@ -335,7 +335,7 @@ public class TARDISHelper {
         BlockState data = ((CraftBlock) block).getNMS();
         net.minecraft.world.level.Level world = ((CraftWorld) block.getWorld()).getHandle();
         BlockPos position = ((CraftBlock) block).getPosition();
-        data.useWithoutItem(world, null, BlockHitResult.miss(data.getOffset(world, position), direction, position));
+        data.useWithoutItem(world, null, BlockHitResult.miss(data.getOffset(position), direction, position));
     }
 
     public void growTree(String tree, Location location) {

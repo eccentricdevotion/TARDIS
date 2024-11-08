@@ -52,13 +52,12 @@ public class FlightPersister {
     public void save() {
         try {
             // save flying TARDISes
-            ps = connection.prepareStatement("INSERT INTO " + prefix + "flight (uuid, tardis_id, location, chicken, stand) VALUES (?, ?, ?, ?, ?)");
+            ps = connection.prepareStatement("INSERT INTO " + prefix + "flight (uuid, tardis_id, location, stand) VALUES (?, ?, ?, ?)");
             for (Map.Entry<UUID, FlightReturnData> map : plugin.getTrackerKeeper().getFlyingReturnLocation().entrySet()) {
                 ps.setString(1, map.getKey().toString());
                 ps.setInt(2, map.getValue().getId());
                 ps.setString(3, map.getValue().getLocation().toString());
-                ps.setString(4, map.getValue().getChicken().toString());
-                ps.setString(5, map.getValue().getStand().toString());
+                ps.setString(4, map.getValue().getStand().toString());
                 count += ps.executeUpdate();
             }
             if (count > 0) {
@@ -89,7 +88,6 @@ public class FlightPersister {
                 UUID uuid = UUID.fromString(rs.getString("uuid"));
                 int id = rs.getInt("tardis_id");
                 Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
-                UUID chicken = UUID.fromString(rs.getString("chicken"));
                 String standTmp = rs.getString("stand");
                 UUID stand;
                 if (!standTmp.isEmpty()) {
@@ -97,7 +95,7 @@ public class FlightPersister {
                 } else {
                     stand = TARDISConstants.UUID_ZERO;
                 }
-                plugin.getTrackerKeeper().getFlyingReturnLocation().put(uuid, new FlightReturnData(id, location, -1, -1, chicken, stand));
+                plugin.getTrackerKeeper().getFlyingReturnLocation().put(uuid, new FlightReturnData(id, location, -1, -1, stand));
                 count++;
             }
             if (count > 0) {

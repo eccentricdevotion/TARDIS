@@ -1,14 +1,13 @@
 package me.eccentric_nz.TARDIS.schematic.getters;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.PaintingVariantTags;
 import net.minecraft.world.entity.decoration.Painting;
 import net.minecraft.world.entity.decoration.PaintingVariant;
-import org.bukkit.craftbukkit.v1_21_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_21_R1.entity.CraftPainting;
+import org.bukkit.craftbukkit.v1_21_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_21_R2.entity.CraftPainting;
 
 public class DataPackPainting {
 
@@ -22,7 +21,7 @@ public class DataPackPainting {
         Painting nmsPainting = ((CraftPainting) painting).getHandle();
         ServerLevel world = ((CraftWorld) painting.getWorld()).getHandle();
         Holder<PaintingVariant> variantHolder = null;
-        for (Holder<PaintingVariant> holder : world.registryAccess().registryOrThrow(Registries.PAINTING_VARIANT).getTagOrEmpty(PaintingVariantTags.PLACEABLE)) {
+        for (Holder<PaintingVariant> holder : world.registryAccess().lookupOrThrow(Registries.PAINTING_VARIANT).getTagOrEmpty(PaintingVariantTags.PLACEABLE)) {
             if (holder.getRegisteredName().equals(key)) {
                 variantHolder = holder;
                 break;

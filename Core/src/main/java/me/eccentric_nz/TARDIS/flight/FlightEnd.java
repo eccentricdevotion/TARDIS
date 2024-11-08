@@ -40,7 +40,7 @@ public class FlightEnd {
         this.plugin = plugin;
     }
 
-    public void process(int id, Player player, boolean malfunction) {
+    public void process(int id, Player player, boolean malfunction, boolean rebuild) {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, true);
@@ -48,7 +48,7 @@ public class FlightEnd {
             List<UUID> travellers = rst.getData();
             travellers.forEach((s) -> {
                 Player p = plugin.getServer().getPlayer(s);
-                if (p != null) {
+                if (p != null && !rebuild) {
                     String message = malfunction ? "MALFUNCTION" : "HANDBRAKE_LEFT_CLICK";
                     plugin.getMessenger().sendStatus(p, message);
                     // TARDIS has travelled so add players to list, so they can receive Artron on exit

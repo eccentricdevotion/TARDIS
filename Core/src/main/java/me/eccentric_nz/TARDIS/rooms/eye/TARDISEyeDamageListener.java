@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.rooms.eye;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeHelper;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
@@ -44,12 +43,9 @@ public class TARDISEyeDamageListener implements Listener {
         Location l = event.getTo();
         Biome biome = l.getBlock().getBiome();
         UUID uuid = player.getUniqueId();
-        if (biome == Biome.CUSTOM) {
-            // is it the eye_of_harmony biome?
-            if (BiomeHelper.getBiomeName(l.getWorld(), l.getBlockX(), l.getBlockY(), l.getBlockZ()).equals("eye_of_harmony")) {
-                // start tracking player for damage
-                plugin.getTrackerKeeper().getEyeDamage().add(uuid);
-            }
+        if (biome.getKey().getKey().equals("eye_of_harmony")) {
+            // start tracking player for damage
+            plugin.getTrackerKeeper().getEyeDamage().add(uuid);
         } else {
             // stop tracking player
             plugin.getTrackerKeeper().getEyeDamage().remove(uuid);

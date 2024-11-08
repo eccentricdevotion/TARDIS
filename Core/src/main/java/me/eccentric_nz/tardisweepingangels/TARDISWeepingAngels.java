@@ -21,7 +21,6 @@ import me.eccentric_nz.tardisweepingangels.commands.TARDISWeepingAngelsCommand;
 import me.eccentric_nz.tardisweepingangels.commands.TabComplete;
 import me.eccentric_nz.tardisweepingangels.death.Death;
 import me.eccentric_nz.tardisweepingangels.death.PlayerDeath;
-import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
 import me.eccentric_nz.tardisweepingangels.equip.PlayerUndisguise;
 import me.eccentric_nz.tardisweepingangels.monsters.clockwork_droids.ClockworkDroidRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.cybermen.CybermanRunnable;
@@ -223,8 +222,8 @@ public class TARDISWeepingAngels {
             plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, r, delay + d, delay);
             d += 6;
         }
-//        // cleaner every 10 minutes
-//        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Cleaner(plugin), 12000, 12000);
+        // cleaner every 10 minutes
+        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Cleaner(plugin), 12000, 12000);
         steal = (plugin.getMonstersConfig().getBoolean("angels.angels_can_steal"));
         if (plugin.getMonstersConfig().getBoolean("judoon.guards")) {
             // add recipe

@@ -272,7 +272,7 @@ public class TARDISFarmer {
                                 TARDISHorse tmhor = new TARDISHorse();
                                 tmhor.setAge(horse.getAge());
                                 tmhor.setBaby(!horse.isAdult());
-                                double mh = horse.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                                double mh = horse.getAttribute(Attribute.MAX_HEALTH).getValue();
                                 tmhor.setHorseHealth(mh);
                                 tmhor.setHealth(horse.getHealth());
                                 // get horse colour, style and variant
@@ -293,7 +293,7 @@ public class TARDISFarmer {
                                 tmhor.setHorseInventory(horse.getInventory().getContents());
                                 tmhor.setDomesticity(horse.getDomestication());
                                 tmhor.setJumpStrength(horse.getJumpStrength());
-                                tmhor.setSpeed(horse.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue());
+                                tmhor.setSpeed(horse.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue());
                                 // check the leash
                                 if (horse.isLeashed()) {
                                     Entity leash = horse.getLeashHolder();
@@ -340,7 +340,7 @@ public class TARDISFarmer {
                                 TARDISLlama tmlla = new TARDISLlama();
                                 tmlla.setAge(llama.getAge());
                                 tmlla.setBaby(!llama.isAdult());
-                                double llmh = llama.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                                double llmh = llama.getAttribute(Attribute.MAX_HEALTH).getValue();
                                 tmlla.setHorseHealth(llmh);
                                 tmlla.setHealth(llama.getHealth());
                                 // get horse colour, style and variant
@@ -355,7 +355,7 @@ public class TARDISFarmer {
                                 tmlla.setHorseInventory(llama.getInventory().getContents());
                                 tmlla.setDomesticity(llama.getDomestication());
                                 tmlla.setJumpStrength(llama.getJumpStrength());
-                                tmlla.setSpeed(llama.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue());
+                                tmlla.setSpeed(llama.getAttribute(Attribute.MOVEMENT_SPEED).getBaseValue());
                                 // check the leash
                                 if (llama.isLeashed()) {
                                     Entity leash = llama.getLeashHolder();
@@ -911,7 +911,7 @@ public class TARDISFarmer {
                             if (e.isBaby()) {
                                 equine.setBaby();
                             }
-                            AttributeInstance attribute = equine.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                            AttributeInstance attribute = equine.getAttribute(Attribute.MAX_HEALTH);
                             attribute.setBaseValue(e.getHorseHealth());
                             equine.setHealth(e.getHealth());
                             String name = e.getName();
@@ -941,7 +941,7 @@ public class TARDISFarmer {
                                 pinv.addItem(leash);
                                 p.updateInventory();
                             }
-                            equine.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(e.getSpeed());
+                            equine.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(e.getSpeed());
                             equine.setRemoveWhenFarAway(false);
                         });
                     } else if (spawnEggs) {
@@ -971,7 +971,7 @@ public class TARDISFarmer {
                             if (ll.isBaby()) {
                                 cria.setBaby();
                             }
-                            AttributeInstance attribute = cria.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                            AttributeInstance attribute = cria.getAttribute(Attribute.MAX_HEALTH);
                             attribute.setBaseValue(ll.getHorseHealth());
                             cria.setHealth(ll.getHealth());
                             String name = ll.getName();
@@ -997,7 +997,7 @@ public class TARDISFarmer {
                                 pinv.addItem(leash);
                                 p.updateInventory();
                             }
-                            cria.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(ll.getSpeed());
+                            cria.getAttribute(Attribute.MOVEMENT_SPEED).setBaseValue(ll.getSpeed());
                             cria.setRemoveWhenFarAway(false);
                         });
                     } else if (spawnEggs) {

@@ -39,7 +39,7 @@ public class RegenerationEmitter extends TARDISParticleRunnable implements Runna
                 vehicle.remove();
             }
             // reset player scale
-            player.getAttribute(Attribute.GENERIC_SCALE).setBaseValue(1.0d);
+            player.getAttribute(Attribute.SCALE).setBaseValue(1.0d);
             // remove invisibility
             player.removePotionEffect(PotionEffectType.INVISIBILITY);
             // show the player again
@@ -59,7 +59,7 @@ public class RegenerationEmitter extends TARDISParticleRunnable implements Runna
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 1800, 1));
             }
             if (plugin.getRegenerationConfig().getBoolean("restore.health")) {
-                player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
+                player.setHealth(player.getAttribute(Attribute.MAX_HEALTH).getDefaultValue());
             }
             if (plugin.getRegenerationConfig().getBoolean("restore.food") && player.getFoodLevel() < 20) {
                 player.setFoodLevel(20);

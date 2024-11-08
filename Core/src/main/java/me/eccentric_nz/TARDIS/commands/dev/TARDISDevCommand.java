@@ -31,6 +31,9 @@ import me.eccentric_nz.TARDIS.skins.tv.TVInventory;
 import me.eccentric_nz.TARDIS.utility.Pluraliser;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardisregeneration.Regenerator;
+import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.tardisweepingangels.equip.MonsterArmour;
+import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -40,6 +43,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
@@ -60,7 +64,7 @@ import java.util.Set;
 public class TARDISDevCommand implements CommandExecutor {
 
     private final Set<String> firstsStr = Sets.newHashSet(
-            "add_regions", "advancements",
+            "add_regions", "advancements", "armour",
             "biome", "box", "brushable",
             "chunks", "chunky", "circuit",
             "debug", "dismount", "displayitem",
@@ -100,6 +104,13 @@ public class TARDISDevCommand implements CommandExecutor {
                     switch (first) {
                         case "add_regions" -> {
                             return new TARDISAddRegionsCommand(plugin).doCheck(sender);
+                        }
+                        case "armour" -> {
+                            if (sender instanceof Player player) {
+                                ItemStack a = MonsterArmour.makeEquippable(Monster.CYBERMAN, EquipmentSlot.CHEST, TARDISWeepingAngels.CYBERMAN);
+                                player.getInventory().addItem(a);
+                            }
+                            return true;
                         }
                         case "biome" -> {
                             return new TARDISBiomeCommand().reset(sender);

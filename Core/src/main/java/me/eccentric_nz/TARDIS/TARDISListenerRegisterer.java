@@ -54,6 +54,8 @@ import me.eccentric_nz.TARDIS.flight.FlightGamemodeListener;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrakeListener;
 import me.eccentric_nz.TARDIS.flight.TARDISManualFlightListener;
 import me.eccentric_nz.TARDIS.flight.TARDISRegulatorListener;
+import me.eccentric_nz.TARDIS.flight.vehicle.PlayerInputListener;
+import me.eccentric_nz.TARDIS.flight.vehicle.VehicleLoadListener;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesEventListener;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesListener;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramListener;
@@ -119,7 +121,6 @@ import me.eccentric_nz.tardischemistry.product.GlowStickListener;
 import me.eccentric_nz.tardischemistry.product.ProductGUIListener;
 import me.eccentric_nz.tardischemistry.product.SparklerListener;
 import me.eccentric_nz.tardischemistry.reducer.ReducerGUIListener;
-import me.eccentric_nz.tardischunkgenerator.helpers.ProtocolLibPacketListener;
 
 /**
  * Registers all the listeners for the various events required to use the TARDIS.
@@ -138,6 +139,8 @@ class TARDISListenerRegisterer {
      * Registers all the listeners for the various events required to use the TARDIS.
      */
     void registerListeners() {
+        plugin.getPM().registerEvents(new PlayerInputListener(plugin), plugin);
+        plugin.getPM().registerEvents(new VehicleLoadListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBonemealListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISEditAreasGUIListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISBlockBreakListener(plugin), plugin);
@@ -404,8 +407,5 @@ class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new TARDISShellLoaderListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISWeatherListener(plugin), plugin);
-        if (plugin.getPM().isPluginEnabled("ProtocolLib")) {
-            new ProtocolLibPacketListener().enable(plugin);
-        }
     }
 }
