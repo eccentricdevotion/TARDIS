@@ -70,7 +70,8 @@ public class TARDISZeroRoomChatListener implements Listener {
             return;
         }
         UUID uuid = player.getUniqueId();
-        String command = event.getMessage().toLowerCase(Locale.ROOT);
+        String resend = event.getMessage();
+        String command = resend.toLowerCase(Locale.ROOT);
         if (plugin.getTrackerKeeper().getTelepaths().containsKey(uuid)) {
             if (command.contains("tardis ") || command.contains("tardistravel ") || command.contains("ttravel ")) {
                 UUID owner = plugin.getTrackerKeeper().getTelepaths().get(uuid);
@@ -84,7 +85,9 @@ public class TARDISZeroRoomChatListener implements Listener {
                     }
                     // if it is a tardis command run it as the time lord
                     event.setPlayer(timelord);
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TELEPATHIC_RUN", command);
+                    event.setCancelled(true);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ()-> plugin.getServer().dispatchCommand(timelord, resend.substring(1)), 2L);
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TELEPATHIC_RUN", resend);
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TELEPATHIC_ONLINE");
                 }
