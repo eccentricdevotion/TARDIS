@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.flight.vehicle.InterpolatedAnimation;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Chunk;
@@ -120,17 +121,7 @@ public class TARDISDisplayItemCommand {
                     int period = 40;
                     float angle = (float) Math.PI;
                     AxisAngle4f axisAngleRotMat = new AxisAngle4f(angle, new Vector3f(0, 1, 0));
-                    plugin.getTrackerKeeper().setAnimateTask(plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-                        display.setInterpolationDelay(-1);
-                        Transformation transformation = new Transformation(
-                                position,
-                                axisAngleRotMat,
-                                size,
-                                axisAngleRotMat
-                        );
-                        display.setInterpolationDuration(period);
-                        display.setTransformation(transformation);
-                    }, 5, period));
+                    plugin.getTrackerKeeper().setAnimateTask(plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new InterpolatedAnimation(display, period), 5, period));
                 } else {
                     for (Entity e : player.getPassengers()) {
                         e.eject();
