@@ -79,6 +79,7 @@ class TARDISSQLiteDatabaseUpdater {
         gravityupdates.add("velocity REAL DEFAULT 0.5");
         particleupdates.add("colour TEXT DEFAULT 'WHITE'");
         particleupdates.add("block TEXT DEFAULT 'STONE'");
+        particleupdates.add("density INTEGER DEFAULT 16");
         portalsupdates.add("abandoned INTEGER DEFAULT 0");
         prefsupdates.add("announce_repeaters_on INTEGER DEFAULT 0");
         prefsupdates.add("artron_level INTEGER DEFAULT 0");

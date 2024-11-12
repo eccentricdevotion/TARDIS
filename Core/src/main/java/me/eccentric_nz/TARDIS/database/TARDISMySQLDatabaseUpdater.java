@@ -82,6 +82,7 @@ class TARDISMySQLDatabaseUpdater {
         tardisupdates.add("zero varchar(512) DEFAULT ''");
         particleupdates.add("colour varchar(16) DEFAULT 'WHITE'");
         particleupdates.add("block varchar(48) DEFAULT 'STONE'");
+        particleupdates.add("density int(2) DEFAULT '16'");
         prefsupdates.add("announce_repeaters_on int(1) DEFAULT '0'");
         prefsupdates.add("auto_type varchar(32) DEFAULT 'CLOSEST'");
         prefsupdates.add("auto_default varchar(12) DEFAULT 'HOME'");
