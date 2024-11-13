@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
@@ -103,7 +104,7 @@ public class TARDISDisplayItemCommand {
                     ItemDisplay display = (ItemDisplay) player.getWorld().spawnEntity(player.getLocation().add(0, 1.5, 0), EntityType.ITEM_DISPLAY);
                     ItemStack box = new ItemStack(Material.BLUE_DYE, 1);
                     ItemMeta im = box.getItemMeta();
-                    im.setCustomModelData(1005);
+                    im.setItemModel(new NamespacedKey(plugin, "police_box/flying/blue"));
                     box.setItemMeta(im);
                     display.setItemStack(box);
                     player.addPassenger(display);
