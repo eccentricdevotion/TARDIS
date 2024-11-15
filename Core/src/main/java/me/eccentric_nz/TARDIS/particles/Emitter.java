@@ -18,7 +18,7 @@ public class Emitter extends TARDISParticleRunnable implements Runnable {
         super(plugin, uuid);
         this.plugin = plugin;
         this.uuid = uuid;
-        this.location = location.add(0.5, data.getShape().getY(), 0.5);
+        this.location = location.clone().add(0.5, data.getShape().getY(), 0.5);
         this.data = data;
         this.loops = end / data.getShape().getPeriod() + 1;
     }
