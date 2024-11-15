@@ -78,7 +78,7 @@ public class RoomCleaner {
         // remove eye controls, set capacitors to 1
         if (room.equals("EYE")) {
             // stop eye particles runnable
-            EyeOfHarmonyParticles.stopTask(plugin, id);
+            EyeOfHarmonyParticles.stop(plugin, id);
             // remove database records
             new ClearEyeControls(plugin).removeRecords(id);
         }

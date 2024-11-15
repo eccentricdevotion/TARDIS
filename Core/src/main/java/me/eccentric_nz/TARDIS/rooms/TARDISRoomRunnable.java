@@ -669,7 +669,7 @@ public class TARDISRoomRunnable implements Runnable {
                     // start a particle runnable
                     if (plugin.getConfig().getBoolean("eye_of_harmony.particles")) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            int task = new EyeOfHarmonyParticles(plugin).stopStart(tardis_id, 1, uuid);
+                            int task = new EyeOfHarmonyParticles(plugin).start(tardis_id, 1, uuid);
                             if (task != -1) {
                                 // update eyes record
                                 HashMap<String, Object> set = new HashMap<>();
