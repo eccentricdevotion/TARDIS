@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.mapping.TARDISBlueMap;
 import me.eccentric_nz.TARDIS.mapping.TARDISDynmap;
 import me.eccentric_nz.TARDIS.mapping.TARDISMapper;
 import me.eccentric_nz.TARDIS.planets.TARDISResourcePackSwitcher;
+import me.eccentric_nz.TARDIS.rooms.eye.EyeStopper;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.RegisteredListener;
@@ -66,8 +67,8 @@ class TARDISSetBooleanCommand {
                 plugin.debug("Could not save planets.yml, " + ex.getMessage());
             }
         }
-        if (first.equals("artron_furnace.particles")) {
-            plugin.getArtronConfig().set(first, bool);
+        if (first.equals("artron_furnace.furnace_particles")) {
+            plugin.getArtronConfig().set("artron_furnace.particles", bool);
             try {
                 plugin.getArtronConfig().save(new File(plugin.getDataFolder(), "artron.yml"));
             } catch (IOException ex) {
@@ -85,6 +86,10 @@ class TARDISSetBooleanCommand {
                 plugin.getConfig().set(first + ".enabled", bool);
             } else {
                 plugin.getConfig().set(first, bool);
+                if (first.equals("eye_of_harmony.particles") && !bool) {
+                    // stop eye particles
+                    new EyeStopper(plugin).kill();
+                }
             }
             plugin.saveConfig();
         }

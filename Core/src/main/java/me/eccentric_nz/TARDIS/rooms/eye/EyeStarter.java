@@ -67,6 +67,9 @@ public class EyeStarter {
                 if (statement != null) {
                     statement.close();
                 }
+                if (ps != null) {
+                    ps.close();
+                }
             } catch (SQLException ex) {
                 plugin.debug("Error closing eye of harmony stars: " + ex.getMessage());
             }
