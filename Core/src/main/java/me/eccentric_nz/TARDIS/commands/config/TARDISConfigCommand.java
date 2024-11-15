@@ -133,7 +133,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("no_creative_condense", "preferences");
         firstsBool.put("no_enchanted_condense", "preferences");
         firstsBool.put("open_door_policy", "preferences");
-        firstsBool.put("particles", "artron_furnace");
+        firstsBool.put("particles", "eye_of_harmony");
         firstsBool.put("per_world_perms", "travel");
         firstsBool.put("perception_filter", "allow");
         firstsBool.put("power_down", "allow");
