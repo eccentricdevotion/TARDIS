@@ -61,7 +61,7 @@ public class TARDISPoliceBoxInventory {
         for (String s : colours) {
             String underscored = s.replace(" ", "_");
             if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_" + underscored.toLowerCase(Locale.ROOT))) {
-                String dye = underscored.toUpperCase(Locale.ROOT) + "_DYE";
+                String dye = underscored.toUpperCase(Locale.ROOT) + "_DYE" ;
                 ItemStack is = new ItemStack(Material.valueOf(dye), 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(s + " Police Box");
@@ -131,21 +131,21 @@ public class TARDISPoliceBoxInventory {
         ItemStack page = new ItemStack(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.material(), 1);
         ItemMeta one = page.getItemMeta();
         one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
-        one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.customModelData());
+        one.setItemModel(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.key());
         page.setItemMeta(one);
         boxes[GUIChameleonPoliceBoxes.GO_TO_PAGE_1.slot()] = page;
         // back
         ItemStack back = new ItemStack(GUIChameleonPoliceBoxes.BACK.material(), 1);
         ItemMeta but = back.getItemMeta();
         but.setDisplayName("Back");
-        but.setCustomModelData(GUIChameleonPoliceBoxes.BACK.customModelData());
+        but.setItemModel(GUIChameleonPoliceBoxes.BACK.key());
         back.setItemMeta(but);
         boxes[GUIChameleonPoliceBoxes.BACK.slot()] = back;
         // Cancel / close
         ItemStack close = new ItemStack(GUIChameleonPoliceBoxes.CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUIChameleonPoliceBoxes.CLOSE.customModelData());
+        can.setItemModel(GUIChameleonPoliceBoxes.CLOSE.key());
         close.setItemMeta(can);
         boxes[GUIChameleonPoliceBoxes.CLOSE.slot()] = close;
         return boxes;

@@ -38,7 +38,7 @@ public class ConstructorInventory {
         ItemMeta info_im = info.getItemMeta();
         info_im.setDisplayName("Info");
         info_im.setLore(Arrays.asList("Add or subtract protons,", "neutrons and electrons to", "construct an atomic element."));
-        info_im.setCustomModelData(GUIChemistry.INFO.customModelData());
+        info_im.setItemModel(GUIChemistry.INFO.key());
         info.setItemMeta(info_im);
         stack[9] = info;
         // proton count
@@ -52,21 +52,21 @@ public class ConstructorInventory {
         ItemStack protons = new ItemStack(GUIChemistry.PROTONS.material(), 1);
         ItemMeta pim = protons.getItemMeta();
         pim.setDisplayName("Protons");
-        pim.setCustomModelData(GUIChemistry.PROTONS.customModelData());
+        pim.setItemModel(GUIChemistry.PROTONS.key());
         protons.setItemMeta(pim);
         stack[GUIChemistry.PROTONS.slot()] = protons;
         // proton down
         ItemStack proton_down = new ItemStack(GUIChemistry.MINUS.material(), 1);
         ItemMeta pdim = proton_down.getItemMeta();
         pdim.setDisplayName("-");
-        pdim.setCustomModelData(GUIChemistry.MINUS.customModelData());
+        pdim.setItemModel(GUIChemistry.MINUS.key());
         proton_down.setItemMeta(pdim);
         stack[5] = proton_down;
         // proton up
         ItemStack proton_up = new ItemStack(GUIChemistry.PLUS.material(), 1);
         ItemMeta puim = proton_up.getItemMeta();
         puim.setDisplayName("+");
-        puim.setCustomModelData(GUIChemistry.PLUS.customModelData());
+        puim.setItemModel(GUIChemistry.PLUS.key());
         proton_up.setItemMeta(puim);
         stack[6] = proton_up;
         // neutron count
@@ -80,21 +80,21 @@ public class ConstructorInventory {
         ItemStack neutrons = new ItemStack(GUIChemistry.NEUTRONS.material(), 1);
         ItemMeta nim = neutrons.getItemMeta();
         nim.setDisplayName("Neutrons");
-        nim.setCustomModelData(GUIChemistry.NEUTRONS.customModelData());
+        nim.setItemModel(GUIChemistry.NEUTRONS.key());
         neutrons.setItemMeta(nim);
         stack[GUIChemistry.NEUTRONS.slot()] = neutrons;
         // neutron down
         ItemStack neutron_down = new ItemStack(GUIChemistry.MINUS.material(), 1);
         ItemMeta ndim = neutron_down.getItemMeta();
         ndim.setDisplayName("-");
-        ndim.setCustomModelData(GUIChemistry.MINUS.customModelData());
+        ndim.setItemModel(GUIChemistry.MINUS.key());
         neutron_down.setItemMeta(ndim);
         stack[14] = neutron_down;
         // neutron up
         ItemStack neutron_up = new ItemStack(GUIChemistry.PLUS.material(), 1);
         ItemMeta nuim = neutron_up.getItemMeta();
         nuim.setDisplayName("+");
-        nuim.setCustomModelData(GUIChemistry.PLUS.customModelData());
+        nuim.setItemModel(GUIChemistry.PLUS.key());
         neutron_up.setItemMeta(nuim);
         stack[15] = neutron_up;
         // electron count
@@ -108,21 +108,21 @@ public class ConstructorInventory {
         ItemStack electrons = new ItemStack(GUIChemistry.ELECTRONS.material(), 1);
         ItemMeta eim = electrons.getItemMeta();
         eim.setDisplayName("Electrons");
-        eim.setCustomModelData(GUIChemistry.ELECTRONS.customModelData());
+        eim.setItemModel(GUIChemistry.ELECTRONS.key());
         electrons.setItemMeta(eim);
         stack[GUIChemistry.ELECTRONS.slot()] = electrons;
         // electron down
         ItemStack electron_down = new ItemStack(GUIChemistry.MINUS.material(), 1);
         ItemMeta edim = electron_down.getItemMeta();
         edim.setDisplayName("-");
-        edim.setCustomModelData(GUIChemistry.MINUS.customModelData());
+        edim.setItemModel(GUIChemistry.MINUS.key());
         electron_down.setItemMeta(edim);
         stack[GUIChemistry.MINUS.slot()] = electron_down;
         // electron up
         ItemStack electron_up = new ItemStack(GUIChemistry.PLUS.material(), 1);
         ItemMeta euim = electron_up.getItemMeta();
         euim.setDisplayName("+");
-        euim.setCustomModelData(GUIChemistry.PLUS.customModelData());
+        euim.setItemModel(GUIChemistry.PLUS.key());
         electron_up.setItemMeta(euim);
         stack[GUIChemistry.PLUS.slot()] = electron_up;
         return stack;

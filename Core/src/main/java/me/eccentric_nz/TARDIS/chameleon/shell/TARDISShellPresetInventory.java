@@ -76,7 +76,7 @@ public class TARDISShellPresetInventory {
         ItemStack current = new ItemStack(GUIChameleonPresets.CURRENT.material(), 1);
         ItemMeta pre = current.getItemMeta();
         pre.setDisplayName("Current Chameleon preset");
-        pre.setCustomModelData(GUIChameleonPresets.CURRENT.customModelData());
+        pre.setItemModel(GUIChameleonPresets.CURRENT.key());
         current.setItemMeta(pre);
         stacks[GUIChameleonPresets.CURRENT.slot()] = current;
         // saved construct
@@ -87,7 +87,7 @@ public class TARDISShellPresetInventory {
             ItemStack saved = new ItemStack(GUIChameleonPresets.SAVED.material(), 1);
             ItemMeta con = saved.getItemMeta();
             con.setDisplayName("Saved Construct");
-            con.setCustomModelData(GUIChameleonPresets.SAVED.customModelData());
+            con.setItemModel(GUIChameleonPresets.SAVED.key());
             saved.setItemMeta(con);
             stacks[GUIChameleonPresets.SAVED.slot()] = saved;
         }
@@ -95,7 +95,7 @@ public class TARDISShellPresetInventory {
         ItemStack close = new ItemStack(GUIChameleonPresets.CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUIChameleonPresets.CLOSE.customModelData());
+        can.setItemModel(GUIChameleonPresets.CLOSE.key());
         close.setItemMeta(can);
         stacks[GUIChameleonPresets.CLOSE.slot()] = close;
 

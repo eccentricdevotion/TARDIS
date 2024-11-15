@@ -16,21 +16,25 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Compass;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Map;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Wool;
 import org.bukkit.Material;
 
 public record GUIMap() {
 
     // TARDIS Map
-    public static GUIData BUTTON_UP = new GUIData(1, 1, Material.CYAN_WOOL);
-    public static GUIData BUTTON_DOWN = new GUIData(2, 18, Material.CYAN_WOOL);
-    public static GUIData BUTTON_LEFT = new GUIData(3, 9, Material.CYAN_WOOL);
-    public static GUIData BUTTON_RIGHT = new GUIData(4, 11, Material.CYAN_WOOL);
-    public static GUIData BUTTON_MAP = new GUIData(2, 10, Material.MAP);
-    public static GUIData BUTTON_LEVEL_B = new GUIData(1, 27, Material.WHITE_WOOL);
-    public static GUIData BUTTON_LEVEL = new GUIData(2, 28, Material.YELLOW_WOOL);
-    public static GUIData BUTTON_LEVEL_T = new GUIData(3, 29, Material.WHITE_WOOL);
-    public static GUIData BUTTON_CLOSE = new GUIData(1, 45, Material.BOWL);
-    public static GUIData BUTTON_TRANSMAT = new GUIData(133, 46, Material.BOWL);
-    public static GUIData BUTTON_WHERE = new GUIData(2, 47, Material.COMPASS);
-    public static GUIData BUTTON_MAP_ON = new GUIData(1, -1, Material.BLACK_WOOL);
+    public static GUIData BUTTON_UP = new GUIData(Wool.UP.getKey(), 1, Material.CYAN_WOOL);
+    public static GUIData BUTTON_DOWN = new GUIData(Wool.DOWN.getKey(), 18, Material.CYAN_WOOL);
+    public static GUIData BUTTON_LEFT = new GUIData(Wool.LEFT.getKey(), 9, Material.CYAN_WOOL);
+    public static GUIData BUTTON_RIGHT = new GUIData(Wool.RIGHT.getKey(), 11, Material.CYAN_WOOL);
+    public static GUIData BUTTON_MAP = new GUIData(Map.LOAD_MAP.getKey(), 10, Material.MAP);
+    public static GUIData BUTTON_LEVEL_B = new GUIData(Wool.LEVEL_BOTTOM.getKey(), 27, Material.WHITE_WOOL);
+    public static GUIData BUTTON_LEVEL = new GUIData(Wool.LEVEL_MAIN.getKey(), 28, Material.YELLOW_WOOL);
+    public static GUIData BUTTON_LEVEL_T = new GUIData(Wool.LEVEL_TOP.getKey(), 29, Material.WHITE_WOOL);
+    public static GUIData BUTTON_CLOSE = new GUIData(Bowl.CLOSE, 45, Material.BOWL);
+    public static GUIData BUTTON_TRANSMAT = new GUIData(Bowl.BUTTON_TRANSMAT, 46, Material.BOWL);
+    public static GUIData BUTTON_WHERE = new GUIData(Compass.WHERE_AM_I.getKey(), 47, Material.COMPASS);
+    public static GUIData BUTTON_MAP_ON = new GUIData(Wool.BLANK.getKey(), -1, Material.BLACK_WOOL);
 }

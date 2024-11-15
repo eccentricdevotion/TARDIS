@@ -16,19 +16,20 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
 import org.bukkit.Material;
 
 public record GUIArchive() {
 
     // TARDIS Archive
-    public static GUIData BACK = new GUIData(8, 18, Material.BOWL);
-    public static GUIData SET_SIZE = new GUIData(77, 19, Material.BOWL);
-    public static GUIData SCAN_CONSOLE = new GUIData(75, 20, Material.BOWL);
-    public static GUIData ARCHIVE_CURRENT_CONSOLE = new GUIData(5, 0, Material.BOWL);
-    public static GUIData SMALL = new GUIData(79, 22, Material.BOWL);
-    public static GUIData MEDIUM = new GUIData(62, 23, Material.BOWL);
-    public static GUIData TALL = new GUIData(81, 24, Material.BOWL);
-    public static GUIData CLOSE = new GUIData(1, 26, Material.BOWL);
+    public static GUIData BACK = new GUIData(Bowl.BACK, 18, Material.BOWL);
+    public static GUIData SET_SIZE = new GUIData(Bowl.SET_SIZE, 19, Material.BOWL);
+    public static GUIData SCAN_CONSOLE = new GUIData(Bowl.SCAN_CONSOLE, 20, Material.BOWL);
+    public static GUIData ARCHIVE_CURRENT_CONSOLE = new GUIData(Bowl.ARCHIVE_CURRENT_CONSOLE, 0, Material.BOWL);
+    public static GUIData SMALL = new GUIData(Bowl.SMALL, 22, Material.BOWL);
+    public static GUIData MEDIUM = new GUIData(Bowl.MEDIUM, 23, Material.BOWL);
+    public static GUIData TALL = new GUIData(Bowl.TALL, 24, Material.BOWL);
+    public static GUIData CLOSE = new GUIData(Bowl.CLOSE, 26, Material.BOWL);
 
     public static GUIData getByName(String name) {
         switch (name) {

@@ -76,7 +76,8 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
         ItemStack choice = view.getItem(slot);
         event.setCancelled(true);
         switch (slot) {
-            case 45 -> {}
+            case 45 -> {
+            }
             case 46 -> {
                 // archive
                 if (choice != null) {
@@ -100,7 +101,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
                 TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(player.getUniqueId());
                 ItemStack[] consoles;
                 // switch page
-                if (choice.getItemMeta().getCustomModelData() == GUIChameleonPresets.GO_TO_PAGE_2.customModelData()) {
+                if (choice.getItemMeta().getItemModel() == GUIChameleonPresets.GO_TO_PAGE_2.key()) {
                     // page 2
                     consoles = new TARDISCustomThemeInventory(plugin, player, tud.getPrevious().getPermission(), tud.getLevel()).getMenu();
                 } else {

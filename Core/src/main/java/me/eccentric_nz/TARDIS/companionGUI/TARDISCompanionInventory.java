@@ -73,26 +73,26 @@ public class TARDISCompanionInventory {
         info_lore.add("click the Add button");
         info_lore.add("(nether star).");
         ii.setLore(info_lore);
-        ii.setCustomModelData(GUICompanion.INFO.customModelData());
+        ii.setItemModel(GUICompanion.INFO.key());
         info.setItemMeta(ii);
         heads[GUICompanion.INFO.slot()] = info;
         ItemStack add = new ItemStack(GUICompanion.ADD_COMPANION.material(), 1);
         ItemMeta aa = add.getItemMeta();
         aa.setDisplayName("Add");
-        aa.setCustomModelData(GUICompanion.ADD_COMPANION.customModelData());
+        aa.setItemModel(GUICompanion.ADD_COMPANION.key());
         add.setItemMeta(aa);
         heads[GUICompanion.ADD_COMPANION.slot()] = add;
         ItemStack del = new ItemStack(GUICompanion.DELETE_COMPANION.material(), 1);
         ItemMeta dd = del.getItemMeta();
         dd.setDisplayName("Remove");
-        dd.setCustomModelData(GUICompanion.DELETE_COMPANION.customModelData());
+        dd.setItemModel(GUICompanion.DELETE_COMPANION.key());
         del.setItemMeta(dd);
         heads[GUICompanion.DELETE_COMPANION.slot()] = del;
         // Cancel / close
         ItemStack close = new ItemStack(GUICompanion.BUTTON_CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUICompanion.BUTTON_CLOSE.customModelData());
+        can.setItemModel(GUICompanion.BUTTON_CLOSE.key());
         close.setItemMeta(can);
         heads[GUICompanion.BUTTON_CLOSE.slot()] = close;
 

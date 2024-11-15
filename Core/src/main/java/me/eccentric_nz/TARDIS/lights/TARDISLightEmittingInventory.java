@@ -32,14 +32,14 @@ public class TARDISLightEmittingInventory {
         ItemStack back = new ItemStack(GUIChameleonTemplate.BACK_HELP.material(), 1);
         ItemMeta bk = back.getItemMeta();
         bk.setDisplayName("Back");
-        bk.setCustomModelData(GUIChameleonTemplate.BACK_HELP.customModelData());
+        bk.setItemModel(GUIChameleonTemplate.BACK_HELP.key());
         back.setItemMeta(bk);
         stacks[24] = back;
         // 26 close
         ItemStack close = new ItemStack(GUILights.CLOSE.material(), 1);
         ItemMeta clim = close.getItemMeta();
         clim.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        clim.setCustomModelData(GUILights.CLOSE.customModelData());
+        clim.setItemModel(GUILights.CLOSE.key());
         close.setItemMeta(clim);
         stacks[26] = close;
         return stacks;

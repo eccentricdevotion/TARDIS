@@ -16,12 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Arrow;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
 import org.bukkit.Material;
 
 public record GUIChameleonPoliceBoxes() {
 
     // Chameleon Police Boxes
-    public static GUIData GO_TO_PAGE_1 = new GUIData(11, 51, Material.ARROW);
-    public static GUIData BACK = new GUIData(8, 52, Material.BOWL);
-    public static GUIData CLOSE = new GUIData(1, 53, Material.BOWL);
+    public static GUIData GO_TO_PAGE_1 = new GUIData(Arrow.PAGE_ONE.getKey(), 51, Material.ARROW);
+    public static GUIData BACK = new GUIData(Bowl.BACK, 52, Material.BOWL);
+    public static GUIData CLOSE = new GUIData(Bowl.CLOSE, 53, Material.BOWL);
 }

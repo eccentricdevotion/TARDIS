@@ -16,18 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.*;
 import org.bukkit.Material;
 
 public record GUIGeneticManipulator() {
 
     // Genetic Manipulator
-    public static GUIData BUTTON_SKINS = new GUIData(160, 43, Material.BOWL);
-    public static GUIData BUTTON_TWA = new GUIData(147, 44, Material.BOWL);
-    public static GUIData BUTTON_MASTER = new GUIData(3, 45, Material.COMPARATOR);
-    public static GUIData BUTTON_AGE = new GUIData(2, 47, Material.HOPPER);
-    public static GUIData BUTTON_TYPE = new GUIData(1, 48, Material.CYAN_DYE);
-    public static GUIData BUTTON_OPTS = new GUIData(1, 49, Material.LEAD);
-    public static GUIData BUTTON_RESTORE = new GUIData(1, 51, Material.APPLE);
-    public static GUIData BUTTON_DNA = new GUIData(1, 52, Material.WRITABLE_BOOK);
-    public static GUIData BUTTON_CANCEL = new GUIData(16, 53, Material.BOWL);
+    public static GUIData BUTTON_SKINS = new GUIData(Bowl.BUTTON_SKINS, 43, Material.BOWL);
+    public static GUIData BUTTON_TWA = new GUIData(Bowl.BUTTON_TWA, 44, Material.BOWL);
+    public static GUIData BUTTON_MASTER = new GUIData(Comparator.BUTTON_MASTER_OFF.getKey(), 45, Material.COMPARATOR);
+    public static GUIData BUTTON_AGE = new GUIData(Hopper.BUTTON_AGE.getKey(), 47, Material.HOPPER);
+    public static GUIData BUTTON_TYPE = new GUIData(CyanDye.BUTTON_TYPE.getKey(), 48, Material.CYAN_DYE);
+    public static GUIData BUTTON_OPTS = new GUIData(Lead.BUTTON_OPTS.getKey(), 49, Material.LEAD);
+    public static GUIData BUTTON_RESTORE = new GUIData(Apple.BUTTON_RESTORE.getKey(), 51, Material.APPLE);
+    public static GUIData BUTTON_DNA = new GUIData(WritableBook.BUTTON_DNA.getKey(), 52, Material.WRITABLE_BOOK);
+    public static GUIData BUTTON_CANCEL = new GUIData(Bowl.BUTTON_CANCEL, 53, Material.BOWL);
 }

@@ -31,7 +31,7 @@ public class TVInventory {
             ItemStack is = new ItemStack(tv.material(), 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(tv.name());
-            im.setCustomModelData(tv.customModelData());
+            im.setItemModel(tv.key());
             is.setItemMeta(im);
             stack[tv.slot()] = is;
         }

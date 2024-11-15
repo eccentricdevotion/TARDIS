@@ -51,35 +51,35 @@ public class ElementInventory {
         ItemStack scroll_up = new ItemStack(GUIChemistry.SCROLL_UP.material(), 1);
         ItemMeta uim = scroll_up.getItemMeta();
         uim.setDisplayName("Scroll up");
-        uim.setCustomModelData(GUIChemistry.SCROLL_UP.customModelData());
+        uim.setItemModel(GUIChemistry.SCROLL_UP.key());
         scroll_up.setItemMeta(uim);
         stack[8] = scroll_up;
         // scroll down
         ItemStack scroll_down = new ItemStack(GUIChemistry.SCROLL_DOWN.material(), 1);
         ItemMeta dim = scroll_down.getItemMeta();
         dim.setDisplayName("Scroll down");
-        dim.setCustomModelData(GUIChemistry.SCROLL_DOWN.customModelData());
+        dim.setItemModel(GUIChemistry.SCROLL_DOWN.key());
         scroll_down.setItemMeta(dim);
         stack[17] = scroll_down;
         // compounds
         ItemStack compounds = new ItemStack(GUIChemistry.COMPOUNDS.material(), 1);
         ItemMeta cim = compounds.getItemMeta();
         cim.setDisplayName("Compounds");
-        cim.setCustomModelData(GUIChemistry.COMPOUNDS.customModelData());
+        cim.setItemModel(GUIChemistry.COMPOUNDS.key());
         compounds.setItemMeta(cim);
         stack[35] = compounds;
         // products
         ItemStack products = new ItemStack(GUIChemistry.PRODUCTS.material(), 1);
         ItemMeta pim = products.getItemMeta();
         pim.setDisplayName("Products");
-        pim.setCustomModelData(GUIChemistry.PRODUCTS.customModelData());
+        pim.setItemModel(GUIChemistry.PRODUCTS.key());
         products.setItemMeta(pim);
         stack[GUIChemistry.PRODUCTS.slot()] = products;
         // close
         ItemStack close = new ItemStack(GUIChemistry.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChemistry.CLOSE.customModelData());
+        close_im.setItemModel(GUIChemistry.CLOSE.key());
         close.setItemMeta(close_im);
         stack[53] = close;
         return stack;

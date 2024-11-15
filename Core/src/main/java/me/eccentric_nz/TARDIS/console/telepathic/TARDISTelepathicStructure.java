@@ -37,7 +37,7 @@ public class TARDISTelepathicStructure {
         ItemStack close = new ItemStack(GUIMap.BUTTON_CLOSE.material(), 1);
         ItemMeta gui = close.getItemMeta();
         gui.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        gui.setCustomModelData(GUIMap.BUTTON_CLOSE.customModelData());
+        gui.setItemModel(GUIMap.BUTTON_CLOSE.key());
         close.setItemMeta(gui);
         stack[53] = close;
         return stack;

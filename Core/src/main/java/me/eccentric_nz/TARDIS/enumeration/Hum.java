@@ -16,31 +16,34 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import org.bukkit.NamespacedKey;
+
 /**
  * @author eccentric_nz
  */
 public enum Hum {
 
-    ALIEN(3),
-    ATMOSPHERE(7),
-    COMPUTER(46),
-    COPPER(48),
-    CORAL(49),
-    GALAXY(53),
-    LEARNING(59),
-    MIND(63),
-    NEON(64),
-    SLEEPING(78),
-    VOID(85),
-    RANDOM(70);
+    ALIEN(Bowl.ALIEN),
+    ATMOSPHERE(Bowl.ATMOSPHERE),
+    COMPUTER(Bowl.COMPUTER),
+    COPPER(Bowl.COPPER),
+    CORAL(Bowl.CORAL),
+    GALAXY(Bowl.GALAXY),
+    LEARNING(Bowl.LEARNING),
+    MIND(Bowl.MIND),
+    NEON(Bowl.NEON),
+    SLEEPING(Bowl.SLEEPING),
+    VOID(Bowl.VOID),
+    RANDOM(Bowl.RANDOM);
     
-    private final int cmd;
+    private final NamespacedKey key;
 
-    Hum(int cmd) {
-        this.cmd = cmd;
+    Hum(NamespacedKey key) {
+        this.key = key;
     }
 
-    public int getCmd() {
-        return cmd;
+    public NamespacedKey getKey() {
+        return key;
     }
 }

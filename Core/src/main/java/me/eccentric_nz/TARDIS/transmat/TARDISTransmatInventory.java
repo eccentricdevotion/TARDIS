@@ -80,7 +80,7 @@ public class TARDISTransmatInventory {
             ItemStack info = new ItemStack(GUITransmat.INFO.material(), 1);
             ItemMeta meta = info.getItemMeta();
             meta.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
-            meta.setCustomModelData(GUITransmat.INFO.customModelData());
+            meta.setItemModel(GUITransmat.INFO.key());
             meta.setLore(plugin.getChameleonGuis().getStringList("INFO_TRANSMAT"));
             info.setItemMeta(meta);
             stack[GUITransmat.INFO.slot()] = info;
@@ -88,7 +88,7 @@ public class TARDISTransmatInventory {
             ItemStack delete = new ItemStack(GUITransmat.DELETE.material(), 1);
             ItemMeta dim = delete.getItemMeta();
             dim.setDisplayName(plugin.getLanguage().getString("BUTTON_DELETE"));
-            dim.setCustomModelData(GUITransmat.DELETE.customModelData());
+            dim.setItemModel(GUITransmat.DELETE.key());
             delete.setItemMeta(dim);
             stack[GUITransmat.DELETE.slot()] = delete;
         }
@@ -96,7 +96,7 @@ public class TARDISTransmatInventory {
         ItemStack tele = new ItemStack(GUITransmat.TRANSMAT.material(), 1);
         ItemMeta port = tele.getItemMeta();
         port.setDisplayName(plugin.getLanguage().getString("BUTTON_TRANSMAT"));
-        port.setCustomModelData(GUITransmat.TRANSMAT.customModelData());
+        port.setItemModel(GUITransmat.TRANSMAT.key());
         tele.setItemMeta(port);
         stack[GUITransmat.TRANSMAT.slot()] = tele;
         // rooms world
@@ -104,7 +104,7 @@ public class TARDISTransmatInventory {
             ItemStack rooms = new ItemStack(GUITransmat.ROOMS.material(), 1);
             ItemMeta world = rooms.getItemMeta();
             world.setDisplayName("Rooms World");
-            world.setCustomModelData(GUITransmat.ROOMS.customModelData());
+            world.setItemModel(GUITransmat.ROOMS.key());
             rooms.setItemMeta(world);
             stack[GUITransmat.ROOMS.slot()] = rooms;
         }
@@ -112,7 +112,7 @@ public class TARDISTransmatInventory {
         ItemStack close = new ItemStack(GUITransmat.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUITransmat.CLOSE.customModelData());
+        close_im.setItemModel(GUITransmat.CLOSE.key());
         close.setItemMeta(close_im);
         stack[GUITransmat.CLOSE.slot()] = close;
 

@@ -16,19 +16,22 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Arrow;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bucket;
 import org.bukkit.Material;
 
 public record GUIChameleonPresets() {
 
     // Chameleon Presets
-    public static GUIData GO_TO_PAGE_2 = new GUIData(12, 52, Material.ARROW);
-    public static GUIData NEW = new GUIData(151, 49, Material.BOWL);
-    public static GUIData SAVE = new GUIData(74, 50, Material.BOWL);
-    public static GUIData USE_SELECTED = new GUIData(152, 45, Material.BOWL);
-    public static GUIData UPDATE_SELECTED = new GUIData(153, 47, Material.BOWL);
-    public static GUIData DELETE_SELECTED = new GUIData(1, 46, Material.BUCKET);
-    public static GUIData CURRENT = new GUIData(17, 50, Material.BOWL);
-    public static GUIData SAVED = new GUIData(18, 51, Material.BOWL);
-    public static GUIData BACK = new GUIData(8, 51, Material.BOWL);
-    public static GUIData CLOSE = new GUIData(1, 53, Material.BOWL);
+    public static GUIData GO_TO_PAGE_2 = new GUIData(Arrow.PAGE_TWO.getKey(), 52, Material.ARROW);
+    public static GUIData NEW = new GUIData(Bowl.NEW, 49, Material.BOWL);
+    public static GUIData SAVE = new GUIData(Bowl.SAVE, 50, Material.BOWL);
+    public static GUIData USE_SELECTED = new GUIData(Bowl.USE_SELECTED, 45, Material.BOWL);
+    public static GUIData UPDATE_SELECTED = new GUIData(Bowl.UPDATE_SELECTED, 47, Material.BOWL);
+    public static GUIData DELETE_SELECTED = new GUIData(Bucket.DELETE.getKey(), 46, Material.BUCKET);
+    public static GUIData CURRENT = new GUIData(Bowl.BUTTON_CHAMELEON, 50, Material.BOWL);
+    public static GUIData SAVED = new GUIData(Bowl.BUTTON_CONSTRUCT, 51, Material.BOWL);
+    public static GUIData BACK = new GUIData(Bowl.BACK, 51, Material.BOWL);
+    public static GUIData CLOSE = new GUIData(Bowl.CLOSE, 53, Material.BOWL);
 }

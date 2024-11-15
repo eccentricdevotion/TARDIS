@@ -16,21 +16,23 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Arrow;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
 import org.bukkit.Material;
 
 public record GUIChameleonTemplate() {
 
     // Chameleon Template
-    public static GUIData BACK_HELP = new GUIData(1, 0, Material.ARROW);
-    public static GUIData INFO_TEMPLATE = new GUIData(57, 4, Material.BOWL);
-    public static GUIData GO_CONSTRUCT = new GUIData(4, 8, Material.ARROW);
-    public static GUIData COL_L_FRONT = new GUIData(35, 45, Material.BOWL);
-    public static GUIData COL_L_MIDDLE = new GUIData(36, 36, Material.BOWL);
-    public static GUIData COL_L_BACK = new GUIData(37, 27, Material.BOWL);
-    public static GUIData COL_B_MIDDLE = new GUIData(38, 28, Material.BOWL);
-    public static GUIData COL_R_BACK = new GUIData(39, 29, Material.BOWL);
-    public static GUIData COL_R_MIDDLE = new GUIData(40, 38, Material.BOWL);
-    public static GUIData COL_R_FRONT = new GUIData(41, 47, Material.BOWL);
-    public static GUIData COL_F_MIDDLE = new GUIData(42, 46, Material.BOWL);
-    public static GUIData COL_C_LAMP = new GUIData(43, 37, Material.BOWL);
+    public static GUIData BACK_HELP = new GUIData(Arrow.BACK.getKey(), 0, Material.ARROW);
+    public static GUIData INFO_TEMPLATE = new GUIData(Bowl.INFO, 4, Material.BOWL);
+    public static GUIData GO_CONSTRUCT = new GUIData(Arrow.GO.getKey(), 8, Material.ARROW);
+    public static GUIData COL_L_FRONT = new GUIData(Bowl.ONE, 45, Material.BOWL);
+    public static GUIData COL_L_MIDDLE = new GUIData(Bowl.TWO, 36, Material.BOWL);
+    public static GUIData COL_L_BACK = new GUIData(Bowl.THREE, 27, Material.BOWL);
+    public static GUIData COL_B_MIDDLE = new GUIData(Bowl.FOUR, 28, Material.BOWL);
+    public static GUIData COL_R_BACK = new GUIData(Bowl.FIVE, 29, Material.BOWL);
+    public static GUIData COL_R_MIDDLE = new GUIData(Bowl.SIX, 38, Material.BOWL);
+    public static GUIData COL_R_FRONT = new GUIData(Bowl.SEVEN, 47, Material.BOWL);
+    public static GUIData COL_F_MIDDLE = new GUIData(Bowl.EIGHT, 46, Material.BOWL);
+    public static GUIData COL_C_LAMP = new GUIData(Bowl.NINE, 37, Material.BOWL);
 }

@@ -71,7 +71,7 @@ public class TARDISIndexFileSection {
         ItemStack back = new ItemStack(GUIChameleonPoliceBoxes.BACK.material(), 1);
         ItemMeta but = back.getItemMeta();
         but.setDisplayName("Back");
-        but.setCustomModelData(GUIChameleonPoliceBoxes.BACK.customModelData());
+        but.setItemModel(GUIChameleonPoliceBoxes.BACK.key());
         back.setItemMeta(but);
         stack[45] = back;
         // close

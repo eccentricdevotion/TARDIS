@@ -78,7 +78,7 @@ public class TARDISPluginThemeInventory extends TARDISThemeInventory {
             ItemMeta io = info.getItemMeta();
             io.setDisplayName("Info");
             io.setLore(List.of("Shift-left click", "a console block to", "transmat to a", "desktop preview."));
-            io.setCustomModelData(GUIUpgrade.INFO.customModelData());
+            io.setItemModel(GUIUpgrade.INFO.key());
             info.setItemMeta(io);
             stack[GUIUpgrade.INFO.slot()] = info;
         }
@@ -87,7 +87,7 @@ public class TARDISPluginThemeInventory extends TARDISThemeInventory {
             ItemStack arc = new ItemStack(GUIUpgrade.ARCHIVE_CONSOLES.material(), 1);
             ItemMeta hive_im = arc.getItemMeta();
             hive_im.setDisplayName("Archive Consoles");
-            hive_im.setCustomModelData(GUIUpgrade.ARCHIVE_CONSOLES.customModelData());
+            hive_im.setItemModel(GUIUpgrade.ARCHIVE_CONSOLES.key());
             arc.setItemMeta(hive_im);
             stack[GUIUpgrade.ARCHIVE_CONSOLES.slot()] = arc;
         }
@@ -97,7 +97,7 @@ public class TARDISPluginThemeInventory extends TARDISThemeInventory {
                 ItemStack rep = new ItemStack(GUIUpgrade.REPAIR_CONSOLE.material(), 1);
                 ItemMeta air_im = rep.getItemMeta();
                 air_im.setDisplayName("Repair Console");
-                air_im.setCustomModelData(GUIUpgrade.REPAIR_CONSOLE.customModelData());
+                air_im.setItemModel(GUIUpgrade.REPAIR_CONSOLE.key());
                 rep.setItemMeta(air_im);
                 stack[GUIUpgrade.REPAIR_CONSOLE.slot()] = rep;
             }
@@ -106,7 +106,7 @@ public class TARDISPluginThemeInventory extends TARDISThemeInventory {
                 ItemStack cle = new ItemStack(GUIUpgrade.CLEAN.material(), 1);
                 ItemMeta an_im = cle.getItemMeta();
                 an_im.setDisplayName("Clean");
-                an_im.setCustomModelData(GUIUpgrade.CLEAN.customModelData());
+                an_im.setItemModel(GUIUpgrade.CLEAN.key());
                 cle.setItemMeta(an_im);
                 stack[GUIUpgrade.CLEAN.slot()] = cle;
             }
@@ -115,14 +115,14 @@ public class TARDISPluginThemeInventory extends TARDISThemeInventory {
         ItemStack custom = new ItemStack(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
         ItemMeta custom_im = custom.getItemMeta();
         custom_im.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
-        custom_im.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.customModelData());
+        custom_im.setItemModel(GUIChameleonPresets.GO_TO_PAGE_2.key());
         custom.setItemMeta(custom_im);
         stack[51] = custom;
         // close
         ItemStack close = new ItemStack(GUIUpgrade.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIUpgrade.CLOSE.customModelData());
+        close_im.setItemModel(GUIUpgrade.CLOSE.key());
         close.setItemMeta(close_im);
         stack[GUIUpgrade.CLOSE.slot()] = close;
 

@@ -16,17 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Comparator;
 import org.bukkit.Material;
 
 public record GUIChameleon() {
 
     // Chameleon Circuit
-    public static GUIData BUTTON_APPLY = new GUIData(1, 0, Material.COMPARATOR);
-    public static GUIData BUTTON_CHAMELEON = new GUIData(17, 11, Material.BOWL);
-    public static GUIData BUTTON_ADAPT = new GUIData(11, 12, Material.BOWL);
-    public static GUIData BUTTON_INVISIBLE = new GUIData(22, 13, Material.BOWL);
-    public static GUIData BUTTON_SHORT = new GUIData(28, 14, Material.BOWL);
-    public static GUIData BUTTON_CONSTRUCT = new GUIData(18, 15, Material.BOWL);
-    public static GUIData BUTTON_LOCK = new GUIData(146, 16, Material.BOWL);
-    public static GUIData BUTTON_CLOSE = new GUIData(1, 26, Material.BOWL);
+    public static GUIData BUTTON_APPLY = new GUIData(Comparator.APPLY.getKey(), 0, Material.COMPARATOR);
+    public static GUIData BUTTON_CHAMELEON = new GUIData(Bowl.BUTTON_CHAMELEON, 11, Material.BOWL);
+    public static GUIData BUTTON_ADAPT = new GUIData(Bowl.BUTTON_ADAPT, 12, Material.BOWL);
+    public static GUIData BUTTON_INVISIBLE = new GUIData(Bowl.BUTTON_INVISIBLE, 13, Material.BOWL);
+    public static GUIData BUTTON_SHORT = new GUIData(Bowl.BUTTON_SHORT, 14, Material.BOWL);
+    public static GUIData BUTTON_CONSTRUCT = new GUIData(Bowl.BUTTON_CONSTRUCT, 15, Material.BOWL);
+    public static GUIData BUTTON_LOCK = new GUIData(Bowl.BUTTON_LOCK, 16, Material.BOWL);
+    public static GUIData BUTTON_CLOSE = new GUIData(Bowl.CLOSE, 26, Material.BOWL);
 }

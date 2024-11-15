@@ -73,21 +73,21 @@ public class TARDISChameleonInventory {
         ItemMeta now = apply.getItemMeta();
         now.setDisplayName(plugin.getChameleonGuis().getString("APPLY"));
         now.setLore(plugin.getChameleonGuis().getStringList("APPLY_LORE"));
-        now.setCustomModelData(GUIChameleon.BUTTON_APPLY.customModelData());
+        now.setItemModel(GUIChameleon.BUTTON_APPLY.key());
         apply.setItemMeta(now);
         // Disabled
         ItemStack dis = new ItemStack(GUIChameleon.BUTTON_CHAMELEON.material(), 1);
         ItemMeta abled = dis.getItemMeta();
         abled.setDisplayName("Chameleon Circuit");
         abled.setLore(plugin.getChameleonGuis().getStringList("DISABLED_LORE"));
-        abled.setCustomModelData(GUIChameleon.BUTTON_CHAMELEON.customModelData());
+        abled.setItemModel(GUIChameleon.BUTTON_CHAMELEON.key());
         dis.setItemMeta(abled);
         // Adaptive
         ItemStack adap = new ItemStack(GUIChameleon.BUTTON_ADAPT.material(), 1);
         ItemMeta tive = adap.getItemMeta();
         tive.setDisplayName(plugin.getChameleonGuis().getString("ADAPT"));
         tive.setLore(plugin.getChameleonGuis().getStringList("ADAPT_LORE"));
-        tive.setCustomModelData(GUIChameleon.BUTTON_ADAPT.customModelData());
+        tive.setItemModel(GUIChameleon.BUTTON_ADAPT.key());
         adap.setItemMeta(tive);
         // Invisible
         ItemStack invis;
@@ -101,7 +101,7 @@ public class TARDISChameleonInventory {
                 ilore.add(plugin.getLanguage().getString("INVISIBILITY_LORE_2"));
             }
             ible.setLore(ilore);
-            ible.setCustomModelData(GUIChameleon.BUTTON_INVISIBLE.customModelData());
+            ible.setItemModel(GUIChameleon.BUTTON_INVISIBLE.key());
             invis.setItemMeta(ible);
         } else {
             invis = null;
@@ -111,14 +111,14 @@ public class TARDISChameleonInventory {
         ItemMeta tout = shor.getItemMeta();
         tout.setDisplayName(plugin.getChameleonGuis().getString("SHORT"));
         tout.setLore(plugin.getChameleonGuis().getStringList("SHORT_LORE"));
-        tout.setCustomModelData(GUIChameleon.BUTTON_SHORT.customModelData());
+        tout.setItemModel(GUIChameleon.BUTTON_SHORT.key());
         shor.setItemMeta(tout);
         // construction GUI
         ItemStack cons = new ItemStack(GUIChameleon.BUTTON_CONSTRUCT.material(), 1);
         ItemMeta truct = cons.getItemMeta();
         truct.setDisplayName(plugin.getChameleonGuis().getString("CONSTRUCT"));
         truct.setLore(plugin.getChameleonGuis().getStringList("CONSTRUCT_LORE"));
-        truct.setCustomModelData(GUIChameleon.BUTTON_CONSTRUCT.customModelData());
+        truct.setItemModel(GUIChameleon.BUTTON_CONSTRUCT.key());
         cons.setItemMeta(truct);
         // lock current preset
         ItemStack lock = null;
@@ -127,7 +127,7 @@ public class TARDISChameleonInventory {
             ItemMeta circuit = lock.getItemMeta();
             circuit.setDisplayName(plugin.getChameleonGuis().getString("LOCK"));
             circuit.setLore(plugin.getChameleonGuis().getStringList("LOCK_LORE"));
-            circuit.setCustomModelData(GUIChameleon.BUTTON_LOCK.customModelData());
+            circuit.setItemModel(GUIChameleon.BUTTON_LOCK.key());
             lock.setItemMeta(circuit);
         }
         // Disabled radio button
@@ -175,14 +175,10 @@ public class TARDISChameleonInventory {
         ItemStack close = new ItemStack(GUIChameleon.BUTTON_CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUIChameleon.BUTTON_CLOSE.customModelData());
+        can.setItemModel(GUIChameleon.BUTTON_CLOSE.key());
         close.setItemMeta(can);
 
-        return new ItemStack[]{
-            apply, null, null, lock, null, null, null, null, null,
-            null, null, dis, adap, invis, shor, cons, null, null,
-            null, null, fac, biome, not, pre, bui, null, close
-        };
+        return new ItemStack[]{apply, null, null, lock, null, null, null, null, null, null, null, dis, adap, invis, shor, cons, null, null, null, null, fac, biome, not, pre, bui, null, close};
     }
 
     public ItemStack[] getMenu() {

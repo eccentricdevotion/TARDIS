@@ -27,7 +27,7 @@ public class TARDISTelepathicInventory {
         ItemStack[] stack = new ItemStack[9];
         // get current telepathic status
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
-        String onOff = (rsp.resultSet() && rsp.isTelepathyOn()) ? ChatColor.GREEN + "ON" : ChatColor.RED + "OFF";
+        String onOff = (rsp.resultSet() && rsp.isTelepathyOn()) ? ChatColor.GREEN + "ON" : ChatColor.RED + "OFF" ;
         // toggling telepathic circuit on/off
         ItemStack toggle = new ItemStack(Material.REPEATER);
         ItemMeta tim = toggle.getItemMeta();
@@ -67,7 +67,7 @@ public class TARDISTelepathicInventory {
         ItemStack close = new ItemStack(GUIMap.BUTTON_CLOSE.material(), 1);
         ItemMeta gui = close.getItemMeta();
         gui.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        gui.setCustomModelData(GUIMap.BUTTON_CLOSE.customModelData());
+        gui.setItemModel(GUIMap.BUTTON_CLOSE.key());
         close.setItemMeta(gui);
         stack[8] = close;
         return stack;

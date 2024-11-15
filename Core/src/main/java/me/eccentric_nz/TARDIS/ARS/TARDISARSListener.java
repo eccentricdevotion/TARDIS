@@ -19,10 +19,12 @@ package me.eccentric_nz.TARDIS.ARS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Stone;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -280,6 +282,11 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                 @Override
                 public int getOffset() {
                     return 1;
+                }
+
+                @Override
+                public NamespacedKey getKey() {
+                    return Stone.SLOT.getKey();
                 }
             });
         });

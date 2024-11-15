@@ -16,6 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.BrownStainedGlassPane;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bucket;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Repeater;
 import org.bukkit.Material;
 
 import java.util.List;
@@ -23,14 +27,14 @@ import java.util.List;
 public record GUITelevision() {
 
     // TARDIS Areas
-    public static GUIData DOCTORS = new GUIData(1000, 1, Material.BROWN_STAINED_GLASS_PANE, "Doctors");
-    public static GUIData COMPANIONS = new GUIData(1001, 3, Material.BROWN_STAINED_GLASS_PANE, "Companions");
-    public static GUIData CHARACTERS = new GUIData(1002, 5, Material.BROWN_STAINED_GLASS_PANE, "Characters");
-    public static GUIData MONSTERS = new GUIData(1003, 7, Material.BROWN_STAINED_GLASS_PANE, "Monsters");
-    public static GUIData DOWNLOAD = new GUIData(157, 29, Material.REPEATER);
-    public static GUIData REMOVE = new GUIData(8, 31, Material.BUCKET);
-    public static GUIData BACK = new GUIData(8, 33, Material.BOWL);
-    public static GUIData CLOSE = new GUIData(1, 35, Material.BOWL);
+    public static GUIData DOCTORS = new GUIData(BrownStainedGlassPane.DOCTOR.getKey(), 1, Material.BROWN_STAINED_GLASS_PANE, "Doctors");
+    public static GUIData COMPANIONS = new GUIData(BrownStainedGlassPane.COMPANION.getKey(), 3, Material.BROWN_STAINED_GLASS_PANE, "Companions");
+    public static GUIData CHARACTERS = new GUIData(BrownStainedGlassPane.CHARACTER.getKey(), 5, Material.BROWN_STAINED_GLASS_PANE, "Characters");
+    public static GUIData MONSTERS = new GUIData(BrownStainedGlassPane.MONSTER.getKey(), 7, Material.BROWN_STAINED_GLASS_PANE, "Monsters");
+    public static GUIData DOWNLOAD = new GUIData(Repeater.DOWNLOAD_OFF.getKey(), 29, Material.REPEATER);
+    public static GUIData REMOVE = new GUIData(Bucket.REMOVE.getKey(), 31, Material.BUCKET);
+    public static GUIData BACK = new GUIData(Bowl.BACK, 33, Material.BOWL);
+    public static GUIData CLOSE = new GUIData(Bowl.CLOSE, 35, Material.BOWL);
 
     public static List<GUIData> values() {
         return List.of(DOCTORS, COMPANIONS, CHARACTERS, MONSTERS, REMOVE, CLOSE);

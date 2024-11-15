@@ -16,31 +16,32 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.*;
 import org.bukkit.Material;
 
 public record GUILights() {
 
     // TARDIS Autonomous
-    public static GUIData LIGHT_INFO = new GUIData(57, 0, Material.BOWL);
-    public static GUIData BLOCK_INFO = new GUIData(57, 27, Material.BOWL);
-    public static GUIData BLOCK_BUTTON = new GUIData(3, 28, Material.COAL_BLOCK);
-    public static GUIData LIGHT_SWITCH = new GUIData(16, 45, Material.REPEATER);
-    public static GUIData BUTTON_LIGHT_LEVELS = new GUIData(4, 47, Material.COAL_BLOCK);
-    public static GUIData BUTTON_LIGHT_SEQUENCE = new GUIData(5, 49, Material.COAL_BLOCK);
-    public static GUIData EDIT_LIGHT_SEQUENCE = new GUIData(6, 51, Material.COAL_BLOCK);
-    public static GUIData SEQUENCE_INFO = new GUIData(57, 4, Material.BOWL);
-    public static GUIData DELAY = new GUIData(9, -1, Material.COAL_BLOCK);
-    public static GUIData LEVEL = new GUIData(7, -1, Material.COAL_BLOCK);
-    public static GUIData CHANGE_INFO = new GUIData(57, 34, Material.BOWL);
-    public static GUIData CHANGE_LIGHTS = new GUIData(10, 35, Material.COAL_BLOCK);
-    public static GUIData INTERIOR_INFO = new GUIData(57, 1, Material.BOWL);
-    public static GUIData EXTERIOR_INFO = new GUIData(57, 7, Material.BOWL);
-    public static GUIData CONSOLE_INFO = new GUIData(57, 22, Material.BOWL);
-    public static GUIData INTERIOR = new GUIData(1, 42, Material.LANTERN);
-    public static GUIData EXTERIOR = new GUIData(1, 42, Material.SOUL_LANTERN);
-    public static GUIData CONSOLE = new GUIData(4, 42, Material.COMPARATOR);
-    public static GUIData CONVERT_INFO = new GUIData(57, 41, Material.BOWL);
-    public static GUIData SELECT_LIGHT = new GUIData(3, 42, Material.COAL_BLOCK);
-    public static GUIData CONVERT_LIGHTS = new GUIData(11, 44, Material.COAL_BLOCK);
-    public static GUIData CLOSE = new GUIData(1, 53, Material.BOWL);
+    public static GUIData LIGHT_INFO = new GUIData(Bowl.INFO, 0, Material.BOWL);
+    public static GUIData BLOCK_INFO = new GUIData(Bowl.INFO, 27, Material.BOWL);
+    public static GUIData BLOCK_BUTTON = new GUIData(CoalBlock.BLOCK_BUTTON.getKey(), 28, Material.COAL_BLOCK);
+    public static GUIData LIGHT_SWITCH = new GUIData(Repeater.BUTTON_LIGHTS_ON.getKey(), 45, Material.REPEATER);
+    public static GUIData BUTTON_LIGHT_LEVELS = new GUIData(CoalBlock.LIGHT_LEVELS.getKey(), 47, Material.COAL_BLOCK);
+    public static GUIData BUTTON_LIGHT_SEQUENCE = new GUIData(CoalBlock.SEQUENCE_BUTTON.getKey(), 49, Material.COAL_BLOCK);
+    public static GUIData EDIT_LIGHT_SEQUENCE = new GUIData(CoalBlock.EDIT_BUTTON.getKey(), 51, Material.COAL_BLOCK);
+    public static GUIData SEQUENCE_INFO = new GUIData(Bowl.INFO, 4, Material.BOWL);
+    public static GUIData DELAY = new GUIData(CoalBlock.DELAY.getKey(), -1, Material.COAL_BLOCK);
+    public static GUIData LEVEL = new GUIData(CoalBlock.LIGHT_LEVELS.getKey(), -1, Material.COAL_BLOCK);
+    public static GUIData CHANGE_INFO = new GUIData(Bowl.INFO, 34, Material.BOWL);
+    public static GUIData CHANGE_LIGHTS = new GUIData(CoalBlock.CHANGE.getKey(), 35, Material.COAL_BLOCK);
+    public static GUIData INTERIOR_INFO = new GUIData(Bowl.INFO, 1, Material.BOWL);
+    public static GUIData EXTERIOR_INFO = new GUIData(Bowl.INFO, 7, Material.BOWL);
+    public static GUIData CONSOLE_INFO = new GUIData(Bowl.INFO, 22, Material.BOWL);
+    public static GUIData INTERIOR = new GUIData(Lantern.INTERIOR.getKey(), 42, Material.LANTERN);
+    public static GUIData EXTERIOR = new GUIData(SoulLantern.EXTERIOR.getKey(), 42, Material.SOUL_LANTERN);
+    public static GUIData CONSOLE = new GUIData(Comparator.CONSOLE.getKey(), 42, Material.COMPARATOR);
+    public static GUIData CONVERT_INFO = new GUIData(Bowl.INFO, 41, Material.BOWL);
+    public static GUIData SELECT_LIGHT = new GUIData(CoalBlock.BLOCK_BUTTON.getKey(), 42, Material.COAL_BLOCK);
+    public static GUIData CONVERT_LIGHTS = new GUIData(CoalBlock.CONVERT.getKey(), 44, Material.COAL_BLOCK);
+    public static GUIData CLOSE = new GUIData(Bowl.CLOSE, 53, Material.BOWL);
 }

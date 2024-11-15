@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import org.bukkit.NamespacedKey;
+
 /**
  * Used to dynamically add custom rooms to the TARDIS' Architectural Reconfiguration System.
  *
@@ -30,4 +32,6 @@ public interface ARS {
     String getConfigPath();
 
     int getOffset();
+
+    NamespacedKey getKey();
 }

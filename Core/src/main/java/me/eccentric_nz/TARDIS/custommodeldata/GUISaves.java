@@ -16,19 +16,23 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Arrow;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bucket;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Map;
 import org.bukkit.Material;
 
 public record GUISaves() {
 
     // TARDIS saves
-    public static GUIData HOME = new GUIData(140, 0, Material.BOWL);
-    public static GUIData DEATH = new GUIData(170, 2, Material.BOWL);
-    public static GUIData REARRANGE_SAVES = new GUIData(5, 45, Material.ARROW);
-    public static GUIData LOAD_TARDIS_AREAS = new GUIData(1, 53, Material.MAP);
-    public static GUIData DELETE_SAVE = new GUIData(1, 47, Material.BUCKET);
-    public static GUIData LOAD_MY_SAVES = new GUIData(138, 49, Material.BOWL);
-    public static GUIData LOAD_SAVES_FROM_THIS_TARDIS = new GUIData(139, 49, Material.BOWL);
-    public static GUIData BACK_TO_PLANETS = new GUIData(1, 51, Material.ARROW);
-    public static GUIData GO_TO_PAGE_1 = new GUIData(11, 51, Material.ARROW);
-    public static GUIData GO_TO_PAGE_2 = new GUIData(12, 51, Material.ARROW);
+    public static GUIData HOME = new GUIData(Bowl.HOME, 0, Material.BOWL);
+    public static GUIData DEATH = new GUIData(Bowl.BUTTON_DEATH, 2, Material.BOWL);
+    public static GUIData REARRANGE_SAVES = new GUIData(Arrow.REARRANGE.getKey(), 45, Material.ARROW);
+    public static GUIData LOAD_TARDIS_AREAS = new GUIData(Map.LOAD_SELECTED_PROGRAM_IN_EDITOR.getKey(), 53, Material.MAP);
+    public static GUIData DELETE_SAVE = new GUIData(Bucket.DELETE.getKey(), 47, Material.BUCKET);
+    public static GUIData LOAD_MY_SAVES = new GUIData(Bowl.OWN_SAVES, 49, Material.BOWL);
+    public static GUIData LOAD_SAVES_FROM_THIS_TARDIS = new GUIData(Bowl.TARDIS_SAVES, 49, Material.BOWL);
+    public static GUIData BACK_TO_PLANETS = new GUIData(Arrow.BACK.getKey(), 51, Material.ARROW);
+    public static GUIData GO_TO_PAGE_1 = new GUIData(Arrow.PAGE_ONE.getKey(), 51, Material.ARROW);
+    public static GUIData GO_TO_PAGE_2 = new GUIData(Arrow.PAGE_TWO.getKey(), 51, Material.ARROW);
 }

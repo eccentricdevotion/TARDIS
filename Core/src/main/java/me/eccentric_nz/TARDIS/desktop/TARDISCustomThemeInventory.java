@@ -77,7 +77,7 @@ public class TARDISCustomThemeInventory extends TARDISThemeInventory {
             ItemMeta io = info.getItemMeta();
             io.setDisplayName("Info");
             io.setLore(List.of("Shift-left click", "a console block", "to transmat to a", "desktop preview.", "Type 'done' in", "chat to return."));
-            io.setCustomModelData(GUIUpgrade.INFO.customModelData());
+            io.setItemModel(GUIUpgrade.INFO.key());
             info.setItemMeta(io);
             stack[GUIUpgrade.INFO.slot()] = info;
         }
@@ -85,14 +85,14 @@ public class TARDISCustomThemeInventory extends TARDISThemeInventory {
         ItemStack custom = new ItemStack(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.material(), 1);
         ItemMeta custom_im = custom.getItemMeta();
         custom_im.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
-        custom_im.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.customModelData());
+        custom_im.setItemModel(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.key());
         custom.setItemMeta(custom_im);
         stack[GUIChameleonPoliceBoxes.GO_TO_PAGE_1.slot()] = custom;
         // close
         ItemStack close = new ItemStack(GUIChameleonPoliceBoxes.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChameleonPoliceBoxes.CLOSE.customModelData());
+        close_im.setItemModel(GUIChameleonPoliceBoxes.CLOSE.key());
         close.setItemMeta(close_im);
         stack[GUIChameleonPoliceBoxes.CLOSE.slot()] = close;
 

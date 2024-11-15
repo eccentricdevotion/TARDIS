@@ -60,14 +60,14 @@ public class TARDISTelepathicBiome {
                 ItemStack scroll_up = new ItemStack(GUIWallFloor.BUTTON_SCROLL_U.material(), 1);
                 ItemMeta uim = scroll_up.getItemMeta();
                 uim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_U"));
-                uim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_U.customModelData());
+                uim.setItemModel(GUIWallFloor.BUTTON_SCROLL_U.key());
                 scroll_up.setItemMeta(uim);
                 stack[GUIWallFloor.BUTTON_SCROLL_U.slot()] = scroll_up;
                 // scroll down
                 ItemStack scroll_down = new ItemStack(GUIWallFloor.BUTTON_SCROLL_D.material(), 1);
                 ItemMeta dim = scroll_down.getItemMeta();
                 dim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_D"));
-                dim.setCustomModelData(GUIWallFloor.BUTTON_SCROLL_D.customModelData());
+                dim.setItemModel(GUIWallFloor.BUTTON_SCROLL_D.key());
                 scroll_down.setItemMeta(dim);
                 stack[GUIWallFloor.BUTTON_SCROLL_D.slot()] = scroll_down;
             }
@@ -76,7 +76,7 @@ public class TARDISTelepathicBiome {
         ItemStack close = new ItemStack(GUIMap.BUTTON_CLOSE.material(), 1);
         ItemMeta gui = close.getItemMeta();
         gui.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        gui.setCustomModelData(GUIMap.BUTTON_CLOSE.customModelData());
+        gui.setItemModel(GUIMap.BUTTON_CLOSE.key());
         close.setItemMeta(gui);
         stack[53] = close;
         return stack;

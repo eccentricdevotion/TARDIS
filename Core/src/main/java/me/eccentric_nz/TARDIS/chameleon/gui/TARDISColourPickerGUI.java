@@ -86,16 +86,9 @@ public class TARDISColourPickerGUI {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta win = close.getItemMeta();
         win.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        win.setCustomModelData(GUIChameleon.BUTTON_CLOSE.customModelData());
+        win.setItemModel(GUIChameleon.BUTTON_CLOSE.key());
         close.setItemMeta(win);
-        return new ItemStack[]{
-                null, null, null, null, dis, null, null, null, null,
-                null, null, null, null, null, null, null, null, null,
-                red, null, less, null, redtint, null, more, null, null,
-                green, null, less, null, greentint, null, more, null, select,
-                blue, null, less, null, bluetint, null, more, null, null,
-                null, null, null, null, null, null, null, null, close
-        };
+        return new ItemStack[]{null, null, null, null, dis, null, null, null, null, null, null, null, null, null, null, null, null, null, red, null, less, null, redtint, null, more, null, null, green, null, less, null, greentint, null, more, null, select, blue, null, less, null, bluetint, null, more, null, null, null, null, null, null, null, null, null, null, close};
     }
 
     public ItemStack[] getGUI() {

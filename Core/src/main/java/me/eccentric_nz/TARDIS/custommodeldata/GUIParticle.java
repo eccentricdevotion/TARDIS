@@ -16,24 +16,25 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.*;
 import org.bukkit.Material;
 
 public record GUIParticle() {
 
     // TARDIS Autonomous
-    public static GUIData SHAPE_INFO = new GUIData(2, 0, Material.LAPIS_BLOCK);
-    public static GUIData SHAPE = new GUIData(1, -1, Material.LAPIS_LAZULI);
-    public static GUIData EFFECT_INFO = new GUIData(2, 9, Material.REDSTONE_BLOCK);
-    public static GUIData EFFECT = new GUIData(1, -1, Material.REDSTONE);
-    public static GUIData COLOUR_INFO = new GUIData(2, 8, Material.EMERALD_BLOCK);
-    public static GUIData COLOUR = new GUIData(1, 17,Material.EMERALD);
-    public static GUIData BLOCK_INFO = new GUIData(2, 26, Material.COAL_BLOCK);
-    public static GUIData BLOCK = new GUIData(1, 35, Material.COAL);
-    public static GUIData TOGGLE = new GUIData(19, 44, Material.REPEATER);
-    public static GUIData TEST = new GUIData(1, 48, Material.COPPER_INGOT);
-    public static GUIData MINUS = new GUIData(40, -1, Material.PAPER);
-    public static GUIData PLUS = new GUIData(39, -1, Material.PAPER);
-    public static GUIData DENSITY = new GUIData(5, 46, Material.IRON_INGOT);
-    public static GUIData SPEED = new GUIData(1, 50, Material.GOLD_INGOT);
-    public static GUIData CLOSE = new GUIData(1, 53, Material.BOWL);
+    public static GUIData SHAPE_INFO = new GUIData(LapisBlock.SHAPE_INFO.getKey(), 0, Material.LAPIS_BLOCK);
+    public static GUIData SHAPE = new GUIData(LapisLazuli.SHAPE.getKey(), -1, Material.LAPIS_LAZULI);
+    public static GUIData EFFECT_INFO = new GUIData(RedstoneBlock.EFFECT_INFO.getKey(), 9, Material.REDSTONE_BLOCK);
+    public static GUIData EFFECT = new GUIData(Redstone.EFFECT.getKey(), -1, Material.REDSTONE);
+    public static GUIData COLOUR_INFO = new GUIData(EmeraldBlock.COLOUR_INFO.getKey(), 8, Material.EMERALD_BLOCK);
+    public static GUIData COLOUR = new GUIData(Emerald.COLOUR.getKey(), 17, Material.EMERALD);
+    public static GUIData BLOCK_INFO = new GUIData(CoalBlock.BLOCK_BUTTON.getKey(), 26, Material.COAL_BLOCK);
+    public static GUIData BLOCK = new GUIData(Coal.BLOCK.getKey(), 35, Material.COAL);
+    public static GUIData TOGGLE = new GUIData(Repeater.BUTTON_TOGGLE_ON.getKey(), 44, Material.REPEATER);
+    public static GUIData TEST = new GUIData(CopperIngot.TEST.getKey(), 48, Material.COPPER_INGOT);
+    public static GUIData MINUS = new GUIData(Paper.HANDLES_OPERATOR_SUBTRACTION.getKey(), -1, Material.PAPER);
+    public static GUIData PLUS = new GUIData(Paper.HANDLES_OPERATOR_ADDITION.getKey(), -1, Material.PAPER);
+    public static GUIData DENSITY = new GUIData(IronIngot.DENSITY.getKey(), 46, Material.IRON_INGOT);
+    public static GUIData SPEED = new GUIData(GoldIngot.SPEED.getKey(), 50, Material.GOLD_INGOT);
+    public static GUIData CLOSE = new GUIData(Bowl.CLOSE, 53, Material.BOWL);
 }

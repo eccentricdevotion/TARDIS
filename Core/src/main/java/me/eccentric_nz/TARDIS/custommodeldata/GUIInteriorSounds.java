@@ -16,11 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
 import org.bukkit.Material;
 
 public record GUIInteriorSounds() {
 
     // TARDIS Interior Sounds
-    public static GUIData ACTION = new GUIData(88, 15, Material.BOWL);
-    public static GUIData CLOSE = new GUIData(1, 17, Material.BOWL);
+    public static GUIData ACTION = new GUIData(Bowl.PLAY, 15, Material.BOWL);
+    public static GUIData CLOSE = new GUIData(Bowl.CLOSE, 17, Material.BOWL);
 }
