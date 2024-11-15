@@ -113,6 +113,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("emergency_npc", "allow");
         firstsBool.put("exile", "travel");
         firstsBool.put("external_gravity", "allow");
+        firstsBool.put("furnace_particles", "artron_furnace");
         firstsBool.put("give_key", "travel");
         firstsBool.put("guardians", "allow");
         firstsBool.put("hads", "allow");
