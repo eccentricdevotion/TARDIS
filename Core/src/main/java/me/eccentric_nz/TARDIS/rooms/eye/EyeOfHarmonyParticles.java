@@ -18,7 +18,7 @@ public class EyeOfHarmonyParticles {
         this.plugin = plugin;
     }
 
-    public static int stopTask(TARDIS plugin, int id) {
+    public static void stop(TARDIS plugin, int id) {
         int task = -1;
         // stop the current particles
         ResultSetArtronStorage rs = new ResultSetArtronStorage(plugin);
@@ -28,11 +28,10 @@ public class EyeOfHarmonyParticles {
                 plugin.getServer().getScheduler().cancelTask(task);
             }
         }
-        return task;
     }
 
-    public int stopStart(int id, int capacitors, UUID uuid) {
-        int task = stopTask(plugin, id);
+    public int start(int id, int capacitors, UUID uuid) {
+        int task = -1;
         // only restart if there are capacitors in storage
         if (capacitors > 0) {
             // get the new settings
