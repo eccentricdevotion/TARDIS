@@ -121,7 +121,7 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener {
         close(p);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             ItemStack[] seeds = new TARDISSeedsInventory(plugin, p).getMenu();
-            Inventory gui = plugin.getServer().createInventory(p, 36, ChatColor.DARK_RED + "TARDIS Seeds Menu");
+            Inventory gui = plugin.getServer().createInventory(p, 45, ChatColor.DARK_RED + "TARDIS Seeds Menu");
             gui.setContents(seeds);
             p.openInventory(gui);
         }, 2L);

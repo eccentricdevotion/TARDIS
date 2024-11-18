@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -54,7 +55,7 @@ public class TARDISSeedsInventory {
      * @return an Array of itemStacks (an inventory)
      */
     private ItemStack[] getItemStack() {
-        ItemStack[] stack = new ItemStack[36];
+        ItemStack[] stack = new ItemStack[45];
         int i = 0;
         // get consoles
         for (Schematic a : Consoles.getBY_NAMES().values()) {
@@ -66,7 +67,8 @@ public class TARDISSeedsInventory {
                 List<String> lore = new ArrayList<>();
                 lore.add("Click to see recipe...");
                 im.setLore(lore);
-                im.setCustomModelData((m.equals(Material.NETHER_WART_BLOCK)) ? 2 : 1);
+                NamespacedKey key = new NamespacedKey(plugin, "block/seed/"+a.getPermission());
+                im.setItemModel(key);
                 is.setItemMeta(im);
                 stack[i] = is;
                 i++;
@@ -78,7 +80,7 @@ public class TARDISSeedsInventory {
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close_im.setCustomModelData(1);
         close.setItemMeta(close_im);
-        stack[35] = close;
+        stack[44] = close;
         return stack;
     }
 

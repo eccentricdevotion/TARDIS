@@ -61,7 +61,7 @@ public class TARDISRecipeCategoryListener extends TARDISMenuListener {
                 ItemStack[] items;
                 if (category == RecipeCategory.SEED_BLOCKS) {
                     items = new TARDISSeedsInventory(plugin, player).getMenu();
-                    recipes = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "TARDIS Seeds Menu");
+                    recipes = plugin.getServer().createInventory(player, 45, ChatColor.DARK_RED + "TARDIS Seeds Menu");
                     recipes.setContents(items);
                 } else {
                     items = new TARDISRecipeInventory(plugin, category).getMenu();

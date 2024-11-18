@@ -136,7 +136,7 @@ public class TARDISChatListener implements Listener {
             // open how to GUI
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 ItemStack[] seeds = new TARDISSeedsInventory(plugin, p).getMenu();
-                Inventory wall = plugin.getServer().createInventory(p, 36, ChatColor.DARK_RED + "TARDIS Seeds Menu");
+                Inventory wall = plugin.getServer().createInventory(p, 45, ChatColor.DARK_RED + "TARDIS Seeds Menu");
                 wall.setContents(seeds);
                 p.openInventory(wall);
             }, 1L);
