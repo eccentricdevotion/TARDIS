@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum BlastFurnace {
 
-    CHEMISTRY(new NamespacedKey(TARDIS.plugin, "item/gui/room/chemistry"));
+    CHEMISTRY(new NamespacedKey(TARDIS.plugin, "gui/room/chemistry"));
 
     private final NamespacedKey key;
 

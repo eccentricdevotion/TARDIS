@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Emerald {
 
-    COLOUR(new NamespacedKey(TARDIS.plugin, "item/gui/particle/colour"));
+    COLOUR(new NamespacedKey(TARDIS.plugin, "gui/particle/colour"));
 
     private final NamespacedKey key;
 

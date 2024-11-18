@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum IronSword {
 
-    RUST_PLAGUE_SWORD(new NamespacedKey(TARDIS.plugin, "item/planets/rust_plague_sword"));
+    RUST_PLAGUE_SWORD(new NamespacedKey(TARDIS.plugin, "planets/rust_plague_sword"));
 
     private final NamespacedKey key;
 

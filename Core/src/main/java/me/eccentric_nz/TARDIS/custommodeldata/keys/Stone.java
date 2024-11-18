@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Stone {
 
-    SLOT(new NamespacedKey(TARDIS.plugin, "item/gui/room/slot"));
+    SLOT(new NamespacedKey(TARDIS.plugin, "gui/room/slot"));
 
     private final NamespacedKey key;
 

@@ -24,15 +24,15 @@ public record GUIChameleonTemplate() {
 
     // Chameleon Template
     public static GUIData BACK_HELP = new GUIData(Arrow.BACK.getKey(), 0, Material.ARROW);
-    public static GUIData INFO_TEMPLATE = new GUIData(Bowl.INFO, 4, Material.BOWL);
+    public static GUIData INFO_TEMPLATE = new GUIData(Bowl.INFO.getKey(), 4, Material.BOWL);
     public static GUIData GO_CONSTRUCT = new GUIData(Arrow.GO.getKey(), 8, Material.ARROW);
-    public static GUIData COL_L_FRONT = new GUIData(Bowl.ONE, 45, Material.BOWL);
-    public static GUIData COL_L_MIDDLE = new GUIData(Bowl.TWO, 36, Material.BOWL);
-    public static GUIData COL_L_BACK = new GUIData(Bowl.THREE, 27, Material.BOWL);
-    public static GUIData COL_B_MIDDLE = new GUIData(Bowl.FOUR, 28, Material.BOWL);
-    public static GUIData COL_R_BACK = new GUIData(Bowl.FIVE, 29, Material.BOWL);
-    public static GUIData COL_R_MIDDLE = new GUIData(Bowl.SIX, 38, Material.BOWL);
-    public static GUIData COL_R_FRONT = new GUIData(Bowl.SEVEN, 47, Material.BOWL);
-    public static GUIData COL_F_MIDDLE = new GUIData(Bowl.EIGHT, 46, Material.BOWL);
-    public static GUIData COL_C_LAMP = new GUIData(Bowl.NINE, 37, Material.BOWL);
+    public static GUIData COL_L_FRONT = new GUIData(Bowl.ONE.getKey(), 45, Material.BOWL);
+    public static GUIData COL_L_MIDDLE = new GUIData(Bowl.TWO.getKey(), 36, Material.BOWL);
+    public static GUIData COL_L_BACK = new GUIData(Bowl.THREE.getKey(), 27, Material.BOWL);
+    public static GUIData COL_B_MIDDLE = new GUIData(Bowl.FOUR.getKey(), 28, Material.BOWL);
+    public static GUIData COL_R_BACK = new GUIData(Bowl.FIVE.getKey(), 29, Material.BOWL);
+    public static GUIData COL_R_MIDDLE = new GUIData(Bowl.SIX.getKey(), 38, Material.BOWL);
+    public static GUIData COL_R_FRONT = new GUIData(Bowl.SEVEN.getKey(), 47, Material.BOWL);
+    public static GUIData COL_F_MIDDLE = new GUIData(Bowl.EIGHT.getKey(), 46, Material.BOWL);
+    public static GUIData COL_C_LAMP = new GUIData(Bowl.NINE.getKey(), 37, Material.BOWL);
 }

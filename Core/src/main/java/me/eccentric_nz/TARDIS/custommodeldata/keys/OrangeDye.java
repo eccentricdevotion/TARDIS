@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum OrangeDye {
 
-    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "item/genetic/button_type")),
+    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "genetic/button_type")),
     TARDIS_ORANGE(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_orange")),
     TARDIS_ORANGE_OPEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_orange_open")),
     TARDIS_ORANGE_STAINED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_orange_stained")),
@@ -26,11 +26,11 @@ public enum OrangeDye {
     ORANGE_FLYING_13(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/orange/orange_flying_13")),
     ORANGE_FLYING_14(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/orange/orange_flying_14")),
     ORANGE_FLYING_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/orange/orange_flying_15")),
-    TENNANT_0(new NamespacedKey(TARDIS.plugin, "item/time_rotor/tennant/tennant_0")),
-    TENNANT_1(new NamespacedKey(TARDIS.plugin, "item/time_rotor/tennant/tennant_1")),
-    TENNANT_2(new NamespacedKey(TARDIS.plugin, "item/time_rotor/tennant/tennant_2")),
-    TENNANT_3(new NamespacedKey(TARDIS.plugin, "item/time_rotor/tennant/tennant_3")),
-    TENNANT_4(new NamespacedKey(TARDIS.plugin, "item/time_rotor/tennant/tennant_4")),
+    TENNANT_0(new NamespacedKey(TARDIS.plugin, "time_rotor/tennant/tennant_0")),
+    TENNANT_1(new NamespacedKey(TARDIS.plugin, "time_rotor/tennant/tennant_1")),
+    TENNANT_2(new NamespacedKey(TARDIS.plugin, "time_rotor/tennant/tennant_2")),
+    TENNANT_3(new NamespacedKey(TARDIS.plugin, "time_rotor/tennant/tennant_3")),
+    TENNANT_4(new NamespacedKey(TARDIS.plugin, "time_rotor/tennant/tennant_4")),
     ORANGE_FLYING_OPEN_0(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/orange/orange_flying_open_0")),
     ORANGE_FLYING_OPEN_1(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/orange/orange_flying_open_1")),
     ORANGE_FLYING_OPEN_2(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/orange/orange_flying_open_2")),
@@ -47,7 +47,7 @@ public enum OrangeDye {
     ORANGE_FLYING_OPEN_13(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/orange/orange_flying_open_13")),
     ORANGE_FLYING_OPEN_14(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/orange/orange_flying_open_14")),
     ORANGE_FLYING_OPEN_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/orange/orange_flying_open_15")),
-    FILING_CABINET_OPEN(new NamespacedKey(TARDIS.plugin, "item/equipment/filing_cabinet_open"));
+    FILING_CABINET_OPEN(new NamespacedKey(TARDIS.plugin, "equipment/filing_cabinet_open"));
 
     private final NamespacedKey key;
 

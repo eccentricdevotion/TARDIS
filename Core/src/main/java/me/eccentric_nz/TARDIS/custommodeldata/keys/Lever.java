@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Lever {
 
-    HANDBRAKE(new NamespacedKey(TARDIS.plugin, "item/gui/handbrake")),
+    HANDBRAKE(new NamespacedKey(TARDIS.plugin, "gui/handbrake")),
     LAMP_0(new NamespacedKey(TARDIS.plugin, "block/control/lamp_0")),
     LAMP_1(new NamespacedKey(TARDIS.plugin, "block/control/lamp_1")),
     LAMP_2(new NamespacedKey(TARDIS.plugin, "block/control/lamp_2")),

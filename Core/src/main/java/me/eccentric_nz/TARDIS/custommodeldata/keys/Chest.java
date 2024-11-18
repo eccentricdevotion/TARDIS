@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Chest {
 
-    SMELTER(new NamespacedKey(TARDIS.plugin, "item/gui/room/smelter"));
+    SMELTER(new NamespacedKey(TARDIS.plugin, "gui/room/smelter"));
 
     private final NamespacedKey key;
 

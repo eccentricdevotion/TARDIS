@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Dirt {
 
-    FARM(new NamespacedKey(TARDIS.plugin, "item/gui/room/farm"));
+    FARM(new NamespacedKey(TARDIS.plugin, "gui/room/farm"));
 
     private final NamespacedKey key;
 

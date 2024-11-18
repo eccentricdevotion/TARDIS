@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum GrassBlock {
 
-    ZERO(new NamespacedKey(TARDIS.plugin, "item/gui/room/zero"));
+    ZERO(new NamespacedKey(TARDIS.plugin, "gui/room/zero"));
 
     private final NamespacedKey key;
 

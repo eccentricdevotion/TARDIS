@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum TubeCoralBlock {
 
-    AQUARIUM(new NamespacedKey(TARDIS.plugin, "item/gui/room/aquarium"));
+    AQUARIUM(new NamespacedKey(TARDIS.plugin, "gui/room/aquarium"));
 
     private final NamespacedKey key;
 

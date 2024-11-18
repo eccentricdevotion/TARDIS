@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Coal {
 
-    BLOCK(new NamespacedKey(TARDIS.plugin, "item/gui/particle/block"));
+    BLOCK(new NamespacedKey(TARDIS.plugin, "gui/particle/block"));
 
     private final NamespacedKey key;
 

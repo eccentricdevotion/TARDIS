@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum LapisLazuli {
 
-    SHAPE(new NamespacedKey(TARDIS.plugin, "item/gui/particle/shape"));
+    SHAPE(new NamespacedKey(TARDIS.plugin, "gui/particle/shape"));
 
     private final NamespacedKey key;
 

@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum GoldenHoe {
 
-    BLASTER(new NamespacedKey(TARDIS.plugin, "item/sonic/blaster"));
+    BLASTER(new NamespacedKey(TARDIS.plugin, "sonic/blaster"));
 
     private final NamespacedKey key;
 

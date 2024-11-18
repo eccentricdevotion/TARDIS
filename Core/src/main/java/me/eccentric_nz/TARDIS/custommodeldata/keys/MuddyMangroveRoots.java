@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum MuddyMangroveRoots {
 
-    MANGROVE(new NamespacedKey(TARDIS.plugin, "item/gui/room/mangrove"));
+    MANGROVE(new NamespacedKey(TARDIS.plugin, "gui/room/mangrove"));
 
     private final NamespacedKey key;
 

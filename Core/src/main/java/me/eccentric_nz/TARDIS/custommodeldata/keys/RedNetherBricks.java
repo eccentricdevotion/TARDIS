@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum RedNetherBricks {
 
-    WORKSHOP(new NamespacedKey(TARDIS.plugin, "item/gui/room/workshop"));
+    WORKSHOP(new NamespacedKey(TARDIS.plugin, "gui/room/workshop"));
 
     private final NamespacedKey key;
 

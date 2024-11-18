@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Blackstone {
 
-    NETHER(new NamespacedKey(TARDIS.plugin, "item/gui/room/nether"));
+    NETHER(new NamespacedKey(TARDIS.plugin, "gui/room/nether"));
 
     private final NamespacedKey key;
 

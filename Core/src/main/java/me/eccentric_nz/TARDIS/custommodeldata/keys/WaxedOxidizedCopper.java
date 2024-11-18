@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum WaxedOxidizedCopper {
 
-    CONSOLE_RUSTIC(new NamespacedKey(TARDIS.plugin, "item/tardis/console_rustic"));
+    CONSOLE_RUSTIC(new NamespacedKey(TARDIS.plugin, "tardis/console_rustic"));
 
     private final NamespacedKey key;
 

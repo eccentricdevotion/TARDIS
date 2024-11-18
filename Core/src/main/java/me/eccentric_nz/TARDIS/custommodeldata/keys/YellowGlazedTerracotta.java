@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum YellowGlazedTerracotta {
 
-    BIRDCAGE(new NamespacedKey(TARDIS.plugin, "item/gui/room/birdcage"));
+    BIRDCAGE(new NamespacedKey(TARDIS.plugin, "gui/room/birdcage"));
 
     private final NamespacedKey key;
 

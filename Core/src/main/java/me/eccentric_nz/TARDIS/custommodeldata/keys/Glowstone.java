@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Glowstone {
 
-    BEDROOM(new NamespacedKey(TARDIS.plugin, "item/gui/room/bedroom"));
+    BEDROOM(new NamespacedKey(TARDIS.plugin, "gui/room/bedroom"));
 
     private final NamespacedKey key;
 

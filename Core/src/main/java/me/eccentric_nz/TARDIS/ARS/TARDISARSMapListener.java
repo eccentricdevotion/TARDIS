@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Arrow;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -199,7 +200,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                 is.setType(Material.ARROW);
                 ItemMeta im = is.getItemMeta();
                 im.setLore(List.of(plugin.getLanguage().getString("ARS_MAP_HERE")));
-                im.setCustomModelData(6);
+                im.setItemModel(Arrow.YOU_ARE_HERE.getKey());
                 is.setItemMeta(im);
             }
         } else {

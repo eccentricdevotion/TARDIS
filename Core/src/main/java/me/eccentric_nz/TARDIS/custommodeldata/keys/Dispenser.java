@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Dispenser {
 
-    VAULT(new NamespacedKey(TARDIS.plugin, "item/gui/room/vault"));
+    VAULT(new NamespacedKey(TARDIS.plugin, "gui/room/vault"));
 
     private final NamespacedKey key;
 

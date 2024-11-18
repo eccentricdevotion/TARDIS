@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum MushroomStew {
 
-    BOWL_OF_CUSTARD(new NamespacedKey(TARDIS.plugin, "item/food/bowl_of_custard"));
+    BOWL_OF_CUSTARD(new NamespacedKey(TARDIS.plugin, "food/bowl_of_custard"));
 
     private final NamespacedKey key;
 

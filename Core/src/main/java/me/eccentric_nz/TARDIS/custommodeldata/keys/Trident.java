@@ -6,7 +6,7 @@ import org.bukkit.NamespacedKey;
 public enum Trident {
 
 
-    DALEK_BOW(new NamespacedKey(TARDIS.plugin, "item/monster/dalek/dalek_bow"));
+    DALEK_BOW(new NamespacedKey(TARDIS.plugin, "monster/dalek/dalek_bow"));
 
     private final NamespacedKey key;
 

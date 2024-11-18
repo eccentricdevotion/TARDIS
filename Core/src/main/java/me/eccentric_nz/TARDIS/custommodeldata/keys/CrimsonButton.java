@@ -5,10 +5,10 @@ import org.bukkit.NamespacedKey;
 
 public enum CrimsonButton {
 
-    BUTTON_DAVROS(new NamespacedKey(TARDIS.plugin, "item/genetic/davros")),
-    DAVROS_HEAD(new NamespacedKey(TARDIS.plugin, "item/monster/davros/davros_head")),
-    DAVROS_DISGUISE(new NamespacedKey(TARDIS.plugin, "item/monster/davros/davros_disguise")),
-    DAVROS(new NamespacedKey(TARDIS.plugin, "item/monster/davros/davros"));
+    BUTTON_DAVROS(new NamespacedKey(TARDIS.plugin, "genetic/davros")),
+    DAVROS_HEAD(new NamespacedKey(TARDIS.plugin, "monster/davros/davros_head")),
+    DAVROS_DISGUISE(new NamespacedKey(TARDIS.plugin, "monster/davros/davros_disguise")),
+    DAVROS(new NamespacedKey(TARDIS.plugin, "monster/davros/davros"));
 
     private final NamespacedKey key;
 

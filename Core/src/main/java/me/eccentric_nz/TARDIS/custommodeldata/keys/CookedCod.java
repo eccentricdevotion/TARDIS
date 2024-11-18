@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum CookedCod {
 
-    FISH_FINGER(new NamespacedKey(TARDIS.plugin, "item/food/fish_finger"));
+    FISH_FINGER(new NamespacedKey(TARDIS.plugin, "food/fish_finger"));
 
     private final NamespacedKey key;
 

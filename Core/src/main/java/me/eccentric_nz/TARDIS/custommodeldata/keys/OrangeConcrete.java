@@ -6,7 +6,7 @@ import org.bukkit.NamespacedKey;
 public enum OrangeConcrete {
 
     THIRTEENTH(new NamespacedKey(TARDIS.plugin, "block/seed/thirteenth")),
-    CONSOLE_ORANGE(new NamespacedKey(TARDIS.plugin, "item/tardis/console_orange")),
+    CONSOLE_ORANGE(new NamespacedKey(TARDIS.plugin, "tardis/console_orange")),
     COMPOUND(new NamespacedKey(TARDIS.plugin, "block/chemistry/compound"));
 
     private final NamespacedKey key;

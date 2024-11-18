@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Pumpkin {
 
-    KITCHEN(new NamespacedKey(TARDIS.plugin, "item/gui/room/kitchen"));
+    KITCHEN(new NamespacedKey(TARDIS.plugin, "gui/room/kitchen"));
 
     private final NamespacedKey key;
 

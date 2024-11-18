@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Shroomlight {
 
-    EYE(new NamespacedKey(TARDIS.plugin, "item/gui/room/eye"));
+    EYE(new NamespacedKey(TARDIS.plugin, "gui/room/eye"));
 
     private final NamespacedKey key;
 

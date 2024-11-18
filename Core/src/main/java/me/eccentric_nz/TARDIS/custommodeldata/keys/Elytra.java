@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Elytra {
 
-    FLIGHT_MODE(new NamespacedKey(TARDIS.plugin, "item/gui/flight_mode"));
+    FLIGHT_MODE(new NamespacedKey(TARDIS.plugin, "gui/flight_mode"));
 
     private final NamespacedKey key;
 

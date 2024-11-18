@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Clay {
 
-    PASSAGE(new NamespacedKey(TARDIS.plugin, "item/gui/room/passage"));
+    PASSAGE(new NamespacedKey(TARDIS.plugin, "gui/room/passage"));
 
     private final NamespacedKey key;
 

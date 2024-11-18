@@ -6,7 +6,7 @@ import org.bukkit.NamespacedKey;
 public enum MossBlock {
 
 
-    PEN(new NamespacedKey(TARDIS.plugin, "item/gui/room/pen"));
+    PEN(new NamespacedKey(TARDIS.plugin, "gui/room/pen"));
 
     private final NamespacedKey key;
 

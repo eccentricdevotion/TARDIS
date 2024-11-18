@@ -24,10 +24,10 @@ public record GUIChameleonConstructor() {
 
     // Chameleon Constructor
     public static GUIData BACK_TO_CHAMELEON_CIRCUIT = new GUIData(Arrow.SCROLL_UP.getKey(), 0, Material.ARROW);
-    public static GUIData HELP = new GUIData(Bowl.HELP, 2, Material.BOWL);
-    public static GUIData INFO = new GUIData(Bowl.INFO, 3, Material.BOWL);
-    public static GUIData ABORT = new GUIData(Bowl.ABORT, 5, Material.BOWL);
-    public static GUIData USE_LAST_SAVED_CONSTRUCT = new GUIData(Bowl.USE_LAST_SAVED_CONSTRUCT, 7, Material.BOWL);
-    public static GUIData SAVE_CONSTRUCT = new GUIData(Bowl.SAVE, 8, Material.BOWL);
+    public static GUIData HELP = new GUIData(Bowl.HELP.getKey(), 2, Material.BOWL);
+    public static GUIData INFO = new GUIData(Bowl.INFO.getKey(), 3, Material.BOWL);
+    public static GUIData ABORT = new GUIData(Bowl.ABORT.getKey(), 5, Material.BOWL);
+    public static GUIData USE_LAST_SAVED_CONSTRUCT = new GUIData(Bowl.USE_LAST_SAVED_CONSTRUCT.getKey(), 7, Material.BOWL);
+    public static GUIData SAVE_CONSTRUCT = new GUIData(Bowl.SAVE.getKey(), 8, Material.BOWL);
 
 }

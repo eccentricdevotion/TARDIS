@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Lantern {
 
-    INTERIOR(new NamespacedKey(TARDIS.plugin, "item/gui/lights/interior"));
+    INTERIOR(new NamespacedKey(TARDIS.plugin, "gui/lights/interior"));
 
     private final NamespacedKey key;
 

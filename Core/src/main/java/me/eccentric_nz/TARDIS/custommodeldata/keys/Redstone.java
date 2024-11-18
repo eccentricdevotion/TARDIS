@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Redstone {
 
-    EFFECT(new NamespacedKey(TARDIS.plugin, "item/gui/particle/effect"));
+    EFFECT(new NamespacedKey(TARDIS.plugin, "gui/particle/effect"));
 
     private final NamespacedKey key;
 

@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Bricks {
 
-    TRENZALORE(new NamespacedKey(TARDIS.plugin, "item/gui/room/trenzalore"));
+    TRENZALORE(new NamespacedKey(TARDIS.plugin, "gui/room/trenzalore"));
 
     private final NamespacedKey key;
 

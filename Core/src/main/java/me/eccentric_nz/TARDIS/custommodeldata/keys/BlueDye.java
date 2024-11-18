@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum BlueDye {
 
-    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "item/genetic/button_type")),
+    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "genetic/button_type")),
     TARDIS_BLUE(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_blue")),
     TARDIS_BLUE_OPEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_blue_open")),
     TARDIS_BLUE_STAINED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_blue_stained")),
@@ -26,12 +26,12 @@ public enum BlueDye {
     BLUE_FLYING_13(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/blue/blue_flying_13")),
     BLUE_FLYING_14(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/blue/blue_flying_14")),
     BLUE_FLYING_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/blue/blue_flying_15")),
-    ENGINE_ROTOR_0(new NamespacedKey(TARDIS.plugin, "item/time_rotor/engine_rotor/engine_rotor_0")),
-    ENGINE_ROTOR_1(new NamespacedKey(TARDIS.plugin, "item/time_rotor/engine_rotor/engine_rotor_1")),
-    ENGINE_ROTOR_2(new NamespacedKey(TARDIS.plugin, "item/time_rotor/engine_rotor/engine_rotor_2")),
-    ENGINE_ROTOR_3(new NamespacedKey(TARDIS.plugin, "item/time_rotor/engine_rotor/engine_rotor_3")),
-    ENGINE_ROTOR_4(new NamespacedKey(TARDIS.plugin, "item/time_rotor/engine_rotor/engine_rotor_4")),
-    ENGINE_ROTOR_5(new NamespacedKey(TARDIS.plugin, "item/time_rotor/engine_rotor/engine_rotor_5")),
+    ENGINE_ROTOR_0(new NamespacedKey(TARDIS.plugin, "time_rotor/engine_rotor/engine_rotor_0")),
+    ENGINE_ROTOR_1(new NamespacedKey(TARDIS.plugin, "time_rotor/engine_rotor/engine_rotor_1")),
+    ENGINE_ROTOR_2(new NamespacedKey(TARDIS.plugin, "time_rotor/engine_rotor/engine_rotor_2")),
+    ENGINE_ROTOR_3(new NamespacedKey(TARDIS.plugin, "time_rotor/engine_rotor/engine_rotor_3")),
+    ENGINE_ROTOR_4(new NamespacedKey(TARDIS.plugin, "time_rotor/engine_rotor/engine_rotor_4")),
+    ENGINE_ROTOR_5(new NamespacedKey(TARDIS.plugin, "time_rotor/engine_rotor/engine_rotor_5")),
     BLUE_FLYING_OPEN_0(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/blue/blue_flying_open_0")),
     BLUE_FLYING_OPEN_1(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/blue/blue_flying_open_1")),
     BLUE_FLYING_OPEN_2(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/blue/blue_flying_open_2")),

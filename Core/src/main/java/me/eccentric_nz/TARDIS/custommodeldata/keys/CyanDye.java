@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum CyanDye {
 
-    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "item/genetic/button_type")),
+    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "genetic/button_type")),
     TARDIS_CYAN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_cyan")),
     TARDIS_CYAN_OPEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_cyan_open")),
     TARDIS_CYAN_STAINED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_cyan_stained")),
@@ -26,12 +26,12 @@ public enum CyanDye {
     CYAN_FLYING_13(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/cyan/cyan_flying_13")),
     CYAN_FLYING_14(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/cyan/cyan_flying_14")),
     CYAN_FLYING_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/cyan/cyan_flying_15")),
-    DELTA_0(new NamespacedKey(TARDIS.plugin, "item/time_rotor/delta/delta_0")),
-    DELTA_1(new NamespacedKey(TARDIS.plugin, "item/time_rotor/delta/delta_1")),
-    DELTA_2(new NamespacedKey(TARDIS.plugin, "item/time_rotor/delta/delta_2")),
-    DELTA_3(new NamespacedKey(TARDIS.plugin, "item/time_rotor/delta/delta_3")),
-    DELTA_4(new NamespacedKey(TARDIS.plugin, "item/time_rotor/delta/delta_4")),
-    DELTA_5(new NamespacedKey(TARDIS.plugin, "item/time_rotor/delta/delta_5")),
+    DELTA_0(new NamespacedKey(TARDIS.plugin, "time_rotor/delta/delta_0")),
+    DELTA_1(new NamespacedKey(TARDIS.plugin, "time_rotor/delta/delta_1")),
+    DELTA_2(new NamespacedKey(TARDIS.plugin, "time_rotor/delta/delta_2")),
+    DELTA_3(new NamespacedKey(TARDIS.plugin, "time_rotor/delta/delta_3")),
+    DELTA_4(new NamespacedKey(TARDIS.plugin, "time_rotor/delta/delta_4")),
+    DELTA_5(new NamespacedKey(TARDIS.plugin, "time_rotor/delta/delta_5")),
     CYAN_FLYING_OPEN_0(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/cyan/cyan_flying_open_0")),
     CYAN_FLYING_OPEN_1(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/cyan/cyan_flying_open_1")),
     CYAN_FLYING_OPEN_2(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/cyan/cyan_flying_open_2")),

@@ -6,7 +6,7 @@ import org.bukkit.NamespacedKey;
 public enum NetherWart {
 
 
-    BANNAKAFFALATTA_SPIKES(new NamespacedKey(TARDIS.plugin, "item/lazarus/bannakaffalatta_spikes"));
+    BANNAKAFFALATTA_SPIKES(new NamespacedKey(TARDIS.plugin, "lazarus/bannakaffalatta_spikes"));
 
     private final NamespacedKey key;
 

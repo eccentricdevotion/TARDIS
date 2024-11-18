@@ -5,8 +5,8 @@ import org.bukkit.NamespacedKey;
 
 public enum LightBlueStainedGlassPane {
 
-    LIGHT_BLUE_GLOW_STICK(new NamespacedKey(TARDIS.plugin, "item/products/glow_sticks/light_blue_glow_stick")),
-    LIGHT_BLUE_GLOW_STICK_ACTIVE(new NamespacedKey(TARDIS.plugin, "item/products/glow_sticks/light_blue_glow_stick_active"));
+    LIGHT_BLUE_GLOW_STICK(new NamespacedKey(TARDIS.plugin, "products/glow_sticks/light_blue_glow_stick")),
+    LIGHT_BLUE_GLOW_STICK_ACTIVE(new NamespacedKey(TARDIS.plugin, "products/glow_sticks/light_blue_glow_stick_active"));
 
     private final NamespacedKey key;
 

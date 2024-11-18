@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum PackedIce {
 
-    IGLOO(new NamespacedKey(TARDIS.plugin, "item/gui/room/igloo"));
+    IGLOO(new NamespacedKey(TARDIS.plugin, "gui/room/igloo"));
 
     private final NamespacedKey key;
 

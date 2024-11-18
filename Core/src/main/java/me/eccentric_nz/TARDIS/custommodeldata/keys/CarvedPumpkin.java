@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum CarvedPumpkin {
 
-    EMPTY_CHILD_MASK(new NamespacedKey(TARDIS.plugin, "item/monster/empty_child/empty_child_mask"));
+    EMPTY_CHILD_MASK(new NamespacedKey(TARDIS.plugin, "monster/empty_child/empty_child_mask"));
 
     private final NamespacedKey key;
 

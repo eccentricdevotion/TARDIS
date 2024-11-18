@@ -4,7 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.NamespacedKey;
 
 public enum EnchantingTable {
-    LIBRARY(new NamespacedKey(TARDIS.plugin, "item/gui/room/library"));
+    LIBRARY(new NamespacedKey(TARDIS.plugin, "gui/room/library"));
 
     private final NamespacedKey key;
 

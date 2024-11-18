@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum CopperIngot {
 
-    TEST(new NamespacedKey(TARDIS.plugin, "item/gui/particle/test"));
+    TEST(new NamespacedKey(TARDIS.plugin, "gui/particle/test"));
 
     private final NamespacedKey key;
 

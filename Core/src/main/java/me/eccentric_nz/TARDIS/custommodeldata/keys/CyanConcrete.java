@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum CyanConcrete {
 
-    CONSOLE_CYAN(new NamespacedKey(TARDIS.plugin, "item/tardis/console_cyan")),
+    CONSOLE_CYAN(new NamespacedKey(TARDIS.plugin, "tardis/console_cyan")),
     SIEGE_CUBE(new NamespacedKey(TARDIS.plugin, "block/siege_cube"));
 
     private final NamespacedKey key;

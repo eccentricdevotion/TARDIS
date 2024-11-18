@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum DeadBrainCoralBlock {
 
-    SHELL(new NamespacedKey(TARDIS.plugin, "item/gui/room/shell"));
+    SHELL(new NamespacedKey(TARDIS.plugin, "gui/room/shell"));
 
     private final NamespacedKey key;
 

@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Sandstone {
 
-    ANTIGRAVITY(new NamespacedKey(TARDIS.plugin, "item/gui/room/antigravity")),
+    ANTIGRAVITY(new NamespacedKey(TARDIS.plugin, "gui/room/antigravity")),
     FACTORY(new NamespacedKey(TARDIS.plugin, "block/seed/factory"));
 
     private final NamespacedKey key;

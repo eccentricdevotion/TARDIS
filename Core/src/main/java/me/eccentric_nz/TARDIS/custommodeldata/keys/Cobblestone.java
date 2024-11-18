@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Cobblestone {
 
-    STANDARD_SONIC(new NamespacedKey(TARDIS.plugin, "item/gui/bowl/standard_sonic")),
+    STANDARD_SONIC(new NamespacedKey(TARDIS.plugin, "gui/bowl/standard_sonic")),
     SMALL(new NamespacedKey(TARDIS.plugin, "block/seed/small")),
     MEDIUM(new NamespacedKey(TARDIS.plugin, "block/seed/medium")),
     TALL(new NamespacedKey(TARDIS.plugin, "block/seed/tall"));

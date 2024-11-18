@@ -5,9 +5,9 @@ import org.bukkit.NamespacedKey;
 
 public enum NetherStar {
 
-    ADMIN(new NamespacedKey(TARDIS.plugin, "item/gui/admin")),
-    BUTTON_PREFS(new NamespacedKey(TARDIS.plugin, "item/gui/bowl/button_prefs")),
-    ADD_COMPANION(new NamespacedKey(TARDIS.plugin, "item/gui/add_companion"));
+    ADMIN(new NamespacedKey(TARDIS.plugin, "gui/admin")),
+    BUTTON_PREFS(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_prefs")),
+    ADD_COMPANION(new NamespacedKey(TARDIS.plugin, "gui/add_companion"));
 
     private final NamespacedKey key;
 

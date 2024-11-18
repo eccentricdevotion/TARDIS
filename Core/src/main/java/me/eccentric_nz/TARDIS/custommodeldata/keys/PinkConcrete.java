@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum PinkConcrete {
 
-    CONSOLE_PINK(new NamespacedKey(TARDIS.plugin, "item/tardis/console_pink"));
+    CONSOLE_PINK(new NamespacedKey(TARDIS.plugin, "tardis/console_pink"));
 
     private final NamespacedKey key;
 

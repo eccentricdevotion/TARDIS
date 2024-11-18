@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum CherryLeaves {
 
-    GARDEN(new NamespacedKey(TARDIS.plugin, "item/gui/room/garden"));
+    GARDEN(new NamespacedKey(TARDIS.plugin, "gui/room/garden"));
 
     private final NamespacedKey key;
 

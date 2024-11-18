@@ -8,7 +8,7 @@ public enum LimeStainedGlass {
 
     TINT_LIME(new NamespacedKey(TARDIS.plugin, "block/lights/tint_lime")),
 
-    COMPUTER_DISK(new NamespacedKey(TARDIS.plugin, "item/equipment/computer_disk"));
+    COMPUTER_DISK(new NamespacedKey(TARDIS.plugin, "equipment/computer_disk"));
 
     private final NamespacedKey key;
 

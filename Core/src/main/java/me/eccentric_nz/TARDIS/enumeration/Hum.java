@@ -24,18 +24,18 @@ import org.bukkit.NamespacedKey;
  */
 public enum Hum {
 
-    ALIEN(Bowl.ALIEN),
-    ATMOSPHERE(Bowl.ATMOSPHERE),
-    COMPUTER(Bowl.COMPUTER),
-    COPPER(Bowl.COPPER),
-    CORAL(Bowl.CORAL),
-    GALAXY(Bowl.GALAXY),
-    LEARNING(Bowl.LEARNING),
-    MIND(Bowl.MIND),
-    NEON(Bowl.NEON),
-    SLEEPING(Bowl.SLEEPING),
-    VOID(Bowl.VOID),
-    RANDOM(Bowl.RANDOM);
+    ALIEN(Bowl.ALIEN.getKey()),
+    ATMOSPHERE(Bowl.ATMOSPHERE.getKey()),
+    COMPUTER(Bowl.COMPUTER.getKey()),
+    COPPER(Bowl.COPPER.getKey()),
+    CORAL(Bowl.CORAL.getKey()),
+    GALAXY(Bowl.GALAXY.getKey()),
+    LEARNING(Bowl.LEARNING.getKey()),
+    MIND(Bowl.MIND.getKey()),
+    NEON(Bowl.NEON.getKey()),
+    SLEEPING(Bowl.SLEEPING.getKey()),
+    VOID(Bowl.VOID.getKey()),
+    RANDOM(Bowl.RANDOM.getKey());
     
     private final NamespacedKey key;
 

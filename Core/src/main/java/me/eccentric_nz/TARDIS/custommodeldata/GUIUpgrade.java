@@ -22,9 +22,9 @@ import org.bukkit.Material;
 public record GUIUpgrade() {
 
     // TARDIS Upgrade Menu
-    public static GUIData INFO = new GUIData(Bowl.INFO, 45, Material.BOWL);
-    public static GUIData ARCHIVE_CONSOLES = new GUIData(Bowl.ARCHIVE_CONSOLES, 46, Material.BOWL);
-    public static GUIData REPAIR_CONSOLE = new GUIData(Bowl.REPAIR_CONSOLE, 47, Material.BOWL);
-    public static GUIData CLEAN = new GUIData(Bowl.CLEAN, 48, Material.BOWL);
-    public static GUIData CLOSE = new GUIData(Bowl.CLOSE, 53, Material.BOWL);
+    public static GUIData INFO = new GUIData(Bowl.INFO.getKey(), 45, Material.BOWL);
+    public static GUIData ARCHIVE_CONSOLES = new GUIData(Bowl.ARCHIVE_CONSOLES.getKey(), 46, Material.BOWL);
+    public static GUIData REPAIR_CONSOLE = new GUIData(Bowl.REPAIR_CONSOLE.getKey(), 47, Material.BOWL);
+    public static GUIData CLEAN = new GUIData(Bowl.CLEAN.getKey(), 48, Material.BOWL);
+    public static GUIData CLOSE = new GUIData(Bowl.CLOSE.getKey(), 53, Material.BOWL);
 }

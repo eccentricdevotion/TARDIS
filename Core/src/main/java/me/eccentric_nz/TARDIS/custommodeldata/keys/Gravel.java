@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Gravel {
 
-    MUSHROOM(new NamespacedKey(TARDIS.plugin, "item/gui/room/mushroom")),
+    MUSHROOM(new NamespacedKey(TARDIS.plugin, "gui/room/mushroom")),
         DESTROY_0(new NamespacedKey(TARDIS.plugin, "block/destroy/destroy_0")),
             DESTROY_1(new NamespacedKey(TARDIS.plugin, "block/destroy/destroy_1")),
             DESTROY_2(new NamespacedKey(TARDIS.plugin, "block/destroy/destroy_2")),

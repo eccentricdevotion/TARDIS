@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum OakPlanks {
 
-    WOOD(new NamespacedKey(TARDIS.plugin, "item/gui/room/wood"));
+    WOOD(new NamespacedKey(TARDIS.plugin, "gui/room/wood"));
 
     private final NamespacedKey key;
 

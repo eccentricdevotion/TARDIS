@@ -24,5 +24,5 @@ public record GUISonicActivator() {
 
     // Sonic Activator
     public static GUIData INSTRUCTIONS = new GUIData(Book.INFO.getKey(), 7, Material.BOOK);
-    public static GUIData CLOSE = new GUIData(Bowl.CLOSE, 8, Material.BOWL);
+    public static GUIData CLOSE = new GUIData(Bowl.CLOSE.getKey(), 8, Material.BOWL);
 }

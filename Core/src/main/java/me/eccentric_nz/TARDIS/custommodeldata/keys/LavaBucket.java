@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum LavaBucket {
 
-    RUST_BUCKET(new NamespacedKey(TARDIS.plugin, "item/planets/rust_bucket"));
+    RUST_BUCKET(new NamespacedKey(TARDIS.plugin, "planets/rust_bucket"));
 
     private final NamespacedKey key;
 

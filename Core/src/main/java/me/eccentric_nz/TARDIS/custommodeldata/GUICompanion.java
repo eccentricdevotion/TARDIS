@@ -27,5 +27,5 @@ public record GUICompanion() {
     public static GUIData ALL_COMPANIONS = new GUIData(WritableBook.COMPANION_ALL.getKey(), 49, Material.WRITABLE_BOOK);
     public static GUIData ADD_COMPANION = new GUIData(NetherStar.ADD_COMPANION.getKey(), 48, Material.NETHER_STAR);
     public static GUIData DELETE_COMPANION = new GUIData(Bucket.DELETE.getKey(), 51, Material.BUCKET);
-    public static GUIData BUTTON_CLOSE = new GUIData(Bowl.CLOSE, 53, Material.BOWL);
+    public static GUIData BUTTON_CLOSE = new GUIData(Bowl.CLOSE.getKey(), 53, Material.BOWL);
 }

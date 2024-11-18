@@ -22,6 +22,6 @@ import org.bukkit.Material;
 public record GUIInteriorSounds() {
 
     // TARDIS Interior Sounds
-    public static GUIData ACTION = new GUIData(Bowl.PLAY, 15, Material.BOWL);
-    public static GUIData CLOSE = new GUIData(Bowl.CLOSE, 17, Material.BOWL);
+    public static GUIData ACTION = new GUIData(Bowl.PLAY.getKey(), 15, Material.BOWL);
+    public static GUIData CLOSE = new GUIData(Bowl.CLOSE.getKey(), 17, Material.BOWL);
 }

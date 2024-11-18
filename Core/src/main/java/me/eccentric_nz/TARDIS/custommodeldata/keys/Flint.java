@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Flint {
 
-    STATTENHEIM_REMOTE(new NamespacedKey(TARDIS.plugin, "item/tardis/stattenheim_remote"));
+    STATTENHEIM_REMOTE(new NamespacedKey(TARDIS.plugin, "tardis/stattenheim_remote"));
 
     private final NamespacedKey key;
 

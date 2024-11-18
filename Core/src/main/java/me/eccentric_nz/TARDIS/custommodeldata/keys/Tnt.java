@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Tnt {
 
-    JETTISON(new NamespacedKey(TARDIS.plugin, "item/gui/room/jettison"));
+    JETTISON(new NamespacedKey(TARDIS.plugin, "gui/room/jettison"));
 
     private final NamespacedKey key;
 

@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum MagentaDye {
 
-    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "item/genetic/button_type")),
+    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "genetic/button_type")),
     TARDIS_MAGENTA(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_magenta")),
     TARDIS_MAGENTA_OPEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_magenta_open")),
     TARDIS_MAGENTA_STAINED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_magenta_stained")),

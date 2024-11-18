@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Terracotta {
 
-    RENDERER(new NamespacedKey(TARDIS.plugin, "item/gui/room/renderer"));
+    RENDERER(new NamespacedKey(TARDIS.plugin, "gui/room/renderer"));
 
     private final NamespacedKey key;
 

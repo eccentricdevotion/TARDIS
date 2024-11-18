@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum BrownGlazedTerracotta {
 
-    STALL(new NamespacedKey(TARDIS.plugin, "item/gui/room/stall"));
+    STALL(new NamespacedKey(TARDIS.plugin, "gui/room/stall"));
 
     private final NamespacedKey key;
 

@@ -33,8 +33,8 @@ public record GUITelevision() {
     public static GUIData MONSTERS = new GUIData(BrownStainedGlassPane.MONSTER.getKey(), 7, Material.BROWN_STAINED_GLASS_PANE, "Monsters");
     public static GUIData DOWNLOAD = new GUIData(Repeater.DOWNLOAD_OFF.getKey(), 29, Material.REPEATER);
     public static GUIData REMOVE = new GUIData(Bucket.REMOVE.getKey(), 31, Material.BUCKET);
-    public static GUIData BACK = new GUIData(Bowl.BACK, 33, Material.BOWL);
-    public static GUIData CLOSE = new GUIData(Bowl.CLOSE, 35, Material.BOWL);
+    public static GUIData BACK = new GUIData(Bowl.BACK.getKey(), 33, Material.BOWL);
+    public static GUIData CLOSE = new GUIData(Bowl.CLOSE.getKey(), 35, Material.BOWL);
 
     public static List<GUIData> values() {
         return List.of(DOCTORS, COMPANIONS, CHARACTERS, MONSTERS, REMOVE, CLOSE);

@@ -6,7 +6,7 @@ import org.bukkit.NamespacedKey;
 public enum PolishedBlackstoneBricks {
 
 
-    OBSERVATORY(new NamespacedKey(TARDIS.plugin, "item/gui/room/observatory"));
+    OBSERVATORY(new NamespacedKey(TARDIS.plugin, "gui/room/observatory"));
 
     private final NamespacedKey key;
 

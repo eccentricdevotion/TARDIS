@@ -36,5 +36,5 @@ public record GUIParticle() {
     public static GUIData PLUS = new GUIData(Paper.HANDLES_OPERATOR_ADDITION.getKey(), -1, Material.PAPER);
     public static GUIData DENSITY = new GUIData(IronIngot.DENSITY.getKey(), 46, Material.IRON_INGOT);
     public static GUIData SPEED = new GUIData(GoldIngot.SPEED.getKey(), 50, Material.GOLD_INGOT);
-    public static GUIData CLOSE = new GUIData(Bowl.CLOSE, 53, Material.BOWL);
+    public static GUIData CLOSE = new GUIData(Bowl.CLOSE.getKey(), 53, Material.BOWL);
 }

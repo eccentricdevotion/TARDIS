@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum StoneBrickStairs {
 
-    HARMONY(new NamespacedKey(TARDIS.plugin, "item/gui/room/harmony"));
+    HARMONY(new NamespacedKey(TARDIS.plugin, "gui/room/harmony"));
 
     private final NamespacedKey key;
 

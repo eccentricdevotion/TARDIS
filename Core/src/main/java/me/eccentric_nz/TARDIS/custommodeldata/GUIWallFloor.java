@@ -25,7 +25,7 @@ public record GUIWallFloor() {
     // TARDIS Wall & Floor Menu
     public static GUIData BUTTON_SCROLL_U = new GUIData(Arrow.SCROLL_UP.getKey(), 8, Material.ARROW);
     public static GUIData BUTTON_SCROLL_D = new GUIData(Arrow.SCROLL_DOWN.getKey(), 17, Material.ARROW);
-    public static GUIData WALL = new GUIData(Bowl.WALL, 26, Material.BOWL);
-    public static GUIData FLOOR = new GUIData(Bowl.FLOOR, 35, Material.BOWL);
-    public static GUIData BUTTON_ABORT = new GUIData(Bowl.ABORT, 53, Material.BOWL);
+    public static GUIData WALL = new GUIData(Bowl.WALL.getKey(), 26, Material.BOWL);
+    public static GUIData FLOOR = new GUIData(Bowl.FLOOR.getKey(), 35, Material.BOWL);
+    public static GUIData BUTTON_ABORT = new GUIData(Bowl.ABORT.getKey(), 53, Material.BOWL);
 }

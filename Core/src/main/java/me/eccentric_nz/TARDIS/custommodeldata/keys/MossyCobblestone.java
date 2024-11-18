@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum MossyCobblestone {
 
-    GRAVITY(new NamespacedKey(TARDIS.plugin, "item/gui/room/gravity"));
+    GRAVITY(new NamespacedKey(TARDIS.plugin, "gui/room/gravity"));
 
     private final NamespacedKey key;
 

@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum BrownDye {
 
-    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "item/genetic/button_type")),
+    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "genetic/button_type")),
     TARDIS_BROWN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_brown")),
     TARDIS_BROWN_OPEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_brown_open")),
     TARDIS_BROWN_STAINED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_brown_stained")),
@@ -26,11 +26,11 @@ public enum BrownDye {
     BROWN_FLYING_13(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/brown/brown_flying_13")),
     BROWN_FLYING_14(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/brown/brown_flying_14")),
     BROWN_FLYING_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/brown/brown_flying_15")),
-    ELEVENTH_0(new NamespacedKey(TARDIS.plugin, "item/time_rotor/eleventh/eleventh_0")),
-    ELEVENTH_1(new NamespacedKey(TARDIS.plugin, "item/time_rotor/eleventh/eleventh_1")),
-    ELEVENTH_2(new NamespacedKey(TARDIS.plugin, "item/time_rotor/eleventh/eleventh_2")),
-    ELEVENTH_3(new NamespacedKey(TARDIS.plugin, "item/time_rotor/eleventh/eleventh_3")),
-    ELEVENTH_4(new NamespacedKey(TARDIS.plugin, "item/time_rotor/eleventh/eleventh_4")),
+    ELEVENTH_0(new NamespacedKey(TARDIS.plugin, "time_rotor/eleventh/eleventh_0")),
+    ELEVENTH_1(new NamespacedKey(TARDIS.plugin, "time_rotor/eleventh/eleventh_1")),
+    ELEVENTH_2(new NamespacedKey(TARDIS.plugin, "time_rotor/eleventh/eleventh_2")),
+    ELEVENTH_3(new NamespacedKey(TARDIS.plugin, "time_rotor/eleventh/eleventh_3")),
+    ELEVENTH_4(new NamespacedKey(TARDIS.plugin, "time_rotor/eleventh/eleventh_4")),
     BROWN_FLYING_OPEN_0(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/brown/brown_flying_open_0")),
     BROWN_FLYING_OPEN_1(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/brown/brown_flying_open_1")),
     BROWN_FLYING_OPEN_2(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/brown/brown_flying_open_2")),
@@ -47,7 +47,7 @@ public enum BrownDye {
     BROWN_FLYING_OPEN_13(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/brown/brown_flying_open_13")),
     BROWN_FLYING_OPEN_14(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/brown/brown_flying_open_14")),
     BROWN_FLYING_OPEN_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/brown/brown_flying_open_15")),
-    SLIDE_RACK(new NamespacedKey(TARDIS.plugin, "item/equipment/slide_rack"));
+    SLIDE_RACK(new NamespacedKey(TARDIS.plugin, "equipment/slide_rack"));
 
     private final NamespacedKey key;
 

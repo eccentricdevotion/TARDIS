@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum FireworkRocket {
 
-    EXCITE(new NamespacedKey(TARDIS.plugin, "item/gui/excite"));
+    EXCITE(new NamespacedKey(TARDIS.plugin, "gui/excite"));
 
     private final NamespacedKey key;
 

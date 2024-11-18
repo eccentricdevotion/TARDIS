@@ -6,7 +6,7 @@ import org.bukkit.NamespacedKey;
 public enum MagmaBlock {
 
 
-    LAVA(new NamespacedKey(TARDIS.plugin, "item/gui/room/lava")),
+    LAVA(new NamespacedKey(TARDIS.plugin, "gui/room/lava")),
 
     SPHERE_0(new NamespacedKey(TARDIS.plugin, "block/sphere_0")),
 

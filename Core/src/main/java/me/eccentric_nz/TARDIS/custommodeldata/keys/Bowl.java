@@ -3,168 +3,178 @@ package me.eccentric_nz.TARDIS.custommodeldata.keys;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.NamespacedKey;
 
-public record Bowl() {
+public enum Bowl {
 
-    public static NamespacedKey CLOSE = new NamespacedKey(TARDIS.plugin, "gui/bowl/close");
-    public static NamespacedKey ABORT = new NamespacedKey(TARDIS.plugin, "gui/bowl/abort");
-    public static NamespacedKey ALIEN = new NamespacedKey(TARDIS.plugin, "gui/bowl/alien");
-    public static NamespacedKey ARCHIVE_CONSOLES = new NamespacedKey(TARDIS.plugin, "gui/bowl/archive_consoles");
-    public static NamespacedKey ARCHIVE_CURRENT_CONSOLE = new NamespacedKey(TARDIS.plugin, "gui/bowl/archive_current_console");
-    public static NamespacedKey ARTRON_BATTERY = new NamespacedKey(TARDIS.plugin, "tardis/artron_battery");
-    public static NamespacedKey ATMOSPHERE = new NamespacedKey(TARDIS.plugin, "gui/bowl/atmosphere");
-    public static NamespacedKey BACK = new NamespacedKey(TARDIS.plugin, "gui/bowl/back");
-    public static NamespacedKey BIO = new NamespacedKey(TARDIS.plugin, "circuit/bio");
-    public static NamespacedKey BUTTON_ABORT = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_abort");
-    public static NamespacedKey BUTTON_ADAPT = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_adapt");
-    public static NamespacedKey BUTTON_AREAS = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_areas");
-    public static NamespacedKey BUTTON_ARS = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_ars");
-    public static NamespacedKey BUTTON_ARTRON = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_artron");
-    public static NamespacedKey BUTTON_BACK = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_back");
-    public static NamespacedKey BUTTON_CANCEL = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_cancel");
-    public static NamespacedKey BUTTON_CHAMELEON = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_chameleon");
-    public static NamespacedKey BUTTON_CONSTRUCT = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_construct");
-    public static NamespacedKey BUTTON_DIRECTION = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_direction");
-    public static NamespacedKey BUTTON_HIDE = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_hide");
-    public static NamespacedKey BUTTON_INFO = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_info");
-    public static NamespacedKey BUTTON_INVISIBLE = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_invisible");
-    public static NamespacedKey BUTTON_PREFS = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_prefs");
-    public static NamespacedKey BUTTON_RANDOM = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_random");
-    public static NamespacedKey BUTTON_REBUILD = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_rebuild");
-    public static NamespacedKey BUTTON_SAVES = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_saves");
-    public static NamespacedKey BUTTON_SCANNER = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_scanner");
-    public static NamespacedKey BUTTON_SHORT = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_short");
-    public static NamespacedKey BUTTON_TEMP = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_temp");
-    public static NamespacedKey BUTTON_TERM = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_term");
-    public static NamespacedKey BUTTON_THEME = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_theme");
-    public static NamespacedKey BUTTON_ZERO = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_zero");
-    public static NamespacedKey CHECK_OUT_SELECTED_PROGRAM = new NamespacedKey(TARDIS.plugin, "gui/bowl/check_out_selected_program");
-    public static NamespacedKey CLEAN = new NamespacedKey(TARDIS.plugin, "gui/bowl/clean");
-    public static NamespacedKey ONE = new NamespacedKey(TARDIS.plugin, "gui/bowl/one");
-    public static NamespacedKey TWO = new NamespacedKey(TARDIS.plugin, "gui/bowl/two");
-    public static NamespacedKey THREE = new NamespacedKey(TARDIS.plugin, "gui/bowl/three");
-    public static NamespacedKey FOUR = new NamespacedKey(TARDIS.plugin, "gui/bowl/four");
-    public static NamespacedKey FIVE = new NamespacedKey(TARDIS.plugin, "gui/bowl/five");
-    public static NamespacedKey SIX = new NamespacedKey(TARDIS.plugin, "gui/bowl/six");
-    public static NamespacedKey SEVEN = new NamespacedKey(TARDIS.plugin, "gui/bowl/seven");
-    public static NamespacedKey EIGHT = new NamespacedKey(TARDIS.plugin, "gui/bowl/eight");
-    public static NamespacedKey NINE = new NamespacedKey(TARDIS.plugin, "gui/bowl/nine");
-    public static NamespacedKey COMMAND = new NamespacedKey(TARDIS.plugin, "gui/bowl/command");
-    public static NamespacedKey COMPANIONS_MENU = new NamespacedKey(TARDIS.plugin, "gui/bowl/companions_menu");
-    public static NamespacedKey COMPUTER = new NamespacedKey(TARDIS.plugin, "gui/bowl/computer");
-    public static NamespacedKey CONTROL = new NamespacedKey(TARDIS.plugin, "gui/bowl/control");
-    public static NamespacedKey COPPER = new NamespacedKey(TARDIS.plugin, "gui/bowl/copper");
-    public static NamespacedKey CORAL = new NamespacedKey(TARDIS.plugin, "gui/bowl/coral");
-    public static NamespacedKey DIAMOND = new NamespacedKey(TARDIS.plugin, "circuit/diamond");
-    public static NamespacedKey EMERALD = new NamespacedKey(TARDIS.plugin, "circuit/emerald");
-    public static NamespacedKey EVENT = new NamespacedKey(TARDIS.plugin, "gui/bowl/event");
-    public static NamespacedKey GALAXY = new NamespacedKey(TARDIS.plugin, "gui/bowl/galaxy");
-    public static NamespacedKey GENERATE_SONIC_SCREWDRIVER = new NamespacedKey(TARDIS.plugin, "gui/bowl/generate_sonic_screwdriver");
-    public static NamespacedKey HELP = new NamespacedKey(TARDIS.plugin, "gui/bowl/help");
-    public static NamespacedKey IGNITE = new NamespacedKey(TARDIS.plugin, "circuit/ignite");
-    public static NamespacedKey INFO = new NamespacedKey(TARDIS.plugin, "gui/bowl/info");
-    public static NamespacedKey INTERIOR_HUM_SOUND = new NamespacedKey(TARDIS.plugin, "gui/bowl/interior_hum_sound");
-    public static NamespacedKey LEARNING = new NamespacedKey(TARDIS.plugin, "gui/bowl/learning");
-    public static NamespacedKey LEFT = new NamespacedKey(TARDIS.plugin, "gui/bowl/left");
-    public static NamespacedKey LOAD_SELECTED_PROGRAM_IN_EDITOR = new NamespacedKey(TARDIS.plugin, "gui/bowl/load_selected_program_in_editor");
-    public static NamespacedKey MEDIUM = new NamespacedKey(TARDIS.plugin, "gui/bowl/medium");
-    public static NamespacedKey MIND = new NamespacedKey(TARDIS.plugin, "gui/bowl/mind");
-    public static NamespacedKey NEON = new NamespacedKey(TARDIS.plugin, "gui/bowl/neon");
-    public static NamespacedKey NUMBER = new NamespacedKey(TARDIS.plugin, "gui/bowl/number");
-    public static NamespacedKey OPERATOR = new NamespacedKey(TARDIS.plugin, "gui/bowl/operator");
-    public static NamespacedKey PAINTER = new NamespacedKey(TARDIS.plugin, "circuit/painter");
-    public static NamespacedKey PICKUP = new NamespacedKey(TARDIS.plugin, "circuit/pickup");
-    public static NamespacedKey HANDLES_DISK = new NamespacedKey(TARDIS.plugin, "disks/handles_disk");
-    public static NamespacedKey RANDOM = new NamespacedKey(TARDIS.plugin, "gui/bowl/random");
-    public static NamespacedKey REDSTONE = new NamespacedKey(TARDIS.plugin, "circuit/redstone");
-    public static NamespacedKey REPAIR_CONSOLE = new NamespacedKey(TARDIS.plugin, "gui/bowl/repair_console");
-    public static NamespacedKey RIGHT = new NamespacedKey(TARDIS.plugin, "gui/bowl/right");
-    public static NamespacedKey SAVE = new NamespacedKey(TARDIS.plugin, "gui/bowl/save");
-    public static NamespacedKey SCAN_CONSOLE = new NamespacedKey(TARDIS.plugin, "gui/bowl/scan_console");
-    public static NamespacedKey SELECTOR = new NamespacedKey(TARDIS.plugin, "gui/bowl/selector");
-    public static NamespacedKey SET_SIZE = new NamespacedKey(TARDIS.plugin, "gui/bowl/set_size");
-    public static NamespacedKey SLEEPING = new NamespacedKey(TARDIS.plugin, "gui/bowl/sleeping");
-    public static NamespacedKey SMALL = new NamespacedKey(TARDIS.plugin, "gui/bowl/small");
-    public static NamespacedKey STANDARD_SONIC = new NamespacedKey(TARDIS.plugin, "gui/bowl/standard_sonic");
-    public static NamespacedKey TALL = new NamespacedKey(TARDIS.plugin, "gui/bowl/tall");
-    public static NamespacedKey USE_LAST_SAVED_CONSTRUCT = new NamespacedKey(TARDIS.plugin, "gui/bowl/use_last_saved_construct");
-    public static NamespacedKey VAR = new NamespacedKey(TARDIS.plugin, "gui/bowl/var");
-    public static NamespacedKey VIEW_TEMP = new NamespacedKey(TARDIS.plugin, "gui/bowl/view_temp");
-    public static NamespacedKey VOID = new NamespacedKey(TARDIS.plugin, "gui/bowl/void");
-    public static NamespacedKey NEXT = new NamespacedKey(TARDIS.plugin, "gui/bowl/next");
-    public static NamespacedKey PREV = new NamespacedKey(TARDIS.plugin, "gui/bowl/prev");
-    public static NamespacedKey PLAY = new NamespacedKey(TARDIS.plugin, "gui/bowl/play");
-    public static NamespacedKey CHECK = new NamespacedKey(TARDIS.plugin, "gui/bowl/check");
-    public static NamespacedKey CRAFT = new NamespacedKey(TARDIS.plugin, "gui/bowl/craft");
-    public static NamespacedKey ELECTRONS = new NamespacedKey(TARDIS.plugin, "gui/bowl/electrons");
-    public static NamespacedKey NEUTRONS = new NamespacedKey(TARDIS.plugin, "gui/bowl/neutrons");
-    public static NamespacedKey PROTONS = new NamespacedKey(TARDIS.plugin, "gui/bowl/protons");
-    public static NamespacedKey REDUCE = new NamespacedKey(TARDIS.plugin, "gui/bowl/reduce");
-    public static NamespacedKey PERCENT_ZERO = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_zero");
-    public static NamespacedKey PERCENT_TEN = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_ten");
-    public static NamespacedKey PERCENT_TWENTY = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_twenty");
-    public static NamespacedKey PERCENT_THIRTY = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_thirty");
-    public static NamespacedKey PERCENT_FORTY = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_forty");
-    public static NamespacedKey PERCENT_FIFTY = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_fifty");
-    public static NamespacedKey PERCENT_SIXTY = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_sixty");
-    public static NamespacedKey PERCENT_SEVENTY = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_seventy");
-    public static NamespacedKey PERCENT_EIGHTY = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_eighty");
-    public static NamespacedKey PERCENT_NINETY = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_ninety");
-    public static NamespacedKey PERCENT_HUNDRED = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_hundred");
-    public static NamespacedKey VM_BEACON = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/beacon");
-    public static NamespacedKey VM_DELETE = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/delete");
-    public static NamespacedKey VM_DISPLAY = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/display");
-    public static NamespacedKey VM_ZERO = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/zero");
-    public static NamespacedKey VM_ONE = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/one");
-    public static NamespacedKey VM_TWO = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/two");
-    public static NamespacedKey VM_THREE = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/three");
-    public static NamespacedKey VM_FOUR = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/four");
-    public static NamespacedKey VM_FIVE = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/five");
-    public static NamespacedKey VM_SIX = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/six");
-    public static NamespacedKey VM_SEVEN = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/seven");
-    public static NamespacedKey VM_EIGHT = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/eight");
-    public static NamespacedKey VM_NINE = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/nine");
-    public static NamespacedKey VM_HASH = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/hash");
-    public static NamespacedKey VM_LIFE = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/life");
-    public static NamespacedKey VM_LOAD = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/load");
-    public static NamespacedKey VM_MESSAGE = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/message");
-    public static NamespacedKey VM_NEXT = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/next");
-    public static NamespacedKey VM_PREV = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/prev");
-    public static NamespacedKey VM_PAGE = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/page");
-    public static NamespacedKey VM_READ = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/read");
-    public static NamespacedKey VM_STAR = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/star");
-    public static NamespacedKey VM_WARP = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/warp");
-    public static NamespacedKey VM_WORLD = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/world");
-    public static NamespacedKey VM_X = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/x");
-    public static NamespacedKey VM_Y = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/y");
-    public static NamespacedKey VM_Z = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/z");
-    public static NamespacedKey BUTTON_TRANSMAT = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_transmat");
-    public static NamespacedKey KNOCKBACK = new NamespacedKey(TARDIS.plugin, "circuit/knockback");
-    public static NamespacedKey BUTTON_SONIC = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_sonic");
-    public static NamespacedKey WALL = new NamespacedKey(TARDIS.plugin, "gui/bowl/wall");
-    public static NamespacedKey FLOOR = new NamespacedKey(TARDIS.plugin, "gui/bowl/floor");
-    public static NamespacedKey OWN_SAVES = new NamespacedKey(TARDIS.plugin, "gui/bowl/own_saves");
-    public static NamespacedKey TARDIS_SAVES = new NamespacedKey(TARDIS.plugin, "gui/bowl/tardis_saves");
-    public static NamespacedKey HOME = new NamespacedKey(TARDIS.plugin, "gui/bowl/home");
-    public static NamespacedKey AREAS = new NamespacedKey(TARDIS.plugin, "gui/bowl/areas");
-    public static NamespacedKey CONFIGURED = new NamespacedKey(TARDIS.plugin, "gui/bowl/configured");
-    public static NamespacedKey CLOSEST = new NamespacedKey(TARDIS.plugin, "gui/bowl/closest");
-    public static NamespacedKey STAY = new NamespacedKey(TARDIS.plugin, "gui/bowl/stay");
-    public static NamespacedKey BUTTON_AUTO_PREFS = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_auto_prefs");
-    public static NamespacedKey BUTTON_LOCK = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_lock");
-    public static NamespacedKey BUTTON_TWA = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_twa");
-    public static NamespacedKey PREDICTIVE = new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/predictive");
-    public static NamespacedKey BUTTON_THROTTLE = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_throttle");
-    public static NamespacedKey BRUSH = new NamespacedKey(TARDIS.plugin, "circuit/brush");
-    public static NamespacedKey NEW = new NamespacedKey(TARDIS.plugin, "gui/bowl/new");
-    public static NamespacedKey USE_SELECTED = new NamespacedKey(TARDIS.plugin, "gui/bowl/use_selected");
-    public static NamespacedKey UPDATE_SELECTED = new NamespacedKey(TARDIS.plugin, "gui/bowl/update_selected");
-    public static NamespacedKey CONVERSION = new NamespacedKey(TARDIS.plugin, "circuit/conversion");
-    public static NamespacedKey BUTTON_FARM_PREFS = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_farm_prefs");
-    public static NamespacedKey BUTTON_SYSTEM_UPGRADES = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_system_upgrades");
-    public static NamespacedKey BUTTON_PARTICLES = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_particles");
-    public static NamespacedKey AUTO_SAVE = new NamespacedKey(TARDIS.plugin, "gui/bowl/auto_save");
-    public static NamespacedKey AUTO_SAVE_SELECTOR = new NamespacedKey(TARDIS.plugin, "gui/bowl/auto_save_selector");
-    public static NamespacedKey BUTTON_SKINS = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_skins");
-    public static NamespacedKey BUTTON_ROOMS_WORLD = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_rooms_world");
-    public static NamespacedKey BUTTON_DEATH = new NamespacedKey(TARDIS.plugin, "gui/bowl/button_death");
+    CLOSE(new NamespacedKey(TARDIS.plugin, "gui/bowl/close")),
+    ABORT(new NamespacedKey(TARDIS.plugin, "gui/bowl/abort")),
+    ALIEN(new NamespacedKey(TARDIS.plugin, "gui/bowl/alien")),
+    ARCHIVE_CONSOLES(new NamespacedKey(TARDIS.plugin, "gui/bowl/archive_consoles")),
+    ARCHIVE_CURRENT_CONSOLE(new NamespacedKey(TARDIS.plugin, "gui/bowl/archive_current_console")),
+    ARTRON_BATTERY(new NamespacedKey(TARDIS.plugin, "tardis/artron_battery")),
+    ATMOSPHERE(new NamespacedKey(TARDIS.plugin, "gui/bowl/atmosphere")),
+    BACK(new NamespacedKey(TARDIS.plugin, "gui/bowl/back")),
+    BIO(new NamespacedKey(TARDIS.plugin, "circuit/bio")),
+    BUTTON_ABORT(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_abort")),
+    BUTTON_ADAPT(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_adapt")),
+    BUTTON_AREAS(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_areas")),
+    BUTTON_ARS(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_ars")),
+    BUTTON_ARTRON(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_artron")),
+    BUTTON_BACK(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_back")),
+    BUTTON_CANCEL(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_cancel")),
+    BUTTON_CHAMELEON(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_chameleon")),
+    BUTTON_CONSTRUCT(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_construct")),
+    BUTTON_DIRECTION(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_direction")),
+    BUTTON_HIDE(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_hide")),
+    BUTTON_INFO(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_info")),
+    BUTTON_INVISIBLE(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_invisible")),
+    BUTTON_PREFS(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_prefs")),
+    BUTTON_RANDOM(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_random")),
+    BUTTON_REBUILD(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_rebuild")),
+    BUTTON_SAVES(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_saves")),
+    BUTTON_SCANNER(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_scanner")),
+    BUTTON_SHORT(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_short")),
+    BUTTON_TEMP(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_temp")),
+    BUTTON_TERM(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_term")),
+    BUTTON_THEME(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_theme")),
+    BUTTON_ZERO(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_zero")),
+    CHECK_OUT_SELECTED_PROGRAM(new NamespacedKey(TARDIS.plugin, "gui/bowl/check_out_selected_program")),
+    CLEAN(new NamespacedKey(TARDIS.plugin, "gui/bowl/clean")),
+    ONE(new NamespacedKey(TARDIS.plugin, "gui/bowl/one")),
+    TWO(new NamespacedKey(TARDIS.plugin, "gui/bowl/two")),
+    THREE(new NamespacedKey(TARDIS.plugin, "gui/bowl/three")),
+    FOUR(new NamespacedKey(TARDIS.plugin, "gui/bowl/four")),
+    FIVE(new NamespacedKey(TARDIS.plugin, "gui/bowl/five")),
+    SIX(new NamespacedKey(TARDIS.plugin, "gui/bowl/six")),
+    SEVEN(new NamespacedKey(TARDIS.plugin, "gui/bowl/seven")),
+    EIGHT(new NamespacedKey(TARDIS.plugin, "gui/bowl/eight")),
+    NINE(new NamespacedKey(TARDIS.plugin, "gui/bowl/nine")),
+    COMMAND(new NamespacedKey(TARDIS.plugin, "gui/bowl/command")),
+    COMPANIONS_MENU(new NamespacedKey(TARDIS.plugin, "gui/bowl/companions_menu")),
+    COMPUTER(new NamespacedKey(TARDIS.plugin, "gui/bowl/computer")),
+    CONTROL(new NamespacedKey(TARDIS.plugin, "gui/bowl/control")),
+    COPPER(new NamespacedKey(TARDIS.plugin, "gui/bowl/copper")),
+    CORAL(new NamespacedKey(TARDIS.plugin, "gui/bowl/coral")),
+    DIAMOND(new NamespacedKey(TARDIS.plugin, "circuit/diamond")),
+    EMERALD(new NamespacedKey(TARDIS.plugin, "circuit/emerald")),
+    EVENT(new NamespacedKey(TARDIS.plugin, "gui/bowl/event")),
+    GALAXY(new NamespacedKey(TARDIS.plugin, "gui/bowl/galaxy")),
+    GENERATE_SONIC_SCREWDRIVER(new NamespacedKey(TARDIS.plugin, "gui/bowl/generate_sonic_screwdriver")),
+    HELP(new NamespacedKey(TARDIS.plugin, "gui/bowl/help")),
+    IGNITE(new NamespacedKey(TARDIS.plugin, "circuit/ignite")),
+    INFO(new NamespacedKey(TARDIS.plugin, "gui/bowl/info")),
+    INTERIOR_HUM_SOUND(new NamespacedKey(TARDIS.plugin, "gui/bowl/interior_hum_sound")),
+    LEARNING(new NamespacedKey(TARDIS.plugin, "gui/bowl/learning")),
+    LEFT(new NamespacedKey(TARDIS.plugin, "gui/bowl/left")),
+    LOAD_SELECTED_PROGRAM_IN_EDITOR(new NamespacedKey(TARDIS.plugin, "gui/bowl/load_selected_program_in_editor")),
+    MEDIUM(new NamespacedKey(TARDIS.plugin, "gui/bowl/medium")),
+    MIND(new NamespacedKey(TARDIS.plugin, "gui/bowl/mind")),
+    NEON(new NamespacedKey(TARDIS.plugin, "gui/bowl/neon")),
+    NUMBER(new NamespacedKey(TARDIS.plugin, "gui/bowl/number")),
+    OPERATOR(new NamespacedKey(TARDIS.plugin, "gui/bowl/operator")),
+    PAINTER(new NamespacedKey(TARDIS.plugin, "circuit/painter")),
+    PICKUP(new NamespacedKey(TARDIS.plugin, "circuit/pickup")),
+    HANDLES_DISK(new NamespacedKey(TARDIS.plugin, "disks/handles_disk")),
+    RANDOM(new NamespacedKey(TARDIS.plugin, "gui/bowl/random")),
+    REDSTONE(new NamespacedKey(TARDIS.plugin, "circuit/redstone")),
+    REPAIR_CONSOLE(new NamespacedKey(TARDIS.plugin, "gui/bowl/repair_console")),
+    RIGHT(new NamespacedKey(TARDIS.plugin, "gui/bowl/right")),
+    SAVE(new NamespacedKey(TARDIS.plugin, "gui/bowl/save")),
+    SCAN_CONSOLE(new NamespacedKey(TARDIS.plugin, "gui/bowl/scan_console")),
+    SELECTOR(new NamespacedKey(TARDIS.plugin, "gui/bowl/selector")),
+    SET_SIZE(new NamespacedKey(TARDIS.plugin, "gui/bowl/set_size")),
+    SLEEPING(new NamespacedKey(TARDIS.plugin, "gui/bowl/sleeping")),
+    SMALL(new NamespacedKey(TARDIS.plugin, "gui/bowl/small")),
+    STANDARD_SONIC(new NamespacedKey(TARDIS.plugin, "gui/bowl/standard_sonic")),
+    TALL(new NamespacedKey(TARDIS.plugin, "gui/bowl/tall")),
+    USE_LAST_SAVED_CONSTRUCT(new NamespacedKey(TARDIS.plugin, "gui/bowl/use_last_saved_construct")),
+    VAR(new NamespacedKey(TARDIS.plugin, "gui/bowl/var")),
+    VIEW_TEMP(new NamespacedKey(TARDIS.plugin, "gui/bowl/view_temp")),
+    VOID(new NamespacedKey(TARDIS.plugin, "gui/bowl/void")),
+    NEXT(new NamespacedKey(TARDIS.plugin, "gui/bowl/next")),
+    PREV(new NamespacedKey(TARDIS.plugin, "gui/bowl/prev")),
+    PLAY(new NamespacedKey(TARDIS.plugin, "gui/bowl/play")),
+    CHECK(new NamespacedKey(TARDIS.plugin, "gui/bowl/check")),
+    CRAFT(new NamespacedKey(TARDIS.plugin, "gui/bowl/craft")),
+    ELECTRONS(new NamespacedKey(TARDIS.plugin, "gui/bowl/electrons")),
+    NEUTRONS(new NamespacedKey(TARDIS.plugin, "gui/bowl/neutrons")),
+    PROTONS(new NamespacedKey(TARDIS.plugin, "gui/bowl/protons")),
+    REDUCE(new NamespacedKey(TARDIS.plugin, "gui/bowl/reduce")),
+    PERCENT_ZERO(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_zero")),
+    PERCENT_TEN(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_ten")),
+    PERCENT_TWENTY(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_twenty")),
+    PERCENT_THIRTY(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_thirty")),
+    PERCENT_FORTY(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_forty")),
+    PERCENT_FIFTY(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_fifty")),
+    PERCENT_SIXTY(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_sixty")),
+    PERCENT_SEVENTY(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_seventy")),
+    PERCENT_EIGHTY(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_eighty")),
+    PERCENT_NINETY(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_ninety")),
+    PERCENT_HUNDRED(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/percent_hundred")),
+    VM_BEACON(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/beacon")),
+    VM_DELETE(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/delete")),
+    VM_DISPLAY(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/display")),
+    VM_ZERO(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/zero")),
+    VM_ONE(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/one")),
+    VM_TWO(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/two")),
+    VM_THREE(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/three")),
+    VM_FOUR(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/four")),
+    VM_FIVE(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/five")),
+    VM_SIX(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/six")),
+    VM_SEVEN(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/seven")),
+    VM_EIGHT(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/eight")),
+    VM_NINE(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/nine")),
+    VM_HASH(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/hash")),
+    VM_LIFE(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/life")),
+    VM_LOAD(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/load")),
+    VM_MESSAGE(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/message")),
+    VM_NEXT(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/next")),
+    VM_PREV(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/prev")),
+    VM_PAGE(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/page")),
+    VM_READ(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/read")),
+    VM_STAR(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/star")),
+    VM_WARP(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/warp")),
+    VM_WORLD(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/world")),
+    VM_X(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/x")),
+    VM_Y(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/y")),
+    VM_Z(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/z")),
+    BUTTON_TRANSMAT(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_transmat")),
+    KNOCKBACK(new NamespacedKey(TARDIS.plugin, "circuit/knockback")),
+    BUTTON_SONIC(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_sonic")),
+    WALL(new NamespacedKey(TARDIS.plugin, "gui/bowl/wall")),
+    FLOOR(new NamespacedKey(TARDIS.plugin, "gui/bowl/floor")),
+    OWN_SAVES(new NamespacedKey(TARDIS.plugin, "gui/bowl/own_saves")),
+    TARDIS_SAVES(new NamespacedKey(TARDIS.plugin, "gui/bowl/tardis_saves")),
+    HOME(new NamespacedKey(TARDIS.plugin, "gui/bowl/home")),
+    AREAS(new NamespacedKey(TARDIS.plugin, "gui/bowl/areas")),
+    CONFIGURED(new NamespacedKey(TARDIS.plugin, "gui/bowl/configured")),
+    CLOSEST(new NamespacedKey(TARDIS.plugin, "gui/bowl/closest")),
+    STAY(new NamespacedKey(TARDIS.plugin, "gui/bowl/stay")),
+    BUTTON_AUTO_PREFS(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_auto_prefs")),
+    BUTTON_LOCK(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_lock")),
+    BUTTON_TWA(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_twa")),
+    PREDICTIVE(new NamespacedKey(TARDIS.plugin, "gui/vortex_manipulator/predictive")),
+    BUTTON_THROTTLE(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_throttle")),
+    BRUSH(new NamespacedKey(TARDIS.plugin, "circuit/brush")),
+    NEW(new NamespacedKey(TARDIS.plugin, "gui/bowl/new")),
+    USE_SELECTED(new NamespacedKey(TARDIS.plugin, "gui/bowl/use_selected")),
+    UPDATE_SELECTED(new NamespacedKey(TARDIS.plugin, "gui/bowl/update_selected")),
+    CONVERSION(new NamespacedKey(TARDIS.plugin, "circuit/conversion")),
+    BUTTON_FARM_PREFS(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_farm_prefs")),
+    BUTTON_SYSTEM_UPGRADES(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_system_upgrades")),
+    BUTTON_PARTICLES(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_particles")),
+    AUTO_SAVE(new NamespacedKey(TARDIS.plugin, "gui/bowl/auto_save")),
+    AUTO_SAVE_SELECTOR(new NamespacedKey(TARDIS.plugin, "gui/bowl/auto_save_selector")),
+    BUTTON_SKINS(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_skins")),
+    BUTTON_ROOMS_WORLD(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_rooms_world")),
+    BUTTON_DEATH(new NamespacedKey(TARDIS.plugin, "gui/bowl/button_death"));
+
+    private final NamespacedKey key;
+
+    Bowl(NamespacedKey key) {
+        this.key = key;
+    }
+
+    public NamespacedKey getKey() {
+        return key;
+    }
 }

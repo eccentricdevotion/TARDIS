@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum GreenDye {
 
-    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "item/genetic/button_type")),
+    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "genetic/button_type")),
     TARDIS_GREEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_green")),
     TARDIS_GREEN_OPEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_green_open")),
     TARDIS_GREEN_STAINED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_green_stained")),
@@ -26,11 +26,11 @@ public enum GreenDye {
     GREEN_FLYING_13(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/green/green_flying_13")),
     GREEN_FLYING_14(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/green/green_flying_14")),
     GREEN_FLYING_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/green/green_flying_15")),
-    RUSTIC_0(new NamespacedKey(TARDIS.plugin, "item/time_rotor/rustic/rustic_0")),
-    RUSTIC_1(new NamespacedKey(TARDIS.plugin, "item/time_rotor/rustic/rustic_1")),
-    RUSTIC_2(new NamespacedKey(TARDIS.plugin, "item/time_rotor/rustic/rustic_2")),
-    RUSTIC_3(new NamespacedKey(TARDIS.plugin, "item/time_rotor/rustic/rustic_3")),
-    RUSTIC_4(new NamespacedKey(TARDIS.plugin, "item/time_rotor/rustic/rustic_4")),
+    RUSTIC_0(new NamespacedKey(TARDIS.plugin, "time_rotor/rustic/rustic_0")),
+    RUSTIC_1(new NamespacedKey(TARDIS.plugin, "time_rotor/rustic/rustic_1")),
+    RUSTIC_2(new NamespacedKey(TARDIS.plugin, "time_rotor/rustic/rustic_2")),
+    RUSTIC_3(new NamespacedKey(TARDIS.plugin, "time_rotor/rustic/rustic_3")),
+    RUSTIC_4(new NamespacedKey(TARDIS.plugin, "time_rotor/rustic/rustic_4")),
     GREEN_FLYING_OPEN_0(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/green/green_flying_open_0")),
     GREEN_FLYING_OPEN_1(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/green/green_flying_open_1")),
     GREEN_FLYING_OPEN_2(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/green/green_flying_open_2")),

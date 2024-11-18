@@ -24,6 +24,6 @@ public record GUIChameleonPoliceBoxes() {
 
     // Chameleon Police Boxes
     public static GUIData GO_TO_PAGE_1 = new GUIData(Arrow.PAGE_ONE.getKey(), 51, Material.ARROW);
-    public static GUIData BACK = new GUIData(Bowl.BACK, 52, Material.BOWL);
-    public static GUIData CLOSE = new GUIData(Bowl.CLOSE, 53, Material.BOWL);
+    public static GUIData BACK = new GUIData(Bowl.BACK.getKey(), 52, Material.BOWL);
+    public static GUIData CLOSE = new GUIData(Bowl.CLOSE.getKey(), 53, Material.BOWL);
 }

@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum SoulLantern {
 
-    EXTERIOR(new NamespacedKey(TARDIS.plugin, "item/gui/lights/exterior"));
+    EXTERIOR(new NamespacedKey(TARDIS.plugin, "gui/lights/exterior"));
 
     private final NamespacedKey key;
 

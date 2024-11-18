@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Cod {
 
-    VAMPIRE_OF_VENICE_FAN(new NamespacedKey(TARDIS.plugin, "item/lazarus/vampire_of_venice_fan"));
+    VAMPIRE_OF_VENICE_FAN(new NamespacedKey(TARDIS.plugin, "lazarus/vampire_of_venice_fan"));
 
     private final NamespacedKey key;
 

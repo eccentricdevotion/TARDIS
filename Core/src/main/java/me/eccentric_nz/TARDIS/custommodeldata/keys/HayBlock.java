@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum HayBlock {
 
-    STABLE(new NamespacedKey(TARDIS.plugin, "item/gui/room/stable"));
+    STABLE(new NamespacedKey(TARDIS.plugin, "gui/room/stable"));
 
     private final NamespacedKey key;
 

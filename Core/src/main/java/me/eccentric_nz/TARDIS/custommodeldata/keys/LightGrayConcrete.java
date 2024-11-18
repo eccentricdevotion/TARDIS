@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum LightGrayConcrete {
 
-    CONSOLE_LIGHT_GRAY(new NamespacedKey(TARDIS.plugin, "item/tardis/console_light_gray")),
+    CONSOLE_LIGHT_GRAY(new NamespacedKey(TARDIS.plugin, "tardis/console_light_gray")),
     CREATIVE(new NamespacedKey(TARDIS.plugin, "block/chemistry/creative"));
 
     private final NamespacedKey key;

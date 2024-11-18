@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum NetherBrick {
 
-    ACID_BATTERY(new NamespacedKey(TARDIS.plugin, "item/tardis/acid_battery"));
+    ACID_BATTERY(new NamespacedKey(TARDIS.plugin, "tardis/acid_battery"));
 
     private final NamespacedKey key;
 

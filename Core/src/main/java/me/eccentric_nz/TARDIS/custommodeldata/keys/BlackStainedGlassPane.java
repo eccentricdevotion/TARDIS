@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum BlackStainedGlassPane {
 
-    XRAY(new NamespacedKey(TARDIS.plugin, "item/tardis/xray"));
+    XRAY(new NamespacedKey(TARDIS.plugin, "tardis/xray"));
 
     private final NamespacedKey key;
 

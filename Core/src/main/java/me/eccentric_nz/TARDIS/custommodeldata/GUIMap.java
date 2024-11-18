@@ -33,8 +33,8 @@ public record GUIMap() {
     public static GUIData BUTTON_LEVEL_B = new GUIData(Wool.LEVEL_BOTTOM.getKey(), 27, Material.WHITE_WOOL);
     public static GUIData BUTTON_LEVEL = new GUIData(Wool.LEVEL_MAIN.getKey(), 28, Material.YELLOW_WOOL);
     public static GUIData BUTTON_LEVEL_T = new GUIData(Wool.LEVEL_TOP.getKey(), 29, Material.WHITE_WOOL);
-    public static GUIData BUTTON_CLOSE = new GUIData(Bowl.CLOSE, 45, Material.BOWL);
-    public static GUIData BUTTON_TRANSMAT = new GUIData(Bowl.BUTTON_TRANSMAT, 46, Material.BOWL);
+    public static GUIData BUTTON_CLOSE = new GUIData(Bowl.CLOSE.getKey(), 45, Material.BOWL);
+    public static GUIData BUTTON_TRANSMAT = new GUIData(Bowl.BUTTON_TRANSMAT.getKey(), 46, Material.BOWL);
     public static GUIData BUTTON_WHERE = new GUIData(Compass.WHERE_AM_I.getKey(), 47, Material.COMPASS);
     public static GUIData BUTTON_MAP_ON = new GUIData(Wool.BLANK.getKey(), -1, Material.BLACK_WOOL);
 }

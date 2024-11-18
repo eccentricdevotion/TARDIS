@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Sunflower {
 
-    CLEAR(new NamespacedKey(TARDIS.plugin, "item/gui/clear"));
+    CLEAR(new NamespacedKey(TARDIS.plugin, "gui/clear"));
 
     private final NamespacedKey key;
 

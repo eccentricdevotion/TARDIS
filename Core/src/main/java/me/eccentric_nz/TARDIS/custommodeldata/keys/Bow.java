@@ -5,9 +5,9 @@ import org.bukkit.NamespacedKey;
 
 public enum Bow {
 
-    DALEK_BOW(new NamespacedKey(TARDIS.plugin, "item/monster/dalek/dalek_bow")),
-    SILURIAN_BOW(new NamespacedKey(TARDIS.plugin, "item/monster/silurian/silurian_bow")),
-    SILURIAN_GUN_ARM(new NamespacedKey(TARDIS.plugin, "item/monster/silurian/silurian_gun_arm"));
+    DALEK_BOW(new NamespacedKey(TARDIS.plugin, "monster/dalek/dalek_bow")),
+    SILURIAN_BOW(new NamespacedKey(TARDIS.plugin, "monster/silurian/silurian_bow")),
+    SILURIAN_GUN_ARM(new NamespacedKey(TARDIS.plugin, "monster/silurian/silurian_gun_arm"));
 
     private final NamespacedKey key;
 

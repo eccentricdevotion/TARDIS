@@ -5,8 +5,8 @@ import org.bukkit.NamespacedKey;
 
 public enum Cookie {
 
-    JAMMY_DODGER(new NamespacedKey(TARDIS.plugin, "item/food/jammy_dodger")),
-    CUSTARD_CREAM(new NamespacedKey(TARDIS.plugin, "item/food/custard_cream"));
+    JAMMY_DODGER(new NamespacedKey(TARDIS.plugin, "food/jammy_dodger")),
+    CUSTARD_CREAM(new NamespacedKey(TARDIS.plugin, "food/custard_cream"));
 
     private final NamespacedKey key;
 

@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Compass {
 
-    WHERE_AM_I(new NamespacedKey(TARDIS.plugin, "item/gui/map/where_am_i"));
+    WHERE_AM_I(new NamespacedKey(TARDIS.plugin, "gui/map/where_am_i"));
 
     private final NamespacedKey key;
 

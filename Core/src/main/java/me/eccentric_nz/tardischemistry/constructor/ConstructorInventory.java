@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardischemistry.constructor;
 
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Paper;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -45,7 +46,7 @@ public class ConstructorInventory {
         ItemStack p_zero = new ItemStack(Material.PAPER, 1);
         ItemMeta pzim = p_zero.getItemMeta();
         pzim.setDisplayName("0");
-        pzim.setCustomModelData(26);
+        pzim.setItemModel(Paper.HANDLES_NUMBER_ZERO.getKey());
         p_zero.setItemMeta(pzim);
         stack[3] = p_zero;
         // protons
@@ -73,7 +74,7 @@ public class ConstructorInventory {
         ItemStack n_zero = new ItemStack(Material.PAPER, 1);
         ItemMeta nzim = n_zero.getItemMeta();
         nzim.setDisplayName("0");
-        nzim.setCustomModelData(26);
+        nzim.setItemModel(Paper.HANDLES_NUMBER_ZERO.getKey());
         n_zero.setItemMeta(nzim);
         stack[12] = n_zero;
         // neutrons
@@ -101,7 +102,7 @@ public class ConstructorInventory {
         ItemStack e_zero = new ItemStack(Material.PAPER, 1);
         ItemMeta ezim = e_zero.getItemMeta();
         ezim.setDisplayName("0");
-        ezim.setCustomModelData(26);
+        ezim.setItemModel(Paper.HANDLES_NUMBER_ZERO.getKey());
         e_zero.setItemMeta(ezim);
         stack[21] = e_zero;
         // electrons

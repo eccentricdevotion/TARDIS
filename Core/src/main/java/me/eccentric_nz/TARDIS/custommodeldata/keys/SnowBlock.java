@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum SnowBlock {
 
-    POOL(new NamespacedKey(TARDIS.plugin, "item/gui/room/pool"));
+    POOL(new NamespacedKey(TARDIS.plugin, "gui/room/pool"));
 
     private final NamespacedKey key;
 

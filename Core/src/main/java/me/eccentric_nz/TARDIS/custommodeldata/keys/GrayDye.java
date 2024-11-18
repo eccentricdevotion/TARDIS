@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum GrayDye {
 
-    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "item/genetic/button_type")),
+    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "genetic/button_type")),
     TARDIS_GRAY(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_gray")),
     TARDIS_GRAY_OPEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_gray_open")),
     TARDIS_GRAY_STAINED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_gray_stained")),
@@ -26,7 +26,7 @@ public enum GrayDye {
     GRAY_FLYING_13(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/gray/gray_flying_13")),
     GRAY_FLYING_14(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/gray/gray_flying_14")),
     GRAY_FLYING_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/gray/gray_flying_15")),
-    TIME_ROTOR_TWELFTH_OFF(new NamespacedKey(TARDIS.plugin, "item/time_rotor/time_rotor_twelfth_off")),
+    TIME_ROTOR_TWELFTH_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/time_rotor_twelfth_off")),
     GRAY_FLYING_OPEN_0(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/gray/gray_flying_open_0")),
     GRAY_FLYING_OPEN_1(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/gray/gray_flying_open_1")),
     GRAY_FLYING_OPEN_2(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/gray/gray_flying_open_2")),
@@ -43,7 +43,7 @@ public enum GrayDye {
     GRAY_FLYING_OPEN_13(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/gray/gray_flying_open_13")),
     GRAY_FLYING_OPEN_14(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/gray/gray_flying_open_14")),
     GRAY_FLYING_OPEN_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/gray/gray_flying_open_15")),
-    ELECTRON_MICROSCOPE(new NamespacedKey(TARDIS.plugin, "item/equipment/electron_microscope"));
+    ELECTRON_MICROSCOPE(new NamespacedKey(TARDIS.plugin, "equipment/electron_microscope"));
 
     private final NamespacedKey key;
 

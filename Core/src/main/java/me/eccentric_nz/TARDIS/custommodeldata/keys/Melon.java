@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Melon {
 
-    GREENHOUSE(new NamespacedKey(TARDIS.plugin, "item/gui/room/greenhouse"));
+    GREENHOUSE(new NamespacedKey(TARDIS.plugin, "gui/room/greenhouse"));
 
     private final NamespacedKey key;
 

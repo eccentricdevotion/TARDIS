@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.custommodeldata.keys.Bucket;
 import me.eccentric_nz.TARDIS.custommodeldata.keys.Map;
 import org.bukkit.Material;
 
-public record GUISaves() {
+public record GUISeeds() {
 
     // TARDIS saves
     public static GUIData HOME = new GUIData(Bowl.HOME.getKey(), 0, Material.BOWL);

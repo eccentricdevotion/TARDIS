@@ -24,22 +24,22 @@ public record GUIChameleonHelp() {
 
     // Chameleon Help
     public static GUIData BACK_CHAM_OPTS = new GUIData(Arrow.BACK.getKey(), 0, Material.ARROW);
-    public static GUIData INFO_HELP_1 = new GUIData(Bowl.INFO, 3, Material.BOWL);
-    public static GUIData INFO_HELP_2 = new GUIData(Bowl.INFO, 4, Material.BOWL);
-    public static GUIData INFO_HELP_3 = new GUIData(Bowl.INFO, 16, Material.BOWL);
-    public static GUIData INFO_HELP_4 = new GUIData(Bowl.INFO, 19, Material.BOWL);
-    public static GUIData COL_L_FRONT = new GUIData(Bowl.ONE, 45, Material.BOWL);
-    public static GUIData COL_L_MIDDLE = new GUIData(Bowl.TWO, 36, Material.BOWL);
-    public static GUIData COL_L_BACK = new GUIData(Bowl.THREE, 27, Material.BOWL);
-    public static GUIData COL_B_MIDDLE = new GUIData(Bowl.FOUR, 28, Material.BOWL);
-    public static GUIData COL_R_BACK = new GUIData(Bowl.FIVE, 29, Material.BOWL);
-    public static GUIData COL_R_MIDDLE = new GUIData(Bowl.SIX, 38, Material.BOWL);
-    public static GUIData COL_R_FRONT = new GUIData(Bowl.SEVEN, 47, Material.BOWL);
-    public static GUIData COL_F_MIDDLE = new GUIData(Bowl.EIGHT, 46, Material.BOWL);
-    public static GUIData COL_C_LAMP = new GUIData(Bowl.NINE, 37, Material.BOWL);
-    public static GUIData ROW_1 = new GUIData(Bowl.ONE, 52, Material.BOWL);
-    public static GUIData ROW_2 = new GUIData(Bowl.TWO, 43, Material.BOWL);
-    public static GUIData ROW_3 = new GUIData(Bowl.THREE, 34, Material.BOWL);
-    public static GUIData ROW_4 = new GUIData(Bowl.FOUR, 25, Material.BOWL);
-    public static GUIData VIEW_TEMP = new GUIData(Bowl.VIEW_TEMP, 40, Material.BOWL);
+    public static GUIData INFO_HELP_1 = new GUIData(Bowl.INFO.getKey(), 3, Material.BOWL);
+    public static GUIData INFO_HELP_2 = new GUIData(Bowl.INFO.getKey(), 4, Material.BOWL);
+    public static GUIData INFO_HELP_3 = new GUIData(Bowl.INFO.getKey(), 16, Material.BOWL);
+    public static GUIData INFO_HELP_4 = new GUIData(Bowl.INFO.getKey(), 19, Material.BOWL);
+    public static GUIData COL_L_FRONT = new GUIData(Bowl.ONE.getKey(), 45, Material.BOWL);
+    public static GUIData COL_L_MIDDLE = new GUIData(Bowl.TWO.getKey(), 36, Material.BOWL);
+    public static GUIData COL_L_BACK = new GUIData(Bowl.THREE.getKey(), 27, Material.BOWL);
+    public static GUIData COL_B_MIDDLE = new GUIData(Bowl.FOUR.getKey(), 28, Material.BOWL);
+    public static GUIData COL_R_BACK = new GUIData(Bowl.FIVE.getKey(), 29, Material.BOWL);
+    public static GUIData COL_R_MIDDLE = new GUIData(Bowl.SIX.getKey(), 38, Material.BOWL);
+    public static GUIData COL_R_FRONT = new GUIData(Bowl.SEVEN.getKey(), 47, Material.BOWL);
+    public static GUIData COL_F_MIDDLE = new GUIData(Bowl.EIGHT.getKey(), 46, Material.BOWL);
+    public static GUIData COL_C_LAMP = new GUIData(Bowl.NINE.getKey(), 37, Material.BOWL);
+    public static GUIData ROW_1 = new GUIData(Bowl.ONE.getKey(), 52, Material.BOWL);
+    public static GUIData ROW_2 = new GUIData(Bowl.TWO.getKey(), 43, Material.BOWL);
+    public static GUIData ROW_3 = new GUIData(Bowl.THREE.getKey(), 34, Material.BOWL);
+    public static GUIData ROW_4 = new GUIData(Bowl.FOUR.getKey(), 25, Material.BOWL);
+    public static GUIData VIEW_TEMP = new GUIData(Bowl.VIEW_TEMP.getKey(), 40, Material.BOWL);
 }

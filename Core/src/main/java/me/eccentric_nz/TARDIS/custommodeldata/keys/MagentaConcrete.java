@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum MagentaConcrete {
 
-    CONSOLE_MAGENTA(new NamespacedKey(TARDIS.plugin, "item/tardis/console_magenta")),
+    CONSOLE_MAGENTA(new NamespacedKey(TARDIS.plugin, "tardis/console_magenta")),
     REDUCER(new NamespacedKey(TARDIS.plugin, "block/chemistry/reducer"));
 
     private final NamespacedKey key;

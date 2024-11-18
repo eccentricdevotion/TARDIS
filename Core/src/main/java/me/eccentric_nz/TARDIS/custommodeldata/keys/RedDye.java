@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum RedDye {
 
-    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "item/genetic/button_type")),
+    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "genetic/button_type")),
     TARDIS_RED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_red")),
     TARDIS_RED_OPEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_red_open")),
     TARDIS_RED_STAINED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_red_stained")),
@@ -26,11 +26,11 @@ public enum RedDye {
     RED_FLYING_13(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/red/red_flying_13")),
     RED_FLYING_14(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/red/red_flying_14")),
     RED_FLYING_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/red/red_flying_15")),
-    CONSOLE_0(new NamespacedKey(TARDIS.plugin, "item/time_rotor/console/console_0")),
-    CONSOLE_1(new NamespacedKey(TARDIS.plugin, "item/time_rotor/console/console_1")),
-    CONSOLE_2(new NamespacedKey(TARDIS.plugin, "item/time_rotor/console/console_2")),
-    CONSOLE_3(new NamespacedKey(TARDIS.plugin, "item/time_rotor/console/console_3")),
-    CONSOLE_4(new NamespacedKey(TARDIS.plugin, "item/time_rotor/console/console_4")),
+    CONSOLE_0(new NamespacedKey(TARDIS.plugin, "time_rotor/console/console_0")),
+    CONSOLE_1(new NamespacedKey(TARDIS.plugin, "time_rotor/console/console_1")),
+    CONSOLE_2(new NamespacedKey(TARDIS.plugin, "time_rotor/console/console_2")),
+    CONSOLE_3(new NamespacedKey(TARDIS.plugin, "time_rotor/console/console_3")),
+    CONSOLE_4(new NamespacedKey(TARDIS.plugin, "time_rotor/console/console_4")),
     RED_FLYING_OPEN_0(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/red/red_flying_open_0")),
     RED_FLYING_OPEN_1(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/red/red_flying_open_1")),
     RED_FLYING_OPEN_2(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/red/red_flying_open_2")),

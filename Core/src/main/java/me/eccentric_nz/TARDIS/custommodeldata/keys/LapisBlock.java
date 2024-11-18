@@ -6,7 +6,7 @@ import org.bukkit.NamespacedKey;
 public enum LapisBlock {
 
     TOM(new NamespacedKey(TARDIS.plugin, "block/seed/tom")),
-    SHAPE_INFO(new NamespacedKey(TARDIS.plugin, "item/gui/particle/shape_info"));
+    SHAPE_INFO(new NamespacedKey(TARDIS.plugin, "gui/particle/shape_info"));
 
     private final NamespacedKey key;
 

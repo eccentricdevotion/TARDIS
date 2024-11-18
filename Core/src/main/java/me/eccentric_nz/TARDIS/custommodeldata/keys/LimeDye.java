@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum LimeDye {
 
-    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "item/genetic/button_type")),
+    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "genetic/button_type")),
     TARDIS_LIME(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_lime")),
     TARDIS_LIME_OPEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_lime_open")),
     TARDIS_LIME_STAINED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_lime_stained")),

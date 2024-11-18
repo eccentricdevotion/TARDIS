@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum PinkDye {
 
-    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "item/genetic/button_type")),
+    BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "genetic/button_type")),
     TARDIS_PINK(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_pink")),
     TARDIS_PINK_OPEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_pink_open")),
     TARDIS_PINK_STAINED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_pink_stained")),

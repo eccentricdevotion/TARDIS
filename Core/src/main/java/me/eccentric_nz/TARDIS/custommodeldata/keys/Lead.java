@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum Lead {
 
-    BUTTON_OPTS(new NamespacedKey(TARDIS.plugin, "item/genetic/button_opts"));
+    BUTTON_OPTS(new NamespacedKey(TARDIS.plugin, "genetic/button_opts"));
 
     private final NamespacedKey key;
 

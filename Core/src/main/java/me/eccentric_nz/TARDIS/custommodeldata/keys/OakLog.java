@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum OakLog {
 
-    VILLAGE(new NamespacedKey(TARDIS.plugin, "item/gui/room/village"));
+    VILLAGE(new NamespacedKey(TARDIS.plugin, "gui/room/village"));
 
     private final NamespacedKey key;
 
