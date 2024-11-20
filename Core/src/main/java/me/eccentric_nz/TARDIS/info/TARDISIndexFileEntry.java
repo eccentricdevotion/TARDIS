@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.info;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
@@ -40,7 +41,7 @@ public class TARDISIndexFileEntry {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(1);
+        close_im.setItemModel(Bowl.CLOSE.getKey());
         close.setItemMeta(close_im);
         stack[26] = close;
         return stack;
