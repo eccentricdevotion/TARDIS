@@ -163,7 +163,7 @@ public class TARDISSeedBlockListener implements Listener {
                     try {
                         TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(console);
                         is = new ItemStack(tdi.getMaterial(), 1);
-                        model = tdi.getCustomModelData();
+                        model = tdi.getCustomModel();
                     } catch (IllegalArgumentException e) {
                         return;
                     }

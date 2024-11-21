@@ -164,7 +164,7 @@ public class HandbrakeInteraction {
                                 ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
                                 if (itemFrame != null) {
                                     // get the rotor type
-                                    Rotor rotor = Rotor.getByModelData(TARDISTimeRotor.getRotorModelData(itemFrame));
+                                    Rotor rotor = Rotor.getByModel(TARDISTimeRotor.getRotorModel(itemFrame));
                                     TARDISTimeRotor.setRotor(rotor, itemFrame);
                                 }
                             }
@@ -199,7 +199,7 @@ public class HandbrakeInteraction {
                                     // cancel the animation
                                     int task = TARDISTimeRotor.ANIMATED_ROTORS.getOrDefault(itemFrame.getUniqueId(), -1);
                                     plugin.getServer().getScheduler().cancelTask(task);
-                                    TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorOffModelData(itemFrame), itemFrame);
+                                    TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorOffModel(itemFrame), itemFrame);
                                 }
                             }
                         }

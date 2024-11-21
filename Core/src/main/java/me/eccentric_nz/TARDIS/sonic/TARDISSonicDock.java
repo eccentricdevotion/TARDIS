@@ -244,7 +244,7 @@ public class TARDISSonicDock {
                                             ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
                                             if (itemFrame != null) {
                                                 // get the rotor type
-                                                Rotor rotor = Rotor.getByModelData(TARDISTimeRotor.getRotorModelData(itemFrame));
+                                                Rotor rotor = Rotor.getByModel(TARDISTimeRotor.getRotorModel(itemFrame));
                                                 TARDISTimeRotor.setRotor(rotor, itemFrame);
                                             }
                                         }

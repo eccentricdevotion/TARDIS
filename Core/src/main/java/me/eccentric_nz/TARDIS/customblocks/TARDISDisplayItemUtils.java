@@ -215,15 +215,15 @@ public class TARDISDisplayItemUtils {
         ItemStack is = new ItemStack(tdi.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(tdi.getDisplayName());
-        im.setCustomModelData(tdi.getCustomModelData());
-        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
+        im.setCustomModelData(tdi.getCustomModel());
+        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModel());
         is.setItemMeta(im);
         Location l = new Location(world, x + 0.5d, y + 0.5d, z + 0.5d);
         ItemDisplay display = (ItemDisplay) world.spawnEntity(l, EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
         display.setPersistent(true);
         display.setInvulnerable(true);
-        display.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
+        display.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModel());
     }
 
     /**
@@ -238,7 +238,7 @@ public class TARDISDisplayItemUtils {
             // also set an interaction entity
             Interaction interaction = (Interaction) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
             interaction.setResponsive(true);
-            interaction.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
+            interaction.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModel());
             interaction.setPersistent(true);
             if (tdi == TARDISDisplayItem.DOOR) {
                 // set size
@@ -265,10 +265,10 @@ public class TARDISDisplayItemUtils {
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(tdi.getDisplayName());
-        if (tdi.getCustomModelData() != -1) {
-            im.setCustomModelData(tdi.getCustomModelData());
+        if (tdi.getCustomModel() != -1) {
+            im.setCustomModelData(tdi.getCustomModel());
         }
-        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
+        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModel());
         is.setItemMeta(im);
         double ay = (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
@@ -278,7 +278,7 @@ public class TARDISDisplayItemUtils {
         }
         display.setPersistent(true);
         display.setInvulnerable(true);
-        display.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
+        display.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModel());
         if (tdi == TARDISDisplayItem.ARTRON_FURNACE) {
             display.setBrightness(new Display.Brightness(15, 15));
         }

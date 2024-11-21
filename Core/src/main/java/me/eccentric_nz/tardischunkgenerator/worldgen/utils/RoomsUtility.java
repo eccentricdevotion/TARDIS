@@ -11,7 +11,6 @@ import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
 import org.bukkit.*;
 import org.bukkit.block.Banner;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
 import org.bukkit.entity.*;
@@ -39,7 +38,7 @@ public class RoomsUtility {
             Material material = Material.valueOf(stack.get("type").getAsString());
             TARDISDisplayItem tdi = TARDISDisplayItem.getByMaterialAndData(material, model);
             if (tdi != null) {
-                set(region, x + 0.5d, y + 0.5d, z + 0.5d, tdi.getMaterial(), tdi.getCustomModelData(), false);
+                set(region, x + 0.5d, y + 0.5d, z + 0.5d, tdi.getMaterial(), tdi.getCustomModel(), false);
             } else {
                 set(region, x + 0.5d, y + 0.25d, z + 0.5d, material, model, true);
             }

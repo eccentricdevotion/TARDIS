@@ -86,7 +86,7 @@ public class TARDISLampToggler {
                             ItemStack is = new ItemStack(light.getOff().getMaterial());
                             ItemMeta im = is.getItemMeta();
                             im.setDisplayName(light.getOff().getDisplayName());
-                            int cmd = light.getOff().getCustomModelData();
+                            int cmd = light.getOff().getCustomModel();
                             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
                             if (cmd != -1) {
                                 im.setCustomModelData(cmd);
@@ -106,7 +106,7 @@ public class TARDISLampToggler {
                         ItemStack is = new ItemStack(light.getOn().getMaterial());
                         ItemMeta im = is.getItemMeta();
                         im.setDisplayName(light.getOn().getDisplayName());
-                        int cmd = light.getOn().getCustomModelData();
+                        int cmd = light.getOn().getCustomModel();
                         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
                         if (cmd != -1) {
                             im.setCustomModelData(cmd);

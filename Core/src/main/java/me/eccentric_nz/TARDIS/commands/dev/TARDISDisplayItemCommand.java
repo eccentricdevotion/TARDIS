@@ -168,8 +168,8 @@ public class TARDISDisplayItemCommand {
                 if (tdi != null) {
                     ItemStack is = new ItemStack(tdi.getMaterial());
                     ItemMeta im = is.getItemMeta();
-                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
-                    im.setCustomModelData(tdi.getCustomModelData());
+                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModel());
+                    im.setCustomModelData(tdi.getCustomModel());
                     im.setDisplayName(TARDISStringUtils.capitalise(args[2]));
                     is.setItemMeta(im);
                     Block up = block.getRelative(BlockFace.UP);
@@ -177,7 +177,7 @@ public class TARDISDisplayItemCommand {
                         // also set an interaction entity
                         Interaction interaction = (Interaction) block.getWorld().spawnEntity(up.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
                         interaction.setResponsive(true);
-                        interaction.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
+                        interaction.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModel());
                         interaction.setPersistent(true);
                         if (tdi.isLight()) {
                             Levelled light = TARDISConstants.LIGHT;

@@ -112,7 +112,7 @@ public class TARDISDisplayBlockListener implements Listener {
         double ay = (which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR || which == TARDISDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
         // set an ItemDisplay entity
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
-        display.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which.getCustomModelData());
+        display.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which.getCustomModel());
         display.setItemStack(single);
         display.setPersistent(true);
         display.setInvulnerable(true);

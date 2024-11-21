@@ -492,7 +492,7 @@ public class TARDII implements TardisAPI {
             } else {
                 try {
                     TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(s.getPermission().toUpperCase(Locale.ROOT));
-                    model = tdi.getCustomModelData();
+                    model = tdi.getCustomModel();
                     is = new ItemStack(tdi.getMaterial(), 1);
                 } catch (IllegalArgumentException e) {
                     TARDIS.plugin.debug("Could not get display item for console! " + e.getMessage());

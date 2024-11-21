@@ -61,10 +61,10 @@ public class TARDISLightSequence {
                                     if (remove == 0) {
                                         TARDISDisplayItemUtils.remove(block);
                                         // set new light - delay as interaction may be removed by the above
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new VariableLight(rs.getMaterial(), block.getLocation().add(0.5, 0.5, 0.5)).set(tardisLight.getOn().getCustomModelData(), level), 3L);
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new VariableLight(rs.getMaterial(), block.getLocation().add(0.5, 0.5, 0.5)).set(tardisLight.getOn().getCustomModel(), level), 3L);
                                     } else {
                                         // just change the variable light display
-                                        new VariableLight(block.getLocation().add(0.5, 0.5, 0.5)).change(tardisLight.getOn().getCustomModelData(), level);
+                                        new VariableLight(block.getLocation().add(0.5, 0.5, 0.5)).change(tardisLight.getOn().getCustomModel(), level);
                                     }
                                 }
                             }
@@ -80,7 +80,7 @@ public class TARDISLightSequence {
                             // set new light - delay as interaction may be removed by the above
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 if (currentLight.getOn().isVariable()) {
-                                    new VariableLight(rs.getMaterial(), block.getLocation().add(0.5, 0.5, 0.5)).set(currentLight.getOn().getCustomModelData(), currentLevel);
+                                    new VariableLight(rs.getMaterial(), block.getLocation().add(0.5, 0.5, 0.5)).set(currentLight.getOn().getCustomModel(), currentLevel);
                                 } else {
                                     TARDISDisplayItemUtils.set(currentLight.getOn(), block, -1);
                                 }

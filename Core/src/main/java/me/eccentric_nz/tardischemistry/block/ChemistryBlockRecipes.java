@@ -38,8 +38,8 @@ public class ChemistryBlockRecipes {
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(data.getDisplayName());
             im.setLore(data.getLore());
-            im.setCustomModelData(data.getDisplayItem().getCustomModelData());
-            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, data.getDisplayItem().getCustomModelData());
+            im.setCustomModelData(data.getDisplayItem().getCustomModel());
+            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, data.getDisplayItem().getCustomModel());
             is.setItemMeta(im);
             NamespacedKey key = new NamespacedKey(plugin, data.getNameSpacedKey());
             ShapedRecipe recipe = new ShapedRecipe(key, is);

@@ -42,16 +42,16 @@ public enum LightGrayDye {
     LIGHT_GRAY_FLYING_OPEN_14(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/light_gray/light_gray_flying_open_14")),
     LIGHT_GRAY_FLYING_OPEN_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/light_gray/light_gray_flying_open_15")),
     MICROSCOPE(new NamespacedKey(TARDIS.plugin, "equipment/microscope")),
-      TIME_ROTOR_EARLY_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/time_rotor_early_off")),
-            TIME_ROTOR_TENNANT_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/time_rotor_tennant_off")),
-            TIME_ROTOR_ELEVENTH_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/time_rotor_eleventh_off")),
-            TIME_ROTOR_TWELFTH_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/time_rotor_twelfth_off")),
-            TIME_ROTOR_DELTA_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/time_rotor_delta_off")),
-            ENGINE_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/engine_off")),
-            ENGINE_ROTOR_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/engine_rotor_off")),
-            HOSPITAL_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/hospital_off")),
-            TIME_ROTOR_CONSOLE_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/time_rotor_console_off")),
-            TIME_ROTOR_RUSTIC_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/time_rotor_rustic_off")) ;
+    TIME_ROTOR_EARLY_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/time_rotor_early_off")),
+    TIME_ROTOR_TENNANT_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/time_rotor_tennant_off")),
+    TIME_ROTOR_ELEVENTH_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/time_rotor_eleventh_off")),
+    TIME_ROTOR_TWELFTH_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/time_rotor_twelfth_off")),
+    TIME_ROTOR_DELTA_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/time_rotor_delta_off")),
+    ENGINE_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/engine_off")),
+    ENGINE_ROTOR_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/engine_rotor_off")),
+    HOSPITAL_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/hospital_off")),
+    TIME_ROTOR_CONSOLE_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/time_rotor_console_off")),
+    TIME_ROTOR_RUSTIC_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/time_rotor_rustic_off"));
 
     private final NamespacedKey key;
 

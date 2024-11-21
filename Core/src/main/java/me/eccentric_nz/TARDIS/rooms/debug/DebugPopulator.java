@@ -142,7 +142,7 @@ public class DebugPopulator {
         int z = 2;
         for (TARDISDisplayItem tdi : TARDISDisplayItem.values()) {
             // 122 blocks - surgery room x-ray
-            if (tdi != TARDISDisplayItem.NONE && tdi != TARDISDisplayItem.PANDORICA && tdi != TARDISDisplayItem.UNTEMPERED_SCHISM && tdi.getCustomModelData() != -1 && !tdi.toString().contains("DOOR")) {
+            if (tdi != TARDISDisplayItem.NONE && tdi != TARDISDisplayItem.PANDORICA && tdi != TARDISDisplayItem.UNTEMPERED_SCHISM && tdi.getCustomModel() != -1 && !tdi.toString().contains("DOOR")) {
                 Location location = new Location(world, rx + x, 65, rz + z);
                 // set display item at location
                 TARDISDisplayItemUtils.set(tdi, world, rx + x, 65, rz + z);
@@ -339,7 +339,7 @@ public class DebugPopulator {
     public void rotors() {
         int x = 28;
         int z = 2;
-        for (Rotor rotor : Rotor.byCustomModelData.values()) {
+        for (Rotor rotor : Rotor.byCustomModel.values()) {
             Location location = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
             // set item frame
             ItemFrame frame = (ItemFrame) world.spawnEntity(location, EntityType.ITEM_FRAME);
@@ -347,7 +347,7 @@ public class DebugPopulator {
             // set item
             ItemStack is = new ItemStack(Material.LIGHT_GRAY_DYE);
             ItemMeta im = is.getItemMeta();
-            im.setCustomModelData(rotor.getOffModelData());
+            im.setItemModel(rotor.getOffModel());
             is.setItemMeta(im);
             frame.setItem(is);
             // lock
@@ -374,7 +374,7 @@ public class DebugPopulator {
                 Material material = (tdi.toString().contains("OPEN")) ? tdi.getMaterial() : tdi.getCraftMaterial();
                 ItemStack is = new ItemStack(material);
                 ItemMeta im = is.getItemMeta();
-                im.setCustomModelData(tdi.getCustomModelData());
+                im.setCustomModelData(tdi.getCustomModel());
                 is.setItemMeta(im);
                 display.setItemStack(is);
                 // loop x z - spaced over 24 x 24 with empty blocks between

@@ -49,10 +49,10 @@ public class TARDISDisplayItemRecipe {
                 }
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(ChatColor.WHITE + tdi.getDisplayName());
-                if (tdi.getCustomModelData() != -1) {
-                    im.setCustomModelData(tdi.getCustomModelData());
+                if (tdi.getCustomModel() != -1) {
+                    im.setCustomModelData(tdi.getCustomModel());
                 }
-                im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
+                im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModel());
                 is.setItemMeta(im);
                 NamespacedKey key = new NamespacedKey(plugin, tdi.getName());
                 ShapedRecipe r = new ShapedRecipe(key, is);

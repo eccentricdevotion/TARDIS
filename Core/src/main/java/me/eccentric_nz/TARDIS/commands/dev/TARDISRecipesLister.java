@@ -67,7 +67,7 @@ class TARDISRecipesLister {
                     } else {
                         try {
                             TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(seed.getKey().getPermission().toUpperCase(Locale.ROOT));
-                            model = tdi.getCustomModelData();
+                            model = tdi.getCustomModel();
                             material = tdi.getMaterial().toString();
                         } catch (IllegalArgumentException e) {
                             material = TARDISDisplayItem.CUSTOM.getMaterial().toString();

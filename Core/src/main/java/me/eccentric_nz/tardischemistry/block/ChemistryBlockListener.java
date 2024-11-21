@@ -162,8 +162,8 @@ public class ChemistryBlockListener implements Listener {
                 ItemStack is = new ItemStack(tdi.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(tdi.getDisplayName());
-                im.setCustomModelData(tdi.getCustomModelData());
-                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
+                im.setCustomModelData(tdi.getCustomModel());
+                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModel());
                 is.setItemMeta(im);
                 block.setBlockData(TARDISConstants.AIR);
                 block.getWorld().dropItemNaturally(event.getPlayer().getLocation(), is);

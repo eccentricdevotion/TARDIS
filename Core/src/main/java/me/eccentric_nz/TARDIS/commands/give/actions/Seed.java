@@ -70,7 +70,7 @@ public class Seed {
                     try {
                         TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(type);
                         is = new ItemStack(tdi.getMaterial(), 1);
-                        model = tdi.getCustomModelData();
+                        model = tdi.getCustomModel();
                     } catch (IllegalArgumentException e) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "SEED_NOT_VALID");
                         return;

@@ -1,12 +1,16 @@
 package me.eccentric_nz.TARDIS.console;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Lever;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Rail;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Repeater;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
@@ -132,22 +136,22 @@ public class ConsoleBuilder {
             return wxyz;
         }
         Material material = interaction.getMaterial();
-        int cmd = interaction.getCustomModelData();
+        NamespacedKey key = interaction.getCustomModel();
         if (interaction == ConsoleInteraction.DIRECTION && id > 0) {
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-            cmd = (rsc.resultSet()) ? getCmd(rsc.getDirection()) + 10000 : 10000;
+            key = (rsc.resultSet()) ? getKey(rsc.getDirection()): Rail.DIRECTION_NORTH.getKey();
         }
         if (interaction == ConsoleInteraction.THROTTLE || interaction == ConsoleInteraction.RELATIVITY_DIFFERENTIATOR) {
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, playerUuid);
             if (rsp.resultSet()) {
-                cmd = (interaction == ConsoleInteraction.THROTTLE) ? 1000 + rsp.getThrottle() : 6000 + rsp.getFlightMode();
+                key = (interaction == ConsoleInteraction.THROTTLE) ? Repeater.values()[115+rsp.getThrottle()].getKey() : Lever.values()[34 + rsp.getFlightMode()].getKey();
             }
         }
         // spawn a control
         ItemStack is = new ItemStack(material);
         ItemMeta im = is.getItemMeta();
-        im.setCustomModelData(cmd);
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
+        im.setItemModel(key);
+        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, key.getKey());
         is.setItemMeta(im);
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
@@ -168,19 +172,19 @@ public class ConsoleBuilder {
         return uuid;
     }
 
-    private int getCmd(COMPASS direction) {
-        int cmd;
+    private NamespacedKey getKey(COMPASS direction) {
+        NamespacedKey key;
         switch (direction) {
-            case NORTH_EAST -> cmd = 1;
-            case EAST -> cmd = 2;
-            case SOUTH_EAST -> cmd = 3;
-            case SOUTH -> cmd = 4;
-            case SOUTH_WEST -> cmd = 5;
-            case WEST -> cmd = 6;
-            case NORTH_WEST -> cmd = 7;
-            default -> cmd = 0;
+            case NORTH_EAST -> key = Rail.DIRECTION_NORTH_EAST.getKey();
+            case EAST -> key = Rail.DIRECTION_EAST.getKey();
+            case SOUTH_EAST -> key = Rail.DIRECTION_SOUTH_EAST.getKey();
+            case SOUTH -> key = Rail.DIRECTION_SOUTH.getKey();
+            case SOUTH_WEST -> key = Rail.DIRECTION_SOUTH_WEST.getKey();
+            case WEST -> key = Rail.DIRECTION_WEST.getKey();
+            case NORTH_WEST -> key = Rail.DIRECTION_NORTH_WEST.getKey();
+            default -> key = Rail.DIRECTION_NORTH.getKey();
         }
-        return cmd;
+        return key;
     }
 
     private UUID spawnCentreDisplay(Location up, int type) {

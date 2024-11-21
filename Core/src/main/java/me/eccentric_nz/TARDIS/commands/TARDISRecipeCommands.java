@@ -349,7 +349,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
             try {
                 TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(type);
                 tardis = new ItemStack(tdi.getMaterial(), 1);
-                model = tdi.getCustomModelData();
+                model = tdi.getCustomModel();
             } catch (IllegalArgumentException e) {
                 tardis = new ItemStack(TARDISDisplayItem.CUSTOM.getMaterial(), 1);
             }
