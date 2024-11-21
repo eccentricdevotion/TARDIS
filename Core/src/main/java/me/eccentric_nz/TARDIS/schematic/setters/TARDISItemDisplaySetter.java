@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.EntityType;
@@ -46,11 +47,12 @@ public class TARDISItemDisplaySetter {
         int pz = rel.get("z").getAsInt();
         Location l = new Location(start.getWorld(), start.getBlockX() + px, start.getBlockY() + py, start.getBlockZ() + pz);
         Block block = l.getBlock();
-        int model = -1;
+        NamespacedKey model = null;
         if (json.has("stack")) {
             JsonObject stack = json.get("stack").getAsJsonObject();
             if (stack.has("cmd")) {
-                model = stack.get("cmd").getAsInt();
+                String key = stack.get("cmd").getAsString();
+                model = new NamespacedKey(TARDIS.plugin, key);
             }
             if (stack.has("door")) {
                 if (id > 0) {
@@ -95,7 +97,7 @@ public class TARDISItemDisplaySetter {
                 }
             }
             Material material = Material.valueOf(stack.get("type").getAsString());
-            TARDISDisplayItem tdi = TARDISDisplayItem.getByMaterialAndData(material, model);
+            TARDISDisplayItem tdi = TARDISDisplayItem.getByModel(model);
             if (tdi != null) {
                 TARDISDisplayItemUtils.set(tdi, block, id);
             } else {
@@ -113,12 +115,12 @@ public class TARDISItemDisplaySetter {
         return "";
     }
 
-    public static void setInRoom(Block block, Material material, int model) {
+    public static void setInRoom(Block block, Material material, NamespacedKey model) {
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 0.25d, 0.5d), EntityType.ITEM_DISPLAY);
         ItemStack is = new ItemStack(material);
-        if (model != -1) {
+        if (model != null) {
             ItemMeta im = is.getItemMeta();
-            im.setCustomModelData(model);
+            im.setItemModel(model);
             is.setItemMeta(im);
         }
         display.setItemStack(is);

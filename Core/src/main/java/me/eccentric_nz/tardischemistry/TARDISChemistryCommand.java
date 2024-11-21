@@ -146,7 +146,7 @@ public class TARDISChemistryCommand implements CommandExecutor {
         ItemMeta im = result.getItemMeta();
         im.setDisplayName(data.getDisplayName());
         im.setLore(data.getLore());
-        im.setCustomModelData(data.getDisplayItem().getCustomModel());
+        im.setItemModel(data.getDisplayItem().getCustomModel());
         result.setItemMeta(im);
         inv.setItem(17, result);
         player.openInventory(inv);

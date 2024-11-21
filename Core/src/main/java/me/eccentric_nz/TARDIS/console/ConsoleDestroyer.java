@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.console;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.console.models.ColourType;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.WaxedOxidizedCopper;
 import me.eccentric_nz.TARDIS.database.ClearInteractions;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetConsoleLabel;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetInteractionsFromId;
@@ -10,6 +11,7 @@ import me.eccentric_nz.TARDIS.sonic.SonicLore;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +31,7 @@ public class ConsoleDestroyer {
 
     public ItemStack returnStack(String uuids, int id) {
         String colour = "";
-        int cmd = 1;
+        NamespacedKey model = null;
         ResultSetInteractionsFromId rs = new ResultSetInteractionsFromId(plugin, id);
         if (rs.resultSet()) {
             // interactions
@@ -76,8 +78,8 @@ public class ConsoleDestroyer {
                         // get colour
                         ItemStack is = display.getItemStack();
                         if (colour.isEmpty() && is != null && is.hasItemMeta()) {
-                            cmd = is.getItemMeta().getCustomModelData() % 1000;
-                            colour = ColourType.COLOURS.getOrDefault(cmd, "LIGHT_GRAY");
+                            model = is.getItemMeta().getItemModel();
+                            colour = ColourType.COLOURS.getOrDefault(model, "LIGHT_GRAY");
                         }
                         // remove
                         display.remove();
@@ -88,14 +90,15 @@ public class ConsoleDestroyer {
             // remove database records
             new ClearInteractions(plugin).removeRecords(id);
             // build item stack
-            Material material = (cmd == 17) ? Material.WAXED_OXIDIZED_COPPER : Material.valueOf(colour + "_CONCRETE");
+            boolean isRustic = model == WaxedOxidizedCopper.CONSOLE_RUSTIC.getKey();
+            Material material = (isRustic) ? Material.WAXED_OXIDIZED_COPPER : Material.valueOf(colour + "_CONCRETE");
             ItemStack console = new ItemStack(material, 1);
             ItemMeta im = console.getItemMeta();
-            String dn = ((cmd == 17) ? "Rustic" : TARDISStringUtils.capitalise(colour)) + " Console";
+            String dn = ((isRustic) ? "Rustic" : TARDISStringUtils.capitalise(colour)) + " Console";
             im.setDisplayName(dn);
             im.setLore(List.of("Integration with interaction"));
             im.setCustomModelData(1001);
-            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
+            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
             console.setItemMeta(im);
             return console;
         }

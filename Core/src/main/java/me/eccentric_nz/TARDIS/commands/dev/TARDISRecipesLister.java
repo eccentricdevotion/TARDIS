@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
@@ -60,7 +61,7 @@ class TARDISRecipesLister {
             }
             if (plugin.getConfig().getBoolean("creation.seed_block.crafting")) {
                 for (Map.Entry<Schematic, ShapedRecipe> seed : plugin.getObstructionum().getSeedRecipes().entrySet()) {
-                    int model = 10001;
+                    NamespacedKey model = TARDISDisplayItem.CUSTOM.getCustomModel();
                     String material;
                     if (seed.getKey().isCustom()) {
                         material = seed.getKey().getSeedMaterial().toString();

@@ -92,7 +92,7 @@ public class TARDISLightsInventory {
             if (lightPref == tl) {
                 lim.setLore(List.of("Current light"));
             }
-            lim.setCustomModelData(tl.getOn().getCustomModel());
+            lim.setItemModel(tl.getOn().getCustomModel());
             light.setItemMeta(lim);
             stacks[i] = light;
             if (i % 9 == 8) {

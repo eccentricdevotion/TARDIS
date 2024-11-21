@@ -2,8 +2,10 @@ package me.eccentric_nz.TARDIS.customblocks;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Glass;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
@@ -35,16 +37,16 @@ public class VariableLight {
     }
 
     public void set() {
-        set(1001, 15);
+        set(Glass.OFF.getKey(), 15);
     }
 
-    public void set(int cmd, int level) {
+    public void set(NamespacedKey model, int level) {
         World world = location.getWorld();
         ItemDisplay roundel = (ItemDisplay) world.spawnEntity(location, EntityType.ITEM_DISPLAY);
         roundel.getPersistentDataContainer().set(TARDIS.plugin.getTardisIdKey(), PersistentDataType.BOOLEAN, true);
         ItemStack r = new ItemStack(Material.GLASS);
         ItemMeta rim = r.getItemMeta();
-        rim.setCustomModelData(cmd);
+        rim.setItemModel(model);
         r.setItemMeta(rim);
         roundel.setItemStack(r);
         ItemDisplay inner = (ItemDisplay) world.spawnEntity(location, EntityType.ITEM_DISPLAY);
@@ -62,13 +64,13 @@ public class VariableLight {
         interaction.setPersistent(true);
     }
 
-    public void change(int cmd, int level) {
+    public void change(NamespacedKey model, int level) {
         Block block = location.getBlock();
         for (ItemDisplay display : TARDISDisplayItemUtils.getAll(block)) {
             if (display.getPersistentDataContainer().has(TARDIS.plugin.getTardisIdKey(), PersistentDataType.BOOLEAN)) {
                 ItemStack roundel = display.getItemStack();
                 ItemMeta rim = roundel.getItemMeta();
-                rim.setCustomModelData(cmd);
+                rim.setItemModel(model);
                 roundel.setItemMeta(rim);
                 display.setItemStack(roundel);
             }

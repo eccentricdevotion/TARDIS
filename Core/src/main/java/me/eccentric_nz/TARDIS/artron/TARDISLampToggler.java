@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.ItemDisplay;
@@ -86,10 +87,10 @@ public class TARDISLampToggler {
                             ItemStack is = new ItemStack(light.getOff().getMaterial());
                             ItemMeta im = is.getItemMeta();
                             im.setDisplayName(light.getOff().getDisplayName());
-                            int cmd = light.getOff().getCustomModel();
-                            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
-                            if (cmd != -1) {
-                                im.setCustomModelData(cmd);
+                            NamespacedKey model = light.getOff().getCustomModel();
+                            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
+                            if (model != null) {
+                                im.setItemModel(model);
                             }
                             is.setItemMeta(im);
                             display.setItemStack(is);
@@ -106,10 +107,10 @@ public class TARDISLampToggler {
                         ItemStack is = new ItemStack(light.getOn().getMaterial());
                         ItemMeta im = is.getItemMeta();
                         im.setDisplayName(light.getOn().getDisplayName());
-                        int cmd = light.getOn().getCustomModel();
-                        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
-                        if (cmd != -1) {
-                            im.setCustomModelData(cmd);
+                        NamespacedKey model = light.getOn().getCustomModel();
+                        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
+                        if (model != null) {
+                            im.setItemModel(model);
                         }
                         is.setItemMeta(im);
                         display.setItemStack(is);

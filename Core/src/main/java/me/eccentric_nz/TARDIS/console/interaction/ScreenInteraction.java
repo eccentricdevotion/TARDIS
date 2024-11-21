@@ -16,6 +16,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 public class ScreenInteraction {
 
@@ -47,7 +48,7 @@ public class ScreenInteraction {
                     return;
                 }
                 // get colour
-                int colour = (material == Material.COPPER_INGOT) ? 17 : ColourType.LOOKUP.getOrDefault(hand.getType(), 1);
+                String colour = (material == Material.COPPER_INGOT) ? "rustic" : material.toString().toLowerCase(Locale.ROOT).replace("_concrete_powder", "");
                 // get the UUIDs
                 String uuids = interaction.getPersistentDataContainer().get(plugin.getUnaryKey(), PersistentDataType.STRING);
                 if (uuids != null) {

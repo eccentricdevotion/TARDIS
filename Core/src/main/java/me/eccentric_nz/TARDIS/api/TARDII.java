@@ -486,7 +486,7 @@ public class TARDII implements TardisAPI {
         if (Consoles.getBY_NAMES().containsKey(schematic)) {
             Schematic s = Consoles.getBY_NAMES().get(schematic);
             ItemStack is;
-            int model = 10001;
+            NamespacedKey model = TARDISDisplayItem.CUSTOM.getCustomModel();
             if (s.isCustom()) {
                 is = new ItemStack(s.getSeedMaterial(), 1);
             } else {
@@ -500,8 +500,8 @@ public class TARDII implements TardisAPI {
                 }
             }
             ItemMeta im = is.getItemMeta();
-            im.setCustomModelData(10000000 + model);
-            im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
+            im.setItemModel(model);
+            im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
             // set display name
             im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
             List<String> lore = new ArrayList<>();

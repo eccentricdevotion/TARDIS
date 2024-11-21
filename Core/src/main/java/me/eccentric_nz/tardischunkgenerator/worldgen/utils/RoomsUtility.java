@@ -29,14 +29,15 @@ public class RoomsUtility {
         int x = rel.get("x").getAsInt() + sx;
         int y = rel.get("y").getAsInt() + 64;
         int z = rel.get("z").getAsInt() + sz;
-        int model = -1;
+        NamespacedKey model = null;
         if (json.has("stack")) {
             JsonObject stack = json.get("stack").getAsJsonObject();
             if (stack.has("cmd")) {
-                model = stack.get("cmd").getAsInt();
+                String key = stack.get("cmd").getAsString();
+                model = new NamespacedKey(TARDIS.plugin, key);
             }
             Material material = Material.valueOf(stack.get("type").getAsString());
-            TARDISDisplayItem tdi = TARDISDisplayItem.getByMaterialAndData(material, model);
+            TARDISDisplayItem tdi = TARDISDisplayItem.getByModel(model);
             if (tdi != null) {
                 set(region, x + 0.5d, y + 0.5d, z + 0.5d, tdi.getMaterial(), tdi.getCustomModel(), false);
             } else {
@@ -45,13 +46,13 @@ public class RoomsUtility {
         }
     }
 
-    private static void set(LimitedRegion region, double x, double y, double z, Material material, int model, boolean inRoom) {
+    private static void set(LimitedRegion region, double x, double y, double z, Material material, NamespacedKey model, boolean inRoom) {
         Location location = new Location(null, x, y, z);
         ItemDisplay display = (ItemDisplay) region.spawnEntity(location, EntityType.ITEM_DISPLAY);
         ItemStack is = new ItemStack(material);
-        if (model != -1) {
+        if (model != null) {
             ItemMeta im = is.getItemMeta();
-            im.setCustomModelData(model);
+            im.setItemModel(model);
             is.setItemMeta(im);
         }
         display.setItemStack(is);

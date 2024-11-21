@@ -85,8 +85,9 @@ public class TARDISDisplayBlockListener implements Listener {
         if (im.getDisplayName().equals(ChatColor.GOLD + "TARDIS Seed Block") || im.getDisplayName().endsWith("Console")) {
             return;
         }
-        int cmd = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
-        TARDISDisplayItem which = TARDISDisplayItem.getByMaterialAndData(is.getType(), cmd);
+        String key = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
+        NamespacedKey model = new NamespacedKey(plugin, key);
+        TARDISDisplayItem which = TARDISDisplayItem.getByModel(model);
         if (which == null) {
             return;
         }
@@ -102,7 +103,7 @@ public class TARDISDisplayBlockListener implements Listener {
                 data = null;
             }
             // set an Interaction entity
-            TARDISDisplayItemUtils.set(location, cmd, which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR || which == TARDISDisplayItem.BONE_DOOR);
+            TARDISDisplayItemUtils.set(location, model.getKey(), which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR || which == TARDISDisplayItem.BONE_DOOR);
         } else {
             data = TARDISConstants.BARRIER;
         }
@@ -112,7 +113,7 @@ public class TARDISDisplayBlockListener implements Listener {
         double ay = (which == TARDISDisplayItem.DOOR || which == TARDISDisplayItem.CLASSIC_DOOR || which == TARDISDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
         // set an ItemDisplay entity
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
-        display.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which.getCustomModel());
+        display.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, which.getCustomModel().getKey());
         display.setItemStack(single);
         display.setPersistent(true);
         display.setInvulnerable(true);

@@ -130,8 +130,8 @@ public class TARDISSiegeListener implements Listener {
         ItemStack is = new ItemStack(TARDISDisplayItem.SIEGE_CUBE.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Siege Cube");
-        im.setCustomModelData(TARDISDisplayItem.SIEGE_CUBE.getCustomModel());
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, TARDISDisplayItem.SIEGE_CUBE.getCustomModel());
+        im.setItemModel(TARDISDisplayItem.SIEGE_CUBE.getCustomModel());
+        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISDisplayItem.SIEGE_CUBE.getCustomModel().getKey());
         List<String> lore = new ArrayList<>();
         lore.add("Time Lord: " + tl);
         lore.add("ID: " + id);

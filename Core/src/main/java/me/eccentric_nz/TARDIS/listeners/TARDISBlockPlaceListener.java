@@ -97,7 +97,7 @@ public class TARDISBlockPlaceListener implements Listener {
                         if (tdi.isLight()) {
                             LampToggler.setLightlevel(block, tdi.isLit() ? 15 : 0);
                             // also add interaction entity
-                            TARDISDisplayItemUtils.set(block.getLocation(), tdi.getCustomModel(), false);
+                            TARDISDisplayItemUtils.set(block.getLocation(), tdi.getCustomModel().getKey(), false);
                         } else {
                             block.setBlockData(TARDISConstants.BARRIER);
                         }

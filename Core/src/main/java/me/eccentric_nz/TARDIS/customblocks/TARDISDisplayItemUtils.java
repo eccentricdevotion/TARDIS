@@ -50,7 +50,7 @@ public class TARDISDisplayItemUtils {
                 if (Tag.ITEMS_DECORATED_POT_SHERDS.isTagged(is.getType())) {
                     return TARDISDisplayItem.CUSTOM_DOOR;
                 } else {
-                    return TARDISDisplayItem.getByMaterialAndData(is.getType(), im.getCustomModelData());
+                    return TARDISDisplayItem.getByModel(im.getItemModel());
                 }
             }
         }
@@ -215,15 +215,15 @@ public class TARDISDisplayItemUtils {
         ItemStack is = new ItemStack(tdi.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(tdi.getDisplayName());
-        im.setCustomModelData(tdi.getCustomModel());
-        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModel());
+        im.setItemModel(tdi.getCustomModel());
+        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
         is.setItemMeta(im);
         Location l = new Location(world, x + 0.5d, y + 0.5d, z + 0.5d);
         ItemDisplay display = (ItemDisplay) world.spawnEntity(l, EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
         display.setPersistent(true);
         display.setInvulnerable(true);
-        display.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModel());
+        display.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
     }
 
     /**
@@ -238,7 +238,7 @@ public class TARDISDisplayItemUtils {
             // also set an interaction entity
             Interaction interaction = (Interaction) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
             interaction.setResponsive(true);
-            interaction.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModel());
+            interaction.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
             interaction.setPersistent(true);
             if (tdi == TARDISDisplayItem.DOOR) {
                 // set size
@@ -265,10 +265,10 @@ public class TARDISDisplayItemUtils {
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(tdi.getDisplayName());
-        if (tdi.getCustomModel() != -1) {
-            im.setCustomModelData(tdi.getCustomModel());
+        if (tdi.getCustomModel() != null) {
+            im.setItemModel(tdi.getCustomModel());
         }
-        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModel());
+        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
         is.setItemMeta(im);
         double ay = (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;
         ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().add(0.5d, ay, 0.5d), EntityType.ITEM_DISPLAY);
@@ -278,7 +278,7 @@ public class TARDISDisplayItemUtils {
         }
         display.setPersistent(true);
         display.setInvulnerable(true);
-        display.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModel());
+        display.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
         if (tdi == TARDISDisplayItem.ARTRON_FURNACE) {
             display.setBrightness(new Display.Brightness(15, 15));
         }
@@ -306,12 +306,12 @@ public class TARDISDisplayItemUtils {
      * Spawn an Interaction entity
      *
      * @param location the location to spawn the entity at
-     * @param cmd      the custom model data to set for the custom block key associated with the entity
+     * @param key      the custom model data to set for the custom block key associated with the entity
      */
-    public static void set(Location location, int cmd, boolean isDoor) {
+    public static void set(Location location, String key, boolean isDoor) {
         // spawn an interaction entity
         Interaction interaction = (Interaction) location.getWorld().spawnEntity(location.clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
-        interaction.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
+        interaction.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, key);
         interaction.setResponsive(true);
         interaction.setPersistent(true);
         interaction.setInvulnerable(true);

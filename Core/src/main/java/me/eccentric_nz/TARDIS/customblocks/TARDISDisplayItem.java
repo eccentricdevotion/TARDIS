@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.customblocks;
 
 import me.eccentric_nz.TARDIS.custommodeldata.keys.*;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import net.minecraft.world.level.block.SkullBlock;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ItemDisplay;
@@ -33,93 +34,93 @@ import java.util.Locale;
 public enum TARDISDisplayItem {
 
     // seed blocks
-    ANCIENT(Material.SCULK),
-    ARS(Material.QUARTZ_BLOCK),
-    BIGGER(Material.GOLD_BLOCK),
-    BONE(Material.WAXED_OXIDIZED_CUT_COPPER),
-    BUDGET(Material.IRON_BLOCK),
-    CAVE(Material.DRIPSTONE_BLOCK),
-    COPPER(CopperBlock.COPPER.getKey(), Material.COPPER_BLOCK, null),
-    CORAL(FireCoralBlock.CORAL.getKey(), Material.FIRE_CORAL_BLOCK, null),
-    CURSED(Material.BLACK_CONCRETE),
-    DELTA(Material.CRYING_OBSIDIAN),
-    DELUXE(Material.DIAMOND_BLOCK),
-    DIVISION(Material.PINK_GLAZED_TERRACOTTA),
-    ELEVENTH(Material.EMERALD_BLOCK),
-    ENDER(Material.PURPUR_BLOCK),
-    EYE_STORAGE(Material.GRAY_SHULKER_BOX),
-    FACTORY(GrayConcrete.FACTORY.getKey(), Material.GRAY_CONCRETE, null),
-    FIFTEENTH(Material.OCHRE_FROGLIGHT),
-    FUGITIVE(Material.POLISHED_DEEPSLATE),
-    HOSPITAL(Material.WHITE_CONCRETE),
-    MASTER(Material.NETHER_BRICKS),
-    MECHANICAL(Material.POLISHED_ANDESITE),
-    ORIGINAL(Material.PACKED_MUD),
-    PLANK(Material.BOOKSHELF),
-    PYRAMID(Material.SANDSTONE_STAIRS),
-    REDSTONE(Material.REDSTONE_BLOCK),
-    ROTOR(Material.HONEYCOMB_BLOCK),
-    RUSTIC(Material.COPPER_BULB),
-    STEAMPUNK(Material.COAL_BLOCK),
-    TELEVISION(Material.BROWN_STAINED_GLASS),
-    THIRTEENTH(HornCoralBlock.THIRTEENTH.getKey(), Material.HORN_CORAL_BLOCK, null),
-    TOM(Material.LAPIS_BLOCK),
-    TWELFTH(Material.PRISMARINE),
-    WAR(Material.WHITE_TERRACOTTA),
-    WEATHERED(Material.WEATHERED_COPPER),
-    SMALL(Cobblestone.SMALL.getKey(), Material.COBBLESTONE, null),
-    MEDIUM(Cobblestone.MEDIUM.getKey() , Material.COBBLESTONE, null),
-    TALL(Cobblestone.TALL.getKey(), Material.COBBLESTONE, null),rewa
-    LEGACY_BIGGER(Material.ORANGE_GLAZED_TERRACOTTA),
-    LEGACY_DELUXE(Material.LIME_GLAZED_TERRACOTTA),
-    LEGACY_ELEVENTH(Material.CYAN_GLAZED_TERRACOTTA),
-    LEGACY_REDSTONE(Material.RED_GLAZED_TERRACOTTA),
-    CUSTOM(PolishedBlackstone.CUSTOM.getKey(), Material.POLISHED_BLACKSTONE, null),
+    ANCIENT(Sculk.ANCIENT.getKey(), Material.SCULK),
+    ARS(QuartzBlock.ARS.getKey(), Material.QUARTZ_BLOCK),
+    BIGGER(GoldBlock.BIGGER.getKey(), Material.GOLD_BLOCK),
+    BONE(WaxedOxidizedCutCopper.BONE.getKey(), Material.WAXED_OXIDIZED_CUT_COPPER),
+    BUDGET(IronBlock.BUDGET.getKey(), Material.IRON_BLOCK),
+    CAVE(DripstoneBlock.CAVE.getKey(), Material.DRIPSTONE_BLOCK),
+    COPPER(CopperBlock.COPPER.getKey(), Material.COPPER_BLOCK),
+    CORAL(FireCoralBlock.CORAL.getKey(), Material.FIRE_CORAL_BLOCK),
+    CURSED(BlackConcrete.CURSED.getKey(), Material.BLACK_CONCRETE),
+    DELTA(CryingObsidian.DELTA.getKey(), Material.CRYING_OBSIDIAN),
+    DELUXE(DiamondBlock.DELUXE.getKey(), Material.DIAMOND_BLOCK),
+    DIVISION(PinkGlazedTerracotta.DIVISION.getKey(), Material.PINK_GLAZED_TERRACOTTA),
+    ELEVENTH(EmeraldBlock.ELEVENTH.getKey(), Material.EMERALD_BLOCK),
+    ENDER(PurpurBlock.ENDER.getKey(), Material.PURPUR_BLOCK),
+    EYE_STORAGE(GrayShulkerBox.EYE_STORAGE.getKey(), Material.GRAY_SHULKER_BOX),
+    FACTORY(GrayConcrete.FACTORY.getKey(), Material.GRAY_CONCRETE),
+    FIFTEENTH(OchreFroglight.FIFTEENTH.getKey(), Material.OCHRE_FROGLIGHT),
+    FUGITIVE(PolishedDeepslate.FUGITIVE.getKey(), Material.POLISHED_DEEPSLATE),
+    HOSPITAL(WhiteConcrete.HOSPITAL.getKey(), Material.WHITE_CONCRETE),
+    MASTER(NetherBricks.MASTER.getKey(), Material.NETHER_BRICKS),
+    MECHANICAL(PolishedAndesite.MECHANICAL.getKey(), Material.POLISHED_ANDESITE),
+    ORIGINAL(PackedMud.ORIGINAL.getKey(), Material.PACKED_MUD),
+    PLANK(Bookshelf.PLANK.getKey(), Material.BOOKSHELF),
+    PYRAMID(SandstoneStairs.PYRAMID.getKey(), Material.SANDSTONE_STAIRS),
+    REDSTONE(RedstoneBlock.REDSTONE.getKey(), Material.REDSTONE_BLOCK),
+    ROTOR(HoneycombBlock.ROTOR.getKey(), Material.HONEYCOMB_BLOCK),
+    RUSTIC(CopperBulb.RUSTIC.getKey(), Material.COPPER_BULB),
+    STEAMPUNK(CoalBlock.STEAMPUNK.getKey(), Material.COAL_BLOCK),
+    TELEVISION(BrownStainedGlass.TV.getKey(), Material.BROWN_STAINED_GLASS),
+    THIRTEENTH(HornCoralBlock.THIRTEENTH.getKey(), Material.HORN_CORAL_BLOCK),
+    TOM(LapisBlock.TOM.getKey(), Material.LAPIS_BLOCK),
+    TWELFTH(Prismarine.TWELFTH.getKey(), Material.PRISMARINE),
+    WAR(WhiteTerracotta.WAR.getKey(), Material.WHITE_TERRACOTTA),
+    WEATHERED(WeatheredCopper.WEATHERED.getKey(), Material.WEATHERED_COPPER),
+    SMALL(Cobblestone.SMALL.getKey(), Material.COBBLESTONE),
+    MEDIUM(Cobblestone.MEDIUM.getKey(), Material.COBBLESTONE),
+    TALL(Cobblestone.TALL.getKey(), Material.COBBLESTONE),
+    LEGACY_BIGGER(OrangeGlazedTerracotta.LEGACY_BIGGER.getKey(), Material.ORANGE_GLAZED_TERRACOTTA),
+    LEGACY_DELUXE(LimeGlazedTerracotta.LEGACY_DELUXE.getKey(), Material.LIME_GLAZED_TERRACOTTA),
+    LEGACY_ELEVENTH(CyanGlazedTerracotta.LEGACY_ELEVENTH.getKey(), Material.CYAN_GLAZED_TERRACOTTA),
+    LEGACY_REDSTONE(RedGlazedTerracotta.LEGACY_REDSTONE.getKey(), Material.RED_GLAZED_TERRACOTTA),
+    CUSTOM(PolishedBlackstone.CUSTOM.getKey(), Material.POLISHED_BLACKSTONE),
     // growing seed block
     GROW(LightGrayTerracotta.GROW.getKey(), Material.LIGHT_GRAY_TERRACOTTA, Material.NETHERITE_BLOCK),
     // tardis blocks
-    ADVANCED_CONSOLE(Jukebox.ADVANCED_CONSOLE.getKey(), Material.JUKEBOX, null),
-    ARTRON_FURNACE(Furnace.ARTRON_FURNACE.getKey(), Material.FURNACE, null),
-    ARTRON_FURNACE_LIT(Furnace.ARTRON_FURNACE_LIT.getKey(), Material.FURNACE, null),
+    ADVANCED_CONSOLE(Jukebox.ADVANCED_CONSOLE.getKey(), Material.JUKEBOX),
+    ARTRON_FURNACE(Furnace.ARTRON_FURNACE.getKey(), Material.FURNACE),
+    ARTRON_FURNACE_LIT(Furnace.ARTRON_FURNACE_LIT.getKey(), Material.FURNACE),
     BLUE_BOX(Wool.BLUE_BOX.getKey(), Material.BLUE_WOOL, Material.BLUE_DYE),
     COG(Wool.COG.getKey(), Material.GRAY_WOOL, Material.GRAY_DYE),
-    DISK_STORAGE(NoteBlock.DISK_STORAGE.getKey(), Material.NOTE_BLOCK, null),
+    DISK_STORAGE(NoteBlock.DISK_STORAGE.getKey(), Material.NOTE_BLOCK),
     //    HANDBRAKE(1001, Material.LEVER, Material.LEVER),
     HEXAGON(Wool.HEXAGON.getKey(), Material.ORANGE_WOOL, Material.ORANGE_DYE),
     ROUNDEL(Wool.ROUNDEL.getKey(), Material.WHITE_WOOL, Material.WHITE_DYE),
     ROUNDEL_OFFSET(Wool.ROUNDEL_OFFSET.getKey(), Material.WHITE_WOOL, Material.LIGHT_GRAY_DYE),
-    PANDORICA(BlackConcrete.PANDORICA.getKey(), Material.BLACK_CONCRETE, null),
-    SIEGE_CUBE(CyanConcrete.SIEGE_CUBE.getKey(), Material.CYAN_CONCRETE, null),
+    PANDORICA(BlackConcrete.PANDORICA.getKey(), Material.BLACK_CONCRETE),
+    SIEGE_CUBE(CyanConcrete.SIEGE_CUBE.getKey(), Material.CYAN_CONCRETE),
     THE_MOMENT(Wool.THE_MOMENT.getKey(), Material.BROWN_WOOL, Material.REDSTONE_BLOCK),
-    UNTEMPERED_SCHISM(AncientDebris.UNTEMPERED_SCHISM.getKey(), Material.ANCIENT_DEBRIS, null),
+    UNTEMPERED_SCHISM(AncientDebris.UNTEMPERED_SCHISM.getKey(), Material.ANCIENT_DEBRIS),
     DOOR(IronDoor.TARDIS_DOOR_0.getKey(), Material.IRON_DOOR, Material.IRON_DOOR),
-    DOOR_OPEN(IronDoor.TARDIS_DOOR_4.getKey(), Material.IRON_DOOR, null),
-    DOOR_BOTH_OPEN(IronDoor.TARDIS_DOOR_BOTH_OPEN.getKey(), Material.IRON_DOOR, null),
+    DOOR_OPEN(IronDoor.TARDIS_DOOR_4.getKey(), Material.IRON_DOOR),
+    DOOR_BOTH_OPEN(IronDoor.TARDIS_DOOR_BOTH_OPEN.getKey(), Material.IRON_DOOR),
     BONE_DOOR(BirchDoor.BONE_DOOR.getKey(), Material.IRON_DOOR, Material.BIRCH_DOOR),
-    BONE_DOOR_OPEN(BirchDoor.BONE_DOOR_OPEN_4.getKey(), Material.BIRCH_DOOR, null),
+    BONE_DOOR_OPEN(BirchDoor.BONE_DOOR_OPEN_4.getKey(), Material.BIRCH_DOOR),
     CLASSIC_DOOR(CherryDoor.CLASSIC_DOOR.getKey(), Material.IRON_DOOR, Material.CHERRY_DOOR),
-    CLASSIC_DOOR_OPEN(CherryDoor.CLASSIC_DOOR_OPEN_5.getKey(), Material.CHERRY_DOOR, null),
-    CUSTOM_DOOR(null, Material.IRON_DOOR, null),
-    SONIC_GENERATOR(FlowerPot.SONIC_GENERATOR.getKey(), Material.FLOWER_POT, null),
+    CLASSIC_DOOR_OPEN(CherryDoor.CLASSIC_DOOR_OPEN_5.getKey(), Material.CHERRY_DOOR),
+    CUSTOM_DOOR(null, Material.IRON_DOOR),
+    SONIC_GENERATOR(FlowerPot.SONIC_GENERATOR.getKey(), Material.FLOWER_POT),
     //    THROTTLE(1001, Material.REPEATER, Material.REPEATER),
     // chemistry lamps off
-    BLUE_LAMP(RedstoneLamp.BLUE_LAMP.getKey(), Material.REDSTONE_LAMP, null),
-    GREEN_LAMP(RedstoneLamp.GREEN_LAMP.getKey(), Material.REDSTONE_LAMP, null),
-    PURPLE_LAMP(RedstoneLamp.PURPLE_LAMP.getKey(), Material.REDSTONE_LAMP, null),
-    RED_LAMP(RedstoneLamp.RED_LAMP.getKey(), Material.REDSTONE_LAMP, null),
+    BLUE_LAMP(RedstoneLamp.BLUE_LAMP.getKey(), Material.REDSTONE_LAMP),
+    GREEN_LAMP(RedstoneLamp.GREEN_LAMP.getKey(), Material.REDSTONE_LAMP),
+    PURPLE_LAMP(RedstoneLamp.PURPLE_LAMP.getKey(), Material.REDSTONE_LAMP),
+    RED_LAMP(RedstoneLamp.RED_LAMP.getKey(), Material.REDSTONE_LAMP),
     // chemistry lamps on
-    BLUE_LAMP_ON(SeaLantern.BLUE_LAMP_ON.getKey(), Material.SEA_LANTERN, null),
-    GREEN_LAMP_ON(SeaLantern.GREEN_LAMP_ON.getKey(), Material.SEA_LANTERN, null),
-    PURPLE_LAMP_ON(SeaLantern.PURPLE_LAMP_ON.getKey(), Material.SEA_LANTERN, null),
-    RED_LAMP_ON(SeaLantern.RED_LAMP_ON.getKey(), Material.SEA_LANTERN, null),
+    BLUE_LAMP_ON(SeaLantern.BLUE_LAMP_ON.getKey(), Material.SEA_LANTERN),
+    GREEN_LAMP_ON(SeaLantern.GREEN_LAMP_ON.getKey(), Material.SEA_LANTERN),
+    PURPLE_LAMP_ON(SeaLantern.PURPLE_LAMP_ON.getKey(), Material.SEA_LANTERN),
+    RED_LAMP_ON(SeaLantern.RED_LAMP_ON.getKey(), Material.SEA_LANTERN),
     // chemistry gui blocks
-    COMPOUND(OrangeConcrete.COMPOUND.getKey(), Material.ORANGE_CONCRETE, null),
-    CONSTRUCTOR(LightBlueConcrete.CONSTRUCTOR.getKey(), Material.LIGHT_BLUE_CONCRETE, null),
-    CREATIVE(LightGrayConcrete.CREATIVE.getKey(), Material.LIGHT_GRAY_CONCRETE, null),
-    LAB(YellowConcrete.LAB.getKey(), Material.YELLOW_CONCRETE, null),
-    PRODUCT(LimeConcrete.PRODUCT.getKey(), Material.LIME_CONCRETE, null),
-    REDUCER(MagentaConcrete.REDUCER.getKey(), Material.MAGENTA_CONCRETE, null),
-    HEAT_BLOCK(RedConcrete.HEAT_BLOCK.getKey(), Material.RED_CONCRETE, null),
+    COMPOUND(OrangeConcrete.COMPOUND.getKey(), Material.ORANGE_CONCRETE),
+    CONSTRUCTOR(LightBlueConcrete.CONSTRUCTOR.getKey(), Material.LIGHT_BLUE_CONCRETE),
+    CREATIVE(LightGrayConcrete.CREATIVE.getKey(), Material.LIGHT_GRAY_CONCRETE),
+    LAB(YellowConcrete.LAB.getKey(), Material.YELLOW_CONCRETE),
+    PRODUCT(LimeConcrete.PRODUCT.getKey(), Material.LIME_CONCRETE),
+    REDUCER(MagentaConcrete.REDUCER.getKey(), Material.MAGENTA_CONCRETE),
+    HEAT_BLOCK(RedConcrete.HEAT_BLOCK.getKey(), Material.RED_CONCRETE),
     // lights off
     LIGHT_BULB(WaxedCopperBulb.BULB.getKey(), Material.WAXED_COPPER_BULB, Material.COPPER_BULB),
     LIGHT_CLASSIC(Wool.CLASSIC.getKey(), Material.GRAY_WOOL, Material.TORCH),
@@ -128,54 +129,54 @@ public enum TARDISDisplayItem {
     LIGHT_ELEVENTH(Wool.ELEVENTH.getKey(), Material.GRAY_WOOL, Material.YELLOW_DYE),
     LIGHT_TWELFTH(Wool.TWELFTH.getKey(), Material.GRAY_WOOL, Material.CYAN_DYE),
     LIGHT_THIRTEENTH(Wool.THIRTEENTH.getKey(), Material.GRAY_WOOL, Material.BLUE_DYE),
-    LIGHT_LAMP(null, Material.REDSTONE_LAMP, null),
-    LIGHT_LANTERN(null, Material.GRAY_WOOL, null),
-    LIGHT_VARIABLE(Glass.OFF.getKey(), Material.GLASS, null),
-    LIGHT_VARIABLE_BLUE(Glass.BLUE_OFF.getKey(), Material.GLASS, null),
-    LIGHT_VARIABLE_GREEN(Glass.GREEN_OFF.getKey(), Material.GLASS, null),
-    LIGHT_VARIABLE_ORANGE(Glass.ORANGE_OFF.getKey(), Material.GLASS, null),
-    LIGHT_VARIABLE_PINK(Glass.PINK_OFF.getKey(), Material.GLASS, null),
-    LIGHT_VARIABLE_PURPLE(Glass.PURPLE_OFF.getKey(), Material.GLASS, null),
-    LIGHT_VARIABLE_YELLOW(Glass.YELLOW_OFF.getKey(), Material.GLASS, null),
+    LIGHT_LAMP(null, Material.REDSTONE_LAMP),
+    LIGHT_LANTERN(null, Material.GRAY_WOOL),
+    LIGHT_VARIABLE(Glass.OFF.getKey(), Material.GLASS),
+    LIGHT_VARIABLE_BLUE(Glass.BLUE_OFF.getKey(), Material.GLASS),
+    LIGHT_VARIABLE_GREEN(Glass.GREEN_OFF.getKey(), Material.GLASS),
+    LIGHT_VARIABLE_ORANGE(Glass.ORANGE_OFF.getKey(), Material.GLASS),
+    LIGHT_VARIABLE_PINK(Glass.PINK_OFF.getKey(), Material.GLASS),
+    LIGHT_VARIABLE_PURPLE(Glass.PURPLE_OFF.getKey(), Material.GLASS),
+    LIGHT_VARIABLE_YELLOW(Glass.YELLOW_OFF.getKey(), Material.GLASS),
     // lights on
-    LIGHT_BULB_ON(RedstoneLamp.BULB_ON.getKey(), Material.REDSTONE_LAMP, null),
-    LIGHT_CLASSIC_ON(SeaLantern.CLASSIC_ON.getKey(), Material.SEA_LANTERN, null),
-    LIGHT_CLASSIC_OFFSET_ON(SeaLantern.CLASSIC_OFFSET_ON.getKey(), Material.SEA_LANTERN, null),
-    LIGHT_TENTH_ON(RedstoneLamp.TENTH_ON.getKey(), Material.REDSTONE_LAMP, null),
-    LIGHT_ELEVENTH_ON(RedstoneLamp.ELEVENTH_ON.getKey(), Material.REDSTONE_LAMP, null),
-    LIGHT_TWELFTH_ON(SeaLantern.TWELFTH_ON.getKey(), Material.SEA_LANTERN, null),
-    LIGHT_THIRTEENTH_ON(SeaLantern.THIRTEENTH_ON.getKey(), Material.SEA_LANTERN, null),
-    LIGHT_LAMP_ON(RedstoneLamp.LAMP_ON.getKey(), Material.REDSTONE_LAMP, null),
-    LIGHT_LANTERN_ON(null, Material.SEA_LANTERN, null),
-    LIGHT_VARIABLE_ON(Glass.VARIABLE.getKey(), Material.GLASS, null),
-    LIGHT_VARIABLE_BLUE_ON(Glass.BLUE.getKey(), Material.GLASS, null),
-    LIGHT_VARIABLE_GREEN_ON(Glass.GREEN.getKey(), Material.GLASS, null),
-    LIGHT_VARIABLE_ORANGE_ON(Glass.ORANGE.getKey(), Material.GLASS, null),
-    LIGHT_VARIABLE_PINK_ON(Glass.PINK.getKey(), Material.GLASS, null),
-    LIGHT_VARIABLE_PURPLE_ON(Glass.PURPLE.getKey(), Material.GLASS, null),
-    LIGHT_VARIABLE_YELLOW_ON(Glass.YELLOW.getKey(), Material.GLASS, null),
+    LIGHT_BULB_ON(RedstoneLamp.BULB_ON.getKey(), Material.REDSTONE_LAMP),
+    LIGHT_CLASSIC_ON(SeaLantern.CLASSIC_ON.getKey(), Material.SEA_LANTERN),
+    LIGHT_CLASSIC_OFFSET_ON(SeaLantern.CLASSIC_OFFSET_ON.getKey(), Material.SEA_LANTERN),
+    LIGHT_TENTH_ON(RedstoneLamp.TENTH_ON.getKey(), Material.REDSTONE_LAMP),
+    LIGHT_ELEVENTH_ON(RedstoneLamp.ELEVENTH_ON.getKey(), Material.REDSTONE_LAMP),
+    LIGHT_TWELFTH_ON(SeaLantern.TWELFTH_ON.getKey(), Material.SEA_LANTERN),
+    LIGHT_THIRTEENTH_ON(SeaLantern.THIRTEENTH_ON.getKey(), Material.SEA_LANTERN),
+    LIGHT_LAMP_ON(RedstoneLamp.LAMP_ON.getKey(), Material.REDSTONE_LAMP),
+    LIGHT_LANTERN_ON(null, Material.SEA_LANTERN),
+    LIGHT_VARIABLE_ON(Glass.VARIABLE.getKey(), Material.GLASS),
+    LIGHT_VARIABLE_BLUE_ON(Glass.BLUE.getKey(), Material.GLASS),
+    LIGHT_VARIABLE_GREEN_ON(Glass.GREEN.getKey(), Material.GLASS),
+    LIGHT_VARIABLE_ORANGE_ON(Glass.ORANGE.getKey(), Material.GLASS),
+    LIGHT_VARIABLE_PINK_ON(Glass.PINK.getKey(), Material.GLASS),
+    LIGHT_VARIABLE_PURPLE_ON(Glass.PURPLE.getKey(), Material.GLASS),
+    LIGHT_VARIABLE_YELLOW_ON(Glass.YELLOW.getKey(), Material.GLASS),
     // lights cloister
-    LIGHT_BULB_CLOISTER(RedstoneLamp.BULB_CLOISTER.getKey(), Material.REDSTONE_LAMP, null),
-    LIGHT_CLASSIC_CLOISTER(SeaLantern.CLASSIC_CLOISTER.getKey(), Material.SEA_LANTERN, null),
-    LIGHT_CLASSIC_OFFSET_CLOISTER(SeaLantern.CLASSIC_OFFSET_CLOISTER.getKey(), Material.SEA_LANTERN, null),
-    LIGHT_TENTH_CLOISTER(RedstoneLamp.TENTH_CLOISTER.getKey(), Material.REDSTONE_LAMP, null),
-    LIGHT_ELEVENTH_CLOISTER(RedstoneLamp.ELEVENTH_CLOISTER.getKey(), Material.REDSTONE_LAMP, null),
-    LIGHT_TWELFTH_CLOISTER(SeaLantern.TWELFTH_CLOISTER.getKey(), Material.SEA_LANTERN, null),
-    LIGHT_THIRTEENTH_CLOISTER(SeaLantern.THIRTEENTH_CLOISTER.getKey(), Material.SEA_LANTERN, null),
-    LIGHT_LAMP_CLOISTER(null, Material.REDSTONE_LAMP, null),
-    LIGHT_LANTERN_CLOISTER(null, Material.SEA_LANTERN, null),
-    LIGHT_VARIABLE_CLOISTER(Glass.CLOISTER.getKey(), Material.GLASS, null),
+    LIGHT_BULB_CLOISTER(RedstoneLamp.BULB_CLOISTER.getKey(), Material.REDSTONE_LAMP),
+    LIGHT_CLASSIC_CLOISTER(SeaLantern.CLASSIC_CLOISTER.getKey(), Material.SEA_LANTERN),
+    LIGHT_CLASSIC_OFFSET_CLOISTER(SeaLantern.CLASSIC_OFFSET_CLOISTER.getKey(), Material.SEA_LANTERN),
+    LIGHT_TENTH_CLOISTER(RedstoneLamp.TENTH_CLOISTER.getKey(), Material.REDSTONE_LAMP),
+    LIGHT_ELEVENTH_CLOISTER(RedstoneLamp.ELEVENTH_CLOISTER.getKey(), Material.REDSTONE_LAMP),
+    LIGHT_TWELFTH_CLOISTER(SeaLantern.TWELFTH_CLOISTER.getKey(), Material.SEA_LANTERN),
+    LIGHT_THIRTEENTH_CLOISTER(SeaLantern.THIRTEENTH_CLOISTER.getKey(), Material.SEA_LANTERN),
+    LIGHT_LAMP_CLOISTER(null, Material.REDSTONE_LAMP),
+    LIGHT_LANTERN_CLOISTER(null, Material.SEA_LANTERN),
+    LIGHT_VARIABLE_CLOISTER(Glass.CLOISTER.getKey(), Material.GLASS),
     // console lamp
     CONSOLE_LAMP(null, Material.GLASS, Material.REDSTONE_LAMP),
     // console sides
-//    CONSOLE_1(AmethystShard.CONSOLE_LIGHT_GRAY.getKey(), Material.AMETHYST_SHARD, null),
-//    CONSOLE_2(1002, Material.AMETHYST_SHARD, null),
-//    CONSOLE_3(1003, Material.AMETHYST_SHARD, null),
-//    CONSOLE_4(1004, Material.AMETHYST_SHARD, null),
-//    CONSOLE_5(1005, Material.AMETHYST_SHARD, null),
-//    CONSOLE_6(1006, Material.AMETHYST_SHARD, null),
+//    CONSOLE_1(AmethystShard.CONSOLE_LIGHT_GRAY.getKey(), Material.AMETHYST_SHARD),
+//    CONSOLE_2(1002, Material.AMETHYST_SHARD),
+//    CONSOLE_3(1003, Material.AMETHYST_SHARD),
+//    CONSOLE_4(1004, Material.AMETHYST_SHARD),
+//    CONSOLE_5(1005, Material.AMETHYST_SHARD),
+//    CONSOLE_6(1006, Material.AMETHYST_SHARD),
     // dummy
-    NONE(null, null, null);
+    NONE(null, null);
 
     private static final HashMap<String, TARDISDisplayItem> BY_NAME = new HashMap<>();
     private static final HashMap<Integer, TARDISDisplayItem> BY_MUSHROOM_STEM = new HashMap<>() {
@@ -225,17 +226,23 @@ public enum TARDISDisplayItem {
         this.craftMaterial = craftMaterial;
     }
 
-    public static TARDISDisplayItem getByMaterialAndData(Material m, int cmd) {
+    TARDISDisplayItem(NamespacedKey customModel, Material item) {
+        this.customModel = customModel;
+        this.material = item;
+        this.craftMaterial = null;
+    }
+
+    public static TARDISDisplayItem getByModel(NamespacedKey key) {
         for (TARDISDisplayItem tdi : values()) {
-            if (tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) {
-                if (tdi.getCraftMaterial() == m && tdi.getCustomModel() == cmd) {
-                    return tdi;
-                }
-            } else {
-                if (tdi.getMaterial() == m && tdi.getCustomModel() == cmd) {
-                    return tdi;
-                }
+//            if (tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) {
+//                if (tdi.getCraftMaterial() == m && tdi.getCustomModel() == key) {
+//                    return tdi;
+//                }
+//            } else {
+            if (tdi.getCustomModel() == key) {
+                return tdi;
             }
+//            }
         }
         return null;
     }
@@ -244,8 +251,8 @@ public enum TARDISDisplayItem {
         ItemStack is = display.getItemStack();
         if (is != null) {
             ItemMeta im = is.getItemMeta();
-            if (im.hasCustomModelData()) {
-                return getByMaterialAndData(is.getType(), im.getCustomModelData());
+            if (im.hasItemModel()) {
+                return getByModel(im.getItemModel());
             }
         }
         return null;
@@ -271,7 +278,7 @@ public enum TARDISDisplayItem {
         return TARDISStringUtils.capitalise(this.getName());
     }
 
-    public int getCustomModel() {
+    public NamespacedKey getCustomModel() {
         return customModel;
     }
 

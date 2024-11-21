@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -342,7 +343,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         // tardis type
         Schematic schm = Consoles.getBY_NAMES().get(type);
         ItemStack tardis;
-        int model = 10001;
+        NamespacedKey model = TARDISDisplayItem.CUSTOM.getCustomModel();
         if (schm.isCustom()) {
             tardis = new ItemStack(schm.getSeedMaterial(), 1);
         } else {
@@ -355,8 +356,8 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
         }
         ItemMeta seed = tardis.getItemMeta();
-        seed.setCustomModelData(model);
-        seed.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
+        seed.setItemModel(model);
+        seed.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
         // set display name
         seed.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
         List<String> lore = new ArrayList<>();

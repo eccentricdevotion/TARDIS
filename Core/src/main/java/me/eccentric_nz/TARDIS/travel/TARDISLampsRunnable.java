@@ -74,11 +74,7 @@ class TARDISLampsRunnable implements Runnable {
                         TARDISDisplayItem tdi = (lights_on) ? light.getOn() : light.getOff();
                         ItemStack is = display.getItemStack();
                         ItemMeta im = is.getItemMeta();
-                        if (tdi.getCustomModel() == -1) {
-                            im.setCustomModelData(null);
-                        } else {
-                            im.setCustomModelData(tdi.getCustomModel());
-                        }
+                        im.setItemModel(tdi.getCustomModel());
                         is.setType(tdi.getMaterial());
                         is.setItemMeta(im);
                         display.setItemStack(is);
@@ -103,11 +99,7 @@ class TARDISLampsRunnable implements Runnable {
                         if (i == 0 && tdi != TARDISDisplayItem.NONE) {
                             ItemStack is = display.getItemStack();
                             ItemMeta im = is.getItemMeta();
-                            if (tdi.getCustomModel() == -1) {
-                                im.setCustomModelData(null);
-                            } else {
-                                im.setCustomModelData(tdi.getCustomModel());
-                            }
+                            im.setItemModel(tdi.getCustomModel());
                             is.setType(tdi.getMaterial());
                             is.setItemMeta(im);
                             display.setItemStack(is);
