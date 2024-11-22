@@ -5,8 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum GrayConcrete {
 
-    CONSOLE_GRAY(new NamespacedKey(TARDIS.plugin, "tardis/console_gray")),
-    FACTORY(new NamespacedKey(TARDIS.plugin, "block/seed/factory"));
+    CONSOLE_GRAY(new NamespacedKey(TARDIS.plugin, "tardis/console_gray"));
 
     private final NamespacedKey key;
 

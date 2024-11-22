@@ -5,7 +5,6 @@ import org.bukkit.NamespacedKey;
 
 public enum EmeraldBlock {
 
-    ELEVENTH(new NamespacedKey(TARDIS.plugin, "block/seed/eleventh")),
     COLOUR_INFO(new NamespacedKey(TARDIS.plugin, "gui/particle/colour_info"));
 
     private final NamespacedKey key;

@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Map;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -102,7 +103,7 @@ class TARDISDecommissionCommand {
                                 ItemStack monitor = new ItemStack(Material.MAP);
                                 ItemMeta im = monitor.getItemMeta();
                                 im.setDisplayName("TARDIS Monitor");
-                                im.setCustomModelData(5);
+                                im.setItemModel(Map.MONITOR.getKey());
                                 monitor.setItemMeta(im);
                                 itemFrame.setItem(monitor);
                             }

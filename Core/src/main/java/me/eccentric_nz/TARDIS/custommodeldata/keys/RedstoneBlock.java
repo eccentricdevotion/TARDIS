@@ -5,7 +5,6 @@ import org.bukkit.NamespacedKey;
 
 public enum RedstoneBlock {
 
-    REDSTONE(new NamespacedKey(TARDIS.plugin, "block/seed/redstone")),
     EFFECT_INFO(new NamespacedKey(TARDIS.plugin, "gui/particle/effect_info"));
 
     private final NamespacedKey key;
