@@ -5,7 +5,6 @@ import org.bukkit.NamespacedKey;
 
 public enum Hopper {
 
-    RAIL(new NamespacedKey(TARDIS.plugin, "gui/room/rail")),
     BUTTON_AGE(new NamespacedKey(TARDIS.plugin, "genetic/button_age"));
 
     private final NamespacedKey key;

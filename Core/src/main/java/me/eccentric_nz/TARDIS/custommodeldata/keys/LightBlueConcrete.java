@@ -5,7 +5,6 @@ import org.bukkit.NamespacedKey;
 
 public enum LightBlueConcrete {
 
-    ALLAY(new NamespacedKey(TARDIS.plugin, "gui/room/allay")),
     CONSOLE_LIGHT_BLUE(new NamespacedKey(TARDIS.plugin, "tardis/console_light_blue")),
     CONSTRUCTOR(new NamespacedKey(TARDIS.plugin, "block/chemistry/constructor"));
 

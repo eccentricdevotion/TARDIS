@@ -5,7 +5,6 @@ import org.bukkit.NamespacedKey;
 
 public enum Furnace {
 
-    LAZARUS(new NamespacedKey(TARDIS.plugin, "gui/room/lazarus")),
     ARTRON_FURNACE(new NamespacedKey(TARDIS.plugin, "tardis/artron_furnace")),
     ARTRON_FURNACE_LIT(new NamespacedKey(TARDIS.plugin, "tardis/artron_furnace_lit"));
 

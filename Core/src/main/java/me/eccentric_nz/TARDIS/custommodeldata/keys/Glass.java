@@ -5,7 +5,6 @@ import org.bukkit.NamespacedKey;
 
 public enum Glass {
 
-    EMPTY(new NamespacedKey(TARDIS.plugin, "gui/room/empty")),
     MONITOR_FRAME_LEFT(new NamespacedKey(TARDIS.plugin, "tardis/monitor_frame_left")),
     MONITOR_FRAME_MIDDLE(new NamespacedKey(TARDIS.plugin, "tardis/monitor_frame_middle")),
     MONITOR_FRAME_RIGHT(new NamespacedKey(TARDIS.plugin, "tardis/monitor_frame_right")),

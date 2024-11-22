@@ -16,7 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.*;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Cobblestone;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Map;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.RoomBlock;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Wool;
 import org.bukkit.Material;
 
 public record GUIArs() {
@@ -34,7 +37,7 @@ public record GUIArs() {
     public static GUIData BUTTON_RESET = new GUIData(Cobblestone.STANDARD_SONIC.getKey(), 30, Material.COBBLESTONE);
     public static GUIData BUTTON_SCROLL_L = new GUIData(Wool.SCROLL_LEFT.getKey(), 36, Material.RED_WOOL);
     public static GUIData BUTTON_SCROLL_R = new GUIData(Wool.SCROLL_RIGHT.getKey(), 38, Material.LIME_WOOL);
-    public static GUIData BUTTON_JETT = new GUIData(Tnt.JETTISON.getKey(), 39, Material.TNT);
+    public static GUIData BUTTON_JETT = new GUIData(RoomBlock.JETTISON.getKey(), 39, Material.TNT);
     public static GUIData BUTTON_MAP_ON = new GUIData(Wool.BLANK.getKey(), -1, Material.BLACK_WOOL);
-    public static GUIData EMPTY_SLOT = new GUIData(Stone.SLOT.getKey(), -1, Material.STONE);
+    public static GUIData EMPTY_SLOT = new GUIData(RoomBlock.SLOT.getKey(), -1, Material.STONE);
 }

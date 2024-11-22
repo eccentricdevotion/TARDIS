@@ -5,7 +5,6 @@ import org.bukkit.NamespacedKey;
 
 public enum EndStone {
 
-    BAKER(new NamespacedKey(TARDIS.plugin, "gui/room/baker")),
     SILENT(new NamespacedKey(TARDIS.plugin, "monster/silent/silent")),
     SILENT_MOUTH(new NamespacedKey(TARDIS.plugin, "monster/silent/silent_mouth")),
     BUTTON_SILENT(new NamespacedKey(TARDIS.plugin, "genetic/silent")),
