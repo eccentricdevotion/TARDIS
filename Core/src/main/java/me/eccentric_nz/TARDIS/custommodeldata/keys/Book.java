@@ -4,11 +4,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.NamespacedKey;
 
 public enum Book {
+
     INFO(new NamespacedKey(TARDIS.plugin, "gui/bowl/info")),
     VASHTA_NERADA(new NamespacedKey(TARDIS.plugin, "genetic/vashta_nerada")),
     VASHTA_NERADA_ARM(new NamespacedKey(TARDIS.plugin, "monster/vashta_nerada/vashta_nerada_arm")),
     VASHTA_NERADA_HEAD(new NamespacedKey(TARDIS.plugin, "monster/vashta_nerada/vashta_nerada_head")),
-
     VASHTA_NERADA_DISGUISE(new NamespacedKey(TARDIS.plugin, "monster/vashta_nerada/vashta_nerada_disguise")),
     VASHTA_NERADA_0(new NamespacedKey(TARDIS.plugin, "monster/vashta_nerada/frames/vashta_nerada_0")),
     VASHTA_NERADA_1(new NamespacedKey(TARDIS.plugin, "monster/vashta_nerada/frames/vashta_nerada_1")),

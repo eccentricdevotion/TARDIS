@@ -5,7 +5,6 @@ import org.bukkit.NamespacedKey;
 
 public enum Torch {
 
-
     ANGEL_OF_LIBERTY_TORCH(new NamespacedKey(TARDIS.plugin, "lazarus/angel_of_liberty_torch"));
 
     private final NamespacedKey key;

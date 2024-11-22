@@ -5,7 +5,6 @@ import org.bukkit.NamespacedKey;
 
 public enum YellowStainedGlass {
 
-
     TINT_YELLOW(new NamespacedKey(TARDIS.plugin, "block/lights/tint_yellow"));
 
     private final NamespacedKey key;
