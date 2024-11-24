@@ -4,6 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISEmergencyRelocation;
+import me.eccentric_nz.TARDIS.console.ConsoleInteraction;
 import me.eccentric_nz.TARDIS.console.models.ButtonModel;
 import me.eccentric_nz.TARDIS.control.actions.ExileAction;
 import me.eccentric_nz.TARDIS.control.actions.RandomDestinationAction;
@@ -72,7 +73,7 @@ public class RandomiserInteraction {
         UUID uuid = interaction.getPersistentDataContainer().get(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID());
         if (uuid != null) {
             ItemDisplay display = (ItemDisplay) plugin.getServer().getEntity(uuid);
-            new ButtonModel().setState(display, plugin);
+            new ButtonModel().setState(display, plugin, ConsoleInteraction.RANDOMISER);
         }
         COMPASS direction = rscl.getDirection();
         if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {

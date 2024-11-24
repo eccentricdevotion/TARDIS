@@ -5,7 +5,6 @@ import org.bukkit.NamespacedKey;
 
 public enum LimeConcrete {
 
-    CONSOLE_LIME(new NamespacedKey(TARDIS.plugin, "tardis/console_lime")),
     PRODUCT(new NamespacedKey(TARDIS.plugin, "block/chemistry/product"));
 
     private final NamespacedKey key;

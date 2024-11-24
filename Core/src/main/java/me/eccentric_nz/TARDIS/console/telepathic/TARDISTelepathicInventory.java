@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.console.telepathic;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIMap;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Repeater;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -27,13 +28,14 @@ public class TARDISTelepathicInventory {
         ItemStack[] stack = new ItemStack[9];
         // get current telepathic status
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
-        String onOff = (rsp.resultSet() && rsp.isTelepathyOn()) ? ChatColor.GREEN + "ON" : ChatColor.RED + "OFF" ;
+        boolean on = (rsp.resultSet() && rsp.isTelepathyOn());
+        String onOff = on ? ChatColor.GREEN + "ON" : ChatColor.RED + "OFF" ;
         // toggling telepathic circuit on/off
         ItemStack toggle = new ItemStack(Material.REPEATER);
         ItemMeta tim = toggle.getItemMeta();
         tim.setDisplayName("Telepathic Circuit");
         tim.setLore(List.of(onOff));
-        tim.setCustomModelData(40);
+        tim.setItemModel(on ? Repeater.TELEPATHIC_CIRCUIT_ON.getKey() : Repeater.TELEPATHIC_CIRCUIT_OFF.getKey());
         toggle.setItemMeta(tim);
         stack[0] = toggle;
         // cave finder

@@ -5,7 +5,6 @@ import org.bukkit.NamespacedKey;
 
 public enum YellowConcrete {
 
-    CONSOLE_YELLOW(new NamespacedKey(TARDIS.plugin, "tardis/console_yellow")),
     LAB(new NamespacedKey(TARDIS.plugin, "block/chemistry/lab"));
 
     private final NamespacedKey key;

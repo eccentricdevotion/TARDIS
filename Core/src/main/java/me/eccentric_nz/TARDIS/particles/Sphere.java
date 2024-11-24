@@ -50,7 +50,7 @@ public class Sphere extends TARDISParticleRunnable {
         }
         ItemStack is = new ItemStack(Material.MAGMA_BLOCK);
         ItemMeta im = is.getItemMeta();
-        im.setCustomModelData(capacitor.getCustomModelData());
+        im.setItemModel(capacitor.getModel());
         is.setItemMeta(im);
         display.setItemStack(is);
         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);

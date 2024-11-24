@@ -1,5 +1,6 @@
 package me.eccentric_nz.tardisregeneration;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GoldIngot;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -31,7 +32,7 @@ public class ElixirOfLife {
         foodComponent.setNutrition(4);
         foodComponent.setSaturation(1.0f);
         im.setFood(foodComponent);
-        im.setCustomModelData(2);
+        im.setItemModel(GoldIngot.ELIXIR_OF_LIFE.getKey());
         im.setDisplayName(ChatColor.WHITE + "Elixir of Life");
         im.setLore(List.of("Use to trigger a", "Time Lord regeneration"));
         goblet.setItemMeta(im);
@@ -43,7 +44,7 @@ public class ElixirOfLife {
             return false;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName() || !im.hasCustomModelData()) {
+        if (!im.hasDisplayName() || !im.hasItemModel()) {
             return false;
         }
         return im.getDisplayName().endsWith("Elixir of Life");

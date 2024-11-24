@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.console;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.AmethystShard;
 import me.eccentric_nz.TARDIS.custommodeldata.keys.Lever;
 import me.eccentric_nz.TARDIS.custommodeldata.keys.Rail;
 import me.eccentric_nz.TARDIS.custommodeldata.keys.Repeater;
@@ -52,7 +53,25 @@ public class ConsoleBuilder {
         for (int i = 0; i < 6; i++) {
             ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
             ItemMeta im = shard.getItemMeta();
-            im.setCustomModelData(1000 + type);
+            switch (type) {
+                case 17 -> im.setItemModel(AmethystShard.CONSOLE_RUSTIC.getKey());
+                case 16 -> im.setItemModel(AmethystShard.CONSOLE_BROWN.getKey());
+                case 15 -> im.setItemModel(AmethystShard.CONSOLE_PINK.getKey());
+                case 14 -> im.setItemModel(AmethystShard.CONSOLE_MAGENTA.getKey());
+                case 13 -> im.setItemModel(AmethystShard.CONSOLE_PURPLE.getKey());
+                case 12 -> im.setItemModel(AmethystShard.CONSOLE_BLUE.getKey());
+                case 11 -> im.setItemModel(AmethystShard.CONSOLE_LIGHT_BLUE.getKey());
+                case 10 -> im.setItemModel(AmethystShard.CONSOLE_CYAN.getKey());
+                case 9 -> im.setItemModel(AmethystShard.CONSOLE_GREEN.getKey());
+                case 8 -> im.setItemModel(AmethystShard.CONSOLE_LIME.getKey());
+                case 7 -> im.setItemModel(AmethystShard.CONSOLE_YELLOW.getKey());
+                case 6 -> im.setItemModel(AmethystShard.CONSOLE_ORANGE.getKey());
+                case 5 -> im.setItemModel(AmethystShard.CONSOLE_RED.getKey());
+                case 4 -> im.setItemModel(AmethystShard.CONSOLE_WHITE.getKey());
+                case 3 -> im.setItemModel(AmethystShard.CONSOLE_BLACK.getKey());
+                case 2 -> im.setItemModel(AmethystShard.CONSOLE_GRAY.getKey());
+                default -> im.setItemModel(AmethystShard.CONSOLE_LIGHT_GRAY.getKey());
+            }
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
             shard.setItemMeta(im);
             ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.25d, 0.5d), EntityType.ITEM_DISPLAY);
@@ -71,7 +90,25 @@ public class ConsoleBuilder {
         for (int i = 30; i < 360; i += 60) {
             ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
             ItemMeta im = shard.getItemMeta();
-            im.setCustomModelData(2000 + type);
+            switch (type) {
+                case 17 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_RUSTIC.getKey());
+                case 16 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_BROWN.getKey());
+                case 15 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_PINK.getKey());
+                case 14 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_MAGENTA.getKey());
+                case 13 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_PURPLE.getKey());
+                case 12 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_BLUE.getKey());
+                case 11 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_LIGHT_BLUE.getKey());
+                case 10 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_CYAN.getKey());
+                case 9 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_GREEN.getKey());
+                case 8 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_LIME.getKey());
+                case 7 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_YELLOW.getKey());
+                case 6 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_ORANGE.getKey());
+                case 5 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_RED.getKey());
+                case 4 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_WHITE.getKey());
+                case 3 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_BLACK.getKey());
+                case 2 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_GRAY.getKey());
+                default -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_LIGHT_GRAY.getKey());
+            }
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
             shard.setItemMeta(im);
             ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.25d, 0.5d), EntityType.ITEM_DISPLAY);
@@ -190,9 +227,28 @@ public class ConsoleBuilder {
     private UUID spawnCentreDisplay(Location up, int type) {
         ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
         ItemMeta im = shard.getItemMeta();
-        int cmd = 3000 + type;
-        im.setCustomModelData(cmd);
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
+        NamespacedKey model;
+        switch (type) {
+            case 17 -> model = AmethystShard.CONSOLE_CENTRE_RUSTIC.getKey();
+            case 16 -> model = AmethystShard.CONSOLE_CENTRE_BROWN.getKey();
+            case 15 -> model = AmethystShard.CONSOLE_CENTRE_PINK.getKey();
+            case 14 -> model = AmethystShard.CONSOLE_CENTRE_MAGENTA.getKey();
+            case 13 -> model = AmethystShard.CONSOLE_CENTRE_PURPLE.getKey();
+            case 12 -> model = AmethystShard.CONSOLE_CENTRE_BLUE.getKey();
+            case 11 -> model = AmethystShard.CONSOLE_CENTRE_LIGHT_BLUE.getKey();
+            case 10 -> model = AmethystShard.CONSOLE_CENTRE_CYAN.getKey();
+            case 9 -> model = AmethystShard.CONSOLE_CENTRE_GREEN.getKey();
+            case 8 -> model = AmethystShard.CONSOLE_CENTRE_LIME.getKey();
+            case 7 -> model = AmethystShard.CONSOLE_CENTRE_YELLOW.getKey();
+            case 6 -> model = AmethystShard.CONSOLE_CENTRE_ORANGE.getKey();
+            case 5 -> model = AmethystShard.CONSOLE_CENTRE_RED.getKey();
+            case 4 -> model = AmethystShard.CONSOLE_CENTRE_WHITE.getKey();
+            case 3 -> model = AmethystShard.CONSOLE_CENTRE_BLACK.getKey();
+            case 2 -> model = AmethystShard.CONSOLE_CENTRE_GRAY.getKey();
+            default -> model = AmethystShard.CONSOLE_CENTRE_LIGHT_GRAY.getKey();
+        }
+        im.setItemModel(model);
+        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
         shard.setItemMeta(im);
         ItemDisplay display = (ItemDisplay) up.getWorld().spawnEntity(up.add(0.5d, 0.25d, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(shard);

@@ -1,5 +1,6 @@
 package me.eccentric_nz.TARDIS.console.models;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Repeater;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -12,7 +13,12 @@ public class ThrottleModel {
         }
         ItemStack is = display.getItemStack();
         ItemMeta im = is.getItemMeta();
-        im.setCustomModelData(state + 1000);
+        switch (state) {
+            case 1 -> im.setItemModel(Repeater.THROTTLE_WARP.getKey());
+            case 2 -> im.setItemModel(Repeater.THROTTLE_RAPID.getKey());
+            case 3 -> im.setItemModel(Repeater.THROTTLE_FASTER.getKey());
+            default -> im.setItemModel(Repeater.THROTTLE_NORMAL.getKey());
+        }
         is.setItemMeta(im);
         display.setItemStack(is);
     }

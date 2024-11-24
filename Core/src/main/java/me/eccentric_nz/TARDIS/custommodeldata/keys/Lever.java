@@ -59,7 +59,7 @@ public enum Lever {
     MODELLED_LIGHT_4(new NamespacedKey(TARDIS.plugin, "block/controls/light_4")),
     MODELLED_LIGHT_5(new NamespacedKey(TARDIS.plugin, "block/controls/light_5")),
     MODELLED_LIGHT_6(new NamespacedKey(TARDIS.plugin, "block/controls/light_6")),
-    CONSOLE_LIGHT_7(new NamespacedKey(TARDIS.plugin, "block/controls/light_7")),
+    MODELLED_LIGHT_7(new NamespacedKey(TARDIS.plugin, "block/controls/light_7")),
     CONSOLE_LAMP_0(new NamespacedKey(TARDIS.plugin, "block/control/console_lamp_0")),
     CONSOLE_LAMP_1(new NamespacedKey(TARDIS.plugin, "block/control/console_lamp_1")),
     CONSOLE_LAMP_2(new NamespacedKey(TARDIS.plugin, "block/control/console_lamp_2")),
