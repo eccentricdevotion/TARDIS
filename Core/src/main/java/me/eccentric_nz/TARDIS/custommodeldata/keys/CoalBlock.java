@@ -5,7 +5,6 @@ import org.bukkit.NamespacedKey;
 
 public enum CoalBlock {
 
-    BLOCK_INFO(new NamespacedKey(TARDIS.plugin, "gui/particle/block_info")),
     BLOCK_BUTTON(new NamespacedKey(TARDIS.plugin, "gui/lights/block_button")),
     LEVELS_BUTTON(new NamespacedKey(TARDIS.plugin, "gui/lights/levels_button")),
     SEQUENCE_BUTTON(new NamespacedKey(TARDIS.plugin, "gui/lights/sequence_button")),

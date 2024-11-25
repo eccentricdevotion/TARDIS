@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GlowstoneDust;
+import org.bukkit.NamespacedKey;
+
 import java.util.HashMap;
 
 /**
@@ -23,33 +26,33 @@ import java.util.HashMap;
  */
 public enum GlowstoneCircuit {
 
-    ADMIN("Server Admin Circuit", 10001968),
-    ARS("TARDIS ARS Circuit", 10001973),
-    BIO("Bio-scanner Circuit", 10001969),
-    BRUSH("Brush Circuit", 10001987),
-    CHAMELEON("TARDIS Chameleon Circuit", 10001966),
-    CIRCUITS("Circuits", 10001985),
-    CONVERSION("Conversion Circuit", 10001988),
-    DIAMOND("Diamond Disruptor Circuit", 10001971),
-    EMERALD("Emerald Environment Circuit", 10001972),
-    IGNITE("Ignite Circuit", 10001982),
-    INPUT("TARDIS Input Circuit", 10001976),
-    INVISIBILITY("TARDIS Invisibility Circuit", 10001981),
-    KNOCKBACK("Knockback Circuit", 10001986),
-    LOCATOR("TARDIS Locator Circuit", 10001965),
-    MATERIALISATION("TARDIS Materialisation Circuit", 10001964),
-    MEMORY("TARDIS Memory Circuit", 10001975),
-    PAINTER("Painter Circuit", 10001979),
-    PERCEPTION("Perception Circuit", 10001978),
-    PICKUP("Pickup Arrows Circuit", 10001984),
-    RANDOM("TARDIS Randomiser Circuit", 10001980),
-    REDSTONE("Redstone Activator Circuit", 10001970),
-    RIFT("Rift Circuit", 10001983),
-    SCANNER("TARDIS Scanner Circuit", 10001977),
-    SONIC("Sonic Oscillator", 10001967),
-    STATTENHEIM("TARDIS Stattenheim Circuit", 10001963),
-    TELEPATHIC("TARDIS Telepathic Circuit", 10001962),
-    TEMPORAL("TARDIS Temporal Circuit", 10001974);
+    ADMIN("Server Admin Circuit", GlowstoneDust.ADMIN.getKey()),
+    ARS("TARDIS ARS Circuit", GlowstoneDust.ARS.getKey()),
+    BIO("Bio-scanner Circuit", GlowstoneDust.BIO.getKey()),
+    BRUSH("Brush Circuit", GlowstoneDust.BRUSH.getKey()),
+    CHAMELEON("TARDIS Chameleon Circuit", GlowstoneDust.CHAMELEON.getKey()),
+    CIRCUITS("Circuits", GlowstoneDust.GALLIFREY.getKey()),
+    CONVERSION("Conversion Circuit", GlowstoneDust.CONVERSION.getKey()),
+    DIAMOND("Diamond Disruptor Circuit", GlowstoneDust.DIAMOND.getKey()),
+    EMERALD("Emerald Environment Circuit", GlowstoneDust.EMERALD.getKey()),
+    IGNITE("Ignite Circuit", GlowstoneDust.IGNITE.getKey()),
+    INPUT("TARDIS Input Circuit", GlowstoneDust.INPUT.getKey()),
+    INVISIBILITY("TARDIS Invisibility Circuit", GlowstoneDust.INVISIBILITY.getKey()),
+    KNOCKBACK("Knockback Circuit", GlowstoneDust.KNOCKBACK.getKey()),
+    LOCATOR("TARDIS Locator Circuit", GlowstoneDust.LOCATOR.getKey()),
+    MATERIALISATION("TARDIS Materialisation Circuit", GlowstoneDust.MATERIALISATION.getKey()),
+    MEMORY("TARDIS Memory Circuit", GlowstoneDust.MEMORY.getKey()),
+    PAINTER("Painter Circuit", GlowstoneDust.PAINTER.getKey()),
+    PERCEPTION("Perception Circuit", GlowstoneDust.PERCEPTION.getKey()),
+    PICKUP("Pickup Arrows Circuit", GlowstoneDust.PICKUP.getKey()),
+    RANDOM("TARDIS Randomiser Circuit", GlowstoneDust.RANDOM.getKey()),
+    REDSTONE("Redstone Activator Circuit", GlowstoneDust.REDSTONE.getKey()),
+    RIFT("Rift Circuit", GlowstoneDust.RIFT.getKey()),
+    SCANNER("TARDIS Scanner Circuit", GlowstoneDust.SCANNER.getKey()),
+    SONIC("Sonic Oscillator", GlowstoneDust.SONIC.getKey()),
+    STATTENHEIM("TARDIS Stattenheim Circuit", GlowstoneDust.STATTENHEIM.getKey()),
+    TELEPATHIC("TARDIS Telepathic Circuit", GlowstoneDust.TELEPATHIC.getKey()),
+    TEMPORAL("TARDIS Temporal Circuit", GlowstoneDust.TEMPORAL.getKey());
 
     private static final HashMap<String, GlowstoneCircuit> BY_NAME = new HashMap<>();
 
@@ -60,13 +63,11 @@ public enum GlowstoneCircuit {
     }
 
     final String displayName;
-    final int customModelData;
-    final int damaged;
+    final NamespacedKey model;
 
-    GlowstoneCircuit(String displayName, int customModelData) {
+    GlowstoneCircuit(String displayName, NamespacedKey model) {
         this.displayName = displayName;
-        this.customModelData = customModelData;
-        damaged = this.customModelData + 10000000;
+        this.model = model;
     }
 
     public static HashMap<String, GlowstoneCircuit> getByName() {
@@ -77,11 +78,7 @@ public enum GlowstoneCircuit {
         return displayName;
     }
 
-    public int getCustomModelData() {
-        return customModelData;
-    }
-
-    public int getDamaged() {
-        return damaged;
+    public NamespacedKey getModel() {
+        return model;
     }
 }

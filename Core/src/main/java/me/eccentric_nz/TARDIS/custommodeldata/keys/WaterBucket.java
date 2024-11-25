@@ -5,8 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum WaterBucket {
 
-    ACID_BUCKET(new NamespacedKey(TARDIS.plugin, "planets/acid_bucket")),
-    RAIN(new NamespacedKey(TARDIS.plugin, "gui/rain"));
+    ACID_BUCKET(new NamespacedKey(TARDIS.plugin, "planets/acid_bucket"));
 
     private final NamespacedKey key;
 

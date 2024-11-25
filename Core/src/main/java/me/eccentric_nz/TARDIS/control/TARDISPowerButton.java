@@ -22,15 +22,15 @@ import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightLevelLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetSensors;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.sensor.PowerSensor;
-import me.eccentric_nz.TARDIS.sensor.SensorToggle;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -143,21 +143,21 @@ public class TARDISPowerButton {
         plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
         // get light level switches
         // interior
-        ResultSetLightLevelLocation rslls = new ResultSetLightLevelLocation(plugin, id, 50);
+        ResultSetLightLevelLocation rslls = new ResultSetLightLevelLocation(plugin, id, 50); // interior light level
         if (rslls.resultSet()) {
             Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rslls.getLocation());
             ItemFrame frame = getFrame(location.getBlock());
             if (frame != null) {
-                setFrame(frame, powered);
+                setFrame(frame, powered, Control.LIGHT_LEVEL);
             }
         }
         // exterior
-        ResultSetLightLevelLocation rsllx = new ResultSetLightLevelLocation(plugin, id, 49);
+        ResultSetLightLevelLocation rsllx = new ResultSetLightLevelLocation(plugin, id, 49); // exterior lamp level
         if (rsllx.resultSet()) {
             Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsllx.getLocation());
             ItemFrame frame = getFrame(location.getBlock());
             if (frame != null) {
-                setFrame(frame, powered);
+                setFrame(frame, powered, Control.EXTERIOR_LAMP);
             }
         }
     }
@@ -176,11 +176,18 @@ public class TARDISPowerButton {
         return null;
     }
 
-    private void setFrame(ItemFrame frame, boolean on) {
+    private void setFrame(ItemFrame frame, boolean on, Control control) {
         ItemStack is = frame.getItem();
         ItemMeta im = is.getItemMeta();
-        int cmd = im.getCustomModelData();
-        im.setCustomModelData(on ? cmd + 1000 : cmd - 1000);
+        NamespacedKey model = im.getItemModel();
+        String key;
+        if (control == Control.LIGHT_LEVEL) {
+            key = (model == null) ? on ? "block/control/light_0" : "block/control/light_0_off" : model.getKey();
+        } else {
+            key = (model == null) ? on ? "block/control/lamp_0" : "block/control/lamp_0_off" : model.getKey();
+        }
+        NamespacedKey nsk = on ? new NamespacedKey(plugin, key.replace("_off", "")) : new NamespacedKey(plugin, key + "_off");
+        im.setItemModel(nsk);
         is.setItemMeta(im);
         frame.setItem(is);
     }

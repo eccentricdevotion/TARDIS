@@ -79,7 +79,7 @@ class TARDISRecipesLister {
             }
             if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                 for (Monster m : Monster.values()) {
-                    sender.sendMessage(m.toString() + "_HEAD(\"" + m.getName() + " Head\", Material." + m.getMaterial().toString() + ", " + m.getCustomModelData() + "),");
+                    sender.sendMessage(m.toString() + "_HEAD(\"" + m.getName() + " Head\", Material." + m.getMaterial().toString() + ", " + m.getModel() + "),");
                 }
             }
         }

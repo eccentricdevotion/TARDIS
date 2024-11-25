@@ -10,6 +10,7 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIKeyPreferences;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISonicPreferences;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.*;
 import me.eccentric_nz.TARDIS.doors.Door;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.rotors.Rotor;
@@ -29,6 +30,7 @@ import me.eccentric_nz.tardisweepingangels.equip.ArmourStandEquipment;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -98,7 +100,7 @@ public class DebugPopulator {
             if (item.getRecipeType() == ShopItemRecipe.SHAPED || item.getRecipeType() == ShopItemRecipe.SHAPELESS) {
                 Location location = new Location(world, rx + x, 65, rz + z);
                 // set block at location
-                setItemFromMaterial(location, item.getMaterial(), item.getCustomModelData(), item.getDisplayName());
+                setItemFromMaterial(location, item.getMaterial(), item.getModel(), item.getDisplayName());
                 // loop x z 24 x 24 blocks with empty blocks between
                 x -= 2;
                 if (x < -24) {
@@ -107,7 +109,10 @@ public class DebugPopulator {
                 }
             }
         }
-        int[] data = new int[]{20001962, 20001963, 20001964, 20001965, 20001966, 20001967, 20001973, 20001974, 20001975, 20001976, 20001977, 20001978, 20001980, 20001981, 20001983};
+        NamespacedKey[] data = new NamespacedKey[]{GlowstoneDust.TELEPATHIC_DAMAGED.getKey(), GlowstoneDust.STATTENHEIM_DAMAGED.getKey(), GlowstoneDust.MATERIALISATION_DAMAGED.getKey(),
+                GlowstoneDust.LOCATOR_DAMAGED.getKey(), GlowstoneDust.CHAMELEON_DAMAGED.getKey(), GlowstoneDust.SONIC_DAMAGED.getKey(), GlowstoneDust.ARS.getKey(), GlowstoneDust.TEMPORAL_DAMAGED.getKey(),
+                GlowstoneDust.MEMORY_DAMAGED.getKey(), GlowstoneDust.INPUT.getKey(), GlowstoneDust.SCANNER_DAMAGED.getKey(), GlowstoneDust.PERCEPTION_DAMAGED.getKey(), GlowstoneDust.RANDOM_DAMAGED.getKey(),
+                GlowstoneDust.INVISIBILITY_DAMAGED.getKey(), GlowstoneDust.RIFT_DAMAGED.getKey()};
         String[] names = new String[]{"Telepathic", "Stattenheim", "Materialisation", "Locator", "Chameleon", "Sonic", "ARS", "Temporal", "Memory", "Input", "Scanner", "Perception", "Random", "Invisibility", "Rift"};
         int c = 0;
         for (String damaged : names) {
@@ -122,7 +127,7 @@ public class DebugPopulator {
         }
         // rust/acid buckets, area disk
         Material[] materials = new Material[]{Material.WATER_BUCKET, Material.LAVA_BUCKET, Material.MUSIC_DISC_BLOCKS};
-        int[] cmd = new int[]{1, 1, 10000001};
+        NamespacedKey[] cmd = new NamespacedKey[]{WaterBucket.ACID_BUCKET.getKey(), LavaBucket.RUST_BUCKET.getKey(), MusicDisc.AREA_DISK.getKey()};
         String[] misc = new String[]{"Acid Bucket", "Rust Bucket", "Area Storage Disk"};
         int b = 0;
         for (String m : misc) {
@@ -166,7 +171,7 @@ public class DebugPopulator {
             if (sonic.getMaterial() == Material.BLAZE_ROD && sonic != GUISonicPreferences.COLOUR) {
                 Location location = new Location(world, rx + x, 65, rz + z);
                 // set block at location
-                setItemFromMaterial(location, sonic.getMaterial(), sonic.getCustomModelData(), sonic.getName());
+                setItemFromMaterial(location, sonic.getMaterial(), sonic.getModel(), sonic.getName());
                 x += 2;
                 if (x > 48) {
                     x = 28;
@@ -178,7 +183,7 @@ public class DebugPopulator {
             if (key.getSlot() < 17) {
                 Location location = new Location(world, rx + x, 65, rz + z);
                 // set block at location
-                setItemFromMaterial(location, key.getMaterial(), key.getCustomModelData(), key.getName());
+                setItemFromMaterial(location, key.getMaterial(), key.getModel(), key.getName());
                 x += 2;
                 if (x > 48) {
                     x = 28;
@@ -192,81 +197,79 @@ public class DebugPopulator {
         int x = 3;
         int z = -3;
         for (Monster monster : Monster.values()) {
-            if (monster != Monster.FLYER) {
-                if (monster != Monster.DALEK) {
-                    Location location = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
-                    ArmorStand stand = (ArmorStand) world.spawnEntity(location, EntityType.ARMOR_STAND);
-                    // equip armour stands
-                    new ArmourStandEquipment().setStandEquipment(stand, monster, (monster == Monster.EMPTY_CHILD));
-                    x += 3;
-                    if (x > 24) {
-                        x = 3;
-                        z -= 3;
-                    }
+            if (monster != Monster.DALEK) {
+                Location location = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
+                ArmorStand stand = (ArmorStand) world.spawnEntity(location, EntityType.ARMOR_STAND);
+                // equip armour stands
+                new ArmourStandEquipment().setStandEquipment(stand, monster, (monster == Monster.EMPTY_CHILD));
+                x += 3;
+                if (x > 24) {
+                    x = 3;
+                    z -= 3;
                 }
-                if (monster == Monster.HEADLESS_MONK) {
+            }
+            if (monster == Monster.HEADLESS_MONK) {
+                Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
+                ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
+                new ArmourStandEquipment().setStandEquipment(as, monster, false);
+                // set helmet to sword version
+                setHelmet(as, 405);
+                x += 3;
+                if (x > 24) {
+                    x = 3;
+                    z -= 3;
+                }
+            }
+            if (monster == Monster.MIRE || monster == Monster.SLITHEEN) {
+                // set no helmet!
+                Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
+                ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
+                new ArmourStandEquipment().setStandEquipment(as, monster, false);
+                // set helmet to sword version
+                setHelmet(as, 5);
+                x += 3;
+                if (x > 24) {
+                    x = 3;
+                    z -= 3;
+                }
+            }
+            if (monster == Monster.CLOCKWORK_DROID) {
+                Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
+                ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
+                new ArmourStandEquipment().setStandEquipment(as, monster, false);
+                // set female
+                setHelmet(as, 7);
+                x += 3;
+                if (x > 24) {
+                    x = 3;
+                    z -= 3;
+                }
+            }
+            if (monster == Monster.DALEK) {
+                for (int c = 0; c < 17; c++) {
                     Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
                     ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
                     new ArmourStandEquipment().setStandEquipment(as, monster, false);
                     // set helmet to sword version
-                    setHelmet(as, 405);
+                    setHelmet(as, 10000005 + c);
                     x += 3;
                     if (x > 24) {
                         x = 3;
                         z -= 3;
                     }
                 }
-                if (monster == Monster.MIRE || monster == Monster.SLITHEEN) {
-                    // set no helmet!
+            }
+            if (monster == Monster.OOD) {
+                for (int c = 411; c < 436; c += 6) {
                     Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
                     ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
                     new ArmourStandEquipment().setStandEquipment(as, monster, false);
-                    // set helmet to sword version
-                    setHelmet(as, 5);
+                    // set colour and red eye variants
+                    setHelmet(as, c);
                     x += 3;
                     if (x > 24) {
                         x = 3;
                         z -= 3;
-                    }
-                }
-                if (monster == Monster.CLOCKWORK_DROID) {
-                    Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
-                    ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
-                    new ArmourStandEquipment().setStandEquipment(as, monster, false);
-                    // set female
-                    setHelmet(as, 7);
-                    x += 3;
-                    if (x > 24) {
-                        x = 3;
-                        z -= 3;
-                    }
-                }
-                if (monster == Monster.DALEK) {
-                    for (int c = 0; c < 17; c++) {
-                        Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
-                        ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
-                        new ArmourStandEquipment().setStandEquipment(as, monster, false);
-                        // set helmet to sword version
-                        setHelmet(as, 10000005 + c);
-                        x += 3;
-                        if (x > 24) {
-                            x = 3;
-                            z -= 3;
-                        }
-                    }
-                }
-                if (monster == Monster.OOD) {
-                    for (int c = 411; c < 436; c += 6) {
-                        Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
-                        ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
-                        new ArmourStandEquipment().setStandEquipment(as, monster, false);
-                        // set colour and red eye variants
-                        setHelmet(as, c);
-                        x += 3;
-                        if (x > 24) {
-                            x = 3;
-                            z -= 3;
-                        }
                     }
                 }
             }
@@ -453,7 +456,7 @@ public class DebugPopulator {
         for (GuiPreview gui : DebugGUI.ICONS) {
             Location location = new Location(world, rx + x, 65, rz + z);
             // set block at location
-            setItemFromMaterial(location, gui.material(), gui.customModelData(), gui.name());
+            setItemFromMaterial(location, gui.material(), gui.model(), gui.name());
             // loop x z 48 x 24 blocks with empty blocks between
             x -= 2;
             if (x < -48) {
@@ -463,11 +466,11 @@ public class DebugPopulator {
         }
     }
 
-    private void setItemFromMaterial(Location location, Material material, int cmd, String name) {
+    private void setItemFromMaterial(Location location, Material material, NamespacedKey model, String name) {
         location.getBlock().setType(Material.WHITE_CONCRETE);
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
-        im.setCustomModelData(cmd);
+        im.setItemModel(model);
         im.setDisplayName(name);
         is.setItemMeta(im);
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
@@ -522,11 +525,12 @@ public class DebugPopulator {
         }
         List<Material> slides = List.of(Material.GLASS, Material.GRAY_STAINED_GLASS, Material.LIGHT_BLUE_STAINED_GLASS);
         String[] names = new String[]{"Slide", "Scope View", "Screen"};
+        NamespacedKey[] keys = new NamespacedKey[]{Glass.GLASS_SLIDE.getKey(), GrayStainedGlass.FOLDER.getKey(), LightBlueStainedGlass.SCREEN.getKey()};
         int s = 0;
         for (Material material : slides) {
             Location location = new Location(world, rx + x, 65, rz + z);
             // set block at location
-            setItemFromMaterial(location, material, 9999, names[s]);
+            setItemFromMaterial(location, material, keys[s], names[s]);
             s++;
             x += 2;
             if (x > 24) {
@@ -593,12 +597,12 @@ public class DebugPopulator {
         TARDISDisplayItemUtils.set(TARDISDisplayItem.UNTEMPERED_SCHISM, block, -1);
         x += 5;
         // regeneration poses
-        for (int p = 1001; p < 1017; p++) {
+        for (TotemOfUndying t : TotemOfUndying.values()) {
             Location location = new Location(world, rx + x + 0.5d, 65.725, rz + z + 0.5d);
             // create the regeneration item model
             ItemStack totem = new ItemStack(Material.TOTEM_OF_UNDYING, 1);
             ItemMeta im = totem.getItemMeta();
-            im.setCustomModelData(p);
+            im.setItemModel(t.getKey());
             totem.setItemMeta(im);
             // spawn a display entity
             ItemDisplay display = (ItemDisplay) world.spawnEntity(location, EntityType.ITEM_DISPLAY);
@@ -618,7 +622,7 @@ public class DebugPopulator {
         for (GuiPreview gui : DebugHandles.ICONS) {
             Location location = new Location(world, rx + x, 65, rz + z);
             // set block at location
-            setItemFromMaterial(location, gui.material(), gui.customModelData(), gui.name());
+            setItemFromMaterial(location, gui.material(), gui.model(), gui.name());
             x += 2;
             if (x > 48) {
                 x = 27;
@@ -633,7 +637,7 @@ public class DebugPopulator {
         for (GuiPreview gui : DebugLazarus.ICONS) {
             Location location = new Location(world, rx + x, 65, rz + z);
             // set block at location
-            setItemFromMaterial(location, gui.material(), gui.customModelData(), gui.name());
+            setItemFromMaterial(location, gui.material(), gui.model(), gui.name());
             x += 2;
             if (x > 48) {
                 x = 27;

@@ -7,8 +7,7 @@ public enum GunPowder {
 
     TOCLAFANE(new NamespacedKey(TARDIS.plugin, "monster/toclafane/toclafane")),
     TOCLAFANE_ATTACK(new NamespacedKey(TARDIS.plugin, "monster/toclafane/toclafane_attack")),
-    BUTTON_TOCLAFANE(new NamespacedKey(TARDIS.plugin, "genetic/toclafane")),
-    THUNDER(new NamespacedKey(TARDIS.plugin, "gui/thunder"));
+    BUTTON_TOCLAFANE(new NamespacedKey(TARDIS.plugin, "genetic/toclafane"));
 
     private final NamespacedKey key;
 

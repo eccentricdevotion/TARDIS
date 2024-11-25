@@ -3,13 +3,16 @@ package me.eccentric_nz.TARDIS.custommodeldata.keys;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.NamespacedKey;
 
-public enum FireworkRocket {
+public enum Weather {
 
+    CLEAR(new NamespacedKey(TARDIS.plugin, "gui/clear")),
+    RAIN(new NamespacedKey(TARDIS.plugin, "gui/rain")),
+    THUNDER(new NamespacedKey(TARDIS.plugin, "gui/thunder")),
     EXCITE(new NamespacedKey(TARDIS.plugin, "gui/excite"));
 
     private final NamespacedKey key;
 
-    FireworkRocket(NamespacedKey key) {
+    Weather(NamespacedKey key) {
         this.key = key;
     }
 

@@ -18,8 +18,7 @@ package me.eccentric_nz.TARDIS.particles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIParticle;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.LapisOre;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.RedstoneOre;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.ParticleItem;
 import me.eccentric_nz.TARDIS.custommodeldata.keys.Repeater;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetParticlePrefs;
@@ -86,7 +85,7 @@ public class TARDISParticleInventory {
             ItemStack pshape = new ItemStack(sm, 1);
             ItemMeta me = pshape.getItemMeta();
             me.setDisplayName(TARDISStringUtils.capitalise(ps.toString()));
-            me.setItemModel(data.getShape() == ps ? LapisOre.SHAPE_SELECTED.getKey() : GUIParticle.SHAPE.key());
+            me.setItemModel(data.getShape() == ps ? ParticleItem.SHAPE_SELECTED.getKey() : GUIParticle.SHAPE.key());
             pshape.setItemMeta(me);
             stacks[i] = pshape;
             i++;
@@ -106,7 +105,7 @@ public class TARDISParticleInventory {
             ItemStack peffect = new ItemStack(pm, 1);
             ItemMeta pim = peffect.getItemMeta();
             pim.setDisplayName(TARDISStringUtils.capitalise(pe.toString()));
-            pim.setItemModel(data.getEffect() == pe ? RedstoneOre.EFFECT_SELECTED.getKey() : GUIParticle.EFFECT.key());
+            pim.setItemModel(data.getEffect() == pe ? ParticleItem.EFFECT_SELECTED.getKey() : GUIParticle.EFFECT.key());
             peffect.setItemMeta(pim);
             stacks[i] = peffect;
             if (i % 9 == 7) {

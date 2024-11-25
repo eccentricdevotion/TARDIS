@@ -62,8 +62,8 @@ class TARDISKeyMenuInventory {
                     im.setLore(List.of(key.getLore()));
                 }
             }
-            if (key.getCustomModelData() != -1) {
-                im.setCustomModelData(key.getCustomModelData());
+            if (key.getModel() != null) {
+                im.setItemModel(key.getModel());
             }
             is.setItemMeta(im);
             itemStacks[key.getSlot()] = is;

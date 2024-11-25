@@ -77,7 +77,6 @@ public enum Paper {
     HANDLES_VARIABLE_REDSTONE(new NamespacedKey(TARDIS.plugin, "handles/handles_variable_redstone")),
     HANDLES_VARIABLE_HOME(new NamespacedKey(TARDIS.plugin, "handles/handles_variable_home")),
     HANDLES_VARIABLE_RECHARGER(new NamespacedKey(TARDIS.plugin, "handles/handles_variable_recharger")),
-    PAPER_BAG(new NamespacedKey(TARDIS.plugin, "food/paper_bag")),
     ST_JOHNS(new NamespacedKey(TARDIS.plugin, "tardis/st_johns"));
 
     private final NamespacedKey key;

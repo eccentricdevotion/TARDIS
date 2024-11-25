@@ -18,7 +18,8 @@ package me.eccentric_nz.TARDIS.particles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIParticle;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.*;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.ParticleItem;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Repeater;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
@@ -110,7 +111,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
             ItemStack is = view.getItem(s);
             if (is != null) {
                 is.setType(s == slot ? Material.LAPIS_ORE : Material.LAPIS_LAZULI);
-                setModel(is, s == slot ? LapisOre.SHAPE_SELECTED.getKey() : LapisLazuli.SHAPE.getKey());
+                setModel(is, s == slot ? ParticleItem.SHAPE_SELECTED.getKey() : ParticleItem.SHAPE.getKey());
                 view.setItem(s, is);
             }
         }
@@ -126,7 +127,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
             ItemStack is = view.getItem(s);
             if (is != null && s != GUIParticle.COLOUR.slot() && s != GUIParticle.BLOCK_INFO.slot() && s != GUIParticle.BLOCK.slot() && s != GUIParticle.TOGGLE.slot()) {
                 is.setType(s == slot ? Material.REDSTONE_ORE : Material.REDSTONE);
-                setModel(is, s == slot ? RedstoneOre.EFFECT_SELECTED.getKey() : Redstone.EFFECT.getKey());
+                setModel(is, s == slot ? ParticleItem.EFFECT_SELECTED.getKey() : ParticleItem.EFFECT.getKey());
                 view.setItem(s, is);
             }
         }

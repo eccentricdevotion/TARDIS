@@ -29,23 +29,21 @@ public class TARDISWeepingAngelsMonstersInventory {
         ItemStack[] stacks = new ItemStack[54];
         int i = 0;
         for (Monster monster : Monster.values()) {
-            if (monster != Monster.FLYER) {
-                ItemStack mon = new ItemStack(monster.getMaterial(), 1);
-                ItemMeta ster = mon.getItemMeta();
-                ster.setDisplayName(monster.toString());
-                int cmd;
-                switch (monster) {
-                    case K9 -> cmd = 6;
-                    case SILENT -> cmd = 4;
-                    case TOCLAFANE -> cmd = 3;
-                    case VASHTA_NERADA -> cmd = 2;
-                    default -> cmd = 1;
-                }
-                ster.setCustomModelData(cmd);
-                mon.setItemMeta(ster);
-                stacks[i] = mon;
-                i++;
+            ItemStack mon = new ItemStack(monster.getMaterial(), 1);
+            ItemMeta ster = mon.getItemMeta();
+            ster.setDisplayName(monster.toString());
+            int cmd;
+            switch (monster) {
+                case K9 -> cmd = 6;
+                case SILENT -> cmd = 4;
+                case TOCLAFANE -> cmd = 3;
+                case VASHTA_NERADA -> cmd = 2;
+                default -> cmd = 1;
             }
+            ster.setCustomModelData(cmd);
+            mon.setItemMeta(ster);
+            stacks[i] = mon;
+            i++;
         }
         // page one
         ItemStack page1 = new ItemStack(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.material(), 1);

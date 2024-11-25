@@ -16,15 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.*;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Weather;
 import org.bukkit.Material;
 
 public record GUIWeather() {
 
     // TARDIS Weather Menu
-    public static GUIData CLEAR = new GUIData(Sunflower.CLEAR.getKey(), 0, Material.SUNFLOWER);
-    public static GUIData RAIN = new GUIData(WaterBucket.RAIN.getKey(), 1, Material.WATER_BUCKET);
-    public static GUIData THUNDER = new GUIData(GunPowder.THUNDER.getKey(), 2, Material.GUNPOWDER);
-    public static GUIData EXCITE = new GUIData(FireworkRocket.EXCITE.getKey(), 5, Material.FIREWORK_ROCKET);
+    public static GUIData CLEAR = new GUIData(Weather.CLEAR.getKey(), 0, Material.SUNFLOWER);
+    public static GUIData RAIN = new GUIData(Weather.RAIN.getKey(), 1, Material.WATER_BUCKET);
+    public static GUIData THUNDER = new GUIData(Weather.THUNDER.getKey(), 2, Material.GUNPOWDER);
+    public static GUIData EXCITE = new GUIData(Weather.EXCITE.getKey(), 5, Material.FIREWORK_ROCKET);
     public static GUIData CLOSE = new GUIData(Bowl.CLOSE.getKey(), 8, Material.BOWL);
 }

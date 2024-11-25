@@ -33,7 +33,7 @@ public class ArmourStandEquipment {
         ItemStack head = new ItemStack(monster.getMaterial(), 1);
         ItemMeta headMeta = head.getItemMeta();
         headMeta.setDisplayName(monster.getName() + " Head");
-        headMeta.setCustomModelData(monster.getCustomModelData());
+        headMeta.setItemModel(monster.getModel());
         head.setItemMeta(headMeta);
         setHelmetOnly(as, head);
     }

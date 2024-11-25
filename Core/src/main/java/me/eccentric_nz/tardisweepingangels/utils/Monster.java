@@ -17,69 +17,70 @@
 package me.eccentric_nz.tardisweepingangels.utils;
 
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.*;
 import me.eccentric_nz.TARDIS.skins.CharacterSkins;
 import me.eccentric_nz.TARDIS.skins.MonsterSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
 
 public enum Monster {
 
-    CLOCKWORK_DROID("Clockwork Droid", EntityType.ZOMBIE, "clockwork", 27, 4, Material.HOST_ARMOR_TRIM_SMITHING_TEMPLATE, MonsterSkins.CLOCKWORK_DROID_MALE),
-    CYBERMAN("Cyberman", EntityType.ZOMBIE, "cyberman", 2, 4, Material.IRON_INGOT, MonsterSkins.CYBERMAN),
-    DALEK("Dalek", EntityType.SKELETON, "dalek", 3, 10000005, Material.SLIME_BALL, 10000004, null),
-    DALEK_SEC("Dalek Sec", EntityType.ZOMBIFIED_PIGLIN, "dalek_sec", 22, 4, Material.MANGROVE_PROPAGULE, CharacterSkins.DALEK_SEC),
-    DAVROS("Davros", EntityType.ZOMBIFIED_PIGLIN, "davros", 23, 4, Material.CRIMSON_BUTTON, null),
-    EMPTY_CHILD("Empty Child", EntityType.ZOMBIE, "empty", 4, 4, Material.SUGAR, MonsterSkins.EMPTY_CHILD),
-    HATH("Hath", EntityType.ZOMBIFIED_PIGLIN, "hath", 16, 5, Material.PUFFERFISH, 4, null),
-    HEADLESS_MONK("Headless Monk", EntityType.SKELETON, "monk", 17, 4, Material.RED_CANDLE, MonsterSkins.HEADLESS_MONK),
-    ICE_WARRIOR("Ice Warrior", EntityType.ZOMBIFIED_PIGLIN, "ice", 5, 5, Material.SNOWBALL, 4, MonsterSkins.ICE_WARRIOR),
-    JUDOON("Judoon", EntityType.HUSK, "judoon", 14, 10, Material.YELLOW_DYE, 11, CharacterSkins.JUDOON),
-    K9("K9", EntityType.HUSK, "k9", 15, 1, Material.BONE, null),
-    MIRE("Mire", EntityType.SKELETON, "mire", 18, 4, Material.NETHERITE_SCRAP, null),
-    OOD("Ood", EntityType.HUSK, "ood", 12, 29, Material.ROTTEN_FLESH, 30, CharacterSkins.OOD),
-    OSSIFIED("Ossified Time Zombie", EntityType.ZOMBIE, "ossified", 24, 4, Material.CHARCOAL, null),
-    RACNOSS("Racnoss", EntityType.PIGLIN_BRUTE, "racnoss", 21, 5, Material.SPIDER_EYE, 4, MonsterSkins.RACNOSS),
-    SCARECROW("Scarecrow", EntityType.ZOMBIE, "scarecrow", 26, 4, Material.WHEAT, MonsterSkins.SCARECROW),
-    SEA_DEVIL("Sea Devil", EntityType.DROWNED, "devil", 19, 4, Material.KELP, MonsterSkins.SEA_DEVIL),
-    SILENT("Silent", EntityType.SKELETON, "silent", 6, 11, Material.END_STONE, 5, MonsterSkins.SILENCE),
-    SILURIAN("Silurian", EntityType.SKELETON, "silurian", 7, 4, Material.FEATHER, MonsterSkins.SILURIAN),
-    SLITHEEN("Slitheen", EntityType.ZOMBIE, "slitheen", 20, 4, Material.TURTLE_EGG, MonsterSkins.SLITHEEN),
-    SONTARAN("Sontaran", EntityType.ZOMBIE, "sontaran", 8, 5, Material.POTATO, 4, MonsterSkins.SONTARAN),
-    STRAX("Strax", EntityType.ZOMBIFIED_PIGLIN, "strax", 9, 4, Material.BAKED_POTATO, null),
-    SYCORAX("Sycorax", EntityType.ZOMBIE, "sycorax", 25, 4, Material.BONE_MEAL, MonsterSkins.SYCORAX),
-    TOCLAFANE("Toclafane", EntityType.ZOMBIE, "toclafane", 13, 2, Material.GUNPOWDER, null),
-    VASHTA_NERADA("Vashta Nerada", EntityType.ZOMBIE, "vashta", 10, 5, Material.BOOK, 4, MonsterSkins.VASHTA_NERADA),
-    WEEPING_ANGEL("Weeping Angel", EntityType.SKELETON, "angel", 1, 5, Material.BRICK, MonsterSkins.WEEPING_ANGEL),
-    ZYGON("Zygon", EntityType.ZOMBIE, "zygon", 11, 4, Material.PAINTING, MonsterSkins.ZYGON),
-    FLYER("Flyer", EntityType.CHICKEN, "flyer", 99, 99, Material.CHICKEN_SPAWN_EGG, null);
+    CLOCKWORK_DROID("Clockwork Droid", EntityType.ZOMBIE, "clockwork", 27, HostArmorTrimSmithingTemplate.CLOCKWORK_DROID_DISGUISE.getKey(), Material.HOST_ARMOR_TRIM_SMITHING_TEMPLATE, MonsterSkins.CLOCKWORK_DROID_MALE),
+    CYBERMAN("Cyberman", EntityType.ZOMBIE, "cyberman", 2, IronIngot.CYBERMAN_DISGUISE.getKey(), Material.IRON_INGOT, MonsterSkins.CYBERMAN),
+    DALEK("Dalek", EntityType.SKELETON, "dalek", 3, SlimeBall.DALEK_BRASS.getKey(), Material.SLIME_BALL, 10000004, null),
+    DALEK_SEC("Dalek Sec", EntityType.ZOMBIFIED_PIGLIN, "dalek_sec", 22, MangrovePropagule.DALEK_SEC_DISGUISE.getKey(), Material.MANGROVE_PROPAGULE, CharacterSkins.DALEK_SEC),
+    DAVROS("Davros", EntityType.ZOMBIFIED_PIGLIN, "davros", 23, CrimsonButton.DAVROS_DISGUISE.getKey(), Material.CRIMSON_BUTTON, null),
+    EMPTY_CHILD("Empty Child", EntityType.ZOMBIE, "empty", 4, Sugar.EMPTY_CHILD_DISGUISE.getKey(), Material.SUGAR, MonsterSkins.EMPTY_CHILD),
+    HATH("Hath", EntityType.ZOMBIFIED_PIGLIN, "hath", 16, Pufferfish.HATH_DISGUISE.getKey(), Material.PUFFERFISH, 4, null),
+    HEADLESS_MONK("Headless Monk", EntityType.SKELETON, "monk", 17, RedCandle.HEADLESS_MONK_DISGUISE.getKey(), Material.RED_CANDLE, MonsterSkins.HEADLESS_MONK),
+    ICE_WARRIOR("Ice Warrior", EntityType.ZOMBIFIED_PIGLIN, "ice", 5, Snowball.ICE_WARRIOR_DISGUISE.getKey(), Material.SNOWBALL, 4, MonsterSkins.ICE_WARRIOR),
+    JUDOON("Judoon", EntityType.HUSK, "judoon", 14, YellowDye.JUDOON_DISGUISE.getKey(), Material.YELLOW_DYE, 11, CharacterSkins.JUDOON),
+    K9("K9", EntityType.HUSK, "k9", 15, Bone.K9.getKey(), Material.BONE, null),
+    MIRE("Mire", EntityType.SKELETON, "mire", 18, NetheriteScrap.THE_MIRE_DISGUISE.getKey(), Material.NETHERITE_SCRAP, null),
+    OOD("Ood", EntityType.HUSK, "ood", 12, RottenFlesh.OOD_DISGUISE.getKey(), Material.ROTTEN_FLESH, 30, CharacterSkins.OOD),
+    OSSIFIED("Ossified Time Zombie", EntityType.ZOMBIE, "ossified", 24, Charcoal.OSSIFIED_DISGUISE.getKey(), Material.CHARCOAL, null),
+    RACNOSS("Racnoss", EntityType.PIGLIN_BRUTE, "racnoss", 21, SpiderEye.RACNOSS_DISGUISE.getKey(), Material.SPIDER_EYE, 4, MonsterSkins.RACNOSS),
+    SCARECROW("Scarecrow", EntityType.ZOMBIE, "scarecrow", 26, Wheat.SCARECROW_DISGUISE.getKey(), Material.WHEAT, MonsterSkins.SCARECROW),
+    SEA_DEVIL("Sea Devil", EntityType.DROWNED, "devil", 19, Kelp.SEA_DEVIL_DISGUISE.getKey(), Material.KELP, MonsterSkins.SEA_DEVIL),
+    SILENT("Silent", EntityType.SKELETON, "silent", 6, EndStone.SILENT_BEAMING.getKey(), Material.END_STONE, 5, MonsterSkins.SILENCE),
+    SILURIAN("Silurian", EntityType.SKELETON, "silurian", 7, Feather.SILURIAN_DISGUISE.getKey(), Material.FEATHER, MonsterSkins.SILURIAN),
+    SLITHEEN("Slitheen", EntityType.ZOMBIE, "slitheen", 20, TurtleEgg.SLITHEEN_DISGUISE.getKey(), Material.TURTLE_EGG, MonsterSkins.SLITHEEN),
+    SONTARAN("Sontaran", EntityType.ZOMBIE, "sontaran", 8, Potato.SONTARAN_DISGUISE.getKey(), Material.POTATO, 4, MonsterSkins.SONTARAN),
+    STRAX("Strax", EntityType.ZOMBIFIED_PIGLIN, "strax", 9, BakedPotato.STRAX_DISGUISE.getKey(), Material.BAKED_POTATO, null),
+    SYCORAX("Sycorax", EntityType.ZOMBIE, "sycorax", 25, BoneMeal.SYCORAX_DISGUISE.getKey(), Material.BONE_MEAL, MonsterSkins.SYCORAX),
+    TOCLAFANE("Toclafane", EntityType.ZOMBIE, "toclafane", 13, GunPowder.TOCLAFANE.getKey(), Material.GUNPOWDER, null),
+    VASHTA_NERADA("Vashta Nerada", EntityType.ZOMBIE, "vashta", 10, Book.VASHTA_NERADA_DISGUISE.getKey(), Material.BOOK, 4, MonsterSkins.VASHTA_NERADA),
+    WEEPING_ANGEL("Weeping Angel", EntityType.SKELETON, "angel", 1, Brick.WEEPING_ANGEL_DISGUISE.getKey(), Material.BRICK, MonsterSkins.WEEPING_ANGEL),
+    ZYGON("Zygon", EntityType.ZOMBIE, "zygon", 11, Painting.ZYGON_DISGUISE.getKey(), Material.PAINTING, MonsterSkins.ZYGON);
 
     private final String name;
     private final EntityType entityType;
     private final String permission;
     private final int persist;
-    private final int customModelData;
+    private final NamespacedKey model;
     private final Material material;
     private final int headModelData;
     private final Skin skin;
 
-    Monster(String name, EntityType entityType, String permission, int persist, int customModelData, Material material, Skin skin) {
+    Monster(String name, EntityType entityType, String permission, int persist, NamespacedKey model, Material material, Skin skin) {
         this.name = name;
         this.entityType = entityType;
         this.permission = permission;
         this.persist = persist;
-        this.customModelData = customModelData;
+        this.model = model;
         this.material = material;
         this.headModelData = 3;
         this.skin = skin;
     }
 
-    Monster(String name, EntityType entityType, String permission, int persist, int customModelData, Material material, int headModelData, Skin skin) {
+    Monster(String name, EntityType entityType, String permission, int persist, NamespacedKey model, Material material, int headModelData, Skin skin) {
         this.name = name;
         this.entityType = entityType;
         this.permission = permission;
         this.persist = persist;
-        this.customModelData = customModelData;
+        this.model = model;
         this.material = material;
         this.headModelData = headModelData;
         this.skin = skin;
@@ -101,8 +102,32 @@ public enum Monster {
         return persist;
     }
 
-    public int getCustomModelData() {
-        return (this == DALEK) ? customModelData + TARDISConstants.RANDOM.nextInt(16) : customModelData;
+    public NamespacedKey getModel() {
+        if (this == DALEK) {
+            NamespacedKey key;
+            switch (TARDISConstants.RANDOM.nextInt(17)) {
+                case 15 -> key = SlimeBall.DALEK_BLACK.getKey();
+                case 14 -> key = SlimeBall.DALEK_RED.getKey();
+                case 13 -> key = SlimeBall.DALEK_GREEN.getKey();
+                case 12 -> key = SlimeBall.DALEK_BROWN.getKey();
+                case 11 -> key = SlimeBall.DALEK_BLUE.getKey();
+                case 10 -> key = SlimeBall.DALEK_PURPLE.getKey();
+                case 9 -> key = SlimeBall.DALEK_CYAN.getKey();
+                case 8 -> key = SlimeBall.DALEK_LIGHT_GRAY.getKey();
+                case 7 -> key = SlimeBall.DALEK_GRAY.getKey();
+                case 6 -> key = SlimeBall.DALEK_PINK.getKey();
+                case 5 -> key = SlimeBall.DALEK_LIME.getKey();
+                case 4 -> key = SlimeBall.DALEK_YELLOW.getKey();
+                case 3 -> key = SlimeBall.DALEK_LIGHT_BLUE.getKey();
+                case 2 -> key = SlimeBall.DALEK_MAGENTA.getKey();
+                case 1 -> key = SlimeBall.DALEK_ORANGE.getKey();
+                case 0 -> key = SlimeBall.DALEK_WHITE.getKey();
+                default -> key = SlimeBall.DALEK_BRASS.getKey();
+            }
+            return key;
+        } else {
+            return model;
+        }
     }
 
     public Material getMaterial() {
@@ -115,7 +140,7 @@ public enum Monster {
 
     public boolean isAnimated() {
         switch (this) {
-            case DALEK, DAVROS, TOCLAFANE, FLYER -> {
+            case DALEK, DAVROS, TOCLAFANE -> {
                 return false;
             }
             default -> {

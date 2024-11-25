@@ -240,7 +240,7 @@ public class TARDISHandlesProgramListener implements Listener {
         if (block.getLore() != null) {
             im.setLore(block.getLore());
         }
-        im.setCustomModelData(block.getCustomModelData());
+        im.setItemModel(block.getModel());
         is.setItemMeta(im);
         view.setItem(slot, is);
     }

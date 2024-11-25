@@ -5,7 +5,6 @@ import org.bukkit.NamespacedKey;
 
 public enum GoldIngot {
 
-    SPEED(new NamespacedKey(TARDIS.plugin, "gui/particle/speed")),
     ELIXIR_OF_LIFE(new NamespacedKey(TARDIS.plugin, "regeneration/elixir_of_life"));
 
     private final NamespacedKey key;

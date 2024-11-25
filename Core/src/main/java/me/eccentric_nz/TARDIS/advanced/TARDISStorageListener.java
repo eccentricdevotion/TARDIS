@@ -17,6 +17,9 @@
 package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GlowstoneDust;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.MusicDisc;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;
@@ -263,23 +266,29 @@ public class TARDISStorageListener extends TARDISMenuListener {
                             if (is.getType().equals(Material.FILLED_MAP)) {
                                 GlowstoneCircuit glowstone = GlowstoneCircuit.getByName().get(im.getDisplayName());
                                 if (glowstone != null) {
-                                    im.setCustomModelData(glowstone.getCustomModelData());
+                                    im.setItemModel(glowstone.getModel());
                                     is.setType(Material.GLOWSTONE_DUST);
                                     is.setItemMeta(im);
                                 }
                             } else {
                                 if (TARDISStaticUtils.isMusicDisk(is)) {
-                                    im.setCustomModelData(10000001);
+                                    switch (is.getType()) {
+                                        case MUSIC_DISC_BLOCKS -> im.setItemModel(MusicDisc.AREA_DISK.getKey());
+                                        case MUSIC_DISC_CAT -> im.setItemModel(MusicDisc.BIOME_DISK.getKey());
+                                        case MUSIC_DISC_CHIRP -> im.setItemModel(MusicDisc.SAVE_DISK.getKey());
+                                        case MUSIC_DISC_MALL -> im.setItemModel(MusicDisc.PRESET_DISK.getKey());
+                                        case MUSIC_DISC_WAIT -> im.setItemModel(MusicDisc.PLAYER_DISK.getKey());
+                                    }
                                 } else if (is.getType().equals(Material.LIME_WOOL)) {
-                                    im.setCustomModelData(86);
+                                    im.setItemModel(Bowl.NEXT.getKey());
                                     is.setType(Material.BOWL);
                                     is.setItemMeta(im);
                                 } else if (is.getType().equals(Material.RED_WOOL)) {
-                                    im.setCustomModelData(87);
+                                    im.setItemModel(Bowl.PREV.getKey());
                                     is.setType(Material.BOWL);
                                     is.setItemMeta(im);
                                 } else if (is.getType().equals(Material.GLOWSTONE_DUST) && !im.hasCustomModelData() && im.getDisplayName().endsWith("Circuits")) {
-                                    im.setCustomModelData(10001985);
+                                    im.setItemModel(GlowstoneDust.GALLIFREY.getKey());
                                 }
                                 is.setItemMeta(im);
                             }

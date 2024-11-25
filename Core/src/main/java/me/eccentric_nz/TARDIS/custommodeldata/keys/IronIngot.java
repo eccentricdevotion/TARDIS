@@ -9,7 +9,6 @@ public enum IronIngot {
     CYBERMAN_ARM(new NamespacedKey(TARDIS.plugin, "monster/cyberman/cyberman_arm")),
     CYBERMAN_HEAD(new NamespacedKey(TARDIS.plugin, "monster/cyberman/cyberman_head")),
     CYBERMAN_DISGUISE(new NamespacedKey(TARDIS.plugin, "monster/cyberman/cyberman_disguise")),
-    DENSITY(new NamespacedKey(TARDIS.plugin, "gui/particle/density")),
     CYBERMAN_FEATURES(new NamespacedKey(TARDIS.plugin, "lazarus/cyberman_features")),
     CYBER_WEAPON(new NamespacedKey(TARDIS.plugin, "lazarus/cyber_weapon")),
     CYBERMAN_0(new NamespacedKey(TARDIS.plugin, "monster/cyberman/frames/cyberman_0")),
