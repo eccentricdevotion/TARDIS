@@ -121,7 +121,6 @@ public class TARDISExteriorFlight {
                 location.getBlock().getRelative(BlockFace.UP, 2).setBlockData(light);
                 // add an interaction entity
                 TARDISDisplayItemUtils.setInteraction(stand, data.getId());
-                // TODO snap stand to centre of block?
             }
             // teleport player to interior
             player.teleport(interior);

@@ -17,19 +17,36 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.flight.FlightEnd;
+import me.eccentric_nz.TARDIS.flight.FlightReturnData;
+import me.eccentric_nz.TARDIS.flight.vehicle.TARDISArmourStand;
+import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Levelled;
+import org.bukkit.craftbukkit.v1_21_R2.entity.CraftArmorStand;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Teleportation is a form of matter transmission and can be either a process of physical/psychological will or a
@@ -51,18 +68,20 @@ public class TARDISTeleportListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onTeleport(PlayerTeleportEvent event) {
+        Player player = event.getPlayer();
+        if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {
+            if (plugin.getTrackerKeeper().getStillFlyingNotReturning().contains(player.getUniqueId())) {
+                // teleport them back to the interior
+                stopFlying(player);
+//                // dis-allow teleporting while flying
+//                event.setCancelled(true);
+            } else {
+                player.resetPlayerTime();
+            }
+            return;
+        }
         TeleportCause cause = event.getCause();
         if (causes.contains(cause)) {
-            Player player = event.getPlayer();
-            if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {
-                if (plugin.getTrackerKeeper().getStillFlyingNotReturning().contains(player.getUniqueId())) {
-                    // dis-allow teleporting while flying
-                    event.setCancelled(true);
-                } else {
-                    player.resetPlayerTime();
-                }
-                return;
-            }
             String world_from = event.getFrom().getWorld().getName();
             String world_to = event.getTo().getWorld().getName();
             String uuid = player.getUniqueId().toString();
@@ -105,6 +124,89 @@ public class TARDISTeleportListener implements Listener {
                     plugin.getQueryFactory().doInsert("travellers", wherei);
                 }, 2L);
             }
+        }
+    }
+
+    private void stopFlying(Player player) {
+        if (player.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+            player.removePotionEffect(PotionEffectType.INVISIBILITY);
+        }
+        UUID uuid = player.getUniqueId();
+        plugin.getTrackerKeeper().getHiddenFlight().remove(uuid);
+        String direction = player.getFacing().getOppositeFace().toString();
+        FlightReturnData data = plugin.getTrackerKeeper().getFlyingReturnLocation().get(uuid);
+        if (data != null) {
+            Location interior = data.getLocation();
+            // stop animation and sound runnables
+            plugin.getServer().getScheduler().cancelTask(data.getAnimation());
+            plugin.getServer().getScheduler().cancelTask(data.getSound());
+            // reset police box model
+            ArmorStand stand = (ArmorStand) Bukkit.getEntity(data.getStand());
+            if (stand != null) {
+                TARDISArmourStand tas = (TARDISArmourStand) ((CraftArmorStand) stand).getHandle();
+                tas.setPlayer(null);
+                tas.setStationary(true);
+                Location location = stand.getLocation();
+                EntityEquipment ee = stand.getEquipment();
+                ItemStack is = ee.getHelmet();
+                ItemMeta im = is.getItemMeta();
+                im.setCustomModelData(1001);
+                is.setItemMeta(im);
+                ee.setHelmet(is);
+                // update the TARDIS's current location
+                HashMap<String, Object> set = new HashMap<>();
+                set.put("world", location.getWorld().getName());
+                set.put("x", location.getBlockX());
+                set.put("y", location.getBlockY());
+                set.put("z", location.getBlockZ());
+                set.put("direction", direction);
+                set.put("submarine", (player.isInWater()) ? 1 : 0);
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("tardis_id", data.getId());
+                plugin.getQueryFactory().doUpdate("current", set, where);
+                // update door location
+                TARDISBuilderUtility.saveDoorLocation(location, data.getId(), direction);
+                Block under = location.getBlock().getRelative(BlockFace.DOWN);
+                if (under.getType().isAir()) {
+                    // if location is in the air, set under door block
+                    TARDISBlockSetters.setUnderDoorBlock(location.getWorld(), under.getX(), under.getY(), under.getZ(), data.getId(), false);
+                }
+                // set the light
+                Levelled light = TARDISConstants.LIGHT;
+                light.setLevel(7);
+                location.getBlock().getRelative(BlockFace.UP, 2).setBlockData(light);
+                // add an interaction entity
+                TARDISDisplayItemUtils.setInteraction(stand, data.getId());
+                Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
+                    COMPASS compass = COMPASS.valueOf(direction);
+                    stand.teleport(new Location(location.getWorld(), location.getBlockX() + 0.5d, location.getBlockY(), location.getBlockZ() + 0.5d, compass.getYaw(), 0.0f));
+                });
+            }
+            plugin.getTrackerKeeper().getFlyingReturnLocation().remove(player.getUniqueId());
+            plugin.getTrackerKeeper().getStillFlyingNotReturning().remove(player.getUniqueId());
+            // teleport player to interior
+            player.teleport(interior);
+            player.setInvulnerable(false);
+            player.setFlying(false);
+            player.setAllowFlight(false);
+            // add player to travellers
+            HashMap<String, Object> sett = new HashMap<>();
+            sett.put("tardis_id", data.getId());
+            sett.put("uuid", uuid.toString());
+            plugin.getQueryFactory().doSyncInsert("travellers", sett);
+            // remove trackers
+            plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(data.getId()));
+            plugin.getTrackerKeeper().getMalfunction().remove(data.getId());
+            plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(data.getId()));
+            if (plugin.getTrackerKeeper().getDidDematToVortex().contains(data.getId())) {
+                plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(data.getId()));
+            }
+            if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(data.getId())) {
+                int taskID = plugin.getTrackerKeeper().getDestinationVortex().get(data.getId());
+                plugin.getServer().getScheduler().cancelTask(taskID);
+                plugin.getTrackerKeeper().getDestinationVortex().remove(data.getId());
+            }
+            new FlightEnd(plugin).process(data.getId(), player, false, true);
         }
     }
 }
