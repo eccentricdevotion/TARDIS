@@ -40,7 +40,7 @@ public class RustPlagueSwordRecipe {
         ItemStack is = new ItemStack(Material.IRON_SWORD, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Rust Plague Sword");
-        im.setCustomModelData(10000001);
+        im.setItemModel(RecipeItem.RUST_PLAGUE_SWORD.getModel());
         im.setLore(List.of("Dalek Virus Dispenser"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "rust_plague_sword");
@@ -48,7 +48,7 @@ public class RustPlagueSwordRecipe {
         ItemStack exact = new ItemStack(Material.LAVA_BUCKET, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "Rust Bucket");
-        em.setCustomModelData(RecipeItem.RUST_BUCKET.getCustomModelData());
+        em.setItemModel(RecipeItem.RUST_BUCKET.getModel());
         exact.setItemMeta(em);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("RIR", "RIR", "DSD");

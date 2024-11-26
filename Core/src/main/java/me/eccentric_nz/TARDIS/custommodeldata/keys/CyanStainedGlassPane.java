@@ -40,9 +40,7 @@ public enum CyanStainedGlassPane {
     TENNANT_FLYING_OPEN_12(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/tennant/tennant_flying_open_12")),
     TENNANT_FLYING_OPEN_13(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/tennant/tennant_flying_open_13")),
     TENNANT_FLYING_OPEN_14(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/tennant/tennant_flying_open_14")),
-    TENNANT_FLYING_OPEN_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/tennant/tennant_flying_open_15")),
-    CYAN_GLOW_STICK(new NamespacedKey(TARDIS.plugin, "products/glow_sticks/cyan_glow_stick")),
-    CYAN_GLOW_STICK_ACTIVE(new NamespacedKey(TARDIS.plugin, "products/glow_sticks/cyan_glow_stick_active"));
+    TENNANT_FLYING_OPEN_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/tennant/tennant_flying_open_15"));
 
     private final NamespacedKey key;
 

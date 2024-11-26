@@ -5,6 +5,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintConsole;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintRoom;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.MusicDisc;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
@@ -77,7 +78,7 @@ public class GallifreyBlueprintTrade {
     private ItemStack buildResult(String perm, String name) {
         ItemStack is = new ItemStack(Material.MUSIC_DISC_MELLOHI, 1);
         ItemMeta im = is.getItemMeta();
-        im.setCustomModelData(10000001);
+        im.setItemModel(MusicDisc.BLUEPRINT_DISK.getKey());
         PersistentDataContainer pdc = im.getPersistentDataContainer();
         pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), UUID.randomUUID());
         pdc.set(plugin.getBlueprintKey(), PersistentDataType.STRING, perm);

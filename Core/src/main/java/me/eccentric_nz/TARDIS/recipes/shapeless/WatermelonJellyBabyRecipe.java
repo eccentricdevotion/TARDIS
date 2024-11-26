@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shapeless;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -26,7 +27,7 @@ public class WatermelonJellyBabyRecipe {
         ItemStack is = new ItemStack(Material.MELON_SLICE, 4);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Watermelon Jelly Baby");
-        im.setCustomModelData(10000003);
+        im.setItemModel(RecipeItem.WATERMELON_JELLY_BABY.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "watermelon_jelly_baby");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

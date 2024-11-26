@@ -6,10 +6,10 @@ import org.bukkit.NamespacedKey;
 public enum MagentaDye {
 
     BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "genetic/button_type")),
+    TARDIS_GLASS(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_glass")),
     TARDIS_MAGENTA(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_magenta")),
     TARDIS_MAGENTA_OPEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_magenta_open")),
     TARDIS_MAGENTA_STAINED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_magenta_stained")),
-    TARDIS_GLASS(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_glass")),
     MAGENTA_FLYING_0(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/magenta/magenta_flying_0")),
     MAGENTA_FLYING_1(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/magenta/magenta_flying_1")),
     MAGENTA_FLYING_2(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/magenta/magenta_flying_2")),

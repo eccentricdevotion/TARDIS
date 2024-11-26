@@ -37,7 +37,7 @@ public class ExteriorLampLevelSwitchRecipe {
         ItemStack is = new ItemStack(Material.LEVER, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Exterior Lamp Level Switch");
-        im.setCustomModelData(RecipeItem.EXTERIOR_LAMP_LEVEL_SWITCH.getCustomModelData());
+        im.setItemModel(RecipeItem.EXTERIOR_LAMP_LEVEL_SWITCH.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "exterior_lamp_level_switch");
         ShapedRecipe r = new ShapedRecipe(key, is);

@@ -103,7 +103,7 @@ public class TARDISRecipeInventory {
                     ItemMeta im = result.getItemMeta();
                     im.setDisplayName(str);
                     im.setLore(List.of("/trecipe " + arg));
-                    im.setCustomModelData(item.getCustomModelData());
+                    im.setItemModel(item.getModel());
                     im.addItemFlags(ItemFlag.values());
                     result.setItemMeta(im);
                     stack[i] = result;

@@ -38,7 +38,7 @@ public class ConsoleLampSwitchRecipe {
         ItemStack is = new ItemStack(Material.LEVER, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Console Lamp Switch");
-        im.setCustomModelData(RecipeItem.CONSOLE_LAMP_SWITCH.getCustomModelData());
+        im.setItemModel(RecipeItem.CONSOLE_LAMP_SWITCH.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "console_lamp_switch");
         ShapedRecipe r = new ShapedRecipe(key, is);

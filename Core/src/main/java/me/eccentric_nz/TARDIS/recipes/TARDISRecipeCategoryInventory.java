@@ -48,7 +48,9 @@ public class TARDISRecipeCategoryInventory {
                 ItemStack cat = new ItemStack(category.getMaterial(), 1);
                 ItemMeta egory = cat.getItemMeta();
                 egory.setDisplayName(category.getName());
-                egory.setCustomModelData(category.getCustomModelData());
+                if (category.getModel() != null) {
+                    egory.setItemModel(category.getModel());
+                }
                 egory.addItemFlags(ItemFlag.values());
                 cat.setItemMeta(egory);
                 stack[category.getSlot()] = cat;

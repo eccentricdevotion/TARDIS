@@ -6,10 +6,10 @@ import org.bukkit.NamespacedKey;
 public enum CyanDye {
 
     BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "genetic/button_type")),
+    TARDIS_GLASS(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_glass")),
     TARDIS_CYAN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_cyan")),
     TARDIS_CYAN_OPEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_cyan_open")),
     TARDIS_CYAN_STAINED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_cyan_stained")),
-    TARDIS_GLASS(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_glass")),
     CYAN_FLYING_0(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/cyan/cyan_flying_0")),
     CYAN_FLYING_1(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/cyan/cyan_flying_1")),
     CYAN_FLYING_2(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/cyan/cyan_flying_2")),

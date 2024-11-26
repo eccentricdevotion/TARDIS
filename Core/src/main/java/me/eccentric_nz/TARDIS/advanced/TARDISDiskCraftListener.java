@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.MusicDisc;
 import me.eccentric_nz.TARDIS.enumeration.BiomeLookup;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -95,7 +96,7 @@ public class TARDISDiskCraftListener implements Listener {
                 ItemMeta dim = disk.getItemMeta();
                 dim.setDisplayName("Biome Storage Disk");
                 dim.setLore(disk_lore);
-                dim.setCustomModelData(10000001);
+                dim.setItemModel(MusicDisc.BIOME_DISK.getKey());
                 disk.setItemMeta(dim);
                 inv.setItem(0, disk);
                 player.updateInventory();
@@ -131,7 +132,7 @@ public class TARDISDiskCraftListener implements Listener {
                 ItemMeta dim = disk.getItemMeta();
                 dim.setDisplayName("Preset Storage Disk");
                 dim.setLore(disk_lore);
-                dim.setCustomModelData(10000001);
+                dim.setItemModel(MusicDisc.PRESET_DISK.getKey());
                 disk.setItemMeta(dim);
                 inv.setItem(0, disk);
                 player.updateInventory();

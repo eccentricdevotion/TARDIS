@@ -5,10 +5,10 @@ import org.bukkit.NamespacedKey;
 
 public enum LightGrayDye {
 
+    TARDIS_GLASS(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_glass")),
     TARDIS_LIGHT_GRAY(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_light_gray")),
     TARDIS_LIGHT_GRAY_OPEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_light_gray_open")),
     TARDIS_LIGHT_GRAY_STAINED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_light_gray_stained")),
-    TARDIS_GLASS(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_glass")),
     LIGHT_GRAY_FLYING_0(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/light_gray/light_gray_flying_0")),
     LIGHT_GRAY_FLYING_1(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/light_gray/light_gray_flying_1")),
     LIGHT_GRAY_FLYING_2(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/light_gray/light_gray_flying_2")),
@@ -41,7 +41,6 @@ public enum LightGrayDye {
     LIGHT_GRAY_FLYING_OPEN_13(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/light_gray/light_gray_flying_open_13")),
     LIGHT_GRAY_FLYING_OPEN_14(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/light_gray/light_gray_flying_open_14")),
     LIGHT_GRAY_FLYING_OPEN_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/light_gray/light_gray_flying_open_15")),
-    MICROSCOPE(new NamespacedKey(TARDIS.plugin, "equipment/microscope")),
     TIME_ROTOR_EARLY_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/time_rotor_early_off")),
     TIME_ROTOR_TENNANT_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/time_rotor_tennant_off")),
     TIME_ROTOR_ELEVENTH_OFF(new NamespacedKey(TARDIS.plugin, "time_rotor/time_rotor_eleventh_off")),

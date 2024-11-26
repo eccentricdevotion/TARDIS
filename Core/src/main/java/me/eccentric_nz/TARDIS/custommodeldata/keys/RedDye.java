@@ -6,10 +6,10 @@ import org.bukkit.NamespacedKey;
 public enum RedDye {
 
     BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "genetic/button_type")),
+    TARDIS_GLASS(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_glass")),
     TARDIS_RED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_red")),
     TARDIS_RED_OPEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_red_open")),
     TARDIS_RED_STAINED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_red_stained")),
-    TARDIS_GLASS(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_glass")),
     RED_FLYING_0(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/red/red_flying_0")),
     RED_FLYING_1(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/red/red_flying_1")),
     RED_FLYING_2(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/red/red_flying_2")),

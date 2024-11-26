@@ -37,7 +37,7 @@ public class BrushRepairRecipe {
         ItemStack isa = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
         ima.setDisplayName(ChatColor.WHITE + "Brush Circuit");
-        ima.setCustomModelData(RecipeItem.BRUSH_CIRCUIT.getCustomModelData());
+        ima.setItemModel(RecipeItem.BRUSH_CIRCUIT.getModel());
         isa.setItemMeta(ima);
         RecipeChoice addition = new RecipeChoice.ExactChoice(isa);
         NamespacedKey key = new NamespacedKey(plugin, "brush_repair");

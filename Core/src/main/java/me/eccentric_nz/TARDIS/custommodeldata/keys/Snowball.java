@@ -21,8 +21,7 @@ public enum Snowball {
     ICE_WARRIOR_ATTACKING_1(new NamespacedKey(TARDIS.plugin, "monster/ice_warrior/frames/ice_warrior_attacking_1")),
     ICE_WARRIOR_ATTACKING_2(new NamespacedKey(TARDIS.plugin, "monster/ice_warrior/frames/ice_warrior_attacking_2")),
     ICE_WARRIOR_ATTACKING_3(new NamespacedKey(TARDIS.plugin, "monster/ice_warrior/frames/ice_warrior_attacking_3")),
-    ICE_WARRIOR_ATTACKING_4(new NamespacedKey(TARDIS.plugin, "monster/ice_warrior/frames/ice_warrior_attacking_4")),
-    ICE_BOMB(new NamespacedKey(TARDIS.plugin, "products/ice_bomb"));
+    ICE_WARRIOR_ATTACKING_4(new NamespacedKey(TARDIS.plugin, "monster/ice_warrior/frames/ice_warrior_attacking_4"));
 
     private final NamespacedKey key;
 

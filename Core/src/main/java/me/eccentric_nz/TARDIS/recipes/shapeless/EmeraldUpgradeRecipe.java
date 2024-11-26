@@ -28,7 +28,7 @@ public class EmeraldUpgradeRecipe {
         ItemStack is = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Emerald Upgrade");
-        im.setCustomModelData(10000010);
+        im.setItemModel(RecipeItem.EMERALD_UPGRADE.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "emerald_upgrade");
         ShapelessRecipe r = new ShapelessRecipe(key, is);
@@ -36,7 +36,7 @@ public class EmeraldUpgradeRecipe {
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "Emerald Environment Circuit");
-        em.setCustomModelData(RecipeItem.EMERALD_ENVIRONMENT_CIRCUIT.getCustomModelData());
+        em.setItemModel(RecipeItem.EMERALD_ENVIRONMENT_CIRCUIT.getModel());
         exact.setItemMeta(em);
         r.addIngredient(new RecipeChoice.ExactChoice(exact));
         plugin.getServer().addRecipe(r);

@@ -28,7 +28,7 @@ public class IgniteUpgradeRecipe {
         ItemStack is = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Ignite Upgrade");
-        im.setCustomModelData(10000010);
+        im.setItemModel(RecipeItem.IGNITE_UPGRADE.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "ignite_upgrade");
         ShapelessRecipe r = new ShapelessRecipe(key, is);
@@ -36,7 +36,7 @@ public class IgniteUpgradeRecipe {
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "Ignite Circuit");
-        em.setCustomModelData(RecipeItem.IGNITE_CIRCUIT.getCustomModelData());
+        em.setItemModel(RecipeItem.IGNITE_CIRCUIT.getModel());
         exact.setItemMeta(em);
         r.addIngredient(new RecipeChoice.ExactChoice(exact));
         plugin.getServer().addRecipe(r);

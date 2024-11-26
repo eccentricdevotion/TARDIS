@@ -55,7 +55,7 @@ public enum ShopItem {
     FACTORY_SEED("Factory Seed", Material.GRAY_CONCRETE, SeedBlock.FACTORY.getKey(), ShopItemRecipe.SEED),
     FIFTEENTH_SEED("Fifteenth Seed", Material.OCHRE_FROGLIGHT, SeedBlock.FIFTEENTH.getKey(), ShopItemRecipe.SEED),
     FUGITIVE_SEED("Fugitive Seed", Material.POLISHED_DEEPSLATE, SeedBlock.FUGITIVE.getKey(), ShopItemRecipe.SEED),
-    FISH_FINGER("Fish Finger", Material.COOKED_COD, CookedCod.FISH_FINGER.getKey()),
+    FISH_FINGER("Fish Finger", Material.COOKED_COD, Food.FISH_FINGER.getKey()),
     FOB_WATCH("Fob Watch", Material.CLOCK, Clock.FOB_WATCH.getKey()),
     GRAPE_JELLY_BABY("Grape Jelly Baby", Material.MELON_SLICE, MelonSlice.JELLY_BABY_PURPLE.getKey(), ShopItemRecipe.SHAPELESS),
     GREEN_BOW_TIE("Green Bow Tie", Material.LEATHER_HELMET, LeatherHelmet.BOWTIE_GREEN.getKey()),

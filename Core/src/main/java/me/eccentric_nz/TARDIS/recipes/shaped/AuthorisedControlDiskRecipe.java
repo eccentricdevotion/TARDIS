@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -34,7 +35,7 @@ public class AuthorisedControlDiskRecipe {
         ItemStack is = new ItemStack(Material.MUSIC_DISC_FAR, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Authorised Control Disk");
-        im.setCustomModelData(10000001);
+        im.setItemModel(RecipeItem.AUTHORISED_CONTROL_DISK.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "authorised_control_disk");
         ShapedRecipe r = new ShapedRecipe(key, is);

@@ -5,10 +5,10 @@ import org.bukkit.NamespacedKey;
 
 public enum WhiteDye {
 
+    TARDIS_GLASS(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_glass")),
     TARDIS_WHITE(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_white")),
     TARDIS_WHITE_OPEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_white_open")),
     TARDIS_WHITE_STAINED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_white_stained")),
-    TARDIS_GLASS(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_glass")),
     WHITE_FLYING_0(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/white/white_flying_0")),
     WHITE_FLYING_1(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/white/white_flying_1")),
     WHITE_FLYING_2(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/white/white_flying_2")),
@@ -52,9 +52,7 @@ public enum WhiteDye {
     WHITE_FLYING_OPEN_12(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/white/white_flying_open_12")),
     WHITE_FLYING_OPEN_13(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/white/white_flying_open_13")),
     WHITE_FLYING_OPEN_14(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/white/white_flying_open_14")),
-    WHITE_FLYING_OPEN_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/white/white_flying_open_15")),
-    TELESCOPE(new NamespacedKey(TARDIS.plugin, "equipment/telescope")),
-    BLEACH(new NamespacedKey(TARDIS.plugin, "products/bleach"));
+    WHITE_FLYING_OPEN_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/white/white_flying_open_15"));
 
     private final NamespacedKey key;
 

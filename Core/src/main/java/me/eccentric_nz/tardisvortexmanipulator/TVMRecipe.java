@@ -4,6 +4,7 @@
 package me.eccentric_nz.tardisvortexmanipulator;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -36,7 +37,7 @@ public class TVMRecipe {
         if (!plugin.getVortexConfig().getString("recipe.lore").equals("")) {
             im.setLore(Arrays.asList(plugin.getVortexConfig().getString("recipe.lore").split("~")));
         }
-        im.setCustomModelData(10000002);
+        im.setItemModel(RecipeItem.VORTEX_MANIPULATOR.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "vortex-manipulator");
         ShapedRecipe r = new ShapedRecipe(key, is);

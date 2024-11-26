@@ -19,7 +19,11 @@ package me.eccentric_nz.TARDIS.chameleon.gui;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GrayStainedGlassPane;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.LeatherHorseArmor;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.PoliceBox;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -61,11 +65,28 @@ public class TARDISPoliceBoxInventory {
         for (String s : colours) {
             String underscored = s.replace(" ", "_");
             if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_" + underscored.toLowerCase(Locale.ROOT))) {
-                String dye = underscored.toUpperCase(Locale.ROOT) + "_DYE" ;
+                String dye = underscored.toUpperCase(Locale.ROOT) + "_DYE";
                 ItemStack is = new ItemStack(Material.valueOf(dye), 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(s + " Police Box");
-                im.setCustomModelData(1001);
+                switch (s) {
+                    case "Blue" -> im.setItemModel(PoliceBox.BLUE.getKey());
+                    case "White" -> im.setItemModel(PoliceBox.WHITE.getKey());
+                    case "Orange" -> im.setItemModel(PoliceBox.ORANGE.getKey());
+                    case "Magenta" -> im.setItemModel(PoliceBox.MAGENTA.getKey());
+                    case "Light Blue" -> im.setItemModel(PoliceBox.LIGHT_BLUE.getKey());
+                    case "Yellow" -> im.setItemModel(PoliceBox.YELLOW.getKey());
+                    case "Lime" -> im.setItemModel(PoliceBox.LIME.getKey());
+                    case "Pink" -> im.setItemModel(PoliceBox.PINK.getKey());
+                    case "Gray" -> im.setItemModel(PoliceBox.GRAY.getKey());
+                    case "Light Gray" -> im.setItemModel(PoliceBox.LIGHT_GRAY.getKey());
+                    case "Cyan" -> im.setItemModel(PoliceBox.CYAN.getKey());
+                    case "Purple" -> im.setItemModel(PoliceBox.PURPLE.getKey());
+                    case "Brown" -> im.setItemModel(PoliceBox.BROWN.getKey());
+                    case "Green" -> im.setItemModel(PoliceBox.GREEN.getKey());
+                    case "Red" -> im.setItemModel(PoliceBox.RED.getKey());
+                    case "Black" -> im.setItemModel(PoliceBox.BLACK.getKey());
+                }
                 is.setItemMeta(im);
                 boxes[i] = is;
             }
@@ -76,7 +97,7 @@ public class TARDISPoliceBoxInventory {
             ItemStack david = new ItemStack(Material.CYAN_STAINED_GLASS_PANE, 1);
             ItemMeta tennant = david.getItemMeta();
             tennant.setDisplayName("Tennant Era Police Box");
-            tennant.setCustomModelData(1001);
+            tennant.setItemModel(PoliceBox.TENNANT.getKey());
             david.setItemMeta(tennant);
             boxes[i] = david;
             i++;
@@ -86,7 +107,7 @@ public class TARDISPoliceBoxInventory {
             ItemStack is = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("Weeping Angel");
-            im.setCustomModelData(1001);
+            im.setItemModel(GrayStainedGlassPane.WEEPING_ANGEL.getKey());
             is.setItemMeta(im);
             boxes[i] = is;
             i++;
@@ -96,7 +117,7 @@ public class TARDISPoliceBoxInventory {
             ItemStack pan = new ItemStack(Material.ENDER_PEARL, 1);
             ItemMeta ica = pan.getItemMeta();
             ica.setDisplayName("Pandorica");
-            ica.setCustomModelData(1001);
+            ica.setItemModel(PoliceBox.PANDORICA.getKey());
             pan.setItemMeta(ica);
             boxes[i] = pan;
             i++;
@@ -106,7 +127,7 @@ public class TARDISPoliceBoxInventory {
             ItemStack any = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
             ItemMeta colour = any.getItemMeta();
             colour.setDisplayName("Pick a colour Police Box");
-            colour.setCustomModelData(1001);
+            colour.setItemModel(LeatherHorseArmor.TARDIS_TINTED.getKey());
             any.setItemMeta(colour);
             boxes[i] = any;
             i++;
@@ -118,7 +139,7 @@ public class TARDISPoliceBoxInventory {
                     ItemStack cis = new ItemStack(cm);
                     ItemMeta cim = cis.getItemMeta();
                     cim.setDisplayName(custom);
-                    cim.setCustomModelData(1001);
+                    cim.setItemModel(new NamespacedKey(plugin, "block/police_box/" + custom + "_closed"));
                     cis.setItemMeta(cim);
                     boxes[i] = cis;
                     i++;

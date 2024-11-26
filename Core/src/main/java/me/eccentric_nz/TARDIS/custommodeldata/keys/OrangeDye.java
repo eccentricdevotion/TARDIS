@@ -6,10 +6,10 @@ import org.bukkit.NamespacedKey;
 public enum OrangeDye {
 
     BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "genetic/button_type")),
+    TARDIS_GLASS(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_glass")),
     TARDIS_ORANGE(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_orange")),
     TARDIS_ORANGE_OPEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_orange_open")),
     TARDIS_ORANGE_STAINED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_orange_stained")),
-    TARDIS_GLASS(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_glass")),
     ORANGE_FLYING_0(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/orange/orange_flying_0")),
     ORANGE_FLYING_1(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/orange/orange_flying_1")),
     ORANGE_FLYING_2(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/orange/orange_flying_2")),
@@ -46,8 +46,7 @@ public enum OrangeDye {
     ORANGE_FLYING_OPEN_12(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/orange/orange_flying_open_12")),
     ORANGE_FLYING_OPEN_13(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/orange/orange_flying_open_13")),
     ORANGE_FLYING_OPEN_14(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/orange/orange_flying_open_14")),
-    ORANGE_FLYING_OPEN_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/orange/orange_flying_open_15")),
-    FILING_CABINET_OPEN(new NamespacedKey(TARDIS.plugin, "equipment/filing_cabinet_open"));
+    ORANGE_FLYING_OPEN_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/orange/orange_flying_open_15"));
 
     private final NamespacedKey key;
 

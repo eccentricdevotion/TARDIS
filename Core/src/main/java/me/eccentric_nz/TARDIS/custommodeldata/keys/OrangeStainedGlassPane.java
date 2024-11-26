@@ -5,9 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum OrangeStainedGlassPane {
 
-    IMPOSSIBLE_ASTRONAUT_PACK(new NamespacedKey(TARDIS.plugin, "lazarus/impossible_astronaut_pack")),
-    ORANGE_GLOW_STICK(new NamespacedKey(TARDIS.plugin, "products/glow_sticks/orange_glow_stick")),
-    ORANGE_GLOW_STICK_ACTIVE(new NamespacedKey(TARDIS.plugin, "products/glow_sticks/orange_glow_stick_active"));
+    IMPOSSIBLE_ASTRONAUT_PACK(new NamespacedKey(TARDIS.plugin, "lazarus/impossible_astronaut_pack"));
 
     private final NamespacedKey key;
 

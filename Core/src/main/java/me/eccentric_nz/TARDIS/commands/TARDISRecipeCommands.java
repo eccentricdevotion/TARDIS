@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISRecipeLister;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryInventory;
@@ -34,6 +35,7 @@ import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Map;
 import java.util.*;
 
 /**
@@ -226,24 +228,24 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 if (item.getType().equals(Material.GLOWSTONE_DUST) && !str.endsWith("Tie")) {
                     String dn = getDisplayName(str, glowstoneCount);
                     im.setDisplayName(ChatColor.WHITE + dn);
-                    im.setCustomModelData(RecipeItem.getByName(dn).getCustomModelData());
+                    im.setItemModel(RecipeItem.getByName(dn).getModel());
                     glowstoneCount++;
                 }
                 if (str.endsWith("TARDIS Remote Key") && item.getType().equals(Material.GOLD_NUGGET)) {
                     im.setDisplayName(ChatColor.WHITE + "TARDIS Key");
-                    im.setCustomModelData(1);
+                    im.setItemModel(GoldNugget.REMOTE.getKey());
                 }
                 if (str.equals("Acid Battery") && item.getType().equals(Material.WATER_BUCKET)) {
                     im.setDisplayName(ChatColor.WHITE + "Acid Bucket");
-                    im.setCustomModelData(1);
+                    im.setItemModel(WaterBucket.ACID_BUCKET.getKey());
                 }
                 if (str.equals("Rift Manipulator") && item.getType().equals(Material.NETHER_BRICK)) {
                     im.setDisplayName(ChatColor.WHITE + "Acid Battery");
-                    im.setCustomModelData(10000001);
+                    im.setItemModel(NetherBrick.ACID_BATTERY.getKey());
                 }
                 if (str.equals("Rust Plague Sword") && item.getType().equals(Material.LAVA_BUCKET)) {
                     im.setDisplayName(ChatColor.WHITE + "Rust Bucket");
-                    im.setCustomModelData(1);
+                    im.setItemModel(LavaBucket.RUST_BUCKET.getKey());
                 }
                 item.setItemMeta(im);
                 inv.setItem(j * 9 + k, item);
@@ -254,7 +256,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         im.setDisplayName(ChatColor.WHITE + str);
         RecipeItem recipeItem = RecipeItem.getByName(str);
         if (recipeItem != RecipeItem.NOT_FOUND) {
-            im.setCustomModelData(recipeItem.getCustomModelData());
+            im.setItemModel(recipeItem.getModel());
         }
         if (str.equals("TARDIS Invisibility Circuit")) {
             // set the second line of lore
@@ -284,17 +286,17 @@ public class TARDISRecipeCommands implements CommandExecutor {
             if (ingredients.get(i).getType().equals(Material.GLOWSTONE_DUST)) {
                 String dn = getDisplayName(str, glowstoneCount);
                 im.setDisplayName(dn);
-                im.setCustomModelData(RecipeItem.getByName(dn).getCustomModelData());
+                im.setItemModel(RecipeItem.getByName(dn).getModel());
                 glowstoneCount++;
             }
             if (ingredients.get(i).getType().equals(Material.MUSIC_DISC_STRAD)) {
                 im.setDisplayName("Blank Storage Disk");
-                im.setCustomModelData(10000001);
+                im.setItemModel(MusicDisc.BLANK_DISK.getKey());
                 im.addItemFlags(ItemFlag.values());
             }
             if (ingredients.get(i).getType().equals(Material.BLAZE_ROD)) {
                 im.setDisplayName("Sonic Screwdriver");
-                im.setCustomModelData(10000010);
+                im.setItemModel(BlazeRod.TENTH.getKey());
             }
             ingredients.get(i).setItemMeta(im);
             inv.setItem(i * 9, ingredients.get(i));
@@ -307,7 +309,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         }
         RecipeItem recipeItem = RecipeItem.getByName(str);
         if (recipeItem != RecipeItem.NOT_FOUND) {
-            im.setCustomModelData(recipeItem.getCustomModelData());
+            im.setItemModel(recipeItem.getModel());
             if (recipeItem.getCategory().equals(RecipeCategory.SONIC_UPGRADES)) {
                 im.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");
                 im.setLore(Arrays.asList("Upgrades:", str));

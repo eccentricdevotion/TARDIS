@@ -5,7 +5,6 @@ import org.bukkit.NamespacedKey;
 
 public enum LightBlueStainedGlass {
 
-    TINT_LIGHT_BLUE(new NamespacedKey(TARDIS.plugin, "block/lights/tint_light_blue")),
     SCREEN(new NamespacedKey(TARDIS.plugin, "equipment/screen")),
     EMPTY_SCREEN(new NamespacedKey(TARDIS.plugin, "screen/empty_screen")),
     ARBOREAL_FIELD(new NamespacedKey(TARDIS.plugin, "screen/arboreal_field")),

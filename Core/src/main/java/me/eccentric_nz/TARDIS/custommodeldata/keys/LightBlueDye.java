@@ -5,10 +5,10 @@ import org.bukkit.NamespacedKey;
 
 public enum LightBlueDye {
 
+    TARDIS_GLASS(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_glass")),
     TARDIS_LIGHT_BLUE(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_light_blue")),
     TARDIS_LIGHT_BLUE_OPEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_light_blue_open")),
     TARDIS_LIGHT_BLUE_STAINED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_light_blue_stained")),
-    TARDIS_GLASS(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_glass")),
     LIGHT_BLUE_FLYING_0(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/light_blue/light_blue_flying_0")),
     LIGHT_BLUE_FLYING_1(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/light_blue/light_blue_flying_1")),
     LIGHT_BLUE_FLYING_2(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/light_blue/light_blue_flying_2")),
@@ -52,8 +52,7 @@ public enum LightBlueDye {
     LIGHT_BLUE_FLYING_OPEN_12(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/light_blue/light_blue_flying_open_12")),
     LIGHT_BLUE_FLYING_OPEN_13(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/light_blue/light_blue_flying_open_13")),
     LIGHT_BLUE_FLYING_OPEN_14(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/light_blue/light_blue_flying_open_14")),
-    LIGHT_BLUE_FLYING_OPEN_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/light_blue/light_blue_flying_open_15")),
-    SCREEN(new NamespacedKey(TARDIS.plugin, "equipment/screen"));
+    LIGHT_BLUE_FLYING_OPEN_15(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/light_blue/light_blue_flying_open_15"));
 
     private final NamespacedKey key;
 

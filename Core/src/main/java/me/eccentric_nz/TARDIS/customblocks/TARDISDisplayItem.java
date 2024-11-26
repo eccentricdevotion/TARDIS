@@ -76,7 +76,7 @@ public enum TARDISDisplayItem {
     LEGACY_REDSTONE(SeedBlock.LEGACY_REDSTONE.getKey(), Material.RED_GLAZED_TERRACOTTA),
     CUSTOM(SeedBlock.CUSTOM.getKey(), Material.POLISHED_BLACKSTONE),
     // growing seed block
-    GROW(LightGrayTerracotta.GROW.getKey(), Material.LIGHT_GRAY_TERRACOTTA, Material.NETHERITE_BLOCK),
+    GROW(SeedBlock.GROW.getKey(), Material.LIGHT_GRAY_TERRACOTTA, Material.NETHERITE_BLOCK),
     // tardis blocks
     ADVANCED_CONSOLE(Jukebox.ADVANCED_CONSOLE.getKey(), Material.JUKEBOX),
     ARTRON_FURNACE(Furnace.ARTRON_FURNACE.getKey(), Material.FURNACE),
@@ -113,13 +113,13 @@ public enum TARDISDisplayItem {
     PURPLE_LAMP_ON(SeaLantern.PURPLE_LAMP_ON.getKey(), Material.SEA_LANTERN),
     RED_LAMP_ON(SeaLantern.RED_LAMP_ON.getKey(), Material.SEA_LANTERN),
     // chemistry gui blocks
-    COMPOUND(OrangeConcrete.COMPOUND.getKey(), Material.ORANGE_CONCRETE),
-    CONSTRUCTOR(LightBlueConcrete.CONSTRUCTOR.getKey(), Material.LIGHT_BLUE_CONCRETE),
-    CREATIVE(LightGrayConcrete.CREATIVE.getKey(), Material.LIGHT_GRAY_CONCRETE),
-    LAB(YellowConcrete.LAB.getKey(), Material.YELLOW_CONCRETE),
-    PRODUCT(LimeConcrete.PRODUCT.getKey(), Material.LIME_CONCRETE),
-    REDUCER(MagentaConcrete.REDUCER.getKey(), Material.MAGENTA_CONCRETE),
-    HEAT_BLOCK(RedConcrete.HEAT_BLOCK.getKey(), Material.RED_CONCRETE),
+    COMPOUND(ChemistryItem.COMPOUND.getKey(), Material.ORANGE_CONCRETE),
+    CONSTRUCTOR(ChemistryItem.CONSTRUCTOR.getKey(), Material.LIGHT_BLUE_CONCRETE),
+    CREATIVE(ChemistryItem.CREATIVE.getKey(), Material.LIGHT_GRAY_CONCRETE),
+    LAB(ChemistryItem.LAB.getKey(), Material.YELLOW_CONCRETE),
+    PRODUCT(ChemistryItem.PRODUCT.getKey(), Material.LIME_CONCRETE),
+    REDUCER(ChemistryItem.REDUCER.getKey(), Material.MAGENTA_CONCRETE),
+    HEAT_BLOCK(ChemistryItem.HEAT_BLOCK.getKey(), Material.RED_CONCRETE),
     // lights off
     LIGHT_BULB(WaxedCopperBulb.BULB.getKey(), Material.WAXED_COPPER_BULB, Material.COPPER_BULB),
     LIGHT_CLASSIC(Wool.CLASSIC.getKey(), Material.GRAY_WOOL, Material.TORCH),
@@ -167,13 +167,6 @@ public enum TARDISDisplayItem {
     LIGHT_VARIABLE_CLOISTER(Glass.CLOISTER.getKey(), Material.GLASS),
     // console lamp
     CONSOLE_LAMP(null, Material.GLASS, Material.REDSTONE_LAMP),
-    // console sides
-//    CONSOLE_1(AmethystShard.CONSOLE_LIGHT_GRAY.getKey(), Material.AMETHYST_SHARD),
-//    CONSOLE_2(1002, Material.AMETHYST_SHARD),
-//    CONSOLE_3(1003, Material.AMETHYST_SHARD),
-//    CONSOLE_4(1004, Material.AMETHYST_SHARD),
-//    CONSOLE_5(1005, Material.AMETHYST_SHARD),
-//    CONSOLE_6(1006, Material.AMETHYST_SHARD),
     // dummy
     NONE(null, null);
 

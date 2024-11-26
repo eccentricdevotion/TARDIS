@@ -6,10 +6,10 @@ import org.bukkit.NamespacedKey;
 public enum PinkDye {
 
     BUTTON_TYPE(new NamespacedKey(TARDIS.plugin, "genetic/button_type")),
+    TARDIS_GLASS(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_glass")),
     TARDIS_PINK(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_pink")),
     TARDIS_PINK_OPEN(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_pink_open")),
     TARDIS_PINK_STAINED(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_pink_stained")),
-    TARDIS_GLASS(new NamespacedKey(TARDIS.plugin, "block/police_box/tardis_glass")),
     PINK_FLYING_0(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/pink/pink_flying_0")),
     PINK_FLYING_1(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/pink/pink_flying_1")),
     PINK_FLYING_2(new NamespacedKey(TARDIS.plugin, "block/police_box/flying/pink/pink_flying_2")),

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Glass;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.ChatColor;
@@ -43,7 +44,7 @@ public class TARDISVariableLightRecipe {
         is = new ItemStack(Material.GLASS, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Variable Light");
-        im.setCustomModelData(1003);
+        im.setItemModel(Glass.VARIABLE.getKey());
         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1003);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "variable_light");

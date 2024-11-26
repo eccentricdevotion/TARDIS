@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -35,7 +36,7 @@ public class TARDISCommunicatorRecipe {
         ItemStack is = new ItemStack(Material.LEATHER_HELMET, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Communicator");
-        im.setCustomModelData(10000040);
+        im.setItemModel(RecipeItem.TARDIS_COMMUNICATOR.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_communicator");
         ShapedRecipe r = new ShapedRecipe(key, is);

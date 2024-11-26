@@ -41,7 +41,8 @@ public enum SeedBlock {
     LEGACY_DELUXE(new NamespacedKey(TARDIS.plugin, "block/seed/legacy_deluxe")),
     LEGACY_ELEVENTH(new NamespacedKey(TARDIS.plugin, "block/seed/legacy_eleventh")),
     LEGACY_REDSTONE(new NamespacedKey(TARDIS.plugin, "block/seed/legacy_redstone")),
-    CUSTOM(new NamespacedKey(TARDIS.plugin, "block/seed/custom"));
+    CUSTOM(new NamespacedKey(TARDIS.plugin, "block/seed/custom")),
+    GROW(new NamespacedKey(TARDIS.plugin, "block/seed/grow"));
 
     private final NamespacedKey key;
 

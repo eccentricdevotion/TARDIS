@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -37,7 +38,7 @@ public class BlackBowTieRecipe {
         ItemStack is = new ItemStack(Material.LEATHER_HELMET, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Black Bow Tie");
-        im.setCustomModelData(10000038);
+        im.setItemModel(RecipeItem.BLACK_BOW_TIE.getModel());
         im.setLore(List.of("Bow ties are cool!"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "black_bow_tie");

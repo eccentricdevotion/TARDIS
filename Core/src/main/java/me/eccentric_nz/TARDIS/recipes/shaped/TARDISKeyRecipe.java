@@ -1,7 +1,9 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GoldNugget;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -28,31 +30,31 @@ lore:Enter and exit your TARDIS
 public class TARDISKeyRecipe {
 
     private final TARDIS plugin;
-    private final HashMap<String, Integer> keyModelLookup = new HashMap<>();
+    private final HashMap<String, NamespacedKey> keyModelLookup = new HashMap<>();
 
     public TARDISKeyRecipe(TARDIS plugin) {
         this.plugin = plugin;
-        keyModelLookup.put("first", 1);
-        keyModelLookup.put("second", 2);
-        keyModelLookup.put("third", 3);
-        keyModelLookup.put("fifth", 4);
-        keyModelLookup.put("seventh", 5);
-        keyModelLookup.put("ninth", 6);
-        keyModelLookup.put("tenth", 7);
-        keyModelLookup.put("eleventh", 8);
-        keyModelLookup.put("rose", 9);
-        keyModelLookup.put("sally", 10);
-        keyModelLookup.put("perception", 11);
-        keyModelLookup.put("susan", 12);
-        keyModelLookup.put("gold", 13);
+        keyModelLookup.put("first", GoldNugget.BRASS_YALE.getKey());
+        keyModelLookup.put("second", GoldNugget.BRASS_PLAIN.getKey());
+        keyModelLookup.put("third", GoldNugget.SPADE_SHAPED.getKey());
+        keyModelLookup.put("fifth", GoldNugget.SILVER_YALE.getKey());
+        keyModelLookup.put("seventh", GoldNugget.SEAL_OF_RASSILON.getKey());
+        keyModelLookup.put("ninth", GoldNugget.SILVER_VARIANT.getKey());
+        keyModelLookup.put("tenth", GoldNugget.SILVER_PLAIN.getKey());
+        keyModelLookup.put("eleventh", GoldNugget.SILVER_NEW.getKey());
+        keyModelLookup.put("rose", GoldNugget.SILVER_ERA.getKey());
+        keyModelLookup.put("sally", GoldNugget.SILVER_STRING.getKey());
+        keyModelLookup.put("perception", GoldNugget.FILTER.getKey());
+        keyModelLookup.put("susan", GoldNugget.BRASS_STRING.getKey());
+        keyModelLookup.put("gold", GoldNugget.BROMLEY_GOLD.getKey());
     }
 
     public void addRecipe() {
-        int keyModel = keyModelLookup.getOrDefault(plugin.getConfig().getString("preferences.default_key").toLowerCase(Locale.ROOT), 1);
+        NamespacedKey keyModel = keyModelLookup.getOrDefault(plugin.getConfig().getString("preferences.default_key").toLowerCase(Locale.ROOT), RecipeItem.TARDIS_KEY.getModel());
         ItemStack is = new ItemStack(Material.GOLD_NUGGET, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Key");
-        im.setCustomModelData(keyModel);
+        im.setItemModel(keyModel);
         im.setLore(List.of("Enter and exit your TARDIS"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_key");

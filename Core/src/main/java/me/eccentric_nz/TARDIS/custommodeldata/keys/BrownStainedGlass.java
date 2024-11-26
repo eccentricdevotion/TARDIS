@@ -5,8 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum BrownStainedGlass {
 
-    TV(new NamespacedKey(TARDIS.plugin, "lazarus/tv")),
-    TINT_BROWN(new NamespacedKey(TARDIS.plugin, "block/lights/tint_brown"));
+    TV(new NamespacedKey(TARDIS.plugin, "lazarus/tv"));
 
     private final NamespacedKey key;
 

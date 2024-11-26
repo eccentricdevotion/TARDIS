@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.MusicDisc;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
@@ -70,7 +71,7 @@ class TARDISAreaDisks {
                     lore.add(name);
                     lore.add(a.getWorld());
                     im.setLore(lore);
-                    im.setCustomModelData(10000001);
+                    im.setItemModel(MusicDisc.AREA_DISK.getKey());
                     is.setItemMeta(im);
                     areas.add(is);
                 }
@@ -157,7 +158,7 @@ class TARDISAreaDisks {
                                 lore.add(name);
                                 lore.add(map.getWorld());
                                 im.setLore(lore);
-                                im.setCustomModelData(10000001);
+                                im.setItemModel(MusicDisc.AREA_DISK.getKey());
                                 is.setItemMeta(im);
                                 inv.setItem(empty, is);
                                 count++;

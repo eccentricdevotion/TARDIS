@@ -37,7 +37,7 @@ public class PainterRepairRecipe {
         ItemStack isa = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
         ima.setDisplayName(ChatColor.WHITE + "Painter Circuit");
-        ima.setCustomModelData(RecipeItem.PAINTER_CIRCUIT.getCustomModelData());
+        ima.setItemModel(RecipeItem.PAINTER_CIRCUIT.getModel());
         isa.setItemMeta(ima);
         RecipeChoice addition = new RecipeChoice.ExactChoice(isa);
         NamespacedKey key = new NamespacedKey(plugin, "painter_repair");
