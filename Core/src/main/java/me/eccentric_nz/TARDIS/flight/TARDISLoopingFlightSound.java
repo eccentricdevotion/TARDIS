@@ -23,13 +23,13 @@ import org.bukkit.Location;
 /**
  * @author eccentric_nz
  */
-class TARDISLoopingFlightSound implements Runnable {
+public class TARDISLoopingFlightSound implements Runnable {
 
     private final TARDIS plugin;
     private final Location location;
     private final int id;
 
-    TARDISLoopingFlightSound(TARDIS plugin, Location location, int id) {
+    public TARDISLoopingFlightSound(TARDIS plugin, Location location, int id) {
         this.plugin = plugin;
         this.location = location;
         this.id = id;
