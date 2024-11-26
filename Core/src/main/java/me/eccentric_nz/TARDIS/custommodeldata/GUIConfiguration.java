@@ -16,46 +16,63 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.NetherStar;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Repeater;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 
 public enum GUIConfiguration {
 
     // Admin Menu
-    ALLOW(1, 0, Material.REPEATER),
-    ARCH(2, 22, Material.REPEATER),
-    ARCHIVE(3, 25, Material.REPEATER),
-    BLUEPRINTS(48, 23, Material.REPEATER),
-    CREATION(4, 26, Material.REPEATER),
-    DIFFICULTY(58, 38, Material.REPEATER),
-    EYE_OF_HARMONY(59, 45, Material.REPEATER),
-    GROWTH(5, 36, Material.REPEATER),
-    HANDLES(6, 37, Material.REPEATER),
-    POLICE_BOX(7, 38, Material.REPEATER),
-    PREFERENCES(8, 41, Material.REPEATER),
-    ABANDON(9, 0, Material.REPEATER),
-    CIRCUITS(10, 0, Material.REPEATER),
-    DEBUG(11, 0, Material.REPEATER),
-    DESKTOP(12, 0, Material.REPEATER),
-    JUNK(13, 0, Material.REPEATER),
-    SIEGE(14, 0, Material.REPEATER),
-    SONIC(55, 0, Material.REPEATER),
-    TRAVEL(15, 0, Material.REPEATER),
-    NEXT(86, 0, Material.BOWL),
-    PREV(87, 0, Material.BOWL),
-    PREFS(2, 0, Material.NETHER_STAR);
+    ALLOW(Repeater.ALLOW_ON.getKey(), Repeater.ALLOW_OFF.getKey(), 0),
+    ARCH(Repeater.ARCH_ON.getKey(), Repeater.ARCH_OFF.getKey(), 22),
+    ARCHIVE(Repeater.ARCHIVE_ON.getKey(), Repeater.ARCHIVE_OFF.getKey(), 25),
+    BLUEPRINTS(Repeater.BLUEPRINTS_ON.getKey(), Repeater.BLUEPRINTS_OFF.getKey(), 23),
+    CREATION(Repeater.CREATION_ON.getKey(), Repeater.CREATION_OFF.getKey(), 26),
+    DIFFICULTY(Repeater.DIFFICULTY_ON.getKey(), Repeater.DIFFICULTY_OFF.getKey(), 38),
+    EYE_OF_HARMONY(Repeater.EYE_ON.getKey(), Repeater.EYE_OFF.getKey(), 45),
+    GROWTH(Repeater.GROWTH_ON.getKey(), Repeater.GROWTH_OFF.getKey(), 36),
+    HANDLES(Repeater.HANDLES_ON.getKey(), Repeater.HANDLES_OFF.getKey(), 37),
+    POLICE_BOX(Repeater.POLICE_BOX_ON.getKey(), Repeater.POLICE_BOX_OFF.getKey(), 38),
+    PREFERENCES(Repeater.PREFERENCES_ON.getKey(), Repeater.PREFERENCES_OFF.getKey(), 41),
+    ABANDON(Repeater.ABANDON_ON.getKey(), Repeater.ABANDON_OFF.getKey(), 0),
+    CIRCUITS(Repeater.CIRCUIT_ON.getKey(), Repeater.CIRCUIT_OFF.getKey(), 0),
+    DEBUG(Repeater.DEBUG_ON.getKey(), Repeater.DEBUG_OFF.getKey(), 0),
+    DESKTOP(Repeater.THEME_ON.getKey(), Repeater.THEME_OFF.getKey(), 0),
+    JUNK(Repeater.JUNK_ON.getKey(), Repeater.JUNK_OFF.getKey(), 0),
+    SIEGE(Repeater.SIEGE_ON.getKey(), Repeater.SIEGE_OFF.getKey(), 0),
+    SONIC(Repeater.SONIC_ON.getKey(), Repeater.SONIC_OFF.getKey(), 0),
+    TRAVEL(Repeater.TRAVEL_ON.getKey(), Repeater.TRAVEL_OFF.getKey(), 0),
+    NEXT(Bowl.NEXT.getKey(), null, 0, Material.BOWL),
+    PREV(Bowl.PREV.getKey(), null, 0, Material.BOWL),
+    PREFS(NetherStar.ADMIN.getKey(), null, 0, Material.NETHER_STAR);
 
-    private final int customModelData;
+    private final NamespacedKey onModel;
+    private final NamespacedKey offModel;
     private final int slot;
     private final Material material;
 
-    GUIConfiguration(int customModelData, int slot, Material material) {
-        this.customModelData = customModelData;
+    GUIConfiguration(NamespacedKey onModel, NamespacedKey offModel, int slot, Material material) {
+        this.onModel = onModel;
+        this.offModel = offModel;
         this.slot = slot;
         this.material = material;
     }
 
-    public int getCustomModelData() {
-        return customModelData;
+    GUIConfiguration(NamespacedKey onModel, NamespacedKey offModel, int slot) {
+        this.onModel = onModel;
+        this.offModel = offModel;
+        this.slot = slot;
+        this.material = Material.REPEATER;
+    }
+
+    public NamespacedKey getOnModel() {
+        return onModel;
+    }
+
+    public NamespacedKey getOffModel() {
+        return offModel;
     }
 
     public int getSlot() {
