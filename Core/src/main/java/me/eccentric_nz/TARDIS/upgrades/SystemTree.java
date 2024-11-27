@@ -16,56 +16,61 @@
  */
 package me.eccentric_nz.TARDIS.upgrades;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.SystemTreeItem;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 
 import java.util.List;
 import java.util.Locale;
 
 public enum SystemTree {
 
+    // TARDIS System Tree structure
+    BOTH_DOWN(SystemTreeItem.BOTH_DOWN.getKey(), null),
+    LEFT_DOWN(SystemTreeItem.LEFT_DOWN.getKey(), null),
+    H_LINE(SystemTreeItem.HORIZONTAL.getKey(), null),
+    RIGHT_DOWN(SystemTreeItem.RIGHT_DOWN.getKey(), null),
+    BLANK(SystemTreeItem.BLANK.getKey(), null),
+    CLOSE(SystemTreeItem.CLOSE.getKey(), null),
+    VERTICAL(SystemTreeItem.VERTICAL.getKey(), null),
     // TARDIS System Upgrades
-    BOTH_DOWN(1),
-    LEFT_DOWN(2),
-    H_LINE(3),
-    RIGHT_DOWN(4),
-    BLANK(5),
-    CLOSE(6),
-    VERTICAL(7),
-    UPGRADE_TREE(1001, 4, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlock upgrades using", "your Time Lord", "Artron Energy."), "", ""),
-    ARCHITECTURE(1002, 9, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the", "architecture branch."), "UPGRADE_TREE", "branch"),
-    CHAMELEON_CIRCUIT(1004, 18, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "exterior to be changed."), "ARCHITECTURE", "architecture"),
-    ROOM_GROWING(1004, 27, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows rooms", "to be grown."), "CHAMELEON_CIRCUIT", "architecture"),
-    DESKTOP_THEME(1005, 36, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the desktop", "theme to be reconfigured."), "ROOM_GROWING", "architecture"),
-    FEATURE(1003, 11, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the", "feature branch.", "Features are independent", "and don't require", "previous unlocks."), "UPGRADE_TREE", "branch"),
-    SAVES(1006, 20, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows you", "to create", "saved locations"), "FEATURE", "feature"),
-    MONITOR(1006, 29, Material.LIME_GLAZED_TERRACOTTA, List.of("View the", "TARDIS exterior."), "FEATURE", "feature"),
-    FORCE_FIELD(1006, 38, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "to have a monster", "repelling force field."), "FEATURE", "feature"),
-//    QUESTION(1005, 47, Material.LIME_GLAZED_TERRACOTTA, List.of("Don't know", "what this is yet."), "FEATURE", "feature"),
-    NAVIGATION(1002, 15, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the", "navigation branch."), "UPGRADE_TREE", "branch"),
-    DISTANCE_1(1004, 24, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 2x", "distance multiplier."), "NAVIGATION", "navigation"),
-    DISTANCE_2(1004, 33, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 3x", "distance multiplier."), "DISTANCE_1", "navigation"),
-    DISTANCE_3(1004, 42, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 4x", "distance multiplier."), "DISTANCE_2", "navigation"),
-    INTER_DIMENSIONAL_TRAVEL(1005, 51, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks travel to", "the Nether and End."), "DISTANCE_3", "navigation"),
-    THROTTLE(1002, 17, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the", "flight branch."), "UPGRADE_TREE", "branch"),
-    FASTER(1004, 26, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks faster", "travel speed."), "THROTTLE", "throttle"),
-    RAPID(1004, 35, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks rapid", "travel speed."), "FASTER", "throttle"),
-    WARP(1004, 44, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks warp", "travel speed."), "RAPID", "throttle"),
-    EXTERIOR_FLIGHT(1005, 53, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks flying the", "TARDIS exterior."), "WARP", "throttle"),
-    TOOLS(1002, 22, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the", "tools branch."), "UPGRADE_TREE", "branch"),
-    TARDIS_LOCATOR(1004, 31, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "to be found."), "TOOLS", "tools"),
-    TELEPATHIC_CIRCUIT(1004, 40, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks cave,", "structure and", "biome travel."), "TARDIS_LOCATOR", "tools"),
-    STATTENHEIM_REMOTE(1005, 49, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "to be remotely", "called to a location."), "TELEPATHIC_CIRCUIT", "tools");
+    UPGRADE_TREE(SystemTreeItem.LOCKED_TREE.getKey(), SystemTreeItem.UNLOCKED_TREE.getKey(), 4, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlock upgrades using", "your Time Lord", "Artron Energy."), "", ""),
+    ARCHITECTURE(SystemTreeItem.LOCKED_BRANCH_DEPENDENT.getKey(), SystemTreeItem.UNLOCKED_BRANCH_DEPENDENT.getKey(), 9, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the", "architecture branch."), "UPGRADE_TREE", "branch"),
+    CHAMELEON_CIRCUIT(SystemTreeItem.LOCKED_DOWN.getKey(), SystemTreeItem.UNLOCKED_DOWN.getKey(), 18, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "exterior to be changed."), "ARCHITECTURE", "architecture"),
+    ROOM_GROWING(SystemTreeItem.LOCKED_DOWN.getKey(), SystemTreeItem.UNLOCKED_DOWN.getKey(), 27, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows rooms", "to be grown."), "CHAMELEON_CIRCUIT", "architecture"),
+    DESKTOP_THEME(SystemTreeItem.LOCKED_END.getKey(), SystemTreeItem.UNLOCKED_END.getKey(), 36, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the desktop", "theme to be reconfigured."), "ROOM_GROWING", "architecture"),
+    FEATURE(SystemTreeItem.LOCKED_BRANCH_INDEPENDENT.getKey(), SystemTreeItem.UNLOCKED_BRANCH_INDEPENDENT.getKey(), 11, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the", "feature branch.", "Features are independent", "and don't require", "previous unlocks."), "UPGRADE_TREE", "branch"),
+    SAVES(SystemTreeItem.LOCKED_INDEPENDENT.getKey(), SystemTreeItem.UNLOCKED_INDEPENDENT.getKey(), 20, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows you", "to create", "saved locations"), "FEATURE", "feature"),
+    MONITOR(SystemTreeItem.LOCKED_INDEPENDENT.getKey(), SystemTreeItem.UNLOCKED_INDEPENDENT.getKey(), 29, Material.LIME_GLAZED_TERRACOTTA, List.of("View the", "TARDIS exterior."), "FEATURE", "feature"),
+    FORCE_FIELD(SystemTreeItem.LOCKED_INDEPENDENT.getKey(), SystemTreeItem.UNLOCKED_INDEPENDENT.getKey(), 38, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "to have a monster", "repelling force field."), "FEATURE", "feature"),
+//    QUESTION(SystemTreeItem.SYS_LOCKED_END.getKey(), SystemTreeItem.SYS_LOCKED_END.getKey(), 47, Material.LIME_GLAZED_TERRACOTTA, List.of("Don't know", "what this is yet."), "FEATURE", "feature"),
+    NAVIGATION(SystemTreeItem.LOCKED_BRANCH_DEPENDENT.getKey(), SystemTreeItem.UNLOCKED_BRANCH_DEPENDENT.getKey(), 15, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the", "navigation branch."), "UPGRADE_TREE", "branch"),
+    DISTANCE_1(SystemTreeItem.LOCKED_DOWN.getKey(), SystemTreeItem.UNLOCKED_DOWN.getKey(), 24, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 2x", "distance multiplier."), "NAVIGATION", "navigation"),
+    DISTANCE_2(SystemTreeItem.LOCKED_DOWN.getKey(), SystemTreeItem.UNLOCKED_DOWN.getKey(), 33, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 3x", "distance multiplier."), "DISTANCE_1", "navigation"),
+    DISTANCE_3(SystemTreeItem.LOCKED_DOWN.getKey(), SystemTreeItem.UNLOCKED_DOWN.getKey(), 42, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the 4x", "distance multiplier."), "DISTANCE_2", "navigation"),
+    INTER_DIMENSIONAL_TRAVEL(SystemTreeItem.LOCKED_END.getKey(), SystemTreeItem.UNLOCKED_END.getKey(), 51, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks travel to", "the Nether and End."), "DISTANCE_3", "navigation"),
+    THROTTLE(SystemTreeItem.LOCKED_BRANCH_DEPENDENT.getKey(), SystemTreeItem.UNLOCKED_BRANCH_DEPENDENT.getKey(), 17, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the", "flight branch."), "UPGRADE_TREE", "branch"),
+    FASTER(SystemTreeItem.LOCKED_DOWN.getKey(), SystemTreeItem.UNLOCKED_DOWN.getKey(), 26, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks faster", "travel speed."), "THROTTLE", "throttle"),
+    RAPID(SystemTreeItem.LOCKED_DOWN.getKey(), SystemTreeItem.UNLOCKED_DOWN.getKey(), 35, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks rapid", "travel speed."), "FASTER", "throttle"),
+    WARP(SystemTreeItem.LOCKED_DOWN.getKey(), SystemTreeItem.UNLOCKED_DOWN.getKey(), 44, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks warp", "travel speed."), "RAPID", "throttle"),
+    EXTERIOR_FLIGHT(SystemTreeItem.LOCKED_END.getKey(), SystemTreeItem.UNLOCKED_END.getKey(), 53, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks flying the", "TARDIS exterior."), "WARP", "throttle"),
+    TOOLS(SystemTreeItem.LOCKED_BRANCH_DEPENDENT.getKey(), SystemTreeItem.UNLOCKED_BRANCH_DEPENDENT.getKey(), 22, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks the", "tools branch."), "UPGRADE_TREE", "branch"),
+    TARDIS_LOCATOR(SystemTreeItem.LOCKED_DOWN.getKey(), SystemTreeItem.UNLOCKED_DOWN.getKey(), 31, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "to be found."), "TOOLS", "tools"),
+    TELEPATHIC_CIRCUIT(SystemTreeItem.LOCKED_DOWN.getKey(), SystemTreeItem.UNLOCKED_DOWN.getKey(), 40, Material.LIME_GLAZED_TERRACOTTA, List.of("Unlocks cave,", "structure and", "biome travel."), "TARDIS_LOCATOR", "tools"),
+    STATTENHEIM_REMOTE(SystemTreeItem.LOCKED_END.getKey(), SystemTreeItem.UNLOCKED_END.getKey(), 49, Material.LIME_GLAZED_TERRACOTTA, List.of("Allows the TARDIS", "to be remotely", "called to a location."), "TELEPATHIC_CIRCUIT", "tools");
 
-    private final int customModelData;
+    private final NamespacedKey locked;
+    private final NamespacedKey unlocked;
     private final int slot;
     private final Material material;
     private final List<String> lore;
     private final String required;
     private final String branch;
 
-    SystemTree(int customModelData, int slot, Material material, List<String> lore, String required, String branch) {
-        this.customModelData = customModelData;
+    SystemTree(NamespacedKey locked, NamespacedKey unlocked, int slot, Material material, List<String> lore, String required, String branch) {
+        this.locked = locked;
+        this.unlocked = unlocked;
         this.slot = slot;
         this.material = material;
         this.required = required;
@@ -73,8 +78,9 @@ public enum SystemTree {
         this.branch = branch;
     }
 
-    SystemTree(int customModelData) {
-        this.customModelData = customModelData;
+    SystemTree(NamespacedKey locked, NamespacedKey unlocked) {
+        this.locked = locked;
+        this.unlocked = unlocked;
         this.slot = -1;
         this.material = Material.MAGENTA_GLAZED_TERRACOTTA;
         this.lore = null;
@@ -82,8 +88,12 @@ public enum SystemTree {
         this.branch = "";
     }
 
-    public int getCustomModelData() {
-        return customModelData;
+    public NamespacedKey getLocked() {
+        return locked;
+    }
+
+    public NamespacedKey getUnlocked() {
+        return unlocked;
     }
 
     public int getSlot() {

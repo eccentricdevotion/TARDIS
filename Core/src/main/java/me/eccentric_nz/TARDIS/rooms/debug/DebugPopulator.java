@@ -213,7 +213,7 @@ public class DebugPopulator {
                 ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
                 new ArmourStandEquipment().setStandEquipment(as, monster, false);
                 // set helmet to sword version
-                setHelmet(as, 405);
+                setHelmet(as, RedCandle.HEADLESS_MONK_STATIC.getKey());
                 x += 3;
                 if (x > 24) {
                     x = 3;
@@ -225,8 +225,8 @@ public class DebugPopulator {
                 Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
                 ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
                 new ArmourStandEquipment().setStandEquipment(as, monster, false);
-                // set helmet to sword version
-                setHelmet(as, 5);
+                // set helmet to alternate version
+                setHelmet(as, monster == Monster.MIRE ? NetheriteScrap.THE_MIRE_HELMETLESS.getKey() : TurtleEgg.SLITHEEN_SUIT.getKey());
                 x += 3;
                 if (x > 24) {
                     x = 3;
@@ -238,7 +238,7 @@ public class DebugPopulator {
                 ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
                 new ArmourStandEquipment().setStandEquipment(as, monster, false);
                 // set female
-                setHelmet(as, 7);
+                setHelmet(as, HostArmorTrimSmithingTemplate.CLOCKWORK_DROID_FEMALE_DISGUISE.getKey());
                 x += 3;
                 if (x > 24) {
                     x = 3;
@@ -250,8 +250,25 @@ public class DebugPopulator {
                     Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
                     ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
                     new ArmourStandEquipment().setStandEquipment(as, monster, false);
-                    // set helmet to sword version
-                    setHelmet(as, 10000005 + c);
+                    // add all colours
+                    switch (c) {
+                        case 0 -> setHelmet(as, SlimeBall.DALEK_WHITE.getKey());
+                        case 1 -> setHelmet(as, SlimeBall.DALEK_ORANGE.getKey());
+                        case 2 -> setHelmet(as, SlimeBall.DALEK_MAGENTA.getKey());
+                        case 3 -> setHelmet(as, SlimeBall.DALEK_LIGHT_BLUE.getKey());
+                        case 4 -> setHelmet(as, SlimeBall.DALEK_YELLOW.getKey());
+                        case 5 -> setHelmet(as, SlimeBall.DALEK_LIME.getKey());
+                        case 6 -> setHelmet(as, SlimeBall.DALEK_PINK.getKey());
+                        case 7 -> setHelmet(as, SlimeBall.DALEK_GRAY.getKey());
+                        case 8 -> setHelmet(as, SlimeBall.DALEK_LIGHT_GRAY.getKey());
+                        case 9 -> setHelmet(as, SlimeBall.DALEK_CYAN.getKey());
+                        case 10 -> setHelmet(as, SlimeBall.DALEK_PURPLE.getKey());
+                        case 12 -> setHelmet(as, SlimeBall.DALEK_BLUE.getKey());
+                        case 13 -> setHelmet(as, SlimeBall.DALEK_BROWN.getKey());
+                        case 14 -> setHelmet(as, SlimeBall.DALEK_GREEN.getKey());
+                        case 15 -> setHelmet(as, SlimeBall.DALEK_RED.getKey());
+                        case 16 -> setHelmet(as, SlimeBall.DALEK_BLACK.getKey());
+                    }
                     x += 3;
                     if (x > 24) {
                         x = 3;
@@ -265,7 +282,13 @@ public class DebugPopulator {
                     ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
                     new ArmourStandEquipment().setStandEquipment(as, monster, false);
                     // set colour and red eye variants
-                    setHelmet(as, c);
+                    switch (c) {
+                        case 411 -> setHelmet(as, RottenFlesh.OOD_REDEYE_BLACK_STATIC.getKey());
+                        case 417 -> setHelmet(as, RottenFlesh.OOD_BLUE_STATIC.getKey());
+                        case 423 -> setHelmet(as, RottenFlesh.OOD_REDEYE_BLUE_STATIC.getKey());
+                        case 429 -> setHelmet(as, RottenFlesh.OOD_BROWN_STATIC.getKey());
+                        case 435 -> setHelmet(as, RottenFlesh.OOD_REDEYE_BROWN_STATIC.getKey());
+                    }
                     x += 3;
                     if (x > 24) {
                         x = 3;
@@ -276,12 +299,12 @@ public class DebugPopulator {
         }
     }
 
-    private void setHelmet(ArmorStand as, int cmd) {
+    private void setHelmet(ArmorStand as, NamespacedKey key) {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             EntityEquipment ee = as.getEquipment();
             ItemStack head = ee.getHelmet();
             ItemMeta meta = head.getItemMeta();
-            meta.setCustomModelData(cmd);
+            meta.setItemModel(key);
             head.setItemMeta(meta);
             ee.setHelmet(head);
         }, 2L);
@@ -294,7 +317,6 @@ public class DebugPopulator {
         int r = 0;
         for (ChameleonPreset preset : ChameleonPreset.values()) {
             if (preset.usesArmourStand() && preset != ChameleonPreset.ITEM) {
-                int cmd = 1001;
                 for (int z = -4 - r; z > -17 - r; z -= 4) {
                     Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
                     ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
@@ -302,11 +324,15 @@ public class DebugPopulator {
                     Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, -1, true);
                     ItemStack head = new ItemStack(dye, 1);
                     ItemMeta meta = head.getItemMeta();
-                    meta.setCustomModelData(cmd);
+                    switch (z) {
+                        case -4 -> meta.setItemModel(preset.getClosed());
+                        case -8 -> meta.setItemModel(preset.getOpen());
+                        case -12 -> meta.setItemModel(preset.getStained());
+                        case -16 -> meta.setItemModel(preset.getGlass());
+                    }
                     head.setItemMeta(meta);
                     ee.setHelmet(head);
                     as.setInvisible(true);
-                    cmd++;
                 }
                 x -= 4;
                 if (x < -49) {
@@ -317,7 +343,6 @@ public class DebugPopulator {
         }
         for (String c : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
             // custom models
-            int cmd = 1001;
             for (int z = -4 - r; z > -17 - r; z -= 4) {
                 Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
                 ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
@@ -325,11 +350,18 @@ public class DebugPopulator {
                 Material material = Material.valueOf(plugin.getCustomModelConfig().getString("models." + c + ".item"));
                 ItemStack head = new ItemStack(material, 1);
                 ItemMeta meta = head.getItemMeta();
-                meta.setCustomModelData(cmd);
+                NamespacedKey key;
+                switch (z) {
+                    case -4 -> key = new NamespacedKey(plugin, "police_box/" + c.toLowerCase(Locale.ROOT) + "_closed");
+                    case -8 -> key = new NamespacedKey(plugin, "police_box/" + c.toLowerCase(Locale.ROOT) + "_open");
+                    case -12 -> key = new NamespacedKey(plugin, "police_box/" + c.toLowerCase(Locale.ROOT) + "_stained");
+                    // -16
+                    default -> key = new NamespacedKey(plugin, "police_box/" + c.toLowerCase(Locale.ROOT) + "_glass");
+                }
+                meta.setItemModel(key);
                 head.setItemMeta(meta);
                 ee.setHelmet(head);
                 as.setInvisible(true);
-                cmd++;
             }
             x -= 4;
             if (x < -49) {

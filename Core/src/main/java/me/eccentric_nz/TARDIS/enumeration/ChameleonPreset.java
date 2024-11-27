@@ -17,8 +17,12 @@
 package me.eccentric_nz.TARDIS.enumeration;
 
 import com.google.common.collect.Maps;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GrayStainedGlassPane;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.LeatherHorseArmor;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.PoliceBox;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 
 import java.util.Arrays;
 import java.util.List;
@@ -253,5 +257,95 @@ public enum ChameleonPreset {
                 VILLAGE, WELL, WINDMILL, YELLOW, CUSTOM -> true;
             default -> false;
         };
+    }
+
+    public NamespacedKey getClosed() {
+        switch (this) {
+            case POLICE_BOX_BLUE -> { return PoliceBox.BLUE.getKey(); }
+            case POLICE_BOX_WHITE -> { return PoliceBox.WHITE.getKey(); }
+            case POLICE_BOX_ORANGE -> { return PoliceBox.ORANGE.getKey(); }
+            case POLICE_BOX_MAGENTA -> { return PoliceBox.MAGENTA.getKey(); }
+            case POLICE_BOX_LIGHT_BLUE -> { return PoliceBox.LIGHT_BLUE.getKey(); }
+            case POLICE_BOX_YELLOW -> { return PoliceBox.YELLOW.getKey(); }
+            case POLICE_BOX_LIME -> { return PoliceBox.LIME.getKey(); }
+            case POLICE_BOX_PINK -> { return PoliceBox.PINK.getKey(); }
+            case POLICE_BOX_GRAY -> { return PoliceBox.GRAY.getKey(); }
+            case POLICE_BOX_LIGHT_GRAY -> { return PoliceBox.LIGHT_GRAY.getKey(); }
+            case POLICE_BOX_CYAN -> { return PoliceBox.CYAN.getKey(); }
+            case POLICE_BOX_PURPLE -> { return PoliceBox.PURPLE.getKey(); }
+            case POLICE_BOX_BROWN -> { return PoliceBox.BROWN.getKey(); }
+            case POLICE_BOX_GREEN -> { return PoliceBox.GREEN.getKey(); }
+            case POLICE_BOX_RED -> { return PoliceBox.RED.getKey(); }
+            case POLICE_BOX_BLACK -> { return PoliceBox.BLACK.getKey(); }
+            case POLICE_BOX_TENNANT -> { return PoliceBox.TENNANT.getKey(); }
+            case WEEPING_ANGEL -> { return GrayStainedGlassPane.WEEPING_ANGEL.getKey(); }
+            case COLOURED -> { return LeatherHorseArmor.TARDIS_TINTED.getKey(); }
+            case PANDORICA -> { return PoliceBox.PANDORICA.getKey(); }
+        }
+        return null;
+    }
+
+    public NamespacedKey getOpen() {
+        switch (this) {
+            case POLICE_BOX_BLUE -> { return PoliceBox.BLUE_OPEN.getKey(); }
+            case POLICE_BOX_WHITE -> { return PoliceBox.WHITE_OPEN.getKey(); }
+            case POLICE_BOX_ORANGE -> { return PoliceBox.ORANGE_OPEN.getKey(); }
+            case POLICE_BOX_MAGENTA -> { return PoliceBox.MAGENTA_OPEN.getKey(); }
+            case POLICE_BOX_LIGHT_BLUE -> { return PoliceBox.LIGHT_BLUE_OPEN.getKey(); }
+            case POLICE_BOX_YELLOW -> { return PoliceBox.YELLOW_OPEN.getKey(); }
+            case POLICE_BOX_LIME -> { return PoliceBox.LIME_OPEN.getKey(); }
+            case POLICE_BOX_PINK -> { return PoliceBox.PINK_OPEN.getKey(); }
+            case POLICE_BOX_GRAY -> { return PoliceBox.GRAY_OPEN.getKey(); }
+            case POLICE_BOX_LIGHT_GRAY -> { return PoliceBox.LIGHT_GRAY_OPEN.getKey(); }
+            case POLICE_BOX_CYAN -> { return PoliceBox.CYAN_OPEN.getKey(); }
+            case POLICE_BOX_PURPLE -> { return PoliceBox.PURPLE_OPEN.getKey(); }
+            case POLICE_BOX_BROWN -> { return PoliceBox.BROWN_OPEN.getKey(); }
+            case POLICE_BOX_GREEN -> { return PoliceBox.GREEN_OPEN.getKey(); }
+            case POLICE_BOX_RED -> { return PoliceBox.RED_OPEN.getKey(); }
+            case POLICE_BOX_BLACK -> { return PoliceBox.BLACK_OPEN.getKey(); }
+            case POLICE_BOX_TENNANT -> { return PoliceBox.TENNANT_OPEN.getKey(); }
+            case WEEPING_ANGEL -> { return GrayStainedGlassPane.WEEPING_ANGEL_OPEN.getKey(); }
+            case COLOURED -> { return LeatherHorseArmor.TARDIS_TINTED_OPEN.getKey(); }
+            case PANDORICA -> { return PoliceBox.PANDORICA_OPEN.getKey(); }
+        }
+        return null;
+    }
+
+    public NamespacedKey getStained() {
+        switch (this) {
+            case POLICE_BOX_BLUE -> { return PoliceBox.BLUE_STAINED.getKey(); }
+            case POLICE_BOX_WHITE -> { return PoliceBox.WHITE_STAINED.getKey(); }
+            case POLICE_BOX_ORANGE -> { return PoliceBox.ORANGE_STAINED.getKey(); }
+            case POLICE_BOX_MAGENTA -> { return PoliceBox.MAGENTA_STAINED.getKey(); }
+            case POLICE_BOX_LIGHT_BLUE -> { return PoliceBox.LIGHT_BLUE_STAINED.getKey(); }
+            case POLICE_BOX_YELLOW -> { return PoliceBox.YELLOW_STAINED.getKey(); }
+            case POLICE_BOX_LIME -> { return PoliceBox.LIME_STAINED.getKey(); }
+            case POLICE_BOX_PINK -> { return PoliceBox.PINK_STAINED.getKey(); }
+            case POLICE_BOX_GRAY -> { return PoliceBox.GRAY_STAINED.getKey(); }
+            case POLICE_BOX_LIGHT_GRAY -> { return PoliceBox.LIGHT_GRAY_STAINED.getKey(); }
+            case POLICE_BOX_CYAN -> { return PoliceBox.CYAN_STAINED.getKey(); }
+            case POLICE_BOX_PURPLE -> { return PoliceBox.PURPLE_STAINED.getKey(); }
+            case POLICE_BOX_BROWN -> { return PoliceBox.BROWN_STAINED.getKey(); }
+            case POLICE_BOX_GREEN -> { return PoliceBox.GREEN_STAINED.getKey(); }
+            case POLICE_BOX_RED -> { return PoliceBox.RED_STAINED.getKey(); }
+            case POLICE_BOX_BLACK -> { return PoliceBox.BLACK_STAINED.getKey(); }
+            case POLICE_BOX_TENNANT -> { return PoliceBox.TENNANT_STAINED.getKey(); }
+            case WEEPING_ANGEL -> { return GrayStainedGlassPane.WEEPING_ANGEL_STAINED.getKey(); }
+            case COLOURED -> { return LeatherHorseArmor.TARDIS_STAINED_TINTED.getKey(); }
+            case PANDORICA -> { return PoliceBox.PANDORICA_STAINED.getKey(); }
+        }
+        return null;
+    }
+
+    public NamespacedKey getGlass() {
+        switch (this) {
+            case POLICE_BOX_BLUE, POLICE_BOX_WHITE, POLICE_BOX_ORANGE, POLICE_BOX_MAGENTA, POLICE_BOX_LIGHT_BLUE,
+                 POLICE_BOX_YELLOW, POLICE_BOX_LIME, POLICE_BOX_PINK, POLICE_BOX_GRAY, POLICE_BOX_LIGHT_GRAY,
+                 POLICE_BOX_CYAN, POLICE_BOX_PURPLE, POLICE_BOX_BROWN, POLICE_BOX_GREEN, POLICE_BOX_RED, POLICE_BOX_BLACK,
+                 POLICE_BOX_TENNANT, COLOURED -> { return PoliceBox.GLASS.getKey(); }
+            case WEEPING_ANGEL -> { return GrayStainedGlassPane.WEEPING_ANGEL_GLASS.getKey(); }
+            case PANDORICA -> { return PoliceBox.PANDORICA_GLASS.getKey(); }
+        }
+        return null;
     }
 }

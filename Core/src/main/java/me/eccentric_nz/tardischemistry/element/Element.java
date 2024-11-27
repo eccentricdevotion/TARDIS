@@ -137,7 +137,7 @@ public enum Element {
     Livermorium(116, "Lv", 177),
     Tennessine(117, "Ts", 177),
     Oganesson(118, "Og", 176),
-    Unknown(999, "Un", 999);
+    Unknown(119, "Un", 999);
 
     private static final HashMap<String, Element> bySymbol = new HashMap<>();
     private static final HashMap<Integer, Element> byAtomicNumber = new HashMap<>();
