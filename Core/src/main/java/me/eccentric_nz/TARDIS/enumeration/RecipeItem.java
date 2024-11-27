@@ -213,7 +213,7 @@ public enum RecipeItem {
     GLOW_STICK(GlowStick.ORANGE_GLOW_STICK.getKey(), RecipeCategory.CHEMISTRY),
     ICE_BOMB(ChemistryItem.ICE_BOMB.getKey(), RecipeCategory.CHEMISTRY),
     SPARKLER(EndRod.SPARKLER_PURPLE.getKey(), RecipeCategory.CHEMISTRY),
-    SUPER_FERTILISER(BoneMeal.SUPER_FERTILISER.getKey(), RecipeCategory.CHEMISTRY),
+    SUPER_FERTILISER(ChemistryItem.SUPER_FERTILISER.getKey(), RecipeCategory.CHEMISTRY),
     // microscope
     COMPUTER_MONITOR(ChemistryItem.COMPUTER_MONITOR.getKey(), RecipeCategory.MICROSCOPE),
     ELECTRON_MICROSCOPE(ChemistryItem.ELECTRON_MICROSCOPE.getKey(), RecipeCategory.MICROSCOPE),

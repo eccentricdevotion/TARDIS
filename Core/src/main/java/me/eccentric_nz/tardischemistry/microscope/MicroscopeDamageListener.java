@@ -38,10 +38,10 @@ public class MicroscopeDamageListener implements Listener {
             }
             if (event.getDamager() instanceof Player player) {
                 LabEquipment equipment = LabEquipment.getByMaterial().get(dye.getType());
-                ItemStack drop = new ItemStack(equipment.material, 1);
+                ItemStack drop = new ItemStack(equipment.getMaterial(), 1);
                 ItemMeta dropMeta = drop.getItemMeta();
                 dropMeta.setDisplayName(equipment.getName());
-                dropMeta.setCustomModelData(10000);
+                dropMeta.setItemModel(equipment.getModel());
                 drop.setItemMeta(dropMeta);
                 player.getWorld().dropItem(entity.getLocation(), drop);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, frame::remove, 1L);

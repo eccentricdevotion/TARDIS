@@ -16,64 +16,68 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.BlazeRod;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Book;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 
 public enum GUISonicGenerator {
 
     // Sonic Generator
-    MARK_I(10000001, 0, Material.BLAZE_ROD, ""),
-    MARK_II(10000002, 1, Material.BLAZE_ROD, ""),
-    MARK_III(10000003, 2, Material.BLAZE_ROD, ""),
-    MARK_IV(10000004, 3, Material.BLAZE_ROD, ""),
-    EIGHTH_DOCTOR(10000008, 4, Material.BLAZE_ROD, ""),
-    TWELFTH_DOCTOR(10000012, 5, Material.BLAZE_ROD, ""),
-    THIRTEENTH_DOCTOR(10000013, 6, Material.BLAZE_ROD, ""),
-    NINTH_DOCTOR(10000009, 7, Material.BLAZE_ROD, ""),
-    TENTH_DOCTOR(10000010, 8, Material.BLAZE_ROD, ""),
-    ELEVENTH_DOCTOR(10000011, 9, Material.BLAZE_ROD, ""),
-    FOURTEENTH_DOCTOR(10000014, 10, Material.BLAZE_ROD, ""),
-    FIFTEENTH_DOCTOR(10000015, 11, Material.BLAZE_ROD, ""),
-    WAR_DOCTOR(10000085, 12, Material.BLAZE_ROD, ""),
-    MASTER(10000032, 13, Material.BLAZE_ROD, ""),
-    SARAH_JANE(10000033, 14, Material.BLAZE_ROD, ""),
-    AMY_POND(10000034, 15, Material.BLAZE_ROD, ""),
-    RIVER_SONG(10000031, 16, Material.BLAZE_ROD, ""),
-    MISSY(10000035, 17, Material.BLAZE_ROD, ""),
-    BRUSH_UPGRADE(150, 26, Material.BOWL, ""),
-    BIO_SCANNER_UPGRADE(9, 27, Material.BOWL, ""),
-    CONVERSION_UPGRADE(154, 28, Material.BOWL, ""),
-    DIAMOND_UPGRADE(50, 29, Material.BOWL, ""),
-    EMERALD_UPGRADE(51, 30, Material.BOWL, ""),
-    IGNITE_UPGRADE(56, 31, Material.BOWL, ""),
-    KNOCKBACK_UPGRADE(134, 32, Material.BOWL, ""),
-    PAINTER_UPGRADE(67, 33, Material.BOWL, ""),
-    PICKUP_ARROWS_UPGRADE(68, 34, Material.BOWL, ""),
-    REDSTONE_UPGRADE(71, 35, Material.BOWL, ""),
-    STANDARD_SONIC(80, 36, Material.BOWL, ""),
-    INSTRUCTIONS_1_OF_3(1, 38, Material.BOOK, "Select your Sonic Screwdriver~type from the top two rows.~Click on the upgrades you~want to add to the sonic."),
-    INSTRUCTIONS_2_OF_3(1, 39, Material.BOOK, "You can reset the upgrades~by clicking the 'Standard' button.~The Artron cost for the~sonic is shown bottom left."),
-    INSTRUCTIONS_3_OF_3(1, 40, Material.BOOK, "The final sonic result~is shown in the middle~of the bottom row."),
-    SAVE_SETTINGS(74, 43, Material.BOWL, "Click to save the current sonic.~No item will be generated!"),
-    GENERATE_SONIC_SCREWDRIVER(54, 44, Material.BOWL, "Click to generate a sonic~with the current settings."),
-    ARTRON_COST(6, 45, Material.BOWL, ""),
-    SONIC_SCREWDRIVER(10000011, 49, Material.BLAZE_ROD, ""),
-    CLOSE(1, 53, Material.BOWL, "Close the menu without~saving or generating.");
+    MARK_I(BlazeRod.MARK1.getKey(), 0, Material.BLAZE_ROD, ""),
+    MARK_II(BlazeRod.MARK2.getKey(), 1, Material.BLAZE_ROD, ""),
+    MARK_III(BlazeRod.MARK3.getKey(), 2, Material.BLAZE_ROD, ""),
+    MARK_IV(BlazeRod.MARK4.getKey(), 3, Material.BLAZE_ROD, ""),
+    EIGHTH_DOCTOR(BlazeRod.EIGHTH.getKey(), 4, Material.BLAZE_ROD, ""),
+    TWELFTH_DOCTOR(BlazeRod.TWELFTH.getKey(), 5, Material.BLAZE_ROD, ""),
+    THIRTEENTH_DOCTOR(BlazeRod.THIRTEENTH.getKey(), 6, Material.BLAZE_ROD, ""),
+    NINTH_DOCTOR(BlazeRod.NINTH.getKey(), 7, Material.BLAZE_ROD, ""),
+    TENTH_DOCTOR(BlazeRod.TENTH.getKey(), 8, Material.BLAZE_ROD, ""),
+    ELEVENTH_DOCTOR(BlazeRod.ELEVENTH.getKey(), 9, Material.BLAZE_ROD, ""),
+    FOURTEENTH_DOCTOR(BlazeRod.FOURTEENTH.getKey(), 10, Material.BLAZE_ROD, ""),
+    FIFTEENTH_DOCTOR(BlazeRod.FIFTEENTH.getKey(), 11, Material.BLAZE_ROD, ""),
+    WAR_DOCTOR(BlazeRod.WAR.getKey(), 12, Material.BLAZE_ROD, ""),
+    MASTER(BlazeRod.MASTER.getKey(), 13, Material.BLAZE_ROD, ""),
+    SARAH_JANE(BlazeRod.SARAH_JANE.getKey(), 14, Material.BLAZE_ROD, ""),
+    AMY_POND(BlazeRod.SONIC_PROBE.getKey(), 15, Material.BLAZE_ROD, ""),
+    RIVER_SONG(BlazeRod.RIVER_SONG.getKey(), 16, Material.BLAZE_ROD, ""),
+    MISSY(BlazeRod.UMBRELLA.getKey(), 17, Material.BLAZE_ROD, ""),
+    BRUSH_UPGRADE(Bowl.BRUSH.getKey(), 26, Material.BOWL, ""),
+    BIO_SCANNER_UPGRADE(Bowl.BIO.getKey(), 27, Material.BOWL, ""),
+    CONVERSION_UPGRADE(Bowl.CONVERSION.getKey(), 28, Material.BOWL, ""),
+    DIAMOND_UPGRADE(Bowl.DIAMOND.getKey(), 29, Material.BOWL, ""),
+    EMERALD_UPGRADE(Bowl.EMERALD.getKey(), 30, Material.BOWL, ""),
+    IGNITE_UPGRADE(Bowl.IGNITE.getKey(), 31, Material.BOWL, ""),
+    KNOCKBACK_UPGRADE(Bowl.KNOCKBACK.getKey(), 32, Material.BOWL, ""),
+    PAINTER_UPGRADE(Bowl.PAINTER.getKey(), 33, Material.BOWL, ""),
+    PICKUP_ARROWS_UPGRADE(Bowl.PICKUP.getKey(), 34, Material.BOWL, ""),
+    REDSTONE_UPGRADE(Bowl.REDSTONE.getKey(), 35, Material.BOWL, ""),
+    STANDARD_SONIC(Bowl.STANDARD_SONIC.getKey(), 36, Material.BOWL, ""),
+    INSTRUCTIONS_1_OF_3(Book.INFO.getKey(), 38, Material.BOOK, "Select your Sonic Screwdriver~type from the top two rows.~Click on the upgrades you~want to add to the sonic."),
+    INSTRUCTIONS_2_OF_3(Book.INFO.getKey(), 39, Material.BOOK, "You can reset the upgrades~by clicking the 'Standard' button.~The Artron cost for the~sonic is shown bottom left."),
+    INSTRUCTIONS_3_OF_3(Book.INFO.getKey(), 40, Material.BOOK, "The final sonic result~is shown in the middle~of the bottom row."),
+    SAVE_SETTINGS(Bowl.SAVE.getKey(), 43, Material.BOWL, "Click to save the current sonic.~No item will be generated!"),
+    GENERATE_SONIC_SCREWDRIVER(Bowl.GENERATE_SONIC_SCREWDRIVER.getKey(), 44, Material.BOWL, "Click to generate a sonic~with the current settings."),
+    ARTRON_COST(Bowl.ARTRON_BATTERY.getKey(), 45, Material.BOWL, ""),
+    SONIC_SCREWDRIVER(BlazeRod.ELEVENTH.getKey(), 49, Material.BLAZE_ROD, ""),
+    CLOSE(Bowl.CLOSE.getKey(), 53, Material.BOWL, "Close the menu without~saving or generating.");
 
-    private final int customModelData;
+    private final NamespacedKey model;
     private final int slot;
     private final Material material;
     private final String lore;
 
-    GUISonicGenerator(int customModelData, int slot, Material material, String lore) {
-        this.customModelData = customModelData;
+    GUISonicGenerator(NamespacedKey model, int slot, Material material, String lore) {
+        this.model = model;
         this.slot = slot;
         this.material = material;
         this.lore = lore;
     }
 
-    public int getCustomModelData() {
-        return customModelData;
+    public NamespacedKey getModel() {
+        return model;
     }
 
     public int getSlot() {

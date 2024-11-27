@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -38,7 +39,7 @@ public class SonicLore {
         }
     }
 
-    public static ItemStack addUpgrade(List<String> lore, String dn, int cmd, ItemStack result, String upgrade) {
+    public static ItemStack addUpgrade(List<String> lore, String dn, NamespacedKey model, ItemStack result, String upgrade) {
         int index = -1;
         String charge = null;
         for (int i = lore.size() - 1; i >= 0; i--) {
@@ -57,7 +58,7 @@ public class SonicLore {
         }
         ItemMeta rim = result.getItemMeta();
         rim.setDisplayName(dn);
-        rim.setCustomModelData(cmd);
+        rim.setItemModel(model);
         rim.setLore(lore);
         result.setItemMeta(rim);
         return result;

@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.FlowerPot;
 import me.eccentric_nz.TARDIS.database.data.Sonic;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSonic;
@@ -164,7 +165,7 @@ public class TARDISSonicGeneratorListener implements Listener {
                 screw.setLore(finalUps);
             }
             // set custom model data
-            screw.setCustomModelData(s.getCustomModelData());
+            screw.setItemModel(s.getModel());
             sonic.setItemMeta(screw);
             if (cost < level) {
                 Location loc = location.clone().add(0.5d, 0.75d, 0.5d);
@@ -216,7 +217,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             ItemStack is = new ItemStack(Material.FLOWER_POT, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("Sonic Generator");
-            im.setCustomModelData(10000001);
+            im.setItemModel(FlowerPot.SONIC_GENERATOR.getKey());
             is.setItemMeta(im);
             b.getWorld().dropItemNaturally(b.getLocation(), is);
         }

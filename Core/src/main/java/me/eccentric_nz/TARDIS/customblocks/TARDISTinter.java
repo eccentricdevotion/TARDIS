@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.customblocks;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.TintBlock;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -33,7 +34,24 @@ public class TARDISTinter {
         Material material = Material.valueOf(glass);
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
-        im.setCustomModelData(1021);
+        switch (glass) {
+            case "BLACK_STAINED_GLASS" -> im.setItemModel(TintBlock.TINT_BLACK.getKey());
+            case "BLUE_STAINED_GLASS" -> im.setItemModel(TintBlock.TINT_BLUE.getKey());
+            case "BROWN_STAINED_GLASS" -> im.setItemModel(TintBlock.TINT_BROWN.getKey());
+            case "CYAN_STAINED_GLASS" -> im.setItemModel(TintBlock.TINT_CYAN.getKey());
+            case "GRAY_STAINED_GLASS" -> im.setItemModel(TintBlock.TINT_GRAY.getKey());
+            case "GREEN_STAINED_GLASS" -> im.setItemModel(TintBlock.TINT_GREEN.getKey());
+            case "LIGHT_BLUE_STAINED_GLASS" -> im.setItemModel(TintBlock.TINT_LIGHT_BLUE.getKey());
+            case "LIGHT_GRAY_STAINED_GLASS" -> im.setItemModel(TintBlock.TINT_LIGHT_GRAY.getKey());
+            case "LIME_STAINED_GLASS" -> im.setItemModel(TintBlock.TINT_LIME.getKey());
+            case "MAGENTA_STAINED_GLASS" -> im.setItemModel(TintBlock.TINT_MAGENTA.getKey());
+            case "ORANGE_STAINED_GLASS" -> im.setItemModel(TintBlock.TINT_ORANGE.getKey());
+            case "PINK_STAINED_GLASS" -> im.setItemModel(TintBlock.TINT_PINK.getKey());
+            case "PURPLE_STAINED_GLASS" -> im.setItemModel(TintBlock.TINT_PURPLE.getKey());
+            case "RED_STAINED_GLASS" -> im.setItemModel(TintBlock.TINT_RED.getKey());
+            case "WHITE_STAINED_GLASS" -> im.setItemModel(TintBlock.TINT_WHITE.getKey());
+            case "YELLOW_STAINED_GLASS" -> im.setItemModel(TintBlock.TINT_YELLOW.getKey());
+        }
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.BYTE, (byte)1);
         is.setItemMeta(im);
         display.setItemStack(is);

@@ -17,14 +17,17 @@
 package me.eccentric_nz.TARDIS.database.resultset;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.BlazeRod;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Sonic;
+import me.eccentric_nz.TARDIS.recipes.shaped.SonicScrewdriverRecipe;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -92,7 +95,27 @@ public class ResultSetSonic {
                 sonic = new Sonic(
                         UUID.fromString(rs.getString("uuid")),
                         rs.getBoolean("activated"),
-                        rs.getInt("model"),
+                        switch (rs.getString("model")) {
+                            case "mark1", "10000001" -> BlazeRod.MARK1.getKey();
+                            case "mark2", "10000002" -> BlazeRod.MARK2.getKey();
+                            case "mark3", "10000003" -> BlazeRod.MARK3.getKey();
+                            case "mark4", "10000004" -> BlazeRod.MARK4.getKey();
+                            case "eighth", "10000008" -> BlazeRod.EIGHTH.getKey();
+                            case "ninth", "10000009" -> BlazeRod.NINTH.getKey();
+                            case "tenth", "10000010" -> BlazeRod.TENTH.getKey();
+                            case "eleventh", "10000011" -> BlazeRod.ELEVENTH.getKey();
+                            case "twelfth", "10000012" -> BlazeRod.TWELFTH.getKey();
+                            case "thirteenth", "10000013" -> BlazeRod.THIRTEENTH.getKey();
+                            case "fourteenth", "10000014" -> BlazeRod.FOURTEENTH.getKey();
+                            case "fifteenth", "10000015" -> BlazeRod.FIFTEENTH.getKey();
+                            case "river_song", "10000031" -> BlazeRod.RIVER_SONG.getKey();
+                            case "master", "10000032" -> BlazeRod.MASTER.getKey();
+                            case "sarah_jane", "10000033" -> BlazeRod.SARAH_JANE.getKey();
+                            case "sonic_probe", "10000034" -> BlazeRod.SONIC_PROBE.getKey();
+                            case "umbrella", "10000035" -> BlazeRod.UMBRELLA.getKey();
+                            case "war", "10000085" -> BlazeRod.WAR.getKey();
+                            default -> SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), BlazeRod.ELEVENTH.getKey());
+                        },
                         rs.getBoolean("bio"),
                         rs.getBoolean("diamond"),
                         rs.getBoolean("emerald"),

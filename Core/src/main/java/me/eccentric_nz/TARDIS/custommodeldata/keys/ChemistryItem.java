@@ -21,7 +21,8 @@ public enum ChemistryItem {
     FILING_CABINET_OPEN(new NamespacedKey(TARDIS.plugin, "equipment/filing_cabinet_open")),
     TELESCOPE(new NamespacedKey(TARDIS.plugin, "equipment/telescope")),
     BLEACH(new NamespacedKey(TARDIS.plugin, "products/bleach")),
-    ICE_BOMB(new NamespacedKey(TARDIS.plugin, "products/ice_bomb"));
+    ICE_BOMB(new NamespacedKey(TARDIS.plugin, "products/ice_bomb")),
+    SUPER_FERTILISER(new NamespacedKey(TARDIS.plugin, "products/super_fertiliser"));
 
     private final NamespacedKey key;
 

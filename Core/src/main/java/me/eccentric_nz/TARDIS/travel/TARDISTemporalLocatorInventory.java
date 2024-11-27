@@ -61,7 +61,7 @@ public class TARDISTemporalLocatorInventory {
             } else {
                 im.setLore(List.of(clock.getLore()));
             }
-            im.setCustomModelData(clock.getCustomModelData());
+            im.setItemModel(clock.getModel());
             is.setItemMeta(im);
             clocks[clock.getSlot()] = is;
         }

@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.transmat;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUITransmat;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Map;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmatList;
 import org.bukkit.Material;
@@ -60,7 +61,7 @@ public class TARDISTransmatInventory {
                 }
                 ItemStack is = new ItemStack(Material.MAP, 1);
                 ItemMeta im = is.getItemMeta();
-                im.setCustomModelData(4);
+                im.setItemModel(Map.TRANSMAT_LOCATION.getKey());
                 im.setDisplayName(t.getName());
                 List<String> lore = new ArrayList<>();
                 lore.add(String.format("X: %.2f", t.getX()));

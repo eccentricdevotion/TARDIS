@@ -27,8 +27,8 @@ public class LabBuilder {
         ItemStack is = new ItemStack(lab.getItemMaterial(), 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(lab.toString().replace("_", " "));
-        im.setCustomModelData(10000000 + lab.getCustomModelData());
-        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, lab.getCustomModelData());
+        im.setItemModel(lab.getModel());
+        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, lab.getModel().getKey());
         is.setItemMeta(im);
         return is;
     }

@@ -19,13 +19,11 @@ package me.eccentric_nz.TARDIS.sonic;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.BlazeRod;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.sonic.actions.*;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Tag;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -281,13 +279,16 @@ public class TARDISSonicListener implements Listener {
             ItemMeta im = is.getItemMeta();
             if (im.getDisplayName().endsWith("Sonic Screwdriver")) {
                 // set to off state
-                int cmd = im.getCustomModelData();
-                if (cmd > 10001000) {
-                    cmd = cmd - 2000000;
-                    im.setCustomModelData(cmd);
-                    is.setItemMeta(im);
-                    item.setItemStack(is);
+                if (im.hasItemModel()) {
+                    NamespacedKey model = im.getItemModel();
+                    if (model.getKey().endsWith("_open")) {
+                        im.setItemModel(new NamespacedKey(plugin, model.getKey().replace("_open", "")));
+                    }
+                } else {
+                    im.setItemModel(BlazeRod.ELEVENTH.getKey());
                 }
+                is.setItemMeta(im);
+                item.setItemStack(is);
             }
         }
     }

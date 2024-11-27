@@ -60,7 +60,7 @@ class TARDISSonicGeneratorInventory {
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");
                 im.setLore(List.of(sonic.getName()));
-                im.setCustomModelData(sonic.getCustomModelData());
+                im.setItemModel(sonic.getModel());
                 is.setItemMeta(im);
                 stack[sonic.getSlot()] = is;
             }
@@ -71,7 +71,7 @@ class TARDISSonicGeneratorInventory {
                 if (!sonic.getLore().isEmpty()) {
                     im.setLore(Arrays.asList(sonic.getLore().split("~")));
                 }
-                im.setCustomModelData(sonic.getCustomModelData());
+                im.setItemModel(sonic.getModel());
                 is.setItemMeta(im);
                 stack[sonic.getSlot()] = is;
             }
@@ -82,7 +82,7 @@ class TARDISSonicGeneratorInventory {
         info_im.setDisplayName("Instructions (1/3)");
         List<String> lore = Arrays.asList("Select your Sonic Screwdriver", "type from the top two rows.", "Click on the upgrades you", "want to add to the sonic.");
         info_im.setLore(lore);
-        info_im.setCustomModelData(GUISonicGenerator.INSTRUCTIONS_1_OF_3.getCustomModelData());
+        info_im.setItemModel(GUISonicGenerator.INSTRUCTIONS_1_OF_3.getModel());
         info.setItemMeta(info_im);
         stack[38] = info;
         // info 2/3
@@ -91,7 +91,7 @@ class TARDISSonicGeneratorInventory {
         info1_im.setDisplayName("Instructions (2/3)");
         List<String> lore1 = Arrays.asList("You can reset the upgrades", "by clicking the 'Standard' button.", "The Artron cost for the", "sonic is shown bottom left.");
         info1_im.setLore(lore1);
-        info1_im.setCustomModelData(GUISonicGenerator.INSTRUCTIONS_2_OF_3.getCustomModelData());
+        info1_im.setItemModel(GUISonicGenerator.INSTRUCTIONS_2_OF_3.getModel());
         info1.setItemMeta(info1_im);
         stack[39] = info1;
         // info 3/3
@@ -100,14 +100,14 @@ class TARDISSonicGeneratorInventory {
         info2_im.setDisplayName("Instructions (3/3)");
         List<String> lore2 = Arrays.asList("The final sonic result", "is shown in the middle", "of the bottom row.");
         info2_im.setLore(lore2);
-        info2_im.setCustomModelData(GUISonicGenerator.INSTRUCTIONS_3_OF_3.getCustomModelData());
+        info2_im.setItemModel(GUISonicGenerator.INSTRUCTIONS_3_OF_3.getModel());
         info2.setItemMeta(info2_im);
         stack[40] = info2;
         // players preferred sonic
         ItemStack sonic = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta screw = sonic.getItemMeta();
         screw.setDisplayName("Sonic Screwdriver");
-        screw.setCustomModelData(data.getCustomModelData());
+        screw.setItemModel(data.getModel());
         List<String> upgrades = new ArrayList<>();
         double full = plugin.getArtronConfig().getDouble("full_charge") / 100.0d;
         int artron = (int) (plugin.getArtronConfig().getDouble("sonic_generator.standard") * full);
@@ -156,7 +156,7 @@ class TARDISSonicGeneratorInventory {
         ItemMeta cost_im = cost.getItemMeta();
         cost_im.setDisplayName("Artron cost");
         cost_im.setLore(List.of("" + artron));
-        cost_im.setCustomModelData(GUISonicGenerator.ARTRON_COST.getCustomModelData());
+        cost_im.setItemModel(GUISonicGenerator.ARTRON_COST.getModel());
         cost.setItemMeta(cost_im);
         stack[45] = cost;
 

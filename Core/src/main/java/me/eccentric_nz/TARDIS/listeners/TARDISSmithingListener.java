@@ -17,9 +17,12 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.BlazeRod;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bucket;
 import me.eccentric_nz.TARDIS.sonic.SonicUpgradeData;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -76,9 +79,9 @@ public class TARDISSmithingListener implements Listener {
                     return;
                 }
                 ItemMeta sim = sonic.getItemMeta();
-                int cmd = 10000011;
-                if (sim.hasCustomModelData()) {
-                    cmd = sim.getCustomModelData();
+                NamespacedKey model = BlazeRod.ELEVENTH.getKey();
+                if (sim.hasItemModel()) {
+                    model = sim.getItemModel();
                 }
                 String dn = sim.getDisplayName();
                 List<String> lore;
@@ -93,7 +96,7 @@ public class TARDISSmithingListener implements Listener {
                 // if they don't already have the upgrade
                 if (!lore.contains(upgrade)) {
                     im.setDisplayName(dn);
-                    im.setCustomModelData(cmd);
+                    im.setItemModel(model);
                     int index = -1;
                     String charge = null;
                     for (int i = lore.size() - 1; i >= 0; i--) {
@@ -120,7 +123,7 @@ public class TARDISSmithingListener implements Listener {
             } else if (isDamagedCapacitor(sonic)) {
                 ItemStack repaired = sonic.clone();
                 ItemMeta im = repaired.getItemMeta();
-                im.setCustomModelData(10000003);
+                im.setItemModel(Bucket.ARTRON_CAPACITOR.getKey());
                 is.setItemMeta(im);
                 event.setResult(repaired);
             }

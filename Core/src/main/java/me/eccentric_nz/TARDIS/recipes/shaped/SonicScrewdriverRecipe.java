@@ -29,8 +29,8 @@ amount:1
 
 public class SonicScrewdriverRecipe {
 
+    public static final HashMap<String, NamespacedKey> sonicModelLookup = new HashMap<>();
     private final TARDIS plugin;
-    private final HashMap<String, NamespacedKey> sonicModelLookup = new HashMap<>();
 
 
     public SonicScrewdriverRecipe(TARDIS plugin) {

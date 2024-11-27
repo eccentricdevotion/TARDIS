@@ -18,6 +18,7 @@ package me.eccentric_nz.tardischemistry.lab;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.MilkBucket;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -173,19 +174,19 @@ public class CureBrewingListener implements Listener {
                                             switch (potionType) {
                                                 case AWKWARD -> {
                                                     im.setDisplayName(ChatColor.WHITE + "Antidote");
-                                                    im.setCustomModelData(1);
+                                                    im.setItemModel(MilkBucket.ANTIDOTE.getKey());
                                                 }
                                                 case MUNDANE -> {
                                                     im.setDisplayName(ChatColor.WHITE + "Elixir");
-                                                    im.setCustomModelData(2);
+                                                    im.setItemModel(MilkBucket.ELIXIR.getKey());
                                                 }
                                                 case THICK -> {
                                                     im.setDisplayName(ChatColor.WHITE + "Eye drops");
-                                                    im.setCustomModelData(3);
+                                                    im.setItemModel(MilkBucket.EYEDROPS.getKey());
                                                 }
                                                 default -> { // UNCRAFTABLE
                                                     im.setDisplayName(ChatColor.WHITE + "Tonic");
-                                                    im.setCustomModelData(4);
+                                                    im.setItemModel(MilkBucket.TONIC.getKey());
                                                 }
                                             }
                                             is.setItemMeta(im);

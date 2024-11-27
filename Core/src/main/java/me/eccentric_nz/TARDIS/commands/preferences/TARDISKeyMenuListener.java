@@ -94,7 +94,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                 ItemStack choice = view.getItem(slot);
                 ItemMeta choiceMeta = choice.getItemMeta();
                 ItemMeta keyMeta = key.getItemMeta();
-                keyMeta.setCustomModelData(choiceMeta.getCustomModelData());
+                keyMeta.setItemModel(choiceMeta.getItemModel());
                 // personalise
                 keyMeta.getPersistentDataContainer().set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
                 // set lore

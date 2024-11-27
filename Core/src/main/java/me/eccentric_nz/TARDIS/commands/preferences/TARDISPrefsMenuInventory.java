@@ -121,14 +121,13 @@ public class TARDISPrefsMenuInventory {
                 ItemStack is = new ItemStack(pref.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(pref.getName());
-                int cmd = pref.getCustomModelData();
                 boolean v;
                 if (pref == GUIPlayerPreferences.JUNK_TARDIS) {
                     v = (tardis != null && tardis.getPreset().equals(ChameleonPreset.JUNK_MODE));
                 } else {
                     v = values.get(pref.getSlot());
                 }
-                im.setCustomModelData(v ? cmd : cmd + 100);
+                im.setItemModel(v ? pref.getOnModel() : pref.getOffModel());
                 if (pref == GUIPlayerPreferences.HADS_TYPE) {
                     im.setLore(List.of(v ? "DISPERSAL" : "DISPLACEMENT"));
                 } else {
@@ -147,7 +146,7 @@ public class TARDISPrefsMenuInventory {
         ght_im.setDisplayName("Flight Mode");
         String mode_value = FlightMode.getByMode().get(rsp.getFlightMode()).toString();
         ght_im.setLore(List.of(mode_value));
-        ght_im.setCustomModelData(GUIPlayerPreferences.FLIGHT_MODE.getCustomModelData());
+        ght_im.setItemModel(GUIPlayerPreferences.FLIGHT_MODE.getOnModel());
         fli.setItemMeta(ght_im);
         stack[GUIPlayerPreferences.FLIGHT_MODE.getSlot()] = fli;
         // interior hum sound
@@ -156,7 +155,7 @@ public class TARDISPrefsMenuInventory {
         hum_im.setDisplayName("Interior Hum Sound");
         String hum_value = (rsp.getHum().isEmpty()) ? "random" : rsp.getHum();
         hum_im.setLore(List.of(hum_value));
-        hum_im.setCustomModelData(GUIPlayerPreferences.INTERIOR_HUM_SOUND.getCustomModelData());
+        hum_im.setItemModel(GUIPlayerPreferences.INTERIOR_HUM_SOUND.getOnModel());
         hum.setItemMeta(hum_im);
         stack[GUIPlayerPreferences.INTERIOR_HUM_SOUND.getSlot()] = hum;
         // handbrake
@@ -164,14 +163,14 @@ public class TARDISPrefsMenuInventory {
         ItemMeta brake = hand.getItemMeta();
         brake.setDisplayName("Handbrake");
         brake.setLore(List.of((tardis != null && tardis.isHandbrakeOn()) ? plugin.getLanguage().getString("SET_ON", "ON") : plugin.getLanguage().getString("SET_OFF", "OFF")));
-        brake.setCustomModelData(GUIPlayerPreferences.HANDBRAKE.getCustomModelData());
+        brake.setItemModel(GUIPlayerPreferences.HANDBRAKE.getOnModel());
         hand.setItemMeta(brake);
         stack[GUIPlayerPreferences.HANDBRAKE.getSlot()] = hand;
         // map
         ItemStack tt = new ItemStack(Material.MAP, 1);
         ItemMeta map = tt.getItemMeta();
         map.setDisplayName("TARDIS Map");
-        map.setCustomModelData(GUIPlayerPreferences.TARDIS_MAP.getCustomModelData());
+        map.setItemModel(GUIPlayerPreferences.TARDIS_MAP.getOnModel());
         tt.setItemMeta(map);
         stack[GUIPlayerPreferences.TARDIS_MAP.getSlot()] = tt;
         if (plugin.getServer().getPlayer(uuid).hasPermission("tardis.autonomous")) {
@@ -179,7 +178,7 @@ public class TARDISPrefsMenuInventory {
             ItemStack auto = new ItemStack(Material.BOWL, 1);
             ItemMeta prefs = auto.getItemMeta();
             prefs.setDisplayName("Autonomous Preferences");
-            prefs.setCustomModelData(GUIPlayerPreferences.AUTONOMOUS_PREFERENCES.getCustomModelData());
+            prefs.setItemModel(GUIPlayerPreferences.AUTONOMOUS_PREFERENCES.getOnModel());
             auto.setItemMeta(prefs);
             stack[GUIPlayerPreferences.AUTONOMOUS_PREFERENCES.getSlot()] = auto;
         }
@@ -188,7 +187,7 @@ public class TARDISPrefsMenuInventory {
             ItemStack farm = new ItemStack(Material.BOWL, 1);
             ItemMeta ing = farm.getItemMeta();
             ing.setDisplayName("Farming Preferences");
-            ing.setCustomModelData(GUIPlayerPreferences.FARMING_PREFERENCES.getCustomModelData());
+            ing.setItemModel(GUIPlayerPreferences.FARMING_PREFERENCES.getOnModel());
             farm.setItemMeta(ing);
             stack[GUIPlayerPreferences.FARMING_PREFERENCES.getSlot()] = farm;
         }
@@ -196,7 +195,7 @@ public class TARDISPrefsMenuInventory {
         ItemStack sonic = new ItemStack(Material.BOWL, 1);
         ItemMeta config = sonic.getItemMeta();
         config.setDisplayName("Sonic Configurator");
-        config.setCustomModelData(GUIPlayerPreferences.SONIC_CONFIGURATOR.getCustomModelData());
+        config.setItemModel(GUIPlayerPreferences.SONIC_CONFIGURATOR.getOnModel());
         sonic.setItemMeta(config);
         stack[GUIPlayerPreferences.SONIC_CONFIGURATOR.getSlot()] = sonic;
         if (plugin.getServer().getPlayer(uuid).hasPermission("tardis.particles")) {
@@ -204,7 +203,7 @@ public class TARDISPrefsMenuInventory {
             ItemStack part = new ItemStack(Material.BOWL, 1);
             ItemMeta icles = part.getItemMeta();
             icles.setDisplayName("Materialisation Particles");
-            icles.setCustomModelData(GUIPlayerPreferences.PARTICLES.getCustomModelData());
+            icles.setItemModel(GUIPlayerPreferences.PARTICLES.getOnModel());
             part.setItemMeta(icles);
             stack[GUIPlayerPreferences.PARTICLES.getSlot()] = part;
         }
@@ -213,7 +212,7 @@ public class TARDISPrefsMenuInventory {
             ItemStack ad = new ItemStack(Material.NETHER_STAR, 1);
             ItemMeta min = ad.getItemMeta();
             min.setDisplayName("Admin Config Menu");
-            min.setCustomModelData(GUIPlayerPreferences.ADMIN_MENU.getCustomModelData());
+            min.setItemModel(GUIPlayerPreferences.ADMIN_MENU.getOnModel());
             ad.setItemMeta(min);
             stack[GUIPlayerPreferences.ADMIN_MENU.getSlot()] = ad;
         }

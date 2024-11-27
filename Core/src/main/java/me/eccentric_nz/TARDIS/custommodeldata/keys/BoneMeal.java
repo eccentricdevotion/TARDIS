@@ -19,8 +19,7 @@ public enum BoneMeal {
     SYCORAX_ATTACKING_1(new NamespacedKey(TARDIS.plugin, "monster/sycorax/frames/sycorax_attacking_1")),
     SYCORAX_ATTACKING_2(new NamespacedKey(TARDIS.plugin, "monster/sycorax/frames/sycorax_attacking_2")),
     SYCORAX_ATTACKING_3(new NamespacedKey(TARDIS.plugin, "monster/sycorax/frames/sycorax_attacking_3")),
-    SYCORAX_ATTACKING_4(new NamespacedKey(TARDIS.plugin, "monster/sycorax/frames/sycorax_attacking_4")),
-    SUPER_FERTILISER(new NamespacedKey(TARDIS.plugin, "products/super_fertiliser"));
+    SYCORAX_ATTACKING_4(new NamespacedKey(TARDIS.plugin, "monster/sycorax/frames/sycorax_attacking_4"));
 
     private final NamespacedKey key;
 

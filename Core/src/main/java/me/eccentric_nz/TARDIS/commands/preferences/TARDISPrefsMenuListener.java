@@ -311,7 +311,8 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         boolean bool = (lore.getFirst().equals(plugin.getLanguage().getString("SET_ON")));
         String value = (bool) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
         int b = (bool) ? 0 : 1;
-        switch (im.getDisplayName()) {
+        String which = im.getDisplayName();
+        switch (which) {
             case "Junk TARDIS" -> {
                 // must be on the outside of the TARDIS
                 HashMap<String, Object> wheret = new HashMap<>();
@@ -431,8 +432,8 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         }
         lore.set(0, value);
         im.setLore(lore);
-        int cmd = im.getCustomModelData();
-        im.setCustomModelData((cmd > 100) ? cmd - 100 : cmd + 100);
+        GUIPlayerPreferences gui = GUIPlayerPreferences.fromString(which);
+        im.setItemModel((value.equals(plugin.getLanguage().getString("SET_ON"))) ? gui.getOnModel() : gui.getOffModel());
         is.setItemMeta(im);
         if (im.getDisplayName().equals("Beacon")) {
             // get tardis id

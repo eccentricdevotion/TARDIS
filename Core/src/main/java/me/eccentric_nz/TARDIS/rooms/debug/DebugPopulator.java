@@ -508,9 +508,9 @@ public class DebugPopulator {
             ItemFrame frame = (ItemFrame) world.spawnEntity(location, EntityType.ITEM_FRAME);
             frame.setFacingDirection(BlockFace.UP, true);
             // set item
-            ItemStack is = new ItemStack(le.material);
+            ItemStack is = new ItemStack(le.getMaterial());
             ItemMeta im = is.getItemMeta();
-            im.setCustomModelData(10000);
+            im.setItemModel(le.getModel());
             is.setItemMeta(im);
             frame.setItem(is);
             // lock

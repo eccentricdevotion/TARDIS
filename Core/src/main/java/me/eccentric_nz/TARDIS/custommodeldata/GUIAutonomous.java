@@ -16,8 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Repeater;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,43 +28,43 @@ import java.util.List;
 public enum GUIAutonomous {
 
     // TARDIS Autonomous
-    AUTONOMOUS_TYPE(151, 0, Material.REPEATER),
-    TYPE_INFO(57, 1, Material.BOWL, Arrays.asList("Choose the location you want", "the TARDIS to automatically", "return to when you die.")),
-    HOME(140, 3, Material.BOWL, Arrays.asList("Always go to the", "TARDIS's home location")),
-    AREAS(141, 4, Material.BOWL, Arrays.asList("Go to the an area", "in the death world.", "If a parking spot cannot", "be found, use the fallback", "specified below.")),
-    CONFIGURED_AREAS(142, 5, Material.BOWL, Arrays.asList("Go to the server's", "default area(s).", "If a parking spot cannot", "be found, use the fallback", "specified below.")),
-    CLOSEST(143, 6, Material.BOWL, Arrays.asList("Go to the TARDIS's", "home location or an area", "whichever is closest.")),
-    SAVE(158, 7, Material.BOWL, Arrays.asList("Go to a TARDIS", "saved destination.")),
-    SELECTED_TYPE(-1, -1, Material.LIME_WOOL),
-    FALLBACK(152, 18, Material.REPEATER),
-    FALLBACK_INFO(57, 19, Material.BOWL, Arrays.asList("If a preferred location", "cannot be found, choose", "what the TARDIS should do.")),
-    GO_HOME(140, 21, Material.BOWL),
-    STAY(144, 22, Material.BOWL),
-    SAVE_SELECTOR(159, 25, Material.BOWL, Arrays.asList("Choose a save", "to travel to -", "click to set.")),
-    SELECTED_DEFAULT(-1, -1, Material.LIME_WOOL),
-    CLOSE(1, 35, Material.BOWL);
+    AUTONOMOUS_TYPE(Repeater.AUTO_TYPE.getKey(), 0, Material.REPEATER),
+    TYPE_INFO(Bowl.INFO.getKey(), 1, Material.BOWL, Arrays.asList("Choose the location you want", "the TARDIS to automatically", "return to when you die.")),
+    HOME(Bowl.HOME.getKey(), 3, Material.BOWL, Arrays.asList("Always go to the", "TARDIS's home location")),
+    AREAS(Bowl.AREAS.getKey(), 4, Material.BOWL, Arrays.asList("Go to the an area", "in the death world.", "If a parking spot cannot", "be found, use the fallback", "specified below.")),
+    CONFIGURED_AREAS(Bowl.CONFIGURED.getKey(), 5, Material.BOWL, Arrays.asList("Go to the server's", "default area(s).", "If a parking spot cannot", "be found, use the fallback", "specified below.")),
+    CLOSEST(Bowl.CLOSEST.getKey(), 6, Material.BOWL, Arrays.asList("Go to the TARDIS's", "home location or an area", "whichever is closest.")),
+    SAVE(Bowl.SAVE.getKey(), 7, Material.BOWL, Arrays.asList("Go to a TARDIS", "saved destination.")),
+    SELECTED_TYPE(null, -1, Material.LIME_WOOL),
+    FALLBACK(Repeater.AUTO_DEFAULT.getKey(), 18, Material.REPEATER),
+    FALLBACK_INFO(Bowl.INFO.getKey(), 19, Material.BOWL, Arrays.asList("If a preferred location", "cannot be found, choose", "what the TARDIS should do.")),
+    GO_HOME(Bowl.HOME.getKey(), 21, Material.BOWL),
+    STAY(Bowl.STAY.getKey(), 22, Material.BOWL),
+    SAVE_SELECTOR(Bowl.AUTO_SAVE_SELECTOR.getKey(), 25, Material.BOWL, Arrays.asList("Choose a save", "to travel to -", "click to set.")),
+    SELECTED_DEFAULT(null, -1, Material.LIME_WOOL),
+    CLOSE(Bowl.CLOSE.getKey(), 35, Material.BOWL);
 
-    private final int customModelData;
+    private final NamespacedKey model;
     private final int slot;
     private final Material material;
     private final List<String> lore;
 
-    GUIAutonomous(int customModelData, int slot, Material material, List<String> lore) {
-        this.customModelData = customModelData;
+    GUIAutonomous(NamespacedKey model, int slot, Material material, List<String> lore) {
+        this.model = model;
         this.slot = slot;
         this.material = material;
         this.lore = lore;
     }
 
-    GUIAutonomous(int customModelData, int slot, Material material) {
-        this.customModelData = customModelData;
+    GUIAutonomous(NamespacedKey model, int slot, Material material) {
+        this.model = model;
         this.slot = slot;
         this.material = material;
         this.lore = null;
     }
 
-    public int getCustomModelData() {
-        return customModelData;
+    public NamespacedKey getModel() {
+        return model;
     }
 
     public int getSlot() {

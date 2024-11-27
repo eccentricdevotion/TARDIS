@@ -16,46 +16,49 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.RoomBlock;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 
 public enum GUIFarming {
 
     // TARDIS Farming
-    ALLAY(1, 0, Material.LIGHT_BLUE_CONCRETE, "Allay"),
-    APIARY(1, 1, Material.BEE_NEST, "Bee"),
-    AQUARIUM(1, 2, Material.TUBE_CORAL_BLOCK, "Fish"),
-    BAMBOO(1, 3, Material.BAMBOO, "Panda"),
-    BIRDCAGE(1, 4, Material.YELLOW_GLAZED_TERRACOTTA, "Bird"),
-    FARM(1, 5, Material.DIRT, "Cow & Mooshroom, Sheep, Pig, Chicken"),
-    GEODE(1, 6, Material.AMETHYST_BLOCK, "Axolotl"),
-    HUTCH(1, 7, Material.ACACIA_LOG, "Rabbit"),
-    IGLOO(1, 8, Material.PACKED_ICE, "Polar Bear"),
-    IISTUBIL(1, 18, Material.WHITE_GLAZED_TERRACOTTA, "Camel"),
-    LAVA(1, 19, Material.MAGMA_BLOCK, "Strider"),
-    MANGROVE(1, 20, Material.MUDDY_MANGROVE_ROOTS, "Frog"),
-    PEN(1, 21, Material.MOSS_BLOCK, "Sniffer"),
-    STABLE(1, 22, Material.HAY_BLOCK, "Horse"),
-    STALL(1, 23, Material.BROWN_GLAZED_TERRACOTTA, "Llama"),
-    VILLAGE(1, 24, Material.OAK_LOG, "Villager"),
-    ON(-1, -1, Material.LIME_WOOL, "On"),
-    OFF(-1, -1, Material.RED_WOOL, "Off"),
-    CLOSE(1, 35, Material.BOWL, "Close");
+    ALLAY(RoomBlock.ALLAY.getKey(), 0, Material.LIGHT_BLUE_CONCRETE, "Allay"),
+    APIARY(RoomBlock.APIARY.getKey(), 1, Material.BEE_NEST, "Bee"),
+    AQUARIUM(RoomBlock.AQUARIUM.getKey(), 2, Material.TUBE_CORAL_BLOCK, "Fish"),
+    BAMBOO(RoomBlock.BAMBOO.getKey(), 3, Material.BAMBOO, "Panda"),
+    BIRDCAGE(RoomBlock.BIRDCAGE.getKey(), 4, Material.YELLOW_GLAZED_TERRACOTTA, "Bird"),
+    FARM(RoomBlock.FARM.getKey(), 5, Material.DIRT, "Cow & Mooshroom, Sheep, Pig, Chicken"),
+    GEODE(RoomBlock.GEODE.getKey(), 6, Material.AMETHYST_BLOCK, "Axolotl"),
+    HUTCH(RoomBlock.HUTCH.getKey(), 7, Material.ACACIA_LOG, "Rabbit"),
+    IGLOO(RoomBlock.IGLOO.getKey(), 8, Material.PACKED_ICE, "Polar Bear"),
+    IISTUBIL(RoomBlock.IISTUBIL.getKey(), 18, Material.WHITE_GLAZED_TERRACOTTA, "Camel"),
+    LAVA(RoomBlock.LAVA.getKey(), 19, Material.MAGMA_BLOCK, "Strider"),
+    MANGROVE(RoomBlock.MANGROVE.getKey(), 20, Material.MUDDY_MANGROVE_ROOTS, "Frog"),
+    PEN(RoomBlock.PEN.getKey(), 21, Material.MOSS_BLOCK, "Sniffer"),
+    STABLE(RoomBlock.STABLE.getKey(), 22, Material.HAY_BLOCK, "Horse"),
+    STALL(RoomBlock.STALL.getKey(), 23, Material.BROWN_GLAZED_TERRACOTTA, "Llama"),
+    VILLAGE(RoomBlock.VILLAGE.getKey(), 24, Material.OAK_LOG, "Villager"),
+    ON(null, -1, Material.LIME_WOOL, "On"),
+    OFF(null, -1, Material.RED_WOOL, "Off"),
+    CLOSE(Bowl.CLOSE.getKey(), 35, Material.BOWL, "Close");
 
-    private final int customModelData;
+    private final NamespacedKey model;
     private final int slot;
     private final Material material;
     private final String mob;
 
-    GUIFarming(int customModelData, int slot, Material material, String mob) {
-        this.customModelData = customModelData;
+    GUIFarming(NamespacedKey model, int slot, Material material, String mob) {
+        this.model = model;
         this.slot = slot;
         this.material = material;
         this.mob = mob;
     }
 
-    public int getCustomModelData() {
-        return customModelData;
+    public NamespacedKey getModel() {
+        return model;
     }
 
     public int getSlot() {

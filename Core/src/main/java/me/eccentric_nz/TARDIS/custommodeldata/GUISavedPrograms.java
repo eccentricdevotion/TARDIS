@@ -16,31 +16,35 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Arrow;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bucket;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 
 public enum GUISavedPrograms {
 
     // Saved Programs
-    BACK_TO_EDITOR(1, 45, Material.ARROW),
-    LOAD_SELECTED_PROGRAM_IN_EDITOR(61, 47, Material.BOWL),
-    DEACTIVATE_SELECTED_PROGRAM(2, 48, Material.BUCKET),
-    DELETE_SELECTED_PROGRAM(1, 49, Material.BUCKET),
-    CHECK_OUT_SELECTED_PROGRAM(33, 51, Material.BOWL),
-    CLOSE(1, 53, Material.BOWL);
+    BACK_TO_EDITOR(Arrow.BACK.getKey(), 45, Material.ARROW),
+    LOAD_SELECTED_PROGRAM_IN_EDITOR(Bowl.LOAD_SELECTED_PROGRAM_IN_EDITOR.getKey(), 47, Material.BOWL),
+    DEACTIVATE_SELECTED_PROGRAM(Bucket.DEACTIVATE.getKey(), 48, Material.BUCKET),
+    DELETE_SELECTED_PROGRAM(Bucket.DELETE.getKey(), 49, Material.BUCKET),
+    CHECK_OUT_SELECTED_PROGRAM(Bowl.CHECK_OUT_SELECTED_PROGRAM.getKey(), 51, Material.BOWL),
+    CLOSE(Bowl.CLOSE.getKey(), 53, Material.BOWL);
 
-    private final int customModelData;
+    private final NamespacedKey model;
     private final int slot;
     private final Material material;
 
-    GUISavedPrograms(int customModelData, int slot, Material material) {
-        this.customModelData = customModelData;
+    GUISavedPrograms(NamespacedKey model, int slot, Material material) {
+        this.model = model;
         this.slot = slot;
         this.material = material;
     }
 
-    public int getCustomModelData() {
-        return customModelData;
+    public NamespacedKey getModel() {
+        return model;
     }
 
     public int getSlot() {

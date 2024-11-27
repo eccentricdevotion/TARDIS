@@ -16,25 +16,27 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Wool;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 
 public enum SonicConfig {
 
-    NOT_UPGRADED(1, Material.GRAY_WOOL),
-    ENABLED(2, Material.LIME_WOOL),
-    DISABLED(2, Material.RED_WOOL);
+    NOT_UPGRADED(Wool.NOT_UPGRADED.getKey(), Material.GRAY_WOOL),
+    ENABLED(Wool.ENABLED.getKey(), Material.LIME_WOOL),
+    DISABLED(Wool.DISABLED.getKey(), Material.RED_WOOL);
 
-    private final int customModelData;
+    private final NamespacedKey model;
     private final Material material;
 
-    SonicConfig(int customModelData, Material material) {
-        this.customModelData = customModelData;
+    SonicConfig(NamespacedKey model, Material material) {
+        this.model = model;
         this.material = material;
     }
 
-    public int getCustomModelData() {
-        return customModelData;
+    public NamespacedKey getModel() {
+        return model;
     }
 
     public Material getMaterial() {
