@@ -17,7 +17,9 @@
 package me.eccentric_nz.TARDIS.chameleon.utils;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.PoliceBox;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
@@ -27,8 +29,18 @@ import org.bukkit.scheduler.BukkitScheduler;
 public class PandoricaOpens {
 
     private final TARDIS plugin;
-    private final int[] opening = new int[]{ 1005, 1006, 1007, 1002 };
-    private final int[] closing = new int[]{ 1007, 1006, 1005, 1001 };
+    private final NamespacedKey[] opening = new NamespacedKey[]{
+            PoliceBox.PANDORICA_75.getKey(),
+            PoliceBox.PANDORICA_50.getKey(),
+            PoliceBox.PANDORICA_25.getKey(),
+            PoliceBox.PANDORICA_OPEN.getKey()
+    };
+    private final NamespacedKey[] closing = new NamespacedKey[]{
+            PoliceBox.PANDORICA_25.getKey(),
+            PoliceBox.PANDORICA_50.getKey(),
+            PoliceBox.PANDORICA_75.getKey(),
+            PoliceBox.PANDORICA.getKey()
+    };
     private final BukkitScheduler scheduler;
 
     public PandoricaOpens(TARDIS plugin) {
@@ -55,17 +67,17 @@ public class PandoricaOpens {
         long delay = 5;
         for (int i = 0; i < 4; i++) {
             String sound;
-            int cmd;
+            NamespacedKey model;
             if (open) {
                 sound = "pandorica_open";
-                cmd = opening[i];
+                model = opening[i];
             } else {
                 sound = "pandorica_close";
-                cmd = closing[i];
+                model = closing[i];
             }
             TARDISSounds.playTARDISSound(stand.getLocation(), sound);
             scheduler.scheduleSyncDelayedTask(plugin, () -> {
-                im.setCustomModelData(cmd);
+                im.setItemModel(model);
                 is.setItemMeta(im);
                 ee.setHelmet(is, true);
             }, delay * i);

@@ -65,7 +65,7 @@ public enum RecipeItem {
     TARDIS_ARTRON_FURNACE(Furnace.ARTRON_FURNACE.getKey(), RecipeCategory.ITEMS),
     TARDIS_BIOME_READER(Brick.BIOME_READER.getKey(), RecipeCategory.ITEMS),
     TARDIS_CHAMELEON_CIRCUIT(GlowstoneDust.CHAMELEON.getKey(), RecipeCategory.CONSOLE_CIRCUITS),
-    TARDIS_COMMUNICATOR(LeatherHelmet.COMMUNICATOR.getKey(), RecipeCategory.ACCESSORIES),
+    TARDIS_COMMUNICATOR(BirchButton.COMMUNICATOR.getKey(), RecipeCategory.ACCESSORIES),
     TARDIS_INPUT_CIRCUIT(GlowstoneDust.INPUT.getKey(), RecipeCategory.CONSOLE_CIRCUITS),
     TARDIS_INVISIBILITY_CIRCUIT(GlowstoneDust.INVISIBILITY.getKey(), RecipeCategory.CONSOLE_CIRCUITS),
     TARDIS_KEY(GoldNugget.BRASS_YALE.getKey(), RecipeCategory.ITEMS),

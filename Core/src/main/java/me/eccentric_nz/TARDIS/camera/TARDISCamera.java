@@ -1,8 +1,12 @@
 package me.eccentric_nz.TARDIS.camera;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GrayStainedGlassPane;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.LeatherHorseArmor;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.PoliceBox;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -46,7 +50,31 @@ public class TARDISCamera {
                     EntityEquipment ee = stand.getEquipment();
                     ItemStack is = ee.getHelmet();
                     ItemMeta im = is.getItemMeta();
-                    im.setCustomModelData((pandorica ? 1008 : 1005));
+                    NamespacedKey viewing = switch (is.getType()) {
+                        case BLACK_DYE -> PoliceBox.BLACK_FLYING.getKey();
+                        case RED_DYE -> PoliceBox.RED_FLYING.getKey();
+                        case BROWN_DYE -> PoliceBox.BROWN_FLYING.getKey();
+                        case GREEN_DYE -> PoliceBox.GREEN_FLYING.getKey();
+                        case PURPLE_DYE -> PoliceBox.PURPLE_FLYING.getKey();
+                        case CYAN_DYE -> PoliceBox.CYAN_FLYING.getKey();
+                        case LIGHT_GRAY_DYE -> PoliceBox.LIGHT_GRAY_FLYING.getKey();
+                        case GRAY_DYE -> PoliceBox.GRAY_FLYING.getKey();
+                        case PINK_DYE -> PoliceBox.PINK_FLYING.getKey();
+                        case LIME_DYE -> PoliceBox.LIME_FLYING.getKey();
+                        case YELLOW_DYE -> PoliceBox.YELLOW_FLYING.getKey();
+                        case LIGHT_BLUE_DYE -> PoliceBox.LIGHT_BLUE_FLYING.getKey();
+                        case MAGENTA_DYE -> PoliceBox.MAGENTA_FLYING.getKey();
+                        case ORANGE_DYE -> PoliceBox.ORANGE_FLYING.getKey();
+                        case WHITE_DYE -> PoliceBox.WHITE_FLYING.getKey();
+                        case CYAN_STAINED_GLASS_PANE -> PoliceBox.TENNANT_FLYING.getKey();
+                        case LEATHER_HORSE_ARMOR -> LeatherHorseArmor.TINTED_FLYING_0.getKey();
+                        case WOLF_SPAWN_EGG -> PoliceBox.BAD_WOLF_FLYING.getKey();
+                        case ENDER_PEARL -> PoliceBox.PANDORICA_FLYING.getKey();
+                        default -> null; // don't change for WEEPING_ANGEL or CUSTOM
+                    };
+                    if (viewing != null) {
+                        im.setItemModel(viewing);
+                    }
                     is.setItemMeta(im);
                     ee.setHelmet(is);
                     // hide player from themselves
@@ -67,7 +95,33 @@ public class TARDISCamera {
             EntityEquipment ee = stand.getEquipment();
             ItemStack is = ee.getHelmet();
             ItemMeta im = is.getItemMeta();
-            im.setCustomModelData(1001);
+            NamespacedKey notviewing = switch (is.getType()) {
+                case BLACK_DYE -> PoliceBox.BLACK.getKey();
+                case RED_DYE -> PoliceBox.RED.getKey();
+                case BROWN_DYE -> PoliceBox.BROWN.getKey();
+                case GREEN_DYE -> PoliceBox.GREEN.getKey();
+                case BLUE_DYE -> PoliceBox.BLUE.getKey();
+                case PURPLE_DYE -> PoliceBox.PURPLE.getKey();
+                case CYAN_DYE -> PoliceBox.CYAN.getKey();
+                case LIGHT_GRAY_DYE -> PoliceBox.LIGHT_GRAY.getKey();
+                case GRAY_DYE -> PoliceBox.GRAY.getKey();
+                case PINK_DYE -> PoliceBox.PINK.getKey();
+                case LIME_DYE -> PoliceBox.LIME.getKey();
+                case YELLOW_DYE -> PoliceBox.YELLOW.getKey();
+                case LIGHT_BLUE_DYE -> PoliceBox.LIGHT_BLUE.getKey();
+                case MAGENTA_DYE -> PoliceBox.MAGENTA.getKey();
+                case ORANGE_DYE -> PoliceBox.ORANGE.getKey();
+                case WHITE_DYE -> PoliceBox.WHITE.getKey();
+                case CYAN_STAINED_GLASS_PANE -> PoliceBox.TENNANT.getKey();
+                case LEATHER_HORSE_ARMOR -> LeatherHorseArmor.TARDIS_TINTED.getKey();
+                case WOLF_SPAWN_EGG -> PoliceBox.BAD_WOLF_CLOSED.getKey();
+                case ENDER_PEARL -> PoliceBox.PANDORICA.getKey();
+                case GRAY_STAINED_GLASS_PANE -> GrayStainedGlassPane.WEEPING_ANGEL.getKey();
+                default -> null; // don't change for WEEPING_ANGEL or CUSTOM
+            };
+            if (notviewing != null) {
+                im.setItemModel(notviewing);
+            }
             is.setItemMeta(im);
             ee.setHelmet(is);
             // teleport player to interior

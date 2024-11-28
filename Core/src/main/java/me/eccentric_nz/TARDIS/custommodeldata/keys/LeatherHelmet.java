@@ -5,6 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum LeatherHelmet {
 
+    // TODO change to a different material - WARPED_BUTTON?
     BOWTIE_WHITE(new NamespacedKey(TARDIS.plugin, "bowtie/bowtie_white")),
     BOWTIE_ORANGE(new NamespacedKey(TARDIS.plugin, "bowtie/bowtie_orange")),
     BOWTIE_MAGENTA(new NamespacedKey(TARDIS.plugin, "bowtie/bowtie_magenta")),
@@ -22,7 +23,8 @@ public enum LeatherHelmet {
     BOWTIE_RED(new NamespacedKey(TARDIS.plugin, "bowtie/bowtie_red")),
     BOWTIE_BLACK(new NamespacedKey(TARDIS.plugin, "bowtie/bowtie_black")),
     THREE_D_GLASSES(new NamespacedKey(TARDIS.plugin, "tardis/3d_glasses")),
-    COMMUNICATOR(new NamespacedKey(TARDIS.plugin, "handles/communicator"));
+    // TODO find 3D glasses overlay texture
+    THREE_D_GLASSES_OVERLAY(new NamespacedKey(TARDIS.plugin, "tardis/3d_glasses_overlay"));
 
     private final NamespacedKey key;
 

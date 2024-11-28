@@ -17,6 +17,8 @@
 package me.eccentric_nz.tardisweepingangels.equip;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bow;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Trident;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Bukkit;
@@ -75,7 +77,7 @@ public class Equipper {
         ItemStack helmet = new ItemStack(monster.getMaterial(), 1);
         ItemMeta headMeta = helmet.getItemMeta();
         headMeta.setDisplayName(monster.getName() + " Head");
-        // 405 = static model
+        // static model
         headMeta.setItemModel(variant);
         helmet.setItemMeta(headMeta);
         // set equipment
@@ -107,14 +109,14 @@ public class Equipper {
                 // invisible bow
                 ItemStack b = new ItemStack(Material.BOW, 1);
                 ItemMeta bim = b.getItemMeta();
-                bim.setCustomModelData(1);
+                bim.setItemModel(Bow.SILURIAN_BOW.getKey());
                 b.setItemMeta(bim);
                 ee.setItemInMainHand(b);
             } else if (trident) {
                 // invisible trident
                 ItemStack t = new ItemStack(Material.TRIDENT, 1);
                 ItemMeta tim = t.getItemMeta();
-                tim.setCustomModelData(1);
+                tim.setItemModel(Trident.DALEK_BOW.getKey());
                 t.setItemMeta(tim);
                 ee.setItemInMainHand(t);
             } else {

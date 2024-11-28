@@ -354,7 +354,8 @@ public class DebugPopulator {
                 switch (z) {
                     case -4 -> key = new NamespacedKey(plugin, "police_box/" + c.toLowerCase(Locale.ROOT) + "_closed");
                     case -8 -> key = new NamespacedKey(plugin, "police_box/" + c.toLowerCase(Locale.ROOT) + "_open");
-                    case -12 -> key = new NamespacedKey(plugin, "police_box/" + c.toLowerCase(Locale.ROOT) + "_stained");
+                    case -12 ->
+                            key = new NamespacedKey(plugin, "police_box/" + c.toLowerCase(Locale.ROOT) + "_stained");
                     // -16
                     default -> key = new NamespacedKey(plugin, "police_box/" + c.toLowerCase(Locale.ROOT) + "_glass");
                 }
@@ -429,7 +430,7 @@ public class DebugPopulator {
             Material material = d.getMaterial();
             ItemStack is = new ItemStack(material);
             ItemMeta im = is.getItemMeta();
-            im.setCustomModelData(10000);
+            im.setItemModel(new NamespacedKey(plugin, "doors/" + door + "_closed"));
             is.setItemMeta(im);
             c.setItemStack(is);
             x -= 3;
@@ -437,11 +438,12 @@ public class DebugPopulator {
                 x = -27;
                 z += 3;
             }
+            // open state
             Location open = new Location(world, rx + x + 0.5d, 65.5d, rz + z + 0.5d);
             ItemDisplay o = (ItemDisplay) world.spawnEntity(open, EntityType.ITEM_DISPLAY);
             ItemStack ois = new ItemStack(material);
             ItemMeta oim = is.getItemMeta();
-            oim.setCustomModelData(10000 + d.getFrames()[d.getFrames().length - 1]);
+            im.setItemModel(new NamespacedKey(plugin, "doors/" + door + "_open"));
             ois.setItemMeta(oim);
             o.setItemStack(ois);
             x -= 3;
@@ -449,13 +451,13 @@ public class DebugPopulator {
                 x = -27;
                 z += 3;
             }
-            // open state
+            // extra state
             if (d.hasExtra()) {
                 Location extra = new Location(world, rx + x + 0.5d, 65.5d, rz + z + 0.5d);
                 ItemDisplay e = (ItemDisplay) world.spawnEntity(extra, EntityType.ITEM_DISPLAY);
                 ItemStack eis = new ItemStack(material);
                 ItemMeta eim = is.getItemMeta();
-                eim.setCustomModelData(10000 + d.getFrames().length);
+                eim.setItemModel(new NamespacedKey(plugin, "doors/" + door + "_" + d.getFrames().length));
                 eis.setItemMeta(eim);
                 e.setItemStack(eis);
                 x -= 3;

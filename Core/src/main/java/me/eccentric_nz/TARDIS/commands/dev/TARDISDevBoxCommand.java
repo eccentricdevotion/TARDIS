@@ -18,12 +18,14 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.PoliceBox;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicFreeze;
 import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
@@ -76,17 +78,192 @@ public class TARDISDevBoxCommand {
                 Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, -1, true);
                 ItemStack is = new ItemStack(dye, 1);
                 ItemMeta im = is.getItemMeta();
-                int cmd = 1001;
+                NamespacedKey model = PoliceBox.BLUE.getKey();
                 if (args.length > 2) {
-                    switch (args[2]) {
-                        case "open" -> cmd = 1002;
-                        case "stained" -> cmd = 1003;
-                        case "glass" -> cmd = 1004;
-                        case "fly" -> cmd = 1005;
-                        default -> cmd = 1001;
+                    switch (dye) {
+                        case BLUE_DYE -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.BLUE_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.BLUE_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.GLASS.getKey();
+                                case "fly" -> model = PoliceBox.BLUE_FLYING.getKey();
+                                default -> model = PoliceBox.BLUE.getKey();
+                            }
+                        }
+                        case BLACK_DYE -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.BLACK_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.BLACK_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.GLASS.getKey();
+                                case "fly" -> model = PoliceBox.BLACK_FLYING.getKey();
+                                default -> model = PoliceBox.BLACK.getKey();
+                            }
+                        }
+                        case BROWN_DYE -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.BROWN_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.BROWN_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.GLASS.getKey();
+                                case "fly" -> model = PoliceBox.BROWN_FLYING.getKey();
+                                default -> model = PoliceBox.BROWN.getKey();
+                            }
+                        }
+                        case LIGHT_BLUE_DYE -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.LIGHT_BLUE_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.LIGHT_BLUE_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.GLASS.getKey();
+                                case "fly" -> model = PoliceBox.LIGHT_BLUE_FLYING.getKey();
+                                default -> model = PoliceBox.LIGHT_BLUE.getKey();
+                            }
+                        }
+                        case LIGHT_GRAY_DYE -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.LIGHT_GRAY_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.LIGHT_GRAY_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.GLASS.getKey();
+                                case "fly" -> model = PoliceBox.LIGHT_GRAY_FLYING.getKey();
+                                default -> model = PoliceBox.LIGHT_GRAY.getKey();
+                            }
+                        }
+                        case GRAY_DYE -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.GRAY_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.GRAY_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.GLASS.getKey();
+                                case "fly" -> model = PoliceBox.GRAY_FLYING.getKey();
+                                default -> model = PoliceBox.GRAY.getKey();
+                            }
+                        }
+                        case CYAN_DYE -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.CYAN_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.CYAN_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.GLASS.getKey();
+                                case "fly" -> model = PoliceBox.CYAN_FLYING.getKey();
+                                default -> model = PoliceBox.CYAN.getKey();
+                            }
+                        }
+                        case MAGENTA_DYE -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.MAGENTA_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.MAGENTA_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.GLASS.getKey();
+                                case "fly" -> model = PoliceBox.MAGENTA_FLYING.getKey();
+                                default -> model = PoliceBox.MAGENTA.getKey();
+                            }
+                        }
+                        case YELLOW_DYE -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.YELLOW_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.YELLOW_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.GLASS.getKey();
+                                case "fly" -> model = PoliceBox.YELLOW_FLYING.getKey();
+                                default -> model = PoliceBox.YELLOW.getKey();
+                            }
+                        }
+                        case LIME_DYE -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.LIME_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.LIME_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.GLASS.getKey();
+                                case "fly" -> model = PoliceBox.LIME_FLYING.getKey();
+                                default -> model = PoliceBox.LIME.getKey();
+                            }
+                        }
+                        case GREEN_DYE -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.GREEN_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.GREEN_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.GLASS.getKey();
+                                case "fly" -> model = PoliceBox.GREEN_FLYING.getKey();
+                                default -> model = PoliceBox.GREEN.getKey();
+                            }
+                        }
+                        case PINK_DYE -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.PINK_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.PINK_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.GLASS.getKey();
+                                case "fly" -> model = PoliceBox.PINK_FLYING.getKey();
+                                default -> model = PoliceBox.PINK.getKey();
+                            }
+                        }
+                        case PURPLE_DYE -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.PURPLE_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.PURPLE_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.GLASS.getKey();
+                                case "fly" -> model = PoliceBox.PURPLE_FLYING.getKey();
+                                default -> model = PoliceBox.PURPLE.getKey();
+                            }
+                        }
+                        case RED_DYE -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.RED_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.RED_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.GLASS.getKey();
+                                case "fly" -> model = PoliceBox.RED_FLYING.getKey();
+                                default -> model = PoliceBox.RED.getKey();
+                            }
+                        }
+                        case ORANGE_DYE -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.ORANGE_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.ORANGE_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.GLASS.getKey();
+                                case "fly" -> model = PoliceBox.ORANGE_FLYING.getKey();
+                                default -> model = PoliceBox.ORANGE.getKey();
+                            }
+                        }
+                        case WHITE_DYE -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.WHITE_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.WHITE_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.GLASS.getKey();
+                                case "fly" -> model = PoliceBox.WHITE_FLYING.getKey();
+                                default -> model = PoliceBox.WHITE.getKey();
+                            }
+                        }
+                        case WOLF_SPAWN_EGG -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.BAD_WOLF_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.BAD_WOLF_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.GLASS.getKey();
+                                case "fly" -> model = PoliceBox.BAD_WOLF_FLYING.getKey();
+                                default -> model = PoliceBox.BAD_WOLF_CLOSED.getKey();
+                            }
+                        }
+                        case CYAN_STAINED_GLASS_PANE -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.TENNANT_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.TENNANT_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.GLASS.getKey();
+                                case "fly" -> model = PoliceBox.TENNANT_FLYING.getKey();
+                                default -> model = PoliceBox.TENNANT.getKey();
+                            }
+                        }
+                        case CLAY_BALL -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.TYPE_40_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.TYPE_40_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.TYPE_40_GLASS.getKey();
+                                case "fly" -> model = PoliceBox.TYPE_40_FLYING.getKey();
+                                default -> model = PoliceBox.TYPE_40_CLOSED.getKey();
+                            }
+                        }
+                        case ENDER_PEARL -> {
+                            switch (args[2]) {
+                                case "open" -> model = PoliceBox.PANDORICA_OPEN.getKey();
+                                case "stained" -> model = PoliceBox.PANDORICA_STAINED.getKey();
+                                case "glass" -> model = PoliceBox.PANDORICA_GLASS.getKey();
+                                case "fly" -> model = PoliceBox.PANDORICA_FLYING.getKey();
+                                default -> model = PoliceBox.PANDORICA.getKey();
+                            }
+                        }
                     }
                 }
-                im.setCustomModelData(cmd);
+                im.setItemModel(model);
                 is.setItemMeta(im);
                 ArmorStand stand = as;
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

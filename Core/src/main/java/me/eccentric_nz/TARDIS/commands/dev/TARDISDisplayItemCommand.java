@@ -31,6 +31,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.flight.vehicle.InterpolatedAnimation;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardisshop.ShopItem;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -81,11 +82,13 @@ public class TARDISDisplayItemCommand {
                 }
                 ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
                 ItemStack is = new ItemStack(material);
-                if (args.length > 3 && TARDISNumberParsers.isSimpleNumber(args[4])) {
-                    int cmd = TARDISNumberParsers.parseInt(args[4]);
-                    ItemMeta im = is.getItemMeta();
-                    im.setCustomModelData(cmd);
-                    is.setItemMeta(im);
+                if (args.length > 4) {
+                    try {
+                        ShopItem shopItem = ShopItem.valueOf(args[4].toUpperCase(Locale.ROOT));
+                        ItemMeta im = is.getItemMeta();
+                        im.setItemModel(shopItem.getModel());
+                        is.setItemMeta(im);
+                    } catch (IllegalArgumentException ignored) { }
                 }
                 display.setItemStack(is);
                 display.setItemDisplayTransform(transform);
@@ -130,23 +133,6 @@ public class TARDISDisplayItemCommand {
                     }
                     plugin.getServer().getScheduler().cancelTask(plugin.getTrackerKeeper().getAnimateTask());
                 }
-            }
-            case "block" -> {
-                ItemDisplay blockDisplay = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.0d, 0.5d), EntityType.ITEM_DISPLAY);
-                ItemStack door = new ItemStack(Material.IRON_DOOR);
-                ItemMeta im = door.getItemMeta();
-                int cmd = (args.length == 3) ? TARDISNumberParsers.parseInt(args[2]) : 1;
-                im.setCustomModelData(10000 + cmd);
-                door.setItemMeta(im);
-                blockDisplay.setItemStack(door);
-                blockDisplay.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
-                // also set an interaction entity
-                Interaction interaction = (Interaction) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.0d, 0.5d), EntityType.INTERACTION);
-                interaction.setResponsive(true);
-                interaction.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 10000 + cmd);
-                interaction.setPersistent(true);
-                interaction.setInteractionHeight(2.0f);
-                interaction.setInteractionWidth(1.0f);
             }
             case "remove" -> {
                 BoundingBox box = new BoundingBox(block.getX(), block.getY(), block.getZ(), block.getX() + 1, block.getY() + 2.5, block.getZ() + 1);

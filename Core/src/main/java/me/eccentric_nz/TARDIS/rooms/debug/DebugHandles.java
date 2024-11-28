@@ -2,7 +2,6 @@ package me.eccentric_nz.TARDIS.rooms.debug;
 
 import me.eccentric_nz.TARDIS.custommodeldata.keys.Arrow;
 import me.eccentric_nz.TARDIS.custommodeldata.keys.BirchButton;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.LeatherHelmet;
 import me.eccentric_nz.TARDIS.custommodeldata.keys.Paper;
 import org.bukkit.Material;
 
@@ -16,7 +15,6 @@ public class DebugHandles {
             new GuiPreview(Material.BIRCH_BUTTON, BirchButton.HANDLES_OFF.getKey(), "handles_off"),
             new GuiPreview(Material.BIRCH_BUTTON, BirchButton.HANDLES_ON.getKey(), "handles_on"),
             new GuiPreview(Material.BIRCH_BUTTON, BirchButton.COMMUNICATOR.getKey(), "communicator"),
-            new GuiPreview(Material.LEATHER_HELMET, LeatherHelmet.COMMUNICATOR.getKey(), "communicator"),
             new GuiPreview(Material.PAPER, Paper.HANDLES_COMMAND_COMEHERE.getKey(), "handles_command_comehere"),
             new GuiPreview(Material.PAPER, Paper.HANDLES_COMMAND_HIDE.getKey(), "handles_command_hide"),
             new GuiPreview(Material.PAPER, Paper.HANDLES_COMMAND_REBUILD.getKey(), "handles_command_rebuild"),

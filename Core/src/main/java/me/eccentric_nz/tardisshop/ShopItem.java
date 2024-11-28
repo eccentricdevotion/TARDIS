@@ -129,7 +129,7 @@ public enum ShopItem {
     TARDIS_ARTRON_FURNACE("TARDIS Artron Furnace", Material.FURNACE, Furnace.ARTRON_FURNACE.getKey()),
     TARDIS_BIOME_READER("TARDIS Biome Reader", Material.BRICK, Brick.BIOME_READER.getKey()),
     TARDIS_CHAMELEON_CIRCUIT("TARDIS Chameleon Circuit", Material.GLOWSTONE_DUST, GlowstoneDust.CHAMELEON.getKey()),
-    TARDIS_COMMUNICATOR("TARDIS Communicator", Material.LEATHER_HELMET, LeatherHelmet.COMMUNICATOR.getKey()),
+    TARDIS_COMMUNICATOR("TARDIS Communicator", Material.BIRCH_BUTTON, BirchButton.COMMUNICATOR.getKey()),
     TARDIS_INPUT_CIRCUIT("TARDIS Input Circuit", Material.GLOWSTONE_DUST, GlowstoneDust.INPUT.getKey()),
     TARDIS_INVISIBILITY_CIRCUIT("TARDIS Invisibility Circuit", Material.GLOWSTONE_DUST, GlowstoneDust.INVISIBILITY.getKey()),
     TARDIS_KEY("TARDIS Key", Material.GOLD_NUGGET, GoldNugget.BRASS_YALE.getKey()),

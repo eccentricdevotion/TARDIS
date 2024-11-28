@@ -380,7 +380,6 @@ class TARDISListenerRegisterer {
             plugin.getPM().registerEvents(new TARDISResourcePackSwitcher(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISItemSpawnListener(plugin), plugin);
-        plugin.getPM().registerEvents(new TARDISAccessoryListener(plugin), plugin);
         if (plugin.getConfig().getBoolean("modules.chemistry")) {
             plugin.getPM().registerEvents(new ChemistryBlockListener(plugin), plugin);
             plugin.getPM().registerEvents(new CreativeGUIListener(plugin), plugin);

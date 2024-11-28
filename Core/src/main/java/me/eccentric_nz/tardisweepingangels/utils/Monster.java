@@ -27,33 +27,33 @@ import org.bukkit.entity.EntityType;
 
 public enum Monster {
 
-    CLOCKWORK_DROID("Clockwork Droid", EntityType.ZOMBIE, "clockwork", 27, Droid.CLOCKWORK_DROID_DISGUISE.getKey(), Material.HOST_ARMOR_TRIM_SMITHING_TEMPLATE, MonsterSkins.CLOCKWORK_DROID_MALE),
-    CYBERMAN("Cyberman", EntityType.ZOMBIE, "cyberman", 2, IronIngot.CYBERMAN_DISGUISE.getKey(), Material.IRON_INGOT, MonsterSkins.CYBERMAN),
-    DALEK("Dalek", EntityType.SKELETON, "dalek", 3, SlimeBall.DALEK_BRASS.getKey(), Material.SLIME_BALL, 10000004, null),
-    DALEK_SEC("Dalek Sec", EntityType.ZOMBIFIED_PIGLIN, "dalek_sec", 22, MangrovePropagule.DALEK_SEC_DISGUISE.getKey(), Material.MANGROVE_PROPAGULE, CharacterSkins.DALEK_SEC),
-    DAVROS("Davros", EntityType.ZOMBIFIED_PIGLIN, "davros", 23, CrimsonButton.DAVROS_DISGUISE.getKey(), Material.CRIMSON_BUTTON, null),
-    EMPTY_CHILD("Empty Child", EntityType.ZOMBIE, "empty", 4, Sugar.EMPTY_CHILD_DISGUISE.getKey(), Material.SUGAR, MonsterSkins.EMPTY_CHILD),
-    HATH("Hath", EntityType.ZOMBIFIED_PIGLIN, "hath", 16, Pufferfish.HATH_DISGUISE.getKey(), Material.PUFFERFISH, 4, null),
-    HEADLESS_MONK("Headless Monk", EntityType.SKELETON, "monk", 17, RedCandle.HEADLESS_MONK_DISGUISE.getKey(), Material.RED_CANDLE, MonsterSkins.HEADLESS_MONK),
-    ICE_WARRIOR("Ice Warrior", EntityType.ZOMBIFIED_PIGLIN, "ice", 5, Snowball.ICE_WARRIOR_DISGUISE.getKey(), Material.SNOWBALL, 4, MonsterSkins.ICE_WARRIOR),
-    JUDOON("Judoon", EntityType.HUSK, "judoon", 14, YellowDye.JUDOON_DISGUISE.getKey(), Material.YELLOW_DYE, 11, CharacterSkins.JUDOON),
-    K9("K9", EntityType.HUSK, "k9", 15, Bone.K9.getKey(), Material.BONE, null),
-    MIRE("Mire", EntityType.SKELETON, "mire", 18, NetheriteScrap.THE_MIRE_DISGUISE.getKey(), Material.NETHERITE_SCRAP, null),
-    OOD("Ood", EntityType.HUSK, "ood", 12, RottenFlesh.OOD_DISGUISE.getKey(), Material.ROTTEN_FLESH, 30, CharacterSkins.OOD),
-    OSSIFIED("Ossified Time Zombie", EntityType.ZOMBIE, "ossified", 24, Charcoal.OSSIFIED_DISGUISE.getKey(), Material.CHARCOAL, null),
-    RACNOSS("Racnoss", EntityType.PIGLIN_BRUTE, "racnoss", 21, SpiderEye.RACNOSS_DISGUISE.getKey(), Material.SPIDER_EYE, 4, MonsterSkins.RACNOSS),
-    SCARECROW("Scarecrow", EntityType.ZOMBIE, "scarecrow", 26, Wheat.SCARECROW_DISGUISE.getKey(), Material.WHEAT, MonsterSkins.SCARECROW),
-    SEA_DEVIL("Sea Devil", EntityType.DROWNED, "devil", 19, Kelp.SEA_DEVIL_DISGUISE.getKey(), Material.KELP, MonsterSkins.SEA_DEVIL),
-    SILENT("Silent", EntityType.SKELETON, "silent", 6, EndStone.SILENT_BEAMING.getKey(), Material.END_STONE, 5, MonsterSkins.SILENCE),
-    SILURIAN("Silurian", EntityType.SKELETON, "silurian", 7, Feather.SILURIAN_DISGUISE.getKey(), Material.FEATHER, MonsterSkins.SILURIAN),
-    SLITHEEN("Slitheen", EntityType.ZOMBIE, "slitheen", 20, TurtleEgg.SLITHEEN_DISGUISE.getKey(), Material.TURTLE_EGG, MonsterSkins.SLITHEEN),
-    SONTARAN("Sontaran", EntityType.ZOMBIE, "sontaran", 8, Potato.SONTARAN_DISGUISE.getKey(), Material.POTATO, 4, MonsterSkins.SONTARAN),
-    STRAX("Strax", EntityType.ZOMBIFIED_PIGLIN, "strax", 9, BakedPotato.STRAX_DISGUISE.getKey(), Material.BAKED_POTATO, null),
-    SYCORAX("Sycorax", EntityType.ZOMBIE, "sycorax", 25, BoneMeal.SYCORAX_DISGUISE.getKey(), Material.BONE_MEAL, MonsterSkins.SYCORAX),
-    TOCLAFANE("Toclafane", EntityType.ZOMBIE, "toclafane", 13, GunPowder.TOCLAFANE.getKey(), Material.GUNPOWDER, null),
-    VASHTA_NERADA("Vashta Nerada", EntityType.ZOMBIE, "vashta", 10, Book.VASHTA_NERADA_DISGUISE.getKey(), Material.BOOK, 4, MonsterSkins.VASHTA_NERADA),
-    WEEPING_ANGEL("Weeping Angel", EntityType.SKELETON, "angel", 1, Brick.WEEPING_ANGEL_DISGUISE.getKey(), Material.BRICK, MonsterSkins.WEEPING_ANGEL),
-    ZYGON("Zygon", EntityType.ZOMBIE, "zygon", 11, Painting.ZYGON_DISGUISE.getKey(), Material.PAINTING, MonsterSkins.ZYGON);
+    CLOCKWORK_DROID("Clockwork Droid", EntityType.ZOMBIE, "clockwork", 27, Droid.CLOCKWORK_DROID_DISGUISE.getKey(), Material.HOST_ARMOR_TRIM_SMITHING_TEMPLATE, Droid.CLOCKWORK_DROID_HEAD.getKey(), MonsterSkins.CLOCKWORK_DROID_MALE),
+    CYBERMAN("Cyberman", EntityType.ZOMBIE, "cyberman", 2, IronIngot.CYBERMAN_DISGUISE.getKey(), Material.IRON_INGOT, IronIngot.CYBERMAN_HEAD.getKey(), MonsterSkins.CYBERMAN),
+    DALEK("Dalek", EntityType.SKELETON, "dalek", 3, SlimeBall.DALEK_BRASS.getKey(), Material.SLIME_BALL, SlimeBall.DALEK_HEAD.getKey(), null),
+    DALEK_SEC("Dalek Sec", EntityType.ZOMBIFIED_PIGLIN, "dalek_sec", 22, MangrovePropagule.DALEK_SEC_DISGUISE.getKey(), Material.MANGROVE_PROPAGULE, MangrovePropagule.DALEK_SEC_HEAD.getKey(), CharacterSkins.DALEK_SEC),
+    DAVROS("Davros", EntityType.ZOMBIFIED_PIGLIN, "davros", 23, CrimsonButton.DAVROS_DISGUISE.getKey(), Material.CRIMSON_BUTTON, CrimsonButton.DAVROS_HEAD.getKey(),null),
+    EMPTY_CHILD("Empty Child", EntityType.ZOMBIE, "empty", 4, Sugar.EMPTY_CHILD_DISGUISE.getKey(), Material.SUGAR, Sugar.EMPTY_CHILD_HEAD.getKey(), MonsterSkins.EMPTY_CHILD),
+    HATH("Hath", EntityType.ZOMBIFIED_PIGLIN, "hath", 16, Pufferfish.HATH_DISGUISE.getKey(), Material.PUFFERFISH, Pufferfish.HATH_HEAD.getKey(), null),
+    HEADLESS_MONK("Headless Monk", EntityType.SKELETON, "monk", 17, RedCandle.HEADLESS_MONK_DISGUISE.getKey(), Material.RED_CANDLE, RedCandle.HEADLESS_MONK_HEAD.getKey(), MonsterSkins.HEADLESS_MONK),
+    ICE_WARRIOR("Ice Warrior", EntityType.ZOMBIFIED_PIGLIN, "ice", 5, Snowball.ICE_WARRIOR_DISGUISE.getKey(), Material.SNOWBALL, Snowball.ICE_WARRIOR_HEAD.getKey(), MonsterSkins.ICE_WARRIOR),
+    JUDOON("Judoon", EntityType.HUSK, "judoon", 14, YellowDye.JUDOON_DISGUISE.getKey(), Material.YELLOW_DYE, YellowDye.JUDOON_MONSTER_HEAD.getKey(), CharacterSkins.JUDOON),
+    K9("K9", EntityType.HUSK, "k9", 15, Bone.K9.getKey(), Material.BONE, null,null),
+    MIRE("Mire", EntityType.SKELETON, "mire", 18, NetheriteScrap.THE_MIRE_DISGUISE.getKey(), Material.NETHERITE_SCRAP, NetheriteScrap.THE_MIRE_HEAD.getKey(),null),
+    OOD("Ood", EntityType.HUSK, "ood", 12, RottenFlesh.OOD_DISGUISE.getKey(), Material.ROTTEN_FLESH, RottenFlesh.OOD_MONSTER_HEAD.getKey(), CharacterSkins.OOD),
+    OSSIFIED("Ossified Time Zombie", EntityType.ZOMBIE, "ossified", 24, Charcoal.OSSIFIED_DISGUISE.getKey(), Material.CHARCOAL, Charcoal.OSSIFIED_HEAD.getKey(), null),
+    RACNOSS("Racnoss", EntityType.PIGLIN_BRUTE, "racnoss", 21, SpiderEye.RACNOSS_DISGUISE.getKey(), Material.SPIDER_EYE, SpiderEye.RACNOSS_HEAD.getKey(), MonsterSkins.RACNOSS),
+    SCARECROW("Scarecrow", EntityType.ZOMBIE, "scarecrow", 26, Wheat.SCARECROW_DISGUISE.getKey(), Material.WHEAT, Wheat.SCARECROW_HEAD.getKey(), MonsterSkins.SCARECROW),
+    SEA_DEVIL("Sea Devil", EntityType.DROWNED, "devil", 19, Kelp.SEA_DEVIL_DISGUISE.getKey(), Material.KELP, Kelp.SEA_DEVIL_HEAD.getKey(), MonsterSkins.SEA_DEVIL),
+    SILENT("Silent", EntityType.SKELETON, "silent", 6, EndStone.SILENT_BEAMING.getKey(), Material.END_STONE, EndStone.SILENT_BEAMING.getKey(), MonsterSkins.SILENCE),
+    SILURIAN("Silurian", EntityType.SKELETON, "silurian", 7, Feather.SILURIAN_DISGUISE.getKey(), Material.FEATHER, Feather.SILURIAN_HEAD.getKey(), MonsterSkins.SILURIAN),
+    SLITHEEN("Slitheen", EntityType.ZOMBIE, "slitheen", 20, TurtleEgg.SLITHEEN_DISGUISE.getKey(), Material.TURTLE_EGG, TurtleEgg.SLITHEEN_HEAD.getKey(), MonsterSkins.SLITHEEN),
+    SONTARAN("Sontaran", EntityType.ZOMBIE, "sontaran", 8, Potato.SONTARAN_DISGUISE.getKey(), Material.POTATO, Potato.SONTARAN_HEAD.getKey(), MonsterSkins.SONTARAN),
+    STRAX("Strax", EntityType.ZOMBIFIED_PIGLIN, "strax", 9, BakedPotato.STRAX_DISGUISE.getKey(), Material.BAKED_POTATO, BakedPotato.STRAX_HEAD.getKey(), null),
+    SYCORAX("Sycorax", EntityType.ZOMBIE, "sycorax", 25, BoneMeal.SYCORAX_DISGUISE.getKey(), Material.BONE_MEAL, BoneMeal.SYCORAX_HEAD.getKey(), MonsterSkins.SYCORAX),
+    TOCLAFANE("Toclafane", EntityType.ZOMBIE, "toclafane", 13, GunPowder.TOCLAFANE.getKey(), Material.GUNPOWDER, null, null),
+    VASHTA_NERADA("Vashta Nerada", EntityType.ZOMBIE, "vashta", 10, Book.VASHTA_NERADA_DISGUISE.getKey(), Material.BOOK, Book.VASHTA_NERADA_HEAD.getKey(), MonsterSkins.VASHTA_NERADA),
+    WEEPING_ANGEL("Weeping Angel", EntityType.SKELETON, "angel", 1, Brick.WEEPING_ANGEL_DISGUISE.getKey(), Material.BRICK, Brick.WEEPING_ANGEL_HEAD.getKey(), MonsterSkins.WEEPING_ANGEL),
+    ZYGON("Zygon", EntityType.ZOMBIE, "zygon", 11, Painting.ZYGON_DISGUISE.getKey(), Material.PAINTING, Painting.ZYGON_HEAD.getKey(), MonsterSkins.ZYGON);
 
     private final String name;
     private final EntityType entityType;
@@ -61,28 +61,28 @@ public enum Monster {
     private final int persist;
     private final NamespacedKey model;
     private final Material material;
-    private final int headModelData;
+    private final NamespacedKey headModel;
     private final Skin skin;
 
-    Monster(String name, EntityType entityType, String permission, int persist, NamespacedKey model, Material material, Skin skin) {
-        this.name = name;
-        this.entityType = entityType;
-        this.permission = permission;
-        this.persist = persist;
-        this.model = model;
-        this.material = material;
-        this.headModelData = 3;
-        this.skin = skin;
-    }
+//    Monster(String name, EntityType entityType, String permission, int persist, NamespacedKey model, Material material, Skin skin) {
+//        this.name = name;
+//        this.entityType = entityType;
+//        this.permission = permission;
+//        this.persist = persist;
+//        this.model = model;
+//        this.material = material;
+//        this.headModel = 3;
+//        this.skin = skin;
+//    }
 
-    Monster(String name, EntityType entityType, String permission, int persist, NamespacedKey model, Material material, int headModelData, Skin skin) {
+    Monster(String name, EntityType entityType, String permission, int persist, NamespacedKey model, Material material, NamespacedKey headModel, Skin skin) {
         this.name = name;
         this.entityType = entityType;
         this.permission = permission;
         this.persist = persist;
         this.model = model;
         this.material = material;
-        this.headModelData = headModelData;
+        this.headModel = headModel;
         this.skin = skin;
     }
 
@@ -134,8 +134,8 @@ public enum Monster {
         return material;
     }
 
-    public int getHeadModelData() {
-        return headModelData;
+    public NamespacedKey getHeadModel() {
+        return headModel;
     }
 
     public boolean isAnimated() {

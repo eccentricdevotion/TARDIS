@@ -1,14 +1,17 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.LeatherHelmet;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.EquippableComponent;
 
 /*
 easy_shape:---,P-P,CPM
@@ -38,6 +41,11 @@ public class ThreeDGlassesRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "3-D Glasses");
         im.setItemModel(RecipeItem.THREE_D_GLASSES.getModel());
+        EquippableComponent equippable = im.getEquippable();
+        equippable.setCameraOverlay(LeatherHelmet.THREE_D_GLASSES_OVERLAY.getKey());
+        equippable.setSlot(EquipmentSlot.HEAD);
+        equippable.setDispensable(true);
+        im.setEquippable(equippable);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "3-d_glasses");
         ShapedRecipe r = new ShapedRecipe(key, is);
