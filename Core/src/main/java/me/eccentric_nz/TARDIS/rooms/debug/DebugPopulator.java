@@ -238,7 +238,7 @@ public class DebugPopulator {
                 ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
                 new ArmourStandEquipment().setStandEquipment(as, monster, false);
                 // set female
-                setHelmet(as, HostArmorTrimSmithingTemplate.CLOCKWORK_DROID_FEMALE_DISGUISE.getKey());
+                setHelmet(as, Droid.CLOCKWORK_DROID_FEMALE_DISGUISE.getKey());
                 x += 3;
                 if (x > 24) {
                     x = 3;

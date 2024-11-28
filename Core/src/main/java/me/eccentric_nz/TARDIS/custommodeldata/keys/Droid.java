@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.custommodeldata.keys;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.NamespacedKey;
 
-public enum HostArmorTrimSmithingTemplate {
+public enum Droid {
 
     CLOCKWORK_DROID(new NamespacedKey(TARDIS.plugin, "genetic/clockwork_droid")),
     CLOCKWORK_DROID_ARM(new NamespacedKey(TARDIS.plugin, "monster/clockwork_droid/clockwork_droid_arm")),
@@ -37,7 +37,7 @@ public enum HostArmorTrimSmithingTemplate {
 
     private final NamespacedKey key;
 
-    HostArmorTrimSmithingTemplate(NamespacedKey key) {
+    Droid(NamespacedKey key) {
         this.key = key;
     }
 

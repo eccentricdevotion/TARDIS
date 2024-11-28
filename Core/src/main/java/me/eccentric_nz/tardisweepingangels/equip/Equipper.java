@@ -21,6 +21,7 @@ import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.EntityEquipment;
@@ -66,16 +67,16 @@ public class Equipper {
     }
 
     public void setHelmetAndInvisibility() {
-        setHelmetAndInvisibility(0);
+        setHelmetAndInvisibility(monster.getModel());
     }
 
-    public void setHelmetAndInvisibility(int variant) {
+    public void setHelmetAndInvisibility(NamespacedKey variant) {
         // make a monster item
         ItemStack helmet = new ItemStack(monster.getMaterial(), 1);
         ItemMeta headMeta = helmet.getItemMeta();
         headMeta.setDisplayName(monster.getName() + " Head");
         // 405 = static model
-        headMeta.setCustomModelData(405 + variant);
+        headMeta.setItemModel(variant);
         helmet.setItemMeta(headMeta);
         // set equipment
         EntityEquipment ee = le.getEquipment();

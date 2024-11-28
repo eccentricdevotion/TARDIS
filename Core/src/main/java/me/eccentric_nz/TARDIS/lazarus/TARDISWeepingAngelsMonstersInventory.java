@@ -36,7 +36,7 @@ public class TARDISWeepingAngelsMonstersInventory {
             ster.setDisplayName(monster.toString());
             NamespacedKey model = null;
             switch (monster) {
-                case CLOCKWORK_DROID -> model = HostArmorTrimSmithingTemplate.CLOCKWORK_DROID.getKey();
+                case CLOCKWORK_DROID -> model = Droid.CLOCKWORK_DROID.getKey();
                 case CYBERMAN -> model = IronIngot.CYBERMAN.getKey();
                 case DALEK -> model = SlimeBall.DALEK.getKey();
                 case DALEK_SEC -> model = MangrovePropagule.DALEK_SEC.getKey();

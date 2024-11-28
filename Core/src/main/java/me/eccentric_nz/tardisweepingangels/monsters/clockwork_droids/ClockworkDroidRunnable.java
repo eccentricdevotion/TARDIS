@@ -18,6 +18,7 @@ package me.eccentric_nz.tardisweepingangels.monsters.clockwork_droids;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Droid;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
@@ -29,6 +30,7 @@ import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -90,9 +92,10 @@ public class ClockworkDroidRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                int variant = TARDISConstants.RANDOM.nextBoolean() ? 0 : 11;
+                boolean male = TARDISConstants.RANDOM.nextBoolean();
+                NamespacedKey variant = male ? Droid.CLOCKWORK_DROID_STATIC.getKey() : Droid.CLOCKWORK_DROID_FEMALE_STATIC.getKey();
                 LivingEntity clockwork_droid = new MonsterSpawner().create(l, Monster.CLOCKWORK_DROID);
-                ((TWAZombie) clockwork_droid).setVariant(variant);
+                ((TWAZombie) clockwork_droid).setVariant(male ? 0 : 1);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     new Equipper(Monster.CLOCKWORK_DROID, clockwork_droid, false, false).setHelmetAndInvisibility(variant);
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(clockwork_droid, EntityType.ZOMBIE, Monster.CLOCKWORK_DROID, l));

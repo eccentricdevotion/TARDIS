@@ -27,7 +27,7 @@ import org.bukkit.entity.EntityType;
 
 public enum Monster {
 
-    CLOCKWORK_DROID("Clockwork Droid", EntityType.ZOMBIE, "clockwork", 27, HostArmorTrimSmithingTemplate.CLOCKWORK_DROID_DISGUISE.getKey(), Material.HOST_ARMOR_TRIM_SMITHING_TEMPLATE, MonsterSkins.CLOCKWORK_DROID_MALE),
+    CLOCKWORK_DROID("Clockwork Droid", EntityType.ZOMBIE, "clockwork", 27, Droid.CLOCKWORK_DROID_DISGUISE.getKey(), Material.HOST_ARMOR_TRIM_SMITHING_TEMPLATE, MonsterSkins.CLOCKWORK_DROID_MALE),
     CYBERMAN("Cyberman", EntityType.ZOMBIE, "cyberman", 2, IronIngot.CYBERMAN_DISGUISE.getKey(), Material.IRON_INGOT, MonsterSkins.CYBERMAN),
     DALEK("Dalek", EntityType.SKELETON, "dalek", 3, SlimeBall.DALEK_BRASS.getKey(), Material.SLIME_BALL, 10000004, null),
     DALEK_SEC("Dalek Sec", EntityType.ZOMBIFIED_PIGLIN, "dalek_sec", 22, MangrovePropagule.DALEK_SEC_DISGUISE.getKey(), Material.MANGROVE_PROPAGULE, CharacterSkins.DALEK_SEC),

@@ -32,14 +32,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  * @author eccentric_nz
  */
 public class TWAZombifiedPiglin extends ZombifiedPiglin {
-
-    /*
-    DALEK_SEC
-    DAVROS
-    HATH
-    ICE_WARRIOR
-    STRAX
-     */
+    
     private final NamespacedKey[] framesDalekSec = new NamespacedKey[]{
             MangrovePropagule.DALEK_SEC_0.getKey(),
             MangrovePropagule.DALEK_SEC_1.getKey(),
