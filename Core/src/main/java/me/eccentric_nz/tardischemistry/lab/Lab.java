@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.tardischemistry.lab;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ChemistryItem;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.ChemistryEquipment;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 
 public enum Lab {
 
-    Bleach("Water,Water,Water,Sodium Hypochlorite,Sodium Hypochlorite,Sodium Hypochlorite", Material.WHITE_DYE, ChemistryItem.BLEACH.getKey()),
-    Heat_Block("Iron,Water,CHARCOAL,Salt", Material.RED_CONCRETE, ChemistryItem.HEAT_BLOCK.getKey()),
-    Ice_Bomb("Sodium Acetate,Sodium Acetate,Sodium Acetate,Sodium Acetate", Material.SNOWBALL, ChemistryItem.ICE_BOMB.getKey()),
-    Super_Fertiliser("Ammonia,Phosphorus", Material.BONE_MEAL, ChemistryItem.SUPER_FERTILISER.getKey());
+    Bleach("Water,Water,Water,Sodium Hypochlorite,Sodium Hypochlorite,Sodium Hypochlorite", Material.WHITE_DYE, ChemistryEquipment.BLEACH.getKey()),
+    Heat_Block("Iron,Water,CHARCOAL,Salt", Material.RED_CONCRETE, ChemistryEquipment.HEAT_BLOCK.getKey()),
+    Ice_Bomb("Sodium Acetate,Sodium Acetate,Sodium Acetate,Sodium Acetate", Material.SNOWBALL, ChemistryEquipment.ICE_BOMB.getKey()),
+    Super_Fertiliser("Ammonia,Phosphorus", Material.BONE_MEAL, ChemistryEquipment.SUPER_FERTILISER.getKey());
 
     private final String recipe;
     private final Material itemMaterial;

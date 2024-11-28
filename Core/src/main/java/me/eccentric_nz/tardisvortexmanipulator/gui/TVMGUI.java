@@ -3,12 +3,15 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -36,121 +39,121 @@ public class TVMGUI {
         ItemMeta play = dis.getItemMeta();
         play.setDisplayName("Display");
         play.setLore(Arrays.asList(""));
-        play.setCustomModelData(108);
+        play.setItemModel(Bowl.VM_DISPLAY.getKey());
         dis.setItemMeta(play);
         // predictive world
         ItemStack pred = new ItemStack(Material.BOWL, 1);
         ItemMeta ict = dis.getItemMeta();
         ict.setDisplayName("Predictive Text");
         ict.setLore(Arrays.asList(""));
-        ict.setCustomModelData(148);
+        ict.setItemModel(Bowl.PREDICTIVE.getKey());
         pred.setItemMeta(ict);
         // keypad pad
         // 1
         ItemStack one = new ItemStack(Material.BOWL, 1);
         ItemMeta none = one.getItemMeta();
         none.setDisplayName("1");
-        none.setCustomModelData(118);
+        none.setItemModel(Bowl.VM_ONE.getKey());
         one.setItemMeta(none);
         // 2 abc
         ItemStack two = new ItemStack(Material.BOWL, 1);
         ItemMeta abc = two.getItemMeta();
         abc.setDisplayName("2");
         abc.setLore(Arrays.asList("abc"));
-        abc.setCustomModelData(126);
+        abc.setItemModel(Bowl.VM_TWO.getKey());
         two.setItemMeta(abc);
         // 3 def
         ItemStack three = new ItemStack(Material.BOWL, 1);
         ItemMeta def = three.getItemMeta();
         def.setDisplayName("3");
         def.setLore(Arrays.asList("def"));
-        def.setCustomModelData(125);
+        def.setItemModel(Bowl.VM_THREE.getKey());
         three.setItemMeta(def);
         // 4 ghi
         ItemStack four = new ItemStack(Material.BOWL, 1);
         ItemMeta ghi = four.getItemMeta();
         ghi.setDisplayName("4");
         ghi.setLore(Arrays.asList("ghi"));
-        ghi.setCustomModelData(111);
+        ghi.setItemModel(Bowl.VM_FOUR.getKey());
         four.setItemMeta(ghi);
         // 5 jkl
         ItemStack five = new ItemStack(Material.BOWL, 1);
         ItemMeta jkl = five.getItemMeta();
         jkl.setDisplayName("5");
         jkl.setLore(Arrays.asList("jkl"));
-        jkl.setCustomModelData(110);
+        jkl.setItemModel(Bowl.VM_FIVE.getKey());
         five.setItemMeta(jkl);
         // 6 mno
         ItemStack six = new ItemStack(Material.BOWL, 1);
         ItemMeta mno = six.getItemMeta();
         mno.setDisplayName("6");
         mno.setLore(Arrays.asList("mno"));
-        mno.setCustomModelData(123);
+        mno.setItemModel(Bowl.VM_SIX.getKey());
         six.setItemMeta(mno);
         // 7 pqrs
         ItemStack seven = new ItemStack(Material.BOWL, 1);
         ItemMeta pqrs = seven.getItemMeta();
         pqrs.setDisplayName("7");
         pqrs.setLore(Arrays.asList("pqrs"));
-        pqrs.setCustomModelData(122);
+        pqrs.setItemModel(Bowl.VM_SEVEN.getKey());
         seven.setItemMeta(pqrs);
         // 8 tuv
         ItemStack eight = new ItemStack(Material.BOWL, 1);
         ItemMeta tuv = eight.getItemMeta();
         tuv.setDisplayName("8");
         tuv.setLore(Arrays.asList("tuv"));
-        tuv.setCustomModelData(109);
+        tuv.setItemModel(Bowl.VM_EIGHT.getKey());
         eight.setItemMeta(tuv);
         // 9 wxyz
         ItemStack nine = new ItemStack(Material.BOWL, 1);
         ItemMeta wxyz = nine.getItemMeta();
         wxyz.setDisplayName("9");
         wxyz.setLore(Arrays.asList("wxyz"));
-        wxyz.setCustomModelData(117);
+        wxyz.setItemModel(Bowl.VM_NINE.getKey());
         nine.setItemMeta(wxyz);
         // 0
         ItemStack zero = new ItemStack(Material.BOWL, 1);
         ItemMeta nada = zero.getItemMeta();
         nada.setDisplayName("0");
-        nada.setCustomModelData(132);
+        nada.setItemModel(Bowl.VM_ZERO.getKey());
         zero.setItemMeta(nada);
         // symbols -_*~
         ItemStack hash = new ItemStack(Material.BOWL, 1);
         ItemMeta symbols = hash.getItemMeta();
         symbols.setDisplayName("#");
         symbols.setLore(Arrays.asList("~_-"));
-        symbols.setCustomModelData(112);
+        symbols.setItemModel(Bowl.VM_HASH.getKey());
         hash.setItemMeta(symbols);
         // space
         ItemStack star = new ItemStack(Material.BOWL, 1);
         ItemMeta space = star.getItemMeta();
         space.setDisplayName("*");
         space.setLore(Arrays.asList("Space"));
-        space.setCustomModelData(124);
+        space.setItemModel(Bowl.VM_STAR.getKey());
         star.setItemMeta(space);
         // world
         ItemStack world = new ItemStack(Material.BOWL, 1);
         ItemMeta but = world.getItemMeta();
         but.setDisplayName("World");
-        but.setCustomModelData(128);
+        but.setItemModel(Bowl.VM_WORLD.getKey());
         world.setItemMeta(but);
         // x
         ItemStack x = new ItemStack(Material.BOWL, 1);
         ItemMeta sel = x.getItemMeta();
         sel.setDisplayName("X");
-        sel.setCustomModelData(129);
+        sel.setItemModel(Bowl.VM_X.getKey());
         x.setItemMeta(sel);
         // y
         ItemStack y = new ItemStack(Material.BOWL, 1);
         ItemMeta hei = y.getItemMeta();
         hei.setDisplayName("Y");
-        hei.setCustomModelData(130);
+        hei.setItemModel(Bowl.VM_Y.getKey());
         y.setItemMeta(hei);
         // z
         ItemStack z = new ItemStack(Material.BOWL, 1);
         ItemMeta coord = z.getItemMeta();
         coord.setDisplayName("Z");
-        coord.setCustomModelData(131);
+        coord.setItemModel(Bowl.VM_Z.getKey());
         z.setItemMeta(coord);
         // tachyon level - show different levels depening on % full
         double percent = tachyonLevel / plugin.getVortexConfig().getDouble("tachyon_use.max");
@@ -160,29 +163,29 @@ public class TVMGUI {
         yon.setDisplayName("Tachyon Level");
         int level = (int) (percent * 100);
         List<String> lore = Arrays.asList(level + "%");
-        int cmd = 105;
+        NamespacedKey tachyon = Bowl.PERCENT_HUNDRED.getKey();
         if (level == 0) {
-            cmd = 95;
+            tachyon = Bowl.PERCENT_ZERO.getKey();
         } else if (level < 11) {
-            cmd = 96;
+            tachyon = Bowl.PERCENT_TEN.getKey();
         } else if (level < 21) {
-            cmd = 97;
+            tachyon = Bowl.PERCENT_TWENTY.getKey();
         } else if (level < 31) {
-            cmd = 98;
+            tachyon = Bowl.PERCENT_THIRTY.getKey();
         } else if (level < 41) {
-            cmd = 99;
+            tachyon = Bowl.PERCENT_FORTY.getKey();
         } else if (level < 51) {
-            cmd = 100;
+            tachyon = Bowl.PERCENT_FIFTY.getKey();
         } else if (level < 61) {
-            cmd = 101;
+            tachyon = Bowl.PERCENT_SIXTY.getKey();
         } else if (level < 71) {
-            cmd = 102;
+            tachyon = Bowl.PERCENT_SEVENTY.getKey();
         } else if (level < 81) {
-            cmd = 103;
+            tachyon = Bowl.PERCENT_EIGHTY.getKey();
         } else if (level < 91) {
-            cmd = 104;
+            tachyon = Bowl.PERCENT_NINETY.getKey();
         }
-        yon.setCustomModelData(cmd);
+        yon.setItemModel(tachyon);
         yon.setLore(lore);
         tach.setItemMeta(yon);
         // deprecated, but if resource pack not installed gives a visial indication of tachyon levels
@@ -191,55 +194,55 @@ public class TVMGUI {
         ItemStack life = new ItemStack(Material.BOWL, 1);
         ItemMeta signs = life.getItemMeta();
         signs.setDisplayName("Lifesigns");
-        signs.setCustomModelData(113);
+        signs.setItemModel(Bowl.VM_LIFE.getKey());
         life.setItemMeta(signs);
         // warp
         ItemStack warp = new ItemStack(Material.BOWL, 1);
         ItemMeta tol = warp.getItemMeta();
         tol.setDisplayName("Enter Vortex / Save location / Check lifesigns");
-        tol.setCustomModelData(127);
+        tol.setItemModel(Bowl.CHECK.getKey());
         warp.setItemMeta(tol);
         // beacon
         ItemStack bea = new ItemStack(Material.BOWL, 1);
         ItemMeta con = bea.getItemMeta();
         con.setDisplayName("Beacon signal");
-        con.setCustomModelData(106);
+        con.setItemModel(Bowl.VM_BEACON.getKey());
         bea.setItemMeta(con);
         // message
         ItemStack mess = new ItemStack(Material.BOWL, 1);
         ItemMeta age = mess.getItemMeta();
         age.setDisplayName("Messages");
-        age.setCustomModelData(115);
+        age.setItemModel(Bowl.VM_MESSAGE.getKey());
         mess.setItemMeta(age);
         // save
         ItemStack save = new ItemStack(Material.BOWL, 1);
         ItemMeta curr = save.getItemMeta();
         curr.setDisplayName("Save current location");
-        curr.setCustomModelData(74);
+        curr.setItemModel(Bowl.SAVE.getKey());
         save.setItemMeta(curr);
         // load
         ItemStack load = new ItemStack(Material.BOWL, 1);
         ItemMeta disk = load.getItemMeta();
         disk.setDisplayName("Load saved location");
-        disk.setCustomModelData(114);
+        disk.setItemModel(Bowl.VM_LOAD.getKey());
         load.setItemMeta(disk);
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta win = close.getItemMeta();
         win.setDisplayName("Close");
-        win.setCustomModelData(1);
+        win.setItemModel(Bowl.CLOSE.getKey());
         close.setItemMeta(win);
         // next
         ItemStack next = new ItemStack(Material.BOWL, 1);
         ItemMeta cha = next.getItemMeta();
         cha.setDisplayName("Next character");
-        cha.setCustomModelData(116);
+        cha.setItemModel(Bowl.VM_NEXT.getKey());
         next.setItemMeta(cha);
         // back
         ItemStack prev = new ItemStack(Material.BOWL, 1);
         ItemMeta let = prev.getItemMeta();
         let.setDisplayName("Previous character");
-        let.setCustomModelData(120);
+        let.setItemModel(Bowl.VM_PREV.getKey());
         prev.setItemMeta(let);
 
         ItemStack[] is = {

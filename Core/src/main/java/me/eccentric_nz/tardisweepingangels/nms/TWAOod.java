@@ -2,6 +2,7 @@ package me.eccentric_nz.tardisweepingangels.nms;
 
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.RottenFlesh;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.OodColour;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
@@ -19,6 +20,7 @@ import net.minecraft.world.entity.monster.Husk;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.v1_21_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_21_R2.inventory.CraftItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -28,9 +30,69 @@ import java.util.Map;
 public class TWAOod extends TWAFollower {
 
     private static final String entityId = "ood";
+    private final NamespacedKey[] framesBlack = new NamespacedKey[]{
+            RottenFlesh.OOD_BLACK_0.getKey(),
+            RottenFlesh.OOD_BLACK_1.getKey(),
+            RottenFlesh.OOD_BLACK_2.getKey(),
+            RottenFlesh.OOD_BLACK_1.getKey(),
+            RottenFlesh.OOD_BLACK_0.getKey(),
+            RottenFlesh.OOD_BLACK_3.getKey(),
+            RottenFlesh.OOD_BLACK_4.getKey(),
+            RottenFlesh.OOD_BLACK_3.getKey()
+    };
+    private final NamespacedKey[] framesBlackRedeye = new NamespacedKey[]{
+            RottenFlesh.OOD_REDEYE_BLACK_0.getKey(),
+            RottenFlesh.OOD_REDEYE_BLACK_1.getKey(),
+            RottenFlesh.OOD_REDEYE_BLACK_2.getKey(),
+            RottenFlesh.OOD_REDEYE_BLACK_1.getKey(),
+            RottenFlesh.OOD_REDEYE_BLACK_0.getKey(),
+            RottenFlesh.OOD_REDEYE_BLACK_3.getKey(),
+            RottenFlesh.OOD_REDEYE_BLACK_4.getKey(),
+            RottenFlesh.OOD_REDEYE_BLACK_3.getKey()
+    };
+    private final NamespacedKey[] framesBlue = new NamespacedKey[]{
+            RottenFlesh.OOD_BLUE_0.getKey(),
+            RottenFlesh.OOD_BLUE_1.getKey(),
+            RottenFlesh.OOD_BLUE_2.getKey(),
+            RottenFlesh.OOD_BLUE_1.getKey(),
+            RottenFlesh.OOD_BLUE_0.getKey(),
+            RottenFlesh.OOD_BLUE_3.getKey(),
+            RottenFlesh.OOD_BLUE_4.getKey(),
+            RottenFlesh.OOD_BLUE_3.getKey()
+    };
+    private final NamespacedKey[] framesBlueRedeye = new NamespacedKey[]{
+            RottenFlesh.OOD_REDEYE_BLUE_0.getKey(),
+            RottenFlesh.OOD_REDEYE_BLUE_1.getKey(),
+            RottenFlesh.OOD_REDEYE_BLUE_2.getKey(),
+            RottenFlesh.OOD_REDEYE_BLUE_1.getKey(),
+            RottenFlesh.OOD_REDEYE_BLUE_0.getKey(),
+            RottenFlesh.OOD_REDEYE_BLUE_3.getKey(),
+            RottenFlesh.OOD_REDEYE_BLUE_4.getKey(),
+            RottenFlesh.OOD_REDEYE_BLUE_3.getKey()
+    };
+    private final NamespacedKey[] framesBrown = new NamespacedKey[]{
+            RottenFlesh.OOD_BROWN_0.getKey(),
+            RottenFlesh.OOD_BROWN_1.getKey(),
+            RottenFlesh.OOD_BROWN_2.getKey(),
+            RottenFlesh.OOD_BROWN_1.getKey(),
+            RottenFlesh.OOD_BROWN_0.getKey(),
+            RottenFlesh.OOD_BROWN_3.getKey(),
+            RottenFlesh.OOD_BROWN_4.getKey(),
+            RottenFlesh.OOD_BROWN_3.getKey()
+    };
+    private final NamespacedKey[] framesBrownRedeye = new NamespacedKey[]{
+            RottenFlesh.OOD_REDEYE_BROWN_0.getKey(),
+            RottenFlesh.OOD_REDEYE_BROWN_1.getKey(),
+            RottenFlesh.OOD_REDEYE_BROWN_2.getKey(),
+            RottenFlesh.OOD_REDEYE_BROWN_1.getKey(),
+            RottenFlesh.OOD_REDEYE_BROWN_0.getKey(),
+            RottenFlesh.OOD_REDEYE_BROWN_3.getKey(),
+            RottenFlesh.OOD_REDEYE_BROWN_4.getKey(),
+            RottenFlesh.OOD_REDEYE_BROWN_3.getKey()
+    };
     private boolean redeye;
     private OodColour colour;
-
+    
     public TWAOod(Level world) {
         super(EntityType.HUSK, world);
         this.redeye = false;
@@ -62,21 +124,22 @@ public class TWAOod extends TWAFollower {
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
             ItemMeta im = bukkit.getItemMeta();
             if (oldX == getX() && oldZ == getZ()) {
-                int cmd = 405 + colour.getStep();
-                if (redeye) {
-                    cmd += 18;
-                }
-                im.setCustomModelData(cmd);
+                NamespacedKey still = switch (colour) {
+                    case BLACK -> (redeye) ? RottenFlesh.OOD_REDEYE_BLACK_STATIC.getKey() : RottenFlesh.OOD_BLACK_STATIC.getKey();
+                    case BLUE -> (redeye) ? RottenFlesh.OOD_REDEYE_BLUE_STATIC.getKey() : RottenFlesh.OOD_BLUE_STATIC.getKey();
+                    case BROWN -> (redeye) ? RottenFlesh.OOD_REDEYE_BROWN_STATIC.getKey() : RottenFlesh.OOD_BROWN_STATIC.getKey();
+                };
+                im.setItemModel(still);
                 i = 0;
             } else {
                 // play move animation
-                int cmd = 400 + colour.getStep();
-                if (redeye) {
-                    cmd += 18;
+                switch (colour) {
+                    case BLACK -> im.setItemModel((redeye) ? framesBlackRedeye[i] : framesBlack[i]);
+                    case BLUE -> im.setItemModel((redeye) ? framesBlueRedeye[i] : framesBlue[i]);
+                    case BROWN -> im.setItemModel((redeye) ? framesBrownRedeye[i] : framesBrown[i]);
                 }
-                im.setCustomModelData(cmd + frames[i]);
                 i++;
-                if (i == frames.length) {
+                if (i == framesBlack.length) {
                     i = 0;
                 }
             }

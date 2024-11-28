@@ -557,7 +557,7 @@ public class DebugPopulator {
         }
         List<Material> slides = List.of(Material.GLASS, Material.GRAY_STAINED_GLASS, Material.LIGHT_BLUE_STAINED_GLASS);
         String[] names = new String[]{"Slide", "Scope View", "Screen"};
-        NamespacedKey[] keys = new NamespacedKey[]{Glass.GLASS_SLIDE.getKey(), GrayStainedGlass.FOLDER.getKey(), LightBlueStainedGlass.SCREEN.getKey()};
+        NamespacedKey[] keys = new NamespacedKey[]{ChemistryEquipment.GLASS_SLIDE.getKey(), ChemistryEquipment.FOLDER.getKey(), ChemistryEquipment.SCREEN.getKey()};
         int s = 0;
         for (Material material : slides) {
             Location location = new Location(world, rx + x, 65, rz + z);

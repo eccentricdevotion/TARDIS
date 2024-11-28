@@ -3,9 +3,8 @@ package me.eccentric_nz.TARDIS.custommodeldata.keys;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.NamespacedKey;
 
-public enum LightBlueStainedGlass {
+public enum Sample {
 
-    SCREEN(new NamespacedKey(TARDIS.plugin, "equipment/screen")),
     EMPTY_SCREEN(new NamespacedKey(TARDIS.plugin, "screen/empty_screen")),
     ARBOREAL_FIELD(new NamespacedKey(TARDIS.plugin, "screen/arboreal_field")),
     BEETLE(new NamespacedKey(TARDIS.plugin, "screen/beetle")),
@@ -30,7 +29,7 @@ public enum LightBlueStainedGlass {
 
     private final NamespacedKey key;
 
-    LightBlueStainedGlass(NamespacedKey key) {
+    Sample(NamespacedKey key) {
         this.key = key;
     }
 

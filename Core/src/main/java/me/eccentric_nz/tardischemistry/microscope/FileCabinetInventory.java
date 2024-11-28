@@ -1,6 +1,8 @@
 package me.eccentric_nz.tardischemistry.microscope;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.ChemistryEquipment;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -21,7 +23,7 @@ class FileCabinetInventory {
             ItemStack is = new ItemStack(Material.GRAY_STAINED_GLASS, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(view.getName());
-            im.setCustomModelData(9999);
+            im.setItemModel(ChemistryEquipment.FOLDER.getKey());
             im.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.INTEGER, view.getCustomModelData());
             is.setItemMeta(im);
             stacks[view.ordinal()] = is;
@@ -30,7 +32,7 @@ class FileCabinetInventory {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName("Close");
-        can.setCustomModelData(1);
+        can.setItemModel(Bowl.CLOSE.getKey());
         close.setItemMeta(can);
         stacks[53] = close;
         return stacks;

@@ -3,9 +3,8 @@ package me.eccentric_nz.TARDIS.custommodeldata.keys;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.NamespacedKey;
 
-public enum GrayStainedGlass {
+public enum Astromony {
 
-    FOLDER(new NamespacedKey(TARDIS.plugin, "equipment/folder")),
     STARS(new NamespacedKey(TARDIS.plugin, "telescope/stars")),
     SUN(new NamespacedKey(TARDIS.plugin, "telescope/sun")),
     SUN_FLARE(new NamespacedKey(TARDIS.plugin, "telescope/sun_flare")),
@@ -52,7 +51,7 @@ public enum GrayStainedGlass {
 
     private final NamespacedKey key;
 
-    GrayStainedGlass(NamespacedKey key) {
+    Astromony(NamespacedKey key) {
         this.key = key;
     }
 

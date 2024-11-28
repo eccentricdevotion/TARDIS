@@ -18,6 +18,7 @@ package me.eccentric_nz.tardisweepingangels.monsters.toclafane;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GunPowder;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
@@ -76,7 +77,7 @@ public class ToclafaneListener implements Listener {
                         ItemStack head = ee.getHelmet();
                         ItemMeta im = head.getItemMeta();
                         player.playSound(stand.getLocation(), "toclafane", 1.0f, 1.0f);
-                        im.setCustomModelData(2);
+                        im.setItemModel(GunPowder.TOCLAFANE_ATTACK.getKey());
                         head.setItemMeta(im);
                         ee.setHelmet(head);
                         bee.setHasStung(false);

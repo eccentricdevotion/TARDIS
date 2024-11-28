@@ -16,11 +16,13 @@
  */
 package me.eccentric_nz.tardisweepingangels.nms;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Kelp;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.v1_21_R2.inventory.CraftItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -31,7 +33,26 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class TWADrowned extends Drowned {
 
-    private final int[] frames = new int[]{0, 1, 2, 1, 0, 3, 4, 3};
+    private final NamespacedKey[] frames = new NamespacedKey[]{
+            Kelp.SEA_DEVIL_0.getKey(),
+            Kelp.SEA_DEVIL_1.getKey(),
+            Kelp.SEA_DEVIL_2.getKey(),
+            Kelp.SEA_DEVIL_1.getKey(),
+            Kelp.SEA_DEVIL_0.getKey(),
+            Kelp.SEA_DEVIL_3.getKey(),
+            Kelp.SEA_DEVIL_4.getKey(),
+            Kelp.SEA_DEVIL_3.getKey()
+    };
+    private final NamespacedKey[] framesSwimming = new NamespacedKey[]{
+            Kelp.SEA_DEVIL_SWIMMING_0.getKey(),
+            Kelp.SEA_DEVIL_SWIMMING_1.getKey(),
+            Kelp.SEA_DEVIL_SWIMMING_2.getKey(),
+            Kelp.SEA_DEVIL_SWIMMING_1.getKey(),
+            Kelp.SEA_DEVIL_SWIMMING_0.getKey(),
+            Kelp.SEA_DEVIL_SWIMMING_3.getKey(),
+            Kelp.SEA_DEVIL_SWIMMING_4.getKey(),
+            Kelp.SEA_DEVIL_SWIMMING_3.getKey()
+    };
     private int i = 0;
     private double oldX;
     private double oldZ;
@@ -47,17 +68,11 @@ public class TWADrowned extends Drowned {
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
             ItemMeta im = bukkit.getItemMeta();
             if (oldX == getX() && oldZ == getZ()) {
-                im.setCustomModelData(405);
+                im.setItemModel(Kelp.SEA_DEVIL_STATIC.getKey());
                 i = 0;
             } else {
                 // play move animation
-                int cmd = 400;
-                if (isSwimming()) {
-                    cmd = 411;
-                } else if (getTarget() != null) {
-                    cmd = 406;
-                }
-                im.setCustomModelData(cmd + frames[i]);
+                im.setItemModel(isSwimming() ? framesSwimming[i] : frames[i]);
                 i++;
                 if (i == frames.length) {
                     i = 0;

@@ -17,11 +17,13 @@
 package me.eccentric_nz.tardisweepingangels.monsters.ood;
 
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.RottenFlesh;
 import me.eccentric_nz.tardisweepingangels.equip.DisguiseEquipper;
 import me.eccentric_nz.tardisweepingangels.equip.FollowerEquipper;
 import me.eccentric_nz.tardisweepingangels.nms.TWAOod;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_21_R2.entity.CraftEntity;
 import org.bukkit.entity.Entity;
@@ -46,19 +48,19 @@ public class OodEquipment {
         ItemMeta headMeta = head.getItemMeta();
         headMeta.setDisplayName("Ood Head");
         if (!disguise) {
-            headMeta.setCustomModelData(405);
+            headMeta.setItemModel(RottenFlesh.OOD_BLACK_STATIC.getKey());
             head.setItemMeta(headMeta);
             new FollowerEquipper().setHelmetAndInvisibilty(player, entity, Monster.OOD, head);
         } else {
-//            int chance = TARDISConstants.RANDOM.nextInt(100);
-            int colour = 29;
-//            if (chance < 15) {
-//                colour += 10;
-//            }
-//            if (chance > 85) {
-//                colour += 20;
-//            }
-            headMeta.setCustomModelData(colour);
+            int chance = TARDISConstants.RANDOM.nextInt(100);
+            NamespacedKey colour = RottenFlesh.OOD_BLACK_STATIC.getKey();
+            if (chance < 15) {
+                colour = RottenFlesh.OOD_BLUE_STATIC.getKey();
+            }
+            if (chance > 85) {
+                colour =  RottenFlesh.OOD_BROWN_STATIC.getKey();
+            }
+            headMeta.setItemModel(colour);
             head.setItemMeta(headMeta);
             new DisguiseEquipper().setHelmetAndInvisibilty(entity, head);
         }

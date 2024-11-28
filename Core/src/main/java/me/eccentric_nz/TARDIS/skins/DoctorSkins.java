@@ -1,5 +1,9 @@
 package me.eccentric_nz.TARDIS.skins;
 
+import me.eccentric_nz.TARDIS.custommodeldata.keys.TotemOfUndying;
+import org.bukkit.NamespacedKey;
+
+import java.util.HashMap;
 import java.util.List;
 
 public class DoctorSkins {
@@ -85,4 +89,25 @@ public class DoctorSkins {
     );
 
     public static final List<Skin> DOCTORS = List.of(FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH, SEVENTH, EIGHTH, NINTH, TENTH, ELEVENTH, TWELFTH, THIRTEENTH, FOURTEENTH, FIFTEENTH, WAR);
+
+    public static final HashMap<Skin, NamespacedKey> MODELS = new HashMap<>();
+
+    static {
+        MODELS.put(FIRST, TotemOfUndying.FIRST.getKey());
+        MODELS.put(SECOND, TotemOfUndying.SECOND.getKey());
+        MODELS.put(THIRD, TotemOfUndying.THIRD.getKey());
+        MODELS.put(FOURTH, TotemOfUndying.FOURTH.getKey());
+        MODELS.put(FIFTH, TotemOfUndying.FIFTH.getKey());
+        MODELS.put(SIXTH, TotemOfUndying.SIXTH.getKey());
+        MODELS.put(SEVENTH, TotemOfUndying.SEVENTH.getKey());
+        MODELS.put(EIGHTH, TotemOfUndying.EIGHTH.getKey());
+        MODELS.put(NINTH, TotemOfUndying.NINTH.getKey());
+        MODELS.put(TENTH, TotemOfUndying.TENTH.getKey());
+        MODELS.put(ELEVENTH, TotemOfUndying.ELEVENTH.getKey());
+        MODELS.put(TWELFTH, TotemOfUndying.TWELFTH.getKey());
+        MODELS.put(THIRTEENTH, TotemOfUndying.THIRTEENTH.getKey());
+        MODELS.put(FOURTEENTH, TotemOfUndying.FOURTEENTH.getKey());
+        MODELS.put(FIFTEENTH, TotemOfUndying.FIFTEENTH.getKey());
+        MODELS.put(WAR, TotemOfUndying.WAR.getKey());
+    }
 }

@@ -55,9 +55,9 @@ public class SparklerListener implements Listener {
                 ItemMeta im = is.getItemMeta();
                 if (im.hasDisplayName() && im.getDisplayName().endsWith("Sparkler") && im.hasCustomModelData() && !im.hasEnchant(Enchantment.LOYALTY)) {
                     player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 1.0f, 1.0f);
-                    // switch custom data models e.g. 10000035 -> 12000035
-                    int cmd = im.getCustomModelData() + 2000000;
-                    im.setCustomModelData(cmd);
+                    // switch custom data models
+                    Product sparkler = Product.getByName().get(im.getDisplayName());
+                    im.setItemModel(sparkler.getActive());
                     // set custom data on sparkler
                     im.addEnchant(Enchantment.LOYALTY, 1, true);
                     is.setItemMeta(im);

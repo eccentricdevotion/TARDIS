@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardischemistry.microscope;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ChemistryItem;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.ChemistryEquipment;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -9,12 +9,12 @@ import java.util.HashMap;
 
 public enum LabEquipment {
 
-    MICROSCOPE(Material.LIGHT_GRAY_DYE, ChemistryItem.MICROSCOPE.getKey()),
-    SLIDE_RACK(Material.BROWN_DYE, ChemistryItem.SLIDE_RACK.getKey()),
-    ELECTRON_MICROSCOPE(Material.GRAY_DYE, ChemistryItem.ELECTRON_MICROSCOPE.getKey()),
-    COMPUTER_MONITOR(Material.LIGHT_BLUE_DYE, ChemistryItem.COMPUTER_MONITOR.getKey()),
-    TELESCOPE(Material.WHITE_DYE, ChemistryItem.TELESCOPE.getKey()),
-    FILING_CABINET(Material.ORANGE_DYE, ChemistryItem.FILING_CABINET_OPEN.getKey());
+    MICROSCOPE(Material.LIGHT_GRAY_DYE, ChemistryEquipment.MICROSCOPE.getKey()),
+    SLIDE_RACK(Material.BROWN_DYE, ChemistryEquipment.SLIDE_RACK.getKey()),
+    ELECTRON_MICROSCOPE(Material.GRAY_DYE, ChemistryEquipment.ELECTRON_MICROSCOPE.getKey()),
+    COMPUTER_MONITOR(Material.LIGHT_BLUE_DYE, ChemistryEquipment.COMPUTER_MONITOR.getKey()),
+    TELESCOPE(Material.WHITE_DYE, ChemistryEquipment.TELESCOPE.getKey()),
+    FILING_CABINET(Material.ORANGE_DYE, ChemistryEquipment.FILING_CABINET_OPEN.getKey());
 
     private static final HashMap<Material, LabEquipment> BY_MATERIAL = new HashMap<>();
 

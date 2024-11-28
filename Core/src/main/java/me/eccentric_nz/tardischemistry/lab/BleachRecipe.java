@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardischemistry.lab;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ChemistryItem;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.ChemistryEquipment;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -61,7 +61,7 @@ public class BleachRecipe {
         ItemStack bleach = new ItemStack(Material.WHITE_DYE, 1);
         ItemMeta bm = bleach.getItemMeta();
         bm.setDisplayName(ChatColor.WHITE + "Bleach");
-        bm.setItemModel(ChemistryItem.BLEACH.getKey());
+        bm.setItemModel(ChemistryEquipment.BLEACH.getKey());
         bm.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
         bleach.setItemMeta(bm);
         // beds

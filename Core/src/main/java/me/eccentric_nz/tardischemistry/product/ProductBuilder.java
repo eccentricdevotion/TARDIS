@@ -25,18 +25,12 @@ import org.bukkit.persistence.PersistentDataType;
 public class ProductBuilder {
 
     public static ItemStack getProduct(Product product) {
-        ItemStack is = new ItemStack(product.getItemMaterial(), 1);
+        ItemStack is = new ItemStack(product.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(product.toString().replace("_", " "));
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        int which;
-        if (product.ordinal() < 4) {
-            which = 10001 + product.ordinal();
-        } else {
-            which = 10000001 + product.ordinal();
-        }
-        im.setCustomModelData(which);
-        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which);
+        im.setItemModel(product.getModel());
+        im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, product.getModel().getKey());
         is.setItemMeta(im);
         return is;
     }

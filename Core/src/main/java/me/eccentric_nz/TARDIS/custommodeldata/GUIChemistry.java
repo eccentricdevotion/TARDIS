@@ -36,5 +36,5 @@ public record GUIChemistry() {
     public static GUIData MINUS = new GUIData(Arrow.HANDLES_OPERATOR_SUBTRACTION.getKey(), 23, Material.ARROW);
     public static GUIData ELEMENTS = new GUIData(Feather.UNKNOWN.getKey(), 35, Material.FEATHER);
     public static GUIData COMPOUNDS = new GUIData(GlassBottle.ALUMINIUM_OXIDE.getKey(), 44, Material.GLASS_BOTTLE);
-    public static GUIData PRODUCTS = new GUIData(ChemistryItem.SUPER_FERTILISER.getKey(), 44, Material.BONE_MEAL);
+    public static GUIData PRODUCTS = new GUIData(ChemistryEquipment.SUPER_FERTILISER.getKey(), 44, Material.BONE_MEAL);
 }

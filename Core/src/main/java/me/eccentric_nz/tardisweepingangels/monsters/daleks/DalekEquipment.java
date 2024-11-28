@@ -18,10 +18,13 @@ package me.eccentric_nz.tardisweepingangels.monsters.daleks;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bow;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.SlimeBall;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.LivingEntity;
@@ -39,7 +42,7 @@ public class DalekEquipment {
         ItemStack helmet = new ItemStack(Material.SLIME_BALL, 1);
         ItemMeta headMeta = helmet.getItemMeta();
         headMeta.setDisplayName("Dalek Head");
-        headMeta.setCustomModelData(10000005 + getRandomCMD());
+        headMeta.setItemModel(getRandomModel());
         helmet.setItemMeta(headMeta);
         EntityEquipment ee = le.getEquipment();
         ee.setHelmet(helmet);
@@ -56,7 +59,7 @@ public class DalekEquipment {
             ee.setHelmetDropChance(0);
             ItemStack bow = new ItemStack(Material.BOW, 1);
             ItemMeta bim = bow.getItemMeta();
-            bim.setCustomModelData(1);
+            bim.setItemModel(Bow.DALEK_BOW.getKey());
             bow.setItemMeta(bim);
             ee.setItemInMainHand(bow);
             ee.setItemInMainHandDropChance(0);
@@ -72,11 +75,29 @@ public class DalekEquipment {
         }
     }
 
-    private static int getRandomCMD() {
+    private static NamespacedKey getRandomModel() {
         if (TARDISConstants.RANDOM.nextBoolean()) {
-            return 0;
+            return SlimeBall.DALEK_BRASS.getKey();
         } else {
-            return TARDISConstants.RANDOM.nextInt(1,17);
+            switch (TARDISConstants.RANDOM.nextInt(1,17)) {
+                case 1 -> { return SlimeBall.DALEK_WHITE.getKey(); }
+                case 2 -> { return SlimeBall.DALEK_ORANGE.getKey(); }
+                case 3 -> { return SlimeBall.DALEK_MAGENTA.getKey(); }
+                case 4 -> { return SlimeBall.DALEK_LIGHT_BLUE.getKey(); }
+                case 5 -> { return SlimeBall.DALEK_YELLOW.getKey(); }
+                case 6 -> { return SlimeBall.DALEK_LIME.getKey(); }
+                case 7 -> { return SlimeBall.DALEK_PINK.getKey(); }
+                case 8 -> { return SlimeBall.DALEK_GRAY.getKey(); }
+                case 9 -> { return SlimeBall.DALEK_LIGHT_GRAY.getKey(); }
+                case 10 -> { return SlimeBall.DALEK_CYAN.getKey(); }
+                case 11 -> { return SlimeBall.DALEK_BLUE.getKey(); }
+                case 12 -> { return SlimeBall.DALEK_PURPLE.getKey(); }
+                case 13 -> { return SlimeBall.DALEK_GREEN.getKey(); }
+                case 14 -> { return SlimeBall.DALEK_BROWN.getKey(); }
+                case 15 -> { return SlimeBall.DALEK_RED.getKey(); }
+                case 16 -> { return SlimeBall.DALEK_BLACK.getKey(); }
+            }
         }
+        return SlimeBall.DALEK_BRASS.getKey();
     }
 }

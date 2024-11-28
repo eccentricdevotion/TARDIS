@@ -2,6 +2,7 @@ package me.eccentric_nz.tardisweepingangels.nms;
 
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.YellowDye;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -18,6 +19,7 @@ import net.minecraft.world.entity.monster.Husk;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.v1_21_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_21_R2.inventory.CraftItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -27,6 +29,26 @@ import java.util.Map;
 public class TWAJudoon extends TWAFollower {
 
     private static final String entityId = "judoon";
+    private final NamespacedKey[] frames = new NamespacedKey[]{
+            YellowDye.JUDOON_0.getKey(),
+            YellowDye.JUDOON_1.getKey(),
+            YellowDye.JUDOON_2.getKey(),
+            YellowDye.JUDOON_1.getKey(),
+            YellowDye.JUDOON_0.getKey(),
+            YellowDye.JUDOON_3.getKey(),
+            YellowDye.JUDOON_4.getKey(),
+            YellowDye.JUDOON_3.getKey()
+    };
+    private final NamespacedKey[] framesGuard = new NamespacedKey[]{
+            YellowDye.JUDOON_GUARD_0.getKey(),
+            YellowDye.JUDOON_GUARD_1.getKey(),
+            YellowDye.JUDOON_GUARD_2.getKey(),
+            YellowDye.JUDOON_GUARD_1.getKey(),
+            YellowDye.JUDOON_GUARD_0.getKey(),
+            YellowDye.JUDOON_GUARD_3.getKey(),
+            YellowDye.JUDOON_GUARD_4.getKey(),
+            YellowDye.JUDOON_GUARD_3.getKey()
+    };
     private int ammo;
     private boolean guard;
 
@@ -59,11 +81,11 @@ public class TWAJudoon extends TWAFollower {
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
             ItemMeta im = bukkit.getItemMeta();
             if (oldX == getX() && oldZ == getZ()) {
-                im.setCustomModelData(405 + (this.guard ? 6 : 0));
+                im.setItemModel(this.guard ? YellowDye.JUDOON_STATIC.getKey() : YellowDye.JUDOON_GUARD.getKey());
                 i = 0;
             } else {
                 // play move animation
-                im.setCustomModelData(400 + frames[i] + (this.guard ? 6 : 0));
+                im.setItemModel(this.guard ? framesGuard[i] : frames[i]);
                 i++;
                 if (i == frames.length) {
                     i = 0;
