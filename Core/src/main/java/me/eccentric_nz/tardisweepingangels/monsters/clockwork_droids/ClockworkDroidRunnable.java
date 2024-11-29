@@ -18,7 +18,7 @@ package me.eccentric_nz.tardisweepingangels.monsters.clockwork_droids;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Droid;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.DroidVariant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
@@ -93,7 +93,7 @@ public class ClockworkDroidRunnable implements Runnable {
                     return;
                 }
                 boolean male = TARDISConstants.RANDOM.nextBoolean();
-                NamespacedKey variant = male ? Droid.CLOCKWORK_DROID_STATIC.getKey() : Droid.CLOCKWORK_DROID_FEMALE_STATIC.getKey();
+                NamespacedKey variant = male ? DroidVariant.CLOCKWORK_DROID_STATIC.getKey() : DroidVariant.CLOCKWORK_DROID_FEMALE_STATIC.getKey();
                 LivingEntity clockwork_droid = new MonsterSpawner().create(l, Monster.CLOCKWORK_DROID);
                 ((TWAZombie) clockwork_droid).setVariant(male ? 0 : 1);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

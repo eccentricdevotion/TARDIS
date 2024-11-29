@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.custommodeldata.keys.Weather;
 import org.bukkit.Material;
 
@@ -27,5 +27,5 @@ public record GUIWeather() {
     public static GUIData RAIN = new GUIData(Weather.RAIN.getKey(), 1, Material.WATER_BUCKET);
     public static GUIData THUNDER = new GUIData(Weather.THUNDER.getKey(), 2, Material.GUNPOWDER);
     public static GUIData EXCITE = new GUIData(Weather.EXCITE.getKey(), 5, Material.FIREWORK_ROCKET);
-    public static GUIData CLOSE = new GUIData(Bowl.CLOSE.getKey(), 8, Material.BOWL);
+    public static GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 8, Material.BOWL);
 }

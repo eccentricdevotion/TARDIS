@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Arrow;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.ArrowVariant;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
 import org.bukkit.Material;
 
 public record GUIWallFloor() {
 
     // TARDIS Wall & Floor Menu
-    public static GUIData BUTTON_SCROLL_U = new GUIData(Arrow.SCROLL_UP.getKey(), 8, Material.ARROW);
-    public static GUIData BUTTON_SCROLL_D = new GUIData(Arrow.SCROLL_DOWN.getKey(), 17, Material.ARROW);
-    public static GUIData WALL = new GUIData(Bowl.WALL.getKey(), 26, Material.BOWL);
-    public static GUIData FLOOR = new GUIData(Bowl.FLOOR.getKey(), 35, Material.BOWL);
-    public static GUIData BUTTON_ABORT = new GUIData(Bowl.ABORT.getKey(), 53, Material.BOWL);
+    public static GUIData BUTTON_SCROLL_U = new GUIData(ArrowVariant.SCROLL_UP.getKey(), 8, Material.ARROW);
+    public static GUIData BUTTON_SCROLL_D = new GUIData(ArrowVariant.SCROLL_DOWN.getKey(), 17, Material.ARROW);
+    public static GUIData WALL = new GUIData(GuiVariant.WALL.getKey(), 26, Material.BOWL);
+    public static GUIData FLOOR = new GUIData(GuiVariant.FLOOR.getKey(), 35, Material.BOWL);
+    public static GUIData BUTTON_ABORT = new GUIData(GuiVariant.ABORT.getKey(), 53, Material.BOWL);
 }

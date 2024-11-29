@@ -16,9 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.BlazeRod;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Book;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -26,27 +25,27 @@ import org.bukkit.NamespacedKey;
 public enum GUISonicPreferences {
 
     // Sonic Prefs Menu
-    MARK_I(BlazeRod.MARK1.getKey(), 0),
-    MARK_II(BlazeRod.MARK2.getKey(), 1),
-    MARK_III(BlazeRod.MARK3.getKey(), 2),
-    MARK_IV(BlazeRod.MARK4.getKey(), 3),
-    EIGHTH_DOCTOR(BlazeRod.EIGHTH.getKey(), 4),
-    NINTH_DOCTOR(BlazeRod.NINTH.getKey(), 5),
-    TENTH_DOCTOR(BlazeRod.TENTH.getKey(), 6),
-    ELEVENTH_DOCTOR(BlazeRod.ELEVENTH.getKey(), 7),
-    TWELFTH_DOCTOR(BlazeRod.TWELFTH.getKey(), 8),
-    THIRTEENTH_DOCTOR(BlazeRod.THIRTEENTH.getKey(), 9),
-    FOURTEENTH_DOCTOR(BlazeRod.FOURTEENTH.getKey(), 10),
-    FIFTEENTH_DOCTOR(BlazeRod.FIFTEENTH.getKey(), 11),
-    WAR_DOCTOR(BlazeRod.WAR.getKey(), 12),
-    MASTER(BlazeRod.MASTER.getKey(), 13),
-    SARAH_JANE(BlazeRod.SARAH_JANE.getKey(), 14),
-    AMY_POND(BlazeRod.SONIC_PROBE.getKey(), 15),
-    RIVER_SONG(BlazeRod.RIVER_SONG.getKey(), 16),
-    MISSY(BlazeRod.UMBRELLA.getKey(), 17),
+    MARK_I(SonicVariant.MARK1.getKey(), 0),
+    MARK_II(SonicVariant.MARK2.getKey(), 1),
+    MARK_III(SonicVariant.MARK3.getKey(), 2),
+    MARK_IV(SonicVariant.MARK4.getKey(), 3),
+    EIGHTH_DOCTOR(SonicVariant.EIGHTH.getKey(), 4),
+    NINTH_DOCTOR(SonicVariant.NINTH.getKey(), 5),
+    TENTH_DOCTOR(SonicVariant.TENTH.getKey(), 6),
+    ELEVENTH_DOCTOR(SonicVariant.ELEVENTH.getKey(), 7),
+    TWELFTH_DOCTOR(SonicVariant.TWELFTH.getKey(), 8),
+    THIRTEENTH_DOCTOR(SonicVariant.THIRTEENTH.getKey(), 9),
+    FOURTEENTH_DOCTOR(SonicVariant.FOURTEENTH.getKey(), 10),
+    FIFTEENTH_DOCTOR(SonicVariant.FIFTEENTH.getKey(), 11),
+    WAR_DOCTOR(SonicVariant.WAR.getKey(), 12),
+    MASTER(SonicVariant.MASTER.getKey(), 13),
+    SARAH_JANE(SonicVariant.SARAH_JANE.getKey(), 14),
+    AMY_POND(SonicVariant.SONIC_PROBE.getKey(), 15),
+    RIVER_SONG(SonicVariant.RIVER_SONG.getKey(), 16),
+    MISSY(SonicVariant.UMBRELLA.getKey(), 17),
     COLOUR(null, 28),
-    INSTRUCTIONS(Book.INFO.getKey(), 31, Material.BOOK),
-    CLOSE(Bowl.CLOSE.getKey(), 35, Material.BOWL);
+    INSTRUCTIONS(GuiVariant.INFO.getKey(), 31, Material.BOOK),
+    CLOSE(GuiVariant.CLOSE.getKey(), 35, Material.BOWL);
 
     private final NamespacedKey model;
     private final int slot;

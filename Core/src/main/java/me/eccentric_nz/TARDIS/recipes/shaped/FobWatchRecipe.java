@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Clock;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
@@ -41,7 +41,7 @@ public class FobWatchRecipe {
         ItemStack is = new ItemStack(Material.CLOCK, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Fob Watch");
-        im.setItemModel(Clock.FOB_WATCH.getKey());
+        im.setItemModel(Whoniverse.FOB_WATCH.getKey());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "fob_watch");
         ShapedRecipe r = new ShapedRecipe(key, is);

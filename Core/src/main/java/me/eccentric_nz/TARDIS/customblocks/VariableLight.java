@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.customblocks;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Glass;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.LightVariant;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -17,8 +17,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Transformation;
 import org.joml.Vector3f;
-
-import java.util.Set;
 
 public class VariableLight {
 
@@ -37,7 +35,7 @@ public class VariableLight {
     }
 
     public void set() {
-        set(Glass.OFF.getKey(), 15);
+        set(LightVariant.OFF.getKey(), 15);
     }
 
     public void set(NamespacedKey model, int level) {

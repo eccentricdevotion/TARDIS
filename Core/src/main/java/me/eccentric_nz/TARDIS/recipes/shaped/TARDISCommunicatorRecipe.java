@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.BirchButton;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
@@ -43,7 +43,7 @@ public class TARDISCommunicatorRecipe {
         EquippableComponent equippable = im.getEquippable();
         equippable.setSlot(EquipmentSlot.HEAD);
         equippable.setDispensable(true);
-        equippable.setCameraOverlay(BirchButton.COMMUNICATOR_OVERLAY.getKey());
+        equippable.setCameraOverlay(Whoniverse.COMMUNICATOR_OVERLAY.getKey());
         im.setEquippable(equippable);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_communicator");

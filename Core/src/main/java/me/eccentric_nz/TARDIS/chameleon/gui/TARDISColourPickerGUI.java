@@ -2,8 +2,8 @@ package me.eccentric_nz.TARDIS.chameleon.gui;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleon;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Arrow;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.LeatherHorseArmor;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.ArrowVariant;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.ColouredVariant;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -28,7 +28,7 @@ public class TARDISColourPickerGUI {
         LeatherArmorMeta play = (LeatherArmorMeta) dis.getItemMeta();
         play.setDisplayName("Colour");
         play.setLore(Arrays.asList("Red: 255", "Green: 255", "Blue: 255"));
-        play.setItemModel(LeatherHorseArmor.TINTED_FLYING_0.getKey());
+        play.setItemModel(ColouredVariant.TINTED_FLYING_0.getKey());
         play.setColor(Color.fromRGB(255, 255, 255)); // white
         dis.setItemMeta(play);
         // red
@@ -50,33 +50,33 @@ public class TARDISColourPickerGUI {
         ItemStack redtint = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
         LeatherArmorMeta rrrtint = (LeatherArmorMeta) redtint.getItemMeta();
         rrrtint.setColor(Color.fromRGB(255, 0, 0)); // red
-        rrrtint.setItemModel(LeatherHorseArmor.TINTED_FLYING_0.getKey());
+        rrrtint.setItemModel(ColouredVariant.TINTED_FLYING_0.getKey());
         rrrtint.setDisplayName("Red");
         redtint.setItemMeta(rrrtint);
         // green tint
         ItemStack greentint = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
         LeatherArmorMeta gggtint = (LeatherArmorMeta) greentint.getItemMeta();
         gggtint.setColor(Color.fromRGB(0, 255, 0)); // green
-        gggtint.setItemModel(LeatherHorseArmor.TINTED_FLYING_0.getKey());
+        gggtint.setItemModel(ColouredVariant.TINTED_FLYING_0.getKey());
         gggtint.setDisplayName("Green");
         greentint.setItemMeta(gggtint);
         // blue tint
         ItemStack bluetint = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
         LeatherArmorMeta bbbtint = (LeatherArmorMeta) bluetint.getItemMeta();
         bbbtint.setColor(Color.fromRGB(0, 0, 255)); // blue
-        bbbtint.setItemModel(LeatherHorseArmor.TINTED_FLYING_0.getKey());
+        bbbtint.setItemModel(ColouredVariant.TINTED_FLYING_0.getKey());
         bbbtint.setDisplayName("Blue");
         bluetint.setItemMeta(bbbtint);
         // less
         ItemStack less = new ItemStack(Material.ARROW, 1);
         ItemMeta lll = less.getItemMeta();
-        bbbtint.setItemModel(Arrow.LESS.getKey());
+        bbbtint.setItemModel(ArrowVariant.LESS.getKey());
         lll.setDisplayName("Less");
         less.setItemMeta(lll);
         // more
         ItemStack more = new ItemStack(Material.ARROW, 1);
         ItemMeta mmm = more.getItemMeta();
-        bbbtint.setItemModel(Arrow.MORE.getKey());
+        bbbtint.setItemModel(ArrowVariant.MORE.getKey());
         mmm.setDisplayName("More");
         more.setItemMeta(mmm);
         // select

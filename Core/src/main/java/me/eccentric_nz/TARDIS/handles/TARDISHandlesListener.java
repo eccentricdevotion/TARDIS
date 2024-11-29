@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.BirchButton;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
@@ -67,7 +67,7 @@ public class TARDISHandlesListener implements Listener {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Handles");
         im.setLore(Arrays.asList("Cyberhead from the", "Maldovar Market"));
-        im.setItemModel(BirchButton.HANDLES_OFF.getKey());
+        im.setItemModel(Whoniverse.HANDLES_OFF.getKey());
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
         is.setItemMeta(im);
         b.getWorld().dropItemNaturally(b.getLocation(), is);

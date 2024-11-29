@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
 import org.bukkit.Material;
 
 public record GUIUpgrade() {
 
     // TARDIS Upgrade Menu
-    public static GUIData INFO = new GUIData(Bowl.INFO.getKey(), 45, Material.BOWL);
-    public static GUIData ARCHIVE_CONSOLES = new GUIData(Bowl.ARCHIVE_CONSOLES.getKey(), 46, Material.BOWL);
-    public static GUIData REPAIR_CONSOLE = new GUIData(Bowl.REPAIR_CONSOLE.getKey(), 47, Material.BOWL);
-    public static GUIData CLEAN = new GUIData(Bowl.CLEAN.getKey(), 48, Material.BOWL);
-    public static GUIData CLOSE = new GUIData(Bowl.CLOSE.getKey(), 53, Material.BOWL);
+    public static GUIData INFO = new GUIData(GuiVariant.INFO.getKey(), 45, Material.BOWL);
+    public static GUIData ARCHIVE_CONSOLES = new GUIData(GuiVariant.ARCHIVE_CONSOLES.getKey(), 46, Material.BOWL);
+    public static GUIData REPAIR_CONSOLE = new GUIData(GuiVariant.REPAIR_CONSOLE.getKey(), 47, Material.BOWL);
+    public static GUIData CLEAN = new GUIData(GuiVariant.CLEAN.getKey(), 48, Material.BOWL);
+    public static GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 53, Material.BOWL);
 }

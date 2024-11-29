@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.YellowDye;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.JudoonVariant;
 import me.eccentric_nz.tardisweepingangels.equip.DisguiseEquipper;
 import me.eccentric_nz.tardisweepingangels.equip.FollowerEquipper;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
@@ -32,7 +32,7 @@ public class JudoonEquipment {
         ItemStack head = new ItemStack(Material.YELLOW_DYE);
         ItemMeta headMeta = head.getItemMeta();
         headMeta.setDisplayName("Judoon Head");
-        headMeta.setItemModel(disguise ? YellowDye.JUDOON_DISGUISE.getKey() : YellowDye.JUDOON_STATIC.getKey());
+        headMeta.setItemModel(disguise ? JudoonVariant.JUDOON_DISGUISE.getKey() : JudoonVariant.JUDOON_STATIC.getKey());
         head.setItemMeta(headMeta);
         if (!disguise) {
             new FollowerEquipper().setHelmetAndInvisibilty(player, entity, Monster.JUDOON, head);

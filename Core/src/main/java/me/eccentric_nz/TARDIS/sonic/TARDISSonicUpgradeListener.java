@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.BlazeRod;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -96,7 +96,7 @@ public class TARDISSonicUpgradeListener implements Listener {
                     ci.setResult(null);
                 } else {
                     ItemMeta sim = sonic.getItemMeta();
-                    NamespacedKey model = BlazeRod.ELEVENTH.getKey();
+                    NamespacedKey model = SonicVariant.ELEVENTH.getKey();
                     if (sim.hasItemModel()) {
                         model = sim.getItemModel();
                     }

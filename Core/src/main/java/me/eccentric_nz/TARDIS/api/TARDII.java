@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.blueprints.*;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISAbandoned;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.MusicDisc;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.DiskVariant;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -583,7 +583,7 @@ public class TARDII implements TardisAPI {
             if (perm != null) {
                 ItemStack is = new ItemStack(Material.MUSIC_DISC_MELLOHI, 1);
                 ItemMeta im = is.getItemMeta();
-                im.setItemModel(MusicDisc.BLUEPRINT_DISK.getKey());
+                im.setItemModel(DiskVariant.BLUEPRINT_DISK.getKey());
                 PersistentDataContainer pdc = im.getPersistentDataContainer();
                 pdc.set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
                 pdc.set(TARDIS.plugin.getBlueprintKey(), PersistentDataType.STRING, perm);

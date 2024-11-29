@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.rotors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.LightGrayDye;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.RotorVariant;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -93,7 +93,7 @@ public class TARDISTimeRotor {
                 return im.getItemModel();
             }
         }
-        return LightGrayDye.TIME_ROTOR_EARLY_OFF.getKey();
+        return RotorVariant.TIME_ROTOR_EARLY_OFF.getKey();
     }
 
     public static NamespacedKey getRotorOffModel(ItemFrame itemFrame) {

@@ -36,104 +36,104 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TWASkeleton extends Skeleton {
 
     private final NamespacedKey[] framesMonk = new NamespacedKey[]{
-            RedCandle.HEADLESS_MONK_0.getKey(),
-            RedCandle.HEADLESS_MONK_1.getKey(),
-            RedCandle.HEADLESS_MONK_2.getKey(),
-            RedCandle.HEADLESS_MONK_1.getKey(),
-            RedCandle.HEADLESS_MONK_0.getKey(),
-            RedCandle.HEADLESS_MONK_3.getKey(),
-            RedCandle.HEADLESS_MONK_4.getKey(),
-            RedCandle.HEADLESS_MONK_3.getKey()
+            MonkVariant.HEADLESS_MONK_0.getKey(),
+            MonkVariant.HEADLESS_MONK_1.getKey(),
+            MonkVariant.HEADLESS_MONK_2.getKey(),
+            MonkVariant.HEADLESS_MONK_1.getKey(),
+            MonkVariant.HEADLESS_MONK_0.getKey(),
+            MonkVariant.HEADLESS_MONK_3.getKey(),
+            MonkVariant.HEADLESS_MONK_4.getKey(),
+            MonkVariant.HEADLESS_MONK_3.getKey()
     };
     private final NamespacedKey[] framesMonkTarget = new NamespacedKey[]{
-            RedCandle.HEADLESS_MONK_ATTACKING_0.getKey(),
-            RedCandle.HEADLESS_MONK_ATTACKING_1.getKey(),
-            RedCandle.HEADLESS_MONK_ATTACKING_2.getKey(),
-            RedCandle.HEADLESS_MONK_ATTACKING_1.getKey(),
-            RedCandle.HEADLESS_MONK_ATTACKING_0.getKey(),
-            RedCandle.HEADLESS_MONK_ATTACKING_3.getKey(),
-            RedCandle.HEADLESS_MONK_ATTACKING_4.getKey(),
-            RedCandle.HEADLESS_MONK_ATTACKING_3.getKey()
+            MonkVariant.HEADLESS_MONK_ATTACKING_0.getKey(),
+            MonkVariant.HEADLESS_MONK_ATTACKING_1.getKey(),
+            MonkVariant.HEADLESS_MONK_ATTACKING_2.getKey(),
+            MonkVariant.HEADLESS_MONK_ATTACKING_1.getKey(),
+            MonkVariant.HEADLESS_MONK_ATTACKING_0.getKey(),
+            MonkVariant.HEADLESS_MONK_ATTACKING_3.getKey(),
+            MonkVariant.HEADLESS_MONK_ATTACKING_4.getKey(),
+            MonkVariant.HEADLESS_MONK_ATTACKING_3.getKey()
     };
     private final NamespacedKey[] framesMire = new NamespacedKey[]{
-            NetheriteScrap.THE_MIRE_0.getKey(),
-            NetheriteScrap.THE_MIRE_1.getKey(),
-            NetheriteScrap.THE_MIRE_2.getKey(),
-            NetheriteScrap.THE_MIRE_1.getKey(),
-            NetheriteScrap.THE_MIRE_0.getKey(),
-            NetheriteScrap.THE_MIRE_3.getKey(),
-            NetheriteScrap.THE_MIRE_4.getKey(),
-            NetheriteScrap.THE_MIRE_3.getKey()
+            MireVariant.THE_MIRE_0.getKey(),
+            MireVariant.THE_MIRE_1.getKey(),
+            MireVariant.THE_MIRE_2.getKey(),
+            MireVariant.THE_MIRE_1.getKey(),
+            MireVariant.THE_MIRE_0.getKey(),
+            MireVariant.THE_MIRE_3.getKey(),
+            MireVariant.THE_MIRE_4.getKey(),
+            MireVariant.THE_MIRE_3.getKey()
     };
     private final NamespacedKey[] framesMireTarget = new NamespacedKey[]{
-            NetheriteScrap.THE_MIRE_ATTACKING_0.getKey(),
-            NetheriteScrap.THE_MIRE_ATTACKING_1.getKey(),
-            NetheriteScrap.THE_MIRE_ATTACKING_2.getKey(),
-            NetheriteScrap.THE_MIRE_ATTACKING_1.getKey(),
-            NetheriteScrap.THE_MIRE_ATTACKING_0.getKey(),
-            NetheriteScrap.THE_MIRE_ATTACKING_3.getKey(),
-            NetheriteScrap.THE_MIRE_ATTACKING_4.getKey(),
-            NetheriteScrap.THE_MIRE_ATTACKING_3.getKey()
+            MireVariant.THE_MIRE_ATTACKING_0.getKey(),
+            MireVariant.THE_MIRE_ATTACKING_1.getKey(),
+            MireVariant.THE_MIRE_ATTACKING_2.getKey(),
+            MireVariant.THE_MIRE_ATTACKING_1.getKey(),
+            MireVariant.THE_MIRE_ATTACKING_0.getKey(),
+            MireVariant.THE_MIRE_ATTACKING_3.getKey(),
+            MireVariant.THE_MIRE_ATTACKING_4.getKey(),
+            MireVariant.THE_MIRE_ATTACKING_3.getKey()
     };
     private final NamespacedKey[] framesSilent = new NamespacedKey[]{
-            EndStone.SILENT_0.getKey(),
-            EndStone.SILENT_1.getKey(),
-            EndStone.SILENT_2.getKey(),
-            EndStone.SILENT_1.getKey(),
-            EndStone.SILENT_0.getKey(),
-            EndStone.SILENT_3.getKey(),
-            EndStone.SILENT_4.getKey(),
-            EndStone.SILENT_3.getKey()
+            SilentVariant.SILENT_0.getKey(),
+            SilentVariant.SILENT_1.getKey(),
+            SilentVariant.SILENT_2.getKey(),
+            SilentVariant.SILENT_1.getKey(),
+            SilentVariant.SILENT_0.getKey(),
+            SilentVariant.SILENT_3.getKey(),
+            SilentVariant.SILENT_4.getKey(),
+            SilentVariant.SILENT_3.getKey()
     };
     private final NamespacedKey[] framesSilentTarget = new NamespacedKey[]{
-            EndStone.SILENT_ATTACKING_0.getKey(),
-            EndStone.SILENT_ATTACKING_1.getKey(),
-            EndStone.SILENT_ATTACKING_2.getKey(),
-            EndStone.SILENT_ATTACKING_1.getKey(),
-            EndStone.SILENT_ATTACKING_0.getKey(),
-            EndStone.SILENT_ATTACKING_3.getKey(),
-            EndStone.SILENT_ATTACKING_4.getKey(),
-            EndStone.SILENT_ATTACKING_3.getKey()
+            SilentVariant.SILENT_ATTACKING_0.getKey(),
+            SilentVariant.SILENT_ATTACKING_1.getKey(),
+            SilentVariant.SILENT_ATTACKING_2.getKey(),
+            SilentVariant.SILENT_ATTACKING_1.getKey(),
+            SilentVariant.SILENT_ATTACKING_0.getKey(),
+            SilentVariant.SILENT_ATTACKING_3.getKey(),
+            SilentVariant.SILENT_ATTACKING_4.getKey(),
+            SilentVariant.SILENT_ATTACKING_3.getKey()
     };
     private final NamespacedKey[] framesSilurian = new NamespacedKey[]{
-            Feather.SILURIAN_0.getKey(),
-            Feather.SILURIAN_1.getKey(),
-            Feather.SILURIAN_2.getKey(),
-            Feather.SILURIAN_1.getKey(),
-            Feather.SILURIAN_0.getKey(),
-            Feather.SILURIAN_3.getKey(),
-            Feather.SILURIAN_4.getKey(),
-            Feather.SILURIAN_3.getKey()
+            SilurianVariant.SILURIAN_0.getKey(),
+            SilurianVariant.SILURIAN_1.getKey(),
+            SilurianVariant.SILURIAN_2.getKey(),
+            SilurianVariant.SILURIAN_1.getKey(),
+            SilurianVariant.SILURIAN_0.getKey(),
+            SilurianVariant.SILURIAN_3.getKey(),
+            SilurianVariant.SILURIAN_4.getKey(),
+            SilurianVariant.SILURIAN_3.getKey()
     };
     private final NamespacedKey[] framesSilurianTarget = new NamespacedKey[]{
-            Feather.SILURIAN_ATTACKING_0.getKey(),
-            Feather.SILURIAN_ATTACKING_1.getKey(),
-            Feather.SILURIAN_ATTACKING_2.getKey(),
-            Feather.SILURIAN_ATTACKING_1.getKey(),
-            Feather.SILURIAN_ATTACKING_0.getKey(),
-            Feather.SILURIAN_ATTACKING_3.getKey(),
-            Feather.SILURIAN_ATTACKING_4.getKey(),
-            Feather.SILURIAN_ATTACKING_3.getKey()
+            SilurianVariant.SILURIAN_ATTACKING_0.getKey(),
+            SilurianVariant.SILURIAN_ATTACKING_1.getKey(),
+            SilurianVariant.SILURIAN_ATTACKING_2.getKey(),
+            SilurianVariant.SILURIAN_ATTACKING_1.getKey(),
+            SilurianVariant.SILURIAN_ATTACKING_0.getKey(),
+            SilurianVariant.SILURIAN_ATTACKING_3.getKey(),
+            SilurianVariant.SILURIAN_ATTACKING_4.getKey(),
+            SilurianVariant.SILURIAN_ATTACKING_3.getKey()
     };
     private final NamespacedKey[] framesAngel = new NamespacedKey[]{
-            Brick.WEEPING_ANGEL_0.getKey(),
-            Brick.WEEPING_ANGEL_1.getKey(),
-            Brick.WEEPING_ANGEL_2.getKey(),
-            Brick.WEEPING_ANGEL_1.getKey(),
-            Brick.WEEPING_ANGEL_0.getKey(),
-            Brick.WEEPING_ANGEL_3.getKey(),
-            Brick.WEEPING_ANGEL_4.getKey(),
-            Brick.WEEPING_ANGEL_3.getKey()
+            WeepingAngelVariant.WEEPING_ANGEL_0.getKey(),
+            WeepingAngelVariant.WEEPING_ANGEL_1.getKey(),
+            WeepingAngelVariant.WEEPING_ANGEL_2.getKey(),
+            WeepingAngelVariant.WEEPING_ANGEL_1.getKey(),
+            WeepingAngelVariant.WEEPING_ANGEL_0.getKey(),
+            WeepingAngelVariant.WEEPING_ANGEL_3.getKey(),
+            WeepingAngelVariant.WEEPING_ANGEL_4.getKey(),
+            WeepingAngelVariant.WEEPING_ANGEL_3.getKey()
     };
     private final NamespacedKey[] framesAngelTarget = new NamespacedKey[]{
-            Brick.WEEPING_ANGEL_ATTACKING_0.getKey(),
-            Brick.WEEPING_ANGEL_ATTACKING_1.getKey(),
-            Brick.WEEPING_ANGEL_ATTACKING_2.getKey(),
-            Brick.WEEPING_ANGEL_ATTACKING_1.getKey(),
-            Brick.WEEPING_ANGEL_ATTACKING_0.getKey(),
-            Brick.WEEPING_ANGEL_ATTACKING_3.getKey(),
-            Brick.WEEPING_ANGEL_ATTACKING_4.getKey(),
-            Brick.WEEPING_ANGEL_ATTACKING_3.getKey()
+            WeepingAngelVariant.WEEPING_ANGEL_ATTACKING_0.getKey(),
+            WeepingAngelVariant.WEEPING_ANGEL_ATTACKING_1.getKey(),
+            WeepingAngelVariant.WEEPING_ANGEL_ATTACKING_2.getKey(),
+            WeepingAngelVariant.WEEPING_ANGEL_ATTACKING_1.getKey(),
+            WeepingAngelVariant.WEEPING_ANGEL_ATTACKING_0.getKey(),
+            WeepingAngelVariant.WEEPING_ANGEL_ATTACKING_3.getKey(),
+            WeepingAngelVariant.WEEPING_ANGEL_ATTACKING_4.getKey(),
+            WeepingAngelVariant.WEEPING_ANGEL_ATTACKING_3.getKey()
     };
     private double oldX;
     private double oldZ;
@@ -156,11 +156,11 @@ public class TWASkeleton extends Skeleton {
             }
             if ((oldX == getX() && oldZ == getZ()) || beaming) {
                 switch (bukkit.getType()) {
-                    case RED_CANDLE -> im.setItemModel(RedCandle.HEADLESS_MONK_STATIC.getKey());
-                    case NETHERITE_SCRAP -> im.setItemModel(NetheriteScrap.THE_MIRE_STATIC.getKey());
-                    case END_STONE -> im.setItemModel(beaming ? EndStone.SILENT_BEAMING.getKey() : EndStone.SILENT_STATIC.getKey());
-                    case FEATHER -> im.setItemModel(Feather.SILURIAN_STATIC.getKey());
-                    case BRICK -> im.setItemModel(Brick.WEEPING_ANGEL_STATIC.getKey());
+                    case RED_CANDLE -> im.setItemModel(MonkVariant.HEADLESS_MONK_STATIC.getKey());
+                    case NETHERITE_SCRAP -> im.setItemModel(MireVariant.THE_MIRE_STATIC.getKey());
+                    case END_STONE -> im.setItemModel(beaming ? SilentVariant.SILENT_BEAMING.getKey() : SilentVariant.SILENT_STATIC.getKey());
+                    case FEATHER -> im.setItemModel(SilurianVariant.SILURIAN_STATIC.getKey());
+                    case BRICK -> im.setItemModel(WeepingAngelVariant.WEEPING_ANGEL_STATIC.getKey());
                 }
                 i = 0;
             } else {

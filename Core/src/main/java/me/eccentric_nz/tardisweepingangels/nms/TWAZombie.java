@@ -34,164 +34,164 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TWAZombie extends Zombie {
 
     private final NamespacedKey[] framesDroid = new NamespacedKey[]{
-            Droid.CLOCKWORK_DROID_0.getKey(),
-            Droid.CLOCKWORK_DROID_1.getKey(),
-            Droid.CLOCKWORK_DROID_2.getKey(),
-            Droid.CLOCKWORK_DROID_1.getKey(),
-            Droid.CLOCKWORK_DROID_0.getKey(),
-            Droid.CLOCKWORK_DROID_3.getKey(),
-            Droid.CLOCKWORK_DROID_4.getKey(),
-            Droid.CLOCKWORK_DROID_3.getKey()
+            DroidVariant.CLOCKWORK_DROID_0.getKey(),
+            DroidVariant.CLOCKWORK_DROID_1.getKey(),
+            DroidVariant.CLOCKWORK_DROID_2.getKey(),
+            DroidVariant.CLOCKWORK_DROID_1.getKey(),
+            DroidVariant.CLOCKWORK_DROID_0.getKey(),
+            DroidVariant.CLOCKWORK_DROID_3.getKey(),
+            DroidVariant.CLOCKWORK_DROID_4.getKey(),
+            DroidVariant.CLOCKWORK_DROID_3.getKey()
     };
     private final NamespacedKey[] framesDroidTarget = new NamespacedKey[]{
-            Droid.CLOCKWORK_DROID_ATTACKING_0.getKey(),
-            Droid.CLOCKWORK_DROID_ATTACKING_1.getKey(),
-            Droid.CLOCKWORK_DROID_ATTACKING_2.getKey(),
-            Droid.CLOCKWORK_DROID_ATTACKING_1.getKey(),
-            Droid.CLOCKWORK_DROID_ATTACKING_0.getKey(),
-            Droid.CLOCKWORK_DROID_ATTACKING_3.getKey(),
-            Droid.CLOCKWORK_DROID_ATTACKING_4.getKey(),
-            Droid.CLOCKWORK_DROID_ATTACKING_3.getKey()
+            DroidVariant.CLOCKWORK_DROID_ATTACKING_0.getKey(),
+            DroidVariant.CLOCKWORK_DROID_ATTACKING_1.getKey(),
+            DroidVariant.CLOCKWORK_DROID_ATTACKING_2.getKey(),
+            DroidVariant.CLOCKWORK_DROID_ATTACKING_1.getKey(),
+            DroidVariant.CLOCKWORK_DROID_ATTACKING_0.getKey(),
+            DroidVariant.CLOCKWORK_DROID_ATTACKING_3.getKey(),
+            DroidVariant.CLOCKWORK_DROID_ATTACKING_4.getKey(),
+            DroidVariant.CLOCKWORK_DROID_ATTACKING_3.getKey()
     };
     private final NamespacedKey[] framesDroidFemale = new NamespacedKey[]{
-            Droid.CLOCKWORK_DROID_FEMALE_0.getKey(),
-            Droid.CLOCKWORK_DROID_FEMALE_1.getKey(),
-            Droid.CLOCKWORK_DROID_FEMALE_2.getKey(),
-            Droid.CLOCKWORK_DROID_FEMALE_1.getKey(),
-            Droid.CLOCKWORK_DROID_FEMALE_0.getKey(),
-            Droid.CLOCKWORK_DROID_FEMALE_3.getKey(),
-            Droid.CLOCKWORK_DROID_FEMALE_4.getKey(),
-            Droid.CLOCKWORK_DROID_FEMALE_3.getKey()
+            DroidVariant.CLOCKWORK_DROID_FEMALE_0.getKey(),
+            DroidVariant.CLOCKWORK_DROID_FEMALE_1.getKey(),
+            DroidVariant.CLOCKWORK_DROID_FEMALE_2.getKey(),
+            DroidVariant.CLOCKWORK_DROID_FEMALE_1.getKey(),
+            DroidVariant.CLOCKWORK_DROID_FEMALE_0.getKey(),
+            DroidVariant.CLOCKWORK_DROID_FEMALE_3.getKey(),
+            DroidVariant.CLOCKWORK_DROID_FEMALE_4.getKey(),
+            DroidVariant.CLOCKWORK_DROID_FEMALE_3.getKey()
     };
     private final NamespacedKey[] framesDroidFemaleTarget = new NamespacedKey[]{
-            Droid.CLOCKWORK_DROID_FEMALE_ATTACKING_0.getKey(),
-            Droid.CLOCKWORK_DROID_FEMALE_ATTACKING_1.getKey(),
-            Droid.CLOCKWORK_DROID_FEMALE_ATTACKING_2.getKey(),
-            Droid.CLOCKWORK_DROID_FEMALE_ATTACKING_1.getKey(),
-            Droid.CLOCKWORK_DROID_FEMALE_ATTACKING_0.getKey(),
-            Droid.CLOCKWORK_DROID_FEMALE_ATTACKING_3.getKey(),
-            Droid.CLOCKWORK_DROID_FEMALE_ATTACKING_4.getKey(),
-            Droid.CLOCKWORK_DROID_FEMALE_ATTACKING_3.getKey()
+            DroidVariant.CLOCKWORK_DROID_FEMALE_ATTACKING_0.getKey(),
+            DroidVariant.CLOCKWORK_DROID_FEMALE_ATTACKING_1.getKey(),
+            DroidVariant.CLOCKWORK_DROID_FEMALE_ATTACKING_2.getKey(),
+            DroidVariant.CLOCKWORK_DROID_FEMALE_ATTACKING_1.getKey(),
+            DroidVariant.CLOCKWORK_DROID_FEMALE_ATTACKING_0.getKey(),
+            DroidVariant.CLOCKWORK_DROID_FEMALE_ATTACKING_3.getKey(),
+            DroidVariant.CLOCKWORK_DROID_FEMALE_ATTACKING_4.getKey(),
+            DroidVariant.CLOCKWORK_DROID_FEMALE_ATTACKING_3.getKey()
     };
     private final NamespacedKey[] framesCyberman = new NamespacedKey[]{
-            IronIngot.CYBERMAN_0.getKey(),
-            IronIngot.CYBERMAN_1.getKey(),
-            IronIngot.CYBERMAN_2.getKey(),
-            IronIngot.CYBERMAN_1.getKey(),
-            IronIngot.CYBERMAN_0.getKey(),
-            IronIngot.CYBERMAN_3.getKey(),
-            IronIngot.CYBERMAN_4.getKey(),
-            IronIngot.CYBERMAN_3.getKey()
+            CybermanVariant.CYBERMAN_0.getKey(),
+            CybermanVariant.CYBERMAN_1.getKey(),
+            CybermanVariant.CYBERMAN_2.getKey(),
+            CybermanVariant.CYBERMAN_1.getKey(),
+            CybermanVariant.CYBERMAN_0.getKey(),
+            CybermanVariant.CYBERMAN_3.getKey(),
+            CybermanVariant.CYBERMAN_4.getKey(),
+            CybermanVariant.CYBERMAN_3.getKey()
     };
     private final NamespacedKey[] framesCybermanTarget = new NamespacedKey[]{
-            IronIngot.CYBERMAN_ATTACKING_0.getKey(),
-            IronIngot.CYBERMAN_ATTACKING_1.getKey(),
-            IronIngot.CYBERMAN_ATTACKING_2.getKey(),
-            IronIngot.CYBERMAN_ATTACKING_1.getKey(),
-            IronIngot.CYBERMAN_ATTACKING_0.getKey(),
-            IronIngot.CYBERMAN_ATTACKING_3.getKey(),
-            IronIngot.CYBERMAN_ATTACKING_4.getKey(),
-            IronIngot.CYBERMAN_ATTACKING_3.getKey()
+            CybermanVariant.CYBERMAN_ATTACKING_0.getKey(),
+            CybermanVariant.CYBERMAN_ATTACKING_1.getKey(),
+            CybermanVariant.CYBERMAN_ATTACKING_2.getKey(),
+            CybermanVariant.CYBERMAN_ATTACKING_1.getKey(),
+            CybermanVariant.CYBERMAN_ATTACKING_0.getKey(),
+            CybermanVariant.CYBERMAN_ATTACKING_3.getKey(),
+            CybermanVariant.CYBERMAN_ATTACKING_4.getKey(),
+            CybermanVariant.CYBERMAN_ATTACKING_3.getKey()
     };
     private final NamespacedKey[] framesEmptyChild = new NamespacedKey[]{
-            Sugar.EMPTY_CHILD_0.getKey(),
-            Sugar.EMPTY_CHILD_1.getKey(),
-            Sugar.EMPTY_CHILD_2.getKey(),
-            Sugar.EMPTY_CHILD_1.getKey(),
-            Sugar.EMPTY_CHILD_0.getKey(),
-            Sugar.EMPTY_CHILD_3.getKey(),
-            Sugar.EMPTY_CHILD_4.getKey(),
-            Sugar.EMPTY_CHILD_3.getKey()
+            EmptyChildVariant.EMPTY_CHILD_0.getKey(),
+            EmptyChildVariant.EMPTY_CHILD_1.getKey(),
+            EmptyChildVariant.EMPTY_CHILD_2.getKey(),
+            EmptyChildVariant.EMPTY_CHILD_1.getKey(),
+            EmptyChildVariant.EMPTY_CHILD_0.getKey(),
+            EmptyChildVariant.EMPTY_CHILD_3.getKey(),
+            EmptyChildVariant.EMPTY_CHILD_4.getKey(),
+            EmptyChildVariant.EMPTY_CHILD_3.getKey()
     };
     private final NamespacedKey[] framesEmptyChildTarget = new NamespacedKey[]{
-            Sugar.EMPTY_CHILD_ATTACKING_0.getKey(),
-            Sugar.EMPTY_CHILD_ATTACKING_1.getKey(),
-            Sugar.EMPTY_CHILD_ATTACKING_2.getKey(),
-            Sugar.EMPTY_CHILD_ATTACKING_1.getKey(),
-            Sugar.EMPTY_CHILD_ATTACKING_0.getKey(),
-            Sugar.EMPTY_CHILD_ATTACKING_3.getKey(),
-            Sugar.EMPTY_CHILD_ATTACKING_4.getKey(),
-            Sugar.EMPTY_CHILD_ATTACKING_3.getKey()
+            EmptyChildVariant.EMPTY_CHILD_ATTACKING_0.getKey(),
+            EmptyChildVariant.EMPTY_CHILD_ATTACKING_1.getKey(),
+            EmptyChildVariant.EMPTY_CHILD_ATTACKING_2.getKey(),
+            EmptyChildVariant.EMPTY_CHILD_ATTACKING_1.getKey(),
+            EmptyChildVariant.EMPTY_CHILD_ATTACKING_0.getKey(),
+            EmptyChildVariant.EMPTY_CHILD_ATTACKING_3.getKey(),
+            EmptyChildVariant.EMPTY_CHILD_ATTACKING_4.getKey(),
+            EmptyChildVariant.EMPTY_CHILD_ATTACKING_3.getKey()
     };
     private final NamespacedKey[] framesSlitheen = new NamespacedKey[]{
-            TurtleEgg.SLITHEEN_0.getKey(),
-            TurtleEgg.SLITHEEN_1.getKey(),
-            TurtleEgg.SLITHEEN_2.getKey(),
-            TurtleEgg.SLITHEEN_1.getKey(),
-            TurtleEgg.SLITHEEN_0.getKey(),
-            TurtleEgg.SLITHEEN_3.getKey(),
-            TurtleEgg.SLITHEEN_4.getKey(),
-            TurtleEgg.SLITHEEN_3.getKey()
+            SlitheenVariant.SLITHEEN_0.getKey(),
+            SlitheenVariant.SLITHEEN_1.getKey(),
+            SlitheenVariant.SLITHEEN_2.getKey(),
+            SlitheenVariant.SLITHEEN_1.getKey(),
+            SlitheenVariant.SLITHEEN_0.getKey(),
+            SlitheenVariant.SLITHEEN_3.getKey(),
+            SlitheenVariant.SLITHEEN_4.getKey(),
+            SlitheenVariant.SLITHEEN_3.getKey()
     };
     private final NamespacedKey[] framesSlitheenTarget = new NamespacedKey[]{
-            TurtleEgg.SLITHEEN_ATTACKING_0.getKey(),
-            TurtleEgg.SLITHEEN_ATTACKING_1.getKey(),
-            TurtleEgg.SLITHEEN_ATTACKING_2.getKey(),
-            TurtleEgg.SLITHEEN_ATTACKING_1.getKey(),
-            TurtleEgg.SLITHEEN_ATTACKING_0.getKey(),
-            TurtleEgg.SLITHEEN_ATTACKING_3.getKey(),
-            TurtleEgg.SLITHEEN_ATTACKING_4.getKey(),
-            TurtleEgg.SLITHEEN_ATTACKING_3.getKey()
+            SlitheenVariant.SLITHEEN_ATTACKING_0.getKey(),
+            SlitheenVariant.SLITHEEN_ATTACKING_1.getKey(),
+            SlitheenVariant.SLITHEEN_ATTACKING_2.getKey(),
+            SlitheenVariant.SLITHEEN_ATTACKING_1.getKey(),
+            SlitheenVariant.SLITHEEN_ATTACKING_0.getKey(),
+            SlitheenVariant.SLITHEEN_ATTACKING_3.getKey(),
+            SlitheenVariant.SLITHEEN_ATTACKING_4.getKey(),
+            SlitheenVariant.SLITHEEN_ATTACKING_3.getKey()
     };
     private final NamespacedKey[] framesSontaran = new NamespacedKey[]{
-            Potato.SONTARAN_0.getKey(),
-            Potato.SONTARAN_1.getKey(),
-            Potato.SONTARAN_2.getKey(),
-            Potato.SONTARAN_1.getKey(),
-            Potato.SONTARAN_0.getKey(),
-            Potato.SONTARAN_3.getKey(),
-            Potato.SONTARAN_4.getKey(),
-            Potato.SONTARAN_3.getKey()
+            SontaranVariant.SONTARAN_0.getKey(),
+            SontaranVariant.SONTARAN_1.getKey(),
+            SontaranVariant.SONTARAN_2.getKey(),
+            SontaranVariant.SONTARAN_1.getKey(),
+            SontaranVariant.SONTARAN_0.getKey(),
+            SontaranVariant.SONTARAN_3.getKey(),
+            SontaranVariant.SONTARAN_4.getKey(),
+            SontaranVariant.SONTARAN_3.getKey()
     };
     private final NamespacedKey[] framesSontaranTarget = new NamespacedKey[]{
-            Potato.SONTARAN_ATTACKING_0.getKey(),
-            Potato.SONTARAN_ATTACKING_1.getKey(),
-            Potato.SONTARAN_ATTACKING_2.getKey(),
-            Potato.SONTARAN_ATTACKING_1.getKey(),
-            Potato.SONTARAN_ATTACKING_0.getKey(),
-            Potato.SONTARAN_ATTACKING_3.getKey(),
-            Potato.SONTARAN_ATTACKING_4.getKey(),
-            Potato.SONTARAN_ATTACKING_3.getKey()
+            SontaranVariant.SONTARAN_ATTACKING_0.getKey(),
+            SontaranVariant.SONTARAN_ATTACKING_1.getKey(),
+            SontaranVariant.SONTARAN_ATTACKING_2.getKey(),
+            SontaranVariant.SONTARAN_ATTACKING_1.getKey(),
+            SontaranVariant.SONTARAN_ATTACKING_0.getKey(),
+            SontaranVariant.SONTARAN_ATTACKING_3.getKey(),
+            SontaranVariant.SONTARAN_ATTACKING_4.getKey(),
+            SontaranVariant.SONTARAN_ATTACKING_3.getKey()
     };
     private final NamespacedKey[] framesVashta = new NamespacedKey[]{
-            Book.VASHTA_NERADA_0.getKey(),
-            Book.VASHTA_NERADA_1.getKey(),
-            Book.VASHTA_NERADA_2.getKey(),
-            Book.VASHTA_NERADA_1.getKey(),
-            Book.VASHTA_NERADA_0.getKey(),
-            Book.VASHTA_NERADA_3.getKey(),
-            Book.VASHTA_NERADA_4.getKey(),
-            Book.VASHTA_NERADA_3.getKey()
+            VashtaNeradaVariant.VASHTA_NERADA_0.getKey(),
+            VashtaNeradaVariant.VASHTA_NERADA_1.getKey(),
+            VashtaNeradaVariant.VASHTA_NERADA_2.getKey(),
+            VashtaNeradaVariant.VASHTA_NERADA_1.getKey(),
+            VashtaNeradaVariant.VASHTA_NERADA_0.getKey(),
+            VashtaNeradaVariant.VASHTA_NERADA_3.getKey(),
+            VashtaNeradaVariant.VASHTA_NERADA_4.getKey(),
+            VashtaNeradaVariant.VASHTA_NERADA_3.getKey()
     };
     private final NamespacedKey[] framesVashtaTarget = new NamespacedKey[]{
-            Book.VASHTA_NERADA_ATTACKING_0.getKey(),
-            Book.VASHTA_NERADA_ATTACKING_1.getKey(),
-            Book.VASHTA_NERADA_ATTACKING_2.getKey(),
-            Book.VASHTA_NERADA_ATTACKING_1.getKey(),
-            Book.VASHTA_NERADA_ATTACKING_0.getKey(),
-            Book.VASHTA_NERADA_ATTACKING_3.getKey(),
-            Book.VASHTA_NERADA_ATTACKING_4.getKey(),
-            Book.VASHTA_NERADA_ATTACKING_3.getKey()
+            VashtaNeradaVariant.VASHTA_NERADA_ATTACKING_0.getKey(),
+            VashtaNeradaVariant.VASHTA_NERADA_ATTACKING_1.getKey(),
+            VashtaNeradaVariant.VASHTA_NERADA_ATTACKING_2.getKey(),
+            VashtaNeradaVariant.VASHTA_NERADA_ATTACKING_1.getKey(),
+            VashtaNeradaVariant.VASHTA_NERADA_ATTACKING_0.getKey(),
+            VashtaNeradaVariant.VASHTA_NERADA_ATTACKING_3.getKey(),
+            VashtaNeradaVariant.VASHTA_NERADA_ATTACKING_4.getKey(),
+            VashtaNeradaVariant.VASHTA_NERADA_ATTACKING_3.getKey()
     };
     private final NamespacedKey[] framesZygon = new NamespacedKey[]{
-            Painting.ZYGON_0.getKey(),
-            Painting.ZYGON_1.getKey(),
-            Painting.ZYGON_2.getKey(),
-            Painting.ZYGON_1.getKey(),
-            Painting.ZYGON_0.getKey(),
-            Painting.ZYGON_3.getKey(),
-            Painting.ZYGON_4.getKey(),
-            Painting.ZYGON_3.getKey()
+            ZygonVariant.ZYGON_0.getKey(),
+            ZygonVariant.ZYGON_1.getKey(),
+            ZygonVariant.ZYGON_2.getKey(),
+            ZygonVariant.ZYGON_1.getKey(),
+            ZygonVariant.ZYGON_0.getKey(),
+            ZygonVariant.ZYGON_3.getKey(),
+            ZygonVariant.ZYGON_4.getKey(),
+            ZygonVariant.ZYGON_3.getKey()
     };
     private final NamespacedKey[] framesZygonTarget = new NamespacedKey[]{
-            Painting.ZYGON_ATTACKING_0.getKey(),
-            Painting.ZYGON_ATTACKING_1.getKey(),
-            Painting.ZYGON_ATTACKING_2.getKey(),
-            Painting.ZYGON_ATTACKING_1.getKey(),
-            Painting.ZYGON_ATTACKING_0.getKey(),
-            Painting.ZYGON_ATTACKING_3.getKey(),
-            Painting.ZYGON_ATTACKING_4.getKey(),
-            Painting.ZYGON_ATTACKING_3.getKey()
+            ZygonVariant.ZYGON_ATTACKING_0.getKey(),
+            ZygonVariant.ZYGON_ATTACKING_1.getKey(),
+            ZygonVariant.ZYGON_ATTACKING_2.getKey(),
+            ZygonVariant.ZYGON_ATTACKING_1.getKey(),
+            ZygonVariant.ZYGON_ATTACKING_0.getKey(),
+            ZygonVariant.ZYGON_ATTACKING_3.getKey(),
+            ZygonVariant.ZYGON_ATTACKING_4.getKey(),
+            ZygonVariant.ZYGON_ATTACKING_3.getKey()
     };
     private double oldX;
     private double oldZ;
@@ -210,13 +210,13 @@ public class TWAZombie extends Zombie {
             ItemMeta im = bukkit.getItemMeta();
             if (oldX == getX() && oldZ == getZ()) {
                 switch (bukkit.getType()) {
-                    case MANGROVE_PROPAGULE -> im.setItemModel(MangrovePropagule.DALEK_SEC_STATIC.getKey());
-                    case SUGAR -> im.setItemModel(Sugar.EMPTY_CHILD_STATIC.getKey());
-                    case TURTLE_EGG -> im.setItemModel(TurtleEgg.SLITHEEN_STATIC.getKey());
-                    case POTATO -> im.setItemModel(Potato.SONTARAN_STATIC.getKey());
-                    case BOOK -> im.setItemModel(Book.VASHTA_NERADA_STATIC.getKey());
-                    case PAINTING -> im.setItemModel(Painting.ZYGON_STATIC.getKey());
-                    case HOST_ARMOR_TRIM_SMITHING_TEMPLATE -> im.setItemModel(variant == 1 ? Droid.CLOCKWORK_DROID_FEMALE_STATIC.getKey() : Droid.CLOCKWORK_DROID_STATIC.getKey());
+                    case MANGROVE_PROPAGULE -> im.setItemModel(DalekSecVariant.DALEK_SEC_STATIC.getKey());
+                    case SUGAR -> im.setItemModel(EmptyChildVariant.EMPTY_CHILD_STATIC.getKey());
+                    case TURTLE_EGG -> im.setItemModel(SlitheenVariant.SLITHEEN_STATIC.getKey());
+                    case POTATO -> im.setItemModel(SontaranVariant.SONTARAN_STATIC.getKey());
+                    case BOOK -> im.setItemModel(VashtaNeradaVariant.VASHTA_NERADA_STATIC.getKey());
+                    case PAINTING -> im.setItemModel(ZygonVariant.ZYGON_STATIC.getKey());
+                    case HOST_ARMOR_TRIM_SMITHING_TEMPLATE -> im.setItemModel(variant == 1 ? DroidVariant.CLOCKWORK_DROID_FEMALE_STATIC.getKey() : DroidVariant.CLOCKWORK_DROID_STATIC.getKey());
                 }
                 i = 0;
             } else {

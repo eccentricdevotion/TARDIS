@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Arrow;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.ArrowVariant;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
 import org.bukkit.Material;
 
 public record GUIArtronStorage() {
 
     // Artron Storage
-    public static GUIData INFO = new GUIData(Bowl.INFO.getKey(), 0, Material.BOWL);
-    public static GUIData ARROW_RIGHT = new GUIData(Arrow.MORE.getKey(), 1, Material.ARROW);
-    public static GUIData ARROW_LEFT = new GUIData(Arrow.LESS.getKey(), 7, Material.ARROW);
-    public static GUIData CLOSE = new GUIData(Bowl.CLOSE.getKey(), 8, Material.BOWL);
+    public static GUIData INFO = new GUIData(GuiVariant.INFO.getKey(), 0, Material.BOWL);
+    public static GUIData ARROW_RIGHT = new GUIData(ArrowVariant.MORE.getKey(), 1, Material.ARROW);
+    public static GUIData ARROW_LEFT = new GUIData(ArrowVariant.LESS.getKey(), 7, Material.ARROW);
+    public static GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 8, Material.BOWL);
 }

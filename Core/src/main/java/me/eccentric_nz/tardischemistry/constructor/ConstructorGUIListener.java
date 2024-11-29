@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardischemistry.constructor;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Paper;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.HandlesVariant;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.tardischemistry.element.Element;
 import me.eccentric_nz.tardischemistry.element.ElementBuilder;
@@ -141,7 +141,7 @@ public class ConstructorGUIListener extends TARDISMenuListener {
         ItemStack ones = view.getItem(3 + offset);
         ItemMeta oneMeta = ones.getItemMeta();
         oneMeta.setDisplayName("" + oneInt);
-        oneMeta.setItemModel(Paper.values()[25 + oneInt].getKey());
+        oneMeta.setItemModel(HandlesVariant.values()[25 + oneInt].getKey());
         ones.setItemMeta(oneMeta);
         ItemStack tens = view.getItem(2 + offset);
         if (tenInt > 0 || tenInt == 0 && hundredInt > 0) {
@@ -150,7 +150,7 @@ public class ConstructorGUIListener extends TARDISMenuListener {
             }
             ItemMeta tenMeta = tens.getItemMeta();
             tenMeta.setDisplayName("" + tenInt);
-            tenMeta.setItemModel(Paper.values()[25 + tenInt].getKey());
+            tenMeta.setItemModel(HandlesVariant.values()[25 + tenInt].getKey());
             tens.setItemMeta(tenMeta);
             view.setItem(2 + offset, tens);
         } else {
@@ -163,7 +163,7 @@ public class ConstructorGUIListener extends TARDISMenuListener {
             }
             ItemMeta hundredMeta = hundreds.getItemMeta();
             hundredMeta.setDisplayName("" + hundredInt);
-            hundredMeta.setItemModel(Paper.values()[25 + hundredInt].getKey());
+            hundredMeta.setItemModel(HandlesVariant.values()[25 + hundredInt].getKey());
             hundreds.setItemMeta(hundredMeta);
             view.setItem(1 + offset, hundreds);
         } else {

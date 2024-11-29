@@ -5,9 +5,9 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.GlowstoneDust;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.MusicDisc;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.CircuitVariant;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.DiskVariant;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;
 import me.eccentric_nz.TARDIS.enumeration.Storage;
@@ -75,22 +75,22 @@ public class DiskStorageAction {
                             } else {
                                 if (TARDISStaticUtils.isMusicDisk(is)) {
                                     switch (is.getType()) {
-                                        case MUSIC_DISC_BLOCKS -> im.setItemModel(MusicDisc.AREA_DISK.getKey());
-                                        case MUSIC_DISC_CAT -> im.setItemModel(MusicDisc.BIOME_DISK.getKey());
-                                        case MUSIC_DISC_CHIRP -> im.setItemModel(MusicDisc.SAVE_DISK.getKey());
-                                        case MUSIC_DISC_MALL -> im.setItemModel(MusicDisc.PRESET_DISK.getKey());
-                                        case MUSIC_DISC_WAIT -> im.setItemModel(MusicDisc.PLAYER_DISK.getKey());
+                                        case MUSIC_DISC_BLOCKS -> im.setItemModel(DiskVariant.AREA_DISK.getKey());
+                                        case MUSIC_DISC_CAT -> im.setItemModel(DiskVariant.BIOME_DISK.getKey());
+                                        case MUSIC_DISC_CHIRP -> im.setItemModel(DiskVariant.SAVE_DISK.getKey());
+                                        case MUSIC_DISC_MALL -> im.setItemModel(DiskVariant.PRESET_DISK.getKey());
+                                        case MUSIC_DISC_WAIT -> im.setItemModel(DiskVariant.PLAYER_DISK.getKey());
                                     }
                                 } else if (is.getType().equals(Material.LIME_WOOL)) { // next
-                                    im.setItemModel(Bowl.NEXT.getKey());
+                                    im.setItemModel(GuiVariant.NEXT.getKey());
                                     is.setType(Material.BOWL);
                                     is.setItemMeta(im);
                                 } else if (is.getType().equals(Material.RED_WOOL)) { // prev
-                                    im.setItemModel(Bowl.PREV.getKey());
+                                    im.setItemModel(GuiVariant.PREV.getKey());
                                     is.setType(Material.BOWL);
                                     is.setItemMeta(im);
                                 } else if (is.getType().equals(Material.GLOWSTONE_DUST) && !im.hasCustomModelData() && im.getDisplayName().equals("Circuits")) {
-                                    im.setItemModel(GlowstoneDust.GALLIFREY.getKey());
+                                    im.setItemModel(CircuitVariant.GALLIFREY.getKey());
                                 }
                                 is.setItemMeta(im);
                             }

@@ -28,13 +28,13 @@ public record GUIParticle() {
     public static GUIData EFFECT = new GUIData(ParticleItem.EFFECT.getKey(), -1, Material.REDSTONE);
     public static GUIData COLOUR_INFO = new GUIData(ParticleItem.COLOUR_INFO.getKey(), 8, Material.EMERALD_BLOCK);
     public static GUIData COLOUR = new GUIData(ParticleItem.COLOUR.getKey(), 17, Material.EMERALD);
-    public static GUIData BLOCK_INFO = new GUIData(CoalBlock.BLOCK_BUTTON.getKey(), 26, Material.COAL_BLOCK);
+    public static GUIData BLOCK_INFO = new GUIData(LightButton.BLOCK_BUTTON.getKey(), 26, Material.COAL_BLOCK);
     public static GUIData BLOCK = new GUIData(ParticleItem.BLOCK.getKey(), 35, Material.COAL);
-    public static GUIData TOGGLE = new GUIData(Repeater.BUTTON_TOGGLE_ON.getKey(), 44, Material.REPEATER);
+    public static GUIData TOGGLE = new GUIData(PrefsVariant.BUTTON_TOGGLE_ON.getKey(), 44, Material.REPEATER);
     public static GUIData TEST = new GUIData(ParticleItem.TEST.getKey(), 48, Material.COPPER_INGOT);
-    public static GUIData MINUS = new GUIData(Paper.HANDLES_OPERATOR_SUBTRACTION.getKey(), -1, Material.PAPER);
-    public static GUIData PLUS = new GUIData(Paper.HANDLES_OPERATOR_ADDITION.getKey(), -1, Material.PAPER);
+    public static GUIData MINUS = new GUIData(HandlesVariant.HANDLES_OPERATOR_SUBTRACTION.getKey(), -1, Material.PAPER);
+    public static GUIData PLUS = new GUIData(HandlesVariant.HANDLES_OPERATOR_ADDITION.getKey(), -1, Material.PAPER);
     public static GUIData DENSITY = new GUIData(ParticleItem.DENSITY.getKey(), 46, Material.IRON_INGOT);
     public static GUIData SPEED = new GUIData(ParticleItem.SPEED.getKey(), 50, Material.GOLD_INGOT);
-    public static GUIData CLOSE = new GUIData(Bowl.CLOSE.getKey(), 53, Material.BOWL);
+    public static GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 53, Material.BOWL);
 }

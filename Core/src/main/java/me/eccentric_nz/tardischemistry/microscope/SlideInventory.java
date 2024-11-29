@@ -1,7 +1,7 @@
 package me.eccentric_nz.tardischemistry.microscope;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.custommodeldata.keys.ChemistryEquipment;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -32,7 +32,7 @@ class SlideInventory {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName("Close");
-        can.setItemModel(Bowl.CLOSE.getKey());
+        can.setItemModel(GuiVariant.CLOSE.getKey());
         close.setItemMeta(can);
         stacks[53] = close;
         return stacks;

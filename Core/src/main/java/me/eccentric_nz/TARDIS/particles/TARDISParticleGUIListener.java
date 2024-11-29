@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.particles;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIParticle;
 import me.eccentric_nz.TARDIS.custommodeldata.keys.ParticleItem;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Repeater;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.PrefsVariant;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
@@ -183,8 +183,8 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
     private void toggle(InventoryView view, ItemStack is, UUID uuid) {
         ItemMeta im = is.getItemMeta();
         NamespacedKey key = im.getItemModel();
-        boolean on = key == null || key == Repeater.BUTTON_TOGGLE_ON.getKey();
-        im.setItemModel(on ? Repeater.BUTTON_TOGGLE_OFF.getKey() : Repeater.BUTTON_TOGGLE_ON.getKey());
+        boolean on = key == null || key == PrefsVariant.BUTTON_TOGGLE_ON.getKey();
+        im.setItemModel(on ? PrefsVariant.BUTTON_TOGGLE_OFF.getKey() : PrefsVariant.BUTTON_TOGGLE_ON.getKey());
         List<String> lore = im.getLore();
         lore.set(0, on ? "OFF" : "ON");
         im.setLore(lore);

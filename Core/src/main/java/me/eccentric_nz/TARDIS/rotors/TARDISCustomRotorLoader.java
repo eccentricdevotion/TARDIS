@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.rotors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.LightGrayDye;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.RotorVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -38,50 +38,49 @@ public class TARDISCustomRotorLoader {
     //    new Rotor(String name, int offModelData, Material material, int[] frames, long frameTick, boolean custom)
     public void addRotors() {
         // create plugin rotors
-        Rotor early = new Rotor("early", LightGrayDye.TIME_ROTOR_EARLY_OFF.getKey(), Material.BLACK_DYE, new int[]{0, 1, 2, 3, 4, 5, 6, 7}, 6, false);
-        Rotor rotor = new Rotor("rotor", LightGrayDye.TIME_ROTOR_TENNANT_OFF.getKey(), Material.ORANGE_DYE, new int[]{0, 0, 1, 2, 3, 4, 3, 2, 1}, 3, false);
-        Rotor console = new Rotor("console", LightGrayDye.TIME_ROTOR_CONSOLE_OFF.getKey(), Material.RED_DYE, new int[]{0, 0, 1, 2, 3, 4, 3, 2, 1}, 2, false);
-        Rotor copper = new Rotor("copper", LightGrayDye.TIME_ROTOR_ELEVENTH_OFF.getKey(), Material.BROWN_DYE, new int[]{0, 0, 1, 2, 3, 4, 3, 2, 1}, 2, false);
-        Rotor round = new Rotor("round", LightGrayDye.TIME_ROTOR_TWELFTH_OFF.getKey(), Material.GRAY_DYE, new int[]{0}, 1, false);
-        Rotor delta = new Rotor("delta", LightGrayDye.TIME_ROTOR_DELTA_OFF.getKey(), Material.CYAN_DYE, new int[]{0, 1, 2, 3, 4, 5}, 4, false);
-        Rotor engine = new Rotor("engine", LightGrayDye.ENGINE_OFF.getKey(), Material.LIGHT_BLUE_DYE, new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}, 2, false);
-        Rotor engine_rotor = new Rotor("engine_rotor", LightGrayDye.ENGINE_ROTOR_OFF.getKey(), Material.BLUE_DYE, new int[]{0, 1, 2, 3, 4, 5, 4, 3, 2, 1}, 3, false);
-        Rotor hospital = new Rotor("hospital", LightGrayDye.HOSPITAL_OFF.getKey(), Material.WHITE_DYE, new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, 2, false);
-        Rotor rustic = new Rotor("rustic", LightGrayDye.TIME_ROTOR_RUSTIC_OFF.getKey(), Material.GREEN_DYE, new int[]{0, 0, 1, 2, 3, 4, 3, 2, 1}, 2, false);
+        Rotor early = new Rotor("early", RotorVariant.TIME_ROTOR_EARLY_OFF.getKey(), Material.BLACK_DYE, new int[]{0, 1, 2, 3, 4, 5, 6, 7}, 6, false);
+        Rotor rotor = new Rotor("rotor", RotorVariant.TIME_ROTOR_TENNANT_OFF.getKey(), Material.ORANGE_DYE, new int[]{0, 0, 1, 2, 3, 4, 3, 2, 1}, 3, false);
+        Rotor console = new Rotor("console", RotorVariant.TIME_ROTOR_CONSOLE_OFF.getKey(), Material.RED_DYE, new int[]{0, 0, 1, 2, 3, 4, 3, 2, 1}, 2, false);
+        Rotor copper = new Rotor("copper", RotorVariant.TIME_ROTOR_ELEVENTH_OFF.getKey(), Material.BROWN_DYE, new int[]{0, 0, 1, 2, 3, 4, 3, 2, 1}, 2, false);
+        Rotor round = new Rotor("round", RotorVariant.TIME_ROTOR_TWELFTH_OFF.getKey(), Material.GRAY_DYE, new int[]{0}, 1, false);
+        Rotor delta = new Rotor("delta", RotorVariant.TIME_ROTOR_DELTA_OFF.getKey(), Material.CYAN_DYE, new int[]{0, 1, 2, 3, 4, 5}, 4, false);
+        Rotor engine = new Rotor("engine", RotorVariant.ENGINE_OFF.getKey(), Material.LIGHT_BLUE_DYE, new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}, 2, false);
+        Rotor engine_rotor = new Rotor("engine_rotor", RotorVariant.ENGINE_ROTOR_OFF.getKey(), Material.BLUE_DYE, new int[]{0, 1, 2, 3, 4, 5, 4, 3, 2, 1}, 3, false);
+        Rotor hospital = new Rotor("hospital", RotorVariant.HOSPITAL_OFF.getKey(), Material.WHITE_DYE, new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, 2, false);
+        Rotor rustic = new Rotor("rustic", RotorVariant.TIME_ROTOR_RUSTIC_OFF.getKey(), Material.GREEN_DYE, new int[]{0, 0, 1, 2, 3, 4, 3, 2, 1}, 2, false);
         // add plugin rotors to look-ups
         Rotor.byMaterial.put(Material.BLACK_DYE, early);
-        Rotor.byCustomModel.put(LightGrayDye.TIME_ROTOR_EARLY_OFF.getKey(), early);
+        Rotor.byCustomModel.put(RotorVariant.TIME_ROTOR_EARLY_OFF.getKey(), early);
         Rotor.byName.put("TIME_ROTOR_EARLY", early);
         Rotor.byMaterial.put(Material.ORANGE_DYE, rotor);
-        Rotor.byCustomModel.put(LightGrayDye.TIME_ROTOR_TENNANT_OFF.getKey(), rotor);
+        Rotor.byCustomModel.put(RotorVariant.TIME_ROTOR_TENNANT_OFF.getKey(), rotor);
         Rotor.byName.put("TIME_ROTOR_ROTOR", rotor);
         Rotor.byMaterial.put(Material.RED_DYE, console);
-        Rotor.byCustomModel.put(LightGrayDye.TIME_ROTOR_CONSOLE_OFF.getKey(), console);
+        Rotor.byCustomModel.put(RotorVariant.TIME_ROTOR_CONSOLE_OFF.getKey(), console);
         Rotor.byName.put("TIME_ROTOR_CONSOLE", console);
         Rotor.byMaterial.put(Material.GREEN_DYE, rustic);
-        Rotor.byCustomModel.put(LightGrayDye.TIME_ROTOR_RUSTIC_OFF.getKey(), rustic);
+        Rotor.byCustomModel.put(RotorVariant.TIME_ROTOR_RUSTIC_OFF.getKey(), rustic);
         Rotor.byName.put("TIME_ROTOR_RUSTIC", rustic);
         Rotor.byMaterial.put(Material.BROWN_DYE, copper);
-        Rotor.byCustomModel.put(LightGrayDye.TIME_ROTOR_ELEVENTH_OFF.getKey(), copper);
+        Rotor.byCustomModel.put(RotorVariant.TIME_ROTOR_ELEVENTH_OFF.getKey(), copper);
         Rotor.byName.put("TIME_ROTOR_COPPER", copper);
         Rotor.byMaterial.put(Material.GRAY_DYE, round);
-        Rotor.byCustomModel.put(LightGrayDye.TIME_ROTOR_TWELFTH_OFF.getKey(), round);
+        Rotor.byCustomModel.put(RotorVariant.TIME_ROTOR_TWELFTH_OFF.getKey(), round);
         Rotor.byName.put("TIME_ROTOR_ROUND", round);
         Rotor.byMaterial.put(Material.CYAN_DYE, delta);
-        Rotor.byCustomModel.put(LightGrayDye.TIME_ROTOR_DELTA_OFF.getKey(), delta);
+        Rotor.byCustomModel.put(RotorVariant.TIME_ROTOR_DELTA_OFF.getKey(), delta);
         Rotor.byName.put("TIME_ROTOR_DELTA", delta);
         Rotor.byMaterial.put(Material.LIGHT_BLUE_DYE, engine);
-        Rotor.byCustomModel.put(LightGrayDye.ENGINE_OFF.getKey(), engine);
+        Rotor.byCustomModel.put(RotorVariant.ENGINE_OFF.getKey(), engine);
         Rotor.byName.put("TIME_ENGINE", engine);
         Rotor.byMaterial.put(Material.BLUE_DYE, engine_rotor);
-        Rotor.byCustomModel.put(LightGrayDye.ENGINE_ROTOR_OFF.getKey(), engine_rotor);
+        Rotor.byCustomModel.put(RotorVariant.ENGINE_ROTOR_OFF.getKey(), engine_rotor);
         Rotor.byName.put("TIME_ROTOR_ENGINE", engine_rotor);
         Rotor.byMaterial.put(Material.WHITE_DYE, hospital);
-        Rotor.byCustomModel.put(LightGrayDye.HOSPITAL_OFF.getKey(), hospital);
+        Rotor.byCustomModel.put(RotorVariant.HOSPITAL_OFF.getKey(), hospital);
         Rotor.byName.put("TIME_ROTOR_HOSPITAL", hospital);
         for (String r : plugin.getCustomRotorsConfig().getKeys(false)) {
             try {
-                int cmd = plugin.getCustomRotorsConfig().getInt(r + ".off_custom_model_data");
                 Material material = Material.valueOf(plugin.getCustomRotorsConfig().getString(r + ".animated_material"));
                 int[] frames = getFrames(plugin.getCustomRotorsConfig().getString(r + ".animation_sequence", "0,0"));
                 NamespacedKey key = new NamespacedKey(plugin, "time_rotor/time_rotor_" + r.toLowerCase(Locale.ROOT) + "_off");

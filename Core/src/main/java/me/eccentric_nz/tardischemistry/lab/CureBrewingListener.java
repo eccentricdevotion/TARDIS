@@ -18,7 +18,7 @@ package me.eccentric_nz.tardischemistry.lab;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.MilkBucket;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.CureVariant;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -174,19 +174,19 @@ public class CureBrewingListener implements Listener {
                                             switch (potionType) {
                                                 case AWKWARD -> {
                                                     im.setDisplayName(ChatColor.WHITE + "Antidote");
-                                                    im.setItemModel(MilkBucket.ANTIDOTE.getKey());
+                                                    im.setItemModel(CureVariant.ANTIDOTE.getKey());
                                                 }
                                                 case MUNDANE -> {
                                                     im.setDisplayName(ChatColor.WHITE + "Elixir");
-                                                    im.setItemModel(MilkBucket.ELIXIR.getKey());
+                                                    im.setItemModel(CureVariant.ELIXIR.getKey());
                                                 }
                                                 case THICK -> {
                                                     im.setDisplayName(ChatColor.WHITE + "Eye drops");
-                                                    im.setItemModel(MilkBucket.EYEDROPS.getKey());
+                                                    im.setItemModel(CureVariant.EYEDROPS.getKey());
                                                 }
                                                 default -> { // UNCRAFTABLE
                                                     im.setDisplayName(ChatColor.WHITE + "Tonic");
-                                                    im.setItemModel(MilkBucket.TONIC.getKey());
+                                                    im.setItemModel(CureVariant.TONIC.getKey());
                                                 }
                                             }
                                             is.setItemMeta(im);

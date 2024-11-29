@@ -16,37 +16,36 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.NetherStar;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Repeater;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.PrefsVariant;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 
 public enum GUIConfiguration {
 
     // Admin Menu
-    ALLOW(Repeater.ALLOW_ON.getKey(), Repeater.ALLOW_OFF.getKey(), 0),
-    ARCH(Repeater.ARCH_ON.getKey(), Repeater.ARCH_OFF.getKey(), 22),
-    ARCHIVE(Repeater.ARCHIVE_ON.getKey(), Repeater.ARCHIVE_OFF.getKey(), 25),
-    BLUEPRINTS(Repeater.BLUEPRINTS_ON.getKey(), Repeater.BLUEPRINTS_OFF.getKey(), 23),
-    CREATION(Repeater.CREATION_ON.getKey(), Repeater.CREATION_OFF.getKey(), 26),
-    DIFFICULTY(Repeater.DIFFICULTY_ON.getKey(), Repeater.DIFFICULTY_OFF.getKey(), 38),
-    EYE_OF_HARMONY(Repeater.EYE_ON.getKey(), Repeater.EYE_OFF.getKey(), 45),
-    GROWTH(Repeater.GROWTH_ON.getKey(), Repeater.GROWTH_OFF.getKey(), 36),
-    HANDLES(Repeater.HANDLES_ON.getKey(), Repeater.HANDLES_OFF.getKey(), 37),
-    POLICE_BOX(Repeater.POLICE_BOX_ON.getKey(), Repeater.POLICE_BOX_OFF.getKey(), 38),
-    PREFERENCES(Repeater.PREFERENCES_ON.getKey(), Repeater.PREFERENCES_OFF.getKey(), 41),
-    ABANDON(Repeater.ABANDON_ON.getKey(), Repeater.ABANDON_OFF.getKey(), 0),
-    CIRCUITS(Repeater.CIRCUIT_ON.getKey(), Repeater.CIRCUIT_OFF.getKey(), 0),
-    DEBUG(Repeater.DEBUG_ON.getKey(), Repeater.DEBUG_OFF.getKey(), 0),
-    DESKTOP(Repeater.THEME_ON.getKey(), Repeater.THEME_OFF.getKey(), 0),
-    JUNK(Repeater.JUNK_ON.getKey(), Repeater.JUNK_OFF.getKey(), 0),
-    SIEGE(Repeater.SIEGE_ON.getKey(), Repeater.SIEGE_OFF.getKey(), 0),
-    SONIC(Repeater.SONIC_ON.getKey(), Repeater.SONIC_OFF.getKey(), 0),
-    TRAVEL(Repeater.TRAVEL_ON.getKey(), Repeater.TRAVEL_OFF.getKey(), 0),
-    NEXT(Bowl.NEXT.getKey(), null, 0, Material.BOWL),
-    PREV(Bowl.PREV.getKey(), null, 0, Material.BOWL),
-    PREFS(NetherStar.ADMIN.getKey(), null, 0, Material.NETHER_STAR);
+    ALLOW(PrefsVariant.ALLOW_ON.getKey(), PrefsVariant.ALLOW_OFF.getKey(), 0),
+    ARCH(PrefsVariant.ARCH_ON.getKey(), PrefsVariant.ARCH_OFF.getKey(), 22),
+    ARCHIVE(PrefsVariant.ARCHIVE_ON.getKey(), PrefsVariant.ARCHIVE_OFF.getKey(), 25),
+    BLUEPRINTS(PrefsVariant.BLUEPRINTS_ON.getKey(), PrefsVariant.BLUEPRINTS_OFF.getKey(), 23),
+    CREATION(PrefsVariant.CREATION_ON.getKey(), PrefsVariant.CREATION_OFF.getKey(), 26),
+    DIFFICULTY(PrefsVariant.DIFFICULTY_ON.getKey(), PrefsVariant.DIFFICULTY_OFF.getKey(), 38),
+    EYE_OF_HARMONY(PrefsVariant.EYE_ON.getKey(), PrefsVariant.EYE_OFF.getKey(), 45),
+    GROWTH(PrefsVariant.GROWTH_ON.getKey(), PrefsVariant.GROWTH_OFF.getKey(), 36),
+    HANDLES(PrefsVariant.HANDLES_ON.getKey(), PrefsVariant.HANDLES_OFF.getKey(), 37),
+    POLICE_BOX(PrefsVariant.POLICE_BOX_ON.getKey(), PrefsVariant.POLICE_BOX_OFF.getKey(), 38),
+    PREFERENCES(PrefsVariant.PREFERENCES_ON.getKey(), PrefsVariant.PREFERENCES_OFF.getKey(), 41),
+    ABANDON(PrefsVariant.ABANDON_ON.getKey(), PrefsVariant.ABANDON_OFF.getKey(), 0),
+    CIRCUITS(PrefsVariant.CIRCUIT_ON.getKey(), PrefsVariant.CIRCUIT_OFF.getKey(), 0),
+    DEBUG(PrefsVariant.DEBUG_ON.getKey(), PrefsVariant.DEBUG_OFF.getKey(), 0),
+    DESKTOP(PrefsVariant.THEME_ON.getKey(), PrefsVariant.THEME_OFF.getKey(), 0),
+    JUNK(PrefsVariant.JUNK_ON.getKey(), PrefsVariant.JUNK_OFF.getKey(), 0),
+    SIEGE(PrefsVariant.SIEGE_ON.getKey(), PrefsVariant.SIEGE_OFF.getKey(), 0),
+    SONIC(PrefsVariant.SONIC_ON.getKey(), PrefsVariant.SONIC_OFF.getKey(), 0),
+    TRAVEL(PrefsVariant.TRAVEL_ON.getKey(), PrefsVariant.TRAVEL_OFF.getKey(), 0),
+    NEXT(GuiVariant.NEXT.getKey(), null, 0, Material.BOWL),
+    PREV(GuiVariant.PREV.getKey(), null, 0, Material.BOWL),
+    PREFS(PrefsVariant.ADMIN.getKey(), null, 0, Material.NETHER_STAR);
 
     private final NamespacedKey onModel;
     private final NamespacedKey offModel;

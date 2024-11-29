@@ -4,7 +4,8 @@
 package me.eccentric_nz.tardisvortexmanipulator.gui;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.VortexManipulatorVariant;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetInbox;
 import me.eccentric_nz.tardisvortexmanipulator.storage.TVMMessage;
 import org.bukkit.Material;
@@ -68,14 +69,14 @@ public class TVMMessageGUI {
         ItemStack page = new ItemStack(Material.BOWL, 1);
         ItemMeta num = page.getItemMeta();
         num.setDisplayName("Page " + n);
-        num.setItemModel(Bowl.VM_PAGE.getKey());
+        num.setItemModel(VortexManipulatorVariant.PAGE.getKey());
         page.setItemMeta(num);
         stack[45] = page;
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta win = close.getItemMeta();
         win.setDisplayName("Close");
-        win.setItemModel(Bowl.CLOSE.getKey());
+        win.setItemModel(GuiVariant.CLOSE.getKey());
         close.setItemMeta(win);
         stack[46] = close;
         // previous screen (only if needed)
@@ -83,7 +84,7 @@ public class TVMMessageGUI {
             ItemStack prev = new ItemStack(Material.BOWL, 1);
             ItemMeta een = prev.getItemMeta();
             een.setDisplayName("Previous Page");
-            een.setItemModel(Bowl.VM_PREV.getKey());
+            een.setItemModel(VortexManipulatorVariant.PREV.getKey());
             prev.setItemMeta(een);
             stack[48] = prev;
         }
@@ -92,7 +93,7 @@ public class TVMMessageGUI {
             ItemStack next = new ItemStack(Material.BOWL, 1);
             ItemMeta scr = next.getItemMeta();
             scr.setDisplayName("Next Page");
-            scr.setItemModel(Bowl.VM_NEXT.getKey());
+            scr.setItemModel(VortexManipulatorVariant.NEXT.getKey());
             next.setItemMeta(scr);
             stack[49] = next;
         }
@@ -100,14 +101,14 @@ public class TVMMessageGUI {
         ItemStack read = new ItemStack(Material.BOWL, 1);
         ItemMeta daer = read.getItemMeta();
         daer.setDisplayName("Read");
-        daer.setItemModel(Bowl.VM_READ.getKey());
+        daer.setItemModel(VortexManipulatorVariant.READ.getKey());
         read.setItemMeta(daer);
         stack[51] = read;
         // delete
         ItemStack del = new ItemStack(Material.BOWL, 1);
         ItemMeta ete = del.getItemMeta();
         ete.setDisplayName("Delete");
-        ete.setItemModel(Bowl.VM_DELETE.getKey());
+        ete.setItemModel(VortexManipulatorVariant.DELETE.getKey());
         del.setItemMeta(ete);
         stack[53] = del;
 

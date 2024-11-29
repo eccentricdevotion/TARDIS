@@ -1,10 +1,10 @@
 package me.eccentric_nz.TARDIS.console;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.AmethystShard;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Lever;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Rail;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Repeater;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.ConsolePart;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.DirectionVariant;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.ModelledControl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.PrefsVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -54,23 +54,23 @@ public class ConsoleBuilder {
             ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
             ItemMeta im = shard.getItemMeta();
             switch (type) {
-                case 17 -> im.setItemModel(AmethystShard.CONSOLE_RUSTIC.getKey());
-                case 16 -> im.setItemModel(AmethystShard.CONSOLE_BROWN.getKey());
-                case 15 -> im.setItemModel(AmethystShard.CONSOLE_PINK.getKey());
-                case 14 -> im.setItemModel(AmethystShard.CONSOLE_MAGENTA.getKey());
-                case 13 -> im.setItemModel(AmethystShard.CONSOLE_PURPLE.getKey());
-                case 12 -> im.setItemModel(AmethystShard.CONSOLE_BLUE.getKey());
-                case 11 -> im.setItemModel(AmethystShard.CONSOLE_LIGHT_BLUE.getKey());
-                case 10 -> im.setItemModel(AmethystShard.CONSOLE_CYAN.getKey());
-                case 9 -> im.setItemModel(AmethystShard.CONSOLE_GREEN.getKey());
-                case 8 -> im.setItemModel(AmethystShard.CONSOLE_LIME.getKey());
-                case 7 -> im.setItemModel(AmethystShard.CONSOLE_YELLOW.getKey());
-                case 6 -> im.setItemModel(AmethystShard.CONSOLE_ORANGE.getKey());
-                case 5 -> im.setItemModel(AmethystShard.CONSOLE_RED.getKey());
-                case 4 -> im.setItemModel(AmethystShard.CONSOLE_WHITE.getKey());
-                case 3 -> im.setItemModel(AmethystShard.CONSOLE_BLACK.getKey());
-                case 2 -> im.setItemModel(AmethystShard.CONSOLE_GRAY.getKey());
-                default -> im.setItemModel(AmethystShard.CONSOLE_LIGHT_GRAY.getKey());
+                case 17 -> im.setItemModel(ConsolePart.CONSOLE_RUSTIC.getKey());
+                case 16 -> im.setItemModel(ConsolePart.CONSOLE_BROWN.getKey());
+                case 15 -> im.setItemModel(ConsolePart.CONSOLE_PINK.getKey());
+                case 14 -> im.setItemModel(ConsolePart.CONSOLE_MAGENTA.getKey());
+                case 13 -> im.setItemModel(ConsolePart.CONSOLE_PURPLE.getKey());
+                case 12 -> im.setItemModel(ConsolePart.CONSOLE_BLUE.getKey());
+                case 11 -> im.setItemModel(ConsolePart.CONSOLE_LIGHT_BLUE.getKey());
+                case 10 -> im.setItemModel(ConsolePart.CONSOLE_CYAN.getKey());
+                case 9 -> im.setItemModel(ConsolePart.CONSOLE_GREEN.getKey());
+                case 8 -> im.setItemModel(ConsolePart.CONSOLE_LIME.getKey());
+                case 7 -> im.setItemModel(ConsolePart.CONSOLE_YELLOW.getKey());
+                case 6 -> im.setItemModel(ConsolePart.CONSOLE_ORANGE.getKey());
+                case 5 -> im.setItemModel(ConsolePart.CONSOLE_RED.getKey());
+                case 4 -> im.setItemModel(ConsolePart.CONSOLE_WHITE.getKey());
+                case 3 -> im.setItemModel(ConsolePart.CONSOLE_BLACK.getKey());
+                case 2 -> im.setItemModel(ConsolePart.CONSOLE_GRAY.getKey());
+                default -> im.setItemModel(ConsolePart.CONSOLE_LIGHT_GRAY.getKey());
             }
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
             shard.setItemMeta(im);
@@ -91,23 +91,23 @@ public class ConsoleBuilder {
             ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
             ItemMeta im = shard.getItemMeta();
             switch (type) {
-                case 17 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_RUSTIC.getKey());
-                case 16 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_BROWN.getKey());
-                case 15 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_PINK.getKey());
-                case 14 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_MAGENTA.getKey());
-                case 13 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_PURPLE.getKey());
-                case 12 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_BLUE.getKey());
-                case 11 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_LIGHT_BLUE.getKey());
-                case 10 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_CYAN.getKey());
-                case 9 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_GREEN.getKey());
-                case 8 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_LIME.getKey());
-                case 7 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_YELLOW.getKey());
-                case 6 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_ORANGE.getKey());
-                case 5 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_RED.getKey());
-                case 4 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_WHITE.getKey());
-                case 3 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_BLACK.getKey());
-                case 2 -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_GRAY.getKey());
-                default -> im.setItemModel(AmethystShard.CONSOLE_DIVISION_LIGHT_GRAY.getKey());
+                case 17 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_RUSTIC.getKey());
+                case 16 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_BROWN.getKey());
+                case 15 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_PINK.getKey());
+                case 14 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_MAGENTA.getKey());
+                case 13 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_PURPLE.getKey());
+                case 12 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_BLUE.getKey());
+                case 11 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_LIGHT_BLUE.getKey());
+                case 10 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_CYAN.getKey());
+                case 9 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_GREEN.getKey());
+                case 8 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_LIME.getKey());
+                case 7 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_YELLOW.getKey());
+                case 6 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_ORANGE.getKey());
+                case 5 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_RED.getKey());
+                case 4 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_WHITE.getKey());
+                case 3 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_BLACK.getKey());
+                case 2 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_GRAY.getKey());
+                default -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_LIGHT_GRAY.getKey());
             }
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
             shard.setItemMeta(im);
@@ -176,12 +176,12 @@ public class ConsoleBuilder {
         NamespacedKey key = interaction.getCustomModel();
         if (interaction == ConsoleInteraction.DIRECTION && id > 0) {
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-            key = (rsc.resultSet()) ? getKey(rsc.getDirection()): Rail.DIRECTION_NORTH.getKey();
+            key = (rsc.resultSet()) ? getKey(rsc.getDirection()): DirectionVariant.DIRECTION_NORTH.getKey();
         }
         if (interaction == ConsoleInteraction.THROTTLE || interaction == ConsoleInteraction.RELATIVITY_DIFFERENTIATOR) {
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, playerUuid);
             if (rsp.resultSet()) {
-                key = (interaction == ConsoleInteraction.THROTTLE) ? Repeater.values()[115+rsp.getThrottle()].getKey() : Lever.values()[34 + rsp.getFlightMode()].getKey();
+                key = (interaction == ConsoleInteraction.THROTTLE) ? PrefsVariant.values()[115+rsp.getThrottle()].getKey() : ModelledControl.values()[34 + rsp.getFlightMode()].getKey();
             }
         }
         // spawn a control
@@ -212,14 +212,14 @@ public class ConsoleBuilder {
     private NamespacedKey getKey(COMPASS direction) {
         NamespacedKey key;
         switch (direction) {
-            case NORTH_EAST -> key = Rail.DIRECTION_NORTH_EAST.getKey();
-            case EAST -> key = Rail.DIRECTION_EAST.getKey();
-            case SOUTH_EAST -> key = Rail.DIRECTION_SOUTH_EAST.getKey();
-            case SOUTH -> key = Rail.DIRECTION_SOUTH.getKey();
-            case SOUTH_WEST -> key = Rail.DIRECTION_SOUTH_WEST.getKey();
-            case WEST -> key = Rail.DIRECTION_WEST.getKey();
-            case NORTH_WEST -> key = Rail.DIRECTION_NORTH_WEST.getKey();
-            default -> key = Rail.DIRECTION_NORTH.getKey();
+            case NORTH_EAST -> key = DirectionVariant.DIRECTION_NORTH_EAST.getKey();
+            case EAST -> key = DirectionVariant.DIRECTION_EAST.getKey();
+            case SOUTH_EAST -> key = DirectionVariant.DIRECTION_SOUTH_EAST.getKey();
+            case SOUTH -> key = DirectionVariant.DIRECTION_SOUTH.getKey();
+            case SOUTH_WEST -> key = DirectionVariant.DIRECTION_SOUTH_WEST.getKey();
+            case WEST -> key = DirectionVariant.DIRECTION_WEST.getKey();
+            case NORTH_WEST -> key = DirectionVariant.DIRECTION_NORTH_WEST.getKey();
+            default -> key = DirectionVariant.DIRECTION_NORTH.getKey();
         }
         return key;
     }
@@ -229,23 +229,23 @@ public class ConsoleBuilder {
         ItemMeta im = shard.getItemMeta();
         NamespacedKey model;
         switch (type) {
-            case 17 -> model = AmethystShard.CONSOLE_CENTRE_RUSTIC.getKey();
-            case 16 -> model = AmethystShard.CONSOLE_CENTRE_BROWN.getKey();
-            case 15 -> model = AmethystShard.CONSOLE_CENTRE_PINK.getKey();
-            case 14 -> model = AmethystShard.CONSOLE_CENTRE_MAGENTA.getKey();
-            case 13 -> model = AmethystShard.CONSOLE_CENTRE_PURPLE.getKey();
-            case 12 -> model = AmethystShard.CONSOLE_CENTRE_BLUE.getKey();
-            case 11 -> model = AmethystShard.CONSOLE_CENTRE_LIGHT_BLUE.getKey();
-            case 10 -> model = AmethystShard.CONSOLE_CENTRE_CYAN.getKey();
-            case 9 -> model = AmethystShard.CONSOLE_CENTRE_GREEN.getKey();
-            case 8 -> model = AmethystShard.CONSOLE_CENTRE_LIME.getKey();
-            case 7 -> model = AmethystShard.CONSOLE_CENTRE_YELLOW.getKey();
-            case 6 -> model = AmethystShard.CONSOLE_CENTRE_ORANGE.getKey();
-            case 5 -> model = AmethystShard.CONSOLE_CENTRE_RED.getKey();
-            case 4 -> model = AmethystShard.CONSOLE_CENTRE_WHITE.getKey();
-            case 3 -> model = AmethystShard.CONSOLE_CENTRE_BLACK.getKey();
-            case 2 -> model = AmethystShard.CONSOLE_CENTRE_GRAY.getKey();
-            default -> model = AmethystShard.CONSOLE_CENTRE_LIGHT_GRAY.getKey();
+            case 17 -> model = ConsolePart.CONSOLE_CENTRE_RUSTIC.getKey();
+            case 16 -> model = ConsolePart.CONSOLE_CENTRE_BROWN.getKey();
+            case 15 -> model = ConsolePart.CONSOLE_CENTRE_PINK.getKey();
+            case 14 -> model = ConsolePart.CONSOLE_CENTRE_MAGENTA.getKey();
+            case 13 -> model = ConsolePart.CONSOLE_CENTRE_PURPLE.getKey();
+            case 12 -> model = ConsolePart.CONSOLE_CENTRE_BLUE.getKey();
+            case 11 -> model = ConsolePart.CONSOLE_CENTRE_LIGHT_BLUE.getKey();
+            case 10 -> model = ConsolePart.CONSOLE_CENTRE_CYAN.getKey();
+            case 9 -> model = ConsolePart.CONSOLE_CENTRE_GREEN.getKey();
+            case 8 -> model = ConsolePart.CONSOLE_CENTRE_LIME.getKey();
+            case 7 -> model = ConsolePart.CONSOLE_CENTRE_YELLOW.getKey();
+            case 6 -> model = ConsolePart.CONSOLE_CENTRE_ORANGE.getKey();
+            case 5 -> model = ConsolePart.CONSOLE_CENTRE_RED.getKey();
+            case 4 -> model = ConsolePart.CONSOLE_CENTRE_WHITE.getKey();
+            case 3 -> model = ConsolePart.CONSOLE_CENTRE_BLACK.getKey();
+            case 2 -> model = ConsolePart.CONSOLE_CENTRE_GRAY.getKey();
+            default -> model = ConsolePart.CONSOLE_CENTRE_LIGHT_GRAY.getKey();
         }
         im.setItemModel(model);
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());

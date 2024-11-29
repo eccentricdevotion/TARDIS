@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Repeater;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.PrefsVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -28,21 +28,21 @@ import java.util.List;
 public enum GUIAutonomous {
 
     // TARDIS Autonomous
-    AUTONOMOUS_TYPE(Repeater.AUTO_TYPE.getKey(), 0, Material.REPEATER),
-    TYPE_INFO(Bowl.INFO.getKey(), 1, Material.BOWL, Arrays.asList("Choose the location you want", "the TARDIS to automatically", "return to when you die.")),
-    HOME(Bowl.HOME.getKey(), 3, Material.BOWL, Arrays.asList("Always go to the", "TARDIS's home location")),
-    AREAS(Bowl.AREAS.getKey(), 4, Material.BOWL, Arrays.asList("Go to the an area", "in the death world.", "If a parking spot cannot", "be found, use the fallback", "specified below.")),
-    CONFIGURED_AREAS(Bowl.CONFIGURED.getKey(), 5, Material.BOWL, Arrays.asList("Go to the server's", "default area(s).", "If a parking spot cannot", "be found, use the fallback", "specified below.")),
-    CLOSEST(Bowl.CLOSEST.getKey(), 6, Material.BOWL, Arrays.asList("Go to the TARDIS's", "home location or an area", "whichever is closest.")),
-    SAVE(Bowl.SAVE.getKey(), 7, Material.BOWL, Arrays.asList("Go to a TARDIS", "saved destination.")),
+    AUTONOMOUS_TYPE(PrefsVariant.AUTO_TYPE.getKey(), 0, Material.REPEATER),
+    TYPE_INFO(GuiVariant.INFO.getKey(), 1, Material.BOWL, Arrays.asList("Choose the location you want", "the TARDIS to automatically", "return to when you die.")),
+    HOME(GuiVariant.HOME.getKey(), 3, Material.BOWL, Arrays.asList("Always go to the", "TARDIS's home location")),
+    AREAS(GuiVariant.AREAS.getKey(), 4, Material.BOWL, Arrays.asList("Go to the an area", "in the death world.", "If a parking spot cannot", "be found, use the fallback", "specified below.")),
+    CONFIGURED_AREAS(GuiVariant.CONFIGURED.getKey(), 5, Material.BOWL, Arrays.asList("Go to the server's", "default area(s).", "If a parking spot cannot", "be found, use the fallback", "specified below.")),
+    CLOSEST(GuiVariant.CLOSEST.getKey(), 6, Material.BOWL, Arrays.asList("Go to the TARDIS's", "home location or an area", "whichever is closest.")),
+    SAVE(GuiVariant.SAVE.getKey(), 7, Material.BOWL, Arrays.asList("Go to a TARDIS", "saved destination.")),
     SELECTED_TYPE(null, -1, Material.LIME_WOOL),
-    FALLBACK(Repeater.AUTO_DEFAULT.getKey(), 18, Material.REPEATER),
-    FALLBACK_INFO(Bowl.INFO.getKey(), 19, Material.BOWL, Arrays.asList("If a preferred location", "cannot be found, choose", "what the TARDIS should do.")),
-    GO_HOME(Bowl.HOME.getKey(), 21, Material.BOWL),
-    STAY(Bowl.STAY.getKey(), 22, Material.BOWL),
-    SAVE_SELECTOR(Bowl.AUTO_SAVE_SELECTOR.getKey(), 25, Material.BOWL, Arrays.asList("Choose a save", "to travel to -", "click to set.")),
+    FALLBACK(PrefsVariant.AUTO_DEFAULT.getKey(), 18, Material.REPEATER),
+    FALLBACK_INFO(GuiVariant.INFO.getKey(), 19, Material.BOWL, Arrays.asList("If a preferred location", "cannot be found, choose", "what the TARDIS should do.")),
+    GO_HOME(GuiVariant.HOME.getKey(), 21, Material.BOWL),
+    STAY(GuiVariant.STAY.getKey(), 22, Material.BOWL),
+    SAVE_SELECTOR(GuiVariant.AUTO_SAVE_SELECTOR.getKey(), 25, Material.BOWL, Arrays.asList("Choose a save", "to travel to -", "click to set.")),
     SELECTED_DEFAULT(null, -1, Material.LIME_WOOL),
-    CLOSE(Bowl.CLOSE.getKey(), 35, Material.BOWL);
+    CLOSE(GuiVariant.CLOSE.getKey(), 35, Material.BOWL);
 
     private final NamespacedKey model;
     private final int slot;

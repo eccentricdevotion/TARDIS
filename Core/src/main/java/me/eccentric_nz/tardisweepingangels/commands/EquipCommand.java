@@ -99,36 +99,36 @@ public class EquipCommand {
                         int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(stand), 1, 20);
                         stand.getPersistentDataContainer().set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
                         // set helmet to sword version
-                        meta.setItemModel(RedCandle.HEADLESS_MONK_STATIC.getKey());
+                        meta.setItemModel(MonkVariant.HEADLESS_MONK_STATIC.getKey());
                     }
                     if (monster == Monster.MIRE || monster == Monster.SLITHEEN) {
                         // set no helmet!
-                        meta.setItemModel((monster==Monster.MIRE? NetheriteScrap.THE_MIRE_HELMETLESS.getKey() : TurtleEgg.SLITHEEN_SUIT.getKey()));
+                        meta.setItemModel((monster==Monster.MIRE? MireVariant.THE_MIRE_HELMETLESS.getKey() : SlitheenVariant.SLITHEEN_SUIT.getKey()));
                     }
                     if (monster == Monster.CLOCKWORK_DROID) {
-                        meta.setItemModel(Droid.CLOCKWORK_DROID_FEMALE_STATIC.getKey());
+                        meta.setItemModel(DroidVariant.CLOCKWORK_DROID_FEMALE_STATIC.getKey());
                     }
                     if (monster == Monster.DALEK) {
                         try {
                             DyeColor colour = DyeColor.valueOf(args[2].toUpperCase(Locale.ROOT));
-                            NamespacedKey c = SlimeBall.DALEK_BRASS.getKey();
+                            NamespacedKey c = DalekVariant.DALEK_BRASS.getKey();
                             switch (colour) {
-                                case BLACK -> c = SlimeBall.DALEK_BLACK.getKey();
-                                case WHITE -> c = SlimeBall.DALEK_WHITE.getKey();
-                                case RED -> c = SlimeBall.DALEK_RED.getKey();
-                                case BROWN -> c = SlimeBall.DALEK_BROWN.getKey();
-                                case GREEN -> c = SlimeBall.DALEK_GREEN.getKey();
-                                case BLUE -> c = SlimeBall.DALEK_BLUE.getKey();
-                                case PURPLE -> c = SlimeBall.DALEK_PURPLE.getKey();
-                                case CYAN -> c = SlimeBall.DALEK_CYAN.getKey();
-                                case LIGHT_GRAY -> c = SlimeBall.DALEK_LIGHT_GRAY.getKey();
-                                case GRAY -> c = SlimeBall.DALEK_GRAY.getKey();
-                                case PINK -> c = SlimeBall.DALEK_PINK.getKey();
-                                case LIME -> c = SlimeBall.DALEK_LIME.getKey();
-                                case YELLOW -> c = SlimeBall.DALEK_YELLOW.getKey();
-                                case LIGHT_BLUE -> c = SlimeBall.DALEK_LIGHT_BLUE.getKey();
-                                case MAGENTA -> c = SlimeBall.DALEK_MAGENTA.getKey();
-                                case ORANGE -> c = SlimeBall.DALEK_ORANGE.getKey();
+                                case BLACK -> c = DalekVariant.DALEK_BLACK.getKey();
+                                case WHITE -> c = DalekVariant.DALEK_WHITE.getKey();
+                                case RED -> c = DalekVariant.DALEK_RED.getKey();
+                                case BROWN -> c = DalekVariant.DALEK_BROWN.getKey();
+                                case GREEN -> c = DalekVariant.DALEK_GREEN.getKey();
+                                case BLUE -> c = DalekVariant.DALEK_BLUE.getKey();
+                                case PURPLE -> c = DalekVariant.DALEK_PURPLE.getKey();
+                                case CYAN -> c = DalekVariant.DALEK_CYAN.getKey();
+                                case LIGHT_GRAY -> c = DalekVariant.DALEK_LIGHT_GRAY.getKey();
+                                case GRAY -> c = DalekVariant.DALEK_GRAY.getKey();
+                                case PINK -> c = DalekVariant.DALEK_PINK.getKey();
+                                case LIME -> c = DalekVariant.DALEK_LIME.getKey();
+                                case YELLOW -> c = DalekVariant.DALEK_YELLOW.getKey();
+                                case LIGHT_BLUE -> c = DalekVariant.DALEK_LIGHT_BLUE.getKey();
+                                case MAGENTA -> c = DalekVariant.DALEK_MAGENTA.getKey();
+                                case ORANGE -> c = DalekVariant.DALEK_ORANGE.getKey();
                             }
                             meta.setItemModel(c);
                         } catch (IllegalArgumentException ignored) {

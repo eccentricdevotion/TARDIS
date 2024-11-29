@@ -16,8 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.compound;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.LavaBucket;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.WaterBucket;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Whoniverse;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -35,7 +34,7 @@ public class CompoundBuilder {
                 is = new ItemStack(Material.LAVA_BUCKET, 1);
                 ItemMeta rm = is.getItemMeta();
                 rm.setDisplayName("Rust Bucket");
-                rm.setItemModel(LavaBucket.RUST_BUCKET.getKey());
+                rm.setItemModel(Whoniverse.RUST_BUCKET.getKey());
                 is.setItemMeta(rm);
             }
             case Sugar -> is = new ItemStack(Material.SUGAR, 1);
@@ -43,7 +42,7 @@ public class CompoundBuilder {
                 is = new ItemStack(Material.WATER_BUCKET, 1);
                 ItemMeta am = is.getItemMeta();
                 am.setDisplayName("Acid Bucket");
-                am.setItemModel(WaterBucket.ACID_BUCKET.getKey());
+                am.setItemModel(Whoniverse.ACID_BUCKET.getKey());
                 is.setItemMeta(am);
             }
             default -> {

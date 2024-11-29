@@ -18,8 +18,7 @@ package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.LavaBucket;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.WaterBucket;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -246,11 +245,11 @@ public class TARDISAcidWater implements Listener {
         ItemMeta im = bucket.getItemMeta();
         if (type.equals(Material.WATER)) {
             im.setDisplayName("Acid Bucket");
-            im.setItemModel(WaterBucket.ACID_BUCKET.getKey());
+            im.setItemModel(Whoniverse.ACID_BUCKET.getKey());
         }
         if (type.equals(Material.LAVA)) {
             im.setDisplayName("Rust Bucket");
-            im.setItemModel(LavaBucket.RUST_BUCKET.getKey());
+            im.setItemModel(Whoniverse.RUST_BUCKET.getKey());
         }
         bucket.setItemMeta(im);
         p.updateInventory();

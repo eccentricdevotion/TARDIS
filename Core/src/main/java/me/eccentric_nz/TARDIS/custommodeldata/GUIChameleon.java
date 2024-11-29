@@ -16,19 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Comparator;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
 import org.bukkit.Material;
 
 public record GUIChameleon() {
 
     // Chameleon Circuit
-    public static GUIData BUTTON_APPLY = new GUIData(Comparator.APPLY.getKey(), 0, Material.COMPARATOR);
-    public static GUIData BUTTON_CHAMELEON = new GUIData(Bowl.BUTTON_CHAMELEON.getKey(), 11, Material.BOWL);
-    public static GUIData BUTTON_ADAPT = new GUIData(Bowl.BUTTON_ADAPT.getKey(), 12, Material.BOWL);
-    public static GUIData BUTTON_INVISIBLE = new GUIData(Bowl.BUTTON_INVISIBLE.getKey(), 13, Material.BOWL);
-    public static GUIData BUTTON_SHORT = new GUIData(Bowl.BUTTON_SHORT.getKey(), 14, Material.BOWL);
-    public static GUIData BUTTON_CONSTRUCT = new GUIData(Bowl.BUTTON_CONSTRUCT.getKey(), 15, Material.BOWL);
-    public static GUIData BUTTON_LOCK = new GUIData(Bowl.BUTTON_LOCK.getKey(), 16, Material.BOWL);
-    public static GUIData BUTTON_CLOSE = new GUIData(Bowl.CLOSE.getKey(), 26, Material.BOWL);
+    public static GUIData BUTTON_APPLY = new GUIData(GuiVariant.APPLY.getKey(), 0, Material.COMPARATOR);
+    public static GUIData BUTTON_CHAMELEON = new GUIData(GuiVariant.BUTTON_CHAMELEON.getKey(), 11, Material.BOWL);
+    public static GUIData BUTTON_ADAPT = new GUIData(GuiVariant.BUTTON_ADAPT.getKey(), 12, Material.BOWL);
+    public static GUIData BUTTON_INVISIBLE = new GUIData(GuiVariant.BUTTON_INVISIBLE.getKey(), 13, Material.BOWL);
+    public static GUIData BUTTON_SHORT = new GUIData(GuiVariant.BUTTON_SHORT.getKey(), 14, Material.BOWL);
+    public static GUIData BUTTON_CONSTRUCT = new GUIData(GuiVariant.BUTTON_CONSTRUCT.getKey(), 15, Material.BOWL);
+    public static GUIData BUTTON_LOCK = new GUIData(GuiVariant.BUTTON_LOCK.getKey(), 16, Material.BOWL);
+    public static GUIData BUTTON_CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 26, Material.BOWL);
 }

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.nms;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.SpiderEye;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.RacnossVariant;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
@@ -34,10 +34,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TWAPiglinBrute extends PiglinBrute {
 
     private final NamespacedKey[] frames = new NamespacedKey[]{
-            SpiderEye.RACNOSS_0.getKey(),
-            SpiderEye.RACNOSS_1.getKey(),
-            SpiderEye.RACNOSS_0.getKey(),
-            SpiderEye.RACNOSS_2.getKey()
+            RacnossVariant.RACNOSS_0.getKey(),
+            RacnossVariant.RACNOSS_1.getKey(),
+            RacnossVariant.RACNOSS_0.getKey(),
+            RacnossVariant.RACNOSS_2.getKey()
     };
     private double oldX;
     private double oldZ;
@@ -54,7 +54,7 @@ public class TWAPiglinBrute extends PiglinBrute {
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
             ItemMeta im = bukkit.getItemMeta();
             if (oldX == getX() && oldZ == getZ()) {
-                im.setItemModel(SpiderEye.RACNOSS_STATIC.getKey());
+                im.setItemModel(RacnossVariant.RACNOSS_STATIC.getKey());
                 i = 0;
             } else {
                 // play move animation

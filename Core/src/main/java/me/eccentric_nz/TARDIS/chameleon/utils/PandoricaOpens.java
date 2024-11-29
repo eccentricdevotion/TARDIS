@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon.utils;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.PoliceBox;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ArmorStand;
@@ -30,16 +30,16 @@ public class PandoricaOpens {
 
     private final TARDIS plugin;
     private final NamespacedKey[] opening = new NamespacedKey[]{
-            PoliceBox.PANDORICA_75.getKey(),
-            PoliceBox.PANDORICA_50.getKey(),
-            PoliceBox.PANDORICA_25.getKey(),
-            PoliceBox.PANDORICA_OPEN.getKey()
+            ChameleonVariant.PANDORICA_75.getKey(),
+            ChameleonVariant.PANDORICA_50.getKey(),
+            ChameleonVariant.PANDORICA_25.getKey(),
+            ChameleonVariant.PANDORICA_OPEN.getKey()
     };
     private final NamespacedKey[] closing = new NamespacedKey[]{
-            PoliceBox.PANDORICA_25.getKey(),
-            PoliceBox.PANDORICA_50.getKey(),
-            PoliceBox.PANDORICA_75.getKey(),
-            PoliceBox.PANDORICA.getKey()
+            ChameleonVariant.PANDORICA_25.getKey(),
+            ChameleonVariant.PANDORICA_50.getKey(),
+            ChameleonVariant.PANDORICA_75.getKey(),
+            ChameleonVariant.PANDORICA.getKey()
     };
     private final BukkitScheduler scheduler;
 

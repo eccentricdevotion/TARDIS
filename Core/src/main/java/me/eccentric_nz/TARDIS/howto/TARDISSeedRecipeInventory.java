@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.howto;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
@@ -93,14 +93,14 @@ class TARDISSeedRecipeInventory {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setItemModel(Bowl.CLOSE.getKey());
+        close_im.setItemModel(GuiVariant.CLOSE.getKey());
         close.setItemMeta(close_im);
         stack[26] = close;
         // back
         ItemStack back = new ItemStack(Material.BOWL, 1);
         ItemMeta back_im = back.getItemMeta();
         back_im.setDisplayName("Back");
-        back_im.setItemModel(Bowl.BACK.getKey());
+        back_im.setItemModel(GuiVariant.BACK.getKey());
         back.setItemMeta(back_im);
         stack[8] = back;
 

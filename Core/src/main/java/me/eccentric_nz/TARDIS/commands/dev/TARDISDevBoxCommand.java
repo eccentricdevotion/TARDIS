@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.PoliceBox;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicFreeze;
@@ -78,187 +78,187 @@ public class TARDISDevBoxCommand {
                 Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, -1, true);
                 ItemStack is = new ItemStack(dye, 1);
                 ItemMeta im = is.getItemMeta();
-                NamespacedKey model = PoliceBox.BLUE.getKey();
+                NamespacedKey model = ChameleonVariant.BLUE.getKey();
                 if (args.length > 2) {
                     switch (dye) {
                         case BLUE_DYE -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.BLUE_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.BLUE_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.GLASS.getKey();
-                                case "fly" -> model = PoliceBox.BLUE_FLYING.getKey();
-                                default -> model = PoliceBox.BLUE.getKey();
+                                case "open" -> model = ChameleonVariant.BLUE_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.BLUE_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.BLUE_FLYING.getKey();
+                                default -> model = ChameleonVariant.BLUE.getKey();
                             }
                         }
                         case BLACK_DYE -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.BLACK_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.BLACK_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.GLASS.getKey();
-                                case "fly" -> model = PoliceBox.BLACK_FLYING.getKey();
-                                default -> model = PoliceBox.BLACK.getKey();
+                                case "open" -> model = ChameleonVariant.BLACK_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.BLACK_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.BLACK_FLYING.getKey();
+                                default -> model = ChameleonVariant.BLACK.getKey();
                             }
                         }
                         case BROWN_DYE -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.BROWN_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.BROWN_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.GLASS.getKey();
-                                case "fly" -> model = PoliceBox.BROWN_FLYING.getKey();
-                                default -> model = PoliceBox.BROWN.getKey();
+                                case "open" -> model = ChameleonVariant.BROWN_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.BROWN_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.BROWN_FLYING.getKey();
+                                default -> model = ChameleonVariant.BROWN.getKey();
                             }
                         }
                         case LIGHT_BLUE_DYE -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.LIGHT_BLUE_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.LIGHT_BLUE_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.GLASS.getKey();
-                                case "fly" -> model = PoliceBox.LIGHT_BLUE_FLYING.getKey();
-                                default -> model = PoliceBox.LIGHT_BLUE.getKey();
+                                case "open" -> model = ChameleonVariant.LIGHT_BLUE_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.LIGHT_BLUE_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.LIGHT_BLUE_FLYING.getKey();
+                                default -> model = ChameleonVariant.LIGHT_BLUE.getKey();
                             }
                         }
                         case LIGHT_GRAY_DYE -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.LIGHT_GRAY_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.LIGHT_GRAY_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.GLASS.getKey();
-                                case "fly" -> model = PoliceBox.LIGHT_GRAY_FLYING.getKey();
-                                default -> model = PoliceBox.LIGHT_GRAY.getKey();
+                                case "open" -> model = ChameleonVariant.LIGHT_GRAY_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.LIGHT_GRAY_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.LIGHT_GRAY_FLYING.getKey();
+                                default -> model = ChameleonVariant.LIGHT_GRAY.getKey();
                             }
                         }
                         case GRAY_DYE -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.GRAY_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.GRAY_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.GLASS.getKey();
-                                case "fly" -> model = PoliceBox.GRAY_FLYING.getKey();
-                                default -> model = PoliceBox.GRAY.getKey();
+                                case "open" -> model = ChameleonVariant.GRAY_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.GRAY_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.GRAY_FLYING.getKey();
+                                default -> model = ChameleonVariant.GRAY.getKey();
                             }
                         }
                         case CYAN_DYE -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.CYAN_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.CYAN_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.GLASS.getKey();
-                                case "fly" -> model = PoliceBox.CYAN_FLYING.getKey();
-                                default -> model = PoliceBox.CYAN.getKey();
+                                case "open" -> model = ChameleonVariant.CYAN_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.CYAN_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.CYAN_FLYING.getKey();
+                                default -> model = ChameleonVariant.CYAN.getKey();
                             }
                         }
                         case MAGENTA_DYE -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.MAGENTA_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.MAGENTA_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.GLASS.getKey();
-                                case "fly" -> model = PoliceBox.MAGENTA_FLYING.getKey();
-                                default -> model = PoliceBox.MAGENTA.getKey();
+                                case "open" -> model = ChameleonVariant.MAGENTA_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.MAGENTA_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.MAGENTA_FLYING.getKey();
+                                default -> model = ChameleonVariant.MAGENTA.getKey();
                             }
                         }
                         case YELLOW_DYE -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.YELLOW_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.YELLOW_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.GLASS.getKey();
-                                case "fly" -> model = PoliceBox.YELLOW_FLYING.getKey();
-                                default -> model = PoliceBox.YELLOW.getKey();
+                                case "open" -> model = ChameleonVariant.YELLOW_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.YELLOW_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.YELLOW_FLYING.getKey();
+                                default -> model = ChameleonVariant.YELLOW.getKey();
                             }
                         }
                         case LIME_DYE -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.LIME_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.LIME_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.GLASS.getKey();
-                                case "fly" -> model = PoliceBox.LIME_FLYING.getKey();
-                                default -> model = PoliceBox.LIME.getKey();
+                                case "open" -> model = ChameleonVariant.LIME_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.LIME_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.LIME_FLYING.getKey();
+                                default -> model = ChameleonVariant.LIME.getKey();
                             }
                         }
                         case GREEN_DYE -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.GREEN_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.GREEN_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.GLASS.getKey();
-                                case "fly" -> model = PoliceBox.GREEN_FLYING.getKey();
-                                default -> model = PoliceBox.GREEN.getKey();
+                                case "open" -> model = ChameleonVariant.GREEN_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.GREEN_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.GREEN_FLYING.getKey();
+                                default -> model = ChameleonVariant.GREEN.getKey();
                             }
                         }
                         case PINK_DYE -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.PINK_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.PINK_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.GLASS.getKey();
-                                case "fly" -> model = PoliceBox.PINK_FLYING.getKey();
-                                default -> model = PoliceBox.PINK.getKey();
+                                case "open" -> model = ChameleonVariant.PINK_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.PINK_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.PINK_FLYING.getKey();
+                                default -> model = ChameleonVariant.PINK.getKey();
                             }
                         }
                         case PURPLE_DYE -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.PURPLE_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.PURPLE_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.GLASS.getKey();
-                                case "fly" -> model = PoliceBox.PURPLE_FLYING.getKey();
-                                default -> model = PoliceBox.PURPLE.getKey();
+                                case "open" -> model = ChameleonVariant.PURPLE_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.PURPLE_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.PURPLE_FLYING.getKey();
+                                default -> model = ChameleonVariant.PURPLE.getKey();
                             }
                         }
                         case RED_DYE -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.RED_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.RED_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.GLASS.getKey();
-                                case "fly" -> model = PoliceBox.RED_FLYING.getKey();
-                                default -> model = PoliceBox.RED.getKey();
+                                case "open" -> model = ChameleonVariant.RED_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.RED_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.RED_FLYING.getKey();
+                                default -> model = ChameleonVariant.RED.getKey();
                             }
                         }
                         case ORANGE_DYE -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.ORANGE_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.ORANGE_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.GLASS.getKey();
-                                case "fly" -> model = PoliceBox.ORANGE_FLYING.getKey();
-                                default -> model = PoliceBox.ORANGE.getKey();
+                                case "open" -> model = ChameleonVariant.ORANGE_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.ORANGE_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.ORANGE_FLYING.getKey();
+                                default -> model = ChameleonVariant.ORANGE.getKey();
                             }
                         }
                         case WHITE_DYE -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.WHITE_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.WHITE_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.GLASS.getKey();
-                                case "fly" -> model = PoliceBox.WHITE_FLYING.getKey();
-                                default -> model = PoliceBox.WHITE.getKey();
+                                case "open" -> model = ChameleonVariant.WHITE_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.WHITE_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.WHITE_FLYING.getKey();
+                                default -> model = ChameleonVariant.WHITE.getKey();
                             }
                         }
                         case WOLF_SPAWN_EGG -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.BAD_WOLF_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.BAD_WOLF_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.GLASS.getKey();
-                                case "fly" -> model = PoliceBox.BAD_WOLF_FLYING.getKey();
-                                default -> model = PoliceBox.BAD_WOLF_CLOSED.getKey();
+                                case "open" -> model = ChameleonVariant.BAD_WOLF_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.BAD_WOLF_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.BAD_WOLF_FLYING.getKey();
+                                default -> model = ChameleonVariant.BAD_WOLF_CLOSED.getKey();
                             }
                         }
                         case CYAN_STAINED_GLASS_PANE -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.TENNANT_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.TENNANT_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.GLASS.getKey();
-                                case "fly" -> model = PoliceBox.TENNANT_FLYING.getKey();
-                                default -> model = PoliceBox.TENNANT.getKey();
+                                case "open" -> model = ChameleonVariant.TENNANT_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.TENNANT_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.TENNANT_FLYING.getKey();
+                                default -> model = ChameleonVariant.TENNANT.getKey();
                             }
                         }
                         case CLAY_BALL -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.TYPE_40_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.TYPE_40_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.TYPE_40_GLASS.getKey();
-                                case "fly" -> model = PoliceBox.TYPE_40_FLYING.getKey();
-                                default -> model = PoliceBox.TYPE_40_CLOSED.getKey();
+                                case "open" -> model = ChameleonVariant.TYPE_40_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.TYPE_40_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.TYPE_40_GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.TYPE_40_FLYING.getKey();
+                                default -> model = ChameleonVariant.TYPE_40_CLOSED.getKey();
                             }
                         }
                         case ENDER_PEARL -> {
                             switch (args[2]) {
-                                case "open" -> model = PoliceBox.PANDORICA_OPEN.getKey();
-                                case "stained" -> model = PoliceBox.PANDORICA_STAINED.getKey();
-                                case "glass" -> model = PoliceBox.PANDORICA_GLASS.getKey();
-                                case "fly" -> model = PoliceBox.PANDORICA_FLYING.getKey();
-                                default -> model = PoliceBox.PANDORICA.getKey();
+                                case "open" -> model = ChameleonVariant.PANDORICA_OPEN.getKey();
+                                case "stained" -> model = ChameleonVariant.PANDORICA_STAINED.getKey();
+                                case "glass" -> model = ChameleonVariant.PANDORICA_GLASS.getKey();
+                                case "fly" -> model = ChameleonVariant.PANDORICA_FLYING.getKey();
+                                default -> model = ChameleonVariant.PANDORICA.getKey();
                             }
                         }
                     }

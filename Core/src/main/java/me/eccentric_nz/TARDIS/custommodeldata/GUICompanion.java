@@ -16,16 +16,18 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.*;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Bucket;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.CompanionVariant;
 import org.bukkit.Material;
 
 public record GUICompanion() {
 
     // Add Companion
-    public static GUIData INFO = new GUIData(Book.INFO.getKey(), 45, Material.BOOK);
-    public static GUIData LIST_COMPANIONS = new GUIData(WritableBook.COMPANION_LIST.getKey(), 47, Material.WRITABLE_BOOK);
-    public static GUIData ALL_COMPANIONS = new GUIData(WritableBook.COMPANION_ALL.getKey(), 49, Material.WRITABLE_BOOK);
-    public static GUIData ADD_COMPANION = new GUIData(NetherStar.ADD_COMPANION.getKey(), 48, Material.NETHER_STAR);
+    public static GUIData INFO = new GUIData(GuiVariant.INFO.getKey(), 45, Material.BOOK);
+    public static GUIData LIST_COMPANIONS = new GUIData(CompanionVariant.COMPANION_LIST.getKey(), 47, Material.WRITABLE_BOOK);
+    public static GUIData ALL_COMPANIONS = new GUIData(CompanionVariant.COMPANION_ALL.getKey(), 49, Material.WRITABLE_BOOK);
+    public static GUIData ADD_COMPANION = new GUIData(CompanionVariant.ADD_COMPANION.getKey(), 48, Material.NETHER_STAR);
     public static GUIData DELETE_COMPANION = new GUIData(Bucket.DELETE.getKey(), 51, Material.BUCKET);
-    public static GUIData BUTTON_CLOSE = new GUIData(Bowl.CLOSE.getKey(), 53, Material.BOWL);
+    public static GUIData BUTTON_CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 53, Material.BOWL);
 }

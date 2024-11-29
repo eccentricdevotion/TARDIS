@@ -5,7 +5,7 @@ import me.eccentric_nz.TARDIS.builders.LightLevel;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.custommodeldata.GUILights;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Repeater;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.PrefsVariant;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightLevel;
@@ -171,7 +171,7 @@ public class TARDISLightsInventory {
         swi.setLore(List.of(lights_onoff));
         NamespacedKey lcmd = GUILights.LIGHT_SWITCH.key();
         if (lights_onoff.equals(off)) {
-            lcmd = Repeater.BUTTON_LIGHTS_OFF.getKey();
+            lcmd = PrefsVariant.BUTTON_LIGHTS_OFF.getKey();
         }
         swi.setItemModel(lcmd);
         lig.setItemMeta(swi);

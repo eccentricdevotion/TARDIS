@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.BlazeRod;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -178,7 +178,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
                     // remove lore
                     sonic_im.setLore(null);
                 }
-                NamespacedKey sonicModel = SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), BlazeRod.ELEVENTH.getKey());
+                NamespacedKey sonicModel = SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getKey());
                 sonic_im.setItemModel(sonicModel);
                 sonic.setItemMeta(sonic_im);
                 setCost(view, costs.get("Standard Sonic"));

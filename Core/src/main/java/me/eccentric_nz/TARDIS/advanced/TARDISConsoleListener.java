@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.MusicDisc;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.DiskVariant;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;
@@ -142,11 +142,11 @@ public class TARDISConsoleListener implements Listener {
                                     }
                                 } else if (TARDISStaticUtils.isMusicDisk(circuit)) {
                                     switch (circuit.getType()) {
-                                        case MUSIC_DISC_BLOCKS -> cm.setItemModel(MusicDisc.AREA_DISK.getKey());
-                                        case MUSIC_DISC_CAT -> cm.setItemModel(MusicDisc.BIOME_DISK.getKey());
-                                        case MUSIC_DISC_CHIRP -> cm.setItemModel(MusicDisc.SAVE_DISK.getKey());
-                                        case MUSIC_DISC_MALL -> cm.setItemModel(MusicDisc.PRESET_DISK.getKey());
-                                        case MUSIC_DISC_WAIT -> cm.setItemModel(MusicDisc.PLAYER_DISK.getKey());
+                                        case MUSIC_DISC_BLOCKS -> cm.setItemModel(DiskVariant.AREA_DISK.getKey());
+                                        case MUSIC_DISC_CAT -> cm.setItemModel(DiskVariant.BIOME_DISK.getKey());
+                                        case MUSIC_DISC_CHIRP -> cm.setItemModel(DiskVariant.SAVE_DISK.getKey());
+                                        case MUSIC_DISC_MALL -> cm.setItemModel(DiskVariant.PRESET_DISK.getKey());
+                                        case MUSIC_DISC_WAIT -> cm.setItemModel(DiskVariant.PLAYER_DISK.getKey());
                                     }
                                     circuit.setItemMeta(cm);
                                 }

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bone;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.K9Variant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -54,7 +54,7 @@ public class HeadBuilder {
         ItemStack is = new ItemStack(Material.BONE);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "K9");
-        im.setItemModel(Bone.K9.getKey());
+        im.setItemModel(K9Variant.K9.getKey());
         is.setItemMeta(im);
         return is;
     }

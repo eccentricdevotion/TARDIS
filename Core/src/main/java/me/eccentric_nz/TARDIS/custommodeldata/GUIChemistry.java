@@ -22,19 +22,19 @@ import org.bukkit.Material;
 public record GUIChemistry() {
 
     // TARDIS Areas
-    public static GUIData CLOSE = new GUIData(Bowl.CLOSE.getKey(), 26, Material.BOWL);
-    public static GUIData INFO = new GUIData(Bowl.INFO.getKey(), 8, Material.BOWL);
-    public static GUIData CHECK = new GUIData(Bowl.CHECK.getKey(), 17, Material.BOWL);
-    public static GUIData CRAFT = new GUIData(Bowl.CRAFT.getKey(), 17, Material.BOWL);
-    public static GUIData ELECTRONS = new GUIData(Bowl.ELECTRONS.getKey(), 22, Material.BOWL);
-    public static GUIData NEUTRONS = new GUIData(Bowl.NEUTRONS.getKey(), 13, Material.BOWL);
-    public static GUIData PROTONS = new GUIData(Bowl.PROTONS.getKey(), 4, Material.BOWL);
-    public static GUIData REDUCE = new GUIData(Bowl.REDUCE.getKey(), 17, Material.BOWL);
-    public static GUIData SCROLL_DOWN = new GUIData(Arrow.SCROLL_DOWN.getKey(), 1, Material.ARROW);
-    public static GUIData SCROLL_UP = new GUIData(Arrow.SCROLL_UP.getKey(), 1, Material.ARROW);
-    public static GUIData PLUS = new GUIData(Arrow.HANDLES_OPERATOR_ADDITION.getKey(), 24, Material.ARROW);
-    public static GUIData MINUS = new GUIData(Arrow.HANDLES_OPERATOR_SUBTRACTION.getKey(), 23, Material.ARROW);
-    public static GUIData ELEMENTS = new GUIData(Feather.UNKNOWN.getKey(), 35, Material.FEATHER);
-    public static GUIData COMPOUNDS = new GUIData(GlassBottle.ALUMINIUM_OXIDE.getKey(), 44, Material.GLASS_BOTTLE);
+    public static GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 26, Material.BOWL);
+    public static GUIData INFO = new GUIData(GuiVariant.INFO.getKey(), 8, Material.BOWL);
+    public static GUIData CHECK = new GUIData(GuiVariant.CHECK.getKey(), 17, Material.BOWL);
+    public static GUIData CRAFT = new GUIData(GuiVariant.CRAFT.getKey(), 17, Material.BOWL);
+    public static GUIData ELECTRONS = new GUIData(GuiVariant.ELECTRONS.getKey(), 22, Material.BOWL);
+    public static GUIData NEUTRONS = new GUIData(GuiVariant.NEUTRONS.getKey(), 13, Material.BOWL);
+    public static GUIData PROTONS = new GUIData(GuiVariant.PROTONS.getKey(), 4, Material.BOWL);
+    public static GUIData REDUCE = new GUIData(GuiVariant.REDUCE.getKey(), 17, Material.BOWL);
+    public static GUIData SCROLL_DOWN = new GUIData(ArrowVariant.SCROLL_DOWN.getKey(), 1, Material.ARROW);
+    public static GUIData SCROLL_UP = new GUIData(ArrowVariant.SCROLL_UP.getKey(), 1, Material.ARROW);
+    public static GUIData PLUS = new GUIData(ArrowVariant.HANDLES_OPERATOR_ADDITION.getKey(), 24, Material.ARROW);
+    public static GUIData MINUS = new GUIData(ArrowVariant.HANDLES_OPERATOR_SUBTRACTION.getKey(), 23, Material.ARROW);
+    public static GUIData ELEMENTS = new GUIData(PeriodicElement.UNKNOWN.getKey(), 35, Material.FEATHER);
+    public static GUIData COMPOUNDS = new GUIData(ChemistryBottle.ALUMINIUM_OXIDE.getKey(), 44, Material.GLASS_BOTTLE);
     public static GUIData PRODUCTS = new GUIData(ChemistryEquipment.SUPER_FERTILISER.getKey(), 44, Material.BONE_MEAL);
 }

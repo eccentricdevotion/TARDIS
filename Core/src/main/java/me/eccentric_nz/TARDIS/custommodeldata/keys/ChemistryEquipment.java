@@ -5,13 +5,13 @@ import org.bukkit.NamespacedKey;
 
 public enum ChemistryEquipment {
 
-    COMPOUND(new NamespacedKey(TARDIS.plugin, "block/chemistry/compound")),
-    CONSTRUCTOR(new NamespacedKey(TARDIS.plugin, "block/chemistry/constructor")),
-    CREATIVE(new NamespacedKey(TARDIS.plugin, "block/chemistry/creative")),
-    HEAT_BLOCK(new NamespacedKey(TARDIS.plugin, "block/chemistry/heat_block")),
-    LAB(new NamespacedKey(TARDIS.plugin, "block/chemistry/lab")),
-    PRODUCT(new NamespacedKey(TARDIS.plugin, "block/chemistry/product")),
-    REDUCER(new NamespacedKey(TARDIS.plugin, "block/chemistry/reducer")),
+    COMPOUND(new NamespacedKey(TARDIS.plugin, "chemistry/compound")),
+    CONSTRUCTOR(new NamespacedKey(TARDIS.plugin, "chemistry/constructor")),
+    CREATIVE(new NamespacedKey(TARDIS.plugin, "chemistry/creative")),
+    HEAT_BLOCK(new NamespacedKey(TARDIS.plugin, "chemistry/heat_block")),
+    LAB(new NamespacedKey(TARDIS.plugin, "chemistry/lab")),
+    PRODUCT(new NamespacedKey(TARDIS.plugin, "chemistry/product")),
+    REDUCER(new NamespacedKey(TARDIS.plugin, "chemistry/reducer")),
     XRAY(new NamespacedKey(TARDIS.plugin, "tardis/xray")),
     MICROSCOPE(new NamespacedKey(TARDIS.plugin, "equipment/microscope")),
     GLASS_SLIDE(new NamespacedKey(TARDIS.plugin, "equipment/glass_slide")),

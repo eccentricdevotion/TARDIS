@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.sonic;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.BlazeRod;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.sonic.actions.*;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
@@ -285,7 +285,7 @@ public class TARDISSonicListener implements Listener {
                         im.setItemModel(new NamespacedKey(plugin, model.getKey().replace("_open", "")));
                     }
                 } else {
-                    im.setItemModel(BlazeRod.ELEVENTH.getKey());
+                    im.setItemModel(SonicVariant.ELEVENTH.getKey());
                 }
                 is.setItemMeta(im);
                 item.setItemStack(is);

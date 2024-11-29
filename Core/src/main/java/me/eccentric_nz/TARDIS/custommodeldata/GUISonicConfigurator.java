@@ -16,8 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Book;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.custommodeldata.keys.Wool;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
@@ -26,25 +25,25 @@ import org.bukkit.NamespacedKey;
 public enum GUISonicConfigurator {
 
     // Sonic Configurator
-    BIO_SCANNER_UPGRADE(Bowl.BIO.getKey(), 0, Material.BOWL, ""),
-    DIAMOND_UPGRADE(Bowl.DIAMOND.getKey(), 1, Material.BOWL, ""),
-    EMERALD_UPGRADE(Bowl.EMERALD.getKey(), 2, Material.BOWL, ""),
-    REDSTONE_UPGRADE(Bowl.REDSTONE.getKey(), 3, Material.BOWL, ""),
-    PAINTER_UPGRADE(Bowl.PAINTER.getKey(), 4, Material.BOWL, ""),
-    IGNITE_UPGRADE(Bowl.IGNITE.getKey(), 5, Material.BOWL, ""),
-    PICKUP_ARROWS_UPGRADE(Bowl.PICKUP.getKey(), 6, Material.BOWL, ""),
-    KNOCKBACK_UPGRADE(Bowl.KNOCKBACK.getKey(), 7, Material.BOWL, ""),
-    BRUSH_UPGRADE(Bowl.BRUSH.getKey(), 8, Material.BOWL, ""),
-    CONVERSION_UPGRADE(Bowl.CONVERSION.getKey(), 18, Material.BOWL, ""),
-    INSTRUCTIONS_1_OF_2(Book.INFO.getKey(), 50, Material.BOOK, "Place your sonic screwdriver~in the bottom left slot.~Click on the upgrades you~want to enable/disable."),
-    INSTRUCTIONS_2_OF_2(Book.INFO.getKey(), 51, Material.BOOK, "Click the 'Save' button~to apply your selections.~Click 'Close' to exit~without saving."),
+    BIO_SCANNER_UPGRADE(GuiVariant.BIO.getKey(), 0, Material.BOWL, ""),
+    DIAMOND_UPGRADE(GuiVariant.DIAMOND.getKey(), 1, Material.BOWL, ""),
+    EMERALD_UPGRADE(GuiVariant.EMERALD.getKey(), 2, Material.BOWL, ""),
+    REDSTONE_UPGRADE(GuiVariant.REDSTONE.getKey(), 3, Material.BOWL, ""),
+    PAINTER_UPGRADE(GuiVariant.PAINTER.getKey(), 4, Material.BOWL, ""),
+    IGNITE_UPGRADE(GuiVariant.IGNITE.getKey(), 5, Material.BOWL, ""),
+    PICKUP_ARROWS_UPGRADE(GuiVariant.PICKUP.getKey(), 6, Material.BOWL, ""),
+    KNOCKBACK_UPGRADE(GuiVariant.KNOCKBACK.getKey(), 7, Material.BOWL, ""),
+    BRUSH_UPGRADE(GuiVariant.BRUSH.getKey(), 8, Material.BOWL, ""),
+    CONVERSION_UPGRADE(GuiVariant.CONVERSION.getKey(), 18, Material.BOWL, ""),
+    INSTRUCTIONS_1_OF_2(GuiVariant.INFO.getKey(), 50, Material.BOOK, "Place your sonic screwdriver~in the bottom left slot.~Click on the upgrades you~want to enable/disable."),
+    INSTRUCTIONS_2_OF_2(GuiVariant.INFO.getKey(), 51, Material.BOOK, "Click the 'Save' button~to apply your selections.~Click 'Close' to exit~without saving."),
     NOT_UPGRADED(Wool.NOT_UPGRADED.getKey(), -1, Material.GRAY_WOOL, ""),
     ENABLED(Wool.ENABLED.getKey(), -1, Material.LIME_WOOL, ""),
     DISABLED(Wool.DISABLED.getKey(), -1, Material.RED_WOOL, ""),
     PLACE_SONIC(Wool.PLACE.getKey(), -1, Material.GRAY_WOOL, ""),
     WAITING(Wool.WAITING.getKey(), -1, Material.GRAY_WOOL, ""),
-    SAVE(Bowl.SAVE.getKey(), 52, Material.BOWL, "Click to save the current configuration."),
-    CLOSE(Bowl.CLOSE.getKey(), 53, Material.BOWL, "Close the menu~without saving.");
+    SAVE(GuiVariant.SAVE.getKey(), 52, Material.BOWL, "Click to save the current configuration."),
+    CLOSE(GuiVariant.CLOSE.getKey(), 53, Material.BOWL, "Close the menu~without saving.");
 
     private final NamespacedKey model;
     private final int slot;

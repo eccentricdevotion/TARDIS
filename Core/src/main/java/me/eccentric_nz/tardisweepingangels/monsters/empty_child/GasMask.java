@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.monsters.empty_child;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.CarvedPumpkin;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.EmptyChildVariant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -61,12 +61,12 @@ public class GasMask implements Listener {
                 }
             }
             // set helmet to pumpkin
-            ItemStack gasmask = new ItemStack(Material.CARVED_PUMPKIN, 1);
+            ItemStack gasmask = new ItemStack(Material.SUGAR, 1);
             ItemMeta im = gasmask.getItemMeta();
             im.setDisplayName("Gas Mask");
-            im.setItemModel(CarvedPumpkin.EMPTY_CHILD_MASK.getKey());
+            im.setItemModel(EmptyChildVariant.EMPTY_CHILD_MASK.getKey());
             EquippableComponent component = im.getEquippable();
-            component.setCameraOverlay(CarvedPumpkin.EMPTY_CHILD_OVERLAY.getKey());
+            component.setCameraOverlay(EmptyChildVariant.EMPTY_CHILD_OVERLAY.getKey());
             im.setEquippable(component);
             gasmask.setItemMeta(im);
             inv.setHelmet(gasmask);

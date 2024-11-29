@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.skins.tv;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUITelevision;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Repeater;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.PrefsVariant;
 import me.eccentric_nz.TARDIS.handles.wiki.WikiLink;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.skins.*;
@@ -100,8 +100,8 @@ public class TVSkinListener extends TARDISMenuListener {
         ItemStack is = view.getItem(GUITelevision.DOWNLOAD.slot());
         if (is != null && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            NamespacedKey key = (im.hasItemModel() && im.getItemModel() == Repeater.DOWNLOAD_OFF.getKey())
-                    ? Repeater.DOWNLOAD_ON.getKey(): Repeater.DOWNLOAD_OFF.getKey();
+            NamespacedKey key = (im.hasItemModel() && im.getItemModel() == PrefsVariant.DOWNLOAD_OFF.getKey())
+                    ? PrefsVariant.DOWNLOAD_ON.getKey(): PrefsVariant.DOWNLOAD_OFF.getKey();
             im.setItemModel(key);
             is.setItemMeta(im);
             view.setItem(GUITelevision.DOWNLOAD.slot(), is);
@@ -113,7 +113,7 @@ public class TVSkinListener extends TARDISMenuListener {
         ItemStack is = view.getItem(GUITelevision.DOWNLOAD.slot());
         if (is != null && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            return im.hasItemModel() && im.getItemModel() == Repeater.DOWNLOAD_ON.getKey();
+            return im.hasItemModel() && im.getItemModel() == PrefsVariant.DOWNLOAD_ON.getKey();
         }
         return false;
     }

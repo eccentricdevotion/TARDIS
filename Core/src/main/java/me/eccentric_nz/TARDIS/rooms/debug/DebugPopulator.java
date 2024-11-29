@@ -109,10 +109,10 @@ public class DebugPopulator {
                 }
             }
         }
-        NamespacedKey[] data = new NamespacedKey[]{GlowstoneDust.TELEPATHIC_DAMAGED.getKey(), GlowstoneDust.STATTENHEIM_DAMAGED.getKey(), GlowstoneDust.MATERIALISATION_DAMAGED.getKey(),
-                GlowstoneDust.LOCATOR_DAMAGED.getKey(), GlowstoneDust.CHAMELEON_DAMAGED.getKey(), GlowstoneDust.SONIC_DAMAGED.getKey(), GlowstoneDust.ARS.getKey(), GlowstoneDust.TEMPORAL_DAMAGED.getKey(),
-                GlowstoneDust.MEMORY_DAMAGED.getKey(), GlowstoneDust.INPUT.getKey(), GlowstoneDust.SCANNER_DAMAGED.getKey(), GlowstoneDust.PERCEPTION_DAMAGED.getKey(), GlowstoneDust.RANDOM_DAMAGED.getKey(),
-                GlowstoneDust.INVISIBILITY_DAMAGED.getKey(), GlowstoneDust.RIFT_DAMAGED.getKey()};
+        NamespacedKey[] data = new NamespacedKey[]{CircuitVariant.TELEPATHIC_DAMAGED.getKey(), CircuitVariant.STATTENHEIM_DAMAGED.getKey(), CircuitVariant.MATERIALISATION_DAMAGED.getKey(),
+                CircuitVariant.LOCATOR_DAMAGED.getKey(), CircuitVariant.CHAMELEON_DAMAGED.getKey(), CircuitVariant.SONIC_DAMAGED.getKey(), CircuitVariant.ARS.getKey(), CircuitVariant.TEMPORAL_DAMAGED.getKey(),
+                CircuitVariant.MEMORY_DAMAGED.getKey(), CircuitVariant.INPUT.getKey(), CircuitVariant.SCANNER_DAMAGED.getKey(), CircuitVariant.PERCEPTION_DAMAGED.getKey(), CircuitVariant.RANDOM_DAMAGED.getKey(),
+                CircuitVariant.INVISIBILITY_DAMAGED.getKey(), CircuitVariant.RIFT_DAMAGED.getKey()};
         String[] names = new String[]{"Telepathic", "Stattenheim", "Materialisation", "Locator", "Chameleon", "Sonic", "ARS", "Temporal", "Memory", "Input", "Scanner", "Perception", "Random", "Invisibility", "Rift"};
         int c = 0;
         for (String damaged : names) {
@@ -127,7 +127,7 @@ public class DebugPopulator {
         }
         // rust/acid buckets, area disk
         Material[] materials = new Material[]{Material.WATER_BUCKET, Material.LAVA_BUCKET, Material.MUSIC_DISC_BLOCKS};
-        NamespacedKey[] cmd = new NamespacedKey[]{WaterBucket.ACID_BUCKET.getKey(), LavaBucket.RUST_BUCKET.getKey(), MusicDisc.AREA_DISK.getKey()};
+        NamespacedKey[] cmd = new NamespacedKey[]{Whoniverse.ACID_BUCKET.getKey(), Whoniverse.RUST_BUCKET.getKey(), DiskVariant.AREA_DISK.getKey()};
         String[] misc = new String[]{"Acid Bucket", "Rust Bucket", "Area Storage Disk"};
         int b = 0;
         for (String m : misc) {
@@ -213,7 +213,7 @@ public class DebugPopulator {
                 ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
                 new ArmourStandEquipment().setStandEquipment(as, monster, false);
                 // set helmet to sword version
-                setHelmet(as, RedCandle.HEADLESS_MONK_STATIC.getKey());
+                setHelmet(as, MonkVariant.HEADLESS_MONK_STATIC.getKey());
                 x += 3;
                 if (x > 24) {
                     x = 3;
@@ -226,7 +226,7 @@ public class DebugPopulator {
                 ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
                 new ArmourStandEquipment().setStandEquipment(as, monster, false);
                 // set helmet to alternate version
-                setHelmet(as, monster == Monster.MIRE ? NetheriteScrap.THE_MIRE_HELMETLESS.getKey() : TurtleEgg.SLITHEEN_SUIT.getKey());
+                setHelmet(as, monster == Monster.MIRE ? MireVariant.THE_MIRE_HELMETLESS.getKey() : SlitheenVariant.SLITHEEN_SUIT.getKey());
                 x += 3;
                 if (x > 24) {
                     x = 3;
@@ -238,7 +238,7 @@ public class DebugPopulator {
                 ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
                 new ArmourStandEquipment().setStandEquipment(as, monster, false);
                 // set female
-                setHelmet(as, Droid.CLOCKWORK_DROID_FEMALE_DISGUISE.getKey());
+                setHelmet(as, DroidVariant.CLOCKWORK_DROID_FEMALE_DISGUISE.getKey());
                 x += 3;
                 if (x > 24) {
                     x = 3;
@@ -252,22 +252,22 @@ public class DebugPopulator {
                     new ArmourStandEquipment().setStandEquipment(as, monster, false);
                     // add all colours
                     switch (c) {
-                        case 0 -> setHelmet(as, SlimeBall.DALEK_WHITE.getKey());
-                        case 1 -> setHelmet(as, SlimeBall.DALEK_ORANGE.getKey());
-                        case 2 -> setHelmet(as, SlimeBall.DALEK_MAGENTA.getKey());
-                        case 3 -> setHelmet(as, SlimeBall.DALEK_LIGHT_BLUE.getKey());
-                        case 4 -> setHelmet(as, SlimeBall.DALEK_YELLOW.getKey());
-                        case 5 -> setHelmet(as, SlimeBall.DALEK_LIME.getKey());
-                        case 6 -> setHelmet(as, SlimeBall.DALEK_PINK.getKey());
-                        case 7 -> setHelmet(as, SlimeBall.DALEK_GRAY.getKey());
-                        case 8 -> setHelmet(as, SlimeBall.DALEK_LIGHT_GRAY.getKey());
-                        case 9 -> setHelmet(as, SlimeBall.DALEK_CYAN.getKey());
-                        case 10 -> setHelmet(as, SlimeBall.DALEK_PURPLE.getKey());
-                        case 12 -> setHelmet(as, SlimeBall.DALEK_BLUE.getKey());
-                        case 13 -> setHelmet(as, SlimeBall.DALEK_BROWN.getKey());
-                        case 14 -> setHelmet(as, SlimeBall.DALEK_GREEN.getKey());
-                        case 15 -> setHelmet(as, SlimeBall.DALEK_RED.getKey());
-                        case 16 -> setHelmet(as, SlimeBall.DALEK_BLACK.getKey());
+                        case 0 -> setHelmet(as, DalekVariant.DALEK_WHITE.getKey());
+                        case 1 -> setHelmet(as, DalekVariant.DALEK_ORANGE.getKey());
+                        case 2 -> setHelmet(as, DalekVariant.DALEK_MAGENTA.getKey());
+                        case 3 -> setHelmet(as, DalekVariant.DALEK_LIGHT_BLUE.getKey());
+                        case 4 -> setHelmet(as, DalekVariant.DALEK_YELLOW.getKey());
+                        case 5 -> setHelmet(as, DalekVariant.DALEK_LIME.getKey());
+                        case 6 -> setHelmet(as, DalekVariant.DALEK_PINK.getKey());
+                        case 7 -> setHelmet(as, DalekVariant.DALEK_GRAY.getKey());
+                        case 8 -> setHelmet(as, DalekVariant.DALEK_LIGHT_GRAY.getKey());
+                        case 9 -> setHelmet(as, DalekVariant.DALEK_CYAN.getKey());
+                        case 10 -> setHelmet(as, DalekVariant.DALEK_PURPLE.getKey());
+                        case 12 -> setHelmet(as, DalekVariant.DALEK_BLUE.getKey());
+                        case 13 -> setHelmet(as, DalekVariant.DALEK_BROWN.getKey());
+                        case 14 -> setHelmet(as, DalekVariant.DALEK_GREEN.getKey());
+                        case 15 -> setHelmet(as, DalekVariant.DALEK_RED.getKey());
+                        case 16 -> setHelmet(as, DalekVariant.DALEK_BLACK.getKey());
                     }
                     x += 3;
                     if (x > 24) {
@@ -283,11 +283,11 @@ public class DebugPopulator {
                     new ArmourStandEquipment().setStandEquipment(as, monster, false);
                     // set colour and red eye variants
                     switch (c) {
-                        case 411 -> setHelmet(as, RottenFlesh.OOD_REDEYE_BLACK_STATIC.getKey());
-                        case 417 -> setHelmet(as, RottenFlesh.OOD_BLUE_STATIC.getKey());
-                        case 423 -> setHelmet(as, RottenFlesh.OOD_REDEYE_BLUE_STATIC.getKey());
-                        case 429 -> setHelmet(as, RottenFlesh.OOD_BROWN_STATIC.getKey());
-                        case 435 -> setHelmet(as, RottenFlesh.OOD_REDEYE_BROWN_STATIC.getKey());
+                        case 411 -> setHelmet(as, OodVariant.OOD_REDEYE_BLACK_STATIC.getKey());
+                        case 417 -> setHelmet(as, OodVariant.OOD_BLUE_STATIC.getKey());
+                        case 423 -> setHelmet(as, OodVariant.OOD_REDEYE_BLUE_STATIC.getKey());
+                        case 429 -> setHelmet(as, OodVariant.OOD_BROWN_STATIC.getKey());
+                        case 435 -> setHelmet(as, OodVariant.OOD_REDEYE_BROWN_STATIC.getKey());
                     }
                     x += 3;
                     if (x > 24) {
@@ -631,7 +631,7 @@ public class DebugPopulator {
         TARDISDisplayItemUtils.set(TARDISDisplayItem.UNTEMPERED_SCHISM, block, -1);
         x += 5;
         // regeneration poses
-        for (TotemOfUndying t : TotemOfUndying.values()) {
+        for (RegenerationVariant t : RegenerationVariant.values()) {
             Location location = new Location(world, rx + x + 0.5d, 65.725, rz + z + 0.5d);
             // create the regeneration item model
             ItemStack totem = new ItemStack(Material.TOTEM_OF_UNDYING, 1);

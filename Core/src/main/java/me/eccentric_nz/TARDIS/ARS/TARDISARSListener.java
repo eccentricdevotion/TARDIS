@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.ARS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.RoomBlock;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.RoomVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
@@ -121,7 +121,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         ItemStack stone = new ItemStack(Material.STONE, 1);
                         ItemMeta s1 = stone.getItemMeta();
                         s1.setDisplayName("Empty slot");
-                        s1.setItemModel(RoomBlock.SLOT.getKey());
+                        s1.setItemModel(RoomVariant.SLOT.getKey());
                         stone.setItemMeta(s1);
                         setSlot(view, selected_slot.get(playerUUID), stone, playerUUID, true);
                         setLore(view, slot, null);
@@ -172,7 +172,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                     ItemStack tnt = new ItemStack(Material.TNT, 1);
                     ItemMeta j = tnt.getItemMeta();
                     j.setDisplayName("Jettison");
-                    j.setItemModel(RoomBlock.JETTISON.getKey());
+                    j.setItemModel(RoomVariant.JETTISON.getKey());
                     tnt.setItemMeta(j);
                     setSlot(view, selected_slot.get(playerUUID), tnt, playerUUID, true);
                     setLore(view, slot, null);
@@ -286,7 +286,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
 
                 @Override
                 public NamespacedKey getKey() {
-                    return RoomBlock.SLOT.getKey();
+                    return RoomVariant.SLOT.getKey();
                 }
             });
         });

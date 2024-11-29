@@ -1,6 +1,6 @@
 package me.eccentric_nz.TARDIS.skins;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.TotemOfUndying;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.RegenerationVariant;
 import org.bukkit.NamespacedKey;
 
 import java.util.HashMap;
@@ -93,21 +93,21 @@ public class DoctorSkins {
     public static final HashMap<Skin, NamespacedKey> MODELS = new HashMap<>();
 
     static {
-        MODELS.put(FIRST, TotemOfUndying.FIRST.getKey());
-        MODELS.put(SECOND, TotemOfUndying.SECOND.getKey());
-        MODELS.put(THIRD, TotemOfUndying.THIRD.getKey());
-        MODELS.put(FOURTH, TotemOfUndying.FOURTH.getKey());
-        MODELS.put(FIFTH, TotemOfUndying.FIFTH.getKey());
-        MODELS.put(SIXTH, TotemOfUndying.SIXTH.getKey());
-        MODELS.put(SEVENTH, TotemOfUndying.SEVENTH.getKey());
-        MODELS.put(EIGHTH, TotemOfUndying.EIGHTH.getKey());
-        MODELS.put(NINTH, TotemOfUndying.NINTH.getKey());
-        MODELS.put(TENTH, TotemOfUndying.TENTH.getKey());
-        MODELS.put(ELEVENTH, TotemOfUndying.ELEVENTH.getKey());
-        MODELS.put(TWELFTH, TotemOfUndying.TWELFTH.getKey());
-        MODELS.put(THIRTEENTH, TotemOfUndying.THIRTEENTH.getKey());
-        MODELS.put(FOURTEENTH, TotemOfUndying.FOURTEENTH.getKey());
-        MODELS.put(FIFTEENTH, TotemOfUndying.FIFTEENTH.getKey());
-        MODELS.put(WAR, TotemOfUndying.WAR.getKey());
+        MODELS.put(FIRST, RegenerationVariant.FIRST.getKey());
+        MODELS.put(SECOND, RegenerationVariant.SECOND.getKey());
+        MODELS.put(THIRD, RegenerationVariant.THIRD.getKey());
+        MODELS.put(FOURTH, RegenerationVariant.FOURTH.getKey());
+        MODELS.put(FIFTH, RegenerationVariant.FIFTH.getKey());
+        MODELS.put(SIXTH, RegenerationVariant.SIXTH.getKey());
+        MODELS.put(SEVENTH, RegenerationVariant.SEVENTH.getKey());
+        MODELS.put(EIGHTH, RegenerationVariant.EIGHTH.getKey());
+        MODELS.put(NINTH, RegenerationVariant.NINTH.getKey());
+        MODELS.put(TENTH, RegenerationVariant.TENTH.getKey());
+        MODELS.put(ELEVENTH, RegenerationVariant.ELEVENTH.getKey());
+        MODELS.put(TWELFTH, RegenerationVariant.TWELFTH.getKey());
+        MODELS.put(THIRTEENTH, RegenerationVariant.THIRTEENTH.getKey());
+        MODELS.put(FOURTEENTH, RegenerationVariant.FOURTEENTH.getKey());
+        MODELS.put(FIFTEENTH, RegenerationVariant.FIFTEENTH.getKey());
+        MODELS.put(WAR, RegenerationVariant.WAR.getKey());
     }
 }

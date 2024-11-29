@@ -9,7 +9,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISSculkShrieker;
 import me.eccentric_nz.TARDIS.console.interaction.SonicConsoleRecharge;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.FlowerPot;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.SonicItem;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -92,7 +92,7 @@ public class TARDISSonicDock {
         }
         ItemDisplay display = doDocking(sonic, block.getLocation(), new Vector(0.5d, 0.5d, 0.5d), player, id);
         // change the dock model
-        updateModel(frame, FlowerPot.SONIC_DOCK_ON.getKey(), false);
+        updateModel(frame, SonicItem.SONIC_DOCK_ON.getKey(), false);
         // start charging
         if (plugin.getConfig().getBoolean("sonic.charge")) {
             long delay = plugin.getConfig().getLong("sonic.charge_level") / plugin.getConfig().getLong("sonic.charge_interval");
@@ -284,7 +284,7 @@ public class TARDISSonicDock {
         }
         doUndock(display, player);
         // change the dock model
-        updateModel(frame, FlowerPot.SONIC_DOCK_OFF.getKey(), true);
+        updateModel(frame, SonicItem.SONIC_DOCK_OFF.getKey(), true);
     }
 
     private void doUndock(ItemDisplay display, Player player) {

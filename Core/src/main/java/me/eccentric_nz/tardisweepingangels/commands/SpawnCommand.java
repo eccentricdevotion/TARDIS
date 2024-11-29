@@ -18,7 +18,7 @@ package me.eccentric_nz.tardisweepingangels.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.SlimeBall;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.DalekVariant;
 import me.eccentric_nz.TARDIS.database.data.Follower;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
@@ -109,24 +109,24 @@ public class SpawnCommand {
                         } else {
                             try {
                                 DyeColor colour = DyeColor.valueOf(args[2].toUpperCase(Locale.ROOT));
-                                NamespacedKey head = SlimeBall.DALEK_BRASS.getKey();
+                                NamespacedKey head = DalekVariant.DALEK_BRASS.getKey();
                                 switch (colour) {
-                                    case BLACK -> head = SlimeBall.DALEK_BLACK.getKey();
-                                    case WHITE -> head = SlimeBall.DALEK_WHITE.getKey();
-                                    case RED -> head = SlimeBall.DALEK_RED.getKey();
-                                    case BROWN -> head = SlimeBall.DALEK_BROWN.getKey();
-                                    case GREEN -> head = SlimeBall.DALEK_GREEN.getKey();
-                                    case BLUE -> head = SlimeBall.DALEK_BLUE.getKey();
-                                    case PURPLE -> head = SlimeBall.DALEK_PURPLE.getKey();
-                                    case CYAN -> head = SlimeBall.DALEK_CYAN.getKey();
-                                    case LIGHT_GRAY -> head = SlimeBall.DALEK_LIGHT_GRAY.getKey();
-                                    case GRAY -> head = SlimeBall.DALEK_GRAY.getKey();
-                                    case PINK -> head = SlimeBall.DALEK_PINK.getKey();
-                                    case LIME -> head = SlimeBall.DALEK_LIME.getKey();
-                                    case YELLOW -> head = SlimeBall.DALEK_YELLOW.getKey();
-                                    case LIGHT_BLUE -> head = SlimeBall.DALEK_LIGHT_BLUE.getKey();
-                                    case MAGENTA -> head = SlimeBall.DALEK_MAGENTA.getKey();
-                                    case ORANGE -> head = SlimeBall.DALEK_ORANGE.getKey();
+                                    case BLACK -> head = DalekVariant.DALEK_BLACK.getKey();
+                                    case WHITE -> head = DalekVariant.DALEK_WHITE.getKey();
+                                    case RED -> head = DalekVariant.DALEK_RED.getKey();
+                                    case BROWN -> head = DalekVariant.DALEK_BROWN.getKey();
+                                    case GREEN -> head = DalekVariant.DALEK_GREEN.getKey();
+                                    case BLUE -> head = DalekVariant.DALEK_BLUE.getKey();
+                                    case PURPLE -> head = DalekVariant.DALEK_PURPLE.getKey();
+                                    case CYAN -> head = DalekVariant.DALEK_CYAN.getKey();
+                                    case LIGHT_GRAY -> head = DalekVariant.DALEK_LIGHT_GRAY.getKey();
+                                    case GRAY -> head = DalekVariant.DALEK_GRAY.getKey();
+                                    case PINK -> head = DalekVariant.DALEK_PINK.getKey();
+                                    case LIME -> head = DalekVariant.DALEK_LIME.getKey();
+                                    case YELLOW -> head = DalekVariant.DALEK_YELLOW.getKey();
+                                    case LIGHT_BLUE -> head = DalekVariant.DALEK_LIGHT_BLUE.getKey();
+                                    case MAGENTA -> head = DalekVariant.DALEK_MAGENTA.getKey();
+                                    case ORANGE -> head = DalekVariant.DALEK_ORANGE.getKey();
                                 }
                                 ItemStack helmet = new ItemStack(Material.SLIME_BALL, 1);
                                 ItemMeta headMeta = helmet.getItemMeta();

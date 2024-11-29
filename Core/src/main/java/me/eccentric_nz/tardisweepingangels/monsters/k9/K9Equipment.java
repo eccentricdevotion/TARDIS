@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.k9;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bone;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.K9Variant;
 import me.eccentric_nz.tardisweepingangels.equip.DisguiseEquipper;
 import me.eccentric_nz.tardisweepingangels.equip.FollowerEquipper;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
@@ -33,7 +33,7 @@ public class K9Equipment {
         ItemStack head = new ItemStack(Material.BONE);
         ItemMeta headMeta = head.getItemMeta();
         headMeta.setDisplayName("K9 Head");
-        headMeta.setItemModel(Bone.K9.getKey());
+        headMeta.setItemModel(K9Variant.K9.getKey());
         head.setItemMeta(headMeta);
         if (entity instanceof Husk) {
             new FollowerEquipper().setHelmetAndInvisibilty(player, entity, Monster.K9, head);

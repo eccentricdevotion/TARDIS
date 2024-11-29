@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.LeatherHelmet;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
@@ -42,7 +42,7 @@ public class ThreeDGlassesRecipe {
         im.setDisplayName(ChatColor.WHITE + "3-D Glasses");
         im.setItemModel(RecipeItem.THREE_D_GLASSES.getModel());
         EquippableComponent equippable = im.getEquippable();
-        equippable.setCameraOverlay(LeatherHelmet.THREE_D_GLASSES_OVERLAY.getKey());
+        equippable.setCameraOverlay(Whoniverse.THREE_D_GLASSES_OVERLAY.getKey());
         equippable.setSlot(EquipmentSlot.HEAD);
         equippable.setDispensable(true);
         im.setEquippable(equippable);

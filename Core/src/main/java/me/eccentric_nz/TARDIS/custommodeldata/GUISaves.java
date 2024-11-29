@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Arrow;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.ArrowVariant;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.custommodeldata.keys.Bucket;
 import me.eccentric_nz.TARDIS.custommodeldata.keys.Map;
 import org.bukkit.Material;
@@ -25,14 +25,14 @@ import org.bukkit.Material;
 public record GUISaves() {
 
     // TARDIS saves
-    public static GUIData HOME = new GUIData(Bowl.HOME.getKey(), 0, Material.BOWL);
-    public static GUIData DEATH = new GUIData(Bowl.BUTTON_DEATH.getKey(), 2, Material.BOWL);
-    public static GUIData REARRANGE_SAVES = new GUIData(Arrow.REARRANGE.getKey(), 45, Material.ARROW);
+    public static GUIData HOME = new GUIData(GuiVariant.HOME.getKey(), 0, Material.BOWL);
+    public static GUIData DEATH = new GUIData(GuiVariant.BUTTON_DEATH.getKey(), 2, Material.BOWL);
+    public static GUIData REARRANGE_SAVES = new GUIData(ArrowVariant.REARRANGE.getKey(), 45, Material.ARROW);
     public static GUIData LOAD_TARDIS_AREAS = new GUIData(Map.LOAD_SELECTED_PROGRAM_IN_EDITOR.getKey(), 53, Material.MAP);
     public static GUIData DELETE_SAVE = new GUIData(Bucket.DELETE.getKey(), 47, Material.BUCKET);
-    public static GUIData LOAD_MY_SAVES = new GUIData(Bowl.OWN_SAVES.getKey(), 49, Material.BOWL);
-    public static GUIData LOAD_SAVES_FROM_THIS_TARDIS = new GUIData(Bowl.TARDIS_SAVES.getKey(), 49, Material.BOWL);
-    public static GUIData BACK_TO_PLANETS = new GUIData(Arrow.BACK.getKey(), 51, Material.ARROW);
-    public static GUIData GO_TO_PAGE_1 = new GUIData(Arrow.PAGE_ONE.getKey(), 51, Material.ARROW);
-    public static GUIData GO_TO_PAGE_2 = new GUIData(Arrow.PAGE_TWO.getKey(), 51, Material.ARROW);
+    public static GUIData LOAD_MY_SAVES = new GUIData(GuiVariant.OWN_SAVES.getKey(), 49, Material.BOWL);
+    public static GUIData LOAD_SAVES_FROM_THIS_TARDIS = new GUIData(GuiVariant.TARDIS_SAVES.getKey(), 49, Material.BOWL);
+    public static GUIData BACK_TO_PLANETS = new GUIData(ArrowVariant.BACK.getKey(), 51, Material.ARROW);
+    public static GUIData GO_TO_PAGE_1 = new GUIData(ArrowVariant.PAGE_ONE.getKey(), 51, Material.ARROW);
+    public static GUIData GO_TO_PAGE_2 = new GUIData(ArrowVariant.PAGE_TWO.getKey(), 51, Material.ARROW);
 }

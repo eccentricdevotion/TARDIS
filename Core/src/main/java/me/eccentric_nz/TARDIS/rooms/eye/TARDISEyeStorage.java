@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.rooms.eye;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIArtronStorage;
 import me.eccentric_nz.TARDIS.custommodeldata.keys.Bucket;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronStorage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -44,7 +45,7 @@ public class TARDISEyeStorage {
                 ItemStack is = new ItemStack(Material.BUCKET, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName("Artron Capacitor");
-                im.setItemModel(Bucket.ARTRON_CAPACITOR.getKey());
+                im.setItemModel(Whoniverse.ARTRON_CAPACITOR.getKey());
                 is.setItemMeta(im);
                 stacks[i] = is;
             }

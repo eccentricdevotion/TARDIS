@@ -7,10 +7,8 @@ public enum Map {
 
     LOAD_SELECTED_PROGRAM_IN_EDITOR(new NamespacedKey(TARDIS.plugin, "gui/bowl/load_selected_program_in_editor")),
     LOAD_MAP(new NamespacedKey(TARDIS.plugin, "gui/map/load_map")),
-    BUTTON_TARDIS_MAP(new NamespacedKey(TARDIS.plugin, "gui/map/button_tardis_map")),
     TRANSMAT_LOCATION(new NamespacedKey(TARDIS.plugin, "gui/map/transmat_location")),
-    MONITOR(new NamespacedKey(TARDIS.plugin, "tardis/monitor")),
-    SCREEN(new NamespacedKey(TARDIS.plugin, "controls/screen"));
+    WHERE_AM_I(new NamespacedKey(TARDIS.plugin, "gui/map/where_am_i"));
 
     private final NamespacedKey key;
 

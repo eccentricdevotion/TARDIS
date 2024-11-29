@@ -16,22 +16,22 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Arrow;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.ArrowVariant;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.custommodeldata.keys.Bucket;
 import org.bukkit.Material;
 
 public record GUIChameleonPresets() {
 
     // Chameleon Presets
-    public static GUIData GO_TO_PAGE_2 = new GUIData(Arrow.PAGE_TWO.getKey(), 52, Material.ARROW);
-    public static GUIData NEW = new GUIData(Bowl.NEW.getKey(), 49, Material.BOWL);
-    public static GUIData SAVE = new GUIData(Bowl.SAVE.getKey(), 50, Material.BOWL);
-    public static GUIData USE_SELECTED = new GUIData(Bowl.USE_SELECTED.getKey(), 45, Material.BOWL);
-    public static GUIData UPDATE_SELECTED = new GUIData(Bowl.UPDATE_SELECTED.getKey(), 47, Material.BOWL);
+    public static GUIData GO_TO_PAGE_2 = new GUIData(ArrowVariant.PAGE_TWO.getKey(), 52, Material.ARROW);
+    public static GUIData NEW = new GUIData(GuiVariant.NEW.getKey(), 49, Material.BOWL);
+    public static GUIData SAVE = new GUIData(GuiVariant.SAVE.getKey(), 50, Material.BOWL);
+    public static GUIData USE_SELECTED = new GUIData(GuiVariant.USE_SELECTED.getKey(), 45, Material.BOWL);
+    public static GUIData UPDATE_SELECTED = new GUIData(GuiVariant.UPDATE_SELECTED.getKey(), 47, Material.BOWL);
     public static GUIData DELETE_SELECTED = new GUIData(Bucket.DELETE.getKey(), 46, Material.BUCKET);
-    public static GUIData CURRENT = new GUIData(Bowl.BUTTON_CHAMELEON.getKey(), 50, Material.BOWL);
-    public static GUIData SAVED = new GUIData(Bowl.BUTTON_CONSTRUCT.getKey(), 51, Material.BOWL);
-    public static GUIData BACK = new GUIData(Bowl.BACK.getKey(), 51, Material.BOWL);
-    public static GUIData CLOSE = new GUIData(Bowl.CLOSE.getKey(), 53, Material.BOWL);
+    public static GUIData CURRENT = new GUIData(GuiVariant.BUTTON_CHAMELEON.getKey(), 50, Material.BOWL);
+    public static GUIData SAVED = new GUIData(GuiVariant.BUTTON_CONSTRUCT.getKey(), 51, Material.BOWL);
+    public static GUIData BACK = new GUIData(GuiVariant.BACK.getKey(), 51, Material.BOWL);
+    public static GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 53, Material.BOWL);
 }

@@ -2,7 +2,7 @@ package me.eccentric_nz.tardisweepingangels.nms;
 
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.RottenFlesh;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.OodVariant;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.OodColour;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
@@ -31,64 +31,64 @@ public class TWAOod extends TWAFollower {
 
     private static final String entityId = "ood";
     private final NamespacedKey[] framesBlack = new NamespacedKey[]{
-            RottenFlesh.OOD_BLACK_0.getKey(),
-            RottenFlesh.OOD_BLACK_1.getKey(),
-            RottenFlesh.OOD_BLACK_2.getKey(),
-            RottenFlesh.OOD_BLACK_1.getKey(),
-            RottenFlesh.OOD_BLACK_0.getKey(),
-            RottenFlesh.OOD_BLACK_3.getKey(),
-            RottenFlesh.OOD_BLACK_4.getKey(),
-            RottenFlesh.OOD_BLACK_3.getKey()
+            OodVariant.OOD_BLACK_0.getKey(),
+            OodVariant.OOD_BLACK_1.getKey(),
+            OodVariant.OOD_BLACK_2.getKey(),
+            OodVariant.OOD_BLACK_1.getKey(),
+            OodVariant.OOD_BLACK_0.getKey(),
+            OodVariant.OOD_BLACK_3.getKey(),
+            OodVariant.OOD_BLACK_4.getKey(),
+            OodVariant.OOD_BLACK_3.getKey()
     };
     private final NamespacedKey[] framesBlackRedeye = new NamespacedKey[]{
-            RottenFlesh.OOD_REDEYE_BLACK_0.getKey(),
-            RottenFlesh.OOD_REDEYE_BLACK_1.getKey(),
-            RottenFlesh.OOD_REDEYE_BLACK_2.getKey(),
-            RottenFlesh.OOD_REDEYE_BLACK_1.getKey(),
-            RottenFlesh.OOD_REDEYE_BLACK_0.getKey(),
-            RottenFlesh.OOD_REDEYE_BLACK_3.getKey(),
-            RottenFlesh.OOD_REDEYE_BLACK_4.getKey(),
-            RottenFlesh.OOD_REDEYE_BLACK_3.getKey()
+            OodVariant.OOD_REDEYE_BLACK_0.getKey(),
+            OodVariant.OOD_REDEYE_BLACK_1.getKey(),
+            OodVariant.OOD_REDEYE_BLACK_2.getKey(),
+            OodVariant.OOD_REDEYE_BLACK_1.getKey(),
+            OodVariant.OOD_REDEYE_BLACK_0.getKey(),
+            OodVariant.OOD_REDEYE_BLACK_3.getKey(),
+            OodVariant.OOD_REDEYE_BLACK_4.getKey(),
+            OodVariant.OOD_REDEYE_BLACK_3.getKey()
     };
     private final NamespacedKey[] framesBlue = new NamespacedKey[]{
-            RottenFlesh.OOD_BLUE_0.getKey(),
-            RottenFlesh.OOD_BLUE_1.getKey(),
-            RottenFlesh.OOD_BLUE_2.getKey(),
-            RottenFlesh.OOD_BLUE_1.getKey(),
-            RottenFlesh.OOD_BLUE_0.getKey(),
-            RottenFlesh.OOD_BLUE_3.getKey(),
-            RottenFlesh.OOD_BLUE_4.getKey(),
-            RottenFlesh.OOD_BLUE_3.getKey()
+            OodVariant.OOD_BLUE_0.getKey(),
+            OodVariant.OOD_BLUE_1.getKey(),
+            OodVariant.OOD_BLUE_2.getKey(),
+            OodVariant.OOD_BLUE_1.getKey(),
+            OodVariant.OOD_BLUE_0.getKey(),
+            OodVariant.OOD_BLUE_3.getKey(),
+            OodVariant.OOD_BLUE_4.getKey(),
+            OodVariant.OOD_BLUE_3.getKey()
     };
     private final NamespacedKey[] framesBlueRedeye = new NamespacedKey[]{
-            RottenFlesh.OOD_REDEYE_BLUE_0.getKey(),
-            RottenFlesh.OOD_REDEYE_BLUE_1.getKey(),
-            RottenFlesh.OOD_REDEYE_BLUE_2.getKey(),
-            RottenFlesh.OOD_REDEYE_BLUE_1.getKey(),
-            RottenFlesh.OOD_REDEYE_BLUE_0.getKey(),
-            RottenFlesh.OOD_REDEYE_BLUE_3.getKey(),
-            RottenFlesh.OOD_REDEYE_BLUE_4.getKey(),
-            RottenFlesh.OOD_REDEYE_BLUE_3.getKey()
+            OodVariant.OOD_REDEYE_BLUE_0.getKey(),
+            OodVariant.OOD_REDEYE_BLUE_1.getKey(),
+            OodVariant.OOD_REDEYE_BLUE_2.getKey(),
+            OodVariant.OOD_REDEYE_BLUE_1.getKey(),
+            OodVariant.OOD_REDEYE_BLUE_0.getKey(),
+            OodVariant.OOD_REDEYE_BLUE_3.getKey(),
+            OodVariant.OOD_REDEYE_BLUE_4.getKey(),
+            OodVariant.OOD_REDEYE_BLUE_3.getKey()
     };
     private final NamespacedKey[] framesBrown = new NamespacedKey[]{
-            RottenFlesh.OOD_BROWN_0.getKey(),
-            RottenFlesh.OOD_BROWN_1.getKey(),
-            RottenFlesh.OOD_BROWN_2.getKey(),
-            RottenFlesh.OOD_BROWN_1.getKey(),
-            RottenFlesh.OOD_BROWN_0.getKey(),
-            RottenFlesh.OOD_BROWN_3.getKey(),
-            RottenFlesh.OOD_BROWN_4.getKey(),
-            RottenFlesh.OOD_BROWN_3.getKey()
+            OodVariant.OOD_BROWN_0.getKey(),
+            OodVariant.OOD_BROWN_1.getKey(),
+            OodVariant.OOD_BROWN_2.getKey(),
+            OodVariant.OOD_BROWN_1.getKey(),
+            OodVariant.OOD_BROWN_0.getKey(),
+            OodVariant.OOD_BROWN_3.getKey(),
+            OodVariant.OOD_BROWN_4.getKey(),
+            OodVariant.OOD_BROWN_3.getKey()
     };
     private final NamespacedKey[] framesBrownRedeye = new NamespacedKey[]{
-            RottenFlesh.OOD_REDEYE_BROWN_0.getKey(),
-            RottenFlesh.OOD_REDEYE_BROWN_1.getKey(),
-            RottenFlesh.OOD_REDEYE_BROWN_2.getKey(),
-            RottenFlesh.OOD_REDEYE_BROWN_1.getKey(),
-            RottenFlesh.OOD_REDEYE_BROWN_0.getKey(),
-            RottenFlesh.OOD_REDEYE_BROWN_3.getKey(),
-            RottenFlesh.OOD_REDEYE_BROWN_4.getKey(),
-            RottenFlesh.OOD_REDEYE_BROWN_3.getKey()
+            OodVariant.OOD_REDEYE_BROWN_0.getKey(),
+            OodVariant.OOD_REDEYE_BROWN_1.getKey(),
+            OodVariant.OOD_REDEYE_BROWN_2.getKey(),
+            OodVariant.OOD_REDEYE_BROWN_1.getKey(),
+            OodVariant.OOD_REDEYE_BROWN_0.getKey(),
+            OodVariant.OOD_REDEYE_BROWN_3.getKey(),
+            OodVariant.OOD_REDEYE_BROWN_4.getKey(),
+            OodVariant.OOD_REDEYE_BROWN_3.getKey()
     };
     private boolean redeye;
     private OodColour colour;
@@ -125,9 +125,9 @@ public class TWAOod extends TWAFollower {
             ItemMeta im = bukkit.getItemMeta();
             if (oldX == getX() && oldZ == getZ()) {
                 NamespacedKey still = switch (colour) {
-                    case BLACK -> (redeye) ? RottenFlesh.OOD_REDEYE_BLACK_STATIC.getKey() : RottenFlesh.OOD_BLACK_STATIC.getKey();
-                    case BLUE -> (redeye) ? RottenFlesh.OOD_REDEYE_BLUE_STATIC.getKey() : RottenFlesh.OOD_BLUE_STATIC.getKey();
-                    case BROWN -> (redeye) ? RottenFlesh.OOD_REDEYE_BROWN_STATIC.getKey() : RottenFlesh.OOD_BROWN_STATIC.getKey();
+                    case BLACK -> (redeye) ? OodVariant.OOD_REDEYE_BLACK_STATIC.getKey() : OodVariant.OOD_BLACK_STATIC.getKey();
+                    case BLUE -> (redeye) ? OodVariant.OOD_REDEYE_BLUE_STATIC.getKey() : OodVariant.OOD_BLUE_STATIC.getKey();
+                    case BROWN -> (redeye) ? OodVariant.OOD_REDEYE_BROWN_STATIC.getKey() : OodVariant.OOD_BROWN_STATIC.getKey();
                 };
                 im.setItemModel(still);
                 i = 0;

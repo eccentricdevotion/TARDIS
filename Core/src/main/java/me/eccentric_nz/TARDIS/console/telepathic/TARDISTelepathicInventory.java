@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.console.telepathic;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodeldata.GUIMap;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Repeater;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.PrefsVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -35,7 +35,7 @@ public class TARDISTelepathicInventory {
         ItemMeta tim = toggle.getItemMeta();
         tim.setDisplayName("Telepathic Circuit");
         tim.setLore(List.of(onOff));
-        tim.setItemModel(on ? Repeater.TELEPATHIC_CIRCUIT_ON.getKey() : Repeater.TELEPATHIC_CIRCUIT_OFF.getKey());
+        tim.setItemModel(on ? PrefsVariant.TELEPATHIC_CIRCUIT_ON.getKey() : PrefsVariant.TELEPATHIC_CIRCUIT_OFF.getKey());
         toggle.setItemMeta(tim);
         stack[0] = toggle;
         // cave finder

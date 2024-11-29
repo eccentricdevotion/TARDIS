@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.monsters.ood;
 
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.RottenFlesh;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.OodVariant;
 import me.eccentric_nz.tardisweepingangels.equip.DisguiseEquipper;
 import me.eccentric_nz.tardisweepingangels.equip.FollowerEquipper;
 import me.eccentric_nz.tardisweepingangels.nms.TWAOod;
@@ -48,17 +48,17 @@ public class OodEquipment {
         ItemMeta headMeta = head.getItemMeta();
         headMeta.setDisplayName("Ood Head");
         if (!disguise) {
-            headMeta.setItemModel(RottenFlesh.OOD_BLACK_STATIC.getKey());
+            headMeta.setItemModel(OodVariant.OOD_BLACK_STATIC.getKey());
             head.setItemMeta(headMeta);
             new FollowerEquipper().setHelmetAndInvisibilty(player, entity, Monster.OOD, head);
         } else {
             int chance = TARDISConstants.RANDOM.nextInt(100);
-            NamespacedKey colour = RottenFlesh.OOD_BLACK_STATIC.getKey();
+            NamespacedKey colour = OodVariant.OOD_BLACK_STATIC.getKey();
             if (chance < 15) {
-                colour = RottenFlesh.OOD_BLUE_STATIC.getKey();
+                colour = OodVariant.OOD_BLUE_STATIC.getKey();
             }
             if (chance > 85) {
-                colour =  RottenFlesh.OOD_BROWN_STATIC.getKey();
+                colour =  OodVariant.OOD_BROWN_STATIC.getKey();
             }
             headMeta.setItemModel(colour);
             head.setItemMeta(headMeta);

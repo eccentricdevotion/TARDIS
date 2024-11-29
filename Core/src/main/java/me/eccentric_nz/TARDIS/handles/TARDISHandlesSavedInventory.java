@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodeldata.GUISavedPrograms;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.MusicDisc;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.DiskVariant;
 import me.eccentric_nz.TARDIS.database.data.Program;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPrograms;
 import org.bukkit.ChatColor;
@@ -68,7 +68,7 @@ class TARDISHandlesSavedInventory {
                     im.setLore(Arrays.asList(p.getName(), p.getProgram_id() + "", checked));
                 }
                 im.addItemFlags(ItemFlag.values());
-                im.setItemModel(MusicDisc.HANDLES_DISK.getKey());
+                im.setItemModel(DiskVariant.HANDLES_DISK.getKey());
                 is.setItemMeta(im);
                 stack[i] = is;
                 i++;

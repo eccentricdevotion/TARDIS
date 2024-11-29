@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.nms;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Kelp;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.SeaDevilVariant;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.monster.Drowned;
@@ -34,24 +34,24 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TWADrowned extends Drowned {
 
     private final NamespacedKey[] frames = new NamespacedKey[]{
-            Kelp.SEA_DEVIL_0.getKey(),
-            Kelp.SEA_DEVIL_1.getKey(),
-            Kelp.SEA_DEVIL_2.getKey(),
-            Kelp.SEA_DEVIL_1.getKey(),
-            Kelp.SEA_DEVIL_0.getKey(),
-            Kelp.SEA_DEVIL_3.getKey(),
-            Kelp.SEA_DEVIL_4.getKey(),
-            Kelp.SEA_DEVIL_3.getKey()
+            SeaDevilVariant.SEA_DEVIL_0.getKey(),
+            SeaDevilVariant.SEA_DEVIL_1.getKey(),
+            SeaDevilVariant.SEA_DEVIL_2.getKey(),
+            SeaDevilVariant.SEA_DEVIL_1.getKey(),
+            SeaDevilVariant.SEA_DEVIL_0.getKey(),
+            SeaDevilVariant.SEA_DEVIL_3.getKey(),
+            SeaDevilVariant.SEA_DEVIL_4.getKey(),
+            SeaDevilVariant.SEA_DEVIL_3.getKey()
     };
     private final NamespacedKey[] framesSwimming = new NamespacedKey[]{
-            Kelp.SEA_DEVIL_SWIMMING_0.getKey(),
-            Kelp.SEA_DEVIL_SWIMMING_1.getKey(),
-            Kelp.SEA_DEVIL_SWIMMING_2.getKey(),
-            Kelp.SEA_DEVIL_SWIMMING_1.getKey(),
-            Kelp.SEA_DEVIL_SWIMMING_0.getKey(),
-            Kelp.SEA_DEVIL_SWIMMING_3.getKey(),
-            Kelp.SEA_DEVIL_SWIMMING_4.getKey(),
-            Kelp.SEA_DEVIL_SWIMMING_3.getKey()
+            SeaDevilVariant.SEA_DEVIL_SWIMMING_0.getKey(),
+            SeaDevilVariant.SEA_DEVIL_SWIMMING_1.getKey(),
+            SeaDevilVariant.SEA_DEVIL_SWIMMING_2.getKey(),
+            SeaDevilVariant.SEA_DEVIL_SWIMMING_1.getKey(),
+            SeaDevilVariant.SEA_DEVIL_SWIMMING_0.getKey(),
+            SeaDevilVariant.SEA_DEVIL_SWIMMING_3.getKey(),
+            SeaDevilVariant.SEA_DEVIL_SWIMMING_4.getKey(),
+            SeaDevilVariant.SEA_DEVIL_SWIMMING_3.getKey()
     };
     private int i = 0;
     private double oldX;
@@ -68,7 +68,7 @@ public class TWADrowned extends Drowned {
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
             ItemMeta im = bukkit.getItemMeta();
             if (oldX == getX() && oldZ == getZ()) {
-                im.setItemModel(Kelp.SEA_DEVIL_STATIC.getKey());
+                im.setItemModel(SeaDevilVariant.SEA_DEVIL_STATIC.getKey());
                 i = 0;
             } else {
                 // play move animation

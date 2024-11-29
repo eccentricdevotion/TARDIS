@@ -2,7 +2,7 @@ package me.eccentric_nz.tardisweepingangels.nms;
 
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.YellowDye;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.JudoonVariant;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -30,24 +30,24 @@ public class TWAJudoon extends TWAFollower {
 
     private static final String entityId = "judoon";
     private final NamespacedKey[] frames = new NamespacedKey[]{
-            YellowDye.JUDOON_0.getKey(),
-            YellowDye.JUDOON_1.getKey(),
-            YellowDye.JUDOON_2.getKey(),
-            YellowDye.JUDOON_1.getKey(),
-            YellowDye.JUDOON_0.getKey(),
-            YellowDye.JUDOON_3.getKey(),
-            YellowDye.JUDOON_4.getKey(),
-            YellowDye.JUDOON_3.getKey()
+            JudoonVariant.JUDOON_0.getKey(),
+            JudoonVariant.JUDOON_1.getKey(),
+            JudoonVariant.JUDOON_2.getKey(),
+            JudoonVariant.JUDOON_1.getKey(),
+            JudoonVariant.JUDOON_0.getKey(),
+            JudoonVariant.JUDOON_3.getKey(),
+            JudoonVariant.JUDOON_4.getKey(),
+            JudoonVariant.JUDOON_3.getKey()
     };
     private final NamespacedKey[] framesGuard = new NamespacedKey[]{
-            YellowDye.JUDOON_GUARD_0.getKey(),
-            YellowDye.JUDOON_GUARD_1.getKey(),
-            YellowDye.JUDOON_GUARD_2.getKey(),
-            YellowDye.JUDOON_GUARD_1.getKey(),
-            YellowDye.JUDOON_GUARD_0.getKey(),
-            YellowDye.JUDOON_GUARD_3.getKey(),
-            YellowDye.JUDOON_GUARD_4.getKey(),
-            YellowDye.JUDOON_GUARD_3.getKey()
+            JudoonVariant.JUDOON_GUARD_0.getKey(),
+            JudoonVariant.JUDOON_GUARD_1.getKey(),
+            JudoonVariant.JUDOON_GUARD_2.getKey(),
+            JudoonVariant.JUDOON_GUARD_1.getKey(),
+            JudoonVariant.JUDOON_GUARD_0.getKey(),
+            JudoonVariant.JUDOON_GUARD_3.getKey(),
+            JudoonVariant.JUDOON_GUARD_4.getKey(),
+            JudoonVariant.JUDOON_GUARD_3.getKey()
     };
     private int ammo;
     private boolean guard;
@@ -81,7 +81,7 @@ public class TWAJudoon extends TWAFollower {
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
             ItemMeta im = bukkit.getItemMeta();
             if (oldX == getX() && oldZ == getZ()) {
-                im.setItemModel(this.guard ? YellowDye.JUDOON_STATIC.getKey() : YellowDye.JUDOON_GUARD.getKey());
+                im.setItemModel(this.guard ? JudoonVariant.JUDOON_STATIC.getKey() : JudoonVariant.JUDOON_GUARD.getKey());
                 i = 0;
             } else {
                 // play move animation

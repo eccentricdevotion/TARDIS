@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.GoldNugget;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.KeyVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
@@ -34,19 +34,19 @@ public class TARDISKeyRecipe {
 
     public TARDISKeyRecipe(TARDIS plugin) {
         this.plugin = plugin;
-        keyModelLookup.put("first", GoldNugget.BRASS_YALE.getKey());
-        keyModelLookup.put("second", GoldNugget.BRASS_PLAIN.getKey());
-        keyModelLookup.put("third", GoldNugget.SPADE_SHAPED.getKey());
-        keyModelLookup.put("fifth", GoldNugget.SILVER_YALE.getKey());
-        keyModelLookup.put("seventh", GoldNugget.SEAL_OF_RASSILON.getKey());
-        keyModelLookup.put("ninth", GoldNugget.SILVER_VARIANT.getKey());
-        keyModelLookup.put("tenth", GoldNugget.SILVER_PLAIN.getKey());
-        keyModelLookup.put("eleventh", GoldNugget.SILVER_NEW.getKey());
-        keyModelLookup.put("rose", GoldNugget.SILVER_ERA.getKey());
-        keyModelLookup.put("sally", GoldNugget.SILVER_STRING.getKey());
-        keyModelLookup.put("perception", GoldNugget.FILTER.getKey());
-        keyModelLookup.put("susan", GoldNugget.BRASS_STRING.getKey());
-        keyModelLookup.put("gold", GoldNugget.BROMLEY_GOLD.getKey());
+        keyModelLookup.put("first", KeyVariant.BRASS_YALE.getKey());
+        keyModelLookup.put("second", KeyVariant.BRASS_PLAIN.getKey());
+        keyModelLookup.put("third", KeyVariant.SPADE_SHAPED.getKey());
+        keyModelLookup.put("fifth", KeyVariant.SILVER_YALE.getKey());
+        keyModelLookup.put("seventh", KeyVariant.SEAL_OF_RASSILON.getKey());
+        keyModelLookup.put("ninth", KeyVariant.SILVER_VARIANT.getKey());
+        keyModelLookup.put("tenth", KeyVariant.SILVER_PLAIN.getKey());
+        keyModelLookup.put("eleventh", KeyVariant.SILVER_NEW.getKey());
+        keyModelLookup.put("rose", KeyVariant.SILVER_ERA.getKey());
+        keyModelLookup.put("sally", KeyVariant.SILVER_STRING.getKey());
+        keyModelLookup.put("perception", KeyVariant.FILTER.getKey());
+        keyModelLookup.put("susan", KeyVariant.BRASS_STRING.getKey());
+        keyModelLookup.put("gold", KeyVariant.BROMLEY_GOLD.getKey());
     }
 
     public void addRecipe() {

@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Book;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
 import org.bukkit.Material;
 
 public record GUISonicActivator() {
 
     // Sonic Activator
-    public static GUIData INSTRUCTIONS = new GUIData(Book.INFO.getKey(), 7, Material.BOOK);
-    public static GUIData CLOSE = new GUIData(Bowl.CLOSE.getKey(), 8, Material.BOWL);
+    public static GUIData INSTRUCTIONS = new GUIData(GuiVariant.INFO.getKey(), 7, Material.BOOK);
+    public static GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 8, Material.BOWL);
 }

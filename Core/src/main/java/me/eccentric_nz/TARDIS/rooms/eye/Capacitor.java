@@ -1,15 +1,15 @@
 package me.eccentric_nz.TARDIS.rooms.eye;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.MagmaBlock;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.EyeVariant;
 import org.bukkit.NamespacedKey;
 
 public enum Capacitor {
 
-    NORMAL(0.75, 6, MagmaBlock.SPHERE_0.getKey()),
-    MEDIUM(1.0, 12, MagmaBlock.SPHERE_1.getKey()),
-    LARGE(1.33, 18, MagmaBlock.SPHERE_2.getKey()),
-    ENORMOUS(1.66, 24, MagmaBlock.SPHERE_3.getKey()),
-    SUPERMASSIVE(2, 30, MagmaBlock.SPHERE_4.getKey());
+    NORMAL(0.75, 6, EyeVariant.SPHERE_0.getKey()),
+    MEDIUM(1.0, 12, EyeVariant.SPHERE_1.getKey()),
+    LARGE(1.33, 18, EyeVariant.SPHERE_2.getKey()),
+    ENORMOUS(1.66, 24, EyeVariant.SPHERE_3.getKey()),
+    SUPERMASSIVE(2, 30, EyeVariant.SPHERE_4.getKey());
 
     private final double radius;
     private final double rings;

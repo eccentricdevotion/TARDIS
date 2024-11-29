@@ -16,10 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Cobblestone;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Map;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.RoomBlock;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Wool;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.*;
 import org.bukkit.Material;
 
 public record GUIArs() {
@@ -34,10 +31,10 @@ public record GUIArs() {
     public static GUIData BUTTON_LEVEL_B = new GUIData(Wool.LEVEL_BOTTOM.getKey(), 27, Material.WHITE_WOOL);
     public static GUIData BUTTON_LEVEL = new GUIData(Wool.LEVEL_MAIN.getKey(), 28, Material.YELLOW_WOOL);
     public static GUIData BUTTON_LEVEL_T = new GUIData(Wool.LEVEL_TOP.getKey(), 29, Material.WHITE_WOOL);
-    public static GUIData BUTTON_RESET = new GUIData(Cobblestone.STANDARD_SONIC.getKey(), 30, Material.COBBLESTONE);
+    public static GUIData BUTTON_RESET = new GUIData(SonicVariant.STANDARD_SONIC.getKey(), 30, Material.COBBLESTONE);
     public static GUIData BUTTON_SCROLL_L = new GUIData(Wool.SCROLL_LEFT.getKey(), 36, Material.RED_WOOL);
     public static GUIData BUTTON_SCROLL_R = new GUIData(Wool.SCROLL_RIGHT.getKey(), 38, Material.LIME_WOOL);
-    public static GUIData BUTTON_JETT = new GUIData(RoomBlock.JETTISON.getKey(), 39, Material.TNT);
+    public static GUIData BUTTON_JETT = new GUIData(RoomVariant.JETTISON.getKey(), 39, Material.TNT);
     public static GUIData BUTTON_MAP_ON = new GUIData(Wool.BLANK.getKey(), -1, Material.BLACK_WOOL);
-    public static GUIData EMPTY_SLOT = new GUIData(RoomBlock.SLOT.getKey(), -1, Material.STONE);
+    public static GUIData EMPTY_SLOT = new GUIData(RoomVariant.SLOT.getKey(), -1, Material.STONE);
 }

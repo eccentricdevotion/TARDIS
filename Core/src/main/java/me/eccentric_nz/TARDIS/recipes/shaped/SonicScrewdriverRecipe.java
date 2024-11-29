@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.BlazeRod;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
@@ -35,32 +35,32 @@ public class SonicScrewdriverRecipe {
 
     public SonicScrewdriverRecipe(TARDIS plugin) {
         this.plugin = plugin;
-        sonicModelLookup.put("mark_1", BlazeRod.MARK1.getKey());
-        sonicModelLookup.put("mark_2", BlazeRod.MARK2.getKey());
-        sonicModelLookup.put("mark_3", BlazeRod.MARK3.getKey());
-        sonicModelLookup.put("mark_4", BlazeRod.MARK4.getKey());
-        sonicModelLookup.put("eighth", BlazeRod.EIGHTH.getKey());
-        sonicModelLookup.put("ninth", BlazeRod.NINTH.getKey());
-        sonicModelLookup.put("ninth_open", BlazeRod.NINTH_OPEN.getKey());
-        sonicModelLookup.put("tenth", BlazeRod.TENTH.getKey());
-        sonicModelLookup.put("tenth_open", BlazeRod.TENTH_OPEN.getKey());
-        sonicModelLookup.put("eleventh", BlazeRod.ELEVENTH.getKey());
-        sonicModelLookup.put("eleventh_open", BlazeRod.ELEVENTH_OPEN.getKey());
-        sonicModelLookup.put("master", BlazeRod.MASTER.getKey());
-        sonicModelLookup.put("sarah_jane", BlazeRod.SARAH_JANE.getKey());
-        sonicModelLookup.put("river_song", BlazeRod.RIVER_SONG.getKey());
-        sonicModelLookup.put("twelfth", BlazeRod.TWELFTH.getKey());
-        sonicModelLookup.put("thirteenth", BlazeRod.THIRTEENTH.getKey());
-        sonicModelLookup.put("fourteenth", BlazeRod.FOURTEENTH.getKey());
-        sonicModelLookup.put("fourteenth_open", BlazeRod.FOURTEENTH_OPEN.getKey());
-        sonicModelLookup.put("fifteenth", BlazeRod.FIFTEENTH.getKey());
-        sonicModelLookup.put("sonic_probe", BlazeRod.SONIC_PROBE.getKey());
-        sonicModelLookup.put("umbrella", BlazeRod.UMBRELLA.getKey());
-        sonicModelLookup.put("war", BlazeRod.WAR.getKey());
+        sonicModelLookup.put("mark_1", SonicVariant.MARK1.getKey());
+        sonicModelLookup.put("mark_2", SonicVariant.MARK2.getKey());
+        sonicModelLookup.put("mark_3", SonicVariant.MARK3.getKey());
+        sonicModelLookup.put("mark_4", SonicVariant.MARK4.getKey());
+        sonicModelLookup.put("eighth", SonicVariant.EIGHTH.getKey());
+        sonicModelLookup.put("ninth", SonicVariant.NINTH.getKey());
+        sonicModelLookup.put("ninth_open", SonicVariant.NINTH_OPEN.getKey());
+        sonicModelLookup.put("tenth", SonicVariant.TENTH.getKey());
+        sonicModelLookup.put("tenth_open", SonicVariant.TENTH_OPEN.getKey());
+        sonicModelLookup.put("eleventh", SonicVariant.ELEVENTH.getKey());
+        sonicModelLookup.put("eleventh_open", SonicVariant.ELEVENTH_OPEN.getKey());
+        sonicModelLookup.put("master", SonicVariant.MASTER.getKey());
+        sonicModelLookup.put("sarah_jane", SonicVariant.SARAH_JANE.getKey());
+        sonicModelLookup.put("river_song", SonicVariant.RIVER_SONG.getKey());
+        sonicModelLookup.put("twelfth", SonicVariant.TWELFTH.getKey());
+        sonicModelLookup.put("thirteenth", SonicVariant.THIRTEENTH.getKey());
+        sonicModelLookup.put("fourteenth", SonicVariant.FOURTEENTH.getKey());
+        sonicModelLookup.put("fourteenth_open", SonicVariant.FOURTEENTH_OPEN.getKey());
+        sonicModelLookup.put("fifteenth", SonicVariant.FIFTEENTH.getKey());
+        sonicModelLookup.put("sonic_probe", SonicVariant.SONIC_PROBE.getKey());
+        sonicModelLookup.put("umbrella", SonicVariant.UMBRELLA.getKey());
+        sonicModelLookup.put("war", SonicVariant.WAR.getKey());
     }
 
     public void addRecipe() {
-        NamespacedKey sonicModel = sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), BlazeRod.ELEVENTH.getKey());
+        NamespacedKey sonicModel = sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getKey());
         ItemStack is = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");

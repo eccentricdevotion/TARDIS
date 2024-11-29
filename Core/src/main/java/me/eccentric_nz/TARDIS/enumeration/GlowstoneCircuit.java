@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.GlowstoneDust;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.CircuitVariant;
 import org.bukkit.NamespacedKey;
 
 import java.util.HashMap;
@@ -26,33 +26,33 @@ import java.util.HashMap;
  */
 public enum GlowstoneCircuit {
 
-    ADMIN("Server Admin Circuit", GlowstoneDust.ADMIN.getKey()),
-    ARS("TARDIS ARS Circuit", GlowstoneDust.ARS.getKey()),
-    BIO("Bio-scanner Circuit", GlowstoneDust.BIO.getKey()),
-    BRUSH("Brush Circuit", GlowstoneDust.BRUSH.getKey()),
-    CHAMELEON("TARDIS Chameleon Circuit", GlowstoneDust.CHAMELEON.getKey()),
-    CIRCUITS("Circuits", GlowstoneDust.GALLIFREY.getKey()),
-    CONVERSION("Conversion Circuit", GlowstoneDust.CONVERSION.getKey()),
-    DIAMOND("Diamond Disruptor Circuit", GlowstoneDust.DIAMOND.getKey()),
-    EMERALD("Emerald Environment Circuit", GlowstoneDust.EMERALD.getKey()),
-    IGNITE("Ignite Circuit", GlowstoneDust.IGNITE.getKey()),
-    INPUT("TARDIS Input Circuit", GlowstoneDust.INPUT.getKey()),
-    INVISIBILITY("TARDIS Invisibility Circuit", GlowstoneDust.INVISIBILITY.getKey()),
-    KNOCKBACK("Knockback Circuit", GlowstoneDust.KNOCKBACK.getKey()),
-    LOCATOR("TARDIS Locator Circuit", GlowstoneDust.LOCATOR.getKey()),
-    MATERIALISATION("TARDIS Materialisation Circuit", GlowstoneDust.MATERIALISATION.getKey()),
-    MEMORY("TARDIS Memory Circuit", GlowstoneDust.MEMORY.getKey()),
-    PAINTER("Painter Circuit", GlowstoneDust.PAINTER.getKey()),
-    PERCEPTION("Perception Circuit", GlowstoneDust.PERCEPTION.getKey()),
-    PICKUP("Pickup Arrows Circuit", GlowstoneDust.PICKUP.getKey()),
-    RANDOM("TARDIS Randomiser Circuit", GlowstoneDust.RANDOM.getKey()),
-    REDSTONE("Redstone Activator Circuit", GlowstoneDust.REDSTONE.getKey()),
-    RIFT("Rift Circuit", GlowstoneDust.RIFT.getKey()),
-    SCANNER("TARDIS Scanner Circuit", GlowstoneDust.SCANNER.getKey()),
-    SONIC("Sonic Oscillator", GlowstoneDust.SONIC.getKey()),
-    STATTENHEIM("TARDIS Stattenheim Circuit", GlowstoneDust.STATTENHEIM.getKey()),
-    TELEPATHIC("TARDIS Telepathic Circuit", GlowstoneDust.TELEPATHIC.getKey()),
-    TEMPORAL("TARDIS Temporal Circuit", GlowstoneDust.TEMPORAL.getKey());
+    ADMIN("Server Admin Circuit", CircuitVariant.ADMIN.getKey()),
+    ARS("TARDIS ARS Circuit", CircuitVariant.ARS.getKey()),
+    BIO("Bio-scanner Circuit", CircuitVariant.BIO.getKey()),
+    BRUSH("Brush Circuit", CircuitVariant.BRUSH.getKey()),
+    CHAMELEON("TARDIS Chameleon Circuit", CircuitVariant.CHAMELEON.getKey()),
+    CIRCUITS("Circuits", CircuitVariant.GALLIFREY.getKey()),
+    CONVERSION("Conversion Circuit", CircuitVariant.CONVERSION.getKey()),
+    DIAMOND("Diamond Disruptor Circuit", CircuitVariant.DIAMOND.getKey()),
+    EMERALD("Emerald Environment Circuit", CircuitVariant.EMERALD.getKey()),
+    IGNITE("Ignite Circuit", CircuitVariant.IGNITE.getKey()),
+    INPUT("TARDIS Input Circuit", CircuitVariant.INPUT.getKey()),
+    INVISIBILITY("TARDIS Invisibility Circuit", CircuitVariant.INVISIBILITY.getKey()),
+    KNOCKBACK("Knockback Circuit", CircuitVariant.KNOCKBACK.getKey()),
+    LOCATOR("TARDIS Locator Circuit", CircuitVariant.LOCATOR.getKey()),
+    MATERIALISATION("TARDIS Materialisation Circuit", CircuitVariant.MATERIALISATION.getKey()),
+    MEMORY("TARDIS Memory Circuit", CircuitVariant.MEMORY.getKey()),
+    PAINTER("Painter Circuit", CircuitVariant.PAINTER.getKey()),
+    PERCEPTION("Perception Circuit", CircuitVariant.PERCEPTION.getKey()),
+    PICKUP("Pickup Arrows Circuit", CircuitVariant.PICKUP.getKey()),
+    RANDOM("TARDIS Randomiser Circuit", CircuitVariant.RANDOM.getKey()),
+    REDSTONE("Redstone Activator Circuit", CircuitVariant.REDSTONE.getKey()),
+    RIFT("Rift Circuit", CircuitVariant.RIFT.getKey()),
+    SCANNER("TARDIS Scanner Circuit", CircuitVariant.SCANNER.getKey()),
+    SONIC("Sonic Oscillator", CircuitVariant.SONIC.getKey()),
+    STATTENHEIM("TARDIS Stattenheim Circuit", CircuitVariant.STATTENHEIM.getKey()),
+    TELEPATHIC("TARDIS Telepathic Circuit", CircuitVariant.TELEPATHIC.getKey()),
+    TEMPORAL("TARDIS Temporal Circuit", CircuitVariant.TEMPORAL.getKey());
 
     private static final HashMap<String, GlowstoneCircuit> BY_NAME = new HashMap<>();
 

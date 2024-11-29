@@ -16,9 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.BlazeRod;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Book;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -26,43 +25,43 @@ import org.bukkit.NamespacedKey;
 public enum GUISonicGenerator {
 
     // Sonic Generator
-    MARK_I(BlazeRod.MARK1.getKey(), 0, Material.BLAZE_ROD, ""),
-    MARK_II(BlazeRod.MARK2.getKey(), 1, Material.BLAZE_ROD, ""),
-    MARK_III(BlazeRod.MARK3.getKey(), 2, Material.BLAZE_ROD, ""),
-    MARK_IV(BlazeRod.MARK4.getKey(), 3, Material.BLAZE_ROD, ""),
-    EIGHTH_DOCTOR(BlazeRod.EIGHTH.getKey(), 4, Material.BLAZE_ROD, ""),
-    TWELFTH_DOCTOR(BlazeRod.TWELFTH.getKey(), 5, Material.BLAZE_ROD, ""),
-    THIRTEENTH_DOCTOR(BlazeRod.THIRTEENTH.getKey(), 6, Material.BLAZE_ROD, ""),
-    NINTH_DOCTOR(BlazeRod.NINTH.getKey(), 7, Material.BLAZE_ROD, ""),
-    TENTH_DOCTOR(BlazeRod.TENTH.getKey(), 8, Material.BLAZE_ROD, ""),
-    ELEVENTH_DOCTOR(BlazeRod.ELEVENTH.getKey(), 9, Material.BLAZE_ROD, ""),
-    FOURTEENTH_DOCTOR(BlazeRod.FOURTEENTH.getKey(), 10, Material.BLAZE_ROD, ""),
-    FIFTEENTH_DOCTOR(BlazeRod.FIFTEENTH.getKey(), 11, Material.BLAZE_ROD, ""),
-    WAR_DOCTOR(BlazeRod.WAR.getKey(), 12, Material.BLAZE_ROD, ""),
-    MASTER(BlazeRod.MASTER.getKey(), 13, Material.BLAZE_ROD, ""),
-    SARAH_JANE(BlazeRod.SARAH_JANE.getKey(), 14, Material.BLAZE_ROD, ""),
-    AMY_POND(BlazeRod.SONIC_PROBE.getKey(), 15, Material.BLAZE_ROD, ""),
-    RIVER_SONG(BlazeRod.RIVER_SONG.getKey(), 16, Material.BLAZE_ROD, ""),
-    MISSY(BlazeRod.UMBRELLA.getKey(), 17, Material.BLAZE_ROD, ""),
-    BRUSH_UPGRADE(Bowl.BRUSH.getKey(), 26, Material.BOWL, ""),
-    BIO_SCANNER_UPGRADE(Bowl.BIO.getKey(), 27, Material.BOWL, ""),
-    CONVERSION_UPGRADE(Bowl.CONVERSION.getKey(), 28, Material.BOWL, ""),
-    DIAMOND_UPGRADE(Bowl.DIAMOND.getKey(), 29, Material.BOWL, ""),
-    EMERALD_UPGRADE(Bowl.EMERALD.getKey(), 30, Material.BOWL, ""),
-    IGNITE_UPGRADE(Bowl.IGNITE.getKey(), 31, Material.BOWL, ""),
-    KNOCKBACK_UPGRADE(Bowl.KNOCKBACK.getKey(), 32, Material.BOWL, ""),
-    PAINTER_UPGRADE(Bowl.PAINTER.getKey(), 33, Material.BOWL, ""),
-    PICKUP_ARROWS_UPGRADE(Bowl.PICKUP.getKey(), 34, Material.BOWL, ""),
-    REDSTONE_UPGRADE(Bowl.REDSTONE.getKey(), 35, Material.BOWL, ""),
-    STANDARD_SONIC(Bowl.STANDARD_SONIC.getKey(), 36, Material.BOWL, ""),
-    INSTRUCTIONS_1_OF_3(Book.INFO.getKey(), 38, Material.BOOK, "Select your Sonic Screwdriver~type from the top two rows.~Click on the upgrades you~want to add to the sonic."),
-    INSTRUCTIONS_2_OF_3(Book.INFO.getKey(), 39, Material.BOOK, "You can reset the upgrades~by clicking the 'Standard' button.~The Artron cost for the~sonic is shown bottom left."),
-    INSTRUCTIONS_3_OF_3(Book.INFO.getKey(), 40, Material.BOOK, "The final sonic result~is shown in the middle~of the bottom row."),
-    SAVE_SETTINGS(Bowl.SAVE.getKey(), 43, Material.BOWL, "Click to save the current sonic.~No item will be generated!"),
-    GENERATE_SONIC_SCREWDRIVER(Bowl.GENERATE_SONIC_SCREWDRIVER.getKey(), 44, Material.BOWL, "Click to generate a sonic~with the current settings."),
-    ARTRON_COST(Bowl.ARTRON_BATTERY.getKey(), 45, Material.BOWL, ""),
-    SONIC_SCREWDRIVER(BlazeRod.ELEVENTH.getKey(), 49, Material.BLAZE_ROD, ""),
-    CLOSE(Bowl.CLOSE.getKey(), 53, Material.BOWL, "Close the menu without~saving or generating.");
+    MARK_I(SonicVariant.MARK1.getKey(), 0, Material.BLAZE_ROD, ""),
+    MARK_II(SonicVariant.MARK2.getKey(), 1, Material.BLAZE_ROD, ""),
+    MARK_III(SonicVariant.MARK3.getKey(), 2, Material.BLAZE_ROD, ""),
+    MARK_IV(SonicVariant.MARK4.getKey(), 3, Material.BLAZE_ROD, ""),
+    EIGHTH_DOCTOR(SonicVariant.EIGHTH.getKey(), 4, Material.BLAZE_ROD, ""),
+    TWELFTH_DOCTOR(SonicVariant.TWELFTH.getKey(), 5, Material.BLAZE_ROD, ""),
+    THIRTEENTH_DOCTOR(SonicVariant.THIRTEENTH.getKey(), 6, Material.BLAZE_ROD, ""),
+    NINTH_DOCTOR(SonicVariant.NINTH.getKey(), 7, Material.BLAZE_ROD, ""),
+    TENTH_DOCTOR(SonicVariant.TENTH.getKey(), 8, Material.BLAZE_ROD, ""),
+    ELEVENTH_DOCTOR(SonicVariant.ELEVENTH.getKey(), 9, Material.BLAZE_ROD, ""),
+    FOURTEENTH_DOCTOR(SonicVariant.FOURTEENTH.getKey(), 10, Material.BLAZE_ROD, ""),
+    FIFTEENTH_DOCTOR(SonicVariant.FIFTEENTH.getKey(), 11, Material.BLAZE_ROD, ""),
+    WAR_DOCTOR(SonicVariant.WAR.getKey(), 12, Material.BLAZE_ROD, ""),
+    MASTER(SonicVariant.MASTER.getKey(), 13, Material.BLAZE_ROD, ""),
+    SARAH_JANE(SonicVariant.SARAH_JANE.getKey(), 14, Material.BLAZE_ROD, ""),
+    AMY_POND(SonicVariant.SONIC_PROBE.getKey(), 15, Material.BLAZE_ROD, ""),
+    RIVER_SONG(SonicVariant.RIVER_SONG.getKey(), 16, Material.BLAZE_ROD, ""),
+    MISSY(SonicVariant.UMBRELLA.getKey(), 17, Material.BLAZE_ROD, ""),
+    BRUSH_UPGRADE(GuiVariant.BRUSH.getKey(), 26, Material.BOWL, ""),
+    BIO_SCANNER_UPGRADE(GuiVariant.BIO.getKey(), 27, Material.BOWL, ""),
+    CONVERSION_UPGRADE(GuiVariant.CONVERSION.getKey(), 28, Material.BOWL, ""),
+    DIAMOND_UPGRADE(GuiVariant.DIAMOND.getKey(), 29, Material.BOWL, ""),
+    EMERALD_UPGRADE(GuiVariant.EMERALD.getKey(), 30, Material.BOWL, ""),
+    IGNITE_UPGRADE(GuiVariant.IGNITE.getKey(), 31, Material.BOWL, ""),
+    KNOCKBACK_UPGRADE(GuiVariant.KNOCKBACK.getKey(), 32, Material.BOWL, ""),
+    PAINTER_UPGRADE(GuiVariant.PAINTER.getKey(), 33, Material.BOWL, ""),
+    PICKUP_ARROWS_UPGRADE(GuiVariant.PICKUP.getKey(), 34, Material.BOWL, ""),
+    REDSTONE_UPGRADE(GuiVariant.REDSTONE.getKey(), 35, Material.BOWL, ""),
+    STANDARD_SONIC(GuiVariant.STANDARD_SONIC.getKey(), 36, Material.BOWL, ""),
+    INSTRUCTIONS_1_OF_3(GuiVariant.INFO.getKey(), 38, Material.BOOK, "Select your Sonic Screwdriver~type from the top two rows.~Click on the upgrades you~want to add to the sonic."),
+    INSTRUCTIONS_2_OF_3(GuiVariant.INFO.getKey(), 39, Material.BOOK, "You can reset the upgrades~by clicking the 'Standard' button.~The Artron cost for the~sonic is shown bottom left."),
+    INSTRUCTIONS_3_OF_3(GuiVariant.INFO.getKey(), 40, Material.BOOK, "The final sonic result~is shown in the middle~of the bottom row."),
+    SAVE_SETTINGS(GuiVariant.SAVE.getKey(), 43, Material.BOWL, "Click to save the current sonic.~No item will be generated!"),
+    GENERATE_SONIC_SCREWDRIVER(GuiVariant.GENERATE_SONIC_SCREWDRIVER.getKey(), 44, Material.BOWL, "Click to generate a sonic~with the current settings."),
+    ARTRON_COST(GuiVariant.ARTRON_BATTERY.getKey(), 45, Material.BOWL, ""),
+    SONIC_SCREWDRIVER(SonicVariant.ELEVENTH.getKey(), 49, Material.BLAZE_ROD, ""),
+    CLOSE(GuiVariant.CLOSE.getKey(), 53, Material.BOWL, "Close the menu without~saving or generating.");
 
     private final NamespacedKey model;
     private final int slot;

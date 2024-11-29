@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.listeners.controls;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.camera.TARDISCamera;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Glass;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.ModelledControl;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -89,10 +89,10 @@ public class TARDISMonitorFrameListener implements Listener {
                         // switch the switches
                         NamespacedKey cmd = im.getItemModel();
                         switch (cmd.getKey().split("_")[2]) {
-                            case "left" -> im.setItemModel(Glass.MONITOR_FRAME_MIDDLE.getKey());
-                            case "middle" -> im.setItemModel(Glass.MONITOR_FRAME_RIGHT.getKey());
+                            case "left" -> im.setItemModel(ModelledControl.MONITOR_FRAME_MIDDLE.getKey());
+                            case "middle" -> im.setItemModel(ModelledControl.MONITOR_FRAME_RIGHT.getKey());
                             // right
-                            default -> im.setItemModel(Glass.MONITOR_FRAME_LEFT.getKey());
+                            default -> im.setItemModel(ModelledControl.MONITOR_FRAME_LEFT.getKey());
                         }
                         is.setItemMeta(im);
                         frame.setItem(is);

@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.custommodeldata;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Arrow;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.ArrowVariant;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.custommodeldata.keys.Bucket;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
@@ -26,12 +26,12 @@ import org.bukkit.NamespacedKey;
 public enum GUISavedPrograms {
 
     // Saved Programs
-    BACK_TO_EDITOR(Arrow.BACK.getKey(), 45, Material.ARROW),
-    LOAD_SELECTED_PROGRAM_IN_EDITOR(Bowl.LOAD_SELECTED_PROGRAM_IN_EDITOR.getKey(), 47, Material.BOWL),
+    BACK_TO_EDITOR(ArrowVariant.BACK.getKey(), 45, Material.ARROW),
+    LOAD_SELECTED_PROGRAM_IN_EDITOR(GuiVariant.LOAD_SELECTED_PROGRAM_IN_EDITOR.getKey(), 47, Material.BOWL),
     DEACTIVATE_SELECTED_PROGRAM(Bucket.DEACTIVATE.getKey(), 48, Material.BUCKET),
     DELETE_SELECTED_PROGRAM(Bucket.DELETE.getKey(), 49, Material.BUCKET),
-    CHECK_OUT_SELECTED_PROGRAM(Bowl.CHECK_OUT_SELECTED_PROGRAM.getKey(), 51, Material.BOWL),
-    CLOSE(Bowl.CLOSE.getKey(), 53, Material.BOWL);
+    CHECK_OUT_SELECTED_PROGRAM(GuiVariant.CHECK_OUT_SELECTED_PROGRAM.getKey(), 51, Material.BOWL),
+    CLOSE(GuiVariant.CLOSE.getKey(), 53, Material.BOWL);
 
     private final NamespacedKey model;
     private final int slot;

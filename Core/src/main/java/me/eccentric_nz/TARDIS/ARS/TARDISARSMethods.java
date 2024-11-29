@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.RoomBlock;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.RoomVariant;
 import me.eccentric_nz.TARDIS.custommodeldata.keys.Wool;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
@@ -178,7 +178,7 @@ public class TARDISARSMethods {
             im.setItemModel(ars.getKey());
         } else {
             im.setLore(null);
-            im.setItemModel(RoomBlock.SLOT.getKey());
+            im.setItemModel(RoomVariant.SLOT.getKey());
         }
         is.setItemMeta(im);
         view.setItem(slot, is);

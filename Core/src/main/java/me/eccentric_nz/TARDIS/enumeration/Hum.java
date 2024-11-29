@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bowl;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
 import org.bukkit.NamespacedKey;
 
 /**
@@ -24,18 +24,18 @@ import org.bukkit.NamespacedKey;
  */
 public enum Hum {
 
-    ALIEN(Bowl.ALIEN.getKey()),
-    ATMOSPHERE(Bowl.ATMOSPHERE.getKey()),
-    COMPUTER(Bowl.COMPUTER.getKey()),
-    COPPER(Bowl.COPPER.getKey()),
-    CORAL(Bowl.CORAL.getKey()),
-    GALAXY(Bowl.GALAXY.getKey()),
-    LEARNING(Bowl.LEARNING.getKey()),
-    MIND(Bowl.MIND.getKey()),
-    NEON(Bowl.NEON.getKey()),
-    SLEEPING(Bowl.SLEEPING.getKey()),
-    VOID(Bowl.VOID.getKey()),
-    RANDOM(Bowl.RANDOM.getKey());
+    ALIEN(GuiVariant.ALIEN.getKey()),
+    ATMOSPHERE(GuiVariant.ATMOSPHERE.getKey()),
+    COMPUTER(GuiVariant.COMPUTER.getKey()),
+    COPPER(GuiVariant.COPPER.getKey()),
+    CORAL(GuiVariant.CORAL.getKey()),
+    GALAXY(GuiVariant.GALAXY.getKey()),
+    LEARNING(GuiVariant.LEARNING.getKey()),
+    MIND(GuiVariant.MIND.getKey()),
+    NEON(GuiVariant.NEON.getKey()),
+    SLEEPING(GuiVariant.SLEEPING.getKey()),
+    VOID(GuiVariant.VOID.getKey()),
+    RANDOM(GuiVariant.RANDOM.getKey());
     
     private final NamespacedKey key;
 

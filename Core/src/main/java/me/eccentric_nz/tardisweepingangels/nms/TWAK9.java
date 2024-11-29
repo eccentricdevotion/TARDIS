@@ -2,7 +2,7 @@ package me.eccentric_nz.tardisweepingangels.nms;
 
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bone;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.K9Variant;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -30,14 +30,14 @@ public class TWAK9 extends TWAFollower {
 
     private static final String entityId = "k9";
     protected final NamespacedKey[] frames = new NamespacedKey[]{
-            Bone.K9_0.getKey(),
-            Bone.K9_1.getKey(),
-            Bone.K9_2.getKey(),
-            Bone.K9_1.getKey(),
-            Bone.K9_0.getKey(),
-            Bone.K9_3.getKey(),
-            Bone.K9_4.getKey(),
-            Bone.K9_3.getKey()
+            K9Variant.K9_0.getKey(),
+            K9Variant.K9_1.getKey(),
+            K9Variant.K9_2.getKey(),
+            K9Variant.K9_1.getKey(),
+            K9Variant.K9_0.getKey(),
+            K9Variant.K9_3.getKey(),
+            K9Variant.K9_4.getKey(),
+            K9Variant.K9_3.getKey()
     };
 
     public TWAK9(Level world) {
@@ -67,7 +67,7 @@ public class TWAK9 extends TWAFollower {
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
             ItemMeta im = bukkit.getItemMeta();
             if (oldX == getX() && oldZ == getZ()) {
-                im.setItemModel(Bone.K9.getKey());
+                im.setItemModel(K9Variant.K9.getKey());
                 i = 0;
             } else {
                 // play move animation
