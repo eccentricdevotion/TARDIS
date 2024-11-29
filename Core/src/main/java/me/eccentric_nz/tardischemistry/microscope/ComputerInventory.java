@@ -24,7 +24,7 @@ class ComputerInventory {
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(screen.getName());
             im.setItemModel(ChemistryEquipment.COMPUTER_DISK.getKey());
-            im.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.INTEGER, screen.getCustomModelData());
+            im.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.STRING, screen.getModel().getKey());
             is.setItemMeta(im);
             stacks[screen.ordinal()] = is;
         }

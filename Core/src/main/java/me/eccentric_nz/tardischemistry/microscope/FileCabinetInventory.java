@@ -24,7 +24,7 @@ class FileCabinetInventory {
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(view.getName());
             im.setItemModel(ChemistryEquipment.FOLDER.getKey());
-            im.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.INTEGER, view.getCustomModelData());
+            im.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.STRING, view.getModel().getKey());
             is.setItemMeta(im);
             stacks[view.ordinal()] = is;
         }

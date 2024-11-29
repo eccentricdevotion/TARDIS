@@ -31,6 +31,7 @@ public enum SonicVariant {
     NINTH_OPEN(new NamespacedKey(TARDIS.plugin, "sonic/ninth_open")),
     TENTH_OPEN(new NamespacedKey(TARDIS.plugin, "sonic/tenth_open")),
     ELEVENTH_OPEN(new NamespacedKey(TARDIS.plugin, "sonic/eleventh_open")),
+    TWELFTH_ON(new NamespacedKey(TARDIS.plugin, "sonic/twelfth_on")),
     THIRTEENTH_ON(new NamespacedKey(TARDIS.plugin, "sonic/thirteenth_on")),
     FOURTEENTH_OPEN(new NamespacedKey(TARDIS.plugin, "sonic/fourteenth_open")),
     FIFTEENTH_ON(new NamespacedKey(TARDIS.plugin, "sonic/fifteenth_on")),

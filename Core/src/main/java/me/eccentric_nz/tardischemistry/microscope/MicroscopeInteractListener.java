@@ -1,6 +1,7 @@
 package me.eccentric_nz.tardischemistry.microscope;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodeldata.keys.Specimen;
 import org.bukkit.Rotation;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -45,7 +46,7 @@ public class MicroscopeInteractListener implements Listener {
             if (!im.hasDisplayName()) {
                 return;
             }
-            if (!im.hasCustomModelData() || im.getCustomModelData() != 10000) {
+            if (!im.hasItemModel()) {
                 return;
             }
             // get the block
@@ -71,7 +72,7 @@ public class MicroscopeInteractListener implements Listener {
             equipment.setAmount(1);
             frame.setItem(equipment);
             // set the item that the microscope should display
-            frame.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.INTEGER, 10000);
+            frame.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.STRING, Specimen.EMPTY_SLIDE.getKey().getKey());
             // remove item from player's hand
             MicroscopeUtils.reduceInHand(player);
         }

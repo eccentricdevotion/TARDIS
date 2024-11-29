@@ -24,7 +24,7 @@ class SlideInventory {
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(slide.getName());
             im.setItemModel(ChemistryEquipment.GLASS_SLIDE.getKey());
-            im.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.INTEGER, slide.getCustomModelData());
+            im.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.STRING, slide.getModel().getKey());
             is.setItemMeta(im);
             stacks[slide.ordinal()] = is;
         }

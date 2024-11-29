@@ -27,13 +27,10 @@ class MicroscopeUtils {
         if (!im.hasDisplayName()) {
             return false;
         }
-        if (!im.hasCustomModelData()) {
+        if (!im.hasItemModel()) {
             return false;
         }
-        if (im.getCustomModelData() != 9999) {
-            return false;
-        }
-        return im.getPersistentDataContainer().has(plugin.getMicroscopeKey(), PersistentDataType.INTEGER);
+        return im.getPersistentDataContainer().has(plugin.getMicroscopeKey(), PersistentDataType.STRING);
     }
 
     static void reduceInHand(Player player) {
