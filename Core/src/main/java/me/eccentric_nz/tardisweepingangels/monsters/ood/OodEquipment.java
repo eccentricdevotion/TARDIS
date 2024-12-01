@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.monsters.ood;
 
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.OodVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.OodVariant;
 import me.eccentric_nz.tardisweepingangels.equip.DisguiseEquipper;
 import me.eccentric_nz.tardisweepingangels.equip.FollowerEquipper;
 import me.eccentric_nz.tardisweepingangels.nms.TWAOod;

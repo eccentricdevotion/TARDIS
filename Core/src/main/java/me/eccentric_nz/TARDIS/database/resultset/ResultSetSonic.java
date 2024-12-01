@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.database.resultset;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.SonicVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Sonic;
 import me.eccentric_nz.TARDIS.recipes.shaped.SonicScrewdriverRecipe;

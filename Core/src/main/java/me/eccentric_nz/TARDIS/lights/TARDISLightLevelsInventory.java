@@ -2,9 +2,9 @@ package me.eccentric_nz.TARDIS.lights;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.LightLevel;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonTemplate;
-import me.eccentric_nz.TARDIS.custommodeldata.GUILights;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIParticle;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonTemplate;
+import me.eccentric_nz.TARDIS.custommodels.GUILights;
+import me.eccentric_nz.TARDIS.custommodels.GUIParticle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAllLightLevels;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

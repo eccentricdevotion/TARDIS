@@ -1,9 +1,8 @@
 package me.eccentric_nz.TARDIS.rooms.eye;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIArtronStorage;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Bucket;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Whoniverse;
+import me.eccentric_nz.TARDIS.custommodels.GUIArtronStorage;
+import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronStorage;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

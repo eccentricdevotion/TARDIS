@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.utils;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIWeather;
+import me.eccentric_nz.TARDIS.custommodels.GUIWeather;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

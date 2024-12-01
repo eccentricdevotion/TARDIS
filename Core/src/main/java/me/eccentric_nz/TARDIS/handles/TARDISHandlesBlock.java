@@ -16,9 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.HandlesVariant;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.DiskVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.HandlesVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
 import org.bukkit.NamespacedKey;
 
 import java.util.ArrayList;

@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.companionGUI;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUICompanion;
+import me.eccentric_nz.TARDIS.custommodels.GUICompanion;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;

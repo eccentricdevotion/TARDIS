@@ -189,8 +189,8 @@ public class TARDISSchematicBuilder {
                                     frame.addProperty("item", type.toString());
                                     if (item.hasItemMeta()) {
                                         ItemMeta im = item.getItemMeta();
-                                        if (im.hasCustomModelData()) {
-                                            frame.addProperty("cmd", im.getCustomModelData());
+                                        if (im.hasItemModel()) {
+                                            frame.addProperty("cmd", im.getItemModel().getKey());
                                         }
                                         if (im.hasDisplayName()) {
                                             frame.addProperty("name", im.getDisplayName());

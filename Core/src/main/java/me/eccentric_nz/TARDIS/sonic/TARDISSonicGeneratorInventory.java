@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISonicGenerator;
+import me.eccentric_nz.TARDIS.custommodels.GUISonicGenerator;
 import me.eccentric_nz.TARDIS.database.data.Sonic;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardischemistry.microscope;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Specimen;
+import me.eccentric_nz.TARDIS.custommodels.keys.Specimen;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.NamespacedKey;
 

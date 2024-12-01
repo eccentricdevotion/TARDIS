@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIControlCentre;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.PrefsVariant;
+import me.eccentric_nz.TARDIS.custommodels.GUIControlCentre;
+import me.eccentric_nz.TARDIS.custommodels.keys.PrefsVariant;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;

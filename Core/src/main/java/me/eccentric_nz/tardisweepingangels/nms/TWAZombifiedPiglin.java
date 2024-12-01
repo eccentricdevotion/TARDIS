@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.nms;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.*;
+import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;

@@ -16,11 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.SonicVariant;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Wool;
+import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 
 import java.util.Locale;

@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.howto;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;

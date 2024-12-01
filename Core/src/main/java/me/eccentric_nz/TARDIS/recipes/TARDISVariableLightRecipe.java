@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.LightVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.LightVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.ChatColor;

@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonConstructor;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIUpgrade;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPoliceBoxes;
+import me.eccentric_nz.TARDIS.custommodels.GUIUpgrade;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.entity.Player;

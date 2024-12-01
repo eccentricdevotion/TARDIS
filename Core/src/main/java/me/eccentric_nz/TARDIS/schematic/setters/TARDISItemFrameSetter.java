@@ -22,11 +22,7 @@ import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
-import me.eccentric_nz.tardischemistry.microscope.LabEquipment;
-import org.bukkit.DyeColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Rotation;
+import org.bukkit.*;
 import org.bukkit.block.Banner;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.banner.Pattern;
@@ -57,15 +53,16 @@ public class TARDISItemFrameSetter {
         Location l = new Location(start.getWorld(), start.getBlockX() + px, start.getBlockY() + py, start.getBlockZ() + pz);
         ItemFrame frame = (ItemFrame) start.getWorld().spawnEntity(l, (json.get("glowing").getAsBoolean()) ? EntityType.GLOW_ITEM_FRAME : EntityType.ITEM_FRAME);
         frame.setFacingDirection(facing, true);
-        int cmd = 1;
+        String cmd = "";
         if (json.has("item")) {
             try {
                 Material material = Material.valueOf(json.get("item").getAsString());
                 ItemStack is = new ItemStack(material);
                 ItemMeta im = is.getItemMeta();
                 if (json.has("cmd")) {
-                    cmd = json.get("cmd").getAsInt();
-                    im.setCustomModelData(cmd);
+                    cmd = json.get("cmd").getAsString();
+                    NamespacedKey key = new NamespacedKey(TARDIS.plugin, cmd);
+                    im.setItemModel(key);
                 }
                 if (json.has("name")) {
                     im.setDisplayName(json.get("name").getAsString());
@@ -102,7 +99,7 @@ public class TARDISItemFrameSetter {
             }
         }
         if (json.has("rotor") && id != -1) {
-            frame.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
+            frame.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, cmd);
             // update rotor record
             TARDISTimeRotor.updateRotorRecord(id, frame.getUniqueId().toString());
         }

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Wool;
+import me.eccentric_nz.TARDIS.custommodels.keys.Wool;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

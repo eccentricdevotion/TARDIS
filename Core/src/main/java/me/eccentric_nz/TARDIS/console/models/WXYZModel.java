@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.console.models;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ModelledButton;
+import me.eccentric_nz.TARDIS.custommodels.keys.ModelledButton;
 import org.bukkit.Sound;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;

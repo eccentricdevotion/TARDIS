@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.CircuitVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import org.bukkit.NamespacedKey;
 
 import java.util.HashMap;

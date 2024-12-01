@@ -1,6 +1,6 @@
 package me.eccentric_nz.TARDIS.rooms.eye;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.EyeVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.EyeVariant;
 import org.bukkit.NamespacedKey;
 
 public enum Capacitor {

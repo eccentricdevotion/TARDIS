@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.chameleon.gui;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

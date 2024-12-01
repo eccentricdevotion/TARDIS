@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon.construct;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonConstructor;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

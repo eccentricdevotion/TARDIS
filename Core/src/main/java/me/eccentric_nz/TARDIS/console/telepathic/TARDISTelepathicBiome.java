@@ -1,8 +1,8 @@
 package me.eccentric_nz.TARDIS.console.telepathic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIMap;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIWallFloor;
+import me.eccentric_nz.TARDIS.custommodels.GUIMap;
+import me.eccentric_nz.TARDIS.custommodels.GUIWallFloor;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;

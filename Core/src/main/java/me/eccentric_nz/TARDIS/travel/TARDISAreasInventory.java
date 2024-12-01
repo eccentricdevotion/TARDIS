@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.travel;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIArea;
+import me.eccentric_nz.TARDIS.custommodels.GUIArea;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import org.bukkit.Material;

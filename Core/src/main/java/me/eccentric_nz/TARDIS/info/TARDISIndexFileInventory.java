@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.info;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

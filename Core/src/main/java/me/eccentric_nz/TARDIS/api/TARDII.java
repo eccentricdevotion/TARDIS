@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.blueprints.*;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISAbandoned;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.DiskVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;

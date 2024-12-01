@@ -1,6 +1,6 @@
 package me.eccentric_nz.TARDIS.console.models;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.SonicItem;
+import me.eccentric_nz.TARDIS.custommodels.keys.SonicItem;
 import org.bukkit.Sound;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;

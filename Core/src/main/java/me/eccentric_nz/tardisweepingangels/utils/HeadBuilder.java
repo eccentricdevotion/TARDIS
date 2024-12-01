@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.K9Variant;
+import me.eccentric_nz.TARDIS.custommodels.keys.K9Variant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

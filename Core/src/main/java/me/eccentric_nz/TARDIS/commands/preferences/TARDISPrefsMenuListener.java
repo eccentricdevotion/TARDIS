@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.autonomous.TARDISAutonomousInventory;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigMenuInventory;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIPlayerPreferences;
+import me.eccentric_nz.TARDIS.custommodels.GUIPlayerPreferences;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;

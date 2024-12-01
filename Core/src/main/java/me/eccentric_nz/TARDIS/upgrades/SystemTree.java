@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.upgrades;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.SystemTreeVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SystemTreeVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

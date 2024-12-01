@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleon;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleon;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.ChatColor;

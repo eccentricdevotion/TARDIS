@@ -18,7 +18,7 @@ package me.eccentric_nz.tardisweepingangels.monsters.clockwork_droids;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.DroidVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.DroidVariant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;

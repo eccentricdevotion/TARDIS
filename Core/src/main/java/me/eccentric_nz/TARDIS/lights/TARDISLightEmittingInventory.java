@@ -1,8 +1,8 @@
 package me.eccentric_nz.TARDIS.lights;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonTemplate;
-import me.eccentric_nz.TARDIS.custommodeldata.GUILights;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonTemplate;
+import me.eccentric_nz.TARDIS.custommodels.GUILights;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 

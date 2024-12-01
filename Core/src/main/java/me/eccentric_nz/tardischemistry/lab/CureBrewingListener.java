@@ -18,7 +18,7 @@ package me.eccentric_nz.tardischemistry.lab;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.CureVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.CureVariant;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;

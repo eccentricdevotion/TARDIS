@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.utils;
 
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.*;
+import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import me.eccentric_nz.TARDIS.skins.CharacterSkins;
 import me.eccentric_nz.TARDIS.skins.MonsterSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;

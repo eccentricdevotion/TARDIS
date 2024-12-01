@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.nms;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.SeaDevilVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SeaDevilVariant;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.monster.Drowned;

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.RoomVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.RoomVariant;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import org.bukkit.NamespacedKey;
 

@@ -1,8 +1,8 @@
 package me.eccentric_nz.TARDIS.commands.areas;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIMap;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIUpgrade;
+import me.eccentric_nz.TARDIS.custommodels.GUIMap;
+import me.eccentric_nz.TARDIS.custommodels.GUIUpgrade;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreaLocations;
 import org.bukkit.Location;
 import org.bukkit.Material;

@@ -2,8 +2,8 @@ package me.eccentric_nz.TARDIS.console.telepathic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIMap;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.PrefsVariant;
+import me.eccentric_nz.TARDIS.custommodels.GUIMap;
+import me.eccentric_nz.TARDIS.custommodels.keys.PrefsVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

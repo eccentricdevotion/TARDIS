@@ -9,7 +9,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISSculkShrieker;
 import me.eccentric_nz.TARDIS.console.interaction.SonicConsoleRecharge;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.SonicItem;
+import me.eccentric_nz.TARDIS.custommodels.keys.SonicItem;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.*;

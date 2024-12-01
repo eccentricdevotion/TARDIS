@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.howto;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIWallFloor;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodels.GUIWallFloor;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

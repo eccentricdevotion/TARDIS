@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.DiskVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

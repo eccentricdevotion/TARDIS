@@ -6,7 +6,7 @@ import com.google.gson.JsonParser;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.*;
+import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

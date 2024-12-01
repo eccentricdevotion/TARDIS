@@ -1,9 +1,9 @@
 package me.eccentric_nz.TARDIS.console;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.DirectionVariant;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ModelledButton;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ModelledControl;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.SonicItem;
+import me.eccentric_nz.TARDIS.custommodels.keys.DirectionVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ModelledButton;
+import me.eccentric_nz.TARDIS.custommodels.keys.ModelledControl;
+import me.eccentric_nz.TARDIS.custommodels.keys.SonicItem;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.util.Vector;

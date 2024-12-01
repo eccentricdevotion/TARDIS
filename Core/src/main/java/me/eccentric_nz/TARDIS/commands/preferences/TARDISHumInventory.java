@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIInteriorSounds;
+import me.eccentric_nz.TARDIS.custommodels.GUIInteriorSounds;
 import me.eccentric_nz.TARDIS.enumeration.Hum;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

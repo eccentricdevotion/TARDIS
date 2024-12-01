@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.travel.save;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISaves;
+import me.eccentric_nz.TARDIS.custommodels.GUISaves;
 import me.eccentric_nz.TARDIS.database.data.Planet;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDeathLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;

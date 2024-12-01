@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Whoniverse;
+import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
 import org.bukkit.GameMode;
 import org.bukkit.Location;

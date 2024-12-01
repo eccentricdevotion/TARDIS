@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.chameleon.gui;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ChameleonVariant;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ColouredVariant;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPoliceBoxes;
+import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;

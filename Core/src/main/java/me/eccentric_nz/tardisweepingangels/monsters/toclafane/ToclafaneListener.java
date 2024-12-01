@@ -18,7 +18,7 @@ package me.eccentric_nz.tardisweepingangels.monsters.toclafane;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ToclafaneVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ToclafaneVariant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;

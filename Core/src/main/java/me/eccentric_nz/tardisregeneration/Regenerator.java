@@ -3,7 +3,7 @@ package me.eccentric_nz.tardisregeneration;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.RegenerationVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.RegenerationVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetRegenerations;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.skins.DoctorSkins;

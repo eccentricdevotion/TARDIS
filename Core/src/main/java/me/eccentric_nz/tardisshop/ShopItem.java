@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardisshop;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.*;
+import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

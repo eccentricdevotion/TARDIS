@@ -1,10 +1,10 @@
 package me.eccentric_nz.TARDIS.console;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ConsolePart;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.DirectionVariant;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ModelledControl;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.PrefsVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ConsolePart;
+import me.eccentric_nz.TARDIS.custommodels.keys.DirectionVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ModelledControl;
+import me.eccentric_nz.TARDIS.custommodels.keys.PrefsVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;

@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.autonomous;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIAutonomous;
+import me.eccentric_nz.TARDIS.custommodels.GUIAutonomous;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAutonomousSave;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;

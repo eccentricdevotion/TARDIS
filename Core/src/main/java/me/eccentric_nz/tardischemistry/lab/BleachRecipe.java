@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardischemistry.lab;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ChemistryEquipment;
+import me.eccentric_nz.TARDIS.custommodels.keys.ChemistryEquipment;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;

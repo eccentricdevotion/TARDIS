@@ -2,7 +2,7 @@ package me.eccentric_nz.tardisweepingangels.nms;
 
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.JudoonVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.JudoonVariant;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;

@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisModel;
@@ -125,7 +127,29 @@ public class TARDISBuilderUtility {
         Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, bd.getTardisID(), true);
         ItemStack is = new ItemStack(dye, 1);
         ItemMeta im = is.getItemMeta();
-        im.setCustomModelData(1001);
+        switch (dye) {
+            case BLACK_DYE -> im.setItemModel(ChameleonVariant.BLACK.getKey());
+            case RED_DYE -> im.setItemModel(ChameleonVariant.RED.getKey());
+            case BROWN_DYE -> im.setItemModel(ChameleonVariant.BROWN.getKey());
+            case GREEN_DYE -> im.setItemModel(ChameleonVariant.GREEN.getKey());
+            case BLUE_DYE -> im.setItemModel(ChameleonVariant.BLUE.getKey());
+            case PURPLE_DYE -> im.setItemModel(ChameleonVariant.PURPLE.getKey());
+            case CYAN_DYE -> im.setItemModel(ChameleonVariant.CYAN.getKey());
+            case LIGHT_GRAY_DYE -> im.setItemModel(ChameleonVariant.LIGHT_GRAY.getKey());
+            case GRAY_DYE -> im.setItemModel(ChameleonVariant.GRAY.getKey());
+            case PINK_DYE -> im.setItemModel(ChameleonVariant.PINK.getKey());
+            case LIME_DYE -> im.setItemModel(ChameleonVariant.LIME.getKey());
+            case YELLOW_DYE -> im.setItemModel(ChameleonVariant.YELLOW.getKey());
+            case LIGHT_BLUE_DYE -> im.setItemModel(ChameleonVariant.LIGHT_BLUE.getKey());
+            case MAGENTA_DYE -> im.setItemModel(ChameleonVariant.MAGENTA.getKey());
+            case ORANGE_DYE -> im.setItemModel(ChameleonVariant.ORANGE.getKey());
+            case WHITE_DYE -> im.setItemModel(ChameleonVariant.WHITE.getKey());
+            case CYAN_STAINED_GLASS_PANE -> im.setItemModel(ChameleonVariant.TENNANT.getKey());
+            case LEATHER_HORSE_ARMOR -> im.setItemModel(ColouredVariant.TARDIS_TINTED.getKey());
+            case WOLF_SPAWN_EGG -> im.setItemModel(ChameleonVariant.BAD_WOLF_CLOSED.getKey());
+            case ENDER_PEARL -> im.setItemModel(ChameleonVariant.PANDORICA.getKey());
+            case GRAY_STAINED_GLASS_PANE -> im.setItemModel(ChameleonVariant.WEEPING_ANGEL.getKey());
+        }
         if (bd.shouldAddSign()) {
             String pb = "";
             switch (preset) {

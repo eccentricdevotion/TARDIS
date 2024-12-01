@@ -17,8 +17,8 @@
 package me.eccentric_nz.tardisweepingangels.equip;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.SilurianVariant;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.DalekVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SilurianVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.DalekVariant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Bukkit;

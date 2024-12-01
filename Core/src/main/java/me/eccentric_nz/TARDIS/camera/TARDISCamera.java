@@ -1,8 +1,8 @@
 package me.eccentric_nz.TARDIS.camera;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ChameleonVariant;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ColouredVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;

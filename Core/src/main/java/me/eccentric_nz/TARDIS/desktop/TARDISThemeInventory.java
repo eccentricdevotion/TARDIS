@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.SeedBlock;
+import me.eccentric_nz.TARDIS.custommodels.keys.SeedBlock;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

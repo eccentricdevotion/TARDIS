@@ -1,6 +1,6 @@
 package me.eccentric_nz.TARDIS.console.models;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ConsoleVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ConsoleVariant;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 

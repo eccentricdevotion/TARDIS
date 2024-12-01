@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.particles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIParticle;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ParticleItem;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.PrefsVariant;
+import me.eccentric_nz.TARDIS.custommodels.GUIParticle;
+import me.eccentric_nz.TARDIS.custommodels.keys.ParticleItem;
+import me.eccentric_nz.TARDIS.custommodels.keys.PrefsVariant;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetParticlePrefs;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;

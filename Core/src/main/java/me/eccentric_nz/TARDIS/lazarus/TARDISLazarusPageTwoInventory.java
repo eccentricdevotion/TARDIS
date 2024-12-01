@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIGeneticManipulator;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPoliceBoxes;
+import me.eccentric_nz.TARDIS.custommodels.GUIGeneticManipulator;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

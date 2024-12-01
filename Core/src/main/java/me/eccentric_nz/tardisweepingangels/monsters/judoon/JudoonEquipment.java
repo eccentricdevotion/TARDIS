@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.JudoonVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.JudoonVariant;
 import me.eccentric_nz.tardisweepingangels.equip.DisguiseEquipper;
 import me.eccentric_nz.tardisweepingangels.equip.FollowerEquipper;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;

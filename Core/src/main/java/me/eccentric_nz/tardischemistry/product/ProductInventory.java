@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardischemistry.product;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
+import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.element;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.PeriodicElement;
+import me.eccentric_nz.TARDIS.custommodels.keys.PeriodicElement;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

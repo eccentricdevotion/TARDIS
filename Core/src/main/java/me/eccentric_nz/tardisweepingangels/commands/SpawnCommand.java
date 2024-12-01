@@ -18,7 +18,7 @@ package me.eccentric_nz.tardisweepingangels.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.DalekVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.DalekVariant;
 import me.eccentric_nz.TARDIS.database.data.Follower;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;

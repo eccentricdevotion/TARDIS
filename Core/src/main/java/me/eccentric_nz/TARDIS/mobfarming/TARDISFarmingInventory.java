@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.mobfarming;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIFarming;
+import me.eccentric_nz.TARDIS.custommodels.GUIFarming;
 import me.eccentric_nz.TARDIS.database.data.FarmPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarmingPrefs;
 import org.bukkit.ChatColor;

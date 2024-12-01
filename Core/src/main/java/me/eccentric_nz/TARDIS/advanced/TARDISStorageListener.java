@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.CircuitVariant;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.DiskVariant;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.GuiVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;

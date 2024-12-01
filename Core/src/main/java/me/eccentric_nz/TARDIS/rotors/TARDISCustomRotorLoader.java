@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.rotors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.RotorVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.RotorVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

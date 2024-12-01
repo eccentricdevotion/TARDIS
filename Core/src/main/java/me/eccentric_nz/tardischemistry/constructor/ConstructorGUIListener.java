@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardischemistry.constructor;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.HandlesVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.HandlesVariant;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.tardischemistry.element.Element;
 import me.eccentric_nz.tardischemistry.element.ElementBuilder;

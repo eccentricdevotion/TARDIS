@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon.utils;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ChameleonVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ArmorStand;

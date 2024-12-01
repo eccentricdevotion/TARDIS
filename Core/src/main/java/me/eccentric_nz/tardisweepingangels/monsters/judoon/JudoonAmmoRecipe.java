@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ArrowVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ArrowVariant;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

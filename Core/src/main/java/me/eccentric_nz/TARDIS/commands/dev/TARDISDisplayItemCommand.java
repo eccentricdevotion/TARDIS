@@ -44,7 +44,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Transformation;
-import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
 
 import java.util.HashMap;
@@ -123,8 +122,6 @@ public class TARDISDisplayItemCommand {
                     );
                     display.setTransformation(initial);
                     int period = 40;
-                    float angle = (float) Math.PI;
-                    AxisAngle4f axisAngleRotMat = new AxisAngle4f(angle, new Vector3f(0, 1, 0));
                     plugin.getTrackerKeeper().setAnimateTask(plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new InterpolatedAnimation(display, period), 5, period));
                 } else {
                     for (Entity e : player.getPassengers()) {

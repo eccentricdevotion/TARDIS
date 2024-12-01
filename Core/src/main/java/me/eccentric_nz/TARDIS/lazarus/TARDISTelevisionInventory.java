@@ -1,9 +1,9 @@
 package me.eccentric_nz.TARDIS.lazarus;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIGeneticManipulator;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPoliceBoxes;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodels.GUIGeneticManipulator;
 import me.eccentric_nz.TARDIS.skins.*;
 import me.eccentric_nz.TARDIS.skins.tv.PlayerHeadCache;
 import org.bukkit.Material;

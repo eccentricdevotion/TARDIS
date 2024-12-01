@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
-import me.eccentric_nz.TARDIS.custommodeldata.GUIKeyPreferences;
+import me.eccentric_nz.TARDIS.custommodels.GUIKeyPreferences;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 

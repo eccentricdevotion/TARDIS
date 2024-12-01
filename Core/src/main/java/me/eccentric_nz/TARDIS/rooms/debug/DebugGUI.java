@@ -1,6 +1,6 @@
 package me.eccentric_nz.TARDIS.rooms.debug;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.*;
+import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import org.bukkit.Material;
 
 import java.util.List;

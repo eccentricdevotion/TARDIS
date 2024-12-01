@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.monsters.empty_child;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.EmptyChildVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.EmptyChildVariant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

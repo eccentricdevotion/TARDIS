@@ -1,7 +1,7 @@
 package me.eccentric_nz.tardischemistry.microscope;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Specimen;
+import me.eccentric_nz.TARDIS.custommodels.keys.Specimen;
 import org.bukkit.Rotation;
 import org.bukkit.World;
 import org.bukkit.block.Block;

@@ -1,8 +1,8 @@
 package me.eccentric_nz.TARDIS.rooms.debug;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.ArrowVariant;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.HandlesVariant;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Whoniverse;
+import me.eccentric_nz.TARDIS.custommodels.keys.ArrowVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.HandlesVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import org.bukkit.Material;
 
 import java.util.List;

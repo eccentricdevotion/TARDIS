@@ -1,6 +1,6 @@
 package me.eccentric_nz.TARDIS.skins;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.RegenerationVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.RegenerationVariant;
 import org.bukkit.NamespacedKey;
 
 import java.util.HashMap;

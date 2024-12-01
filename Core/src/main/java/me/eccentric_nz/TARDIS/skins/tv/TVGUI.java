@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.skins.tv;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUITelevision;
+import me.eccentric_nz.TARDIS.custommodels.GUITelevision;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 

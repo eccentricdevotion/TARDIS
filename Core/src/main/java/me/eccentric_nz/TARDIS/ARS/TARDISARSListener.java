@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.ARS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.RoomVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.RoomVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;

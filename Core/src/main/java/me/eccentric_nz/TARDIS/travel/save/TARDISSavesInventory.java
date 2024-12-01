@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.travel.save;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISaves;
+import me.eccentric_nz.TARDIS.custommodels.GUISaves;
 import me.eccentric_nz.TARDIS.database.data.Destination;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinationsByPlanet;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;

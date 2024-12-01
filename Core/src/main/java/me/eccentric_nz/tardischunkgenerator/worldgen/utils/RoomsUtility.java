@@ -72,14 +72,15 @@ public class RoomsUtility {
         Location l = new Location(null, x, y, z);
         ItemFrame frame = (ItemFrame) region.spawnEntity(l, (json.get("glowing").getAsBoolean()) ? EntityType.GLOW_ITEM_FRAME : EntityType.ITEM_FRAME);
         frame.setFacingDirection(facing, true);
-        int cmd = 1;
+        String cmd = "";
         if (json.has("item")) {
             try {
                 ItemStack is = new ItemStack(Material.valueOf(json.get("item").getAsString()));
                 ItemMeta im = is.getItemMeta();
                 if (json.has("cmd")) {
-                    cmd = json.get("cmd").getAsInt();
-                    im.setCustomModelData(cmd);
+                    cmd = json.get("cmd").getAsString();
+                    NamespacedKey key = new NamespacedKey(TARDIS.plugin, cmd);
+                    im.setItemModel(key);
                 }
                 if (json.has("name")) {
                     im.setDisplayName(json.get("name").getAsString());

@@ -1,9 +1,9 @@
 package me.eccentric_nz.TARDIS.lights;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonConstructor;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonTemplate;
-import me.eccentric_nz.TARDIS.custommodeldata.GUILights;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonTemplate;
+import me.eccentric_nz.TARDIS.custommodels.GUILights;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightPrefs;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Material;

@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.monsters.k9;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.K9Variant;
+import me.eccentric_nz.TARDIS.custommodels.keys.K9Variant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

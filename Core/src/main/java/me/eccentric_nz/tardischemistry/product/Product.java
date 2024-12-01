@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.tardischemistry.product;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.*;
+import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 

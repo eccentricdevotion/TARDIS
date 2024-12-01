@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardischemistry.creative;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
+import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
 import me.eccentric_nz.tardischemistry.lab.Lab;
 import me.eccentric_nz.tardischemistry.lab.LabBuilder;
 import me.eccentric_nz.tardischemistry.product.Product;

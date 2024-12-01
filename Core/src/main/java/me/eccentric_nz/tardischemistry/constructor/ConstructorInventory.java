@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.tardischemistry.constructor;
 
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
-import me.eccentric_nz.TARDIS.custommodeldata.keys.HandlesVariant;
+import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
+import me.eccentric_nz.TARDIS.custommodels.keys.HandlesVariant;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

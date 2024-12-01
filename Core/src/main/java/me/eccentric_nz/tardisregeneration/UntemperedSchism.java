@@ -1,6 +1,6 @@
 package me.eccentric_nz.tardisregeneration;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.Schism;
+import me.eccentric_nz.TARDIS.custommodels.keys.Schism;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

@@ -1,6 +1,6 @@
 package me.eccentric_nz.TARDIS.console.models;
 
-import me.eccentric_nz.TARDIS.custommodeldata.keys.DirectionVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.DirectionVariant;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
