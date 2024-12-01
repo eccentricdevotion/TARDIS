@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.move.TARDISCustomModelDataChanger;
+import me.eccentric_nz.TARDIS.move.TARDISCustomModelChanger;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -78,7 +78,7 @@ public class DisplayItemDoorToggler {
                     if (!rsd.isLocked()) {
                         // toggle the door
                         if (rs.getTardis().getPreset().usesArmourStand()) {
-                            new TARDISCustomModelDataChanger(plugin, player, id, rs.getTardis().getPreset()).toggleOuterDoor();
+                            new TARDISCustomModelChanger(plugin, player, id, rs.getTardis().getPreset()).toggleOuterDoor();
                         }
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, playerUUID.toString());
                         boolean minecart = false;

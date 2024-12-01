@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.flight.vehicle.InterpolatedAnimation;
+import me.eccentric_nz.TARDIS.flight.vehicle.VehicleUtility;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardisshop.ShopItem;
@@ -44,7 +45,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Transformation;
-import org.joml.Vector3f;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -103,24 +103,11 @@ public class TARDISDisplayItemCommand {
             }
             case "animate" -> {
                 if (player.getPassengers().isEmpty()) {
-                    ItemDisplay display = (ItemDisplay) player.getWorld().spawnEntity(player.getLocation().add(0, 1.5, 0), EntityType.ITEM_DISPLAY);
                     ItemStack box = new ItemStack(Material.BLUE_DYE, 1);
                     ItemMeta im = box.getItemMeta();
                     im.setItemModel(new NamespacedKey(plugin, "police_box/flying/blue"));
                     box.setItemMeta(im);
-                    display.setItemStack(box);
-                    player.addPassenger(display);
-                    float scale = 1.75f;
-                    Vector3f size = new Vector3f(scale, scale, scale);
-                    Vector3f position = new Vector3f(0, -1, 0);
-                    // set initial scale and position
-                    Transformation initial = new Transformation(
-                            position,
-                            TARDISConstants.AXIS_ANGLE_ZERO,
-                            size,
-                            TARDISConstants.AXIS_ANGLE_ZERO
-                    );
-                    display.setTransformation(initial);
+                    ItemDisplay display = VehicleUtility.getItemDisplay(player, box,1.75f);
                     int period = 40;
                     plugin.getTrackerKeeper().setAnimateTask(plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new InterpolatedAnimation(display, period), 5, period));
                 } else {

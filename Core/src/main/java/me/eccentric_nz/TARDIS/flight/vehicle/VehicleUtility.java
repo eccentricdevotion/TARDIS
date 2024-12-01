@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.flight.vehicle;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
@@ -9,13 +10,12 @@ import net.minecraft.server.level.ServerLevel;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_21_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_21_R2.entity.CraftArmorStand;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Interaction;
+import org.bukkit.entity.*;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.Transformation;
+import org.joml.Vector3f;
 
 public class VehicleUtility {
 
@@ -78,5 +78,22 @@ public class VehicleUtility {
         stand.setRotation(location.getYaw(), 0.0f);
         old.remove();
         return stand;
+    }
+
+    public static ItemDisplay getItemDisplay(Player player, ItemStack box, float scale) {
+        ItemDisplay display = (ItemDisplay) player.getWorld().spawnEntity(player.getLocation().add(0, 1.5, 0), EntityType.ITEM_DISPLAY);
+        display.setItemStack(box);
+        player.addPassenger(display);
+        Vector3f size = new Vector3f(scale, scale, scale);
+        Vector3f position = new Vector3f(0, -1, 0);
+        // set initial scale and position
+        Transformation initial = new Transformation(
+                position,
+                TARDISConstants.AXIS_ANGLE_ZERO,
+                size,
+                TARDISConstants.AXIS_ANGLE_ZERO
+        );
+        display.setTransformation(initial);
+        return display;
     }
 }

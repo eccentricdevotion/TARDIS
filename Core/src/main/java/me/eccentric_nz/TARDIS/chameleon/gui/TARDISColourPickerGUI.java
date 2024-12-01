@@ -28,7 +28,7 @@ public class TARDISColourPickerGUI {
         LeatherArmorMeta play = (LeatherArmorMeta) dis.getItemMeta();
         play.setDisplayName("Colour");
         play.setLore(Arrays.asList("Red: 255", "Green: 255", "Blue: 255"));
-        play.setItemModel(ColouredVariant.TINTED_FLYING_0.getKey());
+        play.setItemModel(ColouredVariant.TINTED_CAMERA.getKey());
         play.setColor(Color.fromRGB(255, 255, 255)); // white
         dis.setItemMeta(play);
         // red
@@ -50,21 +50,21 @@ public class TARDISColourPickerGUI {
         ItemStack redtint = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
         LeatherArmorMeta rrrtint = (LeatherArmorMeta) redtint.getItemMeta();
         rrrtint.setColor(Color.fromRGB(255, 0, 0)); // red
-        rrrtint.setItemModel(ColouredVariant.TINTED_FLYING_0.getKey());
+        rrrtint.setItemModel(ColouredVariant.TINTED_CAMERA.getKey());
         rrrtint.setDisplayName("Red");
         redtint.setItemMeta(rrrtint);
         // green tint
         ItemStack greentint = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
         LeatherArmorMeta gggtint = (LeatherArmorMeta) greentint.getItemMeta();
         gggtint.setColor(Color.fromRGB(0, 255, 0)); // green
-        gggtint.setItemModel(ColouredVariant.TINTED_FLYING_0.getKey());
+        gggtint.setItemModel(ColouredVariant.TINTED_CAMERA.getKey());
         gggtint.setDisplayName("Green");
         greentint.setItemMeta(gggtint);
         // blue tint
         ItemStack bluetint = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
         LeatherArmorMeta bbbtint = (LeatherArmorMeta) bluetint.getItemMeta();
         bbbtint.setColor(Color.fromRGB(0, 0, 255)); // blue
-        bbbtint.setItemModel(ColouredVariant.TINTED_FLYING_0.getKey());
+        bbbtint.setItemModel(ColouredVariant.TINTED_CAMERA.getKey());
         bbbtint.setDisplayName("Blue");
         bluetint.setItemMeta(bbbtint);
         // less

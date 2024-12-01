@@ -278,7 +278,7 @@ public enum ChameleonPreset {
             case POLICE_BOX_BLACK -> { return ChameleonVariant.BLACK.getKey(); }
             case POLICE_BOX_TENNANT -> { return ChameleonVariant.TENNANT.getKey(); }
             case WEEPING_ANGEL -> { return ChameleonVariant.WEEPING_ANGEL.getKey(); }
-            case COLOURED -> { return ColouredVariant.TARDIS_TINTED.getKey(); }
+            case COLOURED -> { return ColouredVariant.TINTED.getKey(); }
             case PANDORICA -> { return ChameleonVariant.PANDORICA.getKey(); }
         }
         return null;
@@ -304,7 +304,7 @@ public enum ChameleonPreset {
             case POLICE_BOX_BLACK -> { return ChameleonVariant.BLACK_OPEN.getKey(); }
             case POLICE_BOX_TENNANT -> { return ChameleonVariant.TENNANT_OPEN.getKey(); }
             case WEEPING_ANGEL -> { return ChameleonVariant.WEEPING_ANGEL_OPEN.getKey(); }
-            case COLOURED -> { return ColouredVariant.TARDIS_TINTED_OPEN.getKey(); }
+            case COLOURED -> { return ColouredVariant.TINTED_OPEN.getKey(); }
             case PANDORICA -> { return ChameleonVariant.PANDORICA_OPEN.getKey(); }
         }
         return null;
@@ -330,7 +330,7 @@ public enum ChameleonPreset {
             case POLICE_BOX_BLACK -> { return ChameleonVariant.BLACK_STAINED.getKey(); }
             case POLICE_BOX_TENNANT -> { return ChameleonVariant.TENNANT_STAINED.getKey(); }
             case WEEPING_ANGEL -> { return ChameleonVariant.WEEPING_ANGEL_STAINED.getKey(); }
-            case COLOURED -> { return ColouredVariant.TARDIS_STAINED_TINTED.getKey(); }
+            case COLOURED -> { return ColouredVariant.TINTED_STAINED.getKey(); }
             case PANDORICA -> { return ChameleonVariant.PANDORICA_STAINED.getKey(); }
         }
         return null;

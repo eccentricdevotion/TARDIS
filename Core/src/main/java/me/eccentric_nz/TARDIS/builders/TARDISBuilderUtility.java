@@ -145,8 +145,8 @@ public class TARDISBuilderUtility {
             case ORANGE_DYE -> im.setItemModel(ChameleonVariant.ORANGE.getKey());
             case WHITE_DYE -> im.setItemModel(ChameleonVariant.WHITE.getKey());
             case CYAN_STAINED_GLASS_PANE -> im.setItemModel(ChameleonVariant.TENNANT.getKey());
-            case LEATHER_HORSE_ARMOR -> im.setItemModel(ColouredVariant.TARDIS_TINTED.getKey());
-            case WOLF_SPAWN_EGG -> im.setItemModel(ChameleonVariant.BAD_WOLF_CLOSED.getKey());
+            case LEATHER_HORSE_ARMOR -> im.setItemModel(ColouredVariant.TINTED.getKey());
+            case WOLF_SPAWN_EGG -> im.setItemModel(ChameleonVariant.BAD_WOLF.getKey());
             case ENDER_PEARL -> im.setItemModel(ChameleonVariant.PANDORICA.getKey());
             case GRAY_STAINED_GLASS_PANE -> im.setItemModel(ChameleonVariant.WEEPING_ANGEL.getKey());
         }

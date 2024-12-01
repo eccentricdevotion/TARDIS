@@ -126,7 +126,7 @@ public class TARDISPoliceBoxInventory {
             ItemStack any = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
             ItemMeta colour = any.getItemMeta();
             colour.setDisplayName("Pick a colour Police Box");
-            colour.setItemModel(ColouredVariant.TARDIS_TINTED.getKey());
+            colour.setItemModel(ColouredVariant.TINTED.getKey());
             any.setItemMeta(colour);
             boxes[i] = any;
             i++;

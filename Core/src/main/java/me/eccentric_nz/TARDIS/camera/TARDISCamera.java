@@ -50,26 +50,25 @@ public class TARDISCamera {
                     ItemStack is = ee.getHelmet();
                     ItemMeta im = is.getItemMeta();
                     NamespacedKey viewing = switch (is.getType()) {
-                        case BLACK_DYE -> ChameleonVariant.BLACK_FLYING.getKey();
-                        case RED_DYE -> ChameleonVariant.RED_FLYING.getKey();
-                        case BROWN_DYE -> ChameleonVariant.BROWN_FLYING.getKey();
-                        case GREEN_DYE -> ChameleonVariant.GREEN_FLYING.getKey();
-                        case PURPLE_DYE -> ChameleonVariant.PURPLE_FLYING.getKey();
-                        case CYAN_DYE -> ChameleonVariant.CYAN_FLYING.getKey();
-                        case LIGHT_GRAY_DYE -> ChameleonVariant.LIGHT_GRAY_FLYING.getKey();
-                        case GRAY_DYE -> ChameleonVariant.GRAY_FLYING.getKey();
-                        case PINK_DYE -> ChameleonVariant.PINK_FLYING.getKey();
-                        case LIME_DYE -> ChameleonVariant.LIME_FLYING.getKey();
-                        case YELLOW_DYE -> ChameleonVariant.YELLOW_FLYING.getKey();
-                        case LIGHT_BLUE_DYE -> ChameleonVariant.LIGHT_BLUE_FLYING.getKey();
-                        case MAGENTA_DYE -> ChameleonVariant.MAGENTA_FLYING.getKey();
-                        case ORANGE_DYE -> ChameleonVariant.ORANGE_FLYING.getKey();
-                        case WHITE_DYE -> ChameleonVariant.WHITE_FLYING.getKey();
-                        case CYAN_STAINED_GLASS_PANE -> ChameleonVariant.TENNANT_FLYING.getKey();
-                        case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED_FLYING_0.getKey();
-                        case WOLF_SPAWN_EGG -> ChameleonVariant.BAD_WOLF_FLYING.getKey();
-                        case ENDER_PEARL -> ChameleonVariant.PANDORICA_FLYING.getKey();
-                        default -> null; // don't change for WEEPING_ANGEL or CUSTOM
+                        case BLACK_DYE -> ChameleonVariant.BLACK_CAMERA.getKey();
+                        case RED_DYE -> ChameleonVariant.RED_CAMERA.getKey();
+                        case BROWN_DYE -> ChameleonVariant.BROWN_CAMERA.getKey();
+                        case GREEN_DYE -> ChameleonVariant.GREEN_CAMERA.getKey();
+                        case PURPLE_DYE -> ChameleonVariant.PURPLE_CAMERA.getKey();
+                        case CYAN_DYE -> ChameleonVariant.CYAN_CAMERA.getKey();
+                        case LIGHT_GRAY_DYE -> ChameleonVariant.LIGHT_GRAY_CAMERA.getKey();
+                        case GRAY_DYE -> ChameleonVariant.GRAY_CAMERA.getKey();
+                        case PINK_DYE -> ChameleonVariant.PINK_CAMERA.getKey();
+                        case LIME_DYE -> ChameleonVariant.LIME_CAMERA.getKey();
+                        case YELLOW_DYE -> ChameleonVariant.YELLOW_CAMERA.getKey();
+                        case LIGHT_BLUE_DYE -> ChameleonVariant.LIGHT_BLUE_CAMERA.getKey();
+                        case MAGENTA_DYE -> ChameleonVariant.MAGENTA_CAMERA.getKey();
+                        case ORANGE_DYE -> ChameleonVariant.ORANGE_CAMERA.getKey();
+                        case WHITE_DYE -> ChameleonVariant.WHITE_CAMERA.getKey();
+                        case CYAN_STAINED_GLASS_PANE -> ChameleonVariant.TENNANT_CAMERA.getKey();
+                        case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED_CAMERA.getKey();
+                        case WOLF_SPAWN_EGG -> ChameleonVariant.BAD_WOLF_CAMERA.getKey();
+                        default -> null; // don't change for PANDORICA, WEEPING_ANGEL or CUSTOM
                     };
                     if (viewing != null) {
                         im.setItemModel(viewing);
@@ -112,11 +111,9 @@ public class TARDISCamera {
                 case ORANGE_DYE -> ChameleonVariant.ORANGE.getKey();
                 case WHITE_DYE -> ChameleonVariant.WHITE.getKey();
                 case CYAN_STAINED_GLASS_PANE -> ChameleonVariant.TENNANT.getKey();
-                case LEATHER_HORSE_ARMOR -> ColouredVariant.TARDIS_TINTED.getKey();
-                case WOLF_SPAWN_EGG -> ChameleonVariant.BAD_WOLF_CLOSED.getKey();
-                case ENDER_PEARL -> ChameleonVariant.PANDORICA.getKey();
-                case GRAY_STAINED_GLASS_PANE -> ChameleonVariant.WEEPING_ANGEL.getKey();
-                default -> null; // don't change for WEEPING_ANGEL or CUSTOM
+                case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED.getKey();
+                case WOLF_SPAWN_EGG -> ChameleonVariant.BAD_WOLF.getKey();
+                default -> null; // don't change for PANDORICA, WEEPING_ANGEL or CUSTOM
             };
             if (notviewing != null) {
                 im.setItemModel(notviewing);
