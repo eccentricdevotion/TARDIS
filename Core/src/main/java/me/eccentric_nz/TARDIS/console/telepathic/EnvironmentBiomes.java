@@ -57,7 +57,7 @@ public class EnvironmentBiomes {
         put(Biome.OLD_GROWTH_BIRCH_FOREST.getKey().getKey(), Material.STRIPPED_BIRCH_WOOD);
         put(Biome.OLD_GROWTH_PINE_TAIGA.getKey().getKey(), Material.SPRUCE_LOG);
         put(Biome.OLD_GROWTH_SPRUCE_TAIGA.getKey().getKey(), Material.STRIPPED_SPRUCE_WOOD);
-//        put(Biome.PALE_GARDEN.getKey().getKey(), Material.PALE_OAK_PLANKS); // 1.21.4
+        put(Biome.PALE_GARDEN.getKey().getKey(), Material.PALE_OAK_PLANKS);
         put(Biome.PLAINS.getKey().getKey(), Material.GRASS_BLOCK);
         put(Biome.RIVER.getKey().getKey(), Material.FISHING_ROD);
         put(Biome.SAVANNA.getKey().getKey(), Material.ACACIA_PLANKS);
@@ -87,7 +87,7 @@ public class EnvironmentBiomes {
 
     static {
         for (Biome biome : Biome.values()) {
-            if (!END.contains(biome) && !NETHER.contains(biome) && biome != Biome.THE_VOID && biome != Biome.PALE_GARDEN) {
+            if (!END.contains(biome) && !NETHER.contains(biome) && biome != Biome.THE_VOID) {
                 OVERWORLD.add(biome);
             }
         }

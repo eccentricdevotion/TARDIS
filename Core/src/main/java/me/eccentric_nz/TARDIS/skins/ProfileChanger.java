@@ -13,7 +13,7 @@ import net.minecraft.world.entity.PositionMoveRotation;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_21_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_21_R3.entity.CraftPlayer;
 import org.bukkit.event.player.PlayerHideEntityEvent;
 import org.bukkit.event.player.PlayerShowEntityEvent;
 
@@ -54,7 +54,7 @@ public class ProfileChanger {
     private static void setGameProfile(ServerPlayer player, GameProfile profile) {
         try {
             // set GameProfile accessible
-            Field gpField = net.minecraft.world.entity.player.Player.class.getDeclaredField("k"); // k = GameProfile
+            Field gpField = net.minecraft.world.entity.player.Player.class.getDeclaredField("cC"); // cC = GameProfile
             gpField.setAccessible(true);
             gpField.set(player, profile);
             gpField.setAccessible(false);

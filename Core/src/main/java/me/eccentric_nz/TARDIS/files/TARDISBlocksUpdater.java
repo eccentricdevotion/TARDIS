@@ -567,6 +567,48 @@ public class TARDISBlocksUpdater {
             tbs.remove("WEATHERED_COPPER_BULB");
             blocks_config.set("tardis_blocks", tbs);
         }
+        if (!tbs.contains("PALE_OAK_LOG")) {
+            List<String> blocks = new ArrayList<>();
+            blocks.add("PALE_OAK_LOG");
+            blocks.add("PALE_OAK_PLANKS");
+            blocks.add("PALE_OAK_WOOD");
+            blocks.add("RESIN_BLOCK");
+            blocks.add("RESIN_BRICKS");
+            blocks.add("STRIPPED_PALE_OAK_LOG");
+            // tardis blocks
+            tbs.addAll(blocks);
+            tbs.sort(Comparator.naturalOrder());
+            blocks_config.set("tardis_blocks", tbs);
+            // chameleon blocks
+            List<String> chameleon = blocks_config.getStringList("chameleon_blocks");
+            blocks.add("PALE_OAK_LEAVES");
+            chameleon.addAll(blocks);
+            chameleon.sort(Comparator.naturalOrder());
+            blocks_config.set("chameleon_blocks", chameleon);
+            // under door blocks
+            List<String> under = blocks_config.getStringList("under_door_blocks");
+            under.add("CLOSED_EYEBLOSSOM");
+            under.add("OPEN_EYEBLOSSOM");
+            under.add("PALE_OAK_BUTTON");
+            under.add("PALE_OAK_DOOR");
+            under.add("PALE_OAK_FENCE");
+            under.add("PALE_OAK_FENCE_GATE");
+            under.add("PALE_OAK_HANGING_SIGN");
+            under.add("PALE_OAK_LEAVES");
+            under.add("PALE_OAK_PRESSURE_PLATE");
+            under.add("PALE_OAK_SAPLING");
+            under.add("PALE_OAK_SIGN");
+            under.add("PALE_OAK_SLAB");
+            under.add("PALE_OAK_STAIRS");
+            under.add("PALE_OAK_TRAPDOOR");
+            under.add("RESIN_BRICK_SLAB");
+            under.add("RESIN_BRICK_STAIRS");
+            under.add("RESIN_BRICK_WALL");
+            under.sort(Comparator.naturalOrder());
+            blocks_config.set("under_door_blocks", under);
+            blocks_config.set("version", 16);
+            i += 3;
+        }
         try {
             blocks_config.save(new File(plugin.getDataFolder(), "blocks.yml"));
             if (i > 0) {

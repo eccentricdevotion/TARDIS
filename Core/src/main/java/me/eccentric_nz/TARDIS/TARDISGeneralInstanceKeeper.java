@@ -295,7 +295,7 @@ public class TARDISGeneralInstanceKeeper {
         trans.addAll(Tag.REPLACEABLE.getValues());
         trans.addAll(Tag.SAPLINGS.getValues());
         trans.addAll(Tag.SMALL_FLOWERS.getValues());
-        trans.addAll(Tag.TALL_FLOWERS.getValues());
+        trans.addAll(Tag.FLOWERS.getValues());
         trans.addAll(Tag.WOOL_CARPETS.getValues());
         return trans;
     }
