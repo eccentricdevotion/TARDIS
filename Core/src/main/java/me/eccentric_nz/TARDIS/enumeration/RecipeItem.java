@@ -152,9 +152,9 @@ public enum RecipeItem {
     LIGHT_ELEVENTH(LampVariant.ELEVENTH_ON.getKey(), RecipeCategory.CUSTOM_BLOCKS),
     LIGHT_TWELFTH(LanternVariant.TWELFTH_ON.getKey(), RecipeCategory.CUSTOM_BLOCKS),
     LIGHT_THIRTEENTH(LanternVariant.THIRTEENTH_ON.getKey(), RecipeCategory.CUSTOM_BLOCKS),
-    DOOR(TardisDoorVariant.TARDIS_DOOR_0.getKey(), RecipeCategory.CUSTOM_BLOCKS),
-    BONE_DOOR(BoneDoorVariant.BONE_DOOR.getKey(), RecipeCategory.CUSTOM_BLOCKS),
-    CLASSIC_DOOR(ClassicDoorVariant.CLASSIC_DOOR.getKey(), RecipeCategory.CUSTOM_BLOCKS),
+    DOOR(TardisDoorVariant.TARDIS_DOOR_CLOSED.getKey(), RecipeCategory.CUSTOM_BLOCKS),
+    BONE_DOOR(BoneDoorVariant.BONE_DOOR_CLOSED.getKey(), RecipeCategory.CUSTOM_BLOCKS),
+    CLASSIC_DOOR(ClassicDoorVariant.CLASSIC_DOOR_CLOSED.getKey(), RecipeCategory.CUSTOM_BLOCKS),
 //    HANDBRAKE(1001, RecipeCategory.CUSTOM_BLOCKS),
 //    THROTTLE(1001, RecipeCategory.CUSTOM_BLOCKS),
     // unshaped recipes start here

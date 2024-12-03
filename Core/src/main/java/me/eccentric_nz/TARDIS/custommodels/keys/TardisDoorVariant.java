@@ -5,12 +5,12 @@ import org.bukkit.NamespacedKey;
 
 public enum TardisDoorVariant {
 
-    TARDIS_DOOR_0(new NamespacedKey(TARDIS.plugin, "tardis/tardis_door_0")),
-    TARDIS_DOOR_1(new NamespacedKey(TARDIS.plugin, "tardis/tardis_door_1")),
-    TARDIS_DOOR_2(new NamespacedKey(TARDIS.plugin, "tardis/tardis_door_2")),
-    TARDIS_DOOR_3(new NamespacedKey(TARDIS.plugin, "tardis/tardis_door_3")),
-    TARDIS_DOOR_4(new NamespacedKey(TARDIS.plugin, "tardis/tardis_door_4")),
-    TARDIS_DOOR_BOTH_OPEN(new NamespacedKey(TARDIS.plugin, "tardis/tardis_door_both_open"));
+    TARDIS_DOOR_CLOSED(new NamespacedKey(TARDIS.plugin, "doors/tardis_door_closed")),
+    TARDIS_DOOR_0(new NamespacedKey(TARDIS.plugin, "doors/tardis_door_0")),
+    TARDIS_DOOR_1(new NamespacedKey(TARDIS.plugin, "doors/tardis_door_1")),
+    TARDIS_DOOR_2(new NamespacedKey(TARDIS.plugin, "doors/tardis_door_2")),
+    TARDIS_DOOR_OPEN(new NamespacedKey(TARDIS.plugin, "doors/tardis_door_open")),
+    TARDIS_DOOR_EXTRA(new NamespacedKey(TARDIS.plugin, "doors/tardis_door_extra"));
 
     private final NamespacedKey key;
 

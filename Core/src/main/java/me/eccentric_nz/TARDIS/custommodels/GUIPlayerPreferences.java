@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.custommodels;
 
 import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.Buttons;
+import me.eccentric_nz.TARDIS.custommodels.keys.Button;
 import me.eccentric_nz.TARDIS.custommodels.keys.ModelledControl;
 import me.eccentric_nz.TARDIS.custommodels.keys.PrefsVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -55,12 +55,12 @@ public enum GUIPlayerPreferences {
     ANNOUNCE_REPEATERS(PrefsVariant.ANNOUNCE_REPEATERS_ON.getKey(), PrefsVariant.ANNOUNCE_REPEATERS_OFF.getKey(), 25, Material.REPEATER),
     FLIGHT_MODE(PrefsVariant.FLIGHT_MODE.getKey(), null, 27, Material.ELYTRA),
     INTERIOR_HUM_SOUND(GuiVariant.INTERIOR_HUM_SOUND.getKey(), null, 28, Material.BOWL),
-    AUTONOMOUS_PREFERENCES(GuiVariant.BUTTON_AUTO_PREFS.getKey(), null, 29, Material.BOWL),
-    FARMING_PREFERENCES(GuiVariant.BUTTON_FARM_PREFS.getKey(), null, 30, Material.BOWL),
-    PARTICLES(GuiVariant.BUTTON_PARTICLES.getKey(), null, 31, Material.BOWL),
-    SONIC_CONFIGURATOR(GuiVariant.BUTTON_SONIC.getKey(), null, 32, Material.BOWL),
+    AUTONOMOUS_PREFERENCES(Button.AUTONOMOUS_PREFERENCES.getKey(), null, 29, Material.BOWL),
+    FARMING_PREFERENCES(Button.FARMING_PREFERENCES.getKey(), null, 30, Material.BOWL),
+    PARTICLES(Button.PARTICLES.getKey(), null, 31, Material.BOWL),
+    SONIC_CONFIGURATOR(Button.SONIC.getKey(), null, 32, Material.BOWL),
     HANDBRAKE(ModelledControl.HANDBRAKE.getKey(), null, 33, Material.LEVER),
-    TARDIS_MAP(Buttons.BUTTON_TARDIS_MAP.getKey(), null, 34, Material.MAP),
+    TARDIS_MAP(Button.TARDIS_MAP.getKey(), null, 34, Material.MAP),
     ADMIN_MENU(PrefsVariant.ADMIN.getKey(), null, 35, Material.NETHER_STAR);
 
     private final NamespacedKey onModel;

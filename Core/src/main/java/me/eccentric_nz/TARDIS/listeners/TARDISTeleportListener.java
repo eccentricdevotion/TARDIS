@@ -35,6 +35,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.craftbukkit.v1_21_R2.entity.CraftArmorStand;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -147,11 +148,9 @@ public class TARDISTeleportListener implements Listener {
                 tas.setPlayer(null);
                 tas.setStationary(true);
                 Location location = stand.getLocation();
+                ItemDisplay display = (ItemDisplay) Bukkit.getEntity(data.getDisplay());
+                ItemStack is = display.getItemStack();
                 EntityEquipment ee = stand.getEquipment();
-                ItemStack is = ee.getHelmet();
-                ItemMeta im = is.getItemMeta();
-                im.setCustomModelData(1001);
-                is.setItemMeta(im);
                 ee.setHelmet(is);
                 // update the TARDIS's current location
                 HashMap<String, Object> set = new HashMap<>();

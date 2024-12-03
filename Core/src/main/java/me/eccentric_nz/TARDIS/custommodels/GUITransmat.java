@@ -16,15 +16,15 @@
  */
 package me.eccentric_nz.TARDIS.custommodels;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.Button;
 import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.Bucket;
 import org.bukkit.Material;
 
 public record GUITransmat() {
 
     public static GUIData INFO = new GUIData(GuiVariant.INFO.getKey(), 8, Material.BOWL);
-    public static GUIData TRANSMAT = new GUIData(GuiVariant.BUTTON_TRANSMAT.getKey(), 17, Material.BOWL);
-    public static GUIData ROOMS = new GUIData(GuiVariant.BUTTON_ROOMS_WORLD.getKey(), 26, Material.BOWL);
-    public static GUIData DELETE = new GUIData(Bucket.DELETE.getKey(), 35, Material.BUCKET);
+    public static GUIData TRANSMAT = new GUIData(Button.TRANSMAT.getKey(), 17, Material.BOWL);
+    public static GUIData ROOMS = new GUIData(Button.ROOMS_WORLD.getKey(), 26, Material.BOWL);
+    public static GUIData DELETE = new GUIData(Button.DELETE.getKey(), 35, Material.BUCKET);
     public static GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 53, Material.BOWL);
 }

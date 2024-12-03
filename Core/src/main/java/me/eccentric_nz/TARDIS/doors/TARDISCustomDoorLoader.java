@@ -17,11 +17,11 @@ public class TARDISCustomDoorLoader {
 
     public void addDoors() {
         // create plugin doors
-        Door police_box = new Door("Police Box", Material.IRON_DOOR, new int[]{0,1,2,3,4}, 6, true, "tardis_door_open", "tardis_door_close", false);
-        Door classic = new Door("Classic", Material.CHERRY_DOOR, new int[]{0,1,2,3,4,5,6}, 4, false, "classic_door", "classic_door", false);
-        Door bone = new Door("Bone", Material.BIRCH_DOOR, new int[]{0,1,2,3,4,5,6}, 4, false, "classic_door", "classic_door", false);
+        Door police_box = new Door("police_box", Material.IRON_DOOR, new int[]{0,1,2,3,4}, 6, true, "tardis_door_open", "tardis_door_close", false);
+        Door classic = new Door("classic", Material.CHERRY_DOOR, new int[]{0,1,2,3,4,5,6}, 4, false, "classic_door", "classic_door", false);
+        Door bone = new Door("bone", Material.BIRCH_DOOR, new int[]{0,1,2,3,4,5,6}, 4, false, "classic_door", "classic_door", false);
         Door.byMaterial.put(Material.IRON_DOOR, police_box);
-        Door.byName.put("DOOR", police_box);
+        Door.byName.put("POLICE_BOX_DOOR", police_box);
         Door.byMaterial.put(Material.CHERRY_DOOR, classic);
         Door.byName.put("CLASSIC_DOOR", classic);
         Door.byMaterial.put(Material.BIRCH_DOOR, bone);

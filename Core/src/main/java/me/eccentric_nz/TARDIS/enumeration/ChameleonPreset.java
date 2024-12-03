@@ -117,7 +117,7 @@ public enum ChameleonPreset {
     POLICE_BOX_BLACK(Material.BLACK_CONCRETE_POWDER, 15, "", "", false, true, "Black Police Box"),
     POLICE_BOX_TENNANT(Material.CYAN_CONCRETE, 16, "", "", false, true, "Tennant Era Police Box"),
     WEEPING_ANGEL(Material.GRAY_CONCRETE, 17, "", "", false, false, "Weeping Angel"),
-    PANDORICA(Material.LEATHER_HORSE_ARMOR, 18, "", "", false, true, "Pandorica"),
+    PANDORICA(Material.BLACK_CONCRETE, 18, "", "", false, true, "Pandorica"),
     COLOURED(Material.LEATHER_HORSE_ARMOR, 19, "", "", false, true, "Pick a colour"),
 
     ITEM(Material.BARRIER, -1, "", "", false, true, "Item");

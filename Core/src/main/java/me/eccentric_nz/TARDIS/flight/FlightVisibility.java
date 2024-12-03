@@ -58,7 +58,7 @@ public class FlightVisibility {
             // restart animation
             int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new InterpolatedAnimation(display, 40), 5L, 40L);
             // save flight data
-            plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(frd.getId(), frd.getLocation(), frd.getSound(), animation, stand.getUniqueId()));
+            plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(frd.getId(), frd.getLocation(), frd.getSound(), animation, stand.getUniqueId(), display.getUniqueId()));
             // remove tracker
             plugin.getTrackerKeeper().getHiddenFlight().remove(player.getUniqueId());
         }

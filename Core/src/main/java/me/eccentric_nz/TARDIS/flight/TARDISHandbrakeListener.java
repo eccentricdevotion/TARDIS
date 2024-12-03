@@ -215,7 +215,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_REBUILD");
                                             return;
                                         } else {
-                                            new TARDISExteriorFlight(plugin).startFlying(player, id, block, current, beac_on, beacon, preset.equals(ChameleonPreset.PANDORICA));
+                                            new TARDISExteriorFlight(plugin).startFlying(player, id, block, current, beac_on, beacon);
                                         }
                                     } else {
                                         new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, throticle);

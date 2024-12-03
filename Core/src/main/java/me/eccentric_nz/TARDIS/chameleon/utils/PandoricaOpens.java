@@ -48,18 +48,6 @@ public class PandoricaOpens {
         this.scheduler = this.plugin.getServer().getScheduler();
     }
 
-    /*
-      {"predicate": {"custom_model_data":1001}, "model": "tardis:block/pandorica/pandorica"}, // closed
-      {"predicate": {"custom_model_data":1002}, "model": "tardis:block/pandorica/pandorica_open"}, // fully open
-      {"predicate": {"custom_model_data":1003}, "model": "tardis:block/pandorica/pandorica_stained"},
-      {"predicate": {"custom_model_data":1004}, "model": "tardis:block/pandorica/pandorica_glass"},
-      {"predicate": {"custom_model_data":1005}, "model": "tardis:block/pandorica/pandorica_75"}, // start opening
-      {"predicate": {"custom_model_data":1006}, "model": "tardis:block/pandorica/pandorica_50"}, // mid opening
-      {"predicate": {"custom_model_data":1007}, "model": "tardis:block/pandorica/pandorica_25"} // almost opened
-
-      5, 6, 7, 2 // opening
-      7, 6, 5, 1 // closing
-     */
     public void animate(ArmorStand stand, boolean open) {
         EntityEquipment ee = stand.getEquipment();
         ItemStack is = ee.getHelmet();

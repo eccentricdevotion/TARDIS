@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.custommodels;
 
-import me.eccentric_nz.TARDIS.custommodels.keys.Map;
+import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import org.bukkit.Material;
 
 public record GUIArea() {
 
     // TARDIS Areas
-    public static GUIData LOAD_TARDIS_SAVES = new GUIData(Map.LOAD_SELECTED_PROGRAM_IN_EDITOR.getKey(), 1, Material.MAP);
+    public static GUIData LOAD_TARDIS_SAVES = new GUIData(GuiVariant.LOAD_SELECTED_PROGRAM_IN_EDITOR.getKey(), 1, Material.MAP);
 }

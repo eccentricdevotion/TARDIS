@@ -5,13 +5,13 @@ import org.bukkit.NamespacedKey;
 
 public enum ClassicDoorVariant {
 
-    CLASSIC_DOOR(new NamespacedKey(TARDIS.plugin, "tardis/classic_door")),
-    CLASSIC_DOOR_OPEN_0(new NamespacedKey(TARDIS.plugin, "tardis/classic_door_open_0")),
-    CLASSIC_DOOR_OPEN_1(new NamespacedKey(TARDIS.plugin, "tardis/classic_door_open_1")),
-    CLASSIC_DOOR_OPEN_2(new NamespacedKey(TARDIS.plugin, "tardis/classic_door_open_2")),
-    CLASSIC_DOOR_OPEN_3(new NamespacedKey(TARDIS.plugin, "tardis/classic_door_open_3")),
-    CLASSIC_DOOR_OPEN_4(new NamespacedKey(TARDIS.plugin, "tardis/classic_door_open_4")),
-    CLASSIC_DOOR_OPEN_5(new NamespacedKey(TARDIS.plugin, "tardis/classic_door_open_5"));
+    CLASSIC_DOOR_CLOSED(new NamespacedKey(TARDIS.plugin, "doors/classic_door_closed")),
+    CLASSIC_DOOR_0(new NamespacedKey(TARDIS.plugin, "doors/classic_door_0")),
+    CLASSIC_DOOR_1(new NamespacedKey(TARDIS.plugin, "doors/classic_door_1")),
+    CLASSIC_DOOR_2(new NamespacedKey(TARDIS.plugin, "doors/classic_door_2")),
+    CLASSIC_DOOR_3(new NamespacedKey(TARDIS.plugin, "doors/classic_door_3")),
+    CLASSIC_DOOR_4(new NamespacedKey(TARDIS.plugin, "doors/classic_door_4")),
+    CLASSIC_DOOR_OPEN(new NamespacedKey(TARDIS.plugin, "doors/classic_door_open"));
 
     private final NamespacedKey key;
 

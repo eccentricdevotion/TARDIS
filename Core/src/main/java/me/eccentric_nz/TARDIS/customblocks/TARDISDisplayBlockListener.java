@@ -19,6 +19,9 @@ package me.eccentric_nz.TARDIS.customblocks;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
+import me.eccentric_nz.TARDIS.custommodels.keys.BlockBreak;
+import me.eccentric_nz.TARDIS.custommodels.keys.LightVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.TardisDoorVariant;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.doors.*;
@@ -290,20 +293,6 @@ public class TARDISDisplayBlockListener implements Listener {
                             }
                         }
                         processInteraction(display, breaking, player, l, l.getBlock(), interaction);
-                    } else if (inHand.getType() == Material.END_ROD && player.hasPermission("tardis.admin")) {
-                        // toggle custom model data of item display's item stack
-                        ItemStack itemStack = display.getItemStack();
-                        if (itemStack != null) {
-                            ItemMeta im = itemStack.getItemMeta();
-                            int cmd = im.getCustomModelData();
-                            cmd++;
-                            if (cmd > 10010) {
-                                cmd = 10000;
-                            }
-                            im.setCustomModelData(cmd);
-                            itemStack.setItemMeta(im);
-                            display.setItemStack(itemStack);
-                        }
                     } else {
                         TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(display);
                         if (tdi != null) {
@@ -343,9 +332,9 @@ public class TARDISDisplayBlockListener implements Listener {
                                         if (itemStack != null) {
                                             ItemMeta im = itemStack.getItemMeta();
                                             // get custom model data
-                                            int cmd = tdi == TARDISDisplayItem.DOOR_OPEN ? 10005 : Door.getCMD(itemStack.getType());
-                                            if (cmd != -1) {
-                                                im.setCustomModelData(cmd);
+                                            NamespacedKey cmd = tdi == TARDISDisplayItem.DOOR_OPEN ? TardisDoorVariant.TARDIS_DOOR_OPEN.getKey() : Door.getExtraModel(itemStack.getType());
+                                            if (cmd != null) {
+                                                im.setItemModel(cmd);
                                                 itemStack.setItemMeta(im);
                                                 display.setItemStack(itemStack);
                                                 // close doors / deactivate portal
@@ -366,33 +355,28 @@ public class TARDISDisplayBlockListener implements Listener {
                                         switch (tdi) {
                                             case DOOR -> {
                                                 // open doors / activate portal
-                                                new DoorAnimator(plugin, display).open();
+                                                new DoorAnimator(plugin, display).animate(false);
                                                 new DisplayItemDoorToggler(plugin).openClose(player, block, false, TARDISDisplayItem.DOOR);
                                             }
                                             case DOOR_OPEN, DOOR_BOTH_OPEN -> {
                                                 // close doors / deactivate portal
-                                                new DoorAnimator(plugin, display).close();
+                                                new DoorAnimator(plugin, display).animate(true);
                                                 new DisplayItemDoorToggler(plugin).openClose(player, block, true, TARDISDisplayItem.DOOR_OPEN);
                                             }
                                             case CLASSIC_DOOR, BONE_DOOR -> {
                                                 // open doors / activate portal
-                                                new DoorAnimator(plugin, display).open();
+                                                new DoorAnimator(plugin, display).animate(false);
                                                 new DisplayItemDoorToggler(plugin).openClose(player, block, false, tdi);
                                             }
                                             case CLASSIC_DOOR_OPEN, BONE_DOOR_OPEN -> {
                                                 // close doors / deactivate portal
-                                                new DoorAnimator(plugin, display).close();
+                                                new DoorAnimator(plugin, display).animate(true);
                                                 new DisplayItemDoorToggler(plugin).openClose(player, block, true, tdi);
                                             }
                                             case CUSTOM_DOOR -> {
                                                 // get if door is open
                                                 boolean close = im.getCustomModelData() > 10000;
-                                                DoorAnimator animator = new DoorAnimator(plugin, display);
-                                                if (close) {
-                                                    animator.close();
-                                                } else {
-                                                    animator.open();
-                                                }
+                                                new DoorAnimator(plugin, display).animate(close);
                                                 new DisplayItemDoorToggler(plugin).openClose(player, block, close, TARDISDisplayItem.CUSTOM_DOOR);
                                             }
                                         }
@@ -437,18 +421,19 @@ public class TARDISDisplayBlockListener implements Listener {
                                 return;
                             }
                             ItemMeta im = is.getItemMeta();
-                            if (!im.hasCustomModelData()) {
+                            if (!im.hasItemModel()) {
                                 return;
                             }
-                            int cmd = im.getCustomModelData();
-                            if (cmd == 10001 || cmd == 10002 || cmd == 10003) {
-                                // set custom model data to 10000
-                                im.setCustomModelData(10000);
-                                is.setItemMeta(im);
-                                display.setItemStack(is);
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_DOUBLE_DOOR");
-                                plugin.getTrackerKeeper().getUpdatePlayers().remove(player.getUniqueId());
-                            }
+                            String model = im.getItemModel().getKey();
+                            String[] split = model.split("_");
+                            String last = split[split.length - 1];
+                            NamespacedKey key = new NamespacedKey(plugin, model.replace(last, "closed"));
+                            // set custom model to closed
+                            im.setItemModel(key);
+                            is.setItemMeta(im);
+                            display.setItemStack(is);
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_DOUBLE_DOOR");
+                            plugin.getTrackerKeeper().getUpdatePlayers().remove(player.getUniqueId());
                         }
                     }
                 }
@@ -526,7 +511,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                         ItemMeta im = ret.getItemMeta();
                                         im.setDisplayName(ChatColor.WHITE + "Variable Light");
                                         im.setLore(List.of(variable.toString()));
-                                        im.setCustomModelData(1003);
+                                        im.setItemModel(LightVariant.VARIABLE.getKey());
                                         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1003);
                                         ret.setItemMeta(im);
                                         l.getWorld().dropItemNaturally(l, ret);
@@ -560,8 +545,9 @@ public class TARDISDisplayBlockListener implements Listener {
                 } else {
                     // update breaking item stack
                     ItemMeta im = is.getItemMeta();
+                    NamespacedKey model = new NamespacedKey(plugin, "destroy/destroy_" + (destroy + 1));
                     im.getPersistentDataContainer().set(plugin.getDestroyKey(), PersistentDataType.INTEGER, destroy + 1);
-                    im.setCustomModelData(im.getCustomModelData() + 1);
+                    im.setItemModel(model);
                     is.setItemMeta(im);
                     breaking.setItemStack(is);
                     // set a delayed task to reset the breaking animation
@@ -574,7 +560,7 @@ public class TARDISDisplayBlockListener implements Listener {
             ItemStack destroy = new ItemStack(Material.GRAVEL);
             ItemMeta dim = destroy.getItemMeta();
             dim.getPersistentDataContainer().set(plugin.getDestroyKey(), PersistentDataType.INTEGER, 0);
-            dim.setCustomModelData(10000);
+            dim.setItemModel(BlockBreak.DESTROY_0.getKey());
             destroy.setItemMeta(dim);
             Vector v = (interaction != null) ? new Vector(0, 0.5d, 0) : new Vector(0.5d, 0.5d, 0.5d);
             ItemDisplay display = (ItemDisplay) l.getWorld().spawnEntity(l.clone().add(v), EntityType.ITEM_DISPLAY);

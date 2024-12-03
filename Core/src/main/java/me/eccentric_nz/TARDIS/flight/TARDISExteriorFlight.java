@@ -91,13 +91,14 @@ public class TARDISExteriorFlight {
             plugin.getServer().getScheduler().cancelTask(data.getAnimation());
             plugin.getServer().getScheduler().cancelTask(data.getSound());
             if (!drifting) {
+                // get item display
+                ItemDisplay display = (ItemDisplay) player.getPassengers().getFirst();
+                ItemStack is = display.getItemStack();
                 // reset police box model
                 EntityEquipment ee = stand.getEquipment();
-                ItemStack is = ee.getHelmet();
-                ItemMeta im = is.getItemMeta();
-                im.setCustomModelData(1001);
-                is.setItemMeta(im);
                 ee.setHelmet(is);
+                player.eject();
+                display.remove();
                 // update the TARDIS's current location
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("world", location.getWorld().getName());
@@ -152,7 +153,7 @@ public class TARDISExteriorFlight {
         });
     }
 
-    public void startFlying(Player player, int id, Block block, Location current, boolean beac_on, String beacon, boolean pandorica) {
+    public void startFlying(Player player, int id, Block block, Location current, boolean beac_on, String beacon) {
         // get the TARDIS's current location
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (!rsc.resultSet()) {
@@ -211,7 +212,7 @@ public class TARDISExteriorFlight {
                             // remove the light
                             current.getBlock().getRelative(BlockFace.UP, 2).setBlockData(TARDISConstants.AIR);
                             // save player's current location, so we can teleport them back to it when they finish flying
-                            plugin.getTrackerKeeper().getFlyingReturnLocation().put(uuid, new FlightReturnData(id, interior, sound, animation, stand.getUniqueId()));
+                            plugin.getTrackerKeeper().getFlyingReturnLocation().put(uuid, new FlightReturnData(id, interior, sound, animation, stand.getUniqueId(), display.getUniqueId()));
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.setGravity(true), 1L);
                             // remove interaction entity
                             Interaction interaction = TARDISDisplayItemUtils.getInteraction(current);

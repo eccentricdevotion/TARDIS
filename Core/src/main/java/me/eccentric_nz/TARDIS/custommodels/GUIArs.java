@@ -26,7 +26,7 @@ public record GUIArs() {
     public static GUIData BUTTON_DOWN = new GUIData(Wool.DOWN.getKey(), 19, Material.CYAN_WOOL);
     public static GUIData BUTTON_LEFT = new GUIData(Wool.LEFT.getKey(), 9, Material.CYAN_WOOL);
     public static GUIData BUTTON_RIGHT = new GUIData(Wool.RIGHT.getKey(), 11, Material.CYAN_WOOL);
-    public static GUIData BUTTON_MAP = new GUIData(Map.LOAD_MAP.getKey(), 10, Material.MAP);
+    public static GUIData BUTTON_MAP = new GUIData(GuiVariant.LOAD_MAP.getKey(), 10, Material.MAP);
     public static GUIData BUTTON_RECON = new GUIData(Wool.RECONFIGURE.getKey(), 12, Material.PINK_WOOL);
     public static GUIData BUTTON_LEVEL_B = new GUIData(Wool.LEVEL_BOTTOM.getKey(), 27, Material.WHITE_WOOL);
     public static GUIData BUTTON_LEVEL = new GUIData(Wool.LEVEL_MAIN.getKey(), 28, Material.YELLOW_WOOL);

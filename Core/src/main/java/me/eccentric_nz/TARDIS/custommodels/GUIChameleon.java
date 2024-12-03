@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.custommodels;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.Button;
 import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import org.bukkit.Material;
 
@@ -23,11 +24,11 @@ public record GUIChameleon() {
 
     // Chameleon Circuit
     public static GUIData BUTTON_APPLY = new GUIData(GuiVariant.APPLY.getKey(), 0, Material.COMPARATOR);
-    public static GUIData BUTTON_CHAMELEON = new GUIData(GuiVariant.BUTTON_CHAMELEON.getKey(), 11, Material.BOWL);
-    public static GUIData BUTTON_ADAPT = new GUIData(GuiVariant.BUTTON_ADAPT.getKey(), 12, Material.BOWL);
-    public static GUIData BUTTON_INVISIBLE = new GUIData(GuiVariant.BUTTON_INVISIBLE.getKey(), 13, Material.BOWL);
-    public static GUIData BUTTON_SHORT = new GUIData(GuiVariant.BUTTON_SHORT.getKey(), 14, Material.BOWL);
-    public static GUIData BUTTON_CONSTRUCT = new GUIData(GuiVariant.BUTTON_CONSTRUCT.getKey(), 15, Material.BOWL);
-    public static GUIData BUTTON_LOCK = new GUIData(GuiVariant.BUTTON_LOCK.getKey(), 16, Material.BOWL);
+    public static GUIData BUTTON_CHAMELEON = new GUIData(Button.CHAMELEON.getKey(), 11, Material.BOWL);
+    public static GUIData BUTTON_ADAPT = new GUIData(Button.ADAPT.getKey(), 12, Material.BOWL);
+    public static GUIData BUTTON_INVISIBLE = new GUIData(Button.INVISIBLE.getKey(), 13, Material.BOWL);
+    public static GUIData BUTTON_SHORT = new GUIData(Button.SHORT.getKey(), 14, Material.BOWL);
+    public static GUIData BUTTON_CONSTRUCT = new GUIData(Button.CONSTRUCT.getKey(), 15, Material.BOWL);
+    public static GUIData BUTTON_LOCK = new GUIData(Button.LOCK.getKey(), 16, Material.BOWL);
     public static GUIData BUTTON_CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 26, Material.BOWL);
 }

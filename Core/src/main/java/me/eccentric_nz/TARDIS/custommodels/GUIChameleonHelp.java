@@ -41,5 +41,5 @@ public record GUIChameleonHelp() {
     public static GUIData ROW_2 = new GUIData(GuiVariant.TWO.getKey(), 43, Material.BOWL);
     public static GUIData ROW_3 = new GUIData(GuiVariant.THREE.getKey(), 34, Material.BOWL);
     public static GUIData ROW_4 = new GUIData(GuiVariant.FOUR.getKey(), 25, Material.BOWL);
-    public static GUIData VIEW_TEMP = new GUIData(GuiVariant.VIEW_TEMP.getKey(), 40, Material.BOWL);
+    public static GUIData VIEW_TEMP = new GUIData(GuiVariant.VIEW_TEMPLATE.getKey(), 40, Material.BOWL);
 }

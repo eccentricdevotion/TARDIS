@@ -18,6 +18,9 @@ package me.eccentric_nz.TARDIS.commands.give;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.custommodels.keys.BoneDoorVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ClassicDoorVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.TardisDoorVariant;
 import me.eccentric_nz.TARDIS.doors.Door;
 import me.eccentric_nz.TARDIS.rotors.Rotor;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -37,16 +40,17 @@ public class TARDISDisplayBlockCommand {
     public ItemStack getStack(String arg) {
         String display = TARDISStringUtils.toEnumUppercase(arg);
         if (display.startsWith("DOOR_") || display.endsWith("_DOOR")) {
-//            plugin.debug(display);
-//            for (String d : Door.byName.keySet()) {
-//                plugin.debug(d);
-//            }
             Door door = Door.byName.get(display);
             ItemStack is = new ItemStack(door.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
-            im.setDisplayName("Door " + door.getName());
+            im.setDisplayName("Door " + TARDISStringUtils.capitalise(door.getName()));
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 10000);
-            im.setCustomModelData(10000);
+            switch (door.getMaterial()) {
+                case IRON_DOOR -> im.setItemModel(TardisDoorVariant.TARDIS_DOOR_CLOSED.getKey());
+                case BIRCH_DOOR -> im.setItemModel(BoneDoorVariant.BONE_DOOR_CLOSED.getKey());
+                case CHERRY_DOOR -> im.setItemModel(ClassicDoorVariant.CLASSIC_DOOR_CLOSED.getKey());
+                default -> im.setItemModel(Door.getClosedModel(door.getMaterial()));
+            }
             is.setItemMeta(im);
             return is;
         } else if (display.startsWith("TIME_")) {

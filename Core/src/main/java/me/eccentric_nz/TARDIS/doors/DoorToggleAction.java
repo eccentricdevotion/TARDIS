@@ -5,6 +5,9 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.chameleon.utils.PandoricaOpens;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
+import me.eccentric_nz.TARDIS.custommodels.keys.BoneDoorVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ClassicDoorVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.TardisDoorVariant;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
@@ -158,7 +161,12 @@ public class DoorToggleAction extends TARDISDoorListener {
                                                     // animate pandorica opening
                                                     new PandoricaOpens(plugin).animate(stand, true);
                                                 } else {
-                                                    dim.setCustomModelData(1002);
+                                                    switch (dye.getType()) {
+                                                        case IRON_DOOR -> dim.setItemModel(TardisDoorVariant.TARDIS_DOOR_OPEN.getKey());
+                                                        case BIRCH_DOOR -> dim.setItemModel(BoneDoorVariant.BONE_DOOR_OPEN.getKey());
+                                                        case CHERRY_DOOR -> dim.setItemModel(ClassicDoorVariant.CLASSIC_DOOR_OPEN.getKey());
+                                                        default -> dim.setItemModel(Door.getOpenModel(dye.getType()));
+                                                    }
                                                     dye.setItemMeta(dim);
                                                     ee.setHelmet(dye, true);
                                                 }
@@ -213,7 +221,12 @@ public class DoorToggleAction extends TARDISDoorListener {
                                         if (dye.getType() == Material.ENDER_PEARL) {
                                             new PandoricaOpens(plugin).animate(stand, false);
                                         } else {
-                                            dim.setCustomModelData(1001);
+                                            switch (dye.getType()) {
+                                                case IRON_DOOR -> dim.setItemModel(TardisDoorVariant.TARDIS_DOOR_CLOSED.getKey());
+                                                case BIRCH_DOOR -> dim.setItemModel(BoneDoorVariant.BONE_DOOR_CLOSED.getKey());
+                                                case CHERRY_DOOR -> dim.setItemModel(ClassicDoorVariant.CLASSIC_DOOR_CLOSED.getKey());
+                                                default -> dim.setItemModel(Door.getClosedModel(dye.getType()));
+                                            }
                                             dye.setItemMeta(dim);
                                             ee.setHelmet(dye, true);
                                             TARDISSounds.playDoorSound(false, location);

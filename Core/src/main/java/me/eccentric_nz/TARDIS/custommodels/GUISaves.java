@@ -16,20 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.custommodels;
 
-import me.eccentric_nz.TARDIS.custommodels.keys.ArrowVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.Bucket;
-import me.eccentric_nz.TARDIS.custommodels.keys.Map;
+import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import org.bukkit.Material;
 
 public record GUISaves() {
 
     // TARDIS saves
     public static GUIData HOME = new GUIData(GuiVariant.HOME.getKey(), 0, Material.BOWL);
-    public static GUIData DEATH = new GUIData(GuiVariant.BUTTON_DEATH.getKey(), 2, Material.BOWL);
+    public static GUIData DEATH = new GUIData(Button.DEATH.getKey(), 2, Material.BOWL);
     public static GUIData REARRANGE_SAVES = new GUIData(ArrowVariant.REARRANGE.getKey(), 45, Material.ARROW);
-    public static GUIData LOAD_TARDIS_AREAS = new GUIData(Map.LOAD_SELECTED_PROGRAM_IN_EDITOR.getKey(), 53, Material.MAP);
-    public static GUIData DELETE_SAVE = new GUIData(Bucket.DELETE.getKey(), 47, Material.BUCKET);
+    public static GUIData LOAD_TARDIS_AREAS = new GUIData(GuiVariant.LOAD_SELECTED_PROGRAM_IN_EDITOR.getKey(), 53, Material.MAP);
+    public static GUIData DELETE_SAVE = new GUIData(Button.DELETE.getKey(), 47, Material.BUCKET);
     public static GUIData LOAD_MY_SAVES = new GUIData(GuiVariant.OWN_SAVES.getKey(), 49, Material.BOWL);
     public static GUIData LOAD_SAVES_FROM_THIS_TARDIS = new GUIData(GuiVariant.TARDIS_SAVES.getKey(), 49, Material.BOWL);
     public static GUIData BACK_TO_PLANETS = new GUIData(ArrowVariant.BACK.getKey(), 51, Material.ARROW);

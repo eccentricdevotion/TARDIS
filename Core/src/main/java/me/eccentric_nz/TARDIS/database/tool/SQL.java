@@ -76,7 +76,7 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %sfarming_prefs (farm_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', allay int(1) DEFAULT '1', apiary int(1) DEFAULT '1', aquarium int(1) DEFAULT '1', bamboo int(1) DEFAULT '1', birdcage int(1) DEFAULT '1', farm int(1) DEFAULT '1', geode int(1) DEFAULT '1', hutch int(1) DEFAULT '1', igloo int(1) DEFAULT '1', iistubil int(1) DEFAULT '1', lava int(1) DEFAULT '1', mangrove int(1) DEFAULT '1', pen int(1) DEFAULT '1', stable int(1) DEFAULT '1', stall int(1) DEFAULT '1', village int(1) DEFAULT '1', PRIMARY KEY (farm_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
-            "CREATE TABLE IF NOT EXISTS %sflight (f_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', tardis_id int(11) DEFAULT '0', location varchar(512) DEFAULT '', chicken varchar(48) DEFAULT '', stand varchar(48) DEFAULT '', PRIMARY KEY (f_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
+            "CREATE TABLE IF NOT EXISTS %sflight (f_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', tardis_id int(11) DEFAULT '0', location varchar(512) DEFAULT '', stand varchar(48) DEFAULT '', display varchar(48) DEFAULT '', PRIMARY KEY (f_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
             "CREATE TABLE IF NOT EXISTS %sforcefield (uuid varchar(48) NOT NULL DEFAULT '', location varchar(512) DEFAULT '', PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -356,7 +356,7 @@ public class SQL {
 
             "INSERT INTO `%sfarming_prefs` (`farm_id`, `uuid`, `allay`, `apiary`, `aquarium`, `bamboo`, `birdcage`, `farm`, `geode`, `hutch`, `igloo`, `iistubil`, `lava`, `mangrove`, `pen`, `stable`, `stall`, `village`) VALUES ",
 
-            "INSERT INTO `%sflight` (`f_id`, `uuid`, `tardis_id`, `location`, `chicken`, `stand`) VALUES ",
+            "INSERT INTO `%sflight` (`f_id`, `uuid`, `tardis_id`, `location`, `stand`, `display`) VALUES ",
 
             "INSERT INTO `%sforcefield` (`uuid`, `location`) VALUES ",
 

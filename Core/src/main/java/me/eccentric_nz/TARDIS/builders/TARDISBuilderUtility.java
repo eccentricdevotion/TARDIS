@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisModel;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -192,5 +193,14 @@ public class TARDISBuilderUtility {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         TARDIS.plugin.getQueryFactory().doUpdate("tardis", set, where);
+    }
+
+    public static String getCustomModelPath(String type) {
+        for (String c : TARDIS.plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
+            if (type.equals(TARDIS.plugin.getCustomModelConfig().getString("models." + c + ".item"))) {
+                return TARDISStringUtils.toUnderscoredLowercase(c);
+            }
+        }
+        return "custom";
     }
 }

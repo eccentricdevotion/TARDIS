@@ -1,15 +1,17 @@
 package me.eccentric_nz.TARDIS.doors;
 
+import org.bukkit.NamespacedKey;
+
 public class DoorAnimationData {
 
     private final long ticks;
     private final String sound;
-    private final int lastFrame;
+    private final NamespacedKey[] animation;
 
-    public DoorAnimationData(long ticks, String sound, int lastFrame) {
+    public DoorAnimationData(long ticks, String sound, NamespacedKey[] animation) {
         this.ticks = ticks;
         this.sound = sound;
-        this.lastFrame = lastFrame;
+        this.animation = animation;
     }
 
     public long getTicks() {
@@ -20,7 +22,7 @@ public class DoorAnimationData {
         return sound;
     }
 
-    public int getLastFrame() {
-        return lastFrame;
+    public NamespacedKey[] getAnimation() {
+        return animation;
     }
 }

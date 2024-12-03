@@ -16,10 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.custommodels;
 
-import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.Bucket;
-import me.eccentric_nz.TARDIS.custommodels.keys.LazarusCatergory;
-import me.eccentric_nz.TARDIS.custommodels.keys.PrefsVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import org.bukkit.Material;
 
 import java.util.List;
@@ -32,7 +29,7 @@ public record GUITelevision() {
     public static GUIData CHARACTERS = new GUIData(LazarusCatergory.CHARACTER.getKey(), 5, Material.BROWN_STAINED_GLASS_PANE, "Characters");
     public static GUIData MONSTERS = new GUIData(LazarusCatergory.MONSTER.getKey(), 7, Material.BROWN_STAINED_GLASS_PANE, "Monsters");
     public static GUIData DOWNLOAD = new GUIData(PrefsVariant.DOWNLOAD_OFF.getKey(), 29, Material.REPEATER);
-    public static GUIData REMOVE = new GUIData(Bucket.REMOVE.getKey(), 31, Material.BUCKET);
+    public static GUIData REMOVE = new GUIData(Button.REMOVE.getKey(), 31, Material.BUCKET);
     public static GUIData BACK = new GUIData(GuiVariant.BACK.getKey(), 33, Material.BOWL);
     public static GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 35, Material.BOWL);
 

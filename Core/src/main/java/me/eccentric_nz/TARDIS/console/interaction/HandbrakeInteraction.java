@@ -149,7 +149,7 @@ public class HandbrakeInteraction {
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_REBUILD");
                                 return;
                             } else {
-                                new TARDISExteriorFlight(plugin).startFlying(player, id, null, current, beac_on, beacon, preset.equals(ChameleonPreset.PANDORICA));
+                                new TARDISExteriorFlight(plugin).startFlying(player, id, null, current, beac_on, beacon);
                                 TARDISSounds.playTARDISSound(handbrake, "tardis_handbrake_release");
                             }
                         } else {

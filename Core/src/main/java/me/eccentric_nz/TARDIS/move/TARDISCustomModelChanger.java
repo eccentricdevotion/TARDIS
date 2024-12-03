@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
@@ -106,7 +107,7 @@ public class TARDISCustomModelChanger {
                             case ENDER_PEARL -> ChameleonVariant.PANDORICA.getKey();
                             case GRAY_STAINED_GLASS_PANE -> ChameleonVariant.WEEPING_ANGEL.getKey();
                             // get CUSTOM model path
-                            default -> new NamespacedKey(plugin, "police_box/" + getCustomModelPath(is.getType().toString()) + "_closed");
+                            default -> new NamespacedKey(plugin, "police_box/" + TARDISBuilderUtility.getCustomModelPath(is.getType().toString()) + "_closed");
                         };
                     } else {
                         new TARDISInnerDoorCloser(plugin, uuid, id).closeDoor(outside);
@@ -133,7 +134,7 @@ public class TARDISCustomModelChanger {
                             case ENDER_PEARL -> ChameleonVariant.PANDORICA_OPEN.getKey();
                             case GRAY_STAINED_GLASS_PANE -> ChameleonVariant.WEEPING_ANGEL_OPEN.getKey();
                             // get CUSTOM model path
-                            default -> new NamespacedKey(plugin, "police_box/" + getCustomModelPath(is.getType().toString()) + "_open");
+                            default -> new NamespacedKey(plugin, "police_box/" + TARDISBuilderUtility.getCustomModelPath(is.getType().toString()) + "_open");
                         };
                     }
                     if (preset != ChameleonPreset.PANDORICA) {
@@ -145,14 +146,5 @@ public class TARDISCustomModelChanger {
                 }
             }
         }
-    }
-
-    private String getCustomModelPath(String type) {
-        for (String c : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
-            if (type.equals(plugin.getCustomModelConfig().getString("models." + c + ".item"))) {
-                return TARDISStringUtils.toUnderscoredLowercase(c);
-            }
-        }
-        return "custom";
     }
 }

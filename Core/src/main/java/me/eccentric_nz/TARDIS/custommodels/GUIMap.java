@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.custommodels;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.Button;
 import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.Map;
 import me.eccentric_nz.TARDIS.custommodels.keys.Wool;
 import org.bukkit.Material;
 
@@ -28,12 +28,12 @@ public record GUIMap() {
     public static GUIData BUTTON_DOWN = new GUIData(Wool.DOWN.getKey(), 18, Material.CYAN_WOOL);
     public static GUIData BUTTON_LEFT = new GUIData(Wool.LEFT.getKey(), 9, Material.CYAN_WOOL);
     public static GUIData BUTTON_RIGHT = new GUIData(Wool.RIGHT.getKey(), 11, Material.CYAN_WOOL);
-    public static GUIData BUTTON_MAP = new GUIData(Map.LOAD_MAP.getKey(), 10, Material.MAP);
+    public static GUIData BUTTON_MAP = new GUIData(GuiVariant.LOAD_MAP.getKey(), 10, Material.MAP);
     public static GUIData BUTTON_LEVEL_B = new GUIData(Wool.LEVEL_BOTTOM.getKey(), 27, Material.WHITE_WOOL);
     public static GUIData BUTTON_LEVEL = new GUIData(Wool.LEVEL_MAIN.getKey(), 28, Material.YELLOW_WOOL);
     public static GUIData BUTTON_LEVEL_T = new GUIData(Wool.LEVEL_TOP.getKey(), 29, Material.WHITE_WOOL);
     public static GUIData BUTTON_CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 45, Material.BOWL);
-    public static GUIData BUTTON_TRANSMAT = new GUIData(GuiVariant.BUTTON_TRANSMAT.getKey(), 46, Material.BOWL);
-    public static GUIData BUTTON_WHERE = new GUIData(Map.WHERE_AM_I.getKey(), 47, Material.COMPASS);
+    public static GUIData BUTTON_TRANSMAT = new GUIData(Button.TRANSMAT.getKey(), 46, Material.BOWL);
+    public static GUIData BUTTON_WHERE = new GUIData(GuiVariant.WHERE_AM_I.getKey(), 47, Material.COMPASS);
     public static GUIData BUTTON_MAP_ON = new GUIData(Wool.BLANK.getKey(), -1, Material.BLACK_WOOL);
 }
