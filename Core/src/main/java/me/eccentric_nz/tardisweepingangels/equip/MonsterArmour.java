@@ -19,7 +19,7 @@ public class MonsterArmour {
         ItemStack armour = new ItemStack(monster.getMaterial(), 1);
         ItemMeta meta = armour.getItemMeta();
         meta.setDisplayName(monster.getName() + " " + TARDISStringUtils.uppercaseFirst(slot.name()));
-        meta.setItemModel(new NamespacedKey(TARDIS.plugin, "monster/cyberman/cyberman_head"));
+        meta.setItemModel(monster.getHeadModel());
         EquippableComponent equippable = meta.getEquippable();
         equippable.setAllowedEntities(List.of(monster.getEntityType(), EntityType.PLAYER));
         equippable.setSlot(slot);

@@ -31,14 +31,14 @@ public enum Monster {
     CYBERMAN("Cyberman", EntityType.ZOMBIE, "cyberman", 2, CybermanVariant.CYBERMAN_DISGUISE.getKey(), Material.IRON_INGOT, CybermanVariant.CYBERMAN_HEAD.getKey(), MonsterSkins.CYBERMAN),
     DALEK("Dalek", EntityType.SKELETON, "dalek", 3, DalekVariant.DALEK_BRASS.getKey(), Material.SLIME_BALL, DalekVariant.DALEK_HEAD.getKey(), null),
     DALEK_SEC("Dalek Sec", EntityType.ZOMBIFIED_PIGLIN, "dalek_sec", 22, DalekSecVariant.DALEK_SEC_DISGUISE.getKey(), Material.MANGROVE_PROPAGULE, DalekSecVariant.DALEK_SEC_HEAD.getKey(), CharacterSkins.DALEK_SEC),
-    DAVROS("Davros", EntityType.ZOMBIFIED_PIGLIN, "davros", 23, DavrosVariant.DAVROS_DISGUISE.getKey(), Material.CRIMSON_BUTTON, DavrosVariant.DAVROS_HEAD.getKey(),null),
+    DAVROS("Davros", EntityType.ZOMBIFIED_PIGLIN, "davros", 23, DavrosVariant.DAVROS_DISGUISE.getKey(), Material.CRIMSON_BUTTON, DavrosVariant.DAVROS_HEAD.getKey(), null),
     EMPTY_CHILD("Empty Child", EntityType.ZOMBIE, "empty", 4, EmptyChildVariant.EMPTY_CHILD_DISGUISE.getKey(), Material.SUGAR, EmptyChildVariant.EMPTY_CHILD_HEAD.getKey(), MonsterSkins.EMPTY_CHILD),
     HATH("Hath", EntityType.ZOMBIFIED_PIGLIN, "hath", 16, HathVariant.HATH_DISGUISE.getKey(), Material.PUFFERFISH, HathVariant.HATH_HEAD.getKey(), null),
     HEADLESS_MONK("Headless Monk", EntityType.SKELETON, "monk", 17, MonkVariant.HEADLESS_MONK_DISGUISE.getKey(), Material.RED_CANDLE, MonkVariant.HEADLESS_MONK_HEAD.getKey(), MonsterSkins.HEADLESS_MONK),
     ICE_WARRIOR("Ice Warrior", EntityType.ZOMBIFIED_PIGLIN, "ice", 5, IceWarriorVariant.ICE_WARRIOR_DISGUISE.getKey(), Material.SNOWBALL, IceWarriorVariant.ICE_WARRIOR_HEAD.getKey(), MonsterSkins.ICE_WARRIOR),
     JUDOON("Judoon", EntityType.HUSK, "judoon", 14, JudoonVariant.JUDOON_DISGUISE.getKey(), Material.YELLOW_DYE, JudoonVariant.JUDOON_MONSTER_HEAD.getKey(), CharacterSkins.JUDOON),
-    K9("K9", EntityType.HUSK, "k9", 15, K9Variant.K9.getKey(), Material.BONE, null,null),
-    MIRE("Mire", EntityType.SKELETON, "mire", 18, MireVariant.THE_MIRE_DISGUISE.getKey(), Material.NETHERITE_SCRAP, MireVariant.THE_MIRE_HEAD.getKey(),null),
+    K9("K9", EntityType.HUSK, "k9", 15, K9Variant.K9.getKey(), Material.BONE, null, null),
+    MIRE("Mire", EntityType.SKELETON, "mire", 18, MireVariant.THE_MIRE_DISGUISE.getKey(), Material.NETHERITE_SCRAP, MireVariant.THE_MIRE_HEAD.getKey(), null),
     OOD("Ood", EntityType.HUSK, "ood", 12, OodVariant.OOD_DISGUISE.getKey(), Material.ROTTEN_FLESH, OodVariant.OOD_MONSTER_HEAD.getKey(), CharacterSkins.OOD),
     OSSIFIED("Ossified Time Zombie", EntityType.ZOMBIE, "ossified", 24, OssifiedVariant.OSSIFIED_DISGUISE.getKey(), Material.CHARCOAL, OssifiedVariant.OSSIFIED_HEAD.getKey(), null),
     RACNOSS("Racnoss", EntityType.PIGLIN_BRUTE, "racnoss", 21, RacnossVariant.RACNOSS_DISGUISE.getKey(), Material.SPIDER_EYE, RacnossVariant.RACNOSS_HEAD.getKey(), MonsterSkins.RACNOSS),
@@ -63,17 +63,6 @@ public enum Monster {
     private final Material material;
     private final NamespacedKey headModel;
     private final Skin skin;
-
-//    Monster(String name, EntityType entityType, String permission, int persist, NamespacedKey model, Material material, Skin skin) {
-//        this.name = name;
-//        this.entityType = entityType;
-//        this.permission = permission;
-//        this.persist = persist;
-//        this.model = model;
-//        this.material = material;
-//        this.headModel = 3;
-//        this.skin = skin;
-//    }
 
     Monster(String name, EntityType entityType, String permission, int persist, NamespacedKey model, Material material, NamespacedKey headModel, Skin skin) {
         this.name = name;
@@ -167,12 +156,53 @@ public enum Monster {
     public boolean hasTrim() {
         switch (this) {
 //            case DALEK, DAVROS, FLYER, HEADLESS_MONK, JUDOON, K9, MIRE, OOD, OSSIFIED, RACNOSS, SILENT, SLITHEEN, TOCLAFANE -> {
-            case CYBERMAN, EMPTY_CHILD, HATH, ICE_WARRIOR, SILENT, SILURIAN, SONTARAN, STRAX, VASHTA_NERADA, WEEPING_ANGEL, ZYGON -> {
+            case CYBERMAN, EMPTY_CHILD, HATH, ICE_WARRIOR, SILENT, SILURIAN, SONTARAN, STRAX, VASHTA_NERADA,
+                 WEEPING_ANGEL, ZYGON -> {
                 return true;
             }
             default -> {
                 return false;
             }
         }
+    }
+
+    public NamespacedKey getArmourKey() {
+        NamespacedKey key = null;
+        switch (this) {
+            case CLOCKWORK_DROID -> key = ArmourVariant.CLOCKWORK_DROID.getKey();
+            case CYBERMAN -> key = ArmourVariant.CYBERMAN.getKey();
+            case DALEK_SEC -> key = ArmourVariant.DALEK_SEC.getKey();
+            case EMPTY_CHILD -> key = ArmourVariant.EMPTY_CHILD.getKey();
+            case HATH -> key = ArmourVariant.HATH.getKey();
+            case HEADLESS_MONK -> key = ArmourVariant.HEADLESS_MONK.getKey();
+            case ICE_WARRIOR -> key = ArmourVariant.ICE_WARRIOR.getKey();
+            case JUDOON -> key = ArmourVariant.JUDOON.getKey();
+            case MIRE -> key = ArmourVariant.MIRE.getKey();
+            case OOD -> {
+                int r = TARDISConstants.RANDOM.nextInt(100);
+                if (r < 15) {
+                    key = ArmourVariant.OOD_BLUE.getKey();
+                } else if (r > 84) {
+                    key = ArmourVariant.OOD_BROWN.getKey();
+                } else {
+                    key = ArmourVariant.OOD_BLACK.getKey();
+                }
+            }
+            case OSSIFIED -> key = ArmourVariant.OSSIFIED.getKey();
+            case RACNOSS -> key = ArmourVariant.RACNOSS.getKey();
+            case SCARECROW -> key = ArmourVariant.SCARECROW.getKey();
+            case SEA_DEVIL -> key = ArmourVariant.SEA_DEVIL.getKey();
+            case SILENT -> key = ArmourVariant.SILENCE.getKey();
+            case SILURIAN -> key = ArmourVariant.SILURIAN.getKey();
+            case SLITHEEN -> key = ArmourVariant.SLITHEEN.getKey();
+            case SONTARAN -> key = ArmourVariant.SONTARAN.getKey();
+            case STRAX -> key = ArmourVariant.STRAX.getKey();
+            case SYCORAX -> key = ArmourVariant.SYCORAX.getKey();
+            case VASHTA_NERADA -> key = ArmourVariant.VASHTA_NERADA.getKey();
+            case WEEPING_ANGEL -> key = ArmourVariant.WEEPING_ANGEL.getKey();
+            case ZYGON -> key = ArmourVariant.ZYGON.getKey();
+            default -> { }
+        }
+        return key;
     }
 }
