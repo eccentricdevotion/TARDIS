@@ -63,7 +63,7 @@ public class TARDISSonicUpgradeListener implements Listener {
                 for (ItemStack glowstone : ci.getContents()) {
                     if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
                         ItemMeta rm = glowstone.getItemMeta();
-                        upgrade = SonicUpgradeData.customModelData.get(rm.getCustomModelData());
+                        upgrade = SonicUpgradeData.customModelData.get(rm.getItemModel());
                         found = true;
                     }
                 }

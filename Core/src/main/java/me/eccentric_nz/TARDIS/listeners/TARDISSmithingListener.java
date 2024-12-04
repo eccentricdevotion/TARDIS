@@ -59,7 +59,7 @@ public class TARDISSmithingListener implements Listener {
                 ItemStack glowstone = inventory.getItem(2);
                 if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
                     ItemMeta rm = glowstone.getItemMeta();
-                    upgrade = SonicUpgradeData.customModelData.get(rm.getCustomModelData());
+                    upgrade = SonicUpgradeData.customModelData.get(rm.getItemModel());
                     found = true;
                 }
                 // is it a valid upgrade?
@@ -135,10 +135,10 @@ public class TARDISSmithingListener implements Listener {
             return false;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName() || !im.hasCustomModelData()) {
+        if (!im.hasDisplayName() || !im.hasItemModel()) {
             return false;
         }
-        if (!im.getDisplayName().endsWith("Artron Capacitor") || im.getCustomModelData() != 10000004) {
+        if (!im.getDisplayName().endsWith("Artron Capacitor") || !im.getItemModel().equals(Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey())) {
             return false;
         }
         return true;

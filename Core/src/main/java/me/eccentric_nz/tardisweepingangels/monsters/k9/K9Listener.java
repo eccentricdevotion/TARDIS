@@ -94,7 +94,7 @@ public class K9Listener implements Listener {
             ItemStack is = event.getItem();
             if (is != null && is.getType().equals(Material.BONE) && is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName() && im.getDisplayName().endsWith("K9") && im.hasCustomModelData()) {
+                if (im.hasDisplayName() && im.getDisplayName().endsWith("K9") && im.hasItemModel()) {
                     event.setCancelled(true);
                     Player player = event.getPlayer();
                     Location location = event.getClickedBlock().getLocation().add(0.5d, 1.0d, 0.5d);

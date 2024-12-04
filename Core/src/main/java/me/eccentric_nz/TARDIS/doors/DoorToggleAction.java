@@ -50,9 +50,9 @@ public class DoorToggleAction extends TARDISDoorListener {
         ItemStack dye = ee.getHelmet();
         if (dye != null && (TARDISConstants.DYES.contains(dye.getType()) || plugin.getUtils().isCustomModel(dye)) && dye.hasItemMeta()) {
             ItemMeta dim = dye.getItemMeta();
-            if (dim.hasCustomModelData()) {
-                int cmd = dim.getCustomModelData();
-                if ((cmd == 1001 || cmd == 1002) && TARDISPermission.hasPermission(player, "tardis.enter")) {
+            if (dim.hasItemModel()) {
+                String cmd = dim.getItemModel().getKey();
+                if ((cmd.contains("_open") || cmd.contains("_closed")) && TARDISPermission.hasPermission(player, "tardis.enter")) {
                     UUID uuid = player.getUniqueId();
                     // get TARDIS from location
                     Location location = stand.getLocation();
@@ -62,7 +62,7 @@ public class DoorToggleAction extends TARDISDoorListener {
                     where.put("door_type", 0);
                     ResultSetDoors rsd = new ResultSetDoors(plugin, where, false);
                     if (rsd.resultSet()) {
-                        boolean closed = cmd < 1002;
+                        boolean closed = cmd.contains("_closed");
                         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                             plugin.getMessenger().sendStatus(player, "SIEGE_NO_EXIT");
                             return true;
@@ -162,9 +162,12 @@ public class DoorToggleAction extends TARDISDoorListener {
                                                     new PandoricaOpens(plugin).animate(stand, true);
                                                 } else {
                                                     switch (dye.getType()) {
-                                                        case IRON_DOOR -> dim.setItemModel(TardisDoorVariant.TARDIS_DOOR_OPEN.getKey());
-                                                        case BIRCH_DOOR -> dim.setItemModel(BoneDoorVariant.BONE_DOOR_OPEN.getKey());
-                                                        case CHERRY_DOOR -> dim.setItemModel(ClassicDoorVariant.CLASSIC_DOOR_OPEN.getKey());
+                                                        case IRON_DOOR ->
+                                                                dim.setItemModel(TardisDoorVariant.TARDIS_DOOR_OPEN.getKey());
+                                                        case BIRCH_DOOR ->
+                                                                dim.setItemModel(BoneDoorVariant.BONE_DOOR_OPEN.getKey());
+                                                        case CHERRY_DOOR ->
+                                                                dim.setItemModel(ClassicDoorVariant.CLASSIC_DOOR_OPEN.getKey());
                                                         default -> dim.setItemModel(Door.getOpenModel(dye.getType()));
                                                     }
                                                     dye.setItemMeta(dim);
@@ -222,9 +225,12 @@ public class DoorToggleAction extends TARDISDoorListener {
                                             new PandoricaOpens(plugin).animate(stand, false);
                                         } else {
                                             switch (dye.getType()) {
-                                                case IRON_DOOR -> dim.setItemModel(TardisDoorVariant.TARDIS_DOOR_CLOSED.getKey());
-                                                case BIRCH_DOOR -> dim.setItemModel(BoneDoorVariant.BONE_DOOR_CLOSED.getKey());
-                                                case CHERRY_DOOR -> dim.setItemModel(ClassicDoorVariant.CLASSIC_DOOR_CLOSED.getKey());
+                                                case IRON_DOOR ->
+                                                        dim.setItemModel(TardisDoorVariant.TARDIS_DOOR_CLOSED.getKey());
+                                                case BIRCH_DOOR ->
+                                                        dim.setItemModel(BoneDoorVariant.BONE_DOOR_CLOSED.getKey());
+                                                case CHERRY_DOOR ->
+                                                        dim.setItemModel(ClassicDoorVariant.CLASSIC_DOOR_CLOSED.getKey());
                                                 default -> dim.setItemModel(Door.getClosedModel(dye.getType()));
                                             }
                                             dye.setItemMeta(dim);

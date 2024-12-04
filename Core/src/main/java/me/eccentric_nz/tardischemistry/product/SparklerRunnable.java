@@ -76,7 +76,7 @@ public class SparklerRunnable implements Runnable {
     }
 
     private boolean isSparkler(ItemStack sparkler) {
-        return sparkler != null && SparklerMaterial.isCorrectMaterial(sparkler.getType()) && sparkler.hasItemMeta() && sparkler.getItemMeta().hasCustomModelData() && sparkler.containsEnchantment(Enchantment.LOYALTY);
+        return sparkler != null && SparklerMaterial.isCorrectMaterial(sparkler.getType()) && sparkler.hasItemMeta() && sparkler.getItemMeta().hasItemModel() && sparkler.containsEnchantment(Enchantment.LOYALTY);
     }
 
     private Location getHandLocation() {

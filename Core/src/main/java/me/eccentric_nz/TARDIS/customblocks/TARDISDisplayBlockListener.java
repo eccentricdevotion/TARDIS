@@ -219,7 +219,7 @@ public class TARDISDisplayBlockListener implements Listener {
                     return;
                 }
                 ItemMeta dim = dis.getItemMeta();
-                if (!dim.hasCustomModelData() || dim.getCustomModelData() != 10000) {
+                if (!dim.hasItemModel() || !dim.getItemModel().getKey().contains("_closed")) {
                     return;
                 }
                 // set a door
@@ -375,7 +375,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                             }
                                             case CUSTOM_DOOR -> {
                                                 // get if door is open
-                                                boolean close = im.getCustomModelData() > 10000;
+                                                boolean close = !im.getItemModel().getKey().contains("_closed");
                                                 new DoorAnimator(plugin, display).animate(close);
                                                 new DisplayItemDoorToggler(plugin).openClose(player, block, close, TARDISDisplayItem.CUSTOM_DOOR);
                                             }
@@ -450,8 +450,8 @@ public class TARDISDisplayBlockListener implements Listener {
             return false;
         }
         ItemMeta im = is.getItemMeta();
-        int cmd = im.hasCustomModelData() ? im.getCustomModelData() : -1;
-        return cmd == 10000;
+        String cmd = im.hasItemModel() ? im.getItemModel().getKey() : "null";
+        return cmd.endsWith("_open");
     }
 
     private boolean isPlaceable(Material material) {

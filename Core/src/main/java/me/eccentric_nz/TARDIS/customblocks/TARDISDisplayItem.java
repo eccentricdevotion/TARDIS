@@ -226,15 +226,9 @@ public enum TARDISDisplayItem {
 
     public static TARDISDisplayItem getByModel(NamespacedKey key) {
         for (TARDISDisplayItem tdi : values()) {
-//            if (tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) {
-//                if (tdi.getCraftMaterial() == m && tdi.getCustomModel() == key) {
-//                    return tdi;
-//                }
-//            } else {
             if (tdi.getCustomModel() == key) {
                 return tdi;
             }
-//            }
         }
         return null;
     }

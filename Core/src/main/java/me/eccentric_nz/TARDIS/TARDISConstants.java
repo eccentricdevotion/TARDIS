@@ -59,6 +59,12 @@ public class TARDISConstants {
     public static final List<String> HIGHER = Arrays.asList("redstone", "thirteenth", "factory", "copper");
 
     /**
+     * Modelled console colours
+     */
+    public static final Set<String> COLOURS = Set.of("RUSTIC", "BROWN", "PINK", "MAGENTA", "PURPLE", "BLUE", "LIGHT_BLUE",
+            "CYAN", "GREEN", "LIME", "YELLOW", "ORANGE", "RED", "WHITE", "BLACK", "GRAY", "LIGHT_GRAY");
+
+    /**
      * GUI materials
      */
     public static final List<Material> GUI_IDS = Arrays.asList(

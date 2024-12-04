@@ -29,7 +29,7 @@ public class ColourType {
         LOOKUP.put(Material.MAGENTA_CONCRETE_POWDER, ConsoleVariant.CONSOLE_MAGENTA.getKey());
         LOOKUP.put(Material.PINK_CONCRETE_POWDER, ConsoleVariant.CONSOLE_PINK.getKey());
         LOOKUP.put(Material.BROWN_CONCRETE_POWDER, ConsoleVariant.CONSOLE_BROWN.getKey());
-        LOOKUP.put(Material.WAXED_OXIDIZED_COPPER, ConsoleVariant.CONSOLE_RUSTIC.getKey());
+//        LOOKUP.put(Material.WAXED_OXIDIZED_COPPER, ConsoleVariant.CONSOLE_RUSTIC.getKey());
         COLOURS.put(ConsolePart.CONSOLE_LIGHT_GRAY.getKey(), "LIGHT_GRAY");
         COLOURS.put(ConsolePart.CONSOLE_GRAY.getKey(), "GRAY");
         COLOURS.put(ConsolePart.CONSOLE_BLACK.getKey(), "BLACK");

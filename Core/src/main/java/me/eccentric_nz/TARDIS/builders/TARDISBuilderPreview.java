@@ -253,7 +253,7 @@ public class TARDISBuilderPreview implements Runnable {
                 // get the block
                 Block block = new Location(world, x, y, z).getBlock();
                 // build a console
-                int ct = (schm.getPermission().equals("bone")) ? 1 : 17;
+                String ct = (schm.getPermission().equals("bone")) ? "LIGHT_GRAY" : "RUSTIC";
                 new ConsoleBuilder(plugin).create(block, ct, -1, UUID.randomUUID().toString());
             }
             if (type.equals(Material.NOTE_BLOCK)) {

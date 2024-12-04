@@ -28,7 +28,7 @@ public class SkinListener implements Listener {
         ItemStack stack = event.getItemDrop().getItemStack();
         if (SkinUtils.SKINNED.containsKey(uuid) && SkinExtras.MATERIALS.contains(stack.getType())) {
             ItemMeta im = stack.getItemMeta();
-            event.setCancelled(im != null && im.hasCustomModelData());
+            event.setCancelled(im != null && im.hasItemModel());
         }
     }
 
@@ -53,7 +53,7 @@ public class SkinListener implements Listener {
             return;
         }
         ItemMeta im = stack.getItemMeta();
-        if (im == null || !im.hasCustomModelData()) {
+        if (im == null || !im.hasItemModel()) {
             return;
         }
         if (im.getPersistentDataContainer().has(TARDIS.plugin.getTimeLordUuidKey(), PersistentDataType.BOOLEAN)) {
@@ -71,7 +71,7 @@ public class SkinListener implements Listener {
             if (SkinUtils.SKINNED.containsKey(uuid) && SkinExtras.MATERIALS.contains(current.getType())) {
                 if (slotType == InventoryType.SlotType.ARMOR) {
                     ItemMeta im = current.getItemMeta();
-                    event.setCancelled(im != null && im.hasCustomModelData());
+                    event.setCancelled(im != null && im.hasItemModel());
                 }
                 if (slotType == InventoryType.SlotType.QUICKBAR) {
                     Skin skin = SkinUtils.SKINNED.get(uuid);

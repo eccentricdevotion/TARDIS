@@ -306,7 +306,7 @@ class TARDISBuildAbandoned implements Runnable {
                 // get the block
                 Block block = new Location(world, x, y, z).getBlock();
                 // build a console
-                new ConsoleBuilder(plugin).create(block, 1, dbID, TARDISConstants.UUID_ZERO.toString());
+                new ConsoleBuilder(plugin).create(block, "LIGHT_GRAY", dbID, TARDISConstants.UUID_ZERO.toString());
             }
             if (type.equals(Material.SCULK_SHRIEKER)) {
                 // remember the location, so we can make it shriek when flying

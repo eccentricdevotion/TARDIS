@@ -287,7 +287,7 @@ public class TARDISStorageListener extends TARDISMenuListener {
                                     im.setItemModel(GuiVariant.PREV.getKey());
                                     is.setType(Material.BOWL);
                                     is.setItemMeta(im);
-                                } else if (is.getType().equals(Material.GLOWSTONE_DUST) && !im.hasCustomModelData() && im.getDisplayName().endsWith("Circuits")) {
+                                } else if (is.getType().equals(Material.GLOWSTONE_DUST) && !im.hasItemModel() && im.getDisplayName().endsWith("Circuits")) {
                                     im.setItemModel(CircuitVariant.GALLIFREY.getKey());
                                 }
                                 is.setItemMeta(im);

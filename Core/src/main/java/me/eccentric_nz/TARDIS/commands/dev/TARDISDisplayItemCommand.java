@@ -30,7 +30,6 @@ import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.flight.vehicle.InterpolatedAnimation;
 import me.eccentric_nz.TARDIS.flight.vehicle.VehicleUtility;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardisshop.ShopItem;
 import org.bukkit.Chunk;
@@ -244,8 +243,8 @@ public class TARDISDisplayItemCommand {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                     return true;
                 }
-                int colour = TARDISNumberParsers.parseInt(args[2]);
-                if (colour < 1 || colour > 17) {
+                String colour = args[2].toUpperCase(Locale.ROOT);
+                if (TARDISConstants.COLOURS.contains(colour)) {
                     plugin.getMessenger().message(player, "Number must be between 1-17!");
                     return true;
                 }

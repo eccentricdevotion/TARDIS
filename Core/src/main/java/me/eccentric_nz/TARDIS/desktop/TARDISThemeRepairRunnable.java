@@ -445,7 +445,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     // get the block
                     Block block = new Location(world, x, y, z).getBlock();
                     // build a console
-                    int ct = (tud.getSchematic().getPermission().equals("bone")) ? 1 : 17;
+                    String ct = (tud.getSchematic().getPermission().equals("bone")) ? "LIGHT_GRAY" : "RUSTIC";
                     new ConsoleBuilder(plugin).create(block, ct, id, uuid.toString());
                 }
                 if (type.equals(Material.SCULK_SHRIEKER)) {

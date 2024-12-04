@@ -172,17 +172,15 @@ public class SchematicSave {
                                     frame.addProperty("item", type.toString());
                                     if (item.hasItemMeta()) {
                                         ItemMeta im = item.getItemMeta();
-                                        if (im.hasCustomModelData()) {
-                                            frame.addProperty("cmd", im.getCustomModelData());
+                                        if (im.hasItemModel()) {
+                                            frame.addProperty("cmd", im.getItemModel().getKey());
                                         }
                                         if (im.hasDisplayName()) {
                                             frame.addProperty("name", im.getDisplayName());
                                         }
                                         if (im.hasLore()) {
                                             JsonArray lore = new JsonArray();
-                                            im.getLore().forEach(s -> {
-                                                lore.add(s);
-                                            });
+                                            im.getLore().forEach(s -> lore.add(s));
                                             frame.add("lore", lore);
                                         }
                                         if ((Tag.ITEMS_BANNERS.isTagged(type) || type == Material.SHIELD) && im instanceof BlockStateMeta bsm) {

@@ -178,7 +178,7 @@ public class TARDISCraftListener implements Listener {
                             is.setItemMeta(im);
                             ci.setResult(is);
                         }
-                    } else if (dn.startsWith("Door ") && im.hasCustomModelData()) {
+                    } else if (dn.startsWith("Door ") && im.hasItemModel()) {
                         // add custom block key to PDC
                         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 10000);
                         is.setItemMeta(im);

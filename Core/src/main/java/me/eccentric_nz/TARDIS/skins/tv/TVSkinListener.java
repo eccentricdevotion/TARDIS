@@ -100,7 +100,7 @@ public class TVSkinListener extends TARDISMenuListener {
         ItemStack is = view.getItem(GUITelevision.DOWNLOAD.slot());
         if (is != null && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            NamespacedKey key = (im.hasItemModel() && im.getItemModel() == PrefsVariant.DOWNLOAD_OFF.getKey())
+            NamespacedKey key = (im.hasItemModel() && PrefsVariant.DOWNLOAD_OFF.getKey().equals(im.getItemModel()))
                     ? PrefsVariant.DOWNLOAD_ON.getKey(): PrefsVariant.DOWNLOAD_OFF.getKey();
             im.setItemModel(key);
             is.setItemMeta(im);
@@ -113,7 +113,7 @@ public class TVSkinListener extends TARDISMenuListener {
         ItemStack is = view.getItem(GUITelevision.DOWNLOAD.slot());
         if (is != null && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            return im.hasItemModel() && im.getItemModel() == PrefsVariant.DOWNLOAD_ON.getKey();
+            return im.hasItemModel() && PrefsVariant.DOWNLOAD_ON.getKey().equals(im.getItemModel());
         }
         return false;
     }

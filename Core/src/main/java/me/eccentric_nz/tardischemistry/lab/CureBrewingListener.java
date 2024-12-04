@@ -97,7 +97,7 @@ public class CureBrewingListener implements Listener {
                                     Material type = is.getType();
                                     if (type.equals(Material.FEATHER) && is.hasItemMeta()) {
                                         ItemMeta im = is.getItemMeta();
-                                        if (im.hasDisplayName() && im.hasCustomModelData()) {
+                                        if (im.hasDisplayName() && im.hasItemModel()) {
                                             String dn = im.getDisplayName();
                                             items.add(type + (elements.contains(dn) ? ":" + dn : ""));
                                         } else {

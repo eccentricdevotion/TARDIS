@@ -81,7 +81,6 @@ public class TARDISSonicSound {
         }
         ItemMeta meta = stack.getItemMeta();
         if (meta.hasDisplayName() && meta.getDisplayName().endsWith("Sonic Screwdriver")) {
-            int cmd = meta.getCustomModelData();
             meta.setItemModel(model);
             stack.setItemMeta(meta);
             if (stack.containsEnchantment(Enchantment.UNBREAKING)) {

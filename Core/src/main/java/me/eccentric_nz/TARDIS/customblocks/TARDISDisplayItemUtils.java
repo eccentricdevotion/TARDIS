@@ -46,7 +46,7 @@ public class TARDISDisplayItemUtils {
         ItemStack is = display.getItemStack();
         if (is != null) {
             ItemMeta im = is.getItemMeta();
-            if (im.hasCustomModelData()) {
+            if (im.hasItemModel()) {
                 if (Tag.ITEMS_DECORATED_POT_SHERDS.isTagged(is.getType())) {
                     return TARDISDisplayItem.CUSTOM_DOOR;
                 } else {

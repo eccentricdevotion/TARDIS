@@ -472,10 +472,10 @@ public class DebugPopulator {
     public void consoles() {
         int x = -52;
         int z = 4;
-        for (int i = 1; i < 18; i++) {
+        for (String colour : TARDISConstants.COLOURS) {
             Block block = world.getBlockAt(rx + x, 65, rz + z);
             block.setType(Material.WHITE_CONCRETE);
-            new ConsoleBuilder(plugin).create(block, i, -1, UUID.randomUUID().toString());
+            new ConsoleBuilder(plugin).create(block, colour, -1, UUID.randomUUID().toString());
             x -= 6;
             if (x < -76) {
                 x = -52;

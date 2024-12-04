@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.console.telepathic.TARDISTelepathicInventory;
 import me.eccentric_nz.TARDIS.control.TARDISScanner;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -32,6 +33,7 @@ import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -55,7 +57,22 @@ import java.util.List;
 public class TARDISConsoleSwitchListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<Integer> gui_circuits = Arrays.asList(10001962, 10001966, 10001973, 10001974, 10001975, 10001976, 10001977, 20001962, 20001966, 20001973, 20001974, 20001975, 20001976, 20001977);
+    private final List<NamespacedKey> gui_circuits = Arrays.asList(
+            CircuitVariant.TELEPATHIC.getKey(),
+            CircuitVariant.CHAMELEON.getKey(),
+            CircuitVariant.ARS.getKey(),
+            CircuitVariant.TEMPORAL.getKey(),
+            CircuitVariant.MEMORY.getKey(),
+            CircuitVariant.INPUT.getKey(),
+            CircuitVariant.SCANNER.getKey(),
+            CircuitVariant.ARS_DAMAGED.getKey(),
+            CircuitVariant.CHAMELEON_DAMAGED.getKey(),
+            CircuitVariant.INPUT_DAMAGED.getKey(),
+            CircuitVariant.MEMORY_DAMAGED.getKey(),
+            CircuitVariant.SCANNER_DAMAGED.getKey(),
+            CircuitVariant.TEMPORAL_DAMAGED.getKey(),
+            CircuitVariant.TELEPATHIC_DAMAGED.getKey()
+    );
 
     public TARDISConsoleSwitchListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -90,8 +107,8 @@ public class TARDISConsoleSwitchListener implements Listener {
             return;
         }
         ItemMeta im = item.getItemMeta();
-        int cmd = (im.hasCustomModelData()) ? im.getCustomModelData() : 10001963;
-        if (!gui_circuits.contains(cmd)) {
+        NamespacedKey cmd = im.getItemModel();
+        if (cmd == null || !gui_circuits.contains(cmd)) {
             return;
         }
         HashMap<String, Object> where = new HashMap<>();
@@ -105,43 +122,43 @@ public class TARDISConsoleSwitchListener implements Listener {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             ItemStack[] stack = null;
             Inventory new_inv = null;
-            switch (cmd) {
-                // Chameleon circuit
-                case 10001966, 20001966 -> {
-                    new_inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
-                    stack = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset()).getMenu();
+            // Chameleon circuit
+            if (cmd == CircuitVariant.CHAMELEON.getKey() || cmd == CircuitVariant.CHAMELEON_DAMAGED.getKey()) {
+                new_inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
+                stack = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset()).getMenu();
+            }
+            // ARS circuit
+            if (cmd == CircuitVariant.ARS.getKey() || cmd == CircuitVariant.ARS_DAMAGED.getKey()) {
+                new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
+                stack = new TARDISARSInventory(plugin, player).getARS();
+            }
+            // Telepathic circuit
+            if (cmd == CircuitVariant.TELEPATHIC.getKey() || cmd == CircuitVariant.TELEPATHIC_DAMAGED.getKey()) {
+                new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Telepathic Circuit");
+                stack = new TARDISTelepathicInventory(plugin, player).getButtons();
+            }
+            // Temporal circuit
+            if (cmd == CircuitVariant.TEMPORAL.getKey() || cmd == CircuitVariant.TEMPORAL_DAMAGED.getKey()) {
+                new_inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Temporal Locator");
+                stack = new TARDISTemporalLocatorInventory(plugin).getTemporal();
+            }
+            // Memory circuit (saves/areas)
+            if (cmd == CircuitVariant.MEMORY.getKey() || cmd == CircuitVariant.MEMORY_DAMAGED.getKey()) {
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid, SystemTree.SAVES)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
+                    return;
                 }
-                // ARS circuit
-                case 10001973, 20001973 -> {
-                    new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
-                    stack = new TARDISARSInventory(plugin, player).getARS();
-                }
-                // Telepathic circuit
-                case 10001962, 20001962 -> {
-                    new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Telepathic Circuit");
-                    stack = new TARDISTelepathicInventory(plugin, player).getButtons();
-                }
-                // Temporal circuit
-                case 10001974, 20001974 -> {
-                    new_inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Temporal Locator");
-                    stack = new TARDISTemporalLocatorInventory(plugin).getTemporal();
-                }
-                // Memory circuit (saves/areas)
-                case 10001975, 20001975 -> {
-                    if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid, SystemTree.SAVES)) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
-                        return;
-                    }
-                    new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
-                    stack = new TARDISSavesPlanetInventory(plugin, tardis.getTardisId(), player).getPlanets();
-                }
-                // Input circuit (terminal)
-                case 10001976, 20001976 -> {
-                    new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Destination Terminal");
-                    stack = new TARDISTerminalInventory(plugin).getTerminal();
-                }
-                // scanner circuit
-                default -> new TARDISScanner(plugin).scan(tardis.getTardisId(), player, tardis.getRenderer(), tardis.getArtronLevel());
+                new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
+                stack = new TARDISSavesPlanetInventory(plugin, tardis.getTardisId(), player).getPlanets();
+            }
+            // Input circuit (terminal)
+            if (cmd == CircuitVariant.INPUT.getKey() || cmd == CircuitVariant.INPUT_DAMAGED.getKey()) {
+                new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Destination Terminal");
+                stack = new TARDISTerminalInventory(plugin).getTerminal();
+            }
+            // scanner circuit
+            else {
+                new TARDISScanner(plugin).scan(tardis.getTardisId(), player, tardis.getRenderer(), tardis.getArtronLevel());
             }
             // close inventory
             player.closeInventory();
