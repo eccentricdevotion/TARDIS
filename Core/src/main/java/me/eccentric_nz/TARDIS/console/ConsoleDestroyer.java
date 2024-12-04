@@ -20,6 +20,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 public class ConsoleDestroyer {
@@ -141,7 +142,11 @@ public class ConsoleDestroyer {
             im.setDisplayName(dn);
             im.setLore(List.of("Integration with interaction"));
             im.setItemModel(key);
-            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
+            String which = model.getKey()
+                    .replace("tardis/console_division_", "")
+                    .replace("tardis/console_centre_", "")
+                    .replace("tardis/console_", "");
+            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, which.toUpperCase(Locale.ROOT));
             console.setItemMeta(im);
             return console;
         }

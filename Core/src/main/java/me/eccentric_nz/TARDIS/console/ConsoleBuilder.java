@@ -34,7 +34,7 @@ public class ConsoleBuilder {
         this.plugin = plugin;
     }
 
-    public void create(Block block, int type, int id, String playerUuid) {
+    public void create(Block block, String colour, int id, String playerUuid) {
         StringBuilder builder = new StringBuilder();
         String prefix = "~";
         Block up = block.getRelative(BlockFace.UP);
@@ -48,28 +48,28 @@ public class ConsoleBuilder {
             plugin.getQueryFactory().doInsert("interactions", setb);
         }
         // spawn a centre display item
-        UUID centre = spawnCentreDisplay(up.getLocation(), type);
+        UUID centre = spawnCentreDisplay(up.getLocation(), colour);
         builder.append(centre);
         for (int i = 0; i < 6; i++) {
             ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
             ItemMeta im = shard.getItemMeta();
-            switch (type) {
-                case 17 -> im.setItemModel(ConsolePart.CONSOLE_RUSTIC.getKey());
-                case 16 -> im.setItemModel(ConsolePart.CONSOLE_BROWN.getKey());
-                case 15 -> im.setItemModel(ConsolePart.CONSOLE_PINK.getKey());
-                case 14 -> im.setItemModel(ConsolePart.CONSOLE_MAGENTA.getKey());
-                case 13 -> im.setItemModel(ConsolePart.CONSOLE_PURPLE.getKey());
-                case 12 -> im.setItemModel(ConsolePart.CONSOLE_BLUE.getKey());
-                case 11 -> im.setItemModel(ConsolePart.CONSOLE_LIGHT_BLUE.getKey());
-                case 10 -> im.setItemModel(ConsolePart.CONSOLE_CYAN.getKey());
-                case 9 -> im.setItemModel(ConsolePart.CONSOLE_GREEN.getKey());
-                case 8 -> im.setItemModel(ConsolePart.CONSOLE_LIME.getKey());
-                case 7 -> im.setItemModel(ConsolePart.CONSOLE_YELLOW.getKey());
-                case 6 -> im.setItemModel(ConsolePart.CONSOLE_ORANGE.getKey());
-                case 5 -> im.setItemModel(ConsolePart.CONSOLE_RED.getKey());
-                case 4 -> im.setItemModel(ConsolePart.CONSOLE_WHITE.getKey());
-                case 3 -> im.setItemModel(ConsolePart.CONSOLE_BLACK.getKey());
-                case 2 -> im.setItemModel(ConsolePart.CONSOLE_GRAY.getKey());
+            switch (colour) {
+                case "RUSTIC" -> im.setItemModel(ConsolePart.CONSOLE_RUSTIC.getKey());
+                case "BROWN" -> im.setItemModel(ConsolePart.CONSOLE_BROWN.getKey());
+                case "PINK" -> im.setItemModel(ConsolePart.CONSOLE_PINK.getKey());
+                case "MAGENTA" -> im.setItemModel(ConsolePart.CONSOLE_MAGENTA.getKey());
+                case "PURPLE" -> im.setItemModel(ConsolePart.CONSOLE_PURPLE.getKey());
+                case "BLUE" -> im.setItemModel(ConsolePart.CONSOLE_BLUE.getKey());
+                case "LIGHT_BLUE" -> im.setItemModel(ConsolePart.CONSOLE_LIGHT_BLUE.getKey());
+                case "CYAN" -> im.setItemModel(ConsolePart.CONSOLE_CYAN.getKey());
+                case "GREEN" -> im.setItemModel(ConsolePart.CONSOLE_GREEN.getKey());
+                case "LIME" -> im.setItemModel(ConsolePart.CONSOLE_LIME.getKey());
+                case "YELLOW" -> im.setItemModel(ConsolePart.CONSOLE_YELLOW.getKey());
+                case "ORANGE" -> im.setItemModel(ConsolePart.CONSOLE_ORANGE.getKey());
+                case "RED" -> im.setItemModel(ConsolePart.CONSOLE_RED.getKey());
+                case "WHITE" -> im.setItemModel(ConsolePart.CONSOLE_WHITE.getKey());
+                case "BLACK" -> im.setItemModel(ConsolePart.CONSOLE_BLACK.getKey());
+                case "GRAY" -> im.setItemModel(ConsolePart.CONSOLE_GRAY.getKey());
                 default -> im.setItemModel(ConsolePart.CONSOLE_LIGHT_GRAY.getKey());
             }
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
@@ -90,23 +90,23 @@ public class ConsoleBuilder {
         for (int i = 30; i < 360; i += 60) {
             ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
             ItemMeta im = shard.getItemMeta();
-            switch (type) {
-                case 17 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_RUSTIC.getKey());
-                case 16 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_BROWN.getKey());
-                case 15 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_PINK.getKey());
-                case 14 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_MAGENTA.getKey());
-                case 13 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_PURPLE.getKey());
-                case 12 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_BLUE.getKey());
-                case 11 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_LIGHT_BLUE.getKey());
-                case 10 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_CYAN.getKey());
-                case 9 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_GREEN.getKey());
-                case 8 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_LIME.getKey());
-                case 7 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_YELLOW.getKey());
-                case 6 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_ORANGE.getKey());
-                case 5 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_RED.getKey());
-                case 4 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_WHITE.getKey());
-                case 3 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_BLACK.getKey());
-                case 2 -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_GRAY.getKey());
+            switch (colour) {
+                case "RUSTIC" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_RUSTIC.getKey());
+                case "BROWN" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_BROWN.getKey());
+                case "PINK" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_PINK.getKey());
+                case "MAGENTA" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_MAGENTA.getKey());
+                case "PURPLE" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_PURPLE.getKey());
+                case "BLUE" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_BLUE.getKey());
+                case "LIGHT_BLUE" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_LIGHT_BLUE.getKey());
+                case "CYAN" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_CYAN.getKey());
+                case "GREEN" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_GREEN.getKey());
+                case "LIME" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_LIME.getKey());
+                case "YELLOW" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_YELLOW.getKey());
+                case "ORANGE" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_ORANGE.getKey());
+                case "RED" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_RED.getKey());
+                case "WHITE" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_WHITE.getKey());
+                case "BLACK" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_BLACK.getKey());
+                case "GRAY" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_GRAY.getKey());
                 default -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_LIGHT_GRAY.getKey());
             }
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
@@ -224,27 +224,27 @@ public class ConsoleBuilder {
         return key;
     }
 
-    private UUID spawnCentreDisplay(Location up, int type) {
+    private UUID spawnCentreDisplay(Location up, String type) {
         ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
         ItemMeta im = shard.getItemMeta();
         NamespacedKey model;
         switch (type) {
-            case 17 -> model = ConsolePart.CONSOLE_CENTRE_RUSTIC.getKey();
-            case 16 -> model = ConsolePart.CONSOLE_CENTRE_BROWN.getKey();
-            case 15 -> model = ConsolePart.CONSOLE_CENTRE_PINK.getKey();
-            case 14 -> model = ConsolePart.CONSOLE_CENTRE_MAGENTA.getKey();
-            case 13 -> model = ConsolePart.CONSOLE_CENTRE_PURPLE.getKey();
-            case 12 -> model = ConsolePart.CONSOLE_CENTRE_BLUE.getKey();
-            case 11 -> model = ConsolePart.CONSOLE_CENTRE_LIGHT_BLUE.getKey();
-            case 10 -> model = ConsolePart.CONSOLE_CENTRE_CYAN.getKey();
-            case 9 -> model = ConsolePart.CONSOLE_CENTRE_GREEN.getKey();
-            case 8 -> model = ConsolePart.CONSOLE_CENTRE_LIME.getKey();
-            case 7 -> model = ConsolePart.CONSOLE_CENTRE_YELLOW.getKey();
-            case 6 -> model = ConsolePart.CONSOLE_CENTRE_ORANGE.getKey();
-            case 5 -> model = ConsolePart.CONSOLE_CENTRE_RED.getKey();
-            case 4 -> model = ConsolePart.CONSOLE_CENTRE_WHITE.getKey();
-            case 3 -> model = ConsolePart.CONSOLE_CENTRE_BLACK.getKey();
-            case 2 -> model = ConsolePart.CONSOLE_CENTRE_GRAY.getKey();
+            case "RUSTIC" -> model = ConsolePart.CONSOLE_CENTRE_RUSTIC.getKey();
+            case "BROWN" -> model = ConsolePart.CONSOLE_CENTRE_BROWN.getKey();
+            case "PINK" -> model = ConsolePart.CONSOLE_CENTRE_PINK.getKey();
+            case "MAGENTA" -> model = ConsolePart.CONSOLE_CENTRE_MAGENTA.getKey();
+            case "PURPLE" -> model = ConsolePart.CONSOLE_CENTRE_PURPLE.getKey();
+            case "BLUE" -> model = ConsolePart.CONSOLE_CENTRE_BLUE.getKey();
+            case "LIGHT_BLUE" -> model = ConsolePart.CONSOLE_CENTRE_LIGHT_BLUE.getKey();
+            case "CYAN" -> model = ConsolePart.CONSOLE_CENTRE_CYAN.getKey();
+            case "GREEN" -> model = ConsolePart.CONSOLE_CENTRE_GREEN.getKey();
+            case "LIME" -> model = ConsolePart.CONSOLE_CENTRE_LIME.getKey();
+            case "YELLOW" -> model = ConsolePart.CONSOLE_CENTRE_YELLOW.getKey();
+            case "ORANGE" -> model = ConsolePart.CONSOLE_CENTRE_ORANGE.getKey();
+            case "RED" -> model = ConsolePart.CONSOLE_CENTRE_RED.getKey();
+            case "WHITE" -> model = ConsolePart.CONSOLE_CENTRE_WHITE.getKey();
+            case "BLACK" -> model = ConsolePart.CONSOLE_CENTRE_BLACK.getKey();
+            case "GRAY" -> model = ConsolePart.CONSOLE_CENTRE_GRAY.getKey();
             default -> model = ConsolePart.CONSOLE_CENTRE_LIGHT_GRAY.getKey();
         }
         im.setItemModel(model);
