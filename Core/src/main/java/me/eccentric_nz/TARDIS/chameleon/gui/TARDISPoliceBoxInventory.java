@@ -69,22 +69,22 @@ public class TARDISPoliceBoxInventory {
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(s + " Police Box");
                 switch (s) {
-                    case "Blue" -> im.setItemModel(ChameleonVariant.BLUE.getKey());
-                    case "White" -> im.setItemModel(ChameleonVariant.WHITE.getKey());
-                    case "Orange" -> im.setItemModel(ChameleonVariant.ORANGE.getKey());
-                    case "Magenta" -> im.setItemModel(ChameleonVariant.MAGENTA.getKey());
-                    case "Light Blue" -> im.setItemModel(ChameleonVariant.LIGHT_BLUE.getKey());
-                    case "Yellow" -> im.setItemModel(ChameleonVariant.YELLOW.getKey());
-                    case "Lime" -> im.setItemModel(ChameleonVariant.LIME.getKey());
-                    case "Pink" -> im.setItemModel(ChameleonVariant.PINK.getKey());
-                    case "Gray" -> im.setItemModel(ChameleonVariant.GRAY.getKey());
-                    case "Light Gray" -> im.setItemModel(ChameleonVariant.LIGHT_GRAY.getKey());
-                    case "Cyan" -> im.setItemModel(ChameleonVariant.CYAN.getKey());
-                    case "Purple" -> im.setItemModel(ChameleonVariant.PURPLE.getKey());
-                    case "Brown" -> im.setItemModel(ChameleonVariant.BROWN.getKey());
-                    case "Green" -> im.setItemModel(ChameleonVariant.GREEN.getKey());
-                    case "Red" -> im.setItemModel(ChameleonVariant.RED.getKey());
-                    case "Black" -> im.setItemModel(ChameleonVariant.BLACK.getKey());
+                    case "Blue" -> im.setItemModel(ChameleonVariant.BLUE_CLOSED.getKey());
+                    case "White" -> im.setItemModel(ChameleonVariant.WHITE_CLOSED.getKey());
+                    case "Orange" -> im.setItemModel(ChameleonVariant.ORANGE_CLOSED.getKey());
+                    case "Magenta" -> im.setItemModel(ChameleonVariant.MAGENTA_CLOSED.getKey());
+                    case "Light Blue" -> im.setItemModel(ChameleonVariant.LIGHT_BLUE_CLOSED.getKey());
+                    case "Yellow" -> im.setItemModel(ChameleonVariant.YELLOW_CLOSED.getKey());
+                    case "Lime" -> im.setItemModel(ChameleonVariant.LIME_CLOSED.getKey());
+                    case "Pink" -> im.setItemModel(ChameleonVariant.PINK_CLOSED.getKey());
+                    case "Gray" -> im.setItemModel(ChameleonVariant.GRAY_CLOSED.getKey());
+                    case "Light Gray" -> im.setItemModel(ChameleonVariant.LIGHT_GRAY_CLOSED.getKey());
+                    case "Cyan" -> im.setItemModel(ChameleonVariant.CYAN_CLOSED.getKey());
+                    case "Purple" -> im.setItemModel(ChameleonVariant.PURPLE_CLOSED.getKey());
+                    case "Brown" -> im.setItemModel(ChameleonVariant.BROWN_CLOSED.getKey());
+                    case "Green" -> im.setItemModel(ChameleonVariant.GREEN_CLOSED.getKey());
+                    case "Red" -> im.setItemModel(ChameleonVariant.RED_CLOSED.getKey());
+                    case "Black" -> im.setItemModel(ChameleonVariant.BLACK_CLOSED.getKey());
                 }
                 is.setItemMeta(im);
                 boxes[i] = is;
@@ -96,7 +96,7 @@ public class TARDISPoliceBoxInventory {
             ItemStack david = new ItemStack(Material.CYAN_STAINED_GLASS_PANE, 1);
             ItemMeta tennant = david.getItemMeta();
             tennant.setDisplayName("Tennant Era Police Box");
-            tennant.setItemModel(ChameleonVariant.TENNANT.getKey());
+            tennant.setItemModel(ChameleonVariant.TENNANT_CLOSED.getKey());
             david.setItemMeta(tennant);
             boxes[i] = david;
             i++;
@@ -106,7 +106,7 @@ public class TARDISPoliceBoxInventory {
             ItemStack is = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("Weeping Angel");
-            im.setItemModel(ChameleonVariant.WEEPING_ANGEL.getKey());
+            im.setItemModel(ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey());
             is.setItemMeta(im);
             boxes[i] = is;
             i++;
@@ -116,7 +116,7 @@ public class TARDISPoliceBoxInventory {
             ItemStack pan = new ItemStack(Material.ENDER_PEARL, 1);
             ItemMeta ica = pan.getItemMeta();
             ica.setDisplayName("Pandorica");
-            ica.setItemModel(ChameleonVariant.PANDORICA.getKey());
+            ica.setItemModel(ChameleonVariant.PANDORICA_CLOSED.getKey());
             pan.setItemMeta(ica);
             boxes[i] = pan;
             i++;
@@ -126,7 +126,7 @@ public class TARDISPoliceBoxInventory {
             ItemStack any = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
             ItemMeta colour = any.getItemMeta();
             colour.setDisplayName("Pick a colour Police Box");
-            colour.setItemModel(ColouredVariant.TINTED.getKey());
+            colour.setItemModel(ColouredVariant.TINTED_CLOSED.getKey());
             any.setItemMeta(colour);
             boxes[i] = any;
             i++;

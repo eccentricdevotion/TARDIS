@@ -79,7 +79,7 @@ public class TARDISDevBoxCommand {
                 Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, -1, true);
                 ItemStack is = new ItemStack(dye, 1);
                 ItemMeta im = is.getItemMeta();
-                NamespacedKey model = ChameleonVariant.BLUE.getKey();
+                NamespacedKey model = ChameleonVariant.BLUE_CLOSED.getKey();
                 if (args.length > 2) {
                     switch (dye) {
                         case BLUE_DYE -> {
@@ -88,7 +88,7 @@ public class TARDISDevBoxCommand {
                                 case "stained" -> model = ChameleonVariant.BLUE_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.GLASS.getKey();
                                 case "camera" -> model = ChameleonVariant.BLUE_CAMERA.getKey();
-                                default -> model = ChameleonVariant.BLUE.getKey();
+                                default -> model = ChameleonVariant.BLUE_CLOSED.getKey();
                             }
                         }
                         case BLACK_DYE -> {
@@ -97,7 +97,7 @@ public class TARDISDevBoxCommand {
                                 case "stained" -> model = ChameleonVariant.BLACK_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.GLASS.getKey();
                                 case "camera" -> model = ChameleonVariant.BLACK_CAMERA.getKey();
-                                default -> model = ChameleonVariant.BLACK.getKey();
+                                default -> model = ChameleonVariant.BLACK_CLOSED.getKey();
                             }
                         }
                         case BROWN_DYE -> {
@@ -106,7 +106,7 @@ public class TARDISDevBoxCommand {
                                 case "stained" -> model = ChameleonVariant.BROWN_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.GLASS.getKey();
                                 case "camera" -> model = ChameleonVariant.BROWN_CAMERA.getKey();
-                                default -> model = ChameleonVariant.BROWN.getKey();
+                                default -> model = ChameleonVariant.BROWN_CLOSED.getKey();
                             }
                         }
                         case LIGHT_BLUE_DYE -> {
@@ -115,7 +115,7 @@ public class TARDISDevBoxCommand {
                                 case "stained" -> model = ChameleonVariant.LIGHT_BLUE_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.GLASS.getKey();
                                 case "camera" -> model = ChameleonVariant.LIGHT_BLUE_CAMERA.getKey();
-                                default -> model = ChameleonVariant.LIGHT_BLUE.getKey();
+                                default -> model = ChameleonVariant.LIGHT_BLUE_CLOSED.getKey();
                             }
                         }
                         case LIGHT_GRAY_DYE -> {
@@ -124,7 +124,7 @@ public class TARDISDevBoxCommand {
                                 case "stained" -> model = ChameleonVariant.LIGHT_GRAY_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.GLASS.getKey();
                                 case "camera" -> model = ChameleonVariant.LIGHT_GRAY_CAMERA.getKey();
-                                default -> model = ChameleonVariant.LIGHT_GRAY.getKey();
+                                default -> model = ChameleonVariant.LIGHT_GRAY_CLOSED.getKey();
                             }
                         }
                         case GRAY_DYE -> {
@@ -133,7 +133,7 @@ public class TARDISDevBoxCommand {
                                 case "stained" -> model = ChameleonVariant.GRAY_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.GLASS.getKey();
                                 case "camera" -> model = ChameleonVariant.GRAY_CAMERA.getKey();
-                                default -> model = ChameleonVariant.GRAY.getKey();
+                                default -> model = ChameleonVariant.GRAY_CLOSED.getKey();
                             }
                         }
                         case CYAN_DYE -> {
@@ -142,7 +142,7 @@ public class TARDISDevBoxCommand {
                                 case "stained" -> model = ChameleonVariant.CYAN_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.GLASS.getKey();
                                 case "camera" -> model = ChameleonVariant.CYAN_CAMERA.getKey();
-                                default -> model = ChameleonVariant.CYAN.getKey();
+                                default -> model = ChameleonVariant.CYAN_CLOSED.getKey();
                             }
                         }
                         case MAGENTA_DYE -> {
@@ -151,7 +151,7 @@ public class TARDISDevBoxCommand {
                                 case "stained" -> model = ChameleonVariant.MAGENTA_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.GLASS.getKey();
                                 case "camera" -> model = ChameleonVariant.MAGENTA_CAMERA.getKey();
-                                default -> model = ChameleonVariant.MAGENTA.getKey();
+                                default -> model = ChameleonVariant.MAGENTA_CLOSED.getKey();
                             }
                         }
                         case YELLOW_DYE -> {
@@ -160,7 +160,7 @@ public class TARDISDevBoxCommand {
                                 case "stained" -> model = ChameleonVariant.YELLOW_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.GLASS.getKey();
                                 case "camera" -> model = ChameleonVariant.YELLOW_CAMERA.getKey();
-                                default -> model = ChameleonVariant.YELLOW.getKey();
+                                default -> model = ChameleonVariant.YELLOW_CLOSED.getKey();
                             }
                         }
                         case LIME_DYE -> {
@@ -169,7 +169,7 @@ public class TARDISDevBoxCommand {
                                 case "stained" -> model = ChameleonVariant.LIME_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.GLASS.getKey();
                                 case "camera" -> model = ChameleonVariant.LIME_CAMERA.getKey();
-                                default -> model = ChameleonVariant.LIME.getKey();
+                                default -> model = ChameleonVariant.LIME_CLOSED.getKey();
                             }
                         }
                         case GREEN_DYE -> {
@@ -178,7 +178,7 @@ public class TARDISDevBoxCommand {
                                 case "stained" -> model = ChameleonVariant.GREEN_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.GLASS.getKey();
                                 case "camera" -> model = ChameleonVariant.GREEN_CAMERA.getKey();
-                                default -> model = ChameleonVariant.GREEN.getKey();
+                                default -> model = ChameleonVariant.GREEN_CLOSED.getKey();
                             }
                         }
                         case PINK_DYE -> {
@@ -187,7 +187,7 @@ public class TARDISDevBoxCommand {
                                 case "stained" -> model = ChameleonVariant.PINK_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.GLASS.getKey();
                                 case "camera" -> model = ChameleonVariant.PINK_CAMERA.getKey();
-                                default -> model = ChameleonVariant.PINK.getKey();
+                                default -> model = ChameleonVariant.PINK_CLOSED.getKey();
                             }
                         }
                         case PURPLE_DYE -> {
@@ -196,7 +196,7 @@ public class TARDISDevBoxCommand {
                                 case "stained" -> model = ChameleonVariant.PURPLE_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.GLASS.getKey();
                                 case "camera" -> model = ChameleonVariant.PURPLE_CAMERA.getKey();
-                                default -> model = ChameleonVariant.PURPLE.getKey();
+                                default -> model = ChameleonVariant.PURPLE_CLOSED.getKey();
                             }
                         }
                         case RED_DYE -> {
@@ -205,7 +205,7 @@ public class TARDISDevBoxCommand {
                                 case "stained" -> model = ChameleonVariant.RED_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.GLASS.getKey();
                                 case "camera" -> model = ChameleonVariant.RED_CAMERA.getKey();
-                                default -> model = ChameleonVariant.RED.getKey();
+                                default -> model = ChameleonVariant.RED_CLOSED.getKey();
                             }
                         }
                         case ORANGE_DYE -> {
@@ -214,7 +214,7 @@ public class TARDISDevBoxCommand {
                                 case "stained" -> model = ChameleonVariant.ORANGE_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.GLASS.getKey();
                                 case "camera" -> model = ChameleonVariant.ORANGE_CAMERA.getKey();
-                                default -> model = ChameleonVariant.ORANGE.getKey();
+                                default -> model = ChameleonVariant.ORANGE_CLOSED.getKey();
                             }
                         }
                         case WHITE_DYE -> {
@@ -223,7 +223,7 @@ public class TARDISDevBoxCommand {
                                 case "stained" -> model = ChameleonVariant.WHITE_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.GLASS.getKey();
                                 case "camera" -> model = ChameleonVariant.WHITE_CAMERA.getKey();
-                                default -> model = ChameleonVariant.WHITE.getKey();
+                                default -> model = ChameleonVariant.WHITE_CLOSED.getKey();
                             }
                         }
                         case WOLF_SPAWN_EGG -> {
@@ -232,7 +232,7 @@ public class TARDISDevBoxCommand {
                                 case "stained" -> model = ChameleonVariant.BAD_WOLF_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.GLASS.getKey();
                                 case "camera" -> model = ChameleonVariant.BAD_WOLF_CAMERA.getKey();
-                                default -> model = ChameleonVariant.BAD_WOLF.getKey();
+                                default -> model = ChameleonVariant.BAD_WOLF_CLOSED.getKey();
                             }
                         }
                         case CYAN_STAINED_GLASS_PANE -> {
@@ -241,7 +241,7 @@ public class TARDISDevBoxCommand {
                                 case "stained" -> model = ChameleonVariant.TENNANT_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.GLASS.getKey();
                                 case "camera" -> model = ChameleonVariant.TENNANT_CAMERA.getKey();
-                                default -> model = ChameleonVariant.TENNANT.getKey();
+                                default -> model = ChameleonVariant.TENNANT_CLOSED.getKey();
                             }
                         }
                         case CLAY_BALL -> {
@@ -258,7 +258,7 @@ public class TARDISDevBoxCommand {
                                 case "open" -> model = ChameleonVariant.PANDORICA_OPEN.getKey();
                                 case "stained" -> model = ChameleonVariant.PANDORICA_STAINED.getKey();
                                 case "glass" -> model = ChameleonVariant.PANDORICA_GLASS.getKey();
-                                default -> model = ChameleonVariant.PANDORICA.getKey();
+                                default -> model = ChameleonVariant.PANDORICA_CLOSED.getKey();
                             }
                         }
                     }

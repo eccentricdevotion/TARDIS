@@ -260,26 +260,26 @@ public enum ChameleonPreset {
 
     public NamespacedKey getClosed() {
         switch (this) {
-            case POLICE_BOX_BLUE -> { return ChameleonVariant.BLUE.getKey(); }
-            case POLICE_BOX_WHITE -> { return ChameleonVariant.WHITE.getKey(); }
-            case POLICE_BOX_ORANGE -> { return ChameleonVariant.ORANGE.getKey(); }
-            case POLICE_BOX_MAGENTA -> { return ChameleonVariant.MAGENTA.getKey(); }
-            case POLICE_BOX_LIGHT_BLUE -> { return ChameleonVariant.LIGHT_BLUE.getKey(); }
-            case POLICE_BOX_YELLOW -> { return ChameleonVariant.YELLOW.getKey(); }
-            case POLICE_BOX_LIME -> { return ChameleonVariant.LIME.getKey(); }
-            case POLICE_BOX_PINK -> { return ChameleonVariant.PINK.getKey(); }
-            case POLICE_BOX_GRAY -> { return ChameleonVariant.GRAY.getKey(); }
-            case POLICE_BOX_LIGHT_GRAY -> { return ChameleonVariant.LIGHT_GRAY.getKey(); }
-            case POLICE_BOX_CYAN -> { return ChameleonVariant.CYAN.getKey(); }
-            case POLICE_BOX_PURPLE -> { return ChameleonVariant.PURPLE.getKey(); }
-            case POLICE_BOX_BROWN -> { return ChameleonVariant.BROWN.getKey(); }
-            case POLICE_BOX_GREEN -> { return ChameleonVariant.GREEN.getKey(); }
-            case POLICE_BOX_RED -> { return ChameleonVariant.RED.getKey(); }
-            case POLICE_BOX_BLACK -> { return ChameleonVariant.BLACK.getKey(); }
-            case POLICE_BOX_TENNANT -> { return ChameleonVariant.TENNANT.getKey(); }
-            case WEEPING_ANGEL -> { return ChameleonVariant.WEEPING_ANGEL.getKey(); }
-            case COLOURED -> { return ColouredVariant.TINTED.getKey(); }
-            case PANDORICA -> { return ChameleonVariant.PANDORICA.getKey(); }
+            case POLICE_BOX_BLUE -> { return ChameleonVariant.BLUE_CLOSED.getKey(); }
+            case POLICE_BOX_WHITE -> { return ChameleonVariant.WHITE_CLOSED.getKey(); }
+            case POLICE_BOX_ORANGE -> { return ChameleonVariant.ORANGE_CLOSED.getKey(); }
+            case POLICE_BOX_MAGENTA -> { return ChameleonVariant.MAGENTA_CLOSED.getKey(); }
+            case POLICE_BOX_LIGHT_BLUE -> { return ChameleonVariant.LIGHT_BLUE_CLOSED.getKey(); }
+            case POLICE_BOX_YELLOW -> { return ChameleonVariant.YELLOW_CLOSED.getKey(); }
+            case POLICE_BOX_LIME -> { return ChameleonVariant.LIME_CLOSED.getKey(); }
+            case POLICE_BOX_PINK -> { return ChameleonVariant.PINK_CLOSED.getKey(); }
+            case POLICE_BOX_GRAY -> { return ChameleonVariant.GRAY_CLOSED.getKey(); }
+            case POLICE_BOX_LIGHT_GRAY -> { return ChameleonVariant.LIGHT_GRAY_CLOSED.getKey(); }
+            case POLICE_BOX_CYAN -> { return ChameleonVariant.CYAN_CLOSED.getKey(); }
+            case POLICE_BOX_PURPLE -> { return ChameleonVariant.PURPLE_CLOSED.getKey(); }
+            case POLICE_BOX_BROWN -> { return ChameleonVariant.BROWN_CLOSED.getKey(); }
+            case POLICE_BOX_GREEN -> { return ChameleonVariant.GREEN_CLOSED.getKey(); }
+            case POLICE_BOX_RED -> { return ChameleonVariant.RED_CLOSED.getKey(); }
+            case POLICE_BOX_BLACK -> { return ChameleonVariant.BLACK_CLOSED.getKey(); }
+            case POLICE_BOX_TENNANT -> { return ChameleonVariant.TENNANT_CLOSED.getKey(); }
+            case WEEPING_ANGEL -> { return ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey(); }
+            case COLOURED -> { return ColouredVariant.TINTED_CLOSED.getKey(); }
+            case PANDORICA -> { return ChameleonVariant.PANDORICA_CLOSED.getKey(); }
         }
         return null;
     }

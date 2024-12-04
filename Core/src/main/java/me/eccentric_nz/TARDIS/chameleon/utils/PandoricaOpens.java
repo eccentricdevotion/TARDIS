@@ -39,7 +39,7 @@ public class PandoricaOpens {
             ChameleonVariant.PANDORICA_25.getKey(),
             ChameleonVariant.PANDORICA_50.getKey(),
             ChameleonVariant.PANDORICA_75.getKey(),
-            ChameleonVariant.PANDORICA.getKey()
+            ChameleonVariant.PANDORICA_CLOSED.getKey()
     };
     private final BukkitScheduler scheduler;
 

@@ -94,25 +94,25 @@ public class TARDISCamera {
             ItemStack is = ee.getHelmet();
             ItemMeta im = is.getItemMeta();
             NamespacedKey notviewing = switch (is.getType()) {
-                case BLACK_DYE -> ChameleonVariant.BLACK.getKey();
-                case RED_DYE -> ChameleonVariant.RED.getKey();
-                case BROWN_DYE -> ChameleonVariant.BROWN.getKey();
-                case GREEN_DYE -> ChameleonVariant.GREEN.getKey();
-                case BLUE_DYE -> ChameleonVariant.BLUE.getKey();
-                case PURPLE_DYE -> ChameleonVariant.PURPLE.getKey();
-                case CYAN_DYE -> ChameleonVariant.CYAN.getKey();
-                case LIGHT_GRAY_DYE -> ChameleonVariant.LIGHT_GRAY.getKey();
-                case GRAY_DYE -> ChameleonVariant.GRAY.getKey();
-                case PINK_DYE -> ChameleonVariant.PINK.getKey();
-                case LIME_DYE -> ChameleonVariant.LIME.getKey();
-                case YELLOW_DYE -> ChameleonVariant.YELLOW.getKey();
-                case LIGHT_BLUE_DYE -> ChameleonVariant.LIGHT_BLUE.getKey();
-                case MAGENTA_DYE -> ChameleonVariant.MAGENTA.getKey();
-                case ORANGE_DYE -> ChameleonVariant.ORANGE.getKey();
-                case WHITE_DYE -> ChameleonVariant.WHITE.getKey();
-                case CYAN_STAINED_GLASS_PANE -> ChameleonVariant.TENNANT.getKey();
-                case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED.getKey();
-                case WOLF_SPAWN_EGG -> ChameleonVariant.BAD_WOLF.getKey();
+                case BLACK_DYE -> ChameleonVariant.BLACK_CLOSED.getKey();
+                case RED_DYE -> ChameleonVariant.RED_CLOSED.getKey();
+                case BROWN_DYE -> ChameleonVariant.BROWN_CLOSED.getKey();
+                case GREEN_DYE -> ChameleonVariant.GREEN_CLOSED.getKey();
+                case BLUE_DYE -> ChameleonVariant.BLUE_CLOSED.getKey();
+                case PURPLE_DYE -> ChameleonVariant.PURPLE_CLOSED.getKey();
+                case CYAN_DYE -> ChameleonVariant.CYAN_CLOSED.getKey();
+                case LIGHT_GRAY_DYE -> ChameleonVariant.LIGHT_GRAY_CLOSED.getKey();
+                case GRAY_DYE -> ChameleonVariant.GRAY_CLOSED.getKey();
+                case PINK_DYE -> ChameleonVariant.PINK_CLOSED.getKey();
+                case LIME_DYE -> ChameleonVariant.LIME_CLOSED.getKey();
+                case YELLOW_DYE -> ChameleonVariant.YELLOW_CLOSED.getKey();
+                case LIGHT_BLUE_DYE -> ChameleonVariant.LIGHT_BLUE_CLOSED.getKey();
+                case MAGENTA_DYE -> ChameleonVariant.MAGENTA_CLOSED.getKey();
+                case ORANGE_DYE -> ChameleonVariant.ORANGE_CLOSED.getKey();
+                case WHITE_DYE -> ChameleonVariant.WHITE_CLOSED.getKey();
+                case CYAN_STAINED_GLASS_PANE -> ChameleonVariant.TENNANT_CLOSED.getKey();
+                case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED_CLOSED.getKey();
+                case WOLF_SPAWN_EGG -> ChameleonVariant.BAD_WOLF_CLOSED.getKey();
                 default -> null; // don't change for PANDORICA, WEEPING_ANGEL or CUSTOM
             };
             if (notviewing != null) {
