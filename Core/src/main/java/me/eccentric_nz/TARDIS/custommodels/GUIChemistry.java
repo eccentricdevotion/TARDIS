@@ -16,7 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.custommodels;
 
-import me.eccentric_nz.TARDIS.custommodels.keys.*;
+import me.eccentric_nz.TARDIS.custommodels.keys.ArrowVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ChemistryBottle;
+import me.eccentric_nz.TARDIS.custommodels.keys.ChemistryEquipment;
+import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
+import me.eccentric_nz.tardischemistry.element.Element;
 import org.bukkit.Material;
 
 public record GUIChemistry() {
@@ -34,7 +38,7 @@ public record GUIChemistry() {
     public static GUIData SCROLL_UP = new GUIData(ArrowVariant.SCROLL_UP.getKey(), 1, Material.ARROW);
     public static GUIData PLUS = new GUIData(ArrowVariant.HANDLES_OPERATOR_ADDITION.getKey(), 24, Material.ARROW);
     public static GUIData MINUS = new GUIData(ArrowVariant.HANDLES_OPERATOR_SUBTRACTION.getKey(), 23, Material.ARROW);
-    public static GUIData ELEMENTS = new GUIData(PeriodicElement.UNKNOWN.getKey(), 35, Material.FEATHER);
+    public static GUIData ELEMENTS = new GUIData(Element.Unknown.getModel(), 35, Material.FEATHER);
     public static GUIData COMPOUNDS = new GUIData(ChemistryBottle.ALUMINIUM_OXIDE.getKey(), 44, Material.GLASS_BOTTLE);
     public static GUIData PRODUCTS = new GUIData(ChemistryEquipment.SUPER_FERTILISER.getKey(), 44, Material.BONE_MEAL);
 }

@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardischemistry.element;
 
-import me.eccentric_nz.TARDIS.custommodels.keys.PeriodicElement;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -34,7 +33,7 @@ public class ElementBuilder {
         } else {
             im.setLore(Arrays.asList(element.getSymbol(), "" + element.getAtomicNumber()));
         }
-        im.setItemModel(PeriodicElement.values()[15 + element.getAtomicNumber()].getKey());
+        im.setItemModel(element.getModel());
         is.setItemMeta(im);
         return is;
     }
