@@ -30,7 +30,7 @@ public record GUIParticle() {
     public static GUIData COLOUR = new GUIData(ParticleItem.COLOUR.getKey(), 17, Material.EMERALD);
     public static GUIData BLOCK_INFO = new GUIData(LightButton.BLOCK_BUTTON.getKey(), 26, Material.COAL_BLOCK);
     public static GUIData BLOCK = new GUIData(ParticleItem.BLOCK.getKey(), 35, Material.COAL);
-    public static GUIData TOGGLE = new GUIData(PrefsVariant.BUTTON_TOGGLE_ON.getKey(), 44, Material.REPEATER);
+    public static GUIData TOGGLE = new GUIData(SwitchVariant.BUTTON_TOGGLE_ON.getKey(), 44, Material.REPEATER);
     public static GUIData TEST = new GUIData(ParticleItem.TEST.getKey(), 48, Material.COPPER_INGOT);
     public static GUIData MINUS = new GUIData(HandlesVariant.HANDLES_OPERATOR_SUBTRACTION.getKey(), -1, Material.PAPER);
     public static GUIData PLUS = new GUIData(HandlesVariant.HANDLES_OPERATOR_ADDITION.getKey(), -1, Material.PAPER);

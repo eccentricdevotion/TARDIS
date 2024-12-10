@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIControlCentre;
-import me.eccentric_nz.TARDIS.custommodels.keys.PrefsVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -154,7 +154,7 @@ public class TARDISControlInventory {
         dwn.setLore(List.of(power_onoff));
         NamespacedKey pcmd = GUIControlCentre.BUTTON_POWER.key();
         if (power_onoff.equals(off)) {
-            pcmd = PrefsVariant.BUTTON_POWER_OFF.getKey();
+            pcmd = SwitchVariant.BUTTON_POWER_OFF.getKey();
         }
         dwn.setItemModel(pcmd);
         pow.setItemMeta(dwn);
@@ -172,7 +172,7 @@ public class TARDISControlInventory {
         gle.setLore(List.of(toggle_openclosed));
         NamespacedKey tcmd = GUIControlCentre.BUTTON_TOGGLE.key();
         if (!open) {
-            tcmd = PrefsVariant.BUTTON_TOGGLE_OFF.getKey();
+            tcmd = SwitchVariant.BUTTON_TOGGLE_OFF.getKey();
         }
         gle.setItemModel(tcmd);
         tog.setItemMeta(gle);
@@ -198,7 +198,7 @@ public class TARDISControlInventory {
         mode.setLore(List.of(siege_onoff));
         NamespacedKey scmd = GUIControlCentre.BUTTON_SIEGE.key();
         if (siege_onoff.equals(off)) {
-            scmd = PrefsVariant.SIEGE_OFF.getKey();
+            scmd = SwitchVariant.SIEGE_OFF.getKey();
         }
         mode.setItemModel(scmd);
         siege.setItemMeta(mode);

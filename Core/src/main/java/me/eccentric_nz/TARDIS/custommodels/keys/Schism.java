@@ -5,8 +5,8 @@ import org.bukkit.NamespacedKey;
 
 public enum Schism {
 
-    UNTEMPERED_SCHISM_BLOCK(new NamespacedKey(TARDIS.plugin, "regeneration/untempered_schism_block")),
-    UNTEMPERED_SCHISM(new NamespacedKey(TARDIS.plugin, "regeneration/untempered_schism"));
+    UNTEMPERED_SCHISM_BLOCK(new NamespacedKey(TARDIS.plugin, "untempered_schism_block")),
+    UNTEMPERED_SCHISM(new NamespacedKey(TARDIS.plugin, "untempered_schism"));
 
     private final NamespacedKey key;
 

@@ -16,36 +16,37 @@
  */
 package me.eccentric_nz.TARDIS.custommodels;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.Button;
 import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.PrefsVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 
 public enum GUIConfiguration {
 
     // Admin Menu
-    ALLOW(PrefsVariant.ALLOW_ON.getKey(), PrefsVariant.ALLOW_OFF.getKey(), 0),
-    ARCH(PrefsVariant.ARCH_ON.getKey(), PrefsVariant.ARCH_OFF.getKey(), 22),
-    ARCHIVE(PrefsVariant.ARCHIVE_ON.getKey(), PrefsVariant.ARCHIVE_OFF.getKey(), 25),
-    BLUEPRINTS(PrefsVariant.BLUEPRINTS_ON.getKey(), PrefsVariant.BLUEPRINTS_OFF.getKey(), 23),
-    CREATION(PrefsVariant.CREATION_ON.getKey(), PrefsVariant.CREATION_OFF.getKey(), 26),
-    DIFFICULTY(PrefsVariant.DIFFICULTY_ON.getKey(), PrefsVariant.DIFFICULTY_OFF.getKey(), 38),
-    EYE_OF_HARMONY(PrefsVariant.EYE_ON.getKey(), PrefsVariant.EYE_OFF.getKey(), 45),
-    GROWTH(PrefsVariant.GROWTH_ON.getKey(), PrefsVariant.GROWTH_OFF.getKey(), 36),
-    HANDLES(PrefsVariant.HANDLES_ON.getKey(), PrefsVariant.HANDLES_OFF.getKey(), 37),
-    POLICE_BOX(PrefsVariant.POLICE_BOX_ON.getKey(), PrefsVariant.POLICE_BOX_OFF.getKey(), 38),
-    PREFERENCES(PrefsVariant.PREFERENCES_ON.getKey(), PrefsVariant.PREFERENCES_OFF.getKey(), 41),
-    ABANDON(PrefsVariant.ABANDON_ON.getKey(), PrefsVariant.ABANDON_OFF.getKey(), 0),
-    CIRCUITS(PrefsVariant.CIRCUIT_ON.getKey(), PrefsVariant.CIRCUIT_OFF.getKey(), 0),
-    DEBUG(PrefsVariant.DEBUG_ON.getKey(), PrefsVariant.DEBUG_OFF.getKey(), 0),
-    DESKTOP(PrefsVariant.THEME_ON.getKey(), PrefsVariant.THEME_OFF.getKey(), 0),
-    JUNK(PrefsVariant.JUNK_ON.getKey(), PrefsVariant.JUNK_OFF.getKey(), 0),
-    SIEGE(PrefsVariant.SIEGE_ON.getKey(), PrefsVariant.SIEGE_OFF.getKey(), 0),
-    SONIC(PrefsVariant.SONIC_ON.getKey(), PrefsVariant.SONIC_OFF.getKey(), 0),
-    TRAVEL(PrefsVariant.TRAVEL_ON.getKey(), PrefsVariant.TRAVEL_OFF.getKey(), 0),
+    ALLOW(SwitchVariant.ALLOW_ON.getKey(), SwitchVariant.ALLOW_OFF.getKey(), 0),
+    ARCH(SwitchVariant.ARCH_ON.getKey(), SwitchVariant.ARCH_OFF.getKey(), 22),
+    ARCHIVE(SwitchVariant.ARCHIVE_ON.getKey(), SwitchVariant.ARCHIVE_OFF.getKey(), 25),
+    BLUEPRINTS(SwitchVariant.BLUEPRINTS_ON.getKey(), SwitchVariant.BLUEPRINTS_OFF.getKey(), 23),
+    CREATION(SwitchVariant.CREATION_ON.getKey(), SwitchVariant.CREATION_OFF.getKey(), 26),
+    DIFFICULTY(SwitchVariant.DIFFICULTY_ON.getKey(), SwitchVariant.DIFFICULTY_OFF.getKey(), 38),
+    EYE_OF_HARMONY(SwitchVariant.EYE_ON.getKey(), SwitchVariant.EYE_OFF.getKey(), 45),
+    GROWTH(SwitchVariant.GROWTH_ON.getKey(), SwitchVariant.GROWTH_OFF.getKey(), 36),
+    HANDLES(SwitchVariant.HANDLES_ON.getKey(), SwitchVariant.HANDLES_OFF.getKey(), 37),
+    POLICE_BOX(SwitchVariant.POLICE_BOX_ON.getKey(), SwitchVariant.POLICE_BOX_OFF.getKey(), 38),
+    PREFERENCES(SwitchVariant.PREFERENCES_ON.getKey(), SwitchVariant.PREFERENCES_OFF.getKey(), 41),
+    ABANDON(SwitchVariant.ABANDON_ON.getKey(), SwitchVariant.ABANDON_OFF.getKey(), 0),
+    CIRCUITS(SwitchVariant.CIRCUIT_ON.getKey(), SwitchVariant.CIRCUIT_OFF.getKey(), 0),
+    DEBUG(SwitchVariant.DEBUG_ON.getKey(), SwitchVariant.DEBUG_OFF.getKey(), 0),
+    DESKTOP(SwitchVariant.THEME_ON.getKey(), SwitchVariant.THEME_OFF.getKey(), 0),
+    JUNK(SwitchVariant.JUNK_ON.getKey(), SwitchVariant.JUNK_OFF.getKey(), 0),
+    SIEGE(SwitchVariant.SIEGE_ON.getKey(), SwitchVariant.SIEGE_OFF.getKey(), 0),
+    SONIC(SwitchVariant.SONIC_ON.getKey(), SwitchVariant.SONIC_OFF.getKey(), 0),
+    TRAVEL(SwitchVariant.TRAVEL_ON.getKey(), SwitchVariant.TRAVEL_OFF.getKey(), 0),
     NEXT(GuiVariant.NEXT.getKey(), null, 0, Material.BOWL),
     PREV(GuiVariant.PREV.getKey(), null, 0, Material.BOWL),
-    PREFS(PrefsVariant.ADMIN.getKey(), null, 0, Material.NETHER_STAR);
+    PREFS(Button.ADMIN.getKey(), null, 0, Material.NETHER_STAR);
 
     private final NamespacedKey onModel;
     private final NamespacedKey offModel;

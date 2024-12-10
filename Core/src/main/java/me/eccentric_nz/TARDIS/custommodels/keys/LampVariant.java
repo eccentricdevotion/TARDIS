@@ -5,17 +5,17 @@ import org.bukkit.NamespacedKey;
 
 public enum LampVariant {
 
-    BLUE_LAMP(new NamespacedKey(TARDIS.plugin, "chemistry/blue_lamp")),
-    GREEN_LAMP(new NamespacedKey(TARDIS.plugin, "chemistry/green_lamp")),
-    PURPLE_LAMP(new NamespacedKey(TARDIS.plugin, "chemistry/purple_lamp")),
-    RED_LAMP(new NamespacedKey(TARDIS.plugin, "chemistry/red_lamp")),
-    LAMP_ON(new NamespacedKey(TARDIS.plugin, "lights/lamp_on")),
-    TENTH_ON(new NamespacedKey(TARDIS.plugin, "lights/tenth_on")),
-    ELEVENTH_ON(new NamespacedKey(TARDIS.plugin, "lights/eleventh_on")),
-    BULB_ON(new NamespacedKey(TARDIS.plugin, "lights/bulb_on")),
-    TENTH_CLOISTER(new NamespacedKey(TARDIS.plugin, "lights/tenth_cloister")),
-    ELEVENTH_CLOISTER(new NamespacedKey(TARDIS.plugin, "lights/eleventh_cloister")),
-    BULB_CLOISTER(new NamespacedKey(TARDIS.plugin, "lights/bulb_cloister"));
+    BLUE_LAMP(new NamespacedKey(TARDIS.plugin, "blue_lamp")),
+    GREEN_LAMP(new NamespacedKey(TARDIS.plugin, "green_lamp")),
+    PURPLE_LAMP(new NamespacedKey(TARDIS.plugin, "purple_lamp")),
+    RED_LAMP(new NamespacedKey(TARDIS.plugin, "red_lamp")),
+    LAMP_ON(new NamespacedKey(TARDIS.plugin, "light_lamp_on")),
+    TENTH_ON(new NamespacedKey(TARDIS.plugin, "light_tenth_on")),
+    ELEVENTH_ON(new NamespacedKey(TARDIS.plugin, "light_eleventh_on")),
+    BULB_ON(new NamespacedKey(TARDIS.plugin, "light_bulb_on")),
+    TENTH_CLOISTER(new NamespacedKey(TARDIS.plugin, "light_tenth_cloister")),
+    ELEVENTH_CLOISTER(new NamespacedKey(TARDIS.plugin, "light_eleventh_cloister")),
+    BULB_CLOISTER(new NamespacedKey(TARDIS.plugin, "light_bulb_cloister"));
 
     private final NamespacedKey key;
 

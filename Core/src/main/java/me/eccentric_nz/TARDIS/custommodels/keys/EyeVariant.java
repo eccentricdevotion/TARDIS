@@ -5,11 +5,11 @@ import org.bukkit.NamespacedKey;
 
 public enum EyeVariant {
 
-    SPHERE_0(new NamespacedKey(TARDIS.plugin, "eye/sphere_0")),
-    SPHERE_1(new NamespacedKey(TARDIS.plugin, "eye/sphere_1")),
-    SPHERE_2(new NamespacedKey(TARDIS.plugin, "eye/sphere_2")),
-    SPHERE_3(new NamespacedKey(TARDIS.plugin, "eye/sphere_3")),
-    SPHERE_4(new NamespacedKey(TARDIS.plugin, "eye/sphere_4"));
+    SPHERE_0(new NamespacedKey(TARDIS.plugin, "sphere_0")),
+    SPHERE_1(new NamespacedKey(TARDIS.plugin, "sphere_1")),
+    SPHERE_2(new NamespacedKey(TARDIS.plugin, "sphere_2")),
+    SPHERE_3(new NamespacedKey(TARDIS.plugin, "sphere_3")),
+    SPHERE_4(new NamespacedKey(TARDIS.plugin, "sphere_4"));
 
     private final NamespacedKey key;
 

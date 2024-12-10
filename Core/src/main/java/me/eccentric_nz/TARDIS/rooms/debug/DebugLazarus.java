@@ -9,10 +9,10 @@ public class DebugLazarus {
 
     public static final List<GuiPreview> ICONS = List.of(
             new GuiPreview(Material.BRICK, WeepingAngelVariant.WEEPING_ANGEL_WINGS.getKey(), "weeping_angel_wings"),
-            new GuiPreview(Material.BROWN_STAINED_GLASS_PANE, LazarusCatergory.DOCTOR.getKey(), "doctor"),
-            new GuiPreview(Material.BROWN_STAINED_GLASS_PANE, LazarusCatergory.COMPANION.getKey(), "companion"),
-            new GuiPreview(Material.BROWN_STAINED_GLASS_PANE, LazarusCatergory.CHARACTER.getKey(), "character"),
-            new GuiPreview(Material.BROWN_STAINED_GLASS_PANE, LazarusCatergory.MONSTER.getKey(), "monster"),
+            new GuiPreview(Material.BROWN_STAINED_GLASS_PANE, Button.DOCTOR.getKey(), "doctor"),
+            new GuiPreview(Material.BROWN_STAINED_GLASS_PANE, Button.COMPANION.getKey(), "companion"),
+            new GuiPreview(Material.BROWN_STAINED_GLASS_PANE, Button.CHARACTER.getKey(), "character"),
+            new GuiPreview(Material.BROWN_STAINED_GLASS_PANE, Button.MONSTER.getKey(), "monster"),
             new GuiPreview(Material.COD, Features.VAMPIRE_OF_VENICE_FAN.getKey(), "vampire_of_venice_fan"),
             new GuiPreview(Material.END_STONE, SilentVariant.SILENCE_SIDE_HEAD.getKey(), "silence_side_head"),
             new GuiPreview(Material.FEATHER, SilurianVariant.SILURIAN_CREST.getKey(), "silurian_crest"),

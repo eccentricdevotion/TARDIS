@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.custommodels;
 import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.Button;
 import me.eccentric_nz.TARDIS.custommodels.keys.LightButton;
-import me.eccentric_nz.TARDIS.custommodels.keys.PrefsVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import org.bukkit.Material;
 
 public record GUIControlCentre() {
@@ -35,13 +35,13 @@ public record GUIControlCentre() {
     // 2nd column
     public static GUIData BUTTON_ARS = new GUIData(Button.ARS.getKey(), 2, Material.BOWL);
     public static GUIData BUTTON_THEME = new GUIData(Button.THEME.getKey(), 11, Material.BOWL);
-    public static GUIData BUTTON_POWER = new GUIData(PrefsVariant.BUTTON_POWER_ON.getKey(), 20, Material.REPEATER);
+    public static GUIData BUTTON_POWER = new GUIData(SwitchVariant.BUTTON_POWER_ON.getKey(), 20, Material.REPEATER);
     public static GUIData BUTTON_LIGHTS = new GUIData(LightButton.LIGHTS_BUTTON.getKey(), 29, Material.COAL_BLOCK);
-    public static GUIData BUTTON_TOGGLE = new GUIData(PrefsVariant.BUTTON_TOGGLE_ON.getKey(), 38, Material.REPEATER);
+    public static GUIData BUTTON_TOGGLE = new GUIData(SwitchVariant.BUTTON_TOGGLE_ON.getKey(), 38, Material.REPEATER);
     public static GUIData BUTTON_TARDIS_MAP = new GUIData(Button.TARDIS_MAP.getKey(), 47, Material.MAP);
     // 3rd column
     public static GUIData BUTTON_CHAMELEON = new GUIData(Button.CHAMELEON.getKey(), 4, Material.BOWL);
-    public static GUIData BUTTON_SIEGE = new GUIData(PrefsVariant.SIEGE_ON.getKey(), 13, Material.REPEATER);
+    public static GUIData BUTTON_SIEGE = new GUIData(SwitchVariant.SIEGE_ON.getKey(), 13, Material.REPEATER);
     public static GUIData BUTTON_HIDE = new GUIData(Button.HIDE.getKey(), 22, Material.BOWL);
     public static GUIData BUTTON_REBUILD = new GUIData(Button.REBUILD.getKey(), 31, Material.BOWL);
     public static GUIData BUTTON_DIRECTION = new GUIData(Button.DIRECTION.getKey(), 40, Material.BOWL);

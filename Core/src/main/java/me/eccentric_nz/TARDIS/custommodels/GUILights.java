@@ -25,7 +25,7 @@ public record GUILights() {
     public static GUIData LIGHT_INFO = new GUIData(GuiVariant.INFO.getKey(), 0, Material.BOWL);
     public static GUIData BLOCK_INFO = new GUIData(GuiVariant.INFO.getKey(), 27, Material.BOWL);
     public static GUIData BLOCK_BUTTON = new GUIData(LightButton.BLOCK_BUTTON.getKey(), 28, Material.COAL_BLOCK);
-    public static GUIData LIGHT_SWITCH = new GUIData(PrefsVariant.BUTTON_LIGHTS_ON.getKey(), 45, Material.REPEATER);
+    public static GUIData LIGHT_SWITCH = new GUIData(SwitchVariant.BUTTON_LIGHTS_ON.getKey(), 45, Material.REPEATER);
     public static GUIData BUTTON_LIGHT_LEVELS = new GUIData(LightButton.LIGHT_LEVELS.getKey(), 47, Material.COAL_BLOCK);
     public static GUIData BUTTON_LIGHT_SEQUENCE = new GUIData(LightButton.SEQUENCE_BUTTON.getKey(), 49, Material.COAL_BLOCK);
     public static GUIData EDIT_LIGHT_SEQUENCE = new GUIData(LightButton.EDIT_BUTTON.getKey(), 51, Material.COAL_BLOCK);

@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.custommodels;
 
 import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.PrefsVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -28,7 +28,7 @@ import java.util.List;
 public enum GUIAutonomous {
 
     // TARDIS Autonomous
-    AUTONOMOUS_TYPE(PrefsVariant.AUTO_TYPE.getKey(), 0, Material.REPEATER),
+    AUTONOMOUS_TYPE(SwitchVariant.AUTO_TYPE.getKey(), 0, Material.REPEATER),
     TYPE_INFO(GuiVariant.INFO.getKey(), 1, Material.BOWL, Arrays.asList("Choose the location you want", "the TARDIS to automatically", "return to when you die.")),
     HOME(GuiVariant.HOME.getKey(), 3, Material.BOWL, Arrays.asList("Always go to the", "TARDIS's home location")),
     AREAS(GuiVariant.AREAS.getKey(), 4, Material.BOWL, Arrays.asList("Go to the an area", "in the death world.", "If a parking spot cannot", "be found, use the fallback", "specified below.")),
@@ -36,7 +36,7 @@ public enum GUIAutonomous {
     CLOSEST(GuiVariant.CLOSEST.getKey(), 6, Material.BOWL, Arrays.asList("Go to the TARDIS's", "home location or an area", "whichever is closest.")),
     SAVE(GuiVariant.SAVE.getKey(), 7, Material.BOWL, Arrays.asList("Go to a TARDIS", "saved destination.")),
     SELECTED_TYPE(null, -1, Material.LIME_WOOL),
-    FALLBACK(PrefsVariant.AUTO_DEFAULT.getKey(), 18, Material.REPEATER),
+    FALLBACK(SwitchVariant.AUTO_DEFAULT.getKey(), 18, Material.REPEATER),
     FALLBACK_INFO(GuiVariant.INFO.getKey(), 19, Material.BOWL, Arrays.asList("If a preferred location", "cannot be found, choose", "what the TARDIS should do.")),
     GO_HOME(GuiVariant.HOME.getKey(), 21, Material.BOWL),
     STAY(GuiVariant.STAY.getKey(), 22, Material.BOWL),

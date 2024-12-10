@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.particles;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIParticle;
 import me.eccentric_nz.TARDIS.custommodels.keys.ParticleItem;
-import me.eccentric_nz.TARDIS.custommodels.keys.PrefsVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetParticlePrefs;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -155,7 +155,7 @@ public class TARDISParticleInventory {
         ItemMeta tim = toggle.getItemMeta();
         tim.setDisplayName("Particles Enabled");
         tim.setLore(List.of(data.isOn() ? "ON" : "OFF"));
-        NamespacedKey cmd = (data.isOn()) ? GUIParticle.TOGGLE.key() : PrefsVariant.BUTTON_TOGGLE_OFF.getKey();
+        NamespacedKey cmd = (data.isOn()) ? GUIParticle.TOGGLE.key() : SwitchVariant.BUTTON_TOGGLE_OFF.getKey();
         tim.setItemModel(cmd);
         toggle.setItemMeta(tim);
         stacks[GUIParticle.TOGGLE.slot()] = toggle;

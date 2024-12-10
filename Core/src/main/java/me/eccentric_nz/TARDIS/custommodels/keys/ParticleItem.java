@@ -5,19 +5,19 @@ import org.bukkit.NamespacedKey;
 
 public enum ParticleItem {
 
-    BLOCK(new NamespacedKey(TARDIS.plugin, "gui/particle/block")),
-    BLOCK_INFO(new NamespacedKey(TARDIS.plugin, "gui/particle/block_info")),
-    COLOUR(new NamespacedKey(TARDIS.plugin, "gui/particle/colour")),
-    COLOUR_INFO(new NamespacedKey(TARDIS.plugin, "gui/particle/colour_info")),
-    DENSITY(new NamespacedKey(TARDIS.plugin, "gui/particle/density")),
-    EFFECT(new NamespacedKey(TARDIS.plugin, "gui/particle/effect")),
-    EFFECT_INFO(new NamespacedKey(TARDIS.plugin, "gui/particle/effect_info")),
-    EFFECT_SELECTED(new NamespacedKey(TARDIS.plugin, "gui/particle/effect_selected")),
-    SHAPE(new NamespacedKey(TARDIS.plugin, "gui/particle/shape")),
-    SHAPE_INFO(new NamespacedKey(TARDIS.plugin, "gui/particle/shape_info")),
-    SHAPE_SELECTED(new NamespacedKey(TARDIS.plugin, "gui/particle/shape_selected")),
-    SPEED(new NamespacedKey(TARDIS.plugin, "gui/particle/speed")),
-    TEST(new NamespacedKey(TARDIS.plugin, "gui/particle/test"));
+    BLOCK(new NamespacedKey(TARDIS.plugin, "particle_block")),
+    BLOCK_INFO(new NamespacedKey(TARDIS.plugin, "particle_block_info")),
+    COLOUR(new NamespacedKey(TARDIS.plugin, "particle_colour")),
+    COLOUR_INFO(new NamespacedKey(TARDIS.plugin, "particle_colour_info")),
+    DENSITY(new NamespacedKey(TARDIS.plugin, "particle_density")),
+    EFFECT(new NamespacedKey(TARDIS.plugin, "particle_effect")),
+    EFFECT_INFO(new NamespacedKey(TARDIS.plugin, "particle_effect_info")),
+    EFFECT_SELECTED(new NamespacedKey(TARDIS.plugin, "particle_effect_selected")),
+    SHAPE(new NamespacedKey(TARDIS.plugin, "particle_shape")),
+    SHAPE_INFO(new NamespacedKey(TARDIS.plugin, "particle_shape_info")),
+    SHAPE_SELECTED(new NamespacedKey(TARDIS.plugin, "particle_shape_selected")),
+    SPEED(new NamespacedKey(TARDIS.plugin, "particle_speed")),
+    TEST(new NamespacedKey(TARDIS.plugin, "particle_test"));
 
     private final NamespacedKey key;
 

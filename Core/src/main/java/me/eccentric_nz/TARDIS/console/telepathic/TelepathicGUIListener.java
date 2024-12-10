@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.console.telepathic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
-import me.eccentric_nz.TARDIS.custommodels.keys.PrefsVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -82,7 +82,7 @@ public class TelepathicGUIListener extends TARDISMenuListener {
                     plugin.getQueryFactory().doUpdate("player_prefs", set, whereu);
                     // set item model
                     NamespacedKey model = im.getItemModel();
-                    im.setItemModel((model == PrefsVariant.TELEPATHIC_CIRCUIT_OFF.getKey()) ? PrefsVariant.TELEPATHIC_CIRCUIT_ON.getKey() : PrefsVariant.TELEPATHIC_CIRCUIT_OFF.getKey());
+                    im.setItemModel((model == SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getKey()) ? SwitchVariant.TELEPATHIC_CIRCUIT_ON.getKey() : SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getKey());
                     choice.setItemMeta(im);
                     plugin.getMessenger().announceRepeater(player, "Telepathic Circuit " + (b == 1 ? "ON" : "OFF"));
                     close(player);

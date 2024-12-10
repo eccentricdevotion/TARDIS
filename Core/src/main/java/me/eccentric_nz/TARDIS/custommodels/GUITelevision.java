@@ -24,11 +24,11 @@ import java.util.List;
 public record GUITelevision() {
 
     // TARDIS Areas
-    public static GUIData DOCTORS = new GUIData(LazarusCatergory.DOCTOR.getKey(), 1, Material.BROWN_STAINED_GLASS_PANE, "Doctors");
-    public static GUIData COMPANIONS = new GUIData(LazarusCatergory.COMPANION.getKey(), 3, Material.BROWN_STAINED_GLASS_PANE, "Companions");
-    public static GUIData CHARACTERS = new GUIData(LazarusCatergory.CHARACTER.getKey(), 5, Material.BROWN_STAINED_GLASS_PANE, "Characters");
-    public static GUIData MONSTERS = new GUIData(LazarusCatergory.MONSTER.getKey(), 7, Material.BROWN_STAINED_GLASS_PANE, "Monsters");
-    public static GUIData DOWNLOAD = new GUIData(PrefsVariant.DOWNLOAD_OFF.getKey(), 29, Material.REPEATER);
+    public static GUIData DOCTORS = new GUIData(Button.DOCTOR.getKey(), 1, Material.BROWN_STAINED_GLASS_PANE, "Doctors");
+    public static GUIData COMPANIONS = new GUIData(Button.COMPANION.getKey(), 3, Material.BROWN_STAINED_GLASS_PANE, "Companions");
+    public static GUIData CHARACTERS = new GUIData(Button.CHARACTER.getKey(), 5, Material.BROWN_STAINED_GLASS_PANE, "Characters");
+    public static GUIData MONSTERS = new GUIData(Button.MONSTER.getKey(), 7, Material.BROWN_STAINED_GLASS_PANE, "Monsters");
+    public static GUIData DOWNLOAD = new GUIData(SwitchVariant.DOWNLOAD_OFF.getKey(), 29, Material.REPEATER);
     public static GUIData REMOVE = new GUIData(Button.REMOVE.getKey(), 31, Material.BUCKET);
     public static GUIData BACK = new GUIData(GuiVariant.BACK.getKey(), 33, Material.BOWL);
     public static GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 35, Material.BOWL);

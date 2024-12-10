@@ -5,10 +5,10 @@ import org.bukkit.NamespacedKey;
 
 public enum Weather {
 
-    CLEAR(new NamespacedKey(TARDIS.plugin, "gui/clear")),
-    RAIN(new NamespacedKey(TARDIS.plugin, "gui/rain")),
-    THUNDER(new NamespacedKey(TARDIS.plugin, "gui/thunder")),
-    EXCITE(new NamespacedKey(TARDIS.plugin, "gui/excite"));
+    CLEAR(new NamespacedKey(TARDIS.plugin, "button_clear")),
+    RAIN(new NamespacedKey(TARDIS.plugin, "button_rain")),
+    THUNDER(new NamespacedKey(TARDIS.plugin, "button_thunder")),
+    EXCITE(new NamespacedKey(TARDIS.plugin, "button_excite"));
 
     private final NamespacedKey key;
 

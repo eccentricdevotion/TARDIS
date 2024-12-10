@@ -4,7 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.ConsolePart;
 import me.eccentric_nz.TARDIS.custommodels.keys.DirectionVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.ModelledControl;
-import me.eccentric_nz.TARDIS.custommodels.keys.PrefsVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -181,7 +181,7 @@ public class ConsoleBuilder {
         if (interaction == ConsoleInteraction.THROTTLE || interaction == ConsoleInteraction.RELATIVITY_DIFFERENTIATOR) {
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, playerUuid);
             if (rsp.resultSet()) {
-                key = (interaction == ConsoleInteraction.THROTTLE) ? PrefsVariant.values()[115+rsp.getThrottle()].getKey() : ModelledControl.values()[34 + rsp.getFlightMode()].getKey();
+                key = (interaction == ConsoleInteraction.THROTTLE) ? SwitchVariant.values()[115+rsp.getThrottle()].getKey() : ModelledControl.values()[34 + rsp.getFlightMode()].getKey();
             }
         }
         // spawn a control

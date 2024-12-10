@@ -5,10 +5,10 @@ import org.bukkit.NamespacedKey;
 
 public enum CureVariant {
 
-    ANTIDOTE(new NamespacedKey(TARDIS.plugin, "products/antidote")),
-    ELIXIR(new NamespacedKey(TARDIS.plugin, "products/elixir")),
-    EYEDROPS(new NamespacedKey(TARDIS.plugin, "products/eyedrops")),
-    TONIC(new NamespacedKey(TARDIS.plugin, "products/tonic"));
+    ANTIDOTE(new NamespacedKey(TARDIS.plugin, "product_antidote")),
+    ELIXIR(new NamespacedKey(TARDIS.plugin, "product_elixir")),
+    EYEDROPS(new NamespacedKey(TARDIS.plugin, "product_eyedrops")),
+    TONIC(new NamespacedKey(TARDIS.plugin, "product_tonic"));
 
     private final NamespacedKey key;
 
