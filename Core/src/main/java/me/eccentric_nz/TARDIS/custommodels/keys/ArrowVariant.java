@@ -5,7 +5,6 @@ import org.bukkit.NamespacedKey;
 
 public enum ArrowVariant {
 
-    BACK(new NamespacedKey(TARDIS.plugin, "button_back")),
     DOWN(new NamespacedKey(TARDIS.plugin, "button_down")),
     UP(new NamespacedKey(TARDIS.plugin, "button_up")),
     GO(new NamespacedKey(TARDIS.plugin, "button_go")),
