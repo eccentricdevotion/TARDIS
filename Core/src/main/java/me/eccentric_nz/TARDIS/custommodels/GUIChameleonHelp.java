@@ -16,14 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.custommodels;
 
-import me.eccentric_nz.TARDIS.custommodels.keys.ArrowVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import org.bukkit.Material;
 
 public record GUIChameleonHelp() {
 
     // Chameleon Help
-    public static GUIData BACK_CHAM_OPTS = new GUIData(ArrowVariant.BACK.getKey(), 0, Material.ARROW);
+    public static GUIData BACK_CHAM_OPTS = new GUIData(GuiVariant.BACK.getKey(), 0, Material.ARROW);
     public static GUIData INFO_HELP_1 = new GUIData(GuiVariant.INFO.getKey(), 3, Material.BOWL);
     public static GUIData INFO_HELP_2 = new GUIData(GuiVariant.INFO.getKey(), 4, Material.BOWL);
     public static GUIData INFO_HELP_3 = new GUIData(GuiVariant.INFO.getKey(), 16, Material.BOWL);

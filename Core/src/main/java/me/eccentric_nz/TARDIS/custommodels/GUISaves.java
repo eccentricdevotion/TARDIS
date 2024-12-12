@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.custommodels;
 
-import me.eccentric_nz.TARDIS.custommodels.keys.*;
+import me.eccentric_nz.TARDIS.custommodels.keys.ArrowVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.Button;
+import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import org.bukkit.Material;
 
 public record GUISaves() {
@@ -29,7 +31,7 @@ public record GUISaves() {
     public static GUIData DELETE_SAVE = new GUIData(Button.DELETE.getKey(), 47, Material.BUCKET);
     public static GUIData LOAD_MY_SAVES = new GUIData(GuiVariant.OWN_SAVES.getKey(), 49, Material.BOWL);
     public static GUIData LOAD_SAVES_FROM_THIS_TARDIS = new GUIData(GuiVariant.TARDIS_SAVES.getKey(), 49, Material.BOWL);
-    public static GUIData BACK_TO_PLANETS = new GUIData(ArrowVariant.BACK.getKey(), 51, Material.ARROW);
+    public static GUIData BACK_TO_PLANETS = new GUIData(GuiVariant.BACK.getKey(), 51, Material.ARROW);
     public static GUIData GO_TO_PAGE_1 = new GUIData(ArrowVariant.PAGE_ONE.getKey(), 51, Material.ARROW);
     public static GUIData GO_TO_PAGE_2 = new GUIData(ArrowVariant.PAGE_TWO.getKey(), 51, Material.ARROW);
 }

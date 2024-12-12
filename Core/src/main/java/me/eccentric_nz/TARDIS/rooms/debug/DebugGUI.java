@@ -10,7 +10,6 @@ public class DebugGUI {
     public static final List<GuiPreview> ICONS = List.of(
             new GuiPreview(Material.ACACIA_LOG, RoomVariant.HUTCH.getKey(), "room_hutch"),
             new GuiPreview(Material.AMETHYST_BLOCK, RoomVariant.GEODE.getKey(), "room_geode"),
-            new GuiPreview(Material.ARROW, ArrowVariant.BACK.getKey(), "arrow_back"),
             new GuiPreview(Material.ARROW, ArrowVariant.DOWN.getKey(), "arrow_down"),
             new GuiPreview(Material.ARROW, ArrowVariant.UP.getKey(), "arrow_up"),
             new GuiPreview(Material.ARROW, ArrowVariant.GO.getKey(), "arrow_go"),

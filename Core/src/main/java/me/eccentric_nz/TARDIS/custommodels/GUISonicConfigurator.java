@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.custommodels;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.Wool;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -25,16 +26,16 @@ import org.bukkit.NamespacedKey;
 public enum GUISonicConfigurator {
 
     // Sonic Configurator
-    BIO_SCANNER_UPGRADE(GuiVariant.BIO.getKey(), 0, Material.BOWL, ""),
-    DIAMOND_UPGRADE(GuiVariant.DIAMOND.getKey(), 1, Material.BOWL, ""),
-    EMERALD_UPGRADE(GuiVariant.EMERALD.getKey(), 2, Material.BOWL, ""),
-    REDSTONE_UPGRADE(GuiVariant.REDSTONE.getKey(), 3, Material.BOWL, ""),
-    PAINTER_UPGRADE(GuiVariant.PAINTER.getKey(), 4, Material.BOWL, ""),
-    IGNITE_UPGRADE(GuiVariant.IGNITE.getKey(), 5, Material.BOWL, ""),
-    PICKUP_ARROWS_UPGRADE(GuiVariant.PICKUP.getKey(), 6, Material.BOWL, ""),
-    KNOCKBACK_UPGRADE(GuiVariant.KNOCKBACK.getKey(), 7, Material.BOWL, ""),
-    BRUSH_UPGRADE(GuiVariant.BRUSH.getKey(), 8, Material.BOWL, ""),
-    CONVERSION_UPGRADE(GuiVariant.CONVERSION.getKey(), 18, Material.BOWL, ""),
+    BIO_SCANNER_UPGRADE(CircuitVariant.BIO.getKey(), 0, Material.BOWL, ""),
+    DIAMOND_UPGRADE(CircuitVariant.DIAMOND.getKey(), 1, Material.BOWL, ""),
+    EMERALD_UPGRADE(CircuitVariant.EMERALD.getKey(), 2, Material.BOWL, ""),
+    REDSTONE_UPGRADE(CircuitVariant.REDSTONE.getKey(), 3, Material.BOWL, ""),
+    PAINTER_UPGRADE(CircuitVariant.PAINTER.getKey(), 4, Material.BOWL, ""),
+    IGNITE_UPGRADE(CircuitVariant.IGNITE.getKey(), 5, Material.BOWL, ""),
+    PICKUP_ARROWS_UPGRADE(CircuitVariant.PICKUP.getKey(), 6, Material.BOWL, ""),
+    KNOCKBACK_UPGRADE(CircuitVariant.KNOCKBACK.getKey(), 7, Material.BOWL, ""),
+    BRUSH_UPGRADE(CircuitVariant.BRUSH.getKey(), 8, Material.BOWL, ""),
+    CONVERSION_UPGRADE(CircuitVariant.CONVERSION.getKey(), 18, Material.BOWL, ""),
     INSTRUCTIONS_1_OF_2(GuiVariant.INFO.getKey(), 50, Material.BOOK, "Place your sonic screwdriver~in the bottom left slot.~Click on the upgrades you~want to enable/disable."),
     INSTRUCTIONS_2_OF_2(GuiVariant.INFO.getKey(), 51, Material.BOOK, "Click the 'Save' button~to apply your selections.~Click 'Close' to exit~without saving."),
     NOT_UPGRADED(Wool.NOT_UPGRADED.getKey(), -1, Material.GRAY_WOOL, ""),
