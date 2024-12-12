@@ -36,7 +36,7 @@ public enum GuiVariant {
     FOUR(new NamespacedKey(TARDIS.plugin, "button_four")),
     GALAXY(new NamespacedKey(TARDIS.plugin, "button_galaxy")),
     GENERATE_SONIC_SCREWDRIVER(new NamespacedKey(TARDIS.plugin, "button_generate_sonic_screwdriver")),
-    HANDLES_DISK(new NamespacedKey(TARDIS.plugin, "disks/handles_disk")),
+    HANDLES_DISK(new NamespacedKey(TARDIS.plugin, "handles_disk")),
     HELP(new NamespacedKey(TARDIS.plugin, "button_help")),
     HOME(new NamespacedKey(TARDIS.plugin, "button_home")),
     INFO(new NamespacedKey(TARDIS.plugin, "button_info")),

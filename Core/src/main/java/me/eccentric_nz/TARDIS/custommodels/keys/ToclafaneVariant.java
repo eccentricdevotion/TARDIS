@@ -5,9 +5,9 @@ import org.bukkit.NamespacedKey;
 
 public enum ToclafaneVariant {
 
-    TOCLAFANE(new NamespacedKey(TARDIS.plugin, "monster/toclafane/toclafane")),
-    TOCLAFANE_ATTACK(new NamespacedKey(TARDIS.plugin, "monster/toclafane/toclafane_attack")),
-    BUTTON_TOCLAFANE(new NamespacedKey(TARDIS.plugin, "genetic/toclafane"));
+    TOCLAFANE(new NamespacedKey(TARDIS.plugin, "toclafane")),
+    TOCLAFANE_ATTACK(new NamespacedKey(TARDIS.plugin, "toclafane_attack")),
+    BUTTON_TOCLAFANE(new NamespacedKey(TARDIS.plugin, "button_toclafane"));
 
     private final NamespacedKey key;
 
