@@ -68,7 +68,7 @@ public class TARDISSeedsInventory {
                 List<String> lore = new ArrayList<>();
                 lore.add("Click to see recipe...");
                 im.setLore(lore);
-                NamespacedKey key = new NamespacedKey(plugin, "block/seed/"+a.getPermission());
+                NamespacedKey key = new NamespacedKey(plugin, "seed_" + a.getPermission());
                 im.setItemModel(key);
                 is.setItemMeta(im);
                 stack[i] = is;

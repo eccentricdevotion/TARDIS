@@ -25,7 +25,7 @@ public class TimeRotorAnimation implements Runnable {
         if (!is.getType().isAir()) {
             ItemMeta im = is.getItemMeta();
             if (im != null) {
-                im.setItemModel(new NamespacedKey(TARDIS.plugin, "time_rotor/" + which + "/" + which + "_" + frames[i]));
+                im.setItemModel(new NamespacedKey(TARDIS.plugin, "time_rotor_" + which + "_" + frames[i]));
                 is.setItemMeta(im);
                 frame.setItem(is, false);
                 i++;

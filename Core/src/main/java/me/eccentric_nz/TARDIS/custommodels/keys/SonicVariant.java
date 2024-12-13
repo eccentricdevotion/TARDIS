@@ -20,7 +20,7 @@ public enum SonicVariant {
     RIVER_SONG(new NamespacedKey(TARDIS.plugin, "sonic_river_song")),
     MASTER(new NamespacedKey(TARDIS.plugin, "sonic_master")),
     SARAH_JANE(new NamespacedKey(TARDIS.plugin, "sonic_sarah_jane")),
-    SONIC_PROBE(new NamespacedKey(TARDIS.plugin, "sonic_sonic_probe")),
+    SONIC_PROBE(new NamespacedKey(TARDIS.plugin, "sonic_probe")),
     UMBRELLA(new NamespacedKey(TARDIS.plugin, "sonic_umbrella")),
     WAR(new NamespacedKey(TARDIS.plugin, "sonic_war")),
     MARK1_ON(new NamespacedKey(TARDIS.plugin, "sonic_mark1_on")),

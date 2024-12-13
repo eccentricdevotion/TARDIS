@@ -18,8 +18,8 @@ public enum Whoniverse {
     BLASTER(new NamespacedKey(TARDIS.plugin, "sonic_blaster")),
     DISK_STORAGE(new NamespacedKey(TARDIS.plugin, "disk_storage")),
     ELIXIR_OF_LIFE(new NamespacedKey(TARDIS.plugin, "elixir_of_life")),
-    HANDLES_OFF(new NamespacedKey(TARDIS.plugin, "handles_handles_off")),
-    HANDLES_ON(new NamespacedKey(TARDIS.plugin, "handles_handles_on")),
+    HANDLES_OFF(new NamespacedKey(TARDIS.plugin, "handles_off")),
+    HANDLES_ON(new NamespacedKey(TARDIS.plugin, "handles_on")),
     COMMUNICATOR(new NamespacedKey(TARDIS.plugin, "handles_communicator")),
     // TODO make texture file
     COMMUNICATOR_OVERLAY(new NamespacedKey(TARDIS.plugin, "handles_communicator_overlay")),

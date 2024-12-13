@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.rotors;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.RotorVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 
@@ -83,7 +84,7 @@ public class TARDISCustomRotorLoader {
             try {
                 Material material = Material.valueOf(plugin.getCustomRotorsConfig().getString(r + ".animated_material"));
                 int[] frames = getFrames(plugin.getCustomRotorsConfig().getString(r + ".animation_sequence", "0,0"));
-                NamespacedKey key = new NamespacedKey(plugin, "time_rotor/time_rotor_" + r.toLowerCase(Locale.ROOT) + "_off");
+                NamespacedKey key = new NamespacedKey(plugin, "time_rotor_" + TARDISStringUtils.toDashedLowercase(r) + "_off");
                 Rotor column = new Rotor(r, key, material, frames, plugin.getCustomRotorsConfig().getInt(r + ".frame_rate"), true);
                 // add the rotor to look-ups
                 Rotor.byMaterial.put(material, column);

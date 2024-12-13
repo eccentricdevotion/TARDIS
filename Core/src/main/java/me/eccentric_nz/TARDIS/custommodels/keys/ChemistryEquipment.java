@@ -23,9 +23,9 @@ public enum ChemistryEquipment {
     FOLDER(new NamespacedKey(TARDIS.plugin, "folder")),
     TELESCOPE(new NamespacedKey(TARDIS.plugin, "telescope")),
     SCREEN(new NamespacedKey(TARDIS.plugin, "screen")),
-    BLEACH(new NamespacedKey(TARDIS.plugin, "products_bleach")),
-    ICE_BOMB(new NamespacedKey(TARDIS.plugin, "products_ice_bomb")),
-    SUPER_FERTILISER(new NamespacedKey(TARDIS.plugin, "products_super_fertiliser"));
+    BLEACH(new NamespacedKey(TARDIS.plugin, "product_bleach")),
+    ICE_BOMB(new NamespacedKey(TARDIS.plugin, "product_ice_bomb")),
+    SUPER_FERTILISER(new NamespacedKey(TARDIS.plugin, "product_super_fertiliser"));
 
     private final NamespacedKey key;
 

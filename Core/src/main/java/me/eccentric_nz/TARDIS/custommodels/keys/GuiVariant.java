@@ -14,7 +14,7 @@ public enum GuiVariant {
     ATMOSPHERE(new NamespacedKey(TARDIS.plugin, "button_atmosphere")),
     AUTO_SAVE(new NamespacedKey(TARDIS.plugin, "button_auto_save")),
     AUTO_SAVE_SELECTOR(new NamespacedKey(TARDIS.plugin, "button_auto_save_selector")),
-    BACK(new NamespacedKey(TARDIS.plugin, "back")),
+    BACK(new NamespacedKey(TARDIS.plugin, "button_back")),
     CHECK(new NamespacedKey(TARDIS.plugin, "button_check")),
     CHECK_OUT_SELECTED_PROGRAM(new NamespacedKey(TARDIS.plugin, "button_check_out_selected_program")),
     CLEAN(new NamespacedKey(TARDIS.plugin, "button_clean")),

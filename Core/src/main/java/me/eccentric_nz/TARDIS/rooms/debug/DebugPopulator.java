@@ -14,6 +14,7 @@ import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import me.eccentric_nz.TARDIS.doors.Door;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.rotors.Rotor;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardischemistry.compound.Compound;
 import me.eccentric_nz.tardischemistry.compound.CompoundBuilder;
 import me.eccentric_nz.tardischemistry.element.Element;
@@ -325,10 +326,11 @@ public class DebugPopulator {
                     ItemStack head = new ItemStack(dye, 1);
                     ItemMeta meta = head.getItemMeta();
                     switch (z) {
-                        case -4 -> meta.setItemModel(preset.getClosed());
-                        case -8 -> meta.setItemModel(preset.getOpen());
-                        case -12 -> meta.setItemModel(preset.getStained());
-                        case -16 -> meta.setItemModel(preset.getGlass());
+                        case -4, -20 -> meta.setItemModel(preset.getClosed());
+                        case -8, -24 -> meta.setItemModel(preset.getOpen());
+                        case -12, -28 -> meta.setItemModel(preset.getStained());
+                        // -16 & -32
+                        default -> meta.setItemModel(preset.getGlass());
                     }
                     head.setItemMeta(meta);
                     ee.setHelmet(head);
@@ -352,12 +354,11 @@ public class DebugPopulator {
                 ItemMeta meta = head.getItemMeta();
                 NamespacedKey key;
                 switch (z) {
-                    case -4 -> key = new NamespacedKey(plugin, "police_box/" + c.toLowerCase(Locale.ROOT) + "_closed");
-                    case -8 -> key = new NamespacedKey(plugin, "police_box/" + c.toLowerCase(Locale.ROOT) + "_open");
-                    case -12 ->
-                            key = new NamespacedKey(plugin, "police_box/" + c.toLowerCase(Locale.ROOT) + "_stained");
-                    // -16
-                    default -> key = new NamespacedKey(plugin, "police_box/" + c.toLowerCase(Locale.ROOT) + "_glass");
+                    case -4, -20 -> key = new NamespacedKey(plugin, TARDISStringUtils.toUnderscoredLowercase(c) + "_closed");
+                    case -8, -24 -> key = new NamespacedKey(plugin, TARDISStringUtils.toUnderscoredLowercase(c) + "_open");
+                    case -12, -28 -> key = new NamespacedKey(plugin, TARDISStringUtils.toUnderscoredLowercase(c) + "_stained");
+                    // -16 & -32
+                    default -> key = new NamespacedKey(plugin, TARDISStringUtils.toUnderscoredLowercase(c) + "_glass");
                 }
                 meta.setItemModel(key);
                 head.setItemMeta(meta);
@@ -430,7 +431,7 @@ public class DebugPopulator {
             Material material = d.getMaterial();
             ItemStack is = new ItemStack(material);
             ItemMeta im = is.getItemMeta();
-            im.setItemModel(new NamespacedKey(plugin, "doors/" + door + "_closed"));
+            im.setItemModel(new NamespacedKey(plugin, TARDISStringUtils.toUnderscoredLowercase(door) + "_closed"));
             is.setItemMeta(im);
             c.setItemStack(is);
             x -= 3;
@@ -443,7 +444,7 @@ public class DebugPopulator {
             ItemDisplay o = (ItemDisplay) world.spawnEntity(open, EntityType.ITEM_DISPLAY);
             ItemStack ois = new ItemStack(material);
             ItemMeta oim = is.getItemMeta();
-            im.setItemModel(new NamespacedKey(plugin, "doors/" + door + "_open"));
+            im.setItemModel(new NamespacedKey(plugin, TARDISStringUtils.toUnderscoredLowercase(door) + "_open"));
             ois.setItemMeta(oim);
             o.setItemStack(ois);
             x -= 3;
@@ -457,7 +458,7 @@ public class DebugPopulator {
                 ItemDisplay e = (ItemDisplay) world.spawnEntity(extra, EntityType.ITEM_DISPLAY);
                 ItemStack eis = new ItemStack(material);
                 ItemMeta eim = is.getItemMeta();
-                eim.setItemModel(new NamespacedKey(plugin, "doors/" + door + "_" + d.getFrames().length));
+                eim.setItemModel(new NamespacedKey(plugin, TARDISStringUtils.toUnderscoredLowercase(door) + "_" + d.getFrames().length));
                 eis.setItemMeta(eim);
                 e.setItemStack(eis);
                 x -= 3;
