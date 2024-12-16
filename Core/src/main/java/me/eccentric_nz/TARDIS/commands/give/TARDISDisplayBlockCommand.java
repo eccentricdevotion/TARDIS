@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.doors.Door;
 import me.eccentric_nz.TARDIS.rotors.Rotor;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -44,13 +45,14 @@ public class TARDISDisplayBlockCommand {
             ItemStack is = new ItemStack(door.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("Door " + TARDISStringUtils.capitalise(door.getName()));
-            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 10000);
-            switch (door.getMaterial()) {
-                case IRON_DOOR -> im.setItemModel(TardisDoorVariant.TARDIS_DOOR_CLOSED.getKey());
-                case BIRCH_DOOR -> im.setItemModel(BoneDoorVariant.BONE_DOOR_CLOSED.getKey());
-                case CHERRY_DOOR -> im.setItemModel(ClassicDoorVariant.CLASSIC_DOOR_CLOSED.getKey());
-                default -> im.setItemModel(Door.getClosedModel(door.getMaterial()));
-            }
+            NamespacedKey key = switch (door.getMaterial()) {
+                case IRON_DOOR -> TardisDoorVariant.TARDIS_DOOR_CLOSED.getKey();
+                case BIRCH_DOOR -> BoneDoorVariant.BONE_DOOR_CLOSED.getKey();
+                case CHERRY_DOOR -> ClassicDoorVariant.CLASSIC_DOOR_CLOSED.getKey();
+                default -> Door.getClosedModel(door.getMaterial());
+            };
+            im.setItemModel(key);
+            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, key.getKey());
             is.setItemMeta(im);
             return is;
         } else if (display.startsWith("TIME_")) {
