@@ -46,7 +46,7 @@ public enum GUIConfiguration {
     TRAVEL(SwitchVariant.TRAVEL_ON.getKey(), SwitchVariant.TRAVEL_OFF.getKey(), 0),
     NEXT(GuiVariant.NEXT.getKey(), null, 0, Material.BOWL),
     PREV(GuiVariant.PREV.getKey(), null, 0, Material.BOWL),
-    PREFS(Button.ADMIN.getKey(), null, 0, Material.NETHER_STAR);
+    PREFS(Button.PREFERENCES.getKey(), null, 0, Material.NETHER_STAR);
 
     private final NamespacedKey onModel;
     private final NamespacedKey offModel;

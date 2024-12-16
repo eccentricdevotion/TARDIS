@@ -181,7 +181,7 @@ public class ConsoleBuilder {
         if (interaction == ConsoleInteraction.THROTTLE || interaction == ConsoleInteraction.RELATIVITY_DIFFERENTIATOR) {
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, playerUuid);
             if (rsp.resultSet()) {
-                key = (interaction == ConsoleInteraction.THROTTLE) ? SwitchVariant.values()[115+rsp.getThrottle()].getKey() : ModelledControl.values()[34 + rsp.getFlightMode()].getKey();
+                key = (interaction == ConsoleInteraction.THROTTLE) ? ModelledControl.values()[70 + rsp.getThrottle()].getKey() : ModelledControl.values()[50 + rsp.getFlightMode()].getKey();
             }
         }
         // spawn a control

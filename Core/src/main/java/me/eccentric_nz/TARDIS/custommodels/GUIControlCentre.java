@@ -28,7 +28,7 @@ public record GUIControlCentre() {
     // 1st column
     public static GUIData BUTTON_RANDOM = new GUIData(Button.RANDOM.getKey(), 0, Material.BOWL);
     public static GUIData BUTTON_SAVES = new GUIData(Button.SAVES.getKey(), 9, Material.BOWL);
-    public static GUIData BUTTON_BACK = new GUIData(Button.BACK.getKey(), 18, Material.BOWL);
+    public static GUIData BUTTON_BACK = new GUIData(GuiVariant.BACK.getKey(), 18, Material.BOWL);
     public static GUIData BUTTON_AREAS = new GUIData(Button.AREAS.getKey(), 27, Material.BOWL);
     public static GUIData BUTTON_TERM = new GUIData(Button.TERMINAL.getKey(), 36, Material.BOWL);
     public static GUIData BUTTON_THROTTLE = new GUIData(Button.THROTTLE.getKey(), 45, Material.BOWL);
