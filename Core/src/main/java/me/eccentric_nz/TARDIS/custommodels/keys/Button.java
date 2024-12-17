@@ -26,6 +26,7 @@ public enum Button {
     DNA(new NamespacedKey(TARDIS.plugin, "button_dna")),
     FARMING_PREFERENCES(new NamespacedKey(TARDIS.plugin, "button_farm_prefs")),
     FLIGHT_MODE(new NamespacedKey(TARDIS.plugin, "button_flight_mode")),
+    HANDBRAKE(new NamespacedKey(TARDIS.plugin, "button_handbrake")),
     HIDE(new NamespacedKey(TARDIS.plugin, "button_hide")),
     INFO(new NamespacedKey(TARDIS.plugin, "button_info")),
     INVISIBLE(new NamespacedKey(TARDIS.plugin, "button_invisible")),

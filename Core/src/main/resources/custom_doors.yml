@@ -19,9 +19,9 @@ centred:
   # open - assets/tardis/models/item/doors/xxx_open.json - fully open state
   # closed - assets/tardis/models/item/doors/xxx_closed.json - fully closed state
   # animation frames - assets/tardis/models/item/doors/xxx_[zero-based sequential frame number].json
-  # in this example the open animation would be 0, 1, 2, 3, open
-  # and the closed animation would be 3, 2, 1, 0, closed
-  animation_sequence: 0,1,2,3
+  # in this example the open animation would be 0, 1, 2, open
+  # and the closed animation would be 2, 1, 0, closed
+  animation_sequence: 0,1,2
   # the animation frame rate in ticks
   frame_rate: 6
   # whether the door has a third state activated by crouch-right-clicking

@@ -16,9 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.custommodels;
 
-import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.Button;
-import me.eccentric_nz.TARDIS.custommodels.keys.ModelledControl;
+import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
@@ -59,7 +58,7 @@ public enum GUIPlayerPreferences {
     FARMING_PREFERENCES(Button.FARMING_PREFERENCES.getKey(), null, 30, Material.BOWL),
     PARTICLES(Button.PARTICLES.getKey(), null, 31, Material.BOWL),
     SONIC_CONFIGURATOR(Button.SONIC.getKey(), null, 32, Material.BOWL),
-    HANDBRAKE(ModelledControl.HANDBRAKE.getKey(), null, 33, Material.LEVER),
+    HANDBRAKE(Button.HANDBRAKE.getKey(), null, 33, Material.LEVER),
     TARDIS_MAP(Button.TARDIS_MAP.getKey(), null, 34, Material.MAP),
     ADMIN_MENU(Button.ADMIN.getKey(), null, 35, Material.NETHER_STAR);
 

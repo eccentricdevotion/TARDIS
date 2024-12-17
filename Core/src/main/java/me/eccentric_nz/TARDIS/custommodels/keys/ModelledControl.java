@@ -5,7 +5,6 @@ import org.bukkit.NamespacedKey;
 
 public enum ModelledControl {
 
-    HANDBRAKE(new NamespacedKey(TARDIS.plugin, "button_handbrake")),
     LAMP_0(new NamespacedKey(TARDIS.plugin, "model_lamp_0")),
     LAMP_1(new NamespacedKey(TARDIS.plugin, "model_lamp_1")),
     LAMP_2(new NamespacedKey(TARDIS.plugin, "model_lamp_2")),
@@ -56,10 +55,10 @@ public enum ModelledControl {
     CONSOLE_LAMP_7_OFF(new NamespacedKey(TARDIS.plugin, "model_console_lamp_7_off")),
     HANDBRAKE_0(new NamespacedKey(TARDIS.plugin, "console_handbrake_0")),
     HANDBRAKE_1(new NamespacedKey(TARDIS.plugin, "console_handbrake_1")),
-    RELATIVITY_DIFFERENTIATOR_0A(new NamespacedKey(TARDIS.plugin, "console_relativity_differentiator_0a")),
-    RELATIVITY_DIFFERENTIATOR_1A(new NamespacedKey(TARDIS.plugin, "console_relativity_differentiator_1a")),
-    RELATIVITY_DIFFERENTIATOR_2A(new NamespacedKey(TARDIS.plugin, "console_relativity_differentiator_2a")),
-    RELATIVITY_DIFFERENTIATOR_3A(new NamespacedKey(TARDIS.plugin, "console_relativity_differentiator_3a")),
+    RELATIVITY_DIFFERENTIATOR_0A(new NamespacedKey(TARDIS.plugin, "console_relativity_differentiator_0")),
+    RELATIVITY_DIFFERENTIATOR_1A(new NamespacedKey(TARDIS.plugin, "console_relativity_differentiator_1")),
+    RELATIVITY_DIFFERENTIATOR_2A(new NamespacedKey(TARDIS.plugin, "console_relativity_differentiator_2")),
+    RELATIVITY_DIFFERENTIATOR_3A(new NamespacedKey(TARDIS.plugin, "console_relativity_differentiator_3")),
     MODELLED_LAMP_0(new NamespacedKey(TARDIS.plugin, "console_lamp_0")),
     MODELLED_LAMP_1(new NamespacedKey(TARDIS.plugin, "console_lamp_1")),
     MODELLED_LAMP_2(new NamespacedKey(TARDIS.plugin, "console_lamp_2")),

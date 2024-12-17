@@ -195,6 +195,9 @@ public class DebugPopulator {
     }
 
     public void monsters() {
+        if (!plugin.getConfig().getBoolean("modules.weeping_angels")) {
+            return;
+        }
         int x = 3;
         int z = -3;
         for (Monster monster : Monster.values()) {
@@ -425,13 +428,15 @@ public class DebugPopulator {
         // custom doors
         for (String door : plugin.getCustomDoorsConfig().getKeys(false)) {
             Door d = Door.byName.get("DOOR_" + door.toUpperCase(Locale.ROOT));
+            String key = TARDISStringUtils.toUnderscoredLowercase(door);
+            plugin.debug(key);
             // closed state
             Location closed = new Location(world, rx + x + 0.5d, 65.5d, rz + z + 0.5d);
             ItemDisplay c = (ItemDisplay) world.spawnEntity(closed, EntityType.ITEM_DISPLAY);
             Material material = d.getMaterial();
             ItemStack is = new ItemStack(material);
             ItemMeta im = is.getItemMeta();
-            im.setItemModel(new NamespacedKey(plugin, TARDISStringUtils.toUnderscoredLowercase(door) + "_closed"));
+            im.setItemModel(new NamespacedKey(plugin, key + "_closed"));
             is.setItemMeta(im);
             c.setItemStack(is);
             x -= 3;
@@ -444,7 +449,7 @@ public class DebugPopulator {
             ItemDisplay o = (ItemDisplay) world.spawnEntity(open, EntityType.ITEM_DISPLAY);
             ItemStack ois = new ItemStack(material);
             ItemMeta oim = is.getItemMeta();
-            im.setItemModel(new NamespacedKey(plugin, TARDISStringUtils.toUnderscoredLowercase(door) + "_open"));
+            im.setItemModel(new NamespacedKey(plugin, key + "_open"));
             ois.setItemMeta(oim);
             o.setItemStack(ois);
             x -= 3;
@@ -458,7 +463,7 @@ public class DebugPopulator {
                 ItemDisplay e = (ItemDisplay) world.spawnEntity(extra, EntityType.ITEM_DISPLAY);
                 ItemStack eis = new ItemStack(material);
                 ItemMeta eim = is.getItemMeta();
-                eim.setItemModel(new NamespacedKey(plugin, TARDISStringUtils.toUnderscoredLowercase(door) + "_" + d.getFrames().length));
+                eim.setItemModel(new NamespacedKey(plugin, key + "_extra"));
                 eis.setItemMeta(eim);
                 e.setItemStack(eis);
                 x -= 3;

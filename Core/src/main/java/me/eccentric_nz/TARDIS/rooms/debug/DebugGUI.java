@@ -252,7 +252,7 @@ public class DebugGUI {
             new GuiPreview(Material.LAPIS_BLOCK, ParticleItem.SHAPE_INFO.getKey(), "particle_shape_info"),
             new GuiPreview(Material.LAPIS_LAZULI, ParticleItem.SHAPE.getKey(), "particle_shape"),
             new GuiPreview(Material.LAPIS_ORE, ParticleItem.SHAPE_SELECTED.getKey(), "particle_shape_selected"),
-            new GuiPreview(Material.LEVER, ModelledControl.HANDBRAKE.getKey(), "handbrake"),
+            new GuiPreview(Material.LEVER, Button.HANDBRAKE.getKey(), "handbrake"),
             new GuiPreview(Material.LIGHT_BLUE_CONCRETE, RoomVariant.ALLAY.getKey(), "room_allay"),
             new GuiPreview(Material.LIME_WOOL, Wool.SCROLL_RIGHT.getKey(), "map_scroll_right"),
             new GuiPreview(Material.LODESTONE, RoomVariant.MAZE.getKey(), "room_maze"),
