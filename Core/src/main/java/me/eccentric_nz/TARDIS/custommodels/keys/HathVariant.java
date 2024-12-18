@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum HathVariant {
 
-    HATH(new NamespacedKey(TARDIS.plugin, "button_hath")),
+    BUTTON_HATH(new NamespacedKey(TARDIS.plugin, "button_hath")),
     HATH_ARM(new NamespacedKey(TARDIS.plugin, "hath_arm")),
     HATH_WEAPON_ARM(new NamespacedKey(TARDIS.plugin, "hath_weapon_arm")),
     HATH_HEAD(new NamespacedKey(TARDIS.plugin, "hath_head")),

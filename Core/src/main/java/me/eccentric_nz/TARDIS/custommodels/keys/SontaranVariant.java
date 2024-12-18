@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum SontaranVariant {
 
-    SONTARAN(new NamespacedKey(TARDIS.plugin, "button_sontaran")),
+    BUTTON_SONTARAN(new NamespacedKey(TARDIS.plugin, "button_sontaran")),
     SONTARAN_ARM(new NamespacedKey(TARDIS.plugin, "sontaran_arm")),
     SONTARAN_WEAPON_ARM(new NamespacedKey(TARDIS.plugin, "sontaran_weapon_arm")),
     SONTARAN_HEAD(new NamespacedKey(TARDIS.plugin, "sontaran_head")),

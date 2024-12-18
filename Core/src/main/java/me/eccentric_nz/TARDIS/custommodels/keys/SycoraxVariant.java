@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum SycoraxVariant {
 
-    SYCORAX(new NamespacedKey(TARDIS.plugin, "button_sycorax")),
+    BUTTON_SYCORAX(new NamespacedKey(TARDIS.plugin, "button_sycorax")),
     SYCORAX_ARM(new NamespacedKey(TARDIS.plugin, "sycorax_arm")),
     SYCORAX_HEAD(new NamespacedKey(TARDIS.plugin, "sycorax_head")),
     SYCORAX_DISGUISE(new NamespacedKey(TARDIS.plugin, "sycorax_disguise")),

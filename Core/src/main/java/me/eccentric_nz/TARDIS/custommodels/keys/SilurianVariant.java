@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum SilurianVariant {
 
-    SILURIAN(new NamespacedKey(TARDIS.plugin, "button_silurian")),
+    BUTTON_SILURIAN(new NamespacedKey(TARDIS.plugin, "button_silurian")),
     SILURIAN_ARM(new NamespacedKey(TARDIS.plugin, "silurian_arm")),
     SILURIAN_HEAD(new NamespacedKey(TARDIS.plugin, "silurian_head")),
     SILURIAN_DISGUISE(new NamespacedKey(TARDIS.plugin, "silurian_disguise")),

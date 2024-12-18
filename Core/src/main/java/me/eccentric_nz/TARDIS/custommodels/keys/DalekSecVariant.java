@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum DalekSecVariant {
 
-    DALEK_SEC(new NamespacedKey(TARDIS.plugin, "button_dalek_sec")),
+    BUTTON_DALEK_SEC(new NamespacedKey(TARDIS.plugin, "button_dalek_sec")),
     DALEK_SEC_HEAD(new NamespacedKey(TARDIS.plugin, "dalek_sec_head")),
     DALEK_SEC_DISGUISE(new NamespacedKey(TARDIS.plugin, "dalek_sec_disguise")),
     DALEK_SEC_TENTACLES(new NamespacedKey(TARDIS.plugin, "dalek_sec_tentacles")),

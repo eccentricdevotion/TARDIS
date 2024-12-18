@@ -5,9 +5,9 @@ import org.bukkit.NamespacedKey;
 
 public enum SilentVariant {
 
+    BUTTON_SILENT(new NamespacedKey(TARDIS.plugin, "button_silent")),
     SILENT(new NamespacedKey(TARDIS.plugin, "silent")),
     SILENT_MOUTH(new NamespacedKey(TARDIS.plugin, "silent_mouth")),
-    BUTTON_SILENT(new NamespacedKey(TARDIS.plugin, "button_silent")),
     SILENT_MOUTH_CLOSED(new NamespacedKey(TARDIS.plugin, "silent_mouth_closed")),
     SILENT_MOUTH_OPEN(new NamespacedKey(TARDIS.plugin, "silent_mouth_open")),
     SILENT_ARM_RIGHT(new NamespacedKey(TARDIS.plugin, "silent_arm_right")),

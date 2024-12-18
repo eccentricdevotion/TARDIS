@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum VashtaNeradaVariant {
 
-    VASHTA_NERADA(new NamespacedKey(TARDIS.plugin, "button_vashta_nerada")),
+    BUTTON_VASHTA_NERADA(new NamespacedKey(TARDIS.plugin, "button_vashta_nerada")),
     VASHTA_NERADA_ARM(new NamespacedKey(TARDIS.plugin, "vashta_nerada_arm")),
     VASHTA_NERADA_HEAD(new NamespacedKey(TARDIS.plugin, "vashta_nerada_head")),
     VASHTA_NERADA_DISGUISE(new NamespacedKey(TARDIS.plugin, "vashta_nerada_disguise")),

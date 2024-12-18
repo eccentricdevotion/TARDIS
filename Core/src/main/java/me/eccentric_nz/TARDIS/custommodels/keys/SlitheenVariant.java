@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum SlitheenVariant {
 
-    SLITHEEN(new NamespacedKey(TARDIS.plugin, "empty_child_maskslitheen")),
+    BUTTON_SLITHEEN(new NamespacedKey(TARDIS.plugin, "button_slitheen")),
     SLITHEEN_HEAD(new NamespacedKey(TARDIS.plugin, "slitheen_head")),
     SLITHEEN_DISGUISE(new NamespacedKey(TARDIS.plugin, "slitheen_disguise")),
     SLITHEEN_SUIT(new NamespacedKey(TARDIS.plugin, "slitheen_suit")),

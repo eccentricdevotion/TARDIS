@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum SeaDevilVariant {
 
-    SEA_DEVIL(new NamespacedKey(TARDIS.plugin, "button_sea_devil")),
+    BUTTON_SEA_DEVIL(new NamespacedKey(TARDIS.plugin, "button_sea_devil")),
     SEA_DEVIL_HEAD(new NamespacedKey(TARDIS.plugin, "sea_devil_head")),
     SEA_DEVIL_DISGUISE(new NamespacedKey(TARDIS.plugin, "sea_devil_disguise")),
     SEA_DEVIL_EARS(new NamespacedKey(TARDIS.plugin, "sea_devil_ears")),

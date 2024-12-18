@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum EmptyChildVariant {
 
-    EMPTY_CHILD(new NamespacedKey(TARDIS.plugin, "button_empty_child")),
+    BUTTON_EMPTY_CHILD(new NamespacedKey(TARDIS.plugin, "button_empty_child")),
     EMPTY_CHILD_ARM(new NamespacedKey(TARDIS.plugin, "empty_child_arm")),
     EMPTY_CHILD_HEAD(new NamespacedKey(TARDIS.plugin, "empty_child_head")),
     EMPTY_CHILD_DISGUISE(new NamespacedKey(TARDIS.plugin, "empty_child_disguise")),

@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum StraxVariant {
 
-    STRAX(new NamespacedKey(TARDIS.plugin, "button_strax")),
+    BUTTON_STRAX(new NamespacedKey(TARDIS.plugin, "button_strax")),
     STRAX_ARM(new NamespacedKey(TARDIS.plugin, "strax_arm")),
     STRAX_HEAD(new NamespacedKey(TARDIS.plugin, "strax_head")),
     STRAX_DISGUISE(new NamespacedKey(TARDIS.plugin, "strax_disguise")),

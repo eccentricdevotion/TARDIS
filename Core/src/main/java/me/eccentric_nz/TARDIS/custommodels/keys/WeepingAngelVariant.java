@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum WeepingAngelVariant {
 
-    WEEPING_ANGEL(new NamespacedKey(TARDIS.plugin, "button_weeping_angel")),
+    BUTTON_WEEPING_ANGEL(new NamespacedKey(TARDIS.plugin, "button_weeping_angel")),
     WEEPING_ANGEL_ARM(new NamespacedKey(TARDIS.plugin, "weeping_angel_arm")),
     WEEPING_ANGEL_HEAD(new NamespacedKey(TARDIS.plugin, "weeping_angel_head")),
     WEEPING_ANGEL_WING_SINGLE(new NamespacedKey(TARDIS.plugin, "weeping_angel_wing")),

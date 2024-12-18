@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum ZygonVariant {
 
-    ZYGON(new NamespacedKey(TARDIS.plugin, "button_zygon")),
+    BUTTON_ZYGON(new NamespacedKey(TARDIS.plugin, "button_zygon")),
     ZYGON_ARM(new NamespacedKey(TARDIS.plugin, "zygon_arm")),
     ZYGON_HEAD(new NamespacedKey(TARDIS.plugin, "zygon_head")),
     ZYGON_DISGUISE(new NamespacedKey(TARDIS.plugin, "zygon_disguise")),

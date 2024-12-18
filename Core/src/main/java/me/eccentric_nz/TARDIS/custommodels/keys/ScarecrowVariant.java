@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum ScarecrowVariant {
 
-    SCARECROW(new NamespacedKey(TARDIS.plugin, "button_scarecrow")),
+    BUTTON_SCARECROW(new NamespacedKey(TARDIS.plugin, "button_scarecrow")),
     SCARECROW_ARM(new NamespacedKey(TARDIS.plugin, "scarecrow_arm")),
     SCARECROW_HEAD(new NamespacedKey(TARDIS.plugin, "scarecrow_head")),
     SCARECROW_DISGUISE(new NamespacedKey(TARDIS.plugin, "scarecrow_disguise")),

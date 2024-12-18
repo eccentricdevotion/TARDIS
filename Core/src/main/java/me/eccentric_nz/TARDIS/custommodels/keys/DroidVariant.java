@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum DroidVariant {
 
-    CLOCKWORK_DROID(new NamespacedKey(TARDIS.plugin, "button_clockwork_droid")),
+    BUTTON_CLOCKWORK_DROID(new NamespacedKey(TARDIS.plugin, "button_clockwork_droid")),
     CLOCKWORK_DROID_ARM(new NamespacedKey(TARDIS.plugin, "clockwork_droid_arm")),
     CLOCKWORK_DROID_HEAD(new NamespacedKey(TARDIS.plugin, "clockwork_droid_head")),
     CLOCKWORK_DROID_DISGUISE(new NamespacedKey(TARDIS.plugin, "clockwork_droid_disguise")),

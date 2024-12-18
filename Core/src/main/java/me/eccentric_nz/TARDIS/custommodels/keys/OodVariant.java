@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum OodVariant {
 
-    OOD(new NamespacedKey(TARDIS.plugin, "button_ood")),
+    BUTTON_OOD(new NamespacedKey(TARDIS.plugin, "button_ood")),
     OOD_HEAD(new NamespacedKey(TARDIS.plugin, "ood_head")),
     OOD_ARM(new NamespacedKey(TARDIS.plugin, "ood_arm")),
     OOD_BALL_ARM(new NamespacedKey(TARDIS.plugin, "ood_ball_arm")),
@@ -26,37 +26,37 @@ public enum OodVariant {
     OOD_BLACK_2(new NamespacedKey(TARDIS.plugin, "ood_black_2")),
     OOD_BLACK_3(new NamespacedKey(TARDIS.plugin, "ood_black_3")),
     OOD_BLACK_4(new NamespacedKey(TARDIS.plugin, "ood_black_4")),
-    OOD_BLACK_STATIC(new NamespacedKey(TARDIS.plugin, "ood_black_static")),
+    OOD_BLACK_STATIC(new NamespacedKey(TARDIS.plugin, "ood_static_black")),
     OOD_BLUE_0(new NamespacedKey(TARDIS.plugin, "ood_blue_0")),
     OOD_BLUE_1(new NamespacedKey(TARDIS.plugin, "ood_blue_1")),
     OOD_BLUE_2(new NamespacedKey(TARDIS.plugin, "ood_blue_2")),
     OOD_BLUE_3(new NamespacedKey(TARDIS.plugin, "ood_blue_3")),
     OOD_BLUE_4(new NamespacedKey(TARDIS.plugin, "ood_blue_4")),
-    OOD_BLUE_STATIC(new NamespacedKey(TARDIS.plugin, "ood_blue_static")),
+    OOD_BLUE_STATIC(new NamespacedKey(TARDIS.plugin, "ood_static_blue")),
     OOD_BROWN_0(new NamespacedKey(TARDIS.plugin, "ood_brown_0")),
     OOD_BROWN_1(new NamespacedKey(TARDIS.plugin, "ood_brown_1")),
     OOD_BROWN_2(new NamespacedKey(TARDIS.plugin, "ood_brown_2")),
     OOD_BROWN_3(new NamespacedKey(TARDIS.plugin, "ood_brown_3")),
     OOD_BROWN_4(new NamespacedKey(TARDIS.plugin, "ood_brown_4")),
-    OOD_BROWN_STATIC(new NamespacedKey(TARDIS.plugin, "ood_brown_static")),
+    OOD_BROWN_STATIC(new NamespacedKey(TARDIS.plugin, "ood_static_brown")),
     OOD_REDEYE_BLACK_0(new NamespacedKey(TARDIS.plugin, "ood_redeye_black_0")),
     OOD_REDEYE_BLACK_1(new NamespacedKey(TARDIS.plugin, "ood_redeye_black_1")),
     OOD_REDEYE_BLACK_2(new NamespacedKey(TARDIS.plugin, "ood_redeye_black_2")),
     OOD_REDEYE_BLACK_3(new NamespacedKey(TARDIS.plugin, "ood_redeye_black_3")),
     OOD_REDEYE_BLACK_4(new NamespacedKey(TARDIS.plugin, "ood_redeye_black_4")),
-    OOD_REDEYE_BLACK_STATIC(new NamespacedKey(TARDIS.plugin, "ood_redeye_black_static")),
+    OOD_REDEYE_BLACK_STATIC(new NamespacedKey(TARDIS.plugin, "ood_redeye_static_black")),
     OOD_REDEYE_BLUE_0(new NamespacedKey(TARDIS.plugin, "ood_redeye_blue_0")),
     OOD_REDEYE_BLUE_1(new NamespacedKey(TARDIS.plugin, "ood_redeye_blue_1")),
     OOD_REDEYE_BLUE_2(new NamespacedKey(TARDIS.plugin, "ood_redeye_blue_2")),
     OOD_REDEYE_BLUE_3(new NamespacedKey(TARDIS.plugin, "ood_redeye_blue_3")),
     OOD_REDEYE_BLUE_4(new NamespacedKey(TARDIS.plugin, "ood_redeye_blue_4")),
-    OOD_REDEYE_BLUE_STATIC(new NamespacedKey(TARDIS.plugin, "ood_redeye_blue_static")),
+    OOD_REDEYE_BLUE_STATIC(new NamespacedKey(TARDIS.plugin, "ood_redeye_static_blue")),
     OOD_REDEYE_BROWN_0(new NamespacedKey(TARDIS.plugin, "ood_redeye_brown_0")),
     OOD_REDEYE_BROWN_1(new NamespacedKey(TARDIS.plugin, "ood_redeye_brown_1")),
     OOD_REDEYE_BROWN_2(new NamespacedKey(TARDIS.plugin, "ood_redeye_brown_2")),
     OOD_REDEYE_BROWN_3(new NamespacedKey(TARDIS.plugin, "ood_redeye_brown_3")),
     OOD_REDEYE_BROWN_4(new NamespacedKey(TARDIS.plugin, "ood_redeye_brown_4")),
-    OOD_REDEYE_BROWN_STATIC(new NamespacedKey(TARDIS.plugin, "ood_redeye_brown_static"));
+    OOD_REDEYE_BROWN_STATIC(new NamespacedKey(TARDIS.plugin, "ood_redeye_static_brown"));
 
     private final NamespacedKey key;
 

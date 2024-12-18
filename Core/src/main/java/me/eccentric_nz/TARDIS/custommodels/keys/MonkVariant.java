@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum MonkVariant {
 
-    HEADLESS_MONK(new NamespacedKey(TARDIS.plugin, "button_headless_monk")),
+    BUTTON_HEADLESS_MONK(new NamespacedKey(TARDIS.plugin, "button_headless_monk")),
     HEADLESS_MONK_HEAD(new NamespacedKey(TARDIS.plugin, "headless_monk_head")),
     HEADLESS_MONK_DISGUISE(new NamespacedKey(TARDIS.plugin, "headless_monk_disguise")),
     HEADLESS_MONK_0(new NamespacedKey(TARDIS.plugin, "headless_monk_0")),

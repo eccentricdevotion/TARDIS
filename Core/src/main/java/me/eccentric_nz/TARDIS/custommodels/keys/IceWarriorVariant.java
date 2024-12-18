@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum IceWarriorVariant {
 
-    ICE_WARRIOR(new NamespacedKey(TARDIS.plugin, "button_ice_warrior")),
+    BUTTON_ICE_WARRIOR(new NamespacedKey(TARDIS.plugin, "button_ice_warrior")),
     ICE_WARRIOR_ARM(new NamespacedKey(TARDIS.plugin, "ice_warrior_arm")),
     ICE_WARRIOR_DAGGER_ARM(new NamespacedKey(TARDIS.plugin, "ice_warrior_dagger_arm")),
     ICE_WARRIOR_HEAD(new NamespacedKey(TARDIS.plugin, "ice_warrior_head")),

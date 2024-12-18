@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum OssifiedVariant {
 
-    OSSIFIED(new NamespacedKey(TARDIS.plugin, "button_ossified")),
+    BUTTON_OSSIFIED(new NamespacedKey(TARDIS.plugin, "button_ossified")),
     OSSIFIED_ARM(new NamespacedKey(TARDIS.plugin, "ossified_arm")),
     OSSIFIED_HEAD(new NamespacedKey(TARDIS.plugin, "ossified_head")),
     OSSIFIED_DISGUISE(new NamespacedKey(TARDIS.plugin, "ossified_disguise")),

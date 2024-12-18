@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum JudoonVariant {
 
-    JUDOON(new NamespacedKey(TARDIS.plugin, "button_judoon")),
+    BUTTON_JUDOON(new NamespacedKey(TARDIS.plugin, "button_judoon")),
     JUDOON_HEAD(new NamespacedKey(TARDIS.plugin, "judoon_head")),
     JUDOON_ARM(new NamespacedKey(TARDIS.plugin, "judoon_arm")),
     JUDOON_WEAPON_ARM_1(new NamespacedKey(TARDIS.plugin, "judoon_weapon_arm_1")),

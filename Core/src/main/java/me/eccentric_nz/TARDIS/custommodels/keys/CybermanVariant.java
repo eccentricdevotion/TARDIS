@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum CybermanVariant {
 
-    CYBERMAN(new NamespacedKey(TARDIS.plugin, "button_cyberman")),
+    BUTTON_CYBERMAN(new NamespacedKey(TARDIS.plugin, "button_cyberman")),
     CYBERMAN_ARM(new NamespacedKey(TARDIS.plugin, "cyberman_arm")),
     CYBERMAN_HEAD(new NamespacedKey(TARDIS.plugin, "cyberman_head")),
     CYBERMAN_DISGUISE(new NamespacedKey(TARDIS.plugin, "cyberman_disguise")),

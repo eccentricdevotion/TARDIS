@@ -5,7 +5,7 @@ import org.bukkit.NamespacedKey;
 
 public enum RacnossVariant {
 
-    RACNOSS(new NamespacedKey(TARDIS.plugin, "button_racnoss")),
+    BUTTON_RACNOSS(new NamespacedKey(TARDIS.plugin, "button_racnoss")),
     RACNOSS_HEAD(new NamespacedKey(TARDIS.plugin, "racnoss_head")),
     RACNOSS_DISGUISE(new NamespacedKey(TARDIS.plugin, "racnoss_disguise")),
     RACNOSS_0(new NamespacedKey(TARDIS.plugin, "racnoss_0")),
