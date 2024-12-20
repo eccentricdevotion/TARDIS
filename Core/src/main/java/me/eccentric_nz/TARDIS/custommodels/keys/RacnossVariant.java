@@ -7,10 +7,7 @@ public enum RacnossVariant {
 
     BUTTON_RACNOSS(new NamespacedKey(TARDIS.plugin, "button_racnoss")),
     RACNOSS_HEAD(new NamespacedKey(TARDIS.plugin, "racnoss_head")),
-    RACNOSS_DISGUISE(new NamespacedKey(TARDIS.plugin, "racnoss_disguise")),
-    RACNOSS_0(new NamespacedKey(TARDIS.plugin, "racnoss_0")),
-    RACNOSS_1(new NamespacedKey(TARDIS.plugin, "racnoss_1")),
-    RACNOSS_2(new NamespacedKey(TARDIS.plugin, "racnoss_2")),
+    RACNOSS_FEATURES(new NamespacedKey(TARDIS.plugin, "racnoss_features")),
     RACNOSS_STATIC(new NamespacedKey(TARDIS.plugin, "racnoss_static"));
 
     private final NamespacedKey key;

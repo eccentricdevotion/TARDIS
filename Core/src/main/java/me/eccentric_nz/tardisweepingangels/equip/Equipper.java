@@ -17,8 +17,8 @@
 package me.eccentric_nz.tardisweepingangels.equip;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodels.keys.SilurianVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.DalekVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SilurianVariant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Bukkit;
@@ -41,30 +41,30 @@ public class Equipper {
     private final Monster monster;
     private final LivingEntity le;
     private final boolean disguise;
-    private final boolean bow;
+    private final boolean variant;
     private final boolean trident;
 
     public Equipper(Monster monster, LivingEntity le, boolean disguise) {
         this.monster = monster;
         this.le = le;
         this.disguise = disguise;
-        this.bow = false;
+        this.variant = false;
         this.trident = false;
     }
 
-    public Equipper(Monster monster, LivingEntity le, boolean disguise, boolean bow) {
+    public Equipper(Monster monster, LivingEntity le, boolean disguise, boolean variant) {
         this.monster = monster;
         this.le = le;
         this.disguise = disguise;
-        this.bow = bow;
+        this.variant = variant;
         this.trident = false;
     }
 
-    public Equipper(Monster monster, LivingEntity le, boolean disguise, boolean bow, boolean trident) {
+    public Equipper(Monster monster, LivingEntity le, boolean disguise, boolean variant, boolean trident) {
         this.monster = monster;
         this.le = le;
         this.disguise = disguise;
-        this.bow = bow;
+        this.variant = variant;
         this.trident = trident;
     }
 
@@ -81,10 +81,10 @@ public class Equipper {
         headMeta.setItemModel(variant);
         helmet.setItemMeta(headMeta);
         // set equipment
-        EntityEquipment ee = le.getEquipment();
-        // make sure the monster doesn't spawn with any armour
-        ee.setChestplate(null);
-        ee.setLeggings(null);
+        // TODO set custom armour!
+        EntityEquipment ee = setArmour(le, monster, this.variant);
+//        ee.setChestplate(null);
+//        ee.setLeggings(null);
         ee.setBoots(null);
         // set the helmet to the static monster model
         ee.setHelmet(helmet);
@@ -104,24 +104,9 @@ public class Equipper {
             le.addPotionEffect(resistance);
         });
         if (!disguise) {
-            // make sure the monster doesn't spawn with items in hand unless should have a bow
-            if (bow) {
-                // invisible bow
-                ItemStack b = new ItemStack(Material.BOW, 1);
-                ItemMeta bim = b.getItemMeta();
-                bim.setItemModel(SilurianVariant.SILURIAN_BOW.getKey());
-                b.setItemMeta(bim);
-                ee.setItemInMainHand(b);
-            } else if (trident) {
-                // invisible trident
-                ItemStack t = new ItemStack(Material.TRIDENT, 1);
-                ItemMeta tim = t.getItemMeta();
-                tim.setItemModel(DalekVariant.DALEK_BOW.getKey());
-                t.setItemMeta(tim);
-                ee.setItemInMainHand(t);
-            } else {
-                ee.setItemInMainHand(null);
-            }
+            // TODO move this to setArmour() method
+            // make sure the monster doesn't spawn with items in hand unless should have a bow / trident
+            ee.setItemInMainHand(null);
             ee.setItemInOffHand(null);
             // don't drop items when killed
             ee.setItemInMainHandDropChance(0);
@@ -138,5 +123,87 @@ public class Equipper {
         } else {
             new DisguiseEquipper().setHelmetAndInvisibilty(le, helmet);
         }
+    }
+
+    private EntityEquipment setArmour(LivingEntity entity, Monster monster, boolean female) {
+        EntityEquipment ee = entity.getEquipment();
+        // head
+        ItemStack helmet = new ItemStack(monster.getMaterial(), 1);
+        ItemMeta headMeta = helmet.getItemMeta();
+        headMeta.setDisplayName(monster.getName() + " Head");
+        headMeta.setItemModel(monster.getHeadModel());
+        helmet.setItemMeta(headMeta);
+        // chest / arms
+
+        // legs
+        
+        switch (monster) {
+            case CLOCKWORK_DROID -> {
+                if (female) {
+                    // use female skin
+                    ee.setChestplate(null);
+                    ee.setLeggings(null);
+                } else {
+                    ee.setChestplate(null);
+                    ee.setLeggings(null);
+                }
+            }
+            case CYBERMAN -> {
+                // choose a random variant
+            }
+            case DALEK -> {
+            }
+            case EMPTY_CHILD -> {
+            }
+            case HATH -> {
+            }
+            case HEADLESS_MONK -> {
+            }
+            case ICE_WARRIOR -> {
+            }
+            case MIRE -> {
+            }
+            case OSSIFIED -> {
+            }
+            case RACNOSS -> {
+            }
+            case SCARECROW -> {
+            }
+            case SEA_DEVIL -> {
+                ItemStack t = new ItemStack(Material.TRIDENT, 1);
+                ItemMeta tim = t.getItemMeta();
+                tim.setItemModel(DalekVariant.DALEK_BOW.getKey());
+                t.setItemMeta(tim);
+                ee.setItemInMainHand(t);
+            }
+            case SILENT -> {
+            }
+            case SILURIAN -> {
+                // invisible bow
+                ItemStack b = new ItemStack(Material.BOW, 1);
+                ItemMeta bim = b.getItemMeta();
+                bim.setItemModel(SilurianVariant.SILURIAN_GUN.getKey());
+                b.setItemMeta(bim);
+                ee.setItemInMainHand(b);
+            }
+            case SLITHEEN -> {
+            }
+            case SONTARAN -> {
+            }
+            case STRAX -> {
+            }
+            case SYCORAX -> {
+            }
+            case VASHTA_NERADA -> {
+            }
+            case WEEPING_ANGEL -> {
+            }
+            case ZYGON -> {
+            }
+        }
+        ee.setHelmet(null);
+        ee.setChestplate(null);
+        ee.setLeggings(null);
+        return ee;
     }
 }

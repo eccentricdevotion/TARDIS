@@ -12,17 +12,7 @@ public enum MireVariant {
     MIRE_HELMET(new NamespacedKey(TARDIS.plugin, "mire_helmet")),
     MIRE_RIGHT_ARM(new NamespacedKey(TARDIS.plugin, "mire_right_arm")),
     MIRE_LEFT_ARM(new NamespacedKey(TARDIS.plugin, "mire_left_arm")),
-    THE_MIRE_0(new NamespacedKey(TARDIS.plugin, "the_mire_0")),
-    THE_MIRE_1(new NamespacedKey(TARDIS.plugin, "the_mire_1")),
-    THE_MIRE_2(new NamespacedKey(TARDIS.plugin, "the_mire_2")),
-    THE_MIRE_3(new NamespacedKey(TARDIS.plugin, "the_mire_3")),
-    THE_MIRE_4(new NamespacedKey(TARDIS.plugin, "the_mire_4")),
-    THE_MIRE_STATIC(new NamespacedKey(TARDIS.plugin, "the_mire_static")),
-    THE_MIRE_ATTACKING_0(new NamespacedKey(TARDIS.plugin, "the_mire_attacking_0")),
-    THE_MIRE_ATTACKING_1(new NamespacedKey(TARDIS.plugin, "the_mire_attacking_1")),
-    THE_MIRE_ATTACKING_2(new NamespacedKey(TARDIS.plugin, "the_mire_attacking_2")),
-    THE_MIRE_ATTACKING_3(new NamespacedKey(TARDIS.plugin, "the_mire_attacking_3")),
-    THE_MIRE_ATTACKING_4(new NamespacedKey(TARDIS.plugin, "the_mire_attacking_4"));
+    THE_MIRE_STATIC(new NamespacedKey(TARDIS.plugin, "the_mire_static"));
 
     private final NamespacedKey key;
 

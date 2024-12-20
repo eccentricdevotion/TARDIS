@@ -53,7 +53,15 @@ public enum Monster {
     TOCLAFANE("Toclafane", EntityType.ZOMBIE, "toclafane", 13, ToclafaneVariant.TOCLAFANE.getKey(), Material.GUNPOWDER, null, null),
     VASHTA_NERADA("Vashta Nerada", EntityType.ZOMBIE, "vashta", 10, VashtaNeradaVariant.VASHTA_NERADA_STATIC.getKey(), Material.BOOK, VashtaNeradaVariant.VASHTA_NERADA_HEAD.getKey(), MonsterSkins.VASHTA_NERADA),
     WEEPING_ANGEL("Weeping Angel", EntityType.SKELETON, "angel", 1, WeepingAngelVariant.WEEPING_ANGEL_STATIC.getKey(), Material.BRICK, WeepingAngelVariant.WEEPING_ANGEL_HEAD.getKey(), MonsterSkins.WEEPING_ANGEL),
-    ZYGON("Zygon", EntityType.ZOMBIE, "zygon", 11, ZygonVariant.ZYGON_STATIC.getKey(), Material.PAINTING, ZygonVariant.ZYGON_HEAD.getKey(), MonsterSkins.ZYGON);
+    ZYGON("Zygon", EntityType.ZOMBIE, "zygon", 11, ZygonVariant.ZYGON_STATIC.getKey(), Material.PAINTING, ZygonVariant.ZYGON_HEAD.getKey(), MonsterSkins.ZYGON),
+//     ANGEL_OF_LIBERTY("Angel Of Liberty", EntityType.ZOMBIE, "liberty", 28, AngelOfLibertyVariant.ANGEL_OF_LIBERTY_STATIC.getKey(), Material.OXIDIZED_COPPER_GRATE, AngelOfLibertyVariant.ANGEL_OF_LIBERTY_HEAD.getKey(), MonsterSkins.ANGEL_OF_LIBERTY),
+//     CYBERSHADE("Cybershade", EntityType.ZOMBIE, "cybershade", 29, CybershadeVariant.CYBERSHADE_STATIC.getKey(), Material.BROWN_WOOL, CybershadeVariant.CYBERSHADE_HEAD.getKey(), MonsterSkins.CYBERSHADE),
+//     OMEGA("Omega", EntityType.SKELETON, "omega", 30, OmegaVariant.OMEGA_STATIC.getKey(), Material.GOLD_INGOT, OmegaVariant.OMEGA_HEAD.getKey(), MonsterSkins.OMEGA),
+//     SMILER("Smiler", EntityType.ZOMBIE, "smiler", 31, SmilerVariant.SMILER_STATIC.getKey(), Material.RED_STAINED_GLASS_PANE, SmilerVariant.SMILER_HEAD.getKey(), MonsterSkins.SMILER),
+//     SUTEKH("Sutekh", EntityType.STRAY, "sutekh", 32, SutekhVariant.SUTEKH_STATIC.getKey(), Material.DUNE_ARMOR_TRIM_SMITHING_TEMPLATE, SutekhVariant.SUTEKH_HEAD.getKey(), MonsterSkins.SUTEKH),
+//     THE_BEAST("The Beast", EntityType.ZOMBIE, "beast", 33, TheBeastVariant.THE_BEAST_STATIC.getKey(), Material.FIRE_CHARGE, TheBeastVariant.THE_BEAST_HEAD.getKey(), MonsterSkins.THE_BEAST),
+//     VAMPIRE_OF_VENICE("Vampire Of Venice", EntityType.DROWNED, "vampire", 34, VampireOfVeniceVariant.VAMPIRE_STATIC.getKey(), Material.COD, VampireOfVeniceVariant.VAMPIRE_HEAD.getKey(), MonsterSkins.VAMPIRE_OF_VENICE)
+    ;
 
     private final String name;
     private final EntityType entityType;
