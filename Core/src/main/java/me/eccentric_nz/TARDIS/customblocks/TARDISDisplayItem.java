@@ -226,7 +226,7 @@ public enum TARDISDisplayItem {
 
     public static TARDISDisplayItem getByModel(NamespacedKey key) {
         for (TARDISDisplayItem tdi : values()) {
-            if (tdi.getCustomModel().equals(key)) {
+            if (tdi.getCustomModel() != null && key.equals(tdi.getCustomModel())) {
                 return tdi;
             }
         }
