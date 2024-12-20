@@ -97,7 +97,8 @@ public class TARDISItemDisplaySetter {
                 }
             }
             Material material = Material.valueOf(stack.get("type").getAsString());
-            TARDISDisplayItem tdi = TARDISDisplayItem.getByModel(model);
+
+            TARDISDisplayItem tdi = model != null ? TARDISDisplayItem.getByModel(model): null;
             if (tdi != null) {
                 TARDISDisplayItemUtils.set(tdi, block, id);
             } else {
@@ -122,10 +123,10 @@ public class TARDISItemDisplaySetter {
             ItemMeta im = is.getItemMeta();
             im.setItemModel(model);
             is.setItemMeta(im);
+            display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
+            display.setBillboard(Display.Billboard.VERTICAL);
         }
         display.setItemStack(is);
-        display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
-        display.setBillboard(Display.Billboard.VERTICAL);
         display.setInvulnerable(true);
     }
 }
