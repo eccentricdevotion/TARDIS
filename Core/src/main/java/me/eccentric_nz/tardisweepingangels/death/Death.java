@@ -376,7 +376,7 @@ public class Death implements Listener {
                     if (attacker instanceof Zombie && apdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)) {
                         Location l = event.getEntity().getLocation();
                         LivingEntity e = new MonsterSpawner().create(l, Monster.CYBERMAN);
-                        new Equipper(Monster.CYBERMAN, e, false, false).setHelmetAndInvisibility();
+                        new Equipper(Monster.CYBERMAN, e, false).setHelmetAndInvisibility();
                         plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.ZOMBIE, Monster.CYBERMAN, l));
                         if (event.getEntity() instanceof Player) {
                             String name = event.getEntity().getName();

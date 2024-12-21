@@ -161,17 +161,17 @@ public class SpawnCommand {
                 }
                 case JUDOON -> JudoonEquipment.set(null, a, false);
                 case K9 -> K9Equipment.set(player, a, false);
-                case MIRE, SILURIAN -> new Equipper(monster, a, false, true).setHelmetAndInvisibility();
+                case MIRE, SILURIAN -> new Equipper(monster, a, false).setHelmetAndInvisibility();
                 case OOD -> OodEquipment.set(player, a, false, true);
-                case SEA_DEVIL -> new Equipper(monster, a, false, false, true).setHelmetAndInvisibility();
+                case SEA_DEVIL -> new Equipper(monster, a, false).setHelmetAndInvisibility();
                 case SILENT -> {
-                    new Equipper(monster, a, false, false).setHelmetAndInvisibility();
+                    new Equipper(monster, a, false).setHelmetAndInvisibility();
                     SilentEquipment.setGuardian(a);
                 }
                 case STRAX -> {
                     PigZombie strax = (PigZombie) a;
                     strax.setAngry(false);
-                    new Equipper(monster, a, false, false).setHelmetAndInvisibility();
+                    new Equipper(monster, a, false).setHelmetAndInvisibility();
                     a.setCustomName("Strax");
                 }
                 case TOCLAFANE -> ToclafaneEquipment.set(a, false);

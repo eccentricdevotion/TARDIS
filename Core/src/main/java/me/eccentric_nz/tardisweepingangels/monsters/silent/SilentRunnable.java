@@ -91,7 +91,7 @@ public class SilentRunnable implements Runnable {
                 }
                 LivingEntity silent = new MonsterSpawner().create(l, Monster.SILENT);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.SILENT, silent, false, false).setHelmetAndInvisibility();
+                    new Equipper(Monster.SILENT, silent, false).setHelmetAndInvisibility();
                     SilentEquipment.setGuardian(silent);
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(silent, EntityType.SKELETON, Monster.SILENT, l));
                 }, 5L);

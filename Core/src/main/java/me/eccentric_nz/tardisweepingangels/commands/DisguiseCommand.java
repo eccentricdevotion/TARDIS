@@ -90,7 +90,7 @@ public class DisguiseCommand {
                 case TOCLAFANE -> ToclafaneEquipment.set(player, true);
                 // CYBERMAN, EMPTY_CHILD, HATH, HEADLESS_MONK, ICE_WARRIOR, RACNOSS, SEA_DEVIL, SILENT,
                 // SILURIAN, SLITHEEN, SONTARAN, STRAX, MIRE, VASHTA_NERADA, WEEPING_ANGEL, ZYGON
-                default -> new Equipper(monster, player, true, false).setHelmetAndInvisibility();
+                default -> new Equipper(monster, player, true).setHelmetAndInvisibility();
             }
         } else {
             RemoveEquipment.set(player);

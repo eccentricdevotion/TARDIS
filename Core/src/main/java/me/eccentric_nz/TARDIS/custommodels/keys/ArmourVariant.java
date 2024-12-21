@@ -28,6 +28,7 @@ public enum ArmourVariant {
     SILENCE(new NamespacedKey(TARDIS.plugin, "silence")),
     SILURIAN(new NamespacedKey(TARDIS.plugin, "silurian")),
     SLITHEEN(new NamespacedKey(TARDIS.plugin, "slitheen")),
+    SMILER(new NamespacedKey(TARDIS.plugin, "smiler")),
     SONTARAN(new NamespacedKey(TARDIS.plugin, "sontaran")),
     STRAX(new NamespacedKey(TARDIS.plugin, "strax")),
     SUTEKH(new NamespacedKey(TARDIS.plugin, "sutekh")),

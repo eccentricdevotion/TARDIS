@@ -96,7 +96,7 @@ public class SontaranRunnable implements Runnable {
                 }
                 LivingEntity sontaran = new MonsterSpawner().create(l, Monster.SONTARAN);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.SONTARAN, sontaran, false, false).setHelmetAndInvisibility();
+                    new Equipper(Monster.SONTARAN, sontaran, false).setHelmetAndInvisibility();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(sontaran, EntityType.ZOMBIE, Monster.SONTARAN, l));
                 }, 5L);
             }

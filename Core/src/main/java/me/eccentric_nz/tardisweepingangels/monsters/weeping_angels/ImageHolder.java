@@ -53,7 +53,7 @@ public class ImageHolder implements Listener {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 LivingEntity angel = new MonsterSpawner().create(l, Monster.WEEPING_ANGEL);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.WEEPING_ANGEL, angel, false, false).setHelmetAndInvisibility();
+                    new Equipper(Monster.WEEPING_ANGEL, angel, false).setHelmetAndInvisibility();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(angel, EntityType.SKELETON, Monster.WEEPING_ANGEL, l));
                 }, 5L);
             }, 20L);

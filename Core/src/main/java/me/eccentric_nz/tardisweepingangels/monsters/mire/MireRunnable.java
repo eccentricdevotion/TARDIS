@@ -89,7 +89,7 @@ public class MireRunnable implements Runnable {
             }
             LivingEntity mire = new MonsterSpawner().create(l, Monster.MIRE);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                new Equipper(Monster.MIRE, mire, false, false).setHelmetAndInvisibility();
+                new Equipper(Monster.MIRE, mire, false).setHelmetAndInvisibility();
                 plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(mire, EntityType.SKELETON, Monster.MIRE, l));
             }, 5L);
         }

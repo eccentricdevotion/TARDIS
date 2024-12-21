@@ -10,9 +10,10 @@ public class DisguiseEquipper {
 
     public void setHelmetAndInvisibilty(Entity entity, ItemStack head) {
         Player p = (Player) entity;
-        p.getInventory().setHelmet(head);
+        if (head != null) {
+            p.getInventory().setHelmet(head);
+        }
         PotionEffect potionEffect = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
         p.addPotionEffect(potionEffect);
-        // TODO track player for animating
     }
 }

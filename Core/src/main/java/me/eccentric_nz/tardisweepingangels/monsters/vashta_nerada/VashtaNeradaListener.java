@@ -75,7 +75,7 @@ public class VashtaNeradaListener implements Listener {
     private void spawnVashtaNerada(Location l) {
         LivingEntity vashta = new MonsterSpawner().create(l, Monster.VASHTA_NERADA);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-            new Equipper(Monster.VASHTA_NERADA, vashta, false, false).setHelmetAndInvisibility();
+            new Equipper(Monster.VASHTA_NERADA, vashta, false).setHelmetAndInvisibility();
             plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(vashta, EntityType.ZOMBIE, Monster.VASHTA_NERADA, l));
         }, 5L);
     }

@@ -128,16 +128,13 @@ public class ResetMonster {
                     pigman.setAngry(true);
                     pigman.setAnger(Integer.MAX_VALUE);
                 }
-                case MIRE, SILURIAN -> new Equipper(monster, a, false, true).setHelmetAndInvisibility();
-                case SEA_DEVIL -> new Equipper(monster, a, false, false, true).setHelmetAndInvisibility();
                 case SILENT -> SilentEquipment.setGuardian(a);
                 case STRAX -> {
                     PigZombie strax = (PigZombie) a;
                     strax.setAngry(false);
                     a.setCustomName("Strax");
                 }
-                default -> {
-                }
+                default -> { }
             }
         }
     }

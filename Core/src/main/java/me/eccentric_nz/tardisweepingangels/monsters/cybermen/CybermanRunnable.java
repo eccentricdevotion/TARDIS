@@ -91,7 +91,7 @@ public class CybermanRunnable implements Runnable {
                 }
                 LivingEntity cyberman = new MonsterSpawner().create(l, Monster.CYBERMAN);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.CYBERMAN, cyberman, false, false).setHelmetAndInvisibility();
+                    new Equipper(Monster.CYBERMAN, cyberman, false).setHelmetAndInvisibility();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(cyberman, EntityType.ZOMBIE, Monster.CYBERMAN, l));
                 }, 5L);
             }

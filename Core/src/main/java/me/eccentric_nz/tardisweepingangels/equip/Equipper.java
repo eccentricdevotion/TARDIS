@@ -17,8 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.equip;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodels.keys.DalekVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.SilurianVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Bukkit;
@@ -26,6 +25,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -41,53 +41,16 @@ public class Equipper {
     private final Monster monster;
     private final LivingEntity le;
     private final boolean disguise;
-    private final boolean variant;
-    private final boolean trident;
 
     public Equipper(Monster monster, LivingEntity le, boolean disguise) {
         this.monster = monster;
         this.le = le;
         this.disguise = disguise;
-        this.variant = false;
-        this.trident = false;
-    }
-
-    public Equipper(Monster monster, LivingEntity le, boolean disguise, boolean variant) {
-        this.monster = monster;
-        this.le = le;
-        this.disguise = disguise;
-        this.variant = variant;
-        this.trident = false;
-    }
-
-    public Equipper(Monster monster, LivingEntity le, boolean disguise, boolean variant, boolean trident) {
-        this.monster = monster;
-        this.le = le;
-        this.disguise = disguise;
-        this.variant = variant;
-        this.trident = trident;
     }
 
     public void setHelmetAndInvisibility() {
-        setHelmetAndInvisibility(monster.getModel());
-    }
-
-    public void setHelmetAndInvisibility(NamespacedKey variant) {
-        // make a monster item
-        ItemStack helmet = new ItemStack(monster.getMaterial(), 1);
-        ItemMeta headMeta = helmet.getItemMeta();
-        headMeta.setDisplayName(monster.getName() + " Head");
-        // static model
-        headMeta.setItemModel(variant);
-        helmet.setItemMeta(headMeta);
-        // set equipment
-        // TODO set custom armour!
-        EntityEquipment ee = setArmour(le, monster, this.variant);
-//        ee.setChestplate(null);
-//        ee.setLeggings(null);
-        ee.setBoots(null);
-        // set the helmet to the static monster model
-        ee.setHelmet(helmet);
+        // set custom armour!
+        EntityEquipment ee = setArmour(le, monster);
         // set age
         if (le instanceof Ageable ageable) {
             if (monster == Monster.EMPTY_CHILD) {
@@ -96,114 +59,152 @@ public class Equipper {
                 ageable.setAdult();
             }
         }
-        // make the entity invisible
-        Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
-            PotionEffect invisibility = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false);
-            le.addPotionEffect(invisibility);
-            PotionEffect resistance = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, false, false);
-            le.addPotionEffect(resistance);
-        });
-        if (!disguise) {
-            // TODO move this to setArmour() method
-            // make sure the monster doesn't spawn with items in hand unless should have a bow / trident
-            ee.setItemInMainHand(null);
-            ee.setItemInOffHand(null);
-            // don't drop items when killed
-            ee.setItemInMainHandDropChance(0);
-            ee.setItemInOffHandDropChance(0);
-            ee.setHelmetDropChance(0);
-            // don't pick up items
-            le.setCanPickupItems(false);
-            // make silent
-            le.setSilent(true);
-            le.setCollidable(true);
-            le.setPersistent(true);
-            // set TWA data
-            le.getPersistentDataContainer().set(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER, monster.getPersist());
-        } else {
-            new DisguiseEquipper().setHelmetAndInvisibilty(le, helmet);
+        if (!(le instanceof Player)) {
+            // make the entity invisible
+            Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
+                PotionEffect invisibility = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false);
+                le.addPotionEffect(invisibility);
+                PotionEffect resistance = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, false, false);
+                le.addPotionEffect(resistance);
+            });
+        }
+        // no boots
+        ee.setBoots(null);
+        // don't drop items when killed
+        ee.setItemInMainHandDropChance(0);
+        ee.setItemInOffHandDropChance(0);
+        ee.setHelmetDropChance(0);
+        ee.setChestplateDropChance(0);
+        ee.setLeggingsDropChance(0);
+        // don't pick up items
+        le.setCanPickupItems(false);
+        // make silent
+        le.setSilent(true);
+        le.setCollidable(true);
+        le.setPersistent(true);
+        // set TWA data
+        le.getPersistentDataContainer().set(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER, monster.ordinal());
+        if (disguise) {
+            new DisguiseEquipper().setHelmetAndInvisibilty(le, null);
         }
     }
 
-    private EntityEquipment setArmour(LivingEntity entity, Monster monster, boolean female) {
+    private EntityEquipment setArmour(LivingEntity entity, Monster monster) {
         EntityEquipment ee = entity.getEquipment();
-        // head
-        ItemStack helmet = new ItemStack(monster.getMaterial(), 1);
-        ItemMeta headMeta = helmet.getItemMeta();
-        headMeta.setDisplayName(monster.getName() + " Head");
-        headMeta.setItemModel(monster.getHeadModel());
-        helmet.setItemMeta(headMeta);
-        // chest / arms
-
-        // legs
-        
+        new ArmourEquipper().dress(entity, monster);
+        // hands / weapons if needed
+        ItemStack hand = null;
+        ItemStack offhand = null;
         switch (monster) {
+            case ANGEL_OF_LIBERTY -> {
+                // torch
+                hand = new ItemStack(Material.TORCH);
+                ItemMeta tim = hand.getItemMeta();
+                tim.setItemModel(Features.ANGEL_OF_LIBERTY_TORCH.getKey());
+                hand.setItemMeta(tim);
+            }
             case CLOCKWORK_DROID -> {
-                if (female) {
-                    // use female skin
-                    ee.setChestplate(null);
-                    ee.setLeggings(null);
-                } else {
-                    ee.setChestplate(null);
-                    ee.setLeggings(null);
-                }
+                // key
+                hand = new ItemStack(Material.GOLD_NUGGET);
+                ItemMeta tim = hand.getItemMeta();
+                tim.setItemModel(DroidVariant.CLOCKWORK_DROID_KEY.getKey());
+                hand.setItemMeta(tim);
             }
             case CYBERMAN -> {
-                // choose a random variant
-            }
-            case DALEK -> {
-            }
-            case EMPTY_CHILD -> {
+                // weapon
+                hand = new ItemStack(Material.IRON_NUGGET);
+                ItemMeta tim = hand.getItemMeta();
+                tim.setItemModel(CybermanVariant.CYBER_WEAPON.getKey());
+                hand.setItemMeta(tim);
             }
             case HATH -> {
+                // weapon
+                hand = new ItemStack(monster.getMaterial());
+                ItemMeta tim = hand.getItemMeta();
+                tim.setItemModel(HathVariant.HATH_WEAPON.getKey());
+                hand.setItemMeta(tim);
             }
             case HEADLESS_MONK -> {
+                // sword
+                hand = new ItemStack(Material.GOLDEN_SWORD);
+                ItemMeta tim = hand.getItemMeta();
+                // TODO
+                tim.setItemModel(MonkVariant.HEADLESS_MONK_SWORD.getKey());
+                hand.setItemMeta(tim);
             }
             case ICE_WARRIOR -> {
+                // dagger
+                hand = new ItemStack(Material.IRON_SWORD);
+                ItemMeta tim = hand.getItemMeta();
+                tim.setItemModel(IceWarriorVariant.ICE_WARRIOR_DAGGER.getKey());
+                hand.setItemMeta(tim);
+            }
+            case JUDOON -> {
+                // TODO weapon
+                hand = new ItemStack(Material.END_ROD);
+                ItemMeta tim = hand.getItemMeta();
+                tim.setItemModel(JudoonVariant.JUDOON_WEAPON_RESTING.getKey());
+                hand.setItemMeta(tim);
             }
             case MIRE -> {
-            }
-            case OSSIFIED -> {
-            }
-            case RACNOSS -> {
-            }
-            case SCARECROW -> {
+                // both hands/arms
+                hand = new ItemStack(Material.NETHERITE_SCRAP);
+                ItemMeta tim = hand.getItemMeta();
+                tim.setItemModel(MireVariant.MIRE_RIGHT_ARM.getKey());
+                hand.setItemMeta(tim);
+                offhand = new ItemStack(Material.NETHERITE_SCRAP);
+                ItemMeta oim = offhand.getItemMeta();
+                oim.setItemModel(MireVariant.MIRE_LEFT_ARM.getKey());
+                offhand.setItemMeta(oim);
             }
             case SEA_DEVIL -> {
-                ItemStack t = new ItemStack(Material.TRIDENT, 1);
-                ItemMeta tim = t.getItemMeta();
+                // invisible trident
+                hand = new ItemStack(Material.TRIDENT, 1);
+                ItemMeta tim = hand.getItemMeta();
                 tim.setItemModel(DalekVariant.DALEK_BOW.getKey());
-                t.setItemMeta(tim);
-                ee.setItemInMainHand(t);
+                hand.setItemMeta(tim);
             }
             case SILENT -> {
+                // TODO both hands
+                hand = new ItemStack(Material.END_STONE_BRICK_SLAB);
+                ItemMeta tim = hand.getItemMeta();
+                tim.setItemModel(SilentVariant.SILENCE_HAND.getKey());
+                hand.setItemMeta(tim);
+                offhand = new ItemStack(Material.END_STONE_BRICK_SLAB);
+                ItemMeta oim = offhand.getItemMeta();
+                oim.setItemModel(SilentVariant.SILENCE_OFFHAND.getKey());
+                offhand.setItemMeta(oim);
             }
             case SILURIAN -> {
-                // invisible bow
-                ItemStack b = new ItemStack(Material.BOW, 1);
-                ItemMeta bim = b.getItemMeta();
+                // gun
+                hand = new ItemStack(Material.BOW, 1);
+                ItemMeta bim = hand.getItemMeta();
                 bim.setItemModel(SilurianVariant.SILURIAN_GUN.getKey());
-                b.setItemMeta(bim);
-                ee.setItemInMainHand(b);
+                hand.setItemMeta(bim);
             }
             case SLITHEEN -> {
+                // both hands
+                hand = new ItemStack(Material.TURTLE_EGG);
+                ItemMeta tim = hand.getItemMeta();
+                tim.setItemModel(SlitheenVariant.SLITHEEN_CLAW_RIGHT.getKey());
+                hand.setItemMeta(tim);
+                offhand = new ItemStack(Material.TURTLE_EGG);
+                ItemMeta oim = offhand.getItemMeta();
+                oim.setItemModel(SlitheenVariant.SLITHEEN_CLAW_LEFT.getKey());
+                offhand.setItemMeta(oim);
             }
             case SONTARAN -> {
+                // weapon
+                hand = new ItemStack(Material.END_ROD);
+                ItemMeta tim = hand.getItemMeta();
+                tim.setItemModel(SontaranVariant.SONTARAN_WEAPON.getKey());
+                hand.setItemMeta(tim);
             }
-            case STRAX -> {
-            }
-            case SYCORAX -> {
-            }
-            case VASHTA_NERADA -> {
-            }
-            case WEEPING_ANGEL -> {
-            }
-            case ZYGON -> {
+            default -> {
             }
         }
-        ee.setHelmet(null);
-        ee.setChestplate(null);
-        ee.setLeggings(null);
+        ee.setItemInMainHand(hand);
+        ee.setItemInOffHand(offhand);
         return ee;
     }
 }

@@ -91,7 +91,7 @@ public class HeadlessMonkRunnable implements Runnable {
                 }
                 LivingEntity monk = new MonsterSpawner().create(l, Monster.HEADLESS_MONK);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.HEADLESS_MONK, monk, false, false).setHelmetAndInvisibility();
+                    new Equipper(Monster.HEADLESS_MONK, monk, false).setHelmetAndInvisibility();
                     HeadlessMonkEquipment.setTasks(monk);
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(monk, EntityType.SKELETON, Monster.HEADLESS_MONK, l));
                 }, 5L);

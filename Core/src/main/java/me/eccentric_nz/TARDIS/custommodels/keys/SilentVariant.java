@@ -11,7 +11,9 @@ public enum SilentVariant {
     SILENT_MOUTH_OPEN(new NamespacedKey(TARDIS.plugin, "silent_mouth_open")),
     SILENCE_SIDE_HEAD(new NamespacedKey(TARDIS.plugin, "silence_side_head")),
     SILENT_BEAMING(new NamespacedKey(TARDIS.plugin, "silent_beaming")),
-    SILENT_STATIC(new NamespacedKey(TARDIS.plugin, "silent_static"));
+    SILENT_STATIC(new NamespacedKey(TARDIS.plugin, "silent_static")),
+    SILENCE_HAND(new NamespacedKey(TARDIS.plugin, "silent_hand")),
+    SILENCE_OFFHAND(new NamespacedKey(TARDIS.plugin, "silent_offhand"));
 
     private final NamespacedKey key;
 

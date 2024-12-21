@@ -49,10 +49,10 @@ public class MonsterFireListener implements Listener {
             if (monster != null) {
                 event.setCancelled(true);
                 // restore head
-                switch (monster) {
-                    case DALEK -> DalekEquipment.set((LivingEntity) e, false);
-                    case SEA_DEVIL -> new Equipper(monster, (LivingEntity) e, false, false, true);
-                    default -> new Equipper(monster, (LivingEntity) e, false, (monster.equals(Monster.SILURIAN)));
+                if (monster == Monster.DALEK) {
+                    DalekEquipment.set((LivingEntity) e, false);
+                } else {
+                    new Equipper(monster, (LivingEntity) e, false);
                 }
             }
         }

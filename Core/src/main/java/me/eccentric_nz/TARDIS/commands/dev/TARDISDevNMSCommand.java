@@ -67,7 +67,7 @@ public class TARDISDevNMSCommand {
                     }
                 } else {
                     LivingEntity le = new MonsterSpawner().create(location, monster);
-                    new Equipper(monster, le, false, monster == Monster.SILURIAN, monster == Monster.SEA_DEVIL).setHelmetAndInvisibility(monster.getModel());
+                    new Equipper(monster, le, false).setHelmetAndInvisibility();
                     if (monster == Monster.SILENT) {
                         SilentEquipment.setGuardian(le);
                     }

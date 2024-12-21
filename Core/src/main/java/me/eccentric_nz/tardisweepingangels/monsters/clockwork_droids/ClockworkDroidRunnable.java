@@ -95,8 +95,7 @@ public class ClockworkDroidRunnable implements Runnable {
                 NamespacedKey variant = male ? DroidVariant.CLOCKWORK_DROID_STATIC.getKey() : DroidVariant.CLOCKWORK_DROID_FEMALE_STATIC.getKey();
                 LivingEntity clockwork_droid = new MonsterSpawner().create(l, Monster.CLOCKWORK_DROID);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    // TODO set male / female when equipping
-                    new Equipper(Monster.CLOCKWORK_DROID, clockwork_droid, false, male).setHelmetAndInvisibility(variant);
+                    new Equipper(Monster.CLOCKWORK_DROID, clockwork_droid, false).setHelmetAndInvisibility();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(clockwork_droid, EntityType.ZOMBIE, Monster.CLOCKWORK_DROID, l));
                 }, 5L);
             }

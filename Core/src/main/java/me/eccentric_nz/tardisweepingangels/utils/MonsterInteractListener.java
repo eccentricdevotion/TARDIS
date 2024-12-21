@@ -96,9 +96,9 @@ public class MonsterInteractListener implements Listener {
                             PigZombie strax = (PigZombie) new MonsterSpawner().create(l, Monster.STRAX);
                             strax.setAngry(false);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                new Equipper(Monster.STRAX, strax, false, false).setHelmetAndInvisibility();
+                                new Equipper(Monster.STRAX, strax, false).setHelmetAndInvisibility();
                                 strax.setCustomName("Strax");
-                                strax.getPersistentDataContainer().set(TARDISWeepingAngels.STRAX, PersistentDataType.INTEGER, Monster.STRAX.getPersist());
+                                strax.getPersistentDataContainer().set(TARDISWeepingAngels.STRAX, PersistentDataType.INTEGER, Monster.STRAX.ordinal());
                                 strax.getPersistentDataContainer().remove(TARDISWeepingAngels.SONTARAN);
                                 plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(strax, EntityType.ZOMBIFIED_PIGLIN, Monster.STRAX, l));
                             }, 2L);
