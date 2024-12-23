@@ -30,66 +30,6 @@ import java.util.Map;
 public class TWAOod extends TWAFollower {
 
     private static final String entityId = "ood";
-    private final NamespacedKey[] framesBlack = new NamespacedKey[]{
-            OodVariant.OOD_BLACK_0.getKey(),
-            OodVariant.OOD_BLACK_1.getKey(),
-            OodVariant.OOD_BLACK_2.getKey(),
-            OodVariant.OOD_BLACK_1.getKey(),
-            OodVariant.OOD_BLACK_0.getKey(),
-            OodVariant.OOD_BLACK_3.getKey(),
-            OodVariant.OOD_BLACK_4.getKey(),
-            OodVariant.OOD_BLACK_3.getKey()
-    };
-    private final NamespacedKey[] framesBlackRedeye = new NamespacedKey[]{
-            OodVariant.OOD_REDEYE_BLACK_0.getKey(),
-            OodVariant.OOD_REDEYE_BLACK_1.getKey(),
-            OodVariant.OOD_REDEYE_BLACK_2.getKey(),
-            OodVariant.OOD_REDEYE_BLACK_1.getKey(),
-            OodVariant.OOD_REDEYE_BLACK_0.getKey(),
-            OodVariant.OOD_REDEYE_BLACK_3.getKey(),
-            OodVariant.OOD_REDEYE_BLACK_4.getKey(),
-            OodVariant.OOD_REDEYE_BLACK_3.getKey()
-    };
-    private final NamespacedKey[] framesBlue = new NamespacedKey[]{
-            OodVariant.OOD_BLUE_0.getKey(),
-            OodVariant.OOD_BLUE_1.getKey(),
-            OodVariant.OOD_BLUE_2.getKey(),
-            OodVariant.OOD_BLUE_1.getKey(),
-            OodVariant.OOD_BLUE_0.getKey(),
-            OodVariant.OOD_BLUE_3.getKey(),
-            OodVariant.OOD_BLUE_4.getKey(),
-            OodVariant.OOD_BLUE_3.getKey()
-    };
-    private final NamespacedKey[] framesBlueRedeye = new NamespacedKey[]{
-            OodVariant.OOD_REDEYE_BLUE_0.getKey(),
-            OodVariant.OOD_REDEYE_BLUE_1.getKey(),
-            OodVariant.OOD_REDEYE_BLUE_2.getKey(),
-            OodVariant.OOD_REDEYE_BLUE_1.getKey(),
-            OodVariant.OOD_REDEYE_BLUE_0.getKey(),
-            OodVariant.OOD_REDEYE_BLUE_3.getKey(),
-            OodVariant.OOD_REDEYE_BLUE_4.getKey(),
-            OodVariant.OOD_REDEYE_BLUE_3.getKey()
-    };
-    private final NamespacedKey[] framesBrown = new NamespacedKey[]{
-            OodVariant.OOD_BROWN_0.getKey(),
-            OodVariant.OOD_BROWN_1.getKey(),
-            OodVariant.OOD_BROWN_2.getKey(),
-            OodVariant.OOD_BROWN_1.getKey(),
-            OodVariant.OOD_BROWN_0.getKey(),
-            OodVariant.OOD_BROWN_3.getKey(),
-            OodVariant.OOD_BROWN_4.getKey(),
-            OodVariant.OOD_BROWN_3.getKey()
-    };
-    private final NamespacedKey[] framesBrownRedeye = new NamespacedKey[]{
-            OodVariant.OOD_REDEYE_BROWN_0.getKey(),
-            OodVariant.OOD_REDEYE_BROWN_1.getKey(),
-            OodVariant.OOD_REDEYE_BROWN_2.getKey(),
-            OodVariant.OOD_REDEYE_BROWN_1.getKey(),
-            OodVariant.OOD_REDEYE_BROWN_0.getKey(),
-            OodVariant.OOD_REDEYE_BROWN_3.getKey(),
-            OodVariant.OOD_REDEYE_BROWN_4.getKey(),
-            OodVariant.OOD_REDEYE_BROWN_3.getKey()
-    };
     private boolean redeye;
     private OodColour colour;
     
@@ -131,17 +71,6 @@ public class TWAOod extends TWAFollower {
                 };
                 im.setItemModel(still);
                 i = 0;
-            } else {
-                // play move animation
-                switch (colour) {
-                    case BLACK -> im.setItemModel((redeye) ? framesBlackRedeye[i] : framesBlack[i]);
-                    case BLUE -> im.setItemModel((redeye) ? framesBlueRedeye[i] : framesBlue[i]);
-                    case BROWN -> im.setItemModel((redeye) ? framesBrownRedeye[i] : framesBrown[i]);
-                }
-                i++;
-                if (i == framesBlack.length) {
-                    i = 0;
-                }
             }
             bukkit.setItemMeta(im);
             setItemSlot(EquipmentSlot.HEAD, CraftItemStack.asNMSCopy(bukkit));

@@ -7,7 +7,6 @@ public enum ScarecrowVariant {
 
     BUTTON_SCARECROW(new NamespacedKey(TARDIS.plugin, "button_scarecrow")),
     SCARECROW_HEAD(new NamespacedKey(TARDIS.plugin, "scarecrow_head")),
-    SCARECROW_EARS(new NamespacedKey(TARDIS.plugin, "scarecrow_ears")),
     SCARECROW_STATIC(new NamespacedKey(TARDIS.plugin, "scarecrow_static"));
 
     private final NamespacedKey key;

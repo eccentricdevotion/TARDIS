@@ -60,7 +60,7 @@ public class GasMask implements Listener {
                     player.getWorld().dropItemNaturally(player.getLocation(), helmet);
                 }
             }
-            // set helmet to pumpkin
+            // set helmet to mask
             ItemStack gasmask = new ItemStack(Material.SUGAR, 1);
             ItemMeta im = gasmask.getItemMeta();
             im.setDisplayName("Gas Mask");

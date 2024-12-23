@@ -143,7 +143,7 @@ public class SkinUtils {
             case "Brigadier Lethbridge-Stewart" -> key = Features.BRIGADIER_LETHBRIDGE_STEWART_HAT.getKey();
             case "Cyberman" -> {
                 material = Material.IRON_INGOT;
-                key = CybermanVariant.CYBERMAN_FEATURES.getKey();
+                key = Features.CYBERMAN_FEATURES.getKey();
                 // + 7 weapon
                 ItemStack weapon = new ItemStack(material, 1);
                 ItemMeta cwim = weapon.getItemMeta();
@@ -155,21 +155,21 @@ public class SkinUtils {
             case "Cybershade" -> key = Features.CYBERSHADE_EARS.getKey();
             case "Dalek Sec" -> {
                 material = Material.MANGROVE_PROPAGULE;
-                key = DalekSecVariant.DALEK_SEC_TENTACLES.getKey();
+                key = Features.DALEK_SEC_TENTACLES.getKey();
             }
             case "Empty Child" -> {
                 material = Material.SUGAR;
-                key = EmptyChildVariant.EMPTY_CHILD_MASK_FEATURE.getKey();
+                key = Features.EMPTY_CHILD_MASK.getKey();
                 // set generic scale
                 player.getAttribute(Attribute.SCALE).setBaseValue(0.5d);
             }
             case "Hath" -> {
                 material = Material.PUFFERFISH;
-                key = HathVariant.HATH_FEATURES.getKey();
+                key = Features.HATH_FEATURES.getKey();
             }
             case "Ice Warrior" -> {
                 material = Material.SNOWBALL;
-                key = IceWarriorVariant.ICE_WARRIOR_CREST.getKey();
+                key = Features.ICE_WARRIOR_CREST.getKey();
             }
             case "Impossible Astronaut" -> {
                 material = Material.ORANGE_STAINED_GLASS_PANE;
@@ -188,12 +188,12 @@ public class SkinUtils {
             case "Jo Grant" -> key = Features.JO_GRANT_HAIR.getKey();
             case "Judoon" -> {
                 material = Material.YELLOW_DYE;
-                key = JudoonVariant.JUDOON_SNOUT.getKey();
+                key = Features.JUDOON_SNOUT.getKey();
             }
             case "Martha Jones" -> key = Features.MARTHA_JONES_HAIR.getKey();
             case "Mire" -> {
                 material = Material.NETHERITE_SCRAP;
-                key = MireVariant.MIRE_HELMET.getKey();
+                key = Features.MIRE_HELMET.getKey();
                 // + 7, 8 left, right arms
                 ItemStack leftArm = new ItemStack(material, 1);
                 ItemMeta laim = leftArm.getItemMeta();
@@ -211,28 +211,28 @@ public class SkinUtils {
             case "Omega" -> key = Features.OMEGA_FRILL.getKey();
             case "Ood" -> {
                 material = Material.ROTTEN_FLESH;
-                key = OodVariant.OOD_FEATURES.getKey();
+                key = Features.OOD_FEATURES.getKey();
             }
             case "Racnoss" -> key = Features.RACNOSS_FEATURES.getKey();
             case "Scarecrow" -> {
                 material = Material.WHEAT;
-                key = ScarecrowVariant.SCARECROW_EARS.getKey();
+                key = Features.SCARECROW_EARS.getKey();
             }
             case "Sea Devil" -> {
                 material = Material.KELP;
-                key = SeaDevilVariant.SEA_DEVIL_EARS.getKey();
+                key = Features.SEA_DEVIL_EARS.getKey();
             }
             case "Silence" -> {
                 material = Material.END_STONE;
-                key = SilentVariant.SILENCE_SIDE_HEAD.getKey();
+                key = Features.SILENCE_SIDE_HEAD.getKey();
             }
             case "Silurian" -> {
                 material = Material.FEATHER;
-                key = SilurianVariant.SILURIAN_CREST.getKey();
+                key = Features.SILURIAN_CREST.getKey();
             }
             case "Slitheen" -> {
                 material = Material.TURTLE_EGG;
-                key = SlitheenVariant.SLITHEEN_HEAD_SKIN.getKey();
+                key = Features.SLITHEEN_HEAD.getKey();
                 // + 7, 8 left, right claws
                 ItemStack leftClaw = new ItemStack(material, 1);
                 ItemMeta lhim = leftClaw.getItemMeta();
@@ -249,11 +249,11 @@ public class SkinUtils {
             }
             case "Sontaran" -> {
                 material = Material.POTATO;
-                key = SontaranVariant.SONTARAN_EARS.getKey();
+                key = Features.SONTARAN_EARS.getKey();
             }
             case "Strax" -> {
                 material = Material.POTATO;
-                key = SontaranVariant.STRAX_EARS.getKey();
+                key = Features.STRAX_EARS.getKey();
             }
             case "Sutekh" -> key = Features.SUTEKH_FEATURES.getKey();
             case "Sycorax" -> key = Features.SYCORAX_CAPE.getKey();
@@ -265,11 +265,11 @@ public class SkinUtils {
             }
             case "Weeping Angel" -> {
                 material = Material.BRICK;
-                key = WeepingAngelVariant.WEEPING_ANGEL_WINGS.getKey();
+                key = Features.WEEPING_ANGEL_WINGS.getKey();
             }
             case "Zygon" -> {
                 material = Material.PAINTING;
-                key = ZygonVariant.ZYGON_CREST.getKey();
+                key = Features.ZYGON_CREST.getKey();
             }
             default -> {
                 // return

@@ -8,7 +8,6 @@ public enum ZygonVariant {
     BUTTON_ZYGON(new NamespacedKey(TARDIS.plugin, "button_zygon")),
     ZYGON_HEAD(new NamespacedKey(TARDIS.plugin, "zygon_head")),
     ZYGON_DISGUISE(new NamespacedKey(TARDIS.plugin, "zygon_disguise")),
-    ZYGON_CREST(new NamespacedKey(TARDIS.plugin, "zygon_crest")),
     ZYGON_STATIC(new NamespacedKey(TARDIS.plugin, "zygon_static"));
 
     private final NamespacedKey key;

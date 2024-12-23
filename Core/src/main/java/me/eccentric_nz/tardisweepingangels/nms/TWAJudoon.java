@@ -29,26 +29,7 @@ import java.util.Map;
 public class TWAJudoon extends TWAFollower {
 
     private static final String entityId = "judoon";
-    private final NamespacedKey[] frames = new NamespacedKey[]{
-            JudoonVariant.JUDOON_0.getKey(),
-            JudoonVariant.JUDOON_1.getKey(),
-            JudoonVariant.JUDOON_2.getKey(),
-            JudoonVariant.JUDOON_1.getKey(),
-            JudoonVariant.JUDOON_0.getKey(),
-            JudoonVariant.JUDOON_3.getKey(),
-            JudoonVariant.JUDOON_4.getKey(),
-            JudoonVariant.JUDOON_3.getKey()
-    };
-    private final NamespacedKey[] framesGuard = new NamespacedKey[]{
-            JudoonVariant.JUDOON_GUARD_0.getKey(),
-            JudoonVariant.JUDOON_GUARD_1.getKey(),
-            JudoonVariant.JUDOON_GUARD_2.getKey(),
-            JudoonVariant.JUDOON_GUARD_1.getKey(),
-            JudoonVariant.JUDOON_GUARD_0.getKey(),
-            JudoonVariant.JUDOON_GUARD_3.getKey(),
-            JudoonVariant.JUDOON_GUARD_4.getKey(),
-            JudoonVariant.JUDOON_GUARD_3.getKey()
-    };
+
     private int ammo;
     private boolean guard;
 
@@ -82,14 +63,6 @@ public class TWAJudoon extends TWAFollower {
             ItemMeta im = bukkit.getItemMeta();
             if (oldX == getX() && oldZ == getZ()) {
                 im.setItemModel(this.guard ? JudoonVariant.JUDOON_STATIC.getKey() : JudoonVariant.JUDOON_GUARD.getKey());
-                i = 0;
-            } else {
-                // play move animation
-                im.setItemModel(this.guard ? framesGuard[i] : frames[i]);
-                i++;
-                if (i == frames.length) {
-                    i = 0;
-                }
             }
             bukkit.setItemMeta(im);
             setItemSlot(EquipmentSlot.HEAD, CraftItemStack.asNMSCopy(bukkit));

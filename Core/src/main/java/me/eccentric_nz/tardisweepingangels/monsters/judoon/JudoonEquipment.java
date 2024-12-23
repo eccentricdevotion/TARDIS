@@ -32,7 +32,7 @@ public class JudoonEquipment {
         ItemStack head = new ItemStack(Material.YELLOW_DYE);
         ItemMeta headMeta = head.getItemMeta();
         headMeta.setDisplayName("Judoon Head");
-        headMeta.setItemModel(disguise ? JudoonVariant.JUDOON_DISGUISE.getKey() : JudoonVariant.JUDOON_STATIC.getKey());
+        headMeta.setItemModel(disguise ? JudoonVariant.JUDOON_HEAD.getKey() : JudoonVariant.JUDOON_STATIC.getKey());
         head.setItemMeta(headMeta);
         if (!disguise) {
             new FollowerEquipper().setHelmetAndInvisibilty(player, entity, Monster.JUDOON, head);

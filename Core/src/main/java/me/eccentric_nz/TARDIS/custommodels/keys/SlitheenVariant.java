@@ -8,7 +8,6 @@ public enum SlitheenVariant {
     BUTTON_SLITHEEN(new NamespacedKey(TARDIS.plugin, "button_slitheen")),
     SLITHEEN_HEAD(new NamespacedKey(TARDIS.plugin, "slitheen_head")),
     SLITHEEN_SUIT(new NamespacedKey(TARDIS.plugin, "slitheen_suit")),
-    SLITHEEN_HEAD_SKIN(new NamespacedKey(TARDIS.plugin, "slitheen_head")),
     SLITHEEN_CLAW_LEFT(new NamespacedKey(TARDIS.plugin, "slitheen_claw_left")),
     SLITHEEN_CLAW_RIGHT(new NamespacedKey(TARDIS.plugin, "slitheen_claw_right")),
     SLITHEEN_STATIC(new NamespacedKey(TARDIS.plugin, "slitheen_static"));
