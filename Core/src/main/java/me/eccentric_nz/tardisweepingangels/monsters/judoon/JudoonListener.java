@@ -131,7 +131,6 @@ public class JudoonListener implements Listener {
                     if (entity instanceof TWAJudoon judoon) {
                         judoon.setOwnerUUID(pid);
                     }
-                    // TODO update follower record if there is one
                 }
             }
         }

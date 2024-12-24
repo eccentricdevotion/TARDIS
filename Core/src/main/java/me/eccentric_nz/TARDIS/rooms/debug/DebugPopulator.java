@@ -212,37 +212,19 @@ public class DebugPopulator {
                     z -= 3;
                 }
             }
-            if (monster == Monster.HEADLESS_MONK) {
-                Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
-                ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
-                new ArmourStandEquipment().setStandEquipment(as, monster, false);
-                // set helmet to sword version
-                setHelmet(as, MonkVariant.HEADLESS_MONK_STATIC.getKey());
-                x += 3;
-                if (x > 24) {
-                    x = 3;
-                    z -= 3;
-                }
-            }
-            if (monster == Monster.MIRE || monster == Monster.SLITHEEN) {
-                // set no helmet!
+            if (monster == Monster.MIRE || monster == Monster.JUDOON || monster == Monster.SLITHEEN || monster == Monster.HEADLESS_MONK || monster == Monster.CLOCKWORK_DROID || monster == Monster.SILENT) {
                 Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
                 ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
                 new ArmourStandEquipment().setStandEquipment(as, monster, false);
                 // set helmet to alternate version
-                setHelmet(as, monster == Monster.MIRE ? MireVariant.THE_MIRE_HELMETLESS.getKey() : SlitheenVariant.SLITHEEN_SUIT.getKey());
-                x += 3;
-                if (x > 24) {
-                    x = 3;
-                    z -= 3;
+                switch (monster) {
+                    case CLOCKWORK_DROID -> setHelmet(as, DroidVariant.CLOCKWORK_DROID_FEMALE_STATIC.getKey());
+                    case HEADLESS_MONK -> setHelmet(as, MonkVariant.HEADLESS_MONK_ALTERNATE.getKey());
+                    case JUDOON -> setHelmet(as, JudoonVariant.JUDOON_GUARD.getKey());
+                    case MIRE -> setHelmet(as, MireVariant.THE_MIRE_HELMETLESS.getKey());
+                    case SILENT -> setHelmet(as, SilentVariant.SILENT_BEAMING.getKey());
+                    case SLITHEEN -> setHelmet(as, SlitheenVariant.SLITHEEN_SUIT.getKey());
                 }
-            }
-            if (monster == Monster.CLOCKWORK_DROID) {
-                Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
-                ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
-                new ArmourStandEquipment().setStandEquipment(as, monster, false);
-                // set female
-                setHelmet(as, DroidVariant.CLOCKWORK_DROID_FEMALE_STATIC.getKey());
                 x += 3;
                 if (x > 24) {
                     x = 3;

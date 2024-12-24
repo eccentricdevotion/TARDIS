@@ -5,7 +5,6 @@ import org.bukkit.NamespacedKey;
 
 public enum BowTieVariant {
 
-    // TODO change to a different material - WARPED_BUTTON?
     BOWTIE_WHITE(new NamespacedKey(TARDIS.plugin, "bowtie_white")),
     BOWTIE_ORANGE(new NamespacedKey(TARDIS.plugin, "bowtie_orange")),
     BOWTIE_MAGENTA(new NamespacedKey(TARDIS.plugin, "bowtie_magenta")),

@@ -47,7 +47,7 @@ public enum Monster {
     RACNOSS("Racnoss", EntityType.PIGLIN_BRUTE, "racnoss", RacnossVariant.RACNOSS_STATIC.getKey(), Material.SPIDER_EYE, RacnossVariant.RACNOSS_HEAD.getKey(), MonsterSkins.RACNOSS),
     SCARECROW("Scarecrow", EntityType.ZOMBIE, "scarecrow", ScarecrowVariant.SCARECROW_STATIC.getKey(), Material.WHEAT, ScarecrowVariant.SCARECROW_HEAD.getKey(), MonsterSkins.SCARECROW),
     SEA_DEVIL("Sea Devil", EntityType.DROWNED, "devil", SeaDevilVariant.SEA_DEVIL_STATIC.getKey(), Material.KELP, SeaDevilVariant.SEA_DEVIL_HEAD.getKey(), MonsterSkins.SEA_DEVIL),
-    SILENT("Silent", EntityType.SKELETON, "silent", SilentVariant.SILENT_BEAMING.getKey(), Material.END_STONE, SilentVariant.SILENT_BEAMING.getKey(), MonsterSkins.SILENCE),
+    SILENT("Silent", EntityType.SKELETON, "silent", SilentVariant.SILENT_STATIC.getKey(), Material.END_STONE, SilentVariant.SILENT_BEAMING.getKey(), MonsterSkins.SILENCE),
     SILURIAN("Silurian", EntityType.SKELETON, "silurian", SilurianVariant.SILURIAN_STATIC.getKey(), Material.FEATHER, SilurianVariant.SILURIAN_HEAD.getKey(), MonsterSkins.SILURIAN),
     SLITHEEN("Slitheen", EntityType.ZOMBIE, "slitheen", SlitheenVariant.SLITHEEN_STATIC.getKey(), Material.TURTLE_EGG, SlitheenVariant.SLITHEEN_HEAD.getKey(), MonsterSkins.SLITHEEN),
     SMILER("Smiler", EntityType.ZOMBIE, "smiler", SmilerVariant.SMILER_STATIC.getKey(), Material.RED_STAINED_GLASS_PANE, SmilerVariant.SMILER_HEAD.getKey(), MonsterSkins.SMILER),

@@ -28,9 +28,6 @@ public class TWAFollower extends Husk implements OwnableEntity {
     protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(TWAFollower.class, EntityDataSerializers.OPTIONAL_UUID);
     protected UUID uuid;
     protected boolean following = false;
-    protected int i = 0;
-    protected double oldX;
-    protected double oldZ;
 
     public TWAFollower(EntityType<? extends Husk> entityType, Level world) {
         super(entityType, world);

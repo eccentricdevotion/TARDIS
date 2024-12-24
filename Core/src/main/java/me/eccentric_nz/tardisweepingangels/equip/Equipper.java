@@ -128,7 +128,6 @@ public class Equipper {
                 // sword
                 hand = new ItemStack(Material.GOLDEN_SWORD);
                 ItemMeta tim = hand.getItemMeta();
-                // TODO
                 tim.setItemModel(MonkVariant.HEADLESS_MONK_SWORD.getKey());
                 hand.setItemMeta(tim);
             }
@@ -140,7 +139,7 @@ public class Equipper {
                 hand.setItemMeta(tim);
             }
             case JUDOON -> {
-                // TODO weapon
+                // weapon
                 hand = new ItemStack(Material.END_ROD);
                 ItemMeta tim = hand.getItemMeta();
                 tim.setItemModel(JudoonVariant.JUDOON_WEAPON_RESTING.getKey());
@@ -165,7 +164,7 @@ public class Equipper {
                 hand.setItemMeta(tim);
             }
             case SILENT -> {
-                // TODO both hands
+                // both hands
                 hand = new ItemStack(Material.END_STONE_BRICK_SLAB);
                 ItemMeta tim = hand.getItemMeta();
                 tim.setItemModel(SilentVariant.SILENCE_HAND.getKey());

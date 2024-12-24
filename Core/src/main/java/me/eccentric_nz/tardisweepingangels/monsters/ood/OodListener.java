@@ -68,7 +68,6 @@ public class OodListener implements Listener {
                     if (entity instanceof TWAOod ood) {
                         ood.setOwnerUUID(pid);
                     }
-                    // TODO update follower record if there is one
                 }
             }
         }

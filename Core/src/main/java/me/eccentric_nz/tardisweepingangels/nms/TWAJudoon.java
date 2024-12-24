@@ -57,17 +57,13 @@ public class TWAJudoon extends TWAFollower {
 
     @Override
     public void aiStep() {
-        if (hasItemInSlot(EquipmentSlot.HEAD) && tickCount % 3 == 0) {
-            ItemStack is = getItemBySlot(EquipmentSlot.HEAD);
+        if (hasItemInSlot(EquipmentSlot.MAINHAND) && tickCount % 10 == 0) {
+            ItemStack is = getItemBySlot(EquipmentSlot.MAINHAND);
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
             ItemMeta im = bukkit.getItemMeta();
-            if (oldX == getX() && oldZ == getZ()) {
-                im.setItemModel(this.guard ? JudoonVariant.JUDOON_STATIC.getKey() : JudoonVariant.JUDOON_GUARD.getKey());
-            }
+            im.setItemModel(this.guard ? JudoonVariant.JUDOON_WEAPON_ACTIVE.getKey() : JudoonVariant.JUDOON_WEAPON_RESTING.getKey());
             bukkit.setItemMeta(im);
-            setItemSlot(EquipmentSlot.HEAD, CraftItemStack.asNMSCopy(bukkit));
-            oldX = getX();
-            oldZ = getZ();
+            setItemSlot(EquipmentSlot.MAINHAND, CraftItemStack.asNMSCopy(bukkit));
         }
         super.aiStep();
     }

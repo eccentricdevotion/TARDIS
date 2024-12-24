@@ -59,23 +59,13 @@ public class TWAOod extends TWAFollower {
 
     @Override
     public void aiStep() {
-        if (hasItemInSlot(EquipmentSlot.HEAD) && tickCount % 3 == 0) {
+        if (hasItemInSlot(EquipmentSlot.HEAD) && tickCount % 10 == 0) {
             ItemStack is = getItemBySlot(EquipmentSlot.HEAD);
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
             ItemMeta im = bukkit.getItemMeta();
-            if (oldX == getX() && oldZ == getZ()) {
-                NamespacedKey still = switch (colour) {
-                    case BLACK -> (redeye) ? OodVariant.OOD_REDEYE_BLACK_STATIC.getKey() : OodVariant.OOD_BLACK_STATIC.getKey();
-                    case BLUE -> (redeye) ? OodVariant.OOD_REDEYE_BLUE_STATIC.getKey() : OodVariant.OOD_BLUE_STATIC.getKey();
-                    case BROWN -> (redeye) ? OodVariant.OOD_REDEYE_BROWN_STATIC.getKey() : OodVariant.OOD_BROWN_STATIC.getKey();
-                };
-                im.setItemModel(still);
-                i = 0;
-            }
+            im.setItemModel((redeye) ?OodVariant.OOD_REDEYE_HEAD.getKey() : OodVariant.OOD_HEAD.getKey());
             bukkit.setItemMeta(im);
             setItemSlot(EquipmentSlot.HEAD, CraftItemStack.asNMSCopy(bukkit));
-            oldX = getX();
-            oldZ = getZ();
         }
         super.aiStep();
     }

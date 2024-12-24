@@ -29,6 +29,9 @@ import java.util.Map;
 public class TWAK9 extends TWAFollower {
 
     private static final String entityId = "k9";
+    protected int i = 0;
+    protected double oldX;
+    protected double oldZ;
     protected final NamespacedKey[] frames = new NamespacedKey[]{
             K9Variant.K9_0.getKey(),
             K9Variant.K9_1.getKey(),

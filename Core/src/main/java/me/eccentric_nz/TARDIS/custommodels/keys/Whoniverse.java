@@ -21,7 +21,6 @@ public enum Whoniverse {
     HANDLES_OFF(new NamespacedKey(TARDIS.plugin, "handles_off")),
     HANDLES_ON(new NamespacedKey(TARDIS.plugin, "handles_on")),
     COMMUNICATOR(new NamespacedKey(TARDIS.plugin, "handles_communicator")),
-    // TODO make texture file
     COMMUNICATOR_OVERLAY(new NamespacedKey(TARDIS.plugin, "item/handles/handles_communicator_overlay")),
     LOCATOR(new NamespacedKey(TARDIS.plugin, "locator_16")),
     RUST_BUCKET(new NamespacedKey(TARDIS.plugin, "rust_bucket")),
