@@ -24,7 +24,8 @@ public enum DalekVariant {
     DALEK_BROWN(new NamespacedKey(TARDIS.plugin, "dalek_brown")),
     DALEK_GREEN(new NamespacedKey(TARDIS.plugin, "dalek_green")),
     DALEK_RED(new NamespacedKey(TARDIS.plugin, "dalek_red")),
-    DALEK_BLACK(new NamespacedKey(TARDIS.plugin, "dalek_black"));
+    DALEK_BLACK(new NamespacedKey(TARDIS.plugin, "dalek_black")),
+    DALEK_OVERLAY(new NamespacedKey(TARDIS.plugin, "item/monster/dalek/dalek_overlay"));
 
     private final NamespacedKey key;
 

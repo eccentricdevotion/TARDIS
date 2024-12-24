@@ -16,13 +16,17 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.DalekVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.EmptyChildVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.K9Variant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.EquippableComponent;
 import org.bukkit.persistence.PersistentDataType;
 
 public class HeadBuilder {
@@ -46,6 +50,16 @@ public class HeadBuilder {
         };
         im.setDisplayName(ChatColor.WHITE + head);
         im.setItemModel(model);
+        EquippableComponent component = im.getEquippable();
+        component.setSlot(EquipmentSlot.HEAD);
+        // add overlays
+        if (monster.equals(Monster.DALEK)) {
+            component.setCameraOverlay(DalekVariant.DALEK_OVERLAY.getKey());
+        }
+        if (monster.equals(Monster.EMPTY_CHILD)) {
+            component.setCameraOverlay(EmptyChildVariant.EMPTY_CHILD_OVERLAY.getKey());
+        }
+        im.setEquippable(component);
         is.setItemMeta(im);
         return is;
     }
