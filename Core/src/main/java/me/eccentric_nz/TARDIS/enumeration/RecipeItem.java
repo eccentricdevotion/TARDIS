@@ -78,6 +78,8 @@ public enum RecipeItem {
     TARDIS_REMOTE_KEY(KeyVariant.REMOTE.getKey(), RecipeCategory.ITEMS),
     TARDIS_SCANNER_CIRCUIT(CircuitVariant.SCANNER.getKey(), RecipeCategory.CONSOLE_CIRCUITS),
     TARDIS_SPACE_HELMET(Whoniverse.HELMET.getKey(), RecipeCategory.ACCESSORIES),
+    TARDIS_SPACE_SUIT_CHESTPLATE(Whoniverse.SPACE_SUIT_CHESTPLATE.getKey(), RecipeCategory.ACCESSORIES),
+    TARDIS_SPACE_SUIT_LEGGINGS(Whoniverse.SPACE_SUIT_LEGGINGS.getKey(), RecipeCategory.ACCESSORIES),
     TARDIS_STATTENHEIM_CIRCUIT(CircuitVariant.STATTENHEIM.getKey(), RecipeCategory.ITEM_CIRCUITS),
     TARDIS_TELEPATHIC_CIRCUIT(CircuitVariant.TELEPATHIC.getKey(), RecipeCategory.CONSOLE_CIRCUITS),
     TARDIS_TELEVISION(Whoniverse.TV.getKey(), RecipeCategory.ITEMS),
