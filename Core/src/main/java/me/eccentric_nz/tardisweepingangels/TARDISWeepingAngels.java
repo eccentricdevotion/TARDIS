@@ -58,7 +58,6 @@ import me.eccentric_nz.tardisweepingangels.monsters.vashta_nerada.VashtaNeradaLi
 import me.eccentric_nz.tardisweepingangels.monsters.weeping_angels.*;
 import me.eccentric_nz.tardisweepingangels.monsters.zygons.ZygonRunnable;
 import me.eccentric_nz.tardisweepingangels.utils.*;
-import org.apache.http.cookie.SM;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -72,6 +71,7 @@ public class TARDISWeepingAngels {
     private static final List<UUID> guards = new ArrayList<>();
     private static final List<UUID> playersWithGuards = new ArrayList<>();
     public static NamespacedKey ANGEL;
+    public static NamespacedKey ANGEL_OF_LIBERTY;
     public static NamespacedKey BEAST;
     public static NamespacedKey CLOCKWORK_DROID;
     public static NamespacedKey CYBERMAN;
@@ -101,7 +101,7 @@ public class TARDISWeepingAngels {
     public static NamespacedKey SMILER;
     public static NamespacedKey SONTARAN;
     public static NamespacedKey STRAX;
-    public static NamespacedKey SUTEHK;
+    public static NamespacedKey SUTEKH;
     public static NamespacedKey SYCORAX;
     public static NamespacedKey TOCLAFANE;
     public static NamespacedKey VAMPIRE;
@@ -248,6 +248,8 @@ public class TARDISWeepingAngels {
     private void initKeys(TARDIS plugin) {
         ANGEL = new NamespacedKey(plugin, "angel");
         PDC_KEYS.put(Monster.WEEPING_ANGEL, ANGEL);
+        ANGEL_OF_LIBERTY = new NamespacedKey(plugin, "angel_of_liberty");
+        PDC_KEYS.put(Monster.ANGEL_OF_LIBERTY, ANGEL_OF_LIBERTY);
         BEAST = new NamespacedKey(plugin, "beast");
         PDC_KEYS.put(Monster.THE_BEAST, BEAST);
         CLOCKWORK_DROID = new NamespacedKey(plugin, "clockwork_droid");
@@ -302,8 +304,8 @@ public class TARDISWeepingAngels {
         PDC_KEYS.put(Monster.SONTARAN, SONTARAN);
         STRAX = new NamespacedKey(plugin, "strax");
         PDC_KEYS.put(Monster.STRAX, STRAX);
-        SUTEHK = new NamespacedKey(plugin, "sutekh");
-        PDC_KEYS.put(Monster.SUTEKH, SUTEHK);
+        SUTEKH = new NamespacedKey(plugin, "sutekh");
+        PDC_KEYS.put(Monster.SUTEKH, SUTEKH);
         SYCORAX = new NamespacedKey(plugin, "sycorax");
         PDC_KEYS.put(Monster.SYCORAX, SYCORAX);
         TOCLAFANE = new NamespacedKey(plugin, "toclafane");

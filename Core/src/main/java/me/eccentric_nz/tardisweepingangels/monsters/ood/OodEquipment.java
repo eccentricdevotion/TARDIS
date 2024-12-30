@@ -16,53 +16,26 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.ood;
 
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.custommodels.keys.OodVariant;
-import me.eccentric_nz.tardisweepingangels.equip.DisguiseEquipper;
+import me.eccentric_nz.tardisweepingangels.equip.ArmourEquipper;
 import me.eccentric_nz.tardisweepingangels.equip.FollowerEquipper;
-import me.eccentric_nz.tardisweepingangels.nms.TWAOod;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.craftbukkit.v1_21_R3.entity.CraftEntity;
-import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class OodEquipment {
 
-    public static void set(OfflinePlayer player, Entity entity, boolean disguise, boolean random) {
-        if (random) {
-            TWAOod ood = (TWAOod) ((CraftEntity) entity).getHandle();
-            ood.setRedeye(TARDISConstants.RANDOM.nextBoolean());
-            int chance = TARDISConstants.RANDOM.nextInt(100);
-            if (chance < 15) {
-                ood.setColour(OodColour.BLUE);
-            }
-            if (chance > 85) {
-                ood.setColour(OodColour.BROWN);
-            }
-        }
-        ItemStack head = new ItemStack(Material.ROTTEN_FLESH);
-        ItemMeta headMeta = head.getItemMeta();
-        headMeta.setDisplayName("Ood Head");
+    public static void set(OfflinePlayer player, LivingEntity entity, boolean disguise) {
+        new ArmourEquipper().dress(entity, Monster.OOD);
         if (!disguise) {
-            headMeta.setItemModel(OodVariant.OOD_BLACK_STATIC.getKey());
-            head.setItemMeta(headMeta);
-            new FollowerEquipper().setHelmetAndInvisibilty(player, entity, Monster.OOD, head);
+            new FollowerEquipper().setOptionsAndInvisibilty(player, entity, Monster.OOD);
         } else {
-            int chance = TARDISConstants.RANDOM.nextInt(100);
-            NamespacedKey colour = OodVariant.OOD_BLACK_STATIC.getKey();
-            if (chance < 15) {
-                colour = OodVariant.OOD_BLUE_STATIC.getKey();
-            }
-            if (chance > 85) {
-                colour =  OodVariant.OOD_BROWN_STATIC.getKey();
-            }
-            headMeta.setItemModel(colour);
-            head.setItemMeta(headMeta);
-            new DisguiseEquipper().setHelmetAndInvisibilty(entity, head);
+            PotionEffect potionEffect = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
+            entity.addPotionEffect(potionEffect);
         }
     }
 }

@@ -59,6 +59,7 @@ import org.bukkit.*;
 import org.bukkit.World.Environment;
 import org.bukkit.craftbukkit.v1_21_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Husk;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -914,22 +915,20 @@ public class TARDII implements TardisAPI {
         new Equipper(Monster.SLITHEEN, le, disguise).setHelmetAndInvisibility();
     }
 
-    // TODO
     @Override
-    public void setJudoonEquipment(Player player, Entity armorStand, boolean disguise) {
-        JudoonEquipment.set(player, armorStand, disguise);
+    public void setJudoonEquipment(LivingEntity entity, boolean disguise) {
+        new Equipper(Monster.JUDOON, entity, disguise).setHelmetAndInvisibility();
+
     }
 
-    // TODO
     @Override
-    public void setK9Equipment(Player player, Entity armorStand, boolean disguise) {
-        K9Equipment.set(player, armorStand, disguise);
+    public void setK9Equipment(Player player, Entity entity, boolean disguise) {
+        K9Equipment.set(player, (LivingEntity) entity, disguise);
     }
 
-    // TODO
     @Override
-    public void setOodEquipment(Player player, Entity entity, boolean disguise) {
-        OodEquipment.set(player, entity, disguise, false);
+    public void setOodEquipment(LivingEntity entity, boolean disguise) {
+        new Equipper(Monster.OOD, entity, disguise).setHelmetAndInvisibility();
     }
 
     @Override
@@ -999,13 +998,6 @@ public class TARDII implements TardisAPI {
             return fc;
         }
         return null;
-    }
-
-    // TODO
-    @Override
-    public void setJudoonEquipment(Player player, Entity husk, int ammunition) {
-        setJudoonEquipment(player, husk, false);
-        ((TWAJudoon) ((CraftEntity) husk).getHandle()).setAmmo(ammunition);
     }
 
     // TODO

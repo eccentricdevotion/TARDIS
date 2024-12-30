@@ -646,13 +646,12 @@ interface TardisAPI {
     void setSlitheenEquipment(LivingEntity le, boolean disguise);
 
     /**
-     * Sets an armour stand, or disguises a player as a Judoon.
+     * Disguises an entity as a Judoon.
      *
-     * @param player The player that will own this Judoon - may be null
-     * @param armorStand The armour stand or player to disguise
+     * @param entity The entity to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    void setJudoonEquipment(Player player, Entity armorStand, boolean disguise);
+    void setJudoonEquipment(LivingEntity entity, boolean disguise);
 
     /**
      * Sets an armour stand, or disguises a player as K9.
@@ -666,11 +665,10 @@ interface TardisAPI {
     /**
      * Sets an armour stand, or disguises a player as an Ood.
      *
-     * @param player The player that will own this Ood - may be null
-     * @param armorStand The armour stand or player to disguise
+     * @param entity The armour stand or player to disguise
      * @param disguise A boolean to determine if this is a player disguise
      */
-    void setOodEquipment(Player player, Entity armorStand, boolean disguise);
+    void setOodEquipment(LivingEntity entity, boolean disguise);
 
     /**
      * Sets an entity as a Racnoss.
@@ -772,14 +770,14 @@ interface TardisAPI {
     FollowerChecker isClaimedMonster(Entity entity, UUID uuid);
 
     /**
-     * Set the entity entity equipment and ammunition count for a claimed Judoon
+     * Set the entity equipment and ammunition count for a claimed Judoon
      *
      * @param player the player that will own this Judoon
-     * @param armorStand the armour stand to apply the equipment to
+     * @param entity the armour stand to apply the equipment to
      * @param ammunition the persistent data container value with the amount of
      * ammunition
+    void setJudoonEquipment(Player player, Entity entity, int ammunition);
      */
-    void setJudoonEquipment(Player player, Entity armorStand, int ammunition);
 
     /**
      * Start a following task for a claimed monster

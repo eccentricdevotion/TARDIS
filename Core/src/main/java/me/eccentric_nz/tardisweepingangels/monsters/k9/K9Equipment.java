@@ -17,28 +17,31 @@
 package me.eccentric_nz.tardisweepingangels.monsters.k9;
 
 import me.eccentric_nz.TARDIS.custommodels.keys.K9Variant;
-import me.eccentric_nz.tardisweepingangels.equip.DisguiseEquipper;
 import me.eccentric_nz.tardisweepingangels.equip.FollowerEquipper;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Husk;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class K9Equipment {
 
-    public static void set(OfflinePlayer player, Entity entity, boolean disguise) {
+    public static void set(OfflinePlayer player, LivingEntity entity, boolean disguise) {
         ItemStack head = new ItemStack(Material.BONE);
         ItemMeta headMeta = head.getItemMeta();
         headMeta.setDisplayName("K9 Head");
         headMeta.setItemModel(K9Variant.K9.getKey());
         head.setItemMeta(headMeta);
+        entity.getEquipment().setHelmet(head);
         if (entity instanceof Husk) {
-            new FollowerEquipper().setHelmetAndInvisibilty(player, entity, Monster.K9, head);
+            new FollowerEquipper().setOptionsAndInvisibilty(player, entity, Monster.K9);
         } else if (disguise) {
-            new DisguiseEquipper().setHelmetAndInvisibilty(entity, head);
+            PotionEffect potionEffect = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
+            entity.addPotionEffect(potionEffect);
         }
     }
 }

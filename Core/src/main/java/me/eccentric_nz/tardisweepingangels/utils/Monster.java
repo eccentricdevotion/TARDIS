@@ -47,7 +47,7 @@ public enum Monster {
     RACNOSS("Racnoss", EntityType.PIGLIN_BRUTE, "racnoss", RacnossVariant.RACNOSS_STATIC.getKey(), Material.SPIDER_EYE, RacnossVariant.RACNOSS_HEAD.getKey(), MonsterSkins.RACNOSS),
     SCARECROW("Scarecrow", EntityType.ZOMBIE, "scarecrow", ScarecrowVariant.SCARECROW_STATIC.getKey(), Material.WHEAT, ScarecrowVariant.SCARECROW_HEAD.getKey(), MonsterSkins.SCARECROW),
     SEA_DEVIL("Sea Devil", EntityType.DROWNED, "devil", SeaDevilVariant.SEA_DEVIL_STATIC.getKey(), Material.KELP, SeaDevilVariant.SEA_DEVIL_HEAD.getKey(), MonsterSkins.SEA_DEVIL),
-    SILENT("Silent", EntityType.SKELETON, "silent", SilentVariant.SILENT_STATIC.getKey(), Material.END_STONE, SilentVariant.SILENT_BEAMING.getKey(), MonsterSkins.SILENCE),
+    SILENT("Silent", EntityType.SKELETON, "silent", SilentVariant.SILENT_STATIC.getKey(), Material.END_STONE, SilentVariant.SILENT_HEAD.getKey(), MonsterSkins.SILENCE),
     SILURIAN("Silurian", EntityType.SKELETON, "silurian", SilurianVariant.SILURIAN_STATIC.getKey(), Material.FEATHER, SilurianVariant.SILURIAN_HEAD.getKey(), MonsterSkins.SILURIAN),
     SLITHEEN("Slitheen", EntityType.ZOMBIE, "slitheen", SlitheenVariant.SLITHEEN_STATIC.getKey(), Material.TURTLE_EGG, SlitheenVariant.SLITHEEN_HEAD.getKey(), MonsterSkins.SLITHEEN),
     SMILER("Smiler", EntityType.ZOMBIE, "smiler", SmilerVariant.SMILER_STATIC.getKey(), Material.RED_STAINED_GLASS_PANE, SmilerVariant.SMILER_HEAD.getKey(), MonsterSkins.SMILER),
@@ -59,7 +59,7 @@ public enum Monster {
     TOCLAFANE("Toclafane", EntityType.ZOMBIE, "toclafane", ToclafaneVariant.TOCLAFANE.getKey(), Material.GUNPOWDER, null, null),
     VAMPIRE_OF_VENICE("Vampire Of Venice", EntityType.DROWNED, "vampire", VampireOfVeniceVariant.VAMPIRE_STATIC.getKey(), Material.COD, VampireOfVeniceVariant.VAMPIRE_HEAD.getKey(), MonsterSkins.VAMPIRE_OF_VENICE),
     VASHTA_NERADA("Vashta Nerada", EntityType.ZOMBIE, "vashta", VashtaNeradaVariant.VASHTA_NERADA_STATIC.getKey(), Material.BOOK, VashtaNeradaVariant.VASHTA_NERADA_HEAD.getKey(), MonsterSkins.VASHTA_NERADA),
-    WEEPING_ANGEL("Weeping Angel", EntityType.SKELETON, "angel", WeepingAngelVariant.WEEPING_ANGEL_STATIC.getKey(), Material.BRICK, WeepingAngelVariant.WEEPING_ANGEL_HEAD.getKey(), MonsterSkins.WEEPING_ANGEL),
+    WEEPING_ANGEL("Weeping Angel", EntityType.SKELETON, "angel", WeepingAngelVariant.WEEPING_ANGEL_STATIC.getKey(), Material.BRICK, WeepingAngelVariant.WEEPING_ANGEL_PLAYER_HEAD.getKey(), MonsterSkins.WEEPING_ANGEL),
     ZYGON("Zygon", EntityType.ZOMBIE, "zygon", ZygonVariant.ZYGON_STATIC.getKey(), Material.PAINTING, ZygonVariant.ZYGON_HEAD.getKey(), MonsterSkins.ZYGON);
 
     private final String name;

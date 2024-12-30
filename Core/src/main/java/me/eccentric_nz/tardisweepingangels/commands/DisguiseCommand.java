@@ -84,12 +84,11 @@ public class DisguiseCommand {
         if (args[2].equalsIgnoreCase("on")) {
             switch (monster) {
                 case DALEK -> DalekEquipment.set(player, true);
-                case JUDOON -> JudoonEquipment.set(null, player, true);
                 case K9 -> K9Equipment.set(null, player, true);
-                case OOD -> OodEquipment.set(null, player, true, false);
                 case TOCLAFANE -> ToclafaneEquipment.set(player, true);
                 // CYBERMAN, EMPTY_CHILD, HATH, HEADLESS_MONK, ICE_WARRIOR, RACNOSS, SEA_DEVIL, SILENT,
                 // SILURIAN, SLITHEEN, SONTARAN, STRAX, MIRE, VASHTA_NERADA, WEEPING_ANGEL, ZYGON
+                // JUDOON, OOD
                 default -> new Equipper(monster, player, true).setHelmetAndInvisibility();
             }
         } else {

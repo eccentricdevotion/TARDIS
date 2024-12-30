@@ -105,13 +105,6 @@ public class TARDISDevCommand implements CommandExecutor {
                         case "add_regions" -> {
                             return new TARDISAddRegionsCommand(plugin).doCheck(sender);
                         }
-                        case "armour" -> {
-                            if (sender instanceof Player player) {
-                                ItemStack a = MonsterArmour.makeEquippable(Monster.CYBERMAN, EquipmentSlot.CHEST, TARDISWeepingAngels.CYBERMAN);
-                                player.getInventory().addItem(a);
-                            }
-                            return true;
-                        }
                         case "biome" -> {
                             return new TARDISBiomeCommand().reset(sender);
                         }
@@ -169,6 +162,20 @@ public class TARDISDevCommand implements CommandExecutor {
                 switch (first) {
                     case "advancements" -> {
                         TARDISAchievementFactory.checkAdvancement(args[1]);
+                        return true;
+                    }
+                    case "armour" -> {
+                        if (sender instanceof Player player) {
+                            try {
+                                Monster monster = Monster.valueOf(args[1].toUpperCase(Locale.ROOT));
+                                EquipmentSlot slot = EquipmentSlot.valueOf(args[2].toUpperCase(Locale.ROOT));
+                                if (slot != EquipmentSlot.CHEST && slot != EquipmentSlot.LEGS) {
+                                    return false;
+                                }
+                                ItemStack a = MonsterArmour.makeEquippable(monster, slot);
+                                player.getInventory().addItem(a);
+                            } catch (IllegalArgumentException ignored) { }
+                        }
                         return true;
                     }
                     case "biome" -> {

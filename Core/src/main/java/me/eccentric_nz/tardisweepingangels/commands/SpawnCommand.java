@@ -39,11 +39,9 @@ import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.PigZombie;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -87,8 +85,6 @@ public class SpawnCommand {
             LivingEntity a;
             if (monster.isFollower()) {
                 a = (LivingEntity) new MonsterSpawner().createFollower(eyeLocation, new Follower(UUID.randomUUID(), player.getUniqueId(), monster)).getBukkitEntity();
-            } else if (monster == Monster.DALEK) {
-                a = (LivingEntity) eyeLocation.getWorld().spawnEntity(eyeLocation, EntityType.SKELETON);
             } else {
                 a = new MonsterSpawner().create(eyeLocation, monster);
             }
@@ -142,6 +138,11 @@ public class SpawnCommand {
                         }
                     }
                 }
+                case ANGEL_OF_LIBERTY, THE_BEAST -> {
+                    new Equipper(monster, a, false).setHelmetAndInvisibility();
+                    // set entity scale attribute
+                    a.getAttribute(Attribute.SCALE).setBaseValue(2.5d);
+                }
                 case EMPTY_CHILD -> {
                     new Equipper(monster, a, false).setHelmetAndInvisibility();
                     EmptyChildEquipment.setSpeed(a);
@@ -159,11 +160,9 @@ public class SpawnCommand {
                     pigman.setAngry(true);
                     pigman.setAnger(Integer.MAX_VALUE);
                 }
-                case JUDOON -> JudoonEquipment.set(null, a, false);
+                case JUDOON -> JudoonEquipment.set(player, a, false);
                 case K9 -> K9Equipment.set(player, a, false);
-                case MIRE, SILURIAN -> new Equipper(monster, a, false).setHelmetAndInvisibility();
-                case OOD -> OodEquipment.set(player, a, false, true);
-                case SEA_DEVIL -> new Equipper(monster, a, false).setHelmetAndInvisibility();
+                case OOD -> OodEquipment.set(player, a, false);
                 case SILENT -> {
                     new Equipper(monster, a, false).setHelmetAndInvisibility();
                     SilentEquipment.setGuardian(a);
@@ -175,12 +174,14 @@ public class SpawnCommand {
                     a.setCustomName("Strax");
                 }
                 case TOCLAFANE -> ToclafaneEquipment.set(a, false);
-                // WEEPING_ANGEL, CYBERMAN, HATH, SLITHEEN, SONTARAN, VASHTA_NERADA, ZYGON
+                // WEEPING_ANGEL, CYBERMAN, CYBERSHADE, HATH, MIRE, OMEGA, SEA_DEVIL, SILURIAN,
+                // SLITHEEN, SMILER, SONTARAN, SUTEKH, VAMPIRE_OF_VENICE, VASHTA_NERADA, ZYGON
                 default -> new Equipper(monster, a, false).setHelmetAndInvisibility();
             }
+            // TODO add new monster SFX
             String sound = switch (monster) {
                 case EMPTY_CHILD -> "empty";
-                case HEADLESS_MONK -> "headliess_monk";
+                case HEADLESS_MONK -> "headless_monk";
                 case ICE_WARRIOR -> "warrior";
                 case MIRE -> "item.trident.thunder";
                 case SEA_DEVIL -> "sea_devil";

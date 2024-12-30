@@ -33,11 +33,11 @@ public class TWAK9 extends TWAFollower {
     protected double oldX;
     protected double oldZ;
     protected final NamespacedKey[] frames = new NamespacedKey[]{
-            K9Variant.K9_0.getKey(),
+            K9Variant.K9.getKey(),
             K9Variant.K9_1.getKey(),
             K9Variant.K9_2.getKey(),
             K9Variant.K9_1.getKey(),
-            K9Variant.K9_0.getKey(),
+            K9Variant.K9.getKey(),
             K9Variant.K9_3.getKey(),
             K9Variant.K9_4.getKey(),
             K9Variant.K9_3.getKey()

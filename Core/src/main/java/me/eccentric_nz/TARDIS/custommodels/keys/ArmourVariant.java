@@ -37,7 +37,9 @@ public enum ArmourVariant {
     VAMPIRE_OF_VENICE(new NamespacedKey(TARDIS.plugin, "vashta_nerada")),
     VASHTA_NERADA(new NamespacedKey(TARDIS.plugin, "vashta_nerada")),
     WEEPING_ANGEL(new NamespacedKey(TARDIS.plugin, "weeping_angel")),
-    ZYGON(new NamespacedKey(TARDIS.plugin, "zygon"));
+    ZYGON(new NamespacedKey(TARDIS.plugin, "zygon")),
+    CHESTPLATE(new NamespacedKey(TARDIS.plugin, "monster_chestplate")),
+    LEGGINGS(new NamespacedKey(TARDIS.plugin, "monster_leggings"));
 
     private final NamespacedKey key;
 

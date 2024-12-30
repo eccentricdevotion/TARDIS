@@ -50,9 +50,13 @@ import java.util.UUID;
 
 public class Death implements Listener {
 
+    // TODO add custom drops for new monsters
     private final TARDIS plugin;
     private final List<Material> angel_drops = new ArrayList<>();
+    private final List<Material> angel_of_liberty_drops = new ArrayList<>();
+    private final List<Material> beast_drops = new ArrayList<>();
     private final List<Material> cyber_drops = new ArrayList<>();
+    private final List<Material> cybershade_drops = new ArrayList<>();
     private final List<Material> clockwork_drops = new ArrayList<>();
     private final List<Material> dalek_drops = new ArrayList<>();
     private final List<Material> dalek_sec_drops = new ArrayList<>();
@@ -63,39 +67,50 @@ public class Death implements Listener {
     private final List<Material> headless_drops = new ArrayList<>();
     private final List<Material> ice_drops = new ArrayList<>();
     private final List<Material> mire_drops = new ArrayList<>();
+    private final List<Material> omega_drops = new ArrayList<>();
     private final List<Material> ossified_drops = new ArrayList<>();
     private final List<Material> scarecrow_drops = new ArrayList<>();
     private final List<Material> silent_drops = new ArrayList<>();
     private final List<Material> silurian_drops = new ArrayList<>();
     private final List<Material> slitheen_drops = new ArrayList<>();
+    private final List<Material> smiler_drops = new ArrayList<>();
     private final List<Material> sontaran_drops = new ArrayList<>();
+    private final List<Material> sutekh_drops = new ArrayList<>();
     private final List<Material> sycorax_drops = new ArrayList<>();
+    private final List<Material> vampire_drops = new ArrayList<>();
     private final List<Material> vashta_drops = new ArrayList<>();
     private final List<Material> zygon_drops = new ArrayList<>();
 
     public Death(TARDIS plugin) {
         this.plugin = plugin;
         plugin.getMonstersConfig().getStringList("angels.drops").forEach((a) -> angel_drops.add(Material.valueOf(a)));
+        plugin.getMonstersConfig().getStringList("angel_of_liberty.drops").forEach((l) -> angel_of_liberty_drops.add(Material.valueOf(l)));
+        plugin.getMonstersConfig().getStringList("the_beast.drops").forEach((b) -> beast_drops.add(Material.valueOf(b)));
         plugin.getMonstersConfig().getStringList("clockwork_droids.drops").forEach((c) -> clockwork_drops.add(Material.valueOf(c)));
         plugin.getMonstersConfig().getStringList("cybermen.drops").forEach((c) -> cyber_drops.add(Material.valueOf(c)));
+        plugin.getMonstersConfig().getStringList("cybershades.drops").forEach((c) -> cybershade_drops.add(Material.valueOf(c)));
         plugin.getMonstersConfig().getStringList("daleks.drops").forEach((d) -> dalek_drops.add(Material.valueOf(d)));
         plugin.getMonstersConfig().getStringList("daleks.dalek_sec_drops").forEach((d) -> dalek_sec_drops.add(Material.valueOf(d)));
         plugin.getMonstersConfig().getStringList("daleks.davros_drops").forEach((d) -> davros_drops.add(Material.valueOf(d)));
-        plugin.getMonstersConfig().getStringList("sea_devils.drops").forEach((d) -> devil_drops.add(Material.valueOf(d)));
         plugin.getMonstersConfig().getStringList("empty_child.drops").forEach((e) -> empty_drops.add(Material.valueOf(e)));
         plugin.getMonstersConfig().getStringList("hath.drops").forEach((e) -> hath_drops.add(Material.valueOf(e)));
         plugin.getMonstersConfig().getStringList("headless_monks.drops").forEach((e) -> headless_drops.add(Material.valueOf(e)));
         plugin.getMonstersConfig().getStringList("ice_warriors.drops").forEach((i) -> ice_drops.add(Material.valueOf(i)));
+        plugin.getMonstersConfig().getStringList("omega.drops").forEach((o) -> omega_drops.add(Material.valueOf(o)));
+        plugin.getMonstersConfig().getStringList("ossified.drops").forEach((o) -> ossified_drops.add(Material.valueOf(o)));
         plugin.getMonstersConfig().getStringList("scarecrows.drops").forEach((m) -> scarecrow_drops.add(Material.valueOf(m)));
-        plugin.getMonstersConfig().getStringList("silent.drops").forEach((m) -> silent_drops.add(Material.valueOf(m)));
+        plugin.getMonstersConfig().getStringList("sea_devils.drops").forEach((d) -> devil_drops.add(Material.valueOf(d)));
+        plugin.getMonstersConfig().getStringList("silent.drops").forEach((s) -> silent_drops.add(Material.valueOf(s)));
         plugin.getMonstersConfig().getStringList("silurians.drops").forEach((s) -> silurian_drops.add(Material.valueOf(s)));
         plugin.getMonstersConfig().getStringList("slitheen.drops").forEach((s) -> slitheen_drops.add(Material.valueOf(s)));
-        plugin.getMonstersConfig().getStringList("sontarans.drops").forEach((o) -> sontaran_drops.add(Material.valueOf(o)));
-        plugin.getMonstersConfig().getStringList("sycorax.drops").forEach((m) -> sycorax_drops.add(Material.valueOf(m)));
-        plugin.getMonstersConfig().getStringList("the_mire.drops").forEach((e) -> mire_drops.add(Material.valueOf(e)));
+        plugin.getMonstersConfig().getStringList("smilers.drops").forEach((s) -> smiler_drops.add(Material.valueOf(s)));
+        plugin.getMonstersConfig().getStringList("sontarans.drops").forEach((s) -> sontaran_drops.add(Material.valueOf(s)));
+        plugin.getMonstersConfig().getStringList("sutekh.drops").forEach((s) -> sutekh_drops.add(Material.valueOf(s)));
+        plugin.getMonstersConfig().getStringList("sycorax.drops").forEach((s) -> sycorax_drops.add(Material.valueOf(s)));
+        plugin.getMonstersConfig().getStringList("the_mire.drops").forEach((t) -> mire_drops.add(Material.valueOf(t)));
+        plugin.getMonstersConfig().getStringList("vampires.drops").forEach((v) -> vampire_drops.add(Material.valueOf(v)));
         plugin.getMonstersConfig().getStringList("vashta_nerada.drops").forEach((v) -> vashta_drops.add(Material.valueOf(v)));
         plugin.getMonstersConfig().getStringList("zygons.drops").forEach((z) -> zygon_drops.add(Material.valueOf(z)));
-        plugin.getMonstersConfig().getStringList("ossified.drops").forEach((o) -> ossified_drops.add(Material.valueOf(o)));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -158,6 +173,19 @@ public class Death implements Listener {
                     event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                     return;
                 }
+                if (pdc.has(TARDISWeepingAngels.OMEGA, PersistentDataType.INTEGER)) {
+                    event.getDrops().clear();
+                    ItemStack stack;
+                    if (TARDISConstants.RANDOM.nextInt(100) < 3) {
+                        stack = HeadBuilder.getItemStack(Monster.OMEGA);
+                    } else if (TARDISConstants.RANDOM.nextInt(100) < 6) {
+                        stack = new ItemStack(Material.NETHERITE_SCRAP, 2);
+                    } else {
+                        stack = new ItemStack(omega_drops.get(TARDISConstants.RANDOM.nextInt(omega_drops.size())), TARDISConstants.RANDOM.nextInt(2) + 1);
+                    }
+                    event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
+                    return;
+                }
                 if (pdc.has(TARDISWeepingAngels.DALEK, PersistentDataType.INTEGER)) {
                     event.getDrops().clear();
                     ItemStack stack;
@@ -187,19 +215,6 @@ public class Death implements Listener {
                         stack = HeadBuilder.getItemStack(Monster.DAVROS);
                     } else {
                         stack = new ItemStack(davros_drops.get(TARDISConstants.RANDOM.nextInt(davros_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
-                    }
-                    event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
-                    return;
-                }
-                if (pdc.has(TARDISWeepingAngels.DEVIL, PersistentDataType.INTEGER)) {
-                    event.getDrops().clear();
-                    ItemStack stack;
-                    if (TARDISConstants.RANDOM.nextInt(100) < 3) {
-                        stack = HeadBuilder.getItemStack(Monster.SEA_DEVIL);
-                    } else if (TARDISConstants.RANDOM.nextInt(100) < 6) {
-                        stack = new ItemStack(Material.TRIDENT, 1);
-                    } else {
-                        stack = new ItemStack(devil_drops.get(TARDISConstants.RANDOM.nextInt(devil_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                     }
                     event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                     return;
@@ -257,6 +272,30 @@ public class Death implements Listener {
             }
             case ZOMBIE -> {
                 ItemStack stack;
+                if (pdc.has(TARDISWeepingAngels.ANGEL_OF_LIBERTY, PersistentDataType.INTEGER)) {
+                    event.getDrops().clear();
+                    if (TARDISConstants.RANDOM.nextInt(100) < 3) {
+                        stack = HeadBuilder.getItemStack(Monster.ANGEL_OF_LIBERTY);
+                    } else if (TARDISConstants.RANDOM.nextInt(100) < 6) {
+                        stack = new ItemStack(Material.CLOCK, 1);
+                    } else {
+                        stack = new ItemStack(angel_of_liberty_drops.get(TARDISConstants.RANDOM.nextInt(angel_of_liberty_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
+                    }
+                    event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
+                    return;
+                }
+                if (pdc.has(TARDISWeepingAngels.BEAST, PersistentDataType.INTEGER)) {
+                    event.getDrops().clear();
+                    if (TARDISConstants.RANDOM.nextInt(100) < 3) {
+                        stack = HeadBuilder.getItemStack(Monster.THE_BEAST);
+                    } else if (TARDISConstants.RANDOM.nextInt(100) < 6) {
+                        stack = new ItemStack(Material.IRON_INGOT, 1);
+                    } else {
+                        stack = new ItemStack(beast_drops.get(TARDISConstants.RANDOM.nextInt(beast_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
+                    }
+                    event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
+                    return;
+                }
                 if (pdc.has(TARDISWeepingAngels.CLOCKWORK_DROID, PersistentDataType.INTEGER)) {
                     event.getDrops().clear();
                     if (TARDISConstants.RANDOM.nextInt(100) < 3) {
@@ -277,6 +316,18 @@ public class Death implements Listener {
                         stack = new ItemStack(Material.IRON_INGOT, 1);
                     } else {
                         stack = new ItemStack(cyber_drops.get(TARDISConstants.RANDOM.nextInt(cyber_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
+                    }
+                    event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
+                    return;
+                }
+                if (pdc.has(TARDISWeepingAngels.CYBERSHADE, PersistentDataType.INTEGER)) {
+                    event.getDrops().clear();
+                    if (TARDISConstants.RANDOM.nextInt(100) < 3) {
+                        stack = HeadBuilder.getItemStack(Monster.CYBERSHADE);
+                    } else if (TARDISConstants.RANDOM.nextInt(100) < 6) {
+                        stack = new ItemStack(Material.IRON_INGOT, 1);
+                    } else {
+                        stack = new ItemStack(cybershade_drops.get(TARDISConstants.RANDOM.nextInt(cybershade_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                     }
                     event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                     return;
@@ -314,6 +365,18 @@ public class Death implements Listener {
                         stack = new ItemStack(Material.HAY_BLOCK, 1);
                     } else {
                         stack = new ItemStack(scarecrow_drops.get(TARDISConstants.RANDOM.nextInt(scarecrow_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
+                    }
+                    event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
+                    return;
+                }
+                if (pdc.has(TARDISWeepingAngels.SMILER, PersistentDataType.INTEGER)) {
+                    event.getDrops().clear();
+                    if (TARDISConstants.RANDOM.nextInt(100) < 3) {
+                        stack = HeadBuilder.getItemStack(Monster.SMILER);
+                    } else if (TARDISConstants.RANDOM.nextInt(100) < 6) {
+                        stack = new ItemStack(Material.IRON_INGOT, 1);
+                    } else {
+                        stack = new ItemStack(smiler_drops.get(TARDISConstants.RANDOM.nextInt(smiler_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                     }
                     event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                     return;
@@ -392,6 +455,34 @@ public class Death implements Listener {
                     }
                 }
             }
+            case DROWNED -> {
+                if (pdc.has(TARDISWeepingAngels.DEVIL, PersistentDataType.INTEGER)) {
+                    event.getDrops().clear();
+                    ItemStack stack;
+                    if (TARDISConstants.RANDOM.nextInt(100) < 3) {
+                        stack = HeadBuilder.getItemStack(Monster.SEA_DEVIL);
+                    } else if (TARDISConstants.RANDOM.nextInt(100) < 6) {
+                        stack = new ItemStack(Material.TRIDENT, 1);
+                    } else {
+                        stack = new ItemStack(devil_drops.get(TARDISConstants.RANDOM.nextInt(devil_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
+                    }
+                    event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
+                    return;
+                }
+
+                if (pdc.has(TARDISWeepingAngels.VAMPIRE, PersistentDataType.INTEGER)) {
+                    event.getDrops().clear();
+                    ItemStack stack;
+                    if (TARDISConstants.RANDOM.nextInt(100) < 3) {
+                        stack = HeadBuilder.getItemStack(Monster.VAMPIRE_OF_VENICE);
+                    } else if (TARDISConstants.RANDOM.nextInt(100) < 6) {
+                        stack = new ItemStack(Material.TRIDENT, 1);
+                    } else {
+                        stack = new ItemStack(vampire_drops.get(TARDISConstants.RANDOM.nextInt(vampire_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
+                    }
+                    event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
+                }
+            }
             case HUSK -> {
                 if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                     UUID uuid = null;
@@ -418,6 +509,20 @@ public class Death implements Listener {
                         where.put("uuid", uuid.toString());
                         plugin.getQueryFactory().doDelete("followers", where);
                     }
+                }
+            }
+            case STRAY -> {
+                ItemStack stack;
+                if (pdc.has(TARDISWeepingAngels.SUTEKH, PersistentDataType.INTEGER)) {
+                    event.getDrops().clear();
+                    if (TARDISConstants.RANDOM.nextInt(100) < 3) {
+                        stack = HeadBuilder.getItemStack(Monster.SUTEKH);
+                    } else if (TARDISConstants.RANDOM.nextInt(100) < 6) {
+                        stack = new ItemStack(Material.IRON_INGOT, 1);
+                    } else {
+                        stack = new ItemStack(sutekh_drops.get(TARDISConstants.RANDOM.nextInt(sutekh_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
+                    }
+                    event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                 }
             }
             default -> {

@@ -47,7 +47,7 @@ public class TARDISBuilderUtility {
         String doorloc = world.getName() + ":" + x + ":" + y + ":" + z;
         String doorStr = world.getBlockAt(x, y, z).getLocation().toString();
         TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
-        // should insert the door when tardis is first made, and then update location there after!
+        // should insert the door when tardis is first made, and then update location thereafter!
         HashMap<String, Object> whered = new HashMap<>();
         whered.put("door_type", 0);
         whered.put("tardis_id", bd.getTardisID());
@@ -82,7 +82,7 @@ public class TARDISBuilderUtility {
         String doorloc = world.getName() + ":" + x + ":" + y + ":" + z;
         String doorStr = world.getBlockAt(x, y, z).getLocation().toString();
         TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, id);
-        // should insert the door when tardis is first made, and then update location there after!
+        // should insert the door when tardis is first made, and then update location thereafter!
         HashMap<String, Object> whered = new HashMap<>();
         whered.put("door_type", 0);
         whered.put("tardis_id", id);
@@ -151,7 +151,7 @@ public class TARDISBuilderUtility {
             case ENDER_PEARL -> im.setItemModel(ChameleonVariant.PANDORICA_CLOSED.getKey());
             case GRAY_STAINED_GLASS_PANE -> im.setItemModel(ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey());
         }
-        if (bd.shouldAddSign()) {
+        if (bd.shouldAddSign() && bd.getPlayer() != null) {
             String pb = "";
             switch (preset) {
                 case WEEPING_ANGEL -> pb = "Weeping Angel";

@@ -60,7 +60,7 @@ public class K9Listener implements Listener {
             if (!plugin.getMonstersConfig().getBoolean("k9.worlds." + location.getWorld().getName())) {
                 return;
             }
-            Entity k9 = new MonsterSpawner().createFollower(location, new Follower(UUID.randomUUID(), player.getUniqueId(), Monster.K9)).getBukkitEntity();
+            LivingEntity k9 = (LivingEntity) new MonsterSpawner().createFollower(location, new Follower(UUID.randomUUID(), player.getUniqueId(), Monster.K9)).getBukkitEntity();
             K9Equipment.set(player, k9, false);
             ent.remove();
             player.playSound(k9.getLocation(), "k9", 1.0f, 1.0f);
@@ -109,7 +109,7 @@ public class K9Listener implements Listener {
                         player.getInventory().setItemInMainHand(is);
                     }
                     // spawn a K9 instead
-                    Entity k9 = new MonsterSpawner().createFollower(location, new Follower(UUID.randomUUID(), player.getUniqueId(), Monster.K9)).getBukkitEntity();
+                    LivingEntity k9 = (LivingEntity) new MonsterSpawner().createFollower(location, new Follower(UUID.randomUUID(), player.getUniqueId(), Monster.K9)).getBukkitEntity();
                     K9Equipment.set(player, k9, false);
                     player.playSound(k9.getLocation(), "k9", 1.0f, 1.0f);
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(k9, EntityType.HUSK, Monster.K9, location));
