@@ -22,10 +22,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayType;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.worldgen.TARDISChunkGenerator;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
@@ -111,7 +108,7 @@ public class TARDISUtils {
      * they do.
      *
      * @param uuid the player's UUID
-     * @param id the player's TARDIS ID
+     * @param id   the player's TARDIS ID
      */
     public void updateStorageId(String uuid, int id) {
         HashMap<String, Object> where = new HashMap<>();
@@ -242,34 +239,34 @@ public class TARDISUtils {
         TARDISDisplayType displayType = plugin.getTrackerKeeper().getDisplay().get(player.getUniqueId());
         return switch (displayType) {
             case BIOME -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                .replace("%BIOME%", player.getLocation().getBlock().getBiome().toString())
-                );
+                    .replace("%BIOME%", player.getLocation().getBlock().getBiome().toString())
+            );
             case COORDS -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
-                .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
-                .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
-                );
+                    .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
+                    .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
+                    .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
+            );
             case DIRECTION -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                .replace("%FACING%", getFacing(player))
-                .replace("%FACING_XZ%", getFacingXZ(player))
-                );
+                    .replace("%FACING%", getFacing(player))
+                    .replace("%FACING_XZ%", getFacingXZ(player))
+            );
             case TARGET_BLOCK -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString()));
+                    .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString()));
             case WORLD -> ChatColor.translateAlternateColorCodes('&', displayType.getFormat()
-                .replace("%WORLD%", player.getLocation().getWorld().getName()));
+                    .replace("%WORLD%", player.getLocation().getWorld().getName()));
             default -> // ALL
-                ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("display.all")
-                .replace("%WORLD%", player.getLocation().getWorld().getName())
-                .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
-                .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
-                .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
-                .replace("%FACING%", getFacing(player))
-                .replace("%FACING_XZ%", getFacingXZ(player))
-                .replace("%YAW%", String.format("%.1f", player.getLocation().getYaw()))
-                .replace("%PITCH%", String.format("%.1f", player.getLocation().getPitch()))
-                .replace("%BIOME%", player.getLocation().getBlock().getBiome().toString())
-                .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString())
-                );
+                    ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("display.all")
+                            .replace("%WORLD%", player.getLocation().getWorld().getName())
+                            .replace("%X%", String.format("%,d", player.getLocation().getBlockX()))
+                            .replace("%Y%", String.format("%,d", player.getLocation().getBlockY()))
+                            .replace("%Z%", String.format("%,d", player.getLocation().getBlockZ()))
+                            .replace("%FACING%", getFacing(player))
+                            .replace("%FACING_XZ%", getFacingXZ(player))
+                            .replace("%YAW%", String.format("%.1f", player.getLocation().getYaw()))
+                            .replace("%PITCH%", String.format("%.1f", player.getLocation().getPitch()))
+                            .replace("%BIOME%", player.getLocation().getBlock().getBiome().toString())
+                            .replace("%TARGET_BLOCK%", player.getTargetBlock(null, 5).getType().toString())
+                    );
         };
     }
 
@@ -280,5 +277,14 @@ public class TARDISUtils {
             }
         }
         return false;
+    }
+
+    public NamespacedKey getCustomModel(Material material, String variant) {
+        for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
+            if (plugin.getCustomModelConfig().getString("models." + k + ".item").equals(material.toString())) {
+                return new NamespacedKey(plugin, k + variant);
+            }
+        }
+        return null;
     }
 }

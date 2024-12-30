@@ -9,20 +9,36 @@ models:
 
 # Custom JSON model files are required for each TARDIS visual
 # open/closed door + 2 stages of materialisation (coloured/clear)
+# + a (bigger) model used when the player is viewing the exterior
 #
 # These files should be named (all lowercase, replace spaces with underscores)
 # and placed into the assets/tardis/models/item/police_box/ directory.
+# You must use the appropriate suffixes as shown below.
 
 # e.g.:
 #
+#      assets/tardis/models/item/police_box/type_40_camera.json
 #      assets/tardis/models/item/police_box/type_40_closed.json
+#      assets/tardis/models/item/police_box/type_40_glass.json
 #      assets/tardis/models/item/police_box/type_40_open.json
 #      assets/tardis/models/item/police_box/type_40_stained.json
-#      assets/tardis/models/item/police_box/type_40_glass.json
 #
 # and:
 #
+#      assets/tardis/models/item/police_box/bad_wolf_camera.json
 #      assets/tardis/models/item/police_box/bad_wolf_closed.json
+#      assets/tardis/models/item/police_box/bad_wolf_glass.json
 #      assets/tardis/models/item/police_box/bad_wolf_open.json
 #      assets/tardis/models/item/police_box/bad_wolf_stained.json
-#      assets/tardis/models/item/police_box/bad_wolf_glass.json
+#
+# You will also need to add item model definitions to assets/tardis/items directory
+# that point to the custom model files - use the same names.
+#
+# e.g. the contents of assets/tardis/items/type_40_closed.json would be:
+#
+# {
+#    "model": {
+#       "type": "minecraft:model",
+#       "model": "tardis:item/police_box/type_40_closed"
+#    }
+# }

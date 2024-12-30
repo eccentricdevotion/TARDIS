@@ -77,8 +77,8 @@ public class TARDISCustomModelChanger {
             if ((TARDISConstants.DYES.contains(is.getType()) || plugin.getUtils().isCustomModel(is)) && is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
                 if (im.hasItemModel()) {
-                    NamespacedKey cmd = im.getItemModel();
-                    boolean open = cmd.getKey().endsWith("_open");
+                    NamespacedKey model = im.getItemModel();
+                    boolean open = model.getKey().endsWith("_open");
                     NamespacedKey newData;
                     boolean outside = !plugin.getUtils().inTARDISWorld(player);
                     if (open) {

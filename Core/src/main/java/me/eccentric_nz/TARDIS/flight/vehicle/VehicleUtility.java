@@ -48,7 +48,7 @@ public class VehicleUtility {
         // get the existing stand
         ArmorStand old = null;
         for (Entity e : location.getWorld().getNearbyEntities(location, 1.5d, 1.5d, 1.5d, (s) -> s.getType() == EntityType.ARMOR_STAND)) {
-            if (e instanceof ArmorStand a) {
+            if (e instanceof ArmorStand a && !(e instanceof TARDISArmourStand)) {
                 old = a;
             }
         }
