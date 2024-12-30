@@ -73,7 +73,7 @@ public class Sounds implements Listener {
                 which = "davros";
             }
             if (pdc.has(TARDISWeepingAngels.DEVIL, PersistentDataType.INTEGER)) {
-                which = "devil";
+                which = "sea_devil";
             }
             if (pdc.has(TARDISWeepingAngels.EMPTY, PersistentDataType.INTEGER)) {
                 which = "empty_child";
