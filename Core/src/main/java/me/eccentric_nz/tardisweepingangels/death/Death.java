@@ -142,6 +142,12 @@ public class Death implements Listener {
                     return;
                 }
                 if (pdc.has(TARDISWeepingAngels.MONK, PersistentDataType.INTEGER)) {
+                    if (pdc.has(TARDISWeepingAngels.HEADLESS_TASK, PersistentDataType.INTEGER)) {
+                        plugin.getServer().getScheduler().cancelTask(pdc.get(TARDISWeepingAngels.HEADLESS_TASK, PersistentDataType.INTEGER));
+                    }
+                    if (pdc.has(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER)) {
+                        plugin.getServer().getScheduler().cancelTask(pdc.get(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER));
+                    }
                     event.getDrops().clear();
                     ItemStack stack;
                     if (TARDISConstants.RANDOM.nextInt(100) < 3) {
