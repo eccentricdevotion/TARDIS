@@ -145,6 +145,30 @@ public class WorldProcessor implements Runnable {
                 plugin.getMonstersConfig().set("zygons.worlds." + n, m);
                 i++;
             }
+            if (!config.contains("vampires.worlds." + n, true)) {
+                plugin.getMonstersConfig().set("vampires.worlds." + n, m);
+                i++;
+            }
+            if (!config.contains("omega.worlds." + n, true)) {
+                plugin.getMonstersConfig().set("omega.worlds." + n, m);
+                i++;
+            }
+            if (!config.contains("the_beast.worlds." + n, true)) {
+                plugin.getMonstersConfig().set("the_beast.worlds." + n, 1);
+                i++;
+            }
+            if (!config.contains("angel_of_liberty.worlds." + n, true)) {
+                plugin.getMonstersConfig().set("angel_of_liberty.worlds." + n, 1);
+                i++;
+            }
+            if (!config.contains("sutekh.worlds." + n, true)) {
+                plugin.getMonstersConfig().set("sutekh.worlds." + n, m);
+                i++;
+            }
+            if (!config.contains("smilers.worlds." + n, true)) {
+                plugin.getMonstersConfig().set("smilers.worlds." + n, m);
+                i++;
+            }
         }
         if (i > 0) {
             try {

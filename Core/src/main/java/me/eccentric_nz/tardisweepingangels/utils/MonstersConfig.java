@@ -19,6 +19,7 @@ package me.eccentric_nz.tardisweepingangels.utils;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -61,26 +62,32 @@ public class MonstersConfig {
         strOptions.put("angels.weapon", "DIAMOND_PICKAXE");
         strOptions.put("headless_monks.projectile", "SMALL_FIREBALL");
         // list
+        listOptions.put("angel_of_liberty.drops", Arrays.asList("TORCH", "OXIDIZED_COPPER"));
         listOptions.put("angels.drops", Arrays.asList("STONE", "COBBLESTONE"));
         listOptions.put("angels.teleport_worlds", List.of("world"));
         listOptions.put("cybermen.drops", Arrays.asList("REDSTONE", "STONE_BUTTON"));
-        listOptions.put("daleks.drops", Arrays.asList("SLIME_BALL", "ROTTEN_FLESH"));
         listOptions.put("daleks.dalek_sec_drops", Arrays.asList("VERDANT_FROGLIGHT", "LEATHER_CHESTPLATE"));
         listOptions.put("daleks.davros_drops", Arrays.asList("CHAIN", "CRIMSON_BUTTON"));
+        listOptions.put("daleks.drops", Arrays.asList("SLIME_BALL", "ROTTEN_FLESH"));
         listOptions.put("empty_child.drops", Arrays.asList("COOKED_BEEF", "SUGAR"));
         listOptions.put("hath.drops", Arrays.asList("SALMON", "STONE_PICKAXE"));
         listOptions.put("headless_monks.drops", Arrays.asList("BOOK", "RED_CANDLE"));
         listOptions.put("ice_warriors.drops", Arrays.asList("ICE", "PACKED_ICE", "SNOW_BLOCK"));
-        listOptions.put("silent.drops", Arrays.asList("INK_SAC", "FLOWER_POT"));
+        listOptions.put("omega.drops", Arrays.asList("GOLD_INGOT", "CLOCK"));
         listOptions.put("ood.drops", List.of("NAME_TAG"));
         listOptions.put("ossified.drops", List.of("CHARCOAL", "FIREWORK_STAR", "DEAD_BRAIN_CORAL"));
         listOptions.put("racnoss.drops", Arrays.asList("NETHERITE_INGOT", "ECHO_SHARD"));
         listOptions.put("sea_devils.drops", Arrays.asList("COD", "KELP"));
+        listOptions.put("silent.drops", Arrays.asList("INK_SAC", "FLOWER_POT"));
         listOptions.put("silurians.drops", Arrays.asList("GOLD_NUGGET", "FEATHER"));
         listOptions.put("slitheen.drops", Arrays.asList("RABBIT_HIDE", "PHANTOM_MEMBRANE"));
+        listOptions.put("smilers.drops", Arrays.asList("COMPARATOR", "CHERRY_LOG"));
         listOptions.put("sontarans.drops", Arrays.asList("POTATO", "POISONOUS_POTATO"));
+        listOptions.put("sutekh.drops", Arrays.asList("GLOWSTONE_DUST", "LIGHTNING_ROD"));
+        listOptions.put("the_beast.drops", Arrays.asList("MAGMA_BLOCK", "CHAIN"));
         listOptions.put("the_mire.drops", Arrays.asList("HONEY_BOTTLE", "POTION"));
         listOptions.put("toclafane.drops", Arrays.asList("GUNPOWDER", "HONEYCOMB"));
+        listOptions.put("vampires.drops", Arrays.asList("TROPICAL_FISH", "FISHING_ROD"));
         listOptions.put("vashta_nerada.drops", Arrays.asList("BONE", "LEATHER"));
         listOptions.put("zygons.drops", Arrays.asList("PAINTING", "SAND"));
         // boolean
