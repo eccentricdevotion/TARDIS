@@ -69,7 +69,7 @@ public class IceWarriorRunnable implements Runnable {
                 long time = w.getTime();
                 // only spawn in day - times according to http://minecraft.gamepedia.com/Day-night_cycle
                 if ((time > 0 && time < 13187) || time > 22812) {
-                    // get the current warriors
+                    // get the current warrior count
                     int warriors = 0;
                     Collection<PigZombie> piggies = w.getEntitiesByClass(PigZombie.class);
                     for (PigZombie pz : piggies) {

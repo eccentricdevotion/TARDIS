@@ -53,7 +53,7 @@ public class SlitheenRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("slitheen.worlds." + name) > 0) {
-                // get the current warriors
+                // get the current slitheen count
                 int slitheen = 0;
                 Collection<Zombie> zombies = w.getEntitiesByClass(Zombie.class);
                 for (Zombie i : zombies) {

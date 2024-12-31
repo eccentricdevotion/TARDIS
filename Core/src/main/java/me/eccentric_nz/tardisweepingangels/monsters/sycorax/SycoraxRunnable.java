@@ -53,7 +53,7 @@ public class SycoraxRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("sycorax.worlds." + name) > 0) {
-                // get the current warriors
+                // get the current sycorax count
                 int sycorax = 0;
                 Collection<Zombie> zombies = w.getEntitiesByClass(Zombie.class);
                 for (Zombie c : zombies) {

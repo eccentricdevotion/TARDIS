@@ -56,7 +56,7 @@ public class WeepingAngelsRunnable implements Runnable {
                 long time = w.getTime();
                 // only spawn at night - times according to http://minecraft.gamepedia.com/Day-night_cycle
                 if (time > 13187 && time < 22812) {
-                    // get the current angels
+                    // get the current weeping angel count
                     int angels = 0;
                     Collection<Skeleton> skellies = w.getEntitiesByClass(Skeleton.class);
                     for (Skeleton a : skellies) {

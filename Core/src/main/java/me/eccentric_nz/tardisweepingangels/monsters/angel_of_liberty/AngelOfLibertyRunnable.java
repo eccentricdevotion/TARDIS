@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardisweepingangels.monsters.scarecrows;
+package me.eccentric_nz.tardisweepingangels.monsters.angel_of_liberty;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -37,14 +37,20 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Collection;
 
-public class ScarecrowRunnable implements Runnable {
+/**
+ * In a timeline in which the Weeping Angels were using New York City as a "battery farm" for feeding on humans' time
+ * energy in 1938, the Statue of Liberty was one of the many statues in the city that was taken over by the Angels.
+ * The Statue of Liberty would travel from Liberty Island to the Winter Quay in order to send the Angels' imprisoned
+ * victims back in time.
+ *
+ * @author eccentric_nz
+ */
+public class AngelOfLibertyRunnable implements Runnable {
 
     private final TARDIS plugin;
-    private final int spawn_rate;
 
-    public ScarecrowRunnable(TARDIS plugin) {
+    public AngelOfLibertyRunnable(TARDIS plugin) {
         this.plugin = plugin;
-        spawn_rate = plugin.getMonstersConfig().getInt("spawn_rate.how_many");
     }
 
     @Override
@@ -52,27 +58,25 @@ public class ScarecrowRunnable implements Runnable {
         plugin.getServer().getWorlds().forEach((w) -> {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
-            if (plugin.getMonstersConfig().getInt("scarecrows.worlds." + name) > 0) {
-                // get the current scarecrow count
-                int scarecrows = 0;
+            if (plugin.getMonstersConfig().getInt("angel_of_liberty.worlds." + name) > 0) {
+                // get the current angel of liberty count
+                int angel_of_liberty = 0;
                 Collection<Zombie> zombies = w.getEntitiesByClass(Zombie.class);
-                for (Zombie c : zombies) {
-                    PersistentDataContainer pdc = c.getPersistentDataContainer();
-                    if (pdc.has(TARDISWeepingAngels.SCARECROW, PersistentDataType.INTEGER)) {
-                        scarecrows++;
+                for (Zombie z : zombies) {
+                    PersistentDataContainer pdc = z.getPersistentDataContainer();
+                    if (pdc.has(TARDISWeepingAngels.ANGEL_OF_LIBERTY, PersistentDataType.INTEGER)) {
+                        angel_of_liberty++;
                     }
                 }
-                if (scarecrows < plugin.getMonstersConfig().getInt("scarecrows.worlds." + name)) {
-                    // if less than maximum, spawn some more
-                    for (int i = 0; i < spawn_rate; i++) {
-                        spawnScarecrow(w);
-                    }
+                if (angel_of_liberty < plugin.getMonstersConfig().getInt("angel_of_liberty.worlds." + name)) {
+                    // if less than maximum, spawn one
+                    spawnAngelOfLiberty(w);
                 }
             }
         });
     }
 
-    private void spawnScarecrow(World world) {
+    private void spawnAngelOfLiberty(World world) {
         int players = world.getPlayers().size();
         // don't bother spawning if there are no players in the world
         if (players == 0) {
@@ -89,10 +93,10 @@ public class ScarecrowRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                LivingEntity scarecrow = new MonsterSpawner().create(l, Monster.SCARECROW);
+                LivingEntity angel_of_liberty = new MonsterSpawner().create(l, Monster.ANGEL_OF_LIBERTY);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.SCARECROW, scarecrow, false).setHelmetAndInvisibility();
-                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(scarecrow, EntityType.ZOMBIE, Monster.SCARECROW, l));
+                    new Equipper(Monster.ANGEL_OF_LIBERTY, angel_of_liberty, false).setHelmetAndInvisibility();
+                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(angel_of_liberty, EntityType.ZOMBIE, Monster.ANGEL_OF_LIBERTY, l));
                 }, 5L);
             }
         }

@@ -52,7 +52,7 @@ public class MireRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("the_mire.worlds." + name) > 0) {
-                // get the current warriors
+                // get the current mire count
                 int mire = 0;
                 Collection<Skeleton> skeletons = w.getEntitiesByClass(Skeleton.class);
                 for (Skeleton s : skeletons) {

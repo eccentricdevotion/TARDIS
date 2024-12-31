@@ -53,7 +53,7 @@ public class ZygonRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("zygons.worlds." + name) > 0) {
-                // get the current warriors
+                // get the current zygon count
                 int zygons = 0;
                 Collection<Zombie> zombies = w.getEntitiesByClass(Zombie.class);
                 for (Zombie z : zombies) {

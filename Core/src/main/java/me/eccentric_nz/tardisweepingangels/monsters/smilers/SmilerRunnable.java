@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardisweepingangels.monsters.scarecrows;
+package me.eccentric_nz.tardisweepingangels.monsters.smilers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -37,12 +37,21 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Collection;
 
-public class ScarecrowRunnable implements Runnable {
+/**
+ * Smilers normally display a comforting happy face if citizens were obedient, though by their very nature as the
+ * tenacious watchdogs of the Starship UK, their smiles are more often than not unsettling, because Smilers can switch
+ * to grimacing expressions if they witness anyone disrupting the order on the starship. This is the one and only
+ * warning they give for the offender to immediately desist from their actions. If this warning is ignored, Smilers will
+ * reveal enraged faces with menacing red eyes and administer a brutal punishment.
+ *
+ * @author eccentric_nz
+ */
+public class SmilerRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final int spawn_rate;
 
-    public ScarecrowRunnable(TARDIS plugin) {
+    public SmilerRunnable(TARDIS plugin) {
         this.plugin = plugin;
         spawn_rate = plugin.getMonstersConfig().getInt("spawn_rate.how_many");
     }
@@ -52,27 +61,27 @@ public class ScarecrowRunnable implements Runnable {
         plugin.getServer().getWorlds().forEach((w) -> {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
-            if (plugin.getMonstersConfig().getInt("scarecrows.worlds." + name) > 0) {
-                // get the current scarecrow count
-                int scarecrows = 0;
+            if (plugin.getMonstersConfig().getInt("smilers.worlds." + name) > 0) {
+                // get the current smiler count
+                int smilers = 0;
                 Collection<Zombie> zombies = w.getEntitiesByClass(Zombie.class);
-                for (Zombie c : zombies) {
-                    PersistentDataContainer pdc = c.getPersistentDataContainer();
-                    if (pdc.has(TARDISWeepingAngels.SCARECROW, PersistentDataType.INTEGER)) {
-                        scarecrows++;
+                for (Zombie z : zombies) {
+                    PersistentDataContainer pdc = z.getPersistentDataContainer();
+                    if (pdc.has(TARDISWeepingAngels.SMILER, PersistentDataType.INTEGER)) {
+                        smilers++;
                     }
                 }
-                if (scarecrows < plugin.getMonstersConfig().getInt("scarecrows.worlds." + name)) {
+                if (smilers < plugin.getMonstersConfig().getInt("smilers.worlds." + name)) {
                     // if less than maximum, spawn some more
                     for (int i = 0; i < spawn_rate; i++) {
-                        spawnScarecrow(w);
+                        spawnSmiler(w);
                     }
                 }
             }
         });
     }
 
-    private void spawnScarecrow(World world) {
+    private void spawnSmiler(World world) {
         int players = world.getPlayers().size();
         // don't bother spawning if there are no players in the world
         if (players == 0) {
@@ -89,10 +98,10 @@ public class ScarecrowRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                LivingEntity scarecrow = new MonsterSpawner().create(l, Monster.SCARECROW);
+                LivingEntity smiler = new MonsterSpawner().create(l, Monster.SMILER);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.SCARECROW, scarecrow, false).setHelmetAndInvisibility();
-                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(scarecrow, EntityType.ZOMBIE, Monster.SCARECROW, l));
+                    new Equipper(Monster.SMILER, smiler, false).setHelmetAndInvisibility();
+                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(smiler, EntityType.ZOMBIE, Monster.SMILER, l));
                 }, 5L);
             }
         }

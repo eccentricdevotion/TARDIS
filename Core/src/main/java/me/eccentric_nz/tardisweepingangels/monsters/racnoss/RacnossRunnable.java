@@ -63,7 +63,7 @@ public class RacnossRunnable implements Runnable {
                     plugin.debug("Tried to spawn Racnoss in non-Nether world, please remove " + w.getName() + " from the racnoss worlds configuration!");
                     return;
                 }
-                // get the current warriors
+                // get the current racnoss count
                 int racnoss = 0;
                 Collection<PiglinBrute> brutes = w.getEntitiesByClass(PiglinBrute.class);
                 for (PiglinBrute b : brutes) {

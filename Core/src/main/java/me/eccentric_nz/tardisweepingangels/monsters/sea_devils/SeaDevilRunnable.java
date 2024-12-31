@@ -52,7 +52,7 @@ public class SeaDevilRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("sea_devils.worlds." + name) > 0) {
-                // get the current warriors
+                // get the current sea devil count
                 int devil = 0;
                 Collection<Drowned> drowned = w.getEntitiesByClass(Drowned.class);
                 for (Drowned d : drowned) {

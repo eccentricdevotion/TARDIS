@@ -53,7 +53,7 @@ public class SilentRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("silent.worlds." + name) > 0) {
-                // get the current silents
+                // get the current silent count
                 int papal = 0;
                 Collection<Skeleton> mainframe = w.getEntitiesByClass(Skeleton.class);
                 for (Skeleton s : mainframe) {

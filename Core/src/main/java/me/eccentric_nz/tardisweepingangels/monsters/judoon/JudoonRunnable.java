@@ -52,7 +52,7 @@ public class JudoonRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("judoon.worlds." + name) > 0) {
-                // get the current judoons
+                // get the current judoon count
                 int galactic = 0;
                 Collection<Husk> police = w.getEntitiesByClass(Husk.class);
                 for (Husk s : police) {

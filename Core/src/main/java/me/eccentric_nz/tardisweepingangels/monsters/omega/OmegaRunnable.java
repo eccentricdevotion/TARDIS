@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardisweepingangels.monsters.scarecrows;
+package me.eccentric_nz.tardisweepingangels.monsters.omega;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -31,18 +31,25 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.Skeleton;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Collection;
 
-public class ScarecrowRunnable implements Runnable {
+/**
+ * Omega - born as Peylix, also known as "the Engineer" and Omegon, and worshipped as Ohm - is a great intergalactic
+ * engineer and one of the founders of Time Lord society, but centuries of loneliness and isolation has bent his mind so
+ * that he threatens the entire universe.
+ *
+ * @author eccentric_nz
+ */
+public class OmegaRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final int spawn_rate;
 
-    public ScarecrowRunnable(TARDIS plugin) {
+    public OmegaRunnable(TARDIS plugin) {
         this.plugin = plugin;
         spawn_rate = plugin.getMonstersConfig().getInt("spawn_rate.how_many");
     }
@@ -52,27 +59,27 @@ public class ScarecrowRunnable implements Runnable {
         plugin.getServer().getWorlds().forEach((w) -> {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
-            if (plugin.getMonstersConfig().getInt("scarecrows.worlds." + name) > 0) {
-                // get the current scarecrow count
-                int scarecrows = 0;
-                Collection<Zombie> zombies = w.getEntitiesByClass(Zombie.class);
-                for (Zombie c : zombies) {
-                    PersistentDataContainer pdc = c.getPersistentDataContainer();
-                    if (pdc.has(TARDISWeepingAngels.SCARECROW, PersistentDataType.INTEGER)) {
-                        scarecrows++;
+            if (plugin.getMonstersConfig().getInt("omega.worlds." + name) > 0) {
+                // get the current omega count
+                int omegans = 0;
+                Collection<Skeleton> skeletons = w.getEntitiesByClass(Skeleton.class);
+                for (Skeleton s : skeletons) {
+                    PersistentDataContainer pdc = s.getPersistentDataContainer();
+                    if (pdc.has(TARDISWeepingAngels.OMEGA, PersistentDataType.INTEGER)) {
+                        omegans++;
                     }
                 }
-                if (scarecrows < plugin.getMonstersConfig().getInt("scarecrows.worlds." + name)) {
+                if (omegans < plugin.getMonstersConfig().getInt("omega.worlds." + name)) {
                     // if less than maximum, spawn some more
                     for (int i = 0; i < spawn_rate; i++) {
-                        spawnScarecrow(w);
+                        spawnOmega(w);
                     }
                 }
             }
         });
     }
 
-    private void spawnScarecrow(World world) {
+    private void spawnOmega(World world) {
         int players = world.getPlayers().size();
         // don't bother spawning if there are no players in the world
         if (players == 0) {
@@ -89,10 +96,10 @@ public class ScarecrowRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                LivingEntity scarecrow = new MonsterSpawner().create(l, Monster.SCARECROW);
+                LivingEntity zygon = new MonsterSpawner().create(l, Monster.OMEGA);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.SCARECROW, scarecrow, false).setHelmetAndInvisibility();
-                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(scarecrow, EntityType.ZOMBIE, Monster.SCARECROW, l));
+                    new Equipper(Monster.OMEGA, zygon, false).setHelmetAndInvisibility();
+                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(zygon, EntityType.SKELETON, Monster.OMEGA, l));
                 }, 5L);
             }
         }

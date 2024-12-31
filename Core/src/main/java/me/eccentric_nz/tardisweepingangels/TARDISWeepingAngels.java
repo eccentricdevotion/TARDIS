@@ -22,6 +22,7 @@ import me.eccentric_nz.tardisweepingangels.commands.TabComplete;
 import me.eccentric_nz.tardisweepingangels.death.Death;
 import me.eccentric_nz.tardisweepingangels.death.PlayerDeath;
 import me.eccentric_nz.tardisweepingangels.equip.PlayerUndisguise;
+import me.eccentric_nz.tardisweepingangels.monsters.angel_of_liberty.AngelOfLibertyRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.clockwork_droids.ClockworkDroidRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.cybermen.CybermanRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekGlideListener;
@@ -38,6 +39,7 @@ import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Builder;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Listener;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Recipe;
 import me.eccentric_nz.tardisweepingangels.monsters.mire.MireRunnable;
+import me.eccentric_nz.tardisweepingangels.monsters.omega.OmegaRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.OodListener;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.VillagerCuredListener;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.VillagerSpawnListener;
@@ -49,11 +51,15 @@ import me.eccentric_nz.tardisweepingangels.monsters.silent.SilentRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.silurians.SilurianRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.silurians.SilurianSpawnerListener;
 import me.eccentric_nz.tardisweepingangels.monsters.slitheen.SlitheenRunnable;
+import me.eccentric_nz.tardisweepingangels.monsters.smilers.SmilerRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.sontarans.SontaranRunnable;
+import me.eccentric_nz.tardisweepingangels.monsters.sutekh.SutekhRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.sycorax.SycoraxRunnable;
+import me.eccentric_nz.tardisweepingangels.monsters.the_beast.TheBeastRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.BeeSpawnListener;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.ToclafaneListener;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.ToclafaneRunnable;
+import me.eccentric_nz.tardisweepingangels.monsters.vampires.VampireRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.vashta_nerada.VashtaNeradaListener;
 import me.eccentric_nz.tardisweepingangels.monsters.weeping_angels.*;
 import me.eccentric_nz.tardisweepingangels.monsters.zygons.ZygonRunnable;
@@ -203,6 +209,7 @@ public class TARDISWeepingAngels {
         // start repeating spawn tasks
         long delay = plugin.getMonstersConfig().getLong("spawn_rate.how_often");
         List<Runnable> spawners = Arrays.asList(
+                new AngelOfLibertyRunnable(plugin),
                 new ClockworkDroidRunnable(plugin),
                 new CybermanRunnable(plugin),
                 new DalekRunnable(plugin),
@@ -212,15 +219,20 @@ public class TARDISWeepingAngels {
                 new IceWarriorRunnable(plugin),
                 new JudoonRunnable(plugin),
                 new MireRunnable(plugin),
+                new OmegaRunnable(plugin),
                 new RacnossRunnable(plugin),
                 new ScarecrowRunnable(plugin),
                 new SeaDevilRunnable(plugin),
                 new SilentRunnable(plugin),
                 new SilurianRunnable(plugin),
                 new SlitheenRunnable(plugin),
+                new SmilerRunnable(plugin),
                 new SontaranRunnable(plugin),
+                new SutekhRunnable(plugin),
                 new SycoraxRunnable(plugin),
+                new TheBeastRunnable(plugin),
                 new ToclafaneRunnable(plugin),
+                new VampireRunnable(plugin),
                 new WeepingAngelsRunnable(plugin),
                 new ZygonRunnable(plugin)
         );

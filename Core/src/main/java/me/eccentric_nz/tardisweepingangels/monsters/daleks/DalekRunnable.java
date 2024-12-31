@@ -53,7 +53,7 @@ public class DalekRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("daleks.worlds." + name) > 0) {
-                // get the current daleks
+                // get the current dalek count
                 int daleks = 0;
                 Collection<Skeleton> skeletons = w.getEntitiesByClass(Skeleton.class);
                 for (Skeleton d : skeletons) {

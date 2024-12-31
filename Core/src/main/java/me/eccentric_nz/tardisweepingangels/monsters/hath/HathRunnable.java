@@ -53,7 +53,7 @@ public class HathRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("hath.worlds." + name) > 0) {
-                // get the current warriors
+                // get the current hath count
                 int hath = 0;
                 Collection<PigZombie> zombies = w.getEntitiesByClass(PigZombie.class);
                 for (PigZombie c : zombies) {
