@@ -165,7 +165,13 @@ public enum Monster {
                     key = ArmourVariant.CLOCKWORK_DROID_FEMALE.getKey();
                 }
             }
-            case CYBERMAN -> key = ArmourVariant.CYBERMAN.getKey();
+            case CYBERMAN -> {
+                if (TARDISConstants.RANDOM.nextInt(100) > 85) {
+                    key = ArmourVariant.CYBERSHADE.getKey();
+                } else {
+                    key = ArmourVariant.CYBERMAN.getKey();
+                }
+            }
             case CYBERSHADE -> key = ArmourVariant.CYBERSHADE.getKey();
             case DALEK_SEC -> key = ArmourVariant.DALEK_SEC.getKey();
             case EMPTY_CHILD -> key = ArmourVariant.EMPTY_CHILD.getKey();

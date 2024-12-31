@@ -50,13 +50,11 @@ import java.util.UUID;
 
 public class Death implements Listener {
 
-    // TODO add custom drops for new monsters
     private final TARDIS plugin;
     private final List<Material> angel_drops = new ArrayList<>();
     private final List<Material> angel_of_liberty_drops = new ArrayList<>();
     private final List<Material> beast_drops = new ArrayList<>();
     private final List<Material> cyber_drops = new ArrayList<>();
-    private final List<Material> cybershade_drops = new ArrayList<>();
     private final List<Material> clockwork_drops = new ArrayList<>();
     private final List<Material> dalek_drops = new ArrayList<>();
     private final List<Material> dalek_sec_drops = new ArrayList<>();
@@ -88,7 +86,6 @@ public class Death implements Listener {
         plugin.getMonstersConfig().getStringList("the_beast.drops").forEach((b) -> beast_drops.add(Material.valueOf(b)));
         plugin.getMonstersConfig().getStringList("clockwork_droids.drops").forEach((c) -> clockwork_drops.add(Material.valueOf(c)));
         plugin.getMonstersConfig().getStringList("cybermen.drops").forEach((c) -> cyber_drops.add(Material.valueOf(c)));
-        plugin.getMonstersConfig().getStringList("cybershades.drops").forEach((c) -> cybershade_drops.add(Material.valueOf(c)));
         plugin.getMonstersConfig().getStringList("daleks.drops").forEach((d) -> dalek_drops.add(Material.valueOf(d)));
         plugin.getMonstersConfig().getStringList("daleks.dalek_sec_drops").forEach((d) -> dalek_sec_drops.add(Material.valueOf(d)));
         plugin.getMonstersConfig().getStringList("daleks.davros_drops").forEach((d) -> davros_drops.add(Material.valueOf(d)));
@@ -314,7 +311,7 @@ public class Death implements Listener {
                     event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                     return;
                 }
-                if (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)) {
+                if (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER) || pdc.has(TARDISWeepingAngels.CYBERSHADE, PersistentDataType.INTEGER)) {
                     event.getDrops().clear();
                     if (TARDISConstants.RANDOM.nextInt(100) < 3) {
                         stack = HeadBuilder.getItemStack(Monster.CYBERMAN);
@@ -322,18 +319,6 @@ public class Death implements Listener {
                         stack = new ItemStack(Material.IRON_INGOT, 1);
                     } else {
                         stack = new ItemStack(cyber_drops.get(TARDISConstants.RANDOM.nextInt(cyber_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
-                    }
-                    event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
-                    return;
-                }
-                if (pdc.has(TARDISWeepingAngels.CYBERSHADE, PersistentDataType.INTEGER)) {
-                    event.getDrops().clear();
-                    if (TARDISConstants.RANDOM.nextInt(100) < 3) {
-                        stack = HeadBuilder.getItemStack(Monster.CYBERSHADE);
-                    } else if (TARDISConstants.RANDOM.nextInt(100) < 6) {
-                        stack = new ItemStack(Material.IRON_INGOT, 1);
-                    } else {
-                        stack = new ItemStack(cybershade_drops.get(TARDISConstants.RANDOM.nextInt(cybershade_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                     }
                     event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
                     return;

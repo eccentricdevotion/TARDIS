@@ -1,6 +1,8 @@
 package me.eccentric_nz.tardisweepingangels.equip;
 
 import me.eccentric_nz.TARDIS.custommodels.keys.ArmourVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.CybermanVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.DroidVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.EmptyChildVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
@@ -24,7 +26,16 @@ public class ArmourEquipper {
         ItemStack head = new ItemStack(monster.getMaterial());
         ItemMeta headMeta = head.getItemMeta();
         headMeta.getPersistentDataContainer().set(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER, 99);
-        headMeta.setItemModel(monster.getHeadModel());
+        // get armour key once, so random variants (OOD, CLOCKWORK_DROIDS, CYBERMEN) have the chestplate and leggings
+        NamespacedKey armour = monster.getArmourKey();
+        // get head variant (CLOCKWORK_DROIDS, CYBERMEN)
+        NamespacedKey headModel;
+        switch (monster) {
+            case CLOCKWORK_DROID -> headModel = (armour.equals(ArmourVariant.CLOCKWORK_DROID.getKey())) ? monster.getHeadModel() : DroidVariant.CLOCKWORK_DROID_FEMALE_HEAD.getKey();
+            case CYBERMAN -> headModel = (armour.equals(ArmourVariant.CYBERMAN.getKey())) ? monster.getHeadModel(): CybermanVariant.CYBERSHADE_HEAD.getKey();
+            default -> headModel = monster.getHeadModel();
+        }
+        headMeta.setItemModel(headModel);
         EquippableComponent headComponent = headMeta.getEquippable();
         headComponent.setAllowedEntities(List.of(monster.getEntityType(), EntityType.PLAYER));
         headComponent.setSlot(EquipmentSlot.HEAD);
@@ -40,8 +51,6 @@ public class ArmourEquipper {
         headMeta.setDisplayName(ChatColor.WHITE + name);
         head.setItemMeta(headMeta);
         entity.getEquipment().setHelmet(head);
-        // get armour key once, so random variants (OOD, CLOCKWORK_DROIDS) have the same chestplate and leggings
-        NamespacedKey armour = monster.getArmourKey();
         // chest
         ItemStack body = new ItemStack(monster.getMaterial());
         ItemMeta bodyMeta = body.getItemMeta();
