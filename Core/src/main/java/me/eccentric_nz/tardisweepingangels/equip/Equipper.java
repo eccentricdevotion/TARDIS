@@ -22,6 +22,7 @@ import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -102,6 +103,12 @@ public class Equipper {
                 ItemMeta tim = hand.getItemMeta();
                 tim.setItemModel(Features.ANGEL_OF_LIBERTY_TORCH.getKey());
                 hand.setItemMeta(tim);
+                // set entity scale
+                entity.getAttribute(Attribute.SCALE).setBaseValue(2.5d);
+            }
+            case THE_BEAST -> {
+                // set entity scale
+                entity.getAttribute(Attribute.SCALE).setBaseValue(2.5d);
             }
             case CLOCKWORK_DROID -> {
                 // key
