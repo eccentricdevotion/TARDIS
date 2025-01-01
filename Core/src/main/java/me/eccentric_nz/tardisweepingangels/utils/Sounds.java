@@ -54,6 +54,7 @@ public class Sounds implements Listener {
             PersistentDataContainer pdc = entity.getPersistentDataContainer();
             String which = "";
             long delay = 50L;
+            // TODO add new monster SFX
             if (pdc.has(TARDISWeepingAngels.CLOCKWORK_DROID, PersistentDataType.INTEGER)) {
                 delay = 80L;
                 which = "clockwork_droid";
@@ -97,6 +98,30 @@ public class Sounds implements Listener {
             if (pdc.has(TARDISWeepingAngels.SCARECROW, PersistentDataType.INTEGER)) {
                 delay = 70L;
                 which = "scarecrow";
+            }
+            if (pdc.has(TARDISWeepingAngels.BEAST, PersistentDataType.INTEGER)) {
+                delay = 70L;
+                which = "entity.ravager.roar";
+            }
+            if (pdc.has(TARDISWeepingAngels.CYBERSHADE, PersistentDataType.INTEGER)) {
+                delay = 70L;
+                which = "entity.hoglin.converted_to_zombified";
+            }
+            if (pdc.has(TARDISWeepingAngels.VAMPIRE, PersistentDataType.INTEGER)) {
+                delay = 70L;
+                which = "entity.fish.swim";
+            }
+            if (pdc.has(TARDISWeepingAngels.SMILER, PersistentDataType.INTEGER)) {
+                delay = 70L;
+                which = "entity.rabbit.attack";
+            }
+            if (pdc.has(TARDISWeepingAngels.SUTEKH, PersistentDataType.INTEGER)) {
+                delay = 70L;
+                which = "sutech";
+            }
+            if (pdc.has(TARDISWeepingAngels.OMEGA, PersistentDataType.INTEGER)) {
+                delay = 70L;
+                which = "omega";
             }
             if (pdc.has(TARDISWeepingAngels.SILURIAN, PersistentDataType.INTEGER)) {
                 which = "silurian";
