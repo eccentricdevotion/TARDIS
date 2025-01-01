@@ -34,7 +34,7 @@ public enum ArmourVariant {
     SUTEKH(new NamespacedKey(TARDIS.plugin, "sutekh")),
     SYCORAX(new NamespacedKey(TARDIS.plugin, "sycorax")),
     THE_BEAST(new NamespacedKey(TARDIS.plugin, "the_beast")),
-    VAMPIRE_OF_VENICE(new NamespacedKey(TARDIS.plugin, "vashta_nerada")),
+    VAMPIRE_OF_VENICE(new NamespacedKey(TARDIS.plugin, "vampire_of_venice")),
     VASHTA_NERADA(new NamespacedKey(TARDIS.plugin, "vashta_nerada")),
     WEEPING_ANGEL(new NamespacedKey(TARDIS.plugin, "weeping_angel")),
     ZYGON(new NamespacedKey(TARDIS.plugin, "zygon")),
