@@ -42,7 +42,7 @@ public class TARDISTelevisionRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Television");
         im.setItemModel(RecipeItem.TARDIS_TELEVISION.getModel());
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
+        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, RecipeItem.TARDIS_TELEVISION.getModel().getKey());
         is.setItemMeta(im);
         // exact choice
         ItemStack capac = new ItemStack(Material.BUCKET, 1);

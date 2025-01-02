@@ -40,7 +40,7 @@ public class ArtronCapacitorStorageRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Artron Capacitor Storage");
         im.setItemModel(RecipeItem.ARTRON_CAPACITOR_STORAGE.getModel());
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
+        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, RecipeItem.ARTRON_CAPACITOR_STORAGE.getModel().getKey());
         is.setItemMeta(im);
         // exact choice
         ItemStack capac = new ItemStack(Material.BUCKET, 1);
