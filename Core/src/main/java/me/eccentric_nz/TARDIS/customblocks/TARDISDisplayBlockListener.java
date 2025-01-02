@@ -202,7 +202,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                     if (is.getItemMeta().getPersistentDataContainer().has(plugin.getDestroyKey(), PersistentDataType.INTEGER)) {
                                         breaking = display;
                                     }
-                                    if (is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+                                    if (is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
                                         fake = display;
                                     }
                                 }
@@ -547,7 +547,7 @@ public class TARDISDisplayBlockListener implements Listener {
                 } else {
                     // update breaking item stack
                     ItemMeta im = is.getItemMeta();
-                    NamespacedKey model = new NamespacedKey(plugin, "destroy/destroy_" + (destroy + 1));
+                    NamespacedKey model = new NamespacedKey(plugin, "destroy_" + (destroy + 1));
                     im.getPersistentDataContainer().set(plugin.getDestroyKey(), PersistentDataType.INTEGER, destroy + 1);
                     im.setItemModel(model);
                     is.setItemMeta(im);
