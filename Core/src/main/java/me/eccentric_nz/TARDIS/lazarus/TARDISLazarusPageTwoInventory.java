@@ -43,7 +43,6 @@ class TARDISLazarusPageTwoInventory {
 
     TARDISLazarusPageTwoInventory(TARDIS plugin) {
         this.plugin = plugin;
-        disguises.add(Material.POLAR_BEAR_SPAWN_EGG);
         disguises.add(Material.SPIDER_SPAWN_EGG);
         disguises.add(Material.TRADER_LLAMA_SPAWN_EGG);
         disguises.add(Material.WANDERING_TRADER_SPAWN_EGG);
@@ -53,6 +52,7 @@ class TARDISLazarusPageTwoInventory {
         disguises.add(Material.BLAZE_SPAWN_EGG);
         disguises.add(Material.BOGGED_SPAWN_EGG);
         disguises.add(Material.BREEZE_SPAWN_EGG);
+        disguises.add(Material.CREAKING_SPAWN_EGG);
         disguises.add(Material.CREEPER_SPAWN_EGG);
         disguises.add(Material.DROWNED_SPAWN_EGG);
         disguises.add(Material.ELDER_GUARDIAN_SPAWN_EGG);

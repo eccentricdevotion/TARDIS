@@ -87,6 +87,7 @@ class TARDISLazarusInventory {
         disguises.add(Material.LLAMA_SPAWN_EGG);
         disguises.add(Material.PANDA_SPAWN_EGG);
         disguises.add(Material.PIGLIN_SPAWN_EGG);
+        disguises.add(Material.POLAR_BEAR_SPAWN_EGG);
 
         pageOne = getItemStack();
     }

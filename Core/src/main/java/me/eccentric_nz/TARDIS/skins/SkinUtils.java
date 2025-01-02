@@ -335,7 +335,7 @@ public class SkinUtils {
                 player.getInventory().setItem(EquipmentSlot.OFF_HAND, null);
             }
             case "Ace", "Bannakaffalatta", "Brigadier Lethbridge-Stewart", "Dalek Sec", "Hath", "Ice Warrior",
-                 "Impossible Astronaut", "Jo Grant", "Judoon", "Martha Jones", "Omega", "Ood", "Scarecrow",
+                 "Impossible Astronaut", "Jo Grant", "Judoon", "Martha Jones", "Omega", "Ood", "Racnoss", "Scarecrow",
                  "Sea Devil", "Silence", "Silurian", "Sontaran", "Strax", "Sutekh", "Sycorax", "Tegan",
                  "The Beast", "Vampire of Venice", "Weeping Angel", "Zygon" -> {
                 // just head

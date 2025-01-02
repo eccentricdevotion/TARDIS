@@ -89,6 +89,11 @@ public class TARDISDisguise {
                 packagePath += "monster.breeze.";
                 hasEntityStr = false;
             }
+            case CREAKING -> {
+                str = "Creaking";
+                packagePath += "monster.creaking.";
+                hasEntityStr = false;
+            }
             case FROG, TADPOLE -> {
                 str = TARDISStringUtils.uppercaseFirst(disguise.getEntityType().toString());
                 packagePath += "animal.frog.";
