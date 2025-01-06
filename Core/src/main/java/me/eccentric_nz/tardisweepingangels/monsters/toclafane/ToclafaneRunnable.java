@@ -48,7 +48,7 @@ public class ToclafaneRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("toclafane.worlds." + name) > 0) {
-                // get the current toclafane
+                // get the current toclafane count
                 int n = 0;
                 Collection<Bee> hive = w.getEntitiesByClass(Bee.class);
                 for (Bee b : hive) {

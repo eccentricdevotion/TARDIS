@@ -56,7 +56,7 @@ public class SontaranRunnable implements Runnable {
                 long time = w.getTime();
                 // only spawn in day - times according to http://minecraft.gamepedia.com/Day-night_cycle
                 if ((time > 0 && time < 13187) || time > 22812) {
-                    // get the current warriors
+                    // get the current sontaran count
                     int sontarans = 0;
                     Collection<Zombie> potatoes = w.getEntitiesByClass(Zombie.class);
                     for (Zombie pz : potatoes) {
@@ -96,7 +96,7 @@ public class SontaranRunnable implements Runnable {
                 }
                 LivingEntity sontaran = new MonsterSpawner().create(l, Monster.SONTARAN);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.SONTARAN, sontaran, false, false).setHelmetAndInvisibility();
+                    new Equipper(Monster.SONTARAN, sontaran, false).setHelmetAndInvisibility();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(sontaran, EntityType.ZOMBIE, Monster.SONTARAN, l));
                 }, 5L);
             }

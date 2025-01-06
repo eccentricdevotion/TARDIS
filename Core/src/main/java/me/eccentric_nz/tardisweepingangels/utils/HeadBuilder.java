@@ -16,23 +16,28 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.DalekVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.EmptyChildVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.K9Variant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.EquippableComponent;
 import org.bukkit.persistence.PersistentDataType;
 
 public class HeadBuilder {
 
     public static ItemStack getItemStack(Monster monster) {
-        Material material = null;
-        int cmd = 3;
-        if (monster != Monster.K9 && monster != Monster.TOCLAFANE) {
-            material = monster.getMaterial();
-            cmd = monster.getHeadModelData();
+        if (monster == Monster.K9 || monster == Monster.TOCLAFANE) {
+            return null;
         }
-        if (material == null) {
+        Material material = monster.getMaterial();
+        NamespacedKey model = monster.getHeadModel();
+        if (material == null || model == null) {
             return null;
         }
         ItemStack is = new ItemStack(material, 1);
@@ -44,7 +49,17 @@ public class HeadBuilder {
             default -> monster.getName() + " Head";
         };
         im.setDisplayName(ChatColor.WHITE + head);
-        im.setCustomModelData(cmd);
+        im.setItemModel(model);
+        EquippableComponent component = im.getEquippable();
+        component.setSlot(EquipmentSlot.HEAD);
+        // add overlays
+        if (monster.equals(Monster.DALEK)) {
+            component.setCameraOverlay(DalekVariant.DALEK_OVERLAY.getKey());
+        }
+        if (monster.equals(Monster.EMPTY_CHILD)) {
+            component.setCameraOverlay(EmptyChildVariant.EMPTY_CHILD_OVERLAY.getKey());
+        }
+        im.setEquippable(component);
         is.setItemMeta(im);
         return is;
     }
@@ -53,7 +68,7 @@ public class HeadBuilder {
         ItemStack is = new ItemStack(Material.BONE);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "K9");
-        im.setCustomModelData(1);
+        im.setItemModel(K9Variant.K9.getKey());
         is.setItemMeta(im);
         return is;
     }

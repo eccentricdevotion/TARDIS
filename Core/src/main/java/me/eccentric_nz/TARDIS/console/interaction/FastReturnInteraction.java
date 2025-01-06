@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.console.interaction;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.console.ConsoleInteraction;
 import me.eccentric_nz.TARDIS.console.models.ButtonModel;
 import me.eccentric_nz.TARDIS.control.actions.FastReturnAction;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -50,7 +51,7 @@ public class FastReturnInteraction {
         UUID uuid = interaction.getPersistentDataContainer().get(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID());
         if (uuid != null) {
             ItemDisplay display = (ItemDisplay) plugin.getServer().getEntity(uuid);
-            new ButtonModel().setState(display, plugin);
+            new ButtonModel().setState(display, plugin, ConsoleInteraction.FAST_RETURN);
         }
         new FastReturnAction(plugin).clickButton(player, id, tardis);
     }

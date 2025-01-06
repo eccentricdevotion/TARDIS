@@ -26,10 +26,7 @@ import me.eccentric_nz.TARDIS.schematic.actions.SchematicSave;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Tag;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Skull;
@@ -192,8 +189,8 @@ public class TARDISSchematicBuilder {
                                     frame.addProperty("item", type.toString());
                                     if (item.hasItemMeta()) {
                                         ItemMeta im = item.getItemMeta();
-                                        if (im.hasCustomModelData()) {
-                                            frame.addProperty("cmd", im.getCustomModelData());
+                                        if (im.hasItemModel()) {
+                                            frame.addProperty("cmd", im.getItemModel().getKey());
                                         }
                                         if (im.hasDisplayName()) {
                                             frame.addProperty("name", im.getDisplayName());
@@ -229,10 +226,10 @@ public class TARDISSchematicBuilder {
                                 item.add("rel_location", loc);
                                 JsonObject stack = new JsonObject();
                                 Material material = display.getItemStack().getType();
-                                int model = display.getItemStack().getItemMeta().getCustomModelData();
+                                NamespacedKey model = display.getItemStack().getItemMeta().getItemModel();
                                 stack.addProperty("type", material.toString());
-                                stack.addProperty("cmd", model);
-                                TARDISDisplayItem tdi = TARDISDisplayItem.getByMaterialAndData(material, model);
+                                stack.addProperty("cmd", model.getKey());
+                                TARDISDisplayItem tdi = TARDISDisplayItem.getByModel(model);
                                 if (tdi != null) {
                                     stack.addProperty("light", tdi.isLight());
                                     stack.addProperty("lit", tdi.isLit());

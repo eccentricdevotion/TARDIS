@@ -50,7 +50,7 @@ public class TARDISSeedMenuListener extends TARDISMenuListener {
         }
         Player p = (Player) event.getWhoClicked();
         int slot = event.getRawSlot();
-        if (slot < 0 || slot > 35) {
+        if (slot < 0 || slot > 44) {
             ClickType click = event.getClick();
             if (click.equals(ClickType.SHIFT_RIGHT) || click.equals(ClickType.SHIFT_LEFT) || click.equals(ClickType.DOUBLE_CLICK)) {
                 event.setCancelled(true);
@@ -61,7 +61,7 @@ public class TARDISSeedMenuListener extends TARDISMenuListener {
         if (is != null) {
             event.setCancelled(true);
             // close
-            if (slot == 35) {
+            if (slot == 44) {
                 close(p);
                 return;
             }

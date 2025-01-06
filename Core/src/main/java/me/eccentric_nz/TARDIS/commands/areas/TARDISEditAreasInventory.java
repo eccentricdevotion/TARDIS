@@ -1,8 +1,8 @@
 package me.eccentric_nz.TARDIS.commands.areas;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIMap;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIUpgrade;
+import me.eccentric_nz.TARDIS.custommodels.GUIMap;
+import me.eccentric_nz.TARDIS.custommodels.GUIUpgrade;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreaLocations;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -78,7 +78,7 @@ public class TARDISEditAreasInventory {
         ItemStack close = new ItemStack(GUIMap.BUTTON_CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIUpgrade.CLOSE.customModelData());
+        close_im.setItemModel(GUIUpgrade.CLOSE.key());
         close.setItemMeta(close_im);
         stacks[53] = close;
         return stacks;

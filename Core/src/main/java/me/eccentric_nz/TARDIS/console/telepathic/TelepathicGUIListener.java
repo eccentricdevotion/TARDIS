@@ -2,12 +2,14 @@ package me.eccentric_nz.TARDIS.console.telepathic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
+import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
@@ -79,8 +81,8 @@ public class TelepathicGUIListener extends TARDISMenuListener {
                     set.put("telepathy_on", b);
                     plugin.getQueryFactory().doUpdate("player_prefs", set, whereu);
                     // set item model
-                    int cmd = im.getCustomModelData();
-                    im.setCustomModelData((cmd > 100) ? cmd - 100 : cmd + 100);
+                    NamespacedKey model = im.getItemModel();
+                    im.setItemModel((model == SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getKey()) ? SwitchVariant.TELEPATHIC_CIRCUIT_ON.getKey() : SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getKey());
                     choice.setItemMeta(im);
                     plugin.getMessenger().announceRepeater(player, "Telepathic Circuit " + (b == 1 ? "ON" : "OFF"));
                     close(player);

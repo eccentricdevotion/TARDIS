@@ -70,7 +70,7 @@ public class TARDISLightConverter {
                             Block b = w.getBlockAt(r, l, c);
                             if (b.getType().equals(emitting)) {
                                 if (light.getOn().isVariable()) {
-                                    new VariableLight(variable, b.getLocation().add(0.5, 0.5, 0.5)).set(tardis.isLightsOn() ? light.getOn().getCustomModelData() : light.getOff().getCustomModelData(), tardis.isLightsOn() ? 15 : 0);
+                                    new VariableLight(variable, b.getLocation().add(0.5, 0.5, 0.5)).set(tardis.isLightsOn() ? light.getOn().getCustomModel() : light.getOff().getCustomModel(), tardis.isLightsOn() ? 15 : 0);
                                 } else {
                                     TARDISDisplayItemUtils.set(light.getOn(), b, -1);
                                 }

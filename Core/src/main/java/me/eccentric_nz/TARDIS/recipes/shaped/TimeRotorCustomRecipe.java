@@ -41,7 +41,7 @@ public class TimeRotorCustomRecipe {
                 ItemMeta im = is.getItemMeta();
                 String dn = TARDISStringUtils.capitalise(r);
                 im.setDisplayName(ChatColor.WHITE + "Time Rotor " + dn);
-                im.setCustomModelData(plugin.getCustomRotorsConfig().getInt(r + ".off_custom_model_data"));
+                im.setItemModel(new NamespacedKey(plugin, "time_rotor/time_rotor_" + r + "_off"));
                 is.setItemMeta(im);
                 NamespacedKey key = new NamespacedKey(plugin, "time_rotor_" + r);
                 ShapedRecipe recipe = new ShapedRecipe(key, is);

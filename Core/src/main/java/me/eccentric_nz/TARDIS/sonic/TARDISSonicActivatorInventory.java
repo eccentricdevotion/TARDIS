@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISonicActivator;
+import me.eccentric_nz.TARDIS.custommodels.GUISonicActivator;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
@@ -71,7 +71,7 @@ class TARDISSonicActivatorInventory {
         ItemStack close = new ItemStack(GUISonicActivator.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUISonicActivator.CLOSE.customModelData());
+        close_im.setItemModel(GUISonicActivator.CLOSE.key());
         close.setItemMeta(close_im);
 
         return new ItemStack[]{null, null, null, null, null, null, null, info, close};

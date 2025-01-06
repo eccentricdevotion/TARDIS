@@ -19,6 +19,7 @@ import me.eccentric_nz.tardisweepingangels.nms.TWAJudoon;
 import me.eccentric_nz.tardisweepingangels.nms.TWAOod;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -54,20 +55,20 @@ public class TARDISDevNMSCommand {
                             if (chance > 6) {
                                 ood.setColour(OodColour.BROWN);
                             }
-                            OodEquipment.set(player, species.getBukkitEntity(), false, true);
+                            OodEquipment.set(player, (LivingEntity) species.getBukkitEntity(), false);
                         }
                         case JUDOON -> {
                             TWAJudoon judoon = (TWAJudoon) species;
                             judoon.setAmmo(100);
                             judoon.setGuard(false);
-                            JudoonEquipment.set(player, species.getBukkitEntity(), false);
+                            JudoonEquipment.set(player, (LivingEntity) species.getBukkitEntity(), false);
                         }
                         // K9
-                        default -> K9Equipment.set(player, species.getBukkitEntity(), false);
+                        default -> K9Equipment.set(player, (LivingEntity) species.getBukkitEntity(), false);
                     }
                 } else {
                     LivingEntity le = new MonsterSpawner().create(location, monster);
-                    new Equipper(monster, le, false, monster == Monster.SILURIAN, monster == Monster.SEA_DEVIL).setHelmetAndInvisibility();
+                    new Equipper(monster, le, false).setHelmetAndInvisibility();
                     if (monster == Monster.SILENT) {
                         SilentEquipment.setGuardian(le);
                     }

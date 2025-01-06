@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardischemistry.formula;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
+import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
 import me.eccentric_nz.tardischemistry.compound.Compound;
 import me.eccentric_nz.tardischemistry.compound.CompoundBuilder;
 import me.eccentric_nz.tardischemistry.element.Element;
@@ -140,7 +140,7 @@ public class FormulaViewer {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChemistry.CLOSE.customModelData());
+        close_im.setItemModel(GUIChemistry.CLOSE.key());
         close.setItemMeta(close_im);
         stack[26] = close;
         Inventory viewer = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + formula.replace("_", " ") + " Formula");

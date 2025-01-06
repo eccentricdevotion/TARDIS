@@ -1,10 +1,12 @@
 package me.eccentric_nz.TARDIS.rooms.eye;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -48,15 +50,15 @@ public class ArtronCapacitorStorageListener extends TARDISMenuListener {
                     continue;
                 }
                 ItemMeta im = stack.getItemMeta();
-                if (!im.hasDisplayName() || !im.getDisplayName().endsWith("Artron Capacitor") || !im.hasCustomModelData()) {
+                if (!im.hasDisplayName() || !im.getDisplayName().endsWith("Artron Capacitor") || !im.hasItemModel()) {
                     continue;
                 }
-                int cmd = im.getCustomModelData();
-                if (cmd != 10000003 && cmd != 10000004) {
+                NamespacedKey model = im.getItemModel();
+                if (!Whoniverse.ARTRON_CAPACITOR.getKey().equals(model) && !Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey().equals(model)) {
                     continue;
                 }
                 capacitors++;
-                if (cmd == 10000004) {
+                if (Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey().equals(model)) {
                     damaged++;
                 }
             }

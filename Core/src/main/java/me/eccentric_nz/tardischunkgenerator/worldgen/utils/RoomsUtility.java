@@ -11,7 +11,6 @@ import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
 import org.bukkit.*;
 import org.bukkit.block.Banner;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
 import org.bukkit.entity.*;
@@ -30,29 +29,30 @@ public class RoomsUtility {
         int x = rel.get("x").getAsInt() + sx;
         int y = rel.get("y").getAsInt() + 64;
         int z = rel.get("z").getAsInt() + sz;
-        int model = -1;
+        NamespacedKey model = null;
         if (json.has("stack")) {
             JsonObject stack = json.get("stack").getAsJsonObject();
             if (stack.has("cmd")) {
-                model = stack.get("cmd").getAsInt();
+                String key = stack.get("cmd").getAsString();
+                model = new NamespacedKey(TARDIS.plugin, key);
             }
             Material material = Material.valueOf(stack.get("type").getAsString());
-            TARDISDisplayItem tdi = TARDISDisplayItem.getByMaterialAndData(material, model);
+            TARDISDisplayItem tdi = TARDISDisplayItem.getByModel(model);
             if (tdi != null) {
-                set(region, x + 0.5d, y + 0.5d, z + 0.5d, tdi.getMaterial(), tdi.getCustomModelData(), false);
+                set(region, x + 0.5d, y + 0.5d, z + 0.5d, tdi.getMaterial(), tdi.getCustomModel(), false);
             } else {
                 set(region, x + 0.5d, y + 0.25d, z + 0.5d, material, model, true);
             }
         }
     }
 
-    private static void set(LimitedRegion region, double x, double y, double z, Material material, int model, boolean inRoom) {
+    private static void set(LimitedRegion region, double x, double y, double z, Material material, NamespacedKey model, boolean inRoom) {
         Location location = new Location(null, x, y, z);
         ItemDisplay display = (ItemDisplay) region.spawnEntity(location, EntityType.ITEM_DISPLAY);
         ItemStack is = new ItemStack(material);
-        if (model != -1) {
+        if (model != null) {
             ItemMeta im = is.getItemMeta();
-            im.setCustomModelData(model);
+            im.setItemModel(model);
             is.setItemMeta(im);
         }
         display.setItemStack(is);
@@ -72,14 +72,15 @@ public class RoomsUtility {
         Location l = new Location(null, x, y, z);
         ItemFrame frame = (ItemFrame) region.spawnEntity(l, (json.get("glowing").getAsBoolean()) ? EntityType.GLOW_ITEM_FRAME : EntityType.ITEM_FRAME);
         frame.setFacingDirection(facing, true);
-        int cmd = 1;
+        String cmd = "";
         if (json.has("item")) {
             try {
                 ItemStack is = new ItemStack(Material.valueOf(json.get("item").getAsString()));
                 ItemMeta im = is.getItemMeta();
                 if (json.has("cmd")) {
-                    cmd = json.get("cmd").getAsInt();
-                    im.setCustomModelData(cmd);
+                    cmd = json.get("cmd").getAsString();
+                    NamespacedKey key = new NamespacedKey(TARDIS.plugin, cmd);
+                    im.setItemModel(key);
                 }
                 if (json.has("name")) {
                     im.setDisplayName(json.get("name").getAsString());

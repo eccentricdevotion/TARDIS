@@ -71,8 +71,11 @@ public class KillCommand {
             return true;
         }
         switch (monster) {
-            case CYBERMAN, EMPTY_CHILD, SONTARAN, VASHTA_NERADA, ZYGON -> {
+            case ANGEL_OF_LIBERTY, THE_BEAST, CYBERMAN, CYBERSHADE, EMPTY_CHILD, SMILER, SONTARAN, VASHTA_NERADA,
+                 ZYGON -> {
                 switch (monster) {
+                    case ANGEL_OF_LIBERTY -> what = "Angels of Liberty";
+                    case THE_BEAST -> what = "The Beast";
                     case CYBERMAN -> what = "Cybermen";
                     case EMPTY_CHILD -> what = "Empty Children";
                     case VASHTA_NERADA -> what = "Vashta Nerada";
@@ -90,7 +93,7 @@ public class KillCommand {
                     }
                 }
             }
-            case WEEPING_ANGEL, DALEK, HEADLESS_MONK, SILURIAN, MIRE -> {
+            case WEEPING_ANGEL, DALEK, HEADLESS_MONK, SILURIAN, MIRE, OMEGA -> {
                 what = monster.getName() + "s";
                 Collection<Skeleton> skeletons = w.getEntitiesByClass(Skeleton.class);
                 for (Skeleton s : skeletons) {
@@ -99,6 +102,20 @@ public class KillCommand {
                         ItemStack is = ee.getHelmet();
                         if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().startsWith(monster.getName())) {
                             s.remove();
+                            count++;
+                        }
+                    }
+                }
+            }
+            case SEA_DEVIL, VAMPIRE_OF_VENICE -> {
+                what = (monster == Monster.VAMPIRE_OF_VENICE) ? "Vampires of Venice" : "Sea Devils";
+                Collection<Drowned> drowned = w.getEntitiesByClass(Drowned.class);
+                for (Drowned d : drowned) {
+                    EntityEquipment ee = d.getEquipment();
+                    if (ee.getHelmet().getType().equals(monster.getMaterial())) {
+                        ItemStack is = ee.getHelmet();
+                        if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().startsWith(monster.getName())) {
+                            d.remove();
                             count++;
                         }
                     }
@@ -129,6 +146,20 @@ public class KillCommand {
                     }
                 }
             }
+            case SUTEKH -> {
+                what = "Sutekh";
+                Collection<Stray> strays = w.getEntitiesByClass(Stray.class);
+                for (Stray s : strays) {
+                    EntityEquipment ee = s.getEquipment();
+                    if (ee.getHelmet().getType().equals(monster.getMaterial())) {
+                        ItemStack is = ee.getHelmet();
+                        if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().startsWith("Sutekh")) {
+                            s.remove();
+                            count++;
+                        }
+                    }
+                }
+            }
             case OOD, JUDOON, K9 -> {
                 Collection<Husk> ood = w.getEntitiesByClass(Husk.class);
                 for (Husk o : ood) {
@@ -148,19 +179,19 @@ public class KillCommand {
                 }
             }
             case TOCLAFANE -> {
-                Collection<ArmorStand> ood = w.getEntitiesByClass(ArmorStand.class);
-                for (ArmorStand o : ood) {
-                    if (o.getPersistentDataContainer().has(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER)) {
+                Collection<ArmorStand> toclafanes = w.getEntitiesByClass(ArmorStand.class);
+                for (ArmorStand t : toclafanes) {
+                    if (t.getPersistentDataContainer().has(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER)) {
                         what = "Toclafane";
                         // also remove the bee
-                        if (o.getVehicle() != null) {
-                            Entity bee = o.getVehicle();
+                        if (t.getVehicle() != null) {
+                            Entity bee = t.getVehicle();
                             if (bee instanceof Bee) {
-                                o.remove();
+                                t.remove();
                                 bee.remove();
                             }
                         } else {
-                            o.remove();
+                            t.remove();
                         }
                         count++;
                     }

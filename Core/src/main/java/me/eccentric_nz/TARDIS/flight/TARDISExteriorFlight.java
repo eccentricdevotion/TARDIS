@@ -26,7 +26,9 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.flight.vehicle.InterpolatedAnimation;
 import me.eccentric_nz.TARDIS.flight.vehicle.TARDISArmourStand;
+import me.eccentric_nz.TARDIS.flight.vehicle.VehicleUtility;
 import me.eccentric_nz.TARDIS.sensor.BeaconSensor;
 import me.eccentric_nz.TARDIS.sensor.HandbrakeSensor;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -36,7 +38,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
-import org.bukkit.craftbukkit.v1_21_R2.entity.CraftArmorStand;
+import org.bukkit.craftbukkit.v1_21_R3.entity.CraftArmorStand;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
@@ -74,8 +76,7 @@ public class TARDISExteriorFlight {
         if (data != null) {
             Location interior = data.getLocation();
             // check block protection
-            if (!plugin.getPluginRespect().getRespect(location, new Parameters(player, Flag.getDefaultFlags()))
-                    || plugin.getTardisArea().isInExistingArea(location)) {
+            if (!plugin.getPluginRespect().getRespect(location, new Parameters(player, Flag.getDefaultFlags())) || plugin.getTardisArea().isInExistingArea(location)) {
                 // remove police box
                 stand.remove();
                 // set drifting in the time vortex
@@ -90,13 +91,14 @@ public class TARDISExteriorFlight {
             plugin.getServer().getScheduler().cancelTask(data.getAnimation());
             plugin.getServer().getScheduler().cancelTask(data.getSound());
             if (!drifting) {
+                // get item display
+                ItemDisplay display = (ItemDisplay) player.getPassengers().getFirst();
+                ItemStack is = display.getItemStack();
                 // reset police box model
                 EntityEquipment ee = stand.getEquipment();
-                ItemStack is = ee.getHelmet();
-                ItemMeta im = is.getItemMeta();
-                im.setCustomModelData(1001);
-                is.setItemMeta(im);
                 ee.setHelmet(is);
+                player.eject();
+                display.remove();
                 // update the TARDIS's current location
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("world", location.getWorld().getName());
@@ -151,7 +153,7 @@ public class TARDISExteriorFlight {
         });
     }
 
-    public void startFlying(Player player, int id, Block block, Location current, boolean beac_on, String beacon, boolean pandorica) {
+    public void startFlying(Player player, int id, Block block, Location current, boolean beac_on, String beacon) {
         // get the TARDIS's current location
         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         if (!rsc.resultSet()) {
@@ -190,7 +192,14 @@ public class TARDISExteriorFlight {
                 for (Entity e : current.getWorld().getNearbyEntities(current, 1.5d, 1.5d, 1.5d, (s) -> s.getType() == EntityType.ARMOR_STAND)) {
                     if (e instanceof ArmorStand stand) {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new FlyingAnimation(plugin, (ArmorStand) stand, player, pandorica), 5L, 3L);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new FlyingInit(stand).run(), 3L);
+                            ItemStack box = stand.getEquipment().getHelmet();
+                            ItemDisplay display = VehicleUtility.getItemDisplay(player, box, switch (box.getType()) {
+                                case ENDER_PEARL -> 1.5f;
+                                case GRAY_STAINED_GLASS_PANE -> 1.66f;
+                                default -> 1.75f;
+                            });
+                            int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new InterpolatedAnimation(display, 40), 5L, 40L);
                             int sound = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> TARDISSounds.playTARDISSound(player.getLocation(), "time_rotor_flying", 4f), 5L, 33L);
                             player.getPersistentDataContainer().set(plugin.getLoopKey(), PersistentDataType.INTEGER, sound);
                             stand.addPassenger(player);
@@ -203,7 +212,7 @@ public class TARDISExteriorFlight {
                             // remove the light
                             current.getBlock().getRelative(BlockFace.UP, 2).setBlockData(TARDISConstants.AIR);
                             // save player's current location, so we can teleport them back to it when they finish flying
-                            plugin.getTrackerKeeper().getFlyingReturnLocation().put(uuid, new FlightReturnData(id, interior, sound, animation, stand.getUniqueId()));
+                            plugin.getTrackerKeeper().getFlyingReturnLocation().put(uuid, new FlightReturnData(id, interior, sound, animation, stand.getUniqueId(), display.getUniqueId()));
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.setGravity(true), 1L);
                             // remove interaction entity
                             Interaction interaction = TARDISDisplayItemUtils.getInteraction(current);

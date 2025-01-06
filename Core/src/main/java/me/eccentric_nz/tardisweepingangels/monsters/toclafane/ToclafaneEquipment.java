@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.toclafane;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.ToclafaneVariant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -32,7 +33,7 @@ public class ToclafaneEquipment {
         ItemStack head = new ItemStack(Material.GUNPOWDER);
         ItemMeta headMeta = head.getItemMeta();
         headMeta.setDisplayName("Toclafane");
-        headMeta.setCustomModelData((disguise) ? 3 : 2);
+        headMeta.setItemModel((disguise) ? ToclafaneVariant.TOCLAFANE.getKey() : ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
         head.setItemMeta(headMeta);
         if (!disguise) {
             ArmorStand armorStand = (ArmorStand) entity;

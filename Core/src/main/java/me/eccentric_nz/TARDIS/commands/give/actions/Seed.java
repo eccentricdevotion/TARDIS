@@ -8,6 +8,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -63,22 +64,22 @@ public class Seed {
             if (Consoles.getBY_NAMES().containsKey(type)) {
                 Schematic schm = Consoles.getBY_NAMES().get(type);
                 ItemStack is;
-                int model = 10001;
+                NamespacedKey model = TARDISDisplayItem.CUSTOM.getCustomModel();
                 if (schm.isCustom()) {
                     is = new ItemStack(schm.getSeedMaterial(), 1);
                 } else {
                     try {
                         TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(type);
                         is = new ItemStack(tdi.getMaterial(), 1);
-                        model = tdi.getCustomModelData();
+                        model = tdi.getCustomModel();
                     } catch (IllegalArgumentException e) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "SEED_NOT_VALID");
                         return;
                     }
                 }
                 ItemMeta im = is.getItemMeta();
-                im.setCustomModelData(model);
-                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
+                im.setItemModel(model);
+                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
                 // set display name
                 im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
                 List<String> lore = new ArrayList<>();

@@ -1,0 +1,73 @@
+package me.eccentric_nz.TARDIS.custommodels.keys;
+
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.NamespacedKey;
+
+public enum Button {
+
+    ADAPT(new NamespacedKey(TARDIS.plugin, "button_adapt")),
+    ADD_COMPANION(new NamespacedKey(TARDIS.plugin, "button_add_companion")),
+    ADMIN(new NamespacedKey(TARDIS.plugin, "button_admin")),
+    AGE(new NamespacedKey(TARDIS.plugin, "button_age")),
+    AREAS(new NamespacedKey(TARDIS.plugin, "button_areas")),
+    ARS(new NamespacedKey(TARDIS.plugin, "button_ars")),
+    ARTRON(new NamespacedKey(TARDIS.plugin, "button_artron")),
+    AUTONOMOUS_PREFERENCES(new NamespacedKey(TARDIS.plugin, "button_auto_prefs")),
+    BACK(new NamespacedKey(TARDIS.plugin, "button_back")),
+    CANCEL(new NamespacedKey(TARDIS.plugin, "button_cancel")),
+    CHAMELEON(new NamespacedKey(TARDIS.plugin, "button_chameleon")),
+    COMPANION_ALL(new NamespacedKey(TARDIS.plugin, "button_companion_all")),
+    COMPANION_LIST(new NamespacedKey(TARDIS.plugin, "button_companion_list")),
+    CONSTRUCT(new NamespacedKey(TARDIS.plugin, "button_construct")),
+    DEACTIVATE(new NamespacedKey(TARDIS.plugin, "button_deactivate")),
+    DEATH(new NamespacedKey(TARDIS.plugin, "button_death")),
+    DELETE(new NamespacedKey(TARDIS.plugin, "button_delete")),
+    DIRECTION(new NamespacedKey(TARDIS.plugin, "button_direction")),
+    DNA(new NamespacedKey(TARDIS.plugin, "button_dna")),
+    FARMING_PREFERENCES(new NamespacedKey(TARDIS.plugin, "button_farm_prefs")),
+    FLIGHT_MODE(new NamespacedKey(TARDIS.plugin, "button_flight_mode")),
+    HANDBRAKE(new NamespacedKey(TARDIS.plugin, "button_handbrake")),
+    HIDE(new NamespacedKey(TARDIS.plugin, "button_hide")),
+    INFO(new NamespacedKey(TARDIS.plugin, "button_info")),
+    INVISIBLE(new NamespacedKey(TARDIS.plugin, "button_invisible")),
+    LOCK(new NamespacedKey(TARDIS.plugin, "button_lock")),
+    MASTER_OFF(new NamespacedKey(TARDIS.plugin, "button_master_off")),
+    MASTER_ON(new NamespacedKey(TARDIS.plugin, "button_master_on")),
+    OPTIONS(new NamespacedKey(TARDIS.plugin, "button_opts")),
+    PARTICLES(new NamespacedKey(TARDIS.plugin, "button_particles")),
+    PREFERENCES(new NamespacedKey(TARDIS.plugin, "button_prefs")),
+    RANDOM(new NamespacedKey(TARDIS.plugin, "button_random")),
+    REBUILD(new NamespacedKey(TARDIS.plugin, "button_rebuild")),
+    REMOVE(new NamespacedKey(TARDIS.plugin, "button_remove")),
+    RESTORE(new NamespacedKey(TARDIS.plugin, "button_restore")),
+    ROOMS_WORLD(new NamespacedKey(TARDIS.plugin, "button_rooms_world")),
+    SAVES(new NamespacedKey(TARDIS.plugin, "button_saves")),
+    SCANNER(new NamespacedKey(TARDIS.plugin, "button_scanner")),
+    SHORT(new NamespacedKey(TARDIS.plugin, "button_short")),
+    SKINS(new NamespacedKey(TARDIS.plugin, "button_skins")),
+    SONIC(new NamespacedKey(TARDIS.plugin, "button_sonic")),
+    SYSTEM_UPGRADES(new NamespacedKey(TARDIS.plugin, "button_system_upgrades")),
+    TARDIS_MAP(new NamespacedKey(TARDIS.plugin, "button_tardis_map")),
+    TEMPORAL(new NamespacedKey(TARDIS.plugin, "button_temp")),
+    TERMINAL(new NamespacedKey(TARDIS.plugin, "button_term")),
+    THEME(new NamespacedKey(TARDIS.plugin, "button_theme")),
+    THROTTLE(new NamespacedKey(TARDIS.plugin, "button_throttle")),
+    TRANSMAT(new NamespacedKey(TARDIS.plugin, "button_transmat")),
+    TWA(new NamespacedKey(TARDIS.plugin, "button_twa")),
+    TYPE(new NamespacedKey(TARDIS.plugin, "button_type")),
+    DOCTOR(new NamespacedKey(TARDIS.plugin, "button_doctor")),
+    COMPANION(new NamespacedKey(TARDIS.plugin, "button_companion")),
+    CHARACTER(new NamespacedKey(TARDIS.plugin, "button_character")),
+    MONSTER(new NamespacedKey(TARDIS.plugin, "button_monster")),
+    ZERO(new NamespacedKey(TARDIS.plugin, "button_zero"));
+
+    private final NamespacedKey key;
+
+    Button(NamespacedKey key) {
+        this.key = key;
+    }
+
+    public NamespacedKey getKey() {
+        return key;
+    }
+}

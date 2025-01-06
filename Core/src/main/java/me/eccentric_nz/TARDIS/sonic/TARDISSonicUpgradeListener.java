@@ -18,8 +18,10 @@ package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -61,7 +63,7 @@ public class TARDISSonicUpgradeListener implements Listener {
                 for (ItemStack glowstone : ci.getContents()) {
                     if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
                         ItemMeta rm = glowstone.getItemMeta();
-                        upgrade = SonicUpgradeData.customModelData.get(rm.getCustomModelData());
+                        upgrade = SonicUpgradeData.customModelData.get(rm.getItemModel());
                         found = true;
                     }
                 }
@@ -94,9 +96,9 @@ public class TARDISSonicUpgradeListener implements Listener {
                     ci.setResult(null);
                 } else {
                     ItemMeta sim = sonic.getItemMeta();
-                    int cmd = 10000011;
-                    if (sim.hasCustomModelData()) {
-                        cmd = sim.getCustomModelData();
+                    NamespacedKey model = SonicVariant.ELEVENTH.getKey();
+                    if (sim.hasItemModel()) {
+                        model = sim.getItemModel();
                     }
                     String dn = sim.getDisplayName();
                     List<String> lore;
@@ -110,7 +112,7 @@ public class TARDISSonicUpgradeListener implements Listener {
                     }
                     // if they don't already have the upgrade
                     if (!lore.contains(upgrade)) {
-                        ItemStack upgraded = SonicLore.addUpgrade(lore, dn, cmd, is, upgrade);
+                        ItemStack upgraded = SonicLore.addUpgrade(lore, dn, model, is, upgrade);
                         // change the crafting result
                         ci.setResult(upgraded);
                     } else {

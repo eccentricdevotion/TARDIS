@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.customblocks.TARDISMushroomBlockData;
+import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -130,8 +131,8 @@ public class TARDISSiegeListener implements Listener {
         ItemStack is = new ItemStack(TARDISDisplayItem.SIEGE_CUBE.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Siege Cube");
-        im.setCustomModelData(TARDISDisplayItem.SIEGE_CUBE.getCustomModelData());
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, TARDISDisplayItem.SIEGE_CUBE.getCustomModelData());
+        im.setItemModel(TARDISDisplayItem.SIEGE_CUBE.getCustomModel());
+        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISDisplayItem.SIEGE_CUBE.getCustomModel().getKey());
         List<String> lore = new ArrayList<>();
         lore.add("Time Lord: " + tl);
         lore.add("ID: " + id);
@@ -389,8 +390,7 @@ public class TARDISSiegeListener implements Listener {
         }
         ItemMeta im = is.getItemMeta();
         if (im != null) {
-            int cmd = (m.equals(Material.BROWN_MUSHROOM_BLOCK)) ? 10000002 : 10001;
-            return im.hasCustomModelData() && im.getCustomModelData() == cmd;
+            return im.hasItemModel() && Whoniverse.SIEGE_CUBE.getKey().equals(im.getItemModel());
         }
         return false;
     }

@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.console.models;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.ModelledButton;
 import org.bukkit.Sound;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
@@ -21,12 +22,18 @@ public class WXYZModel {
         display.getWorld().playSound(display, Sound.BLOCK_BAMBOO_WOOD_BUTTON_CLICK_ON, 1, 1);
         ItemStack is = display.getItemStack();
         ItemMeta im = is.getItemMeta();
-        im.setCustomModelData(1009 + which);
+        switch (which) {
+            case 4 -> im.setItemModel(ModelledButton.WXYZ_Z.getKey());
+            case 3 -> im.setItemModel(ModelledButton.WXYZ_X.getKey());
+            case 2 -> im.setItemModel(ModelledButton.WXYZ_Y.getKey());
+            case 1 -> im.setItemModel(ModelledButton.WXYZ_W.getKey());
+            default -> im.setItemModel(ModelledButton.WXYZ_0.getKey());
+        }
         is.setItemMeta(im);
         display.setItemStack(is);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             display.getWorld().playSound(display, Sound.BLOCK_BAMBOO_WOOD_BUTTON_CLICK_OFF, 1, 1);
-            im.setCustomModelData(1009);
+            im.setItemModel(ModelledButton.WXYZ_0.getKey());
             is.setItemMeta(im);
             display.setItemStack(is);
         }, 10);

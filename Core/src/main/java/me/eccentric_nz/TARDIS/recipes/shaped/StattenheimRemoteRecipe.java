@@ -41,7 +41,7 @@ public class StattenheimRemoteRecipe {
         ItemStack is = new ItemStack(Material.FLINT, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Stattenheim Remote");
-        im.setCustomModelData(10000001);
+        im.setItemModel(RecipeItem.STATTENHEIM_REMOTE.getModel());
         String uses = plugin.getConfig().getString("circuits.uses.stattenheim", "15");
         if (uses.equals("0")) {
             uses = "1000";
@@ -55,7 +55,7 @@ public class StattenheimRemoteRecipe {
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
             em.setDisplayName(ChatColor.WHITE + "TARDIS Stattenheim Circuit");
-            em.setCustomModelData(RecipeItem.TARDIS_STATTENHEIM_CIRCUIT.getCustomModelData());
+            em.setItemModel(RecipeItem.TARDIS_STATTENHEIM_CIRCUIT.getModel());
             exact.setItemMeta(em);
             r.setIngredient('L', new RecipeChoice.ExactChoice(exact));
         } else {

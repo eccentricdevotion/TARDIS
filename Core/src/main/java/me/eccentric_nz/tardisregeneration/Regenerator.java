@@ -3,6 +3,7 @@ package me.eccentric_nz.tardisregeneration;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.custommodels.keys.RegenerationVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetRegenerations;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.skins.DoctorSkins;
@@ -27,7 +28,7 @@ import java.util.HashMap;
  */
 public class Regenerator {
 
-    private static void display(TARDIS plugin, Player player, int cmd, Skin skin) {
+    private static void display(TARDIS plugin, Player player, Skin skin) {
         // make player invulnerable
         player.setInvulnerable(true);
         // create the regeneration item model
@@ -39,7 +40,7 @@ public class Regenerator {
                 p.hidePlayer(plugin, player);
             }
         }
-        im.setCustomModelData(cmd);
+        im.setItemModel(RegenerationVariant.valueOf(skin.toString()).getKey());
         totem.setItemMeta(im);
         // get rotation
         float yaw = Location.normalizeYaw(player.getLocation().getYaw());
@@ -63,17 +64,14 @@ public class Regenerator {
     }
 
     public void dev(TARDIS plugin, Player player, String[] args) {
-        int cmd;
         Skin skin;
         int random = TARDISConstants.RANDOM.nextInt(DoctorSkins.DOCTORS.size());
         if (args.length == 1) {
-            cmd = random + 1001;
             skin = DoctorSkins.DOCTORS.get(random);
         } else {
-            cmd = TARDISNumberParsers.parseInt(args[1]) + 1000;
-            skin = DoctorSkins.DOCTORS.get(cmd - 1001);
+            skin = DoctorSkins.DOCTORS.get(TARDISNumberParsers.parseInt(args[1]));
         }
-        display(plugin, player, cmd, skin);
+        display(plugin, player, skin);
     }
 
     public void processPlayer(TARDIS plugin, Player player) {
@@ -121,7 +119,7 @@ public class Regenerator {
             }
             // trigger regeneration
             Skin skin = DoctorSkins.DOCTORS.get(which);
-            display(plugin, player, which + 1001, skin);
+            display(plugin, player, skin);
             // reduce regeneration count, taking into account disparity between configured and default
             int reduced = playerRemaining - decrement;
             plugin.getQueryFactory().setRegenerationCount(player.getUniqueId(), reduced);

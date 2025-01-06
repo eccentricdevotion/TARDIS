@@ -19,10 +19,12 @@ package me.eccentric_nz.TARDIS.ARS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
+import me.eccentric_nz.TARDIS.custommodels.keys.RoomVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -119,7 +121,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         ItemStack stone = new ItemStack(Material.STONE, 1);
                         ItemMeta s1 = stone.getItemMeta();
                         s1.setDisplayName("Empty slot");
-                        s1.setCustomModelData(1);
+                        s1.setItemModel(RoomVariant.SLOT.getKey());
                         stone.setItemMeta(s1);
                         setSlot(view, selected_slot.get(playerUUID), stone, playerUUID, true);
                         setLore(view, slot, null);
@@ -170,7 +172,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                     ItemStack tnt = new ItemStack(Material.TNT, 1);
                     ItemMeta j = tnt.getItemMeta();
                     j.setDisplayName("Jettison");
-                    j.setCustomModelData(1);
+                    j.setItemModel(RoomVariant.JETTISON.getKey());
                     tnt.setItemMeta(j);
                     setSlot(view, selected_slot.get(playerUUID), tnt, playerUUID, true);
                     setLore(view, slot, null);
@@ -280,6 +282,11 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                 @Override
                 public int getOffset() {
                     return 1;
+                }
+
+                @Override
+                public NamespacedKey getKey() {
+                    return RoomVariant.SLOT.getKey();
                 }
             });
         });

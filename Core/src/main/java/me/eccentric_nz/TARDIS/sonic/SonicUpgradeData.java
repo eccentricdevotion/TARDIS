@@ -1,12 +1,15 @@
 package me.eccentric_nz.TARDIS.sonic;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
+import org.bukkit.NamespacedKey;
+
 import java.util.HashMap;
 import java.util.List;
 
 public class SonicUpgradeData {
 
     public static final HashMap<String, String> upgrades = new HashMap<>();
-    public static final HashMap<Integer, String> customModelData = new HashMap<>();
+    public static final HashMap<NamespacedKey, String> customModelData = new HashMap<>();
     public static final List<String> sonicKeys = List.of(
             "Bio-scanner Upgrade",
             "Diamond Upgrade",
@@ -31,16 +34,16 @@ public class SonicUpgradeData {
         upgrades.put("Knockback Upgrade", "knockback");
         upgrades.put("Brush Upgrade", "brush");
         upgrades.put("Conversion Upgrade", "conversion");
-        customModelData.put(10001968, "Admin Upgrade");
-        customModelData.put(10001969, "Bio-scanner Upgrade");
-        customModelData.put(10001970, "Redstone Upgrade");
-        customModelData.put(10001971, "Diamond Upgrade");
-        customModelData.put(10001972, "Emerald Upgrade");
-        customModelData.put(10001979, "Painter Upgrade");
-        customModelData.put(10001982, "Ignite Upgrade");
-        customModelData.put(10001984, "Pickup Arrows Upgrade");
-        customModelData.put(10001986, "Knockback Upgrade");
-        customModelData.put(10001987, "Brush Upgrade");
-        customModelData.put(10001988, "Conversion Upgrade");
+        customModelData.put(CircuitVariant.ADMIN.getKey(), "Admin Upgrade");
+        customModelData.put(CircuitVariant.BIO.getKey(), "Bio-scanner Upgrade");
+        customModelData.put(CircuitVariant.REDSTONE.getKey(), "Redstone Upgrade");
+        customModelData.put(CircuitVariant.DIAMOND.getKey(), "Diamond Upgrade");
+        customModelData.put(CircuitVariant.EMERALD.getKey(), "Emerald Upgrade");
+        customModelData.put(CircuitVariant.PAINTER.getKey(), "Painter Upgrade");
+        customModelData.put(CircuitVariant.IGNITE.getKey(), "Ignite Upgrade");
+        customModelData.put(CircuitVariant.PICKUP.getKey(), "Pickup Arrows Upgrade");
+        customModelData.put(CircuitVariant.KNOCKBACK.getKey(), "Knockback Upgrade");
+        customModelData.put(CircuitVariant.BRUSH.getKey(), "Brush Upgrade");
+        customModelData.put(CircuitVariant.CONVERSION.getKey(), "Conversion Upgrade");
     }
 }

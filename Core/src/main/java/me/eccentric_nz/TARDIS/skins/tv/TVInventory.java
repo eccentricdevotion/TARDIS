@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.skins.tv;
 
-import me.eccentric_nz.TARDIS.custommodeldata.GUIData;
-import me.eccentric_nz.TARDIS.custommodeldata.GUITelevision;
+import me.eccentric_nz.TARDIS.custommodels.GUIData;
+import me.eccentric_nz.TARDIS.custommodels.GUITelevision;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -31,7 +31,7 @@ public class TVInventory {
             ItemStack is = new ItemStack(tv.material(), 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(tv.name());
-            im.setCustomModelData(tv.customModelData());
+            im.setItemModel(tv.key());
             is.setItemMeta(im);
             stack[tv.slot()] = is;
         }

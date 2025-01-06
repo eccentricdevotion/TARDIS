@@ -1,7 +1,13 @@
 package me.eccentric_nz.TARDIS.doors;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.ClassicDoorVariant;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Door {
@@ -28,31 +34,63 @@ public class Door {
         this.custom = custom;
     }
 
-    public static int getCMD(Material material) {
+    public static NamespacedKey getExtraModel(Material material) {
         Door door = byMaterial.get(material);
         if (door != null) {
-            return 10000 + door.getFrames().length;
+            return new NamespacedKey(TARDIS.plugin, TARDISStringUtils.toDashedLowercase(door.getName()) + "_extra");
         }
-        return -1;
+        return null;
+    }
+
+    public static NamespacedKey getOpenModel(Material material) {
+        Door door = byMaterial.get(material);
+        if (door != null) {
+            return new NamespacedKey(TARDIS.plugin, TARDISStringUtils.toDashedLowercase(door.getName()) + "_open");
+        }
+        return null;
+    }
+
+    public static NamespacedKey getClosedModel(Material material) {
+        Door door = byMaterial.get(material);
+        if (door != null) {
+            return new NamespacedKey(TARDIS.plugin, TARDISStringUtils.toDashedLowercase(door.getName()) + "_closed");
+        }
+        return null;
     }
 
     public static DoorAnimationData getOpenData(Material material) {
         Door door = byMaterial.get(material);
         if (door != null) {
-            return new DoorAnimationData(door.frameTick, door.openSound, door.frames.length - 2);
+            // get animation
+            NamespacedKey[] animation = new NamespacedKey[door.frames.length + 1];
+            for (int i : door.frames) {
+                animation[i] = new NamespacedKey(TARDIS.plugin, TARDISStringUtils.toUnderscoredLowercase(door.getName()) + "_" + i);
+            }
+            animation[door.frames.length] = new NamespacedKey(TARDIS.plugin, TARDISStringUtils.toUnderscoredLowercase(door.getName()) + "_open");
+            return new DoorAnimationData(door.frameTick, door.openSound, animation);
         } else {
             // default for classic door
-            return new DoorAnimationData(4L, "tardis_door_open", 5);
+            return new DoorAnimationData(4L, "tardis_door_open", new NamespacedKey[]{ClassicDoorVariant.CLASSIC_DOOR_OPEN.getKey()});
         }
     }
 
     public static DoorAnimationData getCloseData(Material material) {
         Door door = byMaterial.get(material);
         if (door != null) {
-            return new DoorAnimationData(door.frameTick, door.closeSound, door.frames.length - 2);
+            // get animation
+            NamespacedKey[] animation = new NamespacedKey[door.frames.length + 1];
+            int[] reversed = ArrayUtils.clone(door.frames);
+            ArrayUtils.reverse(reversed);
+            int i = 0;
+            for (int r : reversed) {
+                animation[i] = new NamespacedKey(TARDIS.plugin, TARDISStringUtils.toUnderscoredLowercase(door.getName()) + "_" + r);
+                i++;
+            }
+            animation[door.frames.length] = new NamespacedKey(TARDIS.plugin, TARDISStringUtils.toUnderscoredLowercase(door.getName()) + "_closed");
+            return new DoorAnimationData(door.frameTick, door.closeSound, animation);
         } else {
             // default for classic door
-            return new DoorAnimationData(4L, "tardis_door_close", 5);
+            return new DoorAnimationData(4L, "tardis_door_close", new NamespacedKey[]{ClassicDoorVariant.CLASSIC_DOOR_CLOSED.getKey()});
         }
     }
 

@@ -20,6 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetParticlePrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -28,6 +30,7 @@ import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.particles.Emitter;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -63,16 +66,70 @@ public class TARDISDematerialisePoliceBox implements Runnable {
     public void run() {
         World world = dd.getLocation().getWorld();
         Block light = dd.getLocation().getBlock().getRelative(BlockFace.UP, 2);
+        NamespacedKey model;
+        Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, dd.getTardisID(), false);
         if (i < loops) {
-            int cmd;
             if (i % 2 == 0) { // stained
-                cmd = 1003;
+                model = switch (dye) {
+                    case BLACK_DYE -> ChameleonVariant.BLACK_STAINED.getKey();
+                    case BLUE_DYE -> ChameleonVariant.BLUE_STAINED.getKey();
+                    case BROWN_DYE -> ChameleonVariant.BROWN_STAINED.getKey();
+                    case CYAN_DYE -> ChameleonVariant.CYAN_STAINED.getKey();
+                    case GRAY_DYE -> ChameleonVariant.GRAY_STAINED.getKey();
+                    case GREEN_DYE -> ChameleonVariant.GREEN_STAINED.getKey();
+                    case LIGHT_BLUE_DYE -> ChameleonVariant.LIGHT_BLUE_STAINED.getKey();
+                    case LIGHT_GRAY_DYE -> ChameleonVariant.LIGHT_GRAY_STAINED.getKey();
+                    case LIME_DYE -> ChameleonVariant.LIME_STAINED.getKey();
+                    case MAGENTA_DYE -> ChameleonVariant.MAGENTA_STAINED.getKey();
+                    case ORANGE_DYE -> ChameleonVariant.ORANGE_STAINED.getKey();
+                    case PINK_DYE -> ChameleonVariant.PINK_STAINED.getKey();
+                    case PURPLE_DYE -> ChameleonVariant.PURPLE_STAINED.getKey();
+                    case RED_DYE -> ChameleonVariant.RED_STAINED.getKey();
+                    case WHITE_DYE -> ChameleonVariant.WHITE_STAINED.getKey();
+                    case YELLOW_DYE -> ChameleonVariant.YELLOW_STAINED.getKey();
+                    case CYAN_STAINED_GLASS_PANE -> ChameleonVariant.TENNANT_STAINED.getKey();
+                    case GRAY_STAINED_GLASS_PANE -> ChameleonVariant.WEEPING_ANGEL_STAINED.getKey();
+                    case ENDER_PEARL -> ChameleonVariant.PANDORICA_STAINED.getKey();
+                    case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED_STAINED.getKey();
+                    default -> new NamespacedKey(plugin, "police_box/" + TARDISBuilderUtility.getCustomModelPath(dye.toString()) + "_stained");
+                };
                 light.setBlockData(TARDISConstants.AIR);
             } else if (i % 4 == 1) { // glass
-                cmd = 1004;
+                model = switch (dye) {
+                    case BLACK_DYE, BLUE_DYE, BROWN_DYE,
+                         CYAN_DYE, GRAY_DYE, GREEN_DYE, LIGHT_BLUE_DYE,
+                         LIGHT_GRAY_DYE, LIME_DYE, MAGENTA_DYE, ORANGE_DYE,
+                         PINK_DYE, PURPLE_DYE, RED_DYE, WHITE_DYE,
+                         YELLOW_DYE, LEATHER_HORSE_ARMOR, CYAN_STAINED_GLASS_PANE -> ChameleonVariant.GLASS.getKey();
+                    case GRAY_STAINED_GLASS_PANE -> ChameleonVariant.WEEPING_ANGEL_STAINED.getKey();
+                    case ENDER_PEARL -> ChameleonVariant.PANDORICA_STAINED.getKey();
+                    default -> new NamespacedKey(plugin, "police_box/" + TARDISBuilderUtility.getCustomModelPath(dye.toString()) + "_glass");
+                };
                 light.setBlockData(TARDISConstants.AIR);
             } else { // preset
-                cmd = 1001;
+                model = switch (dye) {
+                    case BLACK_DYE -> ChameleonVariant.BLACK_CLOSED.getKey();
+                    case BLUE_DYE -> ChameleonVariant.BLUE_CLOSED.getKey();
+                    case BROWN_DYE -> ChameleonVariant.BROWN_CLOSED.getKey();
+                    case CYAN_DYE -> ChameleonVariant.CYAN_CLOSED.getKey();
+                    case GRAY_DYE -> ChameleonVariant.GRAY_CLOSED.getKey();
+                    case GREEN_DYE -> ChameleonVariant.GREEN_CLOSED.getKey();
+                    case LIGHT_BLUE_DYE -> ChameleonVariant.LIGHT_BLUE_CLOSED.getKey();
+                    case LIGHT_GRAY_DYE -> ChameleonVariant.LIGHT_GRAY_CLOSED.getKey();
+                    case LIME_DYE -> ChameleonVariant.LIME_CLOSED.getKey();
+                    case MAGENTA_DYE -> ChameleonVariant.MAGENTA_CLOSED.getKey();
+                    case ORANGE_DYE -> ChameleonVariant.ORANGE_CLOSED.getKey();
+                    case PINK_DYE -> ChameleonVariant.PINK_CLOSED.getKey();
+                    case PURPLE_DYE -> ChameleonVariant.PURPLE_CLOSED.getKey();
+                    case RED_DYE -> ChameleonVariant.RED_CLOSED.getKey();
+                    case WHITE_DYE -> ChameleonVariant.WHITE_CLOSED.getKey();
+                    case YELLOW_DYE -> ChameleonVariant.YELLOW_CLOSED.getKey();
+                    case CYAN_STAINED_GLASS_PANE -> ChameleonVariant.TENNANT_CLOSED.getKey();
+                    case GRAY_STAINED_GLASS_PANE -> ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey();
+                    case ENDER_PEARL -> ChameleonVariant.PANDORICA_CLOSED.getKey();
+                    case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED_CLOSED.getKey();
+                    default -> new NamespacedKey(plugin, "police_box/" + TARDISBuilderUtility.getCustomModelPath(dye.toString()) + "_stained");
+                };
                 Levelled levelled = TARDISConstants.LIGHT;
                 // set light level from exterior lamp control
                 levelled.setLevel(dd.getExteriorLampLevel());
@@ -106,7 +163,6 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                     stand = (ArmorStand) world.spawnEntity(dd.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.ARMOR_STAND);
                 }
                 stand.setRotation(dd.getDirection().getYaw(), 0.0f);
-                Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, dd.getTardisID(), false);
                 is = new ItemStack(dye, 1);
                 // only play the sound if the player is outside the TARDIS
                 if (dd.isOutside()) {
@@ -142,7 +198,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
             }
             if (is != null) {
                 ItemMeta im = is.getItemMeta();
-                im.setCustomModelData(cmd);
+                im.setItemModel(model);
                 is.setItemMeta(im);
                 stand.getEquipment().setHelmet(is, true);
                 stand.setInvulnerable(true);

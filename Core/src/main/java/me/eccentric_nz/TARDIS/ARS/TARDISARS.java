@@ -16,7 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.ARS;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.RoomVariant;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
+import org.bukkit.NamespacedKey;
 
 import java.util.HashMap;
 
@@ -25,56 +27,56 @@ import java.util.HashMap;
  */
 public enum TARDISARS implements ARS {
 
-    ALLAY("LIGHT_BLUE_CONCRETE", "Allay House", 1),
-    ANTIGRAVITY("SANDSTONE", "Anti-gravity Well", 1),
-    APIARY("BEE_NEST", "Apiary", 1),
-    AQUARIUM("TUBE_CORAL_BLOCK", "Aquarium", 1),
-    ARBORETUM("OAK_LEAVES", "Arboretum", 1),
-    BAKER("END_STONE", "4th Doctor's Secondary Console", 1),
-    BAMBOO("BAMBOO", "Bamboo", 1),
-    BEDROOM("GLOWSTONE", "Bedroom", 1),
-    BIRDCAGE("YELLOW_GLAZED_TERRACOTTA", "Bird Cage", 1),
-    CHEMISTRY("BLAST_FURNACE", "Chemistry Lab", 1),
-    EMPTY("GLASS", "Empty", 1),
-    EYE("SHROOMLIGHT", "Eye of Harmony", 1),
-    FARM("DIRT", "Mob Farm", 1),
-    GARDEN("CHERRY_LEAVES", "Flower Garden", 1),
-    GEODE("AMETHYST_BLOCK", "Geode", 1),
-    GRAVITY("MOSSY_COBBLESTONE", "Gravity Well", 1),
-    GREENHOUSE("MELON", "Greenhouse", 1),
-    HARMONY("STONE_BRICK_STAIRS", "Condenser", 1),
-    HUTCH("ACACIA_LOG", "Rabbit Hutch", 1),
-    IGLOO("PACKED_ICE", "Igloo", 1),
-    IISTUBIL("WHITE_GLAZED_TERRACOTTA", "Camel Stable", 1),
-    KITCHEN("PUMPKIN", "Kitchen", 1),
-    LAVA("MAGMA_BLOCK", "Lava", 1),
-    LAZARUS("FURNACE", "Genetic Manipulator", 1),
-    LIBRARY("ENCHANTING_TABLE", "Library", 1),
-    MANGROVE("MUDDY_MANGROVE_ROOTS", "Mangrove", 1),
-    MAZE("LODESTONE", "Maze", 1),
-    MUSHROOM("GRAVEL", "Mycellium", 1),
-    NETHER("BLACKSTONE", "Nether", 1),
-    OBSERVATORY("POLISHED_BLACKSTONE_BRICKS", "Astronomical Observatory", 1),
-    PASSAGE("CLAY", "Passage", 1),
-    PEN("MOSS_BLOCK", "Sniffer Pen", 1),
-    POOL("SNOW_BLOCK", "Pool", 1),
-    RAIL("HOPPER", "Rail Transfer Station", 1),
-    RENDERER("TERRACOTTA", "Exterior Renderer", 1),
-    SHELL("DEAD_BRAIN_CORAL_BLOCK", "Shell", 1),
-    SMELTER("CHEST", "Smelter", 1),
-    STABLE("HAY_BLOCK", "Horse Stable", 1),
-    STALL("BROWN_GLAZED_TERRACOTTA", "Llama Stall", 1),
-    SURGERY("RED_CONCRETE", "Hospital Surgery", 1),
-    TRENZALORE("BRICKS", "Trenzalore", 1),
-    VAULT("DISPENSER", "Storage Vault", 1),
-    VILLAGE("OAK_LOG", "Village", 1),
-    WOOD("OAK_PLANKS", "Wood Secondary Console", 1),
-    WORKSHOP("RED_NETHER_BRICKS", "Workshop", 1),
-    ZERO("GRASS_BLOCK", "Zero Room", 0),
-    JETTISON("TNT", "Jettison", 0),
-    SLOT("STONE", "Empty slot", 0),
-    CUSTOM("", "Custom room", 0),
-    CONSOLE("", "Console", 0);
+    ALLAY("LIGHT_BLUE_CONCRETE", "Allay House", 1, RoomVariant.ALLAY.getKey()),
+    ANTIGRAVITY("SANDSTONE", "Anti-gravity Well", 1, RoomVariant.ANTIGRAVITY.getKey()),
+    APIARY("BEE_NEST", "Apiary", 1, RoomVariant.APIARY.getKey()),
+    AQUARIUM("TUBE_CORAL_BLOCK", "Aquarium", 1, RoomVariant.AQUARIUM.getKey()),
+    ARBORETUM("OAK_LEAVES", "Arboretum", 1, RoomVariant.ARBORETUM.getKey()),
+    BAKER("END_STONE", "4th Doctor's Secondary Console", 1, RoomVariant.BAKER.getKey()),
+    BAMBOO("BAMBOO", "Bamboo", 1, RoomVariant.BAMBOO.getKey()),
+    BEDROOM("GLOWSTONE", "Bedroom", 1, RoomVariant.BEDROOM.getKey()),
+    BIRDCAGE("YELLOW_GLAZED_TERRACOTTA", "Bird Cage", 1, RoomVariant.BIRDCAGE.getKey()),
+    CHEMISTRY("BLAST_FURNACE", "Chemistry Lab", 1, RoomVariant.CHEMISTRY.getKey()),
+    EMPTY("GLASS", "Empty", 1, RoomVariant.EMPTY.getKey()),
+    EYE("SHROOMLIGHT", "Eye of Harmony", 1, RoomVariant.EYE.getKey()),
+    FARM("DIRT", "Mob Farm", 1, RoomVariant.FARM.getKey()),
+    GARDEN("CHERRY_LEAVES", "Flower Garden", 1, RoomVariant.GARDEN.getKey()),
+    GEODE("AMETHYST_BLOCK", "Geode", 1, RoomVariant.GEODE.getKey()),
+    GRAVITY("MOSSY_COBBLESTONE", "Gravity Well", 1, RoomVariant.GRAVITY.getKey()),
+    GREENHOUSE("MELON", "Greenhouse", 1, RoomVariant.GREENHOUSE.getKey()),
+    HARMONY("STONE_BRICK_STAIRS", "Condenser", 1, RoomVariant.HARMONY.getKey()),
+    HUTCH("ACACIA_LOG", "Rabbit Hutch", 1, RoomVariant.HUTCH.getKey()),
+    IGLOO("PACKED_ICE", "Igloo", 1, RoomVariant.IGLOO.getKey()),
+    IISTUBIL("WHITE_GLAZED_TERRACOTTA", "Camel Stable", 1, RoomVariant.IISTUBIL.getKey()),
+    KITCHEN("PUMPKIN", "Kitchen", 1, RoomVariant.KITCHEN.getKey()),
+    LAVA("MAGMA_BLOCK", "Lava", 1, RoomVariant.LAVA.getKey()),
+    LAZARUS("FURNACE", "Genetic Manipulator", 1, RoomVariant.LAZARUS.getKey()),
+    LIBRARY("ENCHANTING_TABLE", "Library", 1, RoomVariant.LIBRARY.getKey()),
+    MANGROVE("MUDDY_MANGROVE_ROOTS", "Mangrove", 1, RoomVariant.MANGROVE.getKey()),
+    MAZE("LODESTONE", "Maze", 1, RoomVariant.MAZE.getKey()),
+    MUSHROOM("GRAVEL", "Mycellium", 1, RoomVariant.MUSHROOM.getKey()),
+    NETHER("BLACKSTONE", "Nether", 1, RoomVariant.NETHER.getKey()),
+    OBSERVATORY("POLISHED_BLACKSTONE_BRICKS", "Astronomical Observatory", 1, RoomVariant.OBSERVATORY.getKey()),
+    PASSAGE("CLAY", "Passage", 1, RoomVariant.PASSAGE.getKey()),
+    PEN("MOSS_BLOCK", "Sniffer Pen", 1, RoomVariant.PEN.getKey()),
+    POOL("SNOW_BLOCK", "Pool", 1, RoomVariant.POOL.getKey()),
+    RAIL("HOPPER", "Rail Transfer Station", 1, RoomVariant.RAIL.getKey()),
+    RENDERER("TERRACOTTA", "Exterior Renderer", 1, RoomVariant.RENDERER.getKey()),
+    SHELL("DEAD_BRAIN_CORAL_BLOCK", "Shell", 1, RoomVariant.SHELL.getKey()),
+    SMELTER("CHEST", "Smelter", 1, RoomVariant.SMELTER.getKey()),
+    STABLE("HAY_BLOCK", "Horse Stable", 1, RoomVariant.STABLE.getKey()),
+    STALL("BROWN_GLAZED_TERRACOTTA", "Llama Stall", 1, RoomVariant.STALL.getKey()),
+    SURGERY("RED_CONCRETE", "Hospital Surgery", 1, RoomVariant.SURGERY.getKey()),
+    TRENZALORE("BRICKS", "Trenzalore", 1, RoomVariant.TRENZALORE.getKey()),
+    VAULT("DISPENSER", "Storage Vault", 1, RoomVariant.VAULT.getKey()),
+    VILLAGE("OAK_LOG", "Village", 1, RoomVariant.VILLAGE.getKey()),
+    WOOD("OAK_PLANKS", "Wood Secondary Console", 1, RoomVariant.WOOD.getKey()),
+    WORKSHOP("RED_NETHER_BRICKS", "Workshop", 1, RoomVariant.WORKSHOP.getKey()),
+    ZERO("GRASS_BLOCK", "Zero Room", 0, null),
+    JETTISON("TNT", "Jettison", 0, RoomVariant.JETTISON.getKey()),
+    SLOT("STONE", "Empty slot", 0, RoomVariant.SLOT.getKey()),
+    CUSTOM("", "Custom room", 0, null),
+    CONSOLE("", "Console", 0, null);
 
     private final static HashMap<String, ARS> EXTENDED_MATERIAL = new HashMap<>();
 
@@ -88,12 +90,14 @@ public enum TARDISARS implements ARS {
     private final String descriptiveName;
     private final String configPath;
     private final int offset;
+    private final NamespacedKey key;
 
-    TARDISARS(String material, String descriptiveName, int offset) {
+    TARDISARS(String material, String descriptiveName, int offset, NamespacedKey key) {
         this.material = material;
         this.descriptiveName = descriptiveName;
         configPath = toString();
         this.offset = offset;
+        this.key = key;
     }
 
     /**
@@ -154,5 +158,15 @@ public enum TARDISARS implements ARS {
     @Override
     public int getOffset() {
         return offset;
+    }
+
+    /**
+     * Gets the item model namespaced key
+     *
+     * @return the namespaced key
+     */
+    @Override
+    public NamespacedKey getKey() {
+        return key;
     }
 }

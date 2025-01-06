@@ -17,14 +17,16 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISonicGenerator;
+import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import me.eccentric_nz.TARDIS.recipes.shaped.SonicScrewdriverRecipe;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,6 +40,7 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill, doesn't wound, doesn't maim. But I'll tell
@@ -123,7 +126,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
                 ItemStack choice = view.getItem(slot);
                 ItemMeta choice_im = choice.getItemMeta();
                 sonic_im = sonic.getItemMeta();
-                sonic_im.setCustomModelData(choice_im.getCustomModelData());
+                sonic_im.setItemModel(choice_im.getItemModel());
                 sonic.setItemMeta(sonic_im);
                 if (slotWasNull) {
                     view.setItem(49, sonic);
@@ -175,7 +178,8 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
                     // remove lore
                     sonic_im.setLore(null);
                 }
-                sonic_im.setCustomModelData(GUISonicGenerator.ELEVENTH_DOCTOR.getCustomModelData());
+                NamespacedKey sonicModel = SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getKey());
+                sonic_im.setItemModel(sonicModel);
                 sonic.setItemMeta(sonic_im);
                 setCost(view, costs.get("Standard Sonic"));
             }
@@ -209,7 +213,8 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
         where.put("uuid", p.getUniqueId().toString());
         where.put("activated", 1);
         ItemMeta im = is.getItemMeta();
-        set.put("model", im.getCustomModelData());
+        String split = im.getItemModel().getKey().replace("sonic/", "");
+        set.put("model", split);
         if (im.hasLore()) {
             List<String> lore = im.getLore();
             fields.forEach((key, value) -> set.put(value, (lore.contains(key)) ? 1 : 0));

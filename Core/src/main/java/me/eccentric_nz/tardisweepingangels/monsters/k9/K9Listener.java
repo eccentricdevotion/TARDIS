@@ -60,7 +60,7 @@ public class K9Listener implements Listener {
             if (!plugin.getMonstersConfig().getBoolean("k9.worlds." + location.getWorld().getName())) {
                 return;
             }
-            Entity k9 = new MonsterSpawner().createFollower(location, new Follower(UUID.randomUUID(), player.getUniqueId(), Monster.K9)).getBukkitEntity();
+            LivingEntity k9 = (LivingEntity) new MonsterSpawner().createFollower(location, new Follower(UUID.randomUUID(), player.getUniqueId(), Monster.K9)).getBukkitEntity();
             K9Equipment.set(player, k9, false);
             ent.remove();
             player.playSound(k9.getLocation(), "k9", 1.0f, 1.0f);
@@ -82,7 +82,6 @@ public class K9Listener implements Listener {
                     // claim this K9
                     k9.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, player.getUniqueId());
                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_CLAIMED", "K-9");
-                    // TODO update follower record if there is one
                 }
             }
         }
@@ -94,7 +93,7 @@ public class K9Listener implements Listener {
             ItemStack is = event.getItem();
             if (is != null && is.getType().equals(Material.BONE) && is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName() && im.getDisplayName().endsWith("K9") && im.hasCustomModelData()) {
+                if (im.hasDisplayName() && im.getDisplayName().endsWith("K9") && im.hasItemModel()) {
                     event.setCancelled(true);
                     Player player = event.getPlayer();
                     Location location = event.getClickedBlock().getLocation().add(0.5d, 1.0d, 0.5d);
@@ -110,7 +109,7 @@ public class K9Listener implements Listener {
                         player.getInventory().setItemInMainHand(is);
                     }
                     // spawn a K9 instead
-                    Entity k9 = new MonsterSpawner().createFollower(location, new Follower(UUID.randomUUID(), player.getUniqueId(), Monster.K9)).getBukkitEntity();
+                    LivingEntity k9 = (LivingEntity) new MonsterSpawner().createFollower(location, new Follower(UUID.randomUUID(), player.getUniqueId(), Monster.K9)).getBukkitEntity();
                     K9Equipment.set(player, k9, false);
                     player.playSound(k9.getLocation(), "k9", 1.0f, 1.0f);
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(k9, EntityType.HUSK, Monster.K9, location));

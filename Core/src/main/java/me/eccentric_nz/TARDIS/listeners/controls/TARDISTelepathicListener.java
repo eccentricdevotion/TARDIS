@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners.controls;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.console.telepathic.TARDISTelepathicInventory;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -157,7 +158,7 @@ public class TARDISTelepathicListener implements Listener {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Telepathic Circuit");
-        im.setCustomModelData(10001962);
+        im.setItemModel(CircuitVariant.TELEPATHIC.getKey());
         String uses = (plugin.getConfig().getString("circuits.uses.telepathic").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.telepathic");
         List<String> lore = Arrays.asList("Uses left", uses);
         im.setLore(lore);

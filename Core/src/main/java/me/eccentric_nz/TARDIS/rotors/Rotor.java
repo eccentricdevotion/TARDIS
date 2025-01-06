@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.rotors;
 
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 
 import java.util.HashMap;
 
@@ -30,26 +31,26 @@ import java.util.HashMap;
 public class Rotor {
 
     public static final HashMap<Material, Rotor> byMaterial = new HashMap<>();
-    public static final HashMap<Integer, Rotor> byCustomModelData = new HashMap<>();
+    public static final HashMap<NamespacedKey, Rotor> byCustomModel = new HashMap<>();
     public static final HashMap<String, Rotor> byName = new HashMap<>();
     private final String name;
-    private final int offModelData;
+    private final NamespacedKey offModel;
     private final Material material;
     private final int[] frames;
     private final long frameTick;
     private final boolean custom;
 
-    public Rotor(String name, int offModelData, Material material, int[] frames, long frameTick, boolean custom) {
+    public Rotor(String name, NamespacedKey offModel, Material material, int[] frames, long frameTick, boolean custom) {
         this.name = name;
-        this.offModelData = offModelData;
+        this.offModel = offModel;
         this.material = material;
         this.frames = frames;
         this.frameTick = frameTick;
         this.custom = custom;
     }
 
-    public static Rotor getByModelData(int cmd) {
-        return byCustomModelData.get(cmd);
+    public static Rotor getByModel(NamespacedKey key) {
+        return byCustomModel.get(key);
     }
 
     public static Rotor getByMaterial(Material material) {
@@ -60,8 +61,8 @@ public class Rotor {
         return name;
     }
 
-    public int getOffModelData() {
-        return offModelData;
+    public NamespacedKey getOffModel() {
+        return offModel;
     }
 
     public Material getMaterial() {

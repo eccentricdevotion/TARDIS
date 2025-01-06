@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.travel;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIArea;
+import me.eccentric_nz.TARDIS.custommodels.GUIArea;
 import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import org.bukkit.Material;
@@ -88,7 +88,7 @@ public class TARDISAreasInventory {
         ItemStack map = new ItemStack(Material.MAP, 1);
         ItemMeta switchto = map.getItemMeta();
         switchto.setDisplayName("Load TARDIS saves");
-        switchto.setCustomModelData(GUIArea.LOAD_TARDIS_SAVES.customModelData());
+        switchto.setItemModel(GUIArea.LOAD_TARDIS_SAVES.key());
         map.setItemMeta(switchto);
         for (int m = 45; m < 54; m++) {
             if (m == 49) {

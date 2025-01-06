@@ -39,13 +39,13 @@ import java.util.Set;
 public class TARDISSonicBlasterRecipe {
 
     private final TARDIS plugin;
-    private final HashMap<String, Integer> modelData = new HashMap<>();
+    private final HashMap<String, NamespacedKey> modelData = new HashMap<>();
 
     public TARDISSonicBlasterRecipe(TARDIS plugin) {
         this.plugin = plugin;
-        modelData.put("Sonic Blaster", 10000001);
-        modelData.put("Blaster Battery", 10000002);
-        modelData.put("Landing Pad", 10000001);
+        modelData.put("Sonic Blaster", RecipeItem.SONIC_BLASTER.getModel());
+        modelData.put("Blaster Battery", RecipeItem.BLASTER_BATTERY.getModel());
+        modelData.put("Landing Pad", RecipeItem.LANDING_PAD.getModel());
     }
 
     public void addShapedRecipes() {
@@ -64,7 +64,7 @@ public class TARDISSonicBlasterRecipe {
         if (!plugin.getBlasterConfig().getString("recipes." + s + ".lore").isEmpty()) {
             im.setLore(Arrays.asList(plugin.getBlasterConfig().getString("recipes." + s + ".lore").split("~")));
         }
-        im.setCustomModelData(modelData.get(s));
+        im.setItemModel(modelData.get(s));
         im.addItemFlags(ItemFlag.values());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(TARDIS.plugin, s.replace(" ", "_").toLowerCase(Locale.ROOT));
@@ -88,7 +88,7 @@ public class TARDISSonicBlasterRecipe {
                     exact = new ItemStack(m, 1);
                     ItemMeta em = exact.getItemMeta();
                     em.setDisplayName(choice[1]);
-                    em.setCustomModelData(RecipeItem.getByName(choice[1]).getCustomModelData());
+                    em.setItemModel(RecipeItem.getByName(choice[1]).getModel());
                     exact.setItemMeta(em);
                     r.setIngredient(c, new RecipeChoice.ExactChoice(exact));
                 } else {

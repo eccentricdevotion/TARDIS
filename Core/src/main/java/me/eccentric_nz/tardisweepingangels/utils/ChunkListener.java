@@ -47,7 +47,7 @@ public class ChunkListener implements Listener {
             switch (d) {
                 case Skeleton skeleton -> {
                     if (pdc.has(TARDISWeepingAngels.MONK, PersistentDataType.INTEGER)) {
-                        new Equipper(Monster.HEADLESS_MONK, skeleton, false, false).setHelmetAndInvisibility();
+                        new Equipper(Monster.HEADLESS_MONK, skeleton, false).setHelmetAndInvisibility();
                         // restart flame runnable?
                         int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(skeleton), 1, 20);
                         pdc.set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
@@ -58,7 +58,7 @@ public class ChunkListener implements Listener {
                         ItemMeta im = drowned.getEquipment().getHelmet().getItemMeta();
                         if (im != null && im.hasDisplayName() && im.getDisplayName().endsWith(" Head")) {
                             if (pdc.has(TARDISWeepingAngels.DEVIL, PersistentDataType.INTEGER)) {
-                                new Equipper(Monster.SEA_DEVIL, drowned, false, false, true).setHelmetAndInvisibility();
+                                new Equipper(Monster.SEA_DEVIL, drowned, false).setHelmetAndInvisibility();
                             } else {
                                 Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, drowned::remove, 2L);
                             }
@@ -67,7 +67,7 @@ public class ChunkListener implements Listener {
                 }
                 case Zombie zombie -> {
                     if (pdc.has(TARDISWeepingAngels.EMPTY, PersistentDataType.INTEGER)) {
-                        new Equipper(Monster.EMPTY_CHILD, zombie, false, false).setHelmetAndInvisibility();
+                        new Equipper(Monster.EMPTY_CHILD, zombie, false).setHelmetAndInvisibility();
                         EmptyChildEquipment.setSpeed(zombie);
                     }
                 }

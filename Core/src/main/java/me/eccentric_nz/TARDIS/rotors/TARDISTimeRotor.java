@@ -17,8 +17,10 @@
 package me.eccentric_nz.TARDIS.rotors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.RotorVariant;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -44,31 +46,31 @@ public class TARDISTimeRotor {
         TARDIS.plugin.getQueryFactory().doUpdate("tardis", set, where);
     }
 
-    public static void setRotor(int which, ItemFrame itemFrame) {
+    public static void setRotor(NamespacedKey key, ItemFrame itemFrame) {
         ItemStack is = new ItemStack(Material.LIGHT_GRAY_DYE, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Time Rotor");
-        im.setCustomModelData(which);
+        im.setItemModel(key);
         is.setItemMeta(im);
         itemFrame.setItem(is, false);
         itemFrame.setFixed(true);
         itemFrame.setVisible(false);
-        itemFrame.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which);
+        itemFrame.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, key.getKey());
     }
 
     public static void setRotor(Rotor which, ItemFrame itemFrame) {
         ItemStack is = new ItemStack(which.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Time Rotor");
-        im.setCustomModelData(1021);
+        im.setItemModel(which.getOffModel());
         is.setItemMeta(im);
         itemFrame.setItem(is, false);
         itemFrame.setFixed(true);
         itemFrame.setVisible(false);
-        itemFrame.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, which.getOffModelData());
+        itemFrame.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, which.getOffModel().getKey());
         if (!which.getName().equals("twelfth")) {
             // start repeating animation task
-            int task = Bukkit.getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, new TimeRotorAnimation(itemFrame, which.getFrames()), which.getFrameTick(), which.getFrameTick());
+            int task = Bukkit.getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, new TimeRotorAnimation(itemFrame, which.getFrames(), which.getName()), which.getFrameTick(), which.getFrameTick());
             // add item frame uuid and task id to map for tracking
             ANIMATED_ROTORS.put(itemFrame.getUniqueId(), task);
         }
@@ -83,21 +85,21 @@ public class TARDISTimeRotor {
         return (ItemFrame) Bukkit.getEntity(uuid);
     }
 
-    public static int getRotorModelData(ItemFrame itemFrame) {
+    public static NamespacedKey getRotorModel(ItemFrame itemFrame) {
         ItemStack is = itemFrame.getItem();
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            if (im.hasCustomModelData()) {
-                return im.getCustomModelData();
+            if (im.hasItemModel()) {
+                return im.getItemModel();
             }
         }
-        return 10000002;
+        return RotorVariant.TIME_ROTOR_EARLY_OFF.getKey();
     }
 
-    public static int getRotorOffModelData(ItemFrame itemFrame) {
+    public static NamespacedKey getRotorOffModel(ItemFrame itemFrame) {
         ItemStack is = itemFrame.getItem();
         Material material = is.getType();
         Rotor rotor = Rotor.getByMaterial(material);
-        return rotor.getOffModelData();
+        return rotor.getOffModel();
     }
 }

@@ -58,8 +58,8 @@ public class SparklerRunnable implements Runnable {
                 int amount = sparkler.getAmount();
                 if (amount > 1) {
                     ItemMeta im = sparkler.getItemMeta();
-                    int cmd = im.getCustomModelData() - 2000000;
-                    im.setCustomModelData(cmd);
+                    Product cmd = Product.getByName().get(im.getDisplayName());
+                    im.setItemModel(cmd.getModel());
                     im.removeEnchant(Enchantment.LOYALTY);
                     sparkler.setItemMeta(im);
                     sparkler.setAmount(amount - 1);
@@ -76,7 +76,7 @@ public class SparklerRunnable implements Runnable {
     }
 
     private boolean isSparkler(ItemStack sparkler) {
-        return sparkler != null && SparklerMaterial.isCorrectMaterial(sparkler.getType()) && sparkler.hasItemMeta() && sparkler.getItemMeta().hasCustomModelData() && sparkler.containsEnchantment(Enchantment.LOYALTY);
+        return sparkler != null && SparklerMaterial.isCorrectMaterial(sparkler.getType()) && sparkler.hasItemMeta() && sparkler.getItemMeta().hasItemModel() && sparkler.containsEnchantment(Enchantment.LOYALTY);
     }
 
     private Location getHandLocation() {

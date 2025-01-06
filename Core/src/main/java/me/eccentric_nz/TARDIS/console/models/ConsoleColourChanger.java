@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.console.models;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemDisplay;
@@ -15,13 +16,13 @@ public class ConsoleColourChanger {
     private final TARDIS plugin;
     private final Location location;
     private final String uuids;
-    private final int type;
+    private final String colour;
 
-    public ConsoleColourChanger(TARDIS plugin, Location location, String uuids, int type) {
+    public ConsoleColourChanger(TARDIS plugin, Location location, String uuids, String colour) {
         this.plugin = plugin;
         this.location = location;
         this.uuids = uuids;
-        this.type = type;
+        this.colour = colour;
     }
 
     public boolean paint() {
@@ -36,15 +37,20 @@ public class ConsoleColourChanger {
                         ItemStack is = display.getItemStack();
                         if (is != null) {
                             ItemMeta im = is.getItemMeta();
-                            int cmd = 1000;
-                            if (im.getCustomModelData() > 3000) {
-                                cmd = 3000;
-                            } else if (im.getCustomModelData() > 2000) {
-                                cmd = 2000;
+                            NamespacedKey model = null;
+                            if (im.hasItemModel()) {
+                                String[] key = im.getItemModel().getKey().split("_");
+                                if (key[1].equals("centre")) {
+                                    model = new NamespacedKey(plugin, "console_centre_"+ colour);
+                                } else if (key[1].equals("division")) {
+                                    model = new NamespacedKey(plugin, "console_division_"+ colour);
+                                } else {
+                                    model = new NamespacedKey(plugin, "console_"+ colour);
+                                }
+                                im.setItemModel(model);
+                                is.setItemMeta(im);
+                                display.setItemStack(is);
                             }
-                            im.setCustomModelData(cmd + type);
-                            is.setItemMeta(im);
-                            display.setItemStack(is);
                         }
                     }
                 }

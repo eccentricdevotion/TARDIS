@@ -17,8 +17,12 @@
 package me.eccentric_nz.TARDIS.sonic.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
+import me.eccentric_nz.TARDIS.enumeration.SonicScrewdriver;
+import me.eccentric_nz.TARDIS.recipes.shaped.SonicScrewdriverRecipe;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -26,6 +30,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
 public class TARDISSonicSound {
@@ -36,8 +41,12 @@ public class TARDISSonicSound {
         if ((!timeout.containsKey(player.getUniqueId()) || timeout.get(player.getUniqueId()) < now)) {
             ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
             // change model to 'on/open', then after scheduled time change back to 'off/closed' model
-            int cmd = im.getCustomModelData();
-            im.setCustomModelData(cmd + 2000000);
+            NamespacedKey sonicModel = SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getKey());
+            if (im.hasItemModel()) {
+                sonicModel = im.getItemModel();
+            }
+            SonicScrewdriver screwdriver = SonicScrewdriver.getByKey(sonicModel.getKey());
+            im.setItemModel(screwdriver.getActive());
             player.getInventory().getItemInMainHand().setItemMeta(im);
             timeout.put(player.getUniqueId(), now + cooldown);
             TARDISSounds.playTARDISSound(player.getLocation(), sound);
@@ -47,21 +56,21 @@ public class TARDISSonicSound {
                     ItemMeta meta = is.getItemMeta();
                     if (meta.hasDisplayName() && meta.getDisplayName().endsWith("Sonic Screwdriver")) {
                         player.getInventory().getItemInMainHand().getEnchantments().keySet().forEach((e) -> player.getInventory().getItemInMainHand().removeEnchantment(e));
-                        meta.setCustomModelData(cmd);
+                        meta.setItemModel(screwdriver.getModel());
                         is.setItemMeta(meta);
                     } else {
                         // find the screwdriver in the player's inventory
-                        revertSonic(player.getInventory());
+                        revertSonic(player.getInventory(), screwdriver.getModel());
                     }
                 } else {
                     // find the screwdriver in the player's inventory
-                    revertSonic(player.getInventory());
+                    revertSonic(player.getInventory(), screwdriver.getModel());
                 }
             }, (cooldown / 50L));
         }
     }
 
-    private static void revertSonic(PlayerInventory inv) {
+    private static void revertSonic(PlayerInventory inv, NamespacedKey model) {
         int first = inv.first(Material.BLAZE_ROD);
         if (first < 0) {
             return;
@@ -72,8 +81,7 @@ public class TARDISSonicSound {
         }
         ItemMeta meta = stack.getItemMeta();
         if (meta.hasDisplayName() && meta.getDisplayName().endsWith("Sonic Screwdriver")) {
-            int cmd = meta.getCustomModelData();
-            meta.setCustomModelData(cmd - 2000000);
+            meta.setItemModel(model);
             stack.setItemMeta(meta);
             if (stack.containsEnchantment(Enchantment.UNBREAKING)) {
                 stack.getEnchantments().keySet().forEach(stack::removeEnchantment);

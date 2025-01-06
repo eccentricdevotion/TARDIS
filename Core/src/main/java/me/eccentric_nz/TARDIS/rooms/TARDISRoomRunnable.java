@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.custommodels.keys.EyeVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarming;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisTimeLordName;
@@ -659,7 +660,7 @@ public class TARDISRoomRunnable implements Runnable {
                     ItemDisplay display = (ItemDisplay) world.spawnEntity(item, EntityType.ITEM_DISPLAY);
                     ItemStack is = new ItemStack(Material.MAGMA_BLOCK);
                     ItemMeta im = is.getItemMeta();
-                    im.setCustomModelData(1000);
+                    im.setItemModel(EyeVariant.SPHERE_0.getKey());
                     is.setItemMeta(im);
                     display.setItemStack(is);
                     display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);

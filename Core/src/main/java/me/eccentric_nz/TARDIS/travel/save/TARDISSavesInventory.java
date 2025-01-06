@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.travel.save;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISaves;
+import me.eccentric_nz.TARDIS.custommodels.GUISaves;
 import me.eccentric_nz.TARDIS.database.data.Destination;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinationsByPlanet;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
@@ -126,19 +126,19 @@ public class TARDISSavesInventory {
         ItemStack tool = new ItemStack(GUISaves.REARRANGE_SAVES.material(), 1);
         ItemMeta rearrange = tool.getItemMeta();
         rearrange.setDisplayName("Rearrange saves");
-        rearrange.setCustomModelData(GUISaves.REARRANGE_SAVES.customModelData());
+        rearrange.setItemModel(GUISaves.REARRANGE_SAVES.key());
         tool.setItemMeta(rearrange);
         // add button to allow deleting saves
         ItemStack bucket = new ItemStack(GUISaves.DELETE_SAVE.material(), 1);
         ItemMeta delete = bucket.getItemMeta();
         delete.setDisplayName("Delete save");
-        delete.setCustomModelData(GUISaves.DELETE_SAVE.customModelData());
+        delete.setItemModel(GUISaves.DELETE_SAVE.key());
         bucket.setItemMeta(delete);
         // add button to go back to planets
         ItemStack planet = new ItemStack(GUISaves.BACK_TO_PLANETS.material(), 1);
         ItemMeta map = planet.getItemMeta();
         map.setDisplayName("Back to Dimension Map");
-        map.setCustomModelData(GUISaves.BACK_TO_PLANETS.customModelData());
+        map.setItemModel(GUISaves.BACK_TO_PLANETS.key());
         planet.setItemMeta(map);
         for (int m = 45; m < 54; m++) {
             switch (m) {

@@ -1,5 +1,9 @@
 package me.eccentric_nz.TARDIS.skins;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.RegenerationVariant;
+import org.bukkit.NamespacedKey;
+
+import java.util.HashMap;
 import java.util.List;
 
 public class DoctorSkins {
@@ -85,4 +89,25 @@ public class DoctorSkins {
     );
 
     public static final List<Skin> DOCTORS = List.of(FIRST, SECOND, THIRD, FOURTH, FIFTH, SIXTH, SEVENTH, EIGHTH, NINTH, TENTH, ELEVENTH, TWELFTH, THIRTEENTH, FOURTEENTH, FIFTEENTH, WAR);
+
+    public static final HashMap<Skin, NamespacedKey> MODELS = new HashMap<>();
+
+    static {
+        MODELS.put(FIRST, RegenerationVariant.FIRST.getKey());
+        MODELS.put(SECOND, RegenerationVariant.SECOND.getKey());
+        MODELS.put(THIRD, RegenerationVariant.THIRD.getKey());
+        MODELS.put(FOURTH, RegenerationVariant.FOURTH.getKey());
+        MODELS.put(FIFTH, RegenerationVariant.FIFTH.getKey());
+        MODELS.put(SIXTH, RegenerationVariant.SIXTH.getKey());
+        MODELS.put(SEVENTH, RegenerationVariant.SEVENTH.getKey());
+        MODELS.put(EIGHTH, RegenerationVariant.EIGHTH.getKey());
+        MODELS.put(NINTH, RegenerationVariant.NINTH.getKey());
+        MODELS.put(TENTH, RegenerationVariant.TENTH.getKey());
+        MODELS.put(ELEVENTH, RegenerationVariant.ELEVENTH.getKey());
+        MODELS.put(TWELFTH, RegenerationVariant.TWELFTH.getKey());
+        MODELS.put(THIRTEENTH, RegenerationVariant.THIRTEENTH.getKey());
+        MODELS.put(FOURTEENTH, RegenerationVariant.FOURTEENTH.getKey());
+        MODELS.put(FIFTEENTH, RegenerationVariant.FIFTEENTH.getKey());
+        MODELS.put(WAR, RegenerationVariant.WAR.getKey());
+    }
 }

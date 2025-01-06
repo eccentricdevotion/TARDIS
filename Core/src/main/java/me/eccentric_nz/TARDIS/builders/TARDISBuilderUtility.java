@@ -17,10 +17,13 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetColour;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisModel;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -44,7 +47,7 @@ public class TARDISBuilderUtility {
         String doorloc = world.getName() + ":" + x + ":" + y + ":" + z;
         String doorStr = world.getBlockAt(x, y, z).getLocation().toString();
         TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
-        // should insert the door when tardis is first made, and then update location there after!
+        // should insert the door when tardis is first made, and then update location thereafter!
         HashMap<String, Object> whered = new HashMap<>();
         whered.put("door_type", 0);
         whered.put("tardis_id", bd.getTardisID());
@@ -79,7 +82,7 @@ public class TARDISBuilderUtility {
         String doorloc = world.getName() + ":" + x + ":" + y + ":" + z;
         String doorStr = world.getBlockAt(x, y, z).getLocation().toString();
         TARDIS.plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, id);
-        // should insert the door when tardis is first made, and then update location there after!
+        // should insert the door when tardis is first made, and then update location thereafter!
         HashMap<String, Object> whered = new HashMap<>();
         whered.put("door_type", 0);
         whered.put("tardis_id", id);
@@ -125,8 +128,30 @@ public class TARDISBuilderUtility {
         Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, bd.getTardisID(), true);
         ItemStack is = new ItemStack(dye, 1);
         ItemMeta im = is.getItemMeta();
-        im.setCustomModelData(1001);
-        if (bd.shouldAddSign()) {
+        switch (dye) {
+            case BLACK_DYE -> im.setItemModel(ChameleonVariant.BLACK_CLOSED.getKey());
+            case RED_DYE -> im.setItemModel(ChameleonVariant.RED_CLOSED.getKey());
+            case BROWN_DYE -> im.setItemModel(ChameleonVariant.BROWN_CLOSED.getKey());
+            case GREEN_DYE -> im.setItemModel(ChameleonVariant.GREEN_CLOSED.getKey());
+            case BLUE_DYE -> im.setItemModel(ChameleonVariant.BLUE_CLOSED.getKey());
+            case PURPLE_DYE -> im.setItemModel(ChameleonVariant.PURPLE_CLOSED.getKey());
+            case CYAN_DYE -> im.setItemModel(ChameleonVariant.CYAN_CLOSED.getKey());
+            case LIGHT_GRAY_DYE -> im.setItemModel(ChameleonVariant.LIGHT_GRAY_CLOSED.getKey());
+            case GRAY_DYE -> im.setItemModel(ChameleonVariant.GRAY_CLOSED.getKey());
+            case PINK_DYE -> im.setItemModel(ChameleonVariant.PINK_CLOSED.getKey());
+            case LIME_DYE -> im.setItemModel(ChameleonVariant.LIME_CLOSED.getKey());
+            case YELLOW_DYE -> im.setItemModel(ChameleonVariant.YELLOW_CLOSED.getKey());
+            case LIGHT_BLUE_DYE -> im.setItemModel(ChameleonVariant.LIGHT_BLUE_CLOSED.getKey());
+            case MAGENTA_DYE -> im.setItemModel(ChameleonVariant.MAGENTA_CLOSED.getKey());
+            case ORANGE_DYE -> im.setItemModel(ChameleonVariant.ORANGE_CLOSED.getKey());
+            case WHITE_DYE -> im.setItemModel(ChameleonVariant.WHITE_CLOSED.getKey());
+            case CYAN_STAINED_GLASS_PANE -> im.setItemModel(ChameleonVariant.TENNANT_CLOSED.getKey());
+            case LEATHER_HORSE_ARMOR -> im.setItemModel(ColouredVariant.TINTED_CLOSED.getKey());
+            case WOLF_SPAWN_EGG -> im.setItemModel(ChameleonVariant.BAD_WOLF_CLOSED.getKey());
+            case ENDER_PEARL -> im.setItemModel(ChameleonVariant.PANDORICA_CLOSED.getKey());
+            case GRAY_STAINED_GLASS_PANE -> im.setItemModel(ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey());
+        }
+        if (bd.shouldAddSign() && bd.getPlayer() != null) {
             String pb = "";
             switch (preset) {
                 case WEEPING_ANGEL -> pb = "Weeping Angel";
@@ -168,5 +193,14 @@ public class TARDISBuilderUtility {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         TARDIS.plugin.getQueryFactory().doUpdate("tardis", set, where);
+    }
+
+    public static String getCustomModelPath(String type) {
+        for (String c : TARDIS.plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
+            if (type.equals(TARDIS.plugin.getCustomModelConfig().getString("models." + c + ".item"))) {
+                return TARDISStringUtils.toUnderscoredLowercase(c);
+            }
+        }
+        return "custom";
     }
 }

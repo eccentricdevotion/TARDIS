@@ -19,12 +19,17 @@ package me.eccentric_nz.TARDIS.commands;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.custommodels.keys.KeyVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISRecipeLister;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -225,24 +230,24 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 if (item.getType().equals(Material.GLOWSTONE_DUST) && !str.endsWith("Tie")) {
                     String dn = getDisplayName(str, glowstoneCount);
                     im.setDisplayName(ChatColor.WHITE + dn);
-                    im.setCustomModelData(RecipeItem.getByName(dn).getCustomModelData());
+                    im.setItemModel(RecipeItem.getByName(dn).getModel());
                     glowstoneCount++;
                 }
                 if (str.endsWith("TARDIS Remote Key") && item.getType().equals(Material.GOLD_NUGGET)) {
                     im.setDisplayName(ChatColor.WHITE + "TARDIS Key");
-                    im.setCustomModelData(1);
+                    im.setItemModel(KeyVariant.REMOTE.getKey());
                 }
                 if (str.equals("Acid Battery") && item.getType().equals(Material.WATER_BUCKET)) {
                     im.setDisplayName(ChatColor.WHITE + "Acid Bucket");
-                    im.setCustomModelData(1);
+                    im.setItemModel(Whoniverse.ACID_BUCKET.getKey());
                 }
                 if (str.equals("Rift Manipulator") && item.getType().equals(Material.NETHER_BRICK)) {
                     im.setDisplayName(ChatColor.WHITE + "Acid Battery");
-                    im.setCustomModelData(10000001);
+                    im.setItemModel(Whoniverse.ACID_BATTERY.getKey());
                 }
                 if (str.equals("Rust Plague Sword") && item.getType().equals(Material.LAVA_BUCKET)) {
                     im.setDisplayName(ChatColor.WHITE + "Rust Bucket");
-                    im.setCustomModelData(1);
+                    im.setItemModel(Whoniverse.RUST_BUCKET.getKey());
                 }
                 item.setItemMeta(im);
                 inv.setItem(j * 9 + k, item);
@@ -253,7 +258,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         im.setDisplayName(ChatColor.WHITE + str);
         RecipeItem recipeItem = RecipeItem.getByName(str);
         if (recipeItem != RecipeItem.NOT_FOUND) {
-            im.setCustomModelData(recipeItem.getCustomModelData());
+            im.setItemModel(recipeItem.getModel());
         }
         if (str.equals("TARDIS Invisibility Circuit")) {
             // set the second line of lore
@@ -283,17 +288,17 @@ public class TARDISRecipeCommands implements CommandExecutor {
             if (ingredients.get(i).getType().equals(Material.GLOWSTONE_DUST)) {
                 String dn = getDisplayName(str, glowstoneCount);
                 im.setDisplayName(dn);
-                im.setCustomModelData(RecipeItem.getByName(dn).getCustomModelData());
+                im.setItemModel(RecipeItem.getByName(dn).getModel());
                 glowstoneCount++;
             }
             if (ingredients.get(i).getType().equals(Material.MUSIC_DISC_STRAD)) {
                 im.setDisplayName("Blank Storage Disk");
-                im.setCustomModelData(10000001);
+                im.setItemModel(DiskVariant.BLANK_DISK.getKey());
                 im.addItemFlags(ItemFlag.values());
             }
             if (ingredients.get(i).getType().equals(Material.BLAZE_ROD)) {
                 im.setDisplayName("Sonic Screwdriver");
-                im.setCustomModelData(10000010);
+                im.setItemModel(SonicVariant.TENTH.getKey());
             }
             ingredients.get(i).setItemMeta(im);
             inv.setItem(i * 9, ingredients.get(i));
@@ -306,7 +311,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         }
         RecipeItem recipeItem = RecipeItem.getByName(str);
         if (recipeItem != RecipeItem.NOT_FOUND) {
-            im.setCustomModelData(recipeItem.getCustomModelData());
+            im.setItemModel(recipeItem.getModel());
             if (recipeItem.getCategory().equals(RecipeCategory.SONIC_UPGRADES)) {
                 im.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");
                 im.setLore(Arrays.asList("Upgrades:", str));
@@ -342,21 +347,21 @@ public class TARDISRecipeCommands implements CommandExecutor {
         // tardis type
         Schematic schm = Consoles.getBY_NAMES().get(type);
         ItemStack tardis;
-        int model = 10001;
+        NamespacedKey model = TARDISDisplayItem.CUSTOM.getCustomModel();
         if (schm.isCustom()) {
             tardis = new ItemStack(schm.getSeedMaterial(), 1);
         } else {
             try {
                 TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(type);
                 tardis = new ItemStack(tdi.getMaterial(), 1);
-                model = tdi.getCustomModelData();
+                model = tdi.getCustomModel();
             } catch (IllegalArgumentException e) {
                 tardis = new ItemStack(TARDISDisplayItem.CUSTOM.getMaterial(), 1);
             }
         }
         ItemMeta seed = tardis.getItemMeta();
-        seed.setCustomModelData(model);
-        seed.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
+        seed.setItemModel(model);
+        seed.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
         // set display name
         seed.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
         List<String> lore = new ArrayList<>();

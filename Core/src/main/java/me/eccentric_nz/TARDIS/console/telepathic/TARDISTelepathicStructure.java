@@ -1,7 +1,7 @@
 package me.eccentric_nz.TARDIS.console.telepathic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIMap;
+import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import me.eccentric_nz.TARDIS.travel.TARDISStructureTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
@@ -37,7 +37,7 @@ public class TARDISTelepathicStructure {
         ItemStack close = new ItemStack(GUIMap.BUTTON_CLOSE.material(), 1);
         ItemMeta gui = close.getItemMeta();
         gui.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        gui.setCustomModelData(GUIMap.BUTTON_CLOSE.customModelData());
+        gui.setItemModel(GUIMap.BUTTON_CLOSE.key());
         close.setItemMeta(gui);
         stack[53] = close;
         return stack;

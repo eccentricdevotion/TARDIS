@@ -16,51 +16,26 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.ood;
 
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.tardisweepingangels.equip.DisguiseEquipper;
+import me.eccentric_nz.tardisweepingangels.equip.ArmourEquipper;
 import me.eccentric_nz.tardisweepingangels.equip.FollowerEquipper;
-import me.eccentric_nz.tardisweepingangels.nms.TWAOod;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.craftbukkit.v1_21_R2.entity.CraftEntity;
-import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class OodEquipment {
 
-    public static void set(OfflinePlayer player, Entity entity, boolean disguise, boolean random) {
-        if (random) {
-            TWAOod ood = (TWAOod) ((CraftEntity) entity).getHandle();
-            ood.setRedeye(TARDISConstants.RANDOM.nextBoolean());
-            int chance = TARDISConstants.RANDOM.nextInt(100);
-            if (chance < 15) {
-                ood.setColour(OodColour.BLUE);
-            }
-            if (chance > 85) {
-                ood.setColour(OodColour.BROWN);
-            }
-        }
-        ItemStack head = new ItemStack(Material.ROTTEN_FLESH);
-        ItemMeta headMeta = head.getItemMeta();
-        headMeta.setDisplayName("Ood Head");
+    public static void set(OfflinePlayer player, LivingEntity entity, boolean disguise) {
+        new ArmourEquipper().dress(entity, Monster.OOD);
         if (!disguise) {
-            headMeta.setCustomModelData(405);
-            head.setItemMeta(headMeta);
-            new FollowerEquipper().setHelmetAndInvisibilty(player, entity, Monster.OOD, head);
+            new FollowerEquipper().setOptionsAndInvisibilty(player, entity, Monster.OOD);
         } else {
-//            int chance = TARDISConstants.RANDOM.nextInt(100);
-            int colour = 29;
-//            if (chance < 15) {
-//                colour += 10;
-//            }
-//            if (chance > 85) {
-//                colour += 20;
-//            }
-            headMeta.setCustomModelData(colour);
-            head.setItemMeta(headMeta);
-            new DisguiseEquipper().setHelmetAndInvisibilty(entity, head);
+            PotionEffect potionEffect = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
+            entity.addPotionEffect(potionEffect);
         }
     }
 }

@@ -17,9 +17,11 @@
 package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -38,20 +40,30 @@ import java.util.List;
 public class TARDISCircuitRepairListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<Integer, String> circuits = new HashMap<>();
+    private final HashMap<NamespacedKey, String> circuits = new HashMap<>();
 
     public TARDISCircuitRepairListener(TARDIS plugin) {
         this.plugin = plugin;
-        circuits.put(10001973, "ars");
-        circuits.put(10001966, "chameleon");
-        circuits.put(10001976, "input");
-        circuits.put(10001981, "invisibility");
-        circuits.put(10001964, "materialisation");
-        circuits.put(10001975, "memory");
-        circuits.put(10001980, "randomiser");
-        circuits.put(10001977, "scanner");
-        circuits.put(10001974, "temporal");
-        circuits.put(10001962, "telepathic");
+        circuits.put(CircuitVariant.ARS.getKey(), "ars");
+        circuits.put(CircuitVariant.CHAMELEON.getKey(), "chameleon");
+        circuits.put(CircuitVariant.INPUT.getKey(), "input");
+        circuits.put(CircuitVariant.INVISIBILITY.getKey(), "invisibility");
+        circuits.put(CircuitVariant.MATERIALISATION.getKey(), "materialisation");
+        circuits.put(CircuitVariant.MEMORY.getKey(), "memory");
+        circuits.put(CircuitVariant.RANDOM.getKey(), "randomiser");
+        circuits.put(CircuitVariant.SCANNER.getKey(), "scanner");
+        circuits.put(CircuitVariant.TEMPORAL.getKey(), "temporal");
+        circuits.put(CircuitVariant.TELEPATHIC.getKey(), "telepathic");
+        circuits.put(CircuitVariant.ARS_DAMAGED.getKey(), "ars");
+        circuits.put(CircuitVariant.CHAMELEON_DAMAGED.getKey(), "chameleon");
+        circuits.put(CircuitVariant.INPUT_DAMAGED.getKey(), "input");
+        circuits.put(CircuitVariant.INVISIBILITY_DAMAGED.getKey(), "invisibility");
+        circuits.put(CircuitVariant.MATERIALISATION_DAMAGED.getKey(), "materialisation");
+        circuits.put(CircuitVariant.MEMORY_DAMAGED.getKey(), "memory");
+        circuits.put(CircuitVariant.RANDOM_DAMAGED.getKey(), "randomiser");
+        circuits.put(CircuitVariant.SCANNER_DAMAGED.getKey(), "scanner");
+        circuits.put(CircuitVariant.TEMPORAL_DAMAGED.getKey(), "temporal");
+        circuits.put(CircuitVariant.TELEPATHIC_DAMAGED.getKey(), "telepathic");
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -73,7 +85,7 @@ public class TARDISCircuitRepairListener implements Listener {
         }
         // get the item meta
         ItemMeta fim = first.getItemMeta();
-        if (!fim.hasDisplayName() || !fim.hasCustomModelData()) {
+        if (!fim.hasDisplayName() || !fim.hasItemModel()) {
             return;
         }
         // get the display name
@@ -88,7 +100,7 @@ public class TARDISCircuitRepairListener implements Listener {
             // get the uses left
             int left = TARDISNumberParsers.parseInt(stripped);
             // get max uses for this circuit
-            int ctm = (fim.hasCustomModelData()) ? fim.getCustomModelData() : 10001963;
+            NamespacedKey ctm = (fim.hasItemModel()) ? fim.getItemModel() : CircuitVariant.ARS.getKey();
             int uses = plugin.getConfig().getInt("circuits.uses." + circuits.get(ctm));
             // is it used?
             if (left >= uses) {

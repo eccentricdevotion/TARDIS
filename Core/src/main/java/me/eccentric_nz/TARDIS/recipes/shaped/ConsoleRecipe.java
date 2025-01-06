@@ -40,7 +40,7 @@ public class ConsoleRecipe {
     }
 
     public void addRecipes() {
-        for (Map.Entry<Material, Integer> colour : ColourType.LOOKUP.entrySet()) {
+        for (Map.Entry<Material, NamespacedKey> colour : ColourType.LOOKUP.entrySet()) {
             // get colour name
             String name = colour.getKey().toString().replace("_CONCRETE_POWDER", "");
             Material material = Material.valueOf(name + "_CONCRETE");
@@ -49,9 +49,8 @@ public class ConsoleRecipe {
             String dn = TARDISStringUtils.capitalise(name) + " Console";
             im.setDisplayName(ChatColor.WHITE + dn);
             im.setLore(List.of("Integration with interaction"));
-            im.setCustomModelData(1001);
-            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, colour.getValue()
-            );
+            im.setItemModel(colour.getValue());
+            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, colour.getValue().getKey());
             is.setItemMeta(im);
             NamespacedKey key = new NamespacedKey(plugin, name.toLowerCase(Locale.ROOT) + "_console");
             ShapedRecipe r = new ShapedRecipe(key, is);

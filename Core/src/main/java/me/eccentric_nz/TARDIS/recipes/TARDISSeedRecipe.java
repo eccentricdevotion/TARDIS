@@ -57,13 +57,13 @@ public class TARDISSeedRecipe {
     private ShapedRecipe makeSeedRecipe(Schematic s) {
         ItemStack is;
         // catch custom consoles, archives, templates not being in model data list
-        int model = 10001;
+        NamespacedKey model = TARDISDisplayItem.CUSTOM.getCustomModel();
         if (s.isCustom()) {
             is = new ItemStack(s.getSeedMaterial(), 1);
         } else {
             try {
                 TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(s.getPermission().toUpperCase(Locale.ROOT));
-                model = tdi.getCustomModelData();
+                model = tdi.getCustomModel();
                 is = new ItemStack(tdi.getMaterial(), 1);
             } catch (IllegalArgumentException e) {
                 plugin.debug("Could not get display item for console! " + e.getMessage());
@@ -71,9 +71,9 @@ public class TARDISSeedRecipe {
             }
         }
         ItemMeta im = is.getItemMeta();
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
+        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
         im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
-        im.setCustomModelData(model);
+        im.setItemModel(model);
         List<String> lore = new ArrayList<>();
         lore.add(s.getPermission().toUpperCase(Locale.ROOT));
         im.setLore(lore);

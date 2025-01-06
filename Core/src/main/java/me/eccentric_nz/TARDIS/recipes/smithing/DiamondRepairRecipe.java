@@ -37,7 +37,7 @@ public class DiamondRepairRecipe {
         ItemStack isa = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
         ima.setDisplayName(ChatColor.WHITE + "Diamond Disruptor Circuit");
-        ima.setCustomModelData(RecipeItem.DIAMOND_DISRUPTOR_CIRCUIT.getCustomModelData());
+        ima.setItemModel(RecipeItem.DIAMOND_DISRUPTOR_CIRCUIT.getModel());
         isa.setItemMeta(ima);
         RecipeChoice addition = new RecipeChoice.ExactChoice(isa);
         NamespacedKey key = new NamespacedKey(plugin, "diamond_repair");

@@ -9,6 +9,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.TARDISSculkShrieker;
 import me.eccentric_nz.TARDIS.console.interaction.SonicConsoleRecharge;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.custommodels.keys.SonicItem;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -26,6 +27,7 @@ import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
@@ -90,7 +92,7 @@ public class TARDISSonicDock {
         }
         ItemDisplay display = doDocking(sonic, block.getLocation(), new Vector(0.5d, 0.5d, 0.5d), player, id);
         // change the dock model
-        updateModel(frame, 1001, false);
+        updateModel(frame, SonicItem.SONIC_DOCK_ON.getKey(), false);
         // start charging
         if (plugin.getConfig().getBoolean("sonic.charge")) {
             long delay = plugin.getConfig().getLong("sonic.charge_level") / plugin.getConfig().getLong("sonic.charge_interval");
@@ -244,7 +246,7 @@ public class TARDISSonicDock {
                                             ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
                                             if (itemFrame != null) {
                                                 // get the rotor type
-                                                Rotor rotor = Rotor.getByModelData(TARDISTimeRotor.getRotorModelData(itemFrame));
+                                                Rotor rotor = Rotor.getByModel(TARDISTimeRotor.getRotorModel(itemFrame));
                                                 TARDISTimeRotor.setRotor(rotor, itemFrame);
                                             }
                                         }
@@ -282,7 +284,7 @@ public class TARDISSonicDock {
         }
         doUndock(display, player);
         // change the dock model
-        updateModel(frame, 1000, true);
+        updateModel(frame, SonicItem.SONIC_DOCK_OFF.getKey(), true);
     }
 
     private void doUndock(ItemDisplay display, Player player) {
@@ -298,10 +300,10 @@ public class TARDISSonicDock {
         display.remove();
     }
 
-    private void updateModel(ItemFrame frame, int cmd, boolean setDisplay) {
+    private void updateModel(ItemFrame frame, NamespacedKey model, boolean setDisplay) {
         ItemStack dock = frame.getItem();
         ItemMeta im = dock.getItemMeta();
-        im.setCustomModelData(cmd);
+        im.setItemModel(model);
         if (setDisplay) {
             im.setDisplayName("Sonic Dock");
         }

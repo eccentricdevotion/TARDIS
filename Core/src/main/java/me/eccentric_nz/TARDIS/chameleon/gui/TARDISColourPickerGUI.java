@@ -1,7 +1,9 @@
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleon;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleon;
+import me.eccentric_nz.TARDIS.custommodels.keys.ArrowVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -26,7 +28,7 @@ public class TARDISColourPickerGUI {
         LeatherArmorMeta play = (LeatherArmorMeta) dis.getItemMeta();
         play.setDisplayName("Colour");
         play.setLore(Arrays.asList("Red: 255", "Green: 255", "Blue: 255"));
-        play.setCustomModelData(1005);
+        play.setItemModel(ColouredVariant.TINTED_CAMERA.getKey());
         play.setColor(Color.fromRGB(255, 255, 255)); // white
         dis.setItemMeta(play);
         // red
@@ -48,33 +50,33 @@ public class TARDISColourPickerGUI {
         ItemStack redtint = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
         LeatherArmorMeta rrrtint = (LeatherArmorMeta) redtint.getItemMeta();
         rrrtint.setColor(Color.fromRGB(255, 0, 0)); // red
-        rrrtint.setCustomModelData(1005);
+        rrrtint.setItemModel(ColouredVariant.TINTED_CAMERA.getKey());
         rrrtint.setDisplayName("Red");
         redtint.setItemMeta(rrrtint);
         // green tint
         ItemStack greentint = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
         LeatherArmorMeta gggtint = (LeatherArmorMeta) greentint.getItemMeta();
         gggtint.setColor(Color.fromRGB(0, 255, 0)); // green
-        gggtint.setCustomModelData(1005);
+        gggtint.setItemModel(ColouredVariant.TINTED_CAMERA.getKey());
         gggtint.setDisplayName("Green");
         greentint.setItemMeta(gggtint);
         // blue tint
         ItemStack bluetint = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
         LeatherArmorMeta bbbtint = (LeatherArmorMeta) bluetint.getItemMeta();
         bbbtint.setColor(Color.fromRGB(0, 0, 255)); // blue
-        bbbtint.setCustomModelData(1005);
+        bbbtint.setItemModel(ColouredVariant.TINTED_CAMERA.getKey());
         bbbtint.setDisplayName("Blue");
         bluetint.setItemMeta(bbbtint);
         // less
         ItemStack less = new ItemStack(Material.ARROW, 1);
         ItemMeta lll = less.getItemMeta();
-        bbbtint.setCustomModelData(14);
+        bbbtint.setItemModel(ArrowVariant.LESS.getKey());
         lll.setDisplayName("Less");
         less.setItemMeta(lll);
         // more
         ItemStack more = new ItemStack(Material.ARROW, 1);
         ItemMeta mmm = more.getItemMeta();
-        bbbtint.setCustomModelData(15);
+        bbbtint.setItemModel(ArrowVariant.MORE.getKey());
         mmm.setDisplayName("More");
         more.setItemMeta(mmm);
         // select
@@ -86,16 +88,9 @@ public class TARDISColourPickerGUI {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta win = close.getItemMeta();
         win.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        win.setCustomModelData(GUIChameleon.BUTTON_CLOSE.customModelData());
+        win.setItemModel(GUIChameleon.BUTTON_CLOSE.key());
         close.setItemMeta(win);
-        return new ItemStack[]{
-                null, null, null, null, dis, null, null, null, null,
-                null, null, null, null, null, null, null, null, null,
-                red, null, less, null, redtint, null, more, null, null,
-                green, null, less, null, greentint, null, more, null, select,
-                blue, null, less, null, bluetint, null, more, null, null,
-                null, null, null, null, null, null, null, null, close
-        };
+        return new ItemStack[]{null, null, null, null, dis, null, null, null, null, null, null, null, null, null, null, null, null, null, red, null, less, null, redtint, null, more, null, null, green, null, less, null, greentint, null, more, null, select, blue, null, less, null, bluetint, null, more, null, null, null, null, null, null, null, null, null, null, close};
     }
 
     public ItemStack[] getGUI() {

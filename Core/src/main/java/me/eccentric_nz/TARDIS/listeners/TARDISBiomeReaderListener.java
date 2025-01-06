@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
+import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.Storage;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -112,7 +113,7 @@ public class TARDISBiomeReaderListener implements Listener {
                                 List<String> disk_lore = new ArrayList<>();
                                 disk_lore.add(biome.name());
                                 dim.setLore(disk_lore);
-                                dim.setCustomModelData(10000001);
+                                dim.setItemModel(DiskVariant.BIOME_DISK.getKey());
                                 bd.setItemMeta(dim);
                                 int slot = getNextFreeSlot(disks1);
                                 if (slot != -1) {

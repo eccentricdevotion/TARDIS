@@ -179,3 +179,39 @@ zygons:
   drops:
     - PAINTING
     - SAND
+the_beast:
+  drops:
+    - MAGMA_BLOCK
+    - CHAIN
+  worlds:
+    world: 1
+sutekh:
+  drops:
+    - GLOWSTONE_DUST
+    - LIGHTNING_ROD
+  worlds:
+    world: 10
+smilers:
+  drops:
+    - COMPARATOR
+    - CHERRY_LOG
+  worlds:
+    world: 10
+omega:
+  drops:
+    - GOLD_INGOT
+    - CLOCK
+  worlds:
+    world: 10
+vampires:
+  drops:
+    - TROPICAL_FISH
+    - FISHING_ROD
+  worlds:
+    world: 10
+angel_of_liberty:
+  drops:
+    - TORCH
+    - OXIDIZED_COPPER
+  worlds:
+    world: 1

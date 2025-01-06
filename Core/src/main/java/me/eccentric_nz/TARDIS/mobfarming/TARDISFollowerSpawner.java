@@ -27,9 +27,7 @@ import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -59,13 +57,13 @@ public class TARDISFollowerSpawner {
             plugin.setTardisSpawn(true);
             // get data from follower
             TWAFollower follower = new MonsterSpawner().createFollower(pl, new Follower(f.getUuid(), f.getOwner(), f.getSpecies(), true, f.hasOption(), f.getColour(), f.getAmmo()));
-            Entity husk = follower.getBukkitEntity();
+            LivingEntity husk = (LivingEntity) follower.getBukkitEntity();
             if (f.getSpecies().equals(Monster.JUDOON)) {
                 JudoonEquipment.set(player, husk, false);
             } else if (f.getSpecies().equals(Monster.K9)) {
                 K9Equipment.set(player, husk, false);
             } else if (f.getSpecies().equals(Monster.OOD)) {
-                OodEquipment.set(player, husk, false, false);
+                OodEquipment.set(player, husk, false);
             }
             follower.setFollowing(true);
         }
@@ -74,8 +72,8 @@ public class TARDISFollowerSpawner {
 
     public void spawnDivisionOod(Location location) {
         plugin.setTardisSpawn(true);
-        Entity husk = new MonsterSpawner().createFollower(location.clone().add(0.5d, 0, 0.5d), new Follower(UUID.randomUUID(), TARDISWeepingAngels.UNCLAIMED, Monster.OOD)).getBukkitEntity();
-        plugin.getTardisAPI().setOodEquipment(null, husk, false);
+        LivingEntity husk = (LivingEntity) new MonsterSpawner().createFollower(location.clone().add(0.5d, 0, 0.5d), new Follower(UUID.randomUUID(), TARDISWeepingAngels.UNCLAIMED, Monster.OOD)).getBukkitEntity();
+        plugin.getTardisAPI().setOodEquipment(husk, false);
     }
 
     public void removeDivisionOod(Location location) {

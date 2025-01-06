@@ -38,7 +38,7 @@ public class SonicDockRecipe {
         ItemStack is = new ItemStack(Material.FLOWER_POT, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Sonic Dock");
-        im.setCustomModelData(1000);
+        im.setItemModel(RecipeItem.SONIC_DOCK.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "sonic_dock");
         ShapedRecipe r = new ShapedRecipe(key, is);
@@ -50,7 +50,7 @@ public class SonicDockRecipe {
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
             em.setDisplayName(ChatColor.WHITE + "Sonic Oscillator");
-            em.setCustomModelData(RecipeItem.SONIC_OSCILLATOR.getCustomModelData());
+            em.setItemModel(RecipeItem.SONIC_OSCILLATOR.getModel());
             exact.setItemMeta(em);
             r.setIngredient('S', new RecipeChoice.ExactChoice(exact));
         } else {

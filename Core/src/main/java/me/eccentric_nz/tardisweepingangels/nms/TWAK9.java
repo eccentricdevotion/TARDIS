@@ -2,6 +2,7 @@ package me.eccentric_nz.tardisweepingangels.nms;
 
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
+import me.eccentric_nz.TARDIS.custommodels.keys.K9Variant;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -18,8 +19,9 @@ import net.minecraft.world.entity.monster.Husk;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_21_R2.CraftServer;
-import org.bukkit.craftbukkit.v1_21_R2.inventory.CraftItemStack;
+import org.bukkit.NamespacedKey;
+import org.bukkit.craftbukkit.v1_21_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Map;
@@ -27,6 +29,19 @@ import java.util.Map;
 public class TWAK9 extends TWAFollower {
 
     private static final String entityId = "k9";
+    protected int i = 0;
+    protected double oldX;
+    protected double oldZ;
+    protected final NamespacedKey[] frames = new NamespacedKey[]{
+            K9Variant.K9.getKey(),
+            K9Variant.K9_1.getKey(),
+            K9Variant.K9_2.getKey(),
+            K9Variant.K9_1.getKey(),
+            K9Variant.K9.getKey(),
+            K9Variant.K9_3.getKey(),
+            K9Variant.K9_4.getKey(),
+            K9Variant.K9_3.getKey()
+    };
 
     public TWAK9(Level world) {
         super(EntityType.HUSK, world);
@@ -55,11 +70,11 @@ public class TWAK9 extends TWAFollower {
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
             ItemMeta im = bukkit.getItemMeta();
             if (oldX == getX() && oldZ == getZ()) {
-                im.setCustomModelData(400);
+                im.setItemModel(K9Variant.K9.getKey());
                 i = 0;
             } else {
                 // play move animation
-                im.setCustomModelData(400 + frames[i]);
+                im.setItemModel(frames[i]);
                 i++;
                 if (i == frames.length) {
                     i = 0;

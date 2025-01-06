@@ -16,7 +16,7 @@ import net.minecraft.world.entity.monster.Husk;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_21_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_21_R3.entity.CraftPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -26,12 +26,8 @@ public class TWAFollower extends Husk implements OwnableEntity {
 
     protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(TWAFollower.class, EntityDataSerializers.BYTE);
     protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(TWAFollower.class, EntityDataSerializers.OPTIONAL_UUID);
-    protected final int[] frames = new int[]{0, 1, 2, 1, 0, 3, 4, 3};
     protected UUID uuid;
     protected boolean following = false;
-    protected int i = 0;
-    protected double oldX;
-    protected double oldZ;
 
     public TWAFollower(EntityType<? extends Husk> entityType, Level world) {
         super(entityType, world);

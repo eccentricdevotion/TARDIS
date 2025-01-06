@@ -53,7 +53,7 @@ public class SycoraxRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("sycorax.worlds." + name) > 0) {
-                // get the current warriors
+                // get the current sycorax count
                 int sycorax = 0;
                 Collection<Zombie> zombies = w.getEntitiesByClass(Zombie.class);
                 for (Zombie c : zombies) {
@@ -91,7 +91,7 @@ public class SycoraxRunnable implements Runnable {
                 }
                 LivingEntity sycorax = new MonsterSpawner().create(l, Monster.SYCORAX);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.SYCORAX, sycorax, false, false).setHelmetAndInvisibility();
+                    new Equipper(Monster.SYCORAX, sycorax, false).setHelmetAndInvisibility();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(sycorax, EntityType.ZOMBIE, Monster.SYCORAX, l));
                 }, 5L);
             }

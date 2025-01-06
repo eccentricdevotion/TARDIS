@@ -1,13 +1,17 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.EquippableComponent;
 
 /*
 easy_shape:N--,IIH,--I
@@ -35,7 +39,12 @@ public class TARDISCommunicatorRecipe {
         ItemStack is = new ItemStack(Material.LEATHER_HELMET, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Communicator");
-        im.setCustomModelData(10000040);
+        im.setItemModel(RecipeItem.TARDIS_COMMUNICATOR.getModel());
+        EquippableComponent equippable = im.getEquippable();
+        equippable.setSlot(EquipmentSlot.HEAD);
+        equippable.setDispensable(true);
+        equippable.setCameraOverlay(Whoniverse.COMMUNICATOR_OVERLAY.getKey());
+        im.setEquippable(equippable);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_communicator");
         ShapedRecipe r = new ShapedRecipe(key, is);

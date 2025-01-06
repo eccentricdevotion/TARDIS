@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.commands.give.actions;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.give.Give;
 import me.eccentric_nz.TARDIS.commands.give.TARDISDisplayBlockCommand;
+import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -77,7 +78,7 @@ public class TARDISItem {
             if (item.equals("acid-bucket") || item.equals("rust-bucket")) {
                 result = new ItemStack((item.equals("acid-bucket") ? Material.WATER_BUCKET : Material.LAVA_BUCKET), 1);
                 im = result.getItemMeta();
-                im.setCustomModelData(1);
+                im.setItemModel((item.equals("acid-bucket") ? Whoniverse.ACID_BUCKET.getKey() : Whoniverse.RUST_BUCKET.getKey()));
             } else if (item.equals("save-storage-disk") || item.equals("preset-storage-disk") || item.equals("biome-storage-disk") || item.equals("player-storage-disk") || item.equals("bowl-of-custard") || item.equals("jelly-baby") || item.equals("schematic-wand") || item.equals("judoon-ammunition")) {
                 result = plugin.getIncomposita().getShapelessRecipes().get(item_to_give).getResult();
             } else if (Give.custom.contains(item)) {

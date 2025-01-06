@@ -215,7 +215,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_REBUILD");
                                             return;
                                         } else {
-                                            new TARDISExteriorFlight(plugin).startFlying(player, id, block, current, beac_on, beacon, preset.equals(ChameleonPreset.PANDORICA));
+                                            new TARDISExteriorFlight(plugin).startFlying(player, id, block, current, beac_on, beacon);
                                         }
                                     } else {
                                         new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, throticle);
@@ -229,7 +229,7 @@ public class TARDISHandbrakeListener implements Listener {
                                             ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
                                             if (itemFrame != null) {
                                                 // get the rotor type
-                                                Rotor rotor = Rotor.getByModelData(TARDISTimeRotor.getRotorModelData(itemFrame));
+                                                Rotor rotor = Rotor.getByModel(TARDISTimeRotor.getRotorModel(itemFrame));
                                                 TARDISTimeRotor.setRotor(rotor, itemFrame);
                                             }
                                         }
@@ -250,7 +250,7 @@ public class TARDISHandbrakeListener implements Listener {
                                                 // cancel the animation
                                                 int task = TARDISTimeRotor.ANIMATED_ROTORS.getOrDefault(itemFrame.getUniqueId(), -1);
                                                 plugin.getServer().getScheduler().cancelTask(task);
-                                                TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorOffModelData(itemFrame), itemFrame);
+                                                TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorOffModel(itemFrame), itemFrame);
                                             }
                                         }
                                     }

@@ -32,6 +32,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Husk;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.persistence.PersistentDataContainer;
 
 import java.util.Collection;
@@ -51,7 +52,7 @@ public class JudoonRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("judoon.worlds." + name) > 0) {
-                // get the current judoons
+                // get the current judoon count
                 int galactic = 0;
                 Collection<Husk> police = w.getEntitiesByClass(Husk.class);
                 for (Husk s : police) {
@@ -85,10 +86,10 @@ public class JudoonRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                Entity e = new MonsterSpawner().createFollower(l, new Follower(UUID.randomUUID(), TARDISWeepingAngels.UNCLAIMED, Monster.JUDOON)).getBukkitEntity();
+                LivingEntity husk = (LivingEntity) new MonsterSpawner().createFollower(l, new Follower(UUID.randomUUID(), TARDISWeepingAngels.UNCLAIMED, Monster.JUDOON)).getBukkitEntity();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    JudoonEquipment.set(null, e, false);
-                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.HUSK, Monster.JUDOON, l));
+                    JudoonEquipment.set(null, husk, false);
+                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(husk, EntityType.HUSK, Monster.JUDOON, l));
                 }, 2L);
             }
         }

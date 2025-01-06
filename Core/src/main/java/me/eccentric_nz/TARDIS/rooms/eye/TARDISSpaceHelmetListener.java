@@ -3,6 +3,7 @@
  */
 package me.eccentric_nz.TARDIS.rooms.eye;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,10 +24,10 @@ public class TARDISSpaceHelmetListener implements Listener {
             return false;
         }
         ItemMeta im = helmet.getItemMeta();
-        if (!im.hasDisplayName() || !im.hasCustomModelData() || !im.hasMaxStackSize()) {
+        if (!im.hasDisplayName() || !im.hasItemModel() || !im.hasMaxStackSize()) {
             return false;
         }
-        return im.getDisplayName().endsWith("TARDIS Space Helmet") && im.getCustomModelData() == 5 && im.getMaxStackSize() == 1;
+        return im.getDisplayName().endsWith("TARDIS Space Helmet") && Whoniverse.HELMET.getKey().equals(im.getItemModel()) && im.getMaxStackSize() == 1;
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

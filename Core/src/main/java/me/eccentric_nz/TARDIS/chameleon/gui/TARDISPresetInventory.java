@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.chameleon.gui;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -68,21 +68,21 @@ public class TARDISPresetInventory {
         ItemStack back = new ItemStack(GUIChameleonPresets.BACK.material(), 1);
         ItemMeta but = back.getItemMeta();
         but.setDisplayName("Back");
-        but.setCustomModelData(GUIChameleonPresets.BACK.customModelData());
+        but.setItemModel(GUIChameleonPresets.BACK.key());
         back.setItemMeta(but);
         stacks[GUIChameleonPresets.BACK.slot()] = back;
         // page two
         ItemStack page = new ItemStack(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
         ItemMeta two = page.getItemMeta();
         two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
-        two.setCustomModelData(GUIChameleonPresets.GO_TO_PAGE_2.customModelData());
+        two.setItemModel(GUIChameleonPresets.GO_TO_PAGE_2.key());
         page.setItemMeta(two);
         stacks[GUIChameleonPresets.GO_TO_PAGE_2.slot()] = page;
         // Cancel / close
         ItemStack close = new ItemStack(GUIChameleonPresets.CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUIChameleonPresets.CLOSE.customModelData());
+        can.setItemModel(GUIChameleonPresets.CLOSE.key());
         close.setItemMeta(can);
         stacks[GUIChameleonPresets.CLOSE.slot()] = close;
         return stacks;

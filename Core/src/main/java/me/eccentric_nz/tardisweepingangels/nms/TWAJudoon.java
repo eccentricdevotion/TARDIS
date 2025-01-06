@@ -2,6 +2,7 @@ package me.eccentric_nz.tardisweepingangels.nms;
 
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
+import me.eccentric_nz.TARDIS.custommodels.keys.JudoonVariant;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -18,8 +19,9 @@ import net.minecraft.world.entity.monster.Husk;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_21_R2.CraftServer;
-import org.bukkit.craftbukkit.v1_21_R2.inventory.CraftItemStack;
+import org.bukkit.NamespacedKey;
+import org.bukkit.craftbukkit.v1_21_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Map;
@@ -27,6 +29,7 @@ import java.util.Map;
 public class TWAJudoon extends TWAFollower {
 
     private static final String entityId = "judoon";
+
     private int ammo;
     private boolean guard;
 
@@ -54,25 +57,13 @@ public class TWAJudoon extends TWAFollower {
 
     @Override
     public void aiStep() {
-        if (hasItemInSlot(EquipmentSlot.HEAD) && tickCount % 3 == 0) {
-            ItemStack is = getItemBySlot(EquipmentSlot.HEAD);
+        if (hasItemInSlot(EquipmentSlot.MAINHAND) && tickCount % 10 == 0) {
+            ItemStack is = getItemBySlot(EquipmentSlot.MAINHAND);
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
             ItemMeta im = bukkit.getItemMeta();
-            if (oldX == getX() && oldZ == getZ()) {
-                im.setCustomModelData(405 + (this.guard ? 6 : 0));
-                i = 0;
-            } else {
-                // play move animation
-                im.setCustomModelData(400 + frames[i] + (this.guard ? 6 : 0));
-                i++;
-                if (i == frames.length) {
-                    i = 0;
-                }
-            }
+            im.setItemModel(this.guard ? JudoonVariant.JUDOON_WEAPON_ACTIVE.getKey() : JudoonVariant.JUDOON_WEAPON_RESTING.getKey());
             bukkit.setItemMeta(im);
-            setItemSlot(EquipmentSlot.HEAD, CraftItemStack.asNMSCopy(bukkit));
-            oldX = getX();
-            oldZ = getZ();
+            setItemSlot(EquipmentSlot.MAINHAND, CraftItemStack.asNMSCopy(bukkit));
         }
         super.aiStep();
     }

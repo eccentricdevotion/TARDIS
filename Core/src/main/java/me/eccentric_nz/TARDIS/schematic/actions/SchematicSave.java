@@ -24,10 +24,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.TARDIS.schematic.getters.DataPackPainting;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Tag;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.*;
 import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
@@ -175,17 +172,15 @@ public class SchematicSave {
                                     frame.addProperty("item", type.toString());
                                     if (item.hasItemMeta()) {
                                         ItemMeta im = item.getItemMeta();
-                                        if (im.hasCustomModelData()) {
-                                            frame.addProperty("cmd", im.getCustomModelData());
+                                        if (im.hasItemModel()) {
+                                            frame.addProperty("cmd", im.getItemModel().getKey());
                                         }
                                         if (im.hasDisplayName()) {
                                             frame.addProperty("name", im.getDisplayName());
                                         }
                                         if (im.hasLore()) {
                                             JsonArray lore = new JsonArray();
-                                            im.getLore().forEach(s -> {
-                                                lore.add(s);
-                                            });
+                                            im.getLore().forEach(s -> lore.add(s));
                                             frame.add("lore", lore);
                                         }
                                         if ((Tag.ITEMS_BANNERS.isTagged(type) || type == Material.SHIELD) && im instanceof BlockStateMeta bsm) {
@@ -218,13 +213,13 @@ public class SchematicSave {
                                 item.add("rel_location", loc);
                                 JsonObject stack = new JsonObject();
                                 Material material = display.getItemStack().getType();
-                                int model = -1;
-                                if (display.getItemStack().getItemMeta().hasCustomModelData()) {
-                                    model = display.getItemStack().getItemMeta().getCustomModelData();
-                                    stack.addProperty("cmd", model);
+                                NamespacedKey model = null;
+                                if (display.getItemStack().getItemMeta().hasItemModel()) {
+                                    model = display.getItemStack().getItemMeta().getItemModel();
+                                    stack.addProperty("cmd", model.getKey());
                                 }
                                 stack.addProperty("type", material.toString());
-                                TARDISDisplayItem tdi = TARDISDisplayItem.getByMaterialAndData(material, model);
+                                TARDISDisplayItem tdi = TARDISDisplayItem.getByModel(model);
                                 if (tdi != null) {
                                     stack.addProperty("light", tdi.isLight());
                                     stack.addProperty("lit", tdi.isLit());

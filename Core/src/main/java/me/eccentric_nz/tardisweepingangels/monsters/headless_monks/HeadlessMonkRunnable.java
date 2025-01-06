@@ -53,12 +53,12 @@ public class HeadlessMonkRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("headless_monks.worlds." + name) > 0) {
-                // get the current silents
+                // get the current monk count
                 int papal = 0;
                 Collection<Skeleton> mainframe = w.getEntitiesByClass(Skeleton.class);
                 for (Skeleton s : mainframe) {
                     PersistentDataContainer pdc = s.getPersistentDataContainer();
-                    if (pdc.has(TARDISWeepingAngels.SILENT, PersistentDataType.INTEGER)) {
+                    if (pdc.has(TARDISWeepingAngels.MONK, PersistentDataType.INTEGER)) {
                         papal++;
                     }
                 }
@@ -91,7 +91,7 @@ public class HeadlessMonkRunnable implements Runnable {
                 }
                 LivingEntity monk = new MonsterSpawner().create(l, Monster.HEADLESS_MONK);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.HEADLESS_MONK, monk, false, false).setHelmetAndInvisibility();
+                    new Equipper(Monster.HEADLESS_MONK, monk, false).setHelmetAndInvisibility();
                     HeadlessMonkEquipment.setTasks(monk);
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(monk, EntityType.SKELETON, Monster.HEADLESS_MONK, l));
                 }, 5L);

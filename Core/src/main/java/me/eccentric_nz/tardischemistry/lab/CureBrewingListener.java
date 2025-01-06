@@ -18,6 +18,7 @@ package me.eccentric_nz.tardischemistry.lab;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.custommodels.keys.CureVariant;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -96,7 +97,7 @@ public class CureBrewingListener implements Listener {
                                     Material type = is.getType();
                                     if (type.equals(Material.FEATHER) && is.hasItemMeta()) {
                                         ItemMeta im = is.getItemMeta();
-                                        if (im.hasDisplayName() && im.hasCustomModelData()) {
+                                        if (im.hasDisplayName() && im.hasItemModel()) {
                                             String dn = im.getDisplayName();
                                             items.add(type + (elements.contains(dn) ? ":" + dn : ""));
                                         } else {
@@ -173,19 +174,19 @@ public class CureBrewingListener implements Listener {
                                             switch (potionType) {
                                                 case AWKWARD -> {
                                                     im.setDisplayName(ChatColor.WHITE + "Antidote");
-                                                    im.setCustomModelData(1);
+                                                    im.setItemModel(CureVariant.ANTIDOTE.getKey());
                                                 }
                                                 case MUNDANE -> {
                                                     im.setDisplayName(ChatColor.WHITE + "Elixir");
-                                                    im.setCustomModelData(2);
+                                                    im.setItemModel(CureVariant.ELIXIR.getKey());
                                                 }
                                                 case THICK -> {
                                                     im.setDisplayName(ChatColor.WHITE + "Eye drops");
-                                                    im.setCustomModelData(3);
+                                                    im.setItemModel(CureVariant.EYEDROPS.getKey());
                                                 }
                                                 default -> { // UNCRAFTABLE
                                                     im.setDisplayName(ChatColor.WHITE + "Tonic");
-                                                    im.setCustomModelData(4);
+                                                    im.setItemModel(CureVariant.TONIC.getKey());
                                                 }
                                             }
                                             is.setItemMeta(im);

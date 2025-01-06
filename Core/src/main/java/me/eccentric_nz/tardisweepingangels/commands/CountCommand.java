@@ -49,7 +49,7 @@ public class CountCommand {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "COULD_NOT_FIND_WORLD");
             return true;
         }
-        if (which.equals("g")) {
+        if (which.equals("G")) {
             what = "Invisible Guardians without Endermen";
             Collection<Guardian> guardians = w.getEntitiesByClass(Guardian.class);
             for (Guardian g : guardians) {
@@ -66,10 +66,11 @@ public class CountCommand {
                 return true;
             }
             switch (monster) {
-                case WEEPING_ANGEL, DALEK, SILURIAN, SILENT, HEADLESS_MONK, MIRE -> {
+                case WEEPING_ANGEL, DALEK, SILURIAN, SILENT, HEADLESS_MONK, MIRE, OMEGA -> {
                     what = switch (monster) {
                         case SILENT -> "Silence";
                         case MIRE -> "Mire";
+                        case OMEGA -> "Omegans";
                         default -> monster.getName() + "s";
                     };
                     Collection<Skeleton> angels = w.getEntitiesByClass(Skeleton.class);
@@ -79,8 +80,11 @@ public class CountCommand {
                         }
                     }
                 }
-                case CYBERMAN, EMPTY_CHILD, SLITHEEN, SONTARAN, VASHTA_NERADA, ZYGON -> {
+                case ANGEL_OF_LIBERTY, THE_BEAST, CYBERMAN, CYBERSHADE, EMPTY_CHILD, SLITHEEN, SMILER, SONTARAN,
+                     VASHTA_NERADA, ZYGON -> {
                     what = switch (monster) {
+                        case ANGEL_OF_LIBERTY -> "Angels of Liberty";
+                        case THE_BEAST -> "The Beast";
                         case CYBERMAN -> "Cybermen";
                         case EMPTY_CHILD -> "Empty Children";
                         case SLITHEEN -> "Slitheen";
@@ -112,8 +116,8 @@ public class CountCommand {
                         }
                     }
                 }
-                case SEA_DEVIL -> {
-                    what = monster.getName() + "s";
+                case SEA_DEVIL, VAMPIRE_OF_VENICE -> {
+                    what = (monster == Monster.VAMPIRE_OF_VENICE) ? "Vampires of Venice" : "Sea Devils";
                     Collection<Drowned> drowned = w.getEntitiesByClass(Drowned.class);
                     for (Drowned d : drowned) {
                         if (d.getPersistentDataContainer().has(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER)) {
@@ -126,6 +130,15 @@ public class CountCommand {
                     Collection<PiglinBrute> brutes = w.getEntitiesByClass(PiglinBrute.class);
                     for (PiglinBrute b : brutes) {
                         if (b.getPersistentDataContainer().has(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER)) {
+                            count++;
+                        }
+                    }
+                }
+                case SUTEKH -> {
+                    what = monster.getName();
+                    Collection<Stray> strays = w.getEntitiesByClass(Stray.class);
+                    for (Stray s : strays) {
+                        if (s.getPersistentDataContainer().has(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER)) {
                             count++;
                         }
                     }

@@ -44,6 +44,7 @@ public class HeadlessShootRunnable implements Runnable {
         if (monk.isDead() || ((Monster) monk).getTarget() == null) {
             // cancel task
             Bukkit.getScheduler().cancelTask(taskID);
+            return;
         }
         Vector direction = target.getLocation().toVector().subtract(monk.getLocation().toVector());
         direction.normalize();

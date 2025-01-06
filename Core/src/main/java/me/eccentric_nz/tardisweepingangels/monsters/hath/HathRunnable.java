@@ -53,7 +53,7 @@ public class HathRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("hath.worlds." + name) > 0) {
-                // get the current warriors
+                // get the current hath count
                 int hath = 0;
                 Collection<PigZombie> zombies = w.getEntitiesByClass(PigZombie.class);
                 for (PigZombie c : zombies) {
@@ -91,7 +91,7 @@ public class HathRunnable implements Runnable {
                 }
                 LivingEntity hath = new MonsterSpawner().create(l, Monster.HATH);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.HATH, hath, false, false).setHelmetAndInvisibility();
+                    new Equipper(Monster.HATH, hath, false).setHelmetAndInvisibility();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(hath, EntityType.ZOMBIFIED_PIGLIN, Monster.HATH, l));
                 }, 5L);
             }

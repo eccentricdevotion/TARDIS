@@ -168,8 +168,8 @@ class TARDISSQLiteDatabaseUpdater {
         sonicupdates.add("sonic_uuid TEXT DEFAULT ''");
         sonicupdates.add("last_scanned TEXT DEFAULT ''");
         sonicupdates.add("scan_type INTEGER DEFAULT 0");
-        flightupdates.add("chicken TEXT DEFAULT ''");
         flightupdates.add("stand TEXT DEFAULT ''");
+        flightupdates.add("display TEXT DEFAULT ''");
         systemupdates.add("monitor INTEGER DEFAULT 0");
         systemupdates.add("telepathic INTEGER DEFAULT 0");
         systemupdates.add("feature INTEGER DEFAULT 0");

@@ -2,6 +2,7 @@ package me.eccentric_nz.tardisweepingangels.nms;
 
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
+import me.eccentric_nz.TARDIS.custommodels.keys.OodVariant;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.OodColour;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Registry;
@@ -19,8 +20,9 @@ import net.minecraft.world.entity.monster.Husk;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_21_R2.CraftServer;
-import org.bukkit.craftbukkit.v1_21_R2.inventory.CraftItemStack;
+import org.bukkit.NamespacedKey;
+import org.bukkit.craftbukkit.v1_21_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Map;
@@ -30,7 +32,7 @@ public class TWAOod extends TWAFollower {
     private static final String entityId = "ood";
     private boolean redeye;
     private OodColour colour;
-
+    
     public TWAOod(Level world) {
         super(EntityType.HUSK, world);
         this.redeye = false;
@@ -57,33 +59,13 @@ public class TWAOod extends TWAFollower {
 
     @Override
     public void aiStep() {
-        if (hasItemInSlot(EquipmentSlot.HEAD) && tickCount % 3 == 0) {
+        if (hasItemInSlot(EquipmentSlot.HEAD) && tickCount % 10 == 0) {
             ItemStack is = getItemBySlot(EquipmentSlot.HEAD);
             org.bukkit.inventory.ItemStack bukkit = CraftItemStack.asBukkitCopy(is);
             ItemMeta im = bukkit.getItemMeta();
-            if (oldX == getX() && oldZ == getZ()) {
-                int cmd = 405 + colour.getStep();
-                if (redeye) {
-                    cmd += 18;
-                }
-                im.setCustomModelData(cmd);
-                i = 0;
-            } else {
-                // play move animation
-                int cmd = 400 + colour.getStep();
-                if (redeye) {
-                    cmd += 18;
-                }
-                im.setCustomModelData(cmd + frames[i]);
-                i++;
-                if (i == frames.length) {
-                    i = 0;
-                }
-            }
+            im.setItemModel((redeye) ?OodVariant.OOD_REDEYE_HEAD.getKey() : OodVariant.OOD_HEAD.getKey());
             bukkit.setItemMeta(im);
             setItemSlot(EquipmentSlot.HEAD, CraftItemStack.asNMSCopy(bukkit));
-            oldX = getX();
-            oldZ = getZ();
         }
         super.aiStep();
     }

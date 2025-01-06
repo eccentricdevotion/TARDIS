@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.config;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
+import me.eccentric_nz.TARDIS.custommodels.GUIConfiguration;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,8 +29,8 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * The architectural reconfiguration system is a component of the Doctor's TARDIS in the shape of a tree that, according
@@ -96,7 +97,7 @@ public class TARDISConfigMenuListener implements Listener {
             }
             plugin.getConfig().set(option, !bool);
             String lore = (bool) ? "false" : "true";
-            setLore(view, slot, lore);
+            setLore(view, slot, lore, option);
             plugin.saveConfig();
         }
     }
@@ -111,18 +112,13 @@ public class TARDISConfigMenuListener implements Listener {
         }
     }
 
-    private void setLore(InventoryView view, int slot, String str) {
+    private void setLore(InventoryView view, int slot, String str, String option) {
         List<String> lore = (str != null) ? List.of(str) : null;
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
         im.setLore(lore);
-        int cmd = im.getCustomModelData();
-        if (cmd > 100) {
-            cmd -= 100;
-        } else {
-            cmd += 100;
-        }
-        im.setCustomModelData(cmd);
+        GUIConfiguration gui = GUIConfiguration.valueOf(option.split("\\.")[0].toUpperCase(Locale.ROOT));
+        im.setItemModel("false".equals(str) ? gui.getOffModel() : gui.getOnModel());
         is.setItemMeta(im);
     }
 }

@@ -25,7 +25,7 @@ import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_21_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_21_R3.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -96,9 +96,9 @@ public class MonsterInteractListener implements Listener {
                             PigZombie strax = (PigZombie) new MonsterSpawner().create(l, Monster.STRAX);
                             strax.setAngry(false);
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                new Equipper(Monster.STRAX, strax, false, false).setHelmetAndInvisibility();
+                                new Equipper(Monster.STRAX, strax, false).setHelmetAndInvisibility();
                                 strax.setCustomName("Strax");
-                                strax.getPersistentDataContainer().set(TARDISWeepingAngels.STRAX, PersistentDataType.INTEGER, Monster.STRAX.getPersist());
+                                strax.getPersistentDataContainer().set(TARDISWeepingAngels.STRAX, PersistentDataType.INTEGER, Monster.STRAX.ordinal());
                                 strax.getPersistentDataContainer().remove(TARDISWeepingAngels.SONTARAN);
                                 plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(strax, EntityType.ZOMBIFIED_PIGLIN, Monster.STRAX, l));
                             }, 2L);

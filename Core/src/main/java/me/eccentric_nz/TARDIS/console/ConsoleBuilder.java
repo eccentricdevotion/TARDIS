@@ -1,12 +1,16 @@
 package me.eccentric_nz.TARDIS.console;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.ConsolePart;
+import me.eccentric_nz.TARDIS.custommodels.keys.DirectionVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ModelledControl;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
@@ -29,7 +33,7 @@ public class ConsoleBuilder {
         this.plugin = plugin;
     }
 
-    public void create(Block block, int type, int id, String playerUuid) {
+    public void create(Block block, String colour, int id, String playerUuid) {
         StringBuilder builder = new StringBuilder();
         String prefix = "~";
         Block up = block.getRelative(BlockFace.UP);
@@ -43,12 +47,30 @@ public class ConsoleBuilder {
             plugin.getQueryFactory().doInsert("interactions", setb);
         }
         // spawn a centre display item
-        UUID centre = spawnCentreDisplay(up.getLocation(), type);
+        UUID centre = spawnCentreDisplay(up.getLocation(), colour);
         builder.append(centre);
         for (int i = 0; i < 6; i++) {
             ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
             ItemMeta im = shard.getItemMeta();
-            im.setCustomModelData(1000 + type);
+            switch (colour) {
+                case "RUSTIC" -> im.setItemModel(ConsolePart.CONSOLE_RUSTIC.getKey());
+                case "BROWN" -> im.setItemModel(ConsolePart.CONSOLE_BROWN.getKey());
+                case "PINK" -> im.setItemModel(ConsolePart.CONSOLE_PINK.getKey());
+                case "MAGENTA" -> im.setItemModel(ConsolePart.CONSOLE_MAGENTA.getKey());
+                case "PURPLE" -> im.setItemModel(ConsolePart.CONSOLE_PURPLE.getKey());
+                case "BLUE" -> im.setItemModel(ConsolePart.CONSOLE_BLUE.getKey());
+                case "LIGHT_BLUE" -> im.setItemModel(ConsolePart.CONSOLE_LIGHT_BLUE.getKey());
+                case "CYAN" -> im.setItemModel(ConsolePart.CONSOLE_CYAN.getKey());
+                case "GREEN" -> im.setItemModel(ConsolePart.CONSOLE_GREEN.getKey());
+                case "LIME" -> im.setItemModel(ConsolePart.CONSOLE_LIME.getKey());
+                case "YELLOW" -> im.setItemModel(ConsolePart.CONSOLE_YELLOW.getKey());
+                case "ORANGE" -> im.setItemModel(ConsolePart.CONSOLE_ORANGE.getKey());
+                case "RED" -> im.setItemModel(ConsolePart.CONSOLE_RED.getKey());
+                case "WHITE" -> im.setItemModel(ConsolePart.CONSOLE_WHITE.getKey());
+                case "BLACK" -> im.setItemModel(ConsolePart.CONSOLE_BLACK.getKey());
+                case "GRAY" -> im.setItemModel(ConsolePart.CONSOLE_GRAY.getKey());
+                default -> im.setItemModel(ConsolePart.CONSOLE_LIGHT_GRAY.getKey());
+            }
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
             shard.setItemMeta(im);
             ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.25d, 0.5d), EntityType.ITEM_DISPLAY);
@@ -67,7 +89,25 @@ public class ConsoleBuilder {
         for (int i = 30; i < 360; i += 60) {
             ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
             ItemMeta im = shard.getItemMeta();
-            im.setCustomModelData(2000 + type);
+            switch (colour) {
+                case "RUSTIC" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_RUSTIC.getKey());
+                case "BROWN" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_BROWN.getKey());
+                case "PINK" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_PINK.getKey());
+                case "MAGENTA" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_MAGENTA.getKey());
+                case "PURPLE" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_PURPLE.getKey());
+                case "BLUE" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_BLUE.getKey());
+                case "LIGHT_BLUE" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_LIGHT_BLUE.getKey());
+                case "CYAN" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_CYAN.getKey());
+                case "GREEN" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_GREEN.getKey());
+                case "LIME" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_LIME.getKey());
+                case "YELLOW" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_YELLOW.getKey());
+                case "ORANGE" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_ORANGE.getKey());
+                case "RED" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_RED.getKey());
+                case "WHITE" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_WHITE.getKey());
+                case "BLACK" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_BLACK.getKey());
+                case "GRAY" -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_GRAY.getKey());
+                default -> im.setItemModel(ConsolePart.CONSOLE_DIVISION_LIGHT_GRAY.getKey());
+            }
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, i);
             shard.setItemMeta(im);
             ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(up.getLocation().add(0.5d, 0.25d, 0.5d), EntityType.ITEM_DISPLAY);
@@ -132,22 +172,22 @@ public class ConsoleBuilder {
             return wxyz;
         }
         Material material = interaction.getMaterial();
-        int cmd = interaction.getCustomModelData();
+        NamespacedKey key = interaction.getCustomModel();
         if (interaction == ConsoleInteraction.DIRECTION && id > 0) {
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-            cmd = (rsc.resultSet()) ? getCmd(rsc.getDirection()) + 10000 : 10000;
+            key = (rsc.resultSet()) ? getKey(rsc.getDirection()): DirectionVariant.DIRECTION_NORTH.getKey();
         }
         if (interaction == ConsoleInteraction.THROTTLE || interaction == ConsoleInteraction.RELATIVITY_DIFFERENTIATOR) {
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, playerUuid);
             if (rsp.resultSet()) {
-                cmd = (interaction == ConsoleInteraction.THROTTLE) ? 1000 + rsp.getThrottle() : 6000 + rsp.getFlightMode();
+                key = (interaction == ConsoleInteraction.THROTTLE) ? ModelledControl.values()[70 + rsp.getThrottle()].getKey() : ModelledControl.values()[50 + rsp.getFlightMode()].getKey();
             }
         }
         // spawn a control
         ItemStack is = new ItemStack(material);
         ItemMeta im = is.getItemMeta();
-        im.setCustomModelData(cmd);
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
+        im.setItemModel(key);
+        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, key.getKey());
         is.setItemMeta(im);
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(is);
@@ -168,27 +208,46 @@ public class ConsoleBuilder {
         return uuid;
     }
 
-    private int getCmd(COMPASS direction) {
-        int cmd;
+    private NamespacedKey getKey(COMPASS direction) {
+        NamespacedKey key;
         switch (direction) {
-            case NORTH_EAST -> cmd = 1;
-            case EAST -> cmd = 2;
-            case SOUTH_EAST -> cmd = 3;
-            case SOUTH -> cmd = 4;
-            case SOUTH_WEST -> cmd = 5;
-            case WEST -> cmd = 6;
-            case NORTH_WEST -> cmd = 7;
-            default -> cmd = 0;
+            case NORTH_EAST -> key = DirectionVariant.DIRECTION_NORTH_EAST.getKey();
+            case EAST -> key = DirectionVariant.DIRECTION_EAST.getKey();
+            case SOUTH_EAST -> key = DirectionVariant.DIRECTION_SOUTH_EAST.getKey();
+            case SOUTH -> key = DirectionVariant.DIRECTION_SOUTH.getKey();
+            case SOUTH_WEST -> key = DirectionVariant.DIRECTION_SOUTH_WEST.getKey();
+            case WEST -> key = DirectionVariant.DIRECTION_WEST.getKey();
+            case NORTH_WEST -> key = DirectionVariant.DIRECTION_NORTH_WEST.getKey();
+            default -> key = DirectionVariant.DIRECTION_NORTH.getKey();
         }
-        return cmd;
+        return key;
     }
 
-    private UUID spawnCentreDisplay(Location up, int type) {
+    private UUID spawnCentreDisplay(Location up, String type) {
         ItemStack shard = new ItemStack(Material.AMETHYST_SHARD);
         ItemMeta im = shard.getItemMeta();
-        int cmd = 3000 + type;
-        im.setCustomModelData(cmd);
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, cmd);
+        NamespacedKey model;
+        switch (type) {
+            case "RUSTIC" -> model = ConsolePart.CONSOLE_CENTRE_RUSTIC.getKey();
+            case "BROWN" -> model = ConsolePart.CONSOLE_CENTRE_BROWN.getKey();
+            case "PINK" -> model = ConsolePart.CONSOLE_CENTRE_PINK.getKey();
+            case "MAGENTA" -> model = ConsolePart.CONSOLE_CENTRE_MAGENTA.getKey();
+            case "PURPLE" -> model = ConsolePart.CONSOLE_CENTRE_PURPLE.getKey();
+            case "BLUE" -> model = ConsolePart.CONSOLE_CENTRE_BLUE.getKey();
+            case "LIGHT_BLUE" -> model = ConsolePart.CONSOLE_CENTRE_LIGHT_BLUE.getKey();
+            case "CYAN" -> model = ConsolePart.CONSOLE_CENTRE_CYAN.getKey();
+            case "GREEN" -> model = ConsolePart.CONSOLE_CENTRE_GREEN.getKey();
+            case "LIME" -> model = ConsolePart.CONSOLE_CENTRE_LIME.getKey();
+            case "YELLOW" -> model = ConsolePart.CONSOLE_CENTRE_YELLOW.getKey();
+            case "ORANGE" -> model = ConsolePart.CONSOLE_CENTRE_ORANGE.getKey();
+            case "RED" -> model = ConsolePart.CONSOLE_CENTRE_RED.getKey();
+            case "WHITE" -> model = ConsolePart.CONSOLE_CENTRE_WHITE.getKey();
+            case "BLACK" -> model = ConsolePart.CONSOLE_CENTRE_BLACK.getKey();
+            case "GRAY" -> model = ConsolePart.CONSOLE_CENTRE_GRAY.getKey();
+            default -> model = ConsolePart.CONSOLE_CENTRE_LIGHT_GRAY.getKey();
+        }
+        im.setItemModel(model);
+        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
         shard.setItemMeta(im);
         ItemDisplay display = (ItemDisplay) up.getWorld().spawnEntity(up.add(0.5d, 0.25d, 0.5d), EntityType.ITEM_DISPLAY);
         display.setItemStack(shard);

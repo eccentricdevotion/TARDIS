@@ -1,6 +1,8 @@
 package me.eccentric_nz.tardischemistry.microscope;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ChemistryEquipment;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -21,8 +23,8 @@ class ComputerInventory {
             ItemStack is = new ItemStack(Material.LIME_STAINED_GLASS, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(screen.getName());
-            im.setCustomModelData(9999);
-            im.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.INTEGER, screen.getCustomModelData());
+            im.setItemModel(ChemistryEquipment.COMPUTER_DISK.getKey());
+            im.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.STRING, screen.getModel().getKey());
             is.setItemMeta(im);
             stacks[screen.ordinal()] = is;
         }
@@ -30,7 +32,7 @@ class ComputerInventory {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName("Close");
-        can.setCustomModelData(1);
+        can.setItemModel(GuiVariant.CLOSE.getKey());
         close.setItemMeta(can);
         stacks[53] = close;
         return stacks;

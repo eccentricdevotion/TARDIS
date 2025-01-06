@@ -16,23 +16,25 @@
  */
 package me.eccentric_nz.tardischemistry.lab;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.ChemistryEquipment;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 
 public enum Lab {
 
-    Bleach("Water,Water,Water,Sodium Hypochlorite,Sodium Hypochlorite,Sodium Hypochlorite", Material.WHITE_DYE, 1),
-    Heat_Block("Iron,Water,CHARCOAL,Salt", Material.RED_CONCRETE, 10001),
-    Ice_Bomb("Sodium Acetate,Sodium Acetate,Sodium Acetate,Sodium Acetate", Material.SNOWBALL, 3),
-    Super_Fertiliser("Ammonia,Phosphorus", Material.BONE_MEAL, 4);
+    Bleach("Water,Water,Water,Sodium Hypochlorite,Sodium Hypochlorite,Sodium Hypochlorite", Material.WHITE_DYE, ChemistryEquipment.BLEACH.getKey()),
+    Heat_Block("Iron,Water,CHARCOAL,Salt", Material.RED_CONCRETE, ChemistryEquipment.HEAT_BLOCK.getKey()),
+    Ice_Bomb("Sodium Acetate,Sodium Acetate,Sodium Acetate,Sodium Acetate", Material.SNOWBALL, ChemistryEquipment.ICE_BOMB.getKey()),
+    Super_Fertiliser("Ammonia,Phosphorus", Material.BONE_MEAL, ChemistryEquipment.SUPER_FERTILISER.getKey());
 
     private final String recipe;
     private final Material itemMaterial;
-    private final int customModelData;
+    private final NamespacedKey model;
 
-    Lab(String recipe, Material itemMaterial, int customModelData) {
+    Lab(String recipe, Material itemMaterial, NamespacedKey model) {
         this.recipe = recipe;
         this.itemMaterial = itemMaterial;
-        this.customModelData = customModelData;
+        this.model = model;
     }
 
     public String getRecipe() {
@@ -43,8 +45,8 @@ public enum Lab {
         return itemMaterial;
     }
 
-    public int getCustomModelData() {
-        return customModelData;
+    public NamespacedKey getModel() {
+        return model;
     }
 
     public String getName() {

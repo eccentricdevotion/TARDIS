@@ -28,7 +28,7 @@ public class ConversionUpgradeRecipe {
         ItemStack is = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Conversion Upgrade");
-        im.setCustomModelData(10000010);
+        im.setItemModel(RecipeItem.CONVERSION_UPGRADE.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "conversion_upgrade");
         ShapelessRecipe r = new ShapelessRecipe(key, is);
@@ -36,7 +36,7 @@ public class ConversionUpgradeRecipe {
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "Conversion Circuit");
-        em.setCustomModelData(RecipeItem.CONVERSION_CIRCUIT.getCustomModelData());
+        em.setItemModel(RecipeItem.CONVERSION_CIRCUIT.getModel());
         exact.setItemMeta(em);
         r.addIngredient(new RecipeChoice.ExactChoice(exact));
         plugin.getServer().addRecipe(r);

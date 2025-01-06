@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.ArtronFurnaceUtils;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -66,10 +66,10 @@ public class TARDISArtronFurnaceListener implements Listener {
         if (display != null) {
             ItemStack itemStack = display.getItemStack();
             ItemMeta im = itemStack.getItemMeta();
-            im.setCustomModelData((lit ? 10000002 : 10000001));
+            im.setItemModel(lit ? Whoniverse.ARTRON_FURNACE_LIT.getKey() : Whoniverse.ARTRON_FURNACE.getKey());
             itemStack.setItemMeta(im);
             display.setItemStack(itemStack);
-            display.setBrightness(new Display.Brightness(15,15));
+            display.setBrightness(new Display.Brightness(15, 15));
         }
     }
 
@@ -189,7 +189,7 @@ public class TARDISArtronFurnaceListener implements Listener {
             ItemStack is = new ItemStack(Material.FURNACE, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("TARDIS Artron Furnace");
-            im.setCustomModelData(RecipeItem.TARDIS_ARTRON_FURNACE.getCustomModelData());
+            im.setItemModel(Whoniverse.ARTRON_FURNACE.getKey());
             is.setItemMeta(im);
             TARDISDisplayItemUtils.remove(block);
             block.setBlockData(TARDISConstants.AIR);

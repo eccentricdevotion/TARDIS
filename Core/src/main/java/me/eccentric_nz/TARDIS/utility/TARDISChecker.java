@@ -177,17 +177,6 @@ public class TARDISChecker {
                 copy("advancement/" + json, jfile);
             }
         }
-        for (Monster monster : Monster.values()) {
-            if (monster.hasTrim()) {
-                String json = monster.getPermission() + ".json";
-                File jfile = new File(rootFolder + "trim_pattern", json);
-                if (!jfile.exists()) {
-                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_NOT_FOUND", "%s"), json, "trim pattern"));
-                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, String.format(plugin.getLanguage().getString("DATAPACK_COPYING", "%s"), "trim pattern", json));
-                    copy("trim_pattern/" + json, jfile);
-                }
-            }
-        }
         for (Painting painting : Painting.values()) {
             String json = painting.getName() + ".json";
             File jfile = new File(rootFolder + "painting_variant", json);

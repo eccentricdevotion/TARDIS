@@ -53,7 +53,7 @@ public class CybermanRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("cybermen.worlds." + name) > 0) {
-                // get the current warriors
+                // get the current cyberman count
                 int cyberarmy = 0;
                 Collection<Zombie> zombies = w.getEntitiesByClass(Zombie.class);
                 for (Zombie c : zombies) {
@@ -91,7 +91,7 @@ public class CybermanRunnable implements Runnable {
                 }
                 LivingEntity cyberman = new MonsterSpawner().create(l, Monster.CYBERMAN);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.CYBERMAN, cyberman, false, false).setHelmetAndInvisibility();
+                    new Equipper(Monster.CYBERMAN, cyberman, false).setHelmetAndInvisibility();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(cyberman, EntityType.ZOMBIE, Monster.CYBERMAN, l));
                 }, 5L);
             }

@@ -28,7 +28,7 @@ public class BioscannerUpgradeRecipe {
         ItemStack is = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Bio-scanner Upgrade");
-        im.setCustomModelData(10000010);
+        im.setItemModel(RecipeItem.BIO_SCANNER_UPGRADE.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "bio-scanner_upgrade");
         ShapelessRecipe r = new ShapelessRecipe(key, is);
@@ -36,7 +36,7 @@ public class BioscannerUpgradeRecipe {
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "Bio-scanner Circuit");
-        em.setCustomModelData(RecipeItem.BIO_SCANNER_CIRCUIT.getCustomModelData());
+        em.setItemModel(RecipeItem.BIO_SCANNER_CIRCUIT.getModel());
         exact.setItemMeta(em);
         r.addIngredient(new RecipeChoice.ExactChoice(exact));
         plugin.getServer().addRecipe(r);

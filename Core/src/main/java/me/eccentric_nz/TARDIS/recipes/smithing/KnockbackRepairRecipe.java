@@ -37,7 +37,7 @@ public class KnockbackRepairRecipe {
         ItemStack isa = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
         ima.setDisplayName(ChatColor.WHITE + "Knockback Circuit");
-        ima.setCustomModelData(RecipeItem.KNOCKBACK_CIRCUIT.getCustomModelData());
+        ima.setItemModel(RecipeItem.KNOCKBACK_CIRCUIT.getModel());
         isa.setItemMeta(ima);
         RecipeChoice addition = new RecipeChoice.ExactChoice(isa);
         NamespacedKey key = new NamespacedKey(plugin, "knockback_repair");

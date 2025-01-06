@@ -16,39 +16,41 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 
 public enum RecipeCategory {
 
-    SEED_BLOCKS(Material.LAPIS_BLOCK, 1, 2, ""),
-    CHEMISTRY(Material.BREWING_STAND, 1, -1, "#AA0000"),
-    CUSTOM_BLOCKS(Material.ANVIL, 1, 8, "#AA0000"),
-    ACCESSORIES(Material.LEATHER_HELMET, 10000037, 9, "#55FF55"),
+    SEED_BLOCKS(Material.LAPIS_BLOCK, SeedBlock.TOM.getKey(), 2, ""),
+    CHEMISTRY(Material.BREWING_STAND, null, -1, "#AA0000"),
+    CUSTOM_BLOCKS(Material.ANVIL, null, 8, "#AA0000"),
+    ACCESSORIES(Material.LEATHER_HELMET, BowTieVariant.BOWTIE_RED.getKey(), 9, "#55FF55"),
     //    CONTROLS(Material.LEVER, 1000, 10, "#AAFF00"),
-    PLANETS(Material.SLIME_BALL, 12, 6, "#AAFF00"),
-    CONSOLES(Material.LIGHT_GRAY_CONCRETE, 1001, 4, "#FF55FF"),
-    CONSOLE_CIRCUITS(Material.GLOWSTONE_DUST, 10001977, 11, "#FF55FF"),
-    FOOD(Material.MELON_SLICE, 10000002, 13, "#AAAAAA"),
-    ITEM_CIRCUITS(Material.GLOWSTONE_DUST, 10001967, 15, "#FF5555"),
-    ITEMS(Material.GOLD_NUGGET, 12, 17, "#5555FF"),
-    ROTORS(Material.LIGHT_GRAY_DYE, 10000002, 18, "#FFAA00"),
-    SONIC_CIRCUITS(Material.GLOWSTONE_DUST, 10001971, 20, "#55FF55"),
-    SONIC_UPGRADES(Material.BLAZE_ROD, 10000009, 22, "#FF55FF"),
-    STORAGE_DISKS(Material.MUSIC_DISC_STRAD, 10000001, 24, "#55FFFF"),
-    MISC(Material.WATER_BUCKET, 1, 26, "#AAAAAA"),
-    MICROSCOPE(Material.SPYGLASS, 1, 27, "#FFFFAA"),
-    UNCRAFTABLE(Material.CRAFTING_TABLE, 1, -1, "#AA0000"),
-    UNUSED(Material.STONE, 1, -1, "#000000");
+    PLANETS(Material.SLIME_BALL, DalekVariant.DALEK_PINK.getKey(), 6, "#AAFF00"),
+    CONSOLES(Material.LIGHT_GRAY_CONCRETE, ConsoleVariant.CONSOLE_LIGHT_GRAY.getKey(), 4, "#FF55FF"),
+    CONSOLE_CIRCUITS(Material.GLOWSTONE_DUST, CircuitVariant.SCANNER.getKey(), 11, "#FF55FF"),
+    FOOD(Material.MELON_SLICE, JellyBabyVariant.JELLY_BABY_ORANGE.getKey(), 13, "#AAAAAA"),
+    ITEM_CIRCUITS(Material.GLOWSTONE_DUST, CircuitVariant.SONIC.getKey(), 15, "#FF5555"),
+    ITEMS(Material.GOLD_NUGGET, KeyVariant.BRASS_STRING.getKey(), 17, "#5555FF"),
+    ROTORS(Material.LIGHT_GRAY_DYE, RotorVariant.TIME_ROTOR_EARLY_OFF.getKey(), 18, "#FFAA00"),
+    SONIC_CIRCUITS(Material.GLOWSTONE_DUST, CircuitVariant.DIAMOND.getKey(), 20, "#55FF55"),
+    SONIC_UPGRADES(Material.BLAZE_ROD, SonicVariant.NINTH.getKey(), 22, "#FF55FF"),
+    STORAGE_DISKS(Material.MUSIC_DISC_STRAD, DiskVariant.BLANK_DISK.getKey(), 24, "#55FFFF"),
+    MISC(Material.WATER_BUCKET, Whoniverse.ACID_BUCKET.getKey(), 26, "#AAAAAA"),
+    MICROSCOPE(Material.SPYGLASS, null, 27, "#FFFFAA"),
+    UNCRAFTABLE(Material.CRAFTING_TABLE, null, -1, "#AA0000"),
+    UNUSED(Material.STONE, RoomVariant.SLOT.getKey(), -1, "#000000");
 
     private final Material material;
-    private final int customModelData;
+    private final NamespacedKey model;
     private final int slot;
     private final String colour;
 
-    RecipeCategory(Material material, int customModelData, int slot, String colour) {
+    RecipeCategory(Material material, NamespacedKey model, int slot, String colour) {
         this.material = material;
-        this.customModelData = customModelData;
+        this.model = model;
         this.slot = slot;
         this.colour = colour;
     }
@@ -62,8 +64,8 @@ public enum RecipeCategory {
         return material;
     }
 
-    public int getCustomModelData() {
-        return customModelData;
+    public NamespacedKey getModel() {
+        return model;
     }
 
     public int getSlot() {

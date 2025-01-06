@@ -158,7 +158,7 @@ public class TARDISTravelStop {
                     // cancel the animation
                     int task = TARDISTimeRotor.ANIMATED_ROTORS.getOrDefault(itemFrame.getUniqueId(), -1);
                     plugin.getServer().getScheduler().cancelTask(task);
-                    TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorOffModelData(itemFrame), itemFrame);
+                    TARDISTimeRotor.setRotor(TARDISTimeRotor.getRotorOffModel(itemFrame), itemFrame);
                 }
             }
         }

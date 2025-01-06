@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.sonic;
 
-import me.eccentric_nz.TARDIS.custommodeldata.GUISonicConfigurator;
+import me.eccentric_nz.TARDIS.custommodels.GUISonicConfigurator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -46,7 +46,7 @@ public class TARDISSonicConfiguratorInventory {
                 if (!gui.getLore().isEmpty()) {
                     im.setLore(Arrays.asList(gui.getLore().split("~")));
                 }
-                im.setCustomModelData(gui.getCustomModelData());
+                im.setItemModel(gui.getModel());
                 is.setItemMeta(im);
                 stack[gui.getSlot()] = is;
             }
@@ -54,7 +54,7 @@ public class TARDISSonicConfiguratorInventory {
         ItemStack wool = new ItemStack(GUISonicConfigurator.WAITING.getMaterial(), 1);
         ItemMeta wim = wool.getItemMeta();
         wim.setDisplayName(" ");
-        wim.setCustomModelData(GUISonicConfigurator.WAITING.getCustomModelData());
+        wim.setItemModel(GUISonicConfigurator.WAITING.getModel());
         wool.setItemMeta(wim);
         for (int i = 9; i < 18; i++) {
             stack[i] = wool;
@@ -63,7 +63,7 @@ public class TARDISSonicConfiguratorInventory {
         ItemStack place = new ItemStack(GUISonicConfigurator.PLACE_SONIC.getMaterial(), 1);
         ItemMeta pim = place.getItemMeta();
         pim.setDisplayName(GUISonicConfigurator.PLACE_SONIC.getName());
-        pim.setCustomModelData(GUISonicConfigurator.PLACE_SONIC.getCustomModelData());
+        pim.setItemModel(GUISonicConfigurator.PLACE_SONIC.getModel());
         place.setItemMeta(pim);
         stack[36] = place;
         return stack;

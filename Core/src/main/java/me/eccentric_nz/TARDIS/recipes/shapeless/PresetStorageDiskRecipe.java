@@ -32,7 +32,7 @@ public class PresetStorageDiskRecipe {
         ItemStack is = new ItemStack(Material.MUSIC_DISC_MALL, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Preset Storage Disk");
-        im.setCustomModelData(10000001);
+        im.setItemModel(RecipeItem.PRESET_STORAGE_DISK.getModel());
         im.setLore(List.of("Blank"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "preset_storage_disk");
@@ -41,7 +41,7 @@ public class PresetStorageDiskRecipe {
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "TARDIS Chameleon Circuit");
-        em.setCustomModelData(RecipeItem.TARDIS_CHAMELEON_CIRCUIT.getCustomModelData());
+        em.setItemModel(RecipeItem.TARDIS_CHAMELEON_CIRCUIT.getModel());
         // set the second line of lore
         List<String> circuit;
         String uses = (plugin.getConfig().getString("circuits.uses.chameleon").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))

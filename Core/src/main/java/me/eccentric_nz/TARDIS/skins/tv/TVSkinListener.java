@@ -1,11 +1,13 @@
 package me.eccentric_nz.TARDIS.skins.tv;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUITelevision;
+import me.eccentric_nz.TARDIS.custommodels.GUITelevision;
+import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.handles.wiki.WikiLink;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.skins.*;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -98,8 +100,9 @@ public class TVSkinListener extends TARDISMenuListener {
         ItemStack is = view.getItem(GUITelevision.DOWNLOAD.slot());
         if (is != null && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            int cmd = im.getCustomModelData() > 57 ? 57 : 157;
-            im.setCustomModelData(cmd);
+            NamespacedKey key = (im.hasItemModel() && SwitchVariant.DOWNLOAD_OFF.getKey().equals(im.getItemModel()))
+                    ? SwitchVariant.DOWNLOAD_ON.getKey(): SwitchVariant.DOWNLOAD_OFF.getKey();
+            im.setItemModel(key);
             is.setItemMeta(im);
             view.setItem(GUITelevision.DOWNLOAD.slot(), is);
         }
@@ -110,7 +113,7 @@ public class TVSkinListener extends TARDISMenuListener {
         ItemStack is = view.getItem(GUITelevision.DOWNLOAD.slot());
         if (is != null && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            return im.hasCustomModelData() && im.getCustomModelData() == 57;
+            return im.hasItemModel() && SwitchVariant.DOWNLOAD_ON.getKey().equals(im.getItemModel());
         }
         return false;
     }

@@ -75,7 +75,7 @@ public class SilurianSpawnerListener implements Listener {
                 for (int i = 0; i < spawn_rate; i++) {
                     LivingEntity e = new MonsterSpawner().create(cave, Monster.SILURIAN);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        new Equipper(Monster.SILURIAN, e, false, true).setHelmetAndInvisibility();
+                        new Equipper(Monster.SILURIAN, e, false).setHelmetAndInvisibility();
                         plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.SKELETON, Monster.SILURIAN, cave));
                     }, 5L);
                 }

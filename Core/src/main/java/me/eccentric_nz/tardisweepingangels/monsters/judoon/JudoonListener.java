@@ -18,6 +18,8 @@ package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.custommodels.keys.ArrowVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.JudoonVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.nms.TWAJudoon;
@@ -26,7 +28,7 @@ import net.minecraft.world.entity.Entity;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.ShulkerBox;
-import org.bukkit.craftbukkit.v1_21_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_21_R3.entity.CraftEntity;
 import org.bukkit.entity.Husk;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -72,7 +74,7 @@ public class JudoonListener implements Listener {
                                 int a = inv.first(Material.ARROW);
                                 ItemStack arrows = inv.getItem(a);
                                 ItemMeta aim = arrows.getItemMeta();
-                                if (aim.hasCustomModelData() && aim.getCustomModelData() == 13) {
+                                if (aim.hasItemModel() && ArrowVariant.JUDOON_AMMO.getKey().equals(aim.getItemModel())) {
                                     int remove = plugin.getMonstersConfig().getInt("judoon.ammunition") - ammo;
                                     if (arrows.getAmount() > remove) {
                                         arrows.setAmount(arrows.getAmount() - remove);
@@ -129,7 +131,6 @@ public class JudoonListener implements Listener {
                     if (entity instanceof TWAJudoon judoon) {
                         judoon.setOwnerUUID(pid);
                     }
-                    // TODO update follower record if there is one
                 }
             }
         }

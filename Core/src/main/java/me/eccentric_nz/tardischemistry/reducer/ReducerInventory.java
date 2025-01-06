@@ -17,7 +17,7 @@
 package me.eccentric_nz.tardischemistry.reducer;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
+import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -40,21 +40,21 @@ public class ReducerInventory {
         ItemMeta info_im = info.getItemMeta();
         info_im.setDisplayName("Info");
         info_im.setLore(Arrays.asList("Reduce a substance to its", "component elements.", "Place an item in the first slot,", "then click the reduce button."));
-        info_im.setCustomModelData(GUIChemistry.INFO.customModelData());
+        info_im.setItemModel(GUIChemistry.INFO.key());
         info.setItemMeta(info_im);
         stack[GUIChemistry.INFO.slot()] = info;
         // check formula
         ItemStack check = new ItemStack(GUIChemistry.REDUCE.material(), 1);
         ItemMeta check_im = check.getItemMeta();
         check_im.setDisplayName("Reduce");
-        check_im.setCustomModelData(GUIChemistry.REDUCE.customModelData());
+        check_im.setItemModel(GUIChemistry.REDUCE.key());
         check.setItemMeta(check_im);
         stack[GUIChemistry.REDUCE.slot()] = check;
         // close
         ItemStack close = new ItemStack(GUIChemistry.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChemistry.CLOSE.customModelData());
+        close_im.setItemModel(GUIChemistry.CLOSE.key());
         close.setItemMeta(close_im);
         stack[GUIChemistry.CLOSE.slot()] = close;
         return stack;

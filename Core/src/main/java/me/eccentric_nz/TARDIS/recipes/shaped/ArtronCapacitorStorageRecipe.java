@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -38,14 +39,14 @@ public class ArtronCapacitorStorageRecipe {
         ItemStack is = new ItemStack(Material.GRAY_SHULKER_BOX, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Artron Capacitor Storage");
-        im.setCustomModelData(1);
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
+        im.setItemModel(RecipeItem.ARTRON_CAPACITOR_STORAGE.getModel());
+        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, RecipeItem.ARTRON_CAPACITOR_STORAGE.getModel().getKey());
         is.setItemMeta(im);
         // exact choice
         ItemStack capac = new ItemStack(Material.BUCKET, 1);
         ItemMeta itor = capac.getItemMeta();
         itor.setDisplayName(ChatColor.WHITE + "Artron Capacitor");
-        itor.setCustomModelData(10000003);
+        itor.setItemModel(RecipeItem.ARTRON_CAPACITOR.getModel());
         capac.setItemMeta(itor);
         NamespacedKey key = new NamespacedKey(plugin, "artron_capacitor_storage");
         ShapedRecipe r = new ShapedRecipe(key, is);

@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.autonomous.TARDISAutonomousInventory;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigMenuInventory;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIPlayerPreferences;
+import me.eccentric_nz.TARDIS.custommodels.GUIPlayerPreferences;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
@@ -311,7 +311,8 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         boolean bool = (lore.getFirst().equals(plugin.getLanguage().getString("SET_ON")));
         String value = (bool) ? plugin.getLanguage().getString("SET_OFF") : plugin.getLanguage().getString("SET_ON");
         int b = (bool) ? 0 : 1;
-        switch (im.getDisplayName()) {
+        String which = im.getDisplayName();
+        switch (which) {
             case "Junk TARDIS" -> {
                 // must be on the outside of the TARDIS
                 HashMap<String, Object> wheret = new HashMap<>();
@@ -431,8 +432,8 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         }
         lore.set(0, value);
         im.setLore(lore);
-        int cmd = im.getCustomModelData();
-        im.setCustomModelData((cmd > 100) ? cmd - 100 : cmd + 100);
+        GUIPlayerPreferences gui = GUIPlayerPreferences.fromString(which);
+        im.setItemModel((value.equals(plugin.getLanguage().getString("SET_ON"))) ? gui.getOnModel() : gui.getOffModel());
         is.setItemMeta(im);
         if (im.getDisplayName().equals("Beacon")) {
             // get tardis id

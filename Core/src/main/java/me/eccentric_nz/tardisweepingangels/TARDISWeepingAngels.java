@@ -22,6 +22,7 @@ import me.eccentric_nz.tardisweepingangels.commands.TabComplete;
 import me.eccentric_nz.tardisweepingangels.death.Death;
 import me.eccentric_nz.tardisweepingangels.death.PlayerDeath;
 import me.eccentric_nz.tardisweepingangels.equip.PlayerUndisguise;
+import me.eccentric_nz.tardisweepingangels.monsters.angel_of_liberty.AngelOfLibertyRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.clockwork_droids.ClockworkDroidRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.cybermen.CybermanRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekGlideListener;
@@ -38,6 +39,7 @@ import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Builder;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Listener;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Recipe;
 import me.eccentric_nz.tardisweepingangels.monsters.mire.MireRunnable;
+import me.eccentric_nz.tardisweepingangels.monsters.omega.OmegaRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.OodListener;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.VillagerCuredListener;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.VillagerSpawnListener;
@@ -49,11 +51,15 @@ import me.eccentric_nz.tardisweepingangels.monsters.silent.SilentRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.silurians.SilurianRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.silurians.SilurianSpawnerListener;
 import me.eccentric_nz.tardisweepingangels.monsters.slitheen.SlitheenRunnable;
+import me.eccentric_nz.tardisweepingangels.monsters.smilers.SmilerRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.sontarans.SontaranRunnable;
+import me.eccentric_nz.tardisweepingangels.monsters.sutekh.SutekhRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.sycorax.SycoraxRunnable;
+import me.eccentric_nz.tardisweepingangels.monsters.the_beast.TheBeastRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.BeeSpawnListener;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.ToclafaneListener;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.ToclafaneRunnable;
+import me.eccentric_nz.tardisweepingangels.monsters.vampires.VampireRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.vashta_nerada.VashtaNeradaListener;
 import me.eccentric_nz.tardisweepingangels.monsters.weeping_angels.*;
 import me.eccentric_nz.tardisweepingangels.monsters.zygons.ZygonRunnable;
@@ -71,33 +77,40 @@ public class TARDISWeepingAngels {
     private static final List<UUID> guards = new ArrayList<>();
     private static final List<UUID> playersWithGuards = new ArrayList<>();
     public static NamespacedKey ANGEL;
+    public static NamespacedKey ANGEL_OF_LIBERTY;
+    public static NamespacedKey BEAST;
     public static NamespacedKey CLOCKWORK_DROID;
     public static NamespacedKey CYBERMAN;
+    public static NamespacedKey CYBERSHADE;
     public static NamespacedKey DALEK;
     public static NamespacedKey DALEK_SEC;
     public static NamespacedKey DAVROS;
     public static NamespacedKey DEVIL;
     public static NamespacedKey EMPTY;
+    public static NamespacedKey FLAME_TASK;
+    public static NamespacedKey FOLLOW;
     public static NamespacedKey HATH;
+    public static NamespacedKey HEADLESS_TASK;
     public static NamespacedKey JUDOON;
     public static NamespacedKey K9;
     public static NamespacedKey MIRE;
     public static NamespacedKey MONK;
-    public static NamespacedKey FLAME_TASK;
-    public static NamespacedKey HEADLESS_TASK;
+    public static NamespacedKey OMEGA;
     public static NamespacedKey OOD;
     public static NamespacedKey OSSIFIED;
     public static NamespacedKey OWNER_UUID;
-    public static NamespacedKey FOLLOW;
     public static NamespacedKey RACNOSS;
     public static NamespacedKey SCARECROW;
     public static NamespacedKey SILENT;
     public static NamespacedKey SILURIAN;
     public static NamespacedKey SLITHEEN;
+    public static NamespacedKey SMILER;
     public static NamespacedKey SONTARAN;
     public static NamespacedKey STRAX;
+    public static NamespacedKey SUTEKH;
     public static NamespacedKey SYCORAX;
     public static NamespacedKey TOCLAFANE;
+    public static NamespacedKey VAMPIRE;
     public static NamespacedKey VASHTA;
     public static NamespacedKey WARRIOR;
     public static NamespacedKey ZYGON;
@@ -196,6 +209,7 @@ public class TARDISWeepingAngels {
         // start repeating spawn tasks
         long delay = plugin.getMonstersConfig().getLong("spawn_rate.how_often");
         List<Runnable> spawners = Arrays.asList(
+                new AngelOfLibertyRunnable(plugin),
                 new ClockworkDroidRunnable(plugin),
                 new CybermanRunnable(plugin),
                 new DalekRunnable(plugin),
@@ -205,15 +219,20 @@ public class TARDISWeepingAngels {
                 new IceWarriorRunnable(plugin),
                 new JudoonRunnable(plugin),
                 new MireRunnable(plugin),
+                new OmegaRunnable(plugin),
                 new RacnossRunnable(plugin),
                 new ScarecrowRunnable(plugin),
                 new SeaDevilRunnable(plugin),
                 new SilentRunnable(plugin),
                 new SilurianRunnable(plugin),
                 new SlitheenRunnable(plugin),
+                new SmilerRunnable(plugin),
                 new SontaranRunnable(plugin),
+                new SutekhRunnable(plugin),
                 new SycoraxRunnable(plugin),
+                new TheBeastRunnable(plugin),
                 new ToclafaneRunnable(plugin),
+                new VampireRunnable(plugin),
                 new WeepingAngelsRunnable(plugin),
                 new ZygonRunnable(plugin)
         );
@@ -241,10 +260,16 @@ public class TARDISWeepingAngels {
     private void initKeys(TARDIS plugin) {
         ANGEL = new NamespacedKey(plugin, "angel");
         PDC_KEYS.put(Monster.WEEPING_ANGEL, ANGEL);
+        ANGEL_OF_LIBERTY = new NamespacedKey(plugin, "angel_of_liberty");
+        PDC_KEYS.put(Monster.ANGEL_OF_LIBERTY, ANGEL_OF_LIBERTY);
+        BEAST = new NamespacedKey(plugin, "beast");
+        PDC_KEYS.put(Monster.THE_BEAST, BEAST);
         CLOCKWORK_DROID = new NamespacedKey(plugin, "clockwork_droid");
         PDC_KEYS.put(Monster.CLOCKWORK_DROID, CLOCKWORK_DROID);
         CYBERMAN = new NamespacedKey(plugin, "cyberman");
         PDC_KEYS.put(Monster.CYBERMAN, CYBERMAN);
+        CYBERSHADE = new NamespacedKey(plugin, "cybershade");
+        PDC_KEYS.put(Monster.CYBERSHADE, CYBERSHADE);
         DALEK = new NamespacedKey(plugin, "dalek");
         PDC_KEYS.put(Monster.DALEK, DALEK);
         DALEK_SEC = new NamespacedKey(plugin, "dalek_sec");
@@ -267,6 +292,8 @@ public class TARDISWeepingAngels {
         PDC_KEYS.put(Monster.HEADLESS_MONK, MONK);
         FLAME_TASK = new NamespacedKey(plugin, "flame_task");
         HEADLESS_TASK = new NamespacedKey(plugin, "headless_task");
+        OMEGA = new NamespacedKey(plugin, "omega");
+        PDC_KEYS.put(Monster.OMEGA, OMEGA);
         OOD = new NamespacedKey(plugin, "ood");
         PDC_KEYS.put(Monster.OOD, OOD);
         OSSIFIED = new NamespacedKey(plugin, "ossified");
@@ -283,14 +310,20 @@ public class TARDISWeepingAngels {
         PDC_KEYS.put(Monster.SILURIAN, SILURIAN);
         SLITHEEN = new NamespacedKey(plugin, "slitheen");
         PDC_KEYS.put(Monster.SLITHEEN, SLITHEEN);
+        SMILER = new NamespacedKey(plugin, "smiler");
+        PDC_KEYS.put(Monster.SMILER, SMILER);
         SONTARAN = new NamespacedKey(plugin, "sontaran");
         PDC_KEYS.put(Monster.SONTARAN, SONTARAN);
         STRAX = new NamespacedKey(plugin, "strax");
         PDC_KEYS.put(Monster.STRAX, STRAX);
+        SUTEKH = new NamespacedKey(plugin, "sutekh");
+        PDC_KEYS.put(Monster.SUTEKH, SUTEKH);
         SYCORAX = new NamespacedKey(plugin, "sycorax");
         PDC_KEYS.put(Monster.SYCORAX, SYCORAX);
         TOCLAFANE = new NamespacedKey(plugin, "toclafane");
         PDC_KEYS.put(Monster.TOCLAFANE, TOCLAFANE);
+        VAMPIRE = new NamespacedKey(plugin, "vampire");
+        PDC_KEYS.put(Monster.VAMPIRE_OF_VENICE, VAMPIRE);
         VASHTA = new NamespacedKey(plugin, "vashta");
         PDC_KEYS.put(Monster.VASHTA_NERADA, VASHTA);
         WARRIOR = new NamespacedKey(plugin, "warrior");

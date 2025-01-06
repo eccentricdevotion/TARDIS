@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
+import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -143,7 +144,7 @@ public class TARDISHandlesProgramListener implements Listener {
                     im.setDisplayName("Handles Program Disk");
                     im.setLore(Arrays.asList("Untitled Disk", pid + "", "Checked OUT"));
                     im.addItemFlags(ItemFlag.values());
-                    im.setCustomModelData(10000001);
+                    im.setItemModel(DiskVariant.HANDLES_DISK.getKey());
                     is.setItemMeta(im);
                     player.getWorld().dropItemNaturally(player.getLocation(), is);
                     plugin.getMessenger().sendColouredCommand(player, "HANDLES_SAVED", "/tardishandles disk [name]", plugin);
@@ -240,7 +241,7 @@ public class TARDISHandlesProgramListener implements Listener {
         if (block.getLore() != null) {
             im.setLore(block.getLore());
         }
-        im.setCustomModelData(block.getCustomModelData());
+        im.setItemModel(block.getModel());
         is.setItemMeta(im);
         view.setItem(slot, is);
     }

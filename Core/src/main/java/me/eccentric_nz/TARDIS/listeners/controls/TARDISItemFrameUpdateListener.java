@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.listeners.controls;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.control.TARDISScannerMap;
+import me.eccentric_nz.TARDIS.custommodels.keys.SonicItem;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -126,7 +127,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                             case MONITOR -> {
                                 ItemStack map = frame.getItem();
                                 // does it have a TARDIS Monitor map?
-                                if (map.getType() == Material.MAP && map.hasItemMeta() && map.getItemMeta().hasCustomModelData()) {
+                                if (map.getType() == Material.MAP && map.hasItemMeta() && map.getItemMeta().hasItemModel()) {
                                     // do nothing
                                 } else {
                                     plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
@@ -153,7 +154,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                 ItemStack glass = frame.getItem();
                                 Rotation rotation = frame.getRotation();
                                 // does it have a Monitor frame?
-                                if (glass.getType() == Material.GLASS && glass.hasItemMeta() && glass.getItemMeta().hasCustomModelData()) {
+                                if (glass.getType() == Material.GLASS && glass.hasItemMeta() && glass.getItemMeta().hasItemModel()) {
                                     // remove display name
                                     ItemMeta gm = glass.getItemMeta();
                                     gm.setDisplayName(null);
@@ -273,7 +274,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
             return false;
         }
         ItemMeta im = dock.getItemMeta();
-        return im.hasCustomModelData() && (im.getCustomModelData() == 1000 || im.getCustomModelData() == 1001);
+        return im.hasItemModel() && (im.getItemModel().getKey().contains("sonic_dock"));
     }
 
     private SwitchPair isLevelSwitch(ItemFrame frame) {
@@ -285,7 +286,7 @@ public class TARDISItemFrameUpdateListener implements Listener {
         if (!im.hasDisplayName()) {
             return new SwitchPair(false, lampSwitch);
         }
-        return new SwitchPair(im.hasCustomModelData() && im.getDisplayName().endsWith("Switch"), lampSwitch);
+        return new SwitchPair(im.hasItemModel() && im.getDisplayName().endsWith("Switch"), lampSwitch);
     }
 
     private class SwitchPair {

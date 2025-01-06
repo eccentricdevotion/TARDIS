@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.rooms.eye;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import org.bukkit.Material;
 import org.bukkit.damage.DamageSource;
 import org.bukkit.damage.DamageType;
@@ -32,13 +33,6 @@ public class EyeDamageRunnable implements Runnable {
     private boolean hasSpaceHelmet(Player player) {
         PlayerInventory inventory = player.getInventory();
         ItemStack helmet = inventory.getHelmet();
-        if (helmet == null || helmet.getType() != Material.GLASS || !helmet.hasItemMeta()) {
-            return false;
-        }
-        ItemMeta im = helmet.getItemMeta();
-        if (!im.hasDisplayName() || !im.hasCustomModelData() || !im.hasMaxStackSize()) {
-            return false;
-        }
-        return im.getDisplayName().endsWith("TARDIS Space Helmet") && im.getCustomModelData() == 5 && im.getMaxStackSize() == 1;
+        return TARDISSpaceHelmetListener.isSpaceHelmet(helmet);
     }
 }

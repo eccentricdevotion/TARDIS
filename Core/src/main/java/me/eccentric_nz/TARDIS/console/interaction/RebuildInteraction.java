@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.console.interaction;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
+import me.eccentric_nz.TARDIS.console.ConsoleInteraction;
 import me.eccentric_nz.TARDIS.console.models.ButtonModel;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Interaction;
@@ -30,7 +31,7 @@ public class RebuildInteraction {
         UUID uuid = interaction.getPersistentDataContainer().get(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID());
         if (uuid != null) {
             ItemDisplay display = (ItemDisplay) plugin.getServer().getEntity(uuid);
-            new ButtonModel().setState(display, plugin);
+            new ButtonModel().setState(display, plugin, ConsoleInteraction.REBUILD);
         }
         new TARDISRebuildCommand(plugin).rebuildPreset(player);
     }

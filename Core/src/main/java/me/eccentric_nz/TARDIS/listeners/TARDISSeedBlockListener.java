@@ -81,10 +81,11 @@ public class TARDISSeedBlockListener implements Listener {
         String dn = im.getDisplayName();
         if (dn.equals(ChatColor.GOLD + "TARDIS Seed Block")) {
             Block block = event.getBlockPlaced();
-            if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
-                int which = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.INTEGER);
+            if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
+                String key = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
+                NamespacedKey which = new NamespacedKey(plugin, key);
                 block.setBlockData(TARDISConstants.BARRIER);
-                TARDISDisplayItem tdi = TARDISDisplayItem.getByMaterialAndData(is.getType(), which);
+                TARDISDisplayItem tdi = TARDISDisplayItem.getByModel(which);
                 if (tdi == null) {
                     tdi = TARDISDisplayItem.CUSTOM;
                 }
@@ -123,7 +124,7 @@ public class TARDISSeedBlockListener implements Listener {
                 return;
             }
             // build a console of the correct colour
-            int type = im.getPersistentDataContainer().getOrDefault(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
+            String type = im.getPersistentDataContainer().getOrDefault(plugin.getCustomBlockKey(), PersistentDataType.STRING, "LIGHT_GRAY");
             // get TARDIS id
             ResultSetTardisID rs = new ResultSetTardisID(plugin);
             String uuid = player.getUniqueId().toString();
@@ -155,7 +156,7 @@ public class TARDISSeedBlockListener implements Listener {
                 World w = l.getWorld();
                 // give back a new display item
                 String console = data.getSchematic().getPermission().toUpperCase(Locale.ROOT);
-                int model = 10001;
+                NamespacedKey model = TARDISDisplayItem.CUSTOM.getCustomModel();
                 ItemStack is;
                 if (data.getSchematic().isCustom()) {
                     is = new ItemStack(data.getSchematic().getSeedMaterial(), 1);
@@ -163,7 +164,7 @@ public class TARDISSeedBlockListener implements Listener {
                     try {
                         TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(console);
                         is = new ItemStack(tdi.getMaterial(), 1);
-                        model = tdi.getCustomModelData();
+                        model = tdi.getCustomModel();
                     } catch (IllegalArgumentException e) {
                         return;
                     }
@@ -172,9 +173,9 @@ public class TARDISSeedBlockListener implements Listener {
                 if (im == null) {
                     return;
                 }
-                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
+                im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
                 im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
-                im.setCustomModelData(model);
+                im.setItemModel(model);
                 List<String> lore = new ArrayList<>();
                 lore.add(console);
                 lore.add("Walls: " + data.getWallType().toString());

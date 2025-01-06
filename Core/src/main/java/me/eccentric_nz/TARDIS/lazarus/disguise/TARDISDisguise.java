@@ -37,10 +37,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_21_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_21_R2.entity.CraftWolf;
-import org.bukkit.craftbukkit.v1_21_R2.inventory.CraftItemStack;
-import org.bukkit.craftbukkit.v1_21_R2.util.CraftNamespacedKey;
+import org.bukkit.craftbukkit.v1_21_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_21_R3.entity.CraftWolf;
+import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_21_R3.util.CraftNamespacedKey;
 import org.bukkit.entity.Axolotl;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Frog;
@@ -87,6 +87,11 @@ public class TARDISDisguise {
             case BREEZE -> {
                 str = "Breeze";
                 packagePath += "monster.breeze.";
+                hasEntityStr = false;
+            }
+            case CREAKING -> {
+                str = "Creaking";
+                packagePath += "monster.creaking.";
                 hasEntityStr = false;
             }
             case FROG, TADPOLE -> {

@@ -19,6 +19,9 @@ package me.eccentric_nz.TARDIS.doors;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.custommodels.keys.BoneDoorVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ClassicDoorVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.TardisDoorVariant;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoorBlocks;
@@ -83,8 +86,12 @@ public class TARDISInnerDoorOpener {
                     ItemStack itemStack = display.getItemStack();
                     ItemMeta im = itemStack.getItemMeta();
                     if (outside) {
-                        DoorAnimationData data = Door.getOpenData(itemStack.getType());
-                        im.setCustomModelData(10000 + data.getLastFrame() + 1);
+                        switch (itemStack.getType()) {
+                            case IRON_DOOR -> im.setItemModel(TardisDoorVariant.TARDIS_DOOR_OPEN.getKey());
+                            case BIRCH_DOOR -> im.setItemModel(BoneDoorVariant.BONE_DOOR_OPEN.getKey());
+                            case CHERRY_DOOR -> im.setItemModel(ClassicDoorVariant.CLASSIC_DOOR_OPEN.getKey());
+                            default -> im.setItemModel(Door.getOpenModel(itemStack.getType()));
+                        }
                     }
                     itemStack.setItemMeta(im);
                     display.setItemStack(itemStack);

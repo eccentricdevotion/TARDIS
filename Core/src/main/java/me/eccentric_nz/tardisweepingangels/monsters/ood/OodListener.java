@@ -23,7 +23,7 @@ import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.nms.TWAOod;
 import me.eccentric_nz.tardisweepingangels.utils.ResetMonster;
 import net.minecraft.world.entity.Entity;
-import org.bukkit.craftbukkit.v1_21_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_21_R3.entity.CraftEntity;
 import org.bukkit.entity.Husk;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -68,7 +68,6 @@ public class OodListener implements Listener {
                     if (entity instanceof TWAOod ood) {
                         ood.setOwnerUUID(pid);
                     }
-                    // TODO update follower record if there is one
                 }
             }
         }

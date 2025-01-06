@@ -1,6 +1,7 @@
 package me.eccentric_nz.TARDIS.recipes.shapeless;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -29,7 +30,7 @@ public class TARDISSchematicWandRecipe {
         ItemStack is = new ItemStack(Material.BONE, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Schematic Wand");
-        im.setCustomModelData(10000001);
+        im.setItemModel(RecipeItem.TARDIS_SCHEMATIC_WAND.getModel());
         im.setLore(List.of("Right-click start", "Left-click end"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_schematic_wand");

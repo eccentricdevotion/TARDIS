@@ -28,10 +28,13 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.flight.vehicle.InterpolatedAnimation;
+import me.eccentric_nz.TARDIS.flight.vehicle.VehicleUtility;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.tardisshop.ShopItem;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
@@ -41,8 +44,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Transformation;
-import org.joml.AxisAngle4f;
-import org.joml.Vector3f;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -79,11 +80,13 @@ public class TARDISDisplayItemCommand {
                 }
                 ItemDisplay display = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
                 ItemStack is = new ItemStack(material);
-                if (args.length > 3 && TARDISNumberParsers.isSimpleNumber(args[4])) {
-                    int cmd = TARDISNumberParsers.parseInt(args[4]);
-                    ItemMeta im = is.getItemMeta();
-                    im.setCustomModelData(cmd);
-                    is.setItemMeta(im);
+                if (args.length > 4) {
+                    try {
+                        ShopItem shopItem = ShopItem.valueOf(args[4].toUpperCase(Locale.ROOT));
+                        ItemMeta im = is.getItemMeta();
+                        im.setItemModel(shopItem.getModel());
+                        is.setItemMeta(im);
+                    } catch (IllegalArgumentException ignored) { }
                 }
                 display.setItemStack(is);
                 display.setItemDisplayTransform(transform);
@@ -99,38 +102,13 @@ public class TARDISDisplayItemCommand {
             }
             case "animate" -> {
                 if (player.getPassengers().isEmpty()) {
-                    ItemDisplay display = (ItemDisplay) player.getWorld().spawnEntity(player.getLocation().add(0, 1.5, 0), EntityType.ITEM_DISPLAY);
                     ItemStack box = new ItemStack(Material.BLUE_DYE, 1);
                     ItemMeta im = box.getItemMeta();
-                    im.setCustomModelData(1005);
+                    im.setItemModel(new NamespacedKey(plugin, "police_box/flying/blue"));
                     box.setItemMeta(im);
-                    display.setItemStack(box);
-                    player.addPassenger(display);
-                    float scale = 1.75f;
-                    Vector3f size = new Vector3f(scale, scale, scale);
-                    Vector3f position = new Vector3f(0, -1, 0);
-                    // set initial scale and position
-                    Transformation initial = new Transformation(
-                            position,
-                            TARDISConstants.AXIS_ANGLE_ZERO,
-                            size,
-                            TARDISConstants.AXIS_ANGLE_ZERO
-                    );
-                    display.setTransformation(initial);
+                    ItemDisplay display = VehicleUtility.getItemDisplay(player, box,1.75f);
                     int period = 40;
-                    float angle = (float) Math.PI;
-                    AxisAngle4f axisAngleRotMat = new AxisAngle4f(angle, new Vector3f(0, 1, 0));
-                    plugin.getTrackerKeeper().setAnimateTask(plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-                        display.setInterpolationDelay(-1);
-                        Transformation transformation = new Transformation(
-                                position,
-                                axisAngleRotMat,
-                                size,
-                                axisAngleRotMat
-                        );
-                        display.setInterpolationDuration(period);
-                        display.setTransformation(transformation);
-                    }, 5, period));
+                    plugin.getTrackerKeeper().setAnimateTask(plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new InterpolatedAnimation(display, period), 5, period));
                 } else {
                     for (Entity e : player.getPassengers()) {
                         e.eject();
@@ -138,23 +116,6 @@ public class TARDISDisplayItemCommand {
                     }
                     plugin.getServer().getScheduler().cancelTask(plugin.getTrackerKeeper().getAnimateTask());
                 }
-            }
-            case "block" -> {
-                ItemDisplay blockDisplay = (ItemDisplay) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.0d, 0.5d), EntityType.ITEM_DISPLAY);
-                ItemStack door = new ItemStack(Material.IRON_DOOR);
-                ItemMeta im = door.getItemMeta();
-                int cmd = (args.length == 3) ? TARDISNumberParsers.parseInt(args[2]) : 1;
-                im.setCustomModelData(10000 + cmd);
-                door.setItemMeta(im);
-                blockDisplay.setItemStack(door);
-                blockDisplay.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.FIXED);
-                // also set an interaction entity
-                Interaction interaction = (Interaction) block.getWorld().spawnEntity(block.getLocation().clone().add(0.5d, 1.0d, 0.5d), EntityType.INTERACTION);
-                interaction.setResponsive(true);
-                interaction.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 10000 + cmd);
-                interaction.setPersistent(true);
-                interaction.setInteractionHeight(2.0f);
-                interaction.setInteractionWidth(1.0f);
             }
             case "remove" -> {
                 BoundingBox box = new BoundingBox(block.getX(), block.getY(), block.getZ(), block.getX() + 1, block.getY() + 2.5, block.getZ() + 1);
@@ -176,8 +137,8 @@ public class TARDISDisplayItemCommand {
                 if (tdi != null) {
                     ItemStack is = new ItemStack(tdi.getMaterial());
                     ItemMeta im = is.getItemMeta();
-                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
-                    im.setCustomModelData(tdi.getCustomModelData());
+                    im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
+                    im.setItemModel(tdi.getCustomModel());
                     im.setDisplayName(TARDISStringUtils.capitalise(args[2]));
                     is.setItemMeta(im);
                     Block up = block.getRelative(BlockFace.UP);
@@ -185,7 +146,7 @@ public class TARDISDisplayItemCommand {
                         // also set an interaction entity
                         Interaction interaction = (Interaction) block.getWorld().spawnEntity(up.getLocation().clone().add(0.5d, 0, 0.5d), EntityType.INTERACTION);
                         interaction.setResponsive(true);
-                        interaction.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, tdi.getCustomModelData());
+                        interaction.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
                         interaction.setPersistent(true);
                         if (tdi.isLight()) {
                             Levelled light = TARDISConstants.LIGHT;
@@ -282,8 +243,8 @@ public class TARDISDisplayItemCommand {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                     return true;
                 }
-                int colour = TARDISNumberParsers.parseInt(args[2]);
-                if (colour < 1 || colour > 17) {
+                String colour = args[2].toUpperCase(Locale.ROOT);
+                if (TARDISConstants.COLOURS.contains(colour)) {
                     plugin.getMessenger().message(player, "Number must be between 1-17!");
                     return true;
                 }

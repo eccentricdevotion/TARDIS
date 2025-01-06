@@ -706,25 +706,37 @@ permissions:
     default: op
     children:
       tardisweepingangels.spawn.angel: true
+      tardisweepingangels.spawn.beast: true
+      tardisweepingangels.spawn.clockwork: true
       tardisweepingangels.spawn.cyberman: true
+      tardisweepingangels.spawn.cybershade: true
       tardisweepingangels.spawn.dalek: true
       tardisweepingangels.spawn.dalek_sec: true
       tardisweepingangels.spawn.davros: true
       tardisweepingangels.spawn.empty: true
+      tardisweepingangels.spawn.hath: true
       tardisweepingangels.spawn.ice: true
       tardisweepingangels.spawn.judoon: true
       tardisweepingangels.spawn.k9: true
+      tardisweepingangels.spawn.liberty: true
       tardisweepingangels.spawn.mire: true
       tardisweepingangels.spawn.monk: true
+      tardisweepingangels.spawn.omega: true
       tardisweepingangels.spawn.ood: true
+      tardisweepingangels.spawn.ossified: true
       tardisweepingangels.spawn.racnoss: true
+      tardisweepingangels.spawn.scarecrow: true
       tardisweepingangels.spawn.sea_devil: true
       tardisweepingangels.spawn.silent: true
       tardisweepingangels.spawn.silurian: true
       tardisweepingangels.spawn.slitheen: true
+      tardisweepingangels.spawn.smiler: true
       tardisweepingangels.spawn.sontaran: true
       tardisweepingangels.spawn.strax: true
+      tardisweepingangels.spawn.sutekh: true
+      tardisweepingangels.spawn.sycorax: true
       tardisweepingangels.spawn.toclafane: true
+      tardisweepingangels.spawn.vampire: true
       tardisweepingangels.spawn.vashta: true
       tardisweepingangels.spawn.zygon: true
   tardisweepingangels.follow:

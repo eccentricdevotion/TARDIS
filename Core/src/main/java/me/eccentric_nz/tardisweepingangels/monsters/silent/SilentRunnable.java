@@ -53,7 +53,7 @@ public class SilentRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("silent.worlds." + name) > 0) {
-                // get the current silents
+                // get the current silent count
                 int papal = 0;
                 Collection<Skeleton> mainframe = w.getEntitiesByClass(Skeleton.class);
                 for (Skeleton s : mainframe) {
@@ -91,7 +91,7 @@ public class SilentRunnable implements Runnable {
                 }
                 LivingEntity silent = new MonsterSpawner().create(l, Monster.SILENT);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.SILENT, silent, false, false).setHelmetAndInvisibility();
+                    new Equipper(Monster.SILENT, silent, false).setHelmetAndInvisibility();
                     SilentEquipment.setGuardian(silent);
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(silent, EntityType.SKELETON, Monster.SILENT, l));
                 }, 5L);

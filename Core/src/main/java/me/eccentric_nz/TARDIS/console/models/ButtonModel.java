@@ -1,6 +1,8 @@
 package me.eccentric_nz.TARDIS.console.models;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.console.ConsoleInteraction;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
@@ -8,31 +10,30 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ButtonModel {
 
-    public void setState(ItemDisplay display, TARDIS plugin) {
+    public void setState(ItemDisplay display, TARDIS plugin, ConsoleInteraction interaction) {
         if (display == null) {
             return;
         }
         display.getWorld().playSound(display, Sound.BLOCK_BAMBOO_WOOD_BUTTON_CLICK_ON, 1, 1);
         ItemStack is = display.getItemStack();
         ItemMeta im = is.getItemMeta();
-        int cmd = im.getCustomModelData();
-        if (cmd < 2000) {
-            im.setCustomModelData(cmd + 1000);
+        NamespacedKey model = im.getItemModel();
+        if (model == null) {
+            model = interaction.getCustomModel();
+        } else if (model.getKey().endsWith("_0")) {
+            NamespacedKey pressed = new NamespacedKey(plugin, model.getKey().replace("_0", "_1"));
+            im.setItemModel(pressed);
             is.setItemMeta(im);
             display.setItemStack(is);
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                display.getWorld().playSound(display, Sound.BLOCK_BAMBOO_WOOD_BUTTON_CLICK_OFF, 1, 1);
-                im.setCustomModelData(cmd);
-                is.setItemMeta(im);
-                display.setItemStack(is);
-            }, 10);
         } else {
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                display.getWorld().playSound(display, Sound.BLOCK_BAMBOO_WOOD_BUTTON_CLICK_OFF, 1, 1);
-                im.setCustomModelData(cmd - 1000);
-                is.setItemMeta(im);
-                display.setItemStack(is);
-            }, 10);
+            model = new NamespacedKey(plugin, model.getKey().replace("_1", "_0"));
         }
+        NamespacedKey released = model;
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            display.getWorld().playSound(display, Sound.BLOCK_BAMBOO_WOOD_BUTTON_CLICK_OFF, 1, 1);
+            im.setItemModel(released);
+            is.setItemMeta(im);
+            display.setItemStack(is);
+        }, 10);
     }
 }

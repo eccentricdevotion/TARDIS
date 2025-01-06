@@ -28,11 +28,11 @@ public class DoorUtility {
             return;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName() || !im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+        if (!im.hasDisplayName() || !im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING) || !im.hasItemModel()) {
             return;
         }
         // set an Interaction
-        TARDISDisplayItemUtils.set(location, 10000, true);
+        TARDISDisplayItemUtils.set(location, im.getItemModel().getKey(), true);
         // set an ItemDisplay
         ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.add(0.5d, 0.0d, 0.5d), EntityType.ITEM_DISPLAY);
         display.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 10000);

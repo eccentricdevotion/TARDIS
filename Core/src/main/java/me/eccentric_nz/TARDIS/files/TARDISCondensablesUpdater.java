@@ -667,6 +667,42 @@ public class TARDISCondensablesUpdater {
                 plugin.getCondensablesConfig().set("SCRAPE_POTTERY_SHERD", 20);
                 i++;
             }
+            if (!plugin.getCondensablesConfig().contains("CHISELED_RESIN_BRICKS")) {
+                plugin.getCondensablesConfig().set("CHISELED_RESIN_BRICKS", 2);
+                plugin.getCondensablesConfig().set("CLOSED_EYEBLOSSOM", 2);
+                plugin.getCondensablesConfig().set("CREAKING_HEART", 22);
+                plugin.getCondensablesConfig().set("OPEN_EYEBLOSSOM", 2);
+                plugin.getCondensablesConfig().set("PALE_HANGING_MOSS", 2);
+                plugin.getCondensablesConfig().set("PALE_MOSS_BLOCK", 16);
+                plugin.getCondensablesConfig().set("PALE_MOSS_CARPET", 2);
+                plugin.getCondensablesConfig().set("PALE_OAK_BOAT", 3);
+                plugin.getCondensablesConfig().set("PALE_OAK_BUTTON", 1);
+                plugin.getCondensablesConfig().set("PALE_OAK_CHEST_BOAT", 3);
+                plugin.getCondensablesConfig().set("PALE_OAK_DOOR", 3);
+                plugin.getCondensablesConfig().set("PALE_OAK_FENCE", 1);
+                plugin.getCondensablesConfig().set("PALE_OAK_FENCE_GATE", 5);
+                plugin.getCondensablesConfig().set("PALE_OAK_HANGING_SIGN", 2);
+                plugin.getCondensablesConfig().set("PALE_OAK_LEAVES", 1);
+                plugin.getCondensablesConfig().set("PALE_OAK_LOG", 2);
+                plugin.getCondensablesConfig().set("PALE_OAK_PLANKS", 2);
+                plugin.getCondensablesConfig().set("PALE_OAK_PRESSURE_PLATE", 1);
+                plugin.getCondensablesConfig().set("PALE_OAK_SAPLING", 2);
+                plugin.getCondensablesConfig().set("PALE_OAK_SIGN", 2);
+                plugin.getCondensablesConfig().set("PALE_OAK_SLAB", 2);
+                plugin.getCondensablesConfig().set("PALE_OAK_STAIRS", 1);
+                plugin.getCondensablesConfig().set("PALE_OAK_TRAPDOOR", 6);
+                plugin.getCondensablesConfig().set("PALE_OAK_WOOD", 2);
+                plugin.getCondensablesConfig().set("RESIN_BLOCK", 16);
+                plugin.getCondensablesConfig().set("RESIN_BRICK", 4);
+                plugin.getCondensablesConfig().set("RESIN_BRICKS", 20);
+                plugin.getCondensablesConfig().set("RESIN_BRICK_SLAB", 2);
+                plugin.getCondensablesConfig().set("RESIN_BRICK_STAIRS", 2);
+                plugin.getCondensablesConfig().set("RESIN_BRICK_WALL", 2);
+                plugin.getCondensablesConfig().set("RESIN_CLUMP", 2);
+                plugin.getCondensablesConfig().set("STRIPPED_PALE_OAK_LOG", 2);
+                plugin.getCondensablesConfig().set("STRIPPED_PALE_OAK_WOOD", 2);
+                i++;
+            }
             if (i > 0) {
                 try {
                     String listPath = plugin.getDataFolder() + File.separator + "condensables.yml";

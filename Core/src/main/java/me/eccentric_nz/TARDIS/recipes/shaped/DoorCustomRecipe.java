@@ -26,7 +26,7 @@ public class DoorCustomRecipe {
                 ItemMeta im = is.getItemMeta();
                 String dn = TARDISStringUtils.capitalise(r);
                 im.setDisplayName(ChatColor.WHITE + "Door " + dn);
-                im.setCustomModelData(10000);
+                im.setItemModel(new NamespacedKey(plugin, "block/tardis/" + r + "_0"));
                 is.setItemMeta(im);
                 NamespacedKey key = new NamespacedKey(plugin, "door_" + r);
                 ShapedRecipe recipe = new ShapedRecipe(key, is);

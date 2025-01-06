@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
@@ -53,21 +54,21 @@ class TARDISRecipesLister {
             }
         } else {
             for (Map.Entry<String, ShapedRecipe> shaped : plugin.getFigura().getShapedRecipes().entrySet()) {
-                sender.sendMessage(TARDISStringUtils.toUnderscoredUppercase(shaped.getKey()) + "(\"" + shaped.getKey() + "\", Material." + shaped.getValue().getResult().getType() + ", " + RecipeItem.getByName(shaped.getKey()).getCustomModelData() + "),");
+                sender.sendMessage(TARDISStringUtils.toUnderscoredUppercase(shaped.getKey()) + "(\"" + shaped.getKey() + "\", Material." + shaped.getValue().getResult().getType() + ", " + RecipeItem.getByName(shaped.getKey()).getModel() + "),");
             }
             for (Map.Entry<String, ShapelessRecipe> shapeless : plugin.getIncomposita().getShapelessRecipes().entrySet()) {
-                sender.sendMessage(TARDISStringUtils.toUnderscoredUppercase(shapeless.getKey()) + "(\"" + shapeless.getKey() + "\", Material." + shapeless.getValue().getResult().getType() + ", " + RecipeItem.getByName(shapeless.getKey()).getCustomModelData() + "),");
+                sender.sendMessage(TARDISStringUtils.toUnderscoredUppercase(shapeless.getKey()) + "(\"" + shapeless.getKey() + "\", Material." + shapeless.getValue().getResult().getType() + ", " + RecipeItem.getByName(shapeless.getKey()).getModel() + "),");
             }
             if (plugin.getConfig().getBoolean("creation.seed_block.crafting")) {
                 for (Map.Entry<Schematic, ShapedRecipe> seed : plugin.getObstructionum().getSeedRecipes().entrySet()) {
-                    int model = 10001;
+                    NamespacedKey model = TARDISDisplayItem.CUSTOM.getCustomModel();
                     String material;
                     if (seed.getKey().isCustom()) {
                         material = seed.getKey().getSeedMaterial().toString();
                     } else {
                         try {
                             TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(seed.getKey().getPermission().toUpperCase(Locale.ROOT));
-                            model = tdi.getCustomModelData();
+                            model = tdi.getCustomModel();
                             material = tdi.getMaterial().toString();
                         } catch (IllegalArgumentException e) {
                             material = TARDISDisplayItem.CUSTOM.getMaterial().toString();
@@ -78,7 +79,7 @@ class TARDISRecipesLister {
             }
             if (plugin.getConfig().getBoolean("modules.weeping_angels")) {
                 for (Monster m : Monster.values()) {
-                    sender.sendMessage(m.toString() + "_HEAD(\"" + m.getName() + " Head\", Material." + m.getMaterial().toString() + ", " + m.getCustomModelData() + "),");
+                    sender.sendMessage(m.toString() + "_HEAD(\"" + m.getName() + " Head\", Material." + m.getMaterial().toString() + ", " + m.getModel() + "),");
                 }
             }
         }

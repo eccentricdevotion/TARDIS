@@ -47,6 +47,14 @@ public class PlayerDeath implements Listener {
                     PersistentDataContainer pdc = attacker.getPersistentDataContainer();
                     String name = event.getEntity().getName();
                     if (attacker instanceof Zombie) {
+                        if (pdc.has(TARDISWeepingAngels.ANGEL_OF_LIBERTY, PersistentDataType.INTEGER)) {
+                            event.setDeathMessage(name + " was slain by the Angel of Liberty");
+                            return;
+                        }
+                        if (pdc.has(TARDISWeepingAngels.BEAST, PersistentDataType.INTEGER)) {
+                            event.setDeathMessage(name + " was slain by The Beast");
+                            return;
+                        }
                         if (pdc.has(TARDISWeepingAngels.CLOCKWORK_DROID, PersistentDataType.INTEGER)) {
                             event.setDeathMessage(name + " was slain by a Clockwork Droid");
                             return;
@@ -54,6 +62,11 @@ public class PlayerDeath implements Listener {
                         if (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)) {
                             String what_happened = (plugin.getMonstersConfig().getBoolean("cybermen.can_upgrade")) ? "upgraded" : "slain";
                             event.setDeathMessage(name + " was " + what_happened + " by a Cyberman");
+                            return;
+                        }
+                        if (pdc.has(TARDISWeepingAngels.CYBERSHADE, PersistentDataType.INTEGER)) {
+                            String what_happened = (plugin.getMonstersConfig().getBoolean("cybermen.can_upgrade")) ? "upgraded" : "slain";
+                            event.setDeathMessage(name + " was " + what_happened + " by a Cybershade");
                             return;
                         }
                         if (pdc.has(TARDISWeepingAngels.EMPTY, PersistentDataType.INTEGER)) {
@@ -66,6 +79,10 @@ public class PlayerDeath implements Listener {
                         }
                         if (pdc.has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)) {
                             event.setDeathMessage(name + " was slain by a Slitheen");
+                            return;
+                        }
+                        if (pdc.has(TARDISWeepingAngels.SMILER, PersistentDataType.INTEGER)) {
+                            event.setDeathMessage(name + " was slain by a Smiler");
                             return;
                         }
                         if (pdc.has(TARDISWeepingAngels.SONTARAN, PersistentDataType.INTEGER)) {
@@ -144,6 +161,10 @@ public class PlayerDeath implements Listener {
                             event.setDeathMessage(name + " was slain by the Mire");
                             return;
                         }
+                        if (pdc.has(TARDISWeepingAngels.OMEGA, PersistentDataType.INTEGER)) {
+                            event.setDeathMessage(name + " was slain by Omega");
+                            return;
+                        }
                         if (!attacker.getPassengers().isEmpty()) {
                             Entity passenger = attacker.getPassengers().getFirst();
                             if (passenger != null && passenger.getType().equals(EntityType.GUARDIAN)) {
@@ -152,12 +173,22 @@ public class PlayerDeath implements Listener {
                             }
                         }
                     }
-                    if (attacker instanceof Drowned && pdc.has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)) {
-                        event.setDeathMessage(name + " was slain by a Sea Devil");
-                        return;
+                    if (attacker instanceof Drowned) {
+                        if (pdc.has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)) {
+                            event.setDeathMessage(name + " was slain by a Sea Devil");
+                            return;
+                        }
+                        if (pdc.has(TARDISWeepingAngels.VAMPIRE, PersistentDataType.INTEGER)) {
+                            event.setDeathMessage(name + " was slain by a Vampire of Venice");
+                            return;
+                        }
                     }
                     if (attacker instanceof PiglinBrute && pdc.has(TARDISWeepingAngels.RACNOSS, PersistentDataType.INTEGER)) {
                         event.setDeathMessage(name + " was slain by a Racnoss");
+                        return;
+                    }
+                    if (attacker instanceof Stray && pdc.has(TARDISWeepingAngels.SUTEKH, PersistentDataType.INTEGER)) {
+                        event.setDeathMessage(name + " was slain by Sutekh");
                         return;
                     }
                 }

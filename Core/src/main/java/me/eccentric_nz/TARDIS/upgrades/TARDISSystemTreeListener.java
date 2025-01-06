@@ -142,7 +142,7 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
                 new SystemUpgradeUpdate(plugin).set(uuid, id, clicked);
                 // set custom model data for clicked upgrade
                 ItemMeta im = is.getItemMeta();
-                im.setCustomModelData(im.getCustomModelData() + 1000);
+                im.setItemModel(clicked.getUnlocked());
                 List<String> lore = im.getLore();
                 lore.set(lore.size() - 1, ChatColor.GREEN + "" + org.bukkit.ChatColor.ITALIC + "Unlocked");
                 im.setLore(lore);

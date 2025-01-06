@@ -17,11 +17,8 @@ import me.eccentric_nz.tardisweepingangels.nms.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.craftbukkit.v1_21_R2.entity.CraftEntity;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.PigZombie;
+import org.bukkit.craftbukkit.v1_21_R3.entity.CraftEntity;
+import org.bukkit.entity.*;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -105,10 +102,11 @@ public class ResetMonster {
         entity.remove();
         // set ood / judoon / k9 equipment
         if (monster.isFollower()) {
+            Husk husk = (Husk) a;
             switch (monster) {
                 case K9 -> K9Equipment.set(player, a, false);
-                case JUDOON -> JudoonEquipment.set(player, a, false);
-                default -> OodEquipment.set(player, a, false, false);
+                case JUDOON -> JudoonEquipment.set(player, husk, false);
+                default -> OodEquipment.set(player, a, false);
             }
         } else {
             // set monster equipment
@@ -128,16 +126,13 @@ public class ResetMonster {
                     pigman.setAngry(true);
                     pigman.setAnger(Integer.MAX_VALUE);
                 }
-                case MIRE, SILURIAN -> new Equipper(monster, a, false, true).setHelmetAndInvisibility();
-                case SEA_DEVIL -> new Equipper(monster, a, false, false, true).setHelmetAndInvisibility();
                 case SILENT -> SilentEquipment.setGuardian(a);
                 case STRAX -> {
                     PigZombie strax = (PigZombie) a;
                     strax.setAngry(false);
                     a.setCustomName("Strax");
                 }
-                default -> {
-                }
+                default -> { }
             }
         }
     }

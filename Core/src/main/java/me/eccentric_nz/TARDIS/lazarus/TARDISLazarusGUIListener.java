@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorDisguiseEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorUndisguiseEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.custommodels.keys.Button;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.lazarus.disguise.*;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -177,8 +178,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                             boolean isOff = masterMeta.getLore().getFirst().equals(plugin.getLanguage().getString("SET_OFF"));
                             String onoff = isOff ? plugin.getLanguage().getString("SET_ON", "ON") : plugin.getLanguage().getString("SET_OFF", "OFF");
                             masterMeta.setLore(List.of(onoff));
-                            int cmd = isOff ? 2 : 3;
-                            masterMeta.setCustomModelData(cmd);
+                            masterMeta.setItemModel(isOff ? Button.MASTER_ON.getKey() : Button.MASTER_OFF.getKey());
                         } else {
                             masterMeta.setLore(Arrays.asList("The Master Race is already", " set to " + plugin.getTrackerKeeper().getImmortalityGate() + "!", "Try again later."));
                         }

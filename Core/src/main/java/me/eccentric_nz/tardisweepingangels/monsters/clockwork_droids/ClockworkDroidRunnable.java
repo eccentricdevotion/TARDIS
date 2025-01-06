@@ -18,17 +18,18 @@ package me.eccentric_nz.tardisweepingangels.monsters.clockwork_droids;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodels.keys.DroidVariant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
-import me.eccentric_nz.tardisweepingangels.nms.TWAZombie;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import me.eccentric_nz.tardisweepingangels.utils.WaterChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -54,7 +55,7 @@ public class ClockworkDroidRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("clockwork_droids.worlds." + name) > 0) {
-                // get the current warriors
+                // get the current droid count
                 int clockwork_droids = 0;
                 Collection<Zombie> zombies = w.getEntitiesByClass(Zombie.class);
                 for (Zombie c : zombies) {
@@ -90,11 +91,11 @@ public class ClockworkDroidRunnable implements Runnable {
                 if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                     return;
                 }
-                int variant = TARDISConstants.RANDOM.nextBoolean() ? 0 : 11;
+                boolean male = TARDISConstants.RANDOM.nextBoolean();
+                NamespacedKey variant = male ? DroidVariant.CLOCKWORK_DROID_STATIC.getKey() : DroidVariant.CLOCKWORK_DROID_FEMALE_STATIC.getKey();
                 LivingEntity clockwork_droid = new MonsterSpawner().create(l, Monster.CLOCKWORK_DROID);
-                ((TWAZombie) clockwork_droid).setVariant(variant);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.CLOCKWORK_DROID, clockwork_droid, false, false).setHelmetAndInvisibility(variant);
+                    new Equipper(Monster.CLOCKWORK_DROID, clockwork_droid, false).setHelmetAndInvisibility();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(clockwork_droid, EntityType.ZOMBIE, Monster.CLOCKWORK_DROID, l));
                 }, 5L);
             }

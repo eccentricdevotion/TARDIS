@@ -25,6 +25,8 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
+import me.eccentric_nz.TARDIS.custommodels.keys.RoomVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.Wool;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
@@ -32,6 +34,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
@@ -58,6 +61,8 @@ public class TARDISARSMethods {
     final HashMap<UUID, Integer> ids = new HashMap<>();
     final List<UUID> hasLoadedMap = new ArrayList<>();
     private final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
+    private final NamespacedKey[] activeLevelKeys = new NamespacedKey[]{Wool.LEVEL_BOTTOM_ACTIVE.getKey(), Wool.LEVEL_MAIN_ACTIVE.getKey(), Wool.LEVEL_TOP_ACTIVE.getKey()};
+    private final NamespacedKey[] inactiveLevelKeys = new NamespacedKey[]{Wool.LEVEL_BOTTOM.getKey(), Wool.LEVEL_MAIN.getKey(), Wool.LEVEL_TOP.getKey()};
 
     TARDISARSMethods(TARDIS plugin) {
         this.plugin = plugin;
@@ -159,21 +164,22 @@ public class TARDISARSMethods {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(room);
         if (!room.equals("Empty slot")) {
-            String config_path = TARDISARS.ARSFor(material.toString()).getConfigPath();
+            ARS ars = TARDISARS.ARSFor(material.toString());
+            String config_path = ars.getConfigPath();
             List<String> lore = new ArrayList<>();
             lore.add("Cost: " + plugin.getRoomsConfig().getInt("rooms." + config_path + ".cost"));
             if (showPerms) {
-                String roomName = TARDISARS.ARSFor(material.toString()).getConfigPath();
                 Player player = plugin.getServer().getPlayer(playerUUID);
-                if (player != null && !TARDISPermission.hasPermission(player, "tardis.room." + roomName.toLowerCase(Locale.ROOT))) {
+                if (player != null && !TARDISPermission.hasPermission(player, "tardis.room." + config_path.toLowerCase(Locale.ROOT))) {
                     lore.add(ChatColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
                 }
             }
             im.setLore(lore);
+            im.setItemModel(ars.getKey());
         } else {
             im.setLore(null);
+            im.setItemModel(RoomVariant.SLOT.getKey());
         }
-        im.setCustomModelData(1);
         is.setItemMeta(im);
         view.setItem(slot, is);
     }
@@ -289,7 +295,7 @@ public class TARDISARSMethods {
             ItemStack is = new ItemStack(material, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(levels[i - 27]);
-            im.setCustomModelData(i - 26);
+            im.setItemModel(i == slot ? activeLevelKeys[i - 27] : inactiveLevelKeys[i - 27]);
             is.setItemMeta(im);
             setSlot(view, i, is, playerUUID, false);
         }

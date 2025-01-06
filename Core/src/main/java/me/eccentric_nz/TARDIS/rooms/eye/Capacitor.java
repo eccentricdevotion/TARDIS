@@ -1,21 +1,26 @@
 package me.eccentric_nz.TARDIS.rooms.eye;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.EyeVariant;
+import org.bukkit.NamespacedKey;
+
 public enum Capacitor {
 
-    NORMAL(0.75, 6), // 1000
-    MEDIUM(1.0, 12), // 1001
-    LARGE(1.33, 18), // 1002
-    ENORMOUS(1.66, 24), // 1003
-    SUPERMASSIVE(2, 30); // 1004
+    NORMAL(0.75, 6, EyeVariant.SPHERE_0.getKey()),
+    MEDIUM(1.0, 12, EyeVariant.SPHERE_1.getKey()),
+    LARGE(1.33, 18, EyeVariant.SPHERE_2.getKey()),
+    ENORMOUS(1.66, 24, EyeVariant.SPHERE_3.getKey()),
+    SUPERMASSIVE(2, 30, EyeVariant.SPHERE_4.getKey());
 
     private final double radius;
     private final double rings;
+    private final NamespacedKey model;
 
-    Capacitor(double radius, double rings) {
+    Capacitor(double radius, double rings, NamespacedKey model) {
         // larger radii are needed for bigger spheres
         this.radius = radius;
         // more rings are needed for bigger spheres
         this.rings = rings;
+        this.model = model;
     }
 
     public double getRadius() {
@@ -26,7 +31,7 @@ public enum Capacitor {
         return rings;
     }
 
-    public int getCustomModelData() {
-        return 1000 + this.ordinal();
+    public NamespacedKey getModel() {
+        return model;
     }
 }

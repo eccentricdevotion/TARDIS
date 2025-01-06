@@ -20,7 +20,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.actions.ConsoleLampAction;
 import me.eccentric_nz.TARDIS.control.actions.LightLevelAction;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightLevel;
+import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -48,29 +50,26 @@ public class TARDISLightLevelFrameListener implements Listener {
             if (rs.fromLocation(location.toString())) {
                 // which switch is it?
                 int type = rs.getType();
-                int start = switch (type) {
-                    case 49 -> 1000; // exterior
-                    case 50 -> 3000; // interior
-                    default -> 9000; // console
-                };
-                // is the power off?
-                if (!rs.isPowered()) {
-                    start += 1000;
-                }
-                int limit = start + 7;
+                int start = 0;
                 ItemStack is = frame.getItem();
                 ItemMeta im = is.getItemMeta();
-                if (im.hasCustomModelData()) {
+                if (im.hasItemModel()) {
                     // switch the switches
-                    int current = im.getCustomModelData();
-                    if (!rs.isPowered() && ((type == 49 && current < 2000) || (type == 50 && current < 4000) || (type == 57 && current < 10000))) {
-                        current += 1000;
-                    }
-                    int cmd = current + 1;
-                    if (cmd > limit) {
+                    String current = im.getItemModel().getKey();
+                    boolean isOff = current.endsWith("_off");
+                    String[] split = current.replace("_off", "").split("_");
+                    String num = split[split.length - 1];
+                    int which = TARDISNumberParsers.parseInt(num);
+                    int cmd = which + 1;
+                    if (cmd > 7) {
                         cmd = start;
                     }
-                    im.setCustomModelData(cmd);
+                    String key = current.replace(num, "" + cmd);
+                    if (!rs.isPowered() && !isOff) {
+                        key += "_off";
+                    }
+                    NamespacedKey model = new NamespacedKey(plugin, key);
+                    im.setItemModel(model);
                     is.setItemMeta(im);
                     frame.setItem(is);
                     if (type == 49 || type == 50) {

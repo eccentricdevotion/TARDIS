@@ -1,7 +1,12 @@
 package me.eccentric_nz.tardisregeneration;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
+import net.minecraft.core.component.DataComponentPatch;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.Consumables;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.FoodComponent;
@@ -31,11 +36,13 @@ public class ElixirOfLife {
         foodComponent.setNutrition(4);
         foodComponent.setSaturation(1.0f);
         im.setFood(foodComponent);
-        im.setCustomModelData(2);
+        im.setItemModel(Whoniverse.ELIXIR_OF_LIFE.getKey());
         im.setDisplayName(ChatColor.WHITE + "Elixir of Life");
         im.setLore(List.of("Use to trigger a", "Time Lord regeneration"));
         goblet.setItemMeta(im);
-        return goblet;
+        net.minecraft.world.item.ItemStack stack = CraftItemStack.asNMSCopy(goblet);
+        stack.applyComponents(DataComponentPatch.builder().set(DataComponents.CONSUMABLE, Consumables.DEFAULT_FOOD).build());
+        return CraftItemStack.asBukkitCopy(stack);
     }
 
     public static boolean is(ItemStack is) {
@@ -43,7 +50,7 @@ public class ElixirOfLife {
             return false;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName() || !im.hasCustomModelData()) {
+        if (!im.hasDisplayName() || !im.hasItemModel()) {
             return false;
         }
         return im.getDisplayName().endsWith("Elixir of Life");

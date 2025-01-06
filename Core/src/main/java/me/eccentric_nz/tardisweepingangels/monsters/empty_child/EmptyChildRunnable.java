@@ -53,7 +53,7 @@ public class EmptyChildRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("empty_child.worlds." + name) > 0) {
-                // get the current warriors
+                // get the current empty child count
                 int wheresmymummy = 0;
                 Collection<Zombie> children = w.getEntitiesByClass(Zombie.class);
                 for (Zombie c : children) {
@@ -92,7 +92,7 @@ public class EmptyChildRunnable implements Runnable {
                 }
                 LivingEntity child = new MonsterSpawner().create(l, Monster.EMPTY_CHILD);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.EMPTY_CHILD, child, false, false).setHelmetAndInvisibility();
+                    new Equipper(Monster.EMPTY_CHILD, child, false).setHelmetAndInvisibility();
                     EmptyChildEquipment.setSpeed(child);
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(child, EntityType.ZOMBIE, Monster.EMPTY_CHILD, l));
                 }, 5L);

@@ -1,8 +1,10 @@
 package me.eccentric_nz.tardischemistry.microscope;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Rotation;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
@@ -67,22 +69,23 @@ public class MicroscopeItemFrameListener implements Listener {
                 }
                 case MICROSCOPE -> {
                     // microscope
-                    int cmd;
+                    String key;
                     if (MicroscopeUtils.hasItemInHand(is, Material.GLASS, plugin)) {
                         // set microscope slide
-                        cmd = im.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.INTEGER);
-                        frame.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.INTEGER, cmd);
+                        key = im.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.STRING);
+                        frame.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.STRING, key);
                     } else {
                         // view current slide
-                        cmd = frame.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.INTEGER);
+                        key = frame.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.STRING);
                     }
                     // remember item in hand for restoration
                     MicroscopeUtils.STORED_STACKS.put(player.getUniqueId(), is);
                     // set item in hand
                     ItemStack slide = new ItemStack(Material.GLASS, 1);
                     ItemMeta slideMeta = slide.getItemMeta();
-                    slideMeta.setDisplayName(Slide.values()[cmd >= 10000 ? cmd - 10000 : cmd].getName());
-                    slideMeta.setCustomModelData(cmd);
+                    String[] split = key.split("/");
+                    slideMeta.setDisplayName(TARDISStringUtils.sentenceCase(split[1]));
+                    slideMeta.setItemModel(new NamespacedKey(plugin, key));
                     slide.setItemMeta(slideMeta);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.getInventory().setItemInMainHand(slide), 1L);
                 }
@@ -100,22 +103,23 @@ public class MicroscopeItemFrameListener implements Listener {
                 }
                 case ELECTRON_MICROSCOPE -> {
                     // electron microscope
-                    int cmd;
+                    String key;
                     if (MicroscopeUtils.hasItemInHand(is, Material.LIME_STAINED_GLASS, plugin)) {
                         // set microscope screen
-                        cmd = im.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.INTEGER);
-                        frame.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.INTEGER, cmd);
+                        key = im.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.STRING);
+                        frame.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.STRING, key);
                     } else {
                         // view current slide
-                        cmd = frame.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.INTEGER);
+                        key = frame.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.STRING);
                     }
                     // remember item in hand for restoration
                     MicroscopeUtils.STORED_STACKS.put(player.getUniqueId(), is);
                     // set item in hand
                     ItemStack screen = new ItemStack(Material.LIME_STAINED_GLASS, 1);
                     ItemMeta screenMeta = screen.getItemMeta();
-                    screenMeta.setDisplayName(Screen.values()[cmd >= 10000 ? cmd - 10000 : cmd].getName());
-                    screenMeta.setCustomModelData(cmd);
+                    String[] split = key.split("/");
+                    screenMeta.setDisplayName(TARDISStringUtils.sentenceCase(split[1]));
+                    screenMeta.setItemModel(new NamespacedKey(plugin, key));
                     screen.setItemMeta(screenMeta);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.getInventory().setItemInMainHand(screen), 1L);
                 }
@@ -133,22 +137,23 @@ public class MicroscopeItemFrameListener implements Listener {
                 }
                 default -> {
                     // telescope
-                    int cmd;
+                    String key;
                     if (MicroscopeUtils.hasItemInHand(is, Material.GRAY_STAINED_GLASS, plugin)) {
                         // set microscope screen
-                        cmd = im.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.INTEGER);
-                        frame.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.INTEGER, cmd);
+                        key = im.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.STRING);
+                        frame.getPersistentDataContainer().set(plugin.getMicroscopeKey(), PersistentDataType.STRING, key);
                     } else {
                         // view current slide
-                        cmd = frame.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.INTEGER);
+                        key = frame.getPersistentDataContainer().get(plugin.getMicroscopeKey(), PersistentDataType.STRING);
                     }
                     // remember item in hand for restoration
                     MicroscopeUtils.STORED_STACKS.put(player.getUniqueId(), is);
                     // set item in hand
                     ItemStack helmet = new ItemStack(Material.GRAY_STAINED_GLASS, 1);
                     ItemMeta helmetMeta = helmet.getItemMeta();
-                    helmetMeta.setDisplayName(ScopeView.values()[cmd >= 10000 ? cmd - 10000 : cmd].getName());
-                    helmetMeta.setCustomModelData(cmd);
+                    String[] split = key.split("/");
+                    helmetMeta.setDisplayName(TARDISStringUtils.sentenceCase(split[1]));
+                    helmetMeta.setItemModel(new NamespacedKey(plugin, key));
                     helmet.setItemMeta(helmetMeta);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.getInventory().setItemInMainHand(helmet), 1L);
                 }

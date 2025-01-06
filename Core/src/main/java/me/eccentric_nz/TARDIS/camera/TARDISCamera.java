@@ -1,8 +1,11 @@
 package me.eccentric_nz.TARDIS.camera;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -46,7 +49,30 @@ public class TARDISCamera {
                     EntityEquipment ee = stand.getEquipment();
                     ItemStack is = ee.getHelmet();
                     ItemMeta im = is.getItemMeta();
-                    im.setCustomModelData((pandorica ? 1008 : 1005));
+                    NamespacedKey viewing = switch (is.getType()) {
+                        case BLACK_DYE -> ChameleonVariant.BLACK_CAMERA.getKey();
+                        case RED_DYE -> ChameleonVariant.RED_CAMERA.getKey();
+                        case BROWN_DYE -> ChameleonVariant.BROWN_CAMERA.getKey();
+                        case GREEN_DYE -> ChameleonVariant.GREEN_CAMERA.getKey();
+                        case PURPLE_DYE -> ChameleonVariant.PURPLE_CAMERA.getKey();
+                        case CYAN_DYE -> ChameleonVariant.CYAN_CAMERA.getKey();
+                        case LIGHT_GRAY_DYE -> ChameleonVariant.LIGHT_GRAY_CAMERA.getKey();
+                        case GRAY_DYE -> ChameleonVariant.GRAY_CAMERA.getKey();
+                        case PINK_DYE -> ChameleonVariant.PINK_CAMERA.getKey();
+                        case LIME_DYE -> ChameleonVariant.LIME_CAMERA.getKey();
+                        case YELLOW_DYE -> ChameleonVariant.YELLOW_CAMERA.getKey();
+                        case LIGHT_BLUE_DYE -> ChameleonVariant.LIGHT_BLUE_CAMERA.getKey();
+                        case MAGENTA_DYE -> ChameleonVariant.MAGENTA_CAMERA.getKey();
+                        case ORANGE_DYE -> ChameleonVariant.ORANGE_CAMERA.getKey();
+                        case WHITE_DYE -> ChameleonVariant.WHITE_CAMERA.getKey();
+                        case CYAN_STAINED_GLASS_PANE -> ChameleonVariant.TENNANT_CAMERA.getKey();
+                        case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED_CAMERA.getKey();
+                        case WOLF_SPAWN_EGG -> ChameleonVariant.BAD_WOLF_CAMERA.getKey();
+                        default -> null; // don't change for PANDORICA, WEEPING_ANGEL or CUSTOM
+                    };
+                    if (viewing != null) {
+                        im.setItemModel(viewing);
+                    }
                     is.setItemMeta(im);
                     ee.setHelmet(is);
                     // hide player from themselves
@@ -67,7 +93,31 @@ public class TARDISCamera {
             EntityEquipment ee = stand.getEquipment();
             ItemStack is = ee.getHelmet();
             ItemMeta im = is.getItemMeta();
-            im.setCustomModelData(1001);
+            NamespacedKey notviewing = switch (is.getType()) {
+                case BLACK_DYE -> ChameleonVariant.BLACK_CLOSED.getKey();
+                case RED_DYE -> ChameleonVariant.RED_CLOSED.getKey();
+                case BROWN_DYE -> ChameleonVariant.BROWN_CLOSED.getKey();
+                case GREEN_DYE -> ChameleonVariant.GREEN_CLOSED.getKey();
+                case BLUE_DYE -> ChameleonVariant.BLUE_CLOSED.getKey();
+                case PURPLE_DYE -> ChameleonVariant.PURPLE_CLOSED.getKey();
+                case CYAN_DYE -> ChameleonVariant.CYAN_CLOSED.getKey();
+                case LIGHT_GRAY_DYE -> ChameleonVariant.LIGHT_GRAY_CLOSED.getKey();
+                case GRAY_DYE -> ChameleonVariant.GRAY_CLOSED.getKey();
+                case PINK_DYE -> ChameleonVariant.PINK_CLOSED.getKey();
+                case LIME_DYE -> ChameleonVariant.LIME_CLOSED.getKey();
+                case YELLOW_DYE -> ChameleonVariant.YELLOW_CLOSED.getKey();
+                case LIGHT_BLUE_DYE -> ChameleonVariant.LIGHT_BLUE_CLOSED.getKey();
+                case MAGENTA_DYE -> ChameleonVariant.MAGENTA_CLOSED.getKey();
+                case ORANGE_DYE -> ChameleonVariant.ORANGE_CLOSED.getKey();
+                case WHITE_DYE -> ChameleonVariant.WHITE_CLOSED.getKey();
+                case CYAN_STAINED_GLASS_PANE -> ChameleonVariant.TENNANT_CLOSED.getKey();
+                case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED_CLOSED.getKey();
+                case WOLF_SPAWN_EGG -> ChameleonVariant.BAD_WOLF_CLOSED.getKey();
+                default -> null; // don't change for PANDORICA, WEEPING_ANGEL or CUSTOM
+            };
+            if (notviewing != null) {
+                im.setItemModel(notviewing);
+            }
             is.setItemMeta(im);
             ee.setHelmet(is);
             // teleport player to interior

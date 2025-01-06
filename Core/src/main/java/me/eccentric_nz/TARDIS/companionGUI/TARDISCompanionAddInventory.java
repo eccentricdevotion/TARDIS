@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.companionGUI;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUICompanion;
+import me.eccentric_nz.TARDIS.custommodels.GUICompanion;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -83,26 +83,26 @@ public class TARDISCompanionAddInventory {
         info_lore.add("Click a player head to");
         info_lore.add("add them as a companion.");
         ii.setLore(info_lore);
-        ii.setCustomModelData(GUICompanion.INFO.customModelData());
+        ii.setItemModel(GUICompanion.INFO.key());
         info.setItemMeta(ii);
         heads[GUICompanion.INFO.slot()] = info;
         ItemStack list = new ItemStack(GUICompanion.LIST_COMPANIONS.material(), 1);
         ItemMeta ll = list.getItemMeta();
         ll.setDisplayName("List companions");
-        ll.setCustomModelData(GUICompanion.LIST_COMPANIONS.customModelData());
+        ll.setItemModel(GUICompanion.LIST_COMPANIONS.key());
         list.setItemMeta(ll);
         heads[GUICompanion.LIST_COMPANIONS.slot()] = list;
         ItemStack every = new ItemStack(GUICompanion.ALL_COMPANIONS.material(), 1);
         ItemMeta one = every.getItemMeta();
         one.setDisplayName("Add all online players");
-        one.setCustomModelData(GUICompanion.ALL_COMPANIONS.customModelData());
+        one.setItemModel(GUICompanion.ALL_COMPANIONS.key());
         every.setItemMeta(one);
         heads[GUICompanion.ALL_COMPANIONS.slot()] = every;
         // Cancel / close
         ItemStack close = new ItemStack(GUICompanion.BUTTON_CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUICompanion.BUTTON_CLOSE.customModelData());
+        can.setItemModel(GUICompanion.BUTTON_CLOSE.key());
         close.setItemMeta(can);
         heads[GUICompanion.BUTTON_CLOSE.slot()] = close;
 

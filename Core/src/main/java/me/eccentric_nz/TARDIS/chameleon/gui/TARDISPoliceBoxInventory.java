@@ -18,8 +18,11 @@ package me.eccentric_nz.TARDIS.chameleon.gui;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPoliceBoxes;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPoliceBoxes;
+import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -65,7 +68,24 @@ public class TARDISPoliceBoxInventory {
                 ItemStack is = new ItemStack(Material.valueOf(dye), 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(s + " Police Box");
-                im.setCustomModelData(1001);
+                switch (s) {
+                    case "Blue" -> im.setItemModel(ChameleonVariant.BLUE_CLOSED.getKey());
+                    case "White" -> im.setItemModel(ChameleonVariant.WHITE_CLOSED.getKey());
+                    case "Orange" -> im.setItemModel(ChameleonVariant.ORANGE_CLOSED.getKey());
+                    case "Magenta" -> im.setItemModel(ChameleonVariant.MAGENTA_CLOSED.getKey());
+                    case "Light Blue" -> im.setItemModel(ChameleonVariant.LIGHT_BLUE_CLOSED.getKey());
+                    case "Yellow" -> im.setItemModel(ChameleonVariant.YELLOW_CLOSED.getKey());
+                    case "Lime" -> im.setItemModel(ChameleonVariant.LIME_CLOSED.getKey());
+                    case "Pink" -> im.setItemModel(ChameleonVariant.PINK_CLOSED.getKey());
+                    case "Gray" -> im.setItemModel(ChameleonVariant.GRAY_CLOSED.getKey());
+                    case "Light Gray" -> im.setItemModel(ChameleonVariant.LIGHT_GRAY_CLOSED.getKey());
+                    case "Cyan" -> im.setItemModel(ChameleonVariant.CYAN_CLOSED.getKey());
+                    case "Purple" -> im.setItemModel(ChameleonVariant.PURPLE_CLOSED.getKey());
+                    case "Brown" -> im.setItemModel(ChameleonVariant.BROWN_CLOSED.getKey());
+                    case "Green" -> im.setItemModel(ChameleonVariant.GREEN_CLOSED.getKey());
+                    case "Red" -> im.setItemModel(ChameleonVariant.RED_CLOSED.getKey());
+                    case "Black" -> im.setItemModel(ChameleonVariant.BLACK_CLOSED.getKey());
+                }
                 is.setItemMeta(im);
                 boxes[i] = is;
             }
@@ -76,7 +96,7 @@ public class TARDISPoliceBoxInventory {
             ItemStack david = new ItemStack(Material.CYAN_STAINED_GLASS_PANE, 1);
             ItemMeta tennant = david.getItemMeta();
             tennant.setDisplayName("Tennant Era Police Box");
-            tennant.setCustomModelData(1001);
+            tennant.setItemModel(ChameleonVariant.TENNANT_CLOSED.getKey());
             david.setItemMeta(tennant);
             boxes[i] = david;
             i++;
@@ -86,7 +106,7 @@ public class TARDISPoliceBoxInventory {
             ItemStack is = new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("Weeping Angel");
-            im.setCustomModelData(1001);
+            im.setItemModel(ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey());
             is.setItemMeta(im);
             boxes[i] = is;
             i++;
@@ -96,7 +116,7 @@ public class TARDISPoliceBoxInventory {
             ItemStack pan = new ItemStack(Material.ENDER_PEARL, 1);
             ItemMeta ica = pan.getItemMeta();
             ica.setDisplayName("Pandorica");
-            ica.setCustomModelData(1001);
+            ica.setItemModel(ChameleonVariant.PANDORICA_CLOSED.getKey());
             pan.setItemMeta(ica);
             boxes[i] = pan;
             i++;
@@ -106,7 +126,7 @@ public class TARDISPoliceBoxInventory {
             ItemStack any = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
             ItemMeta colour = any.getItemMeta();
             colour.setDisplayName("Pick a colour Police Box");
-            colour.setCustomModelData(1001);
+            colour.setItemModel(ColouredVariant.TINTED_CLOSED.getKey());
             any.setItemMeta(colour);
             boxes[i] = any;
             i++;
@@ -118,7 +138,7 @@ public class TARDISPoliceBoxInventory {
                     ItemStack cis = new ItemStack(cm);
                     ItemMeta cim = cis.getItemMeta();
                     cim.setDisplayName(custom);
-                    cim.setCustomModelData(1001);
+                    cim.setItemModel(new NamespacedKey(plugin, "block/police_box/" + custom + "_closed"));
                     cis.setItemMeta(cim);
                     boxes[i] = cis;
                     i++;
@@ -131,21 +151,21 @@ public class TARDISPoliceBoxInventory {
         ItemStack page = new ItemStack(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.material(), 1);
         ItemMeta one = page.getItemMeta();
         one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
-        one.setCustomModelData(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.customModelData());
+        one.setItemModel(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.key());
         page.setItemMeta(one);
         boxes[GUIChameleonPoliceBoxes.GO_TO_PAGE_1.slot()] = page;
         // back
         ItemStack back = new ItemStack(GUIChameleonPoliceBoxes.BACK.material(), 1);
         ItemMeta but = back.getItemMeta();
         but.setDisplayName("Back");
-        but.setCustomModelData(GUIChameleonPoliceBoxes.BACK.customModelData());
+        but.setItemModel(GUIChameleonPoliceBoxes.BACK.key());
         back.setItemMeta(but);
         boxes[GUIChameleonPoliceBoxes.BACK.slot()] = back;
         // Cancel / close
         ItemStack close = new ItemStack(GUIChameleonPoliceBoxes.CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setCustomModelData(GUIChameleonPoliceBoxes.CLOSE.customModelData());
+        can.setItemModel(GUIChameleonPoliceBoxes.CLOSE.key());
         close.setItemMeta(can);
         boxes[GUIChameleonPoliceBoxes.CLOSE.slot()] = close;
         return boxes;

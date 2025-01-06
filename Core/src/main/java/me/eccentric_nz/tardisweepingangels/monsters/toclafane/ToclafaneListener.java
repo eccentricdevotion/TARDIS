@@ -18,13 +18,14 @@ package me.eccentric_nz.tardisweepingangels.monsters.toclafane;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.custommodels.keys.ToclafaneVariant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.craftbukkit.v1_21_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_21_R3.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -76,7 +77,7 @@ public class ToclafaneListener implements Listener {
                         ItemStack head = ee.getHelmet();
                         ItemMeta im = head.getItemMeta();
                         player.playSound(stand.getLocation(), "toclafane", 1.0f, 1.0f);
-                        im.setCustomModelData(2);
+                        im.setItemModel(ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
                         head.setItemMeta(im);
                         ee.setHelmet(head);
                         bee.setHasStung(false);

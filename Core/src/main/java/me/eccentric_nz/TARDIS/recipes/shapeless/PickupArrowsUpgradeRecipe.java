@@ -28,7 +28,7 @@ public class PickupArrowsUpgradeRecipe {
         ItemStack is = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Pickup Arrows Upgrade");
-        im.setCustomModelData(10000010);
+        im.setItemModel(RecipeItem.PICKUP_ARROWS_UPGRADE.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "pickup_arrows_upgrade");
         ShapelessRecipe r = new ShapelessRecipe(key, is);
@@ -36,7 +36,7 @@ public class PickupArrowsUpgradeRecipe {
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "Pickup Arrows Circuit");
-        em.setCustomModelData(RecipeItem.PICKUP_ARROWS_CIRCUIT.getCustomModelData());
+        em.setItemModel(RecipeItem.PICKUP_ARROWS_CIRCUIT.getModel());
         exact.setItemMeta(em);
         r.addIngredient(new RecipeChoice.ExactChoice(exact));
         plugin.getServer().addRecipe(r);

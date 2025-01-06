@@ -37,7 +37,7 @@ public class PickupArrowsRepairRecipe {
         ItemStack isa = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
         ima.setDisplayName(ChatColor.WHITE + "Pickup Arrows Circuit");
-        ima.setCustomModelData(RecipeItem.PICKUP_ARROWS_CIRCUIT.getCustomModelData());
+        ima.setItemModel(RecipeItem.PICKUP_ARROWS_CIRCUIT.getModel());
         isa.setItemMeta(ima);
         RecipeChoice addition = new RecipeChoice.ExactChoice(isa);
         NamespacedKey key = new NamespacedKey(plugin, "pickup_arrows_repair");

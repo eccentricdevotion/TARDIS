@@ -1,5 +1,6 @@
 package me.eccentric_nz.TARDIS.console.models;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.ModelledControl;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -12,13 +13,11 @@ public class HandbrakeModel {
         }
         ItemStack is = display.getItemStack();
         ItemMeta im = is.getItemMeta();
-        int cmd;
         if (state == 0) {
-            cmd = 5001;
+            im.setItemModel(ModelledControl.HANDBRAKE_0.getKey());
         } else {
-            cmd = 5002;
+            im.setItemModel(ModelledControl.HANDBRAKE_1.getKey());
         }
-        im.setCustomModelData(cmd);
         is.setItemMeta(im);
         display.setItemStack(is);
     }

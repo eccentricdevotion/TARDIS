@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardisweepingangels.commands;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicFreeze;
 import me.eccentric_nz.TARDIS.utility.TARDISVector3D;
@@ -26,6 +27,7 @@ import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessFlame
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -97,20 +99,38 @@ public class EquipCommand {
                         int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(stand), 1, 20);
                         stand.getPersistentDataContainer().set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
                         // set helmet to sword version
-                        meta.setCustomModelData(405);
+                        meta.setItemModel(MonkVariant.HEADLESS_MONK_STATIC.getKey());
                     }
                     if (monster == Monster.MIRE || monster == Monster.SLITHEEN) {
                         // set no helmet!
-                        meta.setCustomModelData(5);
+                        meta.setItemModel((monster==Monster.MIRE? MireVariant.THE_MIRE_HELMETLESS.getKey() : SlitheenVariant.SLITHEEN_SUIT.getKey()));
                     }
                     if (monster == Monster.CLOCKWORK_DROID) {
-                        meta.setCustomModelData(7);
+                        meta.setItemModel(DroidVariant.CLOCKWORK_DROID_FEMALE_STATIC.getKey());
                     }
                     if (monster == Monster.DALEK) {
                         try {
                             DyeColor colour = DyeColor.valueOf(args[2].toUpperCase(Locale.ROOT));
-                            int c = colour.ordinal() + 10000006;
-                            meta.setCustomModelData(c);
+                            NamespacedKey c = DalekVariant.DALEK_BRASS.getKey();
+                            switch (colour) {
+                                case BLACK -> c = DalekVariant.DALEK_BLACK.getKey();
+                                case WHITE -> c = DalekVariant.DALEK_WHITE.getKey();
+                                case RED -> c = DalekVariant.DALEK_RED.getKey();
+                                case BROWN -> c = DalekVariant.DALEK_BROWN.getKey();
+                                case GREEN -> c = DalekVariant.DALEK_GREEN.getKey();
+                                case BLUE -> c = DalekVariant.DALEK_BLUE.getKey();
+                                case PURPLE -> c = DalekVariant.DALEK_PURPLE.getKey();
+                                case CYAN -> c = DalekVariant.DALEK_CYAN.getKey();
+                                case LIGHT_GRAY -> c = DalekVariant.DALEK_LIGHT_GRAY.getKey();
+                                case GRAY -> c = DalekVariant.DALEK_GRAY.getKey();
+                                case PINK -> c = DalekVariant.DALEK_PINK.getKey();
+                                case LIME -> c = DalekVariant.DALEK_LIME.getKey();
+                                case YELLOW -> c = DalekVariant.DALEK_YELLOW.getKey();
+                                case LIGHT_BLUE -> c = DalekVariant.DALEK_LIGHT_BLUE.getKey();
+                                case MAGENTA -> c = DalekVariant.DALEK_MAGENTA.getKey();
+                                case ORANGE -> c = DalekVariant.DALEK_ORANGE.getKey();
+                            }
+                            meta.setItemModel(c);
                         } catch (IllegalArgumentException ignored) {
                         }
                     }

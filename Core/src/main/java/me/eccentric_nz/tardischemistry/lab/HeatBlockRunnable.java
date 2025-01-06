@@ -55,7 +55,7 @@ public class HeatBlockRunnable implements Runnable {
                 if (display != null) {
                     ItemStack is = display.getItemStack();
                     if (is.getType() == Material.RED_CONCRETE && is.hasItemMeta()
-                            && is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+                            && is.getItemMeta().getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
                         // it's a heat block
                         meltBlock(location);
                     }

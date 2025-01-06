@@ -52,7 +52,7 @@ public class SeaDevilRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("sea_devils.worlds." + name) > 0) {
-                // get the current warriors
+                // get the current sea devil count
                 int devil = 0;
                 Collection<Drowned> drowned = w.getEntitiesByClass(Drowned.class);
                 for (Drowned d : drowned) {
@@ -89,7 +89,7 @@ public class SeaDevilRunnable implements Runnable {
             }
             LivingEntity devil = new MonsterSpawner().create(l, Monster.SEA_DEVIL);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                new Equipper(Monster.SEA_DEVIL, devil, false, false).setHelmetAndInvisibility();
+                new Equipper(Monster.SEA_DEVIL, devil, false).setHelmetAndInvisibility();
                 plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(devil, EntityType.DROWNED, Monster.SEA_DEVIL, l));
             }, 5L);
         }

@@ -35,18 +35,27 @@ import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterArmour;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BrushableBlock;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Skeleton;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.EquippableComponent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.Locale;
 import java.util.Map;
@@ -67,7 +76,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "add_regions", "advancements", "armour",
             "biome", "box", "brushable",
             "chunks", "chunky", "circuit",
-            "debug", "dismount", "displayitem",
+            "dalek", "debug", "dismount", "displayitem",
             "effect",
             "frame", "furnace",
             "gravity",
@@ -105,15 +114,35 @@ public class TARDISDevCommand implements CommandExecutor {
                         case "add_regions" -> {
                             return new TARDISAddRegionsCommand(plugin).doCheck(sender);
                         }
-                        case "armour" -> {
-                            if (sender instanceof Player player) {
-                                ItemStack a = MonsterArmour.makeEquippable(Monster.CYBERMAN, EquipmentSlot.CHEST, TARDISWeepingAngels.CYBERMAN);
-                                player.getInventory().addItem(a);
-                            }
-                            return true;
-                        }
                         case "biome" -> {
                             return new TARDISBiomeCommand().reset(sender);
+                        }
+                        case "dalek" -> {
+                            if (sender instanceof Player player) {
+                                Location eyeLocation = player.getTargetBlock(null, 16).getLocation();
+                                eyeLocation.add(0.5d, 1.25d, 0.5d);
+                                eyeLocation.setYaw(player.getLocation().getYaw() - 180.0f);
+                                Skeleton skeleton = (Skeleton) eyeLocation.getWorld().spawnEntity(eyeLocation, EntityType.SKELETON);
+                                EntityEquipment ee = skeleton.getEquipment();
+                                ItemStack head = new ItemStack(Material.SLIME_BALL);
+                                ItemMeta him = head.getItemMeta();
+                                him.setItemModel(new NamespacedKey(plugin, "dalek_independent_head"));
+                                EquippableComponent component = him.getEquippable();
+                                component.setSlot(EquipmentSlot.HEAD);
+                                component.setAllowedEntities(EntityType.SKELETON);
+                                him.setEquippable(component);
+                                head.setItemMeta(him);
+                                ee.setHelmet(head);
+                                ItemStack body = new ItemStack(Material.SLIME_BALL);
+                                ItemMeta bim = body.getItemMeta();
+                                bim.setItemModel(new NamespacedKey(plugin, "dalek_body"));
+                                body.setItemMeta(bim);
+                                ee.setItemInMainHand(body);
+                                PotionEffect invisibility = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false);
+                                skeleton.addPotionEffect(invisibility);
+                                PotionEffect resistance = new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 360000, 3, false, false);
+                                skeleton.addPotionEffect(resistance);
+                            }
                         }
                         case "furnace" -> {
                             return new TARDISFurnaceCommand(plugin).list(sender);
@@ -169,6 +198,20 @@ public class TARDISDevCommand implements CommandExecutor {
                 switch (first) {
                     case "advancements" -> {
                         TARDISAchievementFactory.checkAdvancement(args[1]);
+                        return true;
+                    }
+                    case "armour" -> {
+                        if (sender instanceof Player player) {
+                            try {
+                                Monster monster = Monster.valueOf(args[1].toUpperCase(Locale.ROOT));
+                                EquipmentSlot slot = EquipmentSlot.valueOf(args[2].toUpperCase(Locale.ROOT));
+                                if (slot != EquipmentSlot.CHEST && slot != EquipmentSlot.LEGS) {
+                                    return false;
+                                }
+                                ItemStack a = MonsterArmour.makeEquippable(monster, slot);
+                                player.getInventory().addItem(a);
+                            } catch (IllegalArgumentException ignored) { }
+                        }
                         return true;
                     }
                     case "biome" -> {

@@ -37,10 +37,10 @@ public class MicroscopeRecipes {
     public void addRecipes() {
         for (LabEquipment equipment : LabEquipment.values()) {
             String name = equipment.getName();
-            ItemStack is = new ItemStack(equipment.material, 1);
+            ItemStack is = new ItemStack(equipment.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(ChatColor.WHITE + name);
-            im.setCustomModelData(10000);
+            im.setItemModel(equipment.getModel());
             is.setItemMeta(im);
             NamespacedKey key = new NamespacedKey(plugin, equipment.toString().toLowerCase(Locale.ROOT));
             ShapedRecipe r = new ShapedRecipe(key, is);
@@ -53,7 +53,7 @@ public class MicroscopeRecipes {
                 r.setIngredient('G', Material.GLASS_PANE);
             }
             r.setIngredient('R', Material.REDSTONE);
-            r.setIngredient('E', equipment.material);
+            r.setIngredient('E', equipment.getMaterial());
             plugin.getServer().addRecipe(r);
             plugin.getFigura().getShapedRecipes().put(name, r);
         }

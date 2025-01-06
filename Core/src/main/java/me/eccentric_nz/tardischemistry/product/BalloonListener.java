@@ -18,6 +18,7 @@ package me.eccentric_nz.tardischemistry.product;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -114,11 +115,11 @@ public class BalloonListener implements Listener {
     }
 
     private boolean isBalloon(ItemStack is) {
-        return is != null && is.getType().equals(Material.CORNFLOWER) && is.hasItemMeta() && is.getItemMeta().hasCustomModelData() && isInDataRange(is.getItemMeta().getCustomModelData());
-    }
-
-    private boolean isInDataRange(int custom) {
-        return (custom > 10000018 && custom < 10000035);
+        return is != null
+                && is.getType().equals(Material.CORNFLOWER)
+                && is.hasItemMeta()
+                && is.getItemMeta().hasItemModel()
+                && is.getItemMeta().getItemModel().getKey().endsWith("_balloon");
     }
 
     private void removeJumpBoost(Player player) {

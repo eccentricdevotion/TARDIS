@@ -17,7 +17,9 @@
 package me.eccentric_nz.TARDIS.particles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIParticle;
+import me.eccentric_nz.TARDIS.custommodels.GUIParticle;
+import me.eccentric_nz.TARDIS.custommodels.keys.ParticleItem;
+import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
@@ -28,6 +30,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -97,11 +100,18 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         }
     }
 
+    private void setModel(ItemStack is, NamespacedKey key) {
+        ItemMeta im = is.getItemMeta();
+        im.setItemModel(key);
+        is.setItemMeta(im);
+    }
+
     private void setShape(InventoryView view, int slot, String display, UUID uuid) {
         for (int s = 1; s < 8; s++) {
             ItemStack is = view.getItem(s);
             if (is != null) {
                 is.setType(s == slot ? Material.LAPIS_ORE : Material.LAPIS_LAZULI);
+                setModel(is, s == slot ? ParticleItem.SHAPE_SELECTED.getKey() : ParticleItem.SHAPE.getKey());
                 view.setItem(s, is);
             }
         }
@@ -117,6 +127,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
             ItemStack is = view.getItem(s);
             if (is != null && s != GUIParticle.COLOUR.slot() && s != GUIParticle.BLOCK_INFO.slot() && s != GUIParticle.BLOCK.slot() && s != GUIParticle.TOGGLE.slot()) {
                 is.setType(s == slot ? Material.REDSTONE_ORE : Material.REDSTONE);
+                setModel(is, s == slot ? ParticleItem.EFFECT_SELECTED.getKey() : ParticleItem.EFFECT.getKey());
                 view.setItem(s, is);
             }
         }
@@ -171,15 +182,16 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
 
     private void toggle(InventoryView view, ItemStack is, UUID uuid) {
         ItemMeta im = is.getItemMeta();
-        int cmd = im.getCustomModelData();
-        im.setCustomModelData(cmd > 100 ? 19 : 119);
+        NamespacedKey key = im.getItemModel();
+        boolean on = key == null || key == SwitchVariant.BUTTON_TOGGLE_ON.getKey();
+        im.setItemModel(on ? SwitchVariant.BUTTON_TOGGLE_OFF.getKey() : SwitchVariant.BUTTON_TOGGLE_ON.getKey());
         List<String> lore = im.getLore();
-        lore.set(0, cmd > 100 ? "ON" : "OFF");
+        lore.set(0, on ? "OFF" : "ON");
         im.setLore(lore);
         is.setItemMeta(im);
         view.setItem(GUIParticle.TOGGLE.slot(), is);
         HashMap<String, Object> set = new HashMap<>();
-        set.put("particles_on", cmd > 100 ? 1 : 0);
+        set.put("particles_on", on ? 0 : 1);
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", uuid.toString());
         plugin.getQueryFactory().doSyncUpdate("particle_prefs", set, where);

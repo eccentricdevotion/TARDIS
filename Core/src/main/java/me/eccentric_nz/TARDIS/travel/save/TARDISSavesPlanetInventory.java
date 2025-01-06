@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.travel.save;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.GUISaves;
+import me.eccentric_nz.TARDIS.custommodels.GUISaves;
 import me.eccentric_nz.TARDIS.database.data.Planet;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDeathLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
@@ -53,7 +53,7 @@ public class TARDISSavesPlanetInventory {
             hlore.add("Not found!");
         }
         him.setLore(hlore);
-        him.setCustomModelData(GUISaves.HOME.customModelData());
+        him.setItemModel(GUISaves.HOME.key());
         his.setItemMeta(him);
         stack[GUISaves.HOME.slot()] = his;
         if (TARDISPermission.hasPermission(player, "tardis.save.death")) {
@@ -74,7 +74,7 @@ public class TARDISSavesPlanetInventory {
                 dlore.add("Not found!");
             }
             dim.setLore(dlore);
-            dim.setCustomModelData(GUISaves.DEATH.customModelData());
+            dim.setItemModel(GUISaves.DEATH.key());
             death.setItemMeta(dim);
             stack[GUISaves.DEATH.slot()] = death;
         }

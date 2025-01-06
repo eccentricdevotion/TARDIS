@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -76,7 +76,8 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
         ItemStack choice = view.getItem(slot);
         event.setCancelled(true);
         switch (slot) {
-            case 45 -> {}
+            case 45 -> {
+            }
             case 46 -> {
                 // archive
                 if (choice != null) {
@@ -100,7 +101,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
                 TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(player.getUniqueId());
                 ItemStack[] consoles;
                 // switch page
-                if (choice.getItemMeta().getCustomModelData() == GUIChameleonPresets.GO_TO_PAGE_2.customModelData()) {
+                if (GUIChameleonPresets.GO_TO_PAGE_2.key().equals(choice.getItemMeta().getItemModel())) {
                     // page 2
                     consoles = new TARDISCustomThemeInventory(plugin, player, tud.getPrevious().getPermission(), tud.getLevel()).getMenu();
                 } else {

@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.custommodels.keys.SonicItem;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicSound;
@@ -117,7 +118,7 @@ public class TARDISSonicEntityListener implements Listener {
             return -1;
         }
         ItemMeta im = dock.getItemMeta();
-        if (!im.hasCustomModelData() || (im.getCustomModelData() != 1000 && im.getCustomModelData() != 1001)) {
+        if (!im.hasItemModel() || !im.getItemModel().getKey().contains("sonic_dock")) {
             return -1;
         }
         HashMap<String, Object> where = new HashMap<>();

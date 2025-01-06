@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChameleonPresets;
-import me.eccentric_nz.TARDIS.custommodeldata.GUIChemistry;
+import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
+import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -58,7 +58,7 @@ public class TARDISRecipeInventory {
         ItemStack back = new ItemStack(Material.BOWL, 1);
         ItemMeta but = back.getItemMeta();
         but.setDisplayName("Back");
-        but.setCustomModelData(GUIChameleonPresets.BACK.customModelData());
+        but.setItemModel(GUIChameleonPresets.BACK.key());
         back.setItemMeta(but);
         stack[0] = back;
         // info
@@ -66,14 +66,14 @@ public class TARDISRecipeInventory {
         ItemMeta info_im = info.getItemMeta();
         info_im.setDisplayName("Info");
         info_im.setLore(Arrays.asList("Click a button below", "to see the recipe", "for that item"));
-        info_im.setCustomModelData(GUIChemistry.INFO.customModelData());
+        info_im.setItemModel(GUIChemistry.INFO.key());
         info.setItemMeta(info_im);
         stack[4] = info;
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setCustomModelData(GUIChemistry.CLOSE.customModelData());
+        close_im.setItemModel(GUIChemistry.CLOSE.key());
         close.setItemMeta(close_im);
         stack[8] = close;
         int i = 9;
@@ -103,7 +103,7 @@ public class TARDISRecipeInventory {
                     ItemMeta im = result.getItemMeta();
                     im.setDisplayName(str);
                     im.setLore(List.of("/trecipe " + arg));
-                    im.setCustomModelData(item.getCustomModelData());
+                    im.setItemModel(item.getModel());
                     im.addItemFlags(ItemFlag.values());
                     result.setItemMeta(im);
                     stack[i] = result;

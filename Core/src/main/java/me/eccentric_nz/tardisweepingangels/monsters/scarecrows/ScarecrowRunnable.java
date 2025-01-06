@@ -53,7 +53,7 @@ public class ScarecrowRunnable implements Runnable {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("scarecrows.worlds." + name) > 0) {
-                // get the current warriors
+                // get the current scarecrow count
                 int scarecrows = 0;
                 Collection<Zombie> zombies = w.getEntitiesByClass(Zombie.class);
                 for (Zombie c : zombies) {
@@ -91,7 +91,7 @@ public class ScarecrowRunnable implements Runnable {
                 }
                 LivingEntity scarecrow = new MonsterSpawner().create(l, Monster.SCARECROW);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    new Equipper(Monster.SCARECROW, scarecrow, false, false).setHelmetAndInvisibility();
+                    new Equipper(Monster.SCARECROW, scarecrow, false).setHelmetAndInvisibility();
                     plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(scarecrow, EntityType.ZOMBIE, Monster.SCARECROW, l));
                 }, 5L);
             }

@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.blueprints.*;
 import me.eccentric_nz.TARDIS.builders.BuildData;
 import me.eccentric_nz.TARDIS.builders.TARDISAbandoned;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -56,8 +57,9 @@ import me.eccentric_nz.tardisweepingangels.utils.HeadBuilder;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.*;
 import org.bukkit.World.Environment;
-import org.bukkit.craftbukkit.v1_21_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_21_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Husk;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -486,13 +488,13 @@ public class TARDII implements TardisAPI {
         if (Consoles.getBY_NAMES().containsKey(schematic)) {
             Schematic s = Consoles.getBY_NAMES().get(schematic);
             ItemStack is;
-            int model = 10001;
+            NamespacedKey model = TARDISDisplayItem.CUSTOM.getCustomModel();
             if (s.isCustom()) {
                 is = new ItemStack(s.getSeedMaterial(), 1);
             } else {
                 try {
                     TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(s.getPermission().toUpperCase(Locale.ROOT));
-                    model = tdi.getCustomModelData();
+                    model = tdi.getCustomModel();
                     is = new ItemStack(tdi.getMaterial(), 1);
                 } catch (IllegalArgumentException e) {
                     TARDIS.plugin.debug("Could not get display item for console! " + e.getMessage());
@@ -500,8 +502,8 @@ public class TARDII implements TardisAPI {
                 }
             }
             ItemMeta im = is.getItemMeta();
-            im.setCustomModelData(10000000 + model);
-            im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, model);
+            im.setItemModel(model);
+            im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
             // set display name
             im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
             List<String> lore = new ArrayList<>();
@@ -582,7 +584,7 @@ public class TARDII implements TardisAPI {
             if (perm != null) {
                 ItemStack is = new ItemStack(Material.MUSIC_DISC_MELLOHI, 1);
                 ItemMeta im = is.getItemMeta();
-                im.setCustomModelData(10000001);
+                im.setItemModel(DiskVariant.BLUEPRINT_DISK.getKey());
                 PersistentDataContainer pdc = im.getPersistentDataContainer();
                 pdc.set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
                 pdc.set(TARDIS.plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
@@ -851,17 +853,17 @@ public class TARDII implements TardisAPI {
      */
     @Override
     public void setAngelEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.WEEPING_ANGEL, le, disguise, false).setHelmetAndInvisibility();
+        new Equipper(Monster.WEEPING_ANGEL, le, disguise).setHelmetAndInvisibility();
     }
 
     @Override
     public void setWarriorEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.ICE_WARRIOR, le, disguise, false).setHelmetAndInvisibility();
+        new Equipper(Monster.ICE_WARRIOR, le, disguise).setHelmetAndInvisibility();
     }
 
     @Override
     public void setCyberEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.CYBERMAN, le, disguise, false).setHelmetAndInvisibility();
+        new Equipper(Monster.CYBERMAN, le, disguise).setHelmetAndInvisibility();
     }
 
     @Override
@@ -871,17 +873,17 @@ public class TARDII implements TardisAPI {
 
     @Override
     public void setDalekSecEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.DALEK_SEC, le, disguise, false).setHelmetAndInvisibility();
+        new Equipper(Monster.DALEK_SEC, le, disguise).setHelmetAndInvisibility();
     }
 
     @Override
     public void setDavrosEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.DAVROS, le, disguise, false).setHelmetAndInvisibility();
+        new Equipper(Monster.DAVROS, le, disguise).setHelmetAndInvisibility();
     }
 
     @Override
     public void setEmptyChildEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.EMPTY_CHILD, le, disguise, false).setHelmetAndInvisibility();
+        new Equipper(Monster.EMPTY_CHILD, le, disguise).setHelmetAndInvisibility();
         if (!disguise) {
             EmptyChildEquipment.setSpeed(le);
         }
@@ -889,72 +891,70 @@ public class TARDII implements TardisAPI {
 
     @Override
     public void setHathEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.HATH, le, disguise, false).setHelmetAndInvisibility();
+        new Equipper(Monster.HATH, le, disguise).setHelmetAndInvisibility();
     }
 
     @Override
     public void setHeadlessMonkEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.HEADLESS_MONK, le, disguise, false).setHelmetAndInvisibility();
+        new Equipper(Monster.HEADLESS_MONK, le, disguise).setHelmetAndInvisibility();
         HeadlessMonkEquipment.setTasks(le);
     }
 
     @Override
     public void setMireEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.MIRE, le, disguise, true).setHelmetAndInvisibility();
+        new Equipper(Monster.MIRE, le, disguise).setHelmetAndInvisibility();
     }
 
     @Override
     public void setSeaDevilEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.SEA_DEVIL, le, disguise, true).setHelmetAndInvisibility();
+        new Equipper(Monster.SEA_DEVIL, le, disguise).setHelmetAndInvisibility();
     }
 
     @Override
     public void setSlitheenEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.SLITHEEN, le, disguise, true).setHelmetAndInvisibility();
+        new Equipper(Monster.SLITHEEN, le, disguise).setHelmetAndInvisibility();
     }
 
-    // TODO
     @Override
-    public void setJudoonEquipment(Player player, Entity armorStand, boolean disguise) {
-        JudoonEquipment.set(player, armorStand, disguise);
+    public void setJudoonEquipment(LivingEntity entity, boolean disguise) {
+        new Equipper(Monster.JUDOON, entity, disguise).setHelmetAndInvisibility();
+
     }
 
-    // TODO
     @Override
-    public void setK9Equipment(Player player, Entity armorStand, boolean disguise) {
-        K9Equipment.set(player, armorStand, disguise);
+    public void setK9Equipment(Player player, Entity entity, boolean disguise) {
+        K9Equipment.set(player, (LivingEntity) entity, disguise);
     }
 
-    // TODO
     @Override
-    public void setOodEquipment(Player player, Entity entity, boolean disguise) {
-        OodEquipment.set(player, entity, disguise, false);
+    public void setOodEquipment(LivingEntity entity, boolean disguise) {
+        new Equipper(Monster.OOD, entity, disguise).setHelmetAndInvisibility();
     }
 
     @Override
     public void setRacnossEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.RACNOSS, le, disguise, true).setHelmetAndInvisibility();
+        new Equipper(Monster.RACNOSS, le, disguise).setHelmetAndInvisibility();
     }
 
     @Override
     public void setSilentEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.SILENT, le, disguise, false).setHelmetAndInvisibility();
+        new Equipper(Monster.SILENT, le, disguise).setHelmetAndInvisibility();
         SilentEquipment.setGuardian(le);
     }
 
     @Override
     public void setSilurianEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.SILURIAN, le, disguise, true).setHelmetAndInvisibility();
+        new Equipper(Monster.SILURIAN, le, disguise).setHelmetAndInvisibility();
     }
 
     @Override
     public void setSontaranEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.SONTARAN, le, disguise, false).setHelmetAndInvisibility();
+        new Equipper(Monster.SONTARAN, le, disguise).setHelmetAndInvisibility();
     }
 
     @Override
     public void setStraxEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.STRAX, le, disguise, false).setHelmetAndInvisibility();
+        new Equipper(Monster.STRAX, le, disguise).setHelmetAndInvisibility();
         if (!disguise) {
             le.setCustomName("Strax");
         }
@@ -967,12 +967,12 @@ public class TARDII implements TardisAPI {
 
     @Override
     public void setVashtaNeradaEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.VASHTA_NERADA, le, disguise, false).setHelmetAndInvisibility();
+        new Equipper(Monster.VASHTA_NERADA, le, disguise).setHelmetAndInvisibility();
     }
 
     @Override
     public void setZygonEquipment(LivingEntity le, boolean disguise) {
-        new Equipper(Monster.ZYGON, le, disguise, false).setHelmetAndInvisibility();
+        new Equipper(Monster.ZYGON, le, disguise).setHelmetAndInvisibility();
     }
 
     @Override
@@ -998,13 +998,6 @@ public class TARDII implements TardisAPI {
             return fc;
         }
         return null;
-    }
-
-    // TODO
-    @Override
-    public void setJudoonEquipment(Player player, Entity husk, int ammunition) {
-        setJudoonEquipment(player, husk, false);
-        ((TWAJudoon) ((CraftEntity) husk).getHandle()).setAmmo(ammunition);
     }
 
     // TODO

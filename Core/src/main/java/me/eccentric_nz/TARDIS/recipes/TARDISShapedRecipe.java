@@ -89,6 +89,8 @@ public class TARDISShapedRecipe {
         new SonicOscillatorRecipe(plugin).addRecipe();
         new SonicScrewdriverRecipe(plugin).addRecipe();
         new SpaceHelmetRecipe(plugin).addRecipe();
+        new SpaceSuitChestplateRecipe(plugin).addRecipe();
+        new SpaceSuitLeggingsRecipe(plugin).addRecipe();
         new StattenheimRemoteRecipe(plugin).addRecipe();
         new TARDISARSCircuitRecipe(plugin).addRecipe();
         new TARDISArtronFurnaceRecipe(plugin).addRecipe();

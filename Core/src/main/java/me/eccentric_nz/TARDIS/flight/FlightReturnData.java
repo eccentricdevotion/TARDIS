@@ -30,13 +30,15 @@ public class FlightReturnData {
     private final int sound;
     private final int animation;
     private final UUID stand;
+    private final UUID display;
 
-    public FlightReturnData(int id, Location location, int sound, int animation, UUID stand) {
+    public FlightReturnData(int id, Location location, int sound, int animation, UUID stand, UUID display) {
         this.id = id;
         this.location = location;
         this.sound = sound;
         this.animation = animation;
         this.stand = stand;
+        this.display = display;
     }
 
     public int getId() {
@@ -57,5 +59,9 @@ public class FlightReturnData {
 
     public UUID getStand() {
         return stand;
+    }
+
+    public UUID getDisplay() {
+        return display;
     }
 }

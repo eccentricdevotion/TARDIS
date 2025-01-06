@@ -33,14 +33,14 @@ public class ServerAdminCircuitRecipe {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Server Admin Circuit");
-        im.setCustomModelData(10001968);
+        im.setItemModel(RecipeItem.SERVER_ADMIN_CIRCUIT.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "server_admin_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "Sonic Oscillator");
-        em.setCustomModelData(RecipeItem.SONIC_OSCILLATOR.getCustomModelData());
+        em.setItemModel(RecipeItem.SONIC_OSCILLATOR.getModel());
         exact.setItemMeta(em);
         r.shape("BBB", "BOB", "BBB");
         r.setIngredient('B', Material.BEDROCK);

@@ -86,7 +86,7 @@ public class TARDISLightChanger implements Runnable {
                         // set new light - delay as interaction may be removed by the above
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             if (light.getOn().isVariable()) {
-                                new VariableLight(material, block.getLocation().add(0.5, 0.5, 0.5)).set(lightsOn ? light.getOn().getCustomModelData() : light.getOff().getCustomModelData(), lightsOn ? 15 : 0);
+                                new VariableLight(material, block.getLocation().add(0.5, 0.5, 0.5)).set(lightsOn ? light.getOn().getCustomModel() : light.getOff().getCustomModel(), lightsOn ? 15 : 0);
                             } else {
                                 TARDISDisplayItemUtils.set(lightsOn ? light.getOn() : light.getOff(), block, -1);
                             }

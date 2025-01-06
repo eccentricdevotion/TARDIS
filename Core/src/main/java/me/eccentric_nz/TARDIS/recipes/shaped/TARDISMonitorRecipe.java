@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -34,7 +35,7 @@ public class TARDISMonitorRecipe {
         ItemStack is = new ItemStack(Material.MAP, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Monitor");
-        im.setCustomModelData(5);
+        im.setItemModel(RecipeItem.TARDIS_MONITOR.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_monitor");
         ShapedRecipe r = new ShapedRecipe(key, is);

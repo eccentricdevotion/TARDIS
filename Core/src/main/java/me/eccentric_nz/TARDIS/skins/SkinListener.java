@@ -17,18 +17,21 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.List;
 import java.util.UUID;
 
 public class SkinListener implements Listener {
+
+    private List<Material> MATERIALS = List.of(Material.BRICK, Material.COD, Material.END_STONE, Material.FEATHER, Material.IRON_INGOT, Material.KELP, Material.LEATHER, Material.MANGROVE_PROPAGULE, Material.NETHERITE_SCRAP, Material.NETHER_WART, Material.ORANGE_STAINED_GLASS_PANE, Material.PAINTING, Material.POTATO, Material.PUFFERFISH, Material.ROTTEN_FLESH, Material.SNOWBALL, Material.SUGAR, Material.TORCH, Material.TURTLE_EGG, Material.WHEAT, Material.YELLOW_DYE);
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerDropAreaDisk(PlayerDropItemEvent event) {
         Player p = event.getPlayer();
         UUID uuid = p.getUniqueId();
         ItemStack stack = event.getItemDrop().getItemStack();
-        if (SkinUtils.SKINNED.containsKey(uuid) && SkinExtras.MATERIALS.contains(stack.getType())) {
+        if (SkinUtils.SKINNED.containsKey(uuid) && MATERIALS.contains(stack.getType())) {
             ItemMeta im = stack.getItemMeta();
-            event.setCancelled(im != null && im.hasCustomModelData());
+            event.setCancelled(im != null && im.hasItemModel());
         }
     }
 
@@ -49,11 +52,11 @@ public class SkinListener implements Listener {
         if (!SkinUtils.SKINNED.containsKey(uuid)) {
             return;
         }
-        if (!SkinExtras.MATERIALS.contains(stack.getType())) {
+        if (!MATERIALS.contains(stack.getType())) {
             return;
         }
         ItemMeta im = stack.getItemMeta();
-        if (im == null || !im.hasCustomModelData()) {
+        if (im == null || !im.hasItemModel()) {
             return;
         }
         if (im.getPersistentDataContainer().has(TARDIS.plugin.getTimeLordUuidKey(), PersistentDataType.BOOLEAN)) {
@@ -68,10 +71,10 @@ public class SkinListener implements Listener {
         ItemStack current = event.getCurrentItem();
         if (current != null) {
             UUID uuid = event.getWhoClicked().getUniqueId();
-            if (SkinUtils.SKINNED.containsKey(uuid) && SkinExtras.MATERIALS.contains(current.getType())) {
+            if (SkinUtils.SKINNED.containsKey(uuid) && MATERIALS.contains(current.getType())) {
                 if (slotType == InventoryType.SlotType.ARMOR) {
                     ItemMeta im = current.getItemMeta();
-                    event.setCancelled(im != null && im.hasCustomModelData());
+                    event.setCancelled(im != null && im.hasItemModel());
                 }
                 if (slotType == InventoryType.SlotType.QUICKBAR) {
                     Skin skin = SkinUtils.SKINNED.get(uuid);
@@ -87,11 +90,11 @@ public class SkinListener implements Listener {
         if (SkinUtils.SKINNED.containsKey(uuid)) {
             Skin skin = SkinUtils.SKINNED.get(uuid);
             ItemStack is = event.getMainHandItem();
-            if (is != null && SkinExtras.MATERIALS.contains(is.getType())) {
+            if (is != null && MATERIALS.contains(is.getType())) {
                 event.setCancelled(isSkinItem(skin.name(), is));
             }
             ItemStack off = event.getOffHandItem();
-            if (off != null && SkinExtras.MATERIALS.contains(off.getType())) {
+            if (off != null && MATERIALS.contains(off.getType())) {
                 event.setCancelled(isSkinItem(skin.name(), off));
             }
         }

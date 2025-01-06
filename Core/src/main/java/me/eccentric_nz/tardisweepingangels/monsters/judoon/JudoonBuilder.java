@@ -29,6 +29,8 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Husk;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -78,10 +80,10 @@ public class JudoonBuilder implements Listener {
                         south.setType(Material.AIR);
                     }
                     Location l = bottom.getLocation().add(0.5d, 0, 0.5d);
-                    Entity e = new MonsterSpawner().createFollower(l, new Follower(UUID.randomUUID(), event.getPlayer().getUniqueId(), Monster.JUDOON)).getBukkitEntity();
+                    LivingEntity husk = (LivingEntity) new MonsterSpawner().createFollower(l, new Follower(UUID.randomUUID(), event.getPlayer().getUniqueId(), Monster.JUDOON)).getBukkitEntity();
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        JudoonEquipment.set(event.getPlayer(), e, false);
-                        plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(e, EntityType.HUSK, Monster.JUDOON, l));
+                        JudoonEquipment.set(event.getPlayer(), husk, false);
+                        plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(husk, EntityType.HUSK, Monster.JUDOON, l));
                     }, 2L);
                 }, 20L);
             }
