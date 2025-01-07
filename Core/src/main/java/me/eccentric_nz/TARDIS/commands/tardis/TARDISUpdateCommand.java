@@ -81,6 +81,9 @@ class TARDISUpdateCommand {
                 }
                 return true;
             }
+            if (args[1].equalsIgnoreCase("blocks")) {
+                return new TARDISUpdateBlocksCommand(plugin).convert(player);
+            }
             UUID playerUUID = player.getUniqueId();
             if (args[1].equalsIgnoreCase("handles")) {
                 if (args.length > 2) {

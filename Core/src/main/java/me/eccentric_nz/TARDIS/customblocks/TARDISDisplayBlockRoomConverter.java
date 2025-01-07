@@ -21,16 +21,19 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISDisplayBlockRoomConverter implements Runnable {
@@ -42,21 +45,6 @@ public class TARDISDisplayBlockRoomConverter implements Runnable {
     private int c = 16, h = 16, w = 16, level = 0, row = 0, taskId;
     private World world;
 
-    // TODO get the TARDIS interior chunks (including ARS)
-    // loop through the chunks
-    // get the entities in the chunk
-    // loop through entities
-    // if the entity is an item display
-    // check the PDC for the TARDIS custom block key
-    // if key exists
-    // get the item stack
-    // if the item stack is not null
-    // get the custom name
-    // look up the name to get the TDI
-    // set the item stack's item model from TDI
-    // set the display item's item stack
-    //
-    // alternatively create a lookup table to get the TDI from the PDC and TARDIS custom block value
     public TARDISDisplayBlockRoomConverter(TARDIS plugin, Player owner, TARDISARSSlot slot) {
         this.plugin = plugin;
         this.owner = owner;
@@ -82,7 +70,7 @@ public class TARDISDisplayBlockRoomConverter implements Runnable {
             // we're finished
             plugin.getServer().getScheduler().cancelTask(taskId);
             taskId = 0;
-            plugin.getMessenger().message(owner, "ROOM Display Block conversion complete");
+            plugin.getMessenger().message(owner, "Custom block display item conversion complete");
         } else {
             // check a row of blocks
             for (int col = 0; col < c; col++) {
@@ -90,14 +78,29 @@ public class TARDISDisplayBlockRoomConverter implements Runnable {
                 int y = starty + level;
                 int z = startz + col;
                 Block block = world.getBlockAt(x, y, z);
-                if (TARDISMushroomBlock.isTardisMushroom(block)) {
-                    BlockData data = block.getBlockData();
-                    // get which TARDIS block
-                    TARDISDisplayItem tdi = TARDISMushroomBlockData.getTARDISBlock(data);
-                    if (tdi != null) {
-                        plugin.debug(tdi.getName());
-                        block.setType(Material.BARRIER);
-                        TARDISDisplayItemUtils.set(tdi, block, -1);
+                if (isCustomBlock(block)) {
+                    ItemDisplay display = TARDISDisplayItemUtils.getFromBoundingBox(block);
+                    if (display != null && display.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.INTEGER)) {
+                        // get the item stack
+                        ItemStack is = display.getItemStack();
+                        // if the item stack is not null
+                        if (is != null && is.hasItemMeta()) {
+                            ItemMeta im = is.getItemMeta();
+                            // get the custom name
+                            if (im.hasDisplayName()) {
+                                String name = TARDISStringUtils.toEnumUppercase(im.getDisplayName());
+                                // look up the name to get the TDI
+                                TARDISDisplayItem tdi = TARDISDisplayItem.valueOf(name);
+                                if (tdi != null) {
+                                    plugin.debug(tdi.getName());
+                                    // set the item stack's item model from TDI
+                                    im.setItemModel(tdi.getCustomModel());
+                                    is.setItemMeta(im);
+                                    // set the display item's item stack
+                                    display.setItemStack(is);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -109,6 +112,11 @@ public class TARDISDisplayBlockRoomConverter implements Runnable {
                 level++;
             }
         }
+    }
+
+    private boolean isCustomBlock(Block block) {
+        Material m = block.getType();
+        return (m == Material.BARRIER || m == Material.LIGHT);
     }
 
     public void setTaskId(int taskId) {
