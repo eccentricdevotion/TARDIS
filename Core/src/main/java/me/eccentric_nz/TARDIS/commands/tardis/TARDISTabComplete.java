@@ -76,7 +76,9 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
             if (u.isSecondary()) {
                 SEC_SUBS.add(u.getName());
             }
+            UPD_SUBS.add("blocks");
             UPD_SUBS.add("handles");
+            UPD_SUBS.add("list");
         }
         SEC_SUBS.add("remove");
         TARDISWalls.BLOCKS.forEach((m) -> MAT_SUBS.add(m.toString()));
@@ -163,7 +165,7 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
                 if (sub.equals("handles")) {
                     return partial(lastArg, HANDLES_SUBS);
                 } else {
-                return partial(lastArg, EXTRA_SUBS);
+                    return partial(lastArg, EXTRA_SUBS);
                 }
             }
             if (args[0].equals("saveicon")) {
