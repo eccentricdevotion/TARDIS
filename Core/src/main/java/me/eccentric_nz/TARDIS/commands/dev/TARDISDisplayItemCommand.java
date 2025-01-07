@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockConverter;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockRoomConverter;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
@@ -194,10 +193,7 @@ public class TARDISDisplayItemCommand {
                 }
             }
             case "convert" -> {
-                TARDISDisplayBlockConverter converter = new TARDISDisplayBlockConverter(plugin, player);
-                int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, converter, 5, 1);
-                converter.setTaskId(taskId);
-                // also find any rooms and convert the mushroom blocks there
+                // find all console and room chunks and convert the item displays there
                 // get players tardis_id
                 ResultSetTardisID rst = new ResultSetTardisID(plugin);
                 if (rst.fromUUID(player.getUniqueId().toString())) {
@@ -211,7 +207,7 @@ public class TARDISDisplayItemCommand {
                         for (int l = 0; l < 3; l++) {
                             for (int row = 0; row < 9; row++) {
                                 for (int col = 0; col < 9; col++) {
-                                    if (!json[l][row][col].equalsIgnoreCase("STONE") && !isConsole(json[l][row][col])) {
+                                    if (!json[l][row][col].equalsIgnoreCase("STONE")) {
                                         // get ARS slot
                                         TARDISARSSlot slot = new TARDISARSSlot();
                                         slot.setChunk(c);

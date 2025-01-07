@@ -16,20 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.commands.tardis;
 
-import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
-import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockConverter;
-import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayBlockRoomConverter;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
@@ -40,7 +34,6 @@ import me.eccentric_nz.TARDIS.sonic.TARDISSonicDock;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateBlocks;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateableChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -83,42 +76,6 @@ class TARDISUpdateCommand {
                             System.out.println("   ANY BLOCK");
                         } else {
                             System.out.println("   " + s);
-                        }
-                    }
-                }
-                return true;
-            }
-            if (args[1].equalsIgnoreCase("item_display_lights")) {
-                TARDISDisplayBlockConverter converter = new TARDISDisplayBlockConverter(plugin, player);
-                int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, converter, 5, 1);
-                converter.setTaskId(taskId);
-                // also find any rooms and convert the mushroom blocks there
-                // get players tardis_id
-                ResultSetTardisID rst = new ResultSetTardisID(plugin);
-                if (rst.fromUUID(player.getUniqueId().toString())) {
-                    int id = rst.getTardisId();
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("tardis_id", id);
-                    ResultSetARS rsa = new ResultSetARS(plugin, where);
-                    if (rsa.resultSet()) {
-                        String[][][] json = TARDISARSMethods.getGridFromJSON(rsa.getJson());
-                        Chunk c = plugin.getLocationUtils().getTARDISChunk(id);
-                        for (int l = 0; l < 3; l++) {
-                            for (int row = 0; row < 9; row++) {
-                                for (int col = 0; col < 9; col++) {
-                                    if (!json[l][row][col].equalsIgnoreCase("STONE") && !isConsole(json[l][row][col])) {
-                                        // get ARS slot
-                                        TARDISARSSlot slot = new TARDISARSSlot();
-                                        slot.setChunk(c);
-                                        slot.setY(l);
-                                        slot.setX(row);
-                                        slot.setZ(col);
-                                        TARDISDisplayBlockRoomConverter roomConverter = new TARDISDisplayBlockRoomConverter(plugin, player, slot);
-                                        int roomTaskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, roomConverter, 5, 1);
-                                        roomConverter.setTaskId(roomTaskId);
-                                    }
-                                }
-                            }
                         }
                     }
                 }

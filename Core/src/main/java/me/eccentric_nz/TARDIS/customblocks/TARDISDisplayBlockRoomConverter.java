@@ -42,6 +42,21 @@ public class TARDISDisplayBlockRoomConverter implements Runnable {
     private int c = 16, h = 16, w = 16, level = 0, row = 0, taskId;
     private World world;
 
+    // TODO get the TARDIS interior chunks (including ARS)
+    // loop through the chunks
+    // get the entities in the chunk
+    // loop through entities
+    // if the entity is an item display
+    // check the PDC for the TARDIS custom block key
+    // if key exists
+    // get the item stack
+    // if the item stack is not null
+    // get the custom name
+    // look up the name to get the TDI
+    // set the item stack's item model from TDI
+    // set the display item's item stack
+    //
+    // alternatively create a lookup table to get the TDI from the PDC and TARDIS custom block value
     public TARDISDisplayBlockRoomConverter(TARDIS plugin, Player owner, TARDISARSSlot slot) {
         this.plugin = plugin;
         this.owner = owner;
