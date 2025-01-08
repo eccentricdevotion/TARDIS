@@ -40,34 +40,34 @@ public class TARDISCustomRotorLoader {
     public void addRotors() {
         // create plugin rotors
         Rotor early = new Rotor("early", RotorVariant.TIME_ROTOR_EARLY_OFF.getKey(), Material.BLACK_DYE, new int[]{0, 1, 2, 3, 4, 5, 6, 7}, 6, false);
-        Rotor rotor = new Rotor("rotor", RotorVariant.TIME_ROTOR_TENNANT_OFF.getKey(), Material.ORANGE_DYE, new int[]{0, 0, 1, 2, 3, 4, 3, 2, 1}, 3, false);
         Rotor console = new Rotor("console", RotorVariant.TIME_ROTOR_CONSOLE_OFF.getKey(), Material.RED_DYE, new int[]{0, 0, 1, 2, 3, 4, 3, 2, 1}, 2, false);
-        Rotor copper = new Rotor("copper", RotorVariant.TIME_ROTOR_ELEVENTH_OFF.getKey(), Material.BROWN_DYE, new int[]{0, 0, 1, 2, 3, 4, 3, 2, 1}, 2, false);
-        Rotor round = new Rotor("round", RotorVariant.TIME_ROTOR_TWELFTH_OFF.getKey(), Material.GRAY_DYE, new int[]{0}, 1, false);
         Rotor delta = new Rotor("delta", RotorVariant.TIME_ROTOR_DELTA_OFF.getKey(), Material.CYAN_DYE, new int[]{0, 1, 2, 3, 4, 5}, 4, false);
+        Rotor eleventh = new Rotor("eleventh", RotorVariant.TIME_ROTOR_ELEVENTH_OFF.getKey(), Material.BROWN_DYE, new int[]{0, 0, 1, 2, 3, 4, 3, 2, 1}, 2, false);
         Rotor engine = new Rotor("engine", RotorVariant.ENGINE_OFF.getKey(), Material.LIGHT_BLUE_DYE, new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}, 2, false);
         Rotor engine_rotor = new Rotor("engine_rotor", RotorVariant.ENGINE_ROTOR_OFF.getKey(), Material.BLUE_DYE, new int[]{0, 1, 2, 3, 4, 5, 4, 3, 2, 1}, 3, false);
         Rotor hospital = new Rotor("hospital", RotorVariant.HOSPITAL_OFF.getKey(), Material.WHITE_DYE, new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, 2, false);
+        Rotor twelfth = new Rotor("twelfth", RotorVariant.TIME_ROTOR_TWELFTH_OFF.getKey(), Material.GRAY_DYE, new int[]{0}, 1, false);
         Rotor rustic = new Rotor("rustic", RotorVariant.TIME_ROTOR_RUSTIC_OFF.getKey(), Material.GREEN_DYE, new int[]{0, 0, 1, 2, 3, 4, 3, 2, 1}, 2, false);
+        Rotor tennant = new Rotor("tennant", RotorVariant.TIME_ROTOR_TENNANT_OFF.getKey(), Material.ORANGE_DYE, new int[]{0, 0, 1, 2, 3, 4, 3, 2, 1}, 3, false);
         // add plugin rotors to look-ups
         Rotor.byMaterial.put(Material.BLACK_DYE, early);
         Rotor.byCustomModel.put(RotorVariant.TIME_ROTOR_EARLY_OFF.getKey(), early);
         Rotor.byName.put("TIME_ROTOR_EARLY", early);
-        Rotor.byMaterial.put(Material.ORANGE_DYE, rotor);
-        Rotor.byCustomModel.put(RotorVariant.TIME_ROTOR_TENNANT_OFF.getKey(), rotor);
-        Rotor.byName.put("TIME_ROTOR_ROTOR", rotor);
+        Rotor.byMaterial.put(Material.ORANGE_DYE, tennant);
+        Rotor.byCustomModel.put(RotorVariant.TIME_ROTOR_TENNANT_OFF.getKey(), tennant);
+        Rotor.byName.put("TIME_ROTOR_TENNANT", tennant);
         Rotor.byMaterial.put(Material.RED_DYE, console);
         Rotor.byCustomModel.put(RotorVariant.TIME_ROTOR_CONSOLE_OFF.getKey(), console);
         Rotor.byName.put("TIME_ROTOR_CONSOLE", console);
         Rotor.byMaterial.put(Material.GREEN_DYE, rustic);
         Rotor.byCustomModel.put(RotorVariant.TIME_ROTOR_RUSTIC_OFF.getKey(), rustic);
         Rotor.byName.put("TIME_ROTOR_RUSTIC", rustic);
-        Rotor.byMaterial.put(Material.BROWN_DYE, copper);
-        Rotor.byCustomModel.put(RotorVariant.TIME_ROTOR_ELEVENTH_OFF.getKey(), copper);
-        Rotor.byName.put("TIME_ROTOR_COPPER", copper);
-        Rotor.byMaterial.put(Material.GRAY_DYE, round);
-        Rotor.byCustomModel.put(RotorVariant.TIME_ROTOR_TWELFTH_OFF.getKey(), round);
-        Rotor.byName.put("TIME_ROTOR_ROUND", round);
+        Rotor.byMaterial.put(Material.BROWN_DYE, eleventh);
+        Rotor.byCustomModel.put(RotorVariant.TIME_ROTOR_ELEVENTH_OFF.getKey(), eleventh);
+        Rotor.byName.put("TIME_ROTOR_ELEVENTH", eleventh);
+        Rotor.byMaterial.put(Material.GRAY_DYE, twelfth);
+        Rotor.byCustomModel.put(RotorVariant.TIME_ROTOR_TWELFTH_OFF.getKey(), twelfth);
+        Rotor.byName.put("TIME_ROTOR_TWELFTH", twelfth);
         Rotor.byMaterial.put(Material.CYAN_DYE, delta);
         Rotor.byCustomModel.put(RotorVariant.TIME_ROTOR_DELTA_OFF.getKey(), delta);
         Rotor.byName.put("TIME_ROTOR_DELTA", delta);
