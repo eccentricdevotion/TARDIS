@@ -24,9 +24,11 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -91,6 +93,24 @@ public class TARDISTimeRotor {
             ItemMeta im = is.getItemMeta();
             if (im.hasItemModel()) {
                 return im.getItemModel();
+            } else {
+                CustomModelDataComponent component = im.getCustomModelDataComponent();
+                List<Float> floats = component.getFloats();
+                if (floats.size() > 0) {
+                    int cmd = floats.getFirst().intValue();
+                    switch (cmd) {
+                        case 10000002 -> { return RotorVariant.TIME_ROTOR_EARLY_OFF.getKey(); }
+                        case 10000003 -> { return RotorVariant.TIME_ROTOR_TENNANT_OFF.getKey(); }
+                        case 10000004 -> { return RotorVariant.TIME_ROTOR_ELEVENTH_OFF.getKey(); }
+                        case 10000005 -> { return RotorVariant.TIME_ROTOR_TWELFTH_OFF.getKey(); }
+                        case 10000006 -> { return RotorVariant.TIME_ROTOR_DELTA_OFF.getKey(); }
+                        case 10000007 -> { return RotorVariant.ENGINE_OFF.getKey(); }
+                        case 10000008 -> { return RotorVariant.ENGINE_ROTOR_OFF.getKey(); }
+                        case 10000009 -> { return RotorVariant.HOSPITAL_OFF.getKey(); }
+                        case 10000100 -> { return RotorVariant.TIME_ROTOR_CONSOLE_OFF.getKey(); }
+                        case 10000101 -> { return RotorVariant.TIME_ROTOR_RUSTIC_OFF.getKey(); }
+                    }
+                }
             }
         }
         return RotorVariant.TIME_ROTOR_EARLY_OFF.getKey();
