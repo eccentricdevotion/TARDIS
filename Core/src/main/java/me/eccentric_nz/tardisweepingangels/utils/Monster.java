@@ -25,6 +25,9 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum Monster {
 
     ANGEL_OF_LIBERTY("Angel Of Liberty", EntityType.ZOMBIE, "liberty", AngelOfLibertyVariant.ANGEL_OF_LIBERTY_STATIC.getKey(), Material.OXIDIZED_COPPER_GRATE, AngelOfLibertyVariant.ANGEL_OF_LIBERTY_HEAD.getKey(), MonsterSkins.ANGEL_OF_LIBERTY),
@@ -69,6 +72,7 @@ public enum Monster {
     private final Material material;
     private final NamespacedKey headModel;
     private final Skin skin;
+    private final List<NamespacedKey> cyberVariants = new ArrayList<>();
 
     Monster(String name, EntityType entityType, String permission, NamespacedKey model, Material material, NamespacedKey headModel, Skin skin) {
         this.name = name;
@@ -78,6 +82,16 @@ public enum Monster {
         this.material = material;
         this.headModel = headModel;
         this.skin = skin;
+        cyberVariants.add(ArmourVariant.CYBERMAN.getKey());
+        cyberVariants.add(ArmourVariant.BLACK_CYBERMAN.getKey());
+        cyberVariants.add(ArmourVariant.CYBERMAN_EARTHSHOCK.getKey());
+        cyberVariants.add(ArmourVariant.CYBERMAN_INVASION.getKey());
+        cyberVariants.add(ArmourVariant.CYBERMAN_MOONBASE.getKey());
+        cyberVariants.add(ArmourVariant.CYBERMAN_RISE.getKey());
+        cyberVariants.add(ArmourVariant.CYBERMAN_TENTH_PLANET.getKey());
+        cyberVariants.add(ArmourVariant.CYBER_LORD.getKey());
+        cyberVariants.add(ArmourVariant.WOOD_CYBERMAN.getKey());
+        cyberVariants.add(ArmourVariant.CYBERSHADE.getKey());
     }
 
     public String getName() {
@@ -165,13 +179,7 @@ public enum Monster {
                     key = ArmourVariant.CLOCKWORK_DROID_FEMALE.getKey();
                 }
             }
-            case CYBERMAN -> {
-                if (TARDISConstants.RANDOM.nextInt(100) > 85) {
-                    key = ArmourVariant.CYBERSHADE.getKey();
-                } else {
-                    key = ArmourVariant.CYBERMAN.getKey();
-                }
-            }
+            case CYBERMAN -> key = cyberVariants.get(TARDISConstants.RANDOM.nextInt(cyberVariants.size()));
             case CYBERSHADE -> key = ArmourVariant.CYBERSHADE.getKey();
             case DALEK_SEC -> key = ArmourVariant.DALEK_SEC.getKey();
             case EMPTY_CHILD -> key = ArmourVariant.EMPTY_CHILD.getKey();
@@ -208,7 +216,8 @@ public enum Monster {
             case VASHTA_NERADA -> key = ArmourVariant.VASHTA_NERADA.getKey();
             case WEEPING_ANGEL -> key = ArmourVariant.WEEPING_ANGEL.getKey();
             case ZYGON -> key = ArmourVariant.ZYGON.getKey();
-            default -> { }
+            default -> {
+            }
         }
         return key;
     }

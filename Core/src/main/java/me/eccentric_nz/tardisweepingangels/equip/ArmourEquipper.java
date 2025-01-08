@@ -4,8 +4,8 @@ import me.eccentric_nz.TARDIS.custommodels.keys.ArmourVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.CybermanVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.DroidVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.EmptyChildVariant;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
+import me.eccentric_nz.tardisweepingangels.monsters.cybermen.CyberType;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
@@ -26,13 +26,13 @@ public class ArmourEquipper {
         ItemStack head = new ItemStack(monster.getMaterial());
         ItemMeta headMeta = head.getItemMeta();
         headMeta.getPersistentDataContainer().set(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER, 99);
-        // get armour key once, so random variants (OOD, CLOCKWORK_DROIDS, CYBERMEN) have the chestplate and leggings
+        // get armour key once, so random variants (OOD, CLOCKWORK_DROIDS, CYBERMEN) have the same chestplate and leggings
         NamespacedKey armour = monster.getArmourKey();
         // get head variant (CLOCKWORK_DROIDS, CYBERMEN)
         NamespacedKey headModel;
         switch (monster) {
             case CLOCKWORK_DROID -> headModel = (armour.equals(ArmourVariant.CLOCKWORK_DROID.getKey())) ? monster.getHeadModel() : DroidVariant.CLOCKWORK_DROID_FEMALE_HEAD.getKey();
-            case CYBERMAN -> headModel = (armour.equals(ArmourVariant.CYBERMAN.getKey())) ? monster.getHeadModel(): CybermanVariant.CYBERSHADE_HEAD.getKey();
+            case CYBERMAN -> headModel = CyberType.CYBER_HEADS.getOrDefault(armour, CybermanVariant.CYBERMAN_HEAD.getKey());
             default -> headModel = monster.getHeadModel();
         }
         headMeta.setItemModel(headModel);
