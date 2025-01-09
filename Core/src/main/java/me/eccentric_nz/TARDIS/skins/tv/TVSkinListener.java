@@ -22,7 +22,13 @@ import java.util.UUID;
 public class TVSkinListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
-    private final List<String> titles = List.of(ChatColor.DARK_RED + "Doctor Skins", ChatColor.DARK_RED + "Companion Skins", ChatColor.DARK_RED + "Character Skins", ChatColor.DARK_RED + "Monster Skins");
+    private final List<String> titles = List.of(
+            ChatColor.DARK_RED + "Doctor Skins",
+            ChatColor.DARK_RED + "Companion Skins",
+            ChatColor.DARK_RED + "Character Skins",
+            ChatColor.DARK_RED + "Monster Skins",
+            ChatColor.DARK_RED + "Cyberman Skins"
+    );
 
     public TVSkinListener(TARDIS plugin) {
         super(plugin);
@@ -82,6 +88,7 @@ public class TVSkinListener extends TARDISMenuListener {
                     case "Companion" -> skin = CompanionSkins.COMPANIONS.get(slot);
                     case "Character" -> skin = CharacterSkins.CHARACTERS.get(slot);
                     case "Monster" -> skin = MonsterSkins.MONSTERS.get(slot);
+                    case "Cyberman" -> skin = CyberSkins.VARIANTS.get(slot);
                 }
                 if (isDownload(view)) {
                     plugin.getMessenger().sendWikiLink(player, new WikiLink("Download " + skin.name() + " skin file", skin.url(), true));

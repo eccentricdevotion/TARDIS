@@ -152,6 +152,57 @@ public class SkinUtils {
                 weapon.setItemMeta(cwim);
                 setOrSwapItem(weapon, player, EquipmentSlot.HAND);
             }
+            case "Wooden Cyberman" -> {
+                material = Material.SPRUCE_BUTTON;
+                key = Features.WOOD_CYBERMAN_FEATURES.getKey();
+                // + weapon
+                ItemStack weapon = new ItemStack(material, 1);
+                ItemMeta cwim = weapon.getItemMeta();
+                cwim.setDisplayName("Wood Cyber Weapon");
+                cwim.setItemModel(CybermanVariant.WOOD_CYBER_WEAPON.getKey());
+                weapon.setItemMeta(cwim);
+                setOrSwapItem(weapon, player, EquipmentSlot.HAND);
+            }
+            case "Black Cyberman" -> {
+                material = Material.IRON_INGOT;
+                key = Features.BLACK_CYBERMAN_FEATURES.getKey();
+            }
+            case "Invasion Cyberman" -> {
+                material = Material.IRON_INGOT;
+                key = Features.CYBERMAN_INVASION_FEATURES.getKey();
+                // + arm decor
+                ItemStack arm = new ItemStack(material, 1);
+                ItemMeta cwim = arm.getItemMeta();
+                cwim.setDisplayName("Cyber Arm");
+                cwim.setItemModel(CybermanVariant.CYBERMAN_INVASION_ARM.getKey());
+                arm.setItemMeta(cwim);
+                setOrSwapItem(arm, player, EquipmentSlot.HAND);
+                setOrSwapItem(arm, player, EquipmentSlot.OFF_HAND);
+            }
+            case "Rise of the Cyberman", "Cyber Lord", "Moonbase Cyberman" -> {
+                material = Material.IRON_INGOT;
+                key = switch (skin.name()) {
+                    case "Rise of the Cyberman" -> Features.CYBERMAN_RISE_FEATURES.getKey();
+                    case "Moonbase Cyberman" -> Features.CYBERMAN_MOONBASE_FEATURES.getKey();
+                    default -> Features.CYBER_LORD_FEATURES.getKey();
+                };
+                // + arm decor
+                ItemStack arm = new ItemStack(material, 1);
+                ItemMeta cwim = arm.getItemMeta();
+                cwim.setDisplayName("Cyber Arm");
+                cwim.setItemModel(CybermanVariant.CYBERMAN_RISE_ARM.getKey());
+                arm.setItemMeta(cwim);
+                setOrSwapItem(arm, player, EquipmentSlot.HAND);
+                setOrSwapItem(arm, player, EquipmentSlot.OFF_HAND);
+            }
+            case "Tenth Planet Cyberman" -> {
+                material = Material.IRON_INGOT;
+                key = Features.CYBERMAN_TENTH_PLANET_FEATURES.getKey();
+            }
+            case "Earthshock Cyberman" -> {
+                material = Material.IRON_INGOT;
+                key = Features.CYBERMAN_EARTHSHOCK_FEATURES.getKey();
+            }
             case "Cybershade" -> key = Features.CYBERSHADE_EARS.getKey();
             case "Dalek Sec" -> {
                 material = Material.MANGROVE_PROPAGULE;
@@ -314,7 +365,7 @@ public class SkinUtils {
 
     public static void removeExtras(Player player, Skin skin) {
         switch (skin.name()) {
-            case "Angel of Liberty", "Cyberman" -> {
+            case "Angel of Liberty", "Cyberman", "Wooden Cyberman" -> {
                 // head & main hand
                 player.getInventory().setItem(EquipmentSlot.HEAD, null);
                 player.getInventory().setItem(EquipmentSlot.HAND, null);
@@ -328,13 +379,13 @@ public class SkinUtils {
                 player.getInventory().setItem(EquipmentSlot.HEAD, null);
                 player.getAttribute(Attribute.SCALE).setBaseValue(1.0d);
             }
-            case "Mire", "Slitheen" -> {
+            case "Mire", "Slitheen", "Rise of the Cyberman", "Cyber Lord", "Moonbase Cyberman", "Invasion Cyberman" -> {
                 // head & both hands
                 player.getInventory().setItem(EquipmentSlot.HEAD, null);
                 player.getInventory().setItem(EquipmentSlot.HAND, null);
                 player.getInventory().setItem(EquipmentSlot.OFF_HAND, null);
             }
-            case "Ace", "Bannakaffalatta", "Brigadier Lethbridge-Stewart", "Dalek Sec", "Hath", "Ice Warrior",
+            case "Ace", "Bannakaffalatta", "Brigadier Lethbridge-Stewart", "Black Cyberman", "Tenth Planet Cyberman", "Earthshock Cyberman", "Cybershade", "Dalek Sec", "Hath", "Ice Warrior",
                  "Impossible Astronaut", "Jo Grant", "Judoon", "Martha Jones", "Omega", "Ood", "Racnoss", "Scarecrow",
                  "Sea Devil", "Silence", "Silurian", "Sontaran", "Strax", "Sutekh", "Sycorax", "Tegan",
                  "The Beast", "Vampire of Venice", "Weeping Angel", "Zygon" -> {

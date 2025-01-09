@@ -19,18 +19,22 @@ package me.eccentric_nz.tardisweepingangels.utils;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import me.eccentric_nz.TARDIS.skins.CharacterSkins;
+import me.eccentric_nz.TARDIS.skins.CyberSkins;
 import me.eccentric_nz.TARDIS.skins.MonsterSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum Monster {
 
     ANGEL_OF_LIBERTY("Angel Of Liberty", EntityType.ZOMBIE, "liberty", AngelOfLibertyVariant.ANGEL_OF_LIBERTY_STATIC.getKey(), Material.OXIDIZED_COPPER_GRATE, AngelOfLibertyVariant.ANGEL_OF_LIBERTY_HEAD.getKey(), MonsterSkins.ANGEL_OF_LIBERTY),
     CLOCKWORK_DROID("Clockwork Droid", EntityType.ZOMBIE, "clockwork", DroidVariant.CLOCKWORK_DROID_STATIC.getKey(), Material.HOST_ARMOR_TRIM_SMITHING_TEMPLATE, DroidVariant.CLOCKWORK_DROID_HEAD.getKey(), MonsterSkins.CLOCKWORK_DROID_MALE),
-    CYBERMAN("Cyberman", EntityType.ZOMBIE, "cyberman", CybermanVariant.CYBERMAN_STATIC.getKey(), Material.IRON_INGOT, CybermanVariant.CYBERMAN_HEAD.getKey(), MonsterSkins.CYBERMAN),
-    CYBERSHADE("Cybershade", EntityType.ZOMBIE, "cybershade", CybermanVariant.CYBERSHADE_STATIC.getKey(), Material.BROWN_WOOL, CybermanVariant.CYBERSHADE_HEAD.getKey(), MonsterSkins.CYBERSHADE),
+    CYBERMAN("Cyberman", EntityType.ZOMBIE, "cyberman", CybermanVariant.CYBERMAN_STATIC.getKey(), Material.IRON_INGOT, CybermanVariant.CYBERMAN_HEAD.getKey(), CyberSkins.CYBERMAN),
+    CYBERSHADE("Cybershade", EntityType.ZOMBIE, "cybershade", CybermanVariant.CYBERSHADE_STATIC.getKey(), Material.BROWN_WOOL, CybermanVariant.CYBERSHADE_HEAD.getKey(), CyberSkins.CYBERSHADE),
     DALEK("Dalek", EntityType.SKELETON, "dalek", DalekVariant.DALEK_BRASS.getKey(), Material.SLIME_BALL, DalekVariant.DALEK_HEAD.getKey(), null),
     DALEK_SEC("Dalek Sec", EntityType.ZOMBIFIED_PIGLIN, "dalek_sec", DalekSecVariant.DALEK_SEC_STATIC.getKey(), Material.MANGROVE_PROPAGULE, DalekSecVariant.DALEK_SEC_HEAD.getKey(), CharacterSkins.DALEK_SEC),
     DAVROS("Davros", EntityType.ZOMBIFIED_PIGLIN, "davros", DavrosVariant.DAVROS.getKey(), Material.CRIMSON_BUTTON, DavrosVariant.DAVROS_HEAD.getKey(), null),
@@ -69,6 +73,7 @@ public enum Monster {
     private final Material material;
     private final NamespacedKey headModel;
     private final Skin skin;
+    private final List<NamespacedKey> cyberVariants = new ArrayList<>();
 
     Monster(String name, EntityType entityType, String permission, NamespacedKey model, Material material, NamespacedKey headModel, Skin skin) {
         this.name = name;
@@ -78,6 +83,16 @@ public enum Monster {
         this.material = material;
         this.headModel = headModel;
         this.skin = skin;
+        cyberVariants.add(ArmourVariant.CYBERMAN.getKey());
+        cyberVariants.add(ArmourVariant.BLACK_CYBERMAN.getKey());
+        cyberVariants.add(ArmourVariant.CYBERMAN_EARTHSHOCK.getKey());
+        cyberVariants.add(ArmourVariant.CYBERMAN_INVASION.getKey());
+        cyberVariants.add(ArmourVariant.CYBERMAN_MOONBASE.getKey());
+        cyberVariants.add(ArmourVariant.CYBERMAN_RISE.getKey());
+        cyberVariants.add(ArmourVariant.CYBERMAN_TENTH_PLANET.getKey());
+        cyberVariants.add(ArmourVariant.CYBER_LORD.getKey());
+        cyberVariants.add(ArmourVariant.WOOD_CYBERMAN.getKey());
+        cyberVariants.add(ArmourVariant.CYBERSHADE.getKey());
     }
 
     public String getName() {
@@ -165,13 +180,7 @@ public enum Monster {
                     key = ArmourVariant.CLOCKWORK_DROID_FEMALE.getKey();
                 }
             }
-            case CYBERMAN -> {
-                if (TARDISConstants.RANDOM.nextInt(100) > 85) {
-                    key = ArmourVariant.CYBERSHADE.getKey();
-                } else {
-                    key = ArmourVariant.CYBERMAN.getKey();
-                }
-            }
+            case CYBERMAN -> key = cyberVariants.get(TARDISConstants.RANDOM.nextInt(cyberVariants.size()));
             case CYBERSHADE -> key = ArmourVariant.CYBERSHADE.getKey();
             case DALEK_SEC -> key = ArmourVariant.DALEK_SEC.getKey();
             case EMPTY_CHILD -> key = ArmourVariant.EMPTY_CHILD.getKey();
@@ -208,7 +217,8 @@ public enum Monster {
             case VASHTA_NERADA -> key = ArmourVariant.VASHTA_NERADA.getKey();
             case WEEPING_ANGEL -> key = ArmourVariant.WEEPING_ANGEL.getKey();
             case ZYGON -> key = ArmourVariant.ZYGON.getKey();
-            default -> { }
+            default -> {
+            }
         }
         return key;
     }
