@@ -46,33 +46,40 @@ public class TVListener extends TARDISMenuListener {
             return;
         }
         switch (slot) {
-            case 1 -> {
+            case 0 -> {
                 // doctors
                 ItemStack[] doctors = new TVDoctorsInventory().getMenu();
                 Inventory doctorinv = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "Doctor Skins");
                 doctorinv.setContents(doctors);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(doctorinv), 2L);
             }
-            case 3 -> {
+            case 2 -> {
                 // companions
                 ItemStack[] companions = new TVCompanionsInventory().getMenu();
                 Inventory companioninv = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "Companion Skins");
                 companioninv.setContents(companions);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(companioninv), 2L);
             }
-            case 5 -> {
+            case 4 -> {
                 // characters
                 ItemStack[] characters = new TVCharactersInventory().getMenu();
                 Inventory characterinv = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "Character Skins");
                 characterinv.setContents(characters);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(characterinv), 2L);
             }
-            case 7 -> {
+            case 6 -> {
                 // monsters
                 ItemStack[] monsters = new TVMonstersInventory().getMenu();
                 Inventory monsterinv = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "Monster Skins");
                 monsterinv.setContents(monsters);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(monsterinv), 2L);
+            }
+            case 8 -> {
+                // cyber variants
+                ItemStack[] variants = new TVCyberInventory().getMenu();
+                Inventory cyberinv = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "Cyberman Skins");
+                cyberinv.setContents(variants);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(cyberinv), 2L);
             }
             case 31 -> {
                 UUID uuid = player.getUniqueId();

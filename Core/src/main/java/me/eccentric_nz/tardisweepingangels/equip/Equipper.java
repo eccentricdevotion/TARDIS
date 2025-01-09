@@ -22,6 +22,7 @@ import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.LivingEntity;
@@ -92,7 +93,7 @@ public class Equipper {
 
     private EntityEquipment setArmour(LivingEntity entity, Monster monster) {
         EntityEquipment ee = entity.getEquipment();
-        new ArmourEquipper().dress(entity, monster);
+        NamespacedKey armourKey = new ArmourEquipper().dress(entity, monster);
         // hands / weapons if needed
         ItemStack hand = null;
         ItemStack offhand = null;
@@ -111,18 +112,52 @@ public class Equipper {
                 entity.getAttribute(Attribute.SCALE).setBaseValue(2.5d);
             }
             case CLOCKWORK_DROID -> {
+                ArmourVariant variant = getVariant(armourKey);
                 // key
                 hand = new ItemStack(Material.GOLD_NUGGET);
                 ItemMeta tim = hand.getItemMeta();
-                tim.setItemModel(DroidVariant.CLOCKWORK_DROID_KEY.getKey());
+                tim.setItemModel(variant.equals(ArmourVariant.CLOCKWORK_DROID) ? DroidVariant.CLOCKWORK_DROID_KEY.getKey() : DroidVariant.CLOCKWORK_DROID_FEMALE_KEY.getKey());
                 hand.setItemMeta(tim);
             }
             case CYBERMAN -> {
-                // weapon
-                hand = new ItemStack(Material.IRON_NUGGET);
-                ItemMeta tim = hand.getItemMeta();
-                tim.setItemModel(CybermanVariant.CYBER_WEAPON.getKey());
-                hand.setItemMeta(tim);
+                ArmourVariant variant = getVariant(armourKey);
+                switch (variant) {
+                    case CYBERMAN -> {
+                        // weapon
+                        hand = new ItemStack(Material.IRON_NUGGET);
+                        ItemMeta tim = hand.getItemMeta();
+                        tim.setItemModel(CybermanVariant.CYBER_WEAPON.getKey());
+                        hand.setItemMeta(tim);
+                    }
+                    case WOOD_CYBERMAN -> {
+                        // weapon
+                        hand = new ItemStack(Material.SPRUCE_BUTTON);
+                        ItemMeta tim = hand.getItemMeta();
+                        tim.setItemModel(CybermanVariant.WOOD_CYBER_WEAPON.getKey());
+                        hand.setItemMeta(tim);
+                    }
+                    case CYBERMAN_INVASION -> {
+                        hand = new ItemStack(Material.IRON_NUGGET);
+                        ItemMeta tim = hand.getItemMeta();
+                        tim.setItemModel(CybermanVariant.CYBERMAN_INVASION_ARM.getKey());
+                        hand.setItemMeta(tim);
+                        offhand = new ItemStack(Material.IRON_NUGGET);
+                        ItemMeta oim = offhand.getItemMeta();
+                        oim.setItemModel(CybermanVariant.CYBERMAN_INVASION_ARM.getKey());
+                        offhand.setItemMeta(oim);
+                    }
+                    case CYBER_LORD, CYBERMAN_RISE, CYBERMAN_MOONBASE -> {
+                        hand = new ItemStack(Material.IRON_NUGGET);
+                        ItemMeta tim = hand.getItemMeta();
+                        tim.setItemModel(CybermanVariant.CYBERMAN_RISE_ARM.getKey());
+                        hand.setItemMeta(tim);
+                        offhand = new ItemStack(Material.IRON_NUGGET);
+                        ItemMeta oim = offhand.getItemMeta();
+                        oim.setItemModel(CybermanVariant.CYBERMAN_RISE_ARM.getKey());
+                        offhand.setItemMeta(oim);
+                    }
+                    default -> {}
+                }
             }
             case HATH -> {
                 // weapon
@@ -212,5 +247,14 @@ public class Equipper {
         ee.setItemInMainHand(hand);
         ee.setItemInOffHand(offhand);
         return ee;
+    }
+
+    private ArmourVariant getVariant(NamespacedKey key) {
+        for (ArmourVariant v : ArmourVariant.values()) {
+            if (v.getKey().equals(key)) {
+                return v;
+            }
+        }
+        return null;
     }
 }

@@ -21,7 +21,7 @@ import java.util.List;
 
 public class ArmourEquipper {
 
-    public void dress(LivingEntity entity, Monster monster) {
+    public NamespacedKey dress(LivingEntity entity, Monster monster) {
         // helmet
         ItemStack head = new ItemStack(monster.getMaterial());
         ItemMeta headMeta = head.getItemMeta();
@@ -77,5 +77,6 @@ public class ArmourEquipper {
         legsMeta.getPersistentDataContainer().set(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER, 99);
         legs.setItemMeta(legsMeta);
         entity.getEquipment().setLeggings(legs);
+        return armour;
     }
 }

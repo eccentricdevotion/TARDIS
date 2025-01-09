@@ -12,4 +12,5 @@ public class PlayerHeadCache {
     public static final List<ItemStack> CHARACTERS = new ArrayList<>();
     public static final List<ItemStack> LAZARUS_CHARACTERS = new ArrayList<>();
     public static final List<ItemStack> MONSTERS = new ArrayList<>();
+    public static final List<ItemStack> CYBERS = new ArrayList<>();
 }

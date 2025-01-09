@@ -212,6 +212,29 @@ public class DebugPopulator {
                     z -= 3;
                 }
             }
+            if (monster == Monster.CYBERMAN) {
+                for (int c = 0; c < 9; c++) {
+                    Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
+                    ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
+                    new ArmourStandEquipment().setStandEquipment(as, monster, false);
+                    // add all colours
+                    switch (c) {
+                        case 0 -> setHelmet(as, CybermanVariant.CYBERMAN_RISE_STATIC.getKey());
+                        case 1 -> setHelmet(as, CybermanVariant.CYBER_LORD_STATIC.getKey());
+                        case 2 -> setHelmet(as, CybermanVariant.BLACK_CYBERMAN_STATIC.getKey());
+                        case 3 -> setHelmet(as, CybermanVariant.CYBERMAN_EARTHSHOCK_STATIC.getKey());
+                        case 4 -> setHelmet(as, CybermanVariant.CYBERMAN_INVASION_STATIC.getKey());
+                        case 5 -> setHelmet(as, CybermanVariant.CYBERMAN_MOONBASE_STATIC.getKey());
+                        case 6 -> setHelmet(as, CybermanVariant.CYBERMAN_TENTH_PLANET_STATIC.getKey());
+                        case 7 -> setHelmet(as, CybermanVariant.WOOD_CYBERMAN_STATIC.getKey());
+                    }
+                    x += 3;
+                    if (x > 24) {
+                        x = 3;
+                        z -= 3;
+                    }
+                }
+            }
             if (monster == Monster.MIRE || monster == Monster.JUDOON || monster == Monster.SLITHEEN || monster == Monster.HEADLESS_MONK || monster == Monster.CLOCKWORK_DROID || monster == Monster.SILENT) {
                 Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
                 ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
@@ -232,7 +255,7 @@ public class DebugPopulator {
                 }
             }
             if (monster == Monster.DALEK) {
-                for (int c = 0; c < 17; c++) {
+                for (int c = 0; c < 16; c++) {
                     Location loc = new Location(world, rx + x + 0.5d, 65, rz + z + 0.5d);
                     ArmorStand as = (ArmorStand) world.spawnEntity(loc, EntityType.ARMOR_STAND);
                     new ArmourStandEquipment().setStandEquipment(as, monster, false);
@@ -249,11 +272,11 @@ public class DebugPopulator {
                         case 8 -> setHelmet(as, DalekVariant.DALEK_LIGHT_GRAY.getKey());
                         case 9 -> setHelmet(as, DalekVariant.DALEK_CYAN.getKey());
                         case 10 -> setHelmet(as, DalekVariant.DALEK_PURPLE.getKey());
-                        case 12 -> setHelmet(as, DalekVariant.DALEK_BLUE.getKey());
-                        case 13 -> setHelmet(as, DalekVariant.DALEK_BROWN.getKey());
-                        case 14 -> setHelmet(as, DalekVariant.DALEK_GREEN.getKey());
-                        case 15 -> setHelmet(as, DalekVariant.DALEK_RED.getKey());
-                        case 16 -> setHelmet(as, DalekVariant.DALEK_BLACK.getKey());
+                        case 11 -> setHelmet(as, DalekVariant.DALEK_BLUE.getKey());
+                        case 12 -> setHelmet(as, DalekVariant.DALEK_BROWN.getKey());
+                        case 13 -> setHelmet(as, DalekVariant.DALEK_GREEN.getKey());
+                        case 14 -> setHelmet(as, DalekVariant.DALEK_RED.getKey());
+                        case 15 -> setHelmet(as, DalekVariant.DALEK_BLACK.getKey());
                     }
                     x += 3;
                     if (x > 24) {
@@ -608,7 +631,7 @@ public class DebugPopulator {
 
     public void regeneration() {
         int x = 3;
-        int z = -27;
+        int z = -30;
         // regeneration items
         ItemStack elixir = ElixirOfLife.create();
         Location loc = new Location(world, rx + x, 65, rz + z);
