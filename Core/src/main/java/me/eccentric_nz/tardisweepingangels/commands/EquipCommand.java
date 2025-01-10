@@ -103,7 +103,7 @@ public class EquipCommand {
                     }
                     if (monster == Monster.MIRE || monster == Monster.SLITHEEN) {
                         // set no helmet!
-                        meta.setItemModel((monster==Monster.MIRE? MireVariant.THE_MIRE_HELMETLESS.getKey() : SlitheenVariant.SLITHEEN_SUIT.getKey()));
+                        meta.setItemModel((monster == Monster.MIRE ? MireVariant.THE_MIRE_HELMETLESS.getKey() : SlitheenVariant.SLITHEEN_SUIT.getKey()));
                     }
                     if (monster == Monster.CLOCKWORK_DROID) {
                         meta.setItemModel(DroidVariant.CLOCKWORK_DROID_FEMALE_STATIC.getKey());
@@ -131,6 +131,13 @@ public class EquipCommand {
                                 case ORANGE -> c = DalekVariant.DALEK_ORANGE.getKey();
                             }
                             meta.setItemModel(c);
+                        } catch (IllegalArgumentException ignored) {
+                        }
+                    }
+                    if (monster == Monster.CYBERMAN) {
+                        try {
+                            CybermanVariant variant = CybermanVariant.valueOf(args[2].toUpperCase(Locale.ROOT) + "_STATIC");
+                            meta.setItemModel(variant.getKey());
                         } catch (IllegalArgumentException ignored) {
                         }
                     }
