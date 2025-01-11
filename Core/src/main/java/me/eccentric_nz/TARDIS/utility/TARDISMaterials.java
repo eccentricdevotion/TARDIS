@@ -57,7 +57,30 @@ public class TARDISMaterials {
         }
     };
 
-    public static final List<Material> precious = Arrays.asList(Material.BARRIER, Material.BEDROCK, Material.COAL_ORE, Material.COPPER_ORE, Material.DEEPSLATE_COPPER_ORE, Material.DEEPSLATE_DIAMOND_ORE, Material.DEEPSLATE_EMERALD_ORE, Material.DEEPSLATE_GOLD_ORE, Material.DEEPSLATE_IRON_ORE, Material.DEEPSLATE_LAPIS_ORE, Material.DIAMOND_BLOCK, Material.DIAMOND_ORE, Material.EMERALD_BLOCK, Material.EMERALD_ORE, Material.GOLD_BLOCK, Material.GOLD_ORE, Material.IRON_BLOCK, Material.IRON_ORE, Material.LAPIS_BLOCK, Material.LAPIS_ORE, Material.LIGHT, Material.NETHER_QUARTZ_ORE, Material.OBSIDIAN, Material.REDSTONE_BLOCK, Material.REDSTONE_ORE);
+    public static final List<Material> precious = new ArrayList<>() {
+        {
+            add(Material.BARRIER);
+            add(Material.BEDROCK);
+            add(Material.DIAMOND_BLOCK);
+            add(Material.EMERALD_BLOCK);
+            add(Material.GOLD_BLOCK);
+            add(Material.IRON_BLOCK);
+            add(Material.LAPIS_BLOCK);
+            add(Material.LIGHT);
+            add(Material.NETHER_QUARTZ_ORE);
+            add(Material.OBSIDIAN);
+            add(Material.REDSTONE_BLOCK);
+            addAll(Tag.COAL_ORES.getValues());
+            addAll(Tag.COPPER_ORES.getValues());
+            addAll(Tag.DIAMOND_ORES.getValues());
+            addAll(Tag.GOLD_ORES.getValues());
+            addAll(Tag.EMERALD_ORES.getValues());
+            addAll(Tag.LAPIS_ORES.getValues());
+            addAll(Tag.REDSTONE_ORES.getValues());
+            addAll(Tag.IRON_ORES.getValues());
+        }
+    };
+
 
     public static final List<Material> crops = Arrays.asList(Material.SUGAR_CANE, Material.WHEAT, Material.CARROTS, Material.BEETROOTS, Material.MELON_STEM, Material.PUMPKIN_STEM, Material.NETHER_WART, Material.POTATOES, Material.COCOA, Material.CACTUS, Material.SWEET_BERRY_BUSH, Material.PITCHER_CROP, Material.TORCHFLOWER);
 

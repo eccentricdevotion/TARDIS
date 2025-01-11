@@ -109,9 +109,9 @@ public class CountCommand {
                 }
                 case JUDOON, K9, OOD -> {
                     what = (monster.equals(Monster.K9)) ? "K9s" : monster.getName();
-                    Collection<ArmorStand> galactic_police = w.getEntitiesByClass(ArmorStand.class);
-                    for (ArmorStand g : galactic_police) {
-                        if (g.getPersistentDataContainer().has(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER)) {
+                    Collection<Husk> galactic_police = w.getEntitiesByClass(Husk.class);
+                    for (Husk h : galactic_police) {
+                        if (h.getPersistentDataContainer().has(TARDISWeepingAngels.PDC_KEYS.get(monster), TARDISWeepingAngels.PersistentDataTypeUUID)) {
                             count++;
                         }
                     }

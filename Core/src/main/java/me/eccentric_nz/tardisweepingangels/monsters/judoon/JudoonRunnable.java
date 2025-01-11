@@ -55,8 +55,8 @@ public class JudoonRunnable implements Runnable {
                 // get the current judoon count
                 int galactic = 0;
                 Collection<Husk> police = w.getEntitiesByClass(Husk.class);
-                for (Husk s : police) {
-                    PersistentDataContainer pdc = s.getPersistentDataContainer();
+                for (Husk h : police) {
+                    PersistentDataContainer pdc = h.getPersistentDataContainer();
                     if (pdc.has(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID)) {
                         galactic++;
                     }
