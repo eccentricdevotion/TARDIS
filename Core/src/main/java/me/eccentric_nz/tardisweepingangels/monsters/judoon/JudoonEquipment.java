@@ -22,6 +22,7 @@ import me.eccentric_nz.tardisweepingangels.equip.FollowerEquipper;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -40,6 +41,8 @@ public class JudoonEquipment {
             hand.setItemMeta(tim);
             entity.getEquipment().setItemInMainHand(hand);
             new FollowerEquipper().setOptionsAndInvisibilty(player, entity, Monster.JUDOON);
+            // set entity scale
+            entity.getAttribute(Attribute.SCALE).setBaseValue(1.25d);
         } else {
             PotionEffect potionEffect = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
             entity.addPotionEffect(potionEffect);
