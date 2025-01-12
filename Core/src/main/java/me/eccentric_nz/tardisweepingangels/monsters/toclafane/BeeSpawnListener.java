@@ -21,11 +21,15 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.World;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Bee;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+
+import java.util.Collection;
 
 public class BeeSpawnListener implements Listener {
 
@@ -42,10 +46,19 @@ public class BeeSpawnListener implements Listener {
             return;
         }
         World world = entity.getWorld();
-        if (plugin.getMonstersConfig().getInt("tocalane.worlds." + world.getName()) < 1) {
+        int limit = plugin.getMonstersConfig().getInt("tocalane.worlds." + world.getName());
+        if (limit < 1) {
             return;
         }
-        if (TARDISConstants.RANDOM.nextInt(100) < plugin.getMonstersConfig().getInt("toclafane.spawn_from_bee")) {
+        // get the current toclafane count
+        int n = 0;
+        Collection<Bee> hive = world.getEntitiesByClass(Bee.class);
+        for (Bee b : hive) {
+            if (!b.getPassengers().isEmpty() && b.getPassengers().getFirst() instanceof ArmorStand) {
+                n++;
+            }
+        }
+        if (n < limit && TARDISConstants.RANDOM.nextInt(100) < plugin.getMonstersConfig().getInt("toclafane.spawn_from_bee")) {
             Entity toclafane = world.spawnEntity(entity.getLocation(), EntityType.ARMOR_STAND);
             ToclafaneEquipment.set(toclafane, false);
             plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(toclafane, EntityType.ARMOR_STAND, Monster.TOCLAFANE, entity.getLocation()));

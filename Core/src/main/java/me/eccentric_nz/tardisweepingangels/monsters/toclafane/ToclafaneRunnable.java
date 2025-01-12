@@ -52,7 +52,7 @@ public class ToclafaneRunnable implements Runnable {
                 int n = 0;
                 Collection<Bee> hive = w.getEntitiesByClass(Bee.class);
                 for (Bee b : hive) {
-                    if (b.getPassengers() != null && !b.getPassengers().isEmpty() && b.getPassengers().getFirst() instanceof ArmorStand) {
+                    if (!b.getPassengers().isEmpty() && b.getPassengers().getFirst() instanceof ArmorStand) {
                         n++;
                     }
                 }
