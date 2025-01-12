@@ -7,7 +7,8 @@ public enum SmilerVariant {
 
     BUTTON_SMILER(new NamespacedKey(TARDIS.plugin, "button_smiler")),
     SMILER_STATIC(new NamespacedKey(TARDIS.plugin, "smiler_static")),
-    SMILER_HEAD(new NamespacedKey(TARDIS.plugin, "smiler_head"));
+    SMILER_HEAD(new NamespacedKey(TARDIS.plugin, "smiler_head")),
+    SMILER_ANGRY_HEAD(new NamespacedKey(TARDIS.plugin, "smiler_angry_head"));
 
     private final NamespacedKey key;
 

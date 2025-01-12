@@ -16,6 +16,9 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.ArmourVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.Features;
+import me.eccentric_nz.TARDIS.custommodels.keys.SmilerVariant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -24,8 +27,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -44,6 +50,10 @@ public class MonsterTargetListener implements Listener {
         boolean ignore = false;
         switch (entity.getType()) {
             case ZOMBIE -> {
+                // angel of liberty
+                if (pdc.has(TARDISWeepingAngels.ANGEL_OF_LIBERTY, PersistentDataType.INTEGER)) {
+                    ignore = isWearingMonsterHead(player, Monster.ANGEL_OF_LIBERTY.getMaterial());
+                }
                 // clockwork droid
                 if (pdc.has(TARDISWeepingAngels.CLOCKWORK_DROID, PersistentDataType.INTEGER)) {
                     ignore = isWearingMonsterHead(player, Monster.CLOCKWORK_DROID.getMaterial());
@@ -51,6 +61,10 @@ public class MonsterTargetListener implements Listener {
                 // cyberman
                 if (pdc.has(TARDISWeepingAngels.CYBERMAN, PersistentDataType.INTEGER)) {
                     ignore = isWearingMonsterHead(player, Monster.CYBERMAN.getMaterial());
+                }
+                // cybershade
+                if (pdc.has(TARDISWeepingAngels.CYBERSHADE, PersistentDataType.INTEGER)) {
+                    ignore = isWearingMonsterHead(player, Monster.CYBERSHADE.getMaterial());
                 }
                 // empty child
                 if (pdc.has(TARDISWeepingAngels.EMPTY, PersistentDataType.INTEGER)) {
@@ -64,6 +78,10 @@ public class MonsterTargetListener implements Listener {
                 if (pdc.has(TARDISWeepingAngels.SLITHEEN, PersistentDataType.INTEGER)) {
                     ignore = isWearingMonsterHead(player, Monster.SLITHEEN.getMaterial());
                 }
+                // smiler
+                if (pdc.has(TARDISWeepingAngels.SMILER, PersistentDataType.INTEGER)) {
+                    ignore = isWearingMonsterHead(player, Monster.SMILER.getMaterial());
+                }
                 // sontaran
                 if (pdc.has(TARDISWeepingAngels.SONTARAN, PersistentDataType.INTEGER)) {
                     ignore = isWearingMonsterHead(player, Monster.SONTARAN.getMaterial());
@@ -71,6 +89,10 @@ public class MonsterTargetListener implements Listener {
                 // sycorax
                 if (pdc.has(TARDISWeepingAngels.SYCORAX, PersistentDataType.INTEGER)) {
                     ignore = isWearingMonsterHead(player, Monster.SYCORAX.getMaterial());
+                }
+                // the beast
+                if (pdc.has(TARDISWeepingAngels.BEAST, PersistentDataType.INTEGER)) {
+                    ignore = isWearingMonsterHead(player, Monster.THE_BEAST.getMaterial());
                 }
                 // vashta nerada
                 if (pdc.has(TARDISWeepingAngels.VASHTA, PersistentDataType.INTEGER)) {
@@ -94,6 +116,14 @@ public class MonsterTargetListener implements Listener {
                 if (pdc.has(TARDISWeepingAngels.MIRE, PersistentDataType.INTEGER)) {
                     ignore = isWearingMonsterHead(player, Monster.MIRE.getMaterial());
                 }
+                // omega
+                if (pdc.has(TARDISWeepingAngels.OMEGA, PersistentDataType.INTEGER)) {
+                    ignore = isWearingMonsterHead(player, Monster.OMEGA.getMaterial());
+                }
+                // ossified
+                if (pdc.has(TARDISWeepingAngels.OSSIFIED, PersistentDataType.INTEGER)) {
+                    ignore = isWearingMonsterHead(player, Monster.OSSIFIED.getMaterial());
+                }
                 // silent
                 if (pdc.has(TARDISWeepingAngels.SILENT, PersistentDataType.INTEGER)) {
                     ignore = isWearingMonsterHead(player, Monster.SILENT.getMaterial());
@@ -111,6 +141,12 @@ public class MonsterTargetListener implements Listener {
                 // silent
                 if (pdc.has(TARDISWeepingAngels.SILENT, PersistentDataType.INTEGER)) {
                     ignore = isWearingMonsterHead(player, Monster.SILENT.getMaterial());
+                }
+            }
+            case STRAY -> {
+                // sutekh
+                if (pdc.has(TARDISWeepingAngels.SUTEKH, PersistentDataType.INTEGER)) {
+                    ignore = isWearingMonsterHead(player, Monster.SUTEKH.getMaterial());
                 }
             }
             case ZOMBIFIED_PIGLIN -> {
@@ -140,7 +176,18 @@ public class MonsterTargetListener implements Listener {
                 if (pdc.has(TARDISWeepingAngels.DEVIL, PersistentDataType.INTEGER)) {
                     ignore = isWearingMonsterHead(player, Monster.SEA_DEVIL.getMaterial());
                 }
+                // vampire of venice
+                if (pdc.has(TARDISWeepingAngels.VAMPIRE, PersistentDataType.INTEGER)) {
+                    ignore = isWearingMonsterHead(player, Monster.VAMPIRE_OF_VENICE.getMaterial());
+                }
             }
+            case PIGLIN_BRUTE -> {
+                // racnoss
+                if (pdc.has(TARDISWeepingAngels.RACNOSS, PersistentDataType.INTEGER)) {
+                    ignore = isWearingMonsterHead(player, Monster.RACNOSS.getMaterial());
+                }
+            }
+
             default -> {
             }
         }
@@ -169,6 +216,27 @@ public class MonsterTargetListener implements Listener {
             if (closest != null && monsterShouldIgnorePlayer(entity, closest)) {
                 event.setCancelled(true);
                 monster.setTarget(null);
+            } else if (monster.getPersistentDataContainer().has(TARDISWeepingAngels.SMILER, PersistentDataType.INTEGER)) {
+                // set angry head
+                EntityEquipment ee = monster.getEquipment();
+                ItemStack head = ee.getHelmet();
+                if (head != null) {
+                    ItemMeta im = head.getItemMeta();
+                    im.setItemModel(SmilerVariant.SMILER_ANGRY_HEAD.getKey());
+                    head.setItemMeta(im);
+                    ee.setHelmet(head);
+                }
+            }
+            if (event.getReason() == EntityTargetEvent.TargetReason.FORGOT_TARGET && monster.getPersistentDataContainer().has(TARDISWeepingAngels.SMILER, PersistentDataType.INTEGER)) {
+                // set smiling head
+                EntityEquipment ee = monster.getEquipment();
+                ItemStack head = ee.getHelmet();
+                if (head != null) {
+                    ItemMeta im = head.getItemMeta();
+                    im.setItemModel(SmilerVariant.SMILER_HEAD.getKey());
+                    head.setItemMeta(im);
+                    ee.setHelmet(head);
+                }
             }
         }
     }
