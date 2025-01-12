@@ -96,10 +96,14 @@ public class EquipCommand {
                     ItemStack head = ee.getHelmet();
                     ItemMeta meta = head.getItemMeta();
                     if (monster == Monster.HEADLESS_MONK) {
-                        int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(stand), 1, 20);
-                        stand.getPersistentDataContainer().set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
-                        // set helmet to sword version
-                        meta.setItemModel(MonkVariant.HEADLESS_MONK_STATIC.getKey());
+                        if (args[2].equals("flaming")) {
+                            int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(stand), 1, 20);
+                            stand.getPersistentDataContainer().set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
+                            // set helmet to sword version
+                            meta.setItemModel(MonkVariant.HEADLESS_MONK_STATIC.getKey());
+                        } else {
+                            meta.setItemModel(MonkVariant.HEADLESS_MONK_ALTERNATE.getKey());
+                        }
                     }
                     if (monster == Monster.MIRE || monster == Monster.SLITHEEN) {
                         // set no helmet!
@@ -140,6 +144,9 @@ public class EquipCommand {
                             meta.setItemModel(variant.getKey());
                         } catch (IllegalArgumentException ignored) {
                         }
+                    }
+                    if (monster == Monster.TOCLAFANE) {
+                        meta.setItemModel(ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
                     }
                     head.setItemMeta(meta);
                     ee.setHelmet(head);

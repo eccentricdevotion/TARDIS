@@ -53,6 +53,7 @@ public class TabComplete extends TARDISCompleter implements TabCompleter {
             COLOUR_SUBS.add(dye.toString());
         }
         COLOUR_SUBS.add("flying");
+        COLOUR_SUBS.add("flaming");
         COLOUR_SUBS.add("CYBERMAN_RISE");
         COLOUR_SUBS.add("CYBER_LORD");
         COLOUR_SUBS.add("BLACK_CYBERMAN");
