@@ -9,6 +9,8 @@ import me.eccentric_nz.tardisweepingangels.monsters.cybermen.CyberType;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.EquipmentSlot;
@@ -37,6 +39,7 @@ public class ArmourEquipper {
         }
         headMeta.setItemModel(headModel);
         EquippableComponent headComponent = headMeta.getEquippable();
+        headComponent.setDamageOnHurt(false);
         headComponent.setAllowedEntities(List.of(monster.getEntityType(), EntityType.PLAYER));
         headComponent.setSlot(EquipmentSlot.HEAD);
         if (monster.equals(Monster.EMPTY_CHILD)) {
@@ -57,6 +60,7 @@ public class ArmourEquipper {
         bodyMeta.setItemModel(ArmourVariant.CHESTPLATE.getKey());
         bodyMeta.setDisplayName(monster.getName() + " Chestplate");
         EquippableComponent bodyComponent = bodyMeta.getEquippable();
+        bodyComponent.setDamageOnHurt(false);
         bodyComponent.setAllowedEntities(List.of(monster.getEntityType(), EntityType.PLAYER));
         bodyComponent.setSlot(EquipmentSlot.CHEST);
         bodyComponent.setModel(armour);
@@ -70,6 +74,7 @@ public class ArmourEquipper {
         legsMeta.setItemModel(ArmourVariant.LEGGINGS.getKey());
         legsMeta.setDisplayName(monster.getName() + " Leggings");
         EquippableComponent legsComponent = legsMeta.getEquippable();
+        legsComponent.setDamageOnHurt(false);
         legsComponent.setAllowedEntities(List.of(monster.getEntityType(), EntityType.PLAYER));
         legsComponent.setSlot(EquipmentSlot.LEGS);
         legsComponent.setModel(armour);
@@ -77,6 +82,10 @@ public class ArmourEquipper {
         legsMeta.getPersistentDataContainer().set(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER, 99);
         legs.setItemMeta(legsMeta);
         entity.getEquipment().setLeggings(legs);
+        // give monster extra health
+        AttributeInstance attribute = entity.getAttribute(Attribute.MAX_HEALTH);
+        attribute.setBaseValue(24.0d);
+        entity.setHealth(24.0d);
         return armour;
     }
 }
