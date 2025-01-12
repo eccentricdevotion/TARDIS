@@ -22,6 +22,7 @@ import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.monsters.empty_child.EmptyChildEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessFlameRunnable;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -71,12 +72,17 @@ public class ChunkListener implements Listener {
                         EmptyChildEquipment.setSpeed(zombie);
                     }
                 }
-                case ArmorStand stand when stand.getPersistentDataContainer().has(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER) -> {
-                    // restart flame runnable
-                    int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(stand), 1, 20);
-                    pdc.set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
+                case ArmorStand stand when (stand.getPersistentDataContainer().has(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER)) -> {
+                    if (stand.getEquipment().getHelmet() != null && stand.getEquipment().getHelmet().getType() == Material.RED_CANDLE) {
+                        // restart flame runnable
+                        int flameID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessFlameRunnable(stand), 1, 20);
+                        pdc.set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, flameID);
+                    } else {
+                        pdc.set(TARDISWeepingAngels.FLAME_TASK, PersistentDataType.INTEGER, -1);
+                    }
                 }
-                default -> { }
+                default -> {
+                }
             }
         }
     }
@@ -94,13 +100,6 @@ public class ChunkListener implements Listener {
                     }
                 }
             }
-//            else if (monk instanceof Husk) {
-//                if (pdc.has(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID)) {
-//                    // save or update this follower
-//                    TWAFollower follower = (TWAFollower) ((CraftZombie) monk).getHandle();
-//                    new FollowerPersister(plugin).save(follower);
-//                }
-//            }
         }
     }
 }
