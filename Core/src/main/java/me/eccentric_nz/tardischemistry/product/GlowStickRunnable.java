@@ -43,11 +43,11 @@ public class GlowStickRunnable implements Runnable {
             PlayerInventory inventory = player.getInventory();
             // item in hands
             ItemStack mainHand = inventory.getItemInMainHand();
-            if (mainHand != null && isGlowStick(mainHand)) {
+            if (isGlowStick(mainHand)) {
                 damage(mainHand, player, inventory, true);
             }
             ItemStack offHand = inventory.getItemInOffHand();
-            if (offHand != null && isGlowStick(offHand)) {
+            if (isGlowStick(offHand)) {
                 damage(offHand, player, inventory, false);
             }
         }
@@ -74,6 +74,15 @@ public class GlowStickRunnable implements Runnable {
     }
 
     private boolean isGlowStick(ItemStack glowStick) {
-        return glowStick != null && GlowStickMaterial.isCorrectMaterial(glowStick.getType()) && glowStick.hasItemMeta() && glowStick.getItemMeta().hasItemModel() && glowStick.containsEnchantment(Enchantment.LOYALTY);
+        if (glowStick == null) {
+            return false;
+        }
+        if (!glowStick.hasItemMeta()) {
+            return false;
+        }
+        ItemMeta im = glowStick.getItemMeta();
+        return GlowStickMaterial.isCorrectMaterial(glowStick.getType())
+                && im.hasItemModel()
+                && (im.hasEnchantmentGlintOverride() || glowStick.containsEnchantment(Enchantment.LOYALTY));
     }
 }

@@ -19,7 +19,6 @@ package me.eccentric_nz.tardischemistry.product;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -44,12 +43,12 @@ public class GlowStickListener implements Listener {
             ItemStack is = event.getItem();
             if (is != null && GlowStickMaterial.isCorrectMaterial(is.getType()) && is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
-                if (im.hasDisplayName() && im.getDisplayName().endsWith("Glow Stick") && !im.hasEnchant(Enchantment.LOYALTY)) {
+                if (im.hasDisplayName() && im.getDisplayName().endsWith("Glow Stick") && !im.hasEnchantmentGlintOverride()) {
                     player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_HIT, 1.0f, 1.0f);
                     // switch custom data models e.g. 10000008 -> 12000008
                     Product glowstick = Product.getByName().get(im.getDisplayName());
                     im.setItemModel(glowstick.getActive());
-                    im.addEnchant(Enchantment.LOYALTY, 1, true);
+                    im.setEnchantmentGlintOverride(true);
                     im.getPersistentDataContainer().set(namespacedKey, PersistentDataType.INTEGER, 100);
                     is.setItemMeta(im);
                 }

@@ -3,7 +3,6 @@ package me.eccentric_nz.TARDIS.commands.give.actions;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -34,7 +33,7 @@ public class FuelCell {
         int max = plugin.getArtronConfig().getInt("full_charge");
         lore.set(1, "" + max);
         im.setLore(lore);
-        im.addEnchant(Enchantment.UNBREAKING, 1, true);
+        im.setEnchantmentGlintOverride(true);
         im.addItemFlags(ItemFlag.values());
         result.setItemMeta(im);
         player.getInventory().addItem(result);

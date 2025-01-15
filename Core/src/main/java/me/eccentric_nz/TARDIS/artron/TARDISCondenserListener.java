@@ -329,7 +329,7 @@ public class TARDISCondenserListener implements Listener {
             List<String> lore = lim.getLore();
             lore.set(1, "" + remainder);
             lim.setLore(lore);
-            lim.addEnchant(Enchantment.UNBREAKING, 1, true);
+            lim.setEnchantmentGlintOverride(true);
             lim.addItemFlags(ItemFlag.values());
             leftover.setItemMeta(lim);
             player.getInventory().addItem(leftover);
@@ -341,7 +341,7 @@ public class TARDISCondenserListener implements Listener {
             List<String> lore = im.getLore();
             lore.set(1, "" + full);
             im.setLore(lore);
-            im.addEnchant(Enchantment.UNBREAKING, 1, true);
+            im.setEnchantmentGlintOverride(true);
             im.addItemFlags(ItemFlag.values());
             result.setItemMeta(im);
             player.getInventory().addItem(result);

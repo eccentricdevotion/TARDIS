@@ -99,6 +99,7 @@ public class TARDISArtronFurnaceListener implements Listener {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             lore.set(1, "0");
                             im.setLore(lore);
+                            im.setEnchantmentGlintOverride(null);
                             is.setItemMeta(im);
                             is.removeEnchantment(Enchantment.UNBREAKING);
                             furnace.getInventory().setItem(1, is);

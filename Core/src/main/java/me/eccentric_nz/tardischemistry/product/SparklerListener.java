@@ -58,8 +58,7 @@ public class SparklerListener implements Listener {
                     // switch custom data models
                     Product sparkler = Product.getByName().get(im.getDisplayName());
                     im.setItemModel(sparkler.getActive());
-                    // set custom data on sparkler
-                    im.addEnchant(Enchantment.LOYALTY, 1, true);
+                    im.setEnchantmentGlintOverride(true);
                     is.setItemMeta(im);
                     // start sparkler runnable
                     BlockData colour = colours.get(ChatColor.stripColor(im.getDisplayName()));

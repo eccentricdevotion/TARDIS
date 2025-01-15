@@ -61,6 +61,7 @@ public class SparklerRunnable implements Runnable {
                     Product cmd = Product.getByName().get(im.getDisplayName());
                     im.setItemModel(cmd.getModel());
                     im.removeEnchant(Enchantment.LOYALTY);
+                    im.setEnchantmentGlintOverride(null);
                     sparkler.setItemMeta(im);
                     sparkler.setAmount(amount - 1);
                     inventory.setItemInMainHand(sparkler);
@@ -76,7 +77,16 @@ public class SparklerRunnable implements Runnable {
     }
 
     private boolean isSparkler(ItemStack sparkler) {
-        return sparkler != null && SparklerMaterial.isCorrectMaterial(sparkler.getType()) && sparkler.hasItemMeta() && sparkler.getItemMeta().hasItemModel() && sparkler.containsEnchantment(Enchantment.LOYALTY);
+        if (sparkler == null) {
+            return false;
+        }
+        if (!sparkler.hasItemMeta()) {
+            return false;
+        }
+        ItemMeta im = sparkler.getItemMeta();
+        return SparklerMaterial.isCorrectMaterial(sparkler.getType())
+                && im.hasItemModel()
+                && (im.hasEnchantmentGlintOverride() || sparkler.containsEnchantment(Enchantment.LOYALTY));
     }
 
     private Location getHandLocation() {

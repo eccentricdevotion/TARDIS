@@ -172,7 +172,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 }
                 lore.set(1, "" + new_amount);
                 im.setLore(lore);
-                im.addEnchant(Enchantment.UNBREAKING, 1, true);
+                im.setEnchantmentGlintOverride(true);
                 im.addItemFlags(ItemFlag.values());
                 is.setItemMeta(im);
                 // remove the energy from the tardis/timelord
@@ -202,9 +202,10 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
         List<String> lore = im.getLore();
         lore.set(1, "" + level);
         im.setLore(lore);
-        // add enchant if missing
-        if (main && !is.containsEnchantment(Enchantment.UNBREAKING)) {
-            im.addEnchant(Enchantment.UNBREAKING, 1, true);
+        // add glint if missing
+        if (main && !im.hasEnchantmentGlintOverride()) {
+            im.removeEnchant(Enchantment.UNBREAKING);
+            im.setEnchantmentGlintOverride(true);
         }
         is.setItemMeta(im);
         if (main) {
