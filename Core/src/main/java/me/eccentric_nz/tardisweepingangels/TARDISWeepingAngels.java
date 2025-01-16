@@ -63,6 +63,7 @@ import me.eccentric_nz.tardisweepingangels.monsters.vampires.VampireRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.vashta_nerada.VashtaNeradaListener;
 import me.eccentric_nz.tardisweepingangels.monsters.weeping_angels.*;
 import me.eccentric_nz.tardisweepingangels.monsters.zygons.ZygonRunnable;
+import me.eccentric_nz.tardisweepingangels.spawner.SpawnerListener;
 import me.eccentric_nz.tardisweepingangels.utils.*;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataType;
@@ -199,6 +200,9 @@ public class TARDISWeepingAngels {
         }
         if (plugin.getMonstersConfig().getInt("toclafane.spawn_from_bee") > 0) {
             plugin.getPM().registerEvents(new BeeSpawnListener(plugin), plugin);
+        }
+        if (plugin.getMonstersConfig().getBoolean("custom_spawners")) {
+            plugin.getPM().registerEvents(new SpawnerListener(plugin), plugin);
         }
         // register command
         plugin.getCommand("twa").setExecutor(new TARDISWeepingAngelsCommand(plugin));

@@ -3,6 +3,7 @@ spawn_rate:
   how_many: 2
   how_often: 400
   default_max: 0
+custom_spawners: true
 angels:
   worlds:
     world: 10
