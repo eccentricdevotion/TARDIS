@@ -66,7 +66,7 @@ public class CountCommand {
                 return true;
             }
             switch (monster) {
-                case WEEPING_ANGEL, DALEK, SILURIAN, SILENT, HEADLESS_MONK, MIRE, OMEGA -> {
+                case DALEK, HEADLESS_MONK, MIRE, OMEGA, SILENT, SILURIAN, WEEPING_ANGEL -> {
                     what = switch (monster) {
                         case SILENT -> "Silence";
                         case MIRE -> "Mire";
@@ -80,8 +80,8 @@ public class CountCommand {
                         }
                     }
                 }
-                case ANGEL_OF_LIBERTY, THE_BEAST, CYBERMAN, CYBERSHADE, EMPTY_CHILD, SLITHEEN, SMILER, SONTARAN,
-                     VASHTA_NERADA, ZYGON -> {
+                case ANGEL_OF_LIBERTY, CLOCKWORK_DROID, CYBERMAN, CYBERSHADE, EMPTY_CHILD, OSSIFIED, SCARECROW,
+                     SLITHEEN, SMILER, SONTARAN, SYCORAX, THE_BEAST, VASHTA_NERADA, ZYGON -> {
                     what = switch (monster) {
                         case ANGEL_OF_LIBERTY -> "Angels of Liberty";
                         case THE_BEAST -> "The Beast";
@@ -98,7 +98,7 @@ public class CountCommand {
                         }
                     }
                 }
-                case HATH, ICE_WARRIOR, STRAX, DAVROS, DALEK_SEC -> {
+                case DALEK_SEC, DAVROS, HATH, ICE_WARRIOR, STRAX -> {
                     what = (monster.equals(Monster.ICE_WARRIOR)) ? "Ice Warriors" : monster.getName();
                     Collection<PigZombie> fish = w.getEntitiesByClass(PigZombie.class);
                     for (PigZombie h : fish) {
@@ -147,7 +147,7 @@ public class CountCommand {
                     what = monster.getName();
                     Collection<Bee> bees = w.getEntitiesByClass(Bee.class);
                     for (Bee b : bees) {
-                        if (b.getPassengers() != null && !b.getPassengers().isEmpty() && b.getPassengers().getFirst() instanceof ArmorStand) {
+                        if (!b.getPassengers().isEmpty() && b.getPassengers().getFirst() instanceof ArmorStand) {
                             count++;
                         }
                     }

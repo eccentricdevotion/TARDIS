@@ -71,8 +71,8 @@ public class KillCommand {
             return true;
         }
         switch (monster) {
-            case ANGEL_OF_LIBERTY, THE_BEAST, CYBERMAN, CYBERSHADE, EMPTY_CHILD, SMILER, SONTARAN, VASHTA_NERADA,
-                 ZYGON -> {
+            case ANGEL_OF_LIBERTY, CLOCKWORK_DROID, CYBERMAN, CYBERSHADE, EMPTY_CHILD, OSSIFIED, SCARECROW,
+                 SLITHEEN, SMILER, SONTARAN, SYCORAX, THE_BEAST, VASHTA_NERADA, ZYGON -> {
                 switch (monster) {
                     case ANGEL_OF_LIBERTY -> what = "Angels of Liberty";
                     case THE_BEAST -> what = "The Beast";
@@ -83,27 +83,19 @@ public class KillCommand {
                 }
                 Collection<Zombie> zombies = w.getEntitiesByClass(Zombie.class);
                 for (Zombie z : zombies) {
-                    EntityEquipment ee = z.getEquipment();
-                    if (ee.getHelmet().getType().equals(monster.getMaterial())) {
-                        ItemStack is = ee.getHelmet();
-                        if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().startsWith(monster.getName())) {
-                            z.remove();
-                            count++;
-                        }
+                    if (z.getPersistentDataContainer().has(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER)) {
+                        z.remove();
+                        count++;
                     }
                 }
             }
-            case WEEPING_ANGEL, DALEK, HEADLESS_MONK, SILURIAN, MIRE, OMEGA -> {
+            case DALEK, HEADLESS_MONK, MIRE, OMEGA, SILURIAN, WEEPING_ANGEL -> {
                 what = monster.getName() + "s";
                 Collection<Skeleton> skeletons = w.getEntitiesByClass(Skeleton.class);
                 for (Skeleton s : skeletons) {
-                    EntityEquipment ee = s.getEquipment();
-                    if (ee.getHelmet().getType().equals(monster.getMaterial())) {
-                        ItemStack is = ee.getHelmet();
-                        if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().startsWith(monster.getName())) {
-                            s.remove();
-                            count++;
-                        }
+                    if (s.getPersistentDataContainer().has(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER)) {
+                        s.remove();
+                        count++;
                     }
                 }
             }
@@ -111,27 +103,19 @@ public class KillCommand {
                 what = (monster == Monster.VAMPIRE_OF_VENICE) ? "Vampires of Venice" : "Sea Devils";
                 Collection<Drowned> drowned = w.getEntitiesByClass(Drowned.class);
                 for (Drowned d : drowned) {
-                    EntityEquipment ee = d.getEquipment();
-                    if (ee.getHelmet().getType().equals(monster.getMaterial())) {
-                        ItemStack is = ee.getHelmet();
-                        if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().startsWith(monster.getName())) {
-                            d.remove();
-                            count++;
-                        }
+                    if (d.getPersistentDataContainer().has(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER)) {
+                        d.remove();
+                        count++;
                     }
                 }
             }
-            case HATH, ICE_WARRIOR, STRAX -> {
+            case DALEK_SEC, DAVROS, HATH, ICE_WARRIOR, STRAX -> {
                 what = (monster.equals(Monster.ICE_WARRIOR)) ? "Ice Warriors" : monster.getName();
                 Collection<PigZombie> pigZombies = w.getEntitiesByClass(PigZombie.class);
                 for (PigZombie p : pigZombies) {
-                    EntityEquipment ee = p.getEquipment();
-                    if (ee.getHelmet().getType().equals(monster.getMaterial())) {
-                        ItemStack is = ee.getHelmet();
-                        if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().startsWith(monster.getName())) {
-                            p.remove();
-                            count++;
-                        }
+                    if (p.getPersistentDataContainer().has(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER)) {
+                        p.remove();
+                        count++;
                     }
                 }
             }
@@ -150,13 +134,9 @@ public class KillCommand {
                 what = "Sutekh";
                 Collection<Stray> strays = w.getEntitiesByClass(Stray.class);
                 for (Stray s : strays) {
-                    EntityEquipment ee = s.getEquipment();
-                    if (ee.getHelmet().getType().equals(monster.getMaterial())) {
-                        ItemStack is = ee.getHelmet();
-                        if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().startsWith("Sutekh")) {
-                            s.remove();
-                            count++;
-                        }
+                    if (s.getPersistentDataContainer().has(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER)) {
+                        s.remove();
+                        count++;
                     }
                 }
             }

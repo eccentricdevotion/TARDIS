@@ -37,7 +37,7 @@ public class ResetMonster {
 
     public void reset() {
         Monster monster = MonsterEquipment.getMonsterType(entity);
-        if (monster == null || !monster.isAnimated()) {
+        if (monster == null || monster.isFollower()) {
             return;
         }
         Location location = entity.getLocation();
