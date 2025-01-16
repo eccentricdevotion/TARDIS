@@ -1,8 +1,0 @@
-{
-  "asset_id": "tardis:empty_child",
-  "decal": false,
-  "description": {
-    "translate": "trim_pattern.tardis.empty_child"
-  },
-  "template_item": "minecraft:sugar"
-}

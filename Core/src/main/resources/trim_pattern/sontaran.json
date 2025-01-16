@@ -1,8 +1,0 @@
-{
-  "asset_id": "tardis:sontaran",
-  "decal": false,
-  "description": {
-    "translate": "trim_pattern.tardis.sontaran"
-  },
-  "template_item": "minecraft:potato"
-}
