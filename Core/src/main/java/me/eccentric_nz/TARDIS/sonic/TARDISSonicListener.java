@@ -205,8 +205,7 @@ public class TARDISSonicListener implements Listener {
                             TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
                         }
                         // scan area around block for an arrow
-                        List<Entity> nearbyEntites = block.getWorld().getNearbyEntities(block.getLocation(), 2, 2, 2).stream().toList();
-                        for (Entity e : nearbyEntites) {
+                        for (Entity e : block.getWorld().getNearbyEntities(block.getLocation(), 2, 2, 2)) {
                             if (e instanceof Arrow arrow) {
                                 // pick up arrow
                                 arrow.setPickupStatus(AbstractArrow.PickupStatus.ALLOWED);
