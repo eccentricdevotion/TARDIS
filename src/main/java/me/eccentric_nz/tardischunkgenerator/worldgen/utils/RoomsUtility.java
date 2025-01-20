@@ -3,6 +3,8 @@ package me.eccentric_nz.tardischunkgenerator.worldgen.utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -21,6 +23,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class RoomsUtility {
 
@@ -99,10 +102,13 @@ public class RoomsUtility {
                     List<Pattern> plist = new ArrayList<>();
                     for (int j = 0; j < patterns.size(); j++) {
                         JsonObject jo = patterns.get(j).getAsJsonObject();
-                        PatternType pt = PatternType.valueOf(jo.get("pattern").getAsString());
+                        Registry<PatternType> patternTypeRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.BANNER_PATTERN);
+                        PatternType pt = patternTypeRegistry.get(NamespacedKey.minecraft(jo.get("pattern").getAsString().toLowerCase(Locale.ROOT)));
                         DyeColor dc = DyeColor.valueOf(jo.get("pattern_colour").getAsString());
-                        Pattern p = new Pattern(dc, pt);
-                        plist.add(p);
+                        if (pt != null) {
+                            Pattern p = new Pattern(dc, pt);
+                            plist.add(p);
+                        }
                     }
                     BlockStateMeta bsm = (BlockStateMeta) im;
                     Banner b = (Banner) bsm.getBlockState();
@@ -129,26 +135,31 @@ public class RoomsUtility {
         int py = rel.get("y").getAsInt() + 64;
         int pz = rel.get("z").getAsInt() + sz;
         BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
-        Location pl;
+        Location pl = null;
         String which = painting.get("art").getAsString();
         Art art = null;
         if (which.contains(":")) {
             // custom datapack painting
             pl = TARDISPainting.calculatePosition(which.split(":")[1], facing, new Location(null, px, py, pz));
         } else {
-            art = Art.valueOf(which);
-            pl = TARDISPainting.calculatePosition(art, facing, new Location(null, px, py, pz));
-        }
-        try {
-            Painting ent = (Painting) region.spawnEntity(pl, EntityType.PAINTING);
-            ent.setFacingDirection(facing, true);
+            Registry<Art> artRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.PAINTING_VARIANT);
+            art = artRegistry.get(NamespacedKey.minecraft(which.toLowerCase(Locale.ROOT)));
             if (art != null) {
-                ent.setArt(art, true);
-            } else {
-                DataPackPainting.setCustomVariant(ent, which);
+                pl = TARDISPainting.calculatePosition(which.toLowerCase(Locale.ROOT), facing, new Location(null, px, py, pz));
             }
-        } catch (IllegalArgumentException e) {
-            TARDIS.plugin.debug("Invalid painting location!" + pl);
+        }
+        if (pl != null) {
+            try {
+                Painting ent = (Painting) region.spawnEntity(pl, EntityType.PAINTING);
+                ent.setFacingDirection(facing, true);
+                if (art != null) {
+                    ent.setArt(art, true);
+                } else {
+                    DataPackPainting.setCustomVariant(ent, which);
+                }
+            } catch (IllegalArgumentException e) {
+                TARDIS.plugin.debug("Invalid painting location!" + pl);
+            }
         }
     }
 
@@ -157,10 +168,13 @@ public class RoomsUtility {
         JsonArray patterns = json.get("patterns").getAsJsonArray();
         for (int j = 0; j < patterns.size(); j++) {
             JsonObject jo = patterns.get(j).getAsJsonObject();
-            PatternType pt = PatternType.valueOf(jo.get("pattern").getAsString());
+            Registry<PatternType> patternTypeRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.BANNER_PATTERN);
+            PatternType pt = patternTypeRegistry.get(NamespacedKey.minecraft(jo.get("pattern").getAsString().toLowerCase(Locale.ROOT)));
             DyeColor dc = DyeColor.valueOf(jo.get("pattern_colour").getAsString());
-            Pattern p = new Pattern(dc, pt);
-            plist.add(p);
+            if (pt != null) {
+                Pattern p = new Pattern(dc, pt);
+                plist.add(p);
+            }
         }
         banner.setPatterns(plist);
         banner.update();

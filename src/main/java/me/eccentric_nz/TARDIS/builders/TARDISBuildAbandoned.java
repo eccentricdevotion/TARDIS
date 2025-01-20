@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.builders;
 
 import com.google.gson.*;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -49,10 +51,7 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * The TARDIS was prone to a number of technical faults, ranging from depleted resources to malfunctioning controls to a
@@ -245,27 +244,30 @@ class TARDISBuildAbandoned implements Runnable {
                     int py = rel.get("y").getAsInt();
                     int pz = rel.get("z").getAsInt();
                     BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
-                    Location pl;
+                    Location pl = null;
                     String which = painting.get("art").getAsString();
                     Art art = null;
                     if (which.contains(":")) {
                         // custom datapack painting
                         pl = TARDISPainting.calculatePosition(which.split(":")[1], facing, new Location(world, resetx + px, starty + py, resetz + pz));
                     } else {
-                        art = Art.valueOf(which);
-                        pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetx + px, starty + py, resetz + pz));
+                        Registry<Art> artRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.PAINTING_VARIANT);
+                        art = artRegistry.get(NamespacedKey.minecraft(which.toLowerCase(Locale.ROOT)));
+                        pl = TARDISPainting.calculatePosition(which.toLowerCase(Locale.ROOT), facing, new Location(world, resetx + px, starty + py, resetz + pz));
                     }
-                    try {
-                        Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
-                        ent.teleport(pl);
-                        ent.setFacingDirection(facing, true);
-                        if (art != null) {
-                            ent.setArt(art, true);
-                        } else {
-                            DataPackPainting.setCustomVariant(ent, which);
+                    if (pl != null) {
+                        try {
+                            Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
+                            ent.teleport(pl);
+                            ent.setFacingDirection(facing, true);
+                            if (art != null) {
+                                ent.setArt(art, true);
+                            } else {
+                                DataPackPainting.setCustomVariant(ent, which);
+                            }
+                        } catch (IllegalArgumentException e) {
+                            plugin.debug("Invalid painting location!" + pl);
                         }
-                    } catch (IllegalArgumentException e) {
-                        plugin.debug("Invalid painting location!" + pl);
                     }
                 }
             }

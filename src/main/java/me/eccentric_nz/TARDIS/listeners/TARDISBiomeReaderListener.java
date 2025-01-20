@@ -34,10 +34,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -87,6 +84,7 @@ public class TARDISBiomeReaderListener implements Listener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_NOT_VALID");
                     return;
                 }
+                String name = biome.key().value().toUpperCase(Locale.ROOT);
                 // check if they have this biome disk yet
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid.toString());
@@ -106,12 +104,12 @@ public class TARDISBiomeReaderListener implements Listener {
                             } else {
                                 disks2 = TARDISSerializeInventory.itemStacksFromString(Storage.BIOME_2.getEmpty());
                             }
-                            if (!hasBiomeDisk(disks2, biome.name())) {
+                            if (!hasBiomeDisk(disks2, name)) {
                                 ItemStack bd = new ItemStack(Material.MUSIC_DISC_CAT, 1);
                                 ItemMeta dim = bd.getItemMeta();
                                 dim.setDisplayName("Biome Storage Disk");
                                 List<String> disk_lore = new ArrayList<>();
-                                disk_lore.add(biome.name());
+                                disk_lore.add(name);
                                 dim.setLore(disk_lore);
                                 dim.setItemModel(DiskVariant.BIOME_DISK.getKey());
                                 bd.setItemMeta(dim);
@@ -124,7 +122,7 @@ public class TARDISBiomeReaderListener implements Listener {
                                     HashMap<String, Object> whereu = new HashMap<>();
                                     whereu.put("uuid", uuid.toString());
                                     plugin.getQueryFactory().doUpdate("storage", set, whereu);
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_ADDED", biome.name(), "1");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_ADDED", name, "1");
                                 } else {
                                     slot = getNextFreeSlot(disks2);
                                     if (slot != -1) {
@@ -135,16 +133,16 @@ public class TARDISBiomeReaderListener implements Listener {
                                         HashMap<String, Object> whereu = new HashMap<>();
                                         whereu.put("uuid", uuid.toString());
                                         plugin.getQueryFactory().doUpdate("storage", set, whereu);
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_ADDED", biome.name(), "2");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_ADDED", name, "2");
                                     } else {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_FULL");
                                     }
                                 }
                             } else {
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_FOUND", biome.name(), "2");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_FOUND", name, "2");
                             }
                         } else {
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_FOUND", biome.name(), "1");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_FOUND", name, "1");
                         }
                     } catch (IOException ex) {
                         plugin.debug("Could not get biome disks: " + ex);

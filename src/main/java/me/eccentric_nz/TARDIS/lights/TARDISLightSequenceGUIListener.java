@@ -7,7 +7,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.apache.commons.lang3.ArrayUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,7 +42,7 @@ public class TARDISLightSequenceGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onLightMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Light Sequence")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Light Sequence")) {
             return;
         }
         event.setCancelled(true);
@@ -70,7 +70,7 @@ public class TARDISLightSequenceGUIListener extends TARDISMenuListener {
                         ResultSetTardisID rst = new ResultSetTardisID(plugin);
                         if (rst.fromUUID(uuid.toString())) {
                             ItemStack[] lightStacks = new TARDISLightsInventory(plugin, rst.getTardisId(), uuid).getGUI();
-                            Inventory lightGUI = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Lights");
+                            Inventory lightGUI = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Lights");
                             lightGUI.setContents(lightStacks);
                             player.openInventory(lightGUI);
                         }

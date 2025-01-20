@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.travel.save.TARDISSavesPlanetInventory;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -85,14 +85,14 @@ class TARDISSaveSign {
             } else {
                 TARDISSavesPlanetInventory sst = new TARDISSavesPlanetInventory(plugin, id, player);
                 ItemStack[] items = sst.getPlanets();
-                Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
+                Inventory inv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Dimension Map");
                 inv.setContents(items);
                 player.openInventory(inv);
             }
         } else {
             TARDISSavesPlanetInventory sst = new TARDISSavesPlanetInventory(plugin, id, player);
             ItemStack[] items = sst.getPlanets();
-            Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
+            Inventory inv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Dimension Map");
             inv.setContents(items);
             player.openInventory(inv);
         }

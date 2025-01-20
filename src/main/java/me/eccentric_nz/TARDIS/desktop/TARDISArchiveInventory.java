@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.custommodels.GUIData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisSize;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveButtons;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -87,7 +87,7 @@ class TARDISArchiveInventory {
             s = rss.getConsoleSize().toString();
             b = rss.getConsoleSize().getBlocks();
         }
-        size_im.setLore(Arrays.asList(s, b, ChatColor.AQUA + "Click to change"));
+        size_im.setLore(Arrays.asList(s, b, NamedTextColor.AQUA + "Click to change"));
         size.setItemMeta(size_im);
         stack[18] = size;
         // scan

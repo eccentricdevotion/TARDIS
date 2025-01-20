@@ -6,7 +6,8 @@ import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.handles.wiki.WikiLink;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.skins.*;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,11 +24,11 @@ public class TVSkinListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
     private final List<String> titles = List.of(
-            ChatColor.DARK_RED + "Doctor Skins",
-            ChatColor.DARK_RED + "Companion Skins",
-            ChatColor.DARK_RED + "Character Skins",
-            ChatColor.DARK_RED + "Monster Skins",
-            ChatColor.DARK_RED + "Cyberman Skins"
+            NamedTextColor.DARK_RED + "Doctor Skins",
+            NamedTextColor.DARK_RED + "Companion Skins",
+            NamedTextColor.DARK_RED + "Character Skins",
+            NamedTextColor.DARK_RED + "Monster Skins",
+            NamedTextColor.DARK_RED + "Cyberman Skins"
     );
 
     public TVSkinListener(TARDIS plugin) {
@@ -71,7 +72,7 @@ public class TVSkinListener extends TARDISMenuListener {
             case 33 -> {
                 // back
                 ItemStack[] items = new TVInventory().getMenu();
-                Inventory tvinv = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "TARDIS Television");
+                Inventory tvinv = plugin.getServer().createInventory(player, 36, NamedTextColor.DARK_RED + "TARDIS Television");
                 tvinv.setContents(items);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openInventory(tvinv), 2L);
             }
@@ -82,7 +83,7 @@ public class TVSkinListener extends TARDISMenuListener {
                     SkinUtils.removeExtras(player, SkinUtils.SKINNED.get(uuid));
                 }
                 Skin skin = ArchSkins.ARI;
-                String which = ChatColor.stripColor(title).split(" ")[0];
+                String which = TARDISStaticUtils.stripColor(title).split(" ")[0];
                 switch (which) {
                     case "Doctor" -> skin = DoctorSkins.DOCTORS.get(slot);
                     case "Companion" -> skin = CompanionSkins.COMPANIONS.get(slot);

@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shapeless;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -27,7 +27,7 @@ public class AdminUpgradeRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "Admin Upgrade");
+        im.setDisplayName(NamedTextColor.WHITE + "Admin Upgrade");
         im.setItemModel(RecipeItem.ADMIN_UPGRADE.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "admin_upgrade");
@@ -35,7 +35,7 @@ public class AdminUpgradeRecipe {
         r.addIngredient(Material.BLAZE_ROD);
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.setDisplayName(ChatColor.WHITE + "Server Admin Circuit");
+        em.setDisplayName(NamedTextColor.WHITE + "Server Admin Circuit");
         em.setItemModel(RecipeItem.SERVER_ADMIN_CIRCUIT.getModel());
         exact.setItemMeta(em);
         r.addIngredient(new RecipeChoice.ExactChoice(exact));

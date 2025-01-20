@@ -25,7 +25,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.move.TARDISBlackWoolToggler;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -89,7 +90,7 @@ public class TARDISControlInventory {
         // random location
         ItemStack ran = new ItemStack(GUIControlCentre.BUTTON_RANDOM.material(), 1);
         ItemMeta dom = ran.getItemMeta();
-        dom.setDisplayName(ChatColor.MAGIC + "ran" + ChatColor.RESET + plugin.getLanguage().getString("BUTTON_RANDOM") + ChatColor.MAGIC + "dom");
+        dom.setDisplayName(TextDecoration.OBFUSCATED + "ran" + NamedTextColor.WHITE + plugin.getLanguage().getString("BUTTON_RANDOM") + TextDecoration.OBFUSCATED + "dom");
         dom.setItemModel(GUIControlCentre.BUTTON_RANDOM.key());
         ran.setItemMeta(dom);
         // Saves

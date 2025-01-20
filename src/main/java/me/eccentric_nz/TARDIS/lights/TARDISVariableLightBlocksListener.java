@@ -4,7 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.desktop.TARDISWallListener;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
@@ -28,7 +28,7 @@ public class TARDISVariableLightBlocksListener extends TARDISWallListener {
 
     @EventHandler
     public void onVariableLightBlockMenuOpen(InventoryOpenEvent event) {
-        if (event.getView().getTitle().equals(ChatColor.DARK_RED + "Variable Light Blocks")) {
+        if (event.getView().getTitle().equals(NamedTextColor.DARK_RED + "Variable Light Blocks")) {
             Player player = (Player) event.getPlayer();
             scroll.put(player.getUniqueId(), 0);
         }
@@ -38,7 +38,7 @@ public class TARDISVariableLightBlocksListener extends TARDISWallListener {
     public void onVariableLightBlockClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
         String name = view.getTitle();
-        if (!name.equals(ChatColor.DARK_RED + "Variable Light Blocks")) {
+        if (!name.equals(NamedTextColor.DARK_RED + "Variable Light Blocks")) {
             return;
         }
         Player player = (Player) event.getWhoClicked();
@@ -107,7 +107,7 @@ public class TARDISVariableLightBlocksListener extends TARDISWallListener {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 // go back to Lights GUI
                 ItemStack[] lightStacks = new TARDISLightsInventory(plugin, id, uuid).getGUI();
-                Inventory lightGUI = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Lights");
+                Inventory lightGUI = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Lights");
                 lightGUI.setContents(lightStacks);
                 player.openInventory(lightGUI);
             }, 5L);

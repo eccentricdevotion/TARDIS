@@ -4,7 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -63,7 +63,7 @@ public class SonicScrewdriverRecipe {
         NamespacedKey sonicModel = sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getKey());
         ItemStack is = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");
+        im.setDisplayName(NamedTextColor.WHITE + "Sonic Screwdriver");
         im.setItemModel(sonicModel);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "sonic_screwdriver");
@@ -72,7 +72,7 @@ public class SonicScrewdriverRecipe {
             r.shape("Q", "I", "O");
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
-            em.setDisplayName(ChatColor.WHITE + "Sonic Oscillator");
+            em.setDisplayName(NamedTextColor.WHITE + "Sonic Oscillator");
             em.setItemModel(RecipeItem.SONIC_OSCILLATOR.getModel());
             exact.setItemMeta(em);
             r.setIngredient('O', new RecipeChoice.ExactChoice(exact));

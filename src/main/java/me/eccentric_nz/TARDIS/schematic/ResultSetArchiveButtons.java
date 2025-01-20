@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.schematic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -81,7 +81,7 @@ public class ResultSetArchiveButtons {
                     lore.add("Cost: " + cost);
                     // add current
                     if (rs.getInt("use") == 1) {
-                        lore.add(ChatColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"));
+                        lore.add(NamedTextColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"));
                     }
                     im.setLore(lore);
                     is.setItemMeta(im);

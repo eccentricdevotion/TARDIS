@@ -45,21 +45,18 @@ import me.eccentric_nz.tardisweepingangels.equip.RemoveEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.empty_child.EmptyChildEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessMonkEquipment;
-import me.eccentric_nz.tardisweepingangels.monsters.judoon.JudoonEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Equipment;
-import me.eccentric_nz.tardisweepingangels.monsters.ood.OodEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.silent.SilentEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.toclafane.ToclafaneEquipment;
 import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
-import me.eccentric_nz.tardisweepingangels.nms.TWAJudoon;
 import me.eccentric_nz.tardisweepingangels.utils.FollowerChecker;
 import me.eccentric_nz.tardisweepingangels.utils.HeadBuilder;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.*;
 import org.bukkit.World.Environment;
-import org.bukkit.craftbukkit.v1_21_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Husk;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -451,7 +448,7 @@ public class TARDII implements TardisAPI {
             // set the second line of lore
             ItemMeta im = result.getItemMeta();
             List<String> lore = im.getLore();
-            String uses = (TARDIS.plugin.getConfig().getInt("circuits.uses.invisibility", 5) == 0 || !TARDIS.plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + TARDIS.plugin.getConfig().getString("circuits.uses.invisibility");
+            String uses = (TARDIS.plugin.getConfig().getInt("circuits.uses.invisibility", 5) == 0 || !TARDIS.plugin.getConfig().getBoolean("circuits.damage")) ? NamedTextColor.YELLOW + "unlimited" : NamedTextColor.YELLOW + TARDIS.plugin.getConfig().getString("circuits.uses.invisibility");
             lore.set(1, uses);
             im.setLore(lore);
             result.setItemMeta(im);
@@ -468,7 +465,7 @@ public class TARDII implements TardisAPI {
             if (lore == null) {
                 lore = new ArrayList<>();
             }
-            String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
+            String format = NamedTextColor.AQUA + "" + TextDecoration.ITALIC;
             String what = item.endsWith("TARDIS Key") ? "key" : "disk";
             lore.add(format + "This " + what + " belongs to");
             lore.add(format + player.getName());
@@ -505,7 +502,7 @@ public class TARDII implements TardisAPI {
             im.setItemModel(model);
             im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
             // set display name
-            im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
+            im.setDisplayName(NamedTextColor.GOLD + "TARDIS Seed Block");
             List<String> lore = new ArrayList<>();
             lore.add(schematic);
             lore.add("Walls: ORANGE_WOOL");

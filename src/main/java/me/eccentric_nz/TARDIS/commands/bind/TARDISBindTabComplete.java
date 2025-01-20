@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.bind;
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
+import me.eccentric_nz.TARDIS.utility.TARDISRegistryValues;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -43,7 +44,7 @@ public class TARDISBindTabComplete extends TARDISCompleter implements TabComplet
         for (ChameleonPreset p : ChameleonPreset.values()) {
             CHAM_SUBS.add(p.toString());
         }
-        for (Biome b : Biome.values()) {
+        for (Biome b : TARDISRegistryValues.BIOMES) {
             BIOME_SUBS.add(b.toString());
         }
     }

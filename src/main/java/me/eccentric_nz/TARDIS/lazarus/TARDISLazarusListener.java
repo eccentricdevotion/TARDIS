@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPowered;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateGeneticManipulatorForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -86,7 +86,7 @@ public class TARDISLazarusListener implements Listener {
                     if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(uuid)) {
                         new FloodgateGeneticManipulatorForm(plugin, uuid, b).send();
                     } else {
-                        Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
+                        Inventory inv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Genetic Manipulator");
                         inv.setContents(new TARDISLazarusInventory(plugin).getPageOne());
                         player.openInventory(inv);
                     }

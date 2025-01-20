@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISRecipeLister;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
@@ -160,7 +160,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
             if (args.length == 0) {
                 // open recipe GUI
                 ItemStack[] emenu = new TARDISRecipeCategoryInventory().getMenu();
-                Inventory categories = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "Recipe Categories");
+                Inventory categories = plugin.getServer().createInventory(player, 36, NamedTextColor.DARK_RED + "Recipe Categories");
                 categories.setContents(emenu);
                 player.openInventory(categories);
                 return true;
@@ -216,7 +216,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         player.discoverRecipe(recipe.getKey());
         player.closeInventory();
         plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());
-        Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + str + " recipe");
+        Inventory inv = plugin.getServer().createInventory(player, 27, NamedTextColor.DARK_RED + str + " recipe");
         String[] recipeShape = recipe.getShape();
         Map<Character, ItemStack> ingredientMap = recipe.getIngredientMap();
         int glowstoneCount = 0;
@@ -229,24 +229,24 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 ItemMeta im = item.getItemMeta();
                 if (item.getType().equals(Material.GLOWSTONE_DUST) && !str.endsWith("Tie")) {
                     String dn = getDisplayName(str, glowstoneCount);
-                    im.setDisplayName(ChatColor.WHITE + dn);
+                    im.setDisplayName(NamedTextColor.WHITE + dn);
                     im.setItemModel(RecipeItem.getByName(dn).getModel());
                     glowstoneCount++;
                 }
                 if (str.endsWith("TARDIS Remote Key") && item.getType().equals(Material.GOLD_NUGGET)) {
-                    im.setDisplayName(ChatColor.WHITE + "TARDIS Key");
+                    im.setDisplayName(NamedTextColor.WHITE + "TARDIS Key");
                     im.setItemModel(KeyVariant.REMOTE.getKey());
                 }
                 if (str.equals("Acid Battery") && item.getType().equals(Material.WATER_BUCKET)) {
-                    im.setDisplayName(ChatColor.WHITE + "Acid Bucket");
+                    im.setDisplayName(NamedTextColor.WHITE + "Acid Bucket");
                     im.setItemModel(Whoniverse.ACID_BUCKET.getKey());
                 }
                 if (str.equals("Rift Manipulator") && item.getType().equals(Material.NETHER_BRICK)) {
-                    im.setDisplayName(ChatColor.WHITE + "Acid Battery");
+                    im.setDisplayName(NamedTextColor.WHITE + "Acid Battery");
                     im.setItemModel(Whoniverse.ACID_BATTERY.getKey());
                 }
                 if (str.equals("Rust Plague Sword") && item.getType().equals(Material.LAVA_BUCKET)) {
-                    im.setDisplayName(ChatColor.WHITE + "Rust Bucket");
+                    im.setDisplayName(NamedTextColor.WHITE + "Rust Bucket");
                     im.setItemModel(Whoniverse.RUST_BUCKET.getKey());
                 }
                 item.setItemMeta(im);
@@ -255,7 +255,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         }
         ItemStack result = recipe.getResult();
         ItemMeta im = result.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + str);
+        im.setDisplayName(NamedTextColor.WHITE + str);
         RecipeItem recipeItem = RecipeItem.getByName(str);
         if (recipeItem != RecipeItem.NOT_FOUND) {
             im.setItemModel(recipeItem.getModel());
@@ -263,7 +263,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         if (str.equals("TARDIS Invisibility Circuit")) {
             // set the second line of lore
             List<String> lore = im.getLore();
-            String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
+            String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? NamedTextColor.YELLOW + "unlimited" : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
             lore.set(1, uses);
             im.setLore(lore);
         }
@@ -281,7 +281,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         player.discoverRecipe(recipe.getKey());
         List<ItemStack> ingredients = recipe.getIngredientList();
         plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());
-        Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + str + " recipe");
+        Inventory inv = plugin.getServer().createInventory(player, 27, NamedTextColor.DARK_RED + str + " recipe");
         int glowstoneCount = 0;
         for (int i = 0; i < ingredients.size(); i++) {
             ItemMeta im = ingredients.get(i).getItemMeta();
@@ -305,7 +305,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         }
         ItemStack result = recipe.getResult();
         ItemMeta im = result.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + str);
+        im.setDisplayName(NamedTextColor.WHITE + str);
         if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk")) {
             im.addItemFlags(ItemFlag.values());
         }
@@ -313,7 +313,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         if (recipeItem != RecipeItem.NOT_FOUND) {
             im.setItemModel(recipeItem.getModel());
             if (recipeItem.getCategory().equals(RecipeCategory.SONIC_UPGRADES)) {
-                im.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");
+                im.setDisplayName(NamedTextColor.WHITE + "Sonic Screwdriver");
                 im.setLore(Arrays.asList("Upgrades:", str));
             }
         }
@@ -325,7 +325,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
 
     private void showTARDISRecipe(Player player, String type) {
         plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());
-        Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS " + type + " seed recipe");
+        Inventory inv = plugin.getServer().createInventory(player, 27, NamedTextColor.DARK_RED + "TARDIS " + type + " seed recipe");
         // redstone torch
         ItemStack red = new ItemStack(Material.REDSTONE_TORCH, 1);
         // lapis block
@@ -363,7 +363,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         seed.setItemModel(model);
         seed.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
         // set display name
-        seed.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
+        seed.setDisplayName(NamedTextColor.GOLD + "TARDIS Seed Block");
         List<String> lore = new ArrayList<>();
         lore.add(type);
         lore.add("Walls: ORANGE_WOOL");

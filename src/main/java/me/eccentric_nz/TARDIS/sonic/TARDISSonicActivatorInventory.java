@@ -19,7 +19,8 @@ package me.eccentric_nz.TARDIS.sonic;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUISonicActivator;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -52,15 +53,15 @@ class TARDISSonicActivatorInventory {
         lore.add("items to this inventory:");
         // get the Sonic Generator recipe
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            lore.add(ChatColor.AQUA + "GOLD_INGOT");
-            lore.add(ChatColor.AQUA + "REDSTONE_BLOCK");
+            lore.add(NamedTextColor.AQUA + "GOLD_INGOT");
+            lore.add(NamedTextColor.AQUA + "REDSTONE_BLOCK");
         } else {
-            lore.add(ChatColor.AQUA + "GOLD_NUGGET");
-            lore.add(ChatColor.AQUA + "REDSTONE");
+            lore.add(NamedTextColor.AQUA + "GOLD_NUGGET");
+            lore.add(NamedTextColor.AQUA + "REDSTONE");
         }
-        lore.add(ChatColor.AQUA + "FLOWER_POT");
-        lore.add(ChatColor.AQUA + "BLAZE_ROD");
-        lore.add(ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + "Then close the GUI.");
+        lore.add(NamedTextColor.AQUA + "FLOWER_POT");
+        lore.add(NamedTextColor.AQUA + "BLAZE_ROD");
+        lore.add(NamedTextColor.DARK_PURPLE + "" + TextDecoration.ITALIC + "Then close the GUI.");
         // info
         ItemStack info = new ItemStack(GUISonicActivator.INSTRUCTIONS.material(), 1);
         ItemMeta info_im = info.getItemMeta();

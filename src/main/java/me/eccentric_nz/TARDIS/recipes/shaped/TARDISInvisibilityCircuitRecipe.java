@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -41,18 +41,18 @@ public class TARDISInvisibilityCircuitRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "TARDIS Invisibility Circuit");
+        im.setDisplayName(NamedTextColor.WHITE + "TARDIS Invisibility Circuit");
         im.setItemModel(RecipeItem.TARDIS_INVISIBILITY_CIRCUIT.getModel());
         String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
-                ? ChatColor.YELLOW + "unlimited"
-                : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
+                ? NamedTextColor.YELLOW + "unlimited"
+                : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
         im.setLore(List.of("Uses left", uses));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_invisibility_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.setDisplayName(ChatColor.WHITE + "Perception Circuit");
+        em.setDisplayName(NamedTextColor.WHITE + "Perception Circuit");
         em.setItemModel(RecipeItem.PERCEPTION_CIRCUIT.getModel());
         exact.setItemMeta(em);
         ItemStack potion = new ItemStack(Material.POTION, 1);

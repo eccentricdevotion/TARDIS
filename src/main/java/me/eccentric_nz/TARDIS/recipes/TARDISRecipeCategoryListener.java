@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.howto.TARDISSeedsInventory;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -42,7 +42,7 @@ public class TARDISRecipeCategoryListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onRecipeCategoryClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Recipe Categories")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Recipe Categories")) {
             return;
         }
         event.setCancelled(true);
@@ -61,11 +61,11 @@ public class TARDISRecipeCategoryListener extends TARDISMenuListener {
                 ItemStack[] items;
                 if (category == RecipeCategory.SEED_BLOCKS) {
                     items = new TARDISSeedsInventory(plugin, player).getMenu();
-                    recipes = plugin.getServer().createInventory(player, 45, ChatColor.DARK_RED + "TARDIS Seeds Menu");
+                    recipes = plugin.getServer().createInventory(player, 45, NamedTextColor.DARK_RED + "TARDIS Seeds Menu");
                     recipes.setContents(items);
                 } else {
                     items = new TARDISRecipeInventory(plugin, category).getMenu();
-                    recipes = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS Recipes");
+                    recipes = plugin.getServer().createInventory(player, 27, NamedTextColor.DARK_RED + "TARDIS Recipes");
                     recipes.setContents(items);
                 }
                 player.openInventory(recipes);

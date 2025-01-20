@@ -13,7 +13,6 @@ public class FloodgateBiomes {
         put(Biome.BIRCH_FOREST, "blocks/planks_birch.png");
         put(Biome.CHERRY_GROVE, "blocks/cherry_planks.png");
         put(Biome.CRIMSON_FOREST, "blocks/crimson_planks.png");
-        put(Biome.CUSTOM, "blocks/barrier.png");
         put(Biome.COLD_OCEAN, "items/fish_salmon_raw.png");
         put(Biome.DARK_FOREST, "blocks/planks_big_oak.png");
         put(Biome.DEEP_COLD_OCEAN, "items/sea_pickle.png");

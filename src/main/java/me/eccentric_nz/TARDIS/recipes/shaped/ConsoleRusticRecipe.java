@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -40,7 +40,7 @@ public class ConsoleRusticRecipe {
         ItemStack is = new ItemStack(Material.WAXED_OXIDIZED_COPPER, 1);
         ItemMeta im = is.getItemMeta();
         String dn = "Rustic Console";
-        im.setDisplayName(ChatColor.WHITE + dn);
+        im.setDisplayName(NamedTextColor.WHITE + dn);
         im.setLore(List.of("Integration with interaction"));
         im.setItemModel(RecipeItem.RUSTIC_CONSOLE.getModel());
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 17);

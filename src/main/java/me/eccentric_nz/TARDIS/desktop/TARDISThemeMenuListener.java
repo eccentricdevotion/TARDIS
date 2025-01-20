@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -61,7 +61,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onThemeMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Upgrade Menu")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Upgrade Menu")) {
             return;
         }
         Player player = (Player) event.getWhoClicked();
@@ -108,7 +108,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
                     // page 1
                     consoles = new TARDISPluginThemeInventory(plugin, player, tud.getPrevious().getPermission(), tud.getLevel()).getMenu();
                 }
-                Inventory upg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Upgrade Menu");
+                Inventory upg = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Upgrade Menu");
                 upg.setContents(consoles);
                 player.openInventory(upg);
             }
@@ -188,7 +188,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
             ItemStack[] wall_blocks = new TARDISWallsInventory(plugin).getMenu();
-            Inventory wall = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Wall Menu");
+            Inventory wall = plugin.getServer().createInventory(p, 54, NamedTextColor.DARK_RED + "TARDIS Wall Menu");
             wall.setContents(wall_blocks);
             p.openInventory(wall);
         }, 1L);
@@ -203,7 +203,7 @@ public class TARDISThemeMenuListener extends TARDISMenuListener {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             p.closeInventory();
             ItemStack[] archive = new TARDISArchiveInventory(plugin, p).getArchives();
-            Inventory menu = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Archive");
+            Inventory menu = plugin.getServer().createInventory(p, 27, NamedTextColor.DARK_RED + "TARDIS Archive");
             menu.setContents(archive);
             p.openInventory(menu);
         }, 1L);

@@ -17,7 +17,8 @@
 package me.eccentric_nz.tardischemistry.inventory;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -47,7 +48,7 @@ public class InventoryHelper implements Listener {
         InventoryView view = event.getView();
         InventoryType type = view.getTopInventory().getType();
         if (type == InventoryType.CHEST) {
-            String name = ChatColor.stripColor(view.getTitle());
+            String name = TARDISStaticUtils.stripColor(view.getTitle());
             if (INV_TITLES.contains(name)) {
                 Player player = (Player) event.getPlayer();
                 List<ItemStack> leftovers = new ArrayList<>();

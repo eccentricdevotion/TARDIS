@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shapeless;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +29,7 @@ public class PlayerStorageDiskRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.MUSIC_DISC_WAIT, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "Player Storage Disk");
+        im.setDisplayName(NamedTextColor.WHITE + "Player Storage Disk");
         im.setItemModel(RecipeItem.PLAYER_STORAGE_DISK.getModel());
         im.setLore(List.of("Blank"));
         is.setItemMeta(im);

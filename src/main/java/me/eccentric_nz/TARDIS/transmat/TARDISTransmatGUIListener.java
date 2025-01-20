@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.desktop.PreviewData;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -54,7 +54,7 @@ public class TARDISTransmatGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onTransmatMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS transmats")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS transmats")) {
             return;
         }
         event.setCancelled(true);

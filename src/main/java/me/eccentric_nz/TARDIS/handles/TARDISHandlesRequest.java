@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.utility.TARDISRegistryValues;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
@@ -38,10 +39,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -303,8 +301,8 @@ public class TARDISHandlesRequest {
                             }
                             String gb = (groups.getFirst() == null || groups.getFirst().isEmpty()) ? groups.get(1) : groups.getFirst();
                             // cycle through biomes
-                            for (Biome biome : Biome.values()) {
-                                String b = biome.toString();
+                            for (Biome biome : TARDISRegistryValues.BIOMES) {
+                                String b = biome.getKey().value().toUpperCase(Locale.ROOT);
                                 if (gb.equalsIgnoreCase(b)) {
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel biome " + b), 1L);
                                     return;

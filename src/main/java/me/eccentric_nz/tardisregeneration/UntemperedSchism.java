@@ -1,7 +1,7 @@
 package me.eccentric_nz.tardisregeneration;
 
 import me.eccentric_nz.TARDIS.custommodels.keys.Schism;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -21,7 +21,7 @@ public class UntemperedSchism {
         ItemStack untempered = new ItemStack(Material.ANCIENT_DEBRIS);
         ItemMeta im = untempered.getItemMeta();
         im.setItemModel(Schism.UNTEMPERED_SCHISM_BLOCK.getKey());
-        im.setDisplayName(ChatColor.WHITE + "Untempered Schism");
+        im.setDisplayName(NamedTextColor.WHITE + "Untempered Schism");
         im.setLore(List.of("Renew regenerations when", "you have used them all."));
         untempered.setItemMeta(im);
         return untempered;

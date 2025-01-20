@@ -21,8 +21,6 @@ import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import me.eccentric_nz.TARDIS.bStats.TARDISStats;
 import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUI;
-import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.TARDISMySQLDatabase;
@@ -40,9 +38,8 @@ import me.eccentric_nz.TARDIS.mapping.TARDISDynmap;
 import me.eccentric_nz.TARDIS.mapping.TARDISMapper;
 import me.eccentric_nz.TARDIS.mapping.TARDISSquareMap;
 import me.eccentric_nz.TARDIS.messaging.AdventureMessage;
-import me.eccentric_nz.TARDIS.messaging.TARDISChatGUIAdventure;
-import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
-import me.eccentric_nz.TARDIS.messaging.TARDISUpdateChatGUIAdventure;
+import me.eccentric_nz.TARDIS.messaging.AdventureChatGUI;
+import me.eccentric_nz.TARDIS.messaging.AdventureUpdateChatGUI;
 import me.eccentric_nz.TARDIS.monitor.SnapshotLoader;
 import me.eccentric_nz.TARDIS.placeholders.TARDISPlaceholderExpansion;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -50,7 +47,6 @@ import me.eccentric_nz.TARDIS.recipes.*;
 import me.eccentric_nz.TARDIS.rooms.eye.EyeLoader;
 import me.eccentric_nz.TARDIS.rotors.TARDISCustomRotorLoader;
 import me.eccentric_nz.TARDIS.sensor.SensorTracker;
-import me.eccentric_nz.TARDIS.skins.SkinChanger;
 import me.eccentric_nz.TARDIS.skins.SkinChangerPaper;
 import me.eccentric_nz.TARDIS.travel.TARDISArea;
 import me.eccentric_nz.TARDIS.travel.TARDISPluginRespect;
@@ -115,10 +111,10 @@ public class TARDIS extends JavaPlugin {
     private final String versionRegex = "(\\d+[.])+\\d+";
     private final Pattern versionPattern = Pattern.compile(versionRegex);
     private final String serverStr = "1.21";
-    private TARDISMessage messenger;
-    private TARDISChatGUI<?> jsonKeeper;
-    private TARDISUpdateChatGUI updateChatGUI;
-    private SkinChanger skinChanger;
+    private AdventureMessage messenger;
+    private AdventureChatGUI jsonKeeper;
+    private AdventureUpdateChatGUI updateChatGUI;
+    private SkinChangerPaper skinChanger;
     private Calendar afterCal;
     private Calendar beforeCal;
     private ConsoleCommandSender console;
@@ -211,7 +207,7 @@ public class TARDIS extends JavaPlugin {
         versions.put("WorldGuard", "7.0.11");
     }
 
-    public TARDISMessage getMessenger() {
+    public AdventureMessage getMessenger() {
         return messenger;
     }
 
@@ -285,8 +281,8 @@ public class TARDIS extends JavaPlugin {
                 return;
             }
             messenger = new AdventureMessage();
-            jsonKeeper = new TARDISChatGUIAdventure();
-            updateChatGUI = new TARDISUpdateChatGUIAdventure();
+            jsonKeeper = new AdventureChatGUI();
+            updateChatGUI = new AdventureUpdateChatGUI();
             skinChanger = new SkinChangerPaper();
             // send banner
             messenger.sendStartBanner(console);
@@ -899,7 +895,7 @@ public class TARDIS extends JavaPlugin {
      *
      * @return the TARDIS Chat GUI JSON class
      */
-    public TARDISChatGUI getJsonKeeper() {
+    public AdventureChatGUI getJsonKeeper() {
         return jsonKeeper;
     }
 
@@ -908,7 +904,7 @@ public class TARDIS extends JavaPlugin {
      *
      * @return the TARDIS Chat GUI JSON class
      */
-    public TARDISUpdateChatGUI getUpdateGUI() {
+    public AdventureUpdateChatGUI getUpdateGUI() {
         return updateChatGUI;
     }
 
@@ -917,7 +913,7 @@ public class TARDIS extends JavaPlugin {
      *
      * @return the TARDIS Skin Changer class
      */
-    public SkinChanger getSkinChanger() {
+    public SkinChangerPaper getSkinChanger() {
         return skinChanger;
     }
 
@@ -1306,7 +1302,7 @@ public class TARDIS extends JavaPlugin {
         if (pm.isPluginEnabled(plg)) {
             Plugin check = pm.getPlugin(plg);
             ModuleDescriptor.Version minVersion = ModuleDescriptor.Version.parse(min);
-            String yamlVersion = check.getDescription().getVersion();
+            String yamlVersion = check.getPluginMeta().getVersion();
             Matcher matcher = versionPattern.matcher(yamlVersion);
             if (matcher.find()) {
                 String pluginVersion = matcher.group(0);
@@ -1317,10 +1313,10 @@ public class TARDIS extends JavaPlugin {
                     debug("Version IllegalArgumentException");
                 }
             }
-            getServer().getLogger().log(Level.WARNING, "TARDIS failed to get the version for {0}.", plg);
-            getServer().getLogger().log(Level.WARNING, "This could cause issues with enabling the plugin.");
-            getServer().getLogger().log(Level.WARNING, "Please check you have at least v{0}", min);
-            getServer().getLogger().log(Level.WARNING, "The invalid version format was {0}", yamlVersion);
+            getLogger().log(Level.WARNING, "TARDIS failed to get the version for {0}.", plg);
+            getLogger().log(Level.WARNING, "This could cause issues with enabling the plugin.");
+            getLogger().log(Level.WARNING, "Please check you have at least v{0}", min);
+            getLogger().log(Level.WARNING, "The invalid version format was {0}", yamlVersion);
         }
         return true;
     }

@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -35,7 +35,7 @@ public class TARDISLocatorRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.COMPASS, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "TARDIS Locator");
+        im.setDisplayName(NamedTextColor.WHITE + "TARDIS Locator");
         im.setItemModel(RecipeItem.TARDIS_LOCATOR.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_locator");
@@ -45,7 +45,7 @@ public class TARDISLocatorRecipe {
             r.setIngredient('O', Material.OBSIDIAN);
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
-            em.setDisplayName(ChatColor.WHITE + "TARDIS Locator Circuit");
+            em.setDisplayName(NamedTextColor.WHITE + "TARDIS Locator Circuit");
             em.setItemModel(RecipeItem.TARDIS_LOCATOR_CIRCUIT.getModel());
             exact.setItemMeta(em);
             r.setIngredient('C', new RecipeChoice.ExactChoice(exact));

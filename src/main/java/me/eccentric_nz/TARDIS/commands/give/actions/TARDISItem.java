@@ -12,7 +12,8 @@ import me.eccentric_nz.tardischemistry.lab.Lab;
 import me.eccentric_nz.tardischemistry.lab.LabBuilder;
 import me.eccentric_nz.tardischemistry.product.Product;
 import me.eccentric_nz.tardischemistry.product.ProductBuilder;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -93,7 +94,7 @@ public class TARDISItem {
                 // set the second line of lore
                 im = result.getItemMeta();
                 List<String> lore = im.getLore();
-                String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
+                String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? NamedTextColor.YELLOW + "unlimited" : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
                 lore.set(1, uses);
                 im.setLore(lore);
             }
@@ -108,7 +109,7 @@ public class TARDISItem {
                 if (lore == null) {
                     lore = new ArrayList<>();
                 }
-                String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
+                String format = NamedTextColor.AQUA + "" + TextDecoration.ITALIC;
                 String what = item.equals("key") ? "key" : "disk";
                 lore.add(format + "This " + what + " belongs to");
                 lore.add(format + player.getName());
@@ -119,7 +120,7 @@ public class TARDISItem {
             if (im == null) {
                 im = result.getItemMeta();
             }
-            im.setDisplayName(ChatColor.WHITE + Give.items.get(item));
+            im.setDisplayName(NamedTextColor.WHITE + Give.items.get(item));
             result.setItemMeta(im);
             result.setAmount(amount);
             player.getInventory().addItem(result);

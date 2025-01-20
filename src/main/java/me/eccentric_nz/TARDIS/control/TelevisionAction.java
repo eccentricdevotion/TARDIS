@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.skins.tv.TVInventory;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +17,7 @@ public class TelevisionAction {
 
     public void openGUI(Player player) {
         ItemStack[] items = new TVInventory().getMenu();
-        Inventory tvinv = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "TARDIS Television");
+        Inventory tvinv = plugin.getServer().createInventory(player, 36, NamedTextColor.DARK_RED + "TARDIS Television");
         tvinv.setContents(items);
         player.openInventory(tvinv);
     }

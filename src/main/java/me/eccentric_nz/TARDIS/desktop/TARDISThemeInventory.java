@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.keys.SeedBlock;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -65,15 +65,15 @@ public class TARDISThemeInventory {
             List<String> lore = new ArrayList<>();
             lore.add("Cost: " + cost);
             if (!TARDISPermission.hasPermission(player, "tardis." + schematic.getPermission())) {
-                lore.add(ChatColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
+                lore.add(NamedTextColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
             } else if (level < cost && !currentConsole.equals(schematic.getPermission())) {
                 lore.add(plugin.getLanguage().getString("UPGRADE_ABORT_ENERGY"));
             }
             if (currentConsole.equals(schematic.getPermission())) {
-                lore.add(ChatColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"));
+                lore.add(NamedTextColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"));
             } else {
-                lore.add(ChatColor.GREEN + plugin.getLanguage().getString("RESET"));
-                lore.add(ChatColor.GREEN + plugin.getLanguage().getString("REMEMBER"));
+                lore.add(NamedTextColor.GREEN + plugin.getLanguage().getString("RESET"));
+                lore.add(NamedTextColor.GREEN + plugin.getLanguage().getString("REMEMBER"));
             }
             im.setLore(lore);
             switch (m) {

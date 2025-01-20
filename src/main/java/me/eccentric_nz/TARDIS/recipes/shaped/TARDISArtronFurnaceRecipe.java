@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -33,7 +33,7 @@ public class TARDISArtronFurnaceRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.FURNACE, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "TARDIS Artron Furnace");
+        im.setDisplayName(NamedTextColor.WHITE + "TARDIS Artron Furnace");
         im.setItemModel(RecipeItem.TARDIS_ARTRON_FURNACE.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_artron_furnace");

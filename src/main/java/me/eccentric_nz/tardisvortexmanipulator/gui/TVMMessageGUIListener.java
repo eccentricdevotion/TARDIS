@@ -10,7 +10,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetMessageById;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -38,7 +38,7 @@ public class TVMMessageGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onMessageGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "VM Messages")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "VM Messages")) {
             return;
         }
         event.setCancelled(true);
@@ -66,7 +66,7 @@ public class TVMMessageGUIListener extends TARDISMenuListener {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 TVMMessageGUI tvmm = new TVMMessageGUI(plugin, start, start + 44, player.getUniqueId().toString());
                 ItemStack[] gui = tvmm.getGUI();
-                Inventory vmg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "VM Messages");
+                Inventory vmg = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "VM Messages");
                 vmg.setContents(gui);
                 player.openInventory(vmg);
             }, 2L);
@@ -80,7 +80,7 @@ public class TVMMessageGUIListener extends TARDISMenuListener {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             TVMMessageGUI tvmm = new TVMMessageGUI(plugin, start, start + 44, player.getUniqueId().toString());
             ItemStack[] gui = tvmm.getGUI();
-            Inventory vmg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "VM Messages");
+            Inventory vmg = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "VM Messages");
             vmg.setContents(gui);
             player.openInventory(vmg);
         }, 2L);

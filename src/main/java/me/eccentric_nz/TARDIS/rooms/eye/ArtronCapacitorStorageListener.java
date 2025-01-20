@@ -4,7 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -30,7 +30,7 @@ public class ArtronCapacitorStorageListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onCapacitorStorageClose(InventoryCloseEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "Artron Capacitor Storage")) {
+        if (view.getTitle().equals(NamedTextColor.DARK_RED + "Artron Capacitor Storage")) {
             UUID uuid = event.getPlayer().getUniqueId();
             // get the TARDIS the player is in
             HashMap<String, Object> wheres = new HashMap<>();
@@ -85,7 +85,7 @@ public class ArtronCapacitorStorageListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onCapacitorStorageInteract(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (view.getTitle().equals(ChatColor.DARK_RED + "Artron Capacitor Storage")) {
+        if (view.getTitle().equals(NamedTextColor.DARK_RED + "Artron Capacitor Storage")) {
             int slot = event.getRawSlot();
             if ((slot < 2 || slot == 7 || slot == 8) || event.isShiftClick()) {
                 event.setCancelled(true);

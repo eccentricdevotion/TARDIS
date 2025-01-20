@@ -6,7 +6,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
@@ -28,7 +28,7 @@ public class TelepathicStructureListener extends TARDISMenuListener {
     public void onStructureMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
         String name = view.getTitle();
-        if (!name.equals(ChatColor.DARK_RED + "Telepathic Structure Finder")) {
+        if (!name.equals(NamedTextColor.DARK_RED + "Telepathic Structure Finder")) {
             return;
         }
         Player player = (Player) event.getWhoClicked();

@@ -27,7 +27,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -64,7 +65,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onParticleClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Particle Preferences")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Particle Preferences")) {
             return;
         }
         event.setCancelled(true);
@@ -142,12 +143,12 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         ItemStack is = view.getItem(GUIParticle.COLOUR.slot());
         ItemMeta im = is.getItemMeta();
         String lore = im.getLore().getFirst();
-        ChatColor current = ParticleColour.fromString(lore);
+        NamedTextColor current = ParticleColour.fromString(lore);
         int index = ParticleColour.colours.indexOf(current) + 1;
         if (index > 15) {
             index = 0;
         }
-        ChatColor next = ParticleColour.colours.get(index);
+        NamedTextColor next = ParticleColour.colours.get(index);
         String colour = ParticleColour.toString(next);
         List<String> newLore = List.of(next + colour);
         im.setLore(newLore);
@@ -244,14 +245,14 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         } catch (IllegalArgumentException ignored) {
         }
         ItemStack dis = view.getItem(GUIParticle.DENSITY.slot());
-        String d = ChatColor.stripColor(dis.getItemMeta().getLore().getFirst());
+        String d = TARDISStaticUtils.stripColor(dis.getItemMeta().getLore().getFirst());
         int density = TARDISNumberParsers.parseInt(d);
         ItemStack spis = view.getItem(GUIParticle.SPEED.slot());
-        String s = ChatColor.stripColor(spis.getItemMeta().getLore().getFirst());
+        String s = TARDISStaticUtils.stripColor(spis.getItemMeta().getLore().getFirst());
         ItemStack cis = view.getItem(GUIParticle.COLOUR.slot());
-        String colour = ChatColor.stripColor(cis.getItemMeta().getLore().getFirst());
+        String colour = TARDISStaticUtils.stripColor(cis.getItemMeta().getLore().getFirst());
         ItemStack bis = view.getItem(GUIParticle.BLOCK.slot());
-        String block = ChatColor.stripColor(bis.getItemMeta().getLore().getFirst());
+        String block = TARDISStaticUtils.stripColor(bis.getItemMeta().getLore().getFirst());
         double speed = TARDISNumberParsers.parseInt(s) / 10.0d;
         return new ParticleData(effect, shape, density, speed, colour, block, b);
     }
@@ -262,10 +263,10 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
         List<String> lore = im.getLore();
-        int level = TARDISNumberParsers.parseInt(ChatColor.stripColor(lore.getFirst()));
+        int level = TARDISNumberParsers.parseInt(TARDISStaticUtils.stripColor(lore.getFirst()));
         level -= 1;
         if (level >= min) {
-            lore.set(0, ChatColor.AQUA + "" + level);
+            lore.set(0, NamedTextColor.AQUA + "" + level);
             im.setLore(lore);
             is.setItemMeta(im);
             view.setItem(slot, is);
@@ -284,10 +285,10 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
         List<String> lore = im.getLore();
-        int level = TARDISNumberParsers.parseInt(ChatColor.stripColor(lore.getFirst()));
+        int level = TARDISNumberParsers.parseInt(TARDISStaticUtils.stripColor(lore.getFirst()));
         level += 1;
         if (level <= max) {
-            lore.set(0, ChatColor.AQUA + "" + level);
+            lore.set(0, NamedTextColor.AQUA + "" + level);
             im.setLore(lore);
             is.setItemMeta(im);
             view.setItem(slot, is);

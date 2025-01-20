@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.commands.sudo;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -42,7 +42,7 @@ class SudoARS {
     boolean showARS(Player player, UUID uuid) {
         TARDISSudoTracker.SUDOERS.put(player.getUniqueId(), uuid);
         ItemStack[] tars = new TARDISARSInventory(plugin, player).getARS();
-        Inventory ars = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
+        Inventory ars = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Architectural Reconfiguration");
         ars.setContents(tars);
         player.openInventory(ars);
         return true;

@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -40,14 +40,14 @@ public class TARDISBiomeReaderRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.BRICK, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "TARDIS Biome Reader");
+        im.setDisplayName(NamedTextColor.WHITE + "TARDIS Biome Reader");
         im.setItemModel(RecipeItem.TARDIS_BIOME_READER.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_biome_reader");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.setDisplayName(ChatColor.WHITE + "Emerald Environment Circuit");
+        em.setDisplayName(NamedTextColor.WHITE + "Emerald Environment Circuit");
         em.setItemModel(RecipeItem.EMERALD_ENVIRONMENT_CIRCUIT.getModel());
         exact.setItemMeta(em);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {

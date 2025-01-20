@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -37,7 +37,7 @@ public class ArtronStorageCellRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.BUCKET, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "Artron Storage Cell");
+        im.setDisplayName(NamedTextColor.WHITE + "Artron Storage Cell");
         im.setItemModel(Whoniverse.ARTRON_BATTERY.getKey());
         im.setLore(List.of("Charge Level", "0"));
         is.setItemMeta(im);

@@ -19,7 +19,7 @@ package me.eccentric_nz.tardischemistry.element;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischemistry.creative.CompoundsCreativeInventory;
 import me.eccentric_nz.tardischemistry.creative.ProductsCreativeInventory;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -52,7 +52,7 @@ public class ElementGUIListener implements Listener {
     @EventHandler
     public void onElementMenuOpen(InventoryOpenEvent event) {
         String name = event.getView().getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Atomic elements")) {
+        if (name.equals(NamedTextColor.DARK_RED + "Atomic elements")) {
             Player p = (Player) event.getPlayer();
             scroll.put(p.getUniqueId(), 0);
         }
@@ -61,7 +61,7 @@ public class ElementGUIListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onElementMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Atomic elements")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Atomic elements")) {
             return;
         }
         Player p = (Player) event.getWhoClicked();
@@ -98,7 +98,7 @@ public class ElementGUIListener implements Listener {
                 close(p);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     ItemStack[] cmenu = new CompoundsCreativeInventory(plugin).getMenu();
-                    Inventory compounds = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Molecular compounds");
+                    Inventory compounds = plugin.getServer().createInventory(p, 54, NamedTextColor.DARK_RED + "Molecular compounds");
                     compounds.setContents(cmenu);
                     p.openInventory(compounds);
                 }, 2L);
@@ -109,7 +109,7 @@ public class ElementGUIListener implements Listener {
                 close(p);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     ItemStack[] lmenu = new ProductsCreativeInventory(plugin).getMenu();
-                    Inventory lab = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Products");
+                    Inventory lab = plugin.getServer().createInventory(p, 54, NamedTextColor.DARK_RED + "Products");
                     lab.setContents(lmenu);
                     p.openInventory(lab);
                 }, 2L);

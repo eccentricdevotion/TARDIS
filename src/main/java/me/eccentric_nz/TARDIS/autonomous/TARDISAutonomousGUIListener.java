@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetAutonomousSave;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -46,11 +46,11 @@ public class TARDISAutonomousGUIListener extends TARDISMenuListener {
         this.plugin = plugin;
         on = new ItemStack(Material.LIME_WOOL, 1);
         ItemMeta onMeta = on.getItemMeta();
-        onMeta.setDisplayName(ChatColor.GREEN + plugin.getLanguage().getString("SET_ON"));
+        onMeta.setDisplayName(NamedTextColor.GREEN + plugin.getLanguage().getString("SET_ON"));
         on.setItemMeta(onMeta);
         off = new ItemStack(Material.LIGHT_GRAY_CARPET, 1);
         ItemMeta offMeta = off.getItemMeta();
-        offMeta.setDisplayName(ChatColor.RED + plugin.getLanguage().getString("SET_OFF"));
+        offMeta.setDisplayName(NamedTextColor.RED + plugin.getLanguage().getString("SET_OFF"));
         off.setItemMeta(offMeta);
     }
 
@@ -63,7 +63,7 @@ public class TARDISAutonomousGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onChameleonMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Autonomous Menu")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Autonomous Menu")) {
             return;
         }
         event.setCancelled(true);
@@ -148,7 +148,7 @@ public class TARDISAutonomousGUIListener extends TARDISMenuListener {
                         ItemMeta im = is.getItemMeta();
                         List<String> lore = im.getLore();
                         if (lore.size() > 3) {
-                            lore.set(3, ChatColor.GREEN + next.getFirst());
+                            lore.set(3, NamedTextColor.GREEN + next.getFirst());
                             im.setLore(lore);
                             is.setItemMeta(im);
                             view.setItem(25, is);

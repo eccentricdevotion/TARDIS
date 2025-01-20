@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.info;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -24,7 +24,7 @@ public class TARDISIndexFileSectionListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onIndexFileSectionClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Info Category")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Info Category")) {
             return;
         }
         event.setCancelled(true);
@@ -43,7 +43,7 @@ public class TARDISIndexFileSectionListener extends TARDISMenuListener {
                 Player player = (Player) event.getWhoClicked();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     ItemStack[] cats = new TARDISIndexFileInventory(plugin).getMenu();
-                    Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS Index File");
+                    Inventory gui = plugin.getServer().createInventory(player, 27, NamedTextColor.DARK_RED + "TARDIS Index File");
                     gui.setContents(cats);
                     player.openInventory(gui);
                 }, 2L);
@@ -66,7 +66,7 @@ public class TARDISIndexFileSectionListener extends TARDISMenuListener {
                     } else {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             ItemStack[] entries = new TARDISIndexFileEntry(plugin, tim).getMenu();
-                            Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Info Entry");
+                            Inventory gui = plugin.getServer().createInventory(p, 27, NamedTextColor.DARK_RED + "TARDIS Info Entry");
                             gui.setContents(entries);
                             p.openInventory(gui);
                         }, 2L);

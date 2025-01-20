@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon.construct;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -41,7 +41,7 @@ public final class TARDISChameleonConstructorOpenCloseListener implements Listen
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChameleonConstructorOpen(InventoryOpenEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Chameleon Construction")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Chameleon Construction")) {
             return;
         }
         Player player = ((Player) event.getPlayer());
@@ -51,7 +51,7 @@ public final class TARDISChameleonConstructorOpenCloseListener implements Listen
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChameleonConstructorClose(InventoryCloseEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Chameleon Construction")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Chameleon Construction")) {
             return;
         }
         Player player = ((Player) event.getPlayer());

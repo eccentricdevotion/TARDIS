@@ -23,10 +23,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.utility.TARDISDalekDisguiser;
-import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import me.eccentric_nz.TARDIS.utility.*;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Difficulty;
 import org.bukkit.Location;
@@ -215,9 +212,9 @@ public class TARDISMonsterRunnable implements Runnable {
                         rtm.setType(type);
                         String dn = TARDISStringUtils.uppercaseFirst(type.toString().toLowerCase(Locale.ROOT));
                         if (type.equals(EntityType.ZOMBIE_VILLAGER)) {
-                            Profession prof = Profession.values()[TARDISConstants.RANDOM.nextInt(7)];
+                            Profession prof = TARDISRegistryValues.VILLAGER_PROFESSIONS.get(TARDISConstants.RANDOM.nextInt(TARDISRegistryValues.VILLAGER_PROFESSIONS.size()));
                             rtm.setProfession(prof);
-                            dn = "Zombie " + TARDISStringUtils.uppercaseFirst(prof.toString().toLowerCase(Locale.ROOT));
+                            dn = "Zombie " + TARDISStringUtils.uppercaseFirst(prof.getKey().value());
                         }
                         rtm.setDisplayName(dn);
                         moveMonster(map.getValue(), rtm, null, type.equals(EntityType.GUARDIAN));

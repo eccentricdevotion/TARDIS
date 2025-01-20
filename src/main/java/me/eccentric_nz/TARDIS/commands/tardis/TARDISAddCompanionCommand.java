@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
@@ -52,7 +52,7 @@ class TARDISAddCompanionCommand {
     boolean doAddGUI(Player player) {
         if (TARDISPermission.hasPermission(player, "tardis.add")) {
             ItemStack[] items = new TARDISCompanionAddInventory(plugin, player).getPlayers();
-            Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Add Companion");
+            Inventory presetinv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Add Companion");
             presetinv.setContents(items);
             player.openInventory(presetinv);
         } else {

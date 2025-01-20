@@ -51,7 +51,7 @@ import me.eccentric_nz.TARDIS.travel.save.TARDISSavesPlanetInventory;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -80,7 +80,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onControlMenuInteract(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Control Menu")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Control Menu")) {
             return;
         }
         event.setCancelled(true);
@@ -177,7 +177,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                     return;
                 }
                 ItemStack[] tars = new TARDISARSInventory(plugin, player).getARS();
-                Inventory ars = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
+                Inventory ars = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Architectural Reconfiguration");
                 ars.setContents(tars);
                 player.openInventory(ars);
             }
@@ -201,7 +201,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 }
                 // open Chameleon Circuit GUI
                 ItemStack[] cc = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset()).getMenu();
-                Inventory cc_gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
+                Inventory cc_gui = plugin.getServer().createInventory(player, 27, NamedTextColor.DARK_RED + "Chameleon Circuit");
                 cc_gui.setContents(cc);
                 player.openInventory(cc_gui);
             }
@@ -266,7 +266,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 }
                 TARDISSavesPlanetInventory tssi = new TARDISSavesPlanetInventory(plugin, whichId, player);
                 ItemStack[] saves = tssi.getPlanets();
-                Inventory saved = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
+                Inventory saved = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Dimension Map");
                 saved.setContents(saves);
                 player.openInventory(saved);
             }
@@ -298,7 +298,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             }
             case 17 -> {
                 //player prefs
-                Inventory ppm = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "Player Prefs Menu");
+                Inventory ppm = plugin.getServer().createInventory(player, 36, NamedTextColor.DARK_RED + "Player Prefs Menu");
                 ppm.setContents(new TARDISPrefsMenuInventory(plugin, uuid).getMenu());
                 player.openInventory(ppm);
             }
@@ -337,7 +337,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                     // open the add companions inventory
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         ItemStack[] items = new TARDISCompanionAddInventory(plugin, player).getPlayers();
-                        Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Add Companion");
+                        Inventory presetinv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Add Companion");
                         presetinv.setContents(items);
                         player.openInventory(presetinv);
                     }, 2L);
@@ -345,7 +345,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 }
                 String[] companionData = comps.split(":");
                 ItemStack[] heads = new TARDISCompanionInventory(plugin, companionData).getSkulls();
-                Inventory companions = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Companions");
+                Inventory companions = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Companions");
                 companions.setContents(heads);
                 player.openInventory(companions);
             }
@@ -364,7 +364,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             }
             case 29 -> {
                 ItemStack[] lightStacks = new TARDISLightsInventory(plugin, id, player.getUniqueId()).getGUI();
-                Inventory lightGUI = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Lights");
+                Inventory lightGUI = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Lights");
                 lightGUI.setContents(lightStacks);
                 player.openInventory(lightGUI);
             }
@@ -380,7 +380,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
             case 33 -> {
                 // transmat
                 ItemStack[] tran = new TARDISTransmatInventory(plugin, id, player).getMenu();
-                Inventory smat = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS transmats");
+                Inventory smat = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS transmats");
                 smat.setContents(tran);
                 player.openInventory(smat);
             }
@@ -397,7 +397,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 }
                 TARDISAreasInventory tai = new TARDISAreasInventory(plugin, player);
                 ItemStack[] areas = tai.getTerminal();
-                Inventory areainv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS areas");
+                Inventory areainv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS areas");
                 areainv.setContents(areas);
                 player.openInventory(areainv);
             }
@@ -436,13 +436,13 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                     return;
                 }
                 ItemStack[] items = new TARDISTerminalInventory(plugin).getTerminal();
-                Inventory aec = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Destination Terminal");
+                Inventory aec = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Destination Terminal");
                 aec.setContents(items);
                 player.openInventory(aec);
             }
             case 47 -> {
                 // tardis map
-                Inventory new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Map");
+                Inventory new_inv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Map");
                 // open new inventory
                 new_inv.setContents(new TARDISARSMap(plugin).getMap());
                 player.openInventory(new_inv);
@@ -458,7 +458,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                     return;
                 }
                 ItemStack[] clocks = new TARDISTemporalLocatorInventory(plugin).getTemporal();
-                Inventory tmpl = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Temporal Locator");
+                Inventory tmpl = plugin.getServer().createInventory(player, 27, NamedTextColor.DARK_RED + "Temporal Locator");
                 tmpl.setContents(clocks);
                 player.openInventory(tmpl);
             }

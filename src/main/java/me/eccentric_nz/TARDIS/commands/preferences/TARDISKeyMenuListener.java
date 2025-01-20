@@ -19,7 +19,8 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -41,28 +42,28 @@ import java.util.*;
  */
 public class TARDISKeyMenuListener extends TARDISMenuListener {
 
-    public static final TreeMap<Material, ChatColor> COLOUR_LOOKUP = new TreeMap<>();
-    public static final HashMap<ChatColor, Material> REVERSE_LOOKUP = new HashMap<>();
+    public static final TreeMap<Material, NamedTextColor> COLOUR_LOOKUP = new TreeMap<>();
+    public static final HashMap<NamedTextColor, Material> REVERSE_LOOKUP = new HashMap<>();
 
     public TARDISKeyMenuListener(TARDIS plugin) {
         super(plugin);
-        COLOUR_LOOKUP.put(Material.WHITE_WOOL, ChatColor.WHITE);
-        COLOUR_LOOKUP.put(Material.MAGENTA_WOOL, ChatColor.LIGHT_PURPLE);
-        COLOUR_LOOKUP.put(Material.PINK_WOOL, ChatColor.RED);
-        COLOUR_LOOKUP.put(Material.ORANGE_WOOL, ChatColor.GOLD);
-        COLOUR_LOOKUP.put(Material.YELLOW_WOOL, ChatColor.YELLOW);
-        COLOUR_LOOKUP.put(Material.LIME_WOOL, ChatColor.GREEN);
-        COLOUR_LOOKUP.put(Material.CYAN_WOOL, ChatColor.AQUA);
-        COLOUR_LOOKUP.put(Material.LIGHT_BLUE_WOOL, ChatColor.BLUE);
-        COLOUR_LOOKUP.put(Material.PURPLE_WOOL, ChatColor.DARK_PURPLE);
-        COLOUR_LOOKUP.put(Material.RED_WOOL, ChatColor.DARK_RED);
-        COLOUR_LOOKUP.put(Material.GREEN_WOOL, ChatColor.DARK_GREEN);
-        COLOUR_LOOKUP.put(Material.BROWN_WOOL, ChatColor.DARK_AQUA);
-        COLOUR_LOOKUP.put(Material.BLUE_WOOL, ChatColor.DARK_BLUE);
-        COLOUR_LOOKUP.put(Material.LIGHT_GRAY_WOOL, ChatColor.GRAY);
-        COLOUR_LOOKUP.put(Material.GRAY_WOOL, ChatColor.DARK_GRAY);
-        COLOUR_LOOKUP.put(Material.BLACK_WOOL, ChatColor.BLACK);
-        for (Map.Entry<Material, ChatColor> map : COLOUR_LOOKUP.entrySet()) {
+        COLOUR_LOOKUP.put(Material.WHITE_WOOL, NamedTextColor.WHITE);
+        COLOUR_LOOKUP.put(Material.MAGENTA_WOOL, NamedTextColor.LIGHT_PURPLE);
+        COLOUR_LOOKUP.put(Material.PINK_WOOL, NamedTextColor.RED);
+        COLOUR_LOOKUP.put(Material.ORANGE_WOOL, NamedTextColor.GOLD);
+        COLOUR_LOOKUP.put(Material.YELLOW_WOOL, NamedTextColor.YELLOW);
+        COLOUR_LOOKUP.put(Material.LIME_WOOL, NamedTextColor.GREEN);
+        COLOUR_LOOKUP.put(Material.CYAN_WOOL, NamedTextColor.AQUA);
+        COLOUR_LOOKUP.put(Material.LIGHT_BLUE_WOOL, NamedTextColor.BLUE);
+        COLOUR_LOOKUP.put(Material.PURPLE_WOOL, NamedTextColor.DARK_PURPLE);
+        COLOUR_LOOKUP.put(Material.RED_WOOL, NamedTextColor.DARK_RED);
+        COLOUR_LOOKUP.put(Material.GREEN_WOOL, NamedTextColor.DARK_GREEN);
+        COLOUR_LOOKUP.put(Material.BROWN_WOOL, NamedTextColor.DARK_AQUA);
+        COLOUR_LOOKUP.put(Material.BLUE_WOOL, NamedTextColor.DARK_BLUE);
+        COLOUR_LOOKUP.put(Material.LIGHT_GRAY_WOOL, NamedTextColor.GRAY);
+        COLOUR_LOOKUP.put(Material.GRAY_WOOL, NamedTextColor.DARK_GRAY);
+        COLOUR_LOOKUP.put(Material.BLACK_WOOL, NamedTextColor.BLACK);
+        for (Map.Entry<Material, NamedTextColor> map : COLOUR_LOOKUP.entrySet()) {
             REVERSE_LOOKUP.put(map.getValue(), map.getKey());
         }
     }
@@ -70,7 +71,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onPrefsMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Key Prefs Menu")) {
             return;
         }
         Player player = (Player) event.getWhoClicked();
@@ -104,7 +105,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                 } else {
                     lore = new ArrayList<>();
                 }
-                String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
+                String format = NamedTextColor.AQUA + "" + TextDecoration.ITALIC;
                 if (!lore.contains(format + "This key belongs to")) {
                     lore.add(format + "This key belongs to");
                     lore.add(format + player.getName());
@@ -123,7 +124,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                     return;
                 }
                 // set wool colour from display name of placed key
-                ChatColor color = TARDISStaticUtils.getColor(meta.getDisplayName());
+                NamedTextColor color = TARDISStaticUtils.getColor(meta.getDisplayName());
                 Material material = TARDISKeyMenuListener.REVERSE_LOOKUP.get(color);
                 ItemStack choice = view.getItem(19);
                 choice.setType(material);
@@ -140,9 +141,9 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                 Material wool = getNextWool(choice.getType());
                 // set wool colour to next in line
                 choice.setType(wool);
-                ChatColor display = COLOUR_LOOKUP.get(wool);
+                NamedTextColor display = COLOUR_LOOKUP.get(wool);
                 ItemMeta key_im = key.getItemMeta();
-                if (display != ChatColor.WHITE) {
+                if (display != NamedTextColor.WHITE) {
                     key_im.setDisplayName(display + "TARDIS Key");
                 } else {
                     key_im.setDisplayName("TARDIS Key");
@@ -166,7 +167,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onKeyMenuClose(InventoryCloseEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Key Prefs Menu")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Key Prefs Menu")) {
             return;
         }
         ItemStack key = view.getItem(18);

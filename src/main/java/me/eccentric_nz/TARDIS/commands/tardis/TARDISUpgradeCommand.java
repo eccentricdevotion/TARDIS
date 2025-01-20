@@ -28,7 +28,7 @@ import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -107,7 +107,7 @@ class TARDISUpgradeCommand {
         plugin.getTrackerKeeper().getUpgrades().put(uuid, tud);
         // open the upgrade menu
         ItemStack[] consoles = new TARDISPluginThemeInventory(plugin, player, current_console.getPermission(), level).getMenu();
-        Inventory upg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Upgrade Menu");
+        Inventory upg = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Upgrade Menu");
         upg.setContents(consoles);
         player.openInventory(upg);
         return true;

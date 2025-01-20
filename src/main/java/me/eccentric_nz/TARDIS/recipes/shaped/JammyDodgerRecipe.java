@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -33,7 +33,7 @@ public class JammyDodgerRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.COOKIE, 8);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "Jammy Dodger");
+        im.setDisplayName(NamedTextColor.WHITE + "Jammy Dodger");
         im.setItemModel(RecipeItem.JAMMY_DODGER.getModel());
         im.setLore(List.of("Best eaten with custard!"));
         is.setItemMeta(im);

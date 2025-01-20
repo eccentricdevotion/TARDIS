@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -92,7 +92,7 @@ public class TARDISCircuitDamager {
                                     if (lore == null) {
                                         lore = Arrays.asList("Uses left", "");
                                     }
-                                    String yellow = ChatColor.YELLOW + "" + decremented;
+                                    String yellow = NamedTextColor.YELLOW + "" + decremented;
                                     lore.set(1, yellow);
                                     im.setLore(lore);
                                     is.setItemMeta(im);

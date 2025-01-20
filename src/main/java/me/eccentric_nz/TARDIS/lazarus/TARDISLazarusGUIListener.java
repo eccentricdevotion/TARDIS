@@ -27,9 +27,11 @@ import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.skins.Skin;
 import me.eccentric_nz.TARDIS.skins.SkinUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISRegistryValues;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -93,7 +95,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onLazarusClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Genetic Manipulator")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Genetic Manipulator")) {
             return;
         }
         event.setCancelled(true);
@@ -132,7 +134,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     ItemStack pageButton = view.getItem(slot);
                     ItemMeta pageMeta = pageButton.getItemMeta();
                     // go to page one or two
-                    Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
+                    Inventory inv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Genetic Manipulator");
                     if (pageMeta.getDisplayName().equals(plugin.getLanguage().getString("BUTTON_PAGE_1"))) {
                         inv.setContents(new TARDISLazarusInventory(plugin).getPageOne());
                     } else {
@@ -147,10 +149,10 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     // go to skins or page two
                     Inventory inv;
                     if (skinsMeta.getDisplayName().equals(plugin.getLanguage().getString("BUTTON_PAGE_2"))) {
-                        inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
+                        inv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Genetic Manipulator");
                         inv.setContents(new TARDISLazarusPageTwoInventory(plugin).getPageTwo());
                     } else {
-                        inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Skins");
+                        inv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Genetic Skins");
                         inv.setContents(new TARDISTelevisionInventory(plugin).getSkins());
                     }
                     player.openInventory(inv);
@@ -162,10 +164,10 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     // go to monsters or page two
                     Inventory inv;
                     if (monstersMeta.getDisplayName().equals("TARDIS Television")) {
-                        inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Skins");
+                        inv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Genetic Skins");
                         inv.setContents(new TARDISTelevisionInventory(plugin).getSkins());
                     } else {
-                        inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
+                        inv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Genetic Manipulator");
                         inv.setContents(new TARDISWeepingAngelsMonstersInventory(plugin).getMonsters());
                     }
                     player.openInventory(inv);
@@ -190,7 +192,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                 case 47 -> { // adult / baby
                     ItemStack ageButton = view.getItem(slot);
                     ItemMeta ageMeta = ageButton.getItemMeta();
-                    String onoff = (ChatColor.stripColor(ageMeta.getLore().getFirst()).equals("ADULT")) ? "BABY" : "ADULT";
+                    String onoff = (TARDISStaticUtils.stripColor(ageMeta.getLore().getFirst()).equals("ADULT")) ? "BABY" : "ADULT";
                     ageMeta.setLore(List.of(onoff));
                     ageButton.setItemMeta(ageMeta);
                 }
@@ -204,7 +206,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     ItemMeta optionsMeta = optionsButton.getItemMeta();
                     List<String> lore = optionsMeta.getLore();
                     int pos = lore.size() - 1;
-                    String truefalse = (ChatColor.stripColor(lore.get(pos)).equals("FALSE")) ? ChatColor.GREEN + "TRUE" : ChatColor.RED + "FALSE";
+                    String truefalse = (TARDISStaticUtils.stripColor(lore.get(pos)).equals("FALSE")) ? NamedTextColor.GREEN + "TRUE" : NamedTextColor.RED + "FALSE";
                     lore.set(pos, truefalse);
                     optionsMeta.setLore(lore);
                     optionsButton.setItemMeta(optionsMeta);
@@ -477,7 +479,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     public void onLazarusClose(InventoryCloseEvent event) {
         String name = event.getView().getTitle();
         UUID uuid = event.getPlayer().getUniqueId();
-        if ((name.equals(ChatColor.DARK_RED + "Genetic Manipulator") || name.equals(ChatColor.DARK_RED + "Genetic Skins")) && !plugin.getTrackerKeeper().getGeneticManipulation().contains(uuid)) {
+        if ((name.equals(NamedTextColor.DARK_RED + "Genetic Manipulator") || name.equals(NamedTextColor.DARK_RED + "Genetic Skins")) && !plugin.getTrackerKeeper().getGeneticManipulation().contains(uuid)) {
             Block b = plugin.getTrackerKeeper().getLazarus().get(uuid);
             if (b != null && b.getRelative(BlockFace.SOUTH).getType().equals(Material.COBBLESTONE_WALL)) {
                 b.getRelative(BlockFace.SOUTH).setType(Material.AIR);
@@ -514,7 +516,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                 } else {
                     o = 0;
                 }
-                t = Frog.Variant.values()[o].toString();
+                t = TARDISRegistryValues.FROG_VARIANTS.get(o).key().value();
                 frogs.put(uuid, o);
             }
             case "AXOLOTL" -> {
@@ -578,7 +580,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                 } else {
                     o = 0;
                 }
-                t = Type.values()[o].toString();
+                t = TARDISRegistryValues.CAT_TYPES.get(o).key().value();
                 cats.put(uuid, o);
             }
             case "FOX" -> {
@@ -614,7 +616,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                 } else {
                     o = 1;
                 }
-                t = Profession.values()[o].toString();
+                t = TARDISRegistryValues.VILLAGER_PROFESSIONS.get(o).key().value();
                 professions.put(uuid, o);
             }
             case "SLIME", "MAGMA_CUBE" -> {
@@ -732,9 +734,10 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     private Frog.Variant getFrogVariant(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
-        try {
-            return Frog.Variant.valueOf(im.getLore().getFirst());
-        } catch (IllegalArgumentException e) {
+        Frog.Variant v = TARDISRegistryValues.getFrogVariant(im.getLore().getFirst());
+        if (v != null) {
+            return TARDISRegistryValues.getFrogVariant(im.getLore().getFirst());
+        } else {
             return Frog.Variant.TEMPERATE;
         }
     }
@@ -742,9 +745,10 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     private Type getCatType(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
-        try {
-            return Type.valueOf(im.getLore().getFirst());
-        } catch (IllegalArgumentException e) {
+        Cat.Type c = TARDISRegistryValues.getCatType(im.getLore().getFirst());
+        if (c != null) {
+            return c;
+        } else {
             return Type.TABBY;
         }
     }
@@ -802,9 +806,10 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     private Profession getProfession(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
-        try {
-            return Profession.valueOf(im.getLore().getFirst());
-        } catch (IllegalArgumentException e) {
+        Profession p = TARDISRegistryValues.getVillagerProfession(im.getLore().getFirst());
+        if (p != null) {
+            return p;
+        } else {
             return Profession.FARMER;
         }
     }
@@ -827,6 +832,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
         ItemMeta im = is.getItemMeta();
         List<String> lore = im.getLore();
         int pos = lore.size() - 1;
-        return ChatColor.stripColor(lore.get(pos)).equals("TRUE");
+        return TARDISStaticUtils.stripColor(lore.get(pos)).equals("TRUE");
     }
 }

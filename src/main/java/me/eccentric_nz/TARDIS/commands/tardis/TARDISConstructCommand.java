@@ -21,6 +21,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetConstructSign;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -68,7 +70,7 @@ class TARDISConstructCommand {
         int l = TARDISNumberParsers.parseInt(args[1]);
         String raw = ChatColor.translateAlternateColorCodes('&', String.join(" ", Arrays.copyOfRange(args, 2, args.length)));
         // strip color codes and check length
-        if (ChatColor.stripColor(raw).length() > 16) {
+        if (TARDISStaticUtils.stripColor(raw).length() > 16) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CONSTRUCT_LINE_LEN");
             return true;
         }

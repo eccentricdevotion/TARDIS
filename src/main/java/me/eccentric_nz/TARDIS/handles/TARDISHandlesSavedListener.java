@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -56,7 +56,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onHandlesGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Saved Programs")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Saved Programs")) {
             return;
         }
         Player player = (Player) event.getWhoClicked();
@@ -97,7 +97,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 TARDISHandlesProgramInventory thi = new TARDISHandlesProgramInventory(plugin, 0);
                 ItemStack[] items = thi.getHandles();
-                Inventory chaminv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Handles Program");
+                Inventory chaminv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Handles Program");
                 chaminv.setContents(items);
                 player.openInventory(chaminv);
             }, 2L);
@@ -111,7 +111,7 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     TARDISHandlesProgramInventory thi = new TARDISHandlesProgramInventory(plugin, pid);
                     ItemStack[] items = thi.getHandles();
-                    Inventory handlesinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Handles Program");
+                    Inventory handlesinv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Handles Program");
                     handlesinv.setContents(items);
                     player.openInventory(handlesinv);
                 }, 2L);
@@ -206,14 +206,14 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener {
                 ItemMeta im = is.getItemMeta();
                 List<String> lore = im.getLore();
                 if (s == slot) {
-                    if (lore.contains(ChatColor.GREEN + "Selected")) {
-                        if (lore.contains(ChatColor.AQUA + "Running")) {
+                    if (lore.contains(NamedTextColor.GREEN + "Selected")) {
+                        if (lore.contains(NamedTextColor.AQUA + "Running")) {
                             lore.remove(4);
                         } else {
                             lore.remove(3);
                         }
                     } else {
-                        lore.add(ChatColor.GREEN + "Selected");
+                        lore.add(NamedTextColor.GREEN + "Selected");
                     }
                 }
                 im.setLore(lore);

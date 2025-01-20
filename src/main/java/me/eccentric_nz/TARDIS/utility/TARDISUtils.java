@@ -21,7 +21,9 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayType;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.particles.ParticleColour;
 import me.eccentric_nz.tardischunkgenerator.worldgen.TARDISChunkGenerator;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -128,13 +130,13 @@ public class TARDISUtils {
      *
      * @return the configured chat colour
      */
-    public ChatColor getSignColour() {
-        ChatColor colour;
+    public NamedTextColor getSignColour() {
+        NamedTextColor colour;
         String cc = plugin.getConfig().getString("police_box.sign_colour");
         try {
-            colour = ChatColor.valueOf(cc);
+            colour = ParticleColour.fromString(TARDISStringUtils.capitalise(cc));
         } catch (IllegalArgumentException e) {
-            colour = ChatColor.WHITE;
+            colour = NamedTextColor.WHITE;
         }
         return colour;
     }

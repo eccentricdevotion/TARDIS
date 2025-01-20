@@ -29,7 +29,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
@@ -65,7 +65,7 @@ public class TARDISChameleonListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onChameleonMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Chameleon Circuit")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Chameleon Circuit")) {
             return;
         }
         event.setCancelled(true);
@@ -136,7 +136,7 @@ public class TARDISChameleonListener extends TARDISMenuListener {
                 ItemStack frb = view.getItem(20);
                 ItemMeta fact = frb.getItemMeta();
                 String ory = fact.getDisplayName();
-                if (ory.equals(ChatColor.GREEN + plugin.getLanguage().getString("SET_ON"))) {
+                if (ory.equals(NamedTextColor.GREEN + plugin.getLanguage().getString("SET_ON"))) {
                     set.put("chameleon_preset", "FACTORY");
                     toggleOthers(ChameleonOption.FACTORY, view);
                     if (hasChameleonSign) {
@@ -190,7 +190,7 @@ public class TARDISChameleonListener extends TARDISMenuListener {
                 ItemStack irb = view.getItem(22);
                 ItemMeta invis = irb.getItemMeta();
                 String ible = invis.getDisplayName();
-                if (ible.equals(ChatColor.RED + plugin.getLanguage().getString("SET_OFF"))) {
+                if (ible.equals(NamedTextColor.RED + plugin.getLanguage().getString("SET_OFF"))) {
                     // check they have an Invisibility Circuit
                     TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                     tcc.getCircuits();
@@ -228,7 +228,7 @@ public class TARDISChameleonListener extends TARDISMenuListener {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         TARDISPresetInventory tpi = new TARDISPresetInventory(plugin, player);
                         ItemStack[] items = tpi.getPresets();
-                        Inventory presetinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Presets");
+                        Inventory presetinv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Chameleon Presets");
                         presetinv.setContents(items);
                         player.openInventory(presetinv);
                     }, 2L);
@@ -237,7 +237,7 @@ public class TARDISChameleonListener extends TARDISMenuListener {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
                         ItemStack[] items = tci.getConstruct();
-                        Inventory chamcon = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Construction");
+                        Inventory chamcon = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Chameleon Construction");
                         chamcon.setContents(items);
                         player.openInventory(chamcon);
                     }, 2L);
@@ -263,7 +263,7 @@ public class TARDISChameleonListener extends TARDISMenuListener {
                             // set preset lore
                             ItemStack p = view.getItem(23);
                             ItemMeta pim = p.getItemMeta();
-                            pim.setDisplayName(ChatColor.GREEN + which.toString());
+                            pim.setDisplayName(NamedTextColor.GREEN + which.toString());
                             p.setItemMeta(pim);
                             // remove button
                             view.setItem(3, null);
@@ -289,7 +289,7 @@ public class TARDISChameleonListener extends TARDISMenuListener {
         // set preset lore
         ItemStack p = view.getItem(23);
         ItemMeta pim = p.getItemMeta();
-        pim.setDisplayName(ChatColor.GREEN + "POLICE_BOX_BLUE");
+        pim.setDisplayName(NamedTextColor.GREEN + "POLICE_BOX_BLUE");
         p.setItemMeta(pim);
         TARDISStaticUtils.setSign(chameleon, 3, "POLICE_BOX_BLUE", player);
         plugin.getMessenger().sendInsertedColour(player, "CHAM_SET", "Blue Police Box", plugin);
@@ -323,7 +323,7 @@ public class TARDISChameleonListener extends TARDISMenuListener {
     private boolean isBiomeAdaptive(InventoryView view) {
         ItemStack adaption = view.getItem(21);
         ItemMeta im = adaption.getItemMeta();
-        return (ChatColor.stripColor(im.getDisplayName()).equals("BIOME"));
+        return (TARDISStaticUtils.stripColor(im.getDisplayName()).equals("BIOME"));
     }
 
     private ChameleonPreset getAdaption(Biome biome) {

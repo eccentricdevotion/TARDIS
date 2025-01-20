@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.mapping;
 import com.flowpowered.math.vector.Vector3d;
 import de.bluecolored.bluemap.api.BlueMapAPI;
 import de.bluecolored.bluemap.api.BlueMapMap;
-import de.bluecolored.bluemap.api.markers.Marker;
 import de.bluecolored.bluemap.api.markers.MarkerSet;
 import de.bluecolored.bluemap.api.markers.POIMarker;
 import me.eccentric_nz.TARDIS.TARDIS;
@@ -29,9 +28,7 @@ import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TARDISBlueMap implements TARDISMapper {
 

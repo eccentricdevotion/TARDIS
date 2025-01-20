@@ -25,6 +25,8 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.particles.ParticleColour;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -35,9 +37,11 @@ import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
  * @author eccentric_nz
@@ -46,52 +50,52 @@ public class TARDISStaticUtils {
 
     private static final UUID ZERO_UUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
 
-    public static ChatColor policeBoxToChatColor(String preset) {
+    public static NamedTextColor policeBoxToNamedTextColor(String preset) {
         switch (preset) {
             case "POLICE_BOX_WHITE" -> {
-                return ChatColor.WHITE;
+                return NamedTextColor.WHITE;
             }
             case "POLICE_BOX_BROWN", "POLICE_BOX_ORANGE" -> {
-                return ChatColor.GOLD;
+                return NamedTextColor.GOLD;
             }
             case "POLICE_BOX_BLACK" -> {
-                return ChatColor.BLACK;
+                return NamedTextColor.BLACK;
             }
             case "POLICE_BOX_CYAN" -> {
-                return ChatColor.DARK_AQUA;
+                return NamedTextColor.DARK_AQUA;
             }
             case "POLICE_BOX_LIGHT_BLUE" -> {
-                return ChatColor.BLUE;
+                return NamedTextColor.BLUE;
             }
             case "POLICE_BOX_GRAY" -> {
-                return ChatColor.DARK_GRAY;
+                return NamedTextColor.DARK_GRAY;
             }
             case "POLICE_BOX_GREEN" -> {
-                return ChatColor.DARK_GREEN;
+                return NamedTextColor.DARK_GREEN;
             }
             case "POLICE_BOX_PURPLE" -> {
-                return ChatColor.DARK_PURPLE;
+                return NamedTextColor.DARK_PURPLE;
             }
             case "POLICE_BOX_RED" -> {
-                return ChatColor.DARK_RED;
+                return NamedTextColor.DARK_RED;
             }
             case "POLICE_BOX_LIGHT_GRAY" -> {
-                return ChatColor.GRAY;
+                return NamedTextColor.GRAY;
             }
             case "POLICE_BOX_LIME" -> {
-                return ChatColor.GREEN;
+                return NamedTextColor.GREEN;
             }
             case "POLICE_BOX_PINK" -> {
-                return ChatColor.LIGHT_PURPLE;
+                return NamedTextColor.LIGHT_PURPLE;
             }
             case "POLICE_BOX_MAGENTA" -> {
-                return ChatColor.RED;
+                return NamedTextColor.RED;
             }
             case "POLICE_BOX_YELLOW" -> {
-                return ChatColor.YELLOW;
+                return NamedTextColor.YELLOW;
             }
             default -> {
-                return ChatColor.DARK_BLUE;
+                return NamedTextColor.DARK_BLUE;
             }
         }
     }
@@ -250,8 +254,8 @@ public class TARDISStaticUtils {
 
     public static boolean isInfested(Material material) {
         return switch (material) {
-            case INFESTED_CHISELED_STONE_BRICKS, INFESTED_COBBLESTONE, INFESTED_CRACKED_STONE_BRICKS, INFESTED_MOSSY_STONE_BRICKS, INFESTED_STONE, INFESTED_STONE_BRICKS ->
-                    true;
+            case INFESTED_CHISELED_STONE_BRICKS, INFESTED_COBBLESTONE, INFESTED_CRACKED_STONE_BRICKS,
+                 INFESTED_MOSSY_STONE_BRICKS, INFESTED_STONE, INFESTED_STONE_BRICKS -> true;
             default -> false;
         };
     }
@@ -260,13 +264,19 @@ public class TARDISStaticUtils {
         return Tag.BANNERS.isTagged(material);
     }
 
+    private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)" + String.valueOf('§') + "[0-9A-FK-ORX]");
+
+    public static @Nullable String stripColor(@Nullable String input) {
+        return input == null ? null : STRIP_COLOR_PATTERN.matcher(input).replaceAll("");
+    }
+
     public static String getNick(UUID uuid) {
         if (TARDIS.plugin.getConfig().getBoolean("police_box.use_nick")) {
             Essentials essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
             if (essentials != null) {
                 User user = essentials.getUser(uuid);
                 String prefix = essentials.getSettings().getNicknamePrefix();
-                return ChatColor.stripColor(user.getNick()).replace(prefix, "");
+                return stripColor(user.getNick()).replace(prefix, "");
             }
         }
         Player player = Bukkit.getPlayer(uuid);
@@ -284,7 +294,7 @@ public class TARDISStaticUtils {
             if (essentials != null) {
                 User user = essentials.getUser(player.getUniqueId());
                 String prefix = essentials.getSettings().getNicknamePrefix();
-                return ChatColor.stripColor(user.getNick()).replace(prefix, "");
+                return stripColor(user.getNick()).replace(prefix, "");
             }
         }
         return player.getName();
@@ -328,9 +338,9 @@ public class TARDISStaticUtils {
      * Gets the chat colour from a display name. Used by Key and Sonic preference GUIs.
      *
      * @param input the display name of the item
-     * @return a ChatColor
+     * @return a NamedTextColor
      */
-    public static ChatColor getColor(String input) {
+    public static NamedTextColor getColor(String input) {
         char COLOR_CHAR = '\u00A7';
         int length = input.length();
         // Search backwards from the end as it is faster
@@ -339,9 +349,9 @@ public class TARDISStaticUtils {
             if (section == COLOR_CHAR && index < length - 1) {
                 // check normal color
                 char c = input.charAt(index + 1);
-                return ChatColor.getByChar(c);
+                return ParticleColour.fromChar(c);
             }
         }
-        return ChatColor.WHITE;
+        return NamedTextColor.WHITE;
     }
 }

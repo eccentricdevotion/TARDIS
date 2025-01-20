@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.recipes.shaped.SonicScrewdriverRecipe;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -97,7 +97,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onGeneratorMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Sonic Generator")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Sonic Generator")) {
             return;
         }
         Player p = (Player) event.getWhoClicked();
@@ -172,7 +172,7 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
                 }
                 sonic_im = sonic.getItemMeta();
                 if (slotWasNull) {
-                    sonic_im.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");
+                    sonic_im.setDisplayName(NamedTextColor.WHITE + "Sonic Screwdriver");
                     view.setItem(49, sonic);
                 } else {
                     // remove lore

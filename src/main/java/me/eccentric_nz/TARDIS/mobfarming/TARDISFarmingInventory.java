@@ -4,7 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIFarming;
 import me.eccentric_nz.TARDIS.database.data.FarmPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarmingPrefs;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -24,11 +24,11 @@ public class TARDISFarmingInventory {
         this.uuid = uuid;
         off = new ItemStack(GUIFarming.OFF.getMaterial(), 1);
         ItemMeta offMeta = off.getItemMeta();
-        offMeta.setDisplayName(ChatColor.RED + plugin.getLanguage().getString("SET_OFF"));
+        offMeta.setDisplayName(NamedTextColor.RED + plugin.getLanguage().getString("SET_OFF"));
         off.setItemMeta(offMeta);
         on = new ItemStack(GUIFarming.ON.getMaterial(), 1);
         ItemMeta onMeta = on.getItemMeta();
-        onMeta.setDisplayName(ChatColor.RED + plugin.getLanguage().getString("SET_ON"));
+        onMeta.setDisplayName(NamedTextColor.RED + plugin.getLanguage().getString("SET_ON"));
         on.setItemMeta(offMeta);
         gui = getItemStack();
     }

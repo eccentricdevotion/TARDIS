@@ -33,7 +33,7 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -66,7 +66,7 @@ public class TARDISShellLoaderListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onShellLoaderClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Shell Loader")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Shell Loader")) {
             return;
         }
         event.setCancelled(true);

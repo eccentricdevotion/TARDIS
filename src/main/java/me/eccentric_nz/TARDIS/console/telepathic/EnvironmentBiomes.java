@@ -1,7 +1,11 @@
 package me.eccentric_nz.TARDIS.console.telepathic;
 
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import org.bukkit.Material;
+import org.bukkit.Registry;
 import org.bukkit.block.Biome;
+import org.bukkit.entity.Villager;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -14,7 +18,6 @@ public class EnvironmentBiomes {
     public static final List<Biome> NETHER = List.of(Biome.NETHER_WASTES, Biome.BASALT_DELTAS, Biome.CRIMSON_FOREST, Biome.SOUL_SAND_VALLEY, Biome.WARPED_FOREST);
     public static List<Biome> OVERWORLD = new ArrayList<>();
     public static HashMap<String, Material> BIOME_BLOCKS = new HashMap<>() {{
-//        put(Biome.CUSTOM.getKey().getKey(), Material.BARRIER);
         put("eye_of_harmony", Material.MAGMA_BLOCK);
         put("gallifrey_badlands", Material.TERRACOTTA);
         put("skaro_desert", Material.CYAN_TERRACOTTA);
@@ -86,11 +89,12 @@ public class EnvironmentBiomes {
     }};
 
     static {
-        for (Biome biome : Biome.values()) {
-            if (!END.contains(biome) && !NETHER.contains(biome) && biome != Biome.THE_VOID) {
-                OVERWORLD.add(biome);
+        Registry<Biome> biomeRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME);
+        biomeRegistry.forEach(b -> {
+            if (!END.contains(b) && !NETHER.contains(b) && b != Biome.THE_VOID) {
+                OVERWORLD.add(b);
             }
-        }
+        });
         OVERWORLD.sort(Comparator.comparing(b -> b.getKey().getKey()));
     }
 }

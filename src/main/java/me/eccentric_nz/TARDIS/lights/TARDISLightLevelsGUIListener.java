@@ -10,7 +10,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.apache.commons.lang3.ArrayUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -40,7 +40,7 @@ public class TARDISLightLevelsGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onLightLevelsMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Light Levels")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Light Levels")) {
             return;
         }
         event.setCancelled(true);
@@ -127,7 +127,7 @@ public class TARDISLightLevelsGUIListener extends TARDISMenuListener {
                     case 45 -> {
                         // back
                         ItemStack[] lightStacks = new TARDISLightsInventory(plugin, id, uuid).getGUI();
-                        Inventory lightGUI = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Lights");
+                        Inventory lightGUI = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Lights");
                         lightGUI.setContents(lightStacks);
                         player.openInventory(lightGUI);
                     }

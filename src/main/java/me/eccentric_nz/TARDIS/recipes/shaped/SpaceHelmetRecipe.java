@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -38,7 +38,7 @@ public class SpaceHelmetRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLASS, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "TARDIS Space Helmet");
+        im.setDisplayName(NamedTextColor.WHITE + "TARDIS Space Helmet");
         im.setItemModel(RecipeItem.TARDIS_SPACE_HELMET.getModel());
         im.setMaxStackSize(1);
         is.setItemMeta(im);

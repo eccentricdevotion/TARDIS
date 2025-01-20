@@ -18,7 +18,8 @@ package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -38,7 +39,7 @@ public class TARDISRecipeInventoryListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onRecipeInventoryClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Recipes")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Recipes")) {
             return;
         }
         event.setCancelled(true);
@@ -56,14 +57,14 @@ public class TARDISRecipeInventoryListener extends TARDISMenuListener {
                 // back
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     ItemStack[] emenu = new TARDISRecipeCategoryInventory().getMenu();
-                    Inventory categories = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "Recipe Categories");
+                    Inventory categories = plugin.getServer().createInventory(player, 36, NamedTextColor.DARK_RED + "Recipe Categories");
                     categories.setContents(emenu);
                     player.openInventory(categories);
                 }, 2L);
             case 4 -> { } // info
             case 8 -> close(player); // close
             default -> {
-                String command = ChatColor.stripColor(is.getItemMeta().getLore().getFirst()).substring(1);
+                String command = TARDISStaticUtils.stripColor(is.getItemMeta().getLore().getFirst()).substring(1);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     player.performCommand(command);
                     plugin.getTrackerKeeper().getRecipeViewers().add(player.getUniqueId());

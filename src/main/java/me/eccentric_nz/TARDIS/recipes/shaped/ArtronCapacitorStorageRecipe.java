@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -38,14 +38,14 @@ public class ArtronCapacitorStorageRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GRAY_SHULKER_BOX, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "Artron Capacitor Storage");
+        im.setDisplayName(NamedTextColor.WHITE + "Artron Capacitor Storage");
         im.setItemModel(RecipeItem.ARTRON_CAPACITOR_STORAGE.getModel());
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, RecipeItem.ARTRON_CAPACITOR_STORAGE.getModel().getKey());
         is.setItemMeta(im);
         // exact choice
         ItemStack capac = new ItemStack(Material.BUCKET, 1);
         ItemMeta itor = capac.getItemMeta();
-        itor.setDisplayName(ChatColor.WHITE + "Artron Capacitor");
+        itor.setDisplayName(NamedTextColor.WHITE + "Artron Capacitor");
         itor.setItemModel(RecipeItem.ARTRON_CAPACITOR.getModel());
         capac.setItemMeta(itor);
         NamespacedKey key = new NamespacedKey(plugin, "artron_capacitor_storage");

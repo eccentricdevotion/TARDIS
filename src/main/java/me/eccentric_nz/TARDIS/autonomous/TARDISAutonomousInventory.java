@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.custommodels.GUIAutonomous;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAutonomousSave;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -42,7 +42,7 @@ public class TARDISAutonomousInventory {
         this.uuid = uuid;
         off = new ItemStack(Material.LIGHT_GRAY_CARPET, 1);
         ItemMeta offMeta = off.getItemMeta();
-        offMeta.setDisplayName(ChatColor.RED + plugin.getLanguage().getString("SET_OFF"));
+        offMeta.setDisplayName(NamedTextColor.RED + plugin.getLanguage().getString("SET_OFF"));
         off.setItemMeta(offMeta);
         gui = getItemStack();
     }
@@ -67,7 +67,7 @@ public class TARDISAutonomousInventory {
         for (GUIAutonomous a : GUIAutonomous.values()) {
             ItemStack is = new ItemStack(a.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
-            im.setDisplayName(a.getName().contains("Selected") ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : a.getName());
+            im.setDisplayName(a.getName().contains("Selected") ? NamedTextColor.GREEN + plugin.getLanguage().getString("SET_ON") : a.getName());
             if (a.getModel() != null) {
                 im.setItemModel(a.getModel());
             }
@@ -79,7 +79,7 @@ public class TARDISAutonomousInventory {
                     // get autonomous save
                     ResultSetAutonomousSave rsd = new ResultSetAutonomousSave(plugin);
                     if (rsd.fromID(rst.getTardisId())) {
-                        lore.add(ChatColor.GREEN + rsd.getAutonomous());
+                        lore.add(NamedTextColor.GREEN + rsd.getAutonomous());
                     }
                 }
                 im.setLore(lore);

@@ -17,6 +17,8 @@
 package me.eccentric_nz.TARDIS.messaging;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.particles.ParticleColour;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.ChatColor;
 
 import java.util.Arrays;
@@ -56,22 +58,22 @@ public class TARDISChatPaginator {
             char c = rawChars[i];
             // skip chat color modifiers
             if (c == ChatColor.COLOR_CHAR) {
-                word.append(ChatColor.getByChar(rawChars[i + 1]));
+                word.append(ParticleColour.fromChar(rawChars[i + 1]));
                 lineColorChars += 2;
                 i++; // Eat the next character as we have already processed it
                 continue;
             }
             if (c == ' ' || c == '\n') {
-                if (line.length() == 0 && word.length() - lineColorChars > GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) { // special case: extremely long word begins a line
+                if (line.isEmpty() && word.length() - lineColorChars > GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) { // special case: extremely long word begins a line
                     lines.addAll(Arrays.asList(word.toString().split("(?<=\\G.{" + GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH + "})")));
-                } else if (line.length() > 0 && line.length() + 1 + word.length() - lineColorChars > GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) { // Line too long...break the line
+                } else if (!line.isEmpty() && line.length() + 1 + word.length() - lineColorChars > GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) { // Line too long...break the line
                     for (String partialWord : word.toString().split("(?<=\\G.{" + GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH + "})")) {
                         lines.add(line.toString());
                         line = new StringBuilder(partialWord);
                     }
                     lineColorChars = 0;
                 } else {
-                    if (line.length() > 0) {
+                    if (!line.isEmpty()) {
                         line.append(' ');
                     }
                     line.append(word);
@@ -86,20 +88,20 @@ public class TARDISChatPaginator {
                 word.append(c);
             }
         }
-        if (line.length() > 0) { // Only add the last line if there is anything to add
+        if (!line.isEmpty()) { // Only add the last line if there is anything to add
             lines.add(line.toString());
         }
         // Iterate over the wrapped lines, applying the last color from one line to the beginning of the next
-        if (lines.getFirst().length() == 0 || lines.getFirst().charAt(0) != ChatColor.COLOR_CHAR) {
-            lines.set(0, ChatColor.WHITE + lines.getFirst());
+        if (lines.getFirst().isEmpty() || lines.getFirst().charAt(0) != ChatColor.COLOR_CHAR) {
+            lines.set(0, NamedTextColor.WHITE + lines.getFirst());
         }
         for (int i = 1; i < lines.size(); i++) {
             String pLine = lines.get(i - 1);
             String subLine = lines.get(i);
 
             char color = pLine.charAt(pLine.lastIndexOf(ChatColor.COLOR_CHAR) + 1);
-            if (subLine.length() == 0 || subLine.charAt(0) != ChatColor.COLOR_CHAR) {
-                lines.set(i, ChatColor.getByChar(color) + subLine);
+            if (subLine.isEmpty() || subLine.charAt(0) != ChatColor.COLOR_CHAR) {
+                lines.set(i, ParticleColour.fromChar(color) + subLine);
             }
         }
         return lines.toArray(new String[0]);

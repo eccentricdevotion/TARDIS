@@ -38,6 +38,7 @@ import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
+import net.kyori.adventure.text.format.NamedTextColor;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -186,7 +187,7 @@ public class TARDISStattenheimListener implements Listener {
                         int decremented = uses - 1;
                         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, decremented);
                         // set the lore
-                        String coloured = ChatColor.YELLOW + "" + decremented;
+                        String coloured = NamedTextColor.YELLOW + "" + decremented;
                         List<String> lore = Arrays.asList("Right-click block", "to call TARDIS", "Uses left", coloured);
                         im.setLore(lore);
                         is.setItemMeta(im);

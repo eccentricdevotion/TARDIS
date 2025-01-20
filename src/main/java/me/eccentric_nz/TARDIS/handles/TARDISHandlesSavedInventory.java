@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.custommodels.GUISavedPrograms;
 import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
 import me.eccentric_nz.TARDIS.database.data.Program;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPrograms;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -63,7 +63,7 @@ class TARDISHandlesSavedInventory {
                 im.setDisplayName("Handles Program Disk");
                 String checked = (p.isCheckedOut()) ? "Checked OUT" : "Checked IN";
                 if (!p.getParsed().isEmpty()) {
-                    im.setLore(Arrays.asList(p.getName(), p.getProgram_id() + "", checked, ChatColor.AQUA + "Running"));
+                    im.setLore(Arrays.asList(p.getName(), p.getProgram_id() + "", checked, NamedTextColor.AQUA + "Running"));
                 } else {
                     im.setLore(Arrays.asList(p.getName(), p.getProgram_id() + "", checked));
                 }

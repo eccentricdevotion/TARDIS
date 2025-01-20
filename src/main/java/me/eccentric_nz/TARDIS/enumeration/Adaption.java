@@ -16,24 +16,24 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 /**
  * @author eccentric_nz
  */
 public enum Adaption {
 
-    OFF(ChatColor.RED),
-    BIOME(ChatColor.GREEN),
-    BLOCK(ChatColor.AQUA);
+    OFF(NamedTextColor.RED),
+    BIOME(NamedTextColor.GREEN),
+    BLOCK(NamedTextColor.AQUA);
 
-    private final ChatColor colour;
+    private final NamedTextColor colour;
 
-    Adaption(ChatColor colour) {
+    Adaption(NamedTextColor colour) {
         this.colour = colour;
     }
 
-    public ChatColor getColour() {
+    public NamedTextColor getColour() {
         return colour;
     }
 }

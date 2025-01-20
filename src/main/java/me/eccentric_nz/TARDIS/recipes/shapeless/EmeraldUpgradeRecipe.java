@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shapeless;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -27,7 +27,7 @@ public class EmeraldUpgradeRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "Emerald Upgrade");
+        im.setDisplayName(NamedTextColor.WHITE + "Emerald Upgrade");
         im.setItemModel(RecipeItem.EMERALD_UPGRADE.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "emerald_upgrade");
@@ -35,7 +35,7 @@ public class EmeraldUpgradeRecipe {
         r.addIngredient(Material.BLAZE_ROD);
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.setDisplayName(ChatColor.WHITE + "Emerald Environment Circuit");
+        em.setDisplayName(NamedTextColor.WHITE + "Emerald Environment Circuit");
         em.setItemModel(RecipeItem.EMERALD_ENVIRONMENT_CIRCUIT.getModel());
         exact.setItemMeta(em);
         r.addIngredient(new RecipeChoice.ExactChoice(exact));

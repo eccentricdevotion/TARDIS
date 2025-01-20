@@ -84,7 +84,6 @@ public class TARDISZeroRoomChatListener implements Listener {
                         plugin.getTrackerKeeper().getTelepathicRescue().put(owner, uuid);
                     }
                     // if it is a tardis command run it as the time lord
-                    event.setPlayer(timelord);
                     event.setCancelled(true);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ()-> plugin.getServer().dispatchCommand(timelord, resend.substring(1)), 2L);
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TELEPATHIC_RUN", resend);

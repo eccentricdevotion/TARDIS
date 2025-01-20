@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.mobfarming;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -59,7 +59,7 @@ public class TARDISFarmingMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onFarmingMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Farming Menu")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Farming Menu")) {
             return;
         }
         Player player = (Player) event.getWhoClicked();

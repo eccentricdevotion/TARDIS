@@ -16,26 +16,26 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 /**
  * @author eccentric_nz
  */
 public enum ChameleonOption {
 
-    FACTORY(20, "DISABLED", ChatColor.RED, "SET_ON", ChatColor.GREEN),
-    ADAPTIVE(21, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
-    INVISIBLE(22, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
-    PRESET(23, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED),
-    CONSTRUCT(24, "SET_ON", ChatColor.GREEN, "SET_OFF", ChatColor.RED);
+    FACTORY(20, "DISABLED", NamedTextColor.RED, "SET_ON", NamedTextColor.GREEN),
+    ADAPTIVE(21, "SET_ON", NamedTextColor.GREEN, "SET_OFF", NamedTextColor.RED),
+    INVISIBLE(22, "SET_ON", NamedTextColor.GREEN, "SET_OFF", NamedTextColor.RED),
+    PRESET(23, "SET_ON", NamedTextColor.GREEN, "SET_OFF", NamedTextColor.RED),
+    CONSTRUCT(24, "SET_ON", NamedTextColor.GREEN, "SET_OFF", NamedTextColor.RED);
 
     private final int slot;
     private final String on;
-    private final ChatColor onColour;
+    private final NamedTextColor onColour;
     private final String off;
-    private final ChatColor offColour;
+    private final NamedTextColor offColour;
 
-    ChameleonOption(int slot, String on, ChatColor onColour, String off, ChatColor offColour) {
+    ChameleonOption(int slot, String on, NamedTextColor onColour, String off, NamedTextColor offColour) {
         this.slot = slot;
         this.on = on;
         this.off = off;
@@ -51,7 +51,7 @@ public enum ChameleonOption {
         return on;
     }
 
-    public ChatColor getOnColour() {
+    public NamedTextColor getOnColour() {
         return onColour;
     }
 
@@ -59,7 +59,7 @@ public enum ChameleonOption {
         return off;
     }
 
-    public ChatColor getOffColour() {
+    public NamedTextColor getOffColour() {
         return offColour;
     }
 }

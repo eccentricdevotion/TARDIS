@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.custommodels.keys.HandlesVariant;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.tardischemistry.element.Element;
 import me.eccentric_nz.tardischemistry.element.ElementBuilder;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,7 +40,7 @@ public class ConstructorGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onElementMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Element constructor")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Element constructor")) {
             return;
         }
         Player p = (Player) event.getWhoClicked();

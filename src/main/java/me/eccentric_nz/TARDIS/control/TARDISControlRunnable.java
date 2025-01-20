@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetOccupied;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Tag;
 import org.bukkit.block.Sign;
 import org.bukkit.block.sign.Side;
@@ -57,19 +57,19 @@ public class TARDISControlRunnable implements Runnable {
                                 SignSide front = sign.getSide(Side.FRONT);
                                 // update the data
                                 if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                                    front.setLine(0, ChatColor.DARK_PURPLE + "Drifting");
-                                    front.setLine(1, ChatColor.DARK_PURPLE + "in the");
-                                    front.setLine(2, ChatColor.DARK_PURPLE + "time");
-                                    front.setLine(3, ChatColor.DARK_PURPLE + "vortex...");
+                                    front.setLine(0, NamedTextColor.DARK_PURPLE + "Drifting");
+                                    front.setLine(1, NamedTextColor.DARK_PURPLE + "in the");
+                                    front.setLine(2, NamedTextColor.DARK_PURPLE + "time");
+                                    front.setLine(3, NamedTextColor.DARK_PURPLE + "vortex...");
                                 } else {
                                     String worldName = (resultSetConsole.getWorld() != null) ? TARDISAliasResolver.getWorldAlias(resultSetConsole.getWorld()) : "";
                                     if (!plugin.getPlanetsConfig().getBoolean("planets." + resultSetConsole.getWorld() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE) && !worldName.equals("")) {
                                         worldName = plugin.getMVHelper().getAlias(worldName);
                                     }
-                                    front.setLine(0, ChatColor.DARK_PURPLE + worldName);
-                                    front.setLine(1, ChatColor.BLACK + resultSetConsole.getX());
-                                    front.setLine(2, ChatColor.BLACK + resultSetConsole.getY());
-                                    front.setLine(3, ChatColor.BLACK + resultSetConsole.getZ());
+                                    front.setLine(0, NamedTextColor.DARK_PURPLE + worldName);
+                                    front.setLine(1, NamedTextColor.BLACK + resultSetConsole.getX());
+                                    front.setLine(2, NamedTextColor.BLACK + resultSetConsole.getY());
+                                    front.setLine(3, NamedTextColor.BLACK + resultSetConsole.getZ());
                                 }
                                 sign.update();
                             }
@@ -84,15 +84,15 @@ public class TARDISControlRunnable implements Runnable {
                                 Sign sign = (Sign) resultSetConsole.getSign().getState();
                                 SignSide front = sign.getSide(Side.FRONT);
                                 // update the data
-                                front.setLine(0, ChatColor.BLACK + plugin.getLanguage().getString("ARTRON_DISPLAY"));
-                                front.setLine(1, ChatColor.AQUA + resultSetConsole.getArtronLevel());
-                                front.setLine(2, ChatColor.BLACK + plugin.getLanguage().getString("CHAM_DISPLAY"));
+                                front.setLine(0, NamedTextColor.BLACK + plugin.getLanguage().getString("ARTRON_DISPLAY"));
+                                front.setLine(1, NamedTextColor.AQUA + resultSetConsole.getArtronLevel());
+                                front.setLine(2, NamedTextColor.BLACK + plugin.getLanguage().getString("CHAM_DISPLAY"));
                                 String preset = "";
                                 if (resultSetConsole.getPreset().startsWith("POLICE_BOX_")) {
-                                    ChatColor colour = TARDISStaticUtils.policeBoxToChatColor(resultSetConsole.getPreset());
+                                    NamedTextColor colour = TARDISStaticUtils.policeBoxToNamedTextColor(resultSetConsole.getPreset());
                                     preset = colour + "POLICE_BOX";
                                 } else {
-                                    preset = ChatColor.BLUE + resultSetConsole.getPreset().replace("ITEM:", "");
+                                    preset = NamedTextColor.BLUE + resultSetConsole.getPreset().replace("ITEM:", "");
                                 }
                                 front.setLine(3, preset);
                                 sign.update();

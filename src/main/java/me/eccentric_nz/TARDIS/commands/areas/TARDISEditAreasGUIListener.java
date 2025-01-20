@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.areas;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -66,7 +66,7 @@ public class TARDISEditAreasGUIListener extends TARDISMenuListener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCompanionGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Area Locations")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Area Locations")) {
             return;
         }
         event.setCancelled(true);

@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.howto;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -58,7 +58,7 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener {
 
     @EventHandler
     public void onWallFloorMenuOpen(InventoryOpenEvent event) {
-        if (event.getView().getTitle().equals(ChatColor.DARK_RED + "TARDIS Wall & Floor Menu")) {
+        if (event.getView().getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Wall & Floor Menu")) {
             Player p = (Player) event.getPlayer();
             scroll.put(p.getUniqueId(), 0);
         }
@@ -67,7 +67,7 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onWallFloorMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Wall & Floor Menu")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Wall & Floor Menu")) {
             return;
         }
         Player p = (Player) event.getWhoClicked();
@@ -121,7 +121,7 @@ public class TARDISWallFloorMenuListener extends TARDISMenuListener {
         close(p);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             ItemStack[] seeds = new TARDISSeedsInventory(plugin, p).getMenu();
-            Inventory gui = plugin.getServer().createInventory(p, 45, ChatColor.DARK_RED + "TARDIS Seeds Menu");
+            Inventory gui = plugin.getServer().createInventory(p, 45, NamedTextColor.DARK_RED + "TARDIS Seeds Menu");
             gui.setContents(seeds);
             p.openInventory(gui);
         }, 2L);

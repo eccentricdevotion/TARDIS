@@ -19,7 +19,7 @@ package me.eccentric_nz.tardischemistry.constructor;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -39,7 +39,7 @@ public class ConstructCommand {
         }
         // do stuff
         ItemStack[] menu = new ConstructorInventory().getMenu();
-        Inventory products = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Element constructor");
+        Inventory products = plugin.getServer().createInventory(player, 27, NamedTextColor.DARK_RED + "Element constructor");
         products.setContents(menu);
         player.openInventory(products);
         return true;

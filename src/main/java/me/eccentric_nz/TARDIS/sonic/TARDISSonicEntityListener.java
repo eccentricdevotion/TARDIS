@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.custommodels.keys.SonicItem;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicSound;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
@@ -73,7 +73,7 @@ public class TARDISSonicEntityListener implements Listener {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             PlayerInventory pinv = scanned.getInventory();
                             ItemStack[] items = pinv.getStorageContents();
-                            Inventory menu = plugin.getServer().createInventory(player, items.length, ChatColor.DARK_RED + "" + scanned.getName() + "'s Inventory");
+                            Inventory menu = plugin.getServer().createInventory(player, items.length, NamedTextColor.DARK_RED + "" + scanned.getName() + "'s Inventory");
                             menu.setContents(items);
                             player.openInventory(menu);
                         }, 40L);
@@ -144,7 +144,7 @@ public class TARDISSonicEntityListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInventoryViewClick(InventoryClickEvent event) {
         String title = event.getView().getTitle();
-        if (title.startsWith(ChatColor.DARK_RED + "") && title.endsWith("'s Inventory")) {
+        if (title.startsWith(NamedTextColor.DARK_RED + "") && title.endsWith("'s Inventory")) {
             event.setCancelled(true);
         }
     }

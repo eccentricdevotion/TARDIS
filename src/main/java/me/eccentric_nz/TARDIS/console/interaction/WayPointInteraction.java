@@ -7,7 +7,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.save.TARDISSavesPlanetInventory;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
@@ -40,7 +40,7 @@ public class WayPointInteraction {
         }
         TARDISSavesPlanetInventory tssi = new TARDISSavesPlanetInventory(plugin, id, player);
         ItemStack[] saves = tssi.getPlanets();
-        Inventory saved = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
+        Inventory saved = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Dimension Map");
         saved.setContents(saves);
         player.openInventory(saved);
     }

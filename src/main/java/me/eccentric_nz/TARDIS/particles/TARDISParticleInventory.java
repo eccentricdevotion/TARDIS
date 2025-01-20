@@ -23,7 +23,7 @@ import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetParticlePrefs;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -127,9 +127,9 @@ public class TARDISParticleInventory {
         ItemMeta cim = colour.getItemMeta();
         cim.setDisplayName("Particle Colour");
         // set to colour pref
-        ChatColor chatColor = ParticleColour.fromColor(data.getColour());
-        String col = ParticleColour.toString(chatColor);
-        cim.setLore(List.of(chatColor + col));
+        NamedTextColor textColor = ParticleColour.fromColor(data.getColour());
+        String col = ParticleColour.toString(textColor);
+        cim.setLore(List.of(textColor + col));
         cim.setItemModel(GUIParticle.COLOUR.key());
         colour.setItemMeta(cim);
         stacks[GUIParticle.COLOUR.slot()] = colour;
@@ -171,7 +171,7 @@ public class TARDISParticleInventory {
         ItemStack density = new ItemStack(GUIParticle.DENSITY.material(), 1);
         ItemMeta dim = density.getItemMeta();
         dim.setDisplayName("Particle Density");
-        dim.setLore(List.of(ChatColor.AQUA + "" + data.getDensity(), "Has no effect", "on some shapes.", "Range: 8 - 32."));
+        dim.setLore(List.of(textColor.AQUA + "" + data.getDensity(), "Has no effect", "on some shapes.", "Range: 8 - 32."));
         dim.setItemModel(GUIParticle.DENSITY.key());
         density.setItemMeta(dim);
         stacks[GUIParticle.DENSITY.slot()] = density;
@@ -179,7 +179,7 @@ public class TARDISParticleInventory {
         ItemStack speed = new ItemStack(GUIParticle.SPEED.material(), 1);
         ItemMeta spim = speed.getItemMeta();
         spim.setDisplayName("Particle Speed");
-        spim.setLore(List.of(ChatColor.AQUA + String.format("%.0f", data.getSpeed() * 10), "Range: 0 - 10."));
+        spim.setLore(List.of(textColor.AQUA + String.format("%.0f", data.getSpeed() * 10), "Range: 0 - 10."));
         spim.setItemModel(GUIParticle.SPEED.key());
         speed.setItemMeta(spim);
         stacks[GUIParticle.SPEED.slot()] = speed;

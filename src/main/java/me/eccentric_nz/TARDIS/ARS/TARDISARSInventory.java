@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.ARS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIArs;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -168,7 +168,7 @@ public class TARDISARSInventory {
                 lore.add("Cost: " + plugin.getRoomsConfig().getInt("rooms." + a + ".cost"));
                 String roomName = TARDISARS.ARSFor(room.getType().toString()).getConfigPath();
                 if (player != null && !TARDISPermission.hasPermission(player, "tardis.room." + roomName.toLowerCase(Locale.ROOT))) {
-                    lore.add(ChatColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
+                    lore.add(NamedTextColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
                 }
                 im.setLore(lore);
                 im.setItemModel(a.getKey());

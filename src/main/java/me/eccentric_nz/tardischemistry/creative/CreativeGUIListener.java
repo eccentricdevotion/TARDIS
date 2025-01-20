@@ -18,7 +18,7 @@ package me.eccentric_nz.tardischemistry.creative;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischemistry.element.ElementInventory;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -40,7 +40,7 @@ public class CreativeGUIListener implements Listener {
     public void onCreativeMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
         String name = view.getTitle();
-        if (!name.equals(ChatColor.DARK_RED + "Molecular compounds") && !name.equals(ChatColor.DARK_RED + "Products")) {
+        if (!name.equals(NamedTextColor.DARK_RED + "Molecular compounds") && !name.equals(NamedTextColor.DARK_RED + "Products")) {
             return;
         }
         Player p = (Player) event.getWhoClicked();
@@ -59,19 +59,19 @@ public class CreativeGUIListener implements Listener {
                 close(p);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     ItemStack[] emenu = new ElementInventory(plugin).getMenu();
-                    Inventory elements = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Atomic elements");
+                    Inventory elements = plugin.getServer().createInventory(p, 54, NamedTextColor.DARK_RED + "Atomic elements");
                     elements.setContents(emenu);
                     p.openInventory(elements);
                 }, 2L);
             }
             case 44 -> {
                 event.setCancelled(true);
-                boolean molecular = (name.equals(ChatColor.DARK_RED + "Molecular compounds"));
+                boolean molecular = (name.equals(NamedTextColor.DARK_RED + "Molecular compounds"));
                 close(p);
                 // switch to compounds or products
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     ItemStack[] stacks = (molecular) ? new ProductsCreativeInventory(plugin).getMenu() : new CompoundsCreativeInventory(plugin).getMenu();
-                    Inventory inventory = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + (molecular ? "Products" : "Molecular compounds"));
+                    Inventory inventory = plugin.getServer().createInventory(p, 54, NamedTextColor.DARK_RED + (molecular ? "Products" : "Molecular compounds"));
                     inventory.setContents(stacks);
                     p.openInventory(inventory);
                 }, 2L);

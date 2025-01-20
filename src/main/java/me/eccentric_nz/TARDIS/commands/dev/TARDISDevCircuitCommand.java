@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.commands.dev;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -37,7 +37,7 @@ public class TARDISDevCircuitCommand {
             // set the second line of lore
             ItemMeta im = result.getItemMeta();
             List<String> lore = im.getLore();
-            String uses = ChatColor.YELLOW + "" + (plugin.getConfig().getInt("circuits.uses.invisibility") - 3);
+            String uses = NamedTextColor.YELLOW + "" + (plugin.getConfig().getInt("circuits.uses.invisibility") - 3);
             lore.set(1, uses);
             im.setLore(lore);
             result.setItemMeta(im);

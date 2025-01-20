@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.enumeration.Bind;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.utility.TARDISRegistryValues;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Biome;
@@ -98,15 +99,14 @@ class BindAdd {
             }
             case BIOME -> {  // type 4
                 // check valid biome
-                Biome biome;
-                try {
-                    biome = Biome.valueOf(which.toUpperCase(Locale.ROOT));
+                Biome biome = TARDISRegistryValues.getBiome(which);
+                if (biome != null) {
                     if (!biome.equals(Biome.THE_VOID)) {
                         set.put("type", 4);
-                        set.put("name", biome.toString());
+                        set.put("name", which.toUpperCase(Locale.ROOT));
                         bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
                     }
-                } catch (IllegalArgumentException iae) {
+                } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_VALID");
                     return true;
                 }

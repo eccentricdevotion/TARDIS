@@ -28,7 +28,7 @@ import me.eccentric_nz.tardischemistry.formula.FormulaCommand;
 import me.eccentric_nz.tardischemistry.lab.LabCommand;
 import me.eccentric_nz.tardischemistry.product.ProductCommand;
 import me.eccentric_nz.tardischemistry.reducer.ReduceCommand;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -130,7 +130,7 @@ public class TARDISChemistryCommand implements CommandExecutor {
             // lab
             default -> Material.COAL;
         };
-        Inventory inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chemistry " + which + " recipe");
+        Inventory inv = plugin.getServer().createInventory(player, 27, NamedTextColor.DARK_RED + "Chemistry " + which + " recipe");
         ItemStack ingredient = new ItemStack(surround, 1);
         inv.setItem(0, ingredient);
         inv.setItem(1, ingredient);

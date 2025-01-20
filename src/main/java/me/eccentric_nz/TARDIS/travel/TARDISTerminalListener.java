@@ -31,7 +31,7 @@ import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -79,7 +79,7 @@ public class TARDISTerminalListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onDestTerminalClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Destination Terminal")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Destination Terminal")) {
             return;
         }
         event.setCancelled(true);
@@ -184,7 +184,7 @@ public class TARDISTerminalListener implements Listener {
         Inventory inv = event.getInventory();
         InventoryView view = event.getView();
         InventoryHolder holder = inv.getHolder();
-        if (holder instanceof Player player && view.getTitle().equals(ChatColor.DARK_RED + "Destination Terminal")) {
+        if (holder instanceof Player player && view.getTitle().equals(NamedTextColor.DARK_RED + "Destination Terminal")) {
             UUID uuid = player.getUniqueId();
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());

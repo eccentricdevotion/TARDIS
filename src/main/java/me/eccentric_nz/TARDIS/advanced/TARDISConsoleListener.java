@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -121,7 +121,7 @@ public class TARDISConsoleListener implements Listener {
                 plugin.getMessenger().send(p, TardisModule.TARDIS, "POWER_DOWN");
                 return;
             }
-            Inventory inv = plugin.getServer().createInventory(p, 18, ChatColor.DARK_RED + "TARDIS Console");
+            Inventory inv = plugin.getServer().createInventory(p, 18, NamedTextColor.DARK_RED + "TARDIS Console");
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             ResultSetDiskStorage rsds = new ResultSetDiskStorage(plugin, where);

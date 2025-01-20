@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.travel.save.TARDISSavesPlanetInventory;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -57,7 +57,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onAreaTerminalClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS areas")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS areas")) {
             return;
         }
         event.setCancelled(true);
@@ -117,7 +117,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener {
                 if (rs.resultSet()) {
                     TARDISSavesPlanetInventory sst = new TARDISSavesPlanetInventory(plugin, rs.getTardis_id(), player);
                     ItemStack[] items = sst.getPlanets();
-                    Inventory saveinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
+                    Inventory saveinv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Dimension Map");
                     saveinv.setContents(items);
                     player.openInventory(saveinv);
                 }

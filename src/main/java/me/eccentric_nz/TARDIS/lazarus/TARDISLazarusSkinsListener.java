@@ -6,7 +6,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.skins.Skin;
 import me.eccentric_nz.TARDIS.skins.SkinUtils;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,7 +31,7 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
     @EventHandler
     public void onSkinInventoryClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Genetic Skins")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Genetic Skins")) {
             return;
         }
         event.setCancelled(true);
@@ -55,21 +55,21 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
                 case 45 -> {
                     LazarusUtils.pagers.add(uuid);
                     // go to page one
-                    Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
+                    Inventory inv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Genetic Manipulator");
                     inv.setContents(new TARDISLazarusInventory(plugin).getPageOne());
                     player.openInventory(inv);
                 }
                 case 46 -> {
                     LazarusUtils.pagers.add(uuid);
                     // go to page two
-                    Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
+                    Inventory inv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Genetic Manipulator");
                     inv.setContents(new TARDISLazarusPageTwoInventory(plugin).getPageTwo());
                     player.openInventory(inv);
                 }
                 case 47 -> {
                     LazarusUtils.pagers.add(uuid);
                     // go to monsters
-                    Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
+                    Inventory inv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Genetic Manipulator");
                     inv.setContents(new TARDISWeepingAngelsMonstersInventory(plugin).getMonsters());
                     player.openInventory(inv);
                 }

@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.smithing;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -36,7 +36,7 @@ public class DiamondRepairRecipe {
         // addition
         ItemStack isa = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
-        ima.setDisplayName(ChatColor.WHITE + "Diamond Disruptor Circuit");
+        ima.setDisplayName(NamedTextColor.WHITE + "Diamond Disruptor Circuit");
         ima.setItemModel(RecipeItem.DIAMOND_DISRUPTOR_CIRCUIT.getModel());
         isa.setItemMeta(ima);
         RecipeChoice addition = new RecipeChoice.ExactChoice(isa);

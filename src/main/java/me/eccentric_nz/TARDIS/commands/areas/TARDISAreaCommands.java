@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -347,7 +347,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                     if (first.equals("edit")) {
                         // open edit gui to allow removal of added locations
                         ItemStack[] locations = new TARDISEditAreasInventory(plugin, rsaId.getArea().getAreaId()).getLocations();
-                        Inventory inventory = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Area Locations");
+                        Inventory inventory = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Area Locations");
                         inventory.setContents(locations);
                         player.openInventory(inventory);
                     } else {

@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -50,7 +50,7 @@ class TARDISOccupyCommand {
                     HashMap<String, Object> whered = new HashMap<>();
                     whered.put("uuid", player.getUniqueId().toString());
                     plugin.getQueryFactory().doDelete("travellers", whered);
-                    occupied = ChatColor.RED + plugin.getLanguage().getString("OCCUPY_OUT");
+                    occupied = NamedTextColor.RED + plugin.getLanguage().getString("OCCUPY_OUT");
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "OCCUPY_MUST_BE_OUT");
                     return true;
@@ -73,7 +73,7 @@ class TARDISOccupyCommand {
                 wherei.put("tardis_id", id);
                 wherei.put("uuid", player.getUniqueId().toString());
                 plugin.getQueryFactory().doInsert("travellers", wherei);
-                occupied = ChatColor.GREEN + plugin.getLanguage().getString("OCCUPY_IN");
+                occupied = NamedTextColor.GREEN + plugin.getLanguage().getString("OCCUPY_IN");
             } else {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "OCCUPY_MUST_BE_IN");
                 return true;

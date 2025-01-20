@@ -25,7 +25,7 @@ import me.eccentric_nz.TARDIS.handles.TARDISHandlesRequest;
 import me.eccentric_nz.TARDIS.howto.TARDISSeedsInventory;
 import me.eccentric_nz.TARDIS.travel.ComehereAction;
 import me.eccentric_nz.TARDIS.travel.ComehereRequest;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -136,7 +136,7 @@ public class TARDISChatListener implements Listener {
             // open how to GUI
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 ItemStack[] seeds = new TARDISSeedsInventory(plugin, p).getMenu();
-                Inventory wall = plugin.getServer().createInventory(p, 45, ChatColor.DARK_RED + "TARDIS Seeds Menu");
+                Inventory wall = plugin.getServer().createInventory(p, 45, NamedTextColor.DARK_RED + "TARDIS Seeds Menu");
                 wall.setContents(seeds);
                 p.openInventory(wall);
             }, 1L);

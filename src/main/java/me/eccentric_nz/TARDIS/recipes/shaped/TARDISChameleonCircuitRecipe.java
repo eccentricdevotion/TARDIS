@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -41,11 +41,11 @@ public class TARDISChameleonCircuitRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "TARDIS Chameleon Circuit");
+        im.setDisplayName(NamedTextColor.WHITE + "TARDIS Chameleon Circuit");
         im.setItemModel(RecipeItem.TARDIS_CHAMELEON_CIRCUIT.getModel());
         String uses = (plugin.getConfig().getString("circuits.uses.chameleon").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
-                ? ChatColor.YELLOW + "unlimited"
-                : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.chameleon");
+                ? NamedTextColor.YELLOW + "unlimited"
+                : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.chameleon");
         im.setLore(List.of("Uses left", uses));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_chameleon_circuit");
@@ -55,13 +55,13 @@ public class TARDISChameleonCircuitRecipe {
             r.setIngredient('D', Material.REPEATER);
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
-            em.setDisplayName(ChatColor.WHITE + "TARDIS Materialisation Circuit");
+            em.setDisplayName(NamedTextColor.WHITE + "TARDIS Materialisation Circuit");
             em.setItemModel(RecipeItem.TARDIS_MATERIALISATION_CIRCUIT.getModel());
             // set the second line of lore
             List<String> circuit;
             String mat_uses = (plugin.getConfig().getString("circuits.uses.materialisation").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
-                    ? ChatColor.YELLOW + "unlimited"
-                    : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.materialisation");
+                    ? NamedTextColor.YELLOW + "unlimited"
+                    : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.materialisation");
             circuit = Arrays.asList("Uses left", mat_uses);
             em.setLore(circuit);
             exact.setItemMeta(em);

@@ -19,11 +19,14 @@ package me.eccentric_nz.TARDIS.schematic.setters;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rotors.TARDISTimeRotor;
 import org.bukkit.*;
 import org.bukkit.block.Banner;
+import org.bukkit.block.Biome;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
@@ -38,6 +41,7 @@ import org.bukkit.util.BoundingBox;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -81,10 +85,13 @@ public class TARDISItemFrameSetter {
                     List<Pattern> plist = new ArrayList<>();
                     for (int j = 0; j < patterns.size(); j++) {
                         JsonObject jo = patterns.get(j).getAsJsonObject();
-                        PatternType pt = PatternType.valueOf(jo.get("pattern").getAsString());
+                        Registry<PatternType> patternTypeRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.BANNER_PATTERN);
+                        PatternType pt = patternTypeRegistry.get(NamespacedKey.minecraft(jo.get("pattern").getAsString().toLowerCase(Locale.ROOT)));
                         DyeColor dc = DyeColor.valueOf(jo.get("pattern_colour").getAsString());
-                        Pattern p = new Pattern(dc, pt);
-                        plist.add(p);
+                        if (pt != null) {
+                            Pattern p = new Pattern(dc, pt);
+                            plist.add(p);
+                        }
                     }
                     BlockStateMeta bsm = (BlockStateMeta) im;
                     Banner b = (Banner) bsm.getBlockState();

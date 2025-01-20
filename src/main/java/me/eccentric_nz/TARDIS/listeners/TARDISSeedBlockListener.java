@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -79,7 +80,7 @@ public class TARDISSeedBlockListener implements Listener {
             return;
         }
         String dn = im.getDisplayName();
-        if (dn.equals(ChatColor.GOLD + "TARDIS Seed Block")) {
+        if (dn.equals(NamedTextColor.GOLD + "TARDIS Seed Block")) {
             Block block = event.getBlockPlaced();
             if (im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
                 String key = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
@@ -174,7 +175,7 @@ public class TARDISSeedBlockListener implements Listener {
                     return;
                 }
                 im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
-                im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
+                im.setDisplayName(NamedTextColor.GOLD + "TARDIS Seed Block");
                 im.setItemModel(model);
                 List<String> lore = new ArrayList<>();
                 lore.add(console);

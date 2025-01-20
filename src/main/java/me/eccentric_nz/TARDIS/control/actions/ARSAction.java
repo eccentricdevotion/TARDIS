@@ -9,7 +9,7 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -58,7 +58,7 @@ public class ARSAction {
                 return;
             }
             ItemStack[] tars = new TARDISARSInventory(plugin, player).getARS();
-            Inventory ars = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
+            Inventory ars = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Architectural Reconfiguration");
             ars.setContents(tars);
             player.openInventory(ars);
         }

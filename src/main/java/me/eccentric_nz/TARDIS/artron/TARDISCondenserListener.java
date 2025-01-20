@@ -28,7 +28,7 @@ import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -77,7 +77,7 @@ public class TARDISCondenserListener implements Listener {
         InventoryHolder holder = event.getInventory().getHolder();
         String title = view.getTitle();
         if (holder instanceof Chest chest) {
-            if (!title.equals(ChatColor.DARK_RED + "Artron Condenser") && !title.equals(ChatColor.DARK_RED + "Server Condenser")) {
+            if (!title.equals(NamedTextColor.DARK_RED + "Artron Condenser") && !title.equals(NamedTextColor.DARK_RED + "Server Condenser")) {
                 return;
             }
             Player player = (Player) event.getPlayer();
@@ -86,7 +86,7 @@ public class TARDISCondenserListener implements Listener {
             ResultSetTardis rs;
             boolean isCondenser;
             HashMap<String, Object> where = new HashMap<>();
-            if (title.equals(ChatColor.DARK_RED + "Artron Condenser")) {
+            if (title.equals(NamedTextColor.DARK_RED + "Artron Condenser")) {
                 if (plugin.getConfig().getBoolean("preferences.no_creative_condense")) {
                     switch (plugin.getWorldManager()) {
                         case MULTIVERSE -> {
@@ -386,7 +386,7 @@ public class TARDISCondenserListener implements Listener {
         // check inv size
         int inv_size = (is.length > 27) ? 54 : 27;
         holder.getInventory().clear();
-        Inventory aec = plugin.getServer().createInventory(holder, inv_size, ChatColor.DARK_RED + title);
+        Inventory aec = plugin.getServer().createInventory(holder, inv_size, NamedTextColor.DARK_RED + title);
         // set the contents to what was in the chest
         aec.setContents(is);
         p.playSound(p.getLocation(), Sound.BLOCK_CHEST_OPEN, 0.5f, 1);

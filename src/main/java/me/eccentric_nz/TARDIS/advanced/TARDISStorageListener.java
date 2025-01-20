@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.Storage;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -85,7 +85,7 @@ public class TARDISStorageListener extends TARDISMenuListener {
             }
             Storage store = Storage.valueOf(tmp);
             saveCurrentStorage(event.getInventory(), store.getTable(), (Player) event.getPlayer());
-        } else if (!title.equals(ChatColor.DARK_RED + "TARDIS Console") && !title.equals(ChatColor.DARK_RED + "Handles Program")) {
+        } else if (!title.equals(NamedTextColor.DARK_RED + "TARDIS Console") && !title.equals(NamedTextColor.DARK_RED + "Handles Program")) {
             // scan the inventory for area disks and spit them out
             for (int i = 0; i < event.getInventory().getSize(); i++) {
                 ItemStack stack = view.getItem(i);

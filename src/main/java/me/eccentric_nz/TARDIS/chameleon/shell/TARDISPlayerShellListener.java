@@ -31,7 +31,7 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -72,7 +72,7 @@ public class TARDISPlayerShellListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onShellLoaderClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Shells")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Shells")) {
             return;
         }
         event.setCancelled(true);

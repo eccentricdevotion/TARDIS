@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -37,7 +37,7 @@ public class SonicDockRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.FLOWER_POT, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "Sonic Dock");
+        im.setDisplayName(NamedTextColor.WHITE + "Sonic Dock");
         im.setItemModel(RecipeItem.SONIC_DOCK.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "sonic_dock");
@@ -49,7 +49,7 @@ public class SonicDockRecipe {
             r.setIngredient('G', Material.GOLD_INGOT);
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
-            em.setDisplayName(ChatColor.WHITE + "Sonic Oscillator");
+            em.setDisplayName(NamedTextColor.WHITE + "Sonic Oscillator");
             em.setItemModel(RecipeItem.SONIC_OSCILLATOR.getModel());
             exact.setItemMeta(em);
             r.setIngredient('S', new RecipeChoice.ExactChoice(exact));

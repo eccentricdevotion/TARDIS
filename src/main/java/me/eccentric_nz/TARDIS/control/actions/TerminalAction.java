@@ -7,7 +7,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateDestinationTerminalForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -43,7 +43,7 @@ public class TerminalAction {
             new FloodgateDestinationTerminalForm(plugin, playerUUID).send();
         } else {
             ItemStack[] items = new TARDISTerminalInventory(plugin).getTerminal();
-            Inventory aec = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Destination Terminal");
+            Inventory aec = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Destination Terminal");
             aec.setContents(items);
             player.openInventory(aec);
         }

@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicLight;
 import me.eccentric_nz.TARDIS.update.UpdateDoor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -85,7 +86,7 @@ public class TARDISDisplayBlockListener implements Listener {
         if (!im.hasDisplayName() || !im.getPersistentDataContainer().has(plugin.getCustomBlockKey(), PersistentDataType.STRING)) {
             return;
         }
-        if (im.getDisplayName().equals(ChatColor.GOLD + "TARDIS Seed Block") || im.getDisplayName().endsWith("Console")) {
+        if (im.getDisplayName().equals(NamedTextColor.GOLD + "TARDIS Seed Block") || im.getDisplayName().endsWith("Console")) {
             return;
         }
         String key = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
@@ -511,7 +512,7 @@ public class TARDISDisplayBlockListener implements Listener {
                                         ItemStack ret;
                                         ret = new ItemStack(Material.GLASS, 1);
                                         ItemMeta im = ret.getItemMeta();
-                                        im.setDisplayName(ChatColor.WHITE + "Variable Light");
+                                        im.setDisplayName(NamedTextColor.WHITE + "Variable Light");
                                         im.setLore(List.of(variable.toString()));
                                         im.setItemModel(LightVariant.VARIABLE.getKey());
                                         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1003);

@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -39,26 +39,26 @@ public class TARDISStattenheimCircuitRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "TARDIS Stattenheim Circuit");
+        im.setDisplayName(NamedTextColor.WHITE + "TARDIS Stattenheim Circuit");
         im.setItemModel(RecipeItem.TARDIS_STATTENHEIM_CIRCUIT.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_stattenheim_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.setDisplayName(ChatColor.WHITE + "TARDIS Materialisation Circuit");
+        em.setDisplayName(NamedTextColor.WHITE + "TARDIS Materialisation Circuit");
         em.setItemModel(RecipeItem.TARDIS_MATERIALISATION_CIRCUIT.getModel());
         // set the second line of lore
         List<String> circuit;
         String uses = (plugin.getConfig().getString("circuits.uses.materialisation").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
-                ? ChatColor.YELLOW + "unlimited"
-                : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.materialisation");
+                ? NamedTextColor.YELLOW + "unlimited"
+                : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.materialisation");
         circuit = Arrays.asList("Uses left", uses);
         em.setLore(circuit);
         exact.setItemMeta(em);
         ItemStack locator = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta lim = locator.getItemMeta();
-        lim.setDisplayName(ChatColor.WHITE + "TARDIS Locator Circuit");
+        lim.setDisplayName(NamedTextColor.WHITE + "TARDIS Locator Circuit");
         lim.setItemModel(RecipeItem.TARDIS_LOCATOR_CIRCUIT.getModel());
         locator.setItemMeta(lim);
         r.shape("LRM", "QQQ");

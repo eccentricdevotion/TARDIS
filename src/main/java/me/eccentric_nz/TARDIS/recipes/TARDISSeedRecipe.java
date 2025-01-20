@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.rooms.TARDISWalls;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
@@ -72,7 +72,7 @@ public class TARDISSeedRecipe {
         }
         ItemMeta im = is.getItemMeta();
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
-        im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
+        im.setDisplayName(NamedTextColor.GOLD + "TARDIS Seed Block");
         im.setItemModel(model);
         List<String> lore = new ArrayList<>();
         lore.add(s.getPermission().toUpperCase(Locale.ROOT));

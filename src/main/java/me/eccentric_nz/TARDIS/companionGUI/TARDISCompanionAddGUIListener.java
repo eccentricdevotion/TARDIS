@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -77,7 +77,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCompanionAddGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Add Companion")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Add Companion")) {
             return;
         }
         event.setCancelled(true);
@@ -151,7 +151,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener {
                 } else {
                     items = new TARDISCompanionInventory(plugin, comps.split(":")).getSkulls();
                 }
-                Inventory cominv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Companions");
+                Inventory cominv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Companions");
                 cominv.setContents(items);
                 player.openInventory(cominv);
             }

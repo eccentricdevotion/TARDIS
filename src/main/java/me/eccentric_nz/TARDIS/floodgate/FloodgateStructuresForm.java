@@ -1,5 +1,7 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -32,13 +34,13 @@ public class FloodgateStructuresForm {
         // get structures
         SimpleForm.Builder builder = SimpleForm.builder();
         builder.title("Telepathic Structure Finder");
-        for (Structure structure : TARDISStructureTravel.overworldStructures) {
-            builder.button(TARDISStringUtils.capitalise(structure.getKey().getKey()), FormImage.Type.PATH, "textures/blocks/grass_side_carried.png");
+        for (Structure structure : TARDISStructureTravel.overworldStructures.keySet()) {
+            builder.button(TARDISStringUtils.capitalise(RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE).getKey(structure).getKey()), FormImage.Type.PATH, "textures/blocks/grass_side_carried.png");
         }
-        for (Structure structure : TARDISStructureTravel.netherStructures) {
-            builder.button(TARDISStringUtils.capitalise(structure.getKey().getKey()), FormImage.Type.PATH, "textures/blocks/crimson_nylium_side.png");
+        for (Structure structure : TARDISStructureTravel.netherStructures.keySet()) {
+            builder.button(TARDISStringUtils.capitalise(RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE).getKey(structure).getKey()), FormImage.Type.PATH, "textures/blocks/crimson_nylium_side.png");
         }
-        builder.button(TARDISStringUtils.capitalise(Structure.END_CITY.getKey().getKey()), FormImage.Type.PATH, "textures/blocks/purpur_block.png");
+        builder.button("End City", FormImage.Type.PATH, "textures/blocks/purpur_block.png");
         builder.validResultHandler(this::handleResponse);
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);

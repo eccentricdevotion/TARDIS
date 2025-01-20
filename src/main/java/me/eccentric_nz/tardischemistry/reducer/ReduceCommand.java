@@ -19,7 +19,7 @@ package me.eccentric_nz.tardischemistry.reducer;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -39,7 +39,7 @@ public class ReduceCommand {
         }
         // do stuff
         ItemStack[] menu = new ReducerInventory(plugin).getMenu();
-        Inventory reductions = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Material reducer");
+        Inventory reductions = plugin.getServer().createInventory(player, 27, NamedTextColor.DARK_RED + "Material reducer");
         reductions.setContents(menu);
         player.openInventory(reductions);
         return true;

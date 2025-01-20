@@ -1,5 +1,7 @@
 package me.eccentric_nz.TARDIS.console.telepathic;
 
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import me.eccentric_nz.TARDIS.travel.TARDISStructureTravel;
@@ -21,12 +23,12 @@ public class TARDISTelepathicStructure {
         // structure finder
         ItemStack[] stack = new ItemStack[54];
         int i = 0;
-        for (Structure structure : TARDISStructureTravel.overworldStructures) {
+        for (Structure structure : TARDISStructureTravel.overworldStructures.keySet()) {
             ItemStack is = make(structure, Material.GRASS_BLOCK);
             stack[i] = is;
             i++;
         }
-        for (Structure structure : TARDISStructureTravel.netherStructures) {
+        for (Structure structure : TARDISStructureTravel.netherStructures.keySet()) {
             ItemStack is = make(structure, Material.CRIMSON_NYLIUM);
             stack[i] = is;
             i++;
@@ -46,7 +48,7 @@ public class TARDISTelepathicStructure {
     private ItemStack make(Structure structure, Material material) {
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(TARDISStringUtils.capitalise(structure.getKey().getKey()));
+        im.setDisplayName(TARDISStringUtils.capitalise(RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE).getKey(structure).getKey()));
         is.setItemMeta(im);
         return is;
     }

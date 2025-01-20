@@ -1,12 +1,12 @@
 package me.eccentric_nz.tardisregeneration;
 
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.Consumables;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.FoodComponent;
@@ -37,7 +37,7 @@ public class ElixirOfLife {
         foodComponent.setSaturation(1.0f);
         im.setFood(foodComponent);
         im.setItemModel(Whoniverse.ELIXIR_OF_LIFE.getKey());
-        im.setDisplayName(ChatColor.WHITE + "Elixir of Life");
+        im.setDisplayName(NamedTextColor.WHITE + "Elixir of Life");
         im.setLore(List.of("Use to trigger a", "Time Lord regeneration"));
         goblet.setItemMeta(im);
         net.minecraft.world.item.ItemStack stack = CraftItemStack.asNMSCopy(goblet);

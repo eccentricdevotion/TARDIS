@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -62,7 +62,7 @@ public class TARDISHandlesProgramListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onHandlesGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Handles Program")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Handles Program")) {
             return;
         }
         Player player = (Player) event.getWhoClicked();
@@ -130,7 +130,7 @@ public class TARDISHandlesProgramListener implements Listener {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         TARDISHandlesSavedInventory thsi = new TARDISHandlesSavedInventory(plugin, uuid.toString());
                         ItemStack[] items = thsi.getPrograms();
-                        Inventory programsinv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Saved Programs");
+                        Inventory programsinv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Saved Programs");
                         programsinv.setContents(items);
                         player.openInventory(programsinv);
                     }, 2L);
@@ -217,7 +217,7 @@ public class TARDISHandlesProgramListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onHandlesProgramClose(InventoryCloseEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Handles Program")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Handles Program")) {
             return;
         }
         Player p = (Player) event.getPlayer();

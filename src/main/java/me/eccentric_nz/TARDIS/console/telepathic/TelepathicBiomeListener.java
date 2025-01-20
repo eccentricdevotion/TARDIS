@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.console.telepathic;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
@@ -36,7 +36,7 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
     @EventHandler
     public void onWallMenuOpen(InventoryOpenEvent event) {
         String name = event.getView().getTitle();
-        if (name.equals(ChatColor.DARK_RED + "Telepathic Biome Finder")) {
+        if (name.equals(NamedTextColor.DARK_RED + "Telepathic Biome Finder")) {
             Player p = (Player) event.getPlayer();
             scroll.put(p.getUniqueId(), 0);
         }
@@ -46,7 +46,7 @@ public class TelepathicBiomeListener extends TARDISMenuListener {
     public void onBiomeMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
         String name = view.getTitle();
-        if (!name.equals(ChatColor.DARK_RED + "Telepathic Biome Finder")) {
+        if (!name.equals(NamedTextColor.DARK_RED + "Telepathic Biome Finder")) {
             return;
         }
         Player player = (Player) event.getWhoClicked();

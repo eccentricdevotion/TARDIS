@@ -2,7 +2,7 @@ package me.eccentric_nz.tardischemistry.microscope;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Rotation;
@@ -62,7 +62,7 @@ public class MicroscopeItemFrameListener implements Listener {
                     } else {
                         // open the slide GUI
                         ItemStack[] slides = new SlideInventory(plugin).getItems();
-                        Inventory inventory = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Slides");
+                        Inventory inventory = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Slides");
                         inventory.setContents(slides);
                         player.openInventory(inventory);
                     }
@@ -96,7 +96,7 @@ public class MicroscopeItemFrameListener implements Listener {
                     } else {
                         // open computer GUI
                         ItemStack[] screens = new ComputerInventory(plugin).getItems();
-                        Inventory inventory = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Computer Storage");
+                        Inventory inventory = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Computer Storage");
                         inventory.setContents(screens);
                         player.openInventory(inventory);
                     }
@@ -130,7 +130,7 @@ public class MicroscopeItemFrameListener implements Listener {
                     } else {
                         // open filing cabinet GUI
                         ItemStack[] helmets = new FileCabinetInventory(plugin).getItems();
-                        Inventory inventory = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Map Cabinet");
+                        Inventory inventory = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Map Cabinet");
                         inventory.setContents(helmets);
                         player.openInventory(inventory);
                     }

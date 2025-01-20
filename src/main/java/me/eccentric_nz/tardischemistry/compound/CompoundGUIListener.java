@@ -19,7 +19,7 @@ package me.eccentric_nz.tardischemistry.compound;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.tardischemistry.element.Element;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -40,7 +40,7 @@ public class CompoundGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onCompoundMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Chemical compounds")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Chemical compounds")) {
             return;
         }
         Player player = (Player) event.getWhoClicked();

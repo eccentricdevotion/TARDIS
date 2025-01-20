@@ -4,7 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.EquipmentSlot;
@@ -38,7 +38,7 @@ public class TARDISCommunicatorRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.LEATHER_HELMET, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "TARDIS Communicator");
+        im.setDisplayName(NamedTextColor.WHITE + "TARDIS Communicator");
         im.setItemModel(RecipeItem.TARDIS_COMMUNICATOR.getModel());
         EquippableComponent equippable = im.getEquippable();
         equippable.setSlot(EquipmentSlot.HEAD);

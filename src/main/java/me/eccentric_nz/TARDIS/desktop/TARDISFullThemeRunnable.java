@@ -429,17 +429,19 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                     int py = rel.get("y").getAsInt();
                     int pz = rel.get("z").getAsInt();
                     BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
-                    Location pl;
+                    Location pl = null;
                     String which = painting.get("art").getAsString();
                     Art art = null;
                     if (which.contains(":")) {
                         // custom datapack painting
                         pl = TARDISPainting.calculatePosition(which.split(":")[1], facing, new Location(world, resetx + px, starty + py, resetz + pz));
                     } else {
-                        art = Art.valueOf(which);
-                        pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetx + px, starty + py, resetz + pz));
+                        art = TARDISRegistryValues.getPaintingVariant(which);
+                        if (art != null) {
+                            pl = TARDISPainting.calculatePosition(which.toLowerCase(Locale.ROOT), facing, new Location(world, resetx + px, starty + py, resetz + pz));
+                        }
                     }
-                    try {
+                    if (pl != null) {
                         Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
                         ent.teleport(pl);
                         ent.setFacingDirection(facing, true);
@@ -448,7 +450,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         } else {
                             DataPackPainting.setCustomVariant(ent, which);
                         }
-                    } catch (IllegalArgumentException e) {
+                    } else {
                         plugin.debug("Invalid painting location!" + pl);
                     }
                 }

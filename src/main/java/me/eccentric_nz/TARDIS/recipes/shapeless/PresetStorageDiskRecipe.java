@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shapeless;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -31,7 +31,7 @@ public class PresetStorageDiskRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.MUSIC_DISC_MALL, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "Preset Storage Disk");
+        im.setDisplayName(NamedTextColor.WHITE + "Preset Storage Disk");
         im.setItemModel(RecipeItem.PRESET_STORAGE_DISK.getModel());
         im.setLore(List.of("Blank"));
         is.setItemMeta(im);
@@ -40,13 +40,13 @@ public class PresetStorageDiskRecipe {
         r.addIngredient(Material.MUSIC_DISC_STRAD);
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
-        em.setDisplayName(ChatColor.WHITE + "TARDIS Chameleon Circuit");
+        em.setDisplayName(NamedTextColor.WHITE + "TARDIS Chameleon Circuit");
         em.setItemModel(RecipeItem.TARDIS_CHAMELEON_CIRCUIT.getModel());
         // set the second line of lore
         List<String> circuit;
         String uses = (plugin.getConfig().getString("circuits.uses.chameleon").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
-                ? ChatColor.YELLOW + "unlimited"
-                : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.chameleon");
+                ? NamedTextColor.YELLOW + "unlimited"
+                : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.chameleon");
         circuit = Arrays.asList("Uses left", uses);
         em.setLore(circuit);
         exact.setItemMeta(em);

@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.recipes.shapeless;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +29,7 @@ public class TARDISSchematicWandRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.BONE, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "TARDIS Schematic Wand");
+        im.setDisplayName(NamedTextColor.WHITE + "TARDIS Schematic Wand");
         im.setItemModel(RecipeItem.TARDIS_SCHEMATIC_WAND.getModel());
         im.setLore(List.of("Right-click start", "Left-click end"));
         is.setItemMeta(im);

@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -40,14 +40,14 @@ public class TARDISTelevisionRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.BROWN_STAINED_GLASS, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "TARDIS Television");
+        im.setDisplayName(NamedTextColor.WHITE + "TARDIS Television");
         im.setItemModel(RecipeItem.TARDIS_TELEVISION.getModel());
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, RecipeItem.TARDIS_TELEVISION.getModel().getKey());
         is.setItemMeta(im);
         // exact choice
         ItemStack capac = new ItemStack(Material.BUCKET, 1);
         ItemMeta itor = capac.getItemMeta();
-        itor.setDisplayName(ChatColor.WHITE + "Artron Capacitor");
+        itor.setDisplayName(NamedTextColor.WHITE + "Artron Capacitor");
         itor.setItemModel(RecipeItem.ARTRON_CAPACITOR.getModel());
         capac.setItemMeta(itor);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_television");
@@ -57,13 +57,13 @@ public class TARDISTelevisionRecipe {
             // exact choice
             ItemStack chameleon = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta circuit = chameleon.getItemMeta();
-            circuit.setDisplayName(ChatColor.WHITE + "TARDIS Chameleon Circuit");
+            circuit.setDisplayName(NamedTextColor.WHITE + "TARDIS Chameleon Circuit");
             circuit.setItemModel(RecipeItem.TARDIS_CHAMELEON_CIRCUIT.getModel());
             // set the second line of lore
             List<String> lore;
             String uses = (plugin.getConfig().getString("circuits.uses.chameleon").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
-                    ? ChatColor.YELLOW + "unlimited"
-                    : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.chameleon");
+                    ? NamedTextColor.YELLOW + "unlimited"
+                    : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.chameleon");
             lore = Arrays.asList("Uses left", uses);
             circuit.setLore(lore);
             chameleon.setItemMeta(circuit);

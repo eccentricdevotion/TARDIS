@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
@@ -33,10 +35,8 @@ import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeUtilities;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -47,10 +47,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -73,7 +70,7 @@ public class TARDISConsoleCloseListener implements Listener {
     public void onInventoryClose(InventoryCloseEvent event) {
         InventoryView view = event.getView();
         String inv_name = view.getTitle();
-        if (!inv_name.equals(ChatColor.DARK_RED + "TARDIS Console")) {
+        if (!inv_name.equals(NamedTextColor.DARK_RED + "TARDIS Console")) {
             return;
         }
         Player p = ((Player) event.getPlayer());
@@ -188,10 +185,9 @@ public class TARDISConsoleCloseListener implements Listener {
                                 if (current.getBlock().getBiome().toString().equals(first)) {
                                     continue;
                                 }
-                                Biome biome;
-                                try {
-                                    biome = Biome.valueOf(first);
-                                } catch (IllegalArgumentException iae) {
+                                Registry<Biome> biomeRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME);
+                                Biome biome = biomeRegistry.get(NamespacedKey.minecraft(first.toLowerCase(Locale.ROOT)));
+                                if (biome == null) {
                                     // may have a pre-1.9 biome disk do old biome lookup...
                                     if (TardisOldBiomeLookup.OLD_BIOME_LOOKUP.containsKey(first)) {
                                         biome = TardisOldBiomeLookup.OLD_BIOME_LOOKUP.get(first);

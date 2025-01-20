@@ -2,7 +2,7 @@ package me.eccentric_nz.TARDIS.info;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -40,7 +40,7 @@ public class TARDISInformationSystemCommand implements CommandExecutor {
             // open TIS GUI
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 ItemStack[] cats = new TARDISIndexFileInventory(plugin).getMenu();
-                Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Index File");
+                Inventory gui = plugin.getServer().createInventory(p, 27, NamedTextColor.DARK_RED + "TARDIS Index File");
                 gui.setContents(cats);
                 p.openInventory(gui);
             }, 2L);

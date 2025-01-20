@@ -3,7 +3,7 @@ package me.eccentric_nz.tardisshop;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
@@ -41,7 +41,7 @@ public class TARDISShopItemSpawner {
             ArmorStand armourStand = (ArmorStand) location.getWorld().spawnEntity(location.clone().add(0, -1.05d, 0), EntityType.ARMOR_STAND);
             armourStand.setSmall(true);
             armourStand.setVisible(false);
-            armourStand.setCustomName(ChatColor.RED + "Cost:" + ChatColor.RESET + String.format(" %.2f", what.getCost()));
+            armourStand.setCustomName(NamedTextColor.RED + "Cost:" + NamedTextColor.WHITE + String.format(" %.2f", what.getCost()));
             armourStand.setCustomNameVisible(true);
             armourStand.setGravity(false);
             armourStand.setInvulnerable(true);
@@ -68,7 +68,7 @@ public class TARDISShopItemSpawner {
             display.setInvulnerable(true);
             TextDisplay text = (TextDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.65d, 0.5d), EntityType.TEXT_DISPLAY);
             text.setAlignment(TextDisplay.TextAlignment.CENTER);
-            text.setText(what.getItem() + "\n" + ChatColor.RED + "Cost:" + ChatColor.RESET + String.format(" %.2f", what.getCost()));
+            text.setText(what.getItem() + "\n" + NamedTextColor.RED + "Cost:" + NamedTextColor.WHITE + String.format(" %.2f", what.getCost()));
             text.setTransformation(new Transformation(TARDISConstants.VECTOR_ZERO, TARDISConstants.AXIS_ANGLE_ZERO, TARDISConstants.VECTOR_QUARTER, TARDISConstants.AXIS_ANGLE_ZERO));
             text.setBillboard(Display.Billboard.VERTICAL);
         } catch (IllegalArgumentException e) {

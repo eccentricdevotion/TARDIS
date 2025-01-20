@@ -9,7 +9,7 @@ import me.eccentric_nz.TARDIS.floodgate.FloodgateShellLoaderForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -40,14 +40,14 @@ public class ShellRoomAction {
                 new FloodgateShellLoaderForm(plugin, playerUUID).send();
             } else {
                 ItemStack[] shells = new TARDISShellPresetInventory(plugin, player, id).getShells();
-                Inventory sgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Shell Loader");
+                Inventory sgui = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Shell Loader");
                 sgui.setContents(shells);
                 player.openInventory(sgui);
             }
         } else {
             // load player shells GUI
             ItemStack[] shellStacks = new TARDISShellInventory(plugin, id).getPlayerShells();
-            Inventory playerShells = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Shells");
+            Inventory playerShells = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Shells");
             playerShells.setContents(shellStacks);
             player.openInventory(playerShells);
         }

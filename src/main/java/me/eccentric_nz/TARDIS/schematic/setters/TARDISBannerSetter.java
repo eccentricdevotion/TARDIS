@@ -18,9 +18,13 @@ package me.eccentric_nz.TARDIS.schematic.setters;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import org.bukkit.DyeColor;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.banner.Pattern;
@@ -29,6 +33,7 @@ import org.bukkit.block.banner.PatternType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -45,10 +50,13 @@ public class TARDISBannerSetter {
                 JsonArray patterns = state.get("patterns").getAsJsonArray();
                 for (int j = 0; j < patterns.size(); j++) {
                     JsonObject jo = patterns.get(j).getAsJsonObject();
-                    PatternType pt = PatternType.valueOf(jo.get("pattern").getAsString());
+                    Registry<PatternType> patternTypeRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.BANNER_PATTERN);
+                    PatternType pt = patternTypeRegistry.get(NamespacedKey.minecraft(jo.get("pattern").getAsString().toLowerCase(Locale.ROOT)));
                     DyeColor dc = DyeColor.valueOf(jo.get("pattern_colour").getAsString());
-                    Pattern p = new Pattern(dc, pt);
-                    plist.add(p);
+                    if (pt != null) {
+                        Pattern p = new Pattern(dc, pt);
+                        plist.add(p);
+                    }
                 }
                 banner.setPatterns(plist);
                 banner.update();

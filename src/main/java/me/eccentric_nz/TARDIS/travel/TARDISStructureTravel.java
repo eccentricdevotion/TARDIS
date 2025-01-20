@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
@@ -30,9 +32,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.generator.structure.Structure;
 import org.bukkit.util.StructureSearchResult;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -40,41 +40,41 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class TARDISStructureTravel {
 
-    public static final List<Structure> netherStructures = new ArrayList<>();
-    public static final List<Structure> overworldStructures = new ArrayList<>();
+    public static final TreeMap<Structure, String> netherStructures = new TreeMap<>();
+    public static final TreeMap<Structure, String> overworldStructures = new TreeMap<>();
 
     static {
-        netherStructures.add(Structure.BASTION_REMNANT);
-        netherStructures.add(Structure.FORTRESS);
-        netherStructures.add(Structure.NETHER_FOSSIL);
-        netherStructures.add(Structure.RUINED_PORTAL_NETHER);
-        overworldStructures.add(Structure.ANCIENT_CITY);
-        overworldStructures.add(Structure.DESERT_PYRAMID);
-        overworldStructures.add(Structure.IGLOO);
-        overworldStructures.add(Structure.JUNGLE_PYRAMID);
-        overworldStructures.add(Structure.MANSION);
-        overworldStructures.add(Structure.MINESHAFT);
-        overworldStructures.add(Structure.MINESHAFT_MESA);
-        overworldStructures.add(Structure.MONUMENT);
-        overworldStructures.add(Structure.OCEAN_RUIN_COLD);
-        overworldStructures.add(Structure.OCEAN_RUIN_WARM);
-        overworldStructures.add(Structure.PILLAGER_OUTPOST);
-        overworldStructures.add(Structure.RUINED_PORTAL);
-        overworldStructures.add(Structure.RUINED_PORTAL_DESERT);
-        overworldStructures.add(Structure.RUINED_PORTAL_JUNGLE);
-        overworldStructures.add(Structure.RUINED_PORTAL_SWAMP);
-        overworldStructures.add(Structure.RUINED_PORTAL_MOUNTAIN);
-        overworldStructures.add(Structure.RUINED_PORTAL_OCEAN);
-        overworldStructures.add(Structure.SHIPWRECK);
-        overworldStructures.add(Structure.SHIPWRECK_BEACHED);
-        overworldStructures.add(Structure.STRONGHOLD);
-        overworldStructures.add(Structure.SWAMP_HUT);
-        overworldStructures.add(Structure.TRAIL_RUINS);
-        overworldStructures.add(Structure.VILLAGE_DESERT);
-        overworldStructures.add(Structure.VILLAGE_PLAINS);
-        overworldStructures.add(Structure.VILLAGE_SAVANNA);
-        overworldStructures.add(Structure.VILLAGE_SNOWY);
-        overworldStructures.add(Structure.VILLAGE_TAIGA);
+        netherStructures.put(Structure.BASTION_REMNANT, "Bastion Remnant");
+        netherStructures.put(Structure.FORTRESS, "Fortress");
+        netherStructures.put(Structure.NETHER_FOSSIL, "Nether Fossil");
+        netherStructures.put(Structure.RUINED_PORTAL_NETHER, "Ruined Portal Nether");
+        overworldStructures.put(Structure.ANCIENT_CITY, "Ancient City");
+        overworldStructures.put(Structure.DESERT_PYRAMID, "Desert Pyramid");
+        overworldStructures.put(Structure.IGLOO, "Igloo");
+        overworldStructures.put(Structure.JUNGLE_PYRAMID, "Jungle Pyramid");
+        overworldStructures.put(Structure.MANSION, "Mansion");
+        overworldStructures.put(Structure.MINESHAFT, "Mineshaft");
+        overworldStructures.put(Structure.MINESHAFT_MESA, "Mineshaft Mesa");
+        overworldStructures.put(Structure.MONUMENT, "Monument");
+        overworldStructures.put(Structure.OCEAN_RUIN_COLD, "Ocean Ruin Cold");
+        overworldStructures.put(Structure.OCEAN_RUIN_WARM, "Ocean Ruin Warm");
+        overworldStructures.put(Structure.PILLAGER_OUTPOST, "Pillager Outpost");
+        overworldStructures.put(Structure.RUINED_PORTAL, "Ruined Portal");
+        overworldStructures.put(Structure.RUINED_PORTAL_DESERT, "Ruined Portal Desert");
+        overworldStructures.put(Structure.RUINED_PORTAL_JUNGLE, "Ruined Portal Jungle");
+        overworldStructures.put(Structure.RUINED_PORTAL_SWAMP, "Ruined Portal Swamp");
+        overworldStructures.put(Structure.RUINED_PORTAL_MOUNTAIN, "Ruined Portal Mountain");
+        overworldStructures.put(Structure.RUINED_PORTAL_OCEAN, "Ruined Portal Ocean");
+        overworldStructures.put(Structure.SHIPWRECK, "Shipwreck");
+        overworldStructures.put(Structure.SHIPWRECK_BEACHED, "Shipwreck Beached");
+        overworldStructures.put(Structure.STRONGHOLD, "Stronghold");
+        overworldStructures.put(Structure.SWAMP_HUT, "Swamp Hut");
+        overworldStructures.put(Structure.TRAIL_RUINS, "Trail Ruins");
+        overworldStructures.put(Structure.VILLAGE_DESERT, "Village Desert");
+        overworldStructures.put(Structure.VILLAGE_PLAINS, "Village Plains");
+        overworldStructures.put(Structure.VILLAGE_SAVANNA, "Village Savanna");
+        overworldStructures.put(Structure.VILLAGE_SNOWY, "Village Snowy");
+        overworldStructures.put(Structure.VILLAGE_TAIGA, "Village Taiga");
     }
 
     private final TARDIS plugin;
@@ -92,19 +92,19 @@ public class TARDISStructureTravel {
             Structure structure = null;
             if (args.length > 1) {
                 // check it is a valid structure type
-                structure = Registry.STRUCTURE.get(NamespacedKey.minecraft(args[1].toLowerCase(Locale.ROOT)));
+                structure = RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE).get(NamespacedKey.minecraft(args[1].toLowerCase(Locale.ROOT)));
                 if (structure == null) {
                     plugin.getMessenger().send(p, TardisModule.TARDIS, "VILLAGE_NO_STRUCTURE", args[1]);
                     return null;
                 }
                 // check structure travel permission
-                String perm = structure.getKey().getKey();
+                String perm = RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE).getKey(structure).getKey();
                 if (!p.hasPermission("tardis.timetravel.structure." + perm)) {
                     plugin.getMessenger().send(p, TardisModule.TARDIS, "NO_PERM_STRUCTURE", TARDISStringUtils.capitalise(perm));
                     return null;
                 }
                 // check structure arg is appropriate for the world environment
-                if (!env.equals(Environment.NETHER) && netherStructures.contains(structure)) {
+                if (!env.equals(Environment.NETHER) && netherStructures.containsKey(structure)) {
                     plugin.getMessenger().send(p, TardisModule.TARDIS, "VILLAGE_NO_SEARCH", args[1], (env.equals(Environment.THE_END) ? "" : "a ") + TARDISStringUtils.capitalise(env.toString()));
                     return null;
                 }
@@ -112,7 +112,7 @@ public class TARDISStructureTravel {
                     plugin.getMessenger().send(p, TardisModule.TARDIS, "VILLAGE_NO_SEARCH", args[1], "a " + TARDISStringUtils.capitalise(env.toString()));
                     return null;
                 }
-                if (!env.equals(Environment.NORMAL) && overworldStructures.contains(structure)) {
+                if (!env.equals(Environment.NORMAL) && overworldStructures.containsKey(structure)) {
                     plugin.getMessenger().send(p, TardisModule.TARDIS, "VILLAGE_NO_SEARCH", args[1], (env.equals(Environment.THE_END) ? "" : "a ") + TARDISStringUtils.capitalise(env.toString()));
                     return null;
                 }
@@ -123,7 +123,7 @@ public class TARDISStructureTravel {
                 case NETHER -> {
                     if (args.length < 2) {
                         // choose a random Nether structure - FORTRESS, BASTION_REMNANT
-                        structure = netherStructures.get(ThreadLocalRandom.current().nextInt(netherStructures.size()));
+                        structure = getRandomStructure(netherStructures.keySet());
                     }
                     StructureSearchResult netherResult = world.locateNearestStructure(location, structure, 64, false);
                     loc = (netherResult != null) ? netherResult.getLocation() : null;
@@ -140,7 +140,7 @@ public class TARDISStructureTravel {
                 default -> {
                     if (args.length < 2) {
                         // choose a random village structure - ANCIENT_CITY, VILLAGE_DESERT, VILLAGE_PLAINS, VILLAGE_SAVANNA, VILLAGE_SNOWY, VILLAGE_TAIGA, MANSION, JUNGLE_PYRAMID, DESERT_PYRAMID, IGLOO, SWAMP_HUT
-                        structure = overworldStructures.get(ThreadLocalRandom.current().nextInt(overworldStructures.size()));
+                        structure = getRandomStructure(overworldStructures.keySet());
                     }
                     StructureSearchResult normalResult = world.locateNearestStructure(location, structure, 64, false);
                     loc = (normalResult != null) ? normalResult.getLocation() : null;
@@ -200,4 +200,9 @@ public class TARDISStructureTravel {
         }
         return ret;
     }
+
+    private Structure getRandomStructure(Set<Structure> set) {
+        return set.stream().skip(TARDISConstants.RANDOM.nextInt(set.size())).findFirst().get();
+    }
 }
+

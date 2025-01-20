@@ -8,7 +8,8 @@ import me.eccentric_nz.TARDIS.handles.TARDISHandlesProcessor;
 import me.eccentric_nz.TARDIS.handles.TARDISHandlesProgramInventory;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -38,7 +39,7 @@ public class HandlesAction {
         if (player.isSneaking()) {
             // open programming GUI
             ItemStack[] handles = new TARDISHandlesProgramInventory(plugin, 0).getHandles();
-            Inventory hgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Handles Program");
+            Inventory hgui = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Handles Program");
             hgui.setContents(handles);
             player.openInventory(hgui);
         } else {
@@ -46,7 +47,7 @@ public class HandlesAction {
             ItemStack disk = player.getInventory().getItemInMainHand();
             if (disk != null && disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
                 ItemMeta dim = disk.getItemMeta();
-                if (dim.hasDisplayName() && ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
+                if (dim.hasDisplayName() && TARDISStaticUtils.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
                     // get the program_id from the disk
                     int pid = TARDISNumberParsers.parseInt(dim.getLore().get(1));
                     // query the database

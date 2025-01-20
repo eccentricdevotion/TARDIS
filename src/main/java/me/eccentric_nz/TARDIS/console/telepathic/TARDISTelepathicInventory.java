@@ -5,7 +5,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +29,7 @@ public class TARDISTelepathicInventory {
         // get current telepathic status
         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
         boolean on = (rsp.resultSet() && rsp.isTelepathyOn());
-        String onOff = on ? ChatColor.GREEN + "ON" : ChatColor.RED + "OFF" ;
+        String onOff = on ? NamedTextColor.GREEN + "ON" : NamedTextColor.RED + "OFF" ;
         // toggling telepathic circuit on/off
         ItemStack toggle = new ItemStack(Material.REPEATER);
         ItemMeta tim = toggle.getItemMeta();

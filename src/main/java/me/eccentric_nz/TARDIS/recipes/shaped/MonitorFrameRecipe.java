@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -37,7 +37,7 @@ public class MonitorFrameRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.GLASS, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "Monitor Frame");
+        im.setDisplayName(NamedTextColor.WHITE + "Monitor Frame");
         im.setItemModel(RecipeItem.MONITOR_FRAME.getModel());
         im.setLore(List.of("Place in an upwards", "facing item frame"));
         is.setItemMeta(im);

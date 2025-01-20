@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateTelepathicForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -103,7 +103,7 @@ public class TARDISTelepathicListener implements Listener {
                         // open the Telepathic GUI
                         TARDISTelepathicInventory tti = new TARDISTelepathicInventory(plugin, player);
                         ItemStack[] gui = tti.getButtons();
-                        Inventory telepathic = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Telepathic Circuit");
+                        Inventory telepathic = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Telepathic Circuit");
                         telepathic.setContents(gui);
                         player.openInventory(telepathic);
                     }
@@ -159,7 +159,7 @@ public class TARDISTelepathicListener implements Listener {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Telepathic Circuit");
         im.setItemModel(CircuitVariant.TELEPATHIC.getKey());
-        String uses = (plugin.getConfig().getString("circuits.uses.telepathic").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.telepathic");
+        String uses = (plugin.getConfig().getString("circuits.uses.telepathic").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? NamedTextColor.YELLOW + "unlimited" : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.telepathic");
         List<String> lore = Arrays.asList("Uses left", uses);
         im.setLore(lore);
         is.setItemMeta(im);

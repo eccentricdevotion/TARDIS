@@ -9,7 +9,7 @@ import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetWarpByName;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,7 +39,7 @@ public class TVMSavesGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "VM Saves")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "VM Saves")) {
             return;
         }
         event.setCancelled(true);
@@ -71,7 +71,7 @@ public class TVMSavesGUIListener extends TARDISMenuListener {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 TVMSavesGUI tvms = new TVMSavesGUI(plugin, start, start + 44, player.getUniqueId().toString());
                 ItemStack[] gui = tvms.getGUI();
-                Inventory vmg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "VM Saves");
+                Inventory vmg = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "VM Saves");
                 vmg.setContents(gui);
                 player.openInventory(vmg);
             }, 2L);
@@ -85,7 +85,7 @@ public class TVMSavesGUIListener extends TARDISMenuListener {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             TVMSavesGUI tvms = new TVMSavesGUI(plugin, start, start + 44, player.getUniqueId().toString());
             ItemStack[] gui = tvms.getGUI();
-            Inventory vmg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "VM Saves");
+            Inventory vmg = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "VM Saves");
             vmg.setContents(gui);
             player.openInventory(vmg);
         }, 2L);

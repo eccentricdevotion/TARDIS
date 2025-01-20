@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.schematic.actions;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -29,6 +31,7 @@ import me.eccentric_nz.TARDIS.schematic.setters.TARDISItemFrameSetter;
 import me.eccentric_nz.TARDIS.schematic.setters.TARDISSignSetter;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import org.bukkit.*;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
@@ -40,6 +43,7 @@ import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -139,27 +143,32 @@ public class SchematicPaster implements Runnable {
                     int py = rel.get("y").getAsInt();
                     int pz = rel.get("z").getAsInt();
                     BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
-                    Location pl;
+                    Location pl = null;
                     String which = painting.get("art").getAsString();
                     Art art = null;
                     if (which.contains(":")) {
                         // custom datapack painting
                         pl = TARDISPainting.calculatePosition(which.split(":")[1], facing, new Location(world, x + px, y + py, z + pz));
                     } else {
-                        art = Art.valueOf(which);
-                        pl = TARDISPainting.calculatePosition(art, facing, new Location(world, x + px, y + py, z + pz));
-                    }
-                    try {
-                        Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
-                        ent.teleport(pl);
-                        ent.setFacingDirection(facing, true);
+                        Registry<Art> artRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.PAINTING_VARIANT);
+                        art = artRegistry.get(NamespacedKey.minecraft(which.toLowerCase(Locale.ROOT)));
                         if (art != null) {
-                            ent.setArt(art, true);
-                        } else {
-                            DataPackPainting.setCustomVariant(ent, which);
+                            pl = TARDISPainting.calculatePosition(which.toLowerCase(Locale.ROOT), facing, new Location(world, x + px, y + py, z + pz));
                         }
-                    } catch (IllegalArgumentException e) {
-                        plugin.debug("Invalid painting location!" + pl);
+                    }
+                    if (pl != null) {
+                        try {
+                            Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
+                            ent.teleport(pl);
+                            ent.setFacingDirection(facing, true);
+                            if (art != null) {
+                                ent.setArt(art, true);
+                            } else {
+                                DataPackPainting.setCustomVariant(ent, which);
+                            }
+                        } catch (IllegalArgumentException e) {
+                            plugin.debug("Invalid painting location!" + pl);
+                        }
                     }
                 }
             }

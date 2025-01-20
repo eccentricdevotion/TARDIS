@@ -6,7 +6,7 @@ package me.eccentric_nz.tardisvortexmanipulator;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -33,7 +33,7 @@ public class TVMRecipe {
         int amount = plugin.getVortexConfig().getInt("recipe.amount");
         ItemStack is = new ItemStack(mat, amount);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "Vortex Manipulator");
+        im.setDisplayName(NamedTextColor.WHITE + "Vortex Manipulator");
         if (!plugin.getVortexConfig().getString("recipe.lore").equals("")) {
             im.setLore(Arrays.asList(plugin.getVortexConfig().getString("recipe.lore").split("~")));
         }

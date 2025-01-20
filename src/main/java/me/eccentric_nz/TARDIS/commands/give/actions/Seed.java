@@ -6,7 +6,7 @@ import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
@@ -81,7 +81,7 @@ public class Seed {
                 im.setItemModel(model);
                 im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
                 // set display name
-                im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
+                im.setDisplayName(NamedTextColor.GOLD + "TARDIS Seed Block");
                 List<String> lore = new ArrayList<>();
                 lore.add(type);
                 lore.add("Walls: " + wall);

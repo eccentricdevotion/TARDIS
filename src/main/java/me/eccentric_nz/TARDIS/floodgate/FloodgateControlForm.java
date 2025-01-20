@@ -24,7 +24,7 @@ import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -217,7 +217,7 @@ public class FloodgateControlForm {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ARS_USE_CMD");
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             ItemStack[] tars = new TARDISARSInventory(plugin, player).getARS();
-                            Inventory ars = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
+                            Inventory ars = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Architectural Reconfiguration");
                             ars.setContents(tars);
                             player.openInventory(ars);
                         }, 100);

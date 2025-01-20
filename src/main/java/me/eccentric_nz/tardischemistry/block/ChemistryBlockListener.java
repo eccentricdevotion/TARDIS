@@ -29,7 +29,7 @@ import me.eccentric_nz.tardischemistry.element.ElementInventory;
 import me.eccentric_nz.tardischemistry.lab.LabInventory;
 import me.eccentric_nz.tardischemistry.product.ProductInventory;
 import me.eccentric_nz.tardischemistry.reducer.ReducerInventory;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -140,7 +140,7 @@ public class ChemistryBlockListener implements Listener {
                             }
                         }
                     }
-                    inventory = plugin.getServer().createInventory(player, (is.getType().equals(Material.LIGHT_GRAY_CONCRETE) ? 54 : 27), ChatColor.DARK_RED + name);
+                    inventory = plugin.getServer().createInventory(player, (is.getType().equals(Material.LIGHT_GRAY_CONCRETE) ? 54 : 27), NamedTextColor.DARK_RED + name);
                     inventory.setContents(menu);
                     player.openInventory(inventory);
                 }

@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.info;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -23,7 +23,7 @@ public class TARDISIndexFileEntryListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onIndexFileEntryClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Info Entry")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Info Entry")) {
             return;
         }
         event.setCancelled(true);

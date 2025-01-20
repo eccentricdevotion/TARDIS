@@ -16,12 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.listeners.controls;
 
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.Tag;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -154,15 +158,15 @@ public class TARDISKeyboardListener implements Listener {
             return;
         }
         // biome ?
-        try {
-            String upper = firstLine.toUpperCase(Locale.ROOT);
-            Biome.valueOf(upper);
+        String upper = firstLine.toUpperCase(Locale.ROOT);
+        Registry<Biome> biomeRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME);
+        if (biomeRegistry.get(NamespacedKey.minecraft(upper.toLowerCase(Locale.ROOT))) != null) {
             if (!upper.equals("HELL") && !upper.equals("SKY") && !upper.equals("VOID")) {
                 p.performCommand("tardistravel biome " + upper);
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel biome " + upper);
                 return;
             }
-        } catch (IllegalArgumentException iae) {
+        } else {
             plugin.debug(plugin.getLanguage().getString("BIOME_NOT_VALID"));
         }
         // dest?

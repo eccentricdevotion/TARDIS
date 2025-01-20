@@ -31,7 +31,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -143,7 +143,7 @@ public class TARDISLister {
                         String[] companionData = comps.split(":");
                         ItemStack[] heads = new TARDISCompanionInventory(plugin, companionData).getSkulls();
                         // open the GUI
-                        Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Companions");
+                        Inventory inv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Companions");
                         inv.setContents(heads);
                         player.openInventory(inv);
                     } else {

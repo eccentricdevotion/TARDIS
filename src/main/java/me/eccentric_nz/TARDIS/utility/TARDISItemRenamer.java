@@ -18,7 +18,8 @@ package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -58,7 +59,7 @@ public class TARDISItemRenamer {
             if (setlore) {
                 ArrayList<String> lore = new ArrayList<>();
                 lore.add("Enter and exit your TARDIS");
-                String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
+                String format = NamedTextColor.AQUA + "" + TextDecoration.ITALIC;
                 lore.add(format + "This key belongs to");
                 lore.add(format + player.getName());
                 im.setLore(lore);

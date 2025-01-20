@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetSonic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -65,7 +65,7 @@ public class TARDISSonicActivatorListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onActivatorMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Sonic Activator")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Sonic Activator")) {
             return;
         }
         Player p = (Player) event.getWhoClicked();

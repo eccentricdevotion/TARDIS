@@ -13,7 +13,7 @@ import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetManipulator;
 import me.eccentric_nz.tardisvortexmanipulator.gui.TVMGUI;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -85,7 +85,7 @@ public class TVMEquipListener implements Listener {
                 if (action.equals(Action.RIGHT_CLICK_AIR)) {
                     // open gui
                     ItemStack[] gui = new TVMGUI(plugin, rs.getTachyonLevel()).getGUI();
-                    Inventory vmg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Vortex Manipulator");
+                    Inventory vmg = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Vortex Manipulator");
                     vmg.setContents(gui);
                     player.openInventory(vmg);
                 } else if (action.equals(Action.LEFT_CLICK_AIR) && plugin.getVortexConfig().getBoolean("allow.look_at_block") && TARDISPermission.hasPermission(player, "vm.lookatblock")) {

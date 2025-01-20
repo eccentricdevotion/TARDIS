@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.lights;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
@@ -27,7 +27,7 @@ public class TARDISLightEmittingListener extends TARDISMenuListener {
     public void onLightEmittingBlockClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
         String name = view.getTitle();
-        if (!name.equals(ChatColor.DARK_RED + "Light Emitting Blocks")) {
+        if (!name.equals(NamedTextColor.DARK_RED + "Light Emitting Blocks")) {
             return;
         }
         Player player = (Player) event.getWhoClicked();
@@ -48,7 +48,7 @@ public class TARDISLightEmittingListener extends TARDISMenuListener {
                 // get TARDIS id
                 if (rst.fromUUID(uuid.toString())) {
                     ItemStack[] lightStacks = new TARDISLightsInventory(plugin, rst.getTardisId(), uuid).getGUI();
-                    Inventory lightGUI = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Lights");
+                    Inventory lightGUI = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Lights");
                     lightGUI.setContents(lightStacks);
                     player.openInventory(lightGUI);
                 }
@@ -72,7 +72,7 @@ public class TARDISLightEmittingListener extends TARDISMenuListener {
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 // go back to Lights GUI
                 ItemStack[] lightStacks = new TARDISLightsInventory(plugin, rst.getTardisId(), uuid).getGUI();
-                Inventory lightGUI = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Lights");
+                Inventory lightGUI = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Lights");
                 lightGUI.setContents(lightStacks);
                 player.openInventory(lightGUI);
             }, 5L);

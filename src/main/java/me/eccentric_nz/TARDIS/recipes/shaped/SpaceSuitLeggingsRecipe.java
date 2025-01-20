@@ -4,7 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -27,7 +27,7 @@ public class SpaceSuitLeggingsRecipe {
     public void addRecipe() {
         ItemStack is = new ItemStack(Material.CHAINMAIL_LEGGINGS, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "TARDIS Space Suit Leggings");
+        im.setDisplayName(NamedTextColor.WHITE + "TARDIS Space Suit Leggings");
         im.setItemModel(RecipeItem.TARDIS_SPACE_SUIT_LEGGINGS.getModel());
         im.setMaxStackSize(1);
         EquippableComponent equippable = im.getEquippable();

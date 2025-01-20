@@ -19,7 +19,7 @@ package me.eccentric_nz.tardisvortexmanipulator.command;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetManipulator;
 import me.eccentric_nz.tardisvortexmanipulator.gui.TVMGUI;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -42,7 +42,7 @@ public class TVMCommandGUI {
         if (rs.resultSet()) {
             // open gui
             ItemStack[] gui = new TVMGUI(plugin, rs.getTachyonLevel()).getGUI();
-            Inventory vmg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Vortex Manipulator");
+            Inventory vmg = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Vortex Manipulator");
             vmg.setContents(gui);
             player.openInventory(vmg);
         }

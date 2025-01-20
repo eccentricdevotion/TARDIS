@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.howto;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
@@ -45,7 +45,7 @@ public class TARDISSeedMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onSeedMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Seeds Menu")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Seeds Menu")) {
             return;
         }
         Player p = (Player) event.getWhoClicked();
@@ -67,7 +67,7 @@ public class TARDISSeedMenuListener extends TARDISMenuListener {
             }
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                 ItemStack[] recipe = new TARDISSeedRecipeInventory(plugin, is.getType()).getMenu();
-                Inventory gui = plugin.getServer().createInventory(p, 27, ChatColor.DARK_RED + "TARDIS Seed Recipe");
+                Inventory gui = plugin.getServer().createInventory(p, 27, NamedTextColor.DARK_RED + "TARDIS Seed Recipe");
                 gui.setContents(recipe);
                 p.openInventory(gui);
             }, 2L);

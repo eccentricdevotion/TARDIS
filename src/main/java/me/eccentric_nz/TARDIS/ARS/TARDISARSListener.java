@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.custommodels.keys.RoomVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -62,7 +62,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onARSTerminalClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Architectural Reconfiguration")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Architectural Reconfiguration")) {
             return;
         }
         event.setCancelled(true);

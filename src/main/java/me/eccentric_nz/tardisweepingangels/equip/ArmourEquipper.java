@@ -7,7 +7,7 @@ import me.eccentric_nz.TARDIS.custommodels.keys.EmptyChildVariant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.monsters.cybermen.CyberType;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -51,7 +51,7 @@ public class ArmourEquipper {
             case MIRE -> "Mire Helmet";
             default -> monster.getName() + " Head";
         };
-        headMeta.setDisplayName(ChatColor.WHITE + name);
+        headMeta.setDisplayName(NamedTextColor.WHITE + name);
         head.setItemMeta(headMeta);
         entity.getEquipment().setHelmet(head);
         // chest

@@ -31,7 +31,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISTerminalInventory;
 import me.eccentric_nz.TARDIS.travel.save.TARDISSavesPlanetInventory;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -81,7 +81,7 @@ public class TARDISConsoleSwitchListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onConsoleInventoryClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Console")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Console")) {
             return;
         }
         Player player = (Player) event.getWhoClicked();
@@ -124,22 +124,22 @@ public class TARDISConsoleSwitchListener implements Listener {
             Inventory new_inv = null;
             // Chameleon circuit
             if (cmd == CircuitVariant.CHAMELEON.getKey() || cmd == CircuitVariant.CHAMELEON_DAMAGED.getKey()) {
-                new_inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
+                new_inv = plugin.getServer().createInventory(player, 27, NamedTextColor.DARK_RED + "Chameleon Circuit");
                 stack = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset()).getMenu();
             }
             // ARS circuit
             if (cmd == CircuitVariant.ARS.getKey() || cmd == CircuitVariant.ARS_DAMAGED.getKey()) {
-                new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
+                new_inv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Architectural Reconfiguration");
                 stack = new TARDISARSInventory(plugin, player).getARS();
             }
             // Telepathic circuit
             if (cmd == CircuitVariant.TELEPATHIC.getKey() || cmd == CircuitVariant.TELEPATHIC_DAMAGED.getKey()) {
-                new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Telepathic Circuit");
+                new_inv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Telepathic Circuit");
                 stack = new TARDISTelepathicInventory(plugin, player).getButtons();
             }
             // Temporal circuit
             if (cmd == CircuitVariant.TEMPORAL.getKey() || cmd == CircuitVariant.TEMPORAL_DAMAGED.getKey()) {
-                new_inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Temporal Locator");
+                new_inv = plugin.getServer().createInventory(player, 27, NamedTextColor.DARK_RED + "Temporal Locator");
                 stack = new TARDISTemporalLocatorInventory(plugin).getTemporal();
             }
             // Memory circuit (saves/areas)
@@ -148,12 +148,12 @@ public class TARDISConsoleSwitchListener implements Listener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
                     return;
                 }
-                new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
+                new_inv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Dimension Map");
                 stack = new TARDISSavesPlanetInventory(plugin, tardis.getTardisId(), player).getPlanets();
             }
             // Input circuit (terminal)
             if (cmd == CircuitVariant.INPUT.getKey() || cmd == CircuitVariant.INPUT_DAMAGED.getKey()) {
-                new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Destination Terminal");
+                new_inv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Destination Terminal");
                 stack = new TARDISTerminalInventory(plugin).getTerminal();
             }
             // scanner circuit

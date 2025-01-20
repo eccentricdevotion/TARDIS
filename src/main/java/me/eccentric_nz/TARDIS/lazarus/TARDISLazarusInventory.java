@@ -19,7 +19,8 @@ package me.eccentric_nz.TARDIS.lazarus;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.custommodels.GUIGeneticManipulator;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -164,9 +165,9 @@ class TARDISLazarusInventory {
         tf.setDisplayName(plugin.getLanguage().getString("BUTTON_OPTS"));
         List<String> opts = new ArrayList<>();
         for (String o : plugin.getLanguage().getString("BUTTON_OPTS_LIST").split("/")) {
-            opts.add(ChatColor.ITALIC + o + ChatColor.RESET);
+            opts.add(TextDecoration.ITALIC + o + NamedTextColor.WHITE);
         }
-        opts.add(ChatColor.RED + "FALSE");
+        opts.add(NamedTextColor.RED + "FALSE");
         tf.setLore(opts);
         tf.setItemModel(GUIGeneticManipulator.BUTTON_OPTS.key());
         tamed.setItemMeta(tf);

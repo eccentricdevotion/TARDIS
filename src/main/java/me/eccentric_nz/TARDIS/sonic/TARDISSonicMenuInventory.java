@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUISonicPreferences;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -55,7 +55,7 @@ public class TARDISSonicMenuInventory {
             if (sonic.getMaterial() == Material.BLAZE_ROD) {
                 ItemStack is = new ItemStack(sonic.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");
+                im.setDisplayName(NamedTextColor.WHITE + "Sonic Screwdriver");
                 im.setLore(List.of(sonic.getName()));
                 im.setItemModel(sonic.getModel());
                 is.setItemMeta(im);

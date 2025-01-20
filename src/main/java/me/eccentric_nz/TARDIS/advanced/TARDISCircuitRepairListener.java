@@ -19,7 +19,8 @@ package me.eccentric_nz.TARDIS.advanced;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.EventHandler;
@@ -89,11 +90,11 @@ public class TARDISCircuitRepairListener implements Listener {
             return;
         }
         // get the display name
-        String dnf = ChatColor.stripColor(fim.getDisplayName());
+        String dnf = TARDISStaticUtils.stripColor(fim.getDisplayName());
         if (dnf.startsWith("TARDIS") && dnf.endsWith("Circuit") && fim.hasLore()) {
             // get the lore
             List<String> flore = fim.getLore();
-            String stripped = ChatColor.stripColor(flore.get(1));
+            String stripped = TARDISStaticUtils.stripColor(flore.get(1));
             if (stripped.equals("unlimited")) {
                 return;
             }
@@ -121,7 +122,7 @@ public class TARDISCircuitRepairListener implements Listener {
             ItemMeta cim = clone.getItemMeta();
             List<String> clore = new ArrayList<>();
             clore.add("Uses left");
-            clore.add(ChatColor.YELLOW + "" + repair_to);
+            clore.add(NamedTextColor.YELLOW + "" + repair_to);
             cim.setLore(clore);
             clone.setItemMeta(cim);
             // set the item in slot 0 to the new repaired map

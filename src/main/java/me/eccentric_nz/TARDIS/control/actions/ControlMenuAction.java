@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.control.actions;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.TARDISControlInventory;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +29,7 @@ public class ControlMenuAction {
                 TARDISFloodgate.sendControlForm(playerUUID);
             } else {
                 ItemStack[] controls = new TARDISControlInventory(plugin, id).getControls();
-                Inventory cgui = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Control Menu");
+                Inventory cgui = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Control Menu");
                 cgui.setContents(controls);
                 player.openInventory(cgui);
             }

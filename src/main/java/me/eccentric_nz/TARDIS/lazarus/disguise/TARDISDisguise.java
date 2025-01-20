@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.lazarus.disguise;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.utility.TARDISRegistryValues;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -37,10 +38,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_21_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_21_R3.entity.CraftWolf;
-import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftItemStack;
-import org.bukkit.craftbukkit.v1_21_R3.util.CraftNamespacedKey;
+import org.bukkit.craftbukkit.CraftWorld;
+import org.bukkit.craftbukkit.entity.CraftWolf;
+import org.bukkit.craftbukkit.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.util.CraftNamespacedKey;
 import org.bukkit.entity.Axolotl;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Frog;
@@ -229,7 +230,7 @@ public class TARDISDisguise {
                     }
                     if (disguise.getEntityType().equals(EntityType.FROG) && o instanceof Frog.Variant fv) {
                         net.minecraft.world.entity.animal.frog.Frog frog = (net.minecraft.world.entity.animal.frog.Frog) entity;
-                        net.minecraft.world.entity.animal.FrogVariant variant = BuiltInRegistries.FROG_VARIANT.byId(fv.ordinal());
+                        net.minecraft.world.entity.animal.FrogVariant variant = BuiltInRegistries.FROG_VARIANT.byId(TARDISRegistryValues.FROG_VARIANTS.indexOf(fv));
                         frog.setVariant(Holder.direct(variant));
                     }
                     if (disguise.getEntityType().equals(EntityType.RABBIT) && o instanceof org.bukkit.entity.Rabbit.Type rt) {
@@ -265,7 +266,7 @@ public class TARDISDisguise {
                     }
                     if (disguise.getEntityType().equals(EntityType.CAT) && o instanceof org.bukkit.entity.Cat.Type c) {
                         Cat cat = (Cat) entity;
-                        cat.setVariant(Holder.direct(BuiltInRegistries.CAT_VARIANT.byId(c.ordinal())));
+                        cat.setVariant(Holder.direct(BuiltInRegistries.CAT_VARIANT.byId(TARDISRegistryValues.CAT_TYPES.indexOf(c))));
                     }
                     if (disguise.getEntityType().equals(EntityType.FOX) && o instanceof FOX f) {
                         Fox fox = (Fox) entity;

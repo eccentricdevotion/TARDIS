@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetShells;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.inventory.ItemStack;
@@ -100,7 +100,7 @@ public class TARDISShellInventory {
                 lore.add(map.get("line3"));
                 lore.add(map.get("line4"));
                 if (map.get("active").equals("1")) {
-                    lore.add(ChatColor.AQUA + "Active shell");
+                    lore.add(NamedTextColor.AQUA + "Active shell");
                 }
                 con.setLore(lore);
                 if (material == Material.BOWL) {

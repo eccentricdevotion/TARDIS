@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetSonic;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -93,7 +93,7 @@ public class TARDISSonicGeneratorListener implements Listener {
                     } else {
                         // open GUI
                         ItemStack[] items = new TARDISSonicGeneratorInventory(plugin, s, player).getGenerator();
-                        Inventory sgc = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Sonic Generator");
+                        Inventory sgc = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Sonic Generator");
                         sgc.setContents(items);
                         plugin.getTrackerKeeper().getSonicGenerators().put(uuid, block.getLocation());
                         player.openInventory(sgc);
@@ -116,7 +116,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             int level = rs.getArtronLevel();
             ItemStack sonic = new ItemStack(Material.BLAZE_ROD, 1);
             ItemMeta screw = sonic.getItemMeta();
-            screw.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");
+            screw.setDisplayName(NamedTextColor.WHITE + "Sonic Screwdriver");
             List<String> upgrades = new ArrayList<>();
             if (s.hasKnockback()) {
                 upgrades.add("Knockback Upgrade");
@@ -184,7 +184,7 @@ public class TARDISSonicGeneratorListener implements Listener {
 
     private void openActivate(Player p) {
         ItemStack[] items = new TARDISSonicActivatorInventory(plugin).getActivator();
-        Inventory sgc = plugin.getServer().createInventory(p, 9, ChatColor.DARK_RED + "Sonic Activator");
+        Inventory sgc = plugin.getServer().createInventory(p, 9, NamedTextColor.DARK_RED + "Sonic Activator");
         sgc.setContents(items);
         p.openInventory(sgc);
     }

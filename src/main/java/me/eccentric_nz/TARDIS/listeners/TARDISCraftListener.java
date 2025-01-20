@@ -19,7 +19,8 @@ package me.eccentric_nz.TARDIS.listeners;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -127,7 +128,7 @@ public class TARDISCraftListener implements Listener {
                 ItemMeta im = is.getItemMeta();
                 if (im.hasDisplayName()) {
                     String dn = im.getDisplayName();
-                    if (dn.equals(ChatColor.GOLD + "TARDIS Seed Block")) {
+                    if (dn.equals(NamedTextColor.GOLD + "TARDIS Seed Block")) {
                         List<String> lore = im.getLore();
                         lore.add("Walls: " + ci.getItem(6).getType());
                         lore.add("Floors: " + ci.getItem(9).getType());
@@ -142,7 +143,7 @@ public class TARDISCraftListener implements Listener {
                             String which = split[1].toLowerCase(Locale.ROOT);
                             // set the second line of lore
                             List<String> lore;
-                            String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
+                            String uses = (plugin.getConfig().getString("circuits.uses." + which).equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? NamedTextColor.YELLOW + "unlimited" : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses." + which);
                             if (im.hasLore()) {
                                 lore = im.getLore();
                                 lore.set(1, uses);
@@ -170,7 +171,7 @@ public class TARDISCraftListener implements Listener {
                             if (lore == null) {
                                 lore = new ArrayList<>();
                             }
-                            String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
+                            String format = NamedTextColor.AQUA + "" + TextDecoration.ITALIC;
                             String what = dn.contains("Key") ? "key" : "disk";
                             lore.add(format + "This " + what + " belongs to");
                             lore.add(format + human.getName());

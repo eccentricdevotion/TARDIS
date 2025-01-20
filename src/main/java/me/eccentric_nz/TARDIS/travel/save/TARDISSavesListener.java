@@ -29,7 +29,7 @@ import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISAreaCheck;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -73,7 +73,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
             return;
         }
         InventoryView view = event.getView();
-        if (view.getTitle().startsWith(ChatColor.DARK_RED + "TARDIS saves")) {
+        if (view.getTitle().startsWith(NamedTextColor.DARK_RED + "TARDIS saves")) {
             Player player = (Player) event.getWhoClicked();
             UUID uuid = player.getUniqueId();
             // get the TARDIS the player is in
@@ -215,7 +215,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                     set.put("z", TARDISNumberParsers.parseInt(lore.get(3)));
                                     int l_size = lore.size();
                                     if (l_size >= 5) {
-                                        if (!lore.get(4).isEmpty() && !lore.get(4).equals(ChatColor.GOLD + "Current location")) {
+                                        if (!lore.get(4).isEmpty() && !lore.get(4).equals(NamedTextColor.GOLD + "Current location")) {
                                             set.put("direction", lore.get(4));
                                         }
                                         if (l_size > 5 && !lore.get(5).isEmpty() && lore.get(5).equals("true")) {
@@ -224,7 +224,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                             set.put("submarine", 0);
                                         }
                                     }
-                                    if (l_size >= 7 && !lore.get(6).equals(ChatColor.GOLD + "Current location")) {
+                                    if (l_size >= 7 && !lore.get(6).equals(NamedTextColor.GOLD + "Current location")) {
                                         HashMap<String, Object> sett = new HashMap<>();
                                         sett.put("chameleon_preset", lore.get(6));
                                         // set chameleon adaption to OFF
@@ -245,8 +245,8 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                         new TARDISLand(plugin, occupiedTardisId, player).exitVortex();
                                         plugin.getPM().callEvent(new TARDISTravelEvent(player, null, travelType, occupiedTardisId));
                                     }
-                                } else if (!lore.contains(ChatColor.GOLD + "Current location")) {
-                                    lore.add(ChatColor.GOLD + "Current location");
+                                } else if (!lore.contains(NamedTextColor.GOLD + "Current location")) {
+                                    lore.add(NamedTextColor.GOLD + "Current location");
                                     im.setLore(lore);
                                     is.setItemMeta(im);
                                 }
@@ -272,7 +272,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                     if (slot == 53) {
                         int finalId = playerTardisId != -1 ? playerTardisId : occupiedTardisId;
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Dimension Map");
+                            Inventory inv = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Dimension Map");
                             TARDISSavesPlanetInventory tspi = new TARDISSavesPlanetInventory(plugin, finalId, player);
                             ItemStack[] items = tspi.getPlanets();
                             inv.setContents(items);
@@ -287,8 +287,8 @@ public class TARDISSavesListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onSaveSignClose(InventoryCloseEvent event) {
         String inv_name = event.getView().getTitle();
-        if (inv_name.startsWith(ChatColor.DARK_RED + "TARDIS saves")) {
-            boolean isPageTwo = inv_name.equals(ChatColor.DARK_RED + "TARDIS saves 2");
+        if (inv_name.startsWith(NamedTextColor.DARK_RED + "TARDIS saves")) {
+            boolean isPageTwo = inv_name.equals(NamedTextColor.DARK_RED + "TARDIS saves 2");
             UUID uuid = event.getPlayer().getUniqueId();
             // get the TARDIS the player is in
             HashMap<String, Object> wheres = new HashMap<>();

@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.floodgate.FloodgateIndexFileForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.info.TARDISIndexFileInventory;
 import me.eccentric_nz.TARDIS.info.TARDISInfoMenu;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -51,7 +51,7 @@ public class TARDISInfoMenuButton {
             } else {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     ItemStack[] cats = new TARDISIndexFileInventory(plugin).getMenu();
-                    Inventory gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS Index File");
+                    Inventory gui = plugin.getServer().createInventory(player, 27, NamedTextColor.DARK_RED + "TARDIS Index File");
                     gui.setContents(cats);
                     player.openInventory(gui);
                 }, 2L);

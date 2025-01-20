@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISKeyMenuListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -47,7 +47,7 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onSonicMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Sonic Prefs Menu")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Sonic Prefs Menu")) {
             return;
         }
         Player p = (Player) event.getWhoClicked();
@@ -84,7 +84,7 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
                     return;
                 }
                 // set wool colour from display name of placed sonic
-                ChatColor color = TARDISStaticUtils.getColor(meta.getDisplayName());
+                NamedTextColor color = TARDISStaticUtils.getColor(meta.getDisplayName());
                 Material material = TARDISKeyMenuListener.REVERSE_LOOKUP.get(color);
                 ItemStack choice = view.getItem(28);
                 choice.setType(material);
@@ -101,12 +101,12 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
                 Material wool = getNextWool(choice.getType());
                 // set wool colour to next in line
                 choice.setType(wool);
-                ChatColor display = TARDISKeyMenuListener.COLOUR_LOOKUP.get(wool);
+                NamedTextColor display = TARDISKeyMenuListener.COLOUR_LOOKUP.get(wool);
                 ItemMeta sonic_im = sonic.getItemMeta();
-//                if (display != ChatColor.WHITE) {
+//                if (display != NamedTextColor.WHITE) {
                 sonic_im.setDisplayName(display + "Sonic Screwdriver");
 //                } else {
-//                    sonic_im.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");
+//                    sonic_im.setDisplayName(NamedTextColor.WHITE + "Sonic Screwdriver");
 //                }
                 sonic.setItemMeta(sonic_im);
             }
@@ -127,7 +127,7 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onSonicMenuClose(InventoryCloseEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Sonic Prefs Menu")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Sonic Prefs Menu")) {
             return;
         }
         ItemStack sonic = view.getItem(27);

@@ -7,7 +7,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.upgrades.TARDISSystemTreeGUI;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -49,7 +49,7 @@ public class SystemTreeCommand {
         }
         SystemUpgrade current = rsp.getData();
         ItemStack[] menu = new TARDISSystemTreeGUI(plugin, current).getInventory();
-        Inventory upgrades = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS System Upgrades");
+        Inventory upgrades = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS System Upgrades");
         upgrades.setContents(menu);
         player.openInventory(upgrades);
         return true;

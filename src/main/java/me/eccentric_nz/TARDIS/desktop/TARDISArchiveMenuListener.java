@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
@@ -56,7 +56,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onThemeMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Archive")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Archive")) {
             return;
         }
         Player p = (Player) event.getWhoClicked();
@@ -94,7 +94,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener {
                 t = ConsoleSize.values()[s].toString();
                 b = ConsoleSize.values()[s].getBlocks();
                 if (t != null) {
-                    ims.setLore(Arrays.asList(t, b, ChatColor.AQUA + "Click to change"));
+                    ims.setLore(Arrays.asList(t, b, NamedTextColor.AQUA + "Click to change"));
                     iss.setItemMeta(ims);
                 }
             }
@@ -133,7 +133,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener {
                     TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
                     ItemMeta im = choice.getItemMeta();
                     List<String> lore = im.getLore();
-                    if (lore.contains(ChatColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"))) {
+                    if (lore.contains(NamedTextColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"))) {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "ARCHIVE_NOT_CURRENT");
                         return;
                     }

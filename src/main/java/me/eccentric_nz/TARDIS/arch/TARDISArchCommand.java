@@ -18,7 +18,8 @@ package me.eccentric_nz.TARDIS.arch;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -57,7 +58,7 @@ public class TARDISArchCommand {
 
     public boolean whois(CommandSender sender, String[] args) {
         for (Player p : plugin.getServer().getOnlinePlayers()) {
-            if (ChatColor.stripColor(p.getPlayerListName()).equalsIgnoreCase(args[1])) {
+            if (TARDISStaticUtils.stripColor(p.getPlayerListName()).equalsIgnoreCase(args[1])) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "ARCH_PLAYER", p.getName());
                 return true;
             }

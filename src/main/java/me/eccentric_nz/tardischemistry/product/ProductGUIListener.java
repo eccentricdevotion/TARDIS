@@ -18,7 +18,7 @@ package me.eccentric_nz.tardischemistry.product;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -45,7 +45,7 @@ public class ProductGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onProductMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Product crafting")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Product crafting")) {
             return;
         }
         Player player = (Player) event.getWhoClicked();

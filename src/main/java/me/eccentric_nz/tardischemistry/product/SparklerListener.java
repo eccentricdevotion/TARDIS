@@ -17,7 +17,8 @@
 package me.eccentric_nz.tardischemistry.product;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.data.BlockData;
@@ -61,7 +62,7 @@ public class SparklerListener implements Listener {
                     im.setEnchantmentGlintOverride(true);
                     is.setItemMeta(im);
                     // start sparkler runnable
-                    BlockData colour = colours.get(ChatColor.stripColor(im.getDisplayName()));
+                    BlockData colour = colours.get(TARDISStaticUtils.stripColor(im.getDisplayName()));
                     SparklerRunnable runnable = new SparklerRunnable(player, colour, System.currentTimeMillis());
                     int taskId = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, 1L, 2L);
                     runnable.setTaskId(taskId);

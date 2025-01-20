@@ -36,6 +36,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import me.eccentric_nz.TARDIS.utility.TARDISSponge;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardischunkgenerator.worldgen.TARDISChunkGenerator;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -68,7 +69,7 @@ public class TARDISInstantPreset {
     private final boolean rebuild;
     private final ChameleonPreset preset;
     private final Material random_colour;
-    private final ChatColor sign_colour;
+    private final NamedTextColor sign_colour;
     private final List<ProblemBlock> do_at_end = new ArrayList<>();
 
     public TARDISInstantPreset(TARDIS plugin, BuildData bd, ChameleonPreset preset, BlockData chameleonBlockData, boolean rebuild) {
@@ -277,7 +278,7 @@ public class TARDISInstantPreset {
                                     if (plugin.getServer().getPluginManager().getPlugin("Essentials") != null) {
                                         Essentials essentials = (Essentials) plugin.getServer().getPluginManager().getPlugin("Essentials");
                                         User user = essentials.getUser(tardis.getUuid());
-                                        player_name = ChatColor.stripColor(user.getNick(false));
+                                        player_name = TARDISStaticUtils.stripColor(user.getNick(false));
                                     }
                                     String owner;
                                     if (preset.equals(ChameleonPreset.GRAVESTONE) || preset.equals(ChameleonPreset.PUNKED) || preset.equals(ChameleonPreset.ROBOT)) {

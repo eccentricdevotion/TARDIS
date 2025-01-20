@@ -4,7 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISWeatherInventory;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateWeatherForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +25,7 @@ public class WeatherAction {
             new FloodgateWeatherForm(plugin, playerUUID).send();
         } else {
             ItemStack[] weather = new TARDISWeatherInventory(plugin).getWeatherButtons();
-            Inventory forecast = plugin.getServer().createInventory(player, 9, ChatColor.DARK_RED + "TARDIS Weather Menu");
+            Inventory forecast = plugin.getServer().createInventory(player, 9, NamedTextColor.DARK_RED + "TARDIS Weather Menu");
             forecast.setContents(weather);
             player.openInventory(forecast);
         }

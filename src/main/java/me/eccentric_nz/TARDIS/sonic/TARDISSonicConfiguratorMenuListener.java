@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetConfiguredSonic;
 import me.eccentric_nz.TARDIS.enumeration.SonicConfig;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -52,7 +52,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onSonicConfiguratorMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Sonic Configurator")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Sonic Configurator")) {
             return;
         }
         Player player = (Player) event.getWhoClicked();
@@ -356,7 +356,7 @@ public class TARDISSonicConfiguratorMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onSonicConfiguratorMenuClose(InventoryCloseEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Sonic Configurator")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Sonic Configurator")) {
             return;
         }
         ItemStack sonic = view.getItem(45);

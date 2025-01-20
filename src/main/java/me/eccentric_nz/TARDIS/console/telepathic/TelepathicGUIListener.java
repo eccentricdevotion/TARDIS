@@ -8,7 +8,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,7 +34,7 @@ public class TelepathicGUIListener extends TARDISMenuListener {
     public void onTelepathicMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
         String name = view.getTitle();
-        if (!name.equals(ChatColor.DARK_RED + "TARDIS Telepathic Circuit")) {
+        if (!name.equals(NamedTextColor.DARK_RED + "TARDIS Telepathic Circuit")) {
             return;
         }
         Player player = (Player) event.getWhoClicked();
@@ -99,7 +99,7 @@ public class TelepathicGUIListener extends TARDISMenuListener {
                     if (choice != null) {
                         TARDISTelepathicStructure tts = new TARDISTelepathicStructure(plugin);
                         ItemStack[] gui = tts.getButtons();
-                        Inventory structure = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Telepathic Structure Finder");
+                        Inventory structure = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Telepathic Structure Finder");
                         structure.setContents(gui);
                         player.openInventory(structure);
                     }
@@ -109,7 +109,7 @@ public class TelepathicGUIListener extends TARDISMenuListener {
                     if (choice != null) {
                         TARDISTelepathicBiome ttb = new TARDISTelepathicBiome(plugin, rs.getTardis_id());
                         ItemStack[] gui = ttb.getButtons();
-                        Inventory biome = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Telepathic Biome Finder");
+                        Inventory biome = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Telepathic Biome Finder");
                         biome.setContents(gui);
                         player.openInventory(biome);
                     }

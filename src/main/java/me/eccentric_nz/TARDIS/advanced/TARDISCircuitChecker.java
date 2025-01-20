@@ -19,7 +19,8 @@ package me.eccentric_nz.TARDIS.advanced;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -238,7 +239,7 @@ public class TARDISCircuitChecker {
         int uses = 0;
         if (im.hasLore()) {
             List<String> lore = im.getLore();
-            String stripped = ChatColor.stripColor(lore.get(1));
+            String stripped = TARDISStaticUtils.stripColor(lore.get(1));
             if (!stripped.equals("unlimited")) {
                 uses = TARDISNumberParsers.parseInt(stripped);
             }

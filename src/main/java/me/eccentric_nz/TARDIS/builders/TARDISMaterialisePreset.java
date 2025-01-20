@@ -39,6 +39,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISSponge;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import me.eccentric_nz.tardischunkgenerator.worldgen.TARDISChunkGenerator;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -72,7 +73,7 @@ class TARDISMaterialisePreset implements Runnable {
     private final TARDISChameleonColumn glass_column;
     private final Material random_colour;
     private final Material random_glass;
-    private final ChatColor sign_colour;
+    private final NamedTextColor sign_colour;
     private int task;
     private int i;
     private Block handbrake;

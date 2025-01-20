@@ -1,7 +1,8 @@
 package me.eccentric_nz.TARDIS.commands.give.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -32,7 +33,7 @@ public class Kit {
                     im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
                     if (im.hasLore()) {
                         List<String> lore = im.getLore();
-                        String format = ChatColor.AQUA + "" + ChatColor.ITALIC;
+                        String format = NamedTextColor.AQUA + "" + TextDecoration.ITALIC;
                         String what = im.getDisplayName().contains("Key") ? "key" : "disk";
                         lore.add(format + "This " + what + " belongs to");
                         lore.add(format + player.getName());

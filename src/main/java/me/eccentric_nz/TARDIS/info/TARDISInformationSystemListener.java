@@ -18,7 +18,8 @@ package me.eccentric_nz.TARDIS.info;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.ChatColor;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -1885,7 +1886,7 @@ public class TARDISInformationSystemListener implements Listener {
         UUID uuid = p.getUniqueId();
         if (plugin.getTrackerKeeper().getInfoMenu().containsKey(uuid)) {
             event.setCancelled(true);
-            String chat = ChatColor.stripColor(event.getMessage());
+            String chat = TARDISStaticUtils.stripColor(event.getMessage());
             // always exit if 'e' is pressed
             if (chat.equalsIgnoreCase("E")) {
                 exit(p, plugin);

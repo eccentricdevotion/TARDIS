@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.commands.travel;
 
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
@@ -29,7 +31,10 @@ import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISBiomeFinder;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
+import me.eccentric_nz.TARDIS.utility.TARDISRegistryValues;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
@@ -41,7 +46,6 @@ import java.util.Locale;
 import java.util.UUID;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISTravelBiome {
@@ -105,7 +109,7 @@ public class TARDISTravelBiome {
         }
         if (upper.equals("LIST")) {
             StringBuilder buf = new StringBuilder();
-            for (Biome bi : Biome.values()) {
+            for (Biome bi : TARDISRegistryValues.BIOMES) {
                 if (!bi.equals(Biome.THE_VOID)) {
                     buf.append(bi.toString()).append(", ");
                 }
@@ -113,8 +117,9 @@ public class TARDISTravelBiome {
             String b = buf.substring(0, buf.length() - 2);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOMES", b);
         } else {
-            try {
-                Biome biome = Biome.valueOf(upper);
+            Registry<Biome> biomeRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME);
+            Biome biome = biomeRegistry.get(NamespacedKey.minecraft(upper.toLowerCase(Locale.ROOT)));
+            if (biome != null) {
                 if (biome.equals(Biome.THE_VOID)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_TRAVEL_NOT_VALID");
                     return true;
@@ -154,7 +159,7 @@ public class TARDISTravelBiome {
                 }
                 Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                 new TARDISBiomeFinder(plugin).run(w, biome, player, id, rsc.getDirection(), current);
-            } catch (IllegalArgumentException iae) {
+            } else {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_VALID");
                 return true;
             }

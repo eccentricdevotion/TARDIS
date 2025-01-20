@@ -2,7 +2,8 @@ package me.eccentric_nz.TARDIS.upgrades;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.SystemUpgrade;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -33,7 +34,7 @@ public class TARDISSystemTreeGUI {
             if (g.getSlot() != -1) {
                 ItemStack is = new ItemStack(g.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
-                String prefix = (g.getBranch().equals("branch")) ? ChatColor.GOLD + "" + ChatColor.ITALIC : "";
+                String prefix = (g.getBranch().equals("branch")) ? NamedTextColor.GOLD + "" + TextDecoration.ITALIC : "";
                 im.setDisplayName(prefix + g.getName());
                 List<String> lore = new ArrayList<>(g.getLore());
                 boolean has = sysData.getUpgrades().get(g);
@@ -44,12 +45,12 @@ public class TARDISSystemTreeGUI {
                     } else {
                         cost = plugin.getSystemUpgradesConfig().getString(g.getBranch() + "." + g.toString().toLowerCase(Locale.ROOT));
                     }
-                    lore.add(ChatColor.AQUA + "" + ChatColor.ITALIC + "Cost: " + cost);
+                    lore.add(NamedTextColor.AQUA + "" + TextDecoration.ITALIC + "Cost: " + cost);
                 } else if (g != SystemTree.UPGRADE_TREE) {
-                    lore.add(ChatColor.GREEN + "" + ChatColor.ITALIC + "Unlocked");
+                    lore.add(NamedTextColor.GREEN + "" + TextDecoration.ITALIC + "Unlocked");
                 } else {
                     // add players current Artron level to UPGRADE_TREE
-                    lore.add(ChatColor.AQUA + "" + ChatColor.ITALIC + "Artron Level: " + sysData.getArtronLevel());
+                    lore.add(NamedTextColor.AQUA + "" + TextDecoration.ITALIC + "Artron Level: " + sysData.getArtronLevel());
                 }
                 im.setLore(lore);
                 // does the player have this system upgrade?
@@ -61,7 +62,7 @@ public class TARDISSystemTreeGUI {
         // left_down
         ItemStack ld = new ItemStack(SystemTree.LEFT_DOWN.getMaterial(), 1);
         ItemMeta eft = ld.getItemMeta();
-        eft.setDisplayName(ChatColor.WHITE + "");
+        eft.setDisplayName(NamedTextColor.WHITE + "");
         eft.setItemModel(SystemTree.LEFT_DOWN.getLocked());
         ld.setItemMeta(eft);
         stacks[0] = ld;
@@ -69,7 +70,7 @@ public class TARDISSystemTreeGUI {
         int[] horizontal = new int[]{1, 3, 5, 7};
         ItemStack his = new ItemStack(SystemTree.H_LINE.getMaterial(), 1);
         ItemMeta him = his.getItemMeta();
-        him.setDisplayName(ChatColor.WHITE + "");
+        him.setDisplayName(NamedTextColor.WHITE + "");
         him.setItemModel(SystemTree.H_LINE.getLocked());
         his.setItemMeta(him);
         for (int h : horizontal) {
@@ -79,7 +80,7 @@ public class TARDISSystemTreeGUI {
         int[] both_down = new int[]{2, 6};
         ItemStack bd = new ItemStack(SystemTree.BOTH_DOWN.getMaterial(), 1);
         ItemMeta bdim = bd.getItemMeta();
-        bdim.setDisplayName(ChatColor.WHITE + "");
+        bdim.setDisplayName(NamedTextColor.WHITE + "");
         bdim.setItemModel(SystemTree.BOTH_DOWN.getLocked());
         bd.setItemMeta(bdim);
         for (int d : both_down) {
@@ -88,21 +89,21 @@ public class TARDISSystemTreeGUI {
         // right_down
         ItemStack rd = new ItemStack(SystemTree.RIGHT_DOWN.getMaterial(), 1);
         ItemMeta own = rd.getItemMeta();
-        own.setDisplayName(ChatColor.WHITE + "");
+        own.setDisplayName(NamedTextColor.WHITE + "");
         own.setItemModel(SystemTree.RIGHT_DOWN.getLocked());
         rd.setItemMeta(own);
         stacks[8] = rd;
         // background
         ItemStack is = new ItemStack(SystemTree.BLANK.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(ChatColor.WHITE + "");
+        im.setDisplayName(NamedTextColor.WHITE + "");
         im.setItemModel(SystemTree.BLANK.getLocked());
         is.setItemMeta(im);
         stacks[10] = is;
         // vertical
         ItemStack vert = new ItemStack(SystemTree.VERTICAL.getMaterial(), 1);
         ItemMeta ical = vert.getItemMeta();
-        ical.setDisplayName(ChatColor.WHITE + "");
+        ical.setDisplayName(NamedTextColor.WHITE + "");
         ical.setItemModel(SystemTree.VERTICAL.getLocked());
         vert.setItemMeta(ical);
         stacks[13] = vert;

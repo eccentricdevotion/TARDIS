@@ -8,8 +8,9 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeUpdate;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.form.SimpleForm;
@@ -71,7 +72,7 @@ public class FloodgateSystemUpgradesForm {
             if (g.getSlot() != -1 && !notThese.contains(g)) {
                 boolean has = sysData.getUpgrades().get(g);
                 boolean branch = g.getBranch().equals("branch");
-                String prefix = (branch) ? ChatColor.GOLD + "" + ChatColor.ITALIC : "";
+                String prefix = (branch) ? NamedTextColor.GOLD + "" + TextDecoration.ITALIC : "";
                 String suffix;
                 String image = "sys_locked";
                 // does the player have this system upgrade?
@@ -83,9 +84,9 @@ public class FloodgateSystemUpgradesForm {
                     } else {
                         cost = plugin.getSystemUpgradesConfig().getString(g.getBranch() + "." + g.toString().toLowerCase(Locale.ROOT));
                     }
-                    suffix = " " + ChatColor.BLUE + ChatColor.ITALIC + "Cost: " + cost;
+                    suffix = " " + NamedTextColor.BLUE + TextDecoration.ITALIC + "Cost: " + cost;
                 } else {
-                    suffix = " " + ChatColor.GREEN + ChatColor.ITALIC + "Unlocked";
+                    suffix = " " + NamedTextColor.GREEN + TextDecoration.ITALIC + "Unlocked";
                     image = (branch) ? "sys_branch_unlocked" : "sys_unlocked";
                 }
                 builder.button(prefix + g.getName() + suffix, FormImage.Type.URL, String.format("https://github.com/eccentricdevotion/TARDIS-Resource-Pack/raw/master/assets/tardis/textures/item/circuit/%s.png", image));

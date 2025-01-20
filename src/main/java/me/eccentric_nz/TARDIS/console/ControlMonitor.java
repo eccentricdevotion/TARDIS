@@ -9,7 +9,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetScreen;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Color;
 import org.bukkit.entity.Display;
 import org.bukkit.entity.Entity;
@@ -56,7 +56,7 @@ public class ControlMonitor implements Runnable {
         ResultSetScreen rss = new ResultSetScreen(plugin, id);
         StringBuilder builder = new StringBuilder();
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-            builder.append(ChatColor.DARK_PURPLE)
+            builder.append(NamedTextColor.DARK_PURPLE)
                     .append("Drifting\n")
                     .append("in the\n")
                     .append("time\n")
@@ -69,10 +69,10 @@ public class ControlMonitor implements Runnable {
                     if (!plugin.getPlanetsConfig().getBoolean("planets." + resultSetConsole.getWorld() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE) && !worldName.isEmpty()) {
                         worldName = plugin.getMVHelper().getAlias(worldName);
                     }
-                    builder.append(ChatColor.DARK_PURPLE)
+                    builder.append(NamedTextColor.DARK_PURPLE)
                             .append(worldName)
                             .append("\n")
-                            .append(ChatColor.WHITE)
+                            .append(NamedTextColor.WHITE)
                             .append(resultSetConsole.getX())
                             .append("\n")
                             .append(resultSetConsole.getY())
@@ -85,21 +85,21 @@ public class ControlMonitor implements Runnable {
             // get the artron data
             rss.artronAsync((hasResult, resultSetConsole) -> {
                 if (hasResult) {
-                    builder.append(ChatColor.WHITE)
+                    builder.append(NamedTextColor.WHITE)
                             .append(plugin.getLanguage().getString("ARTRON_DISPLAY"))
                             .append("\n")
-                            .append(ChatColor.AQUA)
+                            .append(NamedTextColor.AQUA)
                             .append(resultSetConsole.getArtronLevel())
                             .append("\n")
-                            .append(ChatColor.WHITE)
+                            .append(NamedTextColor.WHITE)
                             .append(plugin.getLanguage().getString("CHAM_DISPLAY"))
                             .append("\n");
                     String preset;
                     if (resultSetConsole.getPreset().startsWith("POLICE_BOX_")) {
-                        ChatColor colour = TARDISStaticUtils.policeBoxToChatColor(resultSetConsole.getPreset());
+                        NamedTextColor colour = TARDISStaticUtils.policeBoxToNamedTextColor(resultSetConsole.getPreset());
                         preset = colour + "POLICE_BOX";
                     } else {
-                        preset = ChatColor.BLUE + resultSetConsole.getPreset().replace("ITEM:", "");
+                        preset = NamedTextColor.BLUE + resultSetConsole.getPreset().replace("ITEM:", "");
                     }
                     builder.append(preset);
                     textDisplay.setText(builder.toString());

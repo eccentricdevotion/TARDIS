@@ -32,7 +32,7 @@ import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -171,7 +171,7 @@ public class TARDISARSMethods {
             if (showPerms) {
                 Player player = plugin.getServer().getPlayer(playerUUID);
                 if (player != null && !TARDISPermission.hasPermission(player, "tardis.room." + config_path.toLowerCase(Locale.ROOT))) {
-                    lore.add(ChatColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
+                    lore.add(NamedTextColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
                 }
             }
             im.setLore(lore);

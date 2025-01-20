@@ -16,51 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
-import org.bukkit.Art;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 
 public class TARDISPainting {
 
-    public static Location calculatePosition(Art art, BlockFace facing, Location loc) {
-        switch (art.getKey().getKey()) {
-            // 1x2
-            case "graham", "wanderer" -> {
-                return loc.clone().add(0, -1, 0);
-            }
-            // 2x1 & 4x3
-            case "creebet", "courbet", "pool", "sea", "sunset", "donkey_kong", "skeleton" -> {
-                if (facing == BlockFace.WEST) {
-                    return loc.clone().add(0, 0, -1);
-                } else if (facing == BlockFace.SOUTH) {
-                    return loc.clone().add(-1, 0, 0);
-                }
-                return loc;
-            }
-            // 2x2, 4x2 & 4x4
-            case "bust", "match", "skull_and_roses", "stage", "void", "wither", "fighters", "burning_skull", "pigscene", "pointer", "earth", "wind", "water", "fire" -> {
-                if (facing == BlockFace.WEST) {
-                    return loc.clone().add(0, -1, -1);
-                } else if (facing == BlockFace.SOUTH) {
-                    return loc.clone().add(-1, -1, 0);
-                }
-                return loc.add(0, -1, 0);
-            }
-            // 1x1 or unsupported artwork
-            default -> {
-                return loc;
-            }
-        }
-    }
-
     public static Location calculatePosition(String art, BlockFace facing, Location loc) {
         switch (art) {
             // 1x2
-            case "eye_chart" -> {
+            case "eye_chart", "graham", "wanderer" -> {
                 return loc.clone().add(0, -1, 0);
             }
             // 2x1 & 4x3
-            case "magnatise", "melt", "periodic_table", "spectacles", "world" -> {
+            case "magnatise", "melt", "periodic_table", "spectacles", "world", "creebet", "courbet", "pool", "sea", "sunset", "donkey_kong", "skeleton" -> {
                 if (facing == BlockFace.WEST) {
                     return loc.clone().add(0, 0, -1);
                 } else if (facing == BlockFace.SOUTH) {
@@ -69,7 +37,8 @@ public class TARDISPainting {
                 return loc;
             }
             // 2x2, 4x2 & 4x4
-            case "aorta", "beaker", "chemistry", "gallifrey_falls_no_more", "lava", "pi", "sulphur" -> {
+            case "aorta", "beaker", "chemistry", "gallifrey_falls_no_more", "lava", "pi", "sulphur", "bust", "match", "skull_and_roses", "stage", "void", "wither", "fighters", "burning_skull", "pigscene",
+                 "pointer", "earth", "wind", "water", "fire" -> {
                 if (facing == BlockFace.WEST) {
                     return loc.clone().add(0, -1, -1);
                 } else if (facing == BlockFace.SOUTH) {

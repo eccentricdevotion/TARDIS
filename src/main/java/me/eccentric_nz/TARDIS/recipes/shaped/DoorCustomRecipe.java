@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +25,7 @@ public class DoorCustomRecipe {
                 ItemStack is = new ItemStack(material);
                 ItemMeta im = is.getItemMeta();
                 String dn = TARDISStringUtils.capitalise(r);
-                im.setDisplayName(ChatColor.WHITE + "Door " + dn);
+                im.setDisplayName(NamedTextColor.WHITE + "Door " + dn);
                 im.setItemModel(new NamespacedKey(plugin, "block/tardis/" + r + "_0"));
                 is.setItemMeta(im);
                 NamespacedKey key = new NamespacedKey(plugin, "door_" + r);

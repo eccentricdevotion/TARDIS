@@ -4,7 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIArtronStorage;
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronStorage;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -32,7 +32,7 @@ public class TARDISEyeStorage {
         // right arrow
         ItemStack r_arrow = new ItemStack(GUIArtronStorage.ARROW_RIGHT.material(), 1);
         ItemMeta r_arrow_im = r_arrow.getItemMeta();
-        r_arrow_im.setDisplayName(ChatColor.WHITE + "");
+        r_arrow_im.setDisplayName(NamedTextColor.WHITE + "");
         r_arrow_im.setItemModel(GUIArtronStorage.ARROW_RIGHT.key());
         r_arrow.setItemMeta(r_arrow_im);
         stacks[GUIArtronStorage.ARROW_RIGHT.slot()] = r_arrow;
@@ -52,7 +52,7 @@ public class TARDISEyeStorage {
         // left arrow
         ItemStack l_arrow = new ItemStack(GUIArtronStorage.ARROW_LEFT.material(), 1);
         ItemMeta l_arrow_im = l_arrow.getItemMeta();
-        l_arrow_im.setDisplayName(ChatColor.WHITE + "");
+        l_arrow_im.setDisplayName(NamedTextColor.WHITE + "");
         l_arrow_im.setItemModel(GUIArtronStorage.ARROW_LEFT.key());
         l_arrow.setItemMeta(l_arrow_im);
         stacks[GUIArtronStorage.ARROW_LEFT.slot()] = l_arrow;

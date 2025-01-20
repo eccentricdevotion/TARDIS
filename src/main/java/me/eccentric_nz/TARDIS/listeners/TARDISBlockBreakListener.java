@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -103,9 +104,9 @@ public class TARDISBlockBreakListener implements Listener {
             // check the text on the sign
             Sign sign = (Sign) block.getState();
             SignSide front = sign.getSide(Side.FRONT);
-            String line0 = ChatColor.stripColor(front.getLine(0));
-            String line1 = ChatColor.stripColor(front.getLine(1));
-            String line2 = ChatColor.stripColor(front.getLine(2));
+            String line0 = TARDISStaticUtils.stripColor(front.getLine(0));
+            String line1 = TARDISStaticUtils.stripColor(front.getLine(1));
+            String line2 = TARDISStaticUtils.stripColor(front.getLine(2));
             if (isPresetSign(line0, line1, line2)) {
                 event.setCancelled(true);
                 sign.update();

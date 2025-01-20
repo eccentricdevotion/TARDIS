@@ -12,7 +12,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -78,7 +78,7 @@ public class TVMGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onGUIClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Vortex Manipulator")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Vortex Manipulator")) {
             return;
         }
         event.setCancelled(true);
@@ -455,7 +455,7 @@ public class TVMGUIListener extends TARDISMenuListener {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             TVMSavesGUI tvms = new TVMSavesGUI(plugin, 0, 44, player.getUniqueId().toString());
             ItemStack[] gui = tvms.getGUI();
-            Inventory vmg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "VM Saves");
+            Inventory vmg = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "VM Saves");
             vmg.setContents(gui);
             player.openInventory(vmg);
         }, 2L);
@@ -470,7 +470,7 @@ public class TVMGUIListener extends TARDISMenuListener {
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             TVMMessageGUI tvmm = new TVMMessageGUI(plugin, 0, 44, player.getUniqueId().toString());
             ItemStack[] gui = tvmm.getGUI();
-            Inventory vmg = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "VM Messages");
+            Inventory vmg = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "VM Messages");
             vmg.setContents(gui);
             player.openInventory(vmg);
         }, 2L);

@@ -10,7 +10,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,7 +41,7 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onLightMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Lights")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Lights")) {
             return;
         }
         event.setCancelled(true);
@@ -63,7 +63,7 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
                         // variable block menu
                         case 28 -> {
                             ItemStack[] blocks = new TARDISWallsInventory(plugin).getMenu();
-                            Inventory variableBlocks = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Variable Light Blocks");
+                            Inventory variableBlocks = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Variable Light Blocks");
                             variableBlocks.setContents(blocks);
                             player.openInventory(variableBlocks);
                         }
@@ -86,7 +86,7 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
                         // select light emitting block
                         case 42 -> {
                             ItemStack[] emitting = new TARDISLightEmittingInventory(plugin).getGUI();
-                            Inventory emittingGUI = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Light Emitting Blocks");
+                            Inventory emittingGUI = plugin.getServer().createInventory(player, 27, NamedTextColor.DARK_RED + "Light Emitting Blocks");
                             emittingGUI.setContents(emitting);
                             player.openInventory(emittingGUI);
                         }
@@ -122,7 +122,7 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
                         // light levels
                         case 47 -> {
                             ItemStack[] levels = new TARDISLightLevelsInventory(plugin, data.getTardisId()).getGUI();
-                            Inventory levelsGUI = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Light Levels");
+                            Inventory levelsGUI = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "TARDIS Light Levels");
                             levelsGUI.setContents(levels);
                             player.openInventory(levelsGUI);
                         }
@@ -138,7 +138,7 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
                         // edit sequence
                         case 51 -> {
                             ItemStack[] edits = new TARDISLightSequenceInventory(plugin, data.getTardisId()).getGUI();
-                            Inventory sequence = plugin.getServer().createInventory(player, 45, ChatColor.DARK_RED + "TARDIS Light Sequence");
+                            Inventory sequence = plugin.getServer().createInventory(player, 45, NamedTextColor.DARK_RED + "TARDIS Light Sequence");
                             sequence.setContents(edits);
                             player.openInventory(sequence);
                         }

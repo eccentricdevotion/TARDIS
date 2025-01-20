@@ -8,7 +8,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,7 +33,7 @@ public class TARDISColourPickerListener extends TARDISMenuListener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onInteract(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Colour Picker")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Colour Picker")) {
             return;
         }
         event.setCancelled(true);

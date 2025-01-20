@@ -21,7 +21,7 @@ import me.eccentric_nz.TARDIS.chameleon.construct.TARDISChameleonConstructorGUI;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -52,7 +52,7 @@ public class TARDISChameleonHelpListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onChameleonConstructorClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Chameleon Help")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Chameleon Help")) {
             return;
         }
         event.setCancelled(true);
@@ -84,7 +84,7 @@ public class TARDISChameleonHelpListener extends TARDISMenuListener {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         TARDISChameleonConstructorGUI tci = new TARDISChameleonConstructorGUI(plugin);
                         ItemStack[] items = tci.getConstruct();
-                        Inventory chamcon = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Construction");
+                        Inventory chamcon = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Chameleon Construction");
                         chamcon.setContents(items);
                         player.openInventory(chamcon);
                     }, 2L);
@@ -92,7 +92,7 @@ public class TARDISChameleonHelpListener extends TARDISMenuListener {
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         TARDISChameleonTemplateGUI tci = new TARDISChameleonTemplateGUI(plugin);
                         ItemStack[] items = tci.getTemplate();
-                        Inventory chamtmp = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Chameleon Template");
+                        Inventory chamtmp = plugin.getServer().createInventory(player, 54, NamedTextColor.DARK_RED + "Chameleon Template");
                         chamtmp.setContents(items);
                         player.openInventory(chamtmp);
                     }, 2L);

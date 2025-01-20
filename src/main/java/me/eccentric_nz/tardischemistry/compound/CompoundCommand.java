@@ -19,7 +19,7 @@ package me.eccentric_nz.tardischemistry.compound;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -39,7 +39,7 @@ public class CompoundCommand {
         }
         // do stuff
         ItemStack[] menu = new CompoundInventory(plugin).getMenu();
-        Inventory compounds = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chemical compounds");
+        Inventory compounds = plugin.getServer().createInventory(player, 27, NamedTextColor.DARK_RED + "Chemical compounds");
         compounds.setContents(menu);
         player.openInventory(compounds);
         return true;

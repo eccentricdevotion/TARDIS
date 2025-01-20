@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.config;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISPrefsMenuInventory;
 import me.eccentric_nz.TARDIS.custommodels.GUIConfiguration;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -51,7 +51,7 @@ public class TARDISConfigMenuListener implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onAdminMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "Admin Config Menu")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "Admin Config Menu")) {
             return;
         }
         event.setCancelled(true);
@@ -65,13 +65,13 @@ public class TARDISConfigMenuListener implements Listener {
             // close this gui and load the previous / next page
             if (option.equals("Previous page")) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Config Menu");
+                    Inventory ppm = plugin.getServer().createInventory(p, 54, NamedTextColor.DARK_RED + "Admin Config Menu");
                     ppm.setContents(new TARDISConfigMenuInventory(plugin).getMenu());
                     p.openInventory(ppm);
                 }, 1L);
             } else {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    Inventory ppm = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "Admin Config Menu");
+                    Inventory ppm = plugin.getServer().createInventory(p, 54, NamedTextColor.DARK_RED + "Admin Config Menu");
                     ppm.setContents(new TARDISConfigPageTwoInventory(plugin).getMenu());
                     p.openInventory(ppm);
                 }, 1L);
@@ -82,7 +82,7 @@ public class TARDISConfigMenuListener implements Listener {
             Player p = (Player) event.getWhoClicked();
             // close this gui and load the Player Prefs Menu
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                Inventory ppm = plugin.getServer().createInventory(p, 36, ChatColor.DARK_RED + "Player Prefs Menu");
+                Inventory ppm = plugin.getServer().createInventory(p, 36, NamedTextColor.DARK_RED + "Player Prefs Menu");
                 ppm.setContents(new TARDISPrefsMenuInventory(plugin, p.getUniqueId()).getMenu());
                 p.openInventory(ppm);
             }, 1L);

@@ -3,7 +3,7 @@ package me.eccentric_nz.TARDIS.info;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -24,7 +24,7 @@ public class TARDISIndexFileListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onIndexFileClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Index File")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Index File")) {
             return;
         }
         event.setCancelled(true);
@@ -48,7 +48,7 @@ public class TARDISIndexFileListener extends TARDISMenuListener {
                 plugin.getTrackerKeeper().getInfoGUI().put(p.getUniqueId(), category);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     ItemStack[] entries = new TARDISIndexFileSection(plugin, category).getMenu();
-                    Inventory gui = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Info Category");
+                    Inventory gui = plugin.getServer().createInventory(p, 54, NamedTextColor.DARK_RED + "TARDIS Info Category");
                     gui.setContents(entries);
                     p.openInventory(gui);
                 }, 2L);

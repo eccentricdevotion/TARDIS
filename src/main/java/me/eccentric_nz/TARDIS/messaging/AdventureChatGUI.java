@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
-import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUI;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.update.TARDISUpdateableCategory;
 import net.kyori.adventure.text.Component;
@@ -31,7 +30,7 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-public class TARDISChatGUIAdventure implements TARDISChatGUI<TextComponent> {
+public class AdventureChatGUI {
 
     private final List<TextComponent> sections = new ArrayList<>();
     private final List<TextComponent> controls = new ArrayList<>();
@@ -40,7 +39,7 @@ public class TARDISChatGUIAdventure implements TARDISChatGUI<TextComponent> {
     private final List<TextComponent> sensors = new ArrayList<>();
     private final List<TextComponent> others = new ArrayList<>();
 
-    public TARDISChatGUIAdventure() {
+    public AdventureChatGUI() {
         int s = 1;
         int c = 1;
         int i = 1;
@@ -77,38 +76,31 @@ public class TARDISChatGUIAdventure implements TARDISChatGUI<TextComponent> {
     }
 
     private TextComponent buildTextComponent(int counter, String description, String name, String command) {
-        TextComponent tc = Component.text(counter + ". " + description)
+        return Component.text(counter + ". " + description)
                 .hoverEvent(HoverEvent.showText(Component.text("Click me!")))
                 .clickEvent(ClickEvent.runCommand("/tardis " + command + " " + name));
-        return tc;
     }
 
-    @Override
     public List<TextComponent> getSections() {
         return sections;
     }
 
-    @Override
     public List<TextComponent> getControls() {
         return controls;
     }
 
-    @Override
     public List<TextComponent> getInterfaces() {
         return interfaces;
     }
 
-    @Override
     public List<TextComponent> getLocations() {
         return locations;
     }
 
-    @Override
     public List<TextComponent> getSensors() {
         return sensors;
     }
 
-    @Override
     public List<TextComponent> getOthers() {
         return others;
     }

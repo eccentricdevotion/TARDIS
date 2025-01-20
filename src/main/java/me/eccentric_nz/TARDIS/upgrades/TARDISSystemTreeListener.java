@@ -7,7 +7,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -33,7 +34,7 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onSystemInventoryClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS System Upgrades")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS System Upgrades")) {
             return;
         }
         event.setCancelled(true);
@@ -144,7 +145,7 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
                 ItemMeta im = is.getItemMeta();
                 im.setItemModel(clicked.getUnlocked());
                 List<String> lore = im.getLore();
-                lore.set(lore.size() - 1, ChatColor.GREEN + "" + org.bukkit.ChatColor.ITALIC + "Unlocked");
+                lore.set(lore.size() - 1, NamedTextColor.GREEN + "" + TextDecoration.ITALIC + "Unlocked");
                 im.setLore(lore);
                 is.setItemMeta(im);
                 // set artron level remaining for item in system tree slot
@@ -152,7 +153,7 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
                 ItemStack st = view.getItem(SystemTree.UPGRADE_TREE.getSlot());
                 ItemMeta stim = st.getItemMeta();
                 List<String> stlore = stim.getLore();
-                stlore.set(3, ChatColor.AQUA + "" + ChatColor.ITALIC + "Artron Level: " + remaining);
+                stlore.set(3, NamedTextColor.AQUA + "" + TextDecoration.ITALIC + "Artron Level: " + remaining);
                 stim.setLore(stlore);
                 st.setItemMeta(stim);
             }

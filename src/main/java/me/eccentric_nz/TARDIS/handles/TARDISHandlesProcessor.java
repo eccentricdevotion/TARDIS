@@ -16,6 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -42,6 +44,8 @@ import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeUtilities;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -51,6 +55,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -353,10 +358,9 @@ public class TARDISHandlesProcessor {
                                                 if (current.getBlock().getBiome().toString().equals(first)) {
                                                     continue;
                                                 }
-                                                Biome biome;
-                                                try {
-                                                    biome = Biome.valueOf(first);
-                                                } catch (IllegalArgumentException iae) {
+                                                Registry<Biome> biomeRegistry = RegistryAccess.registryAccess().getRegistry(RegistryKey.BIOME);
+                                                Biome biome = biomeRegistry.get(NamespacedKey.minecraft(first.toLowerCase(Locale.ROOT)));;
+                                                if (biome == null) {
                                                     // may have a pre-1.9 biome disk do old biome lookup...
                                                     if (TardisOldBiomeLookup.OLD_BIOME_LOOKUP.containsKey(first)) {
                                                         biome = TardisOldBiomeLookup.OLD_BIOME_LOOKUP.get(first);
@@ -366,7 +370,6 @@ public class TARDISHandlesProcessor {
                                                     }
                                                 }
                                                 plugin.getMessenger().handlesSend(player, "BIOME_SEARCH");
-//                                                Location nsob = plugin.getGeneralKeeper().getTardisTravelCommand().searchBiome(player, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
                                                 Location nsob = BiomeUtilities.searchBiome(rsc.getWorld(), biome, current);
                                                 if (nsob == null) {
                                                     plugin.getMessenger().handlesSend(player, "BIOME_NOT_FOUND");

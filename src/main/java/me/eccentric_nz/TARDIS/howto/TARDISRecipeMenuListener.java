@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS.howto;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
@@ -45,7 +45,7 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener {
     @EventHandler(ignoreCancelled = true)
     public void onSeedMenuClick(InventoryClickEvent event) {
         InventoryView view = event.getView();
-        if (!view.getTitle().equals(ChatColor.DARK_RED + "TARDIS Seed Recipe")) {
+        if (!view.getTitle().equals(NamedTextColor.DARK_RED + "TARDIS Seed Recipe")) {
             return;
         }
         Player p = (Player) event.getWhoClicked();
@@ -68,7 +68,7 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener {
                 close(p);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     ItemStack[] seeds = new TARDISSeedsInventory(plugin, p).getMenu();
-                    Inventory gui = plugin.getServer().createInventory(p, 45, ChatColor.DARK_RED + "TARDIS Seeds Menu");
+                    Inventory gui = plugin.getServer().createInventory(p, 45, NamedTextColor.DARK_RED + "TARDIS Seeds Menu");
                     gui.setContents(seeds);
                     p.openInventory(gui);
                 }, 2L);
@@ -78,7 +78,7 @@ public class TARDISRecipeMenuListener extends TARDISMenuListener {
                 close(p);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     ItemStack[] recipe = new TARDISHowtoWallsInventory(plugin).getMenu();
-                    Inventory gui = plugin.getServer().createInventory(p, 54, ChatColor.DARK_RED + "TARDIS Wall & Floor Menu");
+                    Inventory gui = plugin.getServer().createInventory(p, 54, NamedTextColor.DARK_RED + "TARDIS Wall & Floor Menu");
                     gui.setContents(recipe);
                     p.openInventory(gui);
                 }, 2L);

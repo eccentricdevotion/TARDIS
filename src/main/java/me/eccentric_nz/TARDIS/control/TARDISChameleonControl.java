@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.enumeration.Adaption;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -59,7 +59,7 @@ public class TARDISChameleonControl {
         }
         // open Chameleon Circuit GUI
         ItemStack[] cc = new TARDISChameleonInventory(plugin, adapt, preset, model).getMenu();
-        Inventory cc_gui = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
+        Inventory cc_gui = plugin.getServer().createInventory(player, 27, NamedTextColor.DARK_RED + "Chameleon Circuit");
         cc_gui.setContents(cc);
         player.openInventory(cc_gui);
     }

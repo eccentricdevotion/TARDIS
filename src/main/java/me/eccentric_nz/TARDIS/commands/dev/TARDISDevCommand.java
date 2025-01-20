@@ -32,7 +32,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardisregeneration.Regenerator;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterArmour;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -299,7 +299,7 @@ public class TARDISDevCommand implements CommandExecutor {
 //                                SkinUtils.debug(player);
 //                                SkinUtils.setSkinModel(player, true);
                                 ItemStack[] items = new TVInventory().getMenu();
-                                Inventory tvinv = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "TARDIS Television");
+                                Inventory tvinv = plugin.getServer().createInventory(player, 36, NamedTextColor.DARK_RED + "TARDIS Television");
                                 tvinv.setContents(items);
                                 player.openInventory(tvinv);
                             }
