@@ -154,6 +154,12 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", data.getTardisId());
                             plugin.getQueryFactory().doUpdate("light_prefs", set, wheret);
+                            // also update the player prefs lights option
+                            HashMap<String, Object> setpp = new HashMap<>();
+                            setpp.put("lights", light);
+                            HashMap<String, Object> wherepp = new HashMap<>();
+                            wherepp.put("uuid", player.getUniqueId().toString());
+                            plugin.getQueryFactory().doUpdate("player_prefs", setpp, wherepp);
                             // update 'current' lore of light choices
                             for (int l = 1; l <= TardisLight.values().length + 2; l++) {
                                 ItemStack isl = view.getItem(l);

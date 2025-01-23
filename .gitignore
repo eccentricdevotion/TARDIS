@@ -1,7 +1,7 @@
 # osx noise
 .DS_Store
 profile
-
+.gradle/
 # xcode noise
 build/*
 *.mode1
