@@ -41,7 +41,7 @@ public class RustPlagueSwordRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(NamedTextColor.WHITE + "Rust Plague Sword");
         im.setItemModel(RecipeItem.RUST_PLAGUE_SWORD.getModel());
-        im.setLore(List.of("Dalek Virus Dispenser"));
+        im.lore(List.of("Dalek Virus Dispenser"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "rust_plague_sword");
         ShapedRecipe r = new ShapedRecipe(key, is);

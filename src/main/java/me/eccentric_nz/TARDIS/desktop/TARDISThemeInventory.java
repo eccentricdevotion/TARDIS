@@ -20,6 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.keys.SeedBlock;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -43,11 +45,11 @@ public class TARDISThemeInventory {
     /**
      * Constructs an item stack for the Desktop Theme GUI.
      *
-     * @param plugin an instance of the TARDIS plugin
-     * @param schematic the console schematic to get the item stack for
+     * @param plugin         an instance of the TARDIS plugin
+     * @param schematic      the console schematic to get the item stack for
      * @param currentConsole the players current console
-     * @param player the player using the GUI
-     * @param level the player's Artron level
+     * @param player         the player using the GUI
+     * @param level          the player's Artron level
      * @return an ItemStack with the console information
      */
     public ItemStack getConsoleStack(TARDIS plugin, Schematic schematic, String currentConsole, Player player, int level) {
@@ -62,22 +64,23 @@ public class TARDISThemeInventory {
             if (currentConsole.equals(schematic.getPermission())) {
                 cost = Math.round((plugin.getArtronConfig().getInt("just_wall_floor") / 100F) * cost);
             }
-            List<String> lore = new ArrayList<>();
-            lore.add("Cost: " + cost);
+            List<TextComponent> lore = new ArrayList<>();
+            lore.add(Component.text("Cost: " + cost));
             if (!TARDISPermission.hasPermission(player, "tardis." + schematic.getPermission())) {
-                lore.add(NamedTextColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
+                lore.add(Component.text().color(NamedTextColor.RED).append(Component.text(plugin.getLanguage().getString("NO_PERM_CONSOLE"))).build());
             } else if (level < cost && !currentConsole.equals(schematic.getPermission())) {
-                lore.add(plugin.getLanguage().getString("UPGRADE_ABORT_ENERGY"));
+                lore.add(Component.text(plugin.getLanguage().getString("UPGRADE_ABORT_ENERGY")));
             }
             if (currentConsole.equals(schematic.getPermission())) {
-                lore.add(NamedTextColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"));
+                lore.add(Component.text().color(NamedTextColor.GREEN).append(Component.text(plugin.getLanguage().getString("CURRENT_CONSOLE"))).build());
             } else {
-                lore.add(NamedTextColor.GREEN + plugin.getLanguage().getString("RESET"));
-                lore.add(NamedTextColor.GREEN + plugin.getLanguage().getString("REMEMBER"));
+                lore.add(Component.text().color(NamedTextColor.GREEN).append(Component.text(plugin.getLanguage().getString("RESET"))).build());
+                lore.add(Component.text().color(NamedTextColor.GREEN).append(Component.text(plugin.getLanguage().getString("REMEMBER"))).build());
             }
-            im.setLore(lore);
+            im.lore(lore);
             switch (m) {
-                case BLACK_CONCRETE -> im.setItemModel(SeedBlock.CURSED.getKey()); // cursed schematic designed by airomis (player at thatsnotacreeper.com)
+                case BLACK_CONCRETE ->
+                        im.setItemModel(SeedBlock.CURSED.getKey()); // cursed schematic designed by airomis (player at thatsnotacreeper.com)
                 case BOOKSHELF -> im.setItemModel(SeedBlock.PLANK.getKey()); // plank
                 case COAL_BLOCK -> im.setItemModel(SeedBlock.STEAMPUNK.getKey()); // steampunk
                 case COPPER_BULB -> im.setItemModel(SeedBlock.RUSTIC.getKey()); // rustic
@@ -89,25 +92,36 @@ public class TARDISThemeInventory {
                 case HONEYCOMB_BLOCK -> im.setItemModel(SeedBlock.ROTOR.getKey()); // rotor
                 case IRON_BLOCK -> im.setItemModel(SeedBlock.BUDGET.getKey()); // budget
                 case LAPIS_BLOCK -> im.setItemModel(SeedBlock.TOM.getKey()); // tom baker
-                case NETHER_BRICKS -> im.setItemModel(SeedBlock.MASTER.getKey()); // master schematic designed by ShadowAssociate
-                case NETHER_WART_BLOCK -> im.setItemModel(SeedBlock.CORAL.getKey()); // coral schematic designed by vistaero
-                case OCHRE_FROGLIGHT -> im.setItemModel(SeedBlock.FIFTEENTH.getKey()); // fifteenth schematic designed by airomis (player at thatsnotacreeper.com)
-                case ORANGE_CONCRETE -> im.setItemModel(SeedBlock.THIRTEENTH.getKey()); // thirteenth designed by Razihel
+                case NETHER_BRICKS ->
+                        im.setItemModel(SeedBlock.MASTER.getKey()); // master schematic designed by ShadowAssociate
+                case NETHER_WART_BLOCK ->
+                        im.setItemModel(SeedBlock.CORAL.getKey()); // coral schematic designed by vistaero
+                case OCHRE_FROGLIGHT ->
+                        im.setItemModel(SeedBlock.FIFTEENTH.getKey()); // fifteenth schematic designed by airomis (player at thatsnotacreeper.com)
+                case ORANGE_CONCRETE ->
+                        im.setItemModel(SeedBlock.THIRTEENTH.getKey()); // thirteenth designed by Razihel
                 case PACKED_MUD -> im.setItemModel(SeedBlock.ORIGINAL.getKey()); // original
-                case POLISHED_ANDESITE -> im.setItemModel(SeedBlock.MECHANICAL.getKey()); // mechanical adapted from design by Plastic Straw https://www.planetminecraft.com/data-pack/new-tardis-mod-mechanical-interior-datapack/
-                case POLISHED_DEEPSLATE -> im.setItemModel(SeedBlock.FUGITIVE.getKey()); // fugitive schematic based on design by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8
+                case POLISHED_ANDESITE ->
+                        im.setItemModel(SeedBlock.MECHANICAL.getKey()); // mechanical adapted from design by Plastic Straw https://www.planetminecraft.com/data-pack/new-tardis-mod-mechanical-interior-datapack/
+                case POLISHED_DEEPSLATE ->
+                        im.setItemModel(SeedBlock.FUGITIVE.getKey()); // fugitive schematic based on design by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8
                 case PRISMARINE -> im.setItemModel(SeedBlock.TWELFTH.getKey()); // twelfth
-                case PURPUR_BLOCK -> im.setItemModel(SeedBlock.ENDER.getKey()); // ender schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
+                case PURPUR_BLOCK ->
+                        im.setItemModel(SeedBlock.ENDER.getKey()); // ender schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
                 case QUARTZ_BLOCK -> im.setItemModel(SeedBlock.ARS.getKey()); // ARS
                 case REDSTONE_BLOCK -> im.setItemModel(SeedBlock.REDSTONE.getKey()); // redstone
-                case SANDSTONE_STAIRS -> im.setItemModel(SeedBlock.PYRAMID.getKey()); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
+                case SANDSTONE_STAIRS ->
+                        im.setItemModel(SeedBlock.PYRAMID.getKey()); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
                 case SCULK -> im.setItemModel(SeedBlock.ANCIENT.getKey()); // ancient city
-                case WAXED_OXIDIZED_CUT_COPPER -> im.setItemModel(SeedBlock.BONE.getKey()); // bone loosely based on a console by DT10 - https://www.youtube.com/watch?v=Ux4qt0qYm80
-                case WARPED_PLANKS -> im.setItemModel(SeedBlock.COPPER.getKey()); // copper schematic designed by vistaero
+                case WAXED_OXIDIZED_CUT_COPPER ->
+                        im.setItemModel(SeedBlock.BONE.getKey()); // bone loosely based on a console by DT10 - https://www.youtube.com/watch?v=Ux4qt0qYm80
+                case WARPED_PLANKS ->
+                        im.setItemModel(SeedBlock.COPPER.getKey()); // copper schematic designed by vistaero
                 case WEATHERED_COPPER -> im.setItemModel(SeedBlock.WEATHERED.getKey()); // weathered copper
                 case WHITE_CONCRETE -> im.setItemModel(SeedBlock.HOSPITAL.getKey()); // hospital
                 case WHITE_TERRACOTTA -> im.setItemModel(SeedBlock.WAR.getKey()); // war doctor
-                case YELLOW_CONCRETE_POWDER -> im.setItemModel(SeedBlock.FACTORY.getKey()); // factory designed by Razihel
+                case YELLOW_CONCRETE_POWDER ->
+                        im.setItemModel(SeedBlock.FACTORY.getKey()); // factory designed by Razihel
                 case CYAN_GLAZED_TERRACOTTA -> im.setItemModel(SeedBlock.LEGACY_ELEVENTH.getKey()); // legacy_eleventh
                 case LIME_GLAZED_TERRACOTTA -> im.setItemModel(SeedBlock.LEGACY_DELUXE.getKey()); // legacy_deluxe
                 case ORANGE_GLAZED_TERRACOTTA -> im.setItemModel(SeedBlock.LEGACY_BIGGER.getKey()); // legacy_bigger

@@ -39,7 +39,7 @@ public class MonitorFrameRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(NamedTextColor.WHITE + "Monitor Frame");
         im.setItemModel(RecipeItem.MONITOR_FRAME.getModel());
-        im.setLore(List.of("Place in an upwards", "facing item frame"));
+        im.lore(List.of("Place in an upwards", "facing item frame"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "monitor_frame");
         ShapedRecipe r = new ShapedRecipe(key, is);

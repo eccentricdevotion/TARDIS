@@ -31,7 +31,7 @@ public class BiomeStorageDiskRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(NamedTextColor.WHITE + "Biome Storage Disk");
         im.setItemModel(RecipeItem.BIOME_STORAGE_DISK.getModel());
-        im.setLore(List.of("Blank"));
+        im.lore(List.of("Blank"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "biome_storage_disk");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

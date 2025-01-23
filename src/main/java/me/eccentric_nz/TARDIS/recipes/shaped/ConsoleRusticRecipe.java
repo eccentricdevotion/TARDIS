@@ -41,7 +41,7 @@ public class ConsoleRusticRecipe {
         ItemMeta im = is.getItemMeta();
         String dn = "Rustic Console";
         im.setDisplayName(NamedTextColor.WHITE + dn);
-        im.setLore(List.of("Integration with interaction"));
+        im.lore(List.of("Integration with interaction"));
         im.setItemModel(RecipeItem.RUSTIC_CONSOLE.getModel());
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 17);
         is.setItemMeta(im);

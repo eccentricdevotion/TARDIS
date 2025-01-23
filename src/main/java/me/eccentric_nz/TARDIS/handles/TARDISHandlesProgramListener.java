@@ -20,6 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -33,10 +35,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -141,8 +140,12 @@ public class TARDISHandlesProgramListener implements Listener {
                     close(player);
                     ItemStack is = new ItemStack(Material.MUSIC_DISC_WARD, 1);
                     ItemMeta im = is.getItemMeta();
-                    im.setDisplayName("Handles Program Disk");
-                    im.setLore(Arrays.asList("Untitled Disk", pid + "", "Checked OUT"));
+                    im.displayName(Component.text("Handles Program Disk"));
+                    im.lore(List.of(
+                            Component.text("Untitled Disk"),
+                            Component.text(pid),
+                            Component.text("Checked OUT")
+                    ));
                     im.addItemFlags(ItemFlag.values());
                     im.setItemModel(DiskVariant.HANDLES_DISK.getKey());
                     is.setItemMeta(im);
@@ -156,7 +159,7 @@ public class TARDISHandlesProgramListener implements Listener {
                 // duplicate Item stack on cursor
                 ItemStack is = view.getItem(slot);
                 ItemStack cursor = player.getItemOnCursor();
-                if (cursor != null && (is == null || cursor.isSimilar(is))) {
+                if (is == null || cursor.isSimilar(is)) {
                     player.setItemOnCursor(null);
                 } else {
                     player.setItemOnCursor(is.clone());
@@ -237,9 +240,13 @@ public class TARDISHandlesProgramListener implements Listener {
     private void setSlot(InventoryView view, int slot, TARDISHandlesBlock block) {
         ItemStack is = new ItemStack(Material.PAPER, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(block.getDisplayName());
+        im.displayName(Component.text(block.getDisplayName()));
         if (block.getLore() != null) {
-            im.setLore(block.getLore());
+            List<TextComponent> lore = new ArrayList<>();
+            for (String s : block.getLore()) {
+                lore.add(Component.text(s));
+            }
+            im.lore(lore);
         }
         im.setItemModel(block.getModel());
         is.setItemMeta(im);

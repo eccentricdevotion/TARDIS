@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.custommodels.keys.RoomVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -120,7 +121,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                     } else {
                         ItemStack stone = new ItemStack(Material.STONE, 1);
                         ItemMeta s1 = stone.getItemMeta();
-                        s1.setDisplayName("Empty slot");
+                        s1.displayName(Component.text("Empty slot"));
                         s1.setItemModel(RoomVariant.SLOT.getKey());
                         stone.setItemMeta(s1);
                         setSlot(view, selected_slot.get(playerUUID), stone, playerUUID, true);
@@ -171,7 +172,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                     // need to check for gravity wells, and jettison both layers...
                     ItemStack tnt = new ItemStack(Material.TNT, 1);
                     ItemMeta j = tnt.getItemMeta();
-                    j.setDisplayName("Jettison");
+                    j.displayName(Component.text("Jettison"));
                     j.setItemModel(RoomVariant.JETTISON.getKey());
                     tnt.setItemMeta(j);
                     setSlot(view, selected_slot.get(playerUUID), tnt, playerUUID, true);

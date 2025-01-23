@@ -3,6 +3,7 @@ package me.eccentric_nz.tardisshop;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
@@ -27,7 +28,7 @@ public class TARDISShopItemSpawner {
             ItemStack is = new ItemStack(si.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
             im.setItemModel(si.getModel());
-            im.setDisplayName(what.getItem());
+            im.displayName(Component.text(what.getItem()));
             im.getPersistentDataContainer().set(plugin.getShopSettings().getItemKey(), PersistentDataType.INTEGER, 10001);
             is.setItemMeta(im);
             Item item = location.getWorld().dropItem(location, is);
@@ -58,7 +59,7 @@ public class TARDISShopItemSpawner {
             ItemStack is = new ItemStack(si.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
             im.setItemModel(si.getModel());
-            im.setDisplayName(what.getItem());
+            im.displayName(Component.text(what.getItem()));
             im.getPersistentDataContainer().set(plugin.getShopSettings().getItemKey(), PersistentDataType.INTEGER, 10001);
             is.setItemMeta(im);
             ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);

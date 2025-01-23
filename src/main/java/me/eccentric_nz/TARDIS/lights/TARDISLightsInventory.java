@@ -80,7 +80,7 @@ public class TARDISLightsInventory {
         ItemStack lights = new ItemStack(GUILights.LIGHT_INFO.material(), 1);
         ItemMeta sim = lights.getItemMeta();
         sim.setDisplayName("Light Type");
-        sim.setLore(List.of("Choose a light", "from the options", "on the right."));
+        sim.lore(List.of("Choose a light", "from the options", "on the right."));
         sim.setItemModel(GUILights.LIGHT_INFO.key());
         lights.setItemMeta(sim);
         stacks[GUILights.LIGHT_INFO.slot()] = lights;
@@ -90,7 +90,7 @@ public class TARDISLightsInventory {
             ItemMeta lim = light.getItemMeta();
             lim.setDisplayName(TARDISStringUtils.capitalise(tl.toString()));
             if (lightPref == tl) {
-                lim.setLore(List.of("Current light"));
+                lim.lore(List.of("Current light"));
             }
             lim.setItemModel(tl.getOn().getCustomModel());
             light.setItemMeta(lim);
@@ -105,7 +105,7 @@ public class TARDISLightsInventory {
         ItemStack block_info = new ItemStack(GUILights.BLOCK_INFO.material(), 1);
         ItemMeta blim = block_info.getItemMeta();
         blim.setDisplayName("Variable Light Block");
-        blim.setLore(List.of("Only applies to variable lights.", "Click the button to the right", "to open the blocks menu."));
+        blim.lore(List.of("Only applies to variable lights.", "Click the button to the right", "to open the blocks menu."));
         blim.setItemModel(GUILights.BLOCK_INFO.key());
         block_info.setItemMeta(blim);
         stacks[GUILights.BLOCK_INFO.slot()] = block_info;
@@ -123,7 +123,7 @@ public class TARDISLightsInventory {
         ItemStack ch_info = new ItemStack(GUILights.CHANGE_INFO.material(), 1);
         ItemMeta chim = ch_info.getItemMeta();
         chim.setDisplayName("Change your light type");
-        chim.setLore(List.of("Select a light from above,", "if the light is variable", "also select a block type.", "Click the button to start."));
+        chim.lore(List.of("Select a light from above,", "if the light is variable", "also select a block type.", "Click the button to start."));
         chim.setItemModel(GUILights.CHANGE_INFO.key());
         ch_info.setItemMeta(chim);
         stacks[GUILights.CHANGE_INFO.slot()] = ch_info;
@@ -138,7 +138,7 @@ public class TARDISLightsInventory {
         ItemStack c_info = new ItemStack(GUILights.CONVERT_INFO.material(), 1);
         ItemMeta ciim = c_info.getItemMeta();
         ciim.setDisplayName("Convert blocks to lights");
-        ciim.setLore(List.of("Click the button to the", "right to select a block", "type to convert."));
+        ciim.lore(List.of("Click the button to the", "right to select a block", "type to convert."));
         ciim.setItemModel(GUILights.CONVERT_INFO.key());
         c_info.setItemMeta(ciim);
         stacks[GUILights.CONVERT_INFO.slot()] = c_info;
@@ -160,7 +160,7 @@ public class TARDISLightsInventory {
         ItemStack con = new ItemStack(GUILights.CONVERT_LIGHTS.material(), 1);
         ItemMeta vert = con.getItemMeta();
         vert.setDisplayName("Convert blocks to lights");
-        vert.setLore(List.of("Will change the block", "type to the left to", "the TARDIS light you", "have selected above."));
+        vert.lore(List.of("Will change the block", "type to the left to", "the TARDIS light you", "have selected above."));
         vert.setItemModel(GUILights.CONVERT_LIGHTS.key());
         con.setItemMeta(vert);
         stacks[GUILights.CONVERT_LIGHTS.slot()] = con;
@@ -168,7 +168,7 @@ public class TARDISLightsInventory {
         ItemStack lig = new ItemStack(GUILights.LIGHT_SWITCH.material(), 1);
         ItemMeta swi = lig.getItemMeta();
         swi.setDisplayName(plugin.getLanguage().getString("BUTTON_LIGHTS"));
-        swi.setLore(List.of(lights_onoff));
+        swi.lore(List.of(lights_onoff));
         NamespacedKey lcmd = GUILights.LIGHT_SWITCH.key();
         if (lights_onoff.equals(off)) {
             lcmd = SwitchVariant.BUTTON_LIGHTS_OFF.getKey();

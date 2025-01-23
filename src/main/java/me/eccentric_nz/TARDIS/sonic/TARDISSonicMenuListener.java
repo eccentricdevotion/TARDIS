@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISKeyMenuListener;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -103,11 +104,7 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
                 choice.setType(wool);
                 NamedTextColor display = TARDISKeyMenuListener.COLOUR_LOOKUP.get(wool);
                 ItemMeta sonic_im = sonic.getItemMeta();
-//                if (display != NamedTextColor.WHITE) {
-                sonic_im.setDisplayName(display + "Sonic Screwdriver");
-//                } else {
-//                    sonic_im.setDisplayName(NamedTextColor.WHITE + "Sonic Screwdriver");
-//                }
+                sonic_im.displayName(Component.text().color(display).append(Component.text("Sonic Screwdriver")).build());
                 sonic.setItemMeta(sonic_im);
             }
             case 35 -> {

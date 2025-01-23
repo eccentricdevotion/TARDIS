@@ -36,7 +36,7 @@ public class FishFingerRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(NamedTextColor.WHITE + "Fish Finger");
         im.setItemModel(RecipeItem.FISH_FINGER.getModel());
-        im.setLore(List.of("Best eaten with custard!"));
+        im.lore(List.of("Best eaten with custard!"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "fish_finger");
         ShapedRecipe r = new ShapedRecipe(key, is);

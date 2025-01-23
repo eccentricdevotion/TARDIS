@@ -152,7 +152,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                 mode = 1;
             }
             lore.set(0, FlightMode.getByMode().get(mode).toString());
-            im.setLore(lore);
+            im.lore(lore);
             is.setItemMeta(im);
             // set flight mode
             HashMap<String, Object> setf = new HashMap<>();
@@ -190,7 +190,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("handbrake_on", 1);
                         plugin.getQueryFactory().doUpdate("tardis", set, wheret);
-                        im.setLore(List.of(plugin.getLanguage().getString("SET_ON")));
+                        im.lore(List.of(plugin.getLanguage().getString("SET_ON")));
                         is.setItemMeta(im);
                         // Check if it's at a recharge point
                         TARDISArtronLevels tal = new TARDISArtronLevels(plugin);
@@ -431,7 +431,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
             }
         }
         lore.set(0, value);
-        im.setLore(lore);
+        im.lore(lore);
         GUIPlayerPreferences gui = GUIPlayerPreferences.fromString(which);
         im.setItemModel((value.equals(plugin.getLanguage().getString("SET_ON"))) ? gui.getOnModel() : gui.getOffModel());
         is.setItemMeta(im);

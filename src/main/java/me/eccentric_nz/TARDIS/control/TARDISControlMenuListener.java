@@ -417,7 +417,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                     // update the lore
                     ItemStack d = view.getItem(40);
                     ItemMeta im = d.getItemMeta();
-                    im.setLore(List.of(direction));
+                    im.lore(List.of(direction));
                     d.setItemMeta(im);
                 }
             }
@@ -496,7 +496,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                     }
                 }
                 String throttle = SpaceTimeThrottle.getByDelay().get(delay).toString();
-                im.setLore(List.of(throttle));
+                im.lore(List.of(throttle));
                 spt.setItemMeta(im);
                 // update player prefs
                 HashMap<String, Object> wherer = new HashMap<>();

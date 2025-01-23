@@ -31,7 +31,7 @@ public class SaveStorageDiskRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(NamedTextColor.WHITE + "Save Storage Disk");
         im.setItemModel(RecipeItem.SAVE_STORAGE_DISK.getModel());
-        im.setLore(List.of("Blank"));
+        im.lore(List.of("Blank"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "save_storage_disk");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

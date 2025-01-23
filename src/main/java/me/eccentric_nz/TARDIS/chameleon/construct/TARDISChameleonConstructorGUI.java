@@ -18,9 +18,14 @@ package me.eccentric_nz.TARDIS.chameleon.construct;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonConstructor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -42,43 +47,47 @@ public class TARDISChameleonConstructorGUI {
         // back
         ItemStack back = new ItemStack(GUIChameleonConstructor.BACK_TO_CHAMELEON_CIRCUIT.material(), 1);
         ItemMeta bk = back.getItemMeta();
-        bk.setDisplayName(plugin.getChameleonGuis().getString("BACK_CHAM_OPTS"));
+        bk.displayName(Component.text(plugin.getChameleonGuis().getString("BACK_CHAM_OPTS")));
         bk.setItemModel(GUIChameleonConstructor.BACK_TO_CHAMELEON_CIRCUIT.key());
         back.setItemMeta(bk);
         is[GUIChameleonConstructor.BACK_TO_CHAMELEON_CIRCUIT.slot()] = back;
         // help
         ItemStack help = new ItemStack(GUIChameleonConstructor.HELP.material(), 1);
         ItemMeta hp = help.getItemMeta();
-        hp.setDisplayName(plugin.getChameleonGuis().getString("HELP"));
+        hp.displayName(Component.text(plugin.getChameleonGuis().getString("HELP")));
         hp.setItemModel(GUIChameleonConstructor.HELP.key());
         help.setItemMeta(hp);
         is[GUIChameleonConstructor.HELP.slot()] = help;
         // info
         ItemStack info = new ItemStack(GUIChameleonConstructor.INFO.material(), 1);
         ItemMeta io = info.getItemMeta();
-        io.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
-        io.setLore(plugin.getChameleonGuis().getStringList("INFO_CONSTRUCT"));
+        io.displayName(Component.text(plugin.getChameleonGuis().getString("INFO")));
+        List<TextComponent> lore = new ArrayList<>();
+        for (String s : plugin.getChameleonGuis().getStringList("INFO_CONSTRUCT")) {
+            lore.add(Component.text(s));
+        }
+        io.lore(lore);
         io.setItemModel(GUIChameleonConstructor.INFO.key());
         info.setItemMeta(io);
         is[GUIChameleonConstructor.INFO.slot()] = info;
         // abort
         ItemStack abort = new ItemStack(GUIChameleonConstructor.ABORT.material(), 1);
         ItemMeta at = abort.getItemMeta();
-        at.setDisplayName(plugin.getChameleonGuis().getString("ABORT"));
+        at.displayName(Component.text(plugin.getChameleonGuis().getString("ABORT")));
         at.setItemModel(GUIChameleonConstructor.ABORT.key());
         abort.setItemMeta(at);
         is[GUIChameleonConstructor.ABORT.slot()] = abort;
         // load button
         ItemStack load = new ItemStack(GUIChameleonConstructor.USE_LAST_SAVED_CONSTRUCT.material(), 1);
         ItemMeta ld = load.getItemMeta();
-        ld.setDisplayName(plugin.getChameleonGuis().getString("USE_PREV"));
+        ld.displayName(Component.text(plugin.getChameleonGuis().getString("USE_PREV")));
         ld.setItemModel(GUIChameleonConstructor.USE_LAST_SAVED_CONSTRUCT.key());
         load.setItemMeta(ld);
         is[GUIChameleonConstructor.USE_LAST_SAVED_CONSTRUCT.slot()] = load;
         // save button
         ItemStack save = new ItemStack(GUIChameleonConstructor.SAVE_CONSTRUCT.material(), 1);
         ItemMeta se = save.getItemMeta();
-        se.setDisplayName(plugin.getChameleonGuis().getString("SAVE"));
+        se.displayName(Component.text(plugin.getChameleonGuis().getString("SAVE")));
         se.setItemModel(GUIChameleonConstructor.SAVE_CONSTRUCT.key());
         save.setItemMeta(se);
         is[GUIChameleonConstructor.SAVE_CONSTRUCT.slot()] = save;

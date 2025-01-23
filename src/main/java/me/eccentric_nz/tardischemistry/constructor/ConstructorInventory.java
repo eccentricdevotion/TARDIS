@@ -18,11 +18,13 @@ package me.eccentric_nz.tardischemistry.constructor;
 
 import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
 import me.eccentric_nz.TARDIS.custommodels.keys.HandlesVariant;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ConstructorInventory {
 
@@ -37,92 +39,96 @@ public class ConstructorInventory {
         // info
         ItemStack info = new ItemStack(GUIChemistry.INFO.material(), 1);
         ItemMeta info_im = info.getItemMeta();
-        info_im.setDisplayName("Info");
-        info_im.setLore(Arrays.asList("Add or subtract protons,", "neutrons and electrons to", "construct an atomic element."));
+        info_im.displayName(Component.text("Info"));
+        info_im.lore(List.of(
+                Component.text("Add or subtract protons,"),
+                Component.text("neutrons and electrons to"),
+                Component.text("construct an atomic element.")
+        ));
         info_im.setItemModel(GUIChemistry.INFO.key());
         info.setItemMeta(info_im);
         stack[9] = info;
         // proton count
         ItemStack p_zero = new ItemStack(Material.PAPER, 1);
         ItemMeta pzim = p_zero.getItemMeta();
-        pzim.setDisplayName("0");
+        pzim.displayName(Component.text("0"));
         pzim.setItemModel(HandlesVariant.HANDLES_NUMBER_ZERO.getKey());
         p_zero.setItemMeta(pzim);
         stack[3] = p_zero;
         // protons
         ItemStack protons = new ItemStack(GUIChemistry.PROTONS.material(), 1);
         ItemMeta pim = protons.getItemMeta();
-        pim.setDisplayName("Protons");
+        pim.displayName(Component.text("Protons"));
         pim.setItemModel(GUIChemistry.PROTONS.key());
         protons.setItemMeta(pim);
         stack[GUIChemistry.PROTONS.slot()] = protons;
         // proton down
         ItemStack proton_down = new ItemStack(GUIChemistry.MINUS.material(), 1);
         ItemMeta pdim = proton_down.getItemMeta();
-        pdim.setDisplayName("-");
+        pdim.displayName(Component.text("-"));
         pdim.setItemModel(GUIChemistry.MINUS.key());
         proton_down.setItemMeta(pdim);
         stack[5] = proton_down;
         // proton up
         ItemStack proton_up = new ItemStack(GUIChemistry.PLUS.material(), 1);
         ItemMeta puim = proton_up.getItemMeta();
-        puim.setDisplayName("+");
+        puim.displayName(Component.text("+"));
         puim.setItemModel(GUIChemistry.PLUS.key());
         proton_up.setItemMeta(puim);
         stack[6] = proton_up;
         // neutron count
         ItemStack n_zero = new ItemStack(Material.PAPER, 1);
         ItemMeta nzim = n_zero.getItemMeta();
-        nzim.setDisplayName("0");
+        nzim.displayName(Component.text("0"));
         nzim.setItemModel(HandlesVariant.HANDLES_NUMBER_ZERO.getKey());
         n_zero.setItemMeta(nzim);
         stack[12] = n_zero;
         // neutrons
         ItemStack neutrons = new ItemStack(GUIChemistry.NEUTRONS.material(), 1);
         ItemMeta nim = neutrons.getItemMeta();
-        nim.setDisplayName("Neutrons");
+        nim.displayName(Component.text("Neutrons"));
         nim.setItemModel(GUIChemistry.NEUTRONS.key());
         neutrons.setItemMeta(nim);
         stack[GUIChemistry.NEUTRONS.slot()] = neutrons;
         // neutron down
         ItemStack neutron_down = new ItemStack(GUIChemistry.MINUS.material(), 1);
         ItemMeta ndim = neutron_down.getItemMeta();
-        ndim.setDisplayName("-");
+        ndim.displayName(Component.text("-"));
         ndim.setItemModel(GUIChemistry.MINUS.key());
         neutron_down.setItemMeta(ndim);
         stack[14] = neutron_down;
         // neutron up
         ItemStack neutron_up = new ItemStack(GUIChemistry.PLUS.material(), 1);
         ItemMeta nuim = neutron_up.getItemMeta();
-        nuim.setDisplayName("+");
+        nuim.displayName(Component.text("+"));
         nuim.setItemModel(GUIChemistry.PLUS.key());
         neutron_up.setItemMeta(nuim);
         stack[15] = neutron_up;
         // electron count
         ItemStack e_zero = new ItemStack(Material.PAPER, 1);
         ItemMeta ezim = e_zero.getItemMeta();
-        ezim.setDisplayName("0");
+        ezim.displayName(Component.text("0"));
         ezim.setItemModel(HandlesVariant.HANDLES_NUMBER_ZERO.getKey());
         e_zero.setItemMeta(ezim);
         stack[21] = e_zero;
         // electrons
         ItemStack electrons = new ItemStack(GUIChemistry.ELECTRONS.material(), 1);
         ItemMeta eim = electrons.getItemMeta();
-        eim.setDisplayName("Electrons");
+        eim.displayName(Component.text("Electrons"));
         eim.setItemModel(GUIChemistry.ELECTRONS.key());
         electrons.setItemMeta(eim);
         stack[GUIChemistry.ELECTRONS.slot()] = electrons;
         // electron down
         ItemStack electron_down = new ItemStack(GUIChemistry.MINUS.material(), 1);
         ItemMeta edim = electron_down.getItemMeta();
-        edim.setDisplayName("-");
+        edim.displayName(Component.text("-"));
         edim.setItemModel(GUIChemistry.MINUS.key());
         electron_down.setItemMeta(edim);
         stack[GUIChemistry.MINUS.slot()] = electron_down;
         // electron up
         ItemStack electron_up = new ItemStack(GUIChemistry.PLUS.material(), 1);
         ItemMeta euim = electron_up.getItemMeta();
-        euim.setDisplayName("+");
+        euim.displayName(Component.text("+"));
         euim.setItemModel(GUIChemistry.PLUS.key());
         electron_up.setItemMeta(euim);
         stack[GUIChemistry.PLUS.slot()] = electron_up;

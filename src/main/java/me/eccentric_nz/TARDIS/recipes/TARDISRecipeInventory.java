@@ -65,7 +65,7 @@ public class TARDISRecipeInventory {
         ItemStack info = new ItemStack(Material.BOWL, 1);
         ItemMeta info_im = info.getItemMeta();
         info_im.setDisplayName("Info");
-        info_im.setLore(Arrays.asList("Click a button below", "to see the recipe", "for that item"));
+        info_im.lore(Arrays.asList("Click a button below", "to see the recipe", "for that item"));
         info_im.setItemModel(GUIChemistry.INFO.key());
         info.setItemMeta(info_im);
         stack[4] = info;
@@ -102,7 +102,7 @@ public class TARDISRecipeInventory {
                     }
                     ItemMeta im = result.getItemMeta();
                     im.setDisplayName(str);
-                    im.setLore(List.of("/trecipe " + arg));
+                    im.lore(List.of("/trecipe " + arg));
                     im.setItemModel(item.getModel());
                     im.addItemFlags(ItemFlag.values());
                     result.setItemMeta(im);

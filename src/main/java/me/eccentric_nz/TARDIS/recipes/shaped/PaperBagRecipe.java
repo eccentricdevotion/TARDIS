@@ -39,7 +39,7 @@ public class PaperBagRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(NamedTextColor.WHITE + "Paper Bag");
         im.setItemModel(RecipeItem.PAPER_BAG.getModel());
-        im.setLore(List.of("Smaller on the outside"));
+        im.lore(List.of("Smaller on the outside"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "paper_bag");
         ShapedRecipe r = new ShapedRecipe(key, is);

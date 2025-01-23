@@ -20,6 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -88,13 +90,13 @@ public class TARDISCircuitDamager {
                                     clone[i] = null;
                                 } else {
                                     // set uses
-                                    List<String> lore = im.getLore();
+                                    List<Component> lore = im.lore();
                                     if (lore == null) {
-                                        lore = Arrays.asList("Uses left", "");
+                                        lore = List.of(Component.text("Uses left"), Component.text(""));
                                     }
-                                    String yellow = NamedTextColor.YELLOW + "" + decremented;
+                                    TextComponent yellow = Component.text().color(NamedTextColor.YELLOW).append(Component.text(decremented)).build();
                                     lore.set(1, yellow);
-                                    im.setLore(lore);
+                                    im.lore(lore);
                                     is.setItemMeta(im);
                                     clone[i] = is;
                                 }

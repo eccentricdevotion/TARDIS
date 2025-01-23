@@ -19,6 +19,8 @@ package me.eccentric_nz.TARDIS.sonic;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUISonicActivator;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.inventory.ItemStack;
@@ -47,31 +49,31 @@ class TARDISSonicActivatorInventory {
      */
 
     private ItemStack[] getItemStack() {
-        List<String> lore = new ArrayList<>();
-        lore.add("To activate the generator");
-        lore.add("add 1 of each of the following");
-        lore.add("items to this inventory:");
+        List<TextComponent> lore = new ArrayList<>();
+        lore.add(Component.text("To activate the generator"));
+        lore.add(Component.text("add 1 of each of the following"));
+        lore.add(Component.text("items to this inventory:"));
         // get the Sonic Generator recipe
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
-            lore.add(NamedTextColor.AQUA + "GOLD_INGOT");
-            lore.add(NamedTextColor.AQUA + "REDSTONE_BLOCK");
+            lore.add(Component.text().color(NamedTextColor.AQUA).append(Component.text("GOLD_INGOT")).build());
+            lore.add(Component.text().color(NamedTextColor.AQUA).append(Component.text("REDSTONE_BLOCK")).build());
         } else {
-            lore.add(NamedTextColor.AQUA + "GOLD_NUGGET");
-            lore.add(NamedTextColor.AQUA + "REDSTONE");
+            lore.add(Component.text().color(NamedTextColor.AQUA).append(Component.text("GOLD_NUGGET")).build());
+            lore.add(Component.text().color(NamedTextColor.AQUA).append(Component.text("REDSTONE")).build());
         }
-        lore.add(NamedTextColor.AQUA + "FLOWER_POT");
-        lore.add(NamedTextColor.AQUA + "BLAZE_ROD");
-        lore.add(NamedTextColor.DARK_PURPLE + "" + TextDecoration.ITALIC + "Then close the GUI.");
+        lore.add(Component.text().color(NamedTextColor.AQUA).append(Component.text("FLOWER_POT")).build());
+        lore.add(Component.text().color(NamedTextColor.AQUA).append(Component.text("BLAZE_ROD")).build());
+        lore.add(Component.text().color(NamedTextColor.DARK_PURPLE).decorate(TextDecoration.ITALIC).append(Component.text("Then close the GUI.")).build());
         // info
         ItemStack info = new ItemStack(GUISonicActivator.INSTRUCTIONS.material(), 1);
         ItemMeta info_im = info.getItemMeta();
-        info_im.setDisplayName("Instructions");
-        info_im.setLore(lore);
+        info_im.displayName(Component.text("Instructions"));
+        info_im.lore(lore);
         info.setItemMeta(info_im);
         // close
         ItemStack close = new ItemStack(GUISonicActivator.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE")));
         close_im.setItemModel(GUISonicActivator.CLOSE.key());
         close.setItemMeta(close_im);
 

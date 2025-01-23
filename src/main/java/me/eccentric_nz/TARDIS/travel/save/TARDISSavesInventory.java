@@ -111,7 +111,7 @@ public class TARDISSavesInventory {
                         if (!map.getPreset().isEmpty()) {
                             lore.add(map.getPreset());
                         }
-                        im.setLore(lore);
+                        im.lore(lore);
                         is.setItemMeta(im);
                         dests.put(slot, is);
                         i++;

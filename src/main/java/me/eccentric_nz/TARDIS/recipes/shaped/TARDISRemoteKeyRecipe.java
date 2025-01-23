@@ -43,7 +43,7 @@ public class TARDISRemoteKeyRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(NamedTextColor.WHITE + "TARDIS Remote Key");
         im.setItemModel(RecipeItem.TARDIS_REMOTE_KEY.getModel());
-        im.setLore(List.of("Deadlock & unlock", "Hide & rebuild"));
+        im.lore(List.of("Deadlock & unlock", "Hide & rebuild"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_remote_key");
         ShapedRecipe r = new ShapedRecipe(key, is);
@@ -62,7 +62,7 @@ public class TARDISRemoteKeyRecipe {
                     ? NamedTextColor.YELLOW + "unlimited"
                     : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.materialisation");
             circuit = Arrays.asList("Uses left", uses);
-            em.setLore(circuit);
+            em.lore(circuit);
             exact.setItemMeta(em);
             r.setIngredient('T', new RecipeChoice.ExactChoice(exact));
         } else {

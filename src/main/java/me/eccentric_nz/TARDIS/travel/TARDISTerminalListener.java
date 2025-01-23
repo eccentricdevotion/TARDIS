@@ -169,7 +169,7 @@ public class TARDISTerminalListener implements Listener {
                     ItemStack is = view.getItem(49);
                     ItemMeta im = is.getItemMeta();
                     List<String> lore = List.of("No valid destination has been set!");
-                    im.setLore(lore);
+                    im.lore(lore);
                     is.setItemMeta(im);
                 }
             }
@@ -207,7 +207,7 @@ public class TARDISTerminalListener implements Listener {
                 String sub = (rsp.isSubmarineOn()) ? "true" : "false";
                 ItemStack is = inv.getItem(44);
                 ItemMeta im = is.getItemMeta();
-                im.setLore(List.of(sub));
+                im.lore(List.of(sub));
                 is.setItemMeta(im);
             }
         }
@@ -272,7 +272,7 @@ public class TARDISTerminalListener implements Listener {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(row);
         List<String> lore = getLoreValue(max, new_slot, signed, uuid);
-        im.setLore(lore);
+        im.lore(lore);
         is.setItemMeta(im);
         view.setItem(new_slot, is);
     }
@@ -313,7 +313,7 @@ public class TARDISTerminalListener implements Listener {
                     default -> lore = List.of(current);
                 }
             }
-            im.setLore(lore);
+            im.lore(lore);
             is.setItemMeta(im);
         }
     }
@@ -324,7 +324,7 @@ public class TARDISTerminalListener implements Listener {
             String bool = (rsp.isSubmarineOn()) ? "false" : "true";
             ItemStack is = view.getItem(44);
             ItemMeta im = is.getItemMeta();
-            im.setLore(List.of(bool));
+            im.lore(List.of(bool));
             is.setItemMeta(im);
             int tf = (rsp.isSubmarineOn()) ? 0 : 1;
             HashMap<String, Object> set = new HashMap<>();
@@ -495,7 +495,7 @@ public class TARDISTerminalListener implements Listener {
         }
         ItemStack is = view.getItem(46);
         ItemMeta im = is.getItemMeta();
-        im.setLore(lore);
+        im.lore(lore);
         is.setItemMeta(im);
     }
 

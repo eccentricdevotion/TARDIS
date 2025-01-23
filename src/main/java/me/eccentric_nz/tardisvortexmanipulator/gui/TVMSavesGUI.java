@@ -8,6 +8,7 @@ import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.VortexManipulatorVariant;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetSaves;
 import me.eccentric_nz.tardisvortexmanipulator.storage.TVMSave;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -56,7 +57,12 @@ public class TVMSavesGUI {
                 ItemStack save = new ItemStack(blocks.get(s.getEnv()), 1);
                 ItemMeta warp = save.getItemMeta();
                 warp.setDisplayName(s.getName());
-                warp.setLore(Arrays.asList("World: " + s.getWorld(), "x: " + oneDecimal(s.getX()), "y: " + s.getY(), "z: " + oneDecimal(s.getZ())));
+                warp.lore(List.of(
+                        Component.text("World: " + s.getWorld()),
+                        Component.text("x: " + oneDecimal(s.getX())),
+                        Component.text("y: " + s.getY()),
+                        Component.text("z: " + oneDecimal(s.getZ()))
+                ));
                 save.setItemMeta(warp);
                 stack[i] = save;
                 i++;

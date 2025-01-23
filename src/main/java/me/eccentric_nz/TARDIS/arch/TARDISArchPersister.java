@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.arch;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -160,7 +161,7 @@ public class TARDISArchPersister {
                         TARDISArchDisguise.disguise(player, name);
                     }
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        player.setDisplayName(name);
+                        player.displayName(Component.text(name));
                         player.setPlayerListName(name);
                     }, 5L);
                 }
@@ -206,7 +207,7 @@ public class TARDISArchPersister {
                                 TARDISArchDisguise.disguise(player, name);
                             }
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                player.setDisplayName(name);
+                                player.displayName(Component.text(name));
                                 player.setPlayerListName(name);
                             }, 5L);
                         }

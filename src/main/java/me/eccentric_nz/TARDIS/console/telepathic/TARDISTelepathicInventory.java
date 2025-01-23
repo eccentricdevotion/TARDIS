@@ -34,7 +34,7 @@ public class TARDISTelepathicInventory {
         ItemStack toggle = new ItemStack(Material.REPEATER);
         ItemMeta tim = toggle.getItemMeta();
         tim.setDisplayName("Telepathic Circuit");
-        tim.setLore(List.of(onOff));
+        tim.lore(List.of(onOff));
         tim.setItemModel(on ? SwitchVariant.TELEPATHIC_CIRCUIT_ON.getKey() : SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getKey());
         toggle.setItemMeta(tim);
         stack[0] = toggle;
@@ -43,7 +43,7 @@ public class TARDISTelepathicInventory {
             ItemStack cave = new ItemStack(Material.DRIPSTONE_BLOCK);
             ItemMeta cim = cave.getItemMeta();
             cim.setDisplayName("Cave Finder");
-            cim.setLore(List.of("Search for a cave", "to travel to."));
+            cim.lore(List.of("Search for a cave", "to travel to."));
             cave.setItemMeta(cim);
             stack[2] = cave;
         }
@@ -52,7 +52,7 @@ public class TARDISTelepathicInventory {
             ItemStack structure = new ItemStack(Material.HAY_BLOCK);
             ItemMeta sim = structure.getItemMeta();
             sim.setDisplayName("Structure Finder");
-            sim.setLore(List.of("Search for a structure", "to travel to."));
+            sim.lore(List.of("Search for a structure", "to travel to."));
             structure.setItemMeta(sim);
             stack[4] = structure;
         }
@@ -61,7 +61,7 @@ public class TARDISTelepathicInventory {
             ItemStack biome = new ItemStack(Material.BAMBOO_MOSAIC);
             ItemMeta bim = biome.getItemMeta();
             bim.setDisplayName("Biome Finder");
-            bim.setLore(List.of("Search for a biome", "to travel to."));
+            bim.lore(List.of("Search for a biome", "to travel to."));
             biome.setItemMeta(bim);
             stack[6] = biome;
         }

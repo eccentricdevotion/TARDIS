@@ -55,7 +55,7 @@ public class TARDISKeyRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(NamedTextColor.WHITE + "TARDIS Key");
         im.setItemModel(keyModel);
-        im.setLore(List.of("Enter and exit your TARDIS"));
+        im.lore(List.of("Enter and exit your TARDIS"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_key");
         ShapedRecipe r = new ShapedRecipe(key, is);

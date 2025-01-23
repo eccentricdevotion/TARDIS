@@ -149,7 +149,7 @@ public class TARDISAutonomousGUIListener extends TARDISMenuListener {
                         List<String> lore = im.getLore();
                         if (lore.size() > 3) {
                             lore.set(3, NamedTextColor.GREEN + next.getFirst());
-                            im.setLore(lore);
+                            im.lore(lore);
                             is.setItemMeta(im);
                             view.setItem(25, is);
                         }

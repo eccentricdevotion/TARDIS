@@ -36,7 +36,7 @@ public class TARDISTelevisionInventory {
                 im.setOwnerProfile(profile);
                 String[] name = doctor.name().split(" - ");
                 im.setDisplayName(name[0]);
-                im.setLore(List.of(name[1]));
+                im.lore(List.of(name[1]));
                 is.setItemMeta(im);
                 // cache the item stack
                 PlayerHeadCache.DOCTORS.add(is);

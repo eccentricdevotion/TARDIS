@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.custommodels.GUIData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisSize;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveButtons;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -29,6 +30,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * By the time of his eleventh incarnation, the Doctor's console room had gone through at least twelve redesigns, though
@@ -87,7 +89,11 @@ class TARDISArchiveInventory {
             s = rss.getConsoleSize().toString();
             b = rss.getConsoleSize().getBlocks();
         }
-        size_im.setLore(Arrays.asList(s, b, NamedTextColor.AQUA + "Click to change"));
+        size_im.lore(List.of(
+                Component.text(s),
+                Component.text(b),
+                Component.text().color(NamedTextColor.AQUA).append(Component.text("Click to change")).build()
+        ));
         size.setItemMeta(size_im);
         stack[18] = size;
         // scan
@@ -101,7 +107,12 @@ class TARDISArchiveInventory {
         ItemStack arc = new ItemStack(GUIArchive.ARCHIVE_CURRENT_CONSOLE.material(), 1);
         ItemMeta hive_im = arc.getItemMeta();
         hive_im.setDisplayName("Archive current console");
-        hive_im.setLore(Arrays.asList("A random name will", "be generated - use the", "/tardis archive command", "to set your own."));
+        hive_im.lore(List.of(
+                Component.text("A random name will"),
+                Component.text("be generated - use the"),
+                Component.text("/tardis archive command"),
+                Component.text("to set your own.")
+        ));
         hive_im.setItemModel(GUIArchive.ARCHIVE_CURRENT_CONSOLE.key());
         arc.setItemMeta(hive_im);
         stack[20] = arc;
@@ -114,7 +125,10 @@ class TARDISArchiveInventory {
                 ItemMeta late = temp.getItemMeta();
                 late.setDisplayName(c.toString());
                 late.setItemModel(data.key());
-                late.setLore(Arrays.asList("Cobblestone template", c.getBlocks()));
+                late.lore(List.of(
+                        Component.text("Cobblestone template"),
+                        Component.text(c.getBlocks())
+                ));
                 temp.setItemMeta(late);
                 stack[t] = temp;
                 t++;

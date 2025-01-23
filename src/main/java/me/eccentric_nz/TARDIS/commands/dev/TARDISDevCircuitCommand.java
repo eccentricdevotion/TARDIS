@@ -39,7 +39,7 @@ public class TARDISDevCircuitCommand {
             List<String> lore = im.getLore();
             String uses = NamedTextColor.YELLOW + "" + (plugin.getConfig().getInt("circuits.uses.invisibility") - 3);
             lore.set(1, uses);
-            im.setLore(lore);
+            im.lore(lore);
             result.setItemMeta(im);
             player.getInventory().addItem(result);
         }

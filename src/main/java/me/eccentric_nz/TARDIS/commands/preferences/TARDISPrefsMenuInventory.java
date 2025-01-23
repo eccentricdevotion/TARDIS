@@ -129,9 +129,9 @@ public class TARDISPrefsMenuInventory {
                 }
                 im.setItemModel(v ? pref.getOnModel() : pref.getOffModel());
                 if (pref == GUIPlayerPreferences.HADS_TYPE) {
-                    im.setLore(List.of(v ? "DISPERSAL" : "DISPLACEMENT"));
+                    im.lore(List.of(v ? "DISPERSAL" : "DISPLACEMENT"));
                 } else {
-                    im.setLore(List.of(v ? plugin.getLanguage().getString("SET_ON", "ON") : plugin.getLanguage().getString("SET_OFF", "OFF")));
+                    im.lore(List.of(v ? plugin.getLanguage().getString("SET_ON", "ON") : plugin.getLanguage().getString("SET_OFF", "OFF")));
                 }
                 is.setItemMeta(im);
                 stack[pref.getSlot()] = is;
@@ -145,7 +145,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta ght_im = fli.getItemMeta();
         ght_im.setDisplayName("Flight Mode");
         String mode_value = FlightMode.getByMode().get(rsp.getFlightMode()).toString();
-        ght_im.setLore(List.of(mode_value));
+        ght_im.lore(List.of(mode_value));
         ght_im.setItemModel(GUIPlayerPreferences.FLIGHT_MODE.getOnModel());
         fli.setItemMeta(ght_im);
         stack[GUIPlayerPreferences.FLIGHT_MODE.getSlot()] = fli;
@@ -154,7 +154,7 @@ public class TARDISPrefsMenuInventory {
         ItemMeta hum_im = hum.getItemMeta();
         hum_im.setDisplayName("Interior Hum Sound");
         String hum_value = (rsp.getHum().isEmpty()) ? "random" : rsp.getHum();
-        hum_im.setLore(List.of(hum_value));
+        hum_im.lore(List.of(hum_value));
         hum_im.setItemModel(GUIPlayerPreferences.INTERIOR_HUM_SOUND.getOnModel());
         hum.setItemMeta(hum_im);
         stack[GUIPlayerPreferences.INTERIOR_HUM_SOUND.getSlot()] = hum;
@@ -162,7 +162,7 @@ public class TARDISPrefsMenuInventory {
         ItemStack hand = new ItemStack(Material.LEVER, 1);
         ItemMeta brake = hand.getItemMeta();
         brake.setDisplayName("Handbrake");
-        brake.setLore(List.of((tardis != null && tardis.isHandbrakeOn()) ? plugin.getLanguage().getString("SET_ON", "ON") : plugin.getLanguage().getString("SET_OFF", "OFF")));
+        brake.lore(List.of((tardis != null && tardis.isHandbrakeOn()) ? plugin.getLanguage().getString("SET_ON", "ON") : plugin.getLanguage().getString("SET_OFF", "OFF")));
         brake.setItemModel(GUIPlayerPreferences.HANDBRAKE.getOnModel());
         hand.setItemMeta(brake);
         stack[GUIPlayerPreferences.HANDBRAKE.getSlot()] = hand;

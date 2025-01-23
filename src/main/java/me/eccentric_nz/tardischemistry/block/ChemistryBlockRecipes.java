@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardischemistry.block;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -36,8 +37,8 @@ public class ChemistryBlockRecipes {
         for (RecipeData data : ChemistryBlock.RECIPES.values()) {
             ItemStack is = new ItemStack(data.getDisplayItem().getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
-            im.setDisplayName(data.getDisplayName());
-            im.setLore(data.getLore());
+            im.displayName(Component.text(data.getDisplayName()));
+            im.lore(data.getLore());
             im.setItemModel(data.getDisplayItem().getCustomModel());
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, data.getDisplayItem().getCustomModel().getKey());
             is.setItemMeta(im);

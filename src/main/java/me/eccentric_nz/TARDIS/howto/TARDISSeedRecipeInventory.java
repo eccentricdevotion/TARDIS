@@ -18,12 +18,14 @@ package me.eccentric_nz.TARDIS.howto;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * By the time of his eleventh incarnation, the Doctor's console room had gone through at least twelve redesigns, though
@@ -73,14 +75,14 @@ class TARDISSeedRecipeInventory {
         // interior wall
         ItemStack in_wall = new ItemStack(Material.ORANGE_WOOL, 1);
         ItemMeta in_meta = in_wall.getItemMeta();
-        in_meta.setDisplayName("Interior walls");
-        in_meta.setLore(Arrays.asList("Any valid Wall/Floor block", "Click to see blocks..."));
+        in_meta.displayName(Component.text("Interior walls"));
+        in_meta.lore(List.of(Component.text("Any valid Wall/Floor block"), Component.text("Click to see blocks...")));
         in_wall.setItemMeta(in_meta);
         // interior floor
         ItemStack in_floor = new ItemStack(Material.LIGHT_GRAY_WOOL, 1);
         ItemMeta fl_meta = in_floor.getItemMeta();
-        fl_meta.setDisplayName("Interior floors");
-        fl_meta.setLore(Arrays.asList("Any valid Wall/Floor block", "Click to see blocks..."));
+        fl_meta.displayName(Component.text("Interior floors"));
+        fl_meta.lore(List.of(Component.text("Any valid Wall/Floor block"), Component.text("Click to see blocks...")));
         in_floor.setItemMeta(fl_meta);
         // tardis type
         ItemStack tardis = new ItemStack(block, 1);
@@ -92,14 +94,14 @@ class TARDISSeedRecipeInventory {
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE")));
         close_im.setItemModel(GuiVariant.CLOSE.getKey());
         close.setItemMeta(close_im);
         stack[26] = close;
         // back
         ItemStack back = new ItemStack(Material.BOWL, 1);
         ItemMeta back_im = back.getItemMeta();
-        back_im.setDisplayName("Back");
+        back_im.displayName(Component.text("Back"));
         back_im.setItemModel(GuiVariant.BACK.getKey());
         back.setItemMeta(back_im);
         stack[8] = back;

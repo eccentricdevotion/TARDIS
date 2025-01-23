@@ -35,7 +35,7 @@ public class TARDISLightSequenceInventory {
         ItemStack lights = new ItemStack(GUILights.SEQUENCE_INFO.material(), 1);
         ItemMeta sim = lights.getItemMeta();
         sim.setDisplayName("TARDIS Light Sequence");
-        sim.setLore(List.of("Click a block in", "the second row to", "change its colour."));
+        sim.lore(List.of("Click a block in", "the second row to", "change its colour."));
         sim.setItemModel(GUILights.SEQUENCE_INFO.key());
         lights.setItemMeta(sim);
         stacks[GUILights.SEQUENCE_INFO.slot()] = lights;
@@ -84,7 +84,7 @@ public class TARDISLightSequenceInventory {
         ItemStack preset = new ItemStack(GUILights.BUTTON_LIGHT_SEQUENCE.material(), 1);
         ItemMeta pim = preset.getItemMeta();
         pim.setDisplayName("Preset Sequence");
-        pim.setLore(List.of("Click to cycle through", "various light sequences.", "1"));
+        pim.lore(List.of("Click to cycle through", "various light sequences.", "1"));
         pim.setItemModel(GUILights.BUTTON_LIGHT_SEQUENCE.key());
         preset.setItemMeta(pim);
         stacks[36] = preset;

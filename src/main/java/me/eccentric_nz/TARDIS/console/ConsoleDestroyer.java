@@ -140,7 +140,7 @@ public class ConsoleDestroyer {
             ItemMeta im = console.getItemMeta();
             String dn = ((isRustic) ? "Rustic" : TARDISStringUtils.capitalise(colour)) + " Console";
             im.setDisplayName(dn);
-            im.setLore(List.of("Integration with interaction"));
+            im.lore(List.of("Integration with interaction"));
             im.setItemModel(key);
             String which = model.getKey()
                     .replace("tardis/console_division_", "")

@@ -8,6 +8,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Color;
 import org.bukkit.entity.Player;
@@ -18,6 +19,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -107,7 +109,7 @@ public class TARDISColourPickerListener extends TARDISMenuListener {
                 close(player);
             }
             case 53 -> close(player); // close
-            default ->  event.setCancelled(true);
+            default -> event.setCancelled(true);
         }
     }
 
@@ -127,11 +129,14 @@ public class TARDISColourPickerListener extends TARDISMenuListener {
         if (bb < 0) {
             bb = 0;
         }
-        List<String> lore = meta.getLore();
-        lore.set(0, "Red: " + rr);
-        lore.set(1, "Green: " + gg);
-        lore.set(2, "Blue: " + bb);
-        meta.setLore(lore);
+        List<Component> lore = meta.lore();
+        if (lore == null) {
+            lore = new ArrayList<>();
+        }
+        lore.set(0, Component.text("Red: " + rr));
+        lore.set(1, Component.text("Green: " + gg));
+        lore.set(2, Component.text("Blue: " + bb));
+        meta.lore(lore);
         meta.setColor(Color.fromRGB(rr, gg, bb));
         display.setItemMeta(meta);
     }
@@ -152,11 +157,14 @@ public class TARDISColourPickerListener extends TARDISMenuListener {
         if (bb > 255) {
             bb = 255;
         }
-        List<String> lore = meta.getLore();
-        lore.set(0, "Red: " + rr);
-        lore.set(1, "Green: " + gg);
-        lore.set(2, "Blue: " + bb);
-        meta.setLore(lore);
+        List<Component> lore = meta.lore();
+        if (lore == null) {
+            lore = new ArrayList<>();
+        }
+        lore.set(0, Component.text("Red: " + rr));
+        lore.set(1, Component.text("Green: " + gg));
+        lore.set(2, Component.text("Blue: " + bb));
+        meta.lore(lore);
         meta.setColor(Color.fromRGB(rr, gg, bb));
         display.setItemMeta(meta);
     }

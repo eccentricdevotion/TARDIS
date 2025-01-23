@@ -68,7 +68,7 @@ public class TARDISAreasInventory {
                     im.setDisplayName(name);
                     List<String> lore = new ArrayList<>();
                     lore.add(a.getWorld());
-                    im.setLore(lore);
+                    im.lore(lore);
                     is.setItemMeta(im);
                     areas.add(is);
                     i++;

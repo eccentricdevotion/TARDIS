@@ -34,6 +34,8 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -133,9 +135,9 @@ public class TARDISSiegeListener implements Listener {
         im.setDisplayName("TARDIS Siege Cube");
         im.setItemModel(TARDISDisplayItem.SIEGE_CUBE.getCustomModel());
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISDisplayItem.SIEGE_CUBE.getCustomModel().getKey());
-        List<String> lore = new ArrayList<>();
-        lore.add("Time Lord: " + tl);
-        lore.add("ID: " + id);
+        List<TextComponent> lore = new ArrayList<>();
+        lore.add(Component.text("Time Lord: " + tl));
+        lore.add(Component.text("ID: " + id));
         // get occupants
         HashMap<String, Object> wherec = new HashMap<>();
         wherec.put("tardis_id", id);
@@ -145,11 +147,11 @@ public class TARDISSiegeListener implements Listener {
                 Player p = plugin.getServer().getPlayer(tuuid);
                 if (p != null && tuuid != tluuid) {
                     String c = p.getName();
-                    lore.add("Companion: " + c);
+                    lore.add(Component.text("Companion: " + c));
                 }
             });
         }
-        im.setLore(lore);
+        im.lore(lore);
         is.setItemMeta(im);
         // set block to AIR
         b.setBlockData(TARDISConstants.AIR);

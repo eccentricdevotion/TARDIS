@@ -52,7 +52,7 @@ public class TARDISSystemTreeGUI {
                     // add players current Artron level to UPGRADE_TREE
                     lore.add(NamedTextColor.AQUA + "" + TextDecoration.ITALIC + "Artron Level: " + sysData.getArtronLevel());
                 }
-                im.setLore(lore);
+                im.lore(lore);
                 // does the player have this system upgrade?
                 im.setItemModel((has) ? g.getUnlocked() : g.getLocked());
                 is.setItemMeta(im);

@@ -82,9 +82,9 @@ public class TARDISAutonomousInventory {
                         lore.add(NamedTextColor.GREEN + rsd.getAutonomous());
                     }
                 }
-                im.setLore(lore);
+                im.lore(lore);
             } else if (a.getLore() != null) {
-                im.setLore(a.getLore());
+                im.lore(a.getLore());
             }
             is.setItemMeta(im);
             int slot = (a.getSlot() == -1) ? findSlot(a) : a.getSlot();

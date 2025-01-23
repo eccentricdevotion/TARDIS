@@ -68,7 +68,7 @@ public class TARDISTransmatInventory {
                 lore.add(String.format("Y: %.2f", t.getY()));
                 lore.add(String.format("Z: %.2f", t.getZ()));
                 lore.add(String.format("Yaw: %.2f", t.getYaw()));
-                im.setLore(lore);
+                im.lore(lore);
                 is.setItemMeta(im);
                 stack[i] = is;
                 if (i % 9 == 7) {
@@ -82,7 +82,7 @@ public class TARDISTransmatInventory {
             ItemMeta meta = info.getItemMeta();
             meta.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
             meta.setItemModel(GUITransmat.INFO.key());
-            meta.setLore(plugin.getChameleonGuis().getStringList("INFO_TRANSMAT"));
+            meta.lore(plugin.getChameleonGuis().getStringList("INFO_TRANSMAT"));
             info.setItemMeta(meta);
             stack[GUITransmat.INFO.slot()] = info;
             // delete

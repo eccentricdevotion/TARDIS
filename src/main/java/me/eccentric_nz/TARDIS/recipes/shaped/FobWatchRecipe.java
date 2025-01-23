@@ -55,7 +55,7 @@ public class FobWatchRecipe {
                 ? NamedTextColor.YELLOW + "unlimited"
                 : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.chameleon");
         circuit = Arrays.asList("Uses left", uses);
-        em.setLore(circuit);
+        em.lore(circuit);
         exact.setItemMeta(em);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" C ", "IWI", "R R");

@@ -84,7 +84,7 @@ public class GallifreyBlueprintTrade {
         pdc.set(plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
         im.setDisplayName("TARDIS Blueprint Disk");
         List<String> lore = Arrays.asList(TARDISStringUtils.capitalise(name), "Valid only for", "the trading player");
-        im.setLore(lore);
+        im.lore(lore);
         im.addItemFlags(ItemFlag.values());
         is.setItemMeta(im);
         return is;

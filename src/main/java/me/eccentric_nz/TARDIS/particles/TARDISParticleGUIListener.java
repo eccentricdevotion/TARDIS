@@ -28,6 +28,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -150,8 +152,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         }
         NamedTextColor next = ParticleColour.colours.get(index);
         String colour = ParticleColour.toString(next);
-        List<String> newLore = List.of(next + colour);
-        im.setLore(newLore);
+        im.lore(List.of(Component.text(next + colour)));
         is.setItemMeta(im);
         view.setItem(GUIParticle.COLOUR.slot(), is);
         HashMap<String, Object> set = new HashMap<>();
@@ -170,8 +171,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
             index = 0;
         }
         String block = ParticleBlock.blocks.get(index);
-        List<String> newLore = List.of(block);
-        im.setLore(newLore);
+        im.lore(List.of(Component.text(block)));
         is.setItemMeta(im);
         view.setItem(GUIParticle.BLOCK.slot(), is);
         HashMap<String, Object> set = new HashMap<>();
@@ -186,9 +186,9 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         NamespacedKey key = im.getItemModel();
         boolean on = key == null || key == SwitchVariant.BUTTON_TOGGLE_ON.getKey();
         im.setItemModel(on ? SwitchVariant.BUTTON_TOGGLE_OFF.getKey() : SwitchVariant.BUTTON_TOGGLE_ON.getKey());
-        List<String> lore = im.getLore();
-        lore.set(0, on ? "OFF" : "ON");
-        im.setLore(lore);
+        List<Component> lore = im.lore();
+        lore.set(0, Component.text(on ? "OFF" : "ON"));
+        im.lore(lore);
         is.setItemMeta(im);
         view.setItem(GUIParticle.TOGGLE.slot(), is);
         HashMap<String, Object> set = new HashMap<>();
@@ -262,12 +262,12 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         int slot = b ? GUIParticle.DENSITY.slot() : GUIParticle.SPEED.slot();
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
-        List<String> lore = im.getLore();
-        int level = TARDISNumberParsers.parseInt(TARDISStaticUtils.stripColor(lore.getFirst()));
+        List<Component> lore = im.lore();
+        int level = TARDISNumberParsers.parseInt(TARDISStaticUtils.stripColor(((TextComponent) lore.getFirst()).content()));
         level -= 1;
         if (level >= min) {
-            lore.set(0, NamedTextColor.AQUA + "" + level);
-            im.setLore(lore);
+            lore.set(0, Component.text().color(NamedTextColor.AQUA).append(Component.text(level)).build());
+            im.lore(lore);
             is.setItemMeta(im);
             view.setItem(slot, is);
             String f = b ? "density" : "speed";
@@ -284,12 +284,12 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         int slot = b ? GUIParticle.DENSITY.slot() : GUIParticle.SPEED.slot();
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
-        List<String> lore = im.getLore();
-        int level = TARDISNumberParsers.parseInt(TARDISStaticUtils.stripColor(lore.getFirst()));
+        List<Component> lore = im.lore();
+        int level = TARDISNumberParsers.parseInt(TARDISStaticUtils.stripColor(((TextComponent) lore.getFirst()).content()));
         level += 1;
         if (level <= max) {
-            lore.set(0, NamedTextColor.AQUA + "" + level);
-            im.setLore(lore);
+            lore.set(0, Component.text().color(NamedTextColor.AQUA).append(Component.text(level)).build());
+            im.lore(lore);
             is.setItemMeta(im);
             view.setItem(slot, is);
             String f = b ? "density" : "speed";

@@ -33,7 +33,7 @@ public class PresetStorageDiskRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(NamedTextColor.WHITE + "Preset Storage Disk");
         im.setItemModel(RecipeItem.PRESET_STORAGE_DISK.getModel());
-        im.setLore(List.of("Blank"));
+        im.lore(List.of("Blank"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "preset_storage_disk");
         ShapelessRecipe r = new ShapelessRecipe(key, is);
@@ -48,7 +48,7 @@ public class PresetStorageDiskRecipe {
                 ? NamedTextColor.YELLOW + "unlimited"
                 : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.chameleon");
         circuit = Arrays.asList("Uses left", uses);
-        em.setLore(circuit);
+        em.lore(circuit);
         exact.setItemMeta(em);
         r.addIngredient(new RecipeChoice.ExactChoice(exact));
         plugin.getServer().addRecipe(r);

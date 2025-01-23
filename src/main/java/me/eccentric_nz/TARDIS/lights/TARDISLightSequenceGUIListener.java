@@ -154,7 +154,7 @@ public class TARDISLightSequenceGUIListener extends TARDISMenuListener {
             view.getItem(i).setAmount(levels.get(i - 27));
         }
         lore.set(2, "" + next);
-        im.setLore(lore);
+        im.lore(lore);
         preset.setItemMeta(im);
     }
 

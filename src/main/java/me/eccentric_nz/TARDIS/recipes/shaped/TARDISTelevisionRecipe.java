@@ -65,7 +65,7 @@ public class TARDISTelevisionRecipe {
                     ? NamedTextColor.YELLOW + "unlimited"
                     : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.chameleon");
             lore = Arrays.asList("Uses left", uses);
-            circuit.setLore(lore);
+            circuit.lore(lore);
             chameleon.setItemMeta(circuit);
             r.setIngredient('C', new RecipeChoice.ExactChoice(chameleon));
         } else {

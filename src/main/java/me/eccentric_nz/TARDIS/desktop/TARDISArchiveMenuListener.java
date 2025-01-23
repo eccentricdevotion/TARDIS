@@ -27,6 +27,8 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.schematic.ArchiveUpdate;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -85,16 +87,20 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener {
                 // size
                 ItemStack iss = view.getItem(18);
                 ItemMeta ims = iss.getItemMeta();
-                List<String> lores = ims.getLore();
+                List<Component> lores = ims.lore();
                 String t;
                 String b;
                 int s;
-                int o = ConsoleSize.valueOf(lores.getFirst()).ordinal();
+                int o = ConsoleSize.valueOf(((TextComponent) lores.getFirst()).content()).ordinal();
                 s = (o < 2) ? o + 1 : 0;
                 t = ConsoleSize.values()[s].toString();
                 b = ConsoleSize.values()[s].getBlocks();
                 if (t != null) {
-                    ims.setLore(Arrays.asList(t, b, NamedTextColor.AQUA + "Click to change"));
+                    ims.lore(List.of(
+                            Component.text(t),
+                            Component.text(b),
+                            Component.text().color(NamedTextColor.AQUA).append(Component.text("Click to change")).build()
+                    ));
                     iss.setItemMeta(ims);
                 }
             }

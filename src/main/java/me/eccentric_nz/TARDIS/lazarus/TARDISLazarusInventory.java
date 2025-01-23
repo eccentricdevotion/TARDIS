@@ -139,7 +139,7 @@ class TARDISLazarusInventory {
         ItemStack the = new ItemStack(GUIGeneticManipulator.BUTTON_MASTER.material(), 1);
         ItemMeta master = the.getItemMeta();
         master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
-        master.setLore(List.of(plugin.getLanguage().getString("SET_OFF")));
+        master.lore(List.of(plugin.getLanguage().getString("SET_OFF")));
         master.setItemModel(GUIGeneticManipulator.BUTTON_MASTER.key());
         the.setItemMeta(master);
         stacks[GUIGeneticManipulator.BUTTON_MASTER.slot()] = the;
@@ -147,7 +147,7 @@ class TARDISLazarusInventory {
         ItemStack adult = new ItemStack(GUIGeneticManipulator.BUTTON_AGE.material(), 1);
         ItemMeta baby = adult.getItemMeta();
         baby.setDisplayName(plugin.getLanguage().getString("BUTTON_AGE"));
-        baby.setLore(List.of("ADULT"));
+        baby.lore(List.of("ADULT"));
         baby.setItemModel(GUIGeneticManipulator.BUTTON_AGE.key());
         adult.setItemMeta(baby);
         stacks[GUIGeneticManipulator.BUTTON_AGE.slot()] = adult;
@@ -155,7 +155,7 @@ class TARDISLazarusInventory {
         ItemStack typ = new ItemStack(GUIGeneticManipulator.BUTTON_TYPE.material(), 1);
         ItemMeta col = typ.getItemMeta();
         col.setDisplayName(plugin.getLanguage().getString("BUTTON_TYPE"));
-        col.setLore(List.of("WHITE"));
+        col.lore(List.of("WHITE"));
         col.setItemModel(GUIGeneticManipulator.BUTTON_TYPE.key());
         typ.setItemMeta(col);
         stacks[GUIGeneticManipulator.BUTTON_TYPE.slot()] = typ;
@@ -168,7 +168,7 @@ class TARDISLazarusInventory {
             opts.add(TextDecoration.ITALIC + o + NamedTextColor.WHITE);
         }
         opts.add(NamedTextColor.RED + "FALSE");
-        tf.setLore(opts);
+        tf.lore(opts);
         tf.setItemModel(GUIGeneticManipulator.BUTTON_OPTS.key());
         tamed.setItemMeta(tf);
         stacks[GUIGeneticManipulator.BUTTON_OPTS.slot()] = tamed;

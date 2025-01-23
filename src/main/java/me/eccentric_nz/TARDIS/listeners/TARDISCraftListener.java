@@ -133,7 +133,7 @@ public class TARDISCraftListener implements Listener {
                         lore.add("Walls: " + ci.getItem(6).getType());
                         lore.add("Floors: " + ci.getItem(9).getType());
                         lore.add("Chameleon: FACTORY");
-                        im.setLore(lore);
+                        im.lore(lore);
                         is.setItemMeta(im);
                         ci.setResult(is);
                     } else if (is.getType().equals(Material.GLOWSTONE_DUST)) {
@@ -150,7 +150,7 @@ public class TARDISCraftListener implements Listener {
                             } else {
                                 lore = Arrays.asList("Uses left", uses);
                             }
-                            im.setLore(lore);
+                            im.lore(lore);
                             is.setItemMeta(im);
                             ci.setResult(is);
                         }
@@ -175,7 +175,7 @@ public class TARDISCraftListener implements Listener {
                             String what = dn.contains("Key") ? "key" : "disk";
                             lore.add(format + "This " + what + " belongs to");
                             lore.add(format + human.getName());
-                            im.setLore(lore);
+                            im.lore(lore);
                             is.setItemMeta(im);
                             ci.setResult(is);
                         }
@@ -192,7 +192,7 @@ public class TARDISCraftListener implements Listener {
                     } else if (is.getType() == Material.GLASS && dn.endsWith("Variable Light")) {
                         // set the lore to the material in the centre
                         Material variable = ci.getItem(5).getType();
-                        im.setLore(List.of(variable.toString()));
+                        im.lore(List.of(variable.toString()));
                         is.setItemMeta(im);
                         ci.setResult(is);
                     }

@@ -4,6 +4,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPoliceBoxes;
 import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -71,14 +72,14 @@ public class TARDISIndexFileSection {
         // back
         ItemStack back = new ItemStack(GUIChameleonPoliceBoxes.BACK.material(), 1);
         ItemMeta but = back.getItemMeta();
-        but.setDisplayName("Back");
+        but.displayName(Component.text("Back"));
         but.setItemModel(GUIChameleonPoliceBoxes.BACK.key());
         back.setItemMeta(but);
         stack[45] = back;
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE")));
         close_im.setItemModel(GuiVariant.CLOSE.getKey());
         close.setItemMeta(close_im);
         stack[53] = close;
@@ -88,7 +89,7 @@ public class TARDISIndexFileSection {
     private ItemStack makeButton(TARDISInfoMenu tim) {
         ItemStack is = new ItemStack(Material.WRITTEN_BOOK, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(TARDISStringUtils.capitalise(tim.toString()));
+        im.displayName(Component.text(TARDISStringUtils.capitalise(tim.toString())));
         is.setItemMeta(im);
         return is;
     }

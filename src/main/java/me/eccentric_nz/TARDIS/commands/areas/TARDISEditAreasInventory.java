@@ -38,7 +38,7 @@ public class TARDISEditAreasInventory {
                     lore.add("y: " + l.getBlockY());
                     lore.add("z: " + l.getBlockZ());
                     lore.add("id: " + area_id);
-                    im.setLore(lore);
+                    im.lore(lore);
                     is.setItemMeta(im);
                     stacks[i] = is;
                     i++;
@@ -58,14 +58,14 @@ public class TARDISEditAreasInventory {
         info_lore.add("where you are standing");
         info_lore.add("click the Add button");
         info_lore.add("(nether star).");
-        ii.setLore(info_lore);
+        ii.lore(info_lore);
         info.setItemMeta(ii);
         stacks[45] = info;
         // add
         ItemStack add = new ItemStack(Material.NETHER_STAR, 1);
         ItemMeta er = add.getItemMeta();
         er.setDisplayName("Add");
-        er.setLore(List.of("area_id: " + area_id));
+        er.lore(List.of("area_id: " + area_id));
         add.setItemMeta(er);
         stacks[48] = add;
         // remove

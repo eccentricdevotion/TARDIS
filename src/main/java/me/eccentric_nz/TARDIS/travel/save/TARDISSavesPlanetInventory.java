@@ -52,7 +52,7 @@ public class TARDISSavesPlanetInventory {
         } else {
             hlore.add("Not found!");
         }
-        him.setLore(hlore);
+        him.lore(hlore);
         him.setItemModel(GUISaves.HOME.key());
         his.setItemMeta(him);
         stack[GUISaves.HOME.slot()] = his;
@@ -73,7 +73,7 @@ public class TARDISSavesPlanetInventory {
             } else {
                 dlore.add("Not found!");
             }
-            dim.setLore(dlore);
+            dim.lore(dlore);
             dim.setItemModel(GUISaves.DEATH.key());
             death.setItemMeta(dim);
             stack[GUISaves.DEATH.slot()] = death;

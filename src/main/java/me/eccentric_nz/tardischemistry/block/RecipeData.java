@@ -17,22 +17,29 @@
 package me.eccentric_nz.tardischemistry.block;
 
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeData {
 
     private final String displayName;
     private final String nameSpacedKey;
-    private final List<String> lore;
+    private final List<TextComponent> lore;
     private final Material craftMaterial;
     private final TARDISDisplayItem displayItem;
 
     public RecipeData(String displayName, String nameSpacedKey, List<String> lore, Material craftMaterial, TARDISDisplayItem displayItem) {
         this.displayName = displayName;
         this.nameSpacedKey = nameSpacedKey;
-        this.lore = lore;
+        this.lore = new ArrayList<>();
+        for (String s : lore) {
+            this.lore.add(Component.text(s));
+        }
         this.craftMaterial = craftMaterial;
         this.displayItem = displayItem;
     }
@@ -45,7 +52,7 @@ public class RecipeData {
         return nameSpacedKey;
     }
 
-    public List<String> getLore() {
+    public List<TextComponent> getLore() {
         return lore;
     }
 

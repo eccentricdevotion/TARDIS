@@ -50,7 +50,7 @@ public class TARDISEveryoneCompanionInventory {
                     skull.setDisplayName(c.getName());
                     ArrayList<String> lore = new ArrayList<>();
                     lore.add(c.getUniqueId().toString());
-                    skull.setLore(lore);
+                    skull.lore(lore);
                     head.setItemMeta(skull);
                     heads[i] = head;
                     i++;
@@ -69,7 +69,7 @@ public class TARDISEveryoneCompanionInventory {
         info_lore.add("To ADD a companion");
         info_lore.add("click the Add button");
         info_lore.add("(nether star).");
-        ii.setLore(info_lore);
+        ii.lore(info_lore);
         info.setItemMeta(ii);
         heads[45] = info;
         ItemStack add = new ItemStack(Material.NETHER_STAR, 1);

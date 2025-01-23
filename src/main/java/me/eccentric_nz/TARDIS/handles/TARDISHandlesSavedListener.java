@@ -20,6 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -72,17 +74,17 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener {
                     ItemStack disk = view.getItem(slot);
                     if (disk != null && record.isSimilar(disk)) {
                         ItemMeta im = disk.getItemMeta();
-                        List<String> lore = im.getLore();
+                        List<Component> lore = im.lore();
                         // ckeck in
-                        int pid = TARDISNumberParsers.parseInt(lore.get(1));
+                        int pid = TARDISNumberParsers.parseInt(((TextComponent) lore.get(1)).content());
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("checked", 0);
                         HashMap<String, Object> where = new HashMap<>();
                         where.put("program_id", pid);
                         plugin.getQueryFactory().doUpdate("programs", set, where);
                         player.setItemOnCursor(null);
-                        lore.set(2, "Checked IN");
-                        im.setLore(lore);
+                        lore.set(2, Component.text("Checked IN"));
+                        im.lore(lore);
                         disk.setItemMeta(im);
                     }
                 }
@@ -131,9 +133,9 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener {
                 plugin.getQueryFactory().doUpdate("programs", set, where);
                 // update lore
                 ItemMeta im = is.getItemMeta();
-                List<String> lore = im.getLore();
+                List<Component> lore = im.lore();
                 lore.remove(3);
-                im.setLore(lore);
+                im.lore(lore);
                 is.setItemMeta(im);
                 selectedSlot.put(uuid, null);
             } else {
@@ -162,20 +164,20 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener {
                 ItemStack is = view.getItem(selectedSlot.get(uuid));
                 if (is != null) {
                     ItemMeta im = is.getItemMeta();
-                    List<String> lore = im.getLore();
-                    if (lore.get(2).equals("Checked OUT")) {
+                    List<Component> lore = im.lore();
+                    if (((TextComponent) lore.get(2)).content().equals("Checked OUT")) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "HANDLES_CHECKED");
                         return;
                     }
-                    lore.set(2, "Checked OUT");
-                    im.setLore(lore);
+                    lore.set(2, Component.text("Checked OUT"));
+                    im.lore(lore);
                     is.setItemMeta(im);
                     setSlots(view, -1);
                     selectedSlot.put(uuid, null);
                     ItemStack clone = is.clone();
                     player.getWorld().dropItemNaturally(player.getLocation(), clone);
                     // check out
-                    int pid = TARDISNumberParsers.parseInt(lore.get(1));
+                    int pid = TARDISNumberParsers.parseInt(((TextComponent) lore.get(1)).content());
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("checked", 1);
                     HashMap<String, Object> where = new HashMap<>();
@@ -204,19 +206,19 @@ public class TARDISHandlesSavedListener extends TARDISMenuListener {
             ItemStack is = view.getItem(s);
             if (is != null) {
                 ItemMeta im = is.getItemMeta();
-                List<String> lore = im.getLore();
+                List<Component> lore = im.lore();
                 if (s == slot) {
-                    if (lore.contains(NamedTextColor.GREEN + "Selected")) {
-                        if (lore.contains(NamedTextColor.AQUA + "Running")) {
+                    if (lore.contains(Component.text().color(NamedTextColor.GREEN).append(Component.text("Selected")).build())) {
+                        if (lore.contains(Component.text().color(NamedTextColor.AQUA).append(Component.text("Running")).build())) {
                             lore.remove(4);
                         } else {
                             lore.remove(3);
                         }
                     } else {
-                        lore.add(NamedTextColor.GREEN + "Selected");
+                        lore.add(Component.text().color(NamedTextColor.GREEN).append(Component.text("Selected")).build());
                     }
                 }
-                im.setLore(lore);
+                im.lore(lore);
                 is.setItemMeta(im);
             }
         }

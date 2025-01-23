@@ -94,7 +94,7 @@ public class TARDISWeepingAngelsMonstersInventory {
         ItemStack the = new ItemStack(GUIGeneticManipulator.BUTTON_MASTER.material(), 1);
         ItemMeta master = the.getItemMeta();
         master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
-        master.setLore(List.of(plugin.getLanguage().getString("SET_OFF")));
+        master.lore(List.of(plugin.getLanguage().getString("SET_OFF")));
         master.setItemModel(GUIGeneticManipulator.BUTTON_MASTER.key());
         the.setItemMeta(master);
         stacks[GUIGeneticManipulator.BUTTON_MASTER.slot()] = the;

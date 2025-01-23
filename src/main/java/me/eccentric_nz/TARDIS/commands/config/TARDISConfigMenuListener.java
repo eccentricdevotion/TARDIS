@@ -116,7 +116,7 @@ public class TARDISConfigMenuListener implements Listener {
         List<String> lore = (str != null) ? List.of(str) : null;
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
-        im.setLore(lore);
+        im.lore(lore);
         GUIConfiguration gui = GUIConfiguration.valueOf(option.split("\\.")[0].toUpperCase(Locale.ROOT));
         im.setItemModel("false".equals(str) ? gui.getOffModel() : gui.getOnModel());
         is.setItemMeta(im);

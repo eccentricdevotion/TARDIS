@@ -87,7 +87,7 @@ public class Seed {
                 lore.add("Walls: " + wall);
                 lore.add("Floors: " + floor);
                 lore.add("Chameleon: FACTORY");
-                im.setLore(lore);
+                im.lore(lore);
                 is.setItemMeta(im);
                 player.getInventory().addItem(is);
                 player.updateInventory();

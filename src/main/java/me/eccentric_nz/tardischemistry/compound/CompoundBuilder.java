@@ -17,6 +17,7 @@
 package me.eccentric_nz.tardischemistry.compound;
 
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -33,7 +34,7 @@ public class CompoundBuilder {
             case Rust -> {
                 is = new ItemStack(Material.LAVA_BUCKET, 1);
                 ItemMeta rm = is.getItemMeta();
-                rm.setDisplayName("Rust Bucket");
+                rm.displayName(Component.text("Rust Bucket"));
                 rm.setItemModel(Whoniverse.RUST_BUCKET.getKey());
                 is.setItemMeta(rm);
             }
@@ -41,15 +42,15 @@ public class CompoundBuilder {
             case Sulphuric_Acid -> {
                 is = new ItemStack(Material.WATER_BUCKET, 1);
                 ItemMeta am = is.getItemMeta();
-                am.setDisplayName("Acid Bucket");
+                am.displayName(Component.text("Acid Bucket"));
                 am.setItemModel(Whoniverse.ACID_BUCKET.getKey());
                 is.setItemMeta(am);
             }
             default -> {
                 is = new ItemStack(Material.GLASS_BOTTLE, 1);
                 ItemMeta im = is.getItemMeta();
-                im.setDisplayName(compound.toString().replace("_", " "));
-                im.setLore(List.of(compound.getSymbol()));
+                im.displayName(Component.text(compound.toString().replace("_", " ")));
+                im.lore(List.of(Component.text(compound.getSymbol())));
                 if (compound.getModel() != null) {
                     im.setItemModel(compound.getModel());
                 }

@@ -29,7 +29,9 @@ public class TARDISSonicBlaster {
     public void enable() {
         plugin.getPM().registerEvents(new TARDISSonicBlasterListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISSonicBlasterCraftListener(), plugin);
-        new TARDISSonicBlasterRecipe(plugin).addShapedRecipes();
+        new TARDISSonicBlasterRecipe(plugin).addRecipe();
+        new TARDISBlasterBatteryRecipe(plugin).addRecipe();
+        new TARDISLandingPadRecipe(plugin).addRecipe();
         double maxUsableDistance = Math.sqrt(plugin.getBlasterConfig().getDouble("max_blocks"));
         long cooldown = plugin.getBlasterConfig().getLong("cooldown") * 1000;
         plugin.setBlasterSettings(new BlasterSettings(maxUsableDistance, cooldown));

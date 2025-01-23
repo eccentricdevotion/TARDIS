@@ -3,6 +3,7 @@ package me.eccentric_nz.TARDIS.skins.tv;
 import me.eccentric_nz.TARDIS.skins.DoctorSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
 import me.eccentric_nz.TARDIS.skins.SkinUtils;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -33,8 +34,8 @@ public class TVDoctorsInventory extends TVGUI {
                 PlayerProfile profile = SkinUtils.getHeadProfile(doctor);
                 im.setOwnerProfile(profile);
                 String[] name = doctor.name().split(" - ");
-                im.setDisplayName(name[0]);
-                im.setLore(List.of(name[1]));
+                im.displayName(Component.text(name[0]));
+                im.lore(List.of(Component.text(name[1])));
                 is.setItemMeta(im);
                 // cache the item stack
                 PlayerHeadCache.DOCTORS.add(is);

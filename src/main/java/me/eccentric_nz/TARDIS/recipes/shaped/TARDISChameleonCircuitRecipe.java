@@ -46,7 +46,7 @@ public class TARDISChameleonCircuitRecipe {
         String uses = (plugin.getConfig().getString("circuits.uses.chameleon").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? NamedTextColor.YELLOW + "unlimited"
                 : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.chameleon");
-        im.setLore(List.of("Uses left", uses));
+        im.lore(List.of("Uses left", uses));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_chameleon_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
@@ -63,7 +63,7 @@ public class TARDISChameleonCircuitRecipe {
                     ? NamedTextColor.YELLOW + "unlimited"
                     : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.materialisation");
             circuit = Arrays.asList("Uses left", mat_uses);
-            em.setLore(circuit);
+            em.lore(circuit);
             exact.setItemMeta(em);
             r.setIngredient('M', new RecipeChoice.ExactChoice(exact));
         } else {

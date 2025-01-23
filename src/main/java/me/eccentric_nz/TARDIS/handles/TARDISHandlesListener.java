@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -33,6 +34,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -65,8 +67,8 @@ public class TARDISHandlesListener implements Listener {
         // drop a custom BIRCH_BUTTON
         ItemStack is = new ItemStack(Material.BIRCH_BUTTON, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("Handles");
-        im.setLore(Arrays.asList("Cyberhead from the", "Maldovar Market"));
+        im.displayName(Component.text("Handles"));
+        im.lore(List.of(Component.text("Cyberhead from the"), Component.text("Maldovar Market")));
         im.setItemModel(Whoniverse.HANDLES_OFF.getKey());
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
         is.setItemMeta(im);

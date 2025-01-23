@@ -46,7 +46,7 @@ public class GallifreyTradeSelectListener implements Listener {
                 pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
                 List<String> lore = im.getLore();
                 lore.set(2, player.getName());
-                im.setLore(lore);
+                im.lore(lore);
                 trade.getResult().setItemMeta(im);
                 MerchantRecipe newRecipe = new MerchantRecipe(trade.getResult(), 1);
                 newRecipe.addIngredient(trade.getIngredients().getFirst());
@@ -82,7 +82,7 @@ public class GallifreyTradeSelectListener implements Listener {
                     pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
                     List<String> lore = im.getLore();
                     lore.set(2, player.getName());
-                    im.setLore(lore);
+                    im.lore(lore);
                     ItemStack is = result.clone();
                     is.setItemMeta(im);
                     MerchantRecipe newRecipe = new MerchantRecipe(is, 1);

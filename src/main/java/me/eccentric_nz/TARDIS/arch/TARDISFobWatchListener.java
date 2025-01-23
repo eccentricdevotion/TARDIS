@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.api.event.TARDISChameleonArchEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISChameleonArchOffEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -92,7 +93,7 @@ public class TARDISFobWatchListener implements Listener {
                 TARDISArchDisguise.disguise(player, name);
             }
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                player.setDisplayName(name);
+                player.displayName(Component.text(name));
                 player.setPlayerListName(name);
             }, 5L);
             plugin.getPM().callEvent(new TARDISChameleonArchEvent(player, twd));
@@ -109,7 +110,7 @@ public class TARDISFobWatchListener implements Listener {
             player.getWorld().strikeLightningEffect(player.getLocation());
             plugin.getTrackerKeeper().getJohnSmith().remove(uuid);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                player.setDisplayName(player.getName());
+                player.displayName(Component.text(player.getName()));
                 player.setPlayerListName(player.getName());
             }, 5L);
             // remove player from arched table

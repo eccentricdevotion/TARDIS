@@ -98,7 +98,7 @@ public class TARDISArtronFurnaceListener implements Listener {
                         // return an empty cell
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             lore.set(1, "0");
-                            im.setLore(lore);
+                            im.lore(lore);
                             im.setEnchantmentGlintOverride(null);
                             is.setItemMeta(im);
                             is.removeEnchantment(Enchantment.UNBREAKING);

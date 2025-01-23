@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -199,7 +200,7 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                 ItemStack is = view.getItem(slot);
                 is.setType(Material.ARROW);
                 ItemMeta im = is.getItemMeta();
-                im.setLore(List.of(plugin.getLanguage().getString("ARS_MAP_HERE")));
+                im.lore(List.of(Component.text(plugin.getLanguage().getString("ARS_MAP_HERE"))));
                 im.setItemModel(ArrowVariant.YOU_ARE_HERE.getKey());
                 is.setItemMeta(im);
             }

@@ -20,6 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -120,10 +122,10 @@ public class TARDISCircuitRepairListener implements Listener {
             // clone the map
             ItemStack clone = first.clone();
             ItemMeta cim = clone.getItemMeta();
-            List<String> clore = new ArrayList<>();
-            clore.add("Uses left");
-            clore.add(NamedTextColor.YELLOW + "" + repair_to);
-            cim.setLore(clore);
+            List<TextComponent> clore = new ArrayList<>();
+            clore.add(Component.text("Uses left"));
+            clore.add(Component.text().color(NamedTextColor.YELLOW).append(Component.text(repair_to)).build());
+            cim.lore(clore);
             clone.setItemMeta(cim);
             // set the item in slot 0 to the new repaired map
             anvil.setItem(0, clone);

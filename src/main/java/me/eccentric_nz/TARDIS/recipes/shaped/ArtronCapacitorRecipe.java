@@ -50,7 +50,7 @@ public class ArtronCapacitorRecipe {
         ItemMeta cell = storage.getItemMeta();
         cell.setDisplayName(NamedTextColor.WHITE + "Artron Storage Cell");
         cell.setItemModel(RecipeItem.ARTRON_STORAGE_CELL.getModel());
-        cell.setLore(List.of("Charge Level", "0"));
+        cell.lore(List.of("Charge Level", "0"));
         storage.setItemMeta(cell);
         NamespacedKey key = new NamespacedKey(plugin, "artron_capacitor");
         ShapedRecipe r = new ShapedRecipe(key, is);

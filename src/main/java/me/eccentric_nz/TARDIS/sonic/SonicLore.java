@@ -1,6 +1,8 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -16,34 +18,34 @@ public class SonicLore {
         PersistentDataContainer pdc = im.getPersistentDataContainer();
         if (pdc.has(TARDIS.plugin.getSonicChargeKey(), PersistentDataType.INTEGER)) {
             int charge = pdc.get(TARDIS.plugin.getSonicChargeKey(), PersistentDataType.INTEGER);
-            List<String> lore;
+            List<Component> lore;
             int index = -1;
             if (im.hasLore()) {
-                lore = im.getLore();
+                lore = im.lore();
                 for (int i = lore.size() - 1; i >= 0; i--) {
-                    if (lore.get(i).startsWith("Charge: ")) {
+                    if (((TextComponent) lore.get(i)).content().startsWith("Charge: ")) {
                         index = i;
                         break;
                     }
                 }
                 if (index != -1) {
-                    lore.set(index, "Charge: " + charge);
+                    lore.set(index, Component.text("Charge: " + charge));
                 } else {
-                    lore.add("Charge: " + charge);
+                    lore.add(Component.text("Charge: " + charge));
                 }
             } else {
-                lore = List.of("Charge: " + charge);
+                lore = List.of(Component.text("Charge: " + charge));
             }
-            im.setLore(lore);
+            im.lore(lore);
             sonic.setItemMeta(im);
         }
     }
 
-    public static ItemStack addUpgrade(List<String> lore, String dn, NamespacedKey model, ItemStack result, String upgrade) {
+    public static ItemStack addUpgrade(List<Component> lore, String dn, NamespacedKey model, ItemStack result, String upgrade) {
         int index = -1;
-        String charge = null;
+        Component charge = null;
         for (int i = lore.size() - 1; i >= 0; i--) {
-            if (lore.get(i).startsWith("Charge: ")) {
+            if (((TextComponent) lore.get(i)).content().startsWith("Charge: ")) {
                 charge = lore.get(i);
                 index = i;
                 break;
@@ -51,15 +53,15 @@ public class SonicLore {
         }
         if (index != -1 && charge != null) {
             lore.remove(index);
-            lore.add(upgrade);
+            lore.add(Component.text(upgrade));
             lore.add(charge);
         } else {
-            lore.add(upgrade);
+            lore.add(Component.text(upgrade));
         }
         ItemMeta rim = result.getItemMeta();
-        rim.setDisplayName(dn);
+        rim.displayName(Component.text(dn));
         rim.setItemModel(model);
-        rim.setLore(lore);
+        rim.lore(lore);
         result.setItemMeta(rim);
         return result;
     }

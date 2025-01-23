@@ -113,7 +113,7 @@ public class TARDISSmithingListener implements Listener {
                     } else {
                         lore.add(upgrade);
                     }
-                    im.setLore(lore);
+                    im.lore(lore);
                     is.setItemMeta(im);
                     // change the crafting result
                     event.setResult(is);

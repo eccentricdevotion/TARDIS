@@ -81,19 +81,19 @@ public class TARDISTerminalInventory {
         ItemStack x = new ItemStack(Material.LIGHT_BLUE_WOOL, 1);
         ItemMeta xim = x.getItemMeta();
         xim.setDisplayName("X");
-        xim.setLore(List.of("0"));
+        xim.lore(List.of("0"));
         x.setItemMeta(xim);
         // z
         ItemStack z = new ItemStack(Material.YELLOW_WOOL, 1);
         ItemMeta zim = z.getItemMeta();
         zim.setDisplayName("Z");
-        zim.setLore(List.of("0"));
+        zim.lore(List.of("0"));
         z.setItemMeta(zim);
         // multiplier
         ItemStack m = new ItemStack(Material.PURPLE_WOOL, 1);
         ItemMeta mim = m.getItemMeta();
         mim.setDisplayName(plugin.getLanguage().getString("BUTTON_MULTI"));
-        mim.setLore(List.of("x1"));
+        mim.lore(List.of("x1"));
         m.setItemMeta(mim);
         // environments
         // current

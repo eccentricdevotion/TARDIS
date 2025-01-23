@@ -328,7 +328,7 @@ public class TARDISCondenserListener implements Listener {
             ItemMeta lim = leftover.getItemMeta();
             List<String> lore = lim.getLore();
             lore.set(1, "" + remainder);
-            lim.setLore(lore);
+            lim.lore(lore);
             lim.setEnchantmentGlintOverride(true);
             lim.addItemFlags(ItemFlag.values());
             leftover.setItemMeta(lim);
@@ -340,7 +340,7 @@ public class TARDISCondenserListener implements Listener {
             ItemMeta im = result.getItemMeta();
             List<String> lore = im.getLore();
             lore.set(1, "" + full);
-            im.setLore(lore);
+            im.lore(lore);
             im.setEnchantmentGlintOverride(true);
             im.addItemFlags(ItemFlag.values());
             result.setItemMeta(im);

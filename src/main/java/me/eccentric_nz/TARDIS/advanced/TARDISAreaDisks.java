@@ -23,12 +23,15 @@ import me.eccentric_nz.TARDIS.database.data.Area;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.Storage;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,11 +69,11 @@ class TARDISAreaDisks {
                 if (TARDISPermission.hasPermission(p, "tardis.area." + name) || TARDISPermission.hasPermission(p, "tardis.area.*")) {
                     ItemStack is = new ItemStack(Material.MUSIC_DISC_BLOCKS, 1);
                     ItemMeta im = is.getItemMeta();
-                    im.setDisplayName("Area Storage Disk");
-                    List<String> lore = new ArrayList<>();
-                    lore.add(name);
-                    lore.add(a.getWorld());
-                    im.setLore(lore);
+                    im.displayName(Component.text("Area Storage Disk"));
+                    List<TextComponent> lore = new ArrayList<>();
+                    lore.add(Component.text(name));
+                    lore.add(Component.text(a.getWorld()));
+                    im.lore(lore);
                     im.setItemModel(DiskVariant.AREA_DISK.getKey());
                     is.setItemMeta(im);
                     areas.add(is);
@@ -153,11 +156,11 @@ class TARDISAreaDisks {
                             if (empty != -1) {
                                 ItemStack is = new ItemStack(Material.MUSIC_DISC_BLOCKS, 1);
                                 ItemMeta im = is.getItemMeta();
-                                im.setDisplayName("Area Storage Disk");
-                                List<String> lore = new ArrayList<>();
-                                lore.add(name);
-                                lore.add(map.getWorld());
-                                im.setLore(lore);
+                                im.displayName(Component.text("Area Storage Disk"));
+                                List<TextComponent> lore = new ArrayList<>();
+                                lore.add(Component.text(name));
+                                lore.add(Component.text(map.getWorld()));
+                                im.lore(lore);
                                 im.setItemModel(DiskVariant.AREA_DISK.getKey());
                                 is.setItemMeta(im);
                                 inv.setItem(empty, is);

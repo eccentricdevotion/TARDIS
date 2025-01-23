@@ -31,7 +31,7 @@ public class TARDISSchematicWandRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(NamedTextColor.WHITE + "TARDIS Schematic Wand");
         im.setItemModel(RecipeItem.TARDIS_SCHEMATIC_WAND.getModel());
-        im.setLore(List.of("Right-click start", "Left-click end"));
+        im.lore(List.of("Right-click start", "Left-click end"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_schematic_wand");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

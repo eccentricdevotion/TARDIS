@@ -18,6 +18,8 @@ package me.eccentric_nz.TARDIS.schematic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -67,23 +69,23 @@ public class ResultSetArchiveButtons {
                 while (rs.next()) {
                     ItemStack is = new ItemStack(terracotta[i], 1);
                     ItemMeta im = is.getItemMeta();
-                    im.setDisplayName(rs.getString("name"));
-                    List<String> lore = new ArrayList<>();
+                    im.displayName(Component.text(rs.getString("name")));
+                    List<TextComponent> lore = new ArrayList<>();
                     if (!rs.getString("description").isEmpty()) {
                         Pattern p = Pattern.compile("\\G\\s*(.{1,25})(?=\\s|$)", Pattern.DOTALL);
                         Matcher m = p.matcher(rs.getString("description"));
                         while (m.find()) {
-                            lore.add(m.group(1));
+                            lore.add(Component.text(m.group(1)));
                         }
                     }
                     // add cost
                     int cost = plugin.getArtronConfig().getInt("upgrades.archive." + rs.getString("console_size").toLowerCase(Locale.ROOT));
-                    lore.add("Cost: " + cost);
+                    lore.add(Component.text("Cost: " + cost));
                     // add current
                     if (rs.getInt("use") == 1) {
-                        lore.add(NamedTextColor.GREEN + plugin.getLanguage().getString("CURRENT_CONSOLE"));
+                        lore.add(Component.text().color(NamedTextColor.GREEN).append(Component.text(plugin.getLanguage().getString("CURRENT_CONSOLE"))).build());
                     }
-                    im.setLore(lore);
+                    im.lore(lore);
                     is.setItemMeta(im);
                     buttons[i] = is;
                     i++;

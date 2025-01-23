@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.arch;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -42,6 +43,6 @@ public class TARDISFakeChatListener implements Listener {
         }
         String currentDisplayName = player.getDisplayName();
         String newDisplayName = currentDisplayName.replace(player.getName(), plugin.getTrackerKeeper().getJohnSmith().get(player.getUniqueId()).getName());
-        player.setDisplayName(newDisplayName);
+        player.displayName(Component.text(newDisplayName));
     }
 }

@@ -161,7 +161,7 @@ public class TARDISTelepathicListener implements Listener {
         im.setItemModel(CircuitVariant.TELEPATHIC.getKey());
         String uses = (plugin.getConfig().getString("circuits.uses.telepathic").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? NamedTextColor.YELLOW + "unlimited" : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.telepathic");
         List<String> lore = Arrays.asList("Uses left", uses);
-        im.setLore(lore);
+        im.lore(lore);
         is.setItemMeta(im);
         b.getWorld().dropItemNaturally(b.getLocation(), is);
     }

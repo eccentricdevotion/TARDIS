@@ -48,7 +48,7 @@ public class ConsoleRecipe {
             ItemMeta im = is.getItemMeta();
             String dn = TARDISStringUtils.capitalise(name) + " Console";
             im.setDisplayName(NamedTextColor.WHITE + dn);
-            im.setLore(List.of("Integration with interaction"));
+            im.lore(List.of("Integration with interaction"));
             im.setItemModel(colour.getValue());
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, colour.getValue().getKey());
             is.setItemMeta(im);

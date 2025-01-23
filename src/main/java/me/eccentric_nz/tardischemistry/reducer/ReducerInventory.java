@@ -18,10 +18,12 @@ package me.eccentric_nz.tardischemistry.reducer;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
+import net.kyori.adventure.text.Component;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ReducerInventory {
 
@@ -38,22 +40,22 @@ public class ReducerInventory {
         // info
         ItemStack info = new ItemStack(GUIChemistry.INFO.material(), 1);
         ItemMeta info_im = info.getItemMeta();
-        info_im.setDisplayName("Info");
-        info_im.setLore(Arrays.asList("Reduce a substance to its", "component elements.", "Place an item in the first slot,", "then click the reduce button."));
+        info_im.displayName(Component.text("Info"));
+        info_im.lore(List.of(Component.text("Reduce a substance to its"), Component.text("component elements."), Component.text("Place an item in the first slot,"), Component.text("then click the reduce button.")));
         info_im.setItemModel(GUIChemistry.INFO.key());
         info.setItemMeta(info_im);
         stack[GUIChemistry.INFO.slot()] = info;
         // check formula
         ItemStack check = new ItemStack(GUIChemistry.REDUCE.material(), 1);
         ItemMeta check_im = check.getItemMeta();
-        check_im.setDisplayName("Reduce");
+        check_im.displayName(Component.text("Reduce"));
         check_im.setItemModel(GUIChemistry.REDUCE.key());
         check.setItemMeta(check_im);
         stack[GUIChemistry.REDUCE.slot()] = check;
         // close
         ItemStack close = new ItemStack(GUIChemistry.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE")));
         close_im.setItemModel(GUIChemistry.CLOSE.key());
         close.setItemMeta(close_im);
         stack[GUIChemistry.CLOSE.slot()] = close;

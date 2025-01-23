@@ -39,7 +39,7 @@ public class GreyBowTieRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(NamedTextColor.WHITE + "Grey Bow Tie");
         im.setItemModel(RecipeItem.GREY_BOW_TIE.getModel());
-        im.setLore(List.of("Bow ties are cool!"));
+        im.lore(List.of("Bow ties are cool!"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "grey_bow_tie");
         ShapedRecipe r = new ShapedRecipe(key, is);

@@ -265,7 +265,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
             List<String> lore = im.getLore();
             String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? NamedTextColor.YELLOW + "unlimited" : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
             lore.set(1, uses);
-            im.setLore(lore);
+            im.lore(lore);
         }
         if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk")) {
             im.addItemFlags(ItemFlag.values());
@@ -314,7 +314,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
             im.setItemModel(recipeItem.getModel());
             if (recipeItem.getCategory().equals(RecipeCategory.SONIC_UPGRADES)) {
                 im.setDisplayName(NamedTextColor.WHITE + "Sonic Screwdriver");
-                im.setLore(Arrays.asList("Upgrades:", str));
+                im.lore(Arrays.asList("Upgrades:", str));
             }
         }
         result.setAmount(1);
@@ -334,13 +334,13 @@ public class TARDISRecipeCommands implements CommandExecutor {
         ItemStack in_wall = new ItemStack(Material.ORANGE_WOOL, 1);
         ItemMeta in_meta = in_wall.getItemMeta();
         in_meta.setDisplayName("Interior walls");
-        in_meta.setLore(List.of("Any valid Wall/Floor block"));
+        in_meta.lore(List.of("Any valid Wall/Floor block"));
         in_wall.setItemMeta(in_meta);
         // interior floor
         ItemStack in_floor = new ItemStack(Material.LIGHT_GRAY_WOOL, 1);
         ItemMeta fl_meta = in_floor.getItemMeta();
         fl_meta.setDisplayName("Interior floors");
-        fl_meta.setLore(List.of("Any valid Wall/Floor block"));
+        fl_meta.lore(List.of("Any valid Wall/Floor block"));
         in_floor.setItemMeta(fl_meta);
         // seed block
         ItemStack block = new ItemStack(t.get(type), 1);
@@ -369,7 +369,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         lore.add("Walls: ORANGE_WOOL");
         lore.add("Floors: LIGHT_GRAY_WOOL");
         lore.add("Chameleon: FACTORY");
-        seed.setLore(lore);
+        seed.lore(lore);
         tardis.setItemMeta(seed);
         inv.setItem(0, red);
         inv.setItem(9, lapis);

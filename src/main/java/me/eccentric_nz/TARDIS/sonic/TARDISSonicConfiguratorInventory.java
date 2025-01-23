@@ -17,10 +17,14 @@
 package me.eccentric_nz.TARDIS.sonic;
 
 import me.eccentric_nz.TARDIS.custommodels.GUISonicConfigurator;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class TARDISSonicConfiguratorInventory {
 
@@ -42,9 +46,13 @@ public class TARDISSonicConfiguratorInventory {
             if (gui.getSlot() != -1) {
                 ItemStack is = new ItemStack(gui.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.setDisplayName(gui.getName());
+                im.displayName(Component.text(gui.getName()));
                 if (!gui.getLore().isEmpty()) {
-                    im.setLore(Arrays.asList(gui.getLore().split("~")));
+                    List<TextComponent> lore = new ArrayList<>();
+                    for (String s : gui.getLore().split("~")) {
+                        lore.add(Component.text(s));
+                    }
+                    im.lore(lore);
                 }
                 im.setItemModel(gui.getModel());
                 is.setItemMeta(im);
@@ -53,7 +61,7 @@ public class TARDISSonicConfiguratorInventory {
         }
         ItemStack wool = new ItemStack(GUISonicConfigurator.WAITING.getMaterial(), 1);
         ItemMeta wim = wool.getItemMeta();
-        wim.setDisplayName(" ");
+        wim.displayName(Component.text(" "));
         wim.setItemModel(GUISonicConfigurator.WAITING.getModel());
         wool.setItemMeta(wim);
         for (int i = 9; i < 18; i++) {
@@ -62,7 +70,7 @@ public class TARDISSonicConfiguratorInventory {
         stack[27] = wool;
         ItemStack place = new ItemStack(GUISonicConfigurator.PLACE_SONIC.getMaterial(), 1);
         ItemMeta pim = place.getItemMeta();
-        pim.setDisplayName(GUISonicConfigurator.PLACE_SONIC.getName());
+        pim.displayName(Component.text(GUISonicConfigurator.PLACE_SONIC.getName()));
         pim.setItemModel(GUISonicConfigurator.PLACE_SONIC.getModel());
         place.setItemMeta(pim);
         stack[36] = place;

@@ -25,7 +25,7 @@ public class TARDISEyeStorage {
         ItemStack info = new ItemStack(GUIArtronStorage.INFO.material(), 1);
         ItemMeta info_im = info.getItemMeta();
         info_im.setDisplayName("Info");
-        info_im.setLore(List.of("Increase the Artron storage", "capacity by placing", "up to 5 Artron Capacitors", "in the slots to the right."));
+        info_im.lore(List.of("Increase the Artron storage", "capacity by placing", "up to 5 Artron Capacitors", "in the slots to the right."));
         info_im.setItemModel(GUIArtronStorage.INFO.key());
         info.setItemMeta(info_im);
         stacks[GUIArtronStorage.INFO.slot()] = info;

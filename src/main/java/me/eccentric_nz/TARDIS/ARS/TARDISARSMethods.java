@@ -32,6 +32,8 @@ import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.RoomRequiredLister;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -162,22 +164,22 @@ public class TARDISARSMethods {
     void setSlot(InventoryView view, int slot, Material material, String room, UUID playerUUID, boolean showPerms) {
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(room);
+        im.displayName(Component.text(room));
         if (!room.equals("Empty slot")) {
             ARS ars = TARDISARS.ARSFor(material.toString());
             String config_path = ars.getConfigPath();
-            List<String> lore = new ArrayList<>();
-            lore.add("Cost: " + plugin.getRoomsConfig().getInt("rooms." + config_path + ".cost"));
+            List<TextComponent> lore = new ArrayList<>();
+            lore.add(Component.text("Cost: " + plugin.getRoomsConfig().getInt("rooms." + config_path + ".cost")));
             if (showPerms) {
                 Player player = plugin.getServer().getPlayer(playerUUID);
                 if (player != null && !TARDISPermission.hasPermission(player, "tardis.room." + config_path.toLowerCase(Locale.ROOT))) {
-                    lore.add(NamedTextColor.RED + plugin.getLanguage().getString("NO_PERM_CONSOLE"));
+                    lore.add(Component.text().color(NamedTextColor.RED).append(Component.text(plugin.getLanguage().getString("NO_PERM_CONSOLE"))).build());
                 }
             }
-            im.setLore(lore);
+            im.lore(lore);
             im.setItemModel(ars.getKey());
         } else {
-            im.setLore(null);
+            im.lore(null);
             im.setItemModel(RoomVariant.SLOT.getKey());
         }
         is.setItemMeta(im);
@@ -269,10 +271,10 @@ public class TARDISARSMethods {
      * @param str  the lore to set
      */
     void setLore(InventoryView view, int slot, String str) {
-        List<String> lore = (str != null) ? List.of(str) : null;
+        List<TextComponent> lore = (str != null) ? List.of(Component.text(str)) : null;
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
-        im.setLore(lore);
+        im.lore(lore);
         is.setItemMeta(im);
     }
 
@@ -294,7 +296,7 @@ public class TARDISARSMethods {
             }
             ItemStack is = new ItemStack(material, 1);
             ItemMeta im = is.getItemMeta();
-            im.setDisplayName(levels[i - 27]);
+            im.displayName(Component.text(levels[i - 27]));
             im.setItemModel(i == slot ? activeLevelKeys[i - 27] : inactiveLevelKeys[i - 27]);
             is.setItemMeta(im);
             setSlot(view, i, is, playerUUID, false);

@@ -27,6 +27,8 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetSonic;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -116,53 +118,53 @@ public class TARDISSonicGeneratorListener implements Listener {
             int level = rs.getArtronLevel();
             ItemStack sonic = new ItemStack(Material.BLAZE_ROD, 1);
             ItemMeta screw = sonic.getItemMeta();
-            screw.setDisplayName(NamedTextColor.WHITE + "Sonic Screwdriver");
-            List<String> upgrades = new ArrayList<>();
+            screw.displayName(Component.text(NamedTextColor.WHITE + "Sonic Screwdriver"));
+            List<TextComponent> upgrades = new ArrayList<>();
             if (s.hasKnockback()) {
-                upgrades.add("Knockback Upgrade");
+                upgrades.add(Component.text("Knockback Upgrade"));
                 cost += (int) (plugin.getArtronConfig().getDouble("sonic_generator.knockback") * full);
             }
             if (s.hasBio()) {
-                upgrades.add("Bio-scanner Upgrade");
+                upgrades.add(Component.text("Bio-scanner Upgrade"));
                 cost += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
             }
             if (s.hasDiamond()) {
-                upgrades.add("Diamond Upgrade");
+                upgrades.add(Component.text("Diamond Upgrade"));
                 cost += (int) (plugin.getArtronConfig().getDouble("sonic_generator.diamond") * full);
             }
             if (s.hasEmerald()) {
-                upgrades.add("Emerald Upgrade");
+                upgrades.add(Component.text("Emerald Upgrade"));
                 cost += (int) (plugin.getArtronConfig().getDouble("sonic_generator.emerald") * full);
             }
             if (s.hasRedstone()) {
-                upgrades.add("Redstone Upgrade");
+                upgrades.add(Component.text("Redstone Upgrade"));
                 cost += (int) (plugin.getArtronConfig().getDouble("sonic_generator.bio") * full);
             }
             if (s.hasPainter()) {
-                upgrades.add("Painter Upgrade");
+                upgrades.add(Component.text("Painter Upgrade"));
                 cost += (int) (plugin.getArtronConfig().getDouble("sonic_generator.painter") * full);
             }
             if (s.hasIgnite()) {
-                upgrades.add("Ignite Upgrade");
+                upgrades.add(Component.text("Ignite Upgrade"));
                 cost += (int) (plugin.getArtronConfig().getDouble("sonic_generator.ignite") * full);
             }
             if (s.hasArrow()) {
-                upgrades.add("Pickup Arrows Upgrade");
+                upgrades.add(Component.text("Pickup Arrows Upgrade"));
                 cost += (int) (plugin.getArtronConfig().getDouble("sonic_generator.arrow") * full);
             }
             if (s.hasBrush()) {
-                upgrades.add("Brush Upgrade");
+                upgrades.add(Component.text("Brush Upgrade"));
                 cost += (int) (plugin.getArtronConfig().getDouble("sonic_generator.brush") * full);
             }
             if (s.hasConversion()) {
-                upgrades.add("Conversion Upgrade");
+                upgrades.add(Component.text("Conversion Upgrade"));
                 cost += (int) (plugin.getArtronConfig().getDouble("sonic_generator.conversion") * full);
             }
             if (!upgrades.isEmpty()) {
-                List<String> finalUps = new ArrayList<>();
-                finalUps.add("Upgrades:");
+                List<TextComponent> finalUps = new ArrayList<>();
+                finalUps.add(Component.text("Upgrades:"));
                 finalUps.addAll(upgrades);
-                screw.setLore(finalUps);
+                screw.lore(finalUps);
             }
             // set custom model data
             screw.setItemModel(s.getModel());
@@ -216,7 +218,7 @@ public class TARDISSonicGeneratorListener implements Listener {
             // drop a custom FLOWER_POT_ITEM
             ItemStack is = new ItemStack(Material.FLOWER_POT, 1);
             ItemMeta im = is.getItemMeta();
-            im.setDisplayName("Sonic Generator");
+            im.displayName(Component.text("Sonic Generator"));
             im.setItemModel(SonicItem.SONIC_GENERATOR.getKey());
             is.setItemMeta(im);
             b.getWorld().dropItemNaturally(b.getLocation(), is);

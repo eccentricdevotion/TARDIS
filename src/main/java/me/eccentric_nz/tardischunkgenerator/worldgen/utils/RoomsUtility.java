@@ -93,7 +93,7 @@ public class RoomsUtility {
                     for (JsonElement element : json.get("lore").getAsJsonArray()) {
                         lore.add(element.getAsString());
                     }
-                    im.setLore(lore);
+                    im.lore(lore);
                 }
                 if (json.has("banner")) {
                     JsonObject banner = json.get("banner").getAsJsonObject();

@@ -162,7 +162,7 @@ public class TARDISSavesPlanetListener extends TARDISMenuListener {
                     }
                 } else if (!lore.contains(NamedTextColor.GOLD + "Current location")) {
                     lore.add(NamedTextColor.GOLD + "Current location");
-                    im.setLore(lore);
+                    im.lore(lore);
                     is.setItemMeta(im);
                 }
             }

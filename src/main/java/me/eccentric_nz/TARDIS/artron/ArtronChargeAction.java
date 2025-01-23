@@ -95,7 +95,7 @@ public class ArtronChargeAction {
                     int remove = max - current_level;
                     int set = charge - remove;
                     lore.set(1, "" + set);
-                    im.setLore(lore);
+                    im.lore(lore);
                     is.setItemMeta(im);
                     if (set < 1) {
                         is.getEnchantments().keySet().forEach(is::removeEnchantment);
@@ -105,7 +105,7 @@ public class ArtronChargeAction {
                     // only add energy up to capacitors * max level - damage
                     if (amount <= max) {
                         lore.set(1, "0");
-                        im.setLore(lore);
+                        im.lore(lore);
                         is.setItemMeta(im);
                         is.getEnchantments().keySet().forEach(is::removeEnchantment);
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "CELL_TRANSFER");

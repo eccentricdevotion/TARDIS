@@ -20,14 +20,13 @@ public class VortexManipulatorConfig {
 
     private final TARDIS plugin;
     private final FileConfiguration config;
-    private final File configFile;
     HashMap<String, String> strOptions = new HashMap<>();
     HashMap<String, Integer> intOptions = new HashMap<>();
     HashMap<String, Boolean> boolOptions = new HashMap<>();
 
     public VortexManipulatorConfig(TARDIS plugin) {
         this.plugin = plugin;
-        configFile = new File(plugin.getDataFolder(), "vortex_manipulator.yml");
+        File configFile = new File(plugin.getDataFolder(), "vortex_manipulator.yml");
         config = YamlConfiguration.loadConfiguration(configFile);
         // boolean
         boolOptions.put("allow.beacon", true);
@@ -39,7 +38,6 @@ public class VortexManipulatorConfig {
         // integer
         intOptions.put("lifesign_scan_distance", 16);
         intOptions.put("max_look_at_distance", 50);
-        intOptions.put("recipe.amount", 1);
         intOptions.put("tachyon_use.beacon", 1000);
         intOptions.put("tachyon_use.lifesigns", 15);
         intOptions.put("tachyon_use.max", 1000);
@@ -54,15 +52,6 @@ public class VortexManipulatorConfig {
         intOptions.put("block_travel_malfunction_chance", 0);
         // string
         strOptions.put("date_format", "dd/MM/YY HH:mm");
-        strOptions.put("recipe.ingredients.B", "STONE_BUTTON");
-        strOptions.put("recipe.ingredients.C", "COMPASS");
-        strOptions.put("recipe.ingredients.G", "GLASS");
-        strOptions.put("recipe.ingredients.I", "IRON_INGOT");
-        strOptions.put("recipe.ingredients.O", "GOLD_INGOT");
-        strOptions.put("recipe.ingredients.W", "CLOCK");
-        strOptions.put("recipe.lore", "Cheap and nasty time travel");
-        strOptions.put("recipe.result", "CLOCK");
-        strOptions.put("recipe.shape", "BBG,WOC,III");
     }
 
     /**
@@ -91,6 +80,11 @@ public class VortexManipulatorConfig {
                 plugin.getVortexConfig().set(entry.getKey(), entry.getValue());
                 i++;
             }
+        }
+        // remove recipe config options
+        if (config.contains("recipe")) {
+            plugin.getVortexConfig().set("recipe", null);
+            i++;
         }
         if (i > 0) {
             try {

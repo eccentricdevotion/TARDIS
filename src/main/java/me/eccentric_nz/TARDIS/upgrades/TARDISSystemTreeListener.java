@@ -146,7 +146,7 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
                 im.setItemModel(clicked.getUnlocked());
                 List<String> lore = im.getLore();
                 lore.set(lore.size() - 1, NamedTextColor.GREEN + "" + TextDecoration.ITALIC + "Unlocked");
-                im.setLore(lore);
+                im.lore(lore);
                 is.setItemMeta(im);
                 // set artron level remaining for item in system tree slot
                 int remaining = current.getArtronLevel() - cost;
@@ -154,7 +154,7 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
                 ItemMeta stim = st.getItemMeta();
                 List<String> stlore = stim.getLore();
                 stlore.set(3, NamedTextColor.AQUA + "" + TextDecoration.ITALIC + "Artron Level: " + remaining);
-                stim.setLore(stlore);
+                stim.lore(stlore);
                 st.setItemMeta(stim);
             }
         } catch (IllegalArgumentException e) {

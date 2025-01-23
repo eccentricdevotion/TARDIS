@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.arch;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.CommandSender;
@@ -101,7 +102,7 @@ public class TARDISArchCommand {
                 TARDISArchDisguise.disguise(player, name);
             }
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                player.setDisplayName(name);
+                player.displayName(Component.text(name));
                 player.setPlayerListName(name);
             }, 5L);
         } else {
@@ -116,9 +117,10 @@ public class TARDISArchCommand {
             player.getWorld().strikeLightningEffect(player.getLocation());
             plugin.getTrackerKeeper().getJohnSmith().remove(uuid);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                player.setDisplayName(player.getName());
+                player.displayName(Component.text(player.getName()));
                 player.setPlayerListName(player.getName());
-            }, 5L);            // remove player from arched table
+            }, 5L);
+            // remove player from arched table
             new TARDISArchPersister(plugin).removeArch(uuid);
         }
         return true;

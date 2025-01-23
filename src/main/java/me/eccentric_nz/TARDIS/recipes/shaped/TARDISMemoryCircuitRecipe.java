@@ -41,7 +41,7 @@ public class TARDISMemoryCircuitRecipe {
         String uses = (plugin.getConfig().getString("circuits.uses.memory").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? NamedTextColor.YELLOW + "unlimited"
                 : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.memory");
-        im.setLore(List.of("Uses left", uses));
+        im.lore(List.of("Uses left", uses));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_memory_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

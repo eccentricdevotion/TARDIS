@@ -74,8 +74,8 @@ public class TARDISWorlds {
                         if (gameRule != null) {
                             w.setGameRule(gameRule, TARDIS.plugin.getPlanetsConfig().getBoolean("planets." + world + ".gamerules." + rule));
                         } else {
-                            TARDIS.plugin.getServer().getLogger().log(Level.WARNING, "Invalid game rule detected in planets.yml!");
-                            TARDIS.plugin.getServer().getLogger().log(Level.WARNING, "The rule was '" + rule + "' in world '" + world + "'.");
+                            TARDIS.plugin.getLogger().log(Level.WARNING, "Invalid game rule detected in planets.yml!");
+                            TARDIS.plugin.getLogger().log(Level.WARNING, "The rule was '" + rule + "' in world '" + world + "'.");
                         }
                     }
                 }

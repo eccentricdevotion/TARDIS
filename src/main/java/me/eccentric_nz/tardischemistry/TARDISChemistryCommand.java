@@ -28,6 +28,7 @@ import me.eccentric_nz.tardischemistry.formula.FormulaCommand;
 import me.eccentric_nz.tardischemistry.lab.LabCommand;
 import me.eccentric_nz.tardischemistry.product.ProductCommand;
 import me.eccentric_nz.tardischemistry.reducer.ReduceCommand;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -144,8 +145,8 @@ public class TARDISChemistryCommand implements CommandExecutor {
         RecipeData data = ChemistryBlock.RECIPES.get(which);
         ItemStack result = new ItemStack(data.getDisplayItem().getMaterial(), 1);
         ItemMeta im = result.getItemMeta();
-        im.setDisplayName(data.getDisplayName());
-        im.setLore(data.getLore());
+        im.displayName(Component.text(data.getDisplayName()));
+        im.lore(data.getLore());
         im.setItemModel(data.getDisplayItem().getCustomModel());
         result.setItemMeta(im);
         inv.setItem(17, result);

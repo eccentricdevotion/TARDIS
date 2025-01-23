@@ -57,9 +57,9 @@ public class TARDISTemporalLocatorInventory {
                 im.setDisplayName(clock.getName());
             }
             if (clock.getLore().contains("~")) {
-                im.setLore(Arrays.asList(clock.getLore().split("~")));
+                im.lore(Arrays.asList(clock.getLore().split("~")));
             } else {
-                im.setLore(List.of(clock.getLore()));
+                im.lore(List.of(clock.getLore()));
             }
             im.setItemModel(clock.getModel());
             is.setItemMeta(im);

@@ -6,6 +6,8 @@ package me.eccentric_nz.tardisvortexmanipulator.gui;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.VortexManipulatorVariant;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -38,122 +40,122 @@ public class TVMGUI {
         // display
         ItemStack dis = new ItemStack(Material.BOWL, 1);
         ItemMeta play = dis.getItemMeta();
-        play.setDisplayName("Display");
-        play.setLore(Arrays.asList(""));
+        play.displayName(Component.text("Display"));
+        play.lore(List.of(Component.text("")));
         play.setItemModel(VortexManipulatorVariant.DISPLAY.getKey());
         dis.setItemMeta(play);
         // predictive world
         ItemStack pred = new ItemStack(Material.BOWL, 1);
         ItemMeta ict = dis.getItemMeta();
-        ict.setDisplayName("Predictive Text");
-        ict.setLore(Arrays.asList(""));
+        ict.displayName(Component.text("Predictive Text"));
+        ict.lore(List.of(Component.text("")));
         ict.setItemModel(VortexManipulatorVariant.PREDICTIVE.getKey());
         pred.setItemMeta(ict);
         // keypad pad
         // 1
         ItemStack one = new ItemStack(Material.BOWL, 1);
         ItemMeta none = one.getItemMeta();
-        none.setDisplayName("1");
+        none.displayName(Component.text("1"));
         none.setItemModel(VortexManipulatorVariant.ONE.getKey());
         one.setItemMeta(none);
         // 2 abc
         ItemStack two = new ItemStack(Material.BOWL, 1);
         ItemMeta abc = two.getItemMeta();
-        abc.setDisplayName("2");
-        abc.setLore(Arrays.asList("abc"));
+        abc.displayName(Component.text("2"));
+        abc.lore(List.of(Component.text("abc")));
         abc.setItemModel(VortexManipulatorVariant.TWO.getKey());
         two.setItemMeta(abc);
         // 3 def
         ItemStack three = new ItemStack(Material.BOWL, 1);
         ItemMeta def = three.getItemMeta();
-        def.setDisplayName("3");
-        def.setLore(Arrays.asList("def"));
+        def.displayName(Component.text("3"));
+        def.lore(List.of(Component.text("def")));
         def.setItemModel(VortexManipulatorVariant.THREE.getKey());
         three.setItemMeta(def);
         // 4 ghi
         ItemStack four = new ItemStack(Material.BOWL, 1);
         ItemMeta ghi = four.getItemMeta();
-        ghi.setDisplayName("4");
-        ghi.setLore(Arrays.asList("ghi"));
+        ghi.displayName(Component.text("4"));
+        ghi.lore(List.of(Component.text("ghi")));
         ghi.setItemModel(VortexManipulatorVariant.FOUR.getKey());
         four.setItemMeta(ghi);
         // 5 jkl
         ItemStack five = new ItemStack(Material.BOWL, 1);
         ItemMeta jkl = five.getItemMeta();
-        jkl.setDisplayName("5");
-        jkl.setLore(Arrays.asList("jkl"));
+        jkl.displayName(Component.text("5"));
+        jkl.lore(List.of(Component.text("jkl")));
         jkl.setItemModel(VortexManipulatorVariant.FIVE.getKey());
         five.setItemMeta(jkl);
         // 6 mno
         ItemStack six = new ItemStack(Material.BOWL, 1);
         ItemMeta mno = six.getItemMeta();
-        mno.setDisplayName("6");
-        mno.setLore(Arrays.asList("mno"));
+        mno.displayName(Component.text("6"));
+        mno.lore(List.of(Component.text("mno")));
         mno.setItemModel(VortexManipulatorVariant.SIX.getKey());
         six.setItemMeta(mno);
         // 7 pqrs
         ItemStack seven = new ItemStack(Material.BOWL, 1);
         ItemMeta pqrs = seven.getItemMeta();
-        pqrs.setDisplayName("7");
-        pqrs.setLore(Arrays.asList("pqrs"));
+        pqrs.displayName(Component.text("7"));
+        pqrs.lore(List.of(Component.text("pqrs")));
         pqrs.setItemModel(VortexManipulatorVariant.SEVEN.getKey());
         seven.setItemMeta(pqrs);
         // 8 tuv
         ItemStack eight = new ItemStack(Material.BOWL, 1);
         ItemMeta tuv = eight.getItemMeta();
-        tuv.setDisplayName("8");
-        tuv.setLore(Arrays.asList("tuv"));
+        tuv.displayName(Component.text("8"));
+        tuv.lore(List.of(Component.text("tuv")));
         tuv.setItemModel(VortexManipulatorVariant.EIGHT.getKey());
         eight.setItemMeta(tuv);
         // 9 wxyz
         ItemStack nine = new ItemStack(Material.BOWL, 1);
         ItemMeta wxyz = nine.getItemMeta();
-        wxyz.setDisplayName("9");
-        wxyz.setLore(Arrays.asList("wxyz"));
+        wxyz.displayName(Component.text("9"));
+        wxyz.lore(List.of(Component.text("wxyz")));
         wxyz.setItemModel(VortexManipulatorVariant.NINE.getKey());
         nine.setItemMeta(wxyz);
         // 0
         ItemStack zero = new ItemStack(Material.BOWL, 1);
         ItemMeta nada = zero.getItemMeta();
-        nada.setDisplayName("0");
+        nada.displayName(Component.text("0"));
         nada.setItemModel(VortexManipulatorVariant.ZERO.getKey());
         zero.setItemMeta(nada);
         // symbols -_*~
         ItemStack hash = new ItemStack(Material.BOWL, 1);
         ItemMeta symbols = hash.getItemMeta();
-        symbols.setDisplayName("#");
-        symbols.setLore(Arrays.asList("~_-"));
+        symbols.displayName(Component.text("#"));
+        symbols.lore(List.of(Component.text("~_-")));
         symbols.setItemModel(VortexManipulatorVariant.HASH.getKey());
         hash.setItemMeta(symbols);
         // space
         ItemStack star = new ItemStack(Material.BOWL, 1);
         ItemMeta space = star.getItemMeta();
-        space.setDisplayName("*");
-        space.setLore(Arrays.asList("Space"));
+        space.displayName(Component.text("*"));
+        space.lore(List.of(Component.text("Space")));
         space.setItemModel(VortexManipulatorVariant.STAR.getKey());
         star.setItemMeta(space);
         // world
         ItemStack world = new ItemStack(Material.BOWL, 1);
         ItemMeta but = world.getItemMeta();
-        but.setDisplayName("World");
+        but.displayName(Component.text("World"));
         but.setItemModel(VortexManipulatorVariant.WORLD.getKey());
         world.setItemMeta(but);
         // x
         ItemStack x = new ItemStack(Material.BOWL, 1);
         ItemMeta sel = x.getItemMeta();
-        sel.setDisplayName("X");
+        sel.displayName(Component.text("X"));
         sel.setItemModel(VortexManipulatorVariant.X.getKey());
         x.setItemMeta(sel);
         // y
         ItemStack y = new ItemStack(Material.BOWL, 1);
         ItemMeta hei = y.getItemMeta();
-        hei.setDisplayName("Y");
+        hei.displayName(Component.text("Y"));
         hei.setItemModel(VortexManipulatorVariant.Y.getKey());
         y.setItemMeta(hei);
         // z
         ItemStack z = new ItemStack(Material.BOWL, 1);
         ItemMeta coord = z.getItemMeta();
-        coord.setDisplayName("Z");
+        coord.displayName(Component.text("Z"));
         coord.setItemModel(VortexManipulatorVariant.Z.getKey());
         z.setItemMeta(coord);
         // tachyon level - show different levels depening on % full
@@ -161,9 +163,8 @@ public class TVMGUI {
         short durability = (short) (1562 - (percent * 1562));
         ItemStack tach = new ItemStack(Material.DIAMOND_PICKAXE, 1);
         ItemMeta yon = tach.getItemMeta();
-        yon.setDisplayName("Tachyon Level");
+        yon.displayName(Component.text("Tachyon Level"));
         int level = (int) (percent * 100);
-        List<String> lore = Arrays.asList(level + "%");
         NamespacedKey tachyon = VortexManipulatorVariant.PERCENT_HUNDRED.getKey();
         if (level == 0) {
             tachyon = VortexManipulatorVariant.PERCENT_ZERO.getKey();
@@ -187,62 +188,62 @@ public class TVMGUI {
             tachyon = VortexManipulatorVariant.PERCENT_NINETY.getKey();
         }
         yon.setItemModel(tachyon);
-        yon.setLore(lore);
+        yon.lore(List.of(Component.text(level + "%")));
         tach.setItemMeta(yon);
         // deprecated, but if resource pack not installed gives a visial indication of tachyon levels
         tach.setDurability(durability);
         // lifesigns
         ItemStack life = new ItemStack(Material.BOWL, 1);
         ItemMeta signs = life.getItemMeta();
-        signs.setDisplayName("Lifesigns");
+        signs.displayName(Component.text("Lifesigns"));
         signs.setItemModel(VortexManipulatorVariant.LIFE.getKey());
         life.setItemMeta(signs);
         // warp
         ItemStack warp = new ItemStack(Material.BOWL, 1);
         ItemMeta tol = warp.getItemMeta();
-        tol.setDisplayName("Enter Vortex / Save location / Check lifesigns");
+        tol.displayName(Component.text("Enter Vortex / Save location / Check lifesigns"));
         tol.setItemModel(GuiVariant.CHECK.getKey());
         warp.setItemMeta(tol);
         // beacon
         ItemStack bea = new ItemStack(Material.BOWL, 1);
         ItemMeta con = bea.getItemMeta();
-        con.setDisplayName("Beacon signal");
+        con.displayName(Component.text("Beacon signal"));
         con.setItemModel(VortexManipulatorVariant.BEACON.getKey());
         bea.setItemMeta(con);
         // message
         ItemStack mess = new ItemStack(Material.BOWL, 1);
         ItemMeta age = mess.getItemMeta();
-        age.setDisplayName("Messages");
+        age.displayName(Component.text("Messages"));
         age.setItemModel(VortexManipulatorVariant.MESSAGE.getKey());
         mess.setItemMeta(age);
         // save
         ItemStack save = new ItemStack(Material.BOWL, 1);
         ItemMeta curr = save.getItemMeta();
-        curr.setDisplayName("Save current location");
+        curr.displayName(Component.text("Save current location"));
         curr.setItemModel(GuiVariant.SAVE.getKey());
         save.setItemMeta(curr);
         // load
         ItemStack load = new ItemStack(Material.BOWL, 1);
         ItemMeta disk = load.getItemMeta();
-        disk.setDisplayName("Load saved location");
+        disk.displayName(Component.text("Load saved location"));
         disk.setItemModel(VortexManipulatorVariant.LOAD.getKey());
         load.setItemMeta(disk);
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta win = close.getItemMeta();
-        win.setDisplayName("Close");
+        win.displayName(Component.text("Close"));
         win.setItemModel(GuiVariant.CLOSE.getKey());
         close.setItemMeta(win);
         // next
         ItemStack next = new ItemStack(Material.BOWL, 1);
         ItemMeta cha = next.getItemMeta();
-        cha.setDisplayName("Next character");
+        cha.displayName(Component.text("Next character"));
         cha.setItemModel(VortexManipulatorVariant.NEXT.getKey());
         next.setItemMeta(cha);
         // back
         ItemStack prev = new ItemStack(Material.BOWL, 1);
         ItemMeta let = prev.getItemMeta();
-        let.setDisplayName("Previous character");
+        let.displayName(Component.text("Previous character"));
         let.setItemModel(VortexManipulatorVariant.PREV.getKey());
         prev.setItemMeta(let);
 

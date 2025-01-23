@@ -62,7 +62,7 @@ public class TARDISItemRenamer {
                 String format = NamedTextColor.AQUA + "" + TextDecoration.ITALIC;
                 lore.add(format + "This key belongs to");
                 lore.add(format + player.getName());
-                im.setLore(lore);
+                im.lore(lore);
                 im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
             }
             try {

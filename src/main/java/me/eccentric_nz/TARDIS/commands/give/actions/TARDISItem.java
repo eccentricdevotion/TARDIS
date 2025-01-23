@@ -96,7 +96,7 @@ public class TARDISItem {
                 List<String> lore = im.getLore();
                 String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? NamedTextColor.YELLOW + "unlimited" : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
                 lore.set(1, uses);
-                im.setLore(lore);
+                im.lore(lore);
             }
             if (item.equals("blank") || item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk") || item.equals("blaster") || item.equals("control")) {
                 im = result.getItemMeta();
@@ -113,7 +113,7 @@ public class TARDISItem {
                 String what = item.equals("key") ? "key" : "disk";
                 lore.add(format + "This " + what + " belongs to");
                 lore.add(format + player.getName());
-                im.setLore(lore);
+                im.lore(lore);
             }
         }
         if (result != null) {

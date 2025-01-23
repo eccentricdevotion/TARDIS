@@ -160,9 +160,9 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
                                 if (isl != null) {
                                     ItemMeta iml = isl.getItemMeta();
                                     if (!iml.getDisplayName().equals(im.getDisplayName())) {
-                                        iml.setLore(null);
+                                        iml.lore(null);
                                     } else {
-                                        iml.setLore(List.of("Current light"));
+                                        iml.lore(List.of("Current light"));
                                     }
                                     isl.setItemMeta(iml);
                                 }

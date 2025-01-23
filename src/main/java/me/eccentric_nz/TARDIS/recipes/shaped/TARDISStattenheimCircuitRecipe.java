@@ -54,7 +54,7 @@ public class TARDISStattenheimCircuitRecipe {
                 ? NamedTextColor.YELLOW + "unlimited"
                 : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.materialisation");
         circuit = Arrays.asList("Uses left", uses);
-        em.setLore(circuit);
+        em.lore(circuit);
         exact.setItemMeta(em);
         ItemStack locator = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta lim = locator.getItemMeta();

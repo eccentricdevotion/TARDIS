@@ -19,9 +19,14 @@ package me.eccentric_nz.TARDIS.handles;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.data.Program;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetProgram;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -62,7 +67,7 @@ public class TARDISHandlesProgramInventory {
         for (TARDISHandlesBlock b : TARDISHandlesBlock.getButtons()) {
             ItemStack is = new ItemStack(Material.BOWL, 1);
             ItemMeta im = is.getItemMeta();
-            im.setDisplayName(b.getDisplayName());
+            im.displayName(Component.text(b.getDisplayName()));
             im.setItemModel(b.getModel());
             is.setItemMeta(im);
             stack[i] = is;
@@ -76,9 +81,13 @@ public class TARDISHandlesProgramInventory {
         for (TARDISHandlesBlock b : TARDISHandlesBlock.getControls()) {
             ItemStack is = new ItemStack(Material.PAPER, 1);
             ItemMeta im = is.getItemMeta();
-            im.setDisplayName(b.getDisplayName());
+            im.displayName(Component.text(b.getDisplayName()));
             if (b.getLore() != null) {
-                im.setLore(b.getLore());
+                List<TextComponent> lore = new ArrayList<>();
+                for (String s : b.getLore()) {
+                    lore.add(Component.text(s));
+                }
+                im.lore(lore);
             }
             im.setItemModel(b.getModel());
             is.setItemMeta(im);

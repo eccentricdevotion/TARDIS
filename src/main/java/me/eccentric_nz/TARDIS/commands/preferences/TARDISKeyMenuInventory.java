@@ -57,9 +57,9 @@ class TARDISKeyMenuInventory {
             if (!key.getLore().isEmpty()) {
                 if (key.getLore().contains("~")) {
                     String[] split = key.getLore().split("~");
-                    im.setLore(Arrays.asList(split));
+                    im.lore(Arrays.asList(split));
                 } else {
-                    im.setLore(List.of(key.getLore()));
+                    im.lore(List.of(key.getLore()));
                 }
             }
             if (key.getModel() != null) {

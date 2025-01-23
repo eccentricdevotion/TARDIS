@@ -31,7 +31,7 @@ public class PlayerStorageDiskRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(NamedTextColor.WHITE + "Player Storage Disk");
         im.setItemModel(RecipeItem.PLAYER_STORAGE_DISK.getModel());
-        im.setLore(List.of("Blank"));
+        im.lore(List.of("Blank"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "player_storage_disk");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

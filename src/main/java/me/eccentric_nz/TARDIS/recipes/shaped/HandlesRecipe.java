@@ -40,7 +40,7 @@ public class HandlesRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(NamedTextColor.WHITE + "Handles");
         im.setItemModel(RecipeItem.HANDLES.getModel());
-        im.setLore(List.of("Cyberhead from the", "Maldovar Market"));
+        im.lore(List.of("Cyberhead from the", "Maldovar Market"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "handles");
         ShapedRecipe r = new ShapedRecipe(key, is);

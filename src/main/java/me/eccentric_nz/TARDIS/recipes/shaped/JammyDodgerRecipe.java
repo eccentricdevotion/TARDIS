@@ -35,7 +35,7 @@ public class JammyDodgerRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(NamedTextColor.WHITE + "Jammy Dodger");
         im.setItemModel(RecipeItem.JAMMY_DODGER.getModel());
-        im.setLore(List.of("Best eaten with custard!"));
+        im.lore(List.of("Best eaten with custard!"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "jammy_dodger");
         ShapedRecipe r = new ShapedRecipe(key, is);

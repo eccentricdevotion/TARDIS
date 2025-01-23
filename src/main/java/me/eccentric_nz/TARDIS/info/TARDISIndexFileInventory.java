@@ -2,10 +2,13 @@ package me.eccentric_nz.TARDIS.info;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TARDISIndexFileInventory {
@@ -30,8 +33,12 @@ public class TARDISIndexFileInventory {
         for (TISCategory category : TISCategory.values()) {
             ItemStack is = new ItemStack(Material.BOOKSHELF, 1);
             ItemMeta im = is.getItemMeta();
-            im.setDisplayName(category.getName());
-            im.setLore(List.of(category.getLore().split("~")));
+            im.displayName(Component.text(category.getName()));
+            List<TextComponent> lore = new ArrayList<>();
+            for (String s : category.getLore().split("~")) {
+                lore.add(Component.text(s));
+            }
+            im.lore(lore);
             is.setItemMeta(im);
             stack[i] = is;
             i++;
@@ -39,7 +46,7 @@ public class TARDISIndexFileInventory {
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE")));
         close_im.setItemModel(GuiVariant.CLOSE.getKey());
         close.setItemMeta(close_im);
         stack[26] = close;

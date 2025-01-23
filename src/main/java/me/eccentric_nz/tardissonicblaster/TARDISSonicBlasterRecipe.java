@@ -17,8 +17,9 @@
 package me.eccentric_nz.tardissonicblaster;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemFlag;
@@ -27,82 +28,48 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISSonicBlasterRecipe {
 
     private final TARDIS plugin;
-    private final HashMap<String, NamespacedKey> modelData = new HashMap<>();
 
     public TARDISSonicBlasterRecipe(TARDIS plugin) {
         this.plugin = plugin;
-        modelData.put("Sonic Blaster", RecipeItem.SONIC_BLASTER.getModel());
-        modelData.put("Blaster Battery", RecipeItem.BLASTER_BATTERY.getModel());
-        modelData.put("Landing Pad", RecipeItem.LANDING_PAD.getModel());
     }
 
-    public void addShapedRecipes() {
-        Set<String> shaped = plugin.getBlasterConfig().getConfigurationSection("recipes").getKeys(false);
-        for (String s : shaped) {
-            plugin.getServer().addRecipe(makeRecipe(s));
-        }
-    }
-
-    public ShapedRecipe makeRecipe(String s) {
-        Material mat = Material.valueOf(plugin.getBlasterConfig().getString("recipes." + s + ".result"));
-        int amount = plugin.getBlasterConfig().getInt("recipes." + s + ".amount");
-        ItemStack is = new ItemStack(mat, amount);
+    public void addRecipe() {
+        ItemStack is = new ItemStack(Material.GOLDEN_HOE, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(s);
-        if (!plugin.getBlasterConfig().getString("recipes." + s + ".lore").isEmpty()) {
-            im.setLore(Arrays.asList(plugin.getBlasterConfig().getString("recipes." + s + ".lore").split("~")));
-        }
-        im.setItemModel(modelData.get(s));
+        im.displayName(Component.text("Sonic Blaster"));
+        im.lore(List.of(Component.text("The Squareness Gun")));
+        im.setItemModel(RecipeItem.SONIC_BLASTER.getModel());
         im.addItemFlags(ItemFlag.values());
         is.setItemMeta(im);
-        NamespacedKey key = new NamespacedKey(TARDIS.plugin, s.replace(" ", "_").toLowerCase(Locale.ROOT));
+        NamespacedKey key = new NamespacedKey(TARDIS.plugin, "sonic_blaster");
         ShapedRecipe r = new ShapedRecipe(key, is);
-        // get shape
-        try {
-            String[] shape_tmp = plugin.getBlasterConfig().getString("recipes." + s + ".shape").split(",");
-            String[] shape = new String[3];
-            for (int i = 0; i < 3; i++) {
-                shape[i] = shape_tmp[i].replaceAll("-", " ");
-            }
-            r.shape(shape[0], shape[1], shape[2]);
-            Set<String> ingredients = plugin.getBlasterConfig().getConfigurationSection("recipes." + s + ".ingredients").getKeys(false);
-            for (String g : ingredients) {
-                char c = g.charAt(0);
-                String ingredient = plugin.getBlasterConfig().getString("recipes." + s + ".ingredients." + g);
-                if (ingredient.contains("=")) {
-                    ItemStack exact;
-                    String[] choice = ingredient.split("=");
-                    Material m = Material.valueOf(choice[0]);
-                    exact = new ItemStack(m, 1);
-                    ItemMeta em = exact.getItemMeta();
-                    em.setDisplayName(choice[1]);
-                    em.setItemModel(RecipeItem.getByName(choice[1]).getModel());
-                    exact.setItemMeta(em);
-                    r.setIngredient(c, new RecipeChoice.ExactChoice(exact));
-                } else {
-                    Material m = Material.valueOf(ingredient);
-                    r.setIngredient(c, m);
-                }
-                plugin.getFigura().getShapedRecipes().put(s, r);
-            }
-        } catch (IllegalArgumentException e) {
-            plugin.getMessenger().message(plugin.getConsole(), TardisModule.BLASTER, "Recipe failed! Check the config file!");
-        }
+        // set shape
+        r.shape("DTD", "TST", "EBE");
+        r.setIngredient('D', Material.DISPENSER);
+        r.setIngredient('T', Material.TNT);
+        ItemStack oscillator = new ItemStack(Material.GLOWSTONE_DUST, 1);
+        ItemMeta om = oscillator.getItemMeta();
+        om.displayName(Component.text("Sonic Oscillator"));
+        om.setItemModel(RecipeItem.SONIC_OSCILLATOR.getModel());
+        oscillator.setItemMeta(om);
+        r.setIngredient('S', new RecipeChoice.ExactChoice(oscillator));
+        ItemStack battery = new ItemStack(Material.BUCKET, 1);
+        ItemMeta bm = battery.getItemMeta();
+        bm.displayName(Component.text("Blaster Battery"));
+        bm.setItemModel(Whoniverse.BLASTER_BATTERY.getKey());
+        bm.addItemFlags(ItemFlag.values());
+        battery.setItemMeta(bm);
+        r.setIngredient('E', new RecipeChoice.ExactChoice(battery));
+        r.setIngredient('B', Material.OAK_BUTTON);
         // add the recipe to TARDIS' list
-        plugin.getFigura().getShapedRecipes().put(s, r);
-        // return the recipe
-        return r;
+        plugin.getFigura().getShapedRecipes().put("Sonic Blaster", r);
     }
 }

@@ -181,7 +181,7 @@ public class TARDISSeedBlockListener implements Listener {
                 lore.add(console);
                 lore.add("Walls: " + data.getWallType().toString());
                 lore.add("Floors: " + data.getFloorType().toString());
-                im.setLore(lore);
+                im.lore(lore);
                 is.setItemMeta(im);
                 // set the block to AIR
                 event.getBlock().setBlockData(TARDISConstants.AIR);

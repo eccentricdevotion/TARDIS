@@ -46,7 +46,7 @@ public class TARDISInvisibilityCircuitRecipe {
         String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? NamedTextColor.YELLOW + "unlimited"
                 : NamedTextColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
-        im.setLore(List.of("Uses left", uses));
+        im.lore(List.of("Uses left", uses));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_invisibility_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

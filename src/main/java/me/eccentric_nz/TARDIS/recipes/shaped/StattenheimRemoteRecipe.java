@@ -46,7 +46,7 @@ public class StattenheimRemoteRecipe {
         if (uses.equals("0")) {
             uses = "1000";
         }
-        im.setLore(List.of("Right-click block", "to call TARDIS", "Uses left", uses));
+        im.lore(List.of("Right-click block", "to call TARDIS", "Uses left", uses));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "stattenheim_remote");
         ShapedRecipe r = new ShapedRecipe(key, is);

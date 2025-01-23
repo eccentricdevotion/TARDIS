@@ -69,7 +69,7 @@ class TARDISConfigPageTwoInventory {
                 im.setDisplayName(c);
                 GUIConfiguration gui = GUIConfiguration.valueOf(c.split("\\.")[0].toUpperCase(Locale.ROOT));
                 im.setItemModel(value.equals("false") ? gui.getOffModel() : gui.getOnModel());
-                im.setLore(List.of(value));
+                im.lore(List.of(value));
                 is.setItemMeta(im);
                 options.add(is);
             }

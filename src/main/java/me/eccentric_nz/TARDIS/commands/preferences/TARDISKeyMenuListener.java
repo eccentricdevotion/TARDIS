@@ -109,7 +109,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                 if (!lore.contains(format + "This key belongs to")) {
                     lore.add(format + "This key belongs to");
                     lore.add(format + player.getName());
-                    keyMeta.setLore(lore);
+                    keyMeta.lore(lore);
                 }
                 key.setItemMeta(keyMeta);
             }

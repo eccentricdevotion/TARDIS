@@ -65,7 +65,7 @@ class TARDISHandlesDiskCommand {
                 plugin.getQueryFactory().doUpdate("programs", set, wherep);
                 List<String> lore = dim.getLore();
                 lore.set(0, name);
-                dim.setLore(lore);
+                dim.lore(lore);
                 disk.setItemMeta(dim);
             }
         } else {

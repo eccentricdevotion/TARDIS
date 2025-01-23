@@ -18,12 +18,14 @@ package me.eccentric_nz.tardischemistry.product;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ProductInventory {
 
@@ -40,22 +42,30 @@ public class ProductInventory {
         // info
         ItemStack info = new ItemStack(GUIChemistry.INFO.material(), 1);
         ItemMeta info_im = info.getItemMeta();
-        info_im.setDisplayName("Info");
-        info_im.setLore(Arrays.asList("Combine elements and compounds", "to create sparklers, balloons,", "lamps, and glow sticks.", "To see a product formula", "use the " + NamedTextColor.GREEN + TextDecoration.ITALIC + "/tardischemistry formula" + NamedTextColor.DARK_PURPLE + TextDecoration.ITALIC + " command.", "Place items like you would", "in a crafting table", "in the 9 left slots."));
+        info_im.displayName(Component.text("Info"));
+        info_im.lore(List.of(
+                Component.text("Combine elements and compounds"),
+                Component.text("to create sparklers, balloons,"),
+                Component.text("lamps, and glow sticks."),
+                Component.text("To see a product formula"),
+                Component.text("use the ").color(NamedTextColor.GREEN).decorate(TextDecoration.ITALIC).append(Component.text("/tardischemistry formula")).color(NamedTextColor.DARK_PURPLE).decorate(TextDecoration.ITALIC).append(Component.text(" command.")),
+                Component.text("Place items like you would"),
+                Component.text("in a crafting table"),
+                Component.text("in the 9 left slots.")));
         info_im.setItemModel(GUIChemistry.INFO.key());
         info.setItemMeta(info_im);
         stack[GUIChemistry.INFO.slot()] = info;
         // craft recipe
         ItemStack craft = new ItemStack(GUIChemistry.CRAFT.material(), 1);
         ItemMeta craft_im = craft.getItemMeta();
-        craft_im.setDisplayName("Craft");
+        craft_im.displayName(Component.text("Craft"));
         craft_im.setItemModel(GUIChemistry.CRAFT.key());
         craft.setItemMeta(craft_im);
         stack[GUIChemistry.CRAFT.slot()] = craft;
         // close
         ItemStack close = new ItemStack(GUIChemistry.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE")));
         close_im.setItemModel(GUIChemistry.CLOSE.key());
         close.setItemMeta(close_im);
         stack[GUIChemistry.CLOSE.slot()] = close;

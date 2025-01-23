@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.custommodels.GUIUpgrade;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -76,8 +77,13 @@ public class TARDISPluginThemeInventory extends TARDISThemeInventory {
             // info
             ItemStack info = new ItemStack(GUIChameleonConstructor.INFO.material(), 1);
             ItemMeta io = info.getItemMeta();
-            io.setDisplayName("Info");
-            io.setLore(List.of("Shift-left click", "a console block to", "transmat to a", "desktop preview."));
+            io.displayName(Component.text("Info"));
+            io.lore(List.of(
+                    Component.text("Shift-left click"),
+                    Component.text("a console block to"),
+                    Component.text("transmat to a"),
+                    Component.text("desktop preview.")
+            ));
             io.setItemModel(GUIUpgrade.INFO.key());
             info.setItemMeta(io);
             stack[GUIUpgrade.INFO.slot()] = info;
@@ -86,7 +92,7 @@ public class TARDISPluginThemeInventory extends TARDISThemeInventory {
         if (TARDISPermission.hasPermission(player, "tardis.archive")) {
             ItemStack arc = new ItemStack(GUIUpgrade.ARCHIVE_CONSOLES.material(), 1);
             ItemMeta hive_im = arc.getItemMeta();
-            hive_im.setDisplayName("Archive Consoles");
+            hive_im.displayName(Component.text("Archive Consoles"));
             hive_im.setItemModel(GUIUpgrade.ARCHIVE_CONSOLES.key());
             arc.setItemMeta(hive_im);
             stack[GUIUpgrade.ARCHIVE_CONSOLES.slot()] = arc;
@@ -96,7 +102,7 @@ public class TARDISPluginThemeInventory extends TARDISThemeInventory {
             if (TARDISPermission.hasPermission(player, "tardis.repair")) {
                 ItemStack rep = new ItemStack(GUIUpgrade.REPAIR_CONSOLE.material(), 1);
                 ItemMeta air_im = rep.getItemMeta();
-                air_im.setDisplayName("Repair Console");
+                air_im.displayName(Component.text("Repair Console"));
                 air_im.setItemModel(GUIUpgrade.REPAIR_CONSOLE.key());
                 rep.setItemMeta(air_im);
                 stack[GUIUpgrade.REPAIR_CONSOLE.slot()] = rep;
@@ -105,7 +111,7 @@ public class TARDISPluginThemeInventory extends TARDISThemeInventory {
             if (TARDISPermission.hasPermission(player, "tardis.repair")) {
                 ItemStack cle = new ItemStack(GUIUpgrade.CLEAN.material(), 1);
                 ItemMeta an_im = cle.getItemMeta();
-                an_im.setDisplayName("Clean");
+                an_im.displayName(Component.text("Clean"));
                 an_im.setItemModel(GUIUpgrade.CLEAN.key());
                 cle.setItemMeta(an_im);
                 stack[GUIUpgrade.CLEAN.slot()] = cle;
@@ -114,14 +120,14 @@ public class TARDISPluginThemeInventory extends TARDISThemeInventory {
         // custom consoles page
         ItemStack custom = new ItemStack(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
         ItemMeta custom_im = custom.getItemMeta();
-        custom_im.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
+        custom_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_PAGE_2")));
         custom_im.setItemModel(GUIChameleonPresets.GO_TO_PAGE_2.key());
         custom.setItemMeta(custom_im);
         stack[51] = custom;
         // close
         ItemStack close = new ItemStack(GUIUpgrade.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
-        close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
+        close_im.displayName(Component.text(plugin.getLanguage().getString("BUTTON_CLOSE")));
         close_im.setItemModel(GUIUpgrade.CLOSE.key());
         close.setItemMeta(close_im);
         stack[GUIUpgrade.CLOSE.slot()] = close;

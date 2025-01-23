@@ -189,7 +189,7 @@ public class TARDISStattenheimListener implements Listener {
                         // set the lore
                         String coloured = NamedTextColor.YELLOW + "" + decremented;
                         List<String> lore = Arrays.asList("Right-click block", "to call TARDIS", "Uses left", coloured);
-                        im.setLore(lore);
+                        im.lore(lore);
                         is.setItemMeta(im);
                         boolean hidden = tardis.isHidden();
                         int level = tardis.getArtronLevel();

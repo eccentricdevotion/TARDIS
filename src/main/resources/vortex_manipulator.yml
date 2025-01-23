@@ -5,18 +5,6 @@ allow:
   beacon: true
   multiple: true
   look_at_block: true
-recipe:
-  shape: BBG,WOC,III
-  ingredients:
-    B: STONE_BUTTON
-    G: GLASS
-    W: CLOCK
-    O: GOLD_INGOT
-    C: COMPASS
-    I: IRON_INGOT
-  result: CLOCK
-  amount: 1
-  lore: "Cheap and nasty time travel"
 tachyon_use:
   max: 1000
   recharge: 25

@@ -97,14 +97,14 @@ public class TARDISControlInventory {
         ItemStack save = new ItemStack(GUIControlCentre.BUTTON_SAVES.material(), 1);
         ItemMeta locs = save.getItemMeta();
         locs.setDisplayName(plugin.getLanguage().getString("BUTTON_SAVES"));
-        locs.setLore(List.of("load saves from this TARDIS"));
+        locs.lore(List.of("load saves from this TARDIS"));
         locs.setItemModel(GUIControlCentre.BUTTON_SAVES.key());
         save.setItemMeta(locs);
         // Own saves if in another player's TARDIS
         ItemStack own = new ItemStack(GUIControlCentre.BUTTON_SAVES.material(), 1);
         ItemMeta saves = own.getItemMeta();
         saves.setDisplayName(plugin.getLanguage().getString("BUTTON_SAVES"));
-        saves.setLore(List.of("Load my saves"));
+        saves.lore(List.of("Load my saves"));
         saves.setItemModel(GUIControlCentre.BUTTON_SAVES.key());
         own.setItemMeta(saves);
         // back
@@ -130,7 +130,7 @@ public class TARDISControlInventory {
         ItemMeta ttle = thro.getItemMeta();
         ttle.setDisplayName(plugin.getLanguage().getString("BUTTON_THROTTLE"));
         String throttle = SpaceTimeThrottle.getByDelay().get(delay).toString();
-        ttle.setLore(List.of(throttle));
+        ttle.lore(List.of(throttle));
         ttle.setItemModel(GUIControlCentre.BUTTON_THROTTLE.key());
         thro.setItemMeta(ttle);
         /*
@@ -152,7 +152,7 @@ public class TARDISControlInventory {
         ItemStack pow = new ItemStack(GUIControlCentre.BUTTON_POWER.material(), 1);
         ItemMeta dwn = pow.getItemMeta();
         dwn.setDisplayName(plugin.getLanguage().getString("BUTTON_POWER"));
-        dwn.setLore(List.of(power_onoff));
+        dwn.lore(List.of(power_onoff));
         NamespacedKey pcmd = GUIControlCentre.BUTTON_POWER.key();
         if (power_onoff.equals(off)) {
             pcmd = SwitchVariant.BUTTON_POWER_OFF.getKey();
@@ -163,14 +163,14 @@ public class TARDISControlInventory {
         ItemStack lig = new ItemStack(GUIControlCentre.BUTTON_LIGHTS.material(), 1);
         ItemMeta swi = lig.getItemMeta();
         swi.setDisplayName(plugin.getLanguage().getString("BUTTON_LIGHTS"));
-        swi.setLore(List.of("All the light things!"));
+        swi.lore(List.of("All the light things!"));
         swi.setItemModel(GUIControlCentre.BUTTON_LIGHTS.key());
         lig.setItemMeta(swi);
         // toggle wool
         ItemStack tog = new ItemStack(GUIControlCentre.BUTTON_TOGGLE.material(), 1);
         ItemMeta gle = tog.getItemMeta();
         gle.setDisplayName(plugin.getLanguage().getString("BUTTON_TOGGLE"));
-        gle.setLore(List.of(toggle_openclosed));
+        gle.lore(List.of(toggle_openclosed));
         NamespacedKey tcmd = GUIControlCentre.BUTTON_TOGGLE.key();
         if (!open) {
             tcmd = SwitchVariant.BUTTON_TOGGLE_OFF.getKey();
@@ -196,7 +196,7 @@ public class TARDISControlInventory {
         ItemStack siege = new ItemStack(GUIControlCentre.BUTTON_SIEGE.material(), 1);
         ItemMeta mode = siege.getItemMeta();
         mode.setDisplayName(plugin.getLanguage().getString("BUTTON_SIEGE"));
-        mode.setLore(List.of(siege_onoff));
+        mode.lore(List.of(siege_onoff));
         NamespacedKey scmd = GUIControlCentre.BUTTON_SIEGE.key();
         if (siege_onoff.equals(off)) {
             scmd = SwitchVariant.SIEGE_OFF.getKey();
@@ -220,7 +220,7 @@ public class TARDISControlInventory {
         ItemMeta ection = dir.getItemMeta();
         ection.setDisplayName(plugin.getLanguage().getString("BUTTON_DIRECTION"));
         ection.setItemModel(GUIControlCentre.BUTTON_DIRECTION.key());
-        ection.setLore(List.of(direction));
+        ection.lore(List.of(direction));
         dir.setItemMeta(ection);
         // temporal
         ItemStack temp = new ItemStack(GUIControlCentre.BUTTON_TEMP.material(), 1);

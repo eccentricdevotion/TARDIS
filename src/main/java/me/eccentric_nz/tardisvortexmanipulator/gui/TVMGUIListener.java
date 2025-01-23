@@ -12,6 +12,8 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -279,8 +281,10 @@ public class TVMGUIListener extends TARDISMenuListener {
         components.set(0, world);
         ItemStack display = view.getItem(4);
         ItemMeta dim = display.getItemMeta();
-        List<String> lore = List.of(world + " " + components.get(1) + " " + components.get(2) + " " + components.get(3));
-        dim.setLore(lore);
+        List<TextComponent> lore = List.of(
+                Component.text(world + " " + components.get(1) + " " + components.get(2) + " " + components.get(3))
+        );
+        dim.lore(lore);
         display.setItemMeta(dim);
         // move the cursor to the end of the string
         which = 1;
@@ -292,8 +296,7 @@ public class TVMGUIListener extends TARDISMenuListener {
         for (World w : plugin.getServer().getWorlds()) {
             String world = w.getName();
             if (w.getName().toLowerCase(Locale.ROOT).startsWith(stub)) {
-                List<String> lore = List.of(world);
-                im.setLore(lore);
+                im.lore(List.of(Component.text(world)));
                 is.setItemMeta(im);
                 break;
             }
@@ -327,8 +330,7 @@ public class TVMGUIListener extends TARDISMenuListener {
             default -> combined = comp;
         }
         components.set(which, comp);
-        List<String> dlore = List.of(combined);
-        dim.setLore(dlore);
+        dim.lore(List.of(Component.text(combined)));
         display.setItemMeta(dim);
     }
 

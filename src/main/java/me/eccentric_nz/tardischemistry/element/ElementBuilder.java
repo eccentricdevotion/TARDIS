@@ -16,11 +16,13 @@
  */
 package me.eccentric_nz.tardischemistry.element;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ElementBuilder {
 
@@ -29,9 +31,9 @@ public class ElementBuilder {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(element.toString());
         if (element.equals(Element.Unknown)) {
-            im.setLore(Arrays.asList("?", "?"));
+            im.lore(List.of(Component.text("?"), Component.text("?")));
         } else {
-            im.setLore(Arrays.asList(element.getSymbol(), "" + element.getAtomicNumber()));
+            im.lore(List.of(Component.text(element.getSymbol()), Component.text(element.getAtomicNumber())));
         }
         im.setItemModel(element.getModel());
         is.setItemMeta(im);

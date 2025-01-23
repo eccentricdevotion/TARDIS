@@ -29,6 +29,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.sonic.actions.TARDISSonicLight;
 import me.eccentric_nz.TARDIS.update.UpdateDoor;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -512,8 +513,8 @@ public class TARDISDisplayBlockListener implements Listener {
                                         ItemStack ret;
                                         ret = new ItemStack(Material.GLASS, 1);
                                         ItemMeta im = ret.getItemMeta();
-                                        im.setDisplayName(NamedTextColor.WHITE + "Variable Light");
-                                        im.setLore(List.of(variable.toString()));
+                                        im.displayName(Component.text().color(NamedTextColor.WHITE).append(Component.text("Variable Light")).build());
+                                        im.lore(List.of(Component.text(variable.toString())));
                                         im.setItemModel(LightVariant.VARIABLE.getKey());
                                         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1003);
                                         ret.setItemMeta(im);

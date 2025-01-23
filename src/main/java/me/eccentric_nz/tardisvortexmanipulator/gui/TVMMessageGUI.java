@@ -8,6 +8,7 @@ import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.VortexManipulatorVariant;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetInbox;
 import me.eccentric_nz.tardisvortexmanipulator.storage.TVMMessage;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -57,7 +58,11 @@ public class TVMMessageGUI {
                 ItemMeta age = mess.getItemMeta();
                 age.setDisplayName("#" + (i + start + 1));
                 String from = plugin.getServer().getOfflinePlayer(m.getWho()).getName();
-                age.setLore(Arrays.asList("From: " + from, "Date: " + m.getDate(), "" + m.getId()));
+                age.lore(List.of(
+                        Component.text("From: " + from),
+                        Component.text("Date: " + m.getDate()),
+                        Component.text("" + m.getId())
+                ));
                 mess.setItemMeta(age);
                 stack[i] = mess;
                 i++;

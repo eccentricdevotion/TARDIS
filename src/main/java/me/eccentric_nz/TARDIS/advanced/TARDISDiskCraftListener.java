@@ -21,6 +21,9 @@ import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
 import me.eccentric_nz.TARDIS.enumeration.BiomeLookup;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.utility.TARDISRegistryValues;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
@@ -35,6 +38,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -82,12 +86,12 @@ public class TARDISDiskCraftListener implements Listener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DISK_BLANK_BIOME");
                     return;
                 }
-                List<String> disk_lore = new ArrayList<>();
+                List<TextComponent> disk_lore = new ArrayList<>();
                 // biome disk
                 Material lookup = items.getFirst().getType();
                 Biome biome = BiomeLookup.MATERIALS.get(lookup);
                 if (biome != null) {
-                    disk_lore.add(biome.toString());
+                    disk_lore.add(Component.text(biome.key().value().toUpperCase(Locale.ROOT)));
                 }
                 if (disk_lore.isEmpty()) {
                     return;
@@ -95,7 +99,7 @@ public class TARDISDiskCraftListener implements Listener {
                 disk = new ItemStack(Material.MUSIC_DISC_CAT, 1);
                 ItemMeta dim = disk.getItemMeta();
                 dim.setDisplayName("Biome Storage Disk");
-                dim.setLore(disk_lore);
+                dim.lore(disk_lore);
                 dim.setItemModel(DiskVariant.BIOME_DISK.getKey());
                 disk.setItemMeta(dim);
                 inv.setItem(0, disk);
@@ -127,11 +131,10 @@ public class TARDISDiskCraftListener implements Listener {
                 if (preset.isEmpty()) {
                     return;
                 }
-                List<String> disk_lore = List.of(preset);
                 disk = new ItemStack(Material.MUSIC_DISC_MALL, 1);
                 ItemMeta dim = disk.getItemMeta();
                 dim.setDisplayName("Preset Storage Disk");
-                dim.setLore(disk_lore);
+                dim.lore(List.of(Component.text(preset)));
                 dim.setItemModel(DiskVariant.PRESET_DISK.getKey());
                 disk.setItemMeta(dim);
                 inv.setItem(0, disk);

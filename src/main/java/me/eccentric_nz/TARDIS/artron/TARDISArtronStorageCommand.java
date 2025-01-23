@@ -171,7 +171,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                     return false;
                 }
                 lore.set(1, "" + new_amount);
-                im.setLore(lore);
+                im.lore(lore);
                 im.setEnchantmentGlintOverride(true);
                 im.addItemFlags(ItemFlag.values());
                 is.setItemMeta(im);
@@ -201,7 +201,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
     private void setLevel(ItemStack is, ItemMeta im, int level, Player player, boolean main) {
         List<String> lore = im.getLore();
         lore.set(1, "" + level);
-        im.setLore(lore);
+        im.lore(lore);
         // add glint if missing
         if (main && !im.hasEnchantmentGlintOverride()) {
             im.removeEnchant(Enchantment.UNBREAKING);

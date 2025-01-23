@@ -32,7 +32,7 @@ public class FuelCell {
         List<String> lore = im.getLore();
         int max = plugin.getArtronConfig().getInt("full_charge");
         lore.set(1, "" + max);
-        im.setLore(lore);
+        im.lore(lore);
         im.setEnchantmentGlintOverride(true);
         im.addItemFlags(ItemFlag.values());
         result.setItemMeta(im);

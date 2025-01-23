@@ -37,7 +37,7 @@ public class Kit {
                         String what = im.getDisplayName().contains("Key") ? "key" : "disk";
                         lore.add(format + "This " + what + " belongs to");
                         lore.add(format + player.getName());
-                        im.setLore(lore);
+                        im.lore(lore);
                     }
                     result.setItemMeta(im);
                 }

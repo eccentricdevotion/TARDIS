@@ -166,7 +166,7 @@ public class TARDISLightLevelsGUIListener extends TARDISMenuListener {
         ItemMeta im = is.getItemMeta();
         List<String> lore = im.getLore();
         lore.set(0, "" + level);
-        im.setLore(lore);
+        im.lore(lore);
         is.setItemMeta(im);
     }
 
