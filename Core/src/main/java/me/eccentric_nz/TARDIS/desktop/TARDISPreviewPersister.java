@@ -62,6 +62,7 @@ public class TARDISPreviewPersister {
     }
 
     public void load() {
+        PreparedStatement ps = null;
         Statement statement = null;
         ResultSet rs = null;
         String query = "SELECT * FROM " + prefix + "previewers";
@@ -88,6 +89,8 @@ public class TARDISPreviewPersister {
                     }
                 }
             }
+            ps = connection.prepareStatement("DELETE FROM " + prefix + "previewers");
+            ps.executeUpdate();
         } catch (SQLException e) {
             plugin.debug("ResultSet error for previewers table! " + e.getMessage());
         } finally {
@@ -97,6 +100,9 @@ public class TARDISPreviewPersister {
                 }
                 if (statement != null) {
                     statement.close();
+                }
+                if (ps != null) {
+                    ps.close();
                 }
             } catch (SQLException e) {
                 plugin.debug("Error closing previewers table! " + e.getMessage());
