@@ -72,22 +72,23 @@ public class Equipper {
         // no boots
         ee.setBoots(null);
         // don't drop items when killed
-        ee.setItemInMainHandDropChance(0);
-        ee.setItemInOffHandDropChance(0);
-        ee.setHelmetDropChance(0);
-        ee.setChestplateDropChance(0);
-        ee.setLeggingsDropChance(0);
-        // don't pick up items
-        le.setCanPickupItems(false);
-        // make silent
-        le.setSilent(true);
-        le.setCollidable(true);
-        le.setPersistent(true);
-        // set TWA data
-        le.getPersistentDataContainer().set(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER, monster.ordinal());
         if (disguise) {
             PotionEffect potionEffect = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
             le.addPotionEffect(potionEffect);
+        } else {
+            ee.setItemInMainHandDropChance(0);
+            ee.setItemInOffHandDropChance(0);
+            ee.setHelmetDropChance(0);
+            ee.setChestplateDropChance(0);
+            ee.setLeggingsDropChance(0);
+            // don't pick up items
+            le.setCanPickupItems(false);
+            // make silent
+            le.setSilent(true);
+            le.setCollidable(true);
+            le.setPersistent(true);
+            // set TWA data
+            le.getPersistentDataContainer().set(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER, monster.ordinal());
         }
     }
 
@@ -104,12 +105,16 @@ public class Equipper {
                 ItemMeta tim = hand.getItemMeta();
                 tim.setItemModel(Features.ANGEL_OF_LIBERTY_TORCH.getKey());
                 hand.setItemMeta(tim);
-                // set entity scale
-                entity.getAttribute(Attribute.SCALE).setBaseValue(2.5d);
+                if (!disguise) {
+                    // set entity scale
+                    entity.getAttribute(Attribute.SCALE).setBaseValue(2.5d);
+                }
             }
             case THE_BEAST -> {
-                // set entity scale
-                entity.getAttribute(Attribute.SCALE).setBaseValue(2.5d);
+                if (!disguise) {
+                    // set entity scale
+                    entity.getAttribute(Attribute.SCALE).setBaseValue(2.5d);
+                }
             }
             case CLOCKWORK_DROID -> {
                 ArmourVariant variant = getVariant(armourKey);
@@ -156,7 +161,8 @@ public class Equipper {
                         oim.setItemModel(CybermanVariant.CYBERMAN_RISE_ARM.getKey());
                         offhand.setItemMeta(oim);
                     }
-                    default -> {}
+                    default -> {
+                    }
                 }
             }
             case HATH -> {

@@ -41,8 +41,10 @@ public class JudoonEquipment {
             hand.setItemMeta(tim);
             entity.getEquipment().setItemInMainHand(hand);
             new FollowerEquipper().setOptionsAndInvisibilty(player, entity, Monster.JUDOON);
-            // set entity scale
-            entity.getAttribute(Attribute.SCALE).setBaseValue(1.25d);
+            if (!disguise) {
+                // set entity scale
+                entity.getAttribute(Attribute.SCALE).setBaseValue(1.25d);
+            }
         } else {
             PotionEffect potionEffect = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
             entity.addPotionEffect(potionEffect);

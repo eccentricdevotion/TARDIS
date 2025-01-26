@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardisweepingangels.equip;
 
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffectType;
@@ -35,5 +36,6 @@ public class RemoveEquipment {
         inv.setLeggings(null);
         inv.setBoots(null);
         p.updateInventory();
+        p.getAttribute(Attribute.SCALE).setBaseValue(1.0d);
     }
 }
