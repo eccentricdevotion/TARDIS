@@ -41,11 +41,11 @@ public class ConsoleColourChanger {
                             if (im.hasItemModel()) {
                                 String[] key = im.getItemModel().getKey().split("_");
                                 if (key[1].equals("centre")) {
-                                    model = new NamespacedKey(plugin, "console_centre_"+ colour);
+                                    model = new NamespacedKey(plugin, "console_centre_" + colour);
                                 } else if (key[1].equals("division")) {
-                                    model = new NamespacedKey(plugin, "console_division_"+ colour);
+                                    model = new NamespacedKey(plugin, "console_division_" + colour);
                                 } else {
-                                    model = new NamespacedKey(plugin, "console_"+ colour);
+                                    model = new NamespacedKey(plugin, "console_side_" + colour);
                                 }
                                 im.setItemModel(model);
                                 is.setItemMeta(im);

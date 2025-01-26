@@ -38,17 +38,13 @@ public class ConsoleInteractionListener implements Listener {
                         // section zero
                         case HANDBRAKE -> new HandbrakeInteraction(plugin).process(id, state, player, interaction);
                         case THROTTLE -> new ThrottleInteraction(plugin).process(player, interaction, id);
-                        case RELATIVITY_DIFFERENTIATOR ->
-                                new FlightModeInteraction(plugin).process(player, id, interaction);
+                        case RELATIVITY_DIFFERENTIATOR -> new FlightModeInteraction(plugin).process(player, id, interaction);
                         // section one
                         case WORLD -> new WorldInteraction(plugin).selectWorld(state, player, interaction, id);
-                        case MULTIPLIER, X, Z ->
-                                new MultiplierXZInteraction(plugin).setRange(ci, state, interaction, id, player);
-                        case HELMIC_REGULATOR ->
-                                new HelmicRegulatorInteraction(plugin).selectWorld(state, id, player, interaction);
+                        case MULTIPLIER, X, Z -> new MultiplierXZInteraction(plugin).setRange(ci, state, interaction, id, player);
+                        case HELMIC_REGULATOR -> new HelmicRegulatorInteraction(plugin).selectWorld(state, id, player, interaction);
                         // section two
-                        case RANDOMISER ->
-                                new RandomiserInteraction(plugin).generateDestination(id, player, interaction);
+                        case RANDOMISER -> new RandomiserInteraction(plugin).generateDestination(id, player, interaction);
                         case WAYPOINT_SELECTOR -> new WayPointInteraction(plugin).openSaveGUI(id, player, interaction);
                         case FAST_RETURN -> new FastReturnInteraction(plugin).setBack(id, player, interaction);
                         case TELEPATHIC_CIRCUIT -> new TelepathicCircuitInteraction(plugin).process(player);
@@ -57,21 +53,17 @@ public class ConsoleInteractionListener implements Listener {
                         case DIRECTION -> new DirectionInteraction(plugin).rotate(id, player, interaction);
                         // section four
                         case LIGHT_SWITCH -> new LightSwitchInteraction(plugin).toggle(id, player, interaction);
-                        case INTERIOR_LIGHT_LEVEL_SWITCH ->
-                                new LightLevelInteraction(plugin).setInterior(state, id, interaction, player);
-                        case EXTERIOR_LAMP_LEVEL_SWITCH ->
-                                new LampLevelInteraction(plugin).setExterior(state, id, interaction, player);
+                        case INTERIOR_LIGHT_LEVEL_SWITCH -> new LightLevelInteraction(plugin).setInterior(state, id, interaction, player);
+                        case EXTERIOR_LAMP_LEVEL_SWITCH -> new LampLevelInteraction(plugin).setExterior(state, id, interaction, player);
                         case CONSOLE_LAMP -> new ConsoleLampInteraction(plugin).setLevel(state, id, interaction, player);
                         case DOOR_TOGGLE -> new DoorToggleInteraction(plugin).toggle(id, player, interaction);
                         // section five
-                        case SCREEN_LEFT, SCREEN_RIGHT ->
-                                new ScreenInteraction(plugin).display(id, interaction, ci == ConsoleInteraction.SCREEN_RIGHT, player);
+                        case SCREEN_LEFT, SCREEN_RIGHT -> new ScreenInteraction(plugin).display(id, interaction, ci == ConsoleInteraction.SCREEN_RIGHT, player);
                         case SCANNER -> new ScannerInteraction(plugin).process(id, player, interaction);
                         case ARTRON -> new ArtronInteraction(plugin).show(id, player, interaction);
                         case REBUILD -> new RebuildInteraction(plugin).process(id, player, interaction);
                         // manual flight
-                        case ASTROSEXTANT_RECTIFIER, ABSOLUTE_TESSERACTULATOR, GRAVITIC_ANOMALISER ->
-                                new ManualFlightInteraction(plugin).receiveInput(id, player.getUniqueId(), interaction);
+                        case ASTROSEXTANT_RECTIFIER, ABSOLUTE_TESSERACTULATOR, GRAVITIC_ANOMALISER -> new ManualFlightInteraction(plugin).receiveInput(id, player.getUniqueId(), interaction);
                         // unknown
                         default -> plugin.getMessenger().announceRepeater(player, rsi.getControl().getAlternateName());
                     }
