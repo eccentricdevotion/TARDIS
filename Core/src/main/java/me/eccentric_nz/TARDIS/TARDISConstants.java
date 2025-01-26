@@ -56,18 +56,19 @@ public class TARDISConstants {
     /**
      * Consoles which need to be higher
      */
-    public static final List<String> HIGHER = Arrays.asList("redstone", "thirteenth", "factory", "copper");
+    public static final List<String> HIGHER = List.of("redstone", "thirteenth", "factory", "copper");
 
     /**
      * Modelled console colours
      */
-    public static final Set<String> COLOURS = Set.of("RUSTIC", "BROWN", "PINK", "MAGENTA", "PURPLE", "BLUE", "LIGHT_BLUE",
-            "CYAN", "GREEN", "LIME", "YELLOW", "ORANGE", "RED", "WHITE", "BLACK", "GRAY", "LIGHT_GRAY");
+    public static final Set<String> COLOURS = Set.of("console_rustic", "console_brown", "console_pink", "console_magenta",
+            "console_purple", "console_blue", "console_light_blue", "console_cyan", "console_green", "console_lime", "console_yellow",
+            "console_orange", "console_red", "console_white", "console_black", "console_gray", "console_light_gray");
 
     /**
      * GUI materials
      */
-    public static final List<Material> GUI_IDS = Arrays.asList(
+    public static final List<Material> GUI_IDS = List.of(
             Material.STONE, Material.GRANITE, Material.DIORITE, Material.ANDESITE, Material.GRASS_BLOCK, Material.DIRT, Material.PODZOL,
             Material.CRIMSON_NYLIUM, Material.WARPED_NYLIUM, Material.COBBLESTONE, Material.OAK_PLANKS, Material.CRIMSON_PLANKS,
             Material.WARPED_PLANKS, Material.BEDROCK, Material.SAND, Material.RED_SAND, Material.GRAVEL, Material.GOLD_ORE, Material.IRON_ORE,
@@ -98,7 +99,7 @@ public class TARDISConstants {
      * Bad Chameleon blocks that shouldn't be changed to
      */
     public static final Set<Material> CHAMELEON_BLOCKS_BAD = getBadMaterials();
-    public static final List<Tag> CHAMELEON_TAGS_CHANGE = Arrays.asList(
+    public static final List<Tag> CHAMELEON_TAGS_CHANGE = List.of(
             Tag.SLABS, Tag.STAIRS, Tag.TRAPDOORS, Tag.CLIMBABLE, Tag.WALLS, Tag.FLOWER_POTS
     );
     /**
@@ -113,18 +114,18 @@ public class TARDISConstants {
     /**
      * Precious Chameleon blocks
      */
-    public static final List<Material> CHAMELEON_BLOCKS_PRECIOUS = Arrays.asList(
+    public static final List<Material> CHAMELEON_BLOCKS_PRECIOUS = List.of(
             Material.GOLD_BLOCK, Material.IRON_BLOCK, Material.TNT, Material.DIAMOND_BLOCK,
             Material.EMERALD_BLOCK, Material.REDSTONE_BLOCK, Material.COAL_BLOCK, Material.NETHERITE_BLOCK
     );
     /**
      * A list of vowels
      */
-    public static final List<String> VOWELS = Arrays.asList("A", "E", "I", "O", "U");
+    public static final List<String> VOWELS = List.of("A", "E", "I", "O", "U");
     /**
      * A list of living entity types that can be reported in scanner results
      */
-    public static final List<EntityType> ENTITY_TYPES = Arrays.asList(
+    public static final List<EntityType> ENTITY_TYPES = List.of(
             EntityType.ALLAY, EntityType.ARMOR_STAND, EntityType.AXOLOTL, EntityType.BAT, EntityType.BEE, EntityType.BLAZE,
             EntityType.BOGGED, EntityType.BREEZE, EntityType.CAMEL, EntityType.CAT, EntityType.CREAKING, EntityType.CAVE_SPIDER,
             EntityType.CHICKEN, EntityType.ARMADILLO, EntityType.ENDER_DRAGON,
@@ -150,14 +151,14 @@ public class TARDISConstants {
      * A list of water materials types that can be replaced when the TARDIS
      * lands
      */
-    public static final List<Material> GOOD_WATER = Arrays.asList(
+    public static final List<Material> GOOD_WATER = List.of(
             Material.AIR, Material.CAVE_AIR, Material.VOID_AIR, Material.WATER,
             Material.SEAGRASS, Material.TALL_SEAGRASS, Material.KELP_PLANT, Material.SEA_PICKLE
     );
     /**
      * A list of titles to display when a TARDIS Seed block is growing
      */
-    public static final List<String> GROWTH_STATES = Arrays.asList(
+    public static final List<String> GROWTH_STATES = List.of(
             "Initiating block transfer mathematics", "Distributing cluster algebra", "Determining quantum probability/uncertainty",
             "Multiplying universal base code numerals", "Building artron mainframe module", "Assembling hyper-loom null-zone",
             "Complicating space-time events", "Forming extra-dimensional metastructure framework", "Finding dimensionally transcendental cradle",
@@ -240,7 +241,7 @@ public class TARDISConstants {
     /**
      * A list of loot tables to populate TARDIS planet chests
      */
-    public static final List<LootTable> LOOT = Arrays.asList(
+    public static final List<LootTable> LOOT = List.of(
             LootTables.ABANDONED_MINESHAFT.getLootTable(), LootTables.BURIED_TREASURE.getLootTable(), LootTables.DESERT_PYRAMID.getLootTable(),
             LootTables.IGLOO_CHEST.getLootTable(), LootTables.JUNGLE_TEMPLE.getLootTable(), LootTables.SHIPWRECK_TREASURE.getLootTable(),
             LootTables.SIMPLE_DUNGEON.getLootTable(), LootTables.SPAWN_BONUS_CHEST.getLootTable(), LootTables.STRONGHOLD_LIBRARY.getLootTable(),
@@ -258,7 +259,7 @@ public class TARDISConstants {
     /**
      * A list of particle dust options for use in TARDIS forcefields
      */
-    public static final List<Particle.DustOptions> DUSTOPTIONS = Arrays.asList(
+    public static final List<Particle.DustOptions> DUSTOPTIONS = List.of(
             new Particle.DustOptions(Color.fromRGB(0, 102, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 153, 255), 1),
             new Particle.DustOptions(Color.fromRGB(0, 204, 255), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 255), 1),
             new Particle.DustOptions(Color.fromRGB(0, 255, 204), 1), new Particle.DustOptions(Color.fromRGB(0, 255, 153), 1),
@@ -273,7 +274,7 @@ public class TARDISConstants {
     /**
      * A list of materials used in ItemFrame Chameleon presets
      */
-    public static final List<Material> DYES = Arrays.asList(
+    public static final List<Material> DYES = List.of(
             Material.CYAN_STAINED_GLASS_PANE, Material.GRAY_STAINED_GLASS_PANE, Material.WHITE_DYE, Material.ORANGE_DYE, Material.MAGENTA_DYE,
             Material.LIGHT_BLUE_DYE, Material.YELLOW_DYE, Material.LIME_DYE, Material.PINK_DYE, Material.GRAY_DYE, Material.LIGHT_GRAY_DYE,
             Material.CYAN_DYE, Material.PURPLE_DYE, Material.BLUE_DYE, Material.BROWN_DYE, Material.GREEN_DYE, Material.RED_DYE, Material.BLACK_DYE,

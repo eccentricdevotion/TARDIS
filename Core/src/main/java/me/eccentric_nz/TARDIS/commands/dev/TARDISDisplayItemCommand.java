@@ -101,7 +101,7 @@ public class TARDISDisplayItemCommand {
                     ItemMeta im = box.getItemMeta();
                     im.setItemModel(new NamespacedKey(plugin, "police_box/flying/blue"));
                     box.setItemMeta(im);
-                    ItemDisplay display = VehicleUtility.getItemDisplay(player, box,1.75f);
+                    ItemDisplay display = VehicleUtility.getItemDisplay(player, box, 1.75f);
                     int period = 40;
                     plugin.getTrackerKeeper().setAnimateTask(plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new InterpolatedAnimation(display, period), 5, period));
                 } else {
@@ -205,9 +205,9 @@ public class TARDISDisplayItemCommand {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
                     return true;
                 }
-                String colour = args[2].toUpperCase(Locale.ROOT);
+                String colour = args[2].toLowerCase(Locale.ROOT);
                 if (TARDISConstants.COLOURS.contains(colour)) {
-                    plugin.getMessenger().message(player, "Number must be between 1-17!");
+                    plugin.getMessenger().message(player, "Must be a valid concrete powder colour!");
                     return true;
                 }
                 // get TARDIS id
@@ -224,7 +224,6 @@ public class TARDISDisplayItemCommand {
         }
         return true;
     }
-
 
 
     private boolean isConsole(String str) {
