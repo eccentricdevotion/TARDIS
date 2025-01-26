@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -30,8 +29,8 @@ import java.util.Locale;
 class TARDISSiegeCommand {
 
     private final TARDIS plugin;
-    private final List<String> siegeArgs = Arrays.asList("enabled", "breeding", "growth", "butcher", "creeper", "healing", "texture");
-    private final List<String> siegeBool = Arrays.asList("enabled", "butcher", "creeper", "healing", "texture");
+    private final List<String> siegeArgs = List.of("enabled", "breeding", "growth", "butcher", "creeper", "healing", "texture");
+    private final List<String> siegeBool = List.of("enabled", "butcher", "creeper", "healing", "texture");
 
     TARDISSiegeCommand(TARDIS plugin) {
         this.plugin = plugin;

@@ -39,14 +39,14 @@ public class TVMGUI {
         ItemStack dis = new ItemStack(Material.BOWL, 1);
         ItemMeta play = dis.getItemMeta();
         play.setDisplayName("Display");
-        play.setLore(Arrays.asList(""));
+        play.setLore(List.of(""));
         play.setItemModel(VortexManipulatorVariant.DISPLAY.getKey());
         dis.setItemMeta(play);
         // predictive world
         ItemStack pred = new ItemStack(Material.BOWL, 1);
         ItemMeta ict = dis.getItemMeta();
         ict.setDisplayName("Predictive Text");
-        ict.setLore(Arrays.asList(""));
+        ict.setLore(List.of(""));
         ict.setItemModel(VortexManipulatorVariant.PREDICTIVE.getKey());
         pred.setItemMeta(ict);
         // keypad pad
@@ -60,56 +60,56 @@ public class TVMGUI {
         ItemStack two = new ItemStack(Material.BOWL, 1);
         ItemMeta abc = two.getItemMeta();
         abc.setDisplayName("2");
-        abc.setLore(Arrays.asList("abc"));
+        abc.setLore(List.of("abc"));
         abc.setItemModel(VortexManipulatorVariant.TWO.getKey());
         two.setItemMeta(abc);
         // 3 def
         ItemStack three = new ItemStack(Material.BOWL, 1);
         ItemMeta def = three.getItemMeta();
         def.setDisplayName("3");
-        def.setLore(Arrays.asList("def"));
+        def.setLore(List.of("def"));
         def.setItemModel(VortexManipulatorVariant.THREE.getKey());
         three.setItemMeta(def);
         // 4 ghi
         ItemStack four = new ItemStack(Material.BOWL, 1);
         ItemMeta ghi = four.getItemMeta();
         ghi.setDisplayName("4");
-        ghi.setLore(Arrays.asList("ghi"));
+        ghi.setLore(List.of("ghi"));
         ghi.setItemModel(VortexManipulatorVariant.FOUR.getKey());
         four.setItemMeta(ghi);
         // 5 jkl
         ItemStack five = new ItemStack(Material.BOWL, 1);
         ItemMeta jkl = five.getItemMeta();
         jkl.setDisplayName("5");
-        jkl.setLore(Arrays.asList("jkl"));
+        jkl.setLore(List.of("jkl"));
         jkl.setItemModel(VortexManipulatorVariant.FIVE.getKey());
         five.setItemMeta(jkl);
         // 6 mno
         ItemStack six = new ItemStack(Material.BOWL, 1);
         ItemMeta mno = six.getItemMeta();
         mno.setDisplayName("6");
-        mno.setLore(Arrays.asList("mno"));
+        mno.setLore(List.of("mno"));
         mno.setItemModel(VortexManipulatorVariant.SIX.getKey());
         six.setItemMeta(mno);
         // 7 pqrs
         ItemStack seven = new ItemStack(Material.BOWL, 1);
         ItemMeta pqrs = seven.getItemMeta();
         pqrs.setDisplayName("7");
-        pqrs.setLore(Arrays.asList("pqrs"));
+        pqrs.setLore(List.of("pqrs"));
         pqrs.setItemModel(VortexManipulatorVariant.SEVEN.getKey());
         seven.setItemMeta(pqrs);
         // 8 tuv
         ItemStack eight = new ItemStack(Material.BOWL, 1);
         ItemMeta tuv = eight.getItemMeta();
         tuv.setDisplayName("8");
-        tuv.setLore(Arrays.asList("tuv"));
+        tuv.setLore(List.of("tuv"));
         tuv.setItemModel(VortexManipulatorVariant.EIGHT.getKey());
         eight.setItemMeta(tuv);
         // 9 wxyz
         ItemStack nine = new ItemStack(Material.BOWL, 1);
         ItemMeta wxyz = nine.getItemMeta();
         wxyz.setDisplayName("9");
-        wxyz.setLore(Arrays.asList("wxyz"));
+        wxyz.setLore(List.of("wxyz"));
         wxyz.setItemModel(VortexManipulatorVariant.NINE.getKey());
         nine.setItemMeta(wxyz);
         // 0
@@ -122,14 +122,14 @@ public class TVMGUI {
         ItemStack hash = new ItemStack(Material.BOWL, 1);
         ItemMeta symbols = hash.getItemMeta();
         symbols.setDisplayName("#");
-        symbols.setLore(Arrays.asList("~_-"));
+        symbols.setLore(List.of("~_-"));
         symbols.setItemModel(VortexManipulatorVariant.HASH.getKey());
         hash.setItemMeta(symbols);
         // space
         ItemStack star = new ItemStack(Material.BOWL, 1);
         ItemMeta space = star.getItemMeta();
         space.setDisplayName("*");
-        space.setLore(Arrays.asList("Space"));
+        space.setLore(List.of("Space"));
         space.setItemModel(VortexManipulatorVariant.STAR.getKey());
         star.setItemMeta(space);
         // world
@@ -163,7 +163,7 @@ public class TVMGUI {
         ItemMeta yon = tach.getItemMeta();
         yon.setDisplayName("Tachyon Level");
         int level = (int) (percent * 100);
-        List<String> lore = Arrays.asList(level + "%");
+        List<String> lore = List.of(level + "%");
         NamespacedKey tachyon = VortexManipulatorVariant.PERCENT_HUNDRED.getKey();
         if (level == 0) {
             tachyon = VortexManipulatorVariant.PERCENT_ZERO.getKey();

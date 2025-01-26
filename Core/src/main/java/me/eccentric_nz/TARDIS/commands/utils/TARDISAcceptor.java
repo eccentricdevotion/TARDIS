@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.utils;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -24,6 +23,8 @@ import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 public class TARDISAcceptor {
 

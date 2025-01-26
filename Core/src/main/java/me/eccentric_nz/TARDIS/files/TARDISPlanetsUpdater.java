@@ -25,7 +25,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
@@ -196,7 +196,7 @@ public class TARDISPlanetsUpdater {
             planets_config.set("planets.skaro.resource_pack", "default");
             planets_config.set("planets.skaro.acid", true);
             planets_config.set("planets.skaro.acid_damage", 5);
-            planets_config.set("planets.skaro.acid_potions", Arrays.asList("WEAKNESS", "POISON"));
+            planets_config.set("planets.skaro.acid_potions", List.of("WEAKNESS", "POISON"));
             planets_config.set("planets.skaro.rust", true);
             planets_config.set("planets.skaro.flying_daleks", true);
             planets_config.set("planets.skaro.gamemode", "SURVIVAL");

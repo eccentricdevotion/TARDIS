@@ -33,7 +33,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -47,7 +46,7 @@ public class TARDISHandlesProgramListener implements Listener {
     private final HashMap<UUID, Integer> scroll_start = new HashMap<>();
     private final HashMap<UUID, List<TARDISHandlesBlock>> scroll_list = new HashMap<>();
     private final HashMap<UUID, TARDISHandlesCategory> scroll_category = new HashMap<>();
-    private final List<Material> allowed = Arrays.asList(Material.MUSIC_DISC_CHIRP, Material.MUSIC_DISC_WAIT, Material.MUSIC_DISC_CAT, Material.MUSIC_DISC_BLOCKS);
+    private final List<Material> allowed = List.of(Material.MUSIC_DISC_CHIRP, Material.MUSIC_DISC_WAIT, Material.MUSIC_DISC_CAT, Material.MUSIC_DISC_BLOCKS);
 
     public TARDISHandlesProgramListener(TARDIS plugin) {
         this.plugin = plugin;
@@ -142,7 +141,7 @@ public class TARDISHandlesProgramListener implements Listener {
                     ItemStack is = new ItemStack(Material.MUSIC_DISC_WARD, 1);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName("Handles Program Disk");
-                    im.setLore(Arrays.asList("Untitled Disk", pid + "", "Checked OUT"));
+                    im.setLore(List.of("Untitled Disk", pid + "", "Checked OUT"));
                     im.addItemFlags(ItemFlag.values());
                     im.setItemModel(DiskVariant.HANDLES_DISK.getKey());
                     is.setItemMeta(im);

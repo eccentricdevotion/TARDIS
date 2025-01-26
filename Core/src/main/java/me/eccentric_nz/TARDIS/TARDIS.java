@@ -1456,7 +1456,7 @@ public class TARDIS extends JavaPlugin {
      * Loads the custom configuration files.
      */
     private void loadCustomConfigs() {
-        List<String> files = Arrays.asList("achievements.yml", "adaptive.yml", "artron.yml", "blaster.yml", "blocks.yml", "condensables.yml", "custom_consoles.yml", "custom_models.yml", "custom_doors.yml", "custom_time_rotors.yml", "flat_world.yml", "handles.yml", "items.yml", "kits.yml", "monsters.yml", "recipes.yml", "regeneration.yml", "rooms.yml", "shop.yml", "system_upgrades.yml", "tag.yml", "vortex_manipulator.yml");
+        List<String> files = List.of("achievements.yml", "adaptive.yml", "artron.yml", "blaster.yml", "blocks.yml", "condensables.yml", "custom_consoles.yml", "custom_models.yml", "custom_doors.yml", "custom_time_rotors.yml", "flat_world.yml", "handles.yml", "items.yml", "kits.yml", "monsters.yml", "recipes.yml", "regeneration.yml", "rooms.yml", "shop.yml", "system_upgrades.yml", "tag.yml", "vortex_manipulator.yml");
         for (String f : files) {
 //            debug(f);
             tardisCopier.copy(f);

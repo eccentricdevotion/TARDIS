@@ -25,13 +25,12 @@ import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.sensor.PowerSensor;
-import me.eccentric_nz.TARDIS.sensor.SensorToggle;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
+import me.eccentric_nz.TARDIS.sensor.PowerSensor;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
@@ -54,7 +53,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * The handheld Recall Button on the TARDIS Stattenheim remote broadcasts a Stattenheim signal through the Vortex, which
@@ -187,7 +189,7 @@ public class TARDISStattenheimListener implements Listener {
                         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, decremented);
                         // set the lore
                         String coloured = ChatColor.YELLOW + "" + decremented;
-                        List<String> lore = Arrays.asList("Right-click block", "to call TARDIS", "Uses left", coloured);
+                        List<String> lore = List.of("Right-click block", "to call TARDIS", "Uses left", coloured);
                         im.setLore(lore);
                         is.setItemMeta(im);
                         boolean hidden = tardis.isHidden();

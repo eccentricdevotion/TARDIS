@@ -24,7 +24,6 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Cocoa;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class TARDISSonicReplant implements Runnable {
     private final Block under;
     private final Material type;
     private final Material air = Material.AIR;
-    private final List<Material> dirt = Arrays.asList(Material.DIRT, Material.COARSE_DIRT, Material.PODZOL, Material.GRASS_BLOCK);
+    private final List<Material> dirt = List.of(Material.DIRT, Material.COARSE_DIRT, Material.PODZOL, Material.GRASS_BLOCK);
     private final Material log = Material.JUNGLE_LOG;
     private final Material soil = Material.FARMLAND;
     private final Material soul = Material.SOUL_SAND;

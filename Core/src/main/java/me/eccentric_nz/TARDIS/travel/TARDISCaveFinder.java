@@ -26,7 +26,6 @@ import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,7 +35,7 @@ import java.util.List;
 public class TARDISCaveFinder {
 
     private final TARDIS plugin;
-    private final List<BlockFace> directions = Arrays.asList(BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH);
+    private final List<BlockFace> directions = List.of(BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH);
 
     public TARDISCaveFinder(TARDIS plugin) {
         this.plugin = plugin;

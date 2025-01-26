@@ -20,7 +20,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,7 +30,7 @@ import java.util.List;
  */
 class TARDISRegulatorSlot {
 
-    final List<Integer> bounds = Arrays.asList(
+    final List<Integer> bounds = List.of(
             0, 1, 2, 3, 4,
             9, 10, 11, 12, 13,
             18, 19, 20, 21, 22,

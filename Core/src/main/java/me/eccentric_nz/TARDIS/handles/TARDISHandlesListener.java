@@ -31,8 +31,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -66,7 +66,7 @@ public class TARDISHandlesListener implements Listener {
         ItemStack is = new ItemStack(Material.BIRCH_BUTTON, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Handles");
-        im.setLore(Arrays.asList("Cyberhead from the", "Maldovar Market"));
+        im.setLore(List.of("Cyberhead from the", "Maldovar Market"));
         im.setItemModel(Whoniverse.HANDLES_OFF.getKey());
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1);
         is.setItemMeta(im);

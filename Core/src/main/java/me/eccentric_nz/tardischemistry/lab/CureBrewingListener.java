@@ -41,26 +41,26 @@ import java.util.*;
 public class CureBrewingListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<String> elements = Arrays.asList("Silver", "Bismuth", "Calcium", "Cobalt");
-    private final List<PotionType> cures = Arrays.asList(PotionType.AWKWARD, PotionType.MUNDANE, PotionType.THICK, PotionType.WATER);
+    private final List<String> elements = List.of("Silver", "Bismuth", "Calcium", "Cobalt");
+    private final List<PotionType> cures = List.of(PotionType.AWKWARD, PotionType.MUNDANE, PotionType.THICK, PotionType.WATER);
     private final HashMap<PotionType, List<String>> potions = new HashMap<>();
     private final Set<UUID> noPickUps = new HashSet<>();
 
     public CureBrewingListener(TARDIS plugin) {
         this.plugin = plugin;
-        potions.put(PotionType.FIRE_RESISTANCE, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "MAGMA_CREAM", "NETHER_WART"));
-        potions.put(PotionType.HEALING, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "GLISTERING_MELON", "NETHER_WART"));
-        potions.put(PotionType.INVISIBILITY, Arrays.asList("BLAZE_POWDER", "FERMENTED_SPIDER_EYE", "GLASS_BOTTLE", "GOLDEN_CARROT", "NETHER_WART"));
-        potions.put(PotionType.LEAPING, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "NETHER_WART", "RABBIT_FOOT"));
-        potions.put(PotionType.NIGHT_VISION, Arrays.asList("BLAZE_POWDER", "CARROT", "GLASS_BOTTLE", "GOLDEN_CARROT", "NETHER_WART"));
-        potions.put(PotionType.REGENERATION, Arrays.asList("BLAZE_POWDER", "GHAST_TEAR", "GLASS_BOTTLE", "NETHER_WART"));
-        potions.put(PotionType.SWIFTNESS, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "NETHER_WART", "SUGAR"));
-        potions.put(PotionType.STRENGTH, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "IRON_INGOT", "NETHER_WART"));
-        potions.put(PotionType.WATER_BREATHING, Arrays.asList("BLAZE_POWDER", "GLASS_BOTTLE", "NETHER_WART", "PUFFERFISH"));
-        potions.put(PotionType.AWKWARD, Arrays.asList("BLAZE_POWDER", "FEATHER:Silver", "GLASS_BOTTLE", "NETHER_WART"));
-        potions.put(PotionType.MUNDANE, Arrays.asList("BLAZE_POWDER", "FEATHER:Cobalt", "GLASS_BOTTLE", "NETHER_WART"));
-        potions.put(PotionType.THICK, Arrays.asList("BLAZE_POWDER", "FEATHER:Calcium", "GLASS_BOTTLE", "NETHER_WART"));
-        potions.put(PotionType.WATER, Arrays.asList("BLAZE_POWDER", "FEATHER:Bismuth", "GLASS_BOTTLE", "NETHER_WART"));
+        potions.put(PotionType.FIRE_RESISTANCE, List.of("BLAZE_POWDER", "GLASS_BOTTLE", "MAGMA_CREAM", "NETHER_WART"));
+        potions.put(PotionType.HEALING, List.of("BLAZE_POWDER", "GLASS_BOTTLE", "GLISTERING_MELON", "NETHER_WART"));
+        potions.put(PotionType.INVISIBILITY, List.of("BLAZE_POWDER", "FERMENTED_SPIDER_EYE", "GLASS_BOTTLE", "GOLDEN_CARROT", "NETHER_WART"));
+        potions.put(PotionType.LEAPING, List.of("BLAZE_POWDER", "GLASS_BOTTLE", "NETHER_WART", "RABBIT_FOOT"));
+        potions.put(PotionType.NIGHT_VISION, List.of("BLAZE_POWDER", "CARROT", "GLASS_BOTTLE", "GOLDEN_CARROT", "NETHER_WART"));
+        potions.put(PotionType.REGENERATION, List.of("BLAZE_POWDER", "GHAST_TEAR", "GLASS_BOTTLE", "NETHER_WART"));
+        potions.put(PotionType.SWIFTNESS, List.of("BLAZE_POWDER", "GLASS_BOTTLE", "NETHER_WART", "SUGAR"));
+        potions.put(PotionType.STRENGTH, List.of("BLAZE_POWDER", "GLASS_BOTTLE", "IRON_INGOT", "NETHER_WART"));
+        potions.put(PotionType.WATER_BREATHING, List.of("BLAZE_POWDER", "GLASS_BOTTLE", "NETHER_WART", "PUFFERFISH"));
+        potions.put(PotionType.AWKWARD, List.of("BLAZE_POWDER", "FEATHER:Silver", "GLASS_BOTTLE", "NETHER_WART"));
+        potions.put(PotionType.MUNDANE, List.of("BLAZE_POWDER", "FEATHER:Cobalt", "GLASS_BOTTLE", "NETHER_WART"));
+        potions.put(PotionType.THICK, List.of("BLAZE_POWDER", "FEATHER:Calcium", "GLASS_BOTTLE", "NETHER_WART"));
+        potions.put(PotionType.WATER, List.of("BLAZE_POWDER", "FEATHER:Bismuth", "GLASS_BOTTLE", "NETHER_WART"));
     }
 
     @EventHandler(priority = EventPriority.NORMAL)

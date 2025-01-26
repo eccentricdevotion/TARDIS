@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.floodgate;
 
-import java.util.UUID;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.geysermc.floodgate.api.FloodgateApi;
+
+import java.util.UUID;
+import java.util.regex.Pattern;
 
 public class TARDISFloodgate {
 

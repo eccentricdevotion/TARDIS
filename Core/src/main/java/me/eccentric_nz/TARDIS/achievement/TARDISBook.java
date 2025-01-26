@@ -16,12 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.achievement;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
@@ -29,6 +23,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * Book Monsters are creatures were made up entirely of books. They were known
@@ -73,7 +73,7 @@ public class TARDISBook {
         }
         book_str = AT_P.matcher(book_str).replaceAll(p.getName());
         // two line breaks = new page
-        List<String> pages = Arrays.asList(book_str.split(ls + ls));
+        List<String> pages = List.of(book_str.split(ls + ls));
         // make the book
         ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
         BookMeta meta = (BookMeta) book.getItemMeta();

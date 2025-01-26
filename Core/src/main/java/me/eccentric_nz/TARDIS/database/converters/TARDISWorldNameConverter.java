@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.database.converters;
 
-import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeUtilities;
+
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TARDISWorldNameConverter {
 

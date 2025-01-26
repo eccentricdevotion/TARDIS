@@ -45,7 +45,6 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -74,10 +73,10 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     private final HashMap<UUID, Integer> tropics = new HashMap<>();
     private final HashMap<UUID, Integer> wolves = new HashMap<>();
     private final HashMap<UUID, String> disguises = new HashMap<>();
-    private final List<Integer> slimeSizes = Arrays.asList(1, 2, 4);
-    private final List<Integer> pufferStates = Arrays.asList(0, 1, 2);
-    private final List<String> twaMonsters = Arrays.asList("CLOCKWORK_DROID", "CYBERMAN", "DALEK", "DALEK_SEC", "DAVROS", "EMPTY_CHILD", "HATH", "HEADLESS_MONK", "ICE WARRIOR", "JUDOON", "K9", "OOD", "RACNOSS", "SCARECROW", "SEA_DEVIL", "SILENT", "SILURIAN", "SLITHEEN", "SONTARAN", "STRAX", "SYCORAX", "TOCLAFANE", "VASHTA_NERADA", "WEEPING_ANGEL", "ZYGON");
-    private final List<String> twaOnly = Arrays.asList("DALEK", "DAVROS", "K9", "TOCLAFANE");
+    private final List<Integer> slimeSizes = List.of(1, 2, 4);
+    private final List<Integer> pufferStates = List.of(0, 1, 2);
+    private final List<String> twaMonsters = List.of("CLOCKWORK_DROID", "CYBERMAN", "DALEK", "DALEK_SEC", "DAVROS", "EMPTY_CHILD", "HATH", "HEADLESS_MONK", "ICE WARRIOR", "JUDOON", "K9", "OOD", "RACNOSS", "SCARECROW", "SEA_DEVIL", "SILENT", "SILURIAN", "SLITHEEN", "SONTARAN", "STRAX", "SYCORAX", "TOCLAFANE", "VASHTA_NERADA", "WEEPING_ANGEL", "ZYGON");
+    private final List<String> twaOnly = List.of("DALEK", "DAVROS", "K9", "TOCLAFANE");
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
         super(plugin);
@@ -180,10 +179,10 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                             masterMeta.setLore(List.of(onoff));
                             masterMeta.setItemModel(isOff ? Button.MASTER_ON.getKey() : Button.MASTER_OFF.getKey());
                         } else {
-                            masterMeta.setLore(Arrays.asList("The Master Race is already", " set to " + plugin.getTrackerKeeper().getImmortalityGate() + "!", "Try again later."));
+                            masterMeta.setLore(List.of("The Master Race is already", " set to " + plugin.getTrackerKeeper().getImmortalityGate() + "!", "Try again later."));
                         }
                     } else {
-                        masterMeta.setLore(Arrays.asList("You do not have permission", "to be The Master!"));
+                        masterMeta.setLore(List.of("You do not have permission", "to be The Master!"));
                     }
                     masterButton.setItemMeta(masterMeta);
                 }

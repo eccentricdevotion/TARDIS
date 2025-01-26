@@ -27,10 +27,7 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 /**
  *
@@ -62,7 +59,7 @@ public class TARDISSonicBlasterRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(s);
         if (!plugin.getBlasterConfig().getString("recipes." + s + ".lore").isEmpty()) {
-            im.setLore(Arrays.asList(plugin.getBlasterConfig().getString("recipes." + s + ".lore").split("~")));
+            im.setLore(List.of(plugin.getBlasterConfig().getString("recipes." + s + ".lore").split("~")));
         }
         im.setItemModel(modelData.get(s));
         im.addItemFlags(ItemFlag.values());

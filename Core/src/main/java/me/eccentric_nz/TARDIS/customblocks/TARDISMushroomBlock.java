@@ -16,17 +16,17 @@
  */
 package me.eccentric_nz.TARDIS.customblocks;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.MultipleFacing;
 
+import java.util.HashMap;
+import java.util.List;
+
 public class TARDISMushroomBlock {
 
-    private static final List<String> vanillaBrown = Arrays.asList(
+    private static final List<String> vanillaBrown = List.of(
             "minecraft:brown_mushroom_block[down=false,east=false,north=false,south=false,up=false,west=false]",
             "minecraft:brown_mushroom_block[down=false,east=false,north=false,south=false,up=true,west=false]",
             "minecraft:brown_mushroom_block[down=false,east=false,north=false,south=false,up=true,west=true]",
@@ -39,7 +39,7 @@ public class TARDISMushroomBlock {
             "minecraft:brown_mushroom_block[down=false,east=true,north=true,south=false,up=true,west=false]",
             "minecraft:brown_mushroom_block[down=true,east=true,north=true,south=true,up=true,west=true]"
     );
-    private static final List<String> vanillaRed = Arrays.asList(
+    private static final List<String> vanillaRed = List.of(
             "minecraft:red_mushroom_block[down=false,east=false,north=false,south=false,up=false,west=false]",
             "minecraft:red_mushroom_block[down=false,east=false,north=false,south=false,up=false,west=true]",
             "minecraft:red_mushroom_block[down=false,east=false,north=false,south=false,up=true,west=true]",
@@ -60,7 +60,7 @@ public class TARDISMushroomBlock {
             "minecraft:red_mushroom_block[down=true,east=true,north=true,south=true,up=true,west=true]",
             "minecraft:red_mushroom_block[down=false,east=false,north=false,south=false,up=true,west=false]"
     );
-    private static final List<String> vanillaStem = Arrays.asList(
+    private static final List<String> vanillaStem = List.of(
             "minecraft:mushroom_stem[down=false,east=false,north=false,south=false,up=false,west=false]",
             "minecraft:mushroom_stem[down=false,east=true,north=true,south=true,up=false,west=true]",
             "minecraft:mushroom_stem[down=true,east=true,north=true,south=true,up=true,west=true]"

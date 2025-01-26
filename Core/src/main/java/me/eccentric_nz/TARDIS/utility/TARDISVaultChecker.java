@@ -26,7 +26,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class TARDISVaultChecker implements Runnable {
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    private final List<Material> chests = Arrays.asList(Material.CHEST, Material.TRAPPED_CHEST);
+    private final List<Material> chests = List.of(Material.CHEST, Material.TRAPPED_CHEST);
     private final String prefix;
 
     public TARDISVaultChecker(TARDIS plugin) {

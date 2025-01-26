@@ -16,7 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.custommodels;
 
-import me.eccentric_nz.TARDIS.custommodels.keys.*;
+import me.eccentric_nz.TARDIS.custommodels.keys.Button;
+import me.eccentric_nz.TARDIS.custommodels.keys.CybermanVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import org.bukkit.Material;
 
 import java.util.List;

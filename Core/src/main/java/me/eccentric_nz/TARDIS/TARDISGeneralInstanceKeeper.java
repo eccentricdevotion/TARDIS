@@ -56,9 +56,9 @@ public class TARDISGeneralInstanceKeeper {
     private final HashMap<UUID, TARDISCondenserData> roomCondenserData = new HashMap<>();
     private final Set<Material> transparent;
     private final Set<Block> artronFurnaces = new HashSet<>();
-    private final List<BlockFace> blockFaces = Arrays.asList(BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
-    private final List<BlockFace> faces = Arrays.asList(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
-    private final List<BlockFace> surrounding = Arrays.asList(BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST);
+    private final List<BlockFace> blockFaces = List.of(BlockFace.UP, BlockFace.DOWN, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
+    private final List<BlockFace> faces = List.of(BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.EAST);
+    private final List<BlockFace> surrounding = List.of(BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_WEST);
     private final Set<Location> rechargers = new HashSet<>();
     private final List<Material> goodNether = new ArrayList<>() {
         {

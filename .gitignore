@@ -1,43 +1,40 @@
-# osx noise
-.DS_Store
-profile
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 .gradle/
-# xcode noise
-build/*
-*.mode1
-*.mode1v3
-*.mode2v3
-*.perspective
-*.perspectivev3
-*.pbxuser
-*.xcworkspace
-xcuserdata
 
-# vscode
-.vscode/*
+### IntelliJ IDEA ###
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+.idea/
+*.iws
+*.iml
+*.ipr
 
-# svn & cvs
-.svn
-CVS
-/target/
-/Core/target/
-/Spigot/target/
-/Paper/target/
-/Distribution/target/
-/sounds/
-/psd/
-/nbproject/
-/bin/
-/movies/
-/OTG_Files/
-
-# other stuff
+### Eclipse ###
+.apt_generated
 .classpath
+.factorypath
 .project
 .settings
-nb-configuration.xml
-nbactions.xml
+.springBeans
+.sts4-cache
 
-.idea/
-*.iml
-_site/
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store

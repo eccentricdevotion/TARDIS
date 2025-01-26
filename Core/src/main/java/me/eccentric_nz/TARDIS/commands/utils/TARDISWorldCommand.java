@@ -35,7 +35,10 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Load and unload worlds on the server
@@ -45,12 +48,12 @@ import java.util.*;
 public class TARDISWorldCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
-    private final List<String> ROOT_SUBS = Arrays.asList("load", "unload", "enable", "disable", "gm", "rename", "update_name", "info", "dimensionicon");
+    private final List<String> ROOT_SUBS = List.of("load", "unload", "enable", "disable", "gm", "rename", "update_name", "info", "dimensionicon");
     private final List<String> WORLD_SUBS = new ArrayList<>();
     private final List<String> TYPE_SUBS = new ArrayList<>();
     private final List<String> ENV_SUBS = new ArrayList<>();
     private final List<String> GM_SUBS = new ArrayList<>();
-    private final List<String> PLANET_SUBS = Arrays.asList("gallifrey", "siluria", "skaro");
+    private final List<String> PLANET_SUBS = List.of("gallifrey", "siluria", "skaro");
 
     public TARDISWorldCommand(TARDIS plugin) {
         this.plugin = plugin;

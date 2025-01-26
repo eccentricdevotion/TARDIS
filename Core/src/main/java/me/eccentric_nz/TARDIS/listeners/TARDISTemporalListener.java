@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.listeners;
 
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -30,13 +28,15 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 /**
  * @author eccentric_nz
  */
 public class TARDISTemporalListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<String> notthese = Arrays.asList("Fob Watch", "Vortex Manipulator");
+    private final List<String> notthese = List.of("Fob Watch", "Vortex Manipulator");
 
     public TARDISTemporalListener(TARDIS plugin) {
         this.plugin = plugin;

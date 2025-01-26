@@ -32,7 +32,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -110,7 +109,7 @@ public class TARDISRoomPersister {
                         rd.setDirection(COMPASS.valueOf(rs.getString("direction")));
                         rd.setMiddleType(Material.valueOf(rs.getString("middle_type")));
                         rd.setFloorType(Material.valueOf(rs.getString("floor_type")));
-                        List<String> postBlocks = new ArrayList<>(Arrays.asList(rs.getString("post_blocks").split("@")));
+                        List<String> postBlocks = new ArrayList<>(List.of(rs.getString("post_blocks").split("@")));
                         rd.setPostBlocks(postBlocks);
                         long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
                         // get the player who's tardis this is

@@ -22,6 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ReducerInventory {
 
@@ -39,7 +40,7 @@ public class ReducerInventory {
         ItemStack info = new ItemStack(GUIChemistry.INFO.material(), 1);
         ItemMeta info_im = info.getItemMeta();
         info_im.setDisplayName("Info");
-        info_im.setLore(Arrays.asList("Reduce a substance to its", "component elements.", "Place an item in the first slot,", "then click the reduce button."));
+        info_im.setLore(List.of("Reduce a substance to its", "component elements.", "Place an item in the first slot,", "then click the reduce button."));
         info_im.setItemModel(GUIChemistry.INFO.key());
         info.setItemMeta(info_im);
         stack[GUIChemistry.INFO.slot()] = info;

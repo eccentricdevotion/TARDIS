@@ -23,7 +23,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -73,7 +72,7 @@ public class TARDISSonicMenuInventory {
         ItemStack info = new ItemStack(Material.BOOK, 1);
         ItemMeta info_im = info.getItemMeta();
         info_im.setDisplayName("Instructions");
-        List<String> lore = Arrays.asList("Put your Sonic Screwdriver", "in the bottom left most slot", "and then click on the", "Sonic of your choice.");
+        List<String> lore = List.of("Put your Sonic Screwdriver", "in the bottom left most slot", "and then click on the", "Sonic of your choice.");
         info_im.setLore(lore);
         info_im.setItemModel(GUISonicPreferences.INSTRUCTIONS.getModel());
         info.setItemMeta(info_im);
@@ -82,7 +81,7 @@ public class TARDISSonicMenuInventory {
         ItemStack name = new ItemStack(Material.BOOK, 1);
         ItemMeta name_im = name.getItemMeta();
         name_im.setDisplayName("Name");
-        List<String> display = Arrays.asList("If you want to have", "a coloured display name", "click the wool block", "to choose a colour.");
+        List<String> display = List.of("If you want to have", "a coloured display name", "click the wool block", "to choose a colour.");
         name_im.setLore(display);
         name_im.setItemModel(GUISonicPreferences.INSTRUCTIONS.getModel());
         name.setItemMeta(name_im);

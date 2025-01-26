@@ -16,13 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
+import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.HandlesVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
 import org.bukkit.NamespacedKey;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,26 +32,26 @@ public enum TARDISHandlesBlock {
 
     // paper
     // command
-    COMEHERE(TARDISHandlesCategory.COMMAND, "/tardis comehere command", Arrays.asList("Make the TARDIS", "travel to you"), HandlesVariant.HANDLES_COMMAND_COMEHERE.getKey()),
-    HIDE(TARDISHandlesCategory.COMMAND, "/tardis hide command", Arrays.asList("Make the TARDIS", "exterior invisible"), HandlesVariant.HANDLES_COMMAND_HIDE.getKey()),
-    REBUILD(TARDISHandlesCategory.COMMAND, "/tardis rebuild command", Arrays.asList("Rebuild the", "TARDIS exterior"), HandlesVariant.HANDLES_COMMAND_REBUILD.getKey()),
-    SCAN(TARDISHandlesCategory.COMMAND, "TARDIS scan command", Arrays.asList("Scan the environment", "outside the TARDIS"), HandlesVariant.HANDLES_COMMAND_SCAN.getKey()),
-    TAKE_OFF(TARDISHandlesCategory.COMMAND, "TARDIS take off command", Arrays.asList("Make the TARDIS enter", "the Time Vortex"), HandlesVariant.HANDLES_COMMAND_TAKE_OFF.getKey()),
-    TRAVEL(TARDISHandlesCategory.COMMAND, "/tardistravel command", Arrays.asList("Make the TARDIS", "travel somewhere"), HandlesVariant.HANDLES_COMMAND_TRAVEL.getKey()),
-    LAND(TARDISHandlesCategory.COMMAND, "TARDIS land command", Arrays.asList("Make the TARDIS exit", "the Time Vortex"), HandlesVariant.HANDLES_COMMAND_LAND.getKey()),
+    COMEHERE(TARDISHandlesCategory.COMMAND, "/tardis comehere command", List.of("Make the TARDIS", "travel to you"), HandlesVariant.HANDLES_COMMAND_COMEHERE.getKey()),
+    HIDE(TARDISHandlesCategory.COMMAND, "/tardis hide command", List.of("Make the TARDIS", "exterior invisible"), HandlesVariant.HANDLES_COMMAND_HIDE.getKey()),
+    REBUILD(TARDISHandlesCategory.COMMAND, "/tardis rebuild command", List.of("Rebuild the", "TARDIS exterior"), HandlesVariant.HANDLES_COMMAND_REBUILD.getKey()),
+    SCAN(TARDISHandlesCategory.COMMAND, "TARDIS scan command", List.of("Scan the environment", "outside the TARDIS"), HandlesVariant.HANDLES_COMMAND_SCAN.getKey()),
+    TAKE_OFF(TARDISHandlesCategory.COMMAND, "TARDIS take off command", List.of("Make the TARDIS enter", "the Time Vortex"), HandlesVariant.HANDLES_COMMAND_TAKE_OFF.getKey()),
+    TRAVEL(TARDISHandlesCategory.COMMAND, "/tardistravel command", List.of("Make the TARDIS", "travel somewhere"), HandlesVariant.HANDLES_COMMAND_TRAVEL.getKey()),
+    LAND(TARDISHandlesCategory.COMMAND, "TARDIS land command", List.of("Make the TARDIS exit", "the Time Vortex"), HandlesVariant.HANDLES_COMMAND_LAND.getKey()),
     // control
-    FOR(TARDISHandlesCategory.CONTROL, "FOR loop", Arrays.asList("Use to start a loop", "with a counter"), HandlesVariant.HANDLES_CONTROL_FOR.getKey()),
-    TO(TARDISHandlesCategory.CONTROL, "TO", Arrays.asList("Use with a FOR loop", "to specify the number", "of loops"), HandlesVariant.HANDLES_CONTROL_TO.getKey()),
-    DO(TARDISHandlesCategory.CONTROL, "DO", Arrays.asList("Use after an", "IF or FOR loop"), HandlesVariant.HANDLES_CONTROL_DO.getKey()),
-    END(TARDISHandlesCategory.CONTROL, "END", Arrays.asList("Use to finish", "a conditional or", "loop statement"), HandlesVariant.HANDLES_CONTROL_END.getKey()),
-    IF(TARDISHandlesCategory.CONTROL, "IF", Arrays.asList("Check whether a", "condition is", "true or false"), HandlesVariant.HANDLES_CONTROL_IF.getKey()),
-    ELSE(TARDISHandlesCategory.CONTROL, "ELSE", Arrays.asList("Use to run actions", "if an IF is false"), HandlesVariant.HANDLES_CONTROL_ELSE.getKey()),
+    FOR(TARDISHandlesCategory.CONTROL, "FOR loop", List.of("Use to start a loop", "with a counter"), HandlesVariant.HANDLES_CONTROL_FOR.getKey()),
+    TO(TARDISHandlesCategory.CONTROL, "TO", List.of("Use with a FOR loop", "to specify the number", "of loops"), HandlesVariant.HANDLES_CONTROL_TO.getKey()),
+    DO(TARDISHandlesCategory.CONTROL, "DO", List.of("Use after an", "IF or FOR loop"), HandlesVariant.HANDLES_CONTROL_DO.getKey()),
+    END(TARDISHandlesCategory.CONTROL, "END", List.of("Use to finish", "a conditional or", "loop statement"), HandlesVariant.HANDLES_CONTROL_END.getKey()),
+    IF(TARDISHandlesCategory.CONTROL, "IF", List.of("Check whether a", "condition is", "true or false"), HandlesVariant.HANDLES_CONTROL_IF.getKey()),
+    ELSE(TARDISHandlesCategory.CONTROL, "ELSE", List.of("Use to run actions", "if an IF is false"), HandlesVariant.HANDLES_CONTROL_ELSE.getKey()),
     ELSE_IF(TARDISHandlesCategory.CONTROL, "ELSE IF", List.of("Check another condition"), HandlesVariant.HANDLES_CONTROL_ELSE_IF.getKey()),
-    BREAK(TARDISHandlesCategory.CONTROL, "BREAK", Arrays.asList("Use to break", "out of a loop"), HandlesVariant.HANDLES_CONTROL_BREAK.getKey()),
+    BREAK(TARDISHandlesCategory.CONTROL, "BREAK", List.of("Use to break", "out of a loop"), HandlesVariant.HANDLES_CONTROL_BREAK.getKey()),
     // event
     MATERIALISE(TARDISHandlesCategory.EVENT, "TARDIS materialisation event", null, HandlesVariant.HANDLES_EVENT_MATERIALISE.getKey()),
     DEMATERIALISE(TARDISHandlesCategory.EVENT, "TARDIS dematerialisation event", null, HandlesVariant.HANDLES_EVENT_DEMATERIALISE.getKey()),
-    ARTRON(TARDISHandlesCategory.EVENT, "Artron Level event", Arrays.asList("Use with Operator", "and Number blocks"), HandlesVariant.HANDLES_EVENT_ARTRON.getKey()),
+    ARTRON(TARDISHandlesCategory.EVENT, "Artron Level event", List.of("Use with Operator", "and Number blocks"), HandlesVariant.HANDLES_EVENT_ARTRON.getKey()),
     DEATH(TARDISHandlesCategory.EVENT, "Time Lord Death event", null, HandlesVariant.HANDLES_EVENT_DEATH.getKey()),
     ENTER(TARDISHandlesCategory.EVENT, "TARDIS Entry event", null, HandlesVariant.HANDLES_EVENT_ENTER.getKey()),
     EXIT(TARDISHandlesCategory.EVENT, "TARDIS Exit event", null, HandlesVariant.HANDLES_EVENT_EXIT.getKey()),
@@ -71,36 +70,36 @@ public enum TARDISHandlesBlock {
     SEVEN(TARDISHandlesCategory.NUMBER, "7", List.of("The number seven"), HandlesVariant.HANDLES_NUMBER_SEVEN.getKey()),
     EIGHT(TARDISHandlesCategory.NUMBER, "8", List.of("The number eight"), HandlesVariant.HANDLES_NUMBER_EIGHT.getKey()),
     NINE(TARDISHandlesCategory.NUMBER, "9", List.of("The number nine"), HandlesVariant.HANDLES_NUMBER_NINE.getKey()),
-    COIN(TARDISHandlesCategory.NUMBER, "Flip a coin", Arrays.asList("Returns a true", "or false value"), HandlesVariant.HANDLES_NUMBER_COIN.getKey()),
-    RANDOM(TARDISHandlesCategory.NUMBER, "Random number", Arrays.asList("Generate a random number", "between 0 and the", "number that follows"), HandlesVariant.HANDLES_NUMBER_RANDOM.getKey()),
+    COIN(TARDISHandlesCategory.NUMBER, "Flip a coin", List.of("Returns a true", "or false value"), HandlesVariant.HANDLES_NUMBER_COIN.getKey()),
+    RANDOM(TARDISHandlesCategory.NUMBER, "Random number", List.of("Generate a random number", "between 0 and the", "number that follows"), HandlesVariant.HANDLES_NUMBER_RANDOM.getKey()),
     // operator
-    ASSIGNMENT(TARDISHandlesCategory.OPERATOR, "Assignment operator", Arrays.asList("Used to assign a", "value to a variable"), HandlesVariant.HANDLES_OPERATOR_ASSIGNMENT.getKey()),
-    ADDITION(TARDISHandlesCategory.OPERATOR, "Addition operator", Arrays.asList("Use to add two", "numbers together"), HandlesVariant.HANDLES_OPERATOR_ADDITION.getKey()),
-    SUBTRACTION(TARDISHandlesCategory.OPERATOR, "Subtraction operator", Arrays.asList("Use to subtract one", "number from anther"), HandlesVariant.HANDLES_OPERATOR_SUBTRACTION.getKey()),
-    MULTIPLICATION(TARDISHandlesCategory.OPERATOR, "Multiplication operator", Arrays.asList("Use to multiply two", "numbers together"), HandlesVariant.HANDLES_OPERATOR_MULTIPLICATION.getKey()),
-    DIVISION(TARDISHandlesCategory.OPERATOR, "Division operator", Arrays.asList("Use to divide one", "number by another"), HandlesVariant.HANDLES_OPERATOR_DIVISION.getKey()),
-    AND(TARDISHandlesCategory.OPERATOR, "AND operator", Arrays.asList("Use to check", "both conditions", "are is true"), HandlesVariant.HANDLES_OPERATOR_AND.getKey()),
-    OR(TARDISHandlesCategory.OPERATOR, "OR operator", Arrays.asList("Use to check", "if either", "condition is true"), HandlesVariant.HANDLES_OPERATOR_OR.getKey()),
-    EQUALS(TARDISHandlesCategory.OPERATOR, "Equality operator", Arrays.asList("Checks if two", "objects are equal"), HandlesVariant.HANDLES_OPERATOR_EQUALS.getKey()),
-    NOT_EQUAL(TARDISHandlesCategory.OPERATOR, "Not equal operator", Arrays.asList("Checks if two objects", "are not the same"), HandlesVariant.HANDLES_OPERATOR_NOT_EQUAL.getKey()),
-    LESS_THAN(TARDISHandlesCategory.OPERATOR, "Less than operator", Arrays.asList("Checks if one number", "is smaller than another"), HandlesVariant.HANDLES_OPERATOR_LESS_THAN.getKey()),
-    LESS_THAN_EQUAL(TARDISHandlesCategory.OPERATOR, "Less than or equal to operator", Arrays.asList("Checks if one number", "is smaller than or", "equal to another"), HandlesVariant.HANDLES_OPERATOR_LESS_THAN_EQUAL.getKey()),
-    GREATER_THAN(TARDISHandlesCategory.OPERATOR, "Greater than operator", Arrays.asList("Checks if one number", "is bigger than another"), HandlesVariant.HANDLES_OPERATOR_GREATER_THAN.getKey()),
-    GREATER_THAN_EQUAL(TARDISHandlesCategory.OPERATOR, "Greater than or equal to operator", Arrays.asList("Checks if one number", "is bigger than or", "equal to another"), HandlesVariant.HANDLES_OPERATOR_GREATER_THAN_EQUAL.getKey()),
-    MODULO(TARDISHandlesCategory.OPERATOR, "Modulo operator", Arrays.asList("Gets the remainder", "left over after", "dividing two numbers"), HandlesVariant.HANDLES_OPERATOR_MODULO.getKey()),
+    ASSIGNMENT(TARDISHandlesCategory.OPERATOR, "Assignment operator", List.of("Used to assign a", "value to a variable"), HandlesVariant.HANDLES_OPERATOR_ASSIGNMENT.getKey()),
+    ADDITION(TARDISHandlesCategory.OPERATOR, "Addition operator", List.of("Use to add two", "numbers together"), HandlesVariant.HANDLES_OPERATOR_ADDITION.getKey()),
+    SUBTRACTION(TARDISHandlesCategory.OPERATOR, "Subtraction operator", List.of("Use to subtract one", "number from anther"), HandlesVariant.HANDLES_OPERATOR_SUBTRACTION.getKey()),
+    MULTIPLICATION(TARDISHandlesCategory.OPERATOR, "Multiplication operator", List.of("Use to multiply two", "numbers together"), HandlesVariant.HANDLES_OPERATOR_MULTIPLICATION.getKey()),
+    DIVISION(TARDISHandlesCategory.OPERATOR, "Division operator", List.of("Use to divide one", "number by another"), HandlesVariant.HANDLES_OPERATOR_DIVISION.getKey()),
+    AND(TARDISHandlesCategory.OPERATOR, "AND operator", List.of("Use to check", "both conditions", "are is true"), HandlesVariant.HANDLES_OPERATOR_AND.getKey()),
+    OR(TARDISHandlesCategory.OPERATOR, "OR operator", List.of("Use to check", "if either", "condition is true"), HandlesVariant.HANDLES_OPERATOR_OR.getKey()),
+    EQUALS(TARDISHandlesCategory.OPERATOR, "Equality operator", List.of("Checks if two", "objects are equal"), HandlesVariant.HANDLES_OPERATOR_EQUALS.getKey()),
+    NOT_EQUAL(TARDISHandlesCategory.OPERATOR, "Not equal operator", List.of("Checks if two objects", "are not the same"), HandlesVariant.HANDLES_OPERATOR_NOT_EQUAL.getKey()),
+    LESS_THAN(TARDISHandlesCategory.OPERATOR, "Less than operator", List.of("Checks if one number", "is smaller than another"), HandlesVariant.HANDLES_OPERATOR_LESS_THAN.getKey()),
+    LESS_THAN_EQUAL(TARDISHandlesCategory.OPERATOR, "Less than or equal to operator", List.of("Checks if one number", "is smaller than or", "equal to another"), HandlesVariant.HANDLES_OPERATOR_LESS_THAN_EQUAL.getKey()),
+    GREATER_THAN(TARDISHandlesCategory.OPERATOR, "Greater than operator", List.of("Checks if one number", "is bigger than another"), HandlesVariant.HANDLES_OPERATOR_GREATER_THAN.getKey()),
+    GREATER_THAN_EQUAL(TARDISHandlesCategory.OPERATOR, "Greater than or equal to operator", List.of("Checks if one number", "is bigger than or", "equal to another"), HandlesVariant.HANDLES_OPERATOR_GREATER_THAN_EQUAL.getKey()),
+    MODULO(TARDISHandlesCategory.OPERATOR, "Modulo operator", List.of("Gets the remainder", "left over after", "dividing two numbers"), HandlesVariant.HANDLES_OPERATOR_MODULO.getKey()),
     // selector
     TIME_LORD(TARDISHandlesCategory.SELECTOR, "Target Time Lord", null, HandlesVariant.HANDLES_SELECTOR_TIME_LORD.getKey()),
     COMPANIONS(TARDISHandlesCategory.SELECTOR, "Target companions", null, HandlesVariant.HANDLES_SELECTOR_COMPANIONS.getKey()),
     TARDIS(TARDISHandlesCategory.SELECTOR, "The TARDIS", null, HandlesVariant.HANDLES_SELECTOR_TARDIS.getKey()),
-    DOOR(TARDISHandlesCategory.SELECTOR, "TARDIS Door", Arrays.asList("Use with an", "Open, Close", "Lock or Unlock block"), HandlesVariant.HANDLES_SELECTOR_DOOR.getKey()),
-    LIGHTS(TARDISHandlesCategory.SELECTOR, "TARDIS Lights", Arrays.asList("Use with an", "On or Off block"), HandlesVariant.HANDLES_SELECTOR_LIGHTS.getKey()),
-    POWER(TARDISHandlesCategory.SELECTOR, "TARDIS Power action", Arrays.asList("Use with a Show,", "On or Off block"), HandlesVariant.HANDLES_SELECTOR_POWER.getKey()),
-    SIEGE(TARDISHandlesCategory.SELECTOR, "Siege Mode action", Arrays.asList("Use with an", "On or Off block"), HandlesVariant.HANDLES_SELECTOR_SIEGE.getKey()),
+    DOOR(TARDISHandlesCategory.SELECTOR, "TARDIS Door", List.of("Use with an", "Open, Close", "Lock or Unlock block"), HandlesVariant.HANDLES_SELECTOR_DOOR.getKey()),
+    LIGHTS(TARDISHandlesCategory.SELECTOR, "TARDIS Lights", List.of("Use with an", "On or Off block"), HandlesVariant.HANDLES_SELECTOR_LIGHTS.getKey()),
+    POWER(TARDISHandlesCategory.SELECTOR, "TARDIS Power action", List.of("Use with a Show,", "On or Off block"), HandlesVariant.HANDLES_SELECTOR_POWER.getKey()),
+    SIEGE(TARDISHandlesCategory.SELECTOR, "Siege Mode action", List.of("Use with an", "On or Off block"), HandlesVariant.HANDLES_SELECTOR_SIEGE.getKey()),
     // variable
-    VARIABLE(TARDISHandlesCategory.VARIABLE, "Variable", Arrays.asList("A generic container", "to hold a value"), HandlesVariant.HANDLES_VARIABLE_VARIABLE.getKey()),
-    X(TARDISHandlesCategory.VARIABLE, "X coordinate", Arrays.asList("Use with a number", "to specify a location"), HandlesVariant.HANDLES_VARIABLE_X.getKey()),
-    Y(TARDISHandlesCategory.VARIABLE, "Y coordinate", Arrays.asList("Use with a number", "to specify a location"), HandlesVariant.HANDLES_VARIABLE_Y.getKey()),
-    Z(TARDISHandlesCategory.VARIABLE, "Z coordinate", Arrays.asList("Use with a number", "to specify a location"), HandlesVariant.HANDLES_VARIABLE_Z.getKey()),
+    VARIABLE(TARDISHandlesCategory.VARIABLE, "Variable", List.of("A generic container", "to hold a value"), HandlesVariant.HANDLES_VARIABLE_VARIABLE.getKey()),
+    X(TARDISHandlesCategory.VARIABLE, "X coordinate", List.of("Use with a number", "to specify a location"), HandlesVariant.HANDLES_VARIABLE_X.getKey()),
+    Y(TARDISHandlesCategory.VARIABLE, "Y coordinate", List.of("Use with a number", "to specify a location"), HandlesVariant.HANDLES_VARIABLE_Y.getKey()),
+    Z(TARDISHandlesCategory.VARIABLE, "Z coordinate", List.of("Use with a number", "to specify a location"), HandlesVariant.HANDLES_VARIABLE_Z.getKey()),
     OPEN(TARDISHandlesCategory.VARIABLE, "Open Door action", null, HandlesVariant.HANDLES_VARIABLE_OPEN.getKey()),
     CLOSE(TARDISHandlesCategory.VARIABLE, "Close Door action", null, HandlesVariant.HANDLES_VARIABLE_CLOSE.getKey()),
     LOCK(TARDISHandlesCategory.VARIABLE, "Lock Door action", null, HandlesVariant.HANDLES_VARIABLE_LOCK.getKey()),
@@ -108,7 +107,7 @@ public enum TARDISHandlesBlock {
     ON(TARDISHandlesCategory.VARIABLE, "On action", null, HandlesVariant.HANDLES_VARIABLE_ON.getKey()),
     OFF(TARDISHandlesCategory.VARIABLE, "Off action", null, HandlesVariant.HANDLES_VARIABLE_OFF.getKey()),
     SHOW(TARDISHandlesCategory.VARIABLE, "Show Artron Levels action", null, HandlesVariant.HANDLES_VARIABLE_SHOW.getKey()),
-    REDSTONE(TARDISHandlesCategory.VARIABLE, "Send Redstone signal", Arrays.asList("Use to power the block", "Handles is placed on"), HandlesVariant.HANDLES_VARIABLE_REDSTONE.getKey()),
+    REDSTONE(TARDISHandlesCategory.VARIABLE, "Send Redstone signal", List.of("Use to power the block", "Handles is placed on"), HandlesVariant.HANDLES_VARIABLE_REDSTONE.getKey()),
     HOME(TARDISHandlesCategory.VARIABLE, "Home Location", null, HandlesVariant.HANDLES_VARIABLE_HOME.getKey()),
     RECHARGER(TARDISHandlesCategory.VARIABLE, "Travel to recharger", null, HandlesVariant.HANDLES_VARIABLE_RECHARGER.getKey()),
     // bowls

@@ -27,7 +27,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.InventoryView;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,7 +40,7 @@ import java.util.UUID;
 public class TARDISRegulatorListener extends TARDISRegulatorSlot implements Listener {
 
     private final TARDIS plugin;
-    private final List<Integer> directions = Arrays.asList(16, 24, 26, 34);
+    private final List<Integer> directions = List.of(16, 24, 26, 34);
 
     public TARDISRegulatorListener(TARDIS plugin) {
         this.plugin = plugin;

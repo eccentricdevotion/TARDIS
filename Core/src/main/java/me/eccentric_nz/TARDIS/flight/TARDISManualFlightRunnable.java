@@ -25,7 +25,6 @@ import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,7 +39,7 @@ class TARDISManualFlightRunnable implements Runnable {
     private static final int LOOPS = 10;
     private final TARDIS plugin;
     private final List<Location> target;
-    private final List<String> controls = Arrays.asList("Helmic Regulator", "Astrosextant Rectifier", "Gravitic Anomaliser", "Absolute Tesseractulator");
+    private final List<String> controls = List.of("Helmic Regulator", "Astrosextant Rectifier", "Gravitic Anomaliser", "Absolute Tesseractulator");
     private final Player player;
     private final UUID uuid;
     private final boolean console;

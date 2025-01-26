@@ -36,7 +36,7 @@ import java.util.List;
 public class InventoryHelper implements Listener {
 
     private final TARDIS plugin;
-    private final List<String> INV_TITLES = Arrays.asList("Chemical compounds", "Lab table", "Product crafting", "Material reducer");
+    private final List<String> INV_TITLES = List.of("Chemical compounds", "Lab table", "Product crafting", "Material reducer");
 
     public InventoryHelper(TARDIS plugin) {
         this.plugin = plugin;

@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.custommodels.GUITemporalLocator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -57,7 +56,7 @@ public class TARDISTemporalLocatorInventory {
                 im.setDisplayName(clock.getName());
             }
             if (clock.getLore().contains("~")) {
-                im.setLore(Arrays.asList(clock.getLore().split("~")));
+                im.setLore(List.of(clock.getLore().split("~")));
             } else {
                 im.setLore(List.of(clock.getLore()));
             }

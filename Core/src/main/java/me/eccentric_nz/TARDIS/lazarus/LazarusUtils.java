@@ -8,12 +8,15 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 public class LazarusUtils {
 
     public static final Set<UUID> pagers = new HashSet<>();
-    public static final List<String> twaHelmets = Arrays.asList("Dalek Head", "Davros Head", "K9 Head", "Toclafane");
+    public static final List<String> twaHelmets = List.of("Dalek Head", "Davros Head", "K9 Head", "Toclafane");
 
     public static void openDoor(Block b) {
         b.getRelative(BlockFace.SOUTH).setType(Material.AIR);

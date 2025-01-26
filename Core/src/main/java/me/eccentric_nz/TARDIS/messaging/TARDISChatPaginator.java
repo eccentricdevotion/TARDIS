@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.messaging;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.ChatColor;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -63,7 +62,7 @@ public class TARDISChatPaginator {
             }
             if (c == ' ' || c == '\n') {
                 if (line.length() == 0 && word.length() - lineColorChars > GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) { // special case: extremely long word begins a line
-                    lines.addAll(Arrays.asList(word.toString().split("(?<=\\G.{" + GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH + "})")));
+                    lines.addAll(List.of(word.toString().split("(?<=\\G.{" + GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH + "})")));
                 } else if (line.length() > 0 && line.length() + 1 + word.length() - lineColorChars > GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) { // Line too long...break the line
                     for (String partialWord : word.toString().split("(?<=\\G.{" + GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH + "})")) {
                         lines.add(line.toString());

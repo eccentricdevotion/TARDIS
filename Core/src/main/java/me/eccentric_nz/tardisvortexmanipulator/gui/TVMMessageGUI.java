@@ -57,7 +57,7 @@ public class TVMMessageGUI {
                 ItemMeta age = mess.getItemMeta();
                 age.setDisplayName("#" + (i + start + 1));
                 String from = plugin.getServer().getOfflinePlayer(m.getWho()).getName();
-                age.setLore(Arrays.asList("From: " + from, "Date: " + m.getDate(), "" + m.getId()));
+                age.setLore(List.of("From: " + from, "Date: " + m.getDate(), "" + m.getId()));
                 mess.setItemMeta(age);
                 stack[i] = mess;
                 i++;

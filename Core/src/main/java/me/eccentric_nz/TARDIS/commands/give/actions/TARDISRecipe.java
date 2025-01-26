@@ -29,14 +29,14 @@ public class TARDISRecipe {
             if (!map.getValue().isEmpty()) {
                 switch (map.getKey()) {
                     case "bow-tie" -> {
-                        List<String> colours = Arrays.asList("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
+                        List<String> colours = List.of("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
                         colours.forEach((bt) -> {
                             NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
                             keys.add(nsk);
                         });
                     }
                     case "jelly-baby" -> {
-                        List<String> flavours = Arrays.asList("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
+                        List<String> flavours = List.of("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
                         flavours.forEach((jelly) -> {
                             NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
                             keys.add(nsk);
@@ -66,14 +66,14 @@ public class TARDISRecipe {
         Set<NamespacedKey> keys = new HashSet<>();
         switch (item) {
             case "bow-tie" -> {
-                List<String> colours = Arrays.asList("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
+                List<String> colours = List.of("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
                 colours.forEach((bt) -> {
                     NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
                     keys.add(nsk);
                 });
             }
             case "jelly-baby" -> {
-                List<String> flavours = Arrays.asList("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
+                List<String> flavours = List.of("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
                 flavours.forEach((jelly) -> {
                     NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
                     keys.add(nsk);

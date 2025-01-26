@@ -43,7 +43,7 @@ public class ConsoleRusticRecipe {
         im.setDisplayName(ChatColor.WHITE + dn);
         im.setLore(List.of("Integration with interaction"));
         im.setItemModel(RecipeItem.RUSTIC_CONSOLE.getModel());
-        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 17);
+        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, "console_rustic");
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "rustic_console");
         ShapedRecipe r = new ShapedRecipe(key, is);

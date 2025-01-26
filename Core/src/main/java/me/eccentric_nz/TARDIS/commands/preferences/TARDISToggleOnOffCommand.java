@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -37,7 +36,7 @@ class TARDISToggleOnOffCommand {
 
     TARDISToggleOnOffCommand(TARDIS plugin) {
         this.plugin = plugin;
-        was = Arrays.asList("announce_repeaters", "auto", "auto_powerup", "auto_siege", "beacon", "build", "dnd", "eps", "farm", "hads", "info", "lock_containers", "minecart", "renderer", "submarine", "travelbar", "telepathy");
+        was = List.of("announce_repeaters", "auto", "auto_powerup", "auto_siege", "beacon", "build", "dnd", "eps", "farm", "hads", "info", "lock_containers", "minecart", "renderer", "submarine", "travelbar", "telepathy");
     }
 
     public boolean toggle(Player player, String[] args) {

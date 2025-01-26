@@ -32,10 +32,10 @@ import java.util.Locale;
 
 public class TARDISChemistryTabComplete extends TARDISCompleter implements TabCompleter {
 
-    private final List<String> ROOT_SUBS = Arrays.asList("gui", "formula", "recipe");
-    private final List<String> GUI_SUBS = Arrays.asList("creative", "construct", "compound", "reduce", "product", "lab");
+    private final List<String> ROOT_SUBS = List.of("gui", "formula", "recipe");
+    private final List<String> GUI_SUBS = List.of("creative", "construct", "compound", "reduce", "product", "lab");
     private final List<String> FORMULA_SUBS = new ArrayList<>();
-    private final List<String> CREATIVE_SUBS = Arrays.asList("elements", "compounds", "products", "lab");
+    private final List<String> CREATIVE_SUBS = List.of("elements", "compounds", "products", "lab");
 
     public TARDISChemistryTabComplete() {
         for (Compound compound : Compound.values()) {

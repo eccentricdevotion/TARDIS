@@ -16,9 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.database.data;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
+
+import java.util.UUID;
 
 public class StandbyData {
 

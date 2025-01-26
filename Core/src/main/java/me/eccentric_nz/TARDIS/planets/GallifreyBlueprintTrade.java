@@ -17,7 +17,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -83,7 +82,7 @@ public class GallifreyBlueprintTrade {
         pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), UUID.randomUUID());
         pdc.set(plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
         im.setDisplayName("TARDIS Blueprint Disk");
-        List<String> lore = Arrays.asList(TARDISStringUtils.capitalise(name), "Valid only for", "the trading player");
+        List<String> lore = List.of(TARDISStringUtils.capitalise(name), "Valid only for", "the trading player");
         im.setLore(lore);
         im.addItemFlags(ItemFlag.values());
         is.setItemMeta(im);

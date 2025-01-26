@@ -18,9 +18,6 @@ package me.eccentric_nz.TARDIS.recipes;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.recipes.smithing.*;
-import org.bukkit.inventory.SmithingRecipe;
-
-import java.util.HashMap;
 
 public class TARDISSmithingRecipe {
 

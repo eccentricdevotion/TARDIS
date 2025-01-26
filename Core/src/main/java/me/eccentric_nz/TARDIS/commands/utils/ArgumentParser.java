@@ -1,14 +1,14 @@
 package me.eccentric_nz.TARDIS.commands.utils;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class ArgumentParser {
 
     /**
      * Characters considered quotation marks
      */
-    private static final Collection<Character> QUOTATION_MARKS = Arrays.asList('\'', '\"');
+    private static final Collection<Character> QUOTATION_MARKS = List.of('\'', '\"');
 
     /**
      * Space character

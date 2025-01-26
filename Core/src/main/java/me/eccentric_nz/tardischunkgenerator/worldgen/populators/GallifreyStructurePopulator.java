@@ -26,7 +26,7 @@ import org.bukkit.util.BlockVector;
 public class GallifreyStructurePopulator extends BlockPopulator {
 
     private final TARDIS plugin;
-    List<Material> buildable = Arrays.asList(Material.RED_SAND, Material.WATER, Material.TERRACOTTA, Material.BROWN_TERRACOTTA, Material.LIGHT_GRAY_TERRACOTTA, Material.ORANGE_TERRACOTTA, Material.RED_TERRACOTTA, Material.WHITE_TERRACOTTA);
+    List<Material> buildable = List.of(Material.RED_SAND, Material.WATER, Material.TERRACOTTA, Material.BROWN_TERRACOTTA, Material.LIGHT_GRAY_TERRACOTTA, Material.ORANGE_TERRACOTTA, Material.RED_TERRACOTTA, Material.WHITE_TERRACOTTA);
 
     public GallifreyStructurePopulator(TARDIS plugin) {
         this.plugin = plugin;

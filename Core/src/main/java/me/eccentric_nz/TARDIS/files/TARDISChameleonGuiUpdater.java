@@ -22,7 +22,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,14 +39,14 @@ public class TARDISChameleonGuiUpdater {
     public TARDISChameleonGuiUpdater(TARDIS plugin, FileConfiguration chameleoon_config) {
         this.plugin = plugin;
         chameleon_config = chameleoon_config;
-        chameleonListOptions.put("ADAPT_LORE", Arrays.asList("The Chameleon Circuit", "will choose a preset", "that blends in with", "the environment.", "Use BIOME or BLOCK mode."));
-        chameleonListOptions.put("APPLY_LORE", Arrays.asList("Rebuild the TARDIS", "exterior with the", "current settings."));
-        chameleonListOptions.put("CONSTRUCT_LORE", Arrays.asList("Build your own", "Chameleon preset."));
-        chameleonListOptions.put("DISABLED_LORE", Arrays.asList("Disable the Chameleon", "Circuit and revert", "to the FACTORY preset."));
-        chameleonListOptions.put("INVISIBLE_LORE", Arrays.asList("Engages the TARDIS", "Invisiblity Circuit."));
-        chameleonListOptions.put("LOCK_LORE", Arrays.asList("Keep the current biome", "adaptive Chameleon preset.", "To cancel reengage 'Adaptive'", "or chose a different preset."));
-        chameleonListOptions.put("SHORT_LORE", Arrays.asList("Make the Chameleon", "Circuit malfunction and", "always choose the", "same appearance."));
-        chameleonListOptions.put("INFO_TRANSMAT", Arrays.asList("Click on a transmat", "location, then choose", "an action button."));
+        chameleonListOptions.put("ADAPT_LORE", List.of("The Chameleon Circuit", "will choose a preset", "that blends in with", "the environment.", "Use BIOME or BLOCK mode."));
+        chameleonListOptions.put("APPLY_LORE", List.of("Rebuild the TARDIS", "exterior with the", "current settings."));
+        chameleonListOptions.put("CONSTRUCT_LORE", List.of("Build your own", "Chameleon preset."));
+        chameleonListOptions.put("DISABLED_LORE", List.of("Disable the Chameleon", "Circuit and revert", "to the FACTORY preset."));
+        chameleonListOptions.put("INVISIBLE_LORE", List.of("Engages the TARDIS", "Invisiblity Circuit."));
+        chameleonListOptions.put("LOCK_LORE", List.of("Keep the current biome", "adaptive Chameleon preset.", "To cancel reengage 'Adaptive'", "or chose a different preset."));
+        chameleonListOptions.put("SHORT_LORE", List.of("Make the Chameleon", "Circuit malfunction and", "always choose the", "same appearance."));
+        chameleonListOptions.put("INFO_TRANSMAT", List.of("Click on a transmat", "location, then choose", "an action button."));
         chameleonOptions.put("ADAPT", "Adaptive");
         chameleonOptions.put("APPLY", "Apply");
         chameleonOptions.put("BACK_CHAM_OPTS", "Back to Chameleon Circuit");

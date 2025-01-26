@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.messaging;
 
-import java.util.Map;
-import java.util.TreeMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
+
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author eccentric_nz

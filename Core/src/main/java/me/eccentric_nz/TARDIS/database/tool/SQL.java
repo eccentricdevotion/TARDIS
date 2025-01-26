@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.database.tool;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,7 +23,7 @@ import java.util.List;
  */
 public class SQL {
 
-    public static final List<String> CREATES = Arrays.asList(
+    public static final List<String> CREATES = List.of(
 
             "CREATE TABLE IF NOT EXISTS %sachievements (a_id int(11) NOT NULL AUTO_INCREMENT, uuid varchar(48) DEFAULT '', player varchar(32) DEFAULT '', `name` varchar(32) DEFAULT '', amount text, completed int(1) DEFAULT '0', PRIMARY KEY (a_id)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;",
 
@@ -164,7 +163,7 @@ public class SQL {
 
             "CREATE TABLE IF NOT EXISTS %sfollowers (uuid varchar(48) NOT NULL, owner varchar(48), species varchar(8) DEFAULT '', following int(1) DEFAULT '0', `option` int(1) DEFAULT '0', colour varchar(5) DEFAULT '', ammo int(3) DEFAULT '0', PRIMARY KEY (uuid)) DEFAULT CHARSET=utf8 COLLATE utf8_general_ci;"
     );
-    public static final List<String> VALUES = Arrays.asList(
+    public static final List<String> VALUES = List.of(
 
             "(%s, '%s', '%s', '%s', '%s', %s)",
 
@@ -304,7 +303,7 @@ public class SQL {
 
             "('%s', '%s', '%s', %s, %s, '%s', %s)"
     );
-    static final List<String> INSERTS = Arrays.asList(
+    static final List<String> INSERTS = List.of(
 
             "INSERT INTO `%sachievements` (`a_id`, `uuid`, `player`, `name`, `amount`, `completed`) VALUES ",
 

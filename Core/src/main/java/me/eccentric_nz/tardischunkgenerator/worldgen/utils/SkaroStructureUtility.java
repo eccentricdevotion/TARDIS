@@ -11,7 +11,7 @@ public class SkaroStructureUtility {
     public static List<BlockVector> vectorUp = new ArrayList<>();
     public static List<BlockVector> vectorRight = new ArrayList<>();
     public static List<BlockVector> vectorDown = new ArrayList<>();
-    public static List<String> structures = Arrays.asList("small", "farm", "tower", "pen", "water", "small");
+    public static List<String> structures = List.of("small", "farm", "tower", "pen", "water", "small");
 
     static {
         // left

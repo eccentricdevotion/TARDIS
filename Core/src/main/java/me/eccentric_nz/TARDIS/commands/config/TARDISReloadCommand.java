@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
-
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Config;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISWorlds;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz

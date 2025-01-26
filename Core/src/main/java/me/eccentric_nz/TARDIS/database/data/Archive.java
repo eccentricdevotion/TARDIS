@@ -17,9 +17,10 @@
 package me.eccentric_nz.TARDIS.database.data;
 
 import com.google.gson.JsonObject;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
+
+import java.util.UUID;
 
 /**
  * @author eccentric_nz

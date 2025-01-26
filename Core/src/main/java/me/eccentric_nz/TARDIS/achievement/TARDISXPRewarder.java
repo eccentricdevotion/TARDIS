@@ -16,9 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.achievement;
 
+import org.bukkit.entity.Player;
+
 import java.lang.ref.WeakReference;
 import java.util.Arrays;
-import org.bukkit.entity.Player;
 
 /**
  * The Doctor Who Experience was one of the largest and most ambitious Doctor

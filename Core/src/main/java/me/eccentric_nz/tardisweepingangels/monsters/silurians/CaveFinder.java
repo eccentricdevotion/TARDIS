@@ -29,7 +29,7 @@ import java.util.List;
 
 public class CaveFinder {
 
-    private static final List<BlockFace> directions = Arrays.asList(BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH);
+    private static final List<BlockFace> directions = List.of(BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH);
 
     public static Location searchSpawnPoint(Location playerLocation, boolean checkSlimeChunk) {
         World w = playerLocation.getWorld();

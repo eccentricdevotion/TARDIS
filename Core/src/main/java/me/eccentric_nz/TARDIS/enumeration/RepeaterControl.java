@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -25,10 +24,10 @@ import java.util.List;
  */
 public enum RepeaterControl {
 
-    WORLD(2, Arrays.asList("Current world", "Normal world", "Nether world", "End world")),
-    X(3, Arrays.asList("1x X-distance", "2x X-distance", "3x X-distance", "4x X-distance")),
-    Z(4, Arrays.asList("1x Z-distance", "2x Z-distance", "3x Z-distance", "4x Z-distance")),
-    MULTIPLIER(5, Arrays.asList("1x multiplier", "2x multiplier", "3x multiplier", "4x multiplier"));
+    WORLD(2, List.of("Current world", "Normal world", "Nether world", "End world")),
+    X(3, List.of("1x X-distance", "2x X-distance", "3x X-distance", "4x X-distance")),
+    Z(4, List.of("1x Z-distance", "2x Z-distance", "3x Z-distance", "4x Z-distance")),
+    MULTIPLIER(5, List.of("1x multiplier", "2x multiplier", "3x multiplier", "4x multiplier"));
 
 private int control;
     private List<String> descriptions;

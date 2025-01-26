@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
-import java.util.HashMap;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class TARDISAutonomousAreaCommand {
 

@@ -18,11 +18,12 @@ package me.eccentric_nz.TARDIS.schematic;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 /**
  * @author eccentric_nz

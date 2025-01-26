@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.database;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import me.eccentric_nz.TARDIS.TARDIS;
 
 public class TARDISBoundTransmatRemoval {
 

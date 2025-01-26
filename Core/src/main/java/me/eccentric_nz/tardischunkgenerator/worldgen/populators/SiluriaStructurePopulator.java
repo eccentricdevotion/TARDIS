@@ -27,8 +27,8 @@ public class SiluriaStructurePopulator extends BlockPopulator {
 
     private final TARDIS plugin;
     List<SiluriaProcessData> toProcess = new ArrayList<>();
-    List<String> noStilts = Arrays.asList("east_west", "north_south", "cross");
-    List<Material> buildable = Arrays.asList(Material.GRASS_BLOCK, Material.WATER, Material.PODZOL, Material.SAND);
+    List<String> noStilts = List.of("east_west", "north_south", "cross");
+    List<Material> buildable = List.of(Material.GRASS_BLOCK, Material.WATER, Material.PODZOL, Material.SAND);
 
     public SiluriaStructurePopulator(TARDIS plugin) {
         this.plugin = plugin;

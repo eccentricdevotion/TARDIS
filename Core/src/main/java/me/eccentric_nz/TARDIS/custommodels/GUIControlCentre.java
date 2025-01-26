@@ -16,8 +16,8 @@
  */
 package me.eccentric_nz.TARDIS.custommodels;
 
-import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.Button;
+import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.LightButton;
 import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import org.bukkit.Material;

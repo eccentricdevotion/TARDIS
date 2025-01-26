@@ -16,16 +16,16 @@
  */
 package me.eccentric_nz.TARDIS.database.resultset;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
 public class ResultSetPaperBag {
 
@@ -33,7 +33,7 @@ public class ResultSetPaperBag {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final UUID uuid;
-    private final List<Integer> flavours = Arrays.asList(1, 2, 3, 4);
+    private final List<Integer> flavours = List.of(1, 2, 3, 4);
     private final String prefix;
     private int paperBagID;
     private String flavour1;

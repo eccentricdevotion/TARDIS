@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.commands.utils;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -32,10 +29,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+import java.util.Locale;
+
 public class TARDISMushroomFixerCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
-    private final List<String> SUBS = Arrays.asList("red", "brown", "stem");
+    private final List<String> SUBS = List.of("red", "brown", "stem");
 
     public TARDISMushroomFixerCommand(TARDIS plugin) {
         this.plugin = plugin;

@@ -24,7 +24,6 @@ import org.bukkit.command.CommandSender;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -34,7 +33,7 @@ import java.util.Locale;
 class TARDISSetIntegerCommand {
 
     private final TARDIS plugin;
-    private final List<String> TIPS_SUBS = Arrays.asList("400", "800", "1200", "1600");
+    private final List<String> TIPS_SUBS = List.of("400", "800", "1200", "1600");
 
     TARDISSetIntegerCommand(TARDIS plugin) {
         this.plugin = plugin;

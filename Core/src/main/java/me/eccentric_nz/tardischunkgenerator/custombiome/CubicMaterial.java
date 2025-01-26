@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CubicMaterial {
 
-    public static final List<Material> cubes = Arrays.asList(
+    public static final List<Material> cubes = List.of(
             Material.ACACIA_LEAVES,
             Material.ACACIA_LOG,
             Material.ACACIA_PLANKS,

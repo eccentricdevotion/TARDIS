@@ -16,7 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.custommodels;
 
-import me.eccentric_nz.TARDIS.custommodels.keys.*;
+import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.RoomVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.Wool;
 import org.bukkit.Material;
 
 public record GUIArs() {

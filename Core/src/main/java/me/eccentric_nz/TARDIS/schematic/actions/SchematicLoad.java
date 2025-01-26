@@ -17,14 +17,15 @@
 package me.eccentric_nz.TARDIS.schematic.actions;
 
 import com.google.gson.JsonObject;
-import java.io.File;
-import java.util.Locale;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Load;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import org.bukkit.entity.Player;
+
+import java.io.File;
+import java.util.Locale;
+import java.util.UUID;
 
 public class SchematicLoad {
 

@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.command.CommandSender;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,7 +30,7 @@ class TARDISRegionFlagCommand {
 
     // TODO this should be a config command?
     private final TARDIS plugin;
-    private final List<String> which = Arrays.asList("entry", "exit");
+    private final List<String> which = List.of("entry", "exit");
 
     TARDISRegionFlagCommand(TARDIS plugin) {
         this.plugin = plugin;

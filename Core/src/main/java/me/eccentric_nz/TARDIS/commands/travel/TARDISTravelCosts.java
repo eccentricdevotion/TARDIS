@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands.travel;
 
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 /**
  *
@@ -29,7 +29,7 @@ import org.bukkit.entity.Player;
 public class TARDISTravelCosts {
 
     private final TARDIS plugin;
-    private final List<String> costs = Arrays.asList("random", "random_circuit", "travel", "comehere", "hide", "rebuild", "autonomous", "backdoor");
+    private final List<String> costs = List.of("random", "random_circuit", "travel", "comehere", "hide", "rebuild", "autonomous", "backdoor");
 
     public TARDISTravelCosts(TARDIS plugin) {
         this.plugin = plugin;

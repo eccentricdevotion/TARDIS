@@ -22,7 +22,6 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -127,7 +126,7 @@ class TARDISChameleonTemplateGUI {
         ItemMeta lp = lamp.getItemMeta();
         List<String> lampList = plugin.getChameleonGuis().getStringList("PB_LAMP");
         lp.setDisplayName(lampList.getFirst());
-        lp.setLore(Arrays.asList(lampList.get(1), lampList.get(2)));
+        lp.setLore(List.of(lampList.get(1), lampList.get(2)));
         lamp.setItemMeta(lp);
         // redstone block
         ItemStack power = new ItemStack(Material.REDSTONE_BLOCK, 1);
@@ -149,7 +148,7 @@ class TARDISChameleonTemplateGUI {
         ItemMeta dr = door.getItemMeta();
         List<String> doorList = plugin.getChameleonGuis().getStringList("PB_DOOR");
         dr.setDisplayName(doorList.getFirst());
-        dr.setLore(Arrays.asList(doorList.get(1), doorList.get(2)));
+        dr.setLore(List.of(doorList.get(1), doorList.get(2)));
         door.setItemMeta(dr);
 
         return new ItemStack[]{back, null, null, null, info, null, null, null, next, one, two, three, four, five, six, seven, eight, nine, slab, slab, slab, slab, slab, slab, slab, slab, lamp, blue, blue, blue, blue, blue, blue, blue, blue, power, blue, blue, blue, blue, blue, blue, blue, door, null, blue, blue, blue, blue, blue, blue, blue, door, null};

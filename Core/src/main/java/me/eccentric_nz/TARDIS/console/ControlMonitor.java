@@ -3,7 +3,6 @@ package me.eccentric_nz.TARDIS.console;
 import com.mojang.datafixers.util.Pair;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetConsole;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetOccupiedScreen;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetScreen;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;

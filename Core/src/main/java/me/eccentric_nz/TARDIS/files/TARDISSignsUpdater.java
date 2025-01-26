@@ -22,7 +22,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,13 +38,13 @@ public class TARDISSignsUpdater {
     public TARDISSignsUpdater(TARDIS plugin, FileConfiguration signs_config) {
         this.plugin = plugin;
         this.signs_config = signs_config;
-        strings.put("chameleon", Arrays.asList("Chameleon", "Circuit"));
-        strings.put("info", Arrays.asList("Information", "System"));
-        strings.put("ars", Arrays.asList("Architectural", "Reconfiguration", "System"));
-        strings.put("temporal", Arrays.asList("Temporal", "Locator"));
-        strings.put("terminal", Arrays.asList("Destination", "Terminal"));
-        strings.put("saves", Arrays.asList("Saved", "Locations"));
-        strings.put("control", Arrays.asList("Control", "Centre"));
+        strings.put("chameleon", List.of("Chameleon", "Circuit"));
+        strings.put("info", List.of("Information", "System"));
+        strings.put("ars", List.of("Architectural", "Reconfiguration", "System"));
+        strings.put("temporal", List.of("Temporal", "Locator"));
+        strings.put("terminal", List.of("Destination", "Terminal"));
+        strings.put("saves", List.of("Saved", "Locations"));
+        strings.put("control", List.of("Control", "Centre"));
         strings.put("keyboard", List.of("Keyboard"));
         strings.put("junk", List.of("Destination"));
     }

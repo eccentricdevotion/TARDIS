@@ -27,7 +27,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -63,9 +63,9 @@ class TARDISHandlesSavedInventory {
                 im.setDisplayName("Handles Program Disk");
                 String checked = (p.isCheckedOut()) ? "Checked OUT" : "Checked IN";
                 if (!p.getParsed().isEmpty()) {
-                    im.setLore(Arrays.asList(p.getName(), p.getProgram_id() + "", checked, ChatColor.AQUA + "Running"));
+                    im.setLore(List.of(p.getName(), p.getProgram_id() + "", checked, ChatColor.AQUA + "Running"));
                 } else {
-                    im.setLore(Arrays.asList(p.getName(), p.getProgram_id() + "", checked));
+                    im.setLore(List.of(p.getName(), p.getProgram_id() + "", checked));
                 }
                 im.addItemFlags(ItemFlag.values());
                 im.setItemModel(DiskVariant.HANDLES_DISK.getKey());

@@ -26,7 +26,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,13 +45,13 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
                 BIOME_SUBS.add(bi.toString());
             }
         }
-        ROOT_SUBS.addAll(Arrays.asList("home", "biome", "save", "dest", "area", "back", "player", "cave", "village", "structure", "random", "cancel", "costs", "stop"));
+        ROOT_SUBS.addAll(List.of("home", "biome", "save", "dest", "area", "back", "player", "cave", "village", "structure", "random", "cancel", "costs", "stop"));
         ROOT_SUBS.addAll(plugin.getTardisAPI().getWorlds());
         ResultSetAreas rsa = new ResultSetAreas(plugin, null, false, true);
         if (rsa.resultSet()) {
             AREA_SUBS.addAll(rsa.getNames());
         }
-        STRUCTURE_SUBS = Arrays.asList("PILLAGER_OUTPOST", "MINESHAFT", "MINESHAFT_MESA", "MANSION", "JUNGLE_PYRAMID",
+        STRUCTURE_SUBS = List.of("PILLAGER_OUTPOST", "MINESHAFT", "MINESHAFT_MESA", "MANSION", "JUNGLE_PYRAMID",
                 "DESERT_PYRAMID", "IGLOO", "SHIPWRECK", "SHIPWRECK_BEACHED", "SWAMP_HUT", "STRONGHOLD", "MONUMENT",
                 "OCEAN_RUIN_COLD", "OCEAN_RUIN_WARM", "FORTRESS", "NETHER_FOSSIL", "END_CITY", "BURIED_TREASURE",
                 "BASTION_REMNANT", "VILLAGE_PLAINS", "VILLAGE_DESERT", "VILLAGE_SAVANNA", "VILLAGE_SNOWY", "VILLAGE_TAIGA",

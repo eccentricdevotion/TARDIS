@@ -46,7 +46,7 @@ import java.util.*;
 public class TARDISSudoCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 
     private final TARDIS plugin;
-    private final List<String> SUDOS = Arrays.asList("ars", "assemble", "back", "chameleon", "clean", "comehere", "deadlock", "desiege", "handbrake", "hide", "isomorphic", "rebuild", "repair", "travel", "update");
+    private final List<String> SUDOS = List.of("ars", "assemble", "back", "chameleon", "clean", "comehere", "deadlock", "desiege", "handbrake", "hide", "isomorphic", "rebuild", "repair", "travel", "update");
     private final List<String> CHAM_SUBS = new ArrayList<>();
     private final ImmutableList<String> TRAVEL_SUBS = ImmutableList.of("home", "area", "back");
     private final List<String> AREA_SUBS = new ArrayList<>();

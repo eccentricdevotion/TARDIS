@@ -93,7 +93,7 @@ public class FloodgateMapForm {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     String json = JSON_FLUFF.matcher(rs.getString("json")).replaceAll("");
-                    List<String> materials = new ArrayList<>(Arrays.asList(json.split(",")));
+                    List<String> materials = new ArrayList<>(List.of(json.split(",")));
                     materials.removeAll(STONE);
                     for (String material : materials) {
                         // only count if not a console block

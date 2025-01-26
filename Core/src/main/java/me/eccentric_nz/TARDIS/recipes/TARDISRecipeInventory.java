@@ -29,7 +29,6 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -65,7 +64,7 @@ public class TARDISRecipeInventory {
         ItemStack info = new ItemStack(Material.BOWL, 1);
         ItemMeta info_im = info.getItemMeta();
         info_im.setDisplayName("Info");
-        info_im.setLore(Arrays.asList("Click a button below", "to see the recipe", "for that item"));
+        info_im.setLore(List.of("Click a button below", "to see the recipe", "for that item"));
         info_im.setItemModel(GUIChemistry.INFO.key());
         info.setItemMeta(info_im);
         stack[4] = info;

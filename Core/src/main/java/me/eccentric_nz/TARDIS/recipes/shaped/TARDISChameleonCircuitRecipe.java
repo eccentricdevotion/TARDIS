@@ -11,7 +11,6 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -62,7 +61,7 @@ public class TARDISChameleonCircuitRecipe {
             String mat_uses = (plugin.getConfig().getString("circuits.uses.materialisation").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                     ? ChatColor.YELLOW + "unlimited"
                     : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.materialisation");
-            circuit = Arrays.asList("Uses left", mat_uses);
+            circuit = List.of("Uses left", mat_uses);
             em.setLore(circuit);
             exact.setItemMeta(em);
             r.setIngredient('M', new RecipeChoice.ExactChoice(exact));

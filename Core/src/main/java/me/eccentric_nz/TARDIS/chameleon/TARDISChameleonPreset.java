@@ -27,7 +27,7 @@ import me.eccentric_nz.TARDIS.chameleon.utils.TARDISRenderPreset;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.Bukkit;
-import org.bukkit.block.data.*;
+import org.bukkit.block.data.BlockData;
 
 /**
  * A chameleon conversion is a repair procedure that technicians perform on TARDIS chameleon circuits. The Fourth Doctor

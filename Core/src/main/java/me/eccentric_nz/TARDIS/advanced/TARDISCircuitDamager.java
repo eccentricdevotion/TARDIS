@@ -26,7 +26,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -90,7 +89,7 @@ public class TARDISCircuitDamager {
                                     // set uses
                                     List<String> lore = im.getLore();
                                     if (lore == null) {
-                                        lore = Arrays.asList("Uses left", "");
+                                        lore = List.of("Uses left", "");
                                     }
                                     String yellow = ChatColor.YELLOW + "" + decremented;
                                     lore.set(1, yellow);

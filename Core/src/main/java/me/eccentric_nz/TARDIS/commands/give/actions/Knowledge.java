@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.KnowledgeBookMeta;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -30,14 +29,14 @@ public class Knowledge {
             if (!map.getValue().isEmpty()) {
                 switch (map.getKey()) {
                     case "bow-tie" -> {
-                        List<String> colours = Arrays.asList("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
+                        List<String> colours = List.of("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
                         colours.forEach((bt) -> {
                             NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
                             kbm.addRecipe(nsk);
                         });
                     }
                     case "jelly-baby" -> {
-                        List<String> flavours = Arrays.asList("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
+                        List<String> flavours = List.of("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
                         flavours.forEach((jelly) -> {
                             NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
                             kbm.addRecipe(nsk);
@@ -63,7 +62,7 @@ public class Knowledge {
         String message = item_to_give;
         switch (item) {
             case "bow-tie" -> {
-                List<String> colours = Arrays.asList("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
+                List<String> colours = List.of("white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "grey", "light_grey", "cyan", "purple", "blue", "brown", "green", "red", "black");
                 colours.forEach((bt) -> {
                     NamespacedKey nsk = new NamespacedKey(plugin, bt + "_bow_tie");
                     kbm.addRecipe(nsk);
@@ -71,7 +70,7 @@ public class Knowledge {
                 message = "Bow Ties";
             }
             case "jelly-baby" -> {
-                List<String> flavours = Arrays.asList("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
+                List<String> flavours = List.of("vanilla", "orange", "watermelon", "bubblegum", "lemon", "lime", "strawberry", "earl_grey", "vodka", "island_punch", "grape", "blueberry", "cappuccino", "apple", "raspberry", "licorice");
                 flavours.forEach((jelly) -> {
                     NamespacedKey nsk = new NamespacedKey(plugin, jelly + "_jelly_baby");
                     kbm.addRecipe(nsk);

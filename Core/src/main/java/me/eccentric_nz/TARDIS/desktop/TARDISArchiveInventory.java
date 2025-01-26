@@ -28,7 +28,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * By the time of his eleventh incarnation, the Doctor's console room had gone through at least twelve redesigns, though
@@ -87,7 +87,7 @@ class TARDISArchiveInventory {
             s = rss.getConsoleSize().toString();
             b = rss.getConsoleSize().getBlocks();
         }
-        size_im.setLore(Arrays.asList(s, b, ChatColor.AQUA + "Click to change"));
+        size_im.setLore(List.of(s, b, ChatColor.AQUA + "Click to change"));
         size.setItemMeta(size_im);
         stack[18] = size;
         // scan
@@ -101,7 +101,7 @@ class TARDISArchiveInventory {
         ItemStack arc = new ItemStack(GUIArchive.ARCHIVE_CURRENT_CONSOLE.material(), 1);
         ItemMeta hive_im = arc.getItemMeta();
         hive_im.setDisplayName("Archive current console");
-        hive_im.setLore(Arrays.asList("A random name will", "be generated - use the", "/tardis archive command", "to set your own."));
+        hive_im.setLore(List.of("A random name will", "be generated - use the", "/tardis archive command", "to set your own."));
         hive_im.setItemModel(GUIArchive.ARCHIVE_CURRENT_CONSOLE.key());
         arc.setItemMeta(hive_im);
         stack[20] = arc;
@@ -114,7 +114,7 @@ class TARDISArchiveInventory {
                 ItemMeta late = temp.getItemMeta();
                 late.setDisplayName(c.toString());
                 late.setItemModel(data.key());
-                late.setLore(Arrays.asList("Cobblestone template", c.getBlocks()));
+                late.setLore(List.of("Cobblestone template", c.getBlocks()));
                 temp.setItemMeta(late);
                 stack[t] = temp;
                 t++;

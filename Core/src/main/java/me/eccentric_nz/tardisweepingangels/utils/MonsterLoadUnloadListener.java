@@ -44,7 +44,7 @@ import java.util.List;
 public class MonsterLoadUnloadListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<EntityType> justThese = Arrays.asList(EntityType.DROWNED, EntityType.PIGLIN_BRUTE, EntityType.SKELETON, EntityType.ZOMBIE, EntityType.HUSK, EntityType.ZOMBIFIED_PIGLIN);
+    private final List<EntityType> justThese = List.of(EntityType.DROWNED, EntityType.PIGLIN_BRUTE, EntityType.SKELETON, EntityType.ZOMBIE, EntityType.HUSK, EntityType.ZOMBIFIED_PIGLIN);
 
     public MonsterLoadUnloadListener(TARDIS plugin) {
         this.plugin = plugin;

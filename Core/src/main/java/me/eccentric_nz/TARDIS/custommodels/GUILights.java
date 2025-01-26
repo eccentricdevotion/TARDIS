@@ -16,7 +16,10 @@
  */
 package me.eccentric_nz.TARDIS.custommodels;
 
-import me.eccentric_nz.TARDIS.custommodels.keys.*;
+import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.LightButton;
+import me.eccentric_nz.TARDIS.custommodels.keys.LightVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import org.bukkit.Material;
 
 public record GUILights() {

@@ -23,7 +23,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -50,7 +49,7 @@ class TARDISSQLiteDatabaseUpdater {
     private final List<String> flightupdates = new ArrayList<>();
     private final List<String> systemupdates = new ArrayList<>();
     private final List<String> particleupdates = new ArrayList<>();
-    private final List<String> uuidUpdates = Arrays.asList("achievements", "ars", "player_prefs", "storage", "t_count", "tardis", "travellers");
+    private final List<String> uuidUpdates = List.of("achievements", "ars", "player_prefs", "storage", "t_count", "tardis", "travellers");
     private final Statement statement;
     private final TARDIS plugin;
     private final String prefix;

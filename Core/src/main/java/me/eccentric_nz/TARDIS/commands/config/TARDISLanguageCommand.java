@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Language;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * @author eccentric_nz
@@ -31,7 +31,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 class TARDISLanguageCommand {
 
     private final TARDIS plugin;
-    private final List<String> codes = Arrays.asList("ar", "bg", "ca", "zh", "cs", "da", "nl", "en", "et", "fi", "fr", "de", "el", "ht", "he", "hi", "mww", "hu", "id", "it", "ja", "ko", "lv", "lt", "ms", "no", "fa", "pl", "pt", "ro", "ru", "sk", "sl", "es", "sv", "th", "tr", "uk", "ur", "vi");
+    private final List<String> codes = List.of("ar", "bg", "ca", "zh", "cs", "da", "nl", "en", "et", "fi", "fr", "de", "el", "ht", "he", "hi", "mww", "hu", "id", "it", "ja", "ko", "lv", "lt", "ms", "no", "fa", "pl", "pt", "ro", "ru", "sk", "sl", "es", "sv", "th", "tr", "uk", "ur", "vi");
 
     TARDISLanguageCommand(TARDIS plugin) {
         this.plugin = plugin;

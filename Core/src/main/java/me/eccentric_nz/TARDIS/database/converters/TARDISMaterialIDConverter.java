@@ -26,7 +26,6 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 
 import java.sql.*;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -38,7 +37,7 @@ public class TARDISMaterialIDConverter {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
-    private final List<Integer> COLOURED = Arrays.asList(35, 95, 159, 160, 171, 251, 252);
+    private final List<Integer> COLOURED = List.of(35, 95, 159, 160, 171, 251, 252);
 
     public TARDISMaterialIDConverter(TARDIS plugin) {
         this.plugin = plugin;

@@ -21,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ElementBuilder {
 
@@ -29,9 +30,9 @@ public class ElementBuilder {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(element.toString());
         if (element.equals(Element.Unknown)) {
-            im.setLore(Arrays.asList("?", "?"));
+            im.setLore(List.of("?", "?"));
         } else {
-            im.setLore(Arrays.asList(element.getSymbol(), "" + element.getAtomicNumber()));
+            im.setLore(List.of(element.getSymbol(), "" + element.getAtomicNumber()));
         }
         im.setItemModel(element.getModel());
         is.setItemMeta(im);

@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class TARDISColourPickerGUI {
 
@@ -27,7 +27,7 @@ public class TARDISColourPickerGUI {
         ItemStack dis = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
         LeatherArmorMeta play = (LeatherArmorMeta) dis.getItemMeta();
         play.setDisplayName("Colour");
-        play.setLore(Arrays.asList("Red: 255", "Green: 255", "Blue: 255"));
+        play.setLore(List.of("Red: 255", "Green: 255", "Blue: 255"));
         play.setItemModel(ColouredVariant.TINTED_CAMERA.getKey());
         play.setColor(Color.fromRGB(255, 255, 255)); // white
         dis.setItemMeta(play);

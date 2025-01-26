@@ -11,7 +11,7 @@ public class GallifeyStructureUtility {
     public static List<BlockVector> vectorUp = new ArrayList<>();
     public static List<BlockVector> vectorRight = new ArrayList<>();
     public static List<BlockVector> vectorDown = new ArrayList<>();
-    public static List<String> structures = Arrays.asList("large", "farm", "house", "water", "temple");
+    public static List<String> structures = List.of("large", "farm", "house", "water", "temple");
 
     static {
         // left

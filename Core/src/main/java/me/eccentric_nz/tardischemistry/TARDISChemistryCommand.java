@@ -45,7 +45,7 @@ import java.util.Locale;
 public class TARDISChemistryCommand implements CommandExecutor {
 
     private final TARDIS plugin;
-    private final List<String> GUIS = Arrays.asList("creative", "construct", "compound", "reduce", "product", "lab");
+    private final List<String> GUIS = List.of("creative", "construct", "compound", "reduce", "product", "lab");
 
     public TARDISChemistryCommand(TARDIS plugin) {
         this.plugin = plugin;

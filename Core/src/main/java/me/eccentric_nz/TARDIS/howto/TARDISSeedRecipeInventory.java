@@ -23,7 +23,7 @@ import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * By the time of his eleventh incarnation, the Doctor's console room had gone through at least twelve redesigns, though
@@ -74,13 +74,13 @@ class TARDISSeedRecipeInventory {
         ItemStack in_wall = new ItemStack(Material.ORANGE_WOOL, 1);
         ItemMeta in_meta = in_wall.getItemMeta();
         in_meta.setDisplayName("Interior walls");
-        in_meta.setLore(Arrays.asList("Any valid Wall/Floor block", "Click to see blocks..."));
+        in_meta.setLore(List.of("Any valid Wall/Floor block", "Click to see blocks..."));
         in_wall.setItemMeta(in_meta);
         // interior floor
         ItemStack in_floor = new ItemStack(Material.LIGHT_GRAY_WOOL, 1);
         ItemMeta fl_meta = in_floor.getItemMeta();
         fl_meta.setDisplayName("Interior floors");
-        fl_meta.setLore(Arrays.asList("Any valid Wall/Floor block", "Click to see blocks..."));
+        fl_meta.setLore(List.of("Any valid Wall/Floor block", "Click to see blocks..."));
         in_floor.setItemMeta(fl_meta);
         // tardis type
         ItemStack tardis = new ItemStack(block, 1);

@@ -17,13 +17,12 @@
 package me.eccentric_nz.TARDIS.utility;
 
 import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 public class TARDISStringUtils {
 
-    private static final List<String> numbers = Arrays.asList("ZERO", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE");
+    private static final List<String> numbers = List.of("ZERO", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE");
 
     public static String capitalise(String s) {
         String[] split = s.split("_");

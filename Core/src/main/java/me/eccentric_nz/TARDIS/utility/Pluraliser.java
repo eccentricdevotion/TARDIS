@@ -22,7 +22,6 @@ https: // github.com/rhroyston/pluralizer-js
 License: MIT
 */
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +60,7 @@ public class Pluraliser {
             put("warped fungus on a stick", "warped fungi on a stick");
         }
     };
-    private static final List<String> endsWithExceptions = Arrays.asList(
+    private static final List<String> endsWithExceptions = List.of(
             "air", "andesite", "armor", "bamboo", "bars", "basalt", "beans", "berries", "bedrock", "boots", "bricks",
             "cactus", "calcite", "carrots", "crystals", "coal", "concrete", "copper", "debris", "deepslate", "diorite",
             "dirt", "dust", "fire", "fish", "flesh", "foot", "fungus", "glass", "gold", "granite", "grass", "gravel",
@@ -69,7 +68,7 @@ public class Pluraliser {
             "planks", "podzol", "potatoes", "powder", "prismarine", "quartz", "roots", "salmon", "sand", "seeds", "snow",
             "soil", "sprouts", "stairs", "stone", "terracotta", "tiles", "tuff", "vines", "water", "wood", "wool"
     );
-    private static final List<String> endsWithExceptionsAddS = Arrays.asList(
+    private static final List<String> endsWithExceptionsAddS = List.of(
             "allium", "azalea", "button", "cauldron", "grindstone", "piston", "potion"
     );
     private static final HashMap<String, String> fExceptions = new HashMap<>() {
@@ -185,7 +184,7 @@ public class Pluraliser {
             put("index", "indices");
         }
     };
-    private static final List<String> unchanging = Arrays.asList(
+    private static final List<String> unchanging = List.of(
             "advice", "aircraft", "bamboo", "bison", "bread", "carrots", "clay", "cobweb", "cocoa", "cod", "corn",
             "debris", "deer", "elytra", "equipment", "evidence", "farmland", "fish", "flint", "glowstone", "gold",
             "gunpowder", "ice", "information", "jewelry", "kin", "lava", "leather", "legislation", "luck", "luggage",
@@ -193,7 +192,7 @@ public class Pluraliser {
             "quartz", "salmon", "scaffolding", "shears", "sheep", "silver", "snow", "string", "sugar", "swine",
             "trousers", "tnt", "trout", "wheat", "blaze powder", "magma cream"
     );
-    private static final List<String> onlyPlurals = Arrays.asList(
+    private static final List<String> onlyPlurals = List.of(
             "barracks", "bellows", "cattle", "congratulations", "deer", "dregs", "eyeglasses", "gallows", "headquarters",
             "mathematics", "means", "measles", "mumps", "news", "oats", "pants", "pliers", "pajamas", "scissors",
             "series", "shears", "shorts", "species", "tongs", "tweezers", "vespers"

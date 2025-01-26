@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.siegemode;
 
-import java.util.Arrays;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import org.bukkit.Location;
@@ -29,6 +27,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockGrowEvent;
 
+import java.util.List;
+
 /**
  * @author eccentric_nz
  */
@@ -36,7 +36,7 @@ public class TARDISGrowthListener implements Listener {
 
     private final TARDIS plugin;
     private final int chance;
-    private final List<Material> plants = Arrays.asList(Material.AIR, Material.BEETROOTS, Material.CACTUS, Material.CARROTS, Material.COCOA, Material.WHEAT, Material.MELON_STEM, Material.NETHER_WART, Material.POTATOES, Material.PUMPKIN_STEM, Material.SUGAR_CANE);
+    private final List<Material> plants = List.of(Material.AIR, Material.BEETROOTS, Material.CACTUS, Material.CARROTS, Material.COCOA, Material.WHEAT, Material.MELON_STEM, Material.NETHER_WART, Material.POTATOES, Material.PUMPKIN_STEM, Material.SUGAR_CANE);
 
     public TARDISGrowthListener(TARDIS plugin) {
         this.plugin = plugin;

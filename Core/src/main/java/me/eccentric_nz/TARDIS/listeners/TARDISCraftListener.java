@@ -147,7 +147,7 @@ public class TARDISCraftListener implements Listener {
                                 lore = im.getLore();
                                 lore.set(1, uses);
                             } else {
-                                lore = Arrays.asList("Uses left", uses);
+                                lore = List.of("Uses left", uses);
                             }
                             im.setLore(lore);
                             is.setItemMeta(im);

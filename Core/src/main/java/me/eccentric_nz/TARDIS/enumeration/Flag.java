@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.enumeration;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,7 +38,7 @@ public enum Flag {
     SPACE_TARDIS;
 
     public static List<Flag> getNoMessageFlags() {
-        List<Flag> flags = new ArrayList<>(Arrays.asList(Flag.values()));
+        List<Flag> flags = new ArrayList<>(List.of(Flag.values()));
         flags.remove(Flag.MESSAGE_PLAYER);
         return flags;
     }
@@ -52,6 +51,6 @@ public enum Flag {
     }
 
     public static List<Flag> getDefaultFlags() {
-        return Arrays.asList(Flag.values());
+        return List.of(Flag.values());
     }
 }

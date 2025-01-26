@@ -46,7 +46,7 @@ public class RacnossRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final int spawn_rate;
-    private final List<Material> goodNether = Arrays.asList(Material.NETHERRACK, Material.SOUL_SAND, Material.GLOWSTONE, Material.NETHER_BRICK, Material.NETHER_BRICK_FENCE, Material.NETHER_BRICK_STAIRS);
+    private final List<Material> goodNether = List.of(Material.NETHERRACK, Material.SOUL_SAND, Material.GLOWSTONE, Material.NETHER_BRICK, Material.NETHER_BRICK_FENCE, Material.NETHER_BRICK_STAIRS);
 
     public RacnossRunnable(TARDIS plugin) {
         this.plugin = plugin;

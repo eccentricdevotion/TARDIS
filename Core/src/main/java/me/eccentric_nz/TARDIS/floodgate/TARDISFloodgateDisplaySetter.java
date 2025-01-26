@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import com.google.gson.JsonObject;
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import org.bukkit.Location;
 import org.bukkit.Material;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz

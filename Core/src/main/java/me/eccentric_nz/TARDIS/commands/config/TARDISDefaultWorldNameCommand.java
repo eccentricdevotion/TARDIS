@@ -16,11 +16,12 @@
  */
 package me.eccentric_nz.TARDIS.commands.config;
 
-import java.util.Arrays;
-import java.util.regex.Pattern;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
+
+import java.util.Arrays;
+import java.util.regex.Pattern;
 
 /**
  * @author eccentric_nz

@@ -32,7 +32,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 import static me.eccentric_nz.TARDIS.destroyers.TARDISExterminator.deleteFolder;
 
@@ -50,7 +53,7 @@ public class TARDISDeleteCommand {
     public static void cleanDatabase(int id) {
         TARDISBlockLoader bl = new TARDISBlockLoader(TARDIS.plugin);
         bl.unloadProtectedBlocks(id);
-        List<String> tables = Arrays.asList("ars", "back", "chunks", "controls", "current", "destinations", "doors", "gravity_well", "homes", "junk", "lamps", "next", "tardis", "thevoid", "travellers", "vaults");
+        List<String> tables = List.of("ars", "back", "chunks", "controls", "current", "destinations", "doors", "gravity_well", "homes", "junk", "lamps", "next", "tardis", "thevoid", "travellers", "vaults");
         // remove record from database tables
         tables.forEach((table) -> {
             HashMap<String, Object> where = new HashMap<>();

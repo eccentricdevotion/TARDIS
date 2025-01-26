@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RootCommand;
 import org.bukkit.command.CommandSender;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -31,7 +30,7 @@ import java.util.Set;
 public class TARDISCommandHelper {
 
     private final TARDIS plugin;
-    private final List<String> notThese = Arrays.asList("aliases", "description", "usage", "permission", "permission-message");
+    private final List<String> notThese = List.of("aliases", "description", "usage", "permission", "permission-message");
 
     public TARDISCommandHelper(TARDIS plugin) {
         this.plugin = plugin;

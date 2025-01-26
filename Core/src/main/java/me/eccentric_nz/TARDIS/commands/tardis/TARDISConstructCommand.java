@@ -34,7 +34,7 @@ import java.util.List;
 class TARDISConstructCommand {
 
     private final TARDIS plugin;
-    private final List<String> lineNumbers = Arrays.asList("1", "2", "3", "4");
+    private final List<String> lineNumbers = List.of("1", "2", "3", "4");
 
     TARDISConstructCommand(TARDIS plugin) {
         this.plugin = plugin;

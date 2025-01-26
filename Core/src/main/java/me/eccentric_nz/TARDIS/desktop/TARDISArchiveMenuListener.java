@@ -36,7 +36,10 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 /**
  * A control room's look could be changed over time. The process by which an operator could transform a control room was
@@ -94,7 +97,7 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener {
                 t = ConsoleSize.values()[s].toString();
                 b = ConsoleSize.values()[s].getBlocks();
                 if (t != null) {
-                    ims.setLore(Arrays.asList(t, b, ChatColor.AQUA + "Click to change"));
+                    ims.setLore(List.of(t, b, ChatColor.AQUA + "Click to change"));
                     iss.setItemMeta(ims);
                 }
             }

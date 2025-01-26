@@ -16,8 +16,9 @@
  */
 package me.eccentric_nz.TARDIS.customblocks;
 
-import java.util.HashMap;
 import org.bukkit.block.data.BlockData;
+
+import java.util.HashMap;
 
 public class TARDISMushroomBlockData {
 

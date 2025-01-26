@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.custommodels.GUIKeyPreferences;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -57,7 +56,7 @@ class TARDISKeyMenuInventory {
             if (!key.getLore().isEmpty()) {
                 if (key.getLore().contains("~")) {
                     String[] split = key.getLore().split("~");
-                    im.setLore(Arrays.asList(split));
+                    im.setLore(List.of(split));
                 } else {
                     im.setLore(List.of(key.getLore()));
                 }

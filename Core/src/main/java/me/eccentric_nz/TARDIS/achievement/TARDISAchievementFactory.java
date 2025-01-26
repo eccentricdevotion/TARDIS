@@ -27,7 +27,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -97,7 +96,7 @@ public class TARDISAchievementFactory {
                 String amount = (rsa.getAmount().isEmpty()) ? "0" : rsa.getAmount();
                 if (obj.getClass().equals(String.class)) {
                     // farm mobs & rooms - have they got this type before?
-                    data = Arrays.asList(amount.split(":"));
+                    data = List.of(amount.split(":"));
                     if ((data.size() + 1) == size) {
                         achieved = true;
                     }

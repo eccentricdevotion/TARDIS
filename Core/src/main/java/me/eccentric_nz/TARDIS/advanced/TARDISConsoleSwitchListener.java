@@ -44,7 +44,6 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -57,7 +56,7 @@ import java.util.List;
 public class TARDISConsoleSwitchListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<NamespacedKey> gui_circuits = Arrays.asList(
+    private final List<NamespacedKey> gui_circuits = List.of(
             CircuitVariant.TELEPATHIC.getKey(),
             CircuitVariant.CHAMELEON.getKey(),
             CircuitVariant.ARS.getKey(),

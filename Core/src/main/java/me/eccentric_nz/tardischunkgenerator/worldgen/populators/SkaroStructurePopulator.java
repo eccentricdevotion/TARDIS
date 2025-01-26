@@ -32,7 +32,7 @@ import org.bukkit.util.BlockVector;
 public class SkaroStructurePopulator extends BlockPopulator {
 
     private final TARDIS plugin;
-    private final List<EntityType> animals = Arrays.asList(EntityType.SHEEP, EntityType.COW, EntityType.PIG, EntityType.CHICKEN, EntityType.HORSE, EntityType.GOAT);
+    private final List<EntityType> animals = List.of(EntityType.SHEEP, EntityType.COW, EntityType.PIG, EntityType.CHICKEN, EntityType.HORSE, EntityType.GOAT);
 
     public SkaroStructurePopulator(TARDIS plugin) {
         this.plugin = plugin;

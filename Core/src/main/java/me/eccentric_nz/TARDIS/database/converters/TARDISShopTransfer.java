@@ -1,10 +1,11 @@
 package me.eccentric_nz.TARDIS.database.converters;
 
-import java.io.File;
-import java.sql.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+
+import java.io.File;
+import java.sql.*;
 
 public class TARDISShopTransfer {
 

@@ -42,7 +42,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -160,7 +159,7 @@ public class TARDISTelepathicListener implements Listener {
         im.setDisplayName("TARDIS Telepathic Circuit");
         im.setItemModel(CircuitVariant.TELEPATHIC.getKey());
         String uses = (plugin.getConfig().getString("circuits.uses.telepathic").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.telepathic");
-        List<String> lore = Arrays.asList("Uses left", uses);
+        List<String> lore = List.of("Uses left", uses);
         im.setLore(lore);
         is.setItemMeta(im);
         b.getWorld().dropItemNaturally(b.getLocation(), is);

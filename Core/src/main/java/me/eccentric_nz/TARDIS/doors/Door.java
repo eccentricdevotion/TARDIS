@@ -7,7 +7,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class Door {

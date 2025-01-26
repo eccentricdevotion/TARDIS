@@ -15,7 +15,10 @@ import org.geysermc.cumulus.response.SimpleFormResponse;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class FloodgateAddCompanionsForm {
 
@@ -37,7 +40,7 @@ public class FloodgateAddCompanionsForm {
         // get current companions
         ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
         if (rs.fromUUID(uuid.toString()) && rs.getCompanions() != null && !rs.getCompanions().isEmpty()) {
-            comps = Arrays.asList(rs.getCompanions().split(":"));
+            comps = List.of(rs.getCompanions().split(":"));
         } else {
             comps = new ArrayList<>();
         }

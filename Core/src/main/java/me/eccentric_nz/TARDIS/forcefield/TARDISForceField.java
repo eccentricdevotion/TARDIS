@@ -16,10 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.forcefield;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetForcefield;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
@@ -30,6 +26,10 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class TARDISForceField implements Runnable {
 
@@ -128,7 +128,7 @@ public class TARDISForceField implements Runnable {
                 if (rs.getCompanions().equalsIgnoreCase("everyone")) {
                     return true;
                 } else {
-                    comps = Arrays.asList(rs.getCompanions().split(":"));
+                    comps = List.of(rs.getCompanions().split(":"));
                     return comps.contains(other.getUniqueId().toString());
                 }
             }

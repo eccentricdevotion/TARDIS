@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.custommodels.GUISonicConfigurator;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class TARDISSonicConfiguratorInventory {
 
@@ -44,7 +44,7 @@ public class TARDISSonicConfiguratorInventory {
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(gui.getName());
                 if (!gui.getLore().isEmpty()) {
-                    im.setLore(Arrays.asList(gui.getLore().split("~")));
+                    im.setLore(List.of(gui.getLore().split("~")));
                 }
                 im.setItemModel(gui.getModel());
                 is.setItemMeta(im);

@@ -24,7 +24,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -35,7 +34,7 @@ public class TARDISQuestionTabComplete extends TARDISCompleter implements TabCom
 
     private final TARDIS plugin;
     private final ImmutableList<String> ROOT_SUBS;
-    private final List<String> notThese = Arrays.asList("aliases", "description", "usage", "permission", "permission-message");
+    private final List<String> notThese = List.of("aliases", "description", "usage", "permission", "permission-message");
 
     public TARDISQuestionTabComplete(TARDIS plugin) {
         this.plugin = plugin;

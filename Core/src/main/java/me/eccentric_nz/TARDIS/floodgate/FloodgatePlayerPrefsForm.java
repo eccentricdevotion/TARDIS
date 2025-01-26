@@ -8,7 +8,6 @@ import org.geysermc.cumulus.response.CustomFormResponse;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -17,9 +16,9 @@ public class FloodgatePlayerPrefsForm {
 
     private final TARDIS plugin;
     private final UUID uuid;
-    private final List<String> flightmodes = Arrays.asList("NORMAL", "REGULATOR", "MANUAL");
-    private final List<String> hums = Arrays.asList("ALIEN", "ATMOSPHERE", "COMPUTER", "COPPER", "CORAL", "GALAXY", "COMPUTER", "COPPER", "LEARNING", "MIND", "NEON", "SLEEPING", "VOID", "RANDOM");
-    private final List<String> automodes = Arrays.asList("OFF", "HOME", "AREAS", "CONFIGURED_AREAS", "CLOSEST");
+    private final List<String> flightmodes = List.of("NORMAL", "REGULATOR", "MANUAL");
+    private final List<String> hums = List.of("ALIEN", "ATMOSPHERE", "COMPUTER", "COPPER", "CORAL", "GALAXY", "COMPUTER", "COPPER", "LEARNING", "MIND", "NEON", "SLEEPING", "VOID", "RANDOM");
+    private final List<String> automodes = List.of("OFF", "HOME", "AREAS", "CONFIGURED_AREAS", "CLOSEST");
 
     public FloodgatePlayerPrefsForm(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;

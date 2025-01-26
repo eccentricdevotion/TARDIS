@@ -14,6 +14,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,7 +36,7 @@ public class TVMRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Vortex Manipulator");
         if (!plugin.getVortexConfig().getString("recipe.lore").equals("")) {
-            im.setLore(Arrays.asList(plugin.getVortexConfig().getString("recipe.lore").split("~")));
+            im.setLore(List.of(plugin.getVortexConfig().getString("recipe.lore").split("~")));
         }
         im.setItemModel(RecipeItem.VORTEX_MANIPULATOR.getModel());
         is.setItemMeta(im);

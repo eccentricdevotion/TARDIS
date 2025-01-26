@@ -10,7 +10,6 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -47,7 +46,7 @@ public class PresetStorageDiskRecipe {
         String uses = (plugin.getConfig().getString("circuits.uses.chameleon").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? ChatColor.YELLOW + "unlimited"
                 : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.chameleon");
-        circuit = Arrays.asList("Uses left", uses);
+        circuit = List.of("Uses left", uses);
         em.setLore(circuit);
         exact.setItemMeta(em);
         r.addIngredient(new RecipeChoice.ExactChoice(exact));

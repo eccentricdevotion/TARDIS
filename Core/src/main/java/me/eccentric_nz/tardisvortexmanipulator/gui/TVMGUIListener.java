@@ -38,8 +38,8 @@ import java.util.*;
 public class TVMGUIListener extends TARDISMenuListener {
 
     private final TARDIS plugin;
-    List<String> components = Arrays.asList("", "", "", "", "", "");
-    List<Integer> letters = Arrays.asList(0, 4, 5);
+    List<String> components = List.of("", "", "", "", "", "");
+    List<Integer> letters = List.of(0, 4, 5);
     char[] two = new char[]{'2', 'a', 'b', 'c'};
     char[] three = new char[]{'3', 'd', 'e', 'f'};
     char[] four = new char[]{'4', 'g', 'h', 'i'};
@@ -243,7 +243,7 @@ public class TVMGUIListener extends TARDISMenuListener {
             case 45 -> {
                 // close
                 close(player);
-                components = Arrays.asList("", "", "", "", "", "");
+                components = List.of("", "", "", "", "", "");
             }
             case 48 -> {
                 // previous cursor
@@ -537,7 +537,7 @@ public class TVMGUIListener extends TARDISMenuListener {
         List<String> lore = dim.getLore();
         List<String> dest;
         if (!lore.getFirst().trim().isEmpty()) {
-            dest = Arrays.asList(lore.getFirst().trim().split(" "));
+            dest = List.of(lore.getFirst().trim().split(" "));
         } else {
             dest = new ArrayList<>();
         }

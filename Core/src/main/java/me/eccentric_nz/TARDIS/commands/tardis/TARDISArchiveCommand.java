@@ -35,7 +35,6 @@ import me.eccentric_nz.TARDIS.schematic.TARDISSchematicBuilder.ArchiveData;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -46,7 +45,7 @@ import java.util.Locale;
 class TARDISArchiveCommand {
 
     private final TARDIS plugin;
-    private final List<String> subs = Arrays.asList("add", "description", "remove", "scan", "update", "y");
+    private final List<String> subs = List.of("add", "description", "remove", "scan", "update", "y");
 
     TARDISArchiveCommand(TARDIS plugin) {
         this.plugin = plugin;

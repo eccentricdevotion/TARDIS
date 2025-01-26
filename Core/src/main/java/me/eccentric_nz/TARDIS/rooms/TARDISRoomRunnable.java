@@ -1108,7 +1108,7 @@ public class TARDISRoomRunnable implements Runnable {
                     int r = 2;
                     int control_type;
                     String loc_str;
-                    List<Material> controls = Arrays.asList(Material.CAKE, Material.STONE_BUTTON, Material.MUSHROOM_STEM, Material.OAK_BUTTON);
+                    List<Material> controls = List.of(Material.CAKE, Material.STONE_BUTTON, Material.MUSHROOM_STEM, Material.OAK_BUTTON);
                     if (controls.contains(type)) {
                         switch (type) {
                             case STONE_BUTTON -> { // stone button - TARDISConstants.RANDOM

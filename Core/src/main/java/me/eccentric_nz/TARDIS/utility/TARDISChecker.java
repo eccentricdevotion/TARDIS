@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischemistry.block.Painting;
-import me.eccentric_nz.tardisweepingangels.utils.Monster;
 
 import java.io.*;
 import java.util.HashMap;

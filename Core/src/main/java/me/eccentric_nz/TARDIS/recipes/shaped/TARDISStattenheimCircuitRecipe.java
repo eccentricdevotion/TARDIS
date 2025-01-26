@@ -10,7 +10,6 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -53,7 +52,7 @@ public class TARDISStattenheimCircuitRecipe {
         String uses = (plugin.getConfig().getString("circuits.uses.materialisation").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? ChatColor.YELLOW + "unlimited"
                 : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.materialisation");
-        circuit = Arrays.asList("Uses left", uses);
+        circuit = List.of("Uses left", uses);
         em.setLore(circuit);
         exact.setItemMeta(em);
         ItemStack locator = new ItemStack(Material.GLOWSTONE_DUST, 1);

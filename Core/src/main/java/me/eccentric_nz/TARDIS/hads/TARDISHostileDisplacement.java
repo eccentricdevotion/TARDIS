@@ -30,7 +30,10 @@ import org.bukkit.World.Environment;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * The Hostile Action Displacement System, or HADS, was one of the defence mechanisms of the Doctor's TARDIS. When the
@@ -47,7 +50,7 @@ class TARDISHostileDisplacement {
     private int count = 0;
 
     TARDISHostileDisplacement(TARDIS plugin) {
-        angles = Arrays.asList(0, 45, 90, 135, 180, 225, 270, 315);
+        angles = List.of(0, 45, 90, 135, 180, 225, 270, 315);
         this.plugin = plugin;
     }
 

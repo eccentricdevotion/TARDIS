@@ -212,7 +212,7 @@ public class TARDISWeepingAngels {
         plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new CleanGuardians(plugin), 100L, 6000L);
         // start repeating spawn tasks
         long delay = plugin.getMonstersConfig().getLong("spawn_rate.how_often");
-        List<Runnable> spawners = Arrays.asList(
+        List<Runnable> spawners = List.of(
                 new AngelOfLibertyRunnable(plugin),
                 new ClockworkDroidRunnable(plugin),
                 new CybermanRunnable(plugin),

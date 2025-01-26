@@ -12,7 +12,6 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -64,7 +63,7 @@ public class TARDISTelevisionRecipe {
             String uses = (plugin.getConfig().getString("circuits.uses.chameleon").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                     ? ChatColor.YELLOW + "unlimited"
                     : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.chameleon");
-            lore = Arrays.asList("Uses left", uses);
+            lore = List.of("Uses left", uses);
             circuit.setLore(lore);
             chameleon.setItemMeta(circuit);
             r.setIngredient('C', new RecipeChoice.ExactChoice(chameleon));

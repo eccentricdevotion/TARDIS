@@ -32,7 +32,6 @@ import org.bukkit.plugin.RegisteredListener;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -42,8 +41,8 @@ import java.util.Locale;
 class TARDISSetBooleanCommand {
 
     private final TARDIS plugin;
-    private final List<String> require_restart = Arrays.asList("use_default_condensables", "use_worldguard", "walk_in_tardis", "open_door_policy", "handles", "weather_set", "chemistry", "seed_block.crafting", "seed_block.legacy");
-    private final List<String> register = Arrays.asList("wg_flag_set", "zero_room", "switch_resource_packs", "load_shells", "mapping");
+    private final List<String> require_restart = List.of("use_default_condensables", "use_worldguard", "walk_in_tardis", "open_door_policy", "handles", "weather_set", "chemistry", "seed_block.crafting", "seed_block.legacy");
+    private final List<String> register = List.of("wg_flag_set", "zero_room", "switch_resource_packs", "load_shells", "mapping");
 
     TARDISSetBooleanCommand(TARDIS plugin) {
         this.plugin = plugin;

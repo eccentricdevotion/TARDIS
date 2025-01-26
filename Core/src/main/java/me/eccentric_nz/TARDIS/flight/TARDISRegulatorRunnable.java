@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.flight;
 
 import org.bukkit.inventory.InventoryView;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,7 +31,7 @@ import java.util.List;
 public class TARDISRegulatorRunnable extends TARDISRegulatorSlot implements Runnable {
 
     private final InventoryView view;
-    private final List<Integer> directions = Arrays.asList(0, 1, 2, 3);
+    private final List<Integer> directions = List.of(0, 1, 2, 3);
     private int slot;
     private int taskId;
 

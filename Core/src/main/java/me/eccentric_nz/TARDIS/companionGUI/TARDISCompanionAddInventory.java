@@ -26,7 +26,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,7 +52,7 @@ public class TARDISCompanionAddInventory {
         List<String> comps;
         ResultSetTardisCompanions rs = new ResultSetTardisCompanions(plugin);
         if (rs.fromUUID(uuid.toString()) && rs.getCompanions() != null && !rs.getCompanions().isEmpty()) {
-            comps = Arrays.asList(rs.getCompanions().split(":"));
+            comps = List.of(rs.getCompanions().split(":"));
         } else {
             comps = new ArrayList<>();
         }

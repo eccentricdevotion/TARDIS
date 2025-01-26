@@ -26,7 +26,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -69,7 +68,7 @@ class TARDISSonicGeneratorInventory {
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(sonic.getName());
                 if (!sonic.getLore().isEmpty()) {
-                    im.setLore(Arrays.asList(sonic.getLore().split("~")));
+                    im.setLore(List.of(sonic.getLore().split("~")));
                 }
                 im.setItemModel(sonic.getModel());
                 is.setItemMeta(im);
@@ -80,7 +79,7 @@ class TARDISSonicGeneratorInventory {
         ItemStack info = new ItemStack(Material.BOOK, 1);
         ItemMeta info_im = info.getItemMeta();
         info_im.setDisplayName("Instructions (1/3)");
-        List<String> lore = Arrays.asList("Select your Sonic Screwdriver", "type from the top two rows.", "Click on the upgrades you", "want to add to the sonic.");
+        List<String> lore = List.of("Select your Sonic Screwdriver", "type from the top two rows.", "Click on the upgrades you", "want to add to the sonic.");
         info_im.setLore(lore);
         info_im.setItemModel(GUISonicGenerator.INSTRUCTIONS_1_OF_3.getModel());
         info.setItemMeta(info_im);
@@ -89,7 +88,7 @@ class TARDISSonicGeneratorInventory {
         ItemStack info1 = new ItemStack(Material.BOOK, 1);
         ItemMeta info1_im = info.getItemMeta();
         info1_im.setDisplayName("Instructions (2/3)");
-        List<String> lore1 = Arrays.asList("You can reset the upgrades", "by clicking the 'Standard' button.", "The Artron cost for the", "sonic is shown bottom left.");
+        List<String> lore1 = List.of("You can reset the upgrades", "by clicking the 'Standard' button.", "The Artron cost for the", "sonic is shown bottom left.");
         info1_im.setLore(lore1);
         info1_im.setItemModel(GUISonicGenerator.INSTRUCTIONS_2_OF_3.getModel());
         info1.setItemMeta(info1_im);
@@ -98,7 +97,7 @@ class TARDISSonicGeneratorInventory {
         ItemStack info2 = new ItemStack(Material.BOOK, 1);
         ItemMeta info2_im = info.getItemMeta();
         info2_im.setDisplayName("Instructions (3/3)");
-        List<String> lore2 = Arrays.asList("The final sonic result", "is shown in the middle", "of the bottom row.");
+        List<String> lore2 = List.of("The final sonic result", "is shown in the middle", "of the bottom row.");
         info2_im.setLore(lore2);
         info2_im.setItemModel(GUISonicGenerator.INSTRUCTIONS_3_OF_3.getModel());
         info2.setItemMeta(info2_im);
