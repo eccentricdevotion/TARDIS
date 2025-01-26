@@ -153,7 +153,7 @@ public class TARDISTrackerInstanceKeeper {
     private final Set<UUID> hasTravelled = new HashSet<>();
     private final Set<UUID> howTo = new HashSet<>();
     private final Set<UUID> lightChangers = new HashSet<>();
-    private final Set<UUID> mover = new HashSet<>();
+    private final Set<UUID> movers = new HashSet<>();
     private final Set<UUID> recipeViewers = new HashSet<>();
     private final Set<UUID> renderRoomOccupants = new HashSet<>();
     private final Set<UUID> sonicDoorToggle = new HashSet<>();
@@ -1073,8 +1073,8 @@ public class TARDISTrackerInstanceKeeper {
      *
      * @return a collection of player UUIDs
      */
-    public Set<UUID> getMover() {
-        return mover;
+    public Set<UUID> getMovers() {
+        return movers;
     }
 
 

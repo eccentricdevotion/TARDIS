@@ -74,7 +74,7 @@ public class TARDISPortalPersister {
             }
             // save the players
             ps = connection.prepareStatement("INSERT INTO " + prefix + "movers (uuid) VALUES (?)");
-            for (UUID uuid : plugin.getTrackerKeeper().getMover()) {
+            for (UUID uuid : plugin.getTrackerKeeper().getMovers()) {
                 ps.setString(1, uuid.toString());
                 ps.executeUpdate();
             }
@@ -135,7 +135,7 @@ public class TARDISPortalPersister {
             rs = ps.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    plugin.getTrackerKeeper().getMover().add(UUID.fromString(rs.getString("uuid")));
+                    plugin.getTrackerKeeper().getMovers().add(UUID.fromString(rs.getString("uuid")));
                 }
             }
             // clear the movers table, so we don't get any duplicates when saving them

@@ -196,7 +196,7 @@ public class DoorOpenerAction {
                 tp_out.setAbandoned(abandoned);
                 if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                     // players
-                    uuids.forEach((u) -> plugin.getTrackerKeeper().getMover().add(u));
+                    uuids.forEach((u) -> plugin.getTrackerKeeper().getMovers().add(u));
                 }
                 // locations
                 if (tardis != null && preset != null && preset.hasPortal()) {

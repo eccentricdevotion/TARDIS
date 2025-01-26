@@ -45,7 +45,7 @@ class TARDISPortalCommand {
         // clear all portals on the server
         plugin.getTrackerKeeper().getPortals().clear();
         // stop tracking players
-        plugin.getTrackerKeeper().getMover().clear();
+        plugin.getTrackerKeeper().getMovers().clear();
         // clear the portals table
         try {
             statement = connection.createStatement();

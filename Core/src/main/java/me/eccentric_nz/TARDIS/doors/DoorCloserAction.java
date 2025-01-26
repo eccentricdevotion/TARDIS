@@ -109,7 +109,7 @@ public class DoorCloserAction {
             // unset trackers
             if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
                 // players
-                uuids.forEach((u) -> plugin.getTrackerKeeper().getMover().remove(u));
+                uuids.forEach((u) -> plugin.getTrackerKeeper().getMovers().remove(u));
             }
             // locations
             plugin.getTrackerKeeper().getPortals().remove(exportal);

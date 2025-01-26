@@ -61,7 +61,7 @@ public class TARDISMoveListener implements Listener {
     public void onPlayerMoveToFromTARDIS(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
-        if (!plugin.getTrackerKeeper().getMover().contains(uuid)) {
+        if (!plugin.getTrackerKeeper().getMovers().contains(uuid)) {
             return;
         }
         Location l = new Location(event.getTo().getWorld(), event.getTo().getBlockX(), event.getTo().getBlockY(), event.getTo().getBlockZ(), 0.0f, 0.0f);
