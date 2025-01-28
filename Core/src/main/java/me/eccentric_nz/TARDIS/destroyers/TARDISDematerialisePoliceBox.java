@@ -91,7 +91,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                     case GRAY_STAINED_GLASS_PANE -> ChameleonVariant.WEEPING_ANGEL_STAINED.getKey();
                     case ENDER_PEARL -> ChameleonVariant.PANDORICA_STAINED.getKey();
                     case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED_STAINED.getKey();
-                    default -> new NamespacedKey(plugin, "police_box/" + TARDISBuilderUtility.getCustomModelPath(dye.toString()) + "_stained");
+                    default -> new NamespacedKey(plugin, TARDISBuilderUtility.getCustomModelPath(dye.toString()) + "_stained");
                 };
                 light.setBlockData(TARDISConstants.AIR);
             } else if (i % 4 == 1) { // glass
@@ -103,7 +103,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                          YELLOW_DYE, LEATHER_HORSE_ARMOR, CYAN_STAINED_GLASS_PANE -> ChameleonVariant.GLASS.getKey();
                     case GRAY_STAINED_GLASS_PANE -> ChameleonVariant.WEEPING_ANGEL_STAINED.getKey();
                     case ENDER_PEARL -> ChameleonVariant.PANDORICA_STAINED.getKey();
-                    default -> new NamespacedKey(plugin, "police_box/" + TARDISBuilderUtility.getCustomModelPath(dye.toString()) + "_glass");
+                    default -> new NamespacedKey(plugin, TARDISBuilderUtility.getCustomModelPath(dye.toString()) + "_glass");
                 };
                 light.setBlockData(TARDISConstants.AIR);
             } else { // preset
@@ -128,7 +128,7 @@ public class TARDISDematerialisePoliceBox implements Runnable {
                     case GRAY_STAINED_GLASS_PANE -> ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey();
                     case ENDER_PEARL -> ChameleonVariant.PANDORICA_CLOSED.getKey();
                     case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED_CLOSED.getKey();
-                    default -> new NamespacedKey(plugin, "police_box/" + TARDISBuilderUtility.getCustomModelPath(dye.toString()) + "_stained");
+                    default -> new NamespacedKey(plugin, TARDISBuilderUtility.getCustomModelPath(dye.toString()) + "_closed");
                 };
                 Levelled levelled = TARDISConstants.LIGHT;
                 // set light level from exterior lamp control

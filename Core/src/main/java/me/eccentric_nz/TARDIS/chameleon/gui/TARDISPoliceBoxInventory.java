@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPoliceBoxes;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -137,7 +138,8 @@ public class TARDISPoliceBoxInventory {
                     ItemStack cis = new ItemStack(cm);
                     ItemMeta cim = cis.getItemMeta();
                     cim.setDisplayName(custom);
-                    cim.setItemModel(new NamespacedKey(plugin, "block/police_box/" + custom + "_closed"));
+                    String key = TARDISStringUtils.toUnderscoredLowercase(custom);
+                    cim.setItemModel(new NamespacedKey(plugin, key + "_closed"));
                     cis.setItemMeta(cim);
                     boxes[i] = cis;
                     i++;

@@ -106,7 +106,7 @@ public class TARDISCustomModelChanger {
                             case ENDER_PEARL -> ChameleonVariant.PANDORICA_CLOSED.getKey();
                             case GRAY_STAINED_GLASS_PANE -> ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey();
                             // get CUSTOM model path
-                            default -> new NamespacedKey(plugin, "police_box/" + TARDISBuilderUtility.getCustomModelPath(is.getType().toString()) + "_closed");
+                            default -> new NamespacedKey(plugin, TARDISBuilderUtility.getCustomModelPath(is.getType().toString()) + "_closed");
                         };
                     } else {
                         new TARDISInnerDoorCloser(plugin, uuid, id).closeDoor(outside);
@@ -133,7 +133,7 @@ public class TARDISCustomModelChanger {
                             case ENDER_PEARL -> ChameleonVariant.PANDORICA_OPEN.getKey();
                             case GRAY_STAINED_GLASS_PANE -> ChameleonVariant.WEEPING_ANGEL_OPEN.getKey();
                             // get CUSTOM model path
-                            default -> new NamespacedKey(plugin, "police_box/" + TARDISBuilderUtility.getCustomModelPath(is.getType().toString()) + "_open");
+                            default -> new NamespacedKey(plugin, TARDISBuilderUtility.getCustomModelPath(is.getType().toString()) + "_open");
                         };
                     }
                     if (preset != ChameleonPreset.PANDORICA) {

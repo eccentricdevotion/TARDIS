@@ -24,10 +24,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisModel;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
@@ -69,8 +66,8 @@ public class TARDISBuilderUtility {
     /**
      * Saves/updates the door location after the TARDIS exterior has been flown
      *
-     * @param location the location of the TARDIS
-     * @param id the id of the TARDIS database record
+     * @param location  the location of the TARDIS
+     * @param id        the id of the TARDIS database record
      * @param direction the direction the TARDIS is facing
      */
     public static void saveDoorLocation(Location location, int id, String direction) {
@@ -150,6 +147,8 @@ public class TARDISBuilderUtility {
             case WOLF_SPAWN_EGG -> im.setItemModel(ChameleonVariant.BAD_WOLF_CLOSED.getKey());
             case ENDER_PEARL -> im.setItemModel(ChameleonVariant.PANDORICA_CLOSED.getKey());
             case GRAY_STAINED_GLASS_PANE -> im.setItemModel(ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey());
+            // CUSTOM
+            default -> im.setItemModel(new NamespacedKey(plugin, getCustomModelPath(dye.toString()) + "_closed"));
         }
         if (bd.shouldAddSign() && bd.getPlayer() != null) {
             String pb = "";

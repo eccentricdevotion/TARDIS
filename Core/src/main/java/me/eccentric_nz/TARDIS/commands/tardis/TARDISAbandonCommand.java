@@ -282,7 +282,7 @@ public class TARDISAbandonCommand {
                                         case GRAY_STAINED_GLASS_PANE -> ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey();
                                         case ENDER_PEARL -> ChameleonVariant.PANDORICA_CLOSED.getKey();
                                         case LEATHER_HORSE_ARMOR -> ColouredVariant.TINTED_CLOSED.getKey();
-                                        default -> new NamespacedKey(plugin, "police_box/" + TARDISBuilderUtility.getCustomModelPath(is.getType().toString()) + "_stained");
+                                        default -> new NamespacedKey(plugin, TARDISBuilderUtility.getCustomModelPath(is.getType().toString()) + "_closed");
                                     };
                                     im.setItemModel(model);
                                     im.setDisplayName("");
