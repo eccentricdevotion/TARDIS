@@ -436,8 +436,10 @@ public class TARDIS extends JavaPlugin {
                 debug("Registering expansion with PlaceholderAPI.");
                 new TARDISPlaceholderExpansion(this).register();
             }
-            // start bStats metrics
-            new TARDISStats(this).startMetrics();
+            getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
+                // start bStats metrics delayed so citizens has a chance to load for the dependent plugins chart
+                new TARDISStats(this).startMetrics();
+            }, 200L);
         } else {
             getLogger().log(Level.SEVERE, "This plugin requires Spigot/Paper " + minVersion + " or higher, disabling...");
             pm.disablePlugin(this);
