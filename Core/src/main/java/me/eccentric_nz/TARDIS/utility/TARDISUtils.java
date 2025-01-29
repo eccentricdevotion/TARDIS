@@ -281,8 +281,8 @@ public class TARDISUtils {
 
     public NamespacedKey getCustomModel(Material material, String variant) {
         for (String k : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
-            if (plugin.getCustomModelConfig().getString("models." + k + ".item").equals(material.toString())) {
-                return new NamespacedKey(plugin, k + variant);
+            if (plugin.getCustomModelConfig().getString("models." + k + ".item", "CUSTOM").equals(material.toString())) {
+                return new NamespacedKey(plugin, TARDISStringUtils.toUnderscoredLowercase(k) + variant);
             }
         }
         return null;

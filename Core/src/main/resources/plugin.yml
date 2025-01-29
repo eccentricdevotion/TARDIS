@@ -4,6 +4,7 @@ main: me.eccentric_nz.TARDIS.TARDIS
 name: TARDIS
 load: POSTWORLD
 softdepend: [ Blocklocker,BlueMap,CoreProtect,dynmap,Essentials,Factions,floodgate,GriefPrevention,LibsDisguises,LWC,Multiverse-Core,Multiverse-Inventories,PlaceholderAPI,RedProtect,Towny,WorldBorder,WorldGuard,Vault ]
+loadbefore: [ Citizens ]
 website: http://tardis.pages.dev/
 dev-url: http://github.com/eccentricdevotion/TARDIS/
 url: http://tardis.pages.dev/

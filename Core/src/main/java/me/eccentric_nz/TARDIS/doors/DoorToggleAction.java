@@ -185,7 +185,7 @@ public class DoorToggleAction extends TARDISDoorListener {
                                                             // get the custom model config
                                                             NamespacedKey c = plugin.getUtils().getCustomModel(dye.getType(), "_open");
                                                             if (c != null) {
-                                                                dim.setItemModel(Door.getOpenModel(dye.getType()));
+                                                                dim.setItemModel(c);
                                                             }
                                                         }
                                                     }
@@ -267,7 +267,7 @@ public class DoorToggleAction extends TARDISDoorListener {
                                                     // get the custom model config
                                                     NamespacedKey c = plugin.getUtils().getCustomModel(dye.getType(), "_closed");
                                                     if (c != null) {
-                                                        dim.setItemModel(Door.getOpenModel(dye.getType()));
+                                                        dim.setItemModel(c);
                                                     }
                                                 }
                                             }
