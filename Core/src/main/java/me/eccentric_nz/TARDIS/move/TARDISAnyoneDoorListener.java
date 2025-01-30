@@ -24,10 +24,7 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.doors.DoorLockAction;
 import me.eccentric_nz.TARDIS.doors.DoorUtility;
 import me.eccentric_nz.TARDIS.doors.inner.*;
-import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
-import me.eccentric_nz.TARDIS.doors.outer.OuterDoor;
-import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorCloser;
-import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorOpener;
+import me.eccentric_nz.TARDIS.doors.outer.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -227,9 +224,9 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                                         new InnerMinecraftDoorOpener(plugin).open(block, id, playerUUID);
                                                         // open outer
                                                         if (outerDisplayDoor) {
-                                                            new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                                                            new OuterDisplayDoorOpener(plugin).open(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
                                                         } else if (rs.getTardis().getPreset().hasDoor()) {
-                                                            new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rs.getTardis().getPreset()), id, playerUUID);
+                                                            new OuterMinecraftDoorOpener(plugin).open(new OuterDoor(plugin, id).getMinecraft(rs.getTardis().getPreset()), id, player);
                                                         }
                                                     }
                                                 } else {
