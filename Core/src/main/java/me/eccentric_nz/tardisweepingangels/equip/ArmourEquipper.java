@@ -13,6 +13,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -82,10 +83,12 @@ public class ArmourEquipper {
         legsMeta.getPersistentDataContainer().set(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER, 99);
         legs.setItemMeta(legsMeta);
         entity.getEquipment().setLeggings(legs);
-        // give monster extra health
-        AttributeInstance attribute = entity.getAttribute(Attribute.MAX_HEALTH);
-        attribute.setBaseValue(24.0d);
-        entity.setHealth(24.0d);
+        if (!(entity instanceof Player)) {
+            // give monster extra health
+            AttributeInstance attribute = entity.getAttribute(Attribute.MAX_HEALTH);
+            attribute.setBaseValue(24.0d);
+            entity.setHealth(24.0d);
+        }
         return armour;
     }
 }
