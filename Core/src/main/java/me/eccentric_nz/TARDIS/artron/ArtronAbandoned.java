@@ -5,7 +5,14 @@ import me.eccentric_nz.TARDIS.api.event.TARDISClaimEvent;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISAbandonCommand;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.doors.DoorCloserAction;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
+import me.eccentric_nz.TARDIS.doors.inner.Inner;
+import me.eccentric_nz.TARDIS.doors.inner.InnerDisplayDoorCloser;
+import me.eccentric_nz.TARDIS.doors.inner.InnerDoor;
+import me.eccentric_nz.TARDIS.doors.inner.InnerMinecraftDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDoor;
+import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorCloser;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -14,6 +21,8 @@ import org.bukkit.block.Sign;
 import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 public class ArtronAbandoned {
 
@@ -34,7 +43,24 @@ public class ArtronAbandoned {
             if (rscl.resultSet()) {
                 Location current = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
                 if (pu) {
-                    new DoorCloserAction(plugin, player.getUniqueId(), id).closeDoors();
+                    ResultSetTardisPreset rsp = new ResultSetTardisPreset(plugin);
+                    if (rsp.fromID(id)) {
+                        boolean outerDisplayDoor = rsp.getPreset().usesArmourStand();
+                        Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
+                        UUID playerUUID = player.getUniqueId();
+                        // close inner
+                        if (innerDisplayDoor.display()) {
+                            new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID, true);
+                        } else {
+                            new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID);
+                        }
+                        // close outer
+                        if (outerDisplayDoor) {
+                            new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                        } else if (rsp.getPreset().hasDoor()) {
+                            new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rsp.getPreset()), id, playerUUID);
+                        }
+                    }
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDON_CLAIMED");
                     plugin.getPM().callEvent(new TARDISClaimEvent(player, tardis, current));
                 }

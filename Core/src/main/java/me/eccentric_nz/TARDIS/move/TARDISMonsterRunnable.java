@@ -105,7 +105,7 @@ public class TARDISMonsterRunnable implements Runnable {
             // check if a Time Lord or companion is near
             boolean take_action = true;
             for (Entity e : entities) {
-                if (e instanceof Player player && isTimelord(map.getValue(), player)) {
+                if (e instanceof Player player && isTimelord(map.getValue().getTardisId(), player)) {
                     take_action = false;
                     break;
                 }
@@ -435,8 +435,8 @@ public class TARDISMonsterRunnable implements Runnable {
         }
     }
 
-    private boolean isTimelord(TARDISTeleportLocation tpl, Player player) {
-        ResultSetCompanions rsc = new ResultSetCompanions(plugin, tpl.getTardisId());
+    private boolean isTimelord(int id, Player player) {
+        ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
         return (rsc.getCompanions().contains(player.getUniqueId()));
     }
 

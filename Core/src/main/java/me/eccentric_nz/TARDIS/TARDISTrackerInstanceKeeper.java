@@ -1077,7 +1077,6 @@ public class TARDISTrackerInstanceKeeper {
         return movers;
     }
 
-
     /**
      * Tracks players previewing TARDIS desktops or the resource pack debug area
      *

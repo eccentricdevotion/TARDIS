@@ -14,7 +14,13 @@ import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.desktop.TARDISWallFloorRunnable;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.doors.DoorCloserAction;
+import me.eccentric_nz.TARDIS.doors.inner.Inner;
+import me.eccentric_nz.TARDIS.doors.inner.InnerDisplayDoorCloser;
+import me.eccentric_nz.TARDIS.doors.inner.InnerDoor;
+import me.eccentric_nz.TARDIS.doors.inner.InnerMinecraftDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDoor;
+import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorCloser;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeArea;
@@ -58,7 +64,24 @@ public class TARDISAutonomousDeath {
                     if (rsp.isAutoOn() && !tardis.isSiegeOn() && !plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
                         boolean isHomeDefault = rsp.getAutoDefault() == Autonomous.Default.HOME;
                         // close doors
-                        new DoorCloserAction(plugin, uuid, id).closeDoors();
+                        ResultSetTardisPreset rstp = new ResultSetTardisPreset(plugin);
+                        if (rstp.fromID(id)) {
+                            boolean outerDisplayDoor = rstp.getPreset().usesArmourStand();
+                            Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
+                            UUID playerUUID = player.getUniqueId();
+                            // close inner
+                            if (innerDisplayDoor.display()) {
+                                new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID, true);
+                            } else {
+                                new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID);
+                            }
+                            // close outer
+                            if (outerDisplayDoor) {
+                                new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                            } else if (rstp.getPreset().hasDoor()) {
+                                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rstp.getPreset()), id, playerUUID);
+                            }
+                        }
                         Location death_loc = player.getLocation();
                         int amount = Math.round(plugin.getArtronConfig().getInt("autonomous") * spaceTimeThrottle.getArtronMultiplier());
                         if (tardis.getArtronLevel() > amount) {

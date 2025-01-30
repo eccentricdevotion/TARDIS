@@ -2,7 +2,10 @@ package me.eccentric_nz.TARDIS.doors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
+import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
@@ -10,6 +13,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
+
+import java.util.Map;
 
 public class DoorUtility {
 
@@ -64,5 +69,36 @@ public class DoorUtility {
         }
         double y = (-yaw * 180 / Math.PI);
         return (float) Math.round(y / 90) * 90;
+    }
+
+    public static void debugPortal(String block) {
+        TARDIS.plugin.debug("Failed to remove portal entry!");
+        TARDIS.plugin.debug(block);
+        TARDIS.plugin.debug("Current stored locations:");
+        // get open portals
+        for (Map.Entry<Location, TARDISTeleportLocation> map : TARDIS.plugin.getTrackerKeeper().getPortals().entrySet()) {
+            // only portals in police box worlds
+            if (map.getKey().getWorld().getName().contains("TARDIS")) {
+                continue;
+            }
+            if (map.getValue().isAbandoned()) {
+                continue;
+            }
+            TARDIS.plugin.debug(map.getKey().toString());
+        }
+    }
+
+    public static void playDoorSound(Player player, boolean open, Location location, boolean minecart) {
+        if (open) {
+            if (!minecart) {
+                TARDISSounds.playTARDISSound(location, "tardis_door_close");
+            } else {
+                player.playSound(player.getLocation(), Sound.BLOCK_IRON_DOOR_CLOSE, 1.0F, 1.0F);
+            }
+        } else if (!minecart) {
+            TARDISSounds.playTARDISSound(location, "tardis_door_open");
+        } else {
+            player.playSound(player.getLocation(), Sound.BLOCK_IRON_DOOR_OPEN, 1.0F, 1.0F);
+        }
     }
 }

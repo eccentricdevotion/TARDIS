@@ -1,17 +1,15 @@
-package me.eccentric_nz.TARDIS.doors;
+package me.eccentric_nz.TARDIS.doors.outer;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.chameleon.utils.PandoricaOpens;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
-import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.doors.inner.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFarmer;
@@ -26,7 +24,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -39,13 +36,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class DoorToggleAction extends TARDISDoorListener {
+public class OuterDisplayDoorAction extends TARDISDoorListener {
 
-    public DoorToggleAction(TARDIS plugin) {
+    public OuterDisplayDoorAction(TARDIS plugin) {
         super(plugin);
     }
 
-    public boolean openClose(int id, Player player, ArmorStand stand) {
+    public void processClick(int id, Player player, ArmorStand stand) {
         EntityEquipment ee = stand.getEquipment();
         ItemStack dye = ee.getHelmet();
         if (dye != null && (TARDISConstants.DYES.contains(dye.getType()) || plugin.getUtils().isCustomModel(dye)) && dye.hasItemMeta()) {
@@ -65,11 +62,11 @@ public class DoorToggleAction extends TARDISDoorListener {
                         boolean closed = model.contains("_closed");
                         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                             plugin.getMessenger().sendStatus(player, "SIEGE_NO_EXIT");
-                            return true;
+                            return;
                         }
                         if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT");
-                            return true;
+                            return;
                         }
                         // handbrake must be on
                         HashMap<String, Object> tid = new HashMap<>();
@@ -79,12 +76,13 @@ public class DoorToggleAction extends TARDISDoorListener {
                             Tardis tardis = rs.getTardis();
                             if (!tardis.isHandbrakeOn()) {
                                 plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
-                                return true;
+                                return;
                             }
                             // must be Time Lord or companion
                             ResultSetCompanions rsc = new ResultSetCompanions(plugin, id);
                             if (rsc.getCompanions().contains(uuid) || tardis.isAbandoned()) {
                                 if (!rsd.isLocked()) {
+                                    Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
                                     if (closed) {
                                         // get key material
                                         ResultSetPlayerPrefs rspref = new ResultSetPlayerPrefs(plugin, uuid.toString());
@@ -155,42 +153,13 @@ public class DoorToggleAction extends TARDISDoorListener {
                                                 set.put("uuid", uuid.toString());
                                                 plugin.getQueryFactory().doSyncInsert("travellers", set);
                                             } else {
-                                                // create portal & open inner door
-                                                new TARDISInnerDoorOpener(plugin, uuid, id).openDoor(!plugin.getUtils().inTARDISWorld(player));
-                                                if (dye.getType() == Material.ENDER_PEARL) {
-                                                    // animate pandorica opening
-                                                    new PandoricaOpens(plugin).animate(stand, true);
+                                                // open outer
+                                                new OuterDisplayDoorOpener(plugin).open(stand, id, uuid);
+                                                // open inner
+                                                if (innerDisplayDoor.display()) {
+                                                    new InnerDisplayDoorOpener(plugin).open(innerDisplayDoor.block(), id, uuid, true);
                                                 } else {
-                                                    switch (dye.getType()) {
-                                                        case CYAN_STAINED_GLASS_PANE -> dim.setItemModel(ChameleonVariant.TENNANT_OPEN.getKey());
-                                                        case GRAY_STAINED_GLASS_PANE -> dim.setItemModel(ChameleonVariant.WEEPING_ANGEL_OPEN.getKey());
-                                                        case WHITE_DYE -> dim.setItemModel(ChameleonVariant.WHITE_OPEN.getKey());
-                                                        case ORANGE_DYE -> dim.setItemModel(ChameleonVariant.ORANGE_OPEN.getKey());
-                                                        case MAGENTA_DYE -> dim.setItemModel(ChameleonVariant.MAGENTA_OPEN.getKey());
-                                                        case LIGHT_BLUE_DYE -> dim.setItemModel(ChameleonVariant.LIGHT_BLUE_OPEN.getKey());
-                                                        case YELLOW_DYE -> dim.setItemModel(ChameleonVariant.YELLOW_OPEN.getKey());
-                                                        case LIME_DYE -> dim.setItemModel(ChameleonVariant.LIME_OPEN.getKey());
-                                                        case PINK_DYE -> dim.setItemModel(ChameleonVariant.PINK_OPEN.getKey());
-                                                        case GRAY_DYE -> dim.setItemModel(ChameleonVariant.GRAY_OPEN.getKey());
-                                                        case LIGHT_GRAY_DYE -> dim.setItemModel(ChameleonVariant.LIGHT_GRAY_OPEN.getKey());
-                                                        case CYAN_DYE -> dim.setItemModel(ChameleonVariant.CYAN_OPEN.getKey());
-                                                        case PURPLE_DYE -> dim.setItemModel(ChameleonVariant.PURPLE_OPEN.getKey());
-                                                        case BLUE_DYE -> dim.setItemModel(ChameleonVariant.BLUE_OPEN.getKey());
-                                                        case BROWN_DYE -> dim.setItemModel(ChameleonVariant.BROWN_OPEN.getKey());
-                                                        case GREEN_DYE -> dim.setItemModel(ChameleonVariant.GREEN_OPEN.getKey());
-                                                        case RED_DYE -> dim.setItemModel(ChameleonVariant.RED_OPEN.getKey());
-                                                        case BLACK_DYE -> dim.setItemModel(ChameleonVariant.BLACK_OPEN.getKey());
-                                                        case LEATHER_HORSE_ARMOR -> dim.setItemModel(ColouredVariant.TINTED_OPEN.getKey());
-                                                        default -> {
-                                                            // get the custom model config
-                                                            NamespacedKey c = plugin.getUtils().getCustomModel(dye.getType(), "_open");
-                                                            if (c != null) {
-                                                                dim.setItemModel(c);
-                                                            }
-                                                        }
-                                                    }
-                                                    dye.setItemMeta(dim);
-                                                    ee.setHelmet(dye, true);
+                                                    new InnerMinecraftDoorOpener(plugin).open(innerDisplayDoor.block(), id, uuid);
                                                 }
                                             }
                                             TARDISSounds.playDoorSound(true, location);
@@ -203,12 +172,12 @@ public class DoorToggleAction extends TARDISDoorListener {
                                                 ItemStack colour = inv.getItem(8);
                                                 if (colour == null || !TARDISMaterials.dyes.contains(colour.getType())) {
                                                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SONIC_DYE");
-                                                    return true;
+                                                    return;
                                                 }
                                                 // dye = item frame item
                                                 if (dye.getType() == colour.getType()) {
                                                     // same colour - do nothing
-                                                    return true;
+                                                    return;
                                                 }
                                                 long now = System.currentTimeMillis();
                                                 TARDISSonicSound.playSonicSound(plugin, player, now, 600L, "sonic_short");
@@ -236,44 +205,15 @@ public class DoorToggleAction extends TARDISDoorListener {
                                     } else {
                                         if (tardis.isAbandoned()) {
                                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDONED_DOOR");
-                                            return true;
+                                            return;
                                         }
-                                        // close portal & inner door
-                                        new TARDISInnerDoorCloser(plugin, uuid, id).closeDoor(!plugin.getUtils().inTARDISWorld(player));
-                                        if (dye.getType() == Material.ENDER_PEARL) {
-                                            new PandoricaOpens(plugin).animate(stand, false);
+                                        // close outer
+                                        new OuterDisplayDoorCloser(plugin).close(stand, id, uuid);
+                                        // close inner
+                                        if (innerDisplayDoor.display()) {
+                                            new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, uuid, true);
                                         } else {
-                                            switch (dye.getType()) {
-                                                case CYAN_STAINED_GLASS_PANE -> dim.setItemModel(ChameleonVariant.TENNANT_CLOSED.getKey());
-                                                case GRAY_STAINED_GLASS_PANE -> dim.setItemModel(ChameleonVariant.WEEPING_ANGEL_CLOSED.getKey());
-                                                case WHITE_DYE -> dim.setItemModel(ChameleonVariant.WHITE_CLOSED.getKey());
-                                                case ORANGE_DYE -> dim.setItemModel(ChameleonVariant.ORANGE_CLOSED.getKey());
-                                                case MAGENTA_DYE -> dim.setItemModel(ChameleonVariant.MAGENTA_CLOSED.getKey());
-                                                case LIGHT_BLUE_DYE -> dim.setItemModel(ChameleonVariant.LIGHT_BLUE_CLOSED.getKey());
-                                                case YELLOW_DYE -> dim.setItemModel(ChameleonVariant.YELLOW_CLOSED.getKey());
-                                                case LIME_DYE -> dim.setItemModel(ChameleonVariant.LIME_CLOSED.getKey());
-                                                case PINK_DYE -> dim.setItemModel(ChameleonVariant.PINK_CLOSED.getKey());
-                                                case GRAY_DYE -> dim.setItemModel(ChameleonVariant.GRAY_CLOSED.getKey());
-                                                case LIGHT_GRAY_DYE -> dim.setItemModel(ChameleonVariant.LIGHT_GRAY_CLOSED.getKey());
-                                                case CYAN_DYE -> dim.setItemModel(ChameleonVariant.CYAN_CLOSED.getKey());
-                                                case PURPLE_DYE -> dim.setItemModel(ChameleonVariant.PURPLE_CLOSED.getKey());
-                                                case BLUE_DYE -> dim.setItemModel(ChameleonVariant.BLUE_CLOSED.getKey());
-                                                case BROWN_DYE -> dim.setItemModel(ChameleonVariant.BROWN_CLOSED.getKey());
-                                                case GREEN_DYE -> dim.setItemModel(ChameleonVariant.GREEN_CLOSED.getKey());
-                                                case RED_DYE -> dim.setItemModel(ChameleonVariant.RED_CLOSED.getKey());
-                                                case BLACK_DYE -> dim.setItemModel(ChameleonVariant.BLACK_CLOSED.getKey());
-                                                case LEATHER_HORSE_ARMOR -> dim.setItemModel(ColouredVariant.TINTED_CLOSED.getKey());
-                                                default -> {
-                                                    // get the custom model config
-                                                    NamespacedKey c = plugin.getUtils().getCustomModel(dye.getType(), "_closed");
-                                                    if (c != null) {
-                                                        dim.setItemModel(c);
-                                                    }
-                                                }
-                                            }
-                                            dye.setItemMeta(dim);
-                                            ee.setHelmet(dye, true);
-                                            TARDISSounds.playDoorSound(false, location);
+                                            new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, uuid);
                                         }
                                     }
                                 } else if (!tardis.getUuid().equals(uuid)) {
@@ -286,8 +226,6 @@ public class DoorToggleAction extends TARDISDoorListener {
                     }
                 }
             }
-            return true;
         }
-        return false;
     }
 }

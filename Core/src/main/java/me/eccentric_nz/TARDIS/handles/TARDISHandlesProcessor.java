@@ -29,8 +29,10 @@ import me.eccentric_nz.TARDIS.database.data.Program;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
-import me.eccentric_nz.TARDIS.doors.DoorCloserAction;
-import me.eccentric_nz.TARDIS.doors.DoorOpenerAction;
+import me.eccentric_nz.TARDIS.doors.inner.*;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDoor;
+import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorCloser;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.siegemode.TARDISSiegeMode;
@@ -82,7 +84,8 @@ public class TARDISHandlesProcessor {
             if (is != null) {
                 TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
                 switch (thb) {
-                    case ARTRON, DEATH, DEMATERIALISE, ENTER, EXIT, HADS, LOG_OUT, MATERIALISE, SIEGE_OFF, SIEGE_ON -> event = thb.toString();
+                    case ARTRON, DEATH, DEMATERIALISE, ENTER, EXIT, HADS, LOG_OUT, MATERIALISE, SIEGE_OFF, SIEGE_ON ->
+                            event = thb.toString();
                     default -> {
                     }
                 }
@@ -120,8 +123,44 @@ public class TARDISHandlesProcessor {
                         switch (thb) {
                             case DOOR -> {
                                 switch (next) {
-                                    case CLOSE -> new DoorCloserAction(plugin, uuid, id).closeDoors();
-                                    case OPEN -> new DoorOpenerAction(plugin, uuid, id).openDoors();
+                                    case CLOSE -> {
+                                        ResultSetTardisPreset rsp = new ResultSetTardisPreset(plugin);
+                                        if (rsp.fromID(id)) {
+                                            Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
+                                            // close inner
+                                            if (innerDisplayDoor.display()) {
+                                                new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, uuid, true);
+                                            } else {
+                                                new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, uuid);
+                                            }
+                                            boolean outerDisplayDoor = rsp.getPreset().usesArmourStand();
+                                            // close outer
+                                            if (outerDisplayDoor) {
+                                                new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, uuid);
+                                            } else if (rsp.getPreset().hasDoor()) {
+                                                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rsp.getPreset()), id, uuid);
+                                            }
+                                        }
+                                    }
+                                    case OPEN -> {
+                                        ResultSetTardisPreset rsp = new ResultSetTardisPreset(plugin);
+                                        if (rsp.fromID(id)) {
+                                            Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
+                                            // open inner
+                                            if (innerDisplayDoor.display()) {
+                                                new InnerDisplayDoorOpener(plugin).open(innerDisplayDoor.block(), id, uuid, true);
+                                            } else {
+                                                new InnerMinecraftDoorOpener(plugin).open(innerDisplayDoor.block(), id, uuid);
+                                            }
+                                            boolean outerDisplayDoor = rsp.getPreset().usesArmourStand();
+                                            // open outer
+                                            if (outerDisplayDoor) {
+                                                new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, uuid);
+                                            } else if (rsp.getPreset().hasDoor()) {
+                                                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rsp.getPreset()), id, uuid);
+                                            }
+                                        }
+                                    }
                                     case LOCK, UNLOCK -> {
                                         HashMap<String, Object> whered = new HashMap<>();
                                         whered.put("tardis_id", id);
@@ -416,7 +455,7 @@ public class TARDISHandlesProcessor {
                                                     }
                                                     Location player_loc = to.getLocation();
                                                     if (plugin.getTardisArea().isInExistingArea(player_loc)) {
-                                                        plugin.getMessenger().sendColouredCommand(player, "PLAYER_IN_AREA","/tardistravel area [area name]", plugin);
+                                                        plugin.getMessenger().sendColouredCommand(player, "PLAYER_IN_AREA", "/tardistravel area [area name]", plugin);
                                                         continue;
                                                     }
                                                     if (!plugin.getPluginRespect().getRespect(player_loc, new Parameters(player, Flag.getDefaultFlags()))) {
@@ -555,7 +594,7 @@ public class TARDISHandlesProcessor {
                             case HIDE -> player.performCommand("tardis hide");
                             case REBUILD -> player.performCommand("tardis rebuild");
                             case SCAN ->
-                                plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid + " " + id);
+                                    plugin.getServer().dispatchCommand(plugin.getConsole(), "handles scan " + uuid + " " + id);
                             case COMEHERE -> new TARDISHandlesTeleportCommand(plugin).beamMeUp(player);
                             case TAKE_OFF -> {
                                 // player must be in TARDIS
@@ -584,7 +623,8 @@ public class TARDISHandlesProcessor {
             if (is != null) {
                 TARDISHandlesBlock thb = TARDISHandlesBlock.BY_NAME.get(is.getItemMeta().getDisplayName());
                 switch (thb) {
-                    case LESS_THAN, LESS_THAN_EQUAL, GREATER_THAN, GREATER_THAN_EQUAL, EQUALS -> comparison = thb; // operator
+                    case LESS_THAN, LESS_THAN_EQUAL, GREATER_THAN, GREATER_THAN_EQUAL, EQUALS ->
+                            comparison = thb; // operator
                     case ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, ZERO -> {
                         // find all sequential number blocks
                         if (first) {

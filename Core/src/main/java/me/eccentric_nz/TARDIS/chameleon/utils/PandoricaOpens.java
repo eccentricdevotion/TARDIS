@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.chameleon.utils;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.EntityEquipment;
@@ -49,6 +50,10 @@ public class PandoricaOpens {
     }
 
     public void animate(ArmorStand stand, boolean open) {
+        Location location = stand.getLocation();
+        while (!location.getChunk().isLoaded()) {
+            location.getChunk().load();
+        }
         EntityEquipment ee = stand.getEquipment();
         ItemStack is = ee.getHelmet();
         ItemMeta im = is.getItemMeta();

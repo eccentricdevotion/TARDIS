@@ -19,13 +19,19 @@ package me.eccentric_nz.TARDIS.move;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoorBlocks;
-import me.eccentric_nz.TARDIS.doors.TARDISDoorToggler;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
+import me.eccentric_nz.TARDIS.doors.inner.InnerMinecraftDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDoor;
+import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorCloser;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -52,8 +58,19 @@ public class TARDISBlackWoolToggler {
             b.getRelative(BlockFace.UP).setBlockData(mat);
             Block door = b.getRelative(BlockFace.SOUTH);
             if (Tag.DOORS.isTagged(door.getType()) && TARDISStaticUtils.isDoorOpen(door)) {
-                // toggle doors shut
-                new TARDISDoorToggler(plugin, b.getRelative(BlockFace.SOUTH), player, false, true, id).toggleDoors();
+                ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
+                if (rs.fromID(id)) {
+                    boolean outerDisplayDoor = rs.getPreset().usesArmourStand();
+                    UUID playerUUID = player.getUniqueId();
+                    // toggle doors shut
+                    new InnerMinecraftDoorCloser(plugin).close(door, id, playerUUID);
+                    // close doors / deactivate portal
+                    if (outerDisplayDoor) {
+                        new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                    } else if (rs.getPreset().hasDoor()) {
+                        new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rs.getPreset()), id, playerUUID);
+                    }
+                }
             }
         }
     }

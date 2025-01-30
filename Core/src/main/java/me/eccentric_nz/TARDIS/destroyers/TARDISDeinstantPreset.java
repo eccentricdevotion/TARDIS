@@ -22,7 +22,12 @@ import me.eccentric_nz.TARDIS.builders.MaterialisationData;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
-import me.eccentric_nz.TARDIS.doors.DoorCloserAction;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
+import me.eccentric_nz.TARDIS.doors.inner.*;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDoor;
+import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorOpener;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
@@ -39,6 +44,7 @@ import org.bukkit.entity.ItemFrame;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * A police box is a telephone kiosk that can be used by members of the public wishing to get help from the police.
@@ -71,8 +77,26 @@ public class TARDISDeinstantPreset {
         if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
             // always remove the portal
             plugin.getTrackerKeeper().getPortals().remove(l);
-            // toggle the doors if necessary
-            new DoorCloserAction(plugin, dd.getPlayer().getUniqueId(), id).closeDoors();
+            // get preset
+            ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
+            if (rs.fromID(id)) {
+                UUID playerUUID = dd.getPlayer().getUniqueId();
+                // toggle the doors if necessary
+                Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
+                // close inner
+                if (innerDisplayDoor.display()) {
+                    new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID, true);
+                } else {
+                    new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID);
+                }
+                boolean outerDisplayDoor = rs.getPreset().usesArmourStand();
+                // close outer
+                if (outerDisplayDoor) {
+                    new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                } else if (rs.getPreset().hasDoor()) {
+                    new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rs.getPreset()), id, playerUUID);
+                }
+            }
         }
         // remove interaction entity
         Interaction interaction = TARDISDisplayItemUtils.getInteraction(dd.getLocation());

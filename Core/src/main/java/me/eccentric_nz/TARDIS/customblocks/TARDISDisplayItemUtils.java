@@ -116,6 +116,9 @@ public class TARDISDisplayItemUtils {
      * @return The Item Display entity at the block's location or null if there isn't one
      */
     public static ItemDisplay getFromBoundingBox(Block block) {
+        while (!block.getChunk().isLoaded()) {
+            block.getChunk().load();
+        }
         int x = block.getLocation().getBlockX();
         int y = block.getLocation().getBlockY();
         int z = block.getLocation().getBlockZ();

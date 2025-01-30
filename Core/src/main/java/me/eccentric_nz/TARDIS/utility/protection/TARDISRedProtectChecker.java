@@ -55,12 +55,4 @@ public class TARDISRedProtectChecker {
         };
         return cansonic;
     }
-
-    public static boolean shouldToggleDoor(Block block) {
-        Region region = RedProtect.get().getRegionManager().getTopRegion(block.getLocation());
-        if (region == null) {
-            return true;
-        }
-        return !region.getFlagBool("smart-door");
-    }
 }

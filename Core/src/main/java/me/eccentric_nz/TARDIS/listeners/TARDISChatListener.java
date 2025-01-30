@@ -71,56 +71,54 @@ public class TARDISChatListener implements Listener {
         Player player = event.getPlayer();
         UUID chatter = player.getUniqueId();
         String chat = event.getMessage().toLowerCase(Locale.ROOT);
-        if (chat != null) {
-            if (chat.equals("tardis rescue accept") || chat.equals("tardis request accept")) {
-                event.setCancelled(true);
-                boolean request = (chat.equals("tardis request accept"));
-                if (plugin.getTrackerKeeper().getChatRescue().containsKey(chatter)) {
-                    new TARDISAcceptor(plugin).doRequest(player, request);
-                } else {
-                    String message = (request) ? "REQUEST_TIMEOUT" : "RESCUE_TIMEOUT";
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, message);
-                }
-            } else if (chat.equals("tardis call accept")) {
-                // process comehere request
-                event.setCancelled(true);
-                if (plugin.getTrackerKeeper().getComehereRequests().containsKey(chatter)) {
-                    ComehereRequest request = plugin.getTrackerKeeper().getComehereRequests().get(chatter);
-                    new ComehereAction(plugin).doTravel(request);
-                    plugin.getTrackerKeeper().getComehereRequests().remove(chatter);
-                } else {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "REQUEST_TIMEOUT");
-                }
-            } else if (handlesPattern.matcher(chat).lookingAt()) {
-                event.setCancelled(true);
-                // process handles request
-                new TARDISHandlesRequest(plugin).process(chatter, event.getMessage());
-            } else if (chat.equals("done") && plugin.getTrackerKeeper().getPreviewers().containsKey(chatter)) {
-                event.setCancelled(true);
-                // transmat back to TARDIS
-                PreviewData pd = plugin.getTrackerKeeper().getPreviewers().get(chatter);
-                Location transmat = pd.location();
-                if (transmat != null) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT");
-                    plugin.getTrackerKeeper().getPreviewers().remove(chatter);
-                    // transmat to preview desktop
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        // set gamemode
-                        player.playSound(transmat, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
-                        player.teleport(transmat);
-                        player.setGameMode(pd.gamemode());
-                        // set TARDIS occupied
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            HashMap<String, Object> set = new HashMap<>();
-                            set.put("tardis_id", pd.id());
-                            set.put("uuid", chatter.toString());
-                            plugin.getQueryFactory().doSyncInsert("travellers", set);
-                        }, 10L);
-                    }, 10L);
-                }
+        if (chat.equals("tardis rescue accept") || chat.equals("tardis request accept")) {
+            event.setCancelled(true);
+            boolean request = (chat.equals("tardis request accept"));
+            if (plugin.getTrackerKeeper().getChatRescue().containsKey(chatter)) {
+                new TARDISAcceptor(plugin).doRequest(player, request);
             } else {
-                handleChat(player, event.getMessage());
+                String message = (request) ? "REQUEST_TIMEOUT" : "RESCUE_TIMEOUT";
+                plugin.getMessenger().send(player, TardisModule.TARDIS, message);
             }
+        } else if (chat.equals("tardis call accept")) {
+            // process comehere request
+            event.setCancelled(true);
+            if (plugin.getTrackerKeeper().getComehereRequests().containsKey(chatter)) {
+                ComehereRequest request = plugin.getTrackerKeeper().getComehereRequests().get(chatter);
+                new ComehereAction(plugin).doTravel(request);
+                plugin.getTrackerKeeper().getComehereRequests().remove(chatter);
+            } else {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "REQUEST_TIMEOUT");
+            }
+        } else if (handlesPattern.matcher(chat).lookingAt()) {
+            event.setCancelled(true);
+            // process handles request
+            new TARDISHandlesRequest(plugin).process(chatter, event.getMessage());
+        } else if (chat.equals("done") && plugin.getTrackerKeeper().getPreviewers().containsKey(chatter)) {
+            event.setCancelled(true);
+            // transmat back to TARDIS
+            PreviewData pd = plugin.getTrackerKeeper().getPreviewers().get(chatter);
+            Location transmat = pd.location();
+            if (transmat != null) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "TRANSMAT");
+                plugin.getTrackerKeeper().getPreviewers().remove(chatter);
+                // transmat to preview desktop
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    // set gamemode
+                    player.playSound(transmat, Sound.ENTITY_ENDERMAN_TELEPORT, 1.0f, 1.0f);
+                    player.teleport(transmat);
+                    player.setGameMode(pd.gamemode());
+                    // set TARDIS occupied
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        HashMap<String, Object> set = new HashMap<>();
+                        set.put("tardis_id", pd.id());
+                        set.put("uuid", chatter.toString());
+                        plugin.getQueryFactory().doSyncInsert("travellers", set);
+                    }, 10L);
+                }, 10L);
+            }
+        } else {
+            handleChat(player, event.getMessage());
         }
     }
 

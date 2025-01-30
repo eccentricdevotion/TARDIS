@@ -23,8 +23,12 @@ import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.doors.DoorLockAction;
-import me.eccentric_nz.TARDIS.doors.TARDISDoorToggler;
-import me.eccentric_nz.TARDIS.doors.TARDISInnerDoorOpener;
+import me.eccentric_nz.TARDIS.doors.DoorUtility;
+import me.eccentric_nz.TARDIS.doors.inner.*;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDoor;
+import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorOpener;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -82,7 +86,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
      */
     @EventHandler(ignoreCancelled = true)
     public void onDoorInteract(PlayerInteractEvent event) {
-        if (event.getHand() == null) {
+        if (event.getHand() == null || event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
         }
         Block block = event.getClickedBlock();
@@ -115,9 +119,6 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                         event.setUseInteractedBlock(Event.Result.DENY);
                         event.setUseItemInHand(Event.Result.DENY);
                         event.setCancelled(true);
-                        if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
-                            return;
-                        }
                         int id = rsd.getTardis_id();
                         if (plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT");
@@ -207,10 +208,51 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                     new TARDISTakeoff(plugin).run(id, player, rs.getTardis().getBeacon());
                                                 }
                                                 // toggle the door
-                                                if (doortype == 1 || !plugin.getPM().isPluginEnabled("RedProtect") || TARDISRedProtectChecker.shouldToggleDoor(block)) {
-                                                    new TARDISDoorToggler(plugin, block, player, minecart, open, id).toggleDoors();
+                                                DoorUtility.playDoorSound(player, open, block.getLocation(), minecart);
+                                                if (doortype == 1) {
+                                                    boolean outerDisplayDoor = rs.getTardis().getPreset().usesArmourStand();
+                                                    // inner door
+                                                    if (open) {
+                                                        // close door
+                                                        new InnerMinecraftDoorCloser(plugin).close(block, id, playerUUID);
+                                                        // close doors / deactivate portal
+                                                        if (outerDisplayDoor) {
+                                                            new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                                                        } else if (rs.getTardis().getPreset().hasDoor()) {
+                                                            new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rs.getTardis().getPreset()), id, playerUUID);
+                                                        }
+                                                    } else {
+                                                        // open inner
+                                                        new InnerMinecraftDoorOpener(plugin).open(block, id, playerUUID);
+                                                        // open outer
+                                                        if (outerDisplayDoor) {
+                                                            new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                                                        } else if (rs.getTardis().getPreset().hasDoor()) {
+                                                            new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rs.getTardis().getPreset()), id, playerUUID);
+                                                        }
+                                                    }
                                                 } else {
-                                                    new TARDISInnerDoorOpener(plugin, playerUUID, id).openDoor(!plugin.getUtils().inTARDISWorld(player));
+                                                    Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
+                                                    // outer door
+                                                    if (open) {
+                                                        // close outer
+                                                        new OuterMinecraftDoorCloser(plugin).close(block, id, playerUUID);
+                                                        // close inner
+                                                        if (innerDisplayDoor.display()) {
+                                                            new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID, true);
+                                                        } else {
+                                                            new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID);
+                                                        }
+                                                    } else {
+                                                        // open outer
+                                                        new OuterMinecraftDoorOpener(plugin).open(block, id, player);
+                                                        // open inner
+                                                        if (innerDisplayDoor.display()) {
+                                                            new InnerDisplayDoorOpener(plugin).open(innerDisplayDoor.block(), id, playerUUID, true);
+                                                        } else {
+                                                            new InnerMinecraftDoorOpener(plugin).open(innerDisplayDoor.block(), id, playerUUID);
+                                                        }
+                                                    }
                                                 }
                                             }
                                         } else if (Tag.TRAPDOORS.isTagged(blockType)) {

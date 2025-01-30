@@ -19,9 +19,16 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.doors.TARDISDoorToggler;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
+import me.eccentric_nz.TARDIS.doors.inner.*;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDoor;
+import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorOpener;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 public class TARDISDoorCommand {
 
@@ -46,9 +53,42 @@ public class TARDISDoorCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
             return false;
         }
+        int id = rs.getTardisId();
         boolean open = (args[1].equalsIgnoreCase("close"));
-        // toggle the door
-        new TARDISDoorToggler(plugin, player.getLocation().getBlock(), player, false, open, rs.getTardisId()).toggleDoors();
+        UUID playerUUID = player.getUniqueId();
+        ResultSetTardisPreset rsp = new ResultSetTardisPreset(plugin);
+        if (rsp.fromID(id)) {
+            boolean outerDisplayDoor = rsp.getPreset().usesArmourStand();
+            Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
+            // toggle the doors
+            if (open) {
+                // close inner
+                if (innerDisplayDoor.display()) {
+                    new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID, true);
+                } else {
+                    new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID);
+                }
+                // close outer
+                if (outerDisplayDoor) {
+                    new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                } else if (rsp.getPreset().hasDoor()) {
+                    new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rsp.getPreset()), id, playerUUID);
+                }
+            } else {
+                // open inner
+                if (innerDisplayDoor.display()) {
+                    new InnerDisplayDoorOpener(plugin).open(innerDisplayDoor.block(), id, playerUUID, true);
+                } else {
+                    new InnerMinecraftDoorOpener(plugin).open(innerDisplayDoor.block(), id, playerUUID);
+                }
+                // open outer
+                if (outerDisplayDoor) {
+                    new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                } else if (rsp.getPreset().hasDoor()) {
+                    new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rsp.getPreset()), id, playerUUID);
+                }
+            }
+        }
         return true;
     }
 }

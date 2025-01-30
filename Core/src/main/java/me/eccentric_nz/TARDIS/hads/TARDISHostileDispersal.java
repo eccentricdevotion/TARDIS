@@ -21,7 +21,14 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISHADSEvent;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.doors.DoorCloserAction;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
+import me.eccentric_nz.TARDIS.doors.inner.Inner;
+import me.eccentric_nz.TARDIS.doors.inner.InnerDisplayDoorCloser;
+import me.eccentric_nz.TARDIS.doors.inner.InnerDoor;
+import me.eccentric_nz.TARDIS.doors.inner.InnerMinecraftDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDoor;
+import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorCloser;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
@@ -81,7 +88,25 @@ class TARDISHostileDispersal {
             // always remove the portal
             plugin.getTrackerKeeper().getPortals().remove(l);
             // toggle the doors if necessary
-            new DoorCloserAction(plugin, uuid, id).closeDoors();
+            // get preset
+            ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
+            if (rs.fromID(id)) {
+                // toggle the doors if necessary
+                Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
+                // close inner
+                if (innerDisplayDoor.display()) {
+                    new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, uuid, true);
+                } else {
+                    new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, uuid);
+                }
+                boolean outerDisplayDoor = rs.getPreset().usesArmourStand();
+                // close outer
+                if (outerDisplayDoor) {
+                    new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, uuid);
+                } else if (rs.getPreset().hasDoor()) {
+                    new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rs.getPreset()), id, uuid);
+                }
+            }
         }
         World w = l.getWorld();
         // make sure chunk is loaded

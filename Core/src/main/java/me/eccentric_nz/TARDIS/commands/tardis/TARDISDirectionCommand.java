@@ -25,7 +25,14 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.doors.DoorCloserAction;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
+import me.eccentric_nz.TARDIS.doors.inner.Inner;
+import me.eccentric_nz.TARDIS.doors.inner.InnerDisplayDoorCloser;
+import me.eccentric_nz.TARDIS.doors.inner.InnerDoor;
+import me.eccentric_nz.TARDIS.doors.inner.InnerMinecraftDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDoor;
+import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorCloser;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Chunk;
@@ -132,7 +139,23 @@ public class TARDISDirectionCommand {
             setd.put("door_direction", compass.forPreset().toString());
             plugin.getQueryFactory().doUpdate("doors", setd, did);
             // close doors & therefore remove open portals...
-            new DoorCloserAction(plugin, uuid, id).closeDoors();
+            ResultSetTardisPreset rsp = new ResultSetTardisPreset(plugin);
+            if (rsp.fromID(id)) {
+                boolean outerDisplayDoor = rsp.getPreset().usesArmourStand();
+                Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
+                // close inner
+                if (innerDisplayDoor.display()) {
+                    new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, uuid, true);
+                } else {
+                    new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, uuid);
+                }
+                // close outer
+                if (outerDisplayDoor) {
+                    new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, uuid);
+                } else if (rsp.getPreset().hasDoor()) {
+                    new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rsp.getPreset()), id, uuid);
+                }
+            }
             Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             // destroy sign
             if (!hid) {

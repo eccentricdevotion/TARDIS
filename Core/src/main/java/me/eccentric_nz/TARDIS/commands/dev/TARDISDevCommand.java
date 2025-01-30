@@ -24,6 +24,7 @@ import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.lazarus.disguise.ArmourTrim;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
+import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.skins.ArchSkins;
 import me.eccentric_nz.TARDIS.skins.DoctorSkins;
 import me.eccentric_nz.TARDIS.skins.Skin;
@@ -81,6 +82,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "gravity",
             "interaction",
             "label", "list",
+            "monster",
             "nms",
             "plurals",
             "recipe", "regen",
@@ -158,6 +160,24 @@ public class TARDISDevCommand implements CommandExecutor {
                             }
                             return false;
                         }
+                        case "monster" -> {
+                            if (sender instanceof Player player) {
+                                // get open portals
+                                for (Map.Entry<Location, TARDISTeleportLocation> map : plugin.getTrackerKeeper().getPortals().entrySet()) {
+                                    // only portals in police box worlds
+                                    if (map.getKey().getWorld().getName().contains("TARDIS")) {
+                                        continue;
+                                    }
+                                    if (map.getValue().isAbandoned()) {
+                                        continue;
+                                    }
+                                    plugin.getMessenger().message(player, "tardisId => " + map.getValue().getTardisId());
+                                }
+                                plugin.getMessenger().message(player, "End of open portal list.");
+                                return true;
+                            }
+                            return false;
+                        }
                         case "regen" -> {
                             if (sender instanceof Player player) {
                                 new Regenerator().dev(plugin, player, args);
@@ -209,7 +229,8 @@ public class TARDISDevCommand implements CommandExecutor {
                                 }
                                 ItemStack a = MonsterArmour.makeEquippable(monster, slot);
                                 player.getInventory().addItem(a);
-                            } catch (IllegalArgumentException ignored) { }
+                            } catch (IllegalArgumentException ignored) {
+                            }
                         }
                         return true;
                     }

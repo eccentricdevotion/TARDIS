@@ -24,7 +24,11 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.doors.TARDISDoorToggler;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
+import me.eccentric_nz.TARDIS.doors.inner.*;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
+import me.eccentric_nz.TARDIS.doors.outer.OuterDoor;
+import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorCloser;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -43,6 +47,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * At one point, the Tenth Doctor installed a system that allowed him to lock the TARDIS remotely using a fob. As a
@@ -130,10 +135,44 @@ public class TARDISRemoteKeyListener implements Listener {
                     // get inner door block
                     Block block = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoor_location()).getBlock();
                     boolean open = TARDISStaticUtils.isDoorOpen(block);
-                    // toggle door / portals
-                    new TARDISDoorToggler(plugin, block, player, false, open, id).toggleDoors();
-                    String message = (open) ? "DOOR_CLOSED" : "DOOR_OPENED";
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, message);
+                    ResultSetTardisPreset rsp = new ResultSetTardisPreset(plugin);
+                    if (rsp.fromID(id)) {
+                        boolean outerDisplayDoor = rsp.getPreset().usesArmourStand();
+                        UUID playerUUID = player.getUniqueId();
+                        // toggle door / portals
+                        if (open) {
+                            Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
+                            // close inner
+                            if (innerDisplayDoor.display()) {
+                                new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID, true);
+                            } else {
+                                new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID);
+                            }
+                            // close outer
+                            if (outerDisplayDoor) {
+                                new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                            } else if (rsp.getPreset().hasDoor()) {
+                                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rsp.getPreset()), id, playerUUID);
+                            }
+                        } else {
+                            // open inner
+                            Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
+                            // open inner
+                            if (innerDisplayDoor.display()) {
+                                new InnerDisplayDoorOpener(plugin).open(innerDisplayDoor.block(), id, playerUUID, true);
+                            } else {
+                                new InnerMinecraftDoorOpener(plugin).open(innerDisplayDoor.block(), id, playerUUID);
+                            }
+                            // open outer
+                            if (outerDisplayDoor) {
+                                new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                            } else if (rsp.getPreset().hasDoor()) {
+                                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rsp.getPreset()), id, playerUUID);
+                            }
+                        }
+                        String message = (open) ? "DOOR_CLOSED" : "DOOR_OPENED";
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, message);
+                    }
                 }
             } else {
                 if (plugin.getTrackerKeeper().getRebuildCooldown().containsKey(player.getUniqueId())) {
