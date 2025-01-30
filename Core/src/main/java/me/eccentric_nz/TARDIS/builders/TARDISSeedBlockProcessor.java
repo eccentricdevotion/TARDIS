@@ -183,7 +183,14 @@ public class TARDISSeedBlockProcessor {
                 }
                 set.put("lastuse", now);
                 // set preset if default is not 'FACTORY'
-                String preset = plugin.getConfig().getString("police_box.default_preset", "FACTORY").toUpperCase(Locale.ROOT);
+                String preset;
+                String tmp = plugin.getConfig().getString("police_box.default_preset", "FACTORY");
+                if (!tmp.contains(":")) {
+                    preset = tmp.toUpperCase(Locale.ROOT);
+                } else {
+                    String[] split = tmp.split(":");
+                    preset = "ITEM:" + split[1];
+                }
                 set.put("chameleon_preset", preset);
                 set.put("chameleon_demat", preset);
                 // determine wall block material from HashMap

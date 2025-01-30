@@ -303,7 +303,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                     plugin.getPlanetsConfig().set("planets." + name + ".spawn_chunk_radius", 0);
                     plugin.getPlanetsConfig().set("planets." + name + ".spawn_other_mobs", true);
                     plugin.getPlanetsConfig().set("planets." + name + ".gamerules", List.of());
-                    plugin.getPlanetsConfig().set("planets." + name + ".allow_portals", false);
+                    plugin.getPlanetsConfig().set("planets." + name + ".allow_portals", true);
                     plugin.getPlanetsConfig().set("planets." + name + ".alias", TARDISStringUtils.uppercaseFirst(name));
                     String icon;
                     switch (environment) {

@@ -117,7 +117,7 @@ public class TARDISWorlds {
                 plugin.getPlanetsConfig().set("planets." + worldName + ".alias", TARDISStringUtils.uppercaseFirst(worldName));
                 plugin.getPlanetsConfig().set("planets." + worldName + ".spawn_other_mobs", true);
                 plugin.getPlanetsConfig().set("planets." + worldName + ".gamerules", List.of());
-                plugin.getPlanetsConfig().set("planets." + worldName + ".allow_portals", false);
+                plugin.getPlanetsConfig().set("planets." + worldName + ".allow_portals", true);
                 plugin.getPlanetsConfig().set("planets." + worldName + ".helmic_regulator_order", -1);
                 String icon;
                 switch (data.getEnvironment()) {
