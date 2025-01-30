@@ -77,7 +77,7 @@ public class OuterDisplayDoorCloser {
                         // get the custom model config
                         NamespacedKey c = plugin.getUtils().getCustomModel(dye.getType(), "_closed");
                         if (c != null) {
-                            dim.setItemModel(Door.getOpenModel(dye.getType()));
+                            dim.setItemModel(c);
                         }
                     }
                 }
