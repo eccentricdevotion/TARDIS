@@ -58,6 +58,8 @@ public class TARDISStats {
         metrics.addCustomChart(new Metrics.SimplePie("difficulty_disks", () -> plugin.getConfig().getString("difficulty.disks", "false")));
         // junk tardis enabled
         metrics.addCustomChart(new Metrics.SimplePie("junk_tardis", () -> plugin.getConfig().getString("junk.enabled", "true")));
+        // enabled modules
+        metrics.addCustomChart(new Metrics.AdvancedPie("modules", () -> new Modules(plugin).getMap()));
         // dependent plugins
         metrics.addCustomChart(new Metrics.AdvancedPie("dependent_plugins", () -> new DependentPlugins(plugin).getMap()));
     }
