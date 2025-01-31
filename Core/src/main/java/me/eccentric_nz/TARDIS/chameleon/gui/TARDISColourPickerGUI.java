@@ -6,6 +6,7 @@ import me.eccentric_nz.TARDIS.custommodels.keys.ArrowVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -28,8 +29,9 @@ public class TARDISColourPickerGUI {
         LeatherArmorMeta play = (LeatherArmorMeta) dis.getItemMeta();
         play.setDisplayName("Colour");
         play.setLore(List.of("Red: 255", "Green: 255", "Blue: 255"));
-        play.setItemModel(ColouredVariant.TINTED_CAMERA.getKey());
+        play.setItemModel(ColouredVariant.TINT.getKey());
         play.setColor(Color.fromRGB(255, 255, 255)); // white
+        play.addItemFlags(ItemFlag.values());
         dis.setItemMeta(play);
         // red
         ItemStack red = new ItemStack(Material.RED_WOOL, 1);
@@ -50,22 +52,25 @@ public class TARDISColourPickerGUI {
         ItemStack redtint = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
         LeatherArmorMeta rrrtint = (LeatherArmorMeta) redtint.getItemMeta();
         rrrtint.setColor(Color.fromRGB(255, 0, 0)); // red
-        rrrtint.setItemModel(ColouredVariant.TINTED_CAMERA.getKey());
+        rrrtint.setItemModel(ColouredVariant.TINT.getKey());
         rrrtint.setDisplayName("Red");
+        rrrtint.addItemFlags(ItemFlag.values());
         redtint.setItemMeta(rrrtint);
         // green tint
         ItemStack greentint = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
         LeatherArmorMeta gggtint = (LeatherArmorMeta) greentint.getItemMeta();
         gggtint.setColor(Color.fromRGB(0, 255, 0)); // green
-        gggtint.setItemModel(ColouredVariant.TINTED_CAMERA.getKey());
+        gggtint.setItemModel(ColouredVariant.TINT.getKey());
         gggtint.setDisplayName("Green");
+        gggtint.addItemFlags(ItemFlag.values());
         greentint.setItemMeta(gggtint);
         // blue tint
         ItemStack bluetint = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
         LeatherArmorMeta bbbtint = (LeatherArmorMeta) bluetint.getItemMeta();
         bbbtint.setColor(Color.fromRGB(0, 0, 255)); // blue
-        bbbtint.setItemModel(ColouredVariant.TINTED_CAMERA.getKey());
+        bbbtint.setItemModel(ColouredVariant.TINT.getKey());
         bbbtint.setDisplayName("Blue");
+        bbbtint.addItemFlags(ItemFlag.values());
         bluetint.setItemMeta(bbbtint);
         // less
         ItemStack less = new ItemStack(Material.ARROW, 1);
@@ -90,7 +95,14 @@ public class TARDISColourPickerGUI {
         win.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         win.setItemModel(GUIChameleon.BUTTON_CLOSE.key());
         close.setItemMeta(win);
-        return new ItemStack[]{null, null, null, null, dis, null, null, null, null, null, null, null, null, null, null, null, null, null, red, null, less, null, redtint, null, more, null, null, green, null, less, null, greentint, null, more, null, select, blue, null, less, null, bluetint, null, more, null, null, null, null, null, null, null, null, null, null, close};
+        return new ItemStack[]{
+                null, null, null, null, dis, null, null, null, null,
+                null, null, null, null, null, null, null, null, null,
+                red, null, less, null, redtint, null, more, null, null,
+                green, null, less, null, greentint, null, more, null, select,
+                blue, null, less, null, bluetint, null, more, null, null,
+                null, null, null, null, null, null, null, null, close
+        };
     }
 
     public ItemStack[] getGUI() {

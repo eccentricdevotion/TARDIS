@@ -121,7 +121,8 @@ public class TARDISPoliceBoxInventory {
             boxes[i] = pan;
             i++;
         }
-        // any colour
+        // any colour - broken in 1.21.4
+        /*
         if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_tinted")) {
             ItemStack any = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
             ItemMeta colour = any.getItemMeta();
@@ -131,6 +132,7 @@ public class TARDISPoliceBoxInventory {
             boxes[i] = any;
             i++;
         }
+         */
         for (String custom : plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false)) {
             if (i < 50) {
                 try {
