@@ -23,13 +23,14 @@ import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class CaveFinder {
 
-    private static final List<BlockFace> directions = List.of(BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH);
+    private static final List<BlockFace> directions = new ArrayList<>(List.of(BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH));
 
     public static Location searchSpawnPoint(Location playerLocation, boolean checkSlimeChunk) {
         World w = playerLocation.getWorld();

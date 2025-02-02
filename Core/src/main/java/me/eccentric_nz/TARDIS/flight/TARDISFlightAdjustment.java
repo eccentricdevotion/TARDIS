@@ -25,6 +25,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,7 +43,7 @@ class TARDISFlightAdjustment {
 
     TARDISFlightAdjustment(TARDIS plugin) {
         this.plugin = plugin;
-        angles = List.of(0, 45, 90, 135, 180, 225, 270, 315);
+        angles = new ArrayList<>(List.of(0, 45, 90, 135, 180, 225, 270, 315));
     }
 
     public Location getLocation(BuildData bd, int r) {

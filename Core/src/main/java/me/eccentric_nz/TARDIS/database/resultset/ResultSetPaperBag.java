@@ -23,6 +23,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -33,7 +34,7 @@ public class ResultSetPaperBag {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final UUID uuid;
-    private final List<Integer> flavours = List.of(1, 2, 3, 4);
+    private final List<Integer> flavours = new ArrayList<>(List.of(1, 2, 3, 4));
     private final String prefix;
     private int paperBagID;
     private String flavour1;
