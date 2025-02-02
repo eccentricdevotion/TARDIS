@@ -25,10 +25,10 @@ import java.util.HashMap;
  */
 public enum SpaceTimeThrottle {
 
-    NORMAL(4, 560, 20, 11, 1.0f),
-    FASTER(3, 448, 16, 9, 1.5f),
-    RAPID(2, 336, 12, 7, 2.0f),
-    WARP(1, 224, 8, 5, 3.0f),
+    NORMAL(4, 520, 20, 11, 1.0f),
+    FASTER(3, 400, 16, 9, 1.5f),
+    RAPID(2, 255, 12, 7, 2.0f),
+    WARP(1, 175, 8, 5, 3.0f),
     REBUILD(0, 112, 4, -1, 1.0f),
     JUNK(-1, 600, 25, -1, 1.0f);
 
