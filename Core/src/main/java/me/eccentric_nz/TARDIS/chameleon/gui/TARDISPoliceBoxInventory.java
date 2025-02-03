@@ -121,7 +121,7 @@ public class TARDISPoliceBoxInventory {
             boxes[i] = pan;
             i++;
         }
-        // any colour - broken in 1.21.4
+        // colour picker police boxes broken in 1.21.4
         /*
         if (TARDISPermission.hasPermission(player, "tardis.preset.police_box_tinted")) {
             ItemStack any = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);

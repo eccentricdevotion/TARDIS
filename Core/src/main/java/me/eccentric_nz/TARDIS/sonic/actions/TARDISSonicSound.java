@@ -57,6 +57,7 @@ public class TARDISSonicSound {
                     if (meta.hasDisplayName() && meta.getDisplayName().endsWith("Sonic Screwdriver")) {
                         player.getInventory().getItemInMainHand().getEnchantments().keySet().forEach((e) -> player.getInventory().getItemInMainHand().removeEnchantment(e));
                         meta.setItemModel(screwdriver.getModel());
+                        meta.setEnchantmentGlintOverride(null);
                         is.setItemMeta(meta);
                     } else {
                         // find the screwdriver in the player's inventory
@@ -82,6 +83,7 @@ public class TARDISSonicSound {
         ItemMeta meta = stack.getItemMeta();
         if (meta.hasDisplayName() && meta.getDisplayName().endsWith("Sonic Screwdriver")) {
             meta.setItemModel(model);
+            meta.setEnchantmentGlintOverride(null);
             stack.setItemMeta(meta);
             if (stack.containsEnchantment(Enchantment.UNBREAKING)) {
                 stack.getEnchantments().keySet().forEach(stack::removeEnchantment);

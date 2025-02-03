@@ -207,13 +207,15 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
             im.removeEnchant(Enchantment.UNBREAKING);
             im.setEnchantmentGlintOverride(true);
         }
-        is.setItemMeta(im);
         if (main) {
+            is.setItemMeta(im);
             player.getInventory().setItemInMainHand(is);
         } else {
             // remove enchant if level <= 0
             if (level <= 0) {
                 is.getEnchantments().keySet().forEach(is::removeEnchantment);
+                im.setEnchantmentGlintOverride(null);
+                is.setItemMeta(im);
             }
             player.getInventory().setItemInOffHand(is);
         }
