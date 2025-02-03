@@ -34,10 +34,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardisregeneration.Regenerator;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterArmour;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BrushableBlock;
 import org.bukkit.command.Command;
@@ -53,10 +50,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.inventory.meta.components.EquippableComponent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -81,7 +81,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "frame", "furnace",
             "gravity",
             "interaction",
-            "label", "list",
+            "label", "leather", "list",
             "monster",
             "nms",
             "plurals",
@@ -157,6 +157,21 @@ public class TARDISDevCommand implements CommandExecutor {
                         case "interaction" -> {
                             if (sender instanceof Player player) {
                                 return new TARDISInteractionCommand(plugin).process(player.getUniqueId());
+                            }
+                            return false;
+                        }
+                        case "leather" -> {
+                            if (sender instanceof Player player) {
+                                ItemStack is = new ItemStack(Material.LEATHER_HORSE_ARMOR);
+                                LeatherArmorMeta im = (LeatherArmorMeta) is.getItemMeta();
+                                im.setColor(Color.fromRGB(255, 0, 0));
+                                CustomModelDataComponent cmdc = im.getCustomModelDataComponent();
+                                List<String> strings = List.of("chameleon_tint");
+                                cmdc.setStrings(strings);
+                                im.setCustomModelDataComponent(cmdc);
+                                is.setItemMeta(im);
+                                player.getInventory().addItem(is);
+                                return true;
                             }
                             return false;
                         }
