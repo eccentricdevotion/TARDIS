@@ -132,6 +132,7 @@ public class TARDISArtronUpdater {
         integerOptions.put("upgrades.archive.small", 5000);
         integerOptions.put("upgrades.archive.medium", 7500);
         integerOptions.put("upgrades.archive.tall", 10000);
+        integerOptions.put("upgrades.archive.wide", 12000);
         integerOptions.put("upgrades.archive.massive", 20000);
         // string
         stringOptions.put("jettison_seed", "TNT");

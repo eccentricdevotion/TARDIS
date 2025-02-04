@@ -164,6 +164,11 @@ class TARDISArchiveCommand {
                                         w = 47;
                                         c = 47;
                                     }
+                                    case WIDE -> {
+                                        h = 15;
+                                        w = 47;
+                                        c = 47;
+                                    }
                                     case TALL -> {
                                         h = 31;
                                         w = 31;

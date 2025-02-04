@@ -75,6 +75,7 @@ upgrades:
     small: 5000
     medium: 7500
     tall: 10000
+    wide: 12000
     massive: 20000
   template:
     small: 1666

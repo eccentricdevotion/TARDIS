@@ -233,6 +233,17 @@ public class TARDISThemeProcessor {
                                     || !grid[2][5][5].equals("STONE")
                             );
                         }
+                        case WIDE -> {
+                            return (!grid[1][4][5].equals("STONE")
+                                    || !grid[1][4][6].equals("STONE")
+                                    || !grid[1][5][4].equals("STONE")
+                                    || !grid[1][5][5].equals("STONE")
+                                    || !grid[1][5][6].equals("STONE")
+                                    || !grid[1][6][4].equals("STONE")
+                                    || !grid[1][6][5].equals("STONE")
+                                    || !grid[1][6][6].equals("STONE")
+                            );
+                        }
                         case MASSIVE -> {
                             return (!grid[1][4][5].equals("STONE")
                                     || !grid[1][4][6].equals("STONE")
@@ -268,6 +279,14 @@ public class TARDISThemeProcessor {
                                     || !grid[2][5][5].equals("STONE")
                             );
                         }
+                        case WIDE -> {
+                            return (!grid[1][4][6].equals("STONE")
+                                    || !grid[1][5][6].equals("STONE")
+                                    || !grid[1][6][4].equals("STONE")
+                                    || !grid[1][6][5].equals("STONE")
+                                    || !grid[1][6][6].equals("STONE")
+                            );
+                        }
                         case MASSIVE -> {
                             return (!grid[1][4][6].equals("STONE")
                                     || !grid[1][5][6].equals("STONE")
@@ -292,7 +311,14 @@ public class TARDISThemeProcessor {
                     }
                 }
                 case TALL -> {
-                    // same or smaller size do nothing
+                    if (next == ConsoleSize.WIDE) {
+                        return (!grid[1][4][6].equals("STONE")
+                                || !grid[1][5][6].equals("STONE")
+                                || !grid[1][6][4].equals("STONE")
+                                || !grid[1][6][5].equals("STONE")
+                                || !grid[1][6][6].equals("STONE")
+                        );
+                    }
                     if (next == ConsoleSize.MASSIVE) {
                         return (!grid[1][4][6].equals("STONE")
                                 || !grid[1][5][6].equals("STONE")
@@ -308,7 +334,7 @@ public class TARDISThemeProcessor {
                     }
                 }
                 default -> {
-                    // MASSIVE size do nothing
+                    // same or smaller size do nothing
                     return false;
                 }
             }

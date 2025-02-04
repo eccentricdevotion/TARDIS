@@ -489,6 +489,17 @@ class TARDISBuildAbandoned implements Runnable {
                         empty[2][6][5] = control;
                         empty[2][6][6] = control;
                     }
+                    case WIDE -> {
+                        // the 8 slots on the same level
+                        empty[1][4][5] = control;
+                        empty[1][4][6] = control;
+                        empty[1][5][4] = control;
+                        empty[1][5][5] = control;
+                        empty[1][5][6] = control;
+                        empty[1][6][4] = control;
+                        empty[1][6][5] = control;
+                        empty[1][6][6] = control;
+                    }
                     case TALL -> {
                         // the 3 slots on the same level &
                         empty[1][4][5] = control;

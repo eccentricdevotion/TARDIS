@@ -34,7 +34,7 @@ public class TARDISChunkUtils {
     public static List<Chunk> getConsoleChunks(Chunk c, Schematic s) {
         List<Chunk> chunks = new ArrayList<>();
         chunks.add(c);
-        if (s.getConsoleSize().equals(ConsoleSize.MASSIVE)) {
+        if (s.getConsoleSize().equals(ConsoleSize.MASSIVE) || s.getConsoleSize().equals(ConsoleSize.WIDE)) {
             chunks.add(c.getWorld().getChunkAt(c.getX() + 2, c.getZ()));
             chunks.add(c.getWorld().getChunkAt(c.getX() + 2, c.getZ() + 1));
             chunks.add(c.getWorld().getChunkAt(c.getX() + 1, c.getZ() + 2));

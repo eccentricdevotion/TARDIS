@@ -500,7 +500,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 List<TARDISARSJettison> jettisons = getJettisons(size_next, size_prev, chunk);
                 jettisons.forEach((jet) -> {
                     // remove the room
-                    setAir(jet.getX(), jet.getY(), jet.getZ(), jet.getChunk().getWorld(), minusy, 16);
+                    setAir(jet.getX(), jet.getLevel(), jet.getZ(), jet.getChunk().getWorld(), minusy, 16);
                 });
                 // also tidy up the space directly above the ARS centre slot
                 int tidy = starty + height;
@@ -1045,14 +1045,24 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         list.add(new TARDISARSJettison(chunk, 2, 6, 5));
                         list.add(new TARDISARSJettison(chunk, 2, 6, 6));
                     }
-                    default -> {
+                    case WIDE -> {
+                        // the 9 chunks on the level above
+                        list.add(new TARDISARSJettison(chunk, 2, 4, 4));
+                        list.add(new TARDISARSJettison(chunk, 2, 4, 5));
+                        list.add(new TARDISARSJettison(chunk, 2, 4, 6));
+                        list.add(new TARDISARSJettison(chunk, 2, 5, 4));
+                        list.add(new TARDISARSJettison(chunk, 2, 5, 5));
+                        list.add(new TARDISARSJettison(chunk, 2, 5, 6));
+                        list.add(new TARDISARSJettison(chunk, 2, 6, 4));
+                        list.add(new TARDISARSJettison(chunk, 2, 6, 5));
+                        list.add(new TARDISARSJettison(chunk, 2, 6, 6));
                     }
-                    // same size do nothing
+                    default -> { } // same size do nothing
                 }
             }
             case TALL -> {
                 switch (next) {
-                    case MEDIUM -> {
+                    case MEDIUM, WIDE -> {
                         // the 4 chunks on the level above
                         list.add(new TARDISARSJettison(chunk, 2, 4, 4));
                         list.add(new TARDISARSJettison(chunk, 2, 4, 5));
@@ -1070,21 +1080,42 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                         list.add(new TARDISARSJettison(chunk, 2, 5, 4));
                         list.add(new TARDISARSJettison(chunk, 2, 5, 5));
                     }
-                    default -> {
+                    default -> { } // same size or bigger do nothing
+                }
+            }
+            case WIDE -> {
+                switch (next) {
+                    case TALL, MEDIUM -> {
+                        // the 5 chunks on the same level
+                        list.add(new TARDISARSJettison(chunk, 1, 4, 6));
+                        list.add(new TARDISARSJettison(chunk, 1, 5, 6));
+                        list.add(new TARDISARSJettison(chunk, 1, 6, 4));
+                        list.add(new TARDISARSJettison(chunk, 1, 6, 5));
+                        list.add(new TARDISARSJettison(chunk, 1, 6, 6));
                     }
-                    // same size or bigger do nothing
+                    case SMALL -> {
+                        // the 8 chunks on the same level
+                        list.add(new TARDISARSJettison(chunk, 1, 4, 5));
+                        list.add(new TARDISARSJettison(chunk, 1, 4, 6));
+                        list.add(new TARDISARSJettison(chunk, 1, 5, 4));
+                        list.add(new TARDISARSJettison(chunk, 1, 5, 5));
+                        list.add(new TARDISARSJettison(chunk, 1, 5, 6));
+                        list.add(new TARDISARSJettison(chunk, 1, 6, 4));
+                        list.add(new TARDISARSJettison(chunk, 1, 6, 5));
+                        list.add(new TARDISARSJettison(chunk, 1, 6, 6));
+                    }
+                    default -> { } // same size or bigger do nothing
                 }
             }
             case MEDIUM -> {
-                // same size or bigger do nothing
+                // the 3 chunks on the same level
                 if (next == ConsoleSize.SMALL) {// the 3 chunks on the same level
                     list.add(new TARDISARSJettison(chunk, 1, 4, 5));
                     list.add(new TARDISARSJettison(chunk, 1, 5, 4));
                     list.add(new TARDISARSJettison(chunk, 1, 5, 5));
                 }
             }
-            default -> {
-            } // SMALL size do nothing
+            default -> { } // same size or bigger do nothing
         }
         return list;
     }

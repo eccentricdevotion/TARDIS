@@ -236,7 +236,6 @@ public class TARDISConfiguration {
         // string
         stringOptions.put("creation.area", "none");
         stringOptions.put("creation.default_world_name", "TARDIS_TimeVortex");
-        stringOptions.put("creation.tips_next", "FREE");
         stringOptions.put("creation.use_clay", "WOOL");
         stringOptions.put("creation.seed_block.easy", "REDSTONE_TORCH");
         stringOptions.put("creation.seed_block.normal", "SOUL_LANTERN");
@@ -338,6 +337,9 @@ public class TARDISConfiguration {
         }
         if (config.contains("creation.use_block_stack")) {
             plugin.getConfig().set("creation.use_block_stack", null);
+        }
+        if (config.contains("creation.tips_next")) {
+            plugin.getConfig().set("creation.tips_next", null);
         }
         // boolean values
         for (Map.Entry<String, Boolean> entry : booleanOptions.entrySet()) {
