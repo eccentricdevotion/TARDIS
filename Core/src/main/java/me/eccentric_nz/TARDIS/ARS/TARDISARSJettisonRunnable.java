@@ -61,7 +61,7 @@ class TARDISARSJettisonRunnable implements Runnable {
         // remove the room
         World world = slot.getChunk().getWorld();
         int x = slot.getX();
-        int y = slot.getY();
+        int y = slot.getLevel();
         int z = slot.getZ();
         for (int yy = y; yy < (y + 16); yy++) {
             for (int xx = x; xx < (x + 16); xx++) {

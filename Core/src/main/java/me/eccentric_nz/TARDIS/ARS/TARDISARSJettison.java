@@ -26,16 +26,16 @@ import org.bukkit.Chunk;
 public class TARDISARSJettison {
 
     private Chunk chunk;
-    private int y;
+    private int level;
     private int x;
     private int z;
 
     TARDISARSJettison() {
     }
 
-    public TARDISARSJettison(Chunk chunk, int y, int x, int z) {
+    public TARDISARSJettison(Chunk chunk, int level, int x, int z) {
         this.chunk = chunk;
-        setY(y);
+        setLevel(level);
         setX(x);
         setZ(z);
     }
@@ -48,13 +48,13 @@ public class TARDISARSJettison {
         this.chunk = chunk;
     }
 
-    public int getY() {
-        return y;
+    public int getLevel() {
+        return level;
     }
 
-    public final void setY(int y) {
+    public final void setLevel(int level) {
         // convert to the actual y coordinate of the start of the chunk
-        this.y = getChunkY(y);
+        this.level = getChunkY(level);
     }
 
     public int getX() {

@@ -55,7 +55,7 @@ class TARDISARSProcessor {
                             // found TNT in this slot
                             TARDISARSJettison slot = new TARDISARSJettison();
                             slot.setChunk(c);
-                            slot.setY(l);
+                            slot.setLevel(l);
                             slot.setX(x);
                             slot.setZ(z);
                             jettison.put(slot, TARDISARS.ARSFor(start[l][x][z]));
@@ -63,7 +63,7 @@ class TARDISARSProcessor {
                             if (start[l][x][z].equals("SANDSTONE") && l == 2) {
                                 TARDISARSJettison uslot = new TARDISARSJettison();
                                 uslot.setChunk(c);
-                                uslot.setY(3);
+                                uslot.setLevel(3);
                                 uslot.setX(x);
                                 uslot.setZ(z);
                                 jettison.put(uslot, TARDISARS.ANTIGRAVITY);
@@ -71,7 +71,7 @@ class TARDISARSProcessor {
                             if (start[l][x][z].equals("MOSSY_COBBLESTONE") && l == 0) {
                                 TARDISARSJettison lslot = new TARDISARSJettison();
                                 lslot.setChunk(c);
-                                lslot.setY(-1);
+                                lslot.setLevel(-1);
                                 lslot.setX(x);
                                 lslot.setZ(z);
                                 jettison.put(lslot, TARDISARS.GRAVITY);
