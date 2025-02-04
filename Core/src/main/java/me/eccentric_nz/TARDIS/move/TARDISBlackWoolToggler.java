@@ -20,6 +20,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoorBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
+import me.eccentric_nz.TARDIS.doors.inner.Inner;
+import me.eccentric_nz.TARDIS.doors.inner.InnerDisplayDoorCloser;
+import me.eccentric_nz.TARDIS.doors.inner.InnerDoor;
 import me.eccentric_nz.TARDIS.doors.inner.InnerMinecraftDoorCloser;
 import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
 import me.eccentric_nz.TARDIS.doors.outer.OuterDoor;
@@ -60,11 +63,17 @@ public class TARDISBlackWoolToggler {
             if (Tag.DOORS.isTagged(door.getType()) && TARDISStaticUtils.isDoorOpen(door)) {
                 ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
                 if (rs.fromID(id)) {
+                    Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
                     boolean outerDisplayDoor = rs.getPreset().usesArmourStand();
                     UUID playerUUID = player.getUniqueId();
-                    // toggle doors shut
-                    new InnerMinecraftDoorCloser(plugin).close(door, id, playerUUID);
-                    // close doors / deactivate portal
+                    // toggle doors shut / deactivate portals
+                    // close inner
+                    if (innerDisplayDoor.display()) {
+                        new InnerDisplayDoorCloser(plugin).close(door, id, playerUUID, false);
+                    } else {
+                        new InnerMinecraftDoorCloser(plugin).close(door, id, playerUUID);
+                    }
+                    // close outer
                     if (outerDisplayDoor) {
                         new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
                     } else if (rs.getPreset().hasDoor()) {
