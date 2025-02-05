@@ -608,6 +608,23 @@ public class TARDISBlocksUpdater {
             blocks_config.set("version", 16);
             i += 3;
         }
+        if (!tbs.contains("STRIPPED_PALE_OAK_WOOD")) {
+            List<String> blocks = new ArrayList<>();
+            blocks.add("STRIPPED_ACACIA_WOOD");
+            blocks.add("STRIPPED_BIRCH_WOOD");
+            blocks.add("STRIPPED_CHERRY_WOOD");
+            blocks.add("STRIPPED_DARK_OAK_WOOD");
+            blocks.add("STRIPPED_JUNGLE_WOOD");
+            blocks.add("STRIPPED_MANGROVE_WOOD");
+            blocks.add("STRIPPED_OAK_WOOD");
+            blocks.add("STRIPPED_PALE_OAK_WOOD");
+            blocks.add("STRIPPED_SPRUCE_WOOD");
+            // tardis blocks
+            tbs.addAll(blocks);
+            tbs.sort(Comparator.naturalOrder());
+            blocks_config.set("tardis_blocks", tbs);
+            i++;
+        }
         try {
             blocks_config.save(new File(plugin.getDataFolder(), "blocks.yml"));
             if (i > 0) {
