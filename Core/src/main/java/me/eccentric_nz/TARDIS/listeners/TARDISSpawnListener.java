@@ -22,6 +22,7 @@ import me.eccentric_nz.tardisweepingangels.monsters.daleks.DalekEquipment;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Monster;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -69,6 +70,9 @@ public class TARDISSpawnListener implements Listener {
         good_spawns.add(SpawnReason.SPAWNER_EGG);
         good_spawns.add(SpawnReason.VILLAGE_DEFENSE);
         good_spawns.add(SpawnReason.VILLAGE_INVASION);
+        if (plugin.getConfig().getBoolean("allow.animal_spawners")) {
+            good_spawns.add(SpawnReason.SPAWNER);
+        }
     }
 
     /**
@@ -94,6 +98,9 @@ public class TARDISSpawnListener implements Listener {
             // if not an allowable TARDIS spawn reason, cancel
             if (!good_spawns.contains(spawnReason)) {
                 event.setCancelled(true);
+            }
+            if (plugin.getConfig().getBoolean("allow.animal_spawners") && spawnReason.equals(SpawnReason.SPAWNER)) {
+                event.setCancelled(event.getEntity() instanceof Monster);
             }
             if (spawnReason.equals(SpawnReason.BUILD_SNOWMAN) && plugin.getConfig().getBoolean("modules.weeping_angels")) {
                 if (TARDISConstants.RANDOM.nextInt(100) < 3) {

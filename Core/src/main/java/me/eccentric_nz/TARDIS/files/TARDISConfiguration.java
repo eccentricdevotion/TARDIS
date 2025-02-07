@@ -56,6 +56,7 @@ public class TARDISConfiguration {
         booleanOptions.put("allow.add_lights", false);
         booleanOptions.put("allow.admin_bypass", false);
         booleanOptions.put("allow.all_blocks", false);
+        booleanOptions.put("allow.animal_spawners", true);
         booleanOptions.put("allow.autonomous", true);
         booleanOptions.put("allow.emergency_npc", true);
         booleanOptions.put("allow.dynamic_lamps", false);

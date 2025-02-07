@@ -180,6 +180,7 @@ circuits:
 allow:
   mob_farming: true
   spawn_eggs: true
+  animal_spawners: true
   emergency_npc: true
   achievements: true
   autonomous: true
