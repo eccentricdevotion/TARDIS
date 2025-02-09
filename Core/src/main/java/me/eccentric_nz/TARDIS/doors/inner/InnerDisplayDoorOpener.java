@@ -104,14 +104,18 @@ public class InnerDisplayDoorOpener {
                         tp_out.setAbandoned(tardis.isAbandoned());
                         // create portal
                         plugin.getTrackerKeeper().getPortals().put(portal, tp_out);
-                        // add movers (all companion UUIDs)
+                        // add movers
                         if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
-                            plugin.getTrackerKeeper().getMovers().add(uuid);
+                            // always add the time lord of this TARDIS - as a companion may be opening the door
+                            plugin.getTrackerKeeper().getMovers().add(tardis.getUuid());
+                            // others
                             if (tardis.getCompanions().equalsIgnoreCase("everyone")) {
+                                // online players
                                 for (Player p : Bukkit.getServer().getOnlinePlayers()) {
                                     plugin.getTrackerKeeper().getMovers().add(p.getUniqueId());
                                 }
                             } else {
+                                //  companion UUIDs
                                 String[] companions = tardis.getCompanions().split(":");
                                 for (String c : companions) {
                                     if (!c.isEmpty()) {

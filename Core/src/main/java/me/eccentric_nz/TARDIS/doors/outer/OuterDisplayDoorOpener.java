@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetInnerDoorLocations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.doors.Door;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -120,14 +119,18 @@ public class OuterDisplayDoorOpener {
                         tp_in.setAbandoned(tardis.isAbandoned());
                         // track portal
                         plugin.getTrackerKeeper().getPortals().put(portal, tp_in);
-                        // add movers (all companion UUIDs)
+                        // add movers
                         if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
-                            plugin.getTrackerKeeper().getMovers().add(uuid);
+                            // always add the time lord of this TARDIS - as a companion may be opening the door
+                            plugin.getTrackerKeeper().getMovers().add(tardis.getUuid());
+                            // others
                             if (tardis.getCompanions().equalsIgnoreCase("everyone")) {
+                                // online players
                                 for (Player p : Bukkit.getServer().getOnlinePlayers()) {
                                     plugin.getTrackerKeeper().getMovers().add(p.getUniqueId());
                                 }
                             } else {
+                                //  companion UUIDs
                                 String[] companions = tardis.getCompanions().split(":");
                                 for (String c : companions) {
                                     if (!c.isEmpty()) {
