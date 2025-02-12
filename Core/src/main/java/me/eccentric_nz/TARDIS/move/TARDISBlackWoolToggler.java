@@ -54,8 +54,10 @@ public class TARDISBlackWoolToggler {
             BlockData mat;
             if (b.getType().isAir()) {
                 mat = TARDISConstants.BLACK;
+                plugin.getTrackerKeeper().getWoolToggles().remove(id);
             } else {
                 mat = TARDISConstants.AIR;
+                plugin.getTrackerKeeper().getWoolToggles().add(id);
             }
             b.setBlockData(mat);
             b.getRelative(BlockFace.UP).setBlockData(mat);

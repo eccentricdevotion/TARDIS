@@ -42,6 +42,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.enginehub.linbus.stream.token.LinToken;
 
 import java.util.*;
 
@@ -136,6 +137,7 @@ public class TARDISTrackerInstanceKeeper {
     private final Set<Integer> materialising = new HashSet<>();
     private final Set<Integer> minecart = new HashSet<>();
     private final Set<Integer> submarine = new HashSet<>();
+    private final Set<Integer> woolToggle = new HashSet<>();
     private final Set<String> artronFurnaces = new HashSet<>();
     private final Set<String> heatBlocks = new HashSet<>();
     private final Set<String> resetWorlds = new HashSet<>();
@@ -1120,6 +1122,15 @@ public class TARDISTrackerInstanceKeeper {
      */
     public Set<UUID> getSonicDoorToggle() {
         return sonicDoorToggle;
+    }
+
+    /**
+     * Tracks TARDISes that have toggled wool behind interior door
+     *
+     * @return a collection of TARDIS IDs
+     */
+    public Set<Integer> getWoolToggles() {
+        return woolToggle;
     }
 
     /**
