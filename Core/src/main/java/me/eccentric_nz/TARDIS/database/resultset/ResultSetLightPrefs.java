@@ -73,10 +73,11 @@ public class ResultSetLightPrefs {
             if (rs.isBeforeFirst()) {
                 rs.next();
                 tardisId = rs.getInt("tardis_id");
-                light = TardisLight.valueOf(rs.getString("light"));
                 try {
+                    light = TardisLight.valueOf(rs.getString("light"));
                     material = Material.valueOf(rs.getString("material"));
                 } catch (IllegalArgumentException e) {
+                    light = TardisLight.LAMP;
                     material = Material.BONE_BLOCK;
                 }
                 sequence = rs.getString("pattern");
