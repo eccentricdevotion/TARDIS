@@ -74,7 +74,7 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
                 if (rs.resultSet()) {
                     Tardis data = rs.getTardis();
                     switch (slot) {
-                        case 0, 27, 29, 41, 43 -> {
+                        case 0, 27, 29, 34, 41, 43 -> {
                         }
                         // variable block menu
                         case 28 -> {
