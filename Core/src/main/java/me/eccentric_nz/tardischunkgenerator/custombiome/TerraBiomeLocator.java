@@ -34,7 +34,10 @@ public class TerraBiomeLocator {
             } else {
                 location = GenUtils.locateHeightIndependentBiome(terraformWorld, biomeBank, new Vector2f(x, z));
             }
-            return new Location(world, location.x, world.getHighestBlockYAt((int) location.x, (int) location.y), location.y);
+            if (location != null) {
+                return new Location(world, location.x, world.getHighestBlockYAt((int) location.x, (int) location.y), location.y);
+            }
+            return null;
         } catch (IllegalArgumentException ignored) {
             return null;
         }
