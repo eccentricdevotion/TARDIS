@@ -46,17 +46,17 @@ public class TARDISBiomeFinder {
     public void run(World w, String search, Player player, int id, COMPASS direction, Location current) {
         Location tb;
         plugin.getMessenger().sendStatus(player, "BIOME_SEARCH");
-        try {
-            Biome biome = Biome.valueOf(search);
-            if (biome.equals(Biome.THE_VOID)) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_TRAVEL_NOT_VALID");
-                return;
-            }
-            tb = BiomeUtilities.searchBiome(w, biome, current);
-        } catch (IllegalArgumentException iae) {
-            if (TARDIS.plugin.getServer().getPluginManager().isPluginEnabled("TerraformGenerator") && w.getGenerator() instanceof TerraformGenerator) {
-                tb = new TerraBiomeLocator(w, current, search).execute();
-            } else {
+        if (TARDIS.plugin.getServer().getPluginManager().isPluginEnabled("TerraformGenerator") && w.getGenerator() instanceof TerraformGenerator) {
+            tb = new TerraBiomeLocator(w, current, search).execute();
+        } else {
+            try {
+                Biome biome = Biome.valueOf(search);
+                if (biome.equals(Biome.THE_VOID)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_TRAVEL_NOT_VALID");
+                    return;
+                }
+                tb = BiomeUtilities.searchBiome(w, biome, current);
+            } catch (IllegalArgumentException iae) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_VALID");
                 return;
             }
