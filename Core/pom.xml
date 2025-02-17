@@ -460,6 +460,20 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>org.terraform</groupId>
+            <artifactId>TerraformGenerator</artifactId>
+            <version>18.1.2</version>
+            <type>jar</type>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/TerraformGenerator.jar</systemPath>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>2.11.6</version>

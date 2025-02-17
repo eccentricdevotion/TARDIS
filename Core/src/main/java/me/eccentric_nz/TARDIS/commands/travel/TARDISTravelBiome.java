@@ -41,7 +41,6 @@ import java.util.Locale;
 import java.util.UUID;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISTravelBiome {
@@ -113,51 +112,41 @@ public class TARDISTravelBiome {
             String b = buf.substring(0, buf.length() - 2);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOMES", b);
         } else {
-            try {
-                Biome biome = Biome.valueOf(upper);
-                if (biome.equals(Biome.THE_VOID)) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_TRAVEL_NOT_VALID");
-                    return true;
-                }
-                plugin.getMessenger().sendStatus(player, "BIOME_SEARCH");
-                World w;
-                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                if (!rsc.resultSet()) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
-                    return true;
-                }
-                // have they specified a world argument?
-                if (args.length > 2) {
-                    // must be in the vortex
-                    if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_FROM_VORTEX");
-                        return true;
-                    }
-                    String planet = args[2].toLowerCase(Locale.ROOT);
-                    if (TARDISConstants.isTARDISPlanet(planet)) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_PLANET", args[2]);
-                        return true;
-                    }
-                    // get the world
-                    w = TARDISAliasResolver.getWorldFromAlias(args[2]);
-                    if (w == null) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "WORLD_DELETED", args[2]);
-                        return true;
-                    }
-                } else {
-                    String planet = rsc.getWorld().getName();
-                    if (TARDISConstants.isTARDISPlanet(planet)) {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_PLANET", rsc.getWorld().getName());
-                        return true;
-                    }
-                    w = rsc.getWorld();
-                }
-                Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                new TARDISBiomeFinder(plugin).run(w, biome, player, id, rsc.getDirection(), current);
-            } catch (IllegalArgumentException iae) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_VALID");
+
+            World w;
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            if (!rsc.resultSet()) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return true;
             }
+            // have they specified a world argument?
+            if (args.length > 2) {
+                // must be in the vortex
+                if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_FROM_VORTEX");
+                    return true;
+                }
+                String planet = args[2].toLowerCase(Locale.ROOT);
+                if (TARDISConstants.isTARDISPlanet(planet)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_PLANET", args[2]);
+                    return true;
+                }
+                // get the world
+                w = TARDISAliasResolver.getWorldFromAlias(args[2]);
+                if (w == null) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "WORLD_DELETED", args[2]);
+                    return true;
+                }
+            } else {
+                String planet = rsc.getWorld().getName();
+                if (TARDISConstants.isTARDISPlanet(planet)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_PLANET", rsc.getWorld().getName());
+                    return true;
+                }
+                w = rsc.getWorld();
+            }
+            Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+            new TARDISBiomeFinder(plugin).run(w, upper, player, id, rsc.getDirection(), current);
         }
         return true;
     }

@@ -21,7 +21,10 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.lazarus.disguise.*;
 import me.eccentric_nz.TARDIS.skins.TARDISChameleonArchDisguiser;
-import me.eccentric_nz.tardischunkgenerator.custombiome.*;
+import me.eccentric_nz.tardischunkgenerator.custombiome.CubicMaterial;
+import me.eccentric_nz.tardischunkgenerator.custombiome.CustomBiome;
+import me.eccentric_nz.tardischunkgenerator.custombiome.CustomBiomeData;
+import me.eccentric_nz.tardischunkgenerator.custombiome.TARDISBiomeData;
 import me.eccentric_nz.tardischunkgenerator.helpers.GetBlockColours;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISItemFrameFaker;
 import me.eccentric_nz.tardischunkgenerator.helpers.TARDISMapUpdater;
@@ -46,7 +49,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 import org.bukkit.*;
-import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
 import org.bukkit.craftbukkit.v1_21_R3.CraftWorld;
@@ -301,10 +303,6 @@ public class TARDISHelper {
 
     public void updateMap(World world, MapView mapView) {
         new TARDISMapUpdater(world, mapView.getCenterX(), mapView.getCenterZ()).update(mapView);
-    }
-
-    public Location searchBiome(World world, Biome biome, Location policeBox) {
-        return BiomeUtilities.searchBiome(world, biome, policeBox);
     }
 
     public void addCustomBiome(String biome) {

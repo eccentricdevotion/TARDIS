@@ -26,10 +26,12 @@ import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeUtilities;
+import me.eccentric_nz.tardischunkgenerator.custombiome.TerraBiomeLocator;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
+import org.terraform.coregen.bukkit.TerraformGenerator;
 
 import java.util.HashMap;
 
@@ -41,13 +43,29 @@ public class TARDISBiomeFinder {
         this.plugin = plugin;
     }
 
-    public void run(World w, Biome biome, Player player, int id, COMPASS direction, Location current) {
-        Location tb = BiomeUtilities.searchBiome(w, biome, current);
-        // cancel biome finder
+    public void run(World w, String search, Player player, int id, COMPASS direction, Location current) {
+        Location tb;
+        plugin.getMessenger().sendStatus(player, "BIOME_SEARCH");
+        try {
+            Biome biome = Biome.valueOf(search);
+            if (biome.equals(Biome.THE_VOID)) {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_TRAVEL_NOT_VALID");
+                return;
+            }
+            tb = BiomeUtilities.searchBiome(w, biome, current);
+        } catch (IllegalArgumentException iae) {
+            if (TARDIS.plugin.getServer().getPluginManager().isPluginEnabled("TerraformGenerator") && w.getGenerator() instanceof TerraformGenerator) {
+                tb = new TerraBiomeLocator(w, current, search).execute();
+            } else {
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_VALID");
+                return;
+            }
+        }
         if (tb == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_FOUND");
             return;
         }
+        // found a biome
         if (!plugin.getPluginRespect().getRespect(tb, new Parameters(player, Flag.getDefaultFlags()))) {
             if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
                 plugin.getTrackerKeeper().getMalfunction().put(id, true);

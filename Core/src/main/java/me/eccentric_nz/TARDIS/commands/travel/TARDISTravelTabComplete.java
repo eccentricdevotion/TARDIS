@@ -25,9 +25,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * TabCompleter for /tardistravel
@@ -35,7 +33,7 @@ import java.util.Locale;
 public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompleter {
 
     private final List<String> ROOT_SUBS = new ArrayList<>();
-    private final List<String> BIOME_SUBS = new ArrayList<>();
+    private final Set<String> BIOME_SUBS = new HashSet<>();
     private final List<String> AREA_SUBS = new ArrayList<>();
     private final List<String> STRUCTURE_SUBS;
 
@@ -44,6 +42,9 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
             if (!bi.equals(Biome.THE_VOID)) {
                 BIOME_SUBS.add(bi.toString());
             }
+        }
+        if (TARDIS.plugin.getServer().getPluginManager().isPluginEnabled("TerraformGenerator")) {
+            BIOME_SUBS.addAll(new TerraBiomes().get());
         }
         ROOT_SUBS.addAll(List.of("home", "biome", "save", "dest", "area", "back", "player", "cave", "village", "structure", "random", "cancel", "costs", "stop"));
         ROOT_SUBS.addAll(plugin.getTardisAPI().getWorlds());
