@@ -83,7 +83,17 @@ public class ResultSetStandby {
                             }
                             sd = new StandbyData(Integer.MAX_VALUE, UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, lightType);
                         }
-                        default -> sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, Consoles.getBY_NAMES().get(rs.getString("size")).getLights());
+                        default -> {
+                            // get the TARDIS/player's light preference
+                            TardisLight light;
+                            ResultSetLightPrefs rsp = new ResultSetLightPrefs(plugin);
+                            if (rsp.fromID(rs.getInt("tardis_id"))) {
+                                light = rsp.getLight();
+                            } else {
+                                light = Consoles.getBY_NAMES().get(rs.getString("size")).getLights();
+                            }
+                            sd = new StandbyData(rs.getInt("artron_level"), UUID.fromString(rs.getString("uuid")), rs.getBoolean("hidden"), rs.getBoolean("lights_on"), preset, light);
+                        }
                     }
                     ids.put(rs.getInt("tardis_id"), sd);
                 }

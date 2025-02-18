@@ -208,9 +208,9 @@ public enum TARDISDisplayItem {
         }
     }
 
+    private final NamespacedKey customModel;
     private final Material material;
     private final Material craftMaterial;
-    private final NamespacedKey customModel;
 
     TARDISDisplayItem(NamespacedKey customModel, Material item, Material craftMaterial) {
         this.customModel = customModel;
