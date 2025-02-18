@@ -108,8 +108,8 @@ public class TARDISLampToggler {
                         ItemMeta im = is.getItemMeta();
                         im.setDisplayName(light.getOn().getDisplayName());
                         NamespacedKey model = light.getOn().getCustomModel();
-                        im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
                         if (model != null) {
+                            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
                             im.setItemModel(model);
                         }
                         is.setItemMeta(im);
