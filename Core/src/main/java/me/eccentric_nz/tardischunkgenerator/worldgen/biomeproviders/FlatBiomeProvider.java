@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.tardischunkgenerator.worldgen.biomeproviders;
 
-import java.util.List;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.WorldInfo;
+
+import java.util.List;
 
 public class FlatBiomeProvider extends BiomeProvider {
 

@@ -16,13 +16,14 @@
  */
 package me.eccentric_nz.tardisshop;
 
+import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import net.milkbowl.vault.economy.Economy;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 
 /**
  *

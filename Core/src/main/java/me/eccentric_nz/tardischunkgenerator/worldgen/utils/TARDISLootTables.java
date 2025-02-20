@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardischunkgenerator.worldgen.utils;
 
-import java.util.Arrays;
-import java.util.List;
 import org.bukkit.loot.LootTable;
 import org.bukkit.loot.LootTables;
+
+import java.util.List;
 
 public class TARDISLootTables {
 

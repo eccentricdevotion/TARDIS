@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ReducerInventory {

@@ -17,14 +17,10 @@
 package me.eccentric_nz.tardisweepingangels.utils;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentWithPreset;
-import me.eccentric_nz.TARDIS.flight.vehicle.VehicleUtility;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterEquipment;
 import me.eccentric_nz.tardisweepingangels.nms.FollowerPersister;
 import me.eccentric_nz.tardisweepingangels.nms.TWAFollower;
-import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_21_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -35,7 +31,6 @@ import org.bukkit.event.world.EntitiesUnloadEvent;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**

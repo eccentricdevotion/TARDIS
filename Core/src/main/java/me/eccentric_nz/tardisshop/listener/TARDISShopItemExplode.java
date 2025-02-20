@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.tardisshop.listener;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisshop.database.ResultSetShopItem;
 import org.bukkit.block.Block;
@@ -25,6 +23,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TARDISShopItemExplode implements Listener {
 

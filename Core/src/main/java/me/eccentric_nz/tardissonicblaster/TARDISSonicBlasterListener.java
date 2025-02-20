@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardissonicblaster;
 
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
@@ -28,6 +27,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+
+import java.util.UUID;
 
 public class TARDISSonicBlasterListener implements Listener {
 

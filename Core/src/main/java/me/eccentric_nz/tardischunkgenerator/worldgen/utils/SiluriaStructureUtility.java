@@ -16,10 +16,10 @@
  */
 package me.eccentric_nz.tardischunkgenerator.worldgen.utils;
 
-import java.util.Arrays;
+import org.bukkit.util.BlockVector;
+
 import java.util.HashMap;
 import java.util.List;
-import org.bukkit.util.BlockVector;
 
 public class SiluriaStructureUtility {
 

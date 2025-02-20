@@ -18,7 +18,6 @@ package me.eccentric_nz.tardischunkgenerator.custombiome;
 
 import org.bukkit.Material;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class CubicMaterial {

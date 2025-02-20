@@ -21,14 +21,12 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.doors.DoorUtility;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class InnerMinecraftDoorCloser {

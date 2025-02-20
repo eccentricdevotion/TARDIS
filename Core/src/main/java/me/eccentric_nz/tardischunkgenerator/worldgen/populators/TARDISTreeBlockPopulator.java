@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardischunkgenerator.worldgen.populators;
 
-import java.util.Random;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.worldgen.feature.CustomTree;
@@ -25,6 +24,8 @@ import org.bukkit.Material;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
+
+import java.util.Random;
 
 public class TARDISTreeBlockPopulator extends BlockPopulator {
 

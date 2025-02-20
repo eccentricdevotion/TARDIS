@@ -17,12 +17,6 @@
 package me.eccentric_nz.tardisshop;
 
 import com.google.common.collect.ImmutableList;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -39,6 +33,12 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TextDisplay;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class TARDISShopCommand extends TARDISCompleter implements CommandExecutor, TabCompleter {
 

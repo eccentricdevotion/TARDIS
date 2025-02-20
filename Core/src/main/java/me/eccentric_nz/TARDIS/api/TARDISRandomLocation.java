@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.api;
 
-import com.wimbli.WorldBorder.BorderData;
-import com.wimbli.WorldBorder.Config;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -73,25 +71,15 @@ class TARDISRandomLocation {
         maxX = cx;
         minZ = -cz;
         maxZ = cz;
-        // get the limits of the world
-        // is WorldBorder enabled, and is there a border set for this world?
-        if (plugin.getPM().isPluginEnabled("WorldBorder") && Config.Border(w.getName()) != null) {
-            BorderData border = Config.Border(w.getName());
-            minX = (int) border.getX() - border.getRadiusX();
-            maxX = (int) border.getX() + border.getRadiusX();
-            minZ = (int) border.getZ() - border.getRadiusZ();
-            maxZ = (int) border.getZ() + border.getRadiusZ();
-        } else {
-            // check vanilla world border
-            WorldBorder wb = w.getWorldBorder();
-            int size = (int) wb.getSize() / 2;
-            Location centre = wb.getCenter();
-            if (size < 30000000) {
-                minX = centre.getBlockX() - size;
-                minZ = centre.getBlockZ() - size;
-                maxX = centre.getBlockX() + size;
-                maxZ = centre.getBlockZ() + size;
-            }
+        // check the world border
+        WorldBorder wb = w.getWorldBorder();
+        int size = (int) wb.getSize() / 2;
+        Location centre = wb.getCenter();
+        if (size < 30000000) {
+            minX = centre.getBlockX() - size;
+            minZ = centre.getBlockZ() - size;
+            maxX = centre.getBlockX() + size;
+            maxZ = centre.getBlockZ() + size;
         }
         // compensate for nether 1:8 ratio if necessary
         if (env.equals(World.Environment.NETHER)) {

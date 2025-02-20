@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.doors.outer;
 
-import com.mojang.datafixers.util.Pair;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetOuterPortal;

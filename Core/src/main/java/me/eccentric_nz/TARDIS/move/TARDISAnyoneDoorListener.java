@@ -35,7 +35,6 @@ import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import me.eccentric_nz.TARDIS.utility.protection.TARDISRedProtectChecker;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;

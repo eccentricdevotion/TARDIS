@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
-import me.eccentric_nz.TARDIS.custommodels.keys.ArmourVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.Features;
 import me.eccentric_nz.TARDIS.custommodels.keys.SmilerVariant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.Location;

@@ -18,7 +18,6 @@ package me.eccentric_nz.tardischemistry.product;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

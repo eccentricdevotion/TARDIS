@@ -20,8 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravelledTo;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.utility.protection.TARDISFactionsChecker;
-import me.eccentric_nz.TARDIS.utility.protection.TARDISRedProtectChecker;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
 import org.bukkit.entity.Player;
@@ -102,23 +100,14 @@ public class TARDISTravelRequest {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "TOWNY");
             bool = false;
         }
-        if (plugin.getPluginRespect().isBorderOnServer() && plugin.getConfig().getBoolean("preferences.respect_worldborder") && !plugin.getPluginRespect().getBorderchk().isInBorder(l)) {
+        if (plugin.getConfig().getBoolean("preferences.respect_worldborder") && !l.getWorld().getWorldBorder().isInside(l)) {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "WORLDBORDER");
-            bool = false;
-        }
-        if (plugin.getPluginRespect().isFactionsOnServer() && plugin.getConfig().getBoolean("preferences.respect_factions") && !TARDISFactionsChecker.isInFaction(to, l)) {
-            plugin.getMessenger().send(p, TardisModule.TARDIS, "FACTIONS");
             bool = false;
         }
         if (plugin.getPluginRespect().isGriefPreventionOnServer() && plugin.getConfig().getBoolean("preferences.respect_grief_prevention") && !plugin.getPluginRespect().getGriefchk().isInClaim(to, l)) {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "GRIEFPREVENTION");
             bool = false;
         }
-        if (plugin.getPluginRespect().isRedProtectOnServer() && plugin.getConfig().getBoolean("preferences.respect_red_protect") && !TARDISRedProtectChecker.canBuild(to, l)) {
-            plugin.getMessenger().send(p, TardisModule.TARDIS, "REDPROTECT");
-            bool = false;
-        }
-
         if (plugin.getTardisArea().areaCheckLocPlayer(p, l)) {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "TRAVEL_NO_PERM", plugin.getTrackerKeeper().getPerm().get(p.getUniqueId()));
             plugin.getTrackerKeeper().getPerm().remove(p.getUniqueId());

@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.tardisweepingangels.utils;
 
-import java.nio.ByteBuffer;
-import java.util.UUID;
 import org.bukkit.persistence.PersistentDataAdapterContext;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.nio.ByteBuffer;
+import java.util.UUID;
 
 public class UUIDDataType implements PersistentDataType<byte[], UUID> {
 

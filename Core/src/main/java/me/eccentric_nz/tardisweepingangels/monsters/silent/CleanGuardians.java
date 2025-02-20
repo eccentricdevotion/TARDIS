@@ -16,11 +16,12 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.silent;
 
-import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
 import org.bukkit.entity.Guardian;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.Collection;
 
 public class CleanGuardians implements Runnable {
 

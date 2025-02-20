@@ -143,10 +143,6 @@ public class TARDISDeleteCommand {
                     if (!plugin.getPlanetsConfig().getBoolean("planets." + cw + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "mv remove " + wname);
                     }
-                    if (plugin.getPM().isPluginEnabled("WorldBorder")) {
-                        // wb <world> clear
-                        plugin.getServer().dispatchCommand(plugin.getConsole(), "wb " + wname + " clear");
-                    }
                     plugin.getServer().unloadWorld(cw, true);
                     File world_folder = new File(plugin.getServer().getWorldContainer() + File.separator + wname + File.separator);
                     if (!deleteFolder(world_folder)) {

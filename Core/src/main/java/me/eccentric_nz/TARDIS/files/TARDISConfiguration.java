@@ -152,9 +152,7 @@ public class TARDISConfiguration {
         booleanOptions.put("preferences.update.auto_download", false);
         booleanOptions.put("preferences.open_door_policy", false);
         booleanOptions.put("preferences.render_entities", false);
-        booleanOptions.put("preferences.respect_factions", true);
         booleanOptions.put("preferences.respect_grief_prevention", true);
-        booleanOptions.put("preferences.respect_red_protect", true);
         booleanOptions.put("preferences.respect_worldborder", true);
         booleanOptions.put("preferences.spawn_random_monsters", true);
         booleanOptions.put("preferences.strike_lightning", true);
@@ -320,6 +318,10 @@ public class TARDISConfiguration {
         }
         if (config.contains("conversions.lowercase_world_names")) {
             plugin.getConfig().set("conversions.lowercase_world_names", null);
+        }
+        if (config.contains("preferences.respect_factions")) {
+            plugin.getConfig().set("preferences.respect_factions", null);
+            plugin.getConfig().set("preferences.respect_red_protect", null);
         }
         if (config.contains("switch_resource_packs")) {
             plugin.getConfig().set("switch_resource_packs", null);

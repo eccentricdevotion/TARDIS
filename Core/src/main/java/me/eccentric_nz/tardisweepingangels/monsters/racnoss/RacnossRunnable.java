@@ -38,7 +38,6 @@ import org.bukkit.entity.PiglinBrute;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 

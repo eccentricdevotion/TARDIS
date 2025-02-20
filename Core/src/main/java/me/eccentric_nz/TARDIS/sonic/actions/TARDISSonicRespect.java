@@ -17,7 +17,9 @@
 package me.eccentric_nz.TARDIS.sonic.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.utility.protection.*;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISGriefPreventionChecker;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISLWCChecker;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISTownyChecker;
 import nl.rutgerkok.blocklocker.BlockLockerAPIv2;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -36,12 +38,8 @@ public class TARDISSonicRespect {
         // WorldGuard is probably on server + possibly another protection plugin
         if (plugin.isWorldGuardOnServer() && !plugin.getWorldGuardUtils().canBuild(player, block.getLocation())) {
             return false;
-        } else { // keep checking
-
-            // Factions
-            if (plugin.getPM().isPluginEnabled("Factions") && plugin.getConfig().getBoolean("preferences.respect_factions")) {
-                return TARDISFactionsChecker.isInFaction(player, block.getLocation());
-            }
+        } else {
+            // keep checking
             // Towny
             if (plugin.getPM().isPluginEnabled("Towny")) {
                 return new TARDISTownyChecker(plugin).playerHasPermission(player, block);
@@ -49,10 +47,6 @@ public class TARDISSonicRespect {
             // GriefPrevention
             if (plugin.getPM().isPluginEnabled("GriefPrevention")) {
                 return !(new TARDISGriefPreventionChecker(plugin).isInClaim(player, block.getLocation()));
-            }
-            // RedProtect
-            if (plugin.getPM().isPluginEnabled("RedProtect")) {
-                return TARDISRedProtectChecker.canSonic(player, block);
             }
             // LWCX
             if (plugin.getPM().isPluginEnabled("LWC")) {

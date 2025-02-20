@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.listeners;
 
-import java.util.HashMap;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetBeacon;
 import org.bukkit.Location;
@@ -26,6 +24,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class TVMMoveListener implements Listener {
 

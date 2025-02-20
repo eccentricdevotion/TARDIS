@@ -17,13 +17,8 @@
 package me.eccentric_nz.tardisweepingangels.equip;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.skins.CharacterSkins;
-import me.eccentric_nz.TARDIS.skins.MonsterSkins;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
-import org.bukkit.Material;
-import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

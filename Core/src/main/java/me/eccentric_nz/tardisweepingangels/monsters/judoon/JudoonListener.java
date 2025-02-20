@@ -19,7 +19,6 @@ package me.eccentric_nz.tardisweepingangels.monsters.judoon;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.keys.ArrowVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.JudoonVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.nms.TWAJudoon;

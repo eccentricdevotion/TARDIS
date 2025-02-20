@@ -16,8 +16,9 @@
  */
 package me.eccentric_nz.tardischunkgenerator.worldgen.utils;
 
-import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 public class WaterCircle {
 

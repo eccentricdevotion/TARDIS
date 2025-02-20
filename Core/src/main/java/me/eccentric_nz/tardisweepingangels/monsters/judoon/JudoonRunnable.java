@@ -29,7 +29,6 @@ import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Husk;
 import org.bukkit.entity.LivingEntity;

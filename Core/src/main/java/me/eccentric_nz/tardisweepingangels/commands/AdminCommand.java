@@ -16,14 +16,14 @@
  */
 package me.eccentric_nz.tardisweepingangels.commands;
 
-import java.util.HashMap;
-import java.util.Locale;
-
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+
+import java.util.HashMap;
+import java.util.Locale;
 
 public class AdminCommand {
 

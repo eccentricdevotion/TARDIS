@@ -17,7 +17,7 @@
     </properties>
     <url>http://eccentricdevotion.github.com/TARDIS/</url>
     <repositories>
-        <!--worldborder, vault & griefprevention-->
+        <!--vault & griefprevention-->
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
@@ -329,19 +329,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.Brettflan</groupId>
-            <artifactId>WorldBorder</artifactId>
-            <version>44f388f3ba</version>
-            <type>jar</type>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>com.onarandombox.multiversecore</groupId>
             <artifactId>Multiverse-Core</artifactId>
             <version>4.3.2-SNAPSHOT</version>
@@ -477,32 +464,6 @@
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>2.11.6</version>
-            <type>jar</type>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.github.fabiozumbi12.RedProtect</groupId>
-            <artifactId>RedProtect-Core</artifactId>
-            <version>8.1.2</version>
-            <type>jar</type>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.github.fabiozumbi12.RedProtect</groupId>
-            <artifactId>RedProtect-Spigot</artifactId>
-            <version>8.1.2</version>
             <type>jar</type>
             <scope>provided</scope>
             <exclusions>

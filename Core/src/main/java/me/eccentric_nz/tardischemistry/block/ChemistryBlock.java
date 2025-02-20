@@ -19,7 +19,6 @@ package me.eccentric_nz.tardischemistry.block;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import org.bukkit.Material;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 

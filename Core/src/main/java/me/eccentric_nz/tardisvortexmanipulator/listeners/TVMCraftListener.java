@@ -3,7 +3,6 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.listeners;
 
-import java.util.HashMap;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMResultSetManipulator;
 import org.bukkit.Material;
@@ -14,6 +13,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
+
+import java.util.HashMap;
 
 /**
  * @author eccentric_nz

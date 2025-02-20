@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardisweepingangels.monsters.toclafane;
 
-import java.util.Collection;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngelSpawnEvent;
@@ -31,6 +30,8 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Bee;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+
+import java.util.Collection;
 
 public class ToclafaneRunnable implements Runnable {
 

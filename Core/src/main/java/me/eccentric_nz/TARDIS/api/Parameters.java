@@ -33,9 +33,7 @@ public class Parameters {
     private boolean permsNether = false;
     private boolean permsTheEnd = false;
     private boolean repectWorldBorder = false;
-    private boolean respectFactions = false;
     private boolean respectGreifPrevention = false;
-    private boolean respectRedProtect = false;
     private boolean respectTowny = false;
     private boolean respectWorldguard = false;
     private boolean spaceTardis = false;
@@ -56,9 +54,7 @@ public class Parameters {
                 case PERMS_AREA -> permsArea = true;
                 case PERMS_NETHER -> permsNether = true;
                 case PERMS_THEEND -> permsTheEnd = true;
-                case RESPECT_FACTIONS -> respectFactions = true;
                 case RESPECT_GRIEFPREVENTION -> respectGreifPrevention = true;
-                case RESPECT_REDPROTECT -> respectRedProtect = true;
                 case RESPECT_TOWNY -> respectTowny = true;
                 case RESPECT_WORLDBORDER -> repectWorldBorder = true;
                 case RESPECT_WORLDGUARD -> respectWorldguard = true;
@@ -115,30 +111,12 @@ public class Parameters {
     }
 
     /**
-     * Check if we should be respecting Faction areas
-     *
-     * @return the value of config option 'preferences.respect_factions'
-     */
-    public boolean respectFactions() {
-        return respectFactions;
-    }
-
-    /**
      * Check if we should be respecting Greif Prevention claims
      *
      * @return the value of config option 'preferences.respect_grief_prevention'
      */
     public boolean respectGreifPrevention() {
         return respectGreifPrevention;
-    }
-
-    /**
-     * Check if we should be respecting RedProtect areas
-     *
-     * @return the value of config option 'preferences.respect_red_protect'
-     */
-    public boolean respectRedProtect() {
-        return respectRedProtect;
     }
 
     /**

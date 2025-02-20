@@ -16,9 +16,6 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator.command;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -32,6 +29,10 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class TVMCommandBeacon {
 
@@ -56,9 +57,6 @@ public class TVMCommandBeacon {
         Location l = player.getLocation();
         // potential griefing, we need to check the location first!
         List<Flag> flags = new ArrayList<>();
-        if (plugin.getConfig().getBoolean("preferences.respect_factions")) {
-            flags.add(Flag.RESPECT_FACTIONS);
-        }
         if (plugin.getConfig().getBoolean("preferences.respect_griefprevention")) {
             flags.add(Flag.RESPECT_GRIEFPREVENTION);
         }

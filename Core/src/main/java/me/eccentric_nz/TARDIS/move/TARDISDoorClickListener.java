@@ -35,7 +35,6 @@ import me.eccentric_nz.TARDIS.mobfarming.TARDISPetsAndFollowers;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import me.eccentric_nz.TARDIS.utility.protection.TARDISRedProtectChecker;
 import org.bukkit.*;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
@@ -119,7 +118,7 @@ public class TARDISDoorClickListener extends TARDISDoorListener implements Liste
                         canPowerUp = (rsp.isAutoPowerUp() && plugin.getConfig().getBoolean("allow.power_down"));
                         userQuotes = rsp.isQuotesOn();
                     } else {
-                        key = plugin.getConfig().getString("preferences.key");
+                        key = plugin.getConfig().getString("preferences.key", "GOLD_NUGGET");
                     }
                     boolean minecart = rsp.isMinecartOn();
                     Material m = Material.getMaterial(key);

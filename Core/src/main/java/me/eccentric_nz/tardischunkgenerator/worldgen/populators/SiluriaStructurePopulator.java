@@ -18,8 +18,6 @@ package me.eccentric_nz.tardischunkgenerator.worldgen.populators;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.io.InputStream;
-import java.util.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.tardischunkgenerator.worldgen.SiluriaProcessData;
@@ -38,6 +36,9 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
 import org.bukkit.util.BlockVector;
+
+import java.io.InputStream;
+import java.util.*;
 
 public class SiluriaStructurePopulator extends BlockPopulator {
 

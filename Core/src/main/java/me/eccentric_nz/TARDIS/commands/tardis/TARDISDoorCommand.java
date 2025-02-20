@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.doors.inner.*;
 import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
 import me.eccentric_nz.TARDIS.doors.outer.OuterDoor;
 import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorCloser;
-import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorOpener;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 

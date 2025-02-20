@@ -16,10 +16,11 @@
  */
 package me.eccentric_nz.tardisvortexmanipulator;
 
+import org.bukkit.Location;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import org.bukkit.Location;
 
 /**
  *

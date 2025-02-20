@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.tardischunkgenerator.worldgen;
 
-import java.util.List;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.tardischunkgenerator.worldgen.biomeproviders.SkaroBiomeProvider;
 import me.eccentric_nz.tardischunkgenerator.worldgen.feature.TARDISTree;
@@ -27,6 +26,8 @@ import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.WorldInfo;
+
+import java.util.List;
 
 /**
  * @author eccentric_nz

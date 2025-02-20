@@ -204,7 +204,6 @@ public class TARDIS extends JavaPlugin {
         versions.put("Multiverse-Core", "4.3");
         versions.put("Multiverse-Inventories", "4.2");
         versions.put("Towny", "0.100");
-        versions.put("WorldBorder", "1.9.0");
         versions.put("WorldGuard", "7.0.11");
     }
 
@@ -1574,11 +1573,8 @@ public class TARDIS extends JavaPlugin {
 
     private void loadPluginRespect() {
         pluginRespect = new TARDISPluginRespect(this);
-        pluginRespect.loadFactions();
         pluginRespect.loadTowny();
-        pluginRespect.loadWorldBorder();
         pluginRespect.loadGriefPrevention();
-        pluginRespect.loadRedProtect();
     }
 
     /**

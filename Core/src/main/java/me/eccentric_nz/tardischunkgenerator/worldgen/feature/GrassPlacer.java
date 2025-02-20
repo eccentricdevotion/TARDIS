@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.tardischunkgenerator.worldgen.feature;
 
-import java.util.Iterator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.Iterator;
 
 public class GrassPlacer {
 

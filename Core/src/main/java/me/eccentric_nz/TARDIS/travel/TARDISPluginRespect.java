@@ -21,10 +21,7 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravelledTo;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.utility.TARDISWorldBorderChecker;
-import me.eccentric_nz.TARDIS.utility.protection.TARDISFactionsChecker;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISGriefPreventionChecker;
-import me.eccentric_nz.TARDIS.utility.protection.TARDISRedProtectChecker;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISTownyChecker;
 import org.bukkit.Location;
 import org.bukkit.World.Environment;
@@ -40,13 +37,9 @@ public class TARDISPluginRespect {
 
     private final TARDIS plugin;
     private TARDISTownyChecker tychk;
-    private TARDISWorldBorderChecker borderchk;
     private TARDISGriefPreventionChecker griefchk;
     private boolean townyOnServer = false;
-    private boolean borderOnServer = false;
-    private boolean factionsOnServer = false;
     private boolean griefPreventionOnServer = false;
-    private boolean redProtectOnServer = false;
 
     public TARDISPluginRespect(TARDIS plugin) {
         this.plugin = plugin;
@@ -137,7 +130,6 @@ public class TARDISPluginRespect {
             bool = false;
         }
         if (flag.repectWorldBorder()) {
-            if (!borderOnServer) {
                 WorldBorder wb = location.getWorld().getWorldBorder();
                 if (!wb.isInside(location)) {
                     if (flag.messagePlayer()) {
@@ -145,29 +137,10 @@ public class TARDISPluginRespect {
                     }
                     bool = false;
                 }
-            }
-            if (borderOnServer && plugin.getConfig().getBoolean("preferences.respect_worldborder") && !borderchk.isInBorder(location)) {
-                if (flag.messagePlayer()) {
-                    plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "WORLDBORDER");
-                }
-                bool = false;
-            }
-        }
-        if (flag.respectFactions() && factionsOnServer && plugin.getConfig().getBoolean("preferences.respect_factions") && !TARDISFactionsChecker.isInFaction(flag.getPlayer(), location)) {
-            if (flag.messagePlayer()) {
-                plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "FACTIONS");
-            }
-            bool = false;
         }
         if (flag.respectGreifPrevention() && griefPreventionOnServer && plugin.getConfig().getBoolean("preferences.respect_grief_prevention") && griefchk.isInClaim(flag.getPlayer(), location)) {
             if (flag.messagePlayer()) {
                 plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "GRIEFPREVENTION");
-            }
-            bool = false;
-        }
-        if (flag.respectRedProtect() && redProtectOnServer && plugin.getConfig().getBoolean("preferences.respect_red_protect") && !TARDISRedProtectChecker.canBuild(flag.getPlayer(), location)) {
-            if (flag.messagePlayer()) {
-                plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "REDPROTECT");
             }
             bool = false;
         }
@@ -198,32 +171,6 @@ public class TARDISPluginRespect {
     }
 
     /**
-     * Checks if the WorldBorder plugin is available, and loads support if it
-     * is.
-     */
-    public void loadWorldBorder() {
-        if (plugin.getPM().getPlugin("WorldBorder") != null) {
-            borderOnServer = true;
-            borderchk = new TARDISWorldBorderChecker(plugin);
-        }
-    }
-
-    /**
-     * Checks if the Factions plugin is available, and loads support if it is.
-     */
-    public void loadFactions() {
-        if (plugin.getPM().getPlugin("Factions") != null) {
-            try {
-                Class.forName("com.massivecraft.factions.entity.MPlayer");
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, "Factions is the wrong version!");
-                factionsOnServer = false;
-            } catch (ClassNotFoundException e) {
-                factionsOnServer = true;
-            }
-        }
-    }
-
-    /**
      * Checks if the GriefPrevention plugin is available, and loads support if
      * it is.
      */
@@ -235,23 +182,8 @@ public class TARDISPluginRespect {
         }
     }
 
-    /**
-     * Checks if the GriefPrevention plugin is available, and loads support if
-     * it is.
-     */
-    public void loadRedProtect() {
-        if (plugin.getPM().getPlugin("RedProtect") != null) {
-            plugin.debug("Hooking into RedProtect!");
-            redProtectOnServer = true;
-        }
-    }
-
     TARDISTownyChecker getTychk() {
         return tychk;
-    }
-
-    TARDISWorldBorderChecker getBorderchk() {
-        return borderchk;
     }
 
     TARDISGriefPreventionChecker getGriefchk() {
@@ -262,19 +194,7 @@ public class TARDISPluginRespect {
         return townyOnServer;
     }
 
-    boolean isBorderOnServer() {
-        return borderOnServer;
-    }
-
-    boolean isFactionsOnServer() {
-        return factionsOnServer;
-    }
-
     boolean isGriefPreventionOnServer() {
         return griefPreventionOnServer;
-    }
-
-    boolean isRedProtectOnServer() {
-        return redProtectOnServer;
     }
 }

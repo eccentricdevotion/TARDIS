@@ -490,9 +490,6 @@ public class TVMGUIListener extends TARDISMenuListener {
             Location l = player.getLocation();
             // potential griefing, we need to check the location first!
             List<Flag> flags = new ArrayList<>();
-            if (plugin.getConfig().getBoolean("preferences.respect_factions")) {
-                flags.add(Flag.RESPECT_FACTIONS);
-            }
             if (plugin.getConfig().getBoolean("preferences.respect_griefprevention")) {
                 flags.add(Flag.RESPECT_GRIEFPREVENTION);
             }
@@ -549,9 +546,6 @@ public class TVMGUIListener extends TARDISMenuListener {
         flags.add(Flag.PERMS_NETHER);
         flags.add(Flag.PERMS_THEEND);
         flags.add(Flag.PERMS_WORLD);
-        if (plugin.getConfig().getBoolean("preferences.respect_factions")) {
-            flags.add(Flag.RESPECT_FACTIONS);
-        }
         if (plugin.getConfig().getBoolean("preferences.respect_griefprevention")) {
             flags.add(Flag.RESPECT_GRIEFPREVENTION);
         }

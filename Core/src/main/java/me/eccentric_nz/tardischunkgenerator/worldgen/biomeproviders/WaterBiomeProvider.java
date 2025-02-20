@@ -16,12 +16,13 @@
  */
 package me.eccentric_nz.tardischunkgenerator.worldgen.biomeproviders;
 
-import java.util.List;
-import java.util.Random;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.BiomeProvider;
 import org.bukkit.generator.WorldInfo;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
+
+import java.util.List;
+import java.util.Random;
 
 public class WaterBiomeProvider extends BiomeProvider {
 

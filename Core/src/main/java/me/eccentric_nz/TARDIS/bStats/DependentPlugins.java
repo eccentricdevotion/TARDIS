@@ -18,12 +18,13 @@ package me.eccentric_nz.TARDIS.bStats;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
 
 public class DependentPlugins {
 
     private final TARDIS plugin;
-    private final List<String> plugins = List.of("Blocklocker", "BlueMap", "CoreProtect", "dynmap", "Essentials", "Factions", "floodgate", "GriefPrevention", "LibsDisguises", "LWC", "Multiverse-Core", "Multiverse-Inventories", "PlaceholderAPI", "RedProtect", "Towny", "WorldBorder", "WorldGuard", "Vault", "Citizens");
+    private final List<String> plugins = List.of("Blocklocker", "BlueMap", "CoreProtect", "dynmap", "Essentials", "floodgate", "GriefPrevention", "LibsDisguises", "LWC", "Multiverse-Core", "Multiverse-Inventories", "PlaceholderAPI", "Towny", "WorldGuard", "Vault", "Citizens");
 
     public DependentPlugins(TARDIS plugin) {
         this.plugin = plugin;
