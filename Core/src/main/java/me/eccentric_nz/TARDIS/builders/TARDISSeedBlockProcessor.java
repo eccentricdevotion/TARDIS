@@ -161,7 +161,9 @@ public class TARDISSeedBlockProcessor {
                     slot = -999;
                 } else if (tips) {
                     slot = new TARDISInteriorPostioning(plugin).getFreeSlot();
-                    TARDISBuilderInstanceKeeper.getTipsSlots().add(slot);
+                    if (plugin.getConfig().getString("creation.tips_next", "HIGHEST").equalsIgnoreCase("FREE")) {
+                        TARDISBuilderInstanceKeeper.getTipsSlots().add(slot);
+                    }
                 }
                 // save data to database (tardis table)
                 String chun = cw + ":" + cx + ":" + cz;

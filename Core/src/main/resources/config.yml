@@ -31,6 +31,7 @@ creation:
   default_world: true
   default_world_name: TARDIS_TimeVortex
   tips_limit: 400
+  tips_next: HIGHEST
   keep_night: true
   border_radius: 256
   inventory_group: 0

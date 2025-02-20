@@ -239,6 +239,7 @@ public class TARDISConfiguration {
         stringOptions.put("creation.seed_block.easy", "REDSTONE_TORCH");
         stringOptions.put("creation.seed_block.normal", "SOUL_LANTERN");
         stringOptions.put("creation.seed_block.hard", "DRAGON_BREATH");
+        stringOptions.put("creation.tips_next", "HIGHEST");
         stringOptions.put("difficulty.crafting", "easy");
         stringOptions.put("display.all", "&6X&7%X% &6Y&7%Y% &6Z&7%Z% &6F&7%FACING% (%FACING_XZ%) %TARGET_BLOCK%");
         stringOptions.put("police_box.default_preset", "FACTORY");
@@ -340,9 +341,6 @@ public class TARDISConfiguration {
         }
         if (config.contains("creation.use_block_stack")) {
             plugin.getConfig().set("creation.use_block_stack", null);
-        }
-        if (config.contains("creation.tips_next")) {
-            plugin.getConfig().set("creation.tips_next", null);
         }
         // boolean values
         for (Map.Entry<String, Boolean> entry : booleanOptions.entrySet()) {

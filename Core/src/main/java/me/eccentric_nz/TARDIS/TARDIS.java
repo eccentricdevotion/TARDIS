@@ -342,7 +342,7 @@ public class TARDIS extends JavaPlugin {
             loadChameleonGUIs();
             // world loading happens here
             new TARDISConfiguration(this).checkConfig();
-            prefix = getConfig().getString("storage.mysql.prefix");
+            prefix = getConfig().getString("storage.mysql.prefix", "");
             loadDatabase();
             queryFactory = new QueryFactory(this);
             loadInventoryManager();
@@ -351,7 +351,9 @@ public class TARDIS extends JavaPlugin {
             utils = new TARDISUtils(this);
             locationUtils = new TARDISLocationGetters(this);
             buildKeeper.setSeeds(getSeeds());
-            new ResultSetTIPS(this).fillUsedSlotList();
+            if (getConfig().getString("creation.tips_next", "HIGHEST").equalsIgnoreCase("FREE")) {
+                new ResultSetTIPS(this).fillUsedSlotList();
+            }
             new TARDISConsoleLoader(this).addSchematics();
             new TARDISCustomRotorLoader(this).addRotors();
             new TARDISCustomDoorLoader(this).addDoors();

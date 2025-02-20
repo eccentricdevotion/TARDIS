@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTIPS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -86,11 +87,16 @@ public class TARDISInteriorPostioning {
     int getFreeSlot() {
         int limit = plugin.getConfig().getInt("creation.tips_limit");
         int slot = -1;
-        for (int i = 0; i < limit; i++) {
-            if (!TARDISBuilderInstanceKeeper.getTipsSlots().contains(i)) {
-                slot = i;
-                break;
+        if (plugin.getConfig().getString("creation.tips_next", "HIGHEST").equalsIgnoreCase("FREE")) {
+            for (int i = 0; i < limit; i++) {
+                if (!TARDISBuilderInstanceKeeper.getTipsSlots().contains(i)) {
+                    slot = i;
+                    break;
+                }
             }
+        } else {
+            // HIGHEST
+            slot = new ResultSetTIPS(plugin).getHightestSlot() + 1;
         }
         return slot;
     }

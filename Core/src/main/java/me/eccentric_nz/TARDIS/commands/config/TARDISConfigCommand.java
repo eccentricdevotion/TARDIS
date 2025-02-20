@@ -76,6 +76,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsStr.put("seed_block.hard", "creation");
         firstsStr.put("siege", "siege");
         firstsStr.put("sign_colour", "police_box");
+        firstsStr.put("tips_next", "creation");
         firstsStr.put("use_clay", "creation");
         firstsStr.put("vortex_fall", "preferences");
         firstsStrArtron.add("full_charge_item");

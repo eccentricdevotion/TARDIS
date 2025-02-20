@@ -84,7 +84,7 @@ public class ResultSetTIPS {
                 return rs.getInt("highest");
             }
         } catch (SQLException e) {
-            plugin.debug("ResultSet error for tardis table (getting TIPS slots)! " + e.getMessage());
+            plugin.debug("ResultSet error for tardis table (getting TIPS highest slot)! " + e.getMessage());
         } finally {
             try {
                 if (rs != null) {
@@ -94,9 +94,9 @@ public class ResultSetTIPS {
                     statement.close();
                 }
             } catch (SQLException e) {
-                plugin.debug("Error closing tardis table (getting TIPS slots)! " + e.getMessage());
+                plugin.debug("Error closing tardis table (getting TIPS highest slot)! " + e.getMessage());
             }
-            return -1;
         }
+        return -1;
     }
 }
