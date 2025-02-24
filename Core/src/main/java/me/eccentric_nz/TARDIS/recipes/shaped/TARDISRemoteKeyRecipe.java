@@ -54,7 +54,13 @@ public class TARDISRemoteKeyRecipe {
     }
 
     public void addRecipe() {
-        ItemStack is = new ItemStack(Material.GOLD_NUGGET, 1);
+        Material material;
+        try {
+            material = Material.valueOf(plugin.getConfig().getString("preferences.key"));
+        } catch (IllegalArgumentException e) {
+            material = Material.GOLD_NUGGET;
+        }
+        ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Remote Key");
         im.setItemModel(RecipeItem.TARDIS_REMOTE_KEY.getModel());

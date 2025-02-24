@@ -75,7 +75,13 @@ public class TARDISRemoteKeyListener implements Listener {
         }
         // check item in hand
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (!is.getType().equals(Material.GOLD_NUGGET)) {
+        Material material;
+        try {
+            material = Material.valueOf(plugin.getConfig().getString("preferences.key"));
+        } catch (IllegalArgumentException e) {
+            material = Material.GOLD_NUGGET;
+        }
+        if (!is.getType().equals(material)) {
             return;
         }
         if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().endsWith("TARDIS Remote Key")) {

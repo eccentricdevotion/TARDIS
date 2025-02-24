@@ -42,9 +42,17 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class TARDISPerceptionFilterListener implements Listener {
 
     private final TARDIS plugin;
+    private final Material material;
 
     public TARDISPerceptionFilterListener(TARDIS plugin) {
         this.plugin = plugin;
+        Material material;
+        try {
+            material = Material.valueOf(plugin.getConfig().getString("preferences.key"));
+        } catch (IllegalArgumentException e) {
+            material = Material.GOLD_NUGGET;
+        }
+        this.material = material;
     }
 
     @EventHandler
@@ -54,7 +62,7 @@ public class TARDISPerceptionFilterListener implements Listener {
         }
         Player player = event.getPlayer();
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (is != null && is.getType().equals(Material.GOLD_NUGGET) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+        if (is != null && is.getType().equals(material) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
                 if (im.hasDisplayName() && im.getDisplayName().endsWith("Perception Filter")) {

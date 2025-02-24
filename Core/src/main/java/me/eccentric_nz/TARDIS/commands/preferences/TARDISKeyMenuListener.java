@@ -43,6 +43,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
 
     public static final TreeMap<Material, ChatColor> COLOUR_LOOKUP = new TreeMap<>();
     public static final HashMap<ChatColor, Material> REVERSE_LOOKUP = new HashMap<>();
+    private final Material material;
 
     public TARDISKeyMenuListener(TARDIS plugin) {
         super(plugin);
@@ -65,6 +66,13 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
         for (Map.Entry<Material, ChatColor> map : COLOUR_LOOKUP.entrySet()) {
             REVERSE_LOOKUP.put(map.getValue(), map.getKey());
         }
+        Material keyMaterial;
+        try {
+            keyMaterial = Material.valueOf(plugin.getConfig().getString("preferences.key"));
+        } catch (IllegalArgumentException e) {
+            keyMaterial = Material.GOLD_NUGGET;
+        }
+        this.material = keyMaterial;
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -87,7 +95,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                 event.setCancelled(true);
                 // set display name of key in slot 18
                 ItemStack key = view.getItem(18);
-                if (key == null || !key.getType().equals(Material.GOLD_NUGGET) || !key.hasItemMeta()) {
+                if (key == null || !key.getType().equals(material) || !key.hasItemMeta()) {
                     return;
                 }
                 // get display name of selected key
@@ -124,15 +132,15 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                 }
                 // set wool colour from display name of placed key
                 ChatColor color = TARDISStaticUtils.getColor(meta.getDisplayName());
-                Material material = TARDISKeyMenuListener.REVERSE_LOOKUP.get(color);
+                Material wool = TARDISKeyMenuListener.REVERSE_LOOKUP.get(color);
                 ItemStack choice = view.getItem(19);
-                choice.setType(material);
+                choice.setType(wool);
             }
             case 19 -> {
                 event.setCancelled(true);
                 // set display name colour of key in slot 18
                 ItemStack key = view.getItem(18);
-                if (key == null || !key.getType().equals(Material.GOLD_NUGGET) || !key.hasItemMeta()) {
+                if (key == null || !key.getType().equals(material) || !key.hasItemMeta()) {
                     return;
                 }
                 // get current colour of wool

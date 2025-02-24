@@ -66,8 +66,14 @@ public class TARDISKeyRecipe {
     }
 
     public void addRecipe() {
-        NamespacedKey keyModel = keyModelLookup.getOrDefault(plugin.getConfig().getString("preferences.default_key").toLowerCase(Locale.ROOT), RecipeItem.TARDIS_KEY.getModel());
-        ItemStack is = new ItemStack(Material.GOLD_NUGGET, 1);
+        NamespacedKey keyModel = keyModelLookup.getOrDefault(plugin.getConfig().getString("preferences.default_key", "eleventh").toLowerCase(Locale.ROOT), RecipeItem.TARDIS_KEY.getModel());
+        Material material;
+        try {
+            material = Material.valueOf(plugin.getConfig().getString("preferences.key"));
+        } catch (IllegalArgumentException e) {
+            material = Material.GOLD_NUGGET;
+        }
+        ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Key");
         im.setItemModel(keyModel);

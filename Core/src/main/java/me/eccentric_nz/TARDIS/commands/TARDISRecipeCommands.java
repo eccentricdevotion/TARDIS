@@ -233,9 +233,17 @@ public class TARDISRecipeCommands implements CommandExecutor {
                     im.setItemModel(RecipeItem.getByName(dn).getModel());
                     glowstoneCount++;
                 }
-                if (str.endsWith("TARDIS Remote Key") && item.getType().equals(Material.GOLD_NUGGET)) {
-                    im.setDisplayName(ChatColor.WHITE + "TARDIS Key");
-                    im.setItemModel(KeyVariant.REMOTE.getKey());
+                if (str.endsWith("TARDIS Remote Key")) {
+                    Material material;
+                    try {
+                        material = Material.valueOf(plugin.getConfig().getString("preferences.key"));
+                    } catch (IllegalArgumentException e) {
+                        material = Material.GOLD_NUGGET;
+                    }
+                    if (item.getType().equals(material)) {
+                        im.setDisplayName(ChatColor.WHITE + "TARDIS Key");
+                        im.setItemModel(KeyVariant.REMOTE.getKey());
+                    }
                 }
                 if (str.equals("Acid Battery") && item.getType().equals(Material.WATER_BUCKET)) {
                     im.setDisplayName(ChatColor.WHITE + "Acid Bucket");

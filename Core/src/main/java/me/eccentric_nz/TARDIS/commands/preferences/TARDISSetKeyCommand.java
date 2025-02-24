@@ -58,7 +58,6 @@ class TARDISSetKeyCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "MATERIAL_NOT_VALID");
             return false;
         }
-//        if (go.isBlock() && !go.isAir()) {
         if (go.isBlock()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "KEY_NO_BLOCK");
             return true;
