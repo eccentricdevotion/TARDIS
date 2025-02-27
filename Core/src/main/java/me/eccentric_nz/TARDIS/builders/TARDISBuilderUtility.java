@@ -35,10 +35,13 @@ import java.util.HashMap;
 
 public class TARDISBuilderUtility {
 
-    public static void saveDoorLocation(BuildData bd) {
+    public static void saveDoorLocation(BuildData bd, boolean slab) {
         World world = bd.getLocation().getWorld();
         int x = bd.getLocation().getBlockX();
         int y = bd.getLocation().getBlockY();
+        if (slab) {
+            y -= 1;
+        }
         int z = bd.getLocation().getBlockZ();
         // remember the door location
         String doorloc = world.getName() + ":" + x + ":" + y + ":" + z;

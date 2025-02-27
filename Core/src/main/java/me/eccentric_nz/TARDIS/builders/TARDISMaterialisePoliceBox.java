@@ -151,17 +151,19 @@ public class TARDISMaterialisePoliceBox implements Runnable {
             i++;
             // first run
             if (i == 1) {
-                TARDISBuilderUtility.saveDoorLocation(bd);
-                Block remember = bd.getLocation().getBlock().getRelative(BlockFace.DOWN);
+                Block under = block.getRelative(BlockFace.DOWN);
+                boolean slab = Tag.SLABS.isTagged(under.getType());
+                TARDISBuilderUtility.saveDoorLocation(bd, slab);
+                Location spawn = slab ? bd.getLocation().subtract(0, 0.5d, 0) : bd.getLocation();
                 // add under block to Protected Block Map
-                TARDISBlockSetters.rememberBlock(world, remember, bd.getTardisID());
+                TARDISBlockSetters.rememberBlock(world, under, bd.getTardisID());
                 boolean found = false;
                 for (Entity e : world.getNearbyEntities(bd.getLocation(), 1.0d, 1.0d, 1.0d)) {
                     if (e instanceof ArmorStand a) {
                         if (((CraftArmorStand) a).getHandle() instanceof TARDISArmourStand) {
                             stand = a;
                         } else {
-                            stand = (ArmorStand) VehicleUtility.spawnStand(bd.getLocation()).getBukkitEntity();
+                            stand = (ArmorStand) VehicleUtility.spawnStand(spawn).getBukkitEntity();
                             a.remove();
                         }
                         found = true;
@@ -177,11 +179,12 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     if (frame != null) {
                         frame.remove();
                     }
-                    Block under = block.getRelative(BlockFace.DOWN);
-                    block.setBlockData(TARDISConstants.AIR);
-                    TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisID(), false);
+                    if (!slab) {
+                        under.setBlockData(TARDISConstants.AIR);
+                        TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisID(), false);
+                    }
                     // spawn an armour stand
-                    stand = (ArmorStand) VehicleUtility.spawnStand(bd.getLocation()).getBukkitEntity();
+                    stand = (ArmorStand) VehicleUtility.spawnStand(spawn).getBukkitEntity();
                 }
                 stand.setRotation(bd.getDirection().getYaw(), 0.0f);
                 is = new ItemStack(dye, 1);
@@ -228,7 +231,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                     if (rspp.fromUUID(uuid.toString())) {
                         ParticleData data = rspp.getData();
                         // display particles
-                        Emitter emitter = new Emitter(plugin, uuid, bd.getLocation(), data, bd.getThrottle().getFlightTime());
+                        Emitter emitter = new Emitter(plugin, uuid, spawn, data, bd.getThrottle().getFlightTime());
                         int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, data.getShape().getPeriod());
                         emitter.setTaskID(task);
                     }

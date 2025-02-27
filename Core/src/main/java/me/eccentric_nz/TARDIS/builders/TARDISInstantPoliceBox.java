@@ -25,7 +25,9 @@ import me.eccentric_nz.TARDIS.flight.vehicle.VehicleUtility;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
+import org.apache.logging.log4j.core.layout.JsonLayout;
 import org.bukkit.Location;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -72,18 +74,22 @@ public class TARDISInstantPoliceBox {
             }
             plugin.getTrackerKeeper().getRescue().remove(bd.getTardisID());
         }
-        TARDISBuilderUtility.saveDoorLocation(bd);
+        Block block = bd.getLocation().getBlock();
+        Block under = block.getRelative(BlockFace.DOWN);
+        boolean slab = Tag.SLABS.isTagged(under.getType());
+        TARDISBuilderUtility.saveDoorLocation(bd, slab);
         TARDISBuilderUtility.updateChameleonDemat(preset.toString(), bd.getTardisID());
         plugin.getGeneralKeeper().getProtectBlockMap().put(bd.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toString(), bd.getTardisID());
         ItemFrame frame = null;
         ArmorStand stand = null;
         boolean found = false;
+        Location spawn = slab ? bd.getLocation().subtract(0, 0.5d, 0) : bd.getLocation();
         for (Entity e : world.getNearbyEntities(bd.getLocation(), 1.0d, 1.0d, 1.0d)) {
             if (e instanceof ArmorStand a) {
                 if (((CraftArmorStand) a).getHandle() instanceof TARDISArmourStand) {
                     stand = a;
                 } else {
-                    stand = (ArmorStand) VehicleUtility.spawnStand(bd.getLocation()).getBukkitEntity();
+                    stand = (ArmorStand) VehicleUtility.spawnStand(spawn).getBukkitEntity();
                     a.remove();
                 }
                 found = true;
@@ -95,16 +101,16 @@ public class TARDISInstantPoliceBox {
                 break;
             }
         }
-        Block block = bd.getLocation().getBlock();
         if (!found || (stand == null && frame != null)) {
             if (frame != null) {
                 frame.remove();
             }
-            Block under = block.getRelative(BlockFace.DOWN);
-            block.setBlockData(TARDISConstants.AIR);
-            TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisID(), false);
+            if (!slab) {
+                block.setBlockData(TARDISConstants.AIR);
+                TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisID(), false);
+            }
             // spawn armour stand
-            stand = (ArmorStand) VehicleUtility.spawnStand(bd.getLocation()).getBukkitEntity();
+            stand = (ArmorStand) VehicleUtility.spawnStand(spawn).getBukkitEntity();
         }
         stand.setRotation(bd.getDirection().getYaw(), 0.0f);
         TARDISBuilderUtility.setPoliceBoxHelmet(plugin, preset, bd, stand);
