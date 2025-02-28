@@ -55,7 +55,7 @@ import java.util.*;
  * A police box is a telephone kiosk that can be used by members of the public
  * wishing to get help from the police. Early in the First Doctor's travels, the
  * TARDIS assumed the exterior shape of a police box during a five-month
- * stopover in 1963 London. Due a malfunction in its chameleon circuit, the
+ * stopover in 1963 London. Due to a malfunction in its chameleon circuit, the
  * TARDIS became locked into that shape.
  *
  * @author eccentric_nz
@@ -120,7 +120,7 @@ public class TARDISInstantPreset {
         plusz = (bd.getLocation().getBlockZ() + 1);
         minusz = (bd.getLocation().getBlockZ() - 1);
         World world = bd.getLocation().getWorld();
-        int signx = 0, signz = 0;
+        int signx, signz;
         // rescue player?
         if (plugin.getTrackerKeeper().getRescue().containsKey(bd.getTardisID())) {
             UUID playerUUID = plugin.getTrackerKeeper().getRescue().get(bd.getTardisID());
@@ -346,14 +346,14 @@ public class TARDISInstantPreset {
                             s.update();
                         }
                     }
-                } else if (Tag.DOORS.isTagged(mat) || Tag.TRAPDOORS.isTagged(mat) || mat == Material.RAIL) {
+                } else if (Tag.DOORS.isTagged(mat) || Tag.TRAPDOORS.isTagged(mat) || mat == Material.RAIL || (Tag.BUTTONS.isTagged(mat) && preset.equals(ChameleonPreset.CONSTRUCT))) {
                     // wood, iron & trap doors, rails
                     boolean door = false;
                     if (Tag.DOORS.isTagged(mat)) {
                         Bisected bisected = (Bisected) colData[yy];
                         door = bisected.getHalf().equals(Half.BOTTOM);
                     }
-                    if (Tag.TRAPDOORS.isTagged(mat)) {
+                    if (Tag.TRAPDOORS.isTagged(mat) || Tag.BUTTONS.isTagged(mat)) {
                         door = true;
                     }
                     if (door) {
@@ -362,10 +362,12 @@ public class TARDISInstantPreset {
                         Block doorBlock = world.getBlockAt(xx, y + yy, zz);
                         String doorStr = doorBlock.getLocation().toString();
                         plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
-                        // also remember the underdoor block
-                        String under = doorBlock.getRelative(BlockFace.DOWN).getLocation().toString();
-                        plugin.getGeneralKeeper().getProtectBlockMap().put(under, bd.getTardisID());
-                        TARDISBlockSetters.rememberBlock(world, xx, (y - 1), zz, bd.getTardisID());
+                        if (!Tag.BUTTONS.isTagged(mat)) {
+                            // also remember the under door block
+                            String under = doorBlock.getRelative(BlockFace.DOWN).getLocation().toString();
+                            plugin.getGeneralKeeper().getProtectBlockMap().put(under, bd.getTardisID());
+                            TARDISBlockSetters.rememberBlock(world, xx, (y - 1), zz, bd.getTardisID());
+                        }
                         // save the door location in the database
                         processDoor(doorloc);
                         // place block under door if block is in list of blocks an iron door cannot go on
@@ -504,7 +506,7 @@ public class TARDISInstantPreset {
     }
 
     private void processDoor(String doorloc) {
-        // should insert the door when tardis is first made, and then update the location there after!
+        // should insert the door when tardis is first made, and then update the location thereafter!
         HashMap<String, Object> whered = new HashMap<>();
         whered.put("door_type", 0);
         whered.put("tardis_id", bd.getTardisID());

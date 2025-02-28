@@ -432,23 +432,25 @@ class TARDISMaterialisePreset implements Runnable {
                                         s.update();
                                     }
                                 }
-                            } else if (Tag.DOORS.isTagged(mat) || Tag.TRAPDOORS.isTagged(mat) || mat == Material.RAIL) {
+                            } else if (Tag.DOORS.isTagged(mat) || Tag.TRAPDOORS.isTagged(mat) || mat == Material.RAIL || (Tag.BUTTONS.isTagged(mat) && preset.equals(ChameleonPreset.CONSTRUCT))) {
                                 boolean door = false;
                                 if (Tag.DOORS.isTagged(mat)) {
                                     Bisected bisected = (Bisected) colData[yy];
                                     door = bisected.getHalf().equals(Bisected.Half.BOTTOM);
                                 }
-                                if (Tag.TRAPDOORS.isTagged(mat)) {
+                                if (Tag.TRAPDOORS.isTagged(mat) || Tag.BUTTONS.isTagged(mat)) {
                                     door = true;
                                 }
                                 Block doorBlock = world.getBlockAt(xx, y + yy, zz);
                                 if (door) {
                                     // remember the door location
                                     saveDoorLocation(world, xx, y, yy, zz);
-                                    // add under door block as well
-                                    String under = doorBlock.getRelative(BlockFace.DOWN).getLocation().toString();
-                                    plugin.getGeneralKeeper().getProtectBlockMap().put(under, bd.getTardisID());
-                                    TARDISBlockSetters.rememberBlock(world, xx, (y - 1), zz, bd.getTardisID());
+                                    if (!Tag.BUTTONS.isTagged(mat)) {
+                                        // add under door block as well
+                                        String under = doorBlock.getRelative(BlockFace.DOWN).getLocation().toString();
+                                        plugin.getGeneralKeeper().getProtectBlockMap().put(under, bd.getTardisID());
+                                        TARDISBlockSetters.rememberBlock(world, xx, (y - 1), zz, bd.getTardisID());
+                                    }
                                 } else {
                                     String doorStr = doorBlock.getLocation().toString();
                                     plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());

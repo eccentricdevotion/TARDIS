@@ -88,7 +88,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
         if (block != null) {
             Material blockType = block.getType();
             // only proceed if they are clicking a door!
-            if (Tag.DOORS.isTagged(blockType) || Tag.TRAPDOORS.isTagged(blockType)) {
+            if (Tag.DOORS.isTagged(blockType) || Tag.TRAPDOORS.isTagged(blockType) || Tag.BUTTONS.isTagged(blockType)) {
                 Player player = event.getPlayer();
                 if (TARDISPermission.hasPermission(player, "tardis.enter")) {
                     Action action = event.getAction();
@@ -99,7 +99,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                     int bx = block_loc.getBlockX();
                     int by = block_loc.getBlockY();
                     int bz = block_loc.getBlockZ();
-                    if (!Tag.TRAPDOORS.isTagged(blockType)) {
+                    if (Tag.DOORS.isTagged(blockType)) {
                         Bisected bisected = (Bisected) block.getBlockData();
                         if (bisected.getHalf().equals(Bisected.Half.TOP)) {
                             by = (by - 1);
@@ -153,7 +153,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                         if (action == Action.LEFT_CLICK_BLOCK) {
                             new DoorLockAction(plugin).lockUnlock(player, m, id, rsd.isLocked(), false);
                         }
-                        if (action == Action.RIGHT_CLICK_BLOCK && !player.isSneaking()) {
+                        if (action == Action.RIGHT_CLICK_BLOCK && !player.isSneaking() && !Tag.BUTTONS.isTagged(blockType)) {
                             if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                                 plugin.getMessenger().sendStatus(player, "SIEGE_NO_EXIT");
                                 return;
@@ -173,7 +173,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                 }
                                 if (!rsd.isLocked()) {
                                     // toggle the door open/closed
-                                    if (Tag.DOORS.isTagged(blockType) || (blockType.equals(Material.OAK_TRAPDOOR))) {
+                                    if (Tag.DOORS.isTagged(blockType) || blockType.equals(Material.OAK_TRAPDOOR)) {
                                         if (doortype == 0 || doortype == 1) {
                                             boolean open = TARDISStaticUtils.isDoorOpen(block);
                                             boolean toggle = true;
@@ -265,7 +265,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_NEED_UNLOCK");
                                 }
                             }
-                        } else if (action == Action.RIGHT_CLICK_BLOCK && player.isSneaking()) {
+                        } else if (action == Action.RIGHT_CLICK_BLOCK && (player.isSneaking() || Tag.BUTTONS.isTagged(blockType))) {
                             if ((!material.equals(m) && doortype == 0) && !plugin.getConfig().getBoolean("preferences.any_key")) {
                                 // must use key to open and close the outer door
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_KEY", key);

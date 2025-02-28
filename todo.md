@@ -6,7 +6,6 @@
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Microscope** as an addition to Chemistry<br>- Add x-ray? | - |
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Zero-G room**<br>- Determine door level for door circuits and ring walkway<br>- Make schematic<br>- Add methods to stack rooms | [#868](https://github.com/eccentricdevotion/TARDIS/issues/868) |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | **Modelled controls**<br>- Console lamp done | [#836](https://github.com/eccentricdevotion/TARDIS/issues/836) |
-| ![Static Badge](https://img.shields.io/badge/2-390?style=flat-square) | Exterior button door control as alternative to shift-clicking for exteriors without doors | [#839](https://github.com/eccentricdevotion/TARDIS/issues/839) |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | **TARDIS Rooms world**<br>- Add spawn protection / limit abilty to mine blocks e.g. can break amethyst crystals but not blocks? | - |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Floodgate forms for TIS | - |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Add doors to shop items | - |
@@ -19,7 +18,7 @@
 
 ## Wiki Documentation
 
-* Version 6.0.0 changes
+* Version 6.0.x changes
 * `creation.tips_next` config option
 * Make all images tabbed
 * Vanilla/TARDIS screenshots for TabbedImage views
