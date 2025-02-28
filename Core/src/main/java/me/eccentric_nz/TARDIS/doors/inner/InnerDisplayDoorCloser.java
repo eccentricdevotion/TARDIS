@@ -67,31 +67,29 @@ public class InnerDisplayDoorCloser {
                 } else {
                     new DoorAnimator(plugin, display).animate(true);
                 }
-                if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("tardis_id", id);
-                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-                    if (rs.resultSet()) {
-                        // remove portal
-                        TARDISTeleportLocation removed = plugin.getTrackerKeeper().getPortals().remove(block.getLocation());
-                        if (removed == null) {
-                            DoorUtility.debugPortal(block.getLocation().toString());
-                        }
-                        // remove movers
-                        if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
-                            if (rs.getTardis().getCompanions().equalsIgnoreCase("everyone")) {
-                                for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-                                    plugin.getTrackerKeeper().getMovers().remove(p.getUniqueId());
-                                }
-                            } else {
-                                String[] companions = rs.getTardis().getCompanions().split(":");
-                                for (String c : companions) {
-                                    if (!c.isEmpty()) {
-                                        plugin.getTrackerKeeper().getMovers().remove(UUID.fromString(c));
-                                    }
-                                }
-                                plugin.getTrackerKeeper().getMovers().remove(uuid);
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("tardis_id", id);
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+                if (rs.resultSet()) {
+                    // remove portal
+                    TARDISTeleportLocation removed = plugin.getTrackerKeeper().getPortals().remove(block.getLocation());
+                    if (removed == null) {
+                        DoorUtility.debugPortal(block.getLocation().toString());
+                    }
+                    // remove movers
+                    if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
+                        if (rs.getTardis().getCompanions().equalsIgnoreCase("everyone")) {
+                            for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+                                plugin.getTrackerKeeper().getMovers().remove(p.getUniqueId());
                             }
+                        } else {
+                            String[] companions = rs.getTardis().getCompanions().split(":");
+                            for (String c : companions) {
+                                if (!c.isEmpty()) {
+                                    plugin.getTrackerKeeper().getMovers().remove(UUID.fromString(c));
+                                }
+                            }
+                            plugin.getTrackerKeeper().getMovers().remove(uuid);
                         }
                     }
                 }

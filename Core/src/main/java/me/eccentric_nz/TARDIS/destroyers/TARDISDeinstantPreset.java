@@ -76,28 +76,26 @@ public class TARDISDeinstantPreset {
         COMPASS d = dd.getDirection().forPreset();
         int id = dd.getTardisID();
         boolean sub = dd.isSubmarine();
-        if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
-            // always remove the portal
-            plugin.getTrackerKeeper().getPortals().remove(l);
-            // get preset
-            ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
-            if (rs.fromID(id)) {
-                UUID playerUUID = dd.getPlayer().getUniqueId();
-                // toggle the doors if necessary
-                Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
-                // close inner
-                if (innerDisplayDoor.display()) {
-                    new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID, true);
-                } else {
-                    new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID);
-                }
-                boolean outerDisplayDoor = rs.getPreset().usesArmourStand();
-                // close outer
-                if (outerDisplayDoor) {
-                    new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
-                } else if (rs.getPreset().hasDoor()) {
-                    new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rs.getPreset()), id, playerUUID);
-                }
+        // always remove the portal
+        plugin.getTrackerKeeper().getPortals().remove(l);
+        // get preset
+        ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
+        if (rs.fromID(id)) {
+            UUID playerUUID = dd.getPlayer().getUniqueId();
+            // toggle the doors if necessary
+            Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
+            // close inner
+            if (innerDisplayDoor.display()) {
+                new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID, true);
+            } else {
+                new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID);
+            }
+            boolean outerDisplayDoor = rs.getPreset().usesArmourStand();
+            // close outer
+            if (outerDisplayDoor) {
+                new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+            } else if (rs.getPreset().hasDoor()) {
+                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rs.getPreset()), id, playerUUID);
             }
         }
         // remove interaction entity
@@ -203,11 +201,11 @@ public class TARDISDeinstantPreset {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", id);
                 where.put("data", "minecraft:sponge");
-                ResultSetBlocks rs = new ResultSetBlocks(plugin, where, false);
-                rs.resultSetAsync((hasResult, resultSetBlocks) -> {
+                ResultSetBlocks rsb = new ResultSetBlocks(plugin, where, false);
+                rsb.resultSetAsync((hasResult, resultSetBlocks) -> {
                     if (hasResult) {
-                        if (rs.getReplacedBlock().getLocation() != null) {
-                            Block b = rs.getReplacedBlock().getLocation().getBlock();
+                        if (rsb.getReplacedBlock().getLocation() != null) {
+                            Block b = rsb.getReplacedBlock().getLocation().getBlock();
                             TARDISSponge.addWater(b);
                         }
                     }

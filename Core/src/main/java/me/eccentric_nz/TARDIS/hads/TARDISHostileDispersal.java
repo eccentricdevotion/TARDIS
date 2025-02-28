@@ -84,28 +84,26 @@ class TARDISHostileDispersal {
         plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
         // disperse
         COMPASS d = rsc.getDirection();
-        if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
-            // always remove the portal
-            plugin.getTrackerKeeper().getPortals().remove(l);
+        // always remove the portal
+        plugin.getTrackerKeeper().getPortals().remove(l);
+        // toggle the doors if necessary
+        // get preset
+        ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
+        if (rs.fromID(id)) {
             // toggle the doors if necessary
-            // get preset
-            ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
-            if (rs.fromID(id)) {
-                // toggle the doors if necessary
-                Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
-                // close inner
-                if (innerDisplayDoor.display()) {
-                    new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, uuid, true);
-                } else {
-                    new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, uuid);
-                }
-                boolean outerDisplayDoor = rs.getPreset().usesArmourStand();
-                // close outer
-                if (outerDisplayDoor) {
-                    new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, uuid);
-                } else if (rs.getPreset().hasDoor()) {
-                    new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rs.getPreset()), id, uuid);
-                }
+            Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
+            // close inner
+            if (innerDisplayDoor.display()) {
+                new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, uuid, true);
+            } else {
+                new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, uuid);
+            }
+            boolean outerDisplayDoor = rs.getPreset().usesArmourStand();
+            // close outer
+            if (outerDisplayDoor) {
+                new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, uuid);
+            } else if (rs.getPreset().hasDoor()) {
+                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rs.getPreset()), id, uuid);
             }
         }
         World w = l.getWorld();

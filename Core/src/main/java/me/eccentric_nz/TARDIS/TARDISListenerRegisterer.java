@@ -148,16 +148,12 @@ class TARDISListenerRegisterer {
         if (plugin.getConfig().getBoolean("preferences.clean")) {
             plugin.getPM().registerEvents(new ChunkCleanListener(plugin), plugin);
         }
-        if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
-            if (plugin.getConfig().getBoolean("preferences.open_door_policy")) {
-                plugin.getPM().registerEvents(new TARDISAnyoneDoorListener(plugin), plugin);
-                plugin.getPM().registerEvents(new TARDISAnyoneMoveListener(plugin), plugin);
-            } else {
-                plugin.getPM().registerEvents(new TARDISDoorWalkListener(plugin), plugin);
-                plugin.getPM().registerEvents(new TARDISMoveListener(plugin), plugin);
-            }
+        if (plugin.getConfig().getBoolean("preferences.open_door_policy")) {
+            plugin.getPM().registerEvents(new TARDISAnyoneDoorListener(plugin), plugin);
+            plugin.getPM().registerEvents(new TARDISAnyoneMoveListener(plugin), plugin);
         } else {
-            plugin.getPM().registerEvents(new TARDISDoorClickListener(plugin), plugin);
+            plugin.getPM().registerEvents(new TARDISDoorWalkListener(plugin), plugin);
+            plugin.getPM().registerEvents(new TARDISMoveListener(plugin), plugin);
         }
         plugin.getPM().registerEvents(new TARDISHangingListener(plugin), plugin);
         TARDISSonicListener sonicListener = new TARDISSonicListener(plugin);

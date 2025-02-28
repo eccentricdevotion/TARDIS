@@ -172,7 +172,6 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("view_interior_uses_console_size", "police_box");
         firstsBool.put("village_travel", "allow");
         firstsBool.put("vortex_manipulator", "modules");
-        firstsBool.put("walk_in_tardis", "preferences");
         firstsBool.put("weather_set", "allow");
         firstsBool.put("weeping_angels", "modules");
         firstsBool.put("wg_flag_set", "allow");

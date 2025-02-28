@@ -90,9 +90,7 @@ public class TARDISRunnables {
         }
         // removes unused drop chest database records from the vaults table.
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISVaultChecker(plugin), 2400);
-        if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
-            plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISMonsterRunnable(plugin), 2400, 2400);
-        }
+        plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISMonsterRunnable(plugin), 2400, 2400);
         if (plugin.getConfig().getBoolean("allow.3d_doors")) {
             plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new TARDISSpectaclesRunnable(plugin), 120, 100);
         }

@@ -44,11 +44,9 @@ public class UpdateDoor {
         String location = block.getWorld().getName() + ":" + block.getX() + ":" + block.getY() + ":" + block.getZ();
         if (updateable.equals(Updateable.DOOR) && !secondary) {
             // if portals are on, remove the current portal first
-            if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
-                ResultSetDoorBlocks rsdb = new ResultSetDoorBlocks(plugin, id);
-                if (rsdb.resultSet()) {
-                    plugin.getTrackerKeeper().getPortals().remove(rsdb.getInnerBlock().getLocation());
-                }
+            ResultSetDoorBlocks rsdb = new ResultSetDoorBlocks(plugin, id);
+            if (rsdb.resultSet()) {
+                plugin.getTrackerKeeper().getPortals().remove(rsdb.getInnerBlock().getLocation());
             }
             // get door data this should let us determine the direction
             String direction = "SOUTH";

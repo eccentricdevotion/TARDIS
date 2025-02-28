@@ -101,41 +101,39 @@ public class OuterDisplayDoorOpener {
                 ee.setHelmet(dye, true);
                 TARDISSounds.playDoorSound(true, portal);
             }
-            if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("tardis_id", id);
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-                if (rs.resultSet()) {
-                    Tardis tardis = rs.getTardis();
-                    ChameleonPreset preset = tardis.getPreset();
-                    // get interior teleport location
-                    ResultSetInnerDoorLocations resultSetPortal = new ResultSetInnerDoorLocations(plugin, id);
-                    if (resultSetPortal.resultSet()) {
-                        Location teleport = resultSetPortal.getTeleportLocation();
-                        TARDISTeleportLocation tp_in = new TARDISTeleportLocation();
-                        tp_in.setLocation(teleport);
-                        tp_in.setTardisId(id);
-                        tp_in.setDirection(resultSetPortal.getDirection());
-                        tp_in.setAbandoned(tardis.isAbandoned());
-                        // track portal
-                        plugin.getTrackerKeeper().getPortals().put(portal, tp_in);
-                        // add movers
-                        if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
-                            // always add the time lord of this TARDIS - as a companion may be opening the door
-                            plugin.getTrackerKeeper().getMovers().add(tardis.getUuid());
-                            // others
-                            if (tardis.getCompanions().equalsIgnoreCase("everyone")) {
-                                // online players
-                                for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-                                    plugin.getTrackerKeeper().getMovers().add(p.getUniqueId());
-                                }
-                            } else {
-                                //  companion UUIDs
-                                String[] companions = tardis.getCompanions().split(":");
-                                for (String c : companions) {
-                                    if (!c.isEmpty()) {
-                                        plugin.getTrackerKeeper().getMovers().add(UUID.fromString(c));
-                                    }
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", id);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+            if (rs.resultSet()) {
+                Tardis tardis = rs.getTardis();
+                ChameleonPreset preset = tardis.getPreset();
+                // get interior teleport location
+                ResultSetInnerDoorLocations resultSetPortal = new ResultSetInnerDoorLocations(plugin, id);
+                if (resultSetPortal.resultSet()) {
+                    Location teleport = resultSetPortal.getTeleportLocation();
+                    TARDISTeleportLocation tp_in = new TARDISTeleportLocation();
+                    tp_in.setLocation(teleport);
+                    tp_in.setTardisId(id);
+                    tp_in.setDirection(resultSetPortal.getDirection());
+                    tp_in.setAbandoned(tardis.isAbandoned());
+                    // track portal
+                    plugin.getTrackerKeeper().getPortals().put(portal, tp_in);
+                    // add movers
+                    if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
+                        // always add the time lord of this TARDIS - as a companion may be opening the door
+                        plugin.getTrackerKeeper().getMovers().add(tardis.getUuid());
+                        // others
+                        if (tardis.getCompanions().equalsIgnoreCase("everyone")) {
+                            // online players
+                            for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+                                plugin.getTrackerKeeper().getMovers().add(p.getUniqueId());
+                            }
+                        } else {
+                            //  companion UUIDs
+                            String[] companions = tardis.getCompanions().split(":");
+                            for (String c : companions) {
+                                if (!c.isEmpty()) {
+                                    plugin.getTrackerKeeper().getMovers().add(UUID.fromString(c));
                                 }
                             }
                         }

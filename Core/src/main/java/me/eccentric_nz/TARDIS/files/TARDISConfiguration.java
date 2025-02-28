@@ -158,7 +158,6 @@ public class TARDISConfiguration {
         booleanOptions.put("preferences.strike_lightning", true);
         booleanOptions.put("preferences.use_default_condensables", true);
         booleanOptions.put("preferences.use_worldguard", true);
-        booleanOptions.put("preferences.walk_in_tardis", true);
         booleanOptions.put("siege.butcher", false);
         booleanOptions.put("siege.creeper", false);
         booleanOptions.put("siege.enabled", true);
@@ -476,6 +475,11 @@ public class TARDISConfiguration {
         // remove seed_block_crafting
         if (config.contains("creation.seed_block_crafting")) {
             plugin.getConfig().set("creation.seed_block_crafting", null);
+            i++;
+        }
+        // remove walk_in_tardis
+        if (config.contains("preferences.walk_in_tardis")) {
+            plugin.getConfig().set("preferences.walk_in_tardis", null);
             i++;
         }
         // switch chemistry to a module

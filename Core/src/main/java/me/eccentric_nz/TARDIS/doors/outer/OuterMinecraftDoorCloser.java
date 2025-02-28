@@ -64,39 +64,37 @@ public class OuterMinecraftDoorCloser {
                 }
             }
         }
-        if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("tardis_id", id);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-            if (rs.resultSet()) {
-                Tardis tardis = rs.getTardis();
-                // get exterior portal (from current location)
-                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                rsc.resultSet();
-                Location portal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                if (tardis.getPreset().equals(ChameleonPreset.SWAMP)) {
-                    portal.add(0.0d, 1.0d, 0.0d);
-                }
-                // remove exterior portal
-                TARDISTeleportLocation removed = plugin.getTrackerKeeper().getPortals().remove(portal);
-                if (removed == null) {
-                    DoorUtility.debugPortal(portal.toString());
-                }
-                // remove movers
-                if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
-                    if (tardis.getCompanions().equalsIgnoreCase("everyone")) {
-                        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-                            plugin.getTrackerKeeper().getMovers().remove(p.getUniqueId());
-                        }
-                    } else {
-                        String[] companions = tardis.getCompanions().split(":");
-                        for (String c : companions) {
-                            if (!c.isEmpty()) {
-                                plugin.getTrackerKeeper().getMovers().remove(UUID.fromString(c));
-                            }
-                        }
-                        plugin.getTrackerKeeper().getMovers().remove(uuid);
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
+            // get exterior portal (from current location)
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            rsc.resultSet();
+            Location portal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+            if (tardis.getPreset().equals(ChameleonPreset.SWAMP)) {
+                portal.add(0.0d, 1.0d, 0.0d);
+            }
+            // remove exterior portal
+            TARDISTeleportLocation removed = plugin.getTrackerKeeper().getPortals().remove(portal);
+            if (removed == null) {
+                DoorUtility.debugPortal(portal.toString());
+            }
+            // remove movers
+            if (!plugin.getConfig().getBoolean("preferences.open_door_policy")) {
+                if (tardis.getCompanions().equalsIgnoreCase("everyone")) {
+                    for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+                        plugin.getTrackerKeeper().getMovers().remove(p.getUniqueId());
                     }
+                } else {
+                    String[] companions = tardis.getCompanions().split(":");
+                    for (String c : companions) {
+                        if (!c.isEmpty()) {
+                            plugin.getTrackerKeeper().getMovers().remove(UUID.fromString(c));
+                        }
+                    }
+                    plugin.getTrackerKeeper().getMovers().remove(uuid);
                 }
             }
         }

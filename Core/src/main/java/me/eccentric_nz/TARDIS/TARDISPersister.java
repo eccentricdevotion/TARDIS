@@ -42,9 +42,7 @@ public class TARDISPersister {
     }
 
     public void load() {
-        if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
-            new TARDISPortalPersister(plugin).load();
-        }
+        new TARDISPortalPersister(plugin).load();
         if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled")) {
             new TARDISArchPersister(plugin).checkAll();
         }
@@ -80,9 +78,7 @@ public class TARDISPersister {
     public void save() {
         // persist any room growing
         new TARDISRoomPersister(plugin).saveProgress();
-        if (plugin.getConfig().getBoolean("preferences.walk_in_tardis")) {
-            new TARDISPortalPersister(plugin).save();
-        }
+        new TARDISPortalPersister(plugin).save();
         if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled")) {
             new TARDISArchPersister(plugin).saveAll();
         }
