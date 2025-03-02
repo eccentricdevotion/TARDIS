@@ -17,11 +17,6 @@
     </properties>
     <url>http://eccentricdevotion.github.com/TARDIS/</url>
     <repositories>
-        <!--vault & griefprevention-->
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
         <repository>
             <id>spigot</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
@@ -90,6 +85,11 @@
         <repository>
             <id>bluemap</id>
             <url>https://repo.bluecolored.de/releases/</url>
+        </repository>
+        <!--terraform generator, vault & griefprevention-->
+        <repository>
+            <id>tardis-repo-releases</id>
+            <url>https://thenosefairy.duckdns.org:8443/releases</url>
         </repository>
     </repositories>
     <pluginRepositories>
@@ -451,8 +451,7 @@
             <artifactId>TerraformGenerator</artifactId>
             <version>18.1.2</version>
             <type>jar</type>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/TerraformGenerator.jar</systemPath>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>*</groupId>
