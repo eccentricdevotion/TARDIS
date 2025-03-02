@@ -56,6 +56,7 @@ import me.eccentric_nz.TARDIS.utility.logging.TARDISBlockLogger;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISWorldGuardUtils;
 import me.eccentric_nz.tardischunkgenerator.TARDISHelper;
 import me.eccentric_nz.tardischunkgenerator.worldgen.*;
+import me.eccentric_nz.tardisregeneration.ComponentSetter;
 import me.eccentric_nz.tardisregeneration.TARDISRegenerationUpdater;
 import me.eccentric_nz.tardisshop.ShopSettings;
 import me.eccentric_nz.tardissonicblaster.BlasterSettings;
@@ -116,6 +117,7 @@ public class TARDIS extends JavaPlugin {
     private TARDISChatGUI<?> jsonKeeper;
     private TARDISUpdateChatGUI updateChatGUI;
     private SkinChanger skinChanger;
+    private ComponentSetter componentSetter;
     private Calendar afterCal;
     private Calendar beforeCal;
     private ConsoleCommandSender console;
@@ -284,17 +286,20 @@ public class TARDIS extends JavaPlugin {
             Class<?> j;
             Class<?> u;
             Class<?> s;
+            Class<?> c;
             try {
                 if (PaperLib.isPaper()) {
                     m = Class.forName("me.eccentric_nz.TARDIS.paper.AdventureMessage");
                     j = Class.forName("me.eccentric_nz.TARDIS.paper.TARDISChatGUIAdventure");
                     u = Class.forName("me.eccentric_nz.TARDIS.paper.TARDISUpdateChatGUIAdventure");
                     s = Class.forName("me.eccentric_nz.TARDIS.paper.SkinChangerPaper");
+                    c = Class.forName("me.eccme.eccentric_nz.TARDIS.paper.ComponentSetterPaper");
                 } else {
                     m = Class.forName("me.eccentric_nz.TARDIS.spigot.SpigotMessage");
                     j = Class.forName("me.eccentric_nz.TARDIS.spigot.TARDISChatGUISpigot");
                     u = Class.forName("me.eccentric_nz.TARDIS.spigot.TARDISUpdateChatGUISpigot");
                     s = Class.forName("me.eccentric_nz.TARDIS.spigot.SkinChangerSpigot");
+                    c = Class.forName("me.eccme.eccentric_nz.TARDIS.paper.ComponentSetterSpigot");
                 }
                 if (TARDISMessage.class.isAssignableFrom(m)) { // Make sure it actually implements TARDISMessage
                     messenger = (TARDISMessage) m.getConstructor().newInstance();
@@ -307,6 +312,9 @@ public class TARDIS extends JavaPlugin {
                 }
                 if (SkinChanger.class.isAssignableFrom(s)) { // Make sure it actually implements SkinChanger
                     skinChanger = (SkinChanger) s.getConstructor().newInstance();
+                }
+                if (ComponentSetter.class.isAssignableFrom(c)) { // Make sure it actually implements ComponentSetter
+                    componentSetter = (ComponentSetter) c.getConstructor().newInstance();
                 }
             } catch (final Exception e) {
                 getLogger().severe("Could not find support for this server version.");
@@ -953,6 +961,15 @@ public class TARDIS extends JavaPlugin {
     }
 
     /**
+     * Gets the TARDIS Component Setter class
+     *
+     * @return the TARDIS Component Setter class
+     */
+    public ComponentSetter getComponentSetter() {
+        return componentSetter;
+    }
+
+    /**
      * Gets the server's Console Command Sender
      *
      * @return the server's Console Command Sender
@@ -1459,7 +1476,20 @@ public class TARDIS extends JavaPlugin {
      * Loads the custom configuration files.
      */
     private void loadCustomConfigs() {
-        List<String> files = List.of("achievements.yml", "adaptive.yml", "artron.yml", "blaster.yml", "blocks.yml", "condensables.yml", "custom_consoles.yml", "custom_models.yml", "custom_doors.yml", "custom_time_rotors.yml", "flat_world.yml", "handles.yml", "items.yml", "kits.yml", "monsters.yml", "regeneration.yml", "rooms.yml", "shop.yml", "system_upgrades.yml", "tag.yml", "vortex_manipulator.yml");
+        List<String> files = List.of(
+                "achievements.yml", "adaptive.yml", "artron.yml",
+                "blaster.yml", "blocks.yml",
+                "condensables.yml", "custom_consoles.yml", "custom_models.yml", "custom_doors.yml", "custom_time_rotors.yml",
+                "flat_world.yml",
+                "handles.yml",
+                "items.yml",
+                "kits.yml",
+                "monsters.yml",
+                "regeneration.yml", "rooms.yml",
+                "shop.yml", "system_upgrades.yml",
+                "tag.yml",
+                "vortex_manipulator.yml"
+        );
         for (String f : files) {
 //            debug(f);
             tardisCopier.copy(f);
