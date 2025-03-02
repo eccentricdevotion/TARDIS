@@ -293,13 +293,13 @@ public class TARDIS extends JavaPlugin {
                     j = Class.forName("me.eccentric_nz.TARDIS.paper.TARDISChatGUIAdventure");
                     u = Class.forName("me.eccentric_nz.TARDIS.paper.TARDISUpdateChatGUIAdventure");
                     s = Class.forName("me.eccentric_nz.TARDIS.paper.SkinChangerPaper");
-                    c = Class.forName("me.eccme.eccentric_nz.TARDIS.paper.ComponentSetterPaper");
+                    c = Class.forName("me.eccentric_nz.TARDIS.paper.ComponentSetterPaper");
                 } else {
                     m = Class.forName("me.eccentric_nz.TARDIS.spigot.SpigotMessage");
                     j = Class.forName("me.eccentric_nz.TARDIS.spigot.TARDISChatGUISpigot");
                     u = Class.forName("me.eccentric_nz.TARDIS.spigot.TARDISUpdateChatGUISpigot");
                     s = Class.forName("me.eccentric_nz.TARDIS.spigot.SkinChangerSpigot");
-                    c = Class.forName("me.eccme.eccentric_nz.TARDIS.paper.ComponentSetterSpigot");
+                    c = Class.forName("me.eccentric_nz.TARDIS.paper.ComponentSetterSpigot");
                 }
                 if (TARDISMessage.class.isAssignableFrom(m)) { // Make sure it actually implements TARDISMessage
                     messenger = (TARDISMessage) m.getConstructor().newInstance();
