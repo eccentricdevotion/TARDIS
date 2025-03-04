@@ -154,14 +154,14 @@ public class TARDISUpdateChecker implements Runnable {
             // We're connecting to GitHub
             // parse the XML document and grab the spigot version
             DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            Document doc = db.parse("https://raw.githubusercontent.com/eccentricdevotion/TARDIS/master/pom.xml");
+            Document doc = db.parse("https://raw.githubusercontent.com/eccentricdevotion/TARDIS/master/CORE/pom.xml");
             /*
             <project>
                 <dependencies>
                     <dependency>
                         <groupId>org.spigotmc</groupId>
                         <artifactId>spigot</artifactId>
-                        <version>1.21-R0.1-SNAPSHOT</version>
+                        <version>1.21.4-R0.1-SNAPSHOT</version>
              */
             NodeList list = doc.getElementsByTagName("dependencies");
             Node root = list.item(0); // there's only one node
