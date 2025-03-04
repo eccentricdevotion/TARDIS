@@ -95,24 +95,24 @@ public class TARDISFarmer {
         if (!mobs.isEmpty()) {
             List<TARDISAllay> allays = new ArrayList<>();
             List<TARDISAxolotl> axolotls = new ArrayList<>();
+            List<TARDISBee> bees = new ArrayList<>();
+            List<TARDISFrog> frogs = new ArrayList<>();
+            List<TARDISHorse> camels = new ArrayList<>();
             List<TARDISHorse> horses = new ArrayList<>();
             List<TARDISLlama> llamas = new ArrayList<>();
             List<TARDISMob> chickens = new ArrayList<>();
             List<TARDISMob> cows = new ArrayList<>();
-            TARDISFish fish = null;
-            List<TARDISMooshroom> mooshrooms = new ArrayList<>();
+            List<TARDISMob> polarbears = new ArrayList<>();
             List<TARDISMob> sheep = new ArrayList<>();
             List<TARDISMob> sniffers = new ArrayList<>();
             List<TARDISMob> striders = new ArrayList<>();
+            List<TARDISMooshroom> mooshrooms = new ArrayList<>();
+            List<TARDISPanda> pandas = new ArrayList<>();
             List<TARDISPet> parrots = new ArrayList<>();
             List<TARDISPig> pigs = new ArrayList<>();
-            List<TARDISMob> polarbears = new ArrayList<>();
             List<TARDISRabbit> rabbits = new ArrayList<>();
-            List<TARDISBee> bees = new ArrayList<>();
             List<TARDISVillager> villagers = new ArrayList<>();
-            List<TARDISPanda> pandas = new ArrayList<>();
-            List<TARDISFrog> frogs = new ArrayList<>();
-            List<TARDISHorse> camels = new ArrayList<>();
+            TARDISFish fish = null;
             // are we doing an achievement?
             TARDISAchievementFactory taf = null;
             if (plugin.getAchievementConfig().getBoolean("farm.enabled")) {

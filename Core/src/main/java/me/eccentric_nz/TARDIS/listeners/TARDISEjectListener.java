@@ -436,6 +436,38 @@ public class TARDISEjectListener implements Listener {
                 }
                 ent.remove();
             }
+            case FROG -> {
+                event.setCancelled(true);
+                Frog f = (Frog) ent;
+                Frog frog = (Frog) l.getWorld().spawnEntity(l, EntityType.FROG);
+                frog.setVariant(f.getVariant());
+                frog.setAge(f.getTicksLived());
+                if (!f.isAdult()) {
+                    frog.setBaby();
+                }
+                frog.setHealth(f.getHealth());
+                String frogname = ent.getCustomName();
+                if (frogname != null && !frogname.isEmpty()) {
+                    frog.setCustomName(frogname);
+                }
+                ent.remove();
+            }
+            case AXOLOTL -> {
+                event.setCancelled(true);
+                Axolotl a = (Axolotl) ent;
+                Axolotl axolotl = (Axolotl) l.getWorld().spawnEntity(l, EntityType.AXOLOTL);
+                axolotl.setVariant(a.getVariant());
+                axolotl.setAge(a.getTicksLived());
+                if (!a.isAdult()) {
+                    axolotl.setBaby();
+                }
+                axolotl.setHealth(a.getHealth());
+                String axname = ent.getCustomName();
+                if (axname != null && !axname.isEmpty()) {
+                    axolotl.setCustomName(axname);
+                }
+                ent.remove();
+            }
             default -> plugin.getMessenger().send(player, TardisModule.TARDIS, "EJECT_NOT_VALID");
         }
         // stop tracking player
