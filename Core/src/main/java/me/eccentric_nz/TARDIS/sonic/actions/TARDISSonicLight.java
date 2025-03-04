@@ -76,16 +76,15 @@ public class TARDISSonicLight {
         int y = light.getLocation().getBlockY();
         int z = light.getLocation().getBlockZ();
         String location = light.getWorld().getName() + ":" + x + ":" + y + ":" + z;
-        // check if exists
-        HashMap<String, Object> wherel = new HashMap<>();
-        wherel.put("location", location);
-        ResultSetLamps rsl = new ResultSetLamps(plugin, wherel, false);
-        if (rsl.resultSet()) {
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("location", location);
-            plugin.getQueryFactory().doDelete("lamps", where);
-            plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_REMOVE");
-        }
+        // remove lamps record
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("location", location);
+        plugin.getQueryFactory().doDelete("lamps", where);
+        // also remove the blocks record
+        HashMap<String, Object> whereb = new HashMap<>();
+        where.put("location", light.getLocation().toString());
+        plugin.getQueryFactory().doDelete("blocks", whereb);
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "LAMP_REMOVE");
     }
 
     public void toggle(ItemDisplay display, Block light) {

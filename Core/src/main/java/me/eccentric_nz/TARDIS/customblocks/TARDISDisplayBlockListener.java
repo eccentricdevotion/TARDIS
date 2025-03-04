@@ -493,7 +493,7 @@ public class TARDISDisplayBlockListener implements Listener {
                 interaction.remove();
             }
             block.setType(Material.AIR);
-            // remove lamp record if light
+            // remove lamp/block records if light
             TARDISDisplayItem tdi = TARDISDisplayItemUtils.get(fake);
             if (tdi != null) {
                 if (tdi.isLight()) {
@@ -543,7 +543,7 @@ public class TARDISDisplayBlockListener implements Listener {
                         interaction.remove();
                     }
                     block.setType(Material.AIR);
-                    // remove lamp record if light
+                    // remove lamp/block records if light
                     if (tdi != null) {
                         if (tdi.isLight()) {
                             new TARDISSonicLight(plugin).removeLamp(block, player);
