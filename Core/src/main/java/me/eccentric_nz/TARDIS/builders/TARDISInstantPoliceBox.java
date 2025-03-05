@@ -106,7 +106,6 @@ public class TARDISInstantPoliceBox {
                 frame.remove();
             }
             if (!slab) {
-                block.setBlockData(TARDISConstants.AIR);
                 TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisID(), false);
             }
             // spawn armour stand

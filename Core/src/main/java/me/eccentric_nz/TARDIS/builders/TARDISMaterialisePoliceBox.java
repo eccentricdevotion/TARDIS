@@ -180,7 +180,6 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                         frame.remove();
                     }
                     if (!slab) {
-                        under.setBlockData(TARDISConstants.AIR);
                         TARDISBlockSetters.setUnderDoorBlock(world, under.getX(), under.getY(), under.getZ(), bd.getTardisID(), false);
                     }
                     // spawn an armour stand
