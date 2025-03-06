@@ -441,7 +441,12 @@ public class TARDISBuilderInner implements Runnable {
                             } else {
                                 m = split[0] + "_" + use_clay.toString();
                             }
-                            data = Material.getMaterial(m).createBlockData();
+                            Material material = Material.getMaterial(m);
+                            if (material != null) {
+                                data = material.createBlockData();
+                            } else {
+                                data = TARDISConstants.AIR;
+                            }
                         }
                     }
                     case BLUE_WOOL -> {
@@ -465,7 +470,12 @@ public class TARDISBuilderInner implements Runnable {
                         } else {
                             m = split[0] + "_" + use_clay.toString();
                         }
-                        data = Material.getMaterial(m).createBlockData();
+                        Material material = Material.getMaterial(m);
+                        if (material != null) {
+                            data = material.createBlockData();
+                        } else {
+                            data = TARDISConstants.AIR;
+                        }
                     }
                 }
             }
@@ -514,10 +524,10 @@ public class TARDISBuilderInner implements Runnable {
                 Bisected bisected = (Bisected) data;
                 if (bisected.getHalf().equals(Bisected.Half.BOTTOM)) { // iron door bottom
                     HashMap<String, Object> setd = new HashMap<>();
-                    String doorloc = world.getName() + ":" + x + ":" + y + ":" + z;
+                    String doorLocation = world.getName() + ":" + x + ":" + y + ":" + z;
                     setd.put("tardis_id", dbID);
                     setd.put("door_type", 1);
-                    setd.put("door_location", doorloc);
+                    setd.put("door_location", doorLocation);
                     setd.put("door_direction", "SOUTH");
                     plugin.getQueryFactory().doInsert("doors", setd);
                     // if create_worlds is true, set the world spawn
@@ -551,8 +561,8 @@ public class TARDISBuilderInner implements Runnable {
                  * handbrake! Bone and Rustic have modelled consoles, not a lever handbrake.
                  */
                 if (!schm.getPermission().equals("rustic") && !schm.getPermission().equals("bone")) {
-                    String handbrakeloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                    plugin.getQueryFactory().insertSyncControl(dbID, 0, handbrakeloc, 0);
+                    String handbrakeLocation = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                    plugin.getQueryFactory().insertSyncControl(dbID, 0, handbrakeLocation, 0);
                 }
                 // create default json for ARS
                 String[][][] empty = new String[3][9][9];
@@ -630,9 +640,9 @@ public class TARDISBuilderInner implements Runnable {
             if (type.equals(Material.LIGHT)) {
                 // remember light block locations for malfunction and light switch
                 HashMap<String, Object> setlb = new HashMap<>();
-                String lloc = world.getName() + ":" + x + ":" + y + ":" + z;
+                String lightLocation = world.getName() + ":" + x + ":" + y + ":" + z;
                 setlb.put("tardis_id", dbID);
-                setlb.put("location", lloc);
+                setlb.put("location", lightLocation);
                 plugin.getQueryFactory().doInsert("lamps", setlb);
             }
             if (type.equals(Material.COMMAND_BLOCK) || ((schm.getPermission().equals("bigger") || schm.getPermission().equals("coral") || schm.getPermission().equals("deluxe") || schm.getPermission().equals("twelfth")) && type.equals(Material.BEACON))) {
@@ -641,8 +651,8 @@ public class TARDISBuilderInner implements Runnable {
                  * could also be a beacon block, as the creeper sits
                  * over the beacon in the deluxe and bigger consoles.
                  */
-                String creeploc = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
-                set.put("creeper", creeploc);
+                String creeperLocation = world.getName() + ":" + (x + 0.5) + ":" + y + ":" + (z + 0.5);
+                set.put("creeper", creeperLocation);
                 if (type.equals(Material.COMMAND_BLOCK)) {
                     data = switch (schm.getPermission()) {
                         case "ender" -> Material.END_STONE_BRICKS.createBlockData();
@@ -658,15 +668,15 @@ public class TARDISBuilderInner implements Runnable {
                  * wood button - remember it for the Artron Energy
                  * Capacitor.
                  */
-                String woodbuttonloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                plugin.getQueryFactory().insertSyncControl(dbID, 6, woodbuttonloc, 0);
+                String woodButtonLocation = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                plugin.getQueryFactory().insertSyncControl(dbID, 6, woodButtonLocation, 0);
             }
             if (type.equals(Material.DAYLIGHT_DETECTOR)) {
                 /*
                  * remember the telepathic circuit.
                  */
-                String telepathicloc = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
-                plugin.getQueryFactory().insertSyncControl(dbID, 23, telepathicloc, 0);
+                String telepathicLocation = TARDISStaticLocationGetters.makeLocationStr(world, x, y, z);
+                plugin.getQueryFactory().insertSyncControl(dbID, 23, telepathicLocation, 0);
             }
             if (type.equals(Material.BEACON) && schm.getPermission().equals("ender")) {
                 /*
@@ -769,8 +779,8 @@ public class TARDISBuilderInner implements Runnable {
                 TARDISBlockSetters.setBlock(world, x, y, z, Material.VOID_AIR);
             } else if (type.equals(Material.BEDROCK)) {
                 // remember bedrock location to block off the beacon light
-                String bedrocloc = world.getName() + ":" + x + ":" + y + ":" + z;
-                set.put("beacon", bedrocloc);
+                String bedrockLocation = world.getName() + ":" + x + ":" + y + ":" + z;
+                set.put("beacon", bedrockLocation);
                 postBedrock = world.getBlockAt(x, y, z);
             } else if (type.equals(Material.BROWN_MUSHROOM) && schm.getPermission().equals("master")) {
                 // spawn locations for two villagers
@@ -783,6 +793,9 @@ public class TARDISBuilderInner implements Runnable {
                 TARDISBlockSetters.setBlock(world, x, y, z, data);
             }
             double progress = counter / div;
+            if (progress > 1.0) {
+                progress = 1.0;
+            }
             bb.setProgress(progress);
             if (col == d && row < w) {
                 row++;
