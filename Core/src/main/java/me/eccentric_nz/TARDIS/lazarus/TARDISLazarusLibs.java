@@ -22,7 +22,6 @@ import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
-import me.libraryaddict.disguise.disguisetypes.RabbitType;
 import me.libraryaddict.disguise.disguisetypes.watchers.*;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.*;
@@ -152,7 +151,7 @@ public class TARDISLazarusLibs {
                 }
                 case RABBIT -> {
                     RabbitWatcher rabbitWatcher = (RabbitWatcher) livingWatcher;
-                    RabbitType rabbitType = RabbitType.valueOf(choice.toString());
+                    Rabbit.Type rabbitType = Rabbit.Type.valueOf(choice.toString());
                     rabbitWatcher.setType(rabbitType);
                     rabbitWatcher.setBaby(isBaby);
                 }
