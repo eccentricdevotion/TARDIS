@@ -1,17 +1,23 @@
 package me.eccentric_nz.TARDIS.paper;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.Consumable;
+import io.papermc.paper.datacomponent.item.consumable.ItemUseAnimation;
+import io.papermc.paper.registry.keys.SoundEventKeys;
 import me.eccentric_nz.tardisregeneration.ComponentSetter;
-import net.minecraft.core.component.DataComponentPatch;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.component.Consumables;
-import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
 public class ComponentSetterPaper implements ComponentSetter {
     @Override
     public ItemStack setConsumable(ItemStack is) {
-        net.minecraft.world.item.ItemStack stack = CraftItemStack.asNMSCopy(is);
-        stack.applyComponents(DataComponentPatch.builder().set(DataComponents.CONSUMABLE, Consumables.DEFAULT_DRINK).build());
-        return CraftItemStack.asBukkitCopy(stack);
+
+        Consumable consumable = Consumable.consumable()
+                .animation(ItemUseAnimation.DRINK)
+                .sound(SoundEventKeys.ENTITY_GENERIC_DRINK)
+                .consumeSeconds(1.6f)
+                .hasConsumeParticles(false)
+                .build();
+        is.setData(DataComponentTypes.CONSUMABLE, consumable);
+        return is;
     }
 }
