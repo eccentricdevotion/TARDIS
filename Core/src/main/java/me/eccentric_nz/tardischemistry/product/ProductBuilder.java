@@ -16,11 +16,14 @@
  */
 package me.eccentric_nz.tardischemistry.product;
 
+import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.Map;
 
 public class ProductBuilder {
 
@@ -29,6 +32,7 @@ public class ProductBuilder {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(product.toString().replace("_", " "));
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        im.setAttributeModifiers(Multimaps.forMap(Map.of()));
         im.setItemModel(product.getModel());
         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, product.getModel().getKey());
         is.setItemMeta(im);

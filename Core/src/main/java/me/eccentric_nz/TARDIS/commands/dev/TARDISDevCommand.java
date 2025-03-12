@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev;
 
+import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
@@ -163,6 +164,7 @@ public class TARDISDevCommand implements CommandExecutor {
                                 LeatherArmorMeta im = (LeatherArmorMeta) is.getItemMeta();
                                 im.setColor(Color.fromRGB(255, 0, 0));
                                 im.addItemFlags(ItemFlag.values());
+                                im.setAttributeModifiers(Multimaps.forMap(Map.of()));
                                 im.setEquippable(null);
                                 CustomModelDataComponent cmdc = im.getCustomModelDataComponent();
                                 List<String> strings = List.of("chameleon_tint");

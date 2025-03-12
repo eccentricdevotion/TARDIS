@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.tardissonicblaster;
 
+import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -27,10 +28,7 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 /**
  *
@@ -66,6 +64,7 @@ public class TARDISSonicBlasterRecipe {
         }
         im.setItemModel(modelData.get(s));
         im.addItemFlags(ItemFlag.values());
+        im.setAttributeModifiers(Multimaps.forMap(Map.of()));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(TARDIS.plugin, s.replace(" ", "_").toLowerCase(Locale.ROOT));
         ShapedRecipe r = new ShapedRecipe(key, is);

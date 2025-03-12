@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.dev.wiki;
 
+import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,6 +29,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.Damageable;
+
+import java.util.Map;
 
 public class ChestBuilder {
 
@@ -69,6 +72,7 @@ public class ChestBuilder {
                 damageable.setDamage(0);
                 damageable.setUnbreakable(true);
                 damageable.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
+                damageable.setAttributeModifiers(Multimaps.forMap(Map.of()));
                 is.setItemMeta(damageable);
             }
             chest.getBlockInventory().addItem(is);
@@ -89,7 +93,8 @@ public class ChestBuilder {
             if (is.getItemMeta() instanceof Damageable damageable) {
                 damageable.setDamage(0);
                 damageable.setUnbreakable(true);
-                damageable.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
+                damageable.addItemFlags(ItemFlag.values());
+                damageable.setAttributeModifiers(Multimaps.forMap(Map.of()));
                 is.setItemMeta(damageable);
             }
             chest.getBlockInventory().addItem(is);

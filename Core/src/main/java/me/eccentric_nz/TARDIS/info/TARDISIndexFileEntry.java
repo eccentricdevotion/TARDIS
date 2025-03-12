@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.info;
 
+import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -23,6 +24,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Map;
 
 public class TARDISIndexFileEntry {
 
@@ -42,6 +45,7 @@ public class TARDISIndexFileEntry {
         ItemMeta entryMeta = entry.getItemMeta();
         entryMeta.setDisplayName(TARDISStringUtils.capitalise(tardisInfoMenu.toString()));
         entryMeta.addItemFlags(ItemFlag.values());
+        entryMeta.setAttributeModifiers(Multimaps.forMap(Map.of()));
         entry.setItemMeta(entryMeta);
         stack[0] = entry;
         int i = 9;

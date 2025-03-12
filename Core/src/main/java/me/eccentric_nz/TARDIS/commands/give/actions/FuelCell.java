@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.give.actions;
 
+import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
@@ -26,6 +27,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
+import java.util.Map;
 
 public class FuelCell {
 
@@ -51,6 +53,7 @@ public class FuelCell {
         im.setLore(lore);
         im.setEnchantmentGlintOverride(true);
         im.addItemFlags(ItemFlag.values());
+        im.setAttributeModifiers(Multimaps.forMap(Map.of()));
         result.setItemMeta(im);
         player.getInventory().addItem(result);
         player.updateInventory();

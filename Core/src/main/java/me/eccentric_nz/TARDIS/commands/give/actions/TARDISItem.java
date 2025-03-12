@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands.give.actions;
 
+import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.give.Give;
 import me.eccentric_nz.TARDIS.commands.give.TARDISDisplayBlockCommand;
@@ -38,6 +39,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class TARDISItem {
 
@@ -116,6 +118,7 @@ public class TARDISItem {
             if (item.equals("blank") || item.equals("save-disk") || item.equals("preset-disk") || item.equals("biome-disk") || item.equals("player-disk") || item.equals("blaster") || item.equals("control")) {
                 im = result.getItemMeta();
                 im.addItemFlags(ItemFlag.values());
+                im.setAttributeModifiers(Multimaps.forMap(Map.of()));
             }
             if (item.equals("key") || item.equals("control")) {
                 im = result.getItemMeta();

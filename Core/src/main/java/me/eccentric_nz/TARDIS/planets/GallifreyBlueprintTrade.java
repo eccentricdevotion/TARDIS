@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.planets;
 
+import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.ARS.TARDISARS;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -34,6 +35,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class GallifreyBlueprintTrade {
@@ -101,6 +103,7 @@ public class GallifreyBlueprintTrade {
         List<String> lore = List.of(TARDISStringUtils.capitalise(name), "Valid only for", "the trading player");
         im.setLore(lore);
         im.addItemFlags(ItemFlag.values());
+        im.setAttributeModifiers(Multimaps.forMap(Map.of()));
         is.setItemMeta(im);
         return is;
     }

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.api;
 
+import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISTrackerInstanceKeeper;
 import me.eccentric_nz.TARDIS.blueprints.*;
@@ -454,6 +455,7 @@ public class TARDII implements TardisAPI {
         if (item.endsWith("Blank Storage Disk") || item.endsWith("Save Storage Disk") || item.endsWith("Preset Storage Disk") || item.endsWith("Biome Storage Disk") || item.endsWith("Player Storage Disk") || item.endsWith("Authorised Control Disk")) {
             ItemMeta im = result.getItemMeta();
             im.addItemFlags(ItemFlag.values());
+            im.setAttributeModifiers(Multimaps.forMap(Map.of()));
             result.setItemMeta(im);
         }
         if (item.endsWith("TARDIS Key") || item.endsWith("Authorised Control Disk")) {
@@ -587,6 +589,7 @@ public class TARDII implements TardisAPI {
                 List<String> lore = List.of(TARDISStringUtils.capitalise(item), "Valid only for", player.getName());
                 im.setLore(lore);
                 im.addItemFlags(ItemFlag.values());
+                im.setAttributeModifiers(Multimaps.forMap(Map.of()));
                 is.setItemMeta(im);
                 return is;
             }

@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
+import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.blueprints.BlueprintProcessor;
@@ -47,6 +48,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Following his disrupted resurrection, the Master was able to offensively use energy - presumably his own artron
@@ -331,6 +333,7 @@ public class TARDISCondenserListener implements Listener {
             lim.setLore(lore);
             lim.setEnchantmentGlintOverride(true);
             lim.addItemFlags(ItemFlag.values());
+            lim.setAttributeModifiers(Multimaps.forMap(Map.of()));
             leftover.setItemMeta(lim);
             player.getInventory().addItem(leftover);
         }
@@ -343,6 +346,7 @@ public class TARDISCondenserListener implements Listener {
             im.setLore(lore);
             im.setEnchantmentGlintOverride(true);
             im.addItemFlags(ItemFlag.values());
+            im.setAttributeModifiers(Multimaps.forMap(Map.of()));
             result.setItemMeta(im);
             player.getInventory().addItem(result);
         }

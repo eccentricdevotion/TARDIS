@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.artron;
 
+import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -31,10 +32,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -174,6 +172,7 @@ public class TARDISArtronStorageCommand implements CommandExecutor {
                 im.setLore(lore);
                 im.setEnchantmentGlintOverride(true);
                 im.addItemFlags(ItemFlag.values());
+                im.setAttributeModifiers(Multimaps.forMap(Map.of()));
                 is.setItemMeta(im);
                 // remove the energy from the tardis/timelord
                 HashMap<String, Object> where = new HashMap<>();

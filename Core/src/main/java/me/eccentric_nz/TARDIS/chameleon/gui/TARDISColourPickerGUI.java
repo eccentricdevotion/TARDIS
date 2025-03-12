@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.chameleon.gui;
 
+import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleon;
 import me.eccentric_nz.TARDIS.custommodels.keys.ArrowVariant;
@@ -28,6 +29,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.List;
+import java.util.Map;
 
 public class TARDISColourPickerGUI {
 
@@ -48,6 +50,7 @@ public class TARDISColourPickerGUI {
         play.setItemModel(ColouredVariant.TINT.getKey());
         play.setColor(Color.fromRGB(255, 255, 255)); // white
         play.addItemFlags(ItemFlag.values());
+        play.setAttributeModifiers(Multimaps.forMap(Map.of()));
         dis.setItemMeta(play);
         // red
         ItemStack red = new ItemStack(Material.RED_WOOL, 1);
@@ -71,6 +74,7 @@ public class TARDISColourPickerGUI {
         rrrtint.setItemModel(ColouredVariant.TINT.getKey());
         rrrtint.setDisplayName("Red");
         rrrtint.addItemFlags(ItemFlag.values());
+        rrrtint.setAttributeModifiers(Multimaps.forMap(Map.of()));
         redtint.setItemMeta(rrrtint);
         // green tint
         ItemStack greentint = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
@@ -79,6 +83,7 @@ public class TARDISColourPickerGUI {
         gggtint.setItemModel(ColouredVariant.TINT.getKey());
         gggtint.setDisplayName("Green");
         gggtint.addItemFlags(ItemFlag.values());
+        gggtint.setAttributeModifiers(Multimaps.forMap(Map.of()));
         greentint.setItemMeta(gggtint);
         // blue tint
         ItemStack bluetint = new ItemStack(Material.LEATHER_HORSE_ARMOR, 1);
@@ -87,6 +92,7 @@ public class TARDISColourPickerGUI {
         bbbtint.setItemModel(ColouredVariant.TINT.getKey());
         bbbtint.setDisplayName("Blue");
         bbbtint.addItemFlags(ItemFlag.values());
+        bbbtint.setAttributeModifiers(Multimaps.forMap(Map.of()));
         bluetint.setItemMeta(bbbtint);
         // less
         ItemStack less = new ItemStack(Material.ARROW, 1);

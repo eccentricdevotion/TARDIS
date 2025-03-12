@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.handles;
 
+import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUISavedPrograms;
 import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
@@ -28,6 +29,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author eccentric_nz
@@ -68,6 +70,7 @@ class TARDISHandlesSavedInventory {
                     im.setLore(List.of(p.getName(), p.getProgram_id() + "", checked));
                 }
                 im.addItemFlags(ItemFlag.values());
+                im.setAttributeModifiers(Multimaps.forMap(Map.of()));
                 im.setItemModel(DiskVariant.HANDLES_DISK.getKey());
                 is.setItemMeta(im);
                 stack[i] = is;

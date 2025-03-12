@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.recipes;
 
+import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
@@ -31,6 +32,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TARDISRecipeInventory {
 
@@ -104,6 +106,7 @@ public class TARDISRecipeInventory {
                     im.setLore(List.of("/trecipe " + arg));
                     im.setItemModel(item.getModel());
                     im.addItemFlags(ItemFlag.values());
+                    im.setAttributeModifiers(Multimaps.forMap(Map.of()));
                     result.setItemMeta(im);
                     stack[i] = result;
                     i++;

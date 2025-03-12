@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.commands;
 
+import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -277,6 +278,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         }
         if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk")) {
             im.addItemFlags(ItemFlag.values());
+            im.setAttributeModifiers(Multimaps.forMap(Map.of()));
         }
         result.setAmount(1);
         result.setItemMeta(im);
@@ -303,6 +305,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 im.setDisplayName("Blank Storage Disk");
                 im.setItemModel(DiskVariant.BLANK_DISK.getKey());
                 im.addItemFlags(ItemFlag.values());
+                im.setAttributeModifiers(Multimaps.forMap(Map.of()));
             }
             if (ingredients.get(i).getType().equals(Material.BLAZE_ROD)) {
                 im.setDisplayName("Sonic Screwdriver");
@@ -316,6 +319,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         im.setDisplayName(ChatColor.WHITE + str);
         if (str.equals("Blank Storage Disk") || str.equals("Save Storage Disk") || str.equals("Preset Storage Disk") || str.equals("Biome Storage Disk") || str.equals("Player Storage Disk") || str.equals("Authorised Control Disk")) {
             im.addItemFlags(ItemFlag.values());
+            im.setAttributeModifiers(Multimaps.forMap(Map.of()));
         }
         RecipeItem recipeItem = RecipeItem.getByName(str);
         if (recipeItem != RecipeItem.NOT_FOUND) {
