@@ -48,7 +48,7 @@ public class CompoundBuilder {
             default -> {
                 is = new ItemStack(Material.GLASS_BOTTLE, 1);
                 ItemMeta im = is.getItemMeta();
-                im.setDisplayName(compound.toString().replace("_", " "));
+                im.setDisplayName(compound.getName());
                 im.setLore(List.of(compound.getSymbol()));
                 if (compound.getModel() != null) {
                     im.setItemModel(compound.getModel());

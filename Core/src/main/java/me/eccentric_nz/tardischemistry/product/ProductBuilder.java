@@ -30,7 +30,7 @@ public class ProductBuilder {
     public static ItemStack getProduct(Product product) {
         ItemStack is = new ItemStack(product.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(product.toString().replace("_", " "));
+        im.setDisplayName(product.getName());
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         im.setAttributeModifiers(Multimaps.forMap(Map.of()));
         im.setItemModel(product.getModel());
