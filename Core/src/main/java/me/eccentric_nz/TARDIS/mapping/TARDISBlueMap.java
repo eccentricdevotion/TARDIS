@@ -49,15 +49,16 @@ public class TARDISBlueMap implements TARDISMapper {
         plugin.getPM().registerEvents(new TARDISServerListener("BlueMap", this), plugin);
         // if enabled, activate
         if (bluemap != null && bluemap.isEnabled()) {
-            activate();
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, this::activate, 300L);
         }
     }
 
     @Override
     public void activate() {
         BlueMapAPI.getInstance().ifPresent(api -> {
+            long period = (plugin.getConfig().getLong("mapping.update_period") * 20) / 3;
             // start a repeating task to update markers
-            updateMarkerSet((plugin.getConfig().getLong("mapping.update_period") * 20) / 3);
+            updateMarkerSet(period);
         });
     }
 
