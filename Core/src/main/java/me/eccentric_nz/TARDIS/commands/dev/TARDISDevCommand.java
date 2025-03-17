@@ -78,6 +78,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "effect",
             "frame", "furnace",
             "gravity",
+            "head",
             "interaction",
             "label", "leather", "list",
             "monster",
@@ -153,6 +154,12 @@ public class TARDISDevCommand implements CommandExecutor {
                         case "gravity" -> {
                             if (sender instanceof Player player) {
                                 player.setGravity(!player.hasGravity());
+                            }
+                            return true;
+                        }
+                        case "head" -> {
+                            if (sender instanceof Player player) {
+                                new HeadCommand(plugin).giveAPIHead(player);
                             }
                             return true;
                         }
@@ -259,6 +266,10 @@ public class TARDISDevCommand implements CommandExecutor {
                     }
                     case "box" -> {
                         return new TARDISDevBoxCommand(plugin).setPreset(sender, args);
+                    }
+                    case "component" -> {
+                        new ResourcePackConverterCommand(plugin).process(sender, args);
+                        return true;
                     }
                     case "debug" -> {
                         return new DebugCommand(plugin).process(sender, args);

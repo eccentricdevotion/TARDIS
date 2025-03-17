@@ -46,6 +46,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
             "effect",
             "frame", "furnace",
             "gravity",
+            "head",
             "interaction",
             "label", "leather", "list",
             "monster",
