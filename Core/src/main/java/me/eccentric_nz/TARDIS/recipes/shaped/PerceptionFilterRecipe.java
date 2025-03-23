@@ -51,13 +51,7 @@ public class PerceptionFilterRecipe {
     }
 
     public void addRecipe() {
-        Material material;
-        try {
-            material = Material.valueOf(plugin.getConfig().getString("preferences.key"));
-        } catch (IllegalArgumentException e) {
-            material = Material.GOLD_NUGGET;
-        }
-        ItemStack is = new ItemStack(material, 1);
+        ItemStack is = new ItemStack(Material.OMINOUS_TRIAL_KEY, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Perception Filter");
         im.setItemModel(RecipeItem.PERCEPTION_FILTER.getModel());
