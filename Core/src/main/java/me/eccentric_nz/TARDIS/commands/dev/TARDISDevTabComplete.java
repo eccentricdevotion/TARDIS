@@ -62,6 +62,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
     private final ImmutableList<String> STATE_SUBS = ImmutableList.of("closed", "open", "stained", "glass", "fly");
     private final ImmutableList<String> FRAME_SUBS = ImmutableList.of("lock", "unlock");
     private final ImmutableList<String> SCREEN_SUBS = ImmutableList.of("forward", "backward", "left", "right");
+    private final ImmutableList<String> COMPONENT_SUBS = ImmutableList.of("ars", "repeater", "key", "pack", "extra");
     private final ImmutableList<String> DEBUG_SUBS = ImmutableList.of("create", "update", "enter", "exit");
     private final ImmutableList<String> DISPLAY_SUBS = ImmutableList.of("add", "animate", "remove", "place", "break", "convert", "chunk", "console");
     private final List<String> STONE_SUBS = new ArrayList<>();
@@ -112,39 +113,21 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
                 return partial(args[0], ROOT_SUBS);
             }
             case 2 -> {
-                if (sub.equals("list")) {
-                    return partial(lastArg, LIST_SUBS);
-                }
-                if (sub.equals("box")) {
-                    return partial(lastArg, PRESET_SUBS);
-                }
-                if (sub.equals("debug")) {
-                    return partial(lastArg, DEBUG_SUBS);
-                }
-                if (sub.equals("nms") || sub.equals("trim")) {
-                    return partial(lastArg, MONSTER_SUBS);
-                }
-                if (sub.equals("tree")) {
-                    return partial(lastArg, MAT_SUBS);
-                }
-                if (sub.equals("snapshot")) {
-                    return partial(lastArg, SNAPSHOT_SUBS);
-                }
-                if (sub.equals("displayitem")) {
-                    return partial(lastArg, DISPLAY_SUBS);
-                }
-                if (sub.equals("frame")) {
-                    return partial(lastArg, FRAME_SUBS);
-                }
-                if (sub.equals("recipe")) {
-                    return partial(lastArg, RECIPE_SUBS);
-                }
-                if (sub.equals("effect")) {
-                    return partial(lastArg, SHAPE_SUBS);
-                }
-                if (sub.equals("screen")) {
-                    return partial(lastArg, SCREEN_SUBS);
-                }
+                return switch (sub) {
+                    case "list" -> partial(lastArg, LIST_SUBS);
+                    case "box" -> partial(lastArg, PRESET_SUBS);
+                    case "debug" -> partial(lastArg, DEBUG_SUBS);
+                    case "nms", "trim" -> partial(lastArg, MONSTER_SUBS);
+                    case "tree" -> partial(lastArg, MAT_SUBS);
+                    case "snapshot" -> partial(lastArg, SNAPSHOT_SUBS);
+                    case "displayitem" -> partial(lastArg, DISPLAY_SUBS);
+                    case "frame" -> partial(lastArg, FRAME_SUBS);
+                    case "recipe" -> partial(lastArg, RECIPE_SUBS);
+                    case "effect" -> partial(lastArg, SHAPE_SUBS);
+                    case "screen" -> partial(lastArg, SCREEN_SUBS);
+                    case "component" -> partial(lastArg, COMPONENT_SUBS);
+                    default -> throw new IllegalStateException("Unexpected value: " + sub);
+                };
             }
             case 3 -> {
                 if (sub.equals("box")) {

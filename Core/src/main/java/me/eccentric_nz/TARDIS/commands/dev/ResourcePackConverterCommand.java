@@ -530,7 +530,7 @@ public class ResourcePackConverterCommand {
         // get the model
         JsonObject model;
         try {
-            String path = plugin.getDataFolder() + File.separator + key + ".json";
+            String path = plugin.getDataFolder() + File.separator + "component" + File.separator + key + ".json";
             sender.sendMessage(path);
             File child = new File(path);
             JsonReader reader = new JsonReader(new FileReader(child));
@@ -547,7 +547,7 @@ public class ResourcePackConverterCommand {
         cases.add(matcher);
         select.add("cases", cases);
         // write the file
-        String output = plugin.getDataFolder() + File.separator + "processed" + File.separator + filename + ".json";
+        String output = plugin.getDataFolder() + File.separator + "component" + File.separator + "processed" + File.separator + filename + ".json";
         File file = new File(output);
         try (FileWriter writer = new FileWriter(file)) {
             gson.toJson(select, writer);

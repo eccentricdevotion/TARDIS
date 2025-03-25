@@ -117,10 +117,6 @@ public class TARDISDevCommand implements CommandExecutor {
                         case "biome" -> {
                             return new TARDISBiomeCommand().reset(sender);
                         }
-                        case "component" -> {
-                            new ComponentCommand(plugin).write();
-                            return true;
-                        }
                         case "dalek" -> {
                             if (sender instanceof Player player) {
                                 Location eyeLocation = player.getTargetBlock(null, 16).getLocation();
@@ -268,7 +264,14 @@ public class TARDISDevCommand implements CommandExecutor {
                         return new TARDISDevBoxCommand(plugin).setPreset(sender, args);
                     }
                     case "component" -> {
-                        new ResourcePackConverterCommand(plugin).process(sender, args);
+                        switch (args[1].toLowerCase(Locale.ROOT)) {
+                            case "ars" -> new ComponentCommand(plugin).writeARS();
+                            case "repeater" -> new ComponentCommand(plugin).writeRepeater();
+                            case "key" -> new ComponentCommand(plugin).writeKey();
+                            case "pack" -> new ResourcePackConverterCommand(plugin).process(sender, args);
+                            case "extra" -> new ComponentCommand(plugin).writeExtra(sender);
+                            default -> {}
+                        }
                         return true;
                     }
                     case "debug" -> {
