@@ -537,6 +537,8 @@ public class TARDISConstants {
         set.addAll(Tag.FLOWERS.getValues());
         set.addAll(Tag.LEAVES.getValues());
         set.addAll(Tag.REPLACEABLE.getValues());
+        set.addAll(Tag.REPLACEABLE_BY_TREES.getValues());
+        set.addAll(Tag.REPLACEABLE_BY_MUSHROOMS.getValues());
         set.addAll(Tag.SAPLINGS.getValues());
         return set;
     }

@@ -703,6 +703,19 @@ public class TARDISCondensablesUpdater {
                 plugin.getCondensablesConfig().set("STRIPPED_PALE_OAK_WOOD", 2);
                 i++;
             }
+            // 1.21.5
+            if (!plugin.getCondensablesConfig().contains("BLUE_EGG")) {
+                plugin.getCondensablesConfig().set("BLUE_EGG", 1);
+                plugin.getCondensablesConfig().set("BROWN_EGG", 1);
+                plugin.getCondensablesConfig().set("BUSH", 2);
+                plugin.getCondensablesConfig().set("CACTUS_FLOWER", 2);
+                plugin.getCondensablesConfig().set("FIREFLY_BUSH", 2);
+                plugin.getCondensablesConfig().set("LEAF_LITTER", 2);
+                plugin.getCondensablesConfig().set("SHORT_DRY_GRASS", 2);
+                plugin.getCondensablesConfig().set("TALL_DRY_GRASS", 2);
+                plugin.getCondensablesConfig().set("WILDFLOWERS", 2);
+                i++;
+            }
             if (i > 0) {
                 try {
                     String listPath = plugin.getDataFolder() + File.separator + "condensables.yml";
