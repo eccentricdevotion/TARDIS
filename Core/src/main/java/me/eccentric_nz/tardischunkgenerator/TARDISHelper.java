@@ -51,9 +51,9 @@ import org.apache.logging.log4j.core.Logger;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
-import org.bukkit.craftbukkit.v1_21_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_21_R3.block.CraftBlock;
-import org.bukkit.craftbukkit.v1_21_R3.entity.CraftVillager;
+import org.bukkit.craftbukkit.v1_21_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_21_R4.block.CraftBlock;
+import org.bukkit.craftbukkit.v1_21_R4.entity.CraftVillager;
 import org.bukkit.entity.*;
 import org.bukkit.map.MapView;
 import org.bukkit.util.Vector;
@@ -134,7 +134,7 @@ public class TARDISHelper {
                 CompoundTag data;
                 try (FileInputStream fileinputstream = new FileInputStream(file)) {
                     tagCompound = NbtIo.readCompressed(fileinputstream, NbtAccounter.unlimitedHeap());
-                    data = tagCompound.getCompound("Data");
+                    data = tagCompound.getCompound("Data").get();
                     long random = TARDISConstants.RANDOM.nextLong();
                     // set RandomSeed tag
                     data.putLong("RandomSeed", random);
@@ -157,7 +157,7 @@ public class TARDISHelper {
                 CompoundTag data;
                 try (FileInputStream fileinputstream = new FileInputStream(file)) {
                     tagCompound = NbtIo.readCompressed(fileinputstream, NbtAccounter.unlimitedHeap());
-                    data = tagCompound.getCompound("Data");
+                    data = tagCompound.getCompound("Data").get();
                     // set LevelName tag
                     data.putString("LevelName", newName);
                     tagCompound.put("Data", data);
@@ -186,7 +186,7 @@ public class TARDISHelper {
                 CompoundTag data;
                 try (FileInputStream fileinputstream = new FileInputStream(file)) {
                     tagCompound = NbtIo.readCompressed(fileinputstream, NbtAccounter.unlimitedHeap());
-                    data = tagCompound.getCompound("Data");
+                    data = tagCompound.getCompound("Data").get();
                     int mode = switch (gm) {
                         case CREATIVE -> 1;
                         case ADVENTURE -> 2;
@@ -213,10 +213,10 @@ public class TARDISHelper {
                 FileInputStream fileinputstream = new FileInputStream(file);
                 CompoundTag tagCompound = NbtIo.readCompressed(fileinputstream, NbtAccounter.unlimitedHeap());
                 fileinputstream.close();
-                CompoundTag data = tagCompound.getCompound("Data");
+                CompoundTag data = tagCompound.getCompound("Data").get();
                 // get GameType tag
                 GameMode gameMode;
-                int gm = data.getInt("GameType");
+                int gm = data.getInt("GameType").get();
                 gameMode = switch (gm) {
                     case 1 -> GameMode.CREATIVE;
                     case 2 -> GameMode.ADVENTURE;
@@ -225,7 +225,7 @@ public class TARDISHelper {
                 };
                 // get generatorName tag
                 WorldType worldType;
-                String wt = data.getString("generatorName");
+                String wt = data.getString("generatorName").get();
                 worldType = switch (wt.toLowerCase(Locale.ROOT)) {
                     case "flat" -> WorldType.FLAT;
                     case "largebiomes" -> WorldType.LARGE_BIOMES;
@@ -243,7 +243,7 @@ public class TARDISHelper {
                 }
                 Difficulty difficulty = Difficulty.NORMAL;
                 // 0 is Peaceful, 1 is Easy, 2 is Normal, and 3 is Hard
-                int diff = data.getInt("Difficulty");
+                int diff = data.getInt("Difficulty").get();
                 switch (diff) {
                     case 0 -> difficulty = Difficulty.PEACEFUL;
                     case 1 -> difficulty = Difficulty.EASY;

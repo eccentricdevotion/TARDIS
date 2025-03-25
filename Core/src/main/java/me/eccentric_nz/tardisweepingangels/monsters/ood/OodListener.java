@@ -23,7 +23,10 @@ import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.nms.TWAOod;
 import me.eccentric_nz.tardisweepingangels.utils.ResetMonster;
 import net.minecraft.world.entity.Entity;
-import org.bukkit.craftbukkit.v1_21_R3.entity.CraftEntity;
+import net.minecraft.world.entity.EntityReference;
+import net.minecraft.world.entity.LivingEntity;
+import org.bukkit.craftbukkit.v1_21_R4.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_21_R4.entity.CraftPlayer;
 import org.bukkit.entity.Husk;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -66,7 +69,8 @@ public class OodListener implements Listener {
                     husk.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, pid);
                     plugin.getMessenger().send(player, TardisModule.MONSTERS, "WA_CLAIMED", "Ood");
                     if (entity instanceof TWAOod ood) {
-                        ood.setOwnerUUID(pid);
+                        EntityReference<LivingEntity> reference = new EntityReference<>(pid);
+                        ood.setOwnerReference(reference);
                     }
                 }
             }

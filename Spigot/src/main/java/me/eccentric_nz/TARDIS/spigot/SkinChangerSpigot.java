@@ -26,7 +26,7 @@ import me.eccentric_nz.TARDIS.skins.Skin;
 import me.eccentric_nz.TARDIS.skins.SkinChanger;
 import me.eccentric_nz.TARDIS.skins.SkinFetcher;
 import net.minecraft.server.level.ServerPlayer;
-import org.bukkit.craftbukkit.v1_21_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_21_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;

@@ -206,7 +206,7 @@ public class FloodgateGeneticManipulatorForm {
                         if (plugin.isDisguisesOnServer()) {
                             new TARDISLazarusLibs(player, label, Villager.Profession.FARMER, false, false).createDisguise();
                         } else {
-                            options = new Object[]{PROFESSION.FARMER, AGE.ADULT};
+                            options = new Object[]{Villager.Profession.FARMER, AGE.ADULT};
                         }
                     }
                     case SLIME, MAGMA_CUBE, PUFFERFISH -> {

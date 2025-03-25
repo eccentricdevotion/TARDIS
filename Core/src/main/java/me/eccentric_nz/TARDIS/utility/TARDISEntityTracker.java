@@ -73,8 +73,8 @@ public class TARDISEntityTracker {
                     case OCELOT -> options = new Object[]{((Tameable) e).isTamed(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
                     case PARROT -> options = new Object[]{((Parrot) e).getVariant(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
                     case RABBIT -> options = new Object[]{((Rabbit) e).getRabbitType(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
-                    case VILLAGER -> options = new Object[]{PROFESSION.getFromVillagerProfession(((Villager) e).getProfession()), AGE.getFromBoolean(!((Ageable) e).isAdult())};
-                    case ZOMBIE_VILLAGER -> options = new Object[]{PROFESSION.getFromVillagerProfession(((ZombieVillager) e).getVillagerProfession()), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                    case VILLAGER -> options = new Object[]{((Villager) e).getProfession(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                    case ZOMBIE_VILLAGER -> options = new Object[]{((ZombieVillager) e).getVillagerProfession(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
                     case SLIME, MAGMA_CUBE -> options = new Object[]{((Slime) e).getSize()};
                     case COW, TURTLE, ZOMBIE, BEE -> options = new Object[]{AGE.getFromBoolean(!((Ageable) e).isAdult())};
                     case SNOW_GOLEM -> options = new Object[]{((Snowman) e).isDerp()};

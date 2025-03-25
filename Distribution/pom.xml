@@ -7,7 +7,7 @@
     <parent>
         <groupId>me.eccentric_nz.TARDIS</groupId>
         <artifactId>TARDIS</artifactId>
-        <version>6.0.1</version>
+        <version>6.1.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <build>
@@ -75,17 +75,17 @@
         <dependency>
             <groupId>me.eccentric_nz.TARDIS</groupId>
             <artifactId>TARDIS-Core</artifactId>
-            <version>6.0.1</version>
+            <version>6.1.0</version>
         </dependency>
         <dependency>
             <groupId>me.eccentric_nz.TARDIS</groupId>
             <artifactId>TARDIS-Spigot</artifactId>
-            <version>6.0.1</version>
+            <version>6.1.0</version>
         </dependency>
         <dependency>
             <groupId>me.eccentric_nz.TARDIS</groupId>
             <artifactId>TARDIS-Paper</artifactId>
-            <version>6.0.1</version>
+            <version>6.1.0</version>
         </dependency>
     </dependencies>
 </project>

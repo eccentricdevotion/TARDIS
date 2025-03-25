@@ -21,8 +21,10 @@ import me.eccentric_nz.TARDIS.database.data.Follower;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.EntityReference;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_21_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_21_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_21_R4.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -42,7 +44,8 @@ public class MonsterSpawner {
             case JUDOON -> entity = new TWAJudoon(world);
             default -> entity = new TWAK9(world);
         }
-        entity.setOwnerUUID(follower.getOwner());
+        EntityReference<net.minecraft.world.entity.LivingEntity> reference = new EntityReference<>(follower.getOwner());
+        entity.setOwnerReference(reference);
         entity.setPosRaw(location.getX(), location.getY(), location.getZ());
         entity.setPersistenceRequired();
         world.addFreshEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);

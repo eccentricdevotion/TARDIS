@@ -83,7 +83,7 @@ public class TARDISSonicScanner {
                     }
                     if (et.equals(EntityType.SKELETON) && !k.getPassengers().isEmpty() && k.getPassengers().getFirst() != null && k.getPassengers().getFirst().getType().equals(EntityType.GUARDIAN)) {
                         // silent
-                        et = EntityType.POTION;
+                        et = EntityType.SPLASH_POTION;
                     }
                     if (et.equals(EntityType.ARMOR_STAND)) {
                         EntityEquipment ee = ((ArmorStand) k).getEquipment();
@@ -165,7 +165,7 @@ public class TARDISSonicScanner {
                         case SHULKER_BULLET -> player.sendMessage("    Judoon: " + value);
                         case SMALL_FIREBALL -> player.sendMessage("    Dalek Sec: " + value);
                         case SNOWBALL -> player.sendMessage("    Ice Warrior: " + value);
-                        case POTION -> player.sendMessage("    Silent: " + value);
+                        case SPLASH_POTION -> player.sendMessage("    Silent: " + value);
                         case TEXT_DISPLAY -> player.sendMessage("    Headless Monk: " + value);
                         case EXPERIENCE_BOTTLE -> player.sendMessage("    Sea Devil: " + value);
                         default -> {
