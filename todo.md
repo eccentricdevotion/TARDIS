@@ -2,6 +2,7 @@
 
 | Priority | Feature | Link |
 | -------- | ------- | ---- |
+| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Update to 1.21.5**<br>Add new blocks to appropriate rooms e.g. wild flowers to garden? | - |
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Fix bugs**<br>! | - |
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Microscope** as an addition to Chemistry<br>- Add x-ray? | - |
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Zero-G room**<br>- Determine door level for door circuits and ring walkway<br>- Make schematic<br>- Add methods to stack rooms | [#868](https://github.com/eccentricdevotion/TARDIS/issues/868) |
