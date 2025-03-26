@@ -71,6 +71,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     private final HashMap<UUID, Integer> sheep = new HashMap<>();
     private final HashMap<UUID, Integer> slimes = new HashMap<>();
     private final HashMap<UUID, Integer> tropics = new HashMap<>();
+    private final HashMap<UUID, Integer> variants = new HashMap<>();
     private final HashMap<UUID, Integer> wolves = new HashMap<>();
     private final HashMap<UUID, String> disguises = new HashMap<>();
     private final List<Integer> slimeSizes = List.of(1, 2, 4);
@@ -320,7 +321,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                                             options = new Object[]{GENE.getFromPandaGene(getGene(view)), AGE.getFromBoolean(getBaby(view))};
                                         }
                                     }
-                                    case DONKEY, MULE, PIG -> {
+                                    case DONKEY, MULE -> {
                                         if (plugin.isDisguisesOnServer()) {
                                             new TARDISLazarusLibs(player, disguise, null, getBoolean(view), (!getBoolean(view) && getBaby(view))).createDisguise();
                                         } else {
@@ -346,6 +347,27 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                                             new TARDISLazarusLibs(player, disguise, getWolfVariant(view), getBoolean(view), getBaby(view)).createDisguise();
                                         } else {
                                             options = new Object[]{getWolfVariant(view), getBoolean(view), AGE.getFromBoolean(getBaby(view))};
+                                        }
+                                    }
+                                    case CHICKEN -> {
+                                        if (plugin.isDisguisesOnServer()) {
+                                            new TARDISLazarusLibs(player, disguise, getChickenVariant(view), getBoolean(view), getBaby(view)).createDisguise();
+                                        } else {
+                                            options = new Object[]{getChickenVariant(view), getBoolean(view), AGE.getFromBoolean(getBaby(view))};
+                                        }
+                                    }
+                                    case COW -> {
+                                        if (plugin.isDisguisesOnServer()) {
+                                            new TARDISLazarusLibs(player, disguise, getCowVariant(view), getBoolean(view), getBaby(view)).createDisguise();
+                                        } else {
+                                            options = new Object[]{getCowVariant(view), getBoolean(view), AGE.getFromBoolean(getBaby(view))};
+                                        }
+                                    }
+                                    case PIG -> {
+                                        if (plugin.isDisguisesOnServer()) {
+                                            new TARDISLazarusLibs(player, disguise, getPigVariant(view), getBoolean(view), getBaby(view)).createDisguise();
+                                        } else {
+                                            options = new Object[]{getPigVariant(view), getBoolean(view), AGE.getFromBoolean(!getBoolean(view) && getBaby(view))};
                                         }
                                     }
                                     case HORSE -> {
@@ -397,7 +419,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                                             options = new Object[]{getSlimeSize(view)};
                                         }
                                     }
-                                    case COW, TURTLE, ZOMBIE, BEE -> {
+                                    case TURTLE, ZOMBIE, BEE -> {
                                         if (plugin.isDisguisesOnServer()) {
                                             new TARDISLazarusLibs(player, disguise, null, false, getBaby(view)).createDisguise();
                                         } else {
@@ -427,9 +449,9 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                                     }
                                     case MOOSHROOM -> {
                                         if (plugin.isDisguisesOnServer()) {
-                                            new TARDISLazarusLibs(player, disguise, getCowVariant(view), false, getBaby(view)).createDisguise();
+                                            new TARDISLazarusLibs(player, disguise, getMushroomCowVariant(view), false, getBaby(view)).createDisguise();
                                         } else {
-                                            options = new Object[]{MUSHROOM_COW.getFromMushroomCowType(getCowVariant(view)), AGE.getFromBoolean(getBaby(view))};
+                                            options = new Object[]{MUSHROOM_COW.getFromMushroomCowType(getMushroomCowVariant(view)), AGE.getFromBoolean(getBaby(view))};
                                         }
                                     }
                                     case FOX -> {
@@ -550,8 +572,17 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                 } else {
                     o = 0;
                 }
-                t = LazarusWolf.NAMES.get(o);
+                t = LazarusVariants.WOLF_NAMES.get(o);
                 wolves.put(uuid, o);
+            }
+            case "CHICKEN", "COW", "PIG" -> {
+                if (variants.containsKey(uuid)) {
+                    o = (variants.get(uuid) + 1 < 9) ? variants.get(uuid) + 1 : 0;
+                } else {
+                    o = 0;
+                }
+                t = LazarusVariants.NAMES.get(o);
+                variants.put(uuid, o);
             }
             case "HORSE" -> {
                 if (horses.containsKey(uuid)) {
@@ -698,7 +729,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
         }
     }
 
-    private MushroomCow.Variant getCowVariant(InventoryView i) {
+    private MushroomCow.Variant getMushroomCowVariant(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
@@ -792,9 +823,39 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
         try {
-            return LazarusWolf.VARIANTS.get(im.getLore().getFirst());
+            return LazarusVariants.WOLF_VARIANTS.get(im.getLore().getFirst());
         } catch (IllegalArgumentException e) {
             return Wolf.Variant.PALE;
+        }
+    }
+
+    private Chicken.Variant getChickenVariant(InventoryView i) {
+        ItemStack is = i.getItem(48);
+        ItemMeta im = is.getItemMeta();
+        try {
+            return LazarusVariants.CHICKEN_VARIANTS.get(im.getLore().getFirst());
+        } catch (IllegalArgumentException e) {
+            return Chicken.Variant.TEMPERATE;
+        }
+    }
+
+    private Cow.Variant getCowVariant(InventoryView i) {
+        ItemStack is = i.getItem(48);
+        ItemMeta im = is.getItemMeta();
+        try {
+            return LazarusVariants.COW_VARIANTS.get(im.getLore().getFirst());
+        } catch (IllegalArgumentException e) {
+            return Cow.Variant.TEMPERATE;
+        }
+    }
+
+    private Pig.Variant getPigVariant(InventoryView i) {
+        ItemStack is = i.getItem(48);
+        ItemMeta im = is.getItemMeta();
+        try {
+            return LazarusVariants.PIG_VARIANTS.get(im.getLore().getFirst());
+        } catch (IllegalArgumentException e) {
+            return Pig.Variant.TEMPERATE;
         }
     }
 

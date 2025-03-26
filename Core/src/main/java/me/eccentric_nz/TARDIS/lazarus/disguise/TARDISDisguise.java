@@ -40,10 +40,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_21_R4.CraftWorld;
-import org.bukkit.craftbukkit.v1_21_R4.entity.CraftCat;
-import org.bukkit.craftbukkit.v1_21_R4.entity.CraftFrog;
-import org.bukkit.craftbukkit.v1_21_R4.entity.CraftVillager;
-import org.bukkit.craftbukkit.v1_21_R4.entity.CraftWolf;
+import org.bukkit.craftbukkit.v1_21_R4.entity.*;
 import org.bukkit.craftbukkit.v1_21_R4.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.v1_21_R4.util.CraftNamespacedKey;
 import org.bukkit.entity.Axolotl;
@@ -266,6 +263,18 @@ public class TARDISDisguise {
                     if (disguise.getEntityType().equals(EntityType.WOLF) && o instanceof org.bukkit.entity.Wolf.Variant wv) {
                         Wolf wolf = (Wolf) entity;
                         wolf.setVariant(CraftWolf.CraftVariant.bukkitToMinecraftHolder(wv));
+                    }
+                    if (disguise.getEntityType().equals(EntityType.CHICKEN) && o instanceof org.bukkit.entity.Chicken.Variant cv) {
+                        Chicken chicken = (Chicken) entity;
+                        chicken.setVariant(CraftChicken.CraftVariant.bukkitToMinecraftHolder(cv));
+                    }
+                    if (disguise.getEntityType().equals(EntityType.COW) && o instanceof org.bukkit.entity.Cow.Variant cv) {
+                        Cow cow = (Cow) entity;
+                        cow.setVariant(CraftCow.CraftVariant.bukkitToMinecraftHolder(cv));
+                    }
+                    if (disguise.getEntityType().equals(EntityType.PIG) && o instanceof org.bukkit.entity.Pig.Variant pv) {
+                        Pig pig = (Pig) entity;
+                        pig.setVariant(CraftPig.CraftVariant.bukkitToMinecraftHolder(pv));
                     }
                     if (disguise.getEntityType().equals(EntityType.CAT) && o instanceof org.bukkit.entity.Cat.Type c) {
                         Cat cat = (Cat) entity;
