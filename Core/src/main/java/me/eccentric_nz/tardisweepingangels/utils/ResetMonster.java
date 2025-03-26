@@ -30,12 +30,10 @@ import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Equipment;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.OodEquipment;
 import me.eccentric_nz.tardisweepingangels.monsters.silent.SilentEquipment;
 import me.eccentric_nz.tardisweepingangels.nms.*;
-import net.minecraft.world.entity.EntityReference;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_21_R4.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_21_R4.entity.CraftPlayer;
 import org.bukkit.entity.*;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -105,8 +103,7 @@ public class ResetMonster {
                     k9.setFollowing(follower.isFollowing());
                 }
                 TWAFollower twaf = (TWAFollower) ((CraftEntity) a).getHandle();
-                EntityReference<net.minecraft.world.entity.LivingEntity> reference = new EntityReference<>(follower.getOwner());
-                twaf.setOwnerReference(reference);
+                twaf.setOwnerUUID(follower.getOwner());
                 a.getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, follower.getOwner());
                 player = plugin.getServer().getOfflinePlayer(follower.getOwner());
                 // remove database entry

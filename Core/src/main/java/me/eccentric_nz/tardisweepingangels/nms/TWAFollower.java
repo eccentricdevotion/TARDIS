@@ -69,8 +69,8 @@ public class TWAFollower extends Husk implements OwnableEntity {
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        EntityReference<LivingEntity> entityreference = this.getOwnerReference();
-        if (entityreference != null) {
+        if (this.getOwnerUUID() != null) {
+            EntityReference<LivingEntity> entityreference = new EntityReference<>(this.getOwnerUUID());
             entityreference.store(tag, "Owner");
         }
     }
@@ -80,32 +80,33 @@ public class TWAFollower extends Husk implements OwnableEntity {
         super.readAdditionalSaveData(tag);
         EntityReference<LivingEntity> entityreference = EntityReference.readWithOldOwnerConversion(tag, "Owner", this.level());
         if (entityreference != null) {
-            try {
-                this.entityData.set(TWAFollower.DATA_OWNERUUID_ID, Optional.of(entityreference));
-            } catch (Throwable ignored) {
-            }
+            this.entityData.set(TWAFollower.DATA_OWNERUUID_ID, Optional.of(entityreference));
+            this.setOwnerUUID(entityreference.getUUID());
         } else {
-            this.entityData.set(TWAFollower.DATA_OWNERUUID_ID, Optional.empty());
+            tag.getString("Owner").ifPresent((s -> {
+                uuid = OldUsersConverter.convertMobOwnerIfNecessary(this.getServer(), s);
+                if (uuid != null) {
+                    this.setOwnerUUID(uuid);
+                    this.entityData.set(TWAFollower.DATA_OWNERUUID_ID, Optional.of(new EntityReference<>(uuid)));
+                }
+            }));
         }
     }
 
     @Nullable
-    @Override
-    public EntityReference<LivingEntity> getOwnerReference() {
-        return (EntityReference) ((Optional) this.entityData.get(TWAFollower.DATA_OWNERUUID_ID)).orElse(null);
-    }
-
-    public void setOwner(@Nullable LivingEntity entityliving) {
-        this.entityData.set(TWAFollower.DATA_OWNERUUID_ID, Optional.ofNullable(entityliving).map(EntityReference::new));
-    }
-
-    public void setOwnerReference(@Nullable EntityReference<LivingEntity> entityreference) {
-        this.entityData.set(TWAFollower.DATA_OWNERUUID_ID, Optional.ofNullable(entityreference));
-    }
-
+    @SuppressWarnings("unchecked")
     public UUID getOwnerUUID() {
-        EntityReference<LivingEntity> reference = this.getOwnerReference();
-        return reference.getUUID();
+        return this.getBukkitEntity().getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
+    }
+
+    public void setOwnerUUID(UUID uuid) {
+        this.uuid = uuid;
+        this.getBukkitEntity().getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, uuid);
+    }
+
+    @Override
+    public @Nullable EntityReference<LivingEntity> getOwnerReference() {
+        return null;
     }
 
     @Nullable
