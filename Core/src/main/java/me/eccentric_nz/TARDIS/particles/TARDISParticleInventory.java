@@ -101,19 +101,29 @@ public class TARDISParticleInventory {
         i = 10;
         // effects
         for (ParticleEffect pe : ParticleEffect.values()) {
-            Material pm = (data.getEffect() == pe) ? Material.REDSTONE_ORE : GUIParticle.EFFECT.material();
-            ItemStack peffect = new ItemStack(pm, 1);
-            ItemMeta pim = peffect.getItemMeta();
-            pim.setDisplayName(TARDISStringUtils.capitalise(pe.toString()));
-            pim.setItemModel(data.getEffect() == pe ? ParticleItem.EFFECT_SELECTED.getKey() : GUIParticle.EFFECT.key());
-            peffect.setItemMeta(pim);
-            stacks[i] = peffect;
-            if (i % 9 == 7) {
-                i += 3;
-            } else {
-                i++;
+            if (pe != ParticleEffect.LEAVES) {
+                Material pm = (data.getEffect() == pe) ? Material.REDSTONE_ORE : GUIParticle.EFFECT.material();
+                ItemStack peffect = new ItemStack(pm, 1);
+                ItemMeta pim = peffect.getItemMeta();
+                pim.setDisplayName(TARDISStringUtils.capitalise(pe.toString()));
+                pim.setItemModel(data.getEffect() == pe ? ParticleItem.EFFECT_SELECTED.getKey() : GUIParticle.EFFECT.key());
+                peffect.setItemMeta(pim);
+                stacks[i] = peffect;
+                if (i % 9 == 7) {
+                    i += 3;
+                } else {
+                    i++;
+                }
             }
         }
+        // leaves effect (special position)
+        Material lm = (data.getEffect() == ParticleEffect.LEAVES) ? Material.REDSTONE_ORE : GUIParticle.EFFECT.material();
+        ItemStack leaves = new ItemStack(lm, 1);
+        ItemMeta lim = leaves.getItemMeta();
+        lim.setDisplayName("Leaves");
+        lim.setItemModel(data.getEffect() == ParticleEffect.LEAVES ? ParticleItem.EFFECT_SELECTED.getKey() : GUIParticle.EFFECT.key());
+        leaves.setItemMeta(lim);
+        stacks[27] = leaves;
         // colour info
         ItemStack colour_info = new ItemStack(GUIParticle.COLOUR_INFO.material(), 1);
         ItemMeta ciim = colour_info.getItemMeta();

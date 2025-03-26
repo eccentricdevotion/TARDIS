@@ -80,7 +80,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
                 switch (slot) {
                     case 1, 2, 3, 4, 5, 6, 7 -> setShape(view, slot, display, uuid); // particle shape
                     case 10, 11, 12, 13, 14, 15, 16,
-                         19, 20, 21, 22, 23, 24, 25,
+                         19, 20, 21, 22, 23, 24, 25, 27,
                          28, 29, 30, 31, 32, 33, 34,
                          37, 38, 39, 40, 41, 42, 43 -> setEffect(view, slot, display, uuid); // particle effect
                     case 17 -> cycleColour(view, uuid); // colour

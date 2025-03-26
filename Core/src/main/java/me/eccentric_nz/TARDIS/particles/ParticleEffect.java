@@ -35,6 +35,7 @@ public enum ParticleEffect {
     HIT(Particle.ENCHANTED_HIT),
     HONEY(Particle.DRIPPING_HONEY),
     INFESTED(Particle.INFESTED),
+    LEAVES(Particle.TINTED_LEAVES),
     MUSIC(Particle.NOTE),
     NAUTILUS(Particle.NAUTILUS),
     OMEN(Particle.TRIAL_OMEN),
