@@ -23,7 +23,10 @@ import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.sonic.actions.*;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -37,6 +40,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -278,13 +282,19 @@ public class TARDISSonicListener implements Listener {
             ItemMeta im = is.getItemMeta();
             if (im.getDisplayName().endsWith("Sonic Screwdriver")) {
                 // set to off state
-                if (im.hasItemModel()) {
-                    NamespacedKey model = im.getItemModel();
-                    if (model.getKey().endsWith("_open")) {
-                        im.setItemModel(new NamespacedKey(plugin, model.getKey().replace("_open", "")));
+                CustomModelDataComponent component = im.getCustomModelDataComponent();
+                if (!component.getFloats().isEmpty()) {
+//                    NamespacedKey model = im.getItemModel();
+//                    if (model.getKey().endsWith("_open")) {
+                    if (component.getFloats().getFirst() > 200) {
+//                        im.setItemModel(new NamespacedKey(plugin, model.getKey().replace("_open", "")));
+                        component.setFloats(List.of(component.getFloats().getFirst() - 100f));
+                        im.setCustomModelDataComponent(component);
                     }
                 } else {
-                    im.setItemModel(SonicVariant.ELEVENTH.getKey());
+//                    im.setItemModel(SonicVariant.ELEVENTH.getKey());
+                    component.setFloats(SonicVariant.ELEVENTH.getFloats());
+                    im.setCustomModelDataComponent(component);
                 }
                 is.setItemMeta(im);
                 item.setItemStack(is);
