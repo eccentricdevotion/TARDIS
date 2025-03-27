@@ -31,6 +31,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 import java.util.UUID;
@@ -123,9 +124,13 @@ public class TVSkinListener extends TARDISMenuListener {
         ItemStack is = view.getItem(GUITelevision.DOWNLOAD.slot());
         if (is != null && is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
-            NamespacedKey key = (im.hasItemModel() && SwitchVariant.DOWNLOAD_OFF.getKey().equals(im.getItemModel()))
-                    ? SwitchVariant.DOWNLOAD_ON.getKey(): SwitchVariant.DOWNLOAD_OFF.getKey();
-            im.setItemModel(key);
+//            NamespacedKey key = (im.hasItemModel() && SwitchVariant.DOWNLOAD_OFF.getKey().equals(im.getItemModel()))
+//                    ? SwitchVariant.DOWNLOAD_ON.getKey() : SwitchVariant.DOWNLOAD_OFF.getKey();
+//            im.setItemModel(key);
+            CustomModelDataComponent component = im.getCustomModelDataComponent();
+            boolean on = component.getFloats().getFirst() > 200;
+            component.setFloats(on ? SwitchVariant.DOWNLOAD_OFF.getFloats() : SwitchVariant.DOWNLOAD_ON.getFloats());
+            im.setCustomModelDataComponent(component);
             is.setItemMeta(im);
             view.setItem(GUITelevision.DOWNLOAD.slot(), is);
         }

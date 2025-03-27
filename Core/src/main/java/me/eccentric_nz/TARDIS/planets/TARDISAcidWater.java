@@ -245,11 +245,11 @@ public class TARDISAcidWater implements Listener {
         ItemMeta im = bucket.getItemMeta();
         if (type.equals(Material.WATER)) {
             im.setDisplayName("Acid Bucket");
-            im.setItemModel(Whoniverse.ACID_BUCKET.getKey());
+//            im.setItemModel(Whoniverse.ACID_BUCKET.getKey());
         }
         if (type.equals(Material.LAVA)) {
             im.setDisplayName("Rust Bucket");
-            im.setItemModel(Whoniverse.RUST_BUCKET.getKey());
+//            im.setItemModel(Whoniverse.RUST_BUCKET.getKey());
         }
         bucket.setItemMeta(im);
         p.updateInventory();

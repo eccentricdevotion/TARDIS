@@ -63,7 +63,7 @@ public class TARDISHandlesProgramInventory {
             ItemStack is = new ItemStack(Material.BOWL, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(b.getDisplayName());
-            im.setItemModel(b.getModel());
+//            im.setItemModel(b.getModel());
             is.setItemMeta(im);
             stack[i] = is;
             i++;
@@ -80,7 +80,7 @@ public class TARDISHandlesProgramInventory {
             if (b.getLore() != null) {
                 im.setLore(b.getLore());
             }
-            im.setItemModel(b.getModel());
+//            im.setItemModel(b.getModel());
             is.setItemMeta(im);
             stack[i] = is;
             i++;

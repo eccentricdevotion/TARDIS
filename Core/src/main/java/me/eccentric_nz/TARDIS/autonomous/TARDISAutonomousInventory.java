@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.autonomous;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIAutonomous;
+import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAutonomousSave;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -25,6 +26,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +70,18 @@ public class TARDISAutonomousInventory {
             ItemStack is = new ItemStack(a.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(a.getName().contains("Selected") ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : a.getName());
-            if (a.getModel() != null) {
-                im.setItemModel(a.getModel());
+//            if (a.getModel() != null) {
+//                im.setItemModel(a.getModel());
+//            }
+            if (a == GUIAutonomous.AUTONOMOUS_TYPE) {
+                CustomModelDataComponent component = im.getCustomModelDataComponent();
+                component.setFloats(SwitchVariant.AUTO_TYPE.getFloats());
+                im.setCustomModelDataComponent(component);
+            }
+            if (a == GUIAutonomous.FALLBACK) {
+                CustomModelDataComponent component = im.getCustomModelDataComponent();
+                component.setFloats(SwitchVariant.AUTO_DEFAULT.getFloats());
+                im.setCustomModelDataComponent(component);
             }
             if (a == GUIAutonomous.SAVE_SELECTOR) {
                 List<String> lore = new ArrayList<>(a.getLore());

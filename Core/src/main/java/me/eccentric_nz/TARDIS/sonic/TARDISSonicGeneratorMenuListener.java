@@ -35,6 +35,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -126,7 +127,8 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
                 ItemStack choice = view.getItem(slot);
                 ItemMeta choice_im = choice.getItemMeta();
                 sonic_im = sonic.getItemMeta();
-                sonic_im.setItemModel(choice_im.getItemModel());
+                sonic_im.setCustomModelDataComponent(choice_im.getCustomModelDataComponent());
+//                sonic_im.setItemModel(choice_im.getItemModel());
                 sonic.setItemMeta(sonic_im);
                 if (slotWasNull) {
                     view.setItem(49, sonic);
@@ -178,8 +180,11 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
                     // remove lore
                     sonic_im.setLore(null);
                 }
-                NamespacedKey sonicModel = SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getKey());
-                sonic_im.setItemModel(sonicModel);
+                List<Float> sonicModel = SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getFloats());
+                CustomModelDataComponent component = sonic_im.getCustomModelDataComponent();
+                component.setFloats(sonicModel);
+                sonic_im.setCustomModelDataComponent(component);
+//                sonic_im.setItemModel(sonicModel);
                 sonic.setItemMeta(sonic_im);
                 setCost(view, costs.get("Standard Sonic"));
             }

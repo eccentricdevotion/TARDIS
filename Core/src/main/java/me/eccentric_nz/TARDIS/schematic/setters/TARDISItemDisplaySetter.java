@@ -97,7 +97,6 @@ public class TARDISItemDisplaySetter {
                 }
             }
             Material material = Material.valueOf(stack.get("type").getAsString());
-
             TARDISDisplayItem tdi = model != null ? TARDISDisplayItem.getByModel(model): null;
             if (tdi != null) {
                 TARDISDisplayItemUtils.set(tdi, block, id);

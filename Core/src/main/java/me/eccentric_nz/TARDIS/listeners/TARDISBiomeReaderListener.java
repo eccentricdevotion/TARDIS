@@ -113,7 +113,7 @@ public class TARDISBiomeReaderListener implements Listener {
                                 List<String> disk_lore = new ArrayList<>();
                                 disk_lore.add(biome.name());
                                 dim.setLore(disk_lore);
-                                dim.setItemModel(DiskVariant.BIOME_DISK.getKey());
+//                                dim.setItemModel(DiskVariant.BIOME_DISK.getKey());
                                 bd.setItemMeta(dim);
                                 int slot = getNextFreeSlot(disks1);
                                 if (slot != -1) {

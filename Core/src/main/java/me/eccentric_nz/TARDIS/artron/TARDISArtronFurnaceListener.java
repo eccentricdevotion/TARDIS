@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Furnace;
@@ -189,8 +190,8 @@ public class TARDISArtronFurnaceListener implements Listener {
             }
             ItemStack is = new ItemStack(Material.FURNACE, 1);
             ItemMeta im = is.getItemMeta();
-            im.setDisplayName("TARDIS Artron Furnace");
-            im.setItemModel(Whoniverse.ARTRON_FURNACE.getKey());
+            im.setDisplayName(ChatColor.WHITE + "TARDIS Artron Furnace");
+//            im.setItemModel(Whoniverse.ARTRON_FURNACE.getKey());
             is.setItemMeta(im);
             TARDISDisplayItemUtils.remove(block);
             block.setBlockData(TARDISConstants.AIR);

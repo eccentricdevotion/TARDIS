@@ -90,7 +90,7 @@ public class TARDISLampToggler {
                             NamespacedKey model = light.getOff().getCustomModel();
                             if (model != null) {
                                 im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
-                                im.setItemModel(model);
+//                                im.setItemModel(model);
                             }
                             is.setItemMeta(im);
                             display.setItemStack(is);
@@ -110,7 +110,7 @@ public class TARDISLampToggler {
                         NamespacedKey model = light.getOn().getCustomModel();
                         if (model != null) {
                             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
-                            im.setItemModel(model);
+//                            im.setItemModel(model);
                         }
                         is.setItemMeta(im);
                         display.setItemStack(is);

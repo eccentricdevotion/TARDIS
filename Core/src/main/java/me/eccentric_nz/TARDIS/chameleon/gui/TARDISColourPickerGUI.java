@@ -97,13 +97,13 @@ public class TARDISColourPickerGUI {
         // less
         ItemStack less = new ItemStack(Material.ARROW, 1);
         ItemMeta lll = less.getItemMeta();
-        bbbtint.setItemModel(ArrowVariant.LESS.getKey());
+//        bbbtint.setItemModel(ArrowVariant.LESS.getKey());
         lll.setDisplayName("Less");
         less.setItemMeta(lll);
         // more
         ItemStack more = new ItemStack(Material.ARROW, 1);
         ItemMeta mmm = more.getItemMeta();
-        bbbtint.setItemModel(ArrowVariant.MORE.getKey());
+//        bbbtint.setItemModel(ArrowVariant.MORE.getKey());
         mmm.setDisplayName("More");
         more.setItemMeta(mmm);
         // select
@@ -115,7 +115,7 @@ public class TARDISColourPickerGUI {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta win = close.getItemMeta();
         win.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        win.setItemModel(GUIChameleon.BUTTON_CLOSE.key());
+//        win.setItemModel(GUIChameleon.BUTTON_CLOSE.key());
         close.setItemMeta(win);
         return new ItemStack[]{
                 null, null, null, null, dis, null, null, null, null,

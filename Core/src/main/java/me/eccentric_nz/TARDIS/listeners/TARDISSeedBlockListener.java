@@ -175,7 +175,7 @@ public class TARDISSeedBlockListener implements Listener {
                 }
                 im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
                 im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
-                im.setItemModel(model);
+//                im.setItemModel(model);
                 List<String> lore = new ArrayList<>();
                 lore.add(console);
                 lore.add("Walls: " + data.getWallType().toString());

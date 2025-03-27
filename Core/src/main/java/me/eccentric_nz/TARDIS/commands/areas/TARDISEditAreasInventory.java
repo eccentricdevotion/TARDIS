@@ -94,7 +94,7 @@ public class TARDISEditAreasInventory {
         ItemStack close = new ItemStack(GUIMap.BUTTON_CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setItemModel(GUIUpgrade.CLOSE.key());
+//        close_im.setItemModel(GUIUpgrade.CLOSE.key());
         close.setItemMeta(close_im);
         stacks[53] = close;
         return stacks;

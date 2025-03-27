@@ -54,7 +54,7 @@ class TARDISHumInventory {
             ItemStack is = new ItemStack(Material.BOWL, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(hum.toString());
-            im.setItemModel(hum.getKey());
+//            im.setItemModel(hum.getKey());
             is.setItemMeta(im);
             options.add(is);
         }
@@ -72,14 +72,14 @@ class TARDISHumInventory {
         ItemMeta save = play.getItemMeta();
         save.setDisplayName("Action");
         save.setLore(List.of("PLAY"));
-        save.setItemModel(GUIInteriorSounds.ACTION.key());
+//        save.setItemModel(GUIInteriorSounds.ACTION.key());
         play.setItemMeta(save);
         stack[GUIInteriorSounds.ACTION.slot()] = play;
         // close
         ItemStack close = new ItemStack(GUIInteriorSounds.CLOSE.material(), 1);
         ItemMeta c_im = close.getItemMeta();
         c_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        c_im.setItemModel(GUIInteriorSounds.CLOSE.key());
+//        c_im.setItemModel(GUIInteriorSounds.CLOSE.key());
         close.setItemMeta(c_im);
         stack[GUIInteriorSounds.CLOSE.slot()] = close;
 

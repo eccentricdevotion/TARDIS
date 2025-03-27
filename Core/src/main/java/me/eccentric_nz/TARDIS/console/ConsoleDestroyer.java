@@ -157,7 +157,7 @@ public class ConsoleDestroyer {
             String dn = ((isRustic) ? "Rustic" : TARDISStringUtils.capitalise(colour)) + " Console";
             im.setDisplayName(dn);
             im.setLore(List.of("Integration with interaction"));
-            im.setItemModel(key);
+//            im.setItemModel(key);
             String which = model.getKey()
                     .replace("tardis/console_division_", "")
                     .replace("tardis/console_centre_", "")

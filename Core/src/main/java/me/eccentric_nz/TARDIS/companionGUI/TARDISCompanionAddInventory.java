@@ -82,26 +82,26 @@ public class TARDISCompanionAddInventory {
         info_lore.add("Click a player head to");
         info_lore.add("add them as a companion.");
         ii.setLore(info_lore);
-        ii.setItemModel(GUICompanion.INFO.key());
+//        ii.setItemModel(GUICompanion.INFO.key());
         info.setItemMeta(ii);
         heads[GUICompanion.INFO.slot()] = info;
         ItemStack list = new ItemStack(GUICompanion.LIST_COMPANIONS.material(), 1);
         ItemMeta ll = list.getItemMeta();
         ll.setDisplayName("List companions");
-        ll.setItemModel(GUICompanion.LIST_COMPANIONS.key());
+//        ll.setItemModel(GUICompanion.LIST_COMPANIONS.key());
         list.setItemMeta(ll);
         heads[GUICompanion.LIST_COMPANIONS.slot()] = list;
         ItemStack every = new ItemStack(GUICompanion.ALL_COMPANIONS.material(), 1);
         ItemMeta one = every.getItemMeta();
         one.setDisplayName("Add all online players");
-        one.setItemModel(GUICompanion.ALL_COMPANIONS.key());
+//        one.setItemModel(GUICompanion.ALL_COMPANIONS.key());
         every.setItemMeta(one);
         heads[GUICompanion.ALL_COMPANIONS.slot()] = every;
         // Cancel / close
         ItemStack close = new ItemStack(GUICompanion.BUTTON_CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setItemModel(GUICompanion.BUTTON_CLOSE.key());
+//        can.setItemModel(GUICompanion.BUTTON_CLOSE.key());
         close.setItemMeta(can);
         heads[GUICompanion.BUTTON_CLOSE.slot()] = close;
 

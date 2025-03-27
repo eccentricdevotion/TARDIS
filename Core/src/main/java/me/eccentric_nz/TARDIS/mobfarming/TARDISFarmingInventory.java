@@ -107,9 +107,9 @@ public class TARDISFarmingInventory {
                 ItemStack is = new ItemStack(f.getMaterial(), 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(f.getMob());
-                if (f.getModel() != null) {
-                    im.setItemModel(f.getModel());
-                }
+//                if (f.getModel() != null) {
+//                    im.setItemModel(f.getModel());
+//                }
                 if (f != GUIFarming.CLOSE) {
                     im.setLore(List.of(f.getRoomName()));
                 }

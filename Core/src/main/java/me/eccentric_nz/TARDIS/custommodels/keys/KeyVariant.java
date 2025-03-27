@@ -19,31 +19,39 @@ package me.eccentric_nz.TARDIS.custommodels.keys;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.NamespacedKey;
 
+import java.util.List;
+
 public enum KeyVariant {
 
-    BRASS_YALE(new NamespacedKey(TARDIS.plugin, "brass_yale_key")),
-    BRASS_PLAIN(new NamespacedKey(TARDIS.plugin, "brass_plain_key")),
-    SPADE_SHAPED(new NamespacedKey(TARDIS.plugin, "spade_shaped_key")),
-    SILVER_YALE(new NamespacedKey(TARDIS.plugin, "silver_yale_key")),
-    SEAL_OF_RASSILON(new NamespacedKey(TARDIS.plugin, "seal_of_rassilon_key")),
-    SILVER_VARIANT(new NamespacedKey(TARDIS.plugin, "silver_variant_key")),
-    SILVER_PLAIN(new NamespacedKey(TARDIS.plugin, "silver_plain_key")),
-    SILVER_NEW(new NamespacedKey(TARDIS.plugin, "silver_new_key")),
-    SILVER_ERA(new NamespacedKey(TARDIS.plugin, "silver_era_key")),
-    SILVER_STRING(new NamespacedKey(TARDIS.plugin, "silver_string_key")),
-    FILTER(new NamespacedKey(TARDIS.plugin, "perception_filter_key")),
-    BRASS_STRING(new NamespacedKey(TARDIS.plugin, "brass_string_key")),
-    BROMLEY_GOLD(new NamespacedKey(TARDIS.plugin, "bromley_gold_key")),
-    PERCEPTION_FILTER(new NamespacedKey(TARDIS.plugin, "perception_filter_string_key")),
-    REMOTE(new NamespacedKey(TARDIS.plugin, "remote_key"));
+    BRASS_YALE(new NamespacedKey(TARDIS.plugin, "brass_yale_key"), List.of(101f)),
+    BRASS_PLAIN(new NamespacedKey(TARDIS.plugin, "brass_plain_key"), List.of(102f)),
+    SPADE_SHAPED(new NamespacedKey(TARDIS.plugin, "spade_shaped_key"), List.of(103f)),
+    SILVER_YALE(new NamespacedKey(TARDIS.plugin, "silver_yale_key"), List.of(104f)),
+    SEAL_OF_RASSILON(new NamespacedKey(TARDIS.plugin, "seal_of_rassilon_key"), List.of(105f)),
+    SILVER_VARIANT(new NamespacedKey(TARDIS.plugin, "silver_variant_key"), List.of(106f)),
+    SILVER_PLAIN(new NamespacedKey(TARDIS.plugin, "silver_plain_key"), List.of(107f)),
+    SILVER_NEW(new NamespacedKey(TARDIS.plugin, "silver_new_key"), List.of(108f)),
+    SILVER_ERA(new NamespacedKey(TARDIS.plugin, "silver_era_key"), List.of(109f)),
+    SILVER_STRING(new NamespacedKey(TARDIS.plugin, "silver_string_key"), List.of(110f)),
+    FILTER(new NamespacedKey(TARDIS.plugin, "perception_filter_key"), List.of(111f)),
+    BRASS_STRING(new NamespacedKey(TARDIS.plugin, "brass_string_key"), List.of(112f)),
+    BROMLEY_GOLD(new NamespacedKey(TARDIS.plugin, "bromley_gold_key"), List.of(113f)),
+    PERCEPTION_FILTER(new NamespacedKey(TARDIS.plugin, "perception_filter_string_key"), null),
+    REMOTE(new NamespacedKey(TARDIS.plugin, "remote_key"), null);
 
     private final NamespacedKey key;
+    private final List<Float> floats;
 
-    KeyVariant(NamespacedKey key) {
+    KeyVariant(NamespacedKey key, List<Float> floats) {
         this.key = key;
+        this.floats = floats;
     }
 
     public NamespacedKey getKey() {
         return key;
+    }
+
+    public List<Float> getFloats() {
+        return floats;
     }
 }

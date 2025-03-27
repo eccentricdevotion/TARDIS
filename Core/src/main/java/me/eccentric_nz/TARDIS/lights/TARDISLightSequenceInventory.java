@@ -52,7 +52,7 @@ public class TARDISLightSequenceInventory {
         ItemMeta sim = lights.getItemMeta();
         sim.setDisplayName("TARDIS Light Sequence");
         sim.setLore(List.of("Click a block in", "the second row to", "change its colour."));
-        sim.setItemModel(GUILights.SEQUENCE_INFO.key());
+//        sim.setItemModel(GUILights.SEQUENCE_INFO.key());
         lights.setItemMeta(sim);
         stacks[GUILights.SEQUENCE_INFO.slot()] = lights;
         // get light sequence, delay, level from light prefs
@@ -75,7 +75,7 @@ public class TARDISLightSequenceInventory {
                 ItemStack delay = new ItemStack(Material.COAL_BLOCK, 1);
                 ItemMeta dim = delay.getItemMeta();
                 dim.setDisplayName("Display time");
-                dim.setItemModel(GUILights.DELAY.key());
+//                dim.setItemModel(GUILights.DELAY.key());
                 delay.setItemMeta(dim);
                 delay.setAmount(amount);
                 stacks[i] = delay;
@@ -90,7 +90,7 @@ public class TARDISLightSequenceInventory {
                 ItemStack level = new ItemStack(Material.COAL_BLOCK, 1);
                 ItemMeta lim = level.getItemMeta();
                 lim.setDisplayName("Light level");
-                lim.setItemModel(GUILights.LEVEL.key());
+//                lim.setItemModel(GUILights.LEVEL.key());
                 level.setItemMeta(lim);
                 level.setAmount(amount);
                 stacks[i] = level;
@@ -101,28 +101,28 @@ public class TARDISLightSequenceInventory {
         ItemMeta pim = preset.getItemMeta();
         pim.setDisplayName("Preset Sequence");
         pim.setLore(List.of("Click to cycle through", "various light sequences.", "1"));
-        pim.setItemModel(GUILights.BUTTON_LIGHT_SEQUENCE.key());
+//        pim.setItemModel(GUILights.BUTTON_LIGHT_SEQUENCE.key());
         preset.setItemMeta(pim);
         stacks[36] = preset;
         // 40 save
         ItemStack save = new ItemStack(GUIChameleonConstructor.SAVE_CONSTRUCT.material(), 1);
         ItemMeta se = save.getItemMeta();
         se.setDisplayName("Save Sequence");
-        se.setItemModel(GUIChameleonConstructor.SAVE_CONSTRUCT.key());
+//        se.setItemModel(GUIChameleonConstructor.SAVE_CONSTRUCT.key());
         save.setItemMeta(se);
         stacks[40] = save;
         // back button
         ItemStack back = new ItemStack(GUIChameleonTemplate.BACK_HELP.material(), 1);
         ItemMeta bk = back.getItemMeta();
         bk.setDisplayName("Back");
-        bk.setItemModel(GUIChameleonTemplate.BACK_HELP.key());
+//        bk.setItemModel(GUIChameleonTemplate.BACK_HELP.key());
         back.setItemMeta(bk);
         stacks[42] = back;
         // 44 close
         ItemStack close = new ItemStack(GUILights.CLOSE.material(), 1);
         ItemMeta clim = close.getItemMeta();
         clim.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        clim.setItemModel(GUILights.CLOSE.key());
+//        clim.setItemModel(GUILights.CLOSE.key());
         close.setItemMeta(clim);
         stacks[44] = close;
         return stacks;

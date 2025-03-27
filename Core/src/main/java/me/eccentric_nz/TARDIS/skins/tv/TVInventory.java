@@ -18,8 +18,10 @@ package me.eccentric_nz.TARDIS.skins.tv;
 
 import me.eccentric_nz.TARDIS.custommodels.GUIData;
 import me.eccentric_nz.TARDIS.custommodels.GUITelevision;
+import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 public class TVInventory {
 
@@ -47,7 +49,12 @@ public class TVInventory {
             ItemStack is = new ItemStack(tv.material(), 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(tv.name());
-            im.setItemModel(tv.key());
+//            im.setItemModel(tv.key());
+            if (tv == GUITelevision.DOWNLOAD) {
+                CustomModelDataComponent component = im.getCustomModelDataComponent();
+                component.setFloats(SwitchVariant.DOWNLOAD_OFF.getFloats());
+                im.setCustomModelDataComponent(component);
+            }
             is.setItemMeta(im);
             stack[tv.slot()] = is;
         }

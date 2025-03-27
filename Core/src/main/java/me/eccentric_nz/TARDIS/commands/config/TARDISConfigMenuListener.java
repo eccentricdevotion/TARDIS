@@ -28,6 +28,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 import java.util.Locale;
@@ -118,7 +119,10 @@ public class TARDISConfigMenuListener implements Listener {
         ItemMeta im = is.getItemMeta();
         im.setLore(lore);
         GUIConfiguration gui = GUIConfiguration.valueOf(option.split("\\.")[0].toUpperCase(Locale.ROOT));
-        im.setItemModel("false".equals(str) ? gui.getOffModel() : gui.getOnModel());
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setFloats("false".equals(str) ? gui.getOffFloats() : gui.getOnFloats());
+        im.setCustomModelDataComponent(component);
+//        im.setItemModel("false".equals(str) ? gui.getOffFloats() : gui.getOnFloats());
         is.setItemMeta(im);
     }
 }

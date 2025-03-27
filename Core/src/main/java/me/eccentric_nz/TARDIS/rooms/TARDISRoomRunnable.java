@@ -660,7 +660,8 @@ public class TARDISRoomRunnable implements Runnable {
                     ItemDisplay display = (ItemDisplay) world.spawnEntity(item, EntityType.ITEM_DISPLAY);
                     ItemStack is = new ItemStack(Material.MAGMA_BLOCK);
                     ItemMeta im = is.getItemMeta();
-                    im.setItemModel(EyeVariant.SPHERE_0.getKey());
+                    im.setDisplayName("Sphere Normal");
+//                    im.setItemModel(EyeVariant.SPHERE_0.getKey());
                     is.setItemMeta(im);
                     display.setItemStack(is);
                     display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);

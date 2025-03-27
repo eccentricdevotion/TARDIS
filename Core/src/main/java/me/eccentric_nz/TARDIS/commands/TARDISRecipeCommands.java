@@ -37,6 +37,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
@@ -231,7 +232,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 if (item.getType().equals(Material.GLOWSTONE_DUST) && !str.endsWith("Tie")) {
                     String dn = getDisplayName(str, glowstoneCount);
                     im.setDisplayName(ChatColor.WHITE + dn);
-                    im.setItemModel(RecipeItem.getByName(dn).getModel());
+//                    im.setItemModel(RecipeItem.getByName(dn).getModel());
                     glowstoneCount++;
                 }
                 if (str.endsWith("TARDIS Remote Key")) {
@@ -243,20 +244,20 @@ public class TARDISRecipeCommands implements CommandExecutor {
                     }
                     if (item.getType().equals(material)) {
                         im.setDisplayName(ChatColor.WHITE + "TARDIS Key");
-                        im.setItemModel(KeyVariant.REMOTE.getKey());
+//                        im.setItemModel(KeyVariant.REMOTE.getKey());
                     }
                 }
                 if (str.equals("Acid Battery") && item.getType().equals(Material.WATER_BUCKET)) {
                     im.setDisplayName(ChatColor.WHITE + "Acid Bucket");
-                    im.setItemModel(Whoniverse.ACID_BUCKET.getKey());
+//                    im.setItemModel(Whoniverse.ACID_BUCKET.getKey());
                 }
                 if (str.equals("Rift Manipulator") && item.getType().equals(Material.NETHER_BRICK)) {
                     im.setDisplayName(ChatColor.WHITE + "Acid Battery");
-                    im.setItemModel(Whoniverse.ACID_BATTERY.getKey());
+//                    im.setItemModel(Whoniverse.ACID_BATTERY.getKey());
                 }
                 if (str.equals("Rust Plague Sword") && item.getType().equals(Material.LAVA_BUCKET)) {
                     im.setDisplayName(ChatColor.WHITE + "Rust Bucket");
-                    im.setItemModel(Whoniverse.RUST_BUCKET.getKey());
+//                    im.setItemModel(Whoniverse.RUST_BUCKET.getKey());
                 }
                 item.setItemMeta(im);
                 inv.setItem(j * 9 + k, item);
@@ -265,10 +266,10 @@ public class TARDISRecipeCommands implements CommandExecutor {
         ItemStack result = recipe.getResult();
         ItemMeta im = result.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + str);
-        RecipeItem recipeItem = RecipeItem.getByName(str);
-        if (recipeItem != RecipeItem.NOT_FOUND) {
-            im.setItemModel(recipeItem.getModel());
-        }
+//        RecipeItem recipeItem = RecipeItem.getByName(str);
+//        if (recipeItem != RecipeItem.NOT_FOUND) {
+//            im.setItemModel(recipeItem.getModel());
+//        }
         if (str.equals("TARDIS Invisibility Circuit")) {
             // set the second line of lore
             List<String> lore = im.getLore();
@@ -298,18 +299,21 @@ public class TARDISRecipeCommands implements CommandExecutor {
             if (ingredients.get(i).getType().equals(Material.GLOWSTONE_DUST)) {
                 String dn = getDisplayName(str, glowstoneCount);
                 im.setDisplayName(dn);
-                im.setItemModel(RecipeItem.getByName(dn).getModel());
+//                im.setItemModel(RecipeItem.getByName(dn).getModel());
                 glowstoneCount++;
             }
             if (ingredients.get(i).getType().equals(Material.MUSIC_DISC_STRAD)) {
                 im.setDisplayName("Blank Storage Disk");
-                im.setItemModel(DiskVariant.BLANK_DISK.getKey());
+//                im.setItemModel(DiskVariant.BLANK_DISK.getKey());
                 im.addItemFlags(ItemFlag.values());
                 im.setAttributeModifiers(Multimaps.forMap(Map.of()));
             }
             if (ingredients.get(i).getType().equals(Material.BLAZE_ROD)) {
                 im.setDisplayName("Sonic Screwdriver");
-                im.setItemModel(SonicVariant.TENTH.getKey());
+//                im.setItemModel(SonicVariant.TENTH.getKey());
+                CustomModelDataComponent component = im.getCustomModelDataComponent();
+                component.setFloats(SonicVariant.TENTH.getFloats());
+                im.setCustomModelDataComponent(component);
             }
             ingredients.get(i).setItemMeta(im);
             inv.setItem(i * 9, ingredients.get(i));
@@ -323,7 +327,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
         }
         RecipeItem recipeItem = RecipeItem.getByName(str);
         if (recipeItem != RecipeItem.NOT_FOUND) {
-            im.setItemModel(recipeItem.getModel());
+//            im.setItemModel(recipeItem.getModel());
             if (recipeItem.getCategory().equals(RecipeCategory.SONIC_UPGRADES)) {
                 im.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");
                 im.setLore(List.of("Upgrades:", str));
@@ -372,7 +376,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
         }
         ItemMeta seed = tardis.getItemMeta();
-        seed.setItemModel(model);
+//        seed.setItemModel(model);
         seed.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
         // set display name
         seed.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");

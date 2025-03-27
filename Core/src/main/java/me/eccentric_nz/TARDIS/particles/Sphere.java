@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.rooms.eye.Capacitor;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -66,7 +67,8 @@ public class Sphere extends TARDISParticleRunnable {
         }
         ItemStack is = new ItemStack(Material.MAGMA_BLOCK);
         ItemMeta im = is.getItemMeta();
-        im.setItemModel(capacitor.getModel());
+        im.setDisplayName("Sphere " + TARDISStringUtils.capitalise(capacitor.toString()));
+//        im.setItemModel(capacitor.getModel());
         is.setItemMeta(im);
         display.setItemStack(is);
         display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);

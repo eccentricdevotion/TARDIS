@@ -59,7 +59,7 @@ public class TARDISDiskWriterCommand {
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("Save Storage Disk");
             im.setLore(List.of("Blank"));
-            im.setItemModel(DiskVariant.SAVE_DISK.getKey());
+//            im.setItemModel(DiskVariant.SAVE_DISK.getKey());
             is.setItemMeta(im);
         } else {
             is = player.getInventory().getItemInMainHand();

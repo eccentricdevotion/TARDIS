@@ -70,7 +70,8 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
                 ItemStack choice = view.getItem(slot);
                 ItemMeta choice_im = choice.getItemMeta();
                 ItemMeta sonic_im = sonic.getItemMeta();
-                sonic_im.setItemModel(choice_im.getItemModel());
+//                sonic_im.setItemModel(choice_im.getItemModel());
+                sonic_im.setCustomModelDataComponent(choice_im.getCustomModelDataComponent());
                 sonic.setItemMeta(sonic_im);
             }
             case 27 -> {

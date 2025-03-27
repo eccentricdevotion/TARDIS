@@ -178,7 +178,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                             boolean isOff = masterMeta.getLore().getFirst().equals(plugin.getLanguage().getString("SET_OFF"));
                             String onoff = isOff ? plugin.getLanguage().getString("SET_ON", "ON") : plugin.getLanguage().getString("SET_OFF", "OFF");
                             masterMeta.setLore(List.of(onoff));
-                            masterMeta.setItemModel(isOff ? Button.MASTER_ON.getKey() : Button.MASTER_OFF.getKey());
+//                            masterMeta.setItemModel(isOff ? Button.MASTER_ON.getKey() : Button.MASTER_OFF.getKey());
                         } else {
                             masterMeta.setLore(List.of("The Master Race is already", " set to " + plugin.getTrackerKeeper().getImmortalityGate() + "!", "Try again later."));
                         }

@@ -20,42 +20,43 @@ import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.NamespacedKey;
 
+import java.util.List;
 import java.util.Locale;
 
 public enum SonicScrewdriver {
 
-    MARK1(SonicVariant.MARK1.getKey(), SonicVariant.MARK1_ON.getKey()),
-    MARK2(SonicVariant.MARK2.getKey(), SonicVariant.MARK2_ON.getKey()),
-    MARK3(SonicVariant.MARK3.getKey(), SonicVariant.MARK3_ON.getKey()),
-    MARK4(SonicVariant.MARK4.getKey(), SonicVariant.MARK4_ON.getKey()),
-    EIGHTH(SonicVariant.EIGHTH.getKey(), SonicVariant.EIGHTH_ON.getKey()),
-    NINTH(SonicVariant.NINTH.getKey(), SonicVariant.NINTH_OPEN.getKey()),
-    TENTH(SonicVariant.TENTH.getKey(), SonicVariant.TENTH_OPEN.getKey()),
-    ELEVENTH(SonicVariant.ELEVENTH.getKey(), SonicVariant.ELEVENTH_OPEN.getKey()),
-    TWELFTH(SonicVariant.TWELFTH.getKey(), SonicVariant.TWELFTH_ON.getKey()),
-    THIRTEENTH(SonicVariant.THIRTEENTH.getKey(), SonicVariant.THIRTEENTH_ON.getKey()),
-    FOURTEENTH(SonicVariant.FOURTEENTH.getKey(), SonicVariant.FOURTEENTH_OPEN.getKey()),
-    FIFTEENTH(SonicVariant.FIFTEENTH.getKey(), SonicVariant.FIFTEENTH_ON.getKey()),
-    RIVER_SONG(SonicVariant.RIVER_SONG.getKey(), SonicVariant.RIVER_SONG_ON.getKey()),
-    MASTER(SonicVariant.MASTER.getKey(), SonicVariant.MASTER_ON.getKey()),
-    SARAH_JANE(SonicVariant.SARAH_JANE.getKey(), SonicVariant.SARAH_JANE_ON.getKey()),
-    SONIC_PROBE(SonicVariant.SONIC_PROBE.getKey(), SonicVariant.SONIC_PROBE_ON.getKey()),
-    UMBRELLA(SonicVariant.UMBRELLA.getKey(), SonicVariant.UMBRELLA_ON.getKey()),
-    WAR(SonicVariant.WAR.getKey(), SonicVariant.WAR_ON.getKey());
+    MARK1(SonicVariant.MARK1.getFloats(), SonicVariant.MARK1_ON.getFloats()),
+    MARK2(SonicVariant.MARK2.getFloats(), SonicVariant.MARK2_ON.getFloats()),
+    MARK3(SonicVariant.MARK3.getFloats(), SonicVariant.MARK3_ON.getFloats()),
+    MARK4(SonicVariant.MARK4.getFloats(), SonicVariant.MARK4_ON.getFloats()),
+    EIGHTH(SonicVariant.EIGHTH.getFloats(), SonicVariant.EIGHTH_ON.getFloats()),
+    NINTH(SonicVariant.NINTH.getFloats(), SonicVariant.NINTH_OPEN.getFloats()),
+    TENTH(SonicVariant.TENTH.getFloats(), SonicVariant.TENTH_OPEN.getFloats()),
+    ELEVENTH(SonicVariant.ELEVENTH.getFloats(), SonicVariant.ELEVENTH_OPEN.getFloats()),
+    TWELFTH(SonicVariant.TWELFTH.getFloats(), SonicVariant.TWELFTH_ON.getFloats()),
+    THIRTEENTH(SonicVariant.THIRTEENTH.getFloats(), SonicVariant.THIRTEENTH_ON.getFloats()),
+    FOURTEENTH(SonicVariant.FOURTEENTH.getFloats(), SonicVariant.FOURTEENTH_OPEN.getFloats()),
+    FIFTEENTH(SonicVariant.FIFTEENTH.getFloats(), SonicVariant.FIFTEENTH_ON.getFloats()),
+    RIVER_SONG(SonicVariant.RIVER_SONG.getFloats(), SonicVariant.RIVER_SONG_ON.getFloats()),
+    MASTER(SonicVariant.MASTER.getFloats(), SonicVariant.MASTER_ON.getFloats()),
+    SARAH_JANE(SonicVariant.SARAH_JANE.getFloats(), SonicVariant.SARAH_JANE_ON.getFloats()),
+    SONIC_PROBE(SonicVariant.SONIC_PROBE.getFloats(), SonicVariant.SONIC_PROBE_ON.getFloats()),
+    UMBRELLA(SonicVariant.UMBRELLA.getFloats(), SonicVariant.UMBRELLA_ON.getFloats()),
+    WAR(SonicVariant.WAR.getFloats(), SonicVariant.WAR_ON.getFloats());
 
-    private final NamespacedKey model;
-    private final NamespacedKey active;
+    private final List<Float> model;
+    private final List<Float> active;
 
-    SonicScrewdriver(NamespacedKey model, NamespacedKey active) {
+    SonicScrewdriver(List<Float> model, List<Float> active) {
         this.model = model;
         this.active = active;
     }
 
-    public NamespacedKey getModel() {
+    public List<Float> getModel() {
         return model;
     }
 
-    public NamespacedKey getActive() {
+    public List<Float> getActive() {
         return active;
     }
 
@@ -74,6 +75,15 @@ public enum SonicScrewdriver {
                 model = model.substring(0, model.length() - 5);
             }
             return SonicScrewdriver.valueOf(model);
+        }
+        return ELEVENTH;
+    }
+
+    public static SonicScrewdriver getByFloat(float f) {
+        for (SonicScrewdriver variant: SonicScrewdriver.values()) {
+            if (f == variant.getModel().getFirst()) {
+                return variant;
+            }
         }
         return ELEVENTH;
     }

@@ -17,8 +17,10 @@
 package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.custommodels.GUIKeyPreferences;
+import me.eccentric_nz.TARDIS.custommodels.keys.KeyVariant;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -61,9 +63,18 @@ class TARDISKeyMenuInventory {
                     im.setLore(List.of(key.getLore()));
                 }
             }
-            if (key.getModel() != null) {
-                im.setItemModel(key.getModel());
+            if (key.getSlot() < 17) {
+                try {
+                    KeyVariant variant = KeyVariant.valueOf(key.getName());
+                    CustomModelDataComponent component = im.getCustomModelDataComponent();
+                    component.setFloats(variant.getFloats());
+                    im.setCustomModelDataComponent(component);
+                } catch (IllegalArgumentException ignored) {
+                }
             }
+//            if (key.getModel() != null) {
+//                im.setItemModel(key.getModel());
+//            }
             is.setItemMeta(im);
             itemStacks[key.getSlot()] = is;
         }

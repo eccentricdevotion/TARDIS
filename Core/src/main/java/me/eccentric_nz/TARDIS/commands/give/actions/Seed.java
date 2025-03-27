@@ -94,7 +94,7 @@ public class Seed {
                     }
                 }
                 ItemMeta im = is.getItemMeta();
-                im.setItemModel(model);
+//                im.setItemModel(model);
                 im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
                 // set display name
                 im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");

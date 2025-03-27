@@ -143,7 +143,7 @@ public class TARDISHandlesProgramListener implements Listener {
                     im.setDisplayName("Handles Program Disk");
                     im.setLore(List.of("Untitled Disk", pid + "", "Checked OUT"));
                     im.addItemFlags(ItemFlag.values());
-                    im.setItemModel(DiskVariant.HANDLES_DISK.getKey());
+//                    im.setItemModel(DiskVariant.HANDLES_DISK.getKey());
                     is.setItemMeta(im);
                     player.getWorld().dropItemNaturally(player.getLocation(), is);
                     plugin.getMessenger().sendColouredCommand(player, "HANDLES_SAVED", "/tardishandles disk [name]", plugin);
@@ -240,7 +240,7 @@ public class TARDISHandlesProgramListener implements Listener {
         if (block.getLore() != null) {
             im.setLore(block.getLore());
         }
-        im.setItemModel(block.getModel());
+//        im.setItemModel(block.getModel());
         is.setItemMeta(im);
         view.setItem(slot, is);
     }

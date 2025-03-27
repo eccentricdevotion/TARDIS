@@ -88,14 +88,14 @@ public class TARDISIndexFileSection {
         ItemStack back = new ItemStack(GUIChameleonPoliceBoxes.BACK.material(), 1);
         ItemMeta but = back.getItemMeta();
         but.setDisplayName("Back");
-        but.setItemModel(GUIChameleonPoliceBoxes.BACK.key());
+//        but.setItemModel(GUIChameleonPoliceBoxes.BACK.key());
         back.setItemMeta(but);
         stack[45] = back;
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setItemModel(GuiVariant.CLOSE.getKey());
+//        close_im.setItemModel(GuiVariant.CLOSE.getKey());
         close.setItemMeta(close_im);
         stack[53] = close;
         return stack;

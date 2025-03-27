@@ -103,9 +103,9 @@ public class TARDISShellInventory {
                     lore.add(ChatColor.AQUA + "Active shell");
                 }
                 con.setLore(lore);
-                if (material == Material.BOWL) {
-                    con.setItemModel(GUIChameleonPresets.SAVED.key());
-                }
+//                if (material == Material.BOWL) {
+//                    con.setItemModel(GUIChameleonPresets.SAVED.key());
+//                }
                 con.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, TARDISNumberParsers.parseInt(map.get("chameleon_id")));
                 saved.setItemMeta(con);
                 stacks[i] = saved;
@@ -121,21 +121,21 @@ public class TARDISShellInventory {
         ItemMeta uim = use.getItemMeta();
         uim.setDisplayName("Use selected shell");
         uim.setLore(List.of("Will apply shell to", "the Chameleon Circuit", "and rebuild the exterior."));
-        uim.setItemModel(GUIChameleonPresets.USE_SELECTED.key());
+//        uim.setItemModel(GUIChameleonPresets.USE_SELECTED.key());
         use.setItemMeta(uim);
         stacks[GUIChameleonPresets.USE_SELECTED.slot()] = use;
         // delete selected shell
         ItemStack delete = new ItemStack(GUIChameleonPresets.DELETE_SELECTED.material(), 1);
         ItemMeta dim = delete.getItemMeta();
         dim.setDisplayName("Delete selected shell");
-        dim.setItemModel(GUIChameleonPresets.DELETE_SELECTED.key());
+//        dim.setItemModel(GUIChameleonPresets.DELETE_SELECTED.key());
         delete.setItemMeta(dim);
         stacks[GUIChameleonPresets.DELETE_SELECTED.slot()] = delete;
         // update selected shell
         ItemStack update = new ItemStack(GUIChameleonPresets.UPDATE_SELECTED.material(), 1);
         ItemMeta upim = update.getItemMeta();
         upim.setDisplayName("Update selected shell");
-        upim.setItemModel(GUIChameleonPresets.UPDATE_SELECTED.key());
+//        upim.setItemModel(GUIChameleonPresets.UPDATE_SELECTED.key());
         update.setItemMeta(upim);
         stacks[GUIChameleonPresets.UPDATE_SELECTED.slot()] = update;
         // clear shell on platform
@@ -143,7 +143,7 @@ public class TARDISShellInventory {
         ItemMeta ns = newShell.getItemMeta();
         ns.setDisplayName("New Chameleon shell");
         ns.setLore(List.of("Will clear the shell platform", "ready for building."));
-        ns.setItemModel(GUIChameleonPresets.NEW.key());
+//        ns.setItemModel(GUIChameleonPresets.NEW.key());
         newShell.setItemMeta(ns);
         stacks[GUIChameleonPresets.NEW.slot()] = newShell;
         // Save current shell on platform
@@ -151,14 +151,14 @@ public class TARDISShellInventory {
         ItemMeta pre = save.getItemMeta();
         pre.setDisplayName("Save Chameleon shell");
         ns.setLore(List.of("Will save shell and", "rebuild the exterior."));
-        pre.setItemModel(GUIChameleonPresets.SAVE.key());
+//        pre.setItemModel(GUIChameleonPresets.SAVE.key());
         save.setItemMeta(pre);
         stacks[GUIChameleonPresets.SAVE.slot()] = save;
         // Cancel / close
         ItemStack close = new ItemStack(GUIChameleonPresets.CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setItemModel(GUIChameleonPresets.CLOSE.key());
+//        can.setItemModel(GUIChameleonPresets.CLOSE.key());
         close.setItemMeta(can);
         stacks[GUIChameleonPresets.CLOSE.slot()] = close;
 

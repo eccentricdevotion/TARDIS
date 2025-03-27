@@ -31,6 +31,7 @@ import org.bukkit.event.inventory.PrepareSmithingEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.SmithingInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,10 +80,11 @@ public class TARDISSmithingListener implements Listener {
                     return;
                 }
                 ItemMeta sim = sonic.getItemMeta();
-                NamespacedKey model = SonicVariant.ELEVENTH.getKey();
-                if (sim.hasItemModel()) {
-                    model = sim.getItemModel();
-                }
+                CustomModelDataComponent component = sim.getCustomModelDataComponent();
+//                NamespacedKey model = SonicVariant.ELEVENTH.getKey();
+//                if (sim.hasItemModel()) {
+//                    model = sim.getItemModel();
+//                }
                 String dn = sim.getDisplayName();
                 List<String> lore;
                 if (sim.hasLore()) {
@@ -96,7 +98,7 @@ public class TARDISSmithingListener implements Listener {
                 // if they don't already have the upgrade
                 if (!lore.contains(upgrade)) {
                     im.setDisplayName(dn);
-                    im.setItemModel(model);
+                    im.setCustomModelDataComponent(component);
                     int index = -1;
                     String charge = null;
                     for (int i = lore.size() - 1; i >= 0; i--) {
@@ -123,7 +125,7 @@ public class TARDISSmithingListener implements Listener {
             } else if (isDamagedCapacitor(sonic)) {
                 ItemStack repaired = sonic.clone();
                 ItemMeta im = repaired.getItemMeta();
-                im.setItemModel(Whoniverse.ARTRON_CAPACITOR.getKey());
+//                im.setItemModel(Whoniverse.ARTRON_CAPACITOR.getKey());
                 is.setItemMeta(im);
                 event.setResult(repaired);
             }
