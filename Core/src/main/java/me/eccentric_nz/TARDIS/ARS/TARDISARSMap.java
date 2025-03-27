@@ -89,13 +89,13 @@ public class TARDISARSMap {
         // stone
         ItemStack black = new ItemStack(GUIMap.BUTTON_MAP_ON.material(), 1);
         ItemMeta wool = black.getItemMeta();
-        wool.setDisplayName(plugin.getLanguage().getString("BUTTON_MAP_ON"));
+        wool.setDisplayName(plugin.getLanguage().getString("BUTTON_MAP"));
 //        wool.setItemModel(GUIMap.BUTTON_MAP_ON.key());
         black.setItemMeta(wool);
         // load map
         ItemStack loa = new ItemStack(GUIMap.BUTTON_MAP.material(), 1);
         ItemMeta der = loa.getItemMeta();
-        der.setDisplayName(plugin.getLanguage().getString("BUTTON_MAP"));
+        der.setDisplayName(plugin.getLanguage().getString("BUTTON_MAP_NO"));
 //        der.setItemModel(GUIMap.BUTTON_MAP.key());
         loa.setItemMeta(der);
         // close
@@ -117,7 +117,14 @@ public class TARDISARSMap {
 //        ami.setItemModel(GUIMap.BUTTON_WHERE.key());
         where.setItemMeta(ami);
 
-        return new ItemStack[]{null, pad_up, null, null, black, black, black, black, black, pad_left, loa, pad_right, null, black, black, black, black, black, null, pad_down, null, null, black, black, black, black, black, level_bot, level_sel, level_top, null, black, black, black, black, black, null, null, null, null, black, black, black, black, black, close, tran, where, null, null, null, null, null, null};
+        return new ItemStack[]{
+                null, pad_up, null, null, black, black, black, black, black,
+                pad_left, loa, pad_right, null, black, black, black, black, black,
+                null, pad_down, null, null, black, black, black, black, black,
+                level_bot, level_sel, level_top, null, black, black, black, black, black,
+                null, null, null, null, black, black, black, black, black,
+                close, tran, where, null, null, null, null, null, null
+        };
     }
 
     public ItemStack[] getMap() {

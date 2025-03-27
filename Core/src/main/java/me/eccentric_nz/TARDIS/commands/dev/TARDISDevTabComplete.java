@@ -45,7 +45,7 @@ public class TARDISDevTabComplete extends TARDISCompleter implements TabComplete
             "debug", "dismount", "displayitem",
             "effect",
             "frame", "furnace",
-            "gravity",
+            "gravity", "give",
             "head",
             "interaction",
             "label", "leather", "list",

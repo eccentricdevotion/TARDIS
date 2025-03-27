@@ -65,7 +65,7 @@ public class TARDISConsoleLoader {
         // FACTORY designed by Razihel
         Consoles.getBY_NAMES().put("FACTORY", new Schematic("YELLOW_CONCRETE_POWDER", "factory", "Factory Console (1st Doctor)", ConsoleSize.MEDIUM, false, TardisLight.CLASSIC, false, -24));
         // FIFTEENTH schematic designed by airomis (player at thatsnotacreeper.com)
-        Consoles.getBY_NAMES().put("FIFTEENTH", new Schematic("OCHRE_FROGLIGHT", "fifteenth", "Fifteenth Doctor's Console", ConsoleSize.MASSIVE, true, TardisLight.THIRTEENTH, false, -25));
+        Consoles.getBY_NAMES().put("FIFTEENTH", new Schematic("OCHRE_FROGLIGHT", "fifteenth", "15th Doctor's Console", ConsoleSize.MASSIVE, true, TardisLight.THIRTEENTH, false, -25));
         // FUGITIVE based on Ruth TARDIS designed by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8
         Consoles.getBY_NAMES().put("FUGITIVE", new Schematic("POLISHED_DEEPSLATE", "fugitive", "Ruth (The Fugitive Doctor) Clayton's Console", ConsoleSize.MEDIUM, false, TardisLight.CLASSIC, false, -26));
         Consoles.getBY_NAMES().put("HOSPITAL", new Schematic("WHITE_CONCRETE", "hospital", "St John's Hospital Console", ConsoleSize.SMALL, false, TardisLight.CLASSIC, false, -27));
