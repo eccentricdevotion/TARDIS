@@ -91,7 +91,7 @@ public class TVMMessageGUI {
         if (finish > 44) {
             ItemStack next = new ItemStack(Material.BOWL, 1);
             ItemMeta scr = next.getItemMeta();
-            scr.setDisplayName("Next Page");
+            scr.setDisplayName("Next page");
             scr.setItemModel(VortexManipulatorVariant.NEXT.getKey());
             next.setItemMeta(scr);
             stack[49] = next;

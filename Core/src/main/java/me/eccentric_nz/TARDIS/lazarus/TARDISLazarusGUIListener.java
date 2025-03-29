@@ -20,9 +20,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorDisguiseEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISGeneticManipulatorUndisguiseEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodels.keys.Button;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.lazarus.disguise.*;
+import me.eccentric_nz.TARDIS.lazarus.disguise.AGE;
+import me.eccentric_nz.TARDIS.lazarus.disguise.FOX;
+import me.eccentric_nz.TARDIS.lazarus.disguise.GENE;
+import me.eccentric_nz.TARDIS.lazarus.disguise.MUSHROOM_COW;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.skins.Skin;
 import me.eccentric_nz.TARDIS.skins.SkinUtils;
@@ -44,6 +46,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -178,6 +181,9 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                             boolean isOff = masterMeta.getLore().getFirst().equals(plugin.getLanguage().getString("SET_OFF"));
                             String onoff = isOff ? plugin.getLanguage().getString("SET_ON", "ON") : plugin.getLanguage().getString("SET_OFF", "OFF");
                             masterMeta.setLore(List.of(onoff));
+                            CustomModelDataComponent component = masterMeta.getCustomModelDataComponent();
+                            component.setFloats(isOff ? List.of(252f) : List.of(152f));
+                            masterMeta.setCustomModelDataComponent(component);
 //                            masterMeta.setItemModel(isOff ? Button.MASTER_ON.getKey() : Button.MASTER_OFF.getKey());
                         } else {
                             masterMeta.setLore(List.of("The Master Race is already", " set to " + plugin.getTrackerKeeper().getImmortalityGate() + "!", "Try again later."));
@@ -577,7 +583,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
             }
             case "CHICKEN", "COW", "PIG" -> {
                 if (variants.containsKey(uuid)) {
-                    o = (variants.get(uuid) + 1 < 9) ? variants.get(uuid) + 1 : 0;
+                    o = (variants.get(uuid) + 1 < 3) ? variants.get(uuid) + 1 : 0;
                 } else {
                     o = 0;
                 }

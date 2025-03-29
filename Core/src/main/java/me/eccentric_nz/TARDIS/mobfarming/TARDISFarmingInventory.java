@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIFarming;
 import me.eccentric_nz.TARDIS.database.data.FarmPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetFarmingPrefs;
-import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -35,17 +34,18 @@ public class TARDISFarmingInventory {
     private final ItemStack[] gui;
     private final ItemStack on;
     private final ItemStack off;
+
     public TARDISFarmingInventory(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
         off = new ItemStack(GUIFarming.OFF.getMaterial(), 1);
         ItemMeta offMeta = off.getItemMeta();
-        offMeta.setDisplayName(ChatColor.RED + plugin.getLanguage().getString("SET_OFF"));
+        offMeta.setDisplayName("Disabled");
         off.setItemMeta(offMeta);
         on = new ItemStack(GUIFarming.ON.getMaterial(), 1);
         ItemMeta onMeta = on.getItemMeta();
-        onMeta.setDisplayName(ChatColor.RED + plugin.getLanguage().getString("SET_ON"));
-        on.setItemMeta(offMeta);
+        onMeta.setDisplayName("Enabled");
+        on.setItemMeta(onMeta);
         gui = getItemStack();
     }
 

@@ -20,11 +20,10 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPoliceBoxes;
 import me.eccentric_nz.TARDIS.custommodels.GUIChameleonPresets;
 import me.eccentric_nz.TARDIS.custommodels.GUIGeneticManipulator;
-import me.eccentric_nz.TARDIS.custommodels.keys.*;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
-import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class TARDISWeepingAngelsMonstersInventory {
         for (Monster monster : Monster.values()) {
             ItemStack mon = new ItemStack(monster.getMaterial(), 1);
             ItemMeta ster = mon.getItemMeta();
-            ster.setDisplayName(monster.toString());
+            ster.setDisplayName(monster.getName());
 //            NamespacedKey model = null;
 //            switch (monster) {
 //                case CLOCKWORK_DROID -> model = DroidVariant.BUTTON_CLOCKWORK_DROID.getKey();
@@ -111,6 +110,9 @@ public class TARDISWeepingAngelsMonstersInventory {
         ItemMeta master = the.getItemMeta();
         master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
         master.setLore(List.of(plugin.getLanguage().getString("SET_OFF")));
+        CustomModelDataComponent component = master.getCustomModelDataComponent();
+        component.setFloats(List.of(152f));
+        master.setCustomModelDataComponent(component);
 //        master.setItemModel(GUIGeneticManipulator.BUTTON_MASTER.key());
         the.setItemMeta(master);
         stacks[GUIGeneticManipulator.BUTTON_MASTER.slot()] = the;

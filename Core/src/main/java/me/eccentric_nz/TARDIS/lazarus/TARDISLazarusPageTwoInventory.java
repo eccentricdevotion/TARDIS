@@ -23,6 +23,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,6 +146,9 @@ class TARDISLazarusPageTwoInventory {
         ItemMeta master = the.getItemMeta();
         master.setDisplayName(plugin.getLanguage().getString("BUTTON_MASTER"));
         master.setLore(List.of(plugin.getLanguage().getString("SET_OFF")));
+        CustomModelDataComponent component = master.getCustomModelDataComponent();
+        component.setFloats(List.of(152f));
+        master.setCustomModelDataComponent(component);
 //        master.setItemModel(GUIGeneticManipulator.BUTTON_MASTER.key());
         the.setItemMeta(master);
         stacks[GUIGeneticManipulator.BUTTON_MASTER.slot()] = the;

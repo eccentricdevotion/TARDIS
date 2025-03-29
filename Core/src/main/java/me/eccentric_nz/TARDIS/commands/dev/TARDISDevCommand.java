@@ -22,7 +22,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.bStats.ARSRoomCounts;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
-import me.eccentric_nz.TARDIS.custommodels.GUIControlCentre;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.lazarus.disguise.ArmourTrim;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
@@ -156,12 +155,13 @@ public class TARDISDevCommand implements CommandExecutor {
                         }
                         case "give" -> {
                             if (sender instanceof Player player) {
-                                ItemStack ran = new ItemStack(GUIControlCentre.BUTTON_RANDOM.material(), 1);
-                                ItemMeta dom = ran.getItemMeta();
-                                dom.setDisplayName(ChatColor.MAGIC + "ran" + ChatColor.RESET + plugin.getLanguage().getString("BUTTON_RANDOM") + ChatColor.MAGIC + "dom");
-                                ran.setItemMeta(dom);
-                                player.getInventory().addItem(ran);
-                                new ComponentCommand(plugin).writeARS();
+//                                ItemStack ran = new ItemStack(GUIControlCentre.BUTTON_RANDOM.material(), 1);
+//                                ItemMeta dom = ran.getItemMeta();
+//                                dom.setDisplayName(ChatColor.MAGIC + "ran" + ChatColor.RESET + plugin.getLanguage().getString("BUTTON_RANDOM") + ChatColor.MAGIC + "dom");
+//                                ran.setItemMeta(dom);
+//                                player.getInventory().addItem(ran);
+//                                new ComponentCommand(plugin).writeARS();
+                                new StorageContents(plugin).give(player);
                             }
                             return true;
                         }
