@@ -145,6 +145,7 @@ public class TARDISConfigCommand implements CommandExecutor {
         firstsBool.put("reduce_count", "abandon");
         firstsBool.put("regeneration", "modules");
         firstsBool.put("render_entities", "preferences");
+        firstsBool.put("respect_chunky_border", "preferences");
         firstsBool.put("respect_grief_prevention", "preferences");
         firstsBool.put("respect_worldborder", "preferences");
         firstsBool.put("return_room_seed", "growth");

@@ -34,6 +34,7 @@ public class Parameters {
     private boolean permsTheEnd = false;
     private boolean repectWorldBorder = false;
     private boolean respectGreifPrevention = false;
+    private boolean respectChunkyBorder = false;
     private boolean respectTowny = false;
     private boolean respectWorldguard = false;
     private boolean spaceTardis = false;
@@ -54,13 +55,13 @@ public class Parameters {
                 case PERMS_AREA -> permsArea = true;
                 case PERMS_NETHER -> permsNether = true;
                 case PERMS_THEEND -> permsTheEnd = true;
+                case RESPECT_CHUNKYBORDER -> respectChunkyBorder = true;
                 case RESPECT_GRIEFPREVENTION -> respectGreifPrevention = true;
                 case RESPECT_TOWNY -> respectTowny = true;
                 case RESPECT_WORLDBORDER -> repectWorldBorder = true;
                 case RESPECT_WORLDGUARD -> respectWorldguard = true;
                 case SPACE_TARDIS -> spaceTardis = true;
-                default -> {
-                }
+                default -> { }
             }
         }
     }
@@ -108,6 +109,15 @@ public class Parameters {
      */
     public boolean repectWorldBorder() {
         return repectWorldBorder;
+    }
+
+    /**
+     * Check if we should be respecting Chunky borders
+     *
+     * @return the value of config option 'preferences.respect_chunky_border'
+     */
+    public boolean respectChunkyBorder() {
+        return respectChunkyBorder;
     }
 
     /**

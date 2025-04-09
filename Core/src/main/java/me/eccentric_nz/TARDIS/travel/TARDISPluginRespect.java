@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravelledTo;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.utility.protection.TARDISChunkyChecker;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISGriefPreventionChecker;
 import me.eccentric_nz.TARDIS.utility.protection.TARDISTownyChecker;
 import org.bukkit.Location;
@@ -36,10 +37,12 @@ import org.bukkit.WorldBorder;
 public class TARDISPluginRespect {
 
     private final TARDIS plugin;
-    private TARDISTownyChecker tychk;
-    private TARDISGriefPreventionChecker griefchk;
+    private TARDISTownyChecker townyChecker;
+    private TARDISGriefPreventionChecker griefPreventionChecker;
+    private TARDISChunkyChecker chunkyBorderCheck;
     private boolean townyOnServer = false;
     private boolean griefPreventionOnServer = false;
+    private boolean chunkyBorderOnServer = false;
 
     public TARDISPluginRespect(TARDIS plugin) {
         this.plugin = plugin;
@@ -123,7 +126,7 @@ public class TARDISPluginRespect {
             }
             bool = false;
         }
-        if (flag.respectTowny() && townyOnServer && !plugin.getConfig().getString("preferences.respect_towny").equals("none") && !tychk.checkTowny(flag.getPlayer(), location)) {
+        if (flag.respectTowny() && townyOnServer && !plugin.getConfig().getString("preferences.respect_towny").equals("none") && !townyChecker.checkTowny(flag.getPlayer(), location)) {
             if (flag.messagePlayer()) {
                 plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "TOWNY");
             }
@@ -138,7 +141,13 @@ public class TARDISPluginRespect {
                     bool = false;
                 }
         }
-        if (flag.respectGreifPrevention() && griefPreventionOnServer && plugin.getConfig().getBoolean("preferences.respect_grief_prevention") && griefchk.isInClaim(flag.getPlayer(), location)) {
+        if (flag.respectChunkyBorder() && chunkyBorderOnServer && plugin.getConfig().getBoolean("preferences.respect_chunky_border") && chunkyBorderCheck.isOutsideBorder(flag.getPlayer(), location)) {
+            if (flag.messagePlayer()) {
+                plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "CHUNKYBORDER");
+            }
+            bool = false;
+        }
+        if (flag.respectGreifPrevention() && griefPreventionOnServer && plugin.getConfig().getBoolean("preferences.respect_grief_prevention") && griefPreventionChecker.isInClaim(flag.getPlayer(), location)) {
             if (flag.messagePlayer()) {
                 plugin.getMessenger().send(flag.getPlayer(), TardisModule.TARDIS, "GRIEFPREVENTION");
             }
@@ -166,7 +175,7 @@ public class TARDISPluginRespect {
     public void loadTowny() {
         if (plugin.getPM().getPlugin("Towny") != null) {
             townyOnServer = true;
-            tychk = new TARDISTownyChecker(plugin);
+            townyChecker = new TARDISTownyChecker(plugin);
         }
     }
 
@@ -178,16 +187,32 @@ public class TARDISPluginRespect {
         if (plugin.getPM().getPlugin("GriefPrevention") != null) {
             plugin.debug("Hooking into GriefPrevention!");
             griefPreventionOnServer = true;
-            griefchk = new TARDISGriefPreventionChecker(plugin);
+            griefPreventionChecker = new TARDISGriefPreventionChecker(plugin);
         }
     }
 
-    TARDISTownyChecker getTychk() {
-        return tychk;
+    /**
+     * Checks if the Chunky/ChunkyBorder plugins are available, and loads support if
+     * it is.
+     */
+    public void loadChunkyBorder() {
+        if (plugin.getPM().getPlugin("ChunkyBorder") != null) {
+            plugin.debug("Hooking into ChunkyBorder!");
+            chunkyBorderOnServer = true;
+            chunkyBorderCheck = new TARDISChunkyChecker(plugin);
+        }
     }
 
-    TARDISGriefPreventionChecker getGriefchk() {
-        return griefchk;
+    TARDISTownyChecker getTownyChecker() {
+        return townyChecker;
+    }
+
+    TARDISGriefPreventionChecker getGriefPreventionChecker() {
+        return griefPreventionChecker;
+    }
+
+    public TARDISChunkyChecker getChunkyBorderCheck() {
+        return chunkyBorderCheck;
     }
 
     boolean isTownyOnServer() {
@@ -196,5 +221,9 @@ public class TARDISPluginRespect {
 
     boolean isGriefPreventionOnServer() {
         return griefPreventionOnServer;
+    }
+
+    public boolean isChunkyBorderOnServer() {
+        return chunkyBorderOnServer;
     }
 }
