@@ -3,9 +3,10 @@
 | Priority | Feature | Link |
 | -------- | ------- | ---- |
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Fix bugs**<br>! | - |
-| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Microscope** as an addition to Chemistry<br>- Add x-ray? | - |
-| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Zero-G room**<br>- Determine door level for door circuits and ring walkway<br>- Make schematic<br>- Add methods to stack rooms | [#868](https://github.com/eccentricdevotion/TARDIS/issues/868) |
+| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Chunky border support**<br>Test implementation... | [#947](https://github.com/eccentricdevotion/TARDIS/issues/947) |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | **Modelled controls**<br>- Console lamp done | [#836](https://github.com/eccentricdevotion/TARDIS/issues/836) |
+| ![Static Badge](https://img.shields.io/badge/2-0c6?style=flat-square) | **Microscope** as an addition to Chemistry<br>- Add x-ray? | - |
+| ![Static Badge](https://img.shields.io/badge/2-0c6?style=flat-square) | **Zero-G room**<br>- Determine door level for door circuits and ring walkway<br>- Make schematic<br>- Add methods to stack rooms | [#868](https://github.com/eccentricdevotion/TARDIS/issues/868) |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | **TARDIS Rooms world**<br>- Add spawn protection / limit abilty to mine blocks e.g. can break amethyst crystals but not blocks? | - |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Floodgate forms for TIS | - |
 | ![Static Badge](https://img.shields.io/badge/3-06f?style=flat-square) | Add doors to shop items | - |

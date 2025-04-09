@@ -152,6 +152,7 @@ public class TARDISConfiguration {
         booleanOptions.put("preferences.update.auto_download", false);
         booleanOptions.put("preferences.open_door_policy", false);
         booleanOptions.put("preferences.render_entities", false);
+        booleanOptions.put("preferences.respect_chunky_border", true);
         booleanOptions.put("preferences.respect_grief_prevention", true);
         booleanOptions.put("preferences.respect_worldborder", true);
         booleanOptions.put("preferences.spawn_random_monsters", true);

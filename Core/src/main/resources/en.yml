@@ -318,6 +318,7 @@ CHARGER_NOT_FOUND: "Could not find a recharger with that name! Try using %s firs
 CHEMISTRY_CMD_PERM: "You don't have permission to open a Chemistry GUI by command!"
 CHEMISTRY_SUB_PERM: "You don't have permission to open a Chemistry %s GUI!"
 CHEST_SORTED: "Inventory sonically sorted!"
+CHUNKYBORDER: "That location is outside the Chunky border!"
 CIRCUIT_USES: "The %s has %s uses left."
 CIRCUIT_VAPOUR: "The %s has vaporised!"
 CLOISTER_BELL_CMD: "The cloister bell is already %s!"

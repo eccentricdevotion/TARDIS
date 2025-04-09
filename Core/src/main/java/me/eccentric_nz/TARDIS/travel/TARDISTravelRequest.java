@@ -96,7 +96,7 @@ public class TARDISTravelRequest {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "WORLDGUARD");
             bool = false;
         }
-        if (plugin.getPluginRespect().isTownyOnServer() && !plugin.getConfig().getString("preferences.respect_towny").equals("none") && !plugin.getPluginRespect().getTychk().checkTowny(to, l)) {
+        if (plugin.getPluginRespect().isTownyOnServer() && !plugin.getConfig().getString("preferences.respect_towny").equals("none") && !plugin.getPluginRespect().getTownyChecker().checkTowny(to, l)) {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "TOWNY");
             bool = false;
         }
@@ -104,7 +104,11 @@ public class TARDISTravelRequest {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "WORLDBORDER");
             bool = false;
         }
-        if (plugin.getPluginRespect().isGriefPreventionOnServer() && plugin.getConfig().getBoolean("preferences.respect_grief_prevention") && !plugin.getPluginRespect().getGriefchk().isInClaim(to, l)) {
+        if (plugin.getPluginRespect().isChunkyBorderOnServer() && plugin.getConfig().getBoolean("preferences.respect_chunky_border") && !plugin.getPluginRespect().getChunkyBorderCheck().isOutsideBorder(to, l)) {
+            plugin.getMessenger().send(p, TardisModule.TARDIS, "CHUNKYBORDER");
+            bool = false;
+        }
+        if (plugin.getPluginRespect().isGriefPreventionOnServer() && plugin.getConfig().getBoolean("preferences.respect_grief_prevention") && !plugin.getPluginRespect().getGriefPreventionChecker().isInClaim(to, l)) {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "GRIEFPREVENTION");
             bool = false;
         }

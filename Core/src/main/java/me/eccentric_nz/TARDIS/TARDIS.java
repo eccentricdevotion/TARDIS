@@ -1606,6 +1606,7 @@ public class TARDIS extends JavaPlugin {
     private void loadPluginRespect() {
         pluginRespect = new TARDISPluginRespect(this);
         pluginRespect.loadTowny();
+        pluginRespect.loadChunkyBorder();
         pluginRespect.loadGriefPrevention();
     }
 

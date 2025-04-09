@@ -122,6 +122,7 @@ preferences:
   respect_worldguard: build
   respect_towny: nation
   respect_worldborder: true
+  respect_chunky_border: true
   respect_grief_prevention: true
   sfx_volume: 10
   strike_lightning: true
