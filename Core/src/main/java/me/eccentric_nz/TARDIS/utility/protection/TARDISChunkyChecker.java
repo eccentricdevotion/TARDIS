@@ -35,7 +35,7 @@ public class TARDISChunkyChecker {
     private final ChunkyBorder chunky;
 
     public TARDISChunkyChecker(TARDIS plugin) {
-        chunky = (ChunkyBorder) plugin.getPM().getPlugin("ChunkyBorder");
+        chunky = plugin.getServer().getServicesManager().load(ChunkyBorder.class);
     }
 
     /**
