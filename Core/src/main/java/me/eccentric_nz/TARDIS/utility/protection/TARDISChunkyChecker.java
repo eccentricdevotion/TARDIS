@@ -21,6 +21,7 @@ import org.popcraft.chunky.platform.Player;
 import org.popcraft.chunky.platform.World;
 import org.popcraft.chunky.platform.util.Location;
 import org.popcraft.chunkyborder.ChunkyBorder;
+import org.popcraft.chunkyborder.ChunkyBorderBukkit;
 import org.popcraft.chunkyborder.event.server.BlockPlaceEvent;
 import org.popcraft.chunky.platform.BukkitPlayer;
 import org.popcraft.chunky.platform.BukkitWorld;
@@ -35,7 +36,7 @@ public class TARDISChunkyChecker {
     private final ChunkyBorder chunky;
 
     public TARDISChunkyChecker(TARDIS plugin) {
-        chunky = (ChunkyBorder) plugin.getPM().getPlugin("ChunkyBorder");
+        chunky = plugin.getServer().getServicesManager().load(ChunkyBorder.class);
     }
 
     /**
