@@ -171,7 +171,7 @@ public class TARDISParticleInventory {
         tim.setCustomModelDataComponent(tcomponent);
 //        NamespacedKey cmd = (data.isOn()) ? GUIParticle.TOGGLE.key() : SwitchVariant.BUTTON_TOGGLE_OFF.getKey();
 //        tim.setItemModel(cmd);
-//        toggle.setItemMeta(tim);
+        toggle.setItemMeta(tim);
         stacks[GUIParticle.TOGGLE.slot()] = toggle;
         // test
         ItemStack test = new ItemStack(GUIParticle.TEST.material(), 1);
