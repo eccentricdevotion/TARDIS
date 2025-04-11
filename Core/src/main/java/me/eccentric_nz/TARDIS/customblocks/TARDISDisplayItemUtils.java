@@ -217,7 +217,7 @@ public class TARDISDisplayItemUtils {
         // spawn an item display entity
         ItemStack is = new ItemStack(tdi.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(tdi.getDisplayName());
+        im.setDisplayName(ChatColor.WHITE + tdi.getDisplayName());
 //        im.setItemModel(tdi.getCustomModel());
         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
         is.setItemMeta(im);
@@ -267,7 +267,7 @@ public class TARDISDisplayItemUtils {
         Material material = (tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) ? tdi.getCraftMaterial() : tdi.getMaterial();
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName(tdi.getDisplayName());
+        im.setDisplayName(ChatColor.WHITE + tdi.getDisplayName());
 //        if (tdi.getCustomModel() != null) {
 //            im.setItemModel(tdi.getCustomModel());
 //        }

@@ -120,6 +120,7 @@ public class TARDISItemDisplaySetter {
         ItemStack is = new ItemStack(material);
         if (model != null) {
             ItemMeta im = is.getItemMeta();
+            // TODO change method to set display name
             im.setItemModel(model);
             is.setItemMeta(im);
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
