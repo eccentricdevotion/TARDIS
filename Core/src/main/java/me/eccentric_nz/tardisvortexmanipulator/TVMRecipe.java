@@ -37,7 +37,7 @@ public class TVMRecipe {
         if (!plugin.getVortexConfig().getString("recipe.lore").equals("")) {
             im.setLore(List.of(plugin.getVortexConfig().getString("recipe.lore").split("~")));
         }
-        im.setItemModel(RecipeItem.VORTEX_MANIPULATOR.getModel());
+//        im.setItemModel(RecipeItem.VORTEX_MANIPULATOR.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "vortex-manipulator");
         ShapedRecipe r = new ShapedRecipe(key, is);

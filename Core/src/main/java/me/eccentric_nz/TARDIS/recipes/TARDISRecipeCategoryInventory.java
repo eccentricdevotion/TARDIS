@@ -18,11 +18,14 @@ package me.eccentric_nz.TARDIS.recipes;
 
 import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
+import me.eccentric_nz.TARDIS.custommodels.keys.KeyVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 import java.util.Map;
@@ -50,9 +53,19 @@ public class TARDISRecipeCategoryInventory {
                 ItemStack cat = new ItemStack(category.getMaterial(), 1);
                 ItemMeta egory = cat.getItemMeta();
                 egory.setDisplayName(category.getName());
-//                if (category.getModel() != null) {
-//                    egory.setItemModel(category.getModel());
-//                }
+                if (category == RecipeCategory.ITEMS) {
+                    CustomModelDataComponent component = egory.getCustomModelDataComponent();
+                    component.setFloats(KeyVariant.BRASS_STRING.getFloats());
+                    egory.setCustomModelDataComponent(component);
+                }
+                if (category == RecipeCategory.SONIC_UPGRADES) {
+                    CustomModelDataComponent component = egory.getCustomModelDataComponent();
+                    component.setFloats(SonicVariant.NINTH.getFloats());
+                    egory.setCustomModelDataComponent(component);
+                }
+                if (category == RecipeCategory.ROTORS) {
+                    egory.setItemModel(category.getModel());
+                }
                 egory.addItemFlags(ItemFlag.values());
                 egory.setAttributeModifiers(Multimaps.forMap(Map.of()));
                 cat.setItemMeta(egory);
