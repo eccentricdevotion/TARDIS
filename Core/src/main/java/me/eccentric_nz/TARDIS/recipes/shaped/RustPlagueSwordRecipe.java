@@ -26,7 +26,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.WeaponComponent;
 
 import java.util.List;
 
@@ -59,11 +58,9 @@ public class RustPlagueSwordRecipe {
         im.setDisplayName(ChatColor.WHITE + "Rust Plague Sword");
 //        im.setItemModel(RecipeItem.RUST_PLAGUE_SWORD.getModel());
         im.setLore(List.of("Dalek Virus Dispenser"));
-        // set weapon component
-        WeaponComponent component = im.getWeapon();
-        component.setItemDamagePerAttack(8);
-        im.setWeapon(component);
         is.setItemMeta(im);
+        // set weapon component
+        TARDIS.plugin.getComponentSetter().setWeapon(is);
         NamespacedKey key = new NamespacedKey(plugin, "rust_plague_sword");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = new ItemStack(Material.LAVA_BUCKET, 1);

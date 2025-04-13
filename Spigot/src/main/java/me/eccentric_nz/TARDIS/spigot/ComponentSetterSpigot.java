@@ -4,6 +4,7 @@ import me.eccentric_nz.tardisregeneration.ComponentSetter;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.WeaponComponent;
 import org.bukkit.inventory.meta.components.consumable.ConsumableComponent;
 
 public class ComponentSetterSpigot implements ComponentSetter {
@@ -16,6 +17,15 @@ public class ComponentSetterSpigot implements ComponentSetter {
         consumableComponent.setConsumeParticles(false);
         consumableComponent.setSound(Sound.ENTITY_GENERIC_DRINK);
         im.setConsumable(consumableComponent);
+        is.setItemMeta(im);
+        return is;
+    }
+
+    public ItemStack setWeapon(ItemStack is) {
+        ItemMeta im = is.getItemMeta();
+        WeaponComponent component = im.getWeapon();
+        component.setItemDamagePerAttack(8);
+        im.setWeapon(component);
         is.setItemMeta(im);
         return is;
     }
