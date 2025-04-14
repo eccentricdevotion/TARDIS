@@ -18,31 +18,47 @@ package me.eccentric_nz.TARDIS.schematic.setters;
 
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.desktop.TARDISRandomArchiveName;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.block.Block;
 import org.bukkit.block.Skull;
 import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
 
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.UUID;
 
 /**
- *
  * @author eccentric_nz
  */
 public class TARDISHeadSetter {
 
     public static void textureSkull(TARDIS plugin, UUID uuid, JsonObject head, Block block) {
         try {
-            PlayerProfile profile = plugin.getServer().createPlayerProfile(uuid);
+            String name;
+            if (head.has("name")) {
+                name = StringUtils.defaultIfBlank(
+                        head.get("name").getAsString(),
+                        TARDISStringUtils.toLowercaseDashed(TARDISRandomArchiveName.getRandomName()).substring(0, 15)
+                );
+            } else {
+                name = TARDISStringUtils.toLowercaseDashed(TARDISRandomArchiveName.getRandomName()).substring(0, 15);
+            }
+            PlayerProfile profile = plugin.getServer().createPlayerProfile(uuid, name);
             PlayerTextures textures = profile.getTextures();
-            URL url = new URL(head.get("texture").getAsString());
+            URL url = URI.create(head.get("texture").getAsString()).toURL();
             textures.setSkin(url);
             profile.setTextures(textures);
             Skull skull = (Skull) block.getState();
-            skull.setOwnerProfile(profile);
+            if (profile.isComplete()) {
+                skull.setOwnerProfile(profile);
+            } else {
+                TARDIS.plugin.debug("Head texture could not be set due to incomplete player profile!");
+            }
             skull.update();
         } catch (MalformedURLException ex) {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, "Could not create schematic texture URL for player head!");

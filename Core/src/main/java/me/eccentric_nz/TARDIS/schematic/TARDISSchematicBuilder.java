@@ -41,6 +41,7 @@ import org.bukkit.util.BoundingBox;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author eccentric_nz
@@ -310,8 +311,11 @@ public class TARDISSchematicBuilder {
                         JsonObject head = new JsonObject();
                         Skull skull = (Skull) b.getState();
                         if (skull.getOwnerProfile() != null) {
+                            String name = Objects.requireNonNullElse(skull.getOwnerProfile().getName(), "");
                             plugin.debug("UUID: " + skull.getOwnerProfile().getUniqueId());
+                            plugin.debug("name: " + name);
                             head.addProperty("uuid", skull.getOwnerProfile().getUniqueId().toString());
+                            head.addProperty("name", name);
                             head.addProperty("texture", skull.getOwnerProfile().getTextures().getSkin().toString());
                         }
                         obj.add("head", head);
