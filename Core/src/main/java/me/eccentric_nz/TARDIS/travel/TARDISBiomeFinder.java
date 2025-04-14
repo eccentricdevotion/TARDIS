@@ -69,6 +69,7 @@ public class TARDISBiomeFinder {
         if (!plugin.getPluginRespect().getRespect(tb, new Parameters(player, Flag.getDefaultFlags()))) {
             if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
                 plugin.getTrackerKeeper().getMalfunction().put(id, true);
+                // TODO if malfunction, need to change the travel message as respect message plays first...
             } else {
                 // cancel
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "PROTECTED");

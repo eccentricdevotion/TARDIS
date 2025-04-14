@@ -88,6 +88,7 @@ public class TARDISTravelSave {
                 if (!plugin.getPluginRespect().getRespect(save_dest, new Parameters(player, Flag.getDefaultFlags()))) {
                     if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
                         plugin.getTrackerKeeper().getMalfunction().put(id, true);
+                        // TODO if malfunction, need to change the travel message as respect message plays first...
                     } else {
                         return true;
                     }
