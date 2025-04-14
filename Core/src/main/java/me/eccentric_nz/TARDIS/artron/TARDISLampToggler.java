@@ -87,11 +87,15 @@ public class TARDISLampToggler {
                         if (display != null) {
                             ItemStack is = new ItemStack(light.getOff().getMaterial());
                             ItemMeta im = is.getItemMeta();
-                            im.setDisplayName(ChatColor.WHITE + light.getOff().getDisplayName());
+                            String name = ChatColor.WHITE + light.getOff().getDisplayName();
+                            plugin.debug("OFF: " + name);
+                            im.setDisplayName(name);
                             NamespacedKey model = light.getOff().getCustomModel();
                             if (model != null) {
                                 im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
-//                                im.setItemModel(model);
+                                if (name.contains("Variable")) {
+                                    im.setItemModel(model);
+                                }
                             }
                             is.setItemMeta(im);
                             display.setItemStack(is);
@@ -107,11 +111,15 @@ public class TARDISLampToggler {
                     if (display != null) {
                         ItemStack is = new ItemStack(light.getOn().getMaterial());
                         ItemMeta im = is.getItemMeta();
-                        im.setDisplayName(ChatColor.WHITE + light.getOn().getDisplayName());
+                        String name = ChatColor.WHITE + light.getOn().getDisplayName();
+                        plugin.debug("ON: " + name);
+                        im.setDisplayName(name);
                         NamespacedKey model = light.getOn().getCustomModel();
                         if (model != null) {
                             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
-//                            im.setItemModel(model);
+                            if (name.contains("Variable")) {
+                                im.setItemModel(model);
+                            }
                         }
                         is.setItemMeta(im);
                         display.setItemStack(is);
