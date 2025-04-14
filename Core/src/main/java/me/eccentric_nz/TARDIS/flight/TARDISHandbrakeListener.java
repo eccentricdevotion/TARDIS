@@ -223,7 +223,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     // start time rotor?
                                     if (tardis.getRotor() != null) {
                                         if (tardis.getRotor() == TARDISConstants.UUID_ZERO) {
-                                            // get sculk shrieker and set shreiking
+                                            // get sculk shrieker and set shrieking
                                             TARDISSculkShrieker.setRotor(id);
                                         } else {
                                             ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());

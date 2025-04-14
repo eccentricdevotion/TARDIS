@@ -59,11 +59,12 @@ public class TARDISItemFrameSetter {
                 Material material = Material.valueOf(json.get("item").getAsString());
                 ItemStack is = new ItemStack(material);
                 ItemMeta im = is.getItemMeta();
-//                if (json.has("cmd")) {
-//                    cmd = json.get("cmd").getAsString();
-//                    NamespacedKey key = new NamespacedKey(TARDIS.plugin, cmd);
-//                    im.setItemModel(key);
-//                }
+                // needed for Time Rotors / Doors
+                if (json.has("cmd")) {
+                    cmd = json.get("cmd").getAsString();
+                    NamespacedKey key = new NamespacedKey(TARDIS.plugin, cmd);
+                    im.setItemModel(key);
+                }
                 if (json.has("name")) {
                     im.setDisplayName(json.get("name").getAsString());
                 }
