@@ -47,7 +47,7 @@ public class TARDISRedstoneListener implements Listener {
         String block = event.getBlock().getLocation().toString();
         if (plugin.getGeneralKeeper().getSonicPistons().contains(block)) {
             event.setCancelled(true);
-            TARDISSonicRedstone.setExtension(plugin, event.getBlock());
+            TARDISSonicRedstone.keepExtended(plugin, event.getBlock());
         }
     }
 }

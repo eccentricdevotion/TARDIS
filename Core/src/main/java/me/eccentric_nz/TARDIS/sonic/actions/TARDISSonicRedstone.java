@@ -49,7 +49,9 @@ public class TARDISSonicRedstone {
             Material blockType = block.getType();
             // do redstone activation
             switch (blockType) {
-                case COPPER_BULB, WAXED_COPPER_BULB, EXPOSED_COPPER_BULB, WAXED_EXPOSED_COPPER_BULB, OXIDIZED_COPPER_BULB, WAXED_OXIDIZED_COPPER_BULB, WEATHERED_COPPER_BULB, WAXED_WEATHERED_COPPER_BULB -> {
+                case COPPER_BULB, WAXED_COPPER_BULB, EXPOSED_COPPER_BULB, WAXED_EXPOSED_COPPER_BULB,
+                     OXIDIZED_COPPER_BULB, WAXED_OXIDIZED_COPPER_BULB, WEATHERED_COPPER_BULB,
+                     WAXED_WEATHERED_COPPER_BULB -> {
                     CopperBulb bulb = (CopperBulb) block.getBlockData();
                     if (player.isSneaking()) {
                         bulb.setLit(false);
@@ -214,6 +216,13 @@ public class TARDISSonicRedstone {
         return false;
     }
 
+    public static void keepExtended(TARDIS plugin, Block b) {
+        TechnicalPiston head = (TechnicalPiston) b.getBlockData();
+        BlockFace face = head.getFacing();
+        Block piston = b.getRelative(face);
+        extend(plugin, b, piston);
+    }
+
     private static void extend(TARDIS plugin, Block b, Block l) {
         plugin.getGeneralKeeper().getSonicPistons().add(b.getLocation().toString());
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -225,7 +234,7 @@ public class TARDISSonicRedstone {
             pistonHead.setFacing(piston.getFacing());
             l.setBlockData(pistonHead);
             piston.setExtended(true);
-            b.setBlockData(piston, true);
+            b.setBlockData(piston, false);
         }, 3L);
     }
 }
