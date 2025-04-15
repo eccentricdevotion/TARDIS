@@ -20,10 +20,7 @@ import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
-import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.KeyVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISRecipeLister;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryInventory;
@@ -399,64 +396,64 @@ public class TARDISRecipeCommands implements CommandExecutor {
     private String getDisplayName(String recipe, int quartzCount) {
         switch (recipe) {
             case "TARDIS Locator" -> {
-                return "TARDIS Locator Circuit"; // 1965
+                return ChatColor.WHITE + "TARDIS Locator Circuit"; // 1965
             }
             case "Stattenheim Remote" -> {
-                return "TARDIS Stattenheim Circuit"; // 1963
+                return ChatColor.WHITE + "TARDIS Stattenheim Circuit"; // 1963
             }
             case "TARDIS Chameleon Circuit", "TARDIS Remote Key" -> {
-                return "TARDIS Materialisation Circuit"; // 1964
+                return ChatColor.WHITE + "TARDIS Materialisation Circuit"; // 1964
             }
             case "TARDIS Invisibility Circuit", "Perception Filter" -> {
-                return "Perception Circuit"; // 1978
+                return ChatColor.WHITE + "Perception Circuit"; // 1978
             }
             case "Sonic Screwdriver", "Server Admin Circuit", "Sonic Dock" -> {
-                return "Sonic Oscillator"; // 1967
+                return ChatColor.WHITE + "Sonic Oscillator"; // 1967
             }
             case "Fob Watch", "Preset Storage Disk", "TARDIS Television" -> {
-                return "TARDIS Chameleon Circuit"; // 1966
+                return ChatColor.WHITE + "TARDIS Chameleon Circuit"; // 1966
             }
             case "TARDIS Biome Reader", "Emerald Upgrade" -> {
-                return "Emerald Environment Circuit"; // 1972
+                return ChatColor.WHITE + "Emerald Environment Circuit"; // 1972
             }
             case "Rift Manipulator" -> {
-                return "Rift Circuit"; // 1983
+                return ChatColor.WHITE + "Rift Circuit"; // 1983
             }
             case "Admin Upgrade" -> {
-                return "Server Admin Circuit";
+                return ChatColor.WHITE + "Server Admin Circuit";
             }
             case "Bio-scanner Upgrade" -> {
-                return "Bio-scanner Circuit";
+                return ChatColor.WHITE + "Bio-scanner Circuit";
             }
             case "Redstone Upgrade" -> {
-                return "Redstone Activator Circuit";
+                return ChatColor.WHITE + "Redstone Activator Circuit";
             }
             case "Diamond Upgrade" -> {
-                return "Diamond Disruptor Circuit";
+                return ChatColor.WHITE + "Diamond Disruptor Circuit";
             }
             case "Painter Upgrade" -> {
-                return "Painter Circuit";
+                return ChatColor.WHITE + "Painter Circuit";
             }
             case "Ignite Upgrade" -> {
-                return "Ignite Circuit";
+                return ChatColor.WHITE + "Ignite Circuit";
             }
             case "Pickup Arrows Upgrade" -> {
-                return "Pickup Arrows Circuit";
+                return ChatColor.WHITE + "Pickup Arrows Circuit";
             }
             case "Knockback Upgrade" -> {
-                return "Knockback Circuit";
+                return ChatColor.WHITE + "Knockback Circuit";
             }
             case "Brush Upgrade" -> {
-                return "Brush Circuit";
+                return ChatColor.WHITE + "Brush Circuit";
             }
             case "Conversion Upgrade" -> {
-                return "Conversion Circuit";
+                return ChatColor.WHITE + "Conversion Circuit";
             }
             default -> {  // TARDIS Stattenheim Circuit"
                 if (quartzCount == 0) {
-                    return "TARDIS Locator Circuit"; // 1965
+                    return ChatColor.WHITE + "TARDIS Locator Circuit"; // 1965
                 } else {
-                    return "TARDIS Materialisation Circuit"; // 1964
+                    return ChatColor.WHITE + "TARDIS Materialisation Circuit"; // 1964
                 }
             }
         }
