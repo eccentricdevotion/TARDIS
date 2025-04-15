@@ -44,7 +44,7 @@ public class SpaceSuitLeggingsRecipe {
         ItemStack is = new ItemStack(Material.CHAINMAIL_LEGGINGS, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Space Suit Leggings");
-        im.setItemModel(RecipeItem.TARDIS_SPACE_SUIT_LEGGINGS.getModel());
+//        im.setItemModel(RecipeItem.TARDIS_SPACE_SUIT_LEGGINGS.getModel());
         im.setMaxStackSize(1);
         EquippableComponent equippable = im.getEquippable();
         equippable.setSlot(EquipmentSlot.LEGS);

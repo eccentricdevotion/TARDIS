@@ -53,7 +53,7 @@ public class ConversionRepairRecipe {
         ItemStack isa = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
         ima.setDisplayName(ChatColor.WHITE + "Conversion Circuit");
-        ima.setItemModel(RecipeItem.CONVERSION_CIRCUIT.getModel());
+//        ima.setItemModel(RecipeItem.CONVERSION_CIRCUIT.getModel());
         isa.setItemMeta(ima);
         RecipeChoice addition = new RecipeChoice.ExactChoice(isa);
         NamespacedKey key = new NamespacedKey(plugin, "conversion_repair");

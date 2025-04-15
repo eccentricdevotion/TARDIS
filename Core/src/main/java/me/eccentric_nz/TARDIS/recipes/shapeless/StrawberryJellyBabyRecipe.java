@@ -43,7 +43,7 @@ public class StrawberryJellyBabyRecipe {
         ItemStack is = new ItemStack(Material.MELON_SLICE, 4);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Strawberry Jelly Baby");
-        im.setItemModel(RecipeItem.STRAWBERRY_JELLY_BABY.getModel());
+//        im.setItemModel(RecipeItem.STRAWBERRY_JELLY_BABY.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "strawberry_jelly_baby");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

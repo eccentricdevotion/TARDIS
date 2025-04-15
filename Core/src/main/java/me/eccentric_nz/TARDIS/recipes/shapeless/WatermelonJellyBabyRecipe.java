@@ -43,7 +43,7 @@ public class WatermelonJellyBabyRecipe {
         ItemStack is = new ItemStack(Material.MELON_SLICE, 4);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Watermelon Jelly Baby");
-        im.setItemModel(RecipeItem.WATERMELON_JELLY_BABY.getModel());
+//        im.setItemModel(RecipeItem.WATERMELON_JELLY_BABY.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "watermelon_jelly_baby");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

@@ -54,7 +54,7 @@ public class CyanBowTieRecipe {
         ItemStack is = new ItemStack(Material.LEATHER_HELMET, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Cyan Bow Tie");
-        im.setItemModel(RecipeItem.CYAN_BOW_TIE.getModel());
+//        im.setItemModel(RecipeItem.CYAN_BOW_TIE.getModel());
         im.setLore(List.of("Bow ties are cool!"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "cyan_bow_tie");

@@ -58,7 +58,7 @@ public class ConsoleRusticRecipe {
         String dn = "Rustic Console";
         im.setDisplayName(ChatColor.WHITE + dn);
         im.setLore(List.of("Integration with interaction"));
-        im.setItemModel(RecipeItem.RUSTIC_CONSOLE.getModel());
+//        im.setItemModel(RecipeItem.RUSTIC_CONSOLE.getModel());
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, "console_rustic");
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "rustic_console");

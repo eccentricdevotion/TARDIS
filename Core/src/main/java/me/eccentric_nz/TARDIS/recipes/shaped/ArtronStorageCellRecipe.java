@@ -54,7 +54,7 @@ public class ArtronStorageCellRecipe {
         ItemStack is = new ItemStack(Material.BUCKET, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Artron Storage Cell");
-        im.setItemModel(Whoniverse.ARTRON_BATTERY.getKey());
+//        im.setItemModel(Whoniverse.ARTRON_BATTERY.getKey());
         im.setLore(List.of("Charge Level", "0"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "artron_storage_cell");

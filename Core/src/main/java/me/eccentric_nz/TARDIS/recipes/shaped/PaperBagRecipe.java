@@ -54,7 +54,7 @@ public class PaperBagRecipe {
         ItemStack is = new ItemStack(Material.PAPER, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Paper Bag");
-        im.setItemModel(RecipeItem.PAPER_BAG.getModel());
+//        im.setItemModel(RecipeItem.PAPER_BAG.getModel());
         im.setLore(List.of("Smaller on the outside"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "paper_bag");

@@ -44,7 +44,7 @@ public class SpaceSuitChestplateRecipe {
         ItemStack is = new ItemStack(Material.CHAINMAIL_CHESTPLATE, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Space Suit Chestplate");
-        im.setItemModel(RecipeItem.TARDIS_SPACE_SUIT_CHESTPLATE.getModel());
+//        im.setItemModel(RecipeItem.TARDIS_SPACE_SUIT_CHESTPLATE.getModel());
         im.setMaxStackSize(1);
         EquippableComponent equippable = im.getEquippable();
         equippable.setSlot(EquipmentSlot.CHEST);

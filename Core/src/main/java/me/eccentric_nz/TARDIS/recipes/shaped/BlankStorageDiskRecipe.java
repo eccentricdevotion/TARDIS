@@ -46,7 +46,7 @@ public class BlankStorageDiskRecipe {
         ItemStack is = new ItemStack(Material.MUSIC_DISC_STRAD, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Blank Storage Disk");
-        im.setItemModel(RecipeItem.BLANK_STORAGE_DISK.getModel());
+//        im.setItemModel(RecipeItem.BLANK_STORAGE_DISK.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "blank_storage_disk");
         ShapedRecipe r = new ShapedRecipe(key, is);

@@ -48,7 +48,7 @@ public class RiftCircuitRecipe {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Rift Circuit");
-        im.setItemModel(RecipeItem.RIFT_CIRCUIT.getModel());
+//        im.setItemModel(RecipeItem.RIFT_CIRCUIT.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "rift_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

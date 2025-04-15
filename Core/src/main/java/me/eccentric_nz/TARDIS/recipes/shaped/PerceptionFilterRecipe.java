@@ -54,7 +54,7 @@ public class PerceptionFilterRecipe {
         ItemStack is = new ItemStack(Material.OMINOUS_TRIAL_KEY, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Perception Filter");
-        im.setItemModel(RecipeItem.PERCEPTION_FILTER.getModel());
+//        im.setItemModel(RecipeItem.PERCEPTION_FILTER.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "perception_filter");
         ShapedRecipe r = new ShapedRecipe(key, is);
@@ -66,7 +66,7 @@ public class PerceptionFilterRecipe {
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
             em.setDisplayName(ChatColor.WHITE + "Perception Circuit");
-            em.setItemModel(RecipeItem.PERCEPTION_CIRCUIT.getModel());
+//            em.setItemModel(RecipeItem.PERCEPTION_CIRCUIT.getModel());
             exact.setItemMeta(em);
             r.setIngredient('C', new RecipeChoice.ExactChoice(exact));
         } else {

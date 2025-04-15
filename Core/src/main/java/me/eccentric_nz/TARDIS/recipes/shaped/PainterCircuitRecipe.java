@@ -51,7 +51,7 @@ public class PainterCircuitRecipe {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Painter Circuit");
-        im.setItemModel(RecipeItem.PAINTER_CIRCUIT.getModel());
+//        im.setItemModel(RecipeItem.PAINTER_CIRCUIT.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "painter_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

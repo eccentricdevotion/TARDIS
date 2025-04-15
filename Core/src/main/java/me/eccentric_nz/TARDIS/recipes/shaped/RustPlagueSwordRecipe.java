@@ -66,7 +66,7 @@ public class RustPlagueSwordRecipe {
         ItemStack exact = new ItemStack(Material.LAVA_BUCKET, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "Rust Bucket");
-        em.setItemModel(RecipeItem.RUST_BUCKET.getModel());
+//        em.setItemModel(RecipeItem.RUST_BUCKET.getModel());
         exact.setItemMeta(em);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("RIR", "RIR", "DSD");

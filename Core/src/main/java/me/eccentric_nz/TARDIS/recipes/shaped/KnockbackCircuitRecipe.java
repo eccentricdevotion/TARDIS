@@ -54,7 +54,7 @@ public class KnockbackCircuitRecipe {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Knockback Circuit");
-        im.setItemModel(RecipeItem.KNOCKBACK_CIRCUIT.getModel());
+//        im.setItemModel(RecipeItem.KNOCKBACK_CIRCUIT.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "knockback_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

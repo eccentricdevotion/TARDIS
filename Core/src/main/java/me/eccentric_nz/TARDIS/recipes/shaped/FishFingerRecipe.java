@@ -51,7 +51,7 @@ public class FishFingerRecipe {
         ItemStack is = new ItemStack(Material.COOKED_COD, 3);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Fish Finger");
-        im.setItemModel(RecipeItem.FISH_FINGER.getModel());
+//        im.setItemModel(RecipeItem.FISH_FINGER.getModel());
         im.setLore(List.of("Best eaten with custard!"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "fish_finger");

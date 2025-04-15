@@ -51,7 +51,7 @@ public class BioscannerCircuitRecipe {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Bio-scanner Circuit");
-        im.setItemModel(RecipeItem.BIO_SCANNER_CIRCUIT.getModel());
+//        im.setItemModel(RecipeItem.BIO_SCANNER_CIRCUIT.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "bio-scanner_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

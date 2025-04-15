@@ -53,7 +53,7 @@ public class EmeraldRepairRecipe {
         ItemStack isa = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
         ima.setDisplayName(ChatColor.WHITE + "Emerald Environment Circuit");
-        ima.setItemModel(RecipeItem.EMERALD_ENVIRONMENT_CIRCUIT.getModel());
+//        ima.setItemModel(RecipeItem.EMERALD_ENVIRONMENT_CIRCUIT.getModel());
         isa.setItemMeta(ima);
         RecipeChoice addition = new RecipeChoice.ExactChoice(isa);
         NamespacedKey key = new NamespacedKey(plugin, "emerald_repair");

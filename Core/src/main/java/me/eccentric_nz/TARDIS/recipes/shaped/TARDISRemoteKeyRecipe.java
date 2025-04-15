@@ -57,7 +57,7 @@ public class TARDISRemoteKeyRecipe {
         ItemStack is = new ItemStack(Material.OMINOUS_TRIAL_KEY, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Remote Key");
-        im.setItemModel(RecipeItem.TARDIS_REMOTE_KEY.getModel());
+//        im.setItemModel(RecipeItem.TARDIS_REMOTE_KEY.getModel());
         im.setLore(List.of("Deadlock & unlock", "Hide & rebuild"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_remote_key");
@@ -70,7 +70,7 @@ public class TARDISRemoteKeyRecipe {
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
             em.setDisplayName(ChatColor.WHITE + "TARDIS Materialisation Circuit");
-            em.setItemModel(RecipeItem.TARDIS_MATERIALISATION_CIRCUIT.getModel());
+//            em.setItemModel(RecipeItem.TARDIS_MATERIALISATION_CIRCUIT.getModel());
             // set the second line of lore
             List<String> circuit;
             String uses = (plugin.getConfig().getString("circuits.uses.materialisation").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))

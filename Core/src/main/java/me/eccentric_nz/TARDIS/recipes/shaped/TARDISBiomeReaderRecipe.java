@@ -57,14 +57,14 @@ public class TARDISBiomeReaderRecipe {
         ItemStack is = new ItemStack(Material.BRICK, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Biome Reader");
-        im.setItemModel(RecipeItem.TARDIS_BIOME_READER.getModel());
+//        im.setItemModel(RecipeItem.TARDIS_BIOME_READER.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_biome_reader");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "Emerald Environment Circuit");
-        em.setItemModel(RecipeItem.EMERALD_ENVIRONMENT_CIRCUIT.getModel());
+//        em.setItemModel(RecipeItem.EMERALD_ENVIRONMENT_CIRCUIT.getModel());
         exact.setItemMeta(em);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" C ", "SDT", "LWN");

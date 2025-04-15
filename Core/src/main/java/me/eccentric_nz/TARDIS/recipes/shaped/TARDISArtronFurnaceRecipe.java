@@ -50,7 +50,7 @@ public class TARDISArtronFurnaceRecipe {
         ItemStack is = new ItemStack(Material.FURNACE, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Artron Furnace");
-        im.setItemModel(RecipeItem.TARDIS_ARTRON_FURNACE.getModel());
+//        im.setItemModel(RecipeItem.TARDIS_ARTRON_FURNACE.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_artron_furnace");
         ShapedRecipe r = new ShapedRecipe(key, is);

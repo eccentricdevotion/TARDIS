@@ -48,7 +48,7 @@ public class CustardCreamRecipe {
         ItemStack is = new ItemStack(Material.COOKIE, 8);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Custard Cream");
-        im.setItemModel(RecipeItem.CUSTARD_CREAM.getModel());
+//        im.setItemModel(RecipeItem.CUSTARD_CREAM.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "custard_cream");
         ShapedRecipe r = new ShapedRecipe(key, is);

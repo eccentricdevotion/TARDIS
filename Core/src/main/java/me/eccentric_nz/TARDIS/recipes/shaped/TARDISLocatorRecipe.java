@@ -52,7 +52,7 @@ public class TARDISLocatorRecipe {
         ItemStack is = new ItemStack(Material.COMPASS, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Locator");
-        im.setItemModel(RecipeItem.TARDIS_LOCATOR.getModel());
+//        im.setItemModel(RecipeItem.TARDIS_LOCATOR.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_locator");
         ShapedRecipe r = new ShapedRecipe(key, is);
@@ -62,7 +62,7 @@ public class TARDISLocatorRecipe {
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
             em.setDisplayName(ChatColor.WHITE + "TARDIS Locator Circuit");
-            em.setItemModel(RecipeItem.TARDIS_LOCATOR_CIRCUIT.getModel());
+//            em.setItemModel(RecipeItem.TARDIS_LOCATOR_CIRCUIT.getModel());
             exact.setItemMeta(em);
             r.setIngredient('C', new RecipeChoice.ExactChoice(exact));
         } else {

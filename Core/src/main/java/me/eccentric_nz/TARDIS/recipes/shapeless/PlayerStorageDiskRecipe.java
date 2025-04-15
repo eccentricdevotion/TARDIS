@@ -46,7 +46,7 @@ public class PlayerStorageDiskRecipe {
         ItemStack is = new ItemStack(Material.MUSIC_DISC_WAIT, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Player Storage Disk");
-        im.setItemModel(RecipeItem.PLAYER_STORAGE_DISK.getModel());
+//        im.setItemModel(RecipeItem.PLAYER_STORAGE_DISK.getModel());
         im.setLore(List.of("Blank"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "player_storage_disk");

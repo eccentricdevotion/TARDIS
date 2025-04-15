@@ -25,10 +25,9 @@ import org.bukkit.inventory.SmithingRecipe;
 import org.bukkit.inventory.SmithingTransformRecipe;
 
 /*
-base:BLAZE_ROD
-addition:GLOWSTONE_DUST=Redstone Activator Circuit
-result:BLAZE_ROD
-
+base:BUCKET
+addition:COPPER_INGOT
+result:BUCKET
 */
 
 public class CapacitorRepairRecipe {

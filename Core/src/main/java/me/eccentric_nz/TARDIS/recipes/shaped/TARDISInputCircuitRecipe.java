@@ -51,7 +51,7 @@ public class TARDISInputCircuitRecipe {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Input Circuit");
-        im.setItemModel(RecipeItem.TARDIS_INPUT_CIRCUIT.getModel());
+//        im.setItemModel(RecipeItem.TARDIS_INPUT_CIRCUIT.getModel());
         String uses = (plugin.getConfig().getString("circuits.uses.input").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? ChatColor.YELLOW + "unlimited"
                 : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.input");
