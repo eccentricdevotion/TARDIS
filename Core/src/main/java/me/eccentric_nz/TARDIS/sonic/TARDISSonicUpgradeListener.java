@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -62,7 +63,8 @@ public class TARDISSonicUpgradeListener implements Listener {
                 for (ItemStack glowstone : ci.getContents()) {
                     if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
                         ItemMeta rm = glowstone.getItemMeta();
-                        upgrade = SonicUpgradeData.customModelData.get(rm.getItemModel());
+                        String displayName = ChatColor.stripColor(rm.getDisplayName());
+                        upgrade = SonicUpgradeData.displayNames.get(displayName);
                         found = true;
                     }
                 }
@@ -96,7 +98,7 @@ public class TARDISSonicUpgradeListener implements Listener {
                 } else {
                     ItemMeta sim = sonic.getItemMeta();
                     List<Float> floats = SonicVariant.ELEVENTH.getFloats();
-                    if (sim.hasCustomModelData()) {
+                    if (sim.hasCustomModelDataComponent()) {
                         floats = sim.getCustomModelDataComponent().getFloats();
                     }
                     String dn = sim.getDisplayName();

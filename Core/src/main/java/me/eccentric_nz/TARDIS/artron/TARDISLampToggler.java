@@ -88,7 +88,6 @@ public class TARDISLampToggler {
                             ItemStack is = new ItemStack(light.getOff().getMaterial());
                             ItemMeta im = is.getItemMeta();
                             String name = ChatColor.WHITE + light.getOff().getDisplayName();
-                            plugin.debug("OFF: " + name);
                             im.setDisplayName(name);
                             NamespacedKey model = light.getOff().getCustomModel();
                             if (model != null) {
@@ -112,7 +111,6 @@ public class TARDISLampToggler {
                         ItemStack is = new ItemStack(light.getOn().getMaterial());
                         ItemMeta im = is.getItemMeta();
                         String name = ChatColor.WHITE + light.getOn().getDisplayName();
-                        plugin.debug("ON: " + name);
                         im.setDisplayName(name);
                         NamespacedKey model = light.getOn().getCustomModel();
                         if (model != null) {

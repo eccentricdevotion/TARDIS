@@ -26,6 +26,7 @@ public class SonicUpgradeData {
 
     public static final HashMap<String, String> upgrades = new HashMap<>();
     public static final HashMap<NamespacedKey, String> customModelData = new HashMap<>();
+    public static final HashMap<String, String> displayNames = new HashMap<>();
     public static final List<String> sonicKeys = List.of(
             "Bio-scanner Upgrade",
             "Diamond Upgrade",
@@ -61,5 +62,16 @@ public class SonicUpgradeData {
         customModelData.put(CircuitVariant.KNOCKBACK.getKey(), "Knockback Upgrade");
         customModelData.put(CircuitVariant.BRUSH.getKey(), "Brush Upgrade");
         customModelData.put(CircuitVariant.CONVERSION.getKey(), "Conversion Upgrade");
+        displayNames.put("Bio-scanner Circuit", "Bio-scanner Upgrade");
+        displayNames.put("Brush Circuit", "Brush Upgrade");
+        displayNames.put("Conversion Circuit", "Conversion Upgrade");
+        displayNames.put("Diamond Disruptor Circuit", "Diamond Upgrade");
+        displayNames.put("Emerald Environment Circuit", "Emerald Upgrade");
+        displayNames.put("Ignite Circuit", "Ignite Upgrade");
+        displayNames.put("Knockback Circuit", "Knockback Upgrade");
+        displayNames.put("Painter Circuit", "Painter Upgrade");
+        displayNames.put("Pickup Arrows Circuit", "Pickup Arrows Upgrade");
+        displayNames.put("Redstone Activator Circuit", "Redstone Upgrade");
+        displayNames.put("Server Admin Circuit", "Admin Upgrade");
     }
 }

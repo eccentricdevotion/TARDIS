@@ -17,12 +17,11 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.sonic.SonicUpgradeData;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -60,7 +59,7 @@ public class TARDISSmithingListener implements Listener {
                 ItemStack glowstone = inventory.getItem(2);
                 if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
                     ItemMeta rm = glowstone.getItemMeta();
-                    upgrade = SonicUpgradeData.customModelData.get(rm.getItemModel());
+                    upgrade = SonicUpgradeData.displayNames.get(ChatColor.stripColor(rm.getDisplayName()));
                     found = true;
                 }
                 // is it a valid upgrade?
