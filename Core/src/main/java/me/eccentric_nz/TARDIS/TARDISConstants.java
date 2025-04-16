@@ -54,11 +54,6 @@ public class TARDISConstants {
     public static final Vector3f VECTOR_QUARTER = new Vector3f(0.25f, 0.25f, 0.25f);
 
     /**
-     * Consoles which need to be higher
-     */
-    public static final List<String> HIGHER = List.of("redstone", "thirteenth", "factory", "copper");
-
-    /**
      * Modelled console colours
      */
     public static final Set<String> COLOURS = Set.of("console_rustic", "console_brown", "console_pink", "console_magenta",

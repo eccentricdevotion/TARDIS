@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.dev;
 
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -87,17 +86,10 @@ public class TARDISChunksCommand {
     }
 
     private Location getLocation(Schematic schematic, Tardis tardis, World world) {
-        int starty;
-        if (schematic.getPermission().equals("mechanical") || schematic.getPermission().equals("cursed")) {
-            starty = 62;
-        } else if (TARDISConstants.HIGHER.contains(schematic.getPermission())) {
-            starty = 65;
-        } else {
-            starty = 64;
-        }
         TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
         TARDISTIPSData pos = tintpos.getTIPSData(tardis.getTIPS());
         int startx = pos.getCentreX();
+        int starty = schematic.getStartY();
         int startz = pos.getCentreZ();
         return new Location(world, startx, starty, startz);
     }

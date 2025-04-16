@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.desktop;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -124,14 +123,7 @@ public class TARDISRepair {
                     startx = gsl[0];
                     startz = gsl[2];
                 }
-                int starty;
-                if (tardis.getSchematic().getPermission().equals("mechanical") || tardis.getSchematic().getPermission().equals("cursed")) {
-                    starty = 62;
-                } else if (TARDISConstants.HIGHER.contains(tardis.getSchematic().getPermission())) {
-                    starty = 65;
-                } else {
-                    starty = 64;
-                }
+                int starty = tardis.getSchematic().getStartY();
                 World world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
                 String wall = "ORANGE_WOOL";
                 String floor = "LIGHT_GRAY_WOOL";

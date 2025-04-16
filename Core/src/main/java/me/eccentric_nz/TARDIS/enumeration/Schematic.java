@@ -29,8 +29,21 @@ public class Schematic {
     private final ConsoleSize consoleSize;
     private final boolean beacon;
     private final TardisLight light;
+    private final int startY;
     private final boolean custom;
     private final int preview;
+
+    public Schematic(String seed, String permission, String description, ConsoleSize consoleSize, boolean beacon, TardisLight light, int startY, boolean custom, int preview) {
+        this.seed = seed;
+        this.permission = permission;
+        this.description = description;
+        this.consoleSize = consoleSize;
+        this.beacon = beacon;
+        this.light = light;
+        this.startY = startY;
+        this.custom = custom;
+        this.preview = preview;
+    }
 
     public Schematic(String seed, String permission, String description, ConsoleSize consoleSize, boolean beacon, TardisLight light, boolean custom, int preview) {
         this.seed = seed;
@@ -39,6 +52,7 @@ public class Schematic {
         this.consoleSize = consoleSize;
         this.beacon = beacon;
         this.light = light;
+        this.startY = 64;
         this.custom = custom;
         this.preview = preview;
     }
@@ -104,6 +118,15 @@ public class Schematic {
      */
     public TardisLight getLights() {
         return light;
+    }
+
+    /**
+     * Gets the y coordinate this schematic uses.
+     *
+     * @return the y coordinate to start building the console.
+     */
+    public int getStartY() {
+        return startY;
     }
 
     /**

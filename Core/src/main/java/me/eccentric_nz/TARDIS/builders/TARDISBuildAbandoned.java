@@ -128,13 +128,7 @@ class TARDISBuildAbandoned implements Runnable {
     @Override
     public void run() {
         if (!running) {
-            if (schm.getPermission().equals("mechanical") || schm.getPermission().equals("cursed")) {
-                starty = 62;
-            } else if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
-                starty = 65;
-            } else {
-                starty = 64;
-            }
+            starty = schm.getStartY();
             // get JSON
             obj = TARDISSchematicGZip.getObject(plugin, "consoles", schm.getPermission(), schm.isCustom());
             if (obj != null) {
