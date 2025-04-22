@@ -25,6 +25,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInputEvent;
 
@@ -36,7 +37,7 @@ public class PlayerInputListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerInput(PlayerInputEvent event) {
         Player player = event.getPlayer();
         Entity entity = player.getVehicle();
@@ -44,10 +45,10 @@ public class PlayerInputListener implements Listener {
             Input input = event.getInput();
             if (input.isSneak()) {
                 stand.setStationary(true);
-                Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
-                    TARDIS.plugin.getTrackerKeeper().getStillFlyingNotReturning().remove(player.getUniqueId());
+                Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    plugin.getTrackerKeeper().getStillFlyingNotReturning().remove(player.getUniqueId());
                     // teleport player back to the TARDIS interior
-                    new TARDISExteriorFlight(TARDIS.plugin).stopFlying(player, as);
+                    new TARDISExteriorFlight(plugin).stopFlying(player, as);
                     stand.setPlayer(null);
                     player.setFlying(false);
                     player.setAllowFlight(false);

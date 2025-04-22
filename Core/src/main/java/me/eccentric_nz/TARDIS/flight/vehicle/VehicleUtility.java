@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.flight.vehicle;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
+import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.builders.exterior.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import net.minecraft.server.level.ServerLevel;
@@ -41,11 +41,10 @@ public class VehicleUtility {
                 TARDIS.plugin.debug("Found armour stand");
                 if (((CraftArmorStand) as).getHandle() instanceof TARDISArmourStand) {
                     TARDIS.plugin.debug("Found TARDISArmourStand");
-                    return false;
                 } else {
                     convertStand(as);
-                    return false;
                 }
+                return false;
             }
         }
         return true;
@@ -97,9 +96,9 @@ public class VehicleUtility {
     }
 
     public static ItemDisplay getItemDisplay(Player player, ItemStack box, float scale) {
+        TARDIS.plugin.debug("getItemDisplay" + box.getItemMeta().hasItemModel());
         ItemDisplay display = (ItemDisplay) player.getWorld().spawnEntity(player.getLocation().add(0, 1.5, 0), EntityType.ITEM_DISPLAY);
         display.setItemStack(box);
-        player.addPassenger(display);
         Vector3f size = new Vector3f(scale, scale, scale);
         Vector3f position = new Vector3f(0, -1, 0);
         // set initial scale and position
@@ -109,6 +108,7 @@ public class VehicleUtility {
                 size,
                 TARDISConstants.AXIS_ANGLE_ZERO
         );
+        player.addPassenger(display);
         display.setTransformation(initial);
         return display;
     }
