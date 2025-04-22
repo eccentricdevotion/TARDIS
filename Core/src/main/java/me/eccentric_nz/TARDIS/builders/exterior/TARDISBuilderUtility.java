@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with plugin program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.TARDIS.builders.exterior;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
@@ -188,7 +188,7 @@ public class TARDISBuilderUtility {
         ee.setHelmet(is, true);
     }
 
-    static void updateChameleonDemat(String preset, int id) {
+    public static void updateChameleonDemat(String preset, int id) {
         // update demat field in database
         HashMap<String, Object> set = new HashMap<>();
         set.put("chameleon_demat", preset);

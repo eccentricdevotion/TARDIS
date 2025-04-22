@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.TARDIS.builders.interior;
 
 /**
  * Data storage container for the TARDIS Interior Positioning System. It stores the coordinates of the TIPS slot.

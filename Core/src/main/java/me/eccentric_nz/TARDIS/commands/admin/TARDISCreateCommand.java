@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
-import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISBuildData;
+import me.eccentric_nz.TARDIS.builders.utility.TARDISSeedBlockProcessor;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;

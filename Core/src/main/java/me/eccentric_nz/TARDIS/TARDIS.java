@@ -20,7 +20,7 @@ import io.papermc.lib.PaperLib;
 import me.eccentric_nz.TARDIS.api.TARDII;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import me.eccentric_nz.TARDIS.bStats.TARDISStats;
-import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
+import me.eccentric_nz.TARDIS.builders.exterior.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUI;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;

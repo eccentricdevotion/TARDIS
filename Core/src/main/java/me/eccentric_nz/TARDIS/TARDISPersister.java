@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS;
 
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
-import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockPersister;
+import me.eccentric_nz.TARDIS.builders.utility.TARDISSeedBlockPersister;
 import me.eccentric_nz.TARDIS.camera.CameraPersister;
 import me.eccentric_nz.TARDIS.database.TARDISTimeRotorLoader;
 import me.eccentric_nz.TARDIS.desktop.TARDISPreviewPersister;

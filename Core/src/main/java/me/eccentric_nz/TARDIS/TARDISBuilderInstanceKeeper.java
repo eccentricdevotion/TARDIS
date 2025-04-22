@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS;
 
 import com.google.common.collect.Sets;
-import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISBuildData;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;

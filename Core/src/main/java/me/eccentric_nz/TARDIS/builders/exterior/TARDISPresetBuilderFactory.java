@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.TARDIS.builders.exterior;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -205,7 +205,7 @@ public class TARDISPresetBuilderFactory {
         }
     }
 
-    BlockFace getSkullDirection(COMPASS d) {
+    public BlockFace getSkullDirection(COMPASS d) {
         BlockFace[] faces = face_map.get(d);
         return faces[TARDISConstants.RANDOM.nextInt(5)];
     }

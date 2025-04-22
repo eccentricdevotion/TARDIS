@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.TARDIS.builders.exterior;
 
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
@@ -530,7 +530,7 @@ public class TARDISInstantPreset {
         final Location l;
         final BlockData data;
 
-        ProblemBlock(Location l, BlockData data) {
+        public ProblemBlock(Location l, BlockData data) {
             this.l = l;
             this.data = data;
         }

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.TARDIS.builders.exterior;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -35,7 +35,7 @@ public final class BuildData extends MaterialisationData {
         setPlayerDefaults(uuid);
     }
 
-    boolean shouldAddSign() {
+    public boolean shouldAddSign() {
         return addSign;
     }
 
@@ -47,7 +47,7 @@ public final class BuildData extends MaterialisationData {
         this.malfunction = malfunction;
     }
 
-    boolean useMinecartSounds() {
+    public boolean useMinecartSounds() {
         return minecartSounds;
     }
 

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.TARDIS.builders.interior;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSSlot;
@@ -84,7 +84,7 @@ public class TARDISInteriorPostioning {
      *
      * @return the first vacant slot
      */
-    int getFreeSlot() {
+    public int getFreeSlot() {
         int limit = plugin.getConfig().getInt("creation.tips_limit");
         int slot = -1;
         if (plugin.getConfig().getString("creation.tips_next", "HIGHEST").equalsIgnoreCase("FREE")) {

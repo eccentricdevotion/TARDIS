@@ -17,7 +17,7 @@
 package me.eccentric_nz.TARDIS.flight.vehicle;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.BuildData;
+import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentWithPreset;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;

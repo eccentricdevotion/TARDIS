@@ -18,7 +18,7 @@ package me.eccentric_nz.TARDIS;
 
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.arch.TARDISWatchData;
-import me.eccentric_nz.TARDIS.builders.BuildData;
+import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.desktop.PreviewData;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.display.TARDISDisplayType;
