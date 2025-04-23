@@ -96,7 +96,6 @@ public class VehicleUtility {
     }
 
     public static ItemDisplay getItemDisplay(Player player, ItemStack box, float scale) {
-        TARDIS.plugin.debug("getItemDisplay" + box.getItemMeta().hasItemModel());
         ItemDisplay display = (ItemDisplay) player.getWorld().spawnEntity(player.getLocation().add(0, 1.5, 0), EntityType.ITEM_DISPLAY);
         display.setItemStack(box);
         Vector3f size = new Vector3f(scale, scale, scale);

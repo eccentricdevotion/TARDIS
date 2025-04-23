@@ -92,12 +92,12 @@ public class TARDISExteriorFlight {
             // get item display
             ItemDisplay display = (ItemDisplay) player.getPassengers().getFirst();
             ItemStack is = display.getItemStack();
-            // reset police box model
-            EntityEquipment ee = stand.getEquipment();
-            ee.setHelmet(is);
             player.eject();
             display.remove();
             if (!drifting) {
+                // reset police box model
+                EntityEquipment ee = stand.getEquipment();
+                ee.setHelmet(is);
                 // update the TARDIS's current location
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("world", location.getWorld().getName());
