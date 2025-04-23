@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.control.actions.ExileAction;
 import me.eccentric_nz.TARDIS.control.actions.RandomDestinationAction;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetRandomInteractions;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -73,6 +74,14 @@ public class TARDISRandomButton {
             ResultSetRepeaters rsr = new ResultSetRepeaters(plugin, id, secondary);
             if (rsr.resultSet()) {
                 int[] repeaters = rsr.getRepeaters();
+                if (repeaters[0] == -1) {
+                    // try getting modeled console settings
+                    // from WORLD, MULTIPLIER, X, Z and HELMIC_REGULATOR interactions
+                    ResultSetRandomInteractions rsri = new ResultSetRandomInteractions(plugin, id);
+                    if (rsri.resultSet()) {
+                        repeaters = rsri.getStates();
+                    }
+                }
                 new RandomDestinationAction(plugin).getRandomDestination(player, id, repeaters, rscl, direction, level, cost, comps, ownerUUID);
             }
         }
