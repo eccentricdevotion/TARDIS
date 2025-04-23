@@ -89,15 +89,15 @@ public class TARDISExteriorFlight {
             // stop animation and sound runnables
             plugin.getServer().getScheduler().cancelTask(data.getAnimation());
             plugin.getServer().getScheduler().cancelTask(data.getSound());
+            // get item display
+            ItemDisplay display = (ItemDisplay) player.getPassengers().getFirst();
+            ItemStack is = display.getItemStack();
+            player.eject();
+            display.remove();
             if (!drifting) {
-                // get item display
-                ItemDisplay display = (ItemDisplay) player.getPassengers().getFirst();
-                ItemStack is = display.getItemStack();
                 // reset police box model
                 EntityEquipment ee = stand.getEquipment();
                 ee.setHelmet(is);
-                player.eject();
-                display.remove();
                 // update the TARDIS's current location
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("world", location.getWorld().getName());
