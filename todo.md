@@ -19,8 +19,7 @@
 
 ## Wiki Documentation
 
-* Version 6.0.x changes
-* `creation.tips_next` config option
+* Version 6.0.x and 6.1.0 changes
 * Make all images tabbed
 * Vanilla/TARDIS screenshots for TabbedImage views
 * Add Handles rotation command

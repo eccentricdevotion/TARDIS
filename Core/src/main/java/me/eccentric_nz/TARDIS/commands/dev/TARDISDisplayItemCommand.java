@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISUpdateBlocksCommand;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -99,7 +100,7 @@ public class TARDISDisplayItemCommand {
                 if (player.getPassengers().isEmpty()) {
                     ItemStack box = new ItemStack(Material.BLUE_DYE, 1);
                     ItemMeta im = box.getItemMeta();
-                    im.setItemModel(new NamespacedKey(plugin, "police_box/flying/blue"));
+                    im.setItemModel(ChameleonVariant.BLUE_CLOSED.getKey());
                     box.setItemMeta(im);
                     ItemDisplay display = VehicleUtility.getItemDisplay(player, box, 1.75f);
                     int period = 40;
