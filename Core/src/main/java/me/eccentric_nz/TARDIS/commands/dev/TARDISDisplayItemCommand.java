@@ -82,7 +82,8 @@ public class TARDISDisplayItemCommand {
                         ItemMeta im = is.getItemMeta();
                         im.setItemModel(shopItem.getModel());
                         is.setItemMeta(im);
-                    } catch (IllegalArgumentException ignored) { }
+                    } catch (IllegalArgumentException ignored) {
+                    }
                 }
                 display.setItemStack(is);
                 display.setItemDisplayTransform(transform);
@@ -98,13 +99,19 @@ public class TARDISDisplayItemCommand {
             }
             case "animate" -> {
                 if (player.getPassengers().isEmpty()) {
-                    ItemStack box = new ItemStack(Material.BLUE_DYE, 1);
-                    ItemMeta im = box.getItemMeta();
-                    im.setItemModel(ChameleonVariant.BLUE_CLOSED.getKey());
-                    box.setItemMeta(im);
-                    ItemDisplay display = VehicleUtility.getItemDisplay(player, box, 1.75f);
-                    int period = 40;
-                    plugin.getTrackerKeeper().setAnimateTask(plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new InterpolatedAnimation(display, period), 5, period));
+                    if (args.length == 2) {
+                        ItemStack box = new ItemStack(Material.BLUE_DYE, 1);
+                        ItemMeta im = box.getItemMeta();
+                        im.setItemModel(ChameleonVariant.BLUE_CLOSED.getKey());
+                        box.setItemMeta(im);
+                        ItemDisplay display = VehicleUtility.getItemDisplay(player, box, 1.75f);
+                        int period = 40;
+                        plugin.getTrackerKeeper().setAnimateTask(plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new InterpolatedAnimation(display, period), 5, period));
+                    } else {
+                        Bee bee = (Bee) player.getWorld().spawnEntity(player.getLocation(), EntityType.BEE);
+                        bee.setAI(false);
+                        player.addPassenger(bee);
+                    }
                 } else {
                     for (Entity e : player.getPassengers()) {
                         e.eject();
