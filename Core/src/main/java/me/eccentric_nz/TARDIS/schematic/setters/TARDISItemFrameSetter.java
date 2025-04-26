@@ -62,8 +62,13 @@ public class TARDISItemFrameSetter {
                 // needed for Time Rotors / Doors
                 if (json.has("cmd")) {
                     cmd = json.get("cmd").getAsString();
-                    NamespacedKey key = new NamespacedKey(TARDIS.plugin, cmd);
-                    im.setItemModel(key);
+                    if (!cmd.equals("st_johns")) {
+                        NamespacedKey key = new NamespacedKey(TARDIS.plugin, cmd);
+                        im.setItemModel(key);
+                    } else {
+                        im.setDisplayName("St John's Logo");
+                        frame.setCustomNameVisible(false);
+                    }
                 }
                 if (json.has("name")) {
                     im.setDisplayName(json.get("name").getAsString());
