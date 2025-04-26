@@ -87,7 +87,6 @@ public class TARDISAreasInventory {
         ItemStack map = new ItemStack(Material.MAP, 1);
         ItemMeta switchto = map.getItemMeta();
         switchto.setDisplayName("Load TARDIS saves");
-//        switchto.setItemModel(GUIArea.LOAD_TARDIS_SAVES.key());
         map.setItemMeta(switchto);
         for (int m = 45; m < 54; m++) {
             if (m == 49) {

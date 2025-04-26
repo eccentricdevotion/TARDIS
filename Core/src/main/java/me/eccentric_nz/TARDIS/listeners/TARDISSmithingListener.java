@@ -124,7 +124,6 @@ public class TARDISSmithingListener implements Listener {
             } else if (isDamagedCapacitor(sonic)) {
                 ItemStack repaired = sonic.clone();
                 ItemMeta im = repaired.getItemMeta();
-//                im.setItemModel(Whoniverse.ARTRON_CAPACITOR.getKey());
                 is.setItemMeta(im);
                 event.setResult(repaired);
             }

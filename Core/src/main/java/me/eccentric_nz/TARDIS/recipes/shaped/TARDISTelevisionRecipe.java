@@ -56,14 +56,12 @@ public class TARDISTelevisionRecipe {
         ItemStack is = new ItemStack(Material.BROWN_STAINED_GLASS, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Television");
-//        im.setItemModel(RecipeItem.TARDIS_TELEVISION.getModel());
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, RecipeItem.TARDIS_TELEVISION.getModel().getKey());
         is.setItemMeta(im);
         // exact choice
         ItemStack capac = new ItemStack(Material.BUCKET, 1);
         ItemMeta itor = capac.getItemMeta();
         itor.setDisplayName(ChatColor.WHITE + "Artron Capacitor");
-//        itor.setItemModel(RecipeItem.ARTRON_CAPACITOR.getModel());
         capac.setItemMeta(itor);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_television");
         ShapedRecipe r = new ShapedRecipe(key, is);
@@ -73,7 +71,6 @@ public class TARDISTelevisionRecipe {
             ItemStack chameleon = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta circuit = chameleon.getItemMeta();
             circuit.setDisplayName(ChatColor.WHITE + "TARDIS Chameleon Circuit");
-//            circuit.setItemModel(RecipeItem.TARDIS_CHAMELEON_CIRCUIT.getModel());
             // set the second line of lore
             List<String> lore;
             String uses = (plugin.getConfig().getString("circuits.uses.chameleon").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))

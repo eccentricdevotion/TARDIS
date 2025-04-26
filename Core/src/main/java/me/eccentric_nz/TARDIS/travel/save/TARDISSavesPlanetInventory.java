@@ -69,7 +69,6 @@ public class TARDISSavesPlanetInventory {
             hlore.add("Not found!");
         }
         him.setLore(hlore);
-//        him.setItemModel(GUISaves.HOME.key());
         his.setItemMeta(him);
         stack[GUISaves.HOME.slot()] = his;
         if (TARDISPermission.hasPermission(player, "tardis.save.death")) {
@@ -90,7 +89,6 @@ public class TARDISSavesPlanetInventory {
                 dlore.add("Not found!");
             }
             dim.setLore(dlore);
-//            dim.setItemModel(GUISaves.DEATH.key());
             death.setItemMeta(dim);
             stack[GUISaves.DEATH.slot()] = death;
         }

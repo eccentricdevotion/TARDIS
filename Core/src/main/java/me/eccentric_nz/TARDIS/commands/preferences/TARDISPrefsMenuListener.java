@@ -437,7 +437,6 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(value.equals(plugin.getLanguage().getString("SET_ON")) ? gui.getOnFloats() : gui.getOffFloats());
         im.setCustomModelDataComponent(component);
-//        im.setItemModel((value.equals(plugin.getLanguage().getString("SET_ON"))) ? gui.getOnModel() : gui.getOffModel());
         is.setItemMeta(im);
         if (im.getDisplayName().equals("Beacon")) {
             // get tardis id

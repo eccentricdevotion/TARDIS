@@ -156,7 +156,6 @@ public class TARDISTelepathicListener implements Listener {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("TARDIS Telepathic Circuit");
-//        im.setItemModel(CircuitVariant.TELEPATHIC.getKey());
         String uses = (plugin.getConfig().getString("circuits.uses.telepathic").equals("0") || !plugin.getConfig().getBoolean("circuits.damage")) ? ChatColor.YELLOW + "unlimited" : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.telepathic");
         List<String> lore = List.of("Uses left", uses);
         im.setLore(lore);

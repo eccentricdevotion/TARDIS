@@ -49,7 +49,6 @@ public class SonicOscillatorRecipe {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Sonic Oscillator");
-//        im.setItemModel(RecipeItem.SONIC_OSCILLATOR.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "sonic_oscillator");
         ShapedRecipe r = new ShapedRecipe(key, is);

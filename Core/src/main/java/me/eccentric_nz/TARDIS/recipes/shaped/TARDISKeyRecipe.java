@@ -76,7 +76,6 @@ public class TARDISKeyRecipe {
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Key");
-//        im.setItemModel(keyModel);
         im.setLore(List.of("Enter and exit your TARDIS"));
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats(floats);

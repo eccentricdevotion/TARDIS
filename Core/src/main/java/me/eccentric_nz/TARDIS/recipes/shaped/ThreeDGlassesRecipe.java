@@ -55,7 +55,6 @@ public class ThreeDGlassesRecipe {
         ItemStack is = new ItemStack(Material.LEATHER_HELMET, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "3-D Glasses");
-//        im.setItemModel(RecipeItem.THREE_D_GLASSES.getModel());
         EquippableComponent equippable = im.getEquippable();
         equippable.setCameraOverlay(Whoniverse.THREE_D_GLASSES_OVERLAY.getKey());
         equippable.setSlot(EquipmentSlot.HEAD);

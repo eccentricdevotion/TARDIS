@@ -45,7 +45,6 @@ public class BiomeStorageDiskRecipe {
         ItemStack is = new ItemStack(Material.MUSIC_DISC_CAT, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Biome Storage Disk");
-//        im.setItemModel(RecipeItem.BIOME_STORAGE_DISK.getModel());
         im.setLore(List.of("Blank"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "biome_storage_disk");

@@ -72,7 +72,6 @@ class TARDISConfigPageTwoInventory {
                 CustomModelDataComponent component = im.getCustomModelDataComponent();
                 component.setFloats(value.equals("false") ? gui.getOffFloats() : gui.getOnFloats());
                 im.setCustomModelDataComponent(component);
-//                im.setItemModel(value.equals("false") ? gui.getOffModel() : gui.getOnModel());
                 im.setLore(List.of(value));
                 is.setItemMeta(im);
                 options.add(is);
@@ -90,14 +89,12 @@ class TARDISConfigPageTwoInventory {
         ItemStack next = new ItemStack(Material.BOWL, 1);
         ItemMeta page = next.getItemMeta();
         page.setDisplayName("Previous page");
-//        page.setItemModel(GUIConfiguration.PREV.getOnFloats());
         next.setItemMeta(page);
         stack[52] = next;
         // player prefs
         ItemStack play = new ItemStack(Material.NETHER_STAR, 1);
         ItemMeta prefs = play.getItemMeta();
         prefs.setDisplayName("Player Preferences");
-//        prefs.setItemModel(GUIConfiguration.PREFS.getOnFloats());
         play.setItemMeta(prefs);
         stack[53] = play;
         return stack;

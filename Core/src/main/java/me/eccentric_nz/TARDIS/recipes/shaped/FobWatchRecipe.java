@@ -54,14 +54,12 @@ public class FobWatchRecipe {
         ItemStack is = new ItemStack(Material.CLOCK, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Fob Watch");
-//        im.setItemModel(Whoniverse.FOB_WATCH.getKey());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "fob_watch");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "TARDIS Chameleon Circuit");
-//        em.setItemModel(RecipeItem.TARDIS_CHAMELEON_CIRCUIT.getModel());
         // set the second line of lore
         List<String> circuit;
         String uses = (plugin.getConfig().getString("circuits.uses.chameleon").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))

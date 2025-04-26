@@ -85,7 +85,6 @@ public class TARDISEveryoneCompanionInventory {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-//        can.setItemModel(GUICompanion.BUTTON_CLOSE.key());
         close.setItemMeta(can);
         heads[53] = close;
 

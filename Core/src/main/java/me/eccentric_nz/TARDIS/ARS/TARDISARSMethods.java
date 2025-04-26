@@ -172,10 +172,8 @@ public class TARDISARSMethods {
                 }
             }
             im.setLore(lore);
-//            im.setItemModel(ars.getKey());
         } else {
             im.setLore(null);
-//            im.setItemModel(RoomVariant.SLOT.getKey());
         }
         is.setItemMeta(im);
         view.setItem(slot, is);
@@ -292,7 +290,6 @@ public class TARDISARSMethods {
             ItemStack is = new ItemStack(material, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(levels[i - 27]);
-//            im.setItemModel(i == slot ? activeLevelKeys[i - 27] : inactiveLevelKeys[i - 27]);
             is.setItemMeta(im);
             setSlot(view, i, is, playerUUID, false);
         }

@@ -117,7 +117,6 @@ class TARDISLazarusInventory {
         ItemStack page = new ItemStack(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
         ItemMeta two = page.getItemMeta();
         two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
-//        two.setItemModel(GUIChameleonPresets.GO_TO_PAGE_2.key());
         page.setItemMeta(two);
         stacks[42] = page;
         // add skins
@@ -131,7 +130,6 @@ class TARDISLazarusInventory {
         ItemStack weep = new ItemStack(GUIGeneticManipulator.BUTTON_TWA.material(), 1);
         ItemMeta ing = weep.getItemMeta();
         ing.setDisplayName("TARDIS Monsters");
-//        ing.setItemModel(GUIGeneticManipulator.BUTTON_TWA.key());
         weep.setItemMeta(ing);
         stacks[GUIGeneticManipulator.BUTTON_TWA.slot()] = weep;
         // add options
@@ -143,7 +141,6 @@ class TARDISLazarusInventory {
         CustomModelDataComponent component = master.getCustomModelDataComponent();
         component.setFloats(List.of(152f));
         master.setCustomModelDataComponent(component);
-//        master.setItemModel(GUIGeneticManipulator.BUTTON_MASTER.key());
         the.setItemMeta(master);
         stacks[GUIGeneticManipulator.BUTTON_MASTER.slot()] = the;
         // adult
@@ -151,7 +148,6 @@ class TARDISLazarusInventory {
         ItemMeta baby = adult.getItemMeta();
         baby.setDisplayName(plugin.getLanguage().getString("BUTTON_AGE"));
         baby.setLore(List.of("ADULT"));
-//        baby.setItemModel(GUIGeneticManipulator.BUTTON_AGE.key());
         adult.setItemMeta(baby);
         stacks[GUIGeneticManipulator.BUTTON_AGE.slot()] = adult;
         // type
@@ -159,7 +155,6 @@ class TARDISLazarusInventory {
         ItemMeta col = typ.getItemMeta();
         col.setDisplayName(plugin.getLanguage().getString("BUTTON_TYPE"));
         col.setLore(List.of("WHITE"));
-//        col.setItemModel(GUIGeneticManipulator.BUTTON_TYPE.key());
         typ.setItemMeta(col);
         stacks[GUIGeneticManipulator.BUTTON_TYPE.slot()] = typ;
         // tamed
@@ -172,28 +167,24 @@ class TARDISLazarusInventory {
         }
         opts.add(ChatColor.RED + "FALSE");
         tf.setLore(opts);
-//        tf.setItemModel(GUIGeneticManipulator.BUTTON_OPTS.key());
         tamed.setItemMeta(tf);
         stacks[GUIGeneticManipulator.BUTTON_OPTS.slot()] = tamed;
         // add buttons
         ItemStack rem = new ItemStack(GUIGeneticManipulator.BUTTON_RESTORE.material(), 1);
         ItemMeta ove = rem.getItemMeta();
         ove.setDisplayName(plugin.getLanguage().getString("BUTTON_RESTORE"));
-//        ove.setItemModel(GUIGeneticManipulator.BUTTON_RESTORE.key());
         rem.setItemMeta(ove);
         stacks[GUIGeneticManipulator.BUTTON_RESTORE.slot()] = rem;
         // set
         ItemStack s = new ItemStack(GUIGeneticManipulator.BUTTON_DNA.material(), 1);
         ItemMeta sim = s.getItemMeta();
         sim.setDisplayName(plugin.getLanguage().getString("BUTTON_DNA"));
-//        sim.setItemModel(GUIGeneticManipulator.BUTTON_DNA.key());
         s.setItemMeta(sim);
         stacks[GUIGeneticManipulator.BUTTON_DNA.slot()] = s;
         // cancel
         ItemStack can = new ItemStack(GUIGeneticManipulator.BUTTON_CANCEL.material(), 1);
         ItemMeta cel = can.getItemMeta();
         cel.setDisplayName(plugin.getLanguage().getString("BUTTON_CANCEL"));
-//        cel.setItemModel(GUIGeneticManipulator.BUTTON_CANCEL.key());
         can.setItemMeta(cel);
         stacks[GUIGeneticManipulator.BUTTON_CANCEL.slot()] = can;
 

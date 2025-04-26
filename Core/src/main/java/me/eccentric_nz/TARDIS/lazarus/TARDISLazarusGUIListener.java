@@ -184,7 +184,6 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                             CustomModelDataComponent component = masterMeta.getCustomModelDataComponent();
                             component.setFloats(isOff ? List.of(252f) : List.of(152f));
                             masterMeta.setCustomModelDataComponent(component);
-//                            masterMeta.setItemModel(isOff ? Button.MASTER_ON.getKey() : Button.MASTER_OFF.getKey());
                         } else {
                             masterMeta.setLore(List.of("The Master Race is already", " set to " + plugin.getTrackerKeeper().getImmortalityGate() + "!", "Try again later."));
                         }

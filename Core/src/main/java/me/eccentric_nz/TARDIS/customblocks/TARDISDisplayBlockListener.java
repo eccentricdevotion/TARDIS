@@ -524,7 +524,6 @@ public class TARDISDisplayBlockListener implements Listener {
                                         ItemMeta im = ret.getItemMeta();
                                         im.setDisplayName(ChatColor.WHITE + "Variable Light");
                                         im.setLore(List.of(variable.toString()));
-//                                        im.setItemModel(LightVariant.VARIABLE.getKey());
                                         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1003);
                                         ret.setItemMeta(im);
                                         l.getWorld().dropItemNaturally(l, ret);

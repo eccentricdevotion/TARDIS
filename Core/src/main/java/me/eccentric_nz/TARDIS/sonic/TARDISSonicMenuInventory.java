@@ -57,7 +57,6 @@ public class TARDISSonicMenuInventory {
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");
                 im.setLore(List.of(sonic.getName()));
-//                im.setItemModel(sonic.getModel());
                 CustomModelDataComponent component = im.getCustomModelDataComponent();
                 component.setFloats(sonic.getFloats());
                 im.setCustomModelDataComponent(component);
@@ -78,7 +77,6 @@ public class TARDISSonicMenuInventory {
         info_im.setDisplayName("Instructions");
         List<String> lore = List.of("Put your Sonic Screwdriver", "in the bottom left most slot", "and then click on the", "Sonic of your choice.");
         info_im.setLore(lore);
-//        info_im.setItemModel(GUISonicPreferences.INSTRUCTIONS.getModel());
         info.setItemMeta(info_im);
         stack[31] = info;
         // info 2
@@ -87,14 +85,12 @@ public class TARDISSonicMenuInventory {
         name_im.setDisplayName("Name");
         List<String> display = List.of("If you want to have", "a coloured display name", "click the wool block", "to choose a colour.");
         name_im.setLore(display);
-//        name_im.setItemModel(GUISonicPreferences.INSTRUCTIONS.getModel());
         name.setItemMeta(name_im);
         stack[32] = name;
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-//        close_im.setItemModel(GUISonicPreferences.CLOSE.getModel());
         close.setItemMeta(close_im);
         stack[35] = close;
 

@@ -41,14 +41,12 @@ public class TARDISEyeStorage {
         ItemMeta info_im = info.getItemMeta();
         info_im.setDisplayName("Info");
         info_im.setLore(List.of("Increase the Artron storage", "capacity by placing", "up to 5 Artron Capacitors", "in the slots to the right."));
-//        info_im.setItemModel(GUIArtronStorage.INFO.key());
         info.setItemMeta(info_im);
         stacks[GUIArtronStorage.INFO.slot()] = info;
         // right arrow
         ItemStack r_arrow = new ItemStack(GUIArtronStorage.ARROW_RIGHT.material(), 1);
         ItemMeta r_arrow_im = r_arrow.getItemMeta();
         r_arrow_im.setDisplayName(ChatColor.WHITE + "");
-//        r_arrow_im.setItemModel(GUIArtronStorage.ARROW_RIGHT.key());
         r_arrow.setItemMeta(r_arrow_im);
         stacks[GUIArtronStorage.ARROW_RIGHT.slot()] = r_arrow;
         ResultSetArtronStorage rs = new ResultSetArtronStorage(plugin);
@@ -59,7 +57,6 @@ public class TARDISEyeStorage {
                 ItemStack is = new ItemStack(Material.BUCKET, 1);
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName("Artron Capacitor");
-//                im.setItemModel(Whoniverse.ARTRON_CAPACITOR.getKey());
                 is.setItemMeta(im);
                 stacks[i] = is;
             }
@@ -68,14 +65,12 @@ public class TARDISEyeStorage {
         ItemStack l_arrow = new ItemStack(GUIArtronStorage.ARROW_LEFT.material(), 1);
         ItemMeta l_arrow_im = l_arrow.getItemMeta();
         l_arrow_im.setDisplayName(ChatColor.WHITE + "");
-//        l_arrow_im.setItemModel(GUIArtronStorage.ARROW_LEFT.key());
         l_arrow.setItemMeta(l_arrow_im);
         stacks[GUIArtronStorage.ARROW_LEFT.slot()] = l_arrow;
         // close
         ItemStack close = new ItemStack(GUIArtronStorage.CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-//        can.setItemModel(GUIArtronStorage.CLOSE.key());
         close.setItemMeta(can);
         stacks[GUIArtronStorage.CLOSE.slot()] = close;
         return stacks;

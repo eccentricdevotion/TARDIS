@@ -660,7 +660,6 @@ public class TARDISRoomRunnable implements Runnable {
                     ItemStack is = new ItemStack(Material.MAGMA_BLOCK);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName("Sphere Normal");
-//                    im.setItemModel(EyeVariant.SPHERE_0.getKey());
                     is.setItemMeta(im);
                     display.setItemStack(is);
                     display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);

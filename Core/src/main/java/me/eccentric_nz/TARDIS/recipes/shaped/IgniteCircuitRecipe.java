@@ -49,7 +49,6 @@ public class IgniteCircuitRecipe {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Ignite Circuit");
-//        im.setItemModel(RecipeItem.IGNITE_CIRCUIT.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "ignite_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

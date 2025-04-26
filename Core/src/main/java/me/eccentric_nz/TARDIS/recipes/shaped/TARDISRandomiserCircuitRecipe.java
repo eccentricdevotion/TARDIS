@@ -56,7 +56,6 @@ public class TARDISRandomiserCircuitRecipe {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Randomiser Circuit");
-//        im.setItemModel(RecipeItem.TARDIS_RANDOMISER_CIRCUIT.getModel());
         String uses = (plugin.getConfig().getString("circuits.uses.randomiser").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? ChatColor.YELLOW + "unlimited"
                 : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.randomiser");

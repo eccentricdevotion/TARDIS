@@ -70,7 +70,6 @@ class TARDISAreaDisks {
                     lore.add(name);
                     lore.add(a.getWorld());
                     im.setLore(lore);
-//                    im.setItemModel(DiskVariant.AREA_DISK.getKey());
                     is.setItemMeta(im);
                     areas.add(is);
                 }
@@ -157,7 +156,6 @@ class TARDISAreaDisks {
                                 lore.add(name);
                                 lore.add(map.getWorld());
                                 im.setLore(lore);
-//                                im.setItemModel(DiskVariant.AREA_DISK.getKey());
                                 is.setItemMeta(im);
                                 inv.setItem(empty, is);
                                 count++;

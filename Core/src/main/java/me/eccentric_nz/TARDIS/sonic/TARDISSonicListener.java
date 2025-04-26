@@ -287,12 +287,10 @@ public class TARDISSonicListener implements Listener {
 //                    NamespacedKey model = im.getItemModel();
 //                    if (model.getKey().endsWith("_open")) {
                     if (component.getFloats().getFirst() > 200) {
-//                        im.setItemModel(new NamespacedKey(plugin, model.getKey().replace("_open", "")));
                         component.setFloats(List.of(component.getFloats().getFirst() - 100f));
                         im.setCustomModelDataComponent(component);
                     }
                 } else {
-//                    im.setItemModel(SonicVariant.ELEVENTH.getKey());
                     component.setFloats(SonicVariant.ELEVENTH.getFloats());
                     im.setCustomModelDataComponent(component);
                 }

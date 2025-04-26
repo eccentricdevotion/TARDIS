@@ -218,7 +218,6 @@ public class TARDISDisplayItemUtils {
         ItemStack is = new ItemStack(tdi.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + tdi.getDisplayName());
-//        im.setItemModel(tdi.getCustomModel());
         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
         is.setItemMeta(im);
         Location l = new Location(world, x + 0.5d, y + 0.5d, z + 0.5d);
@@ -269,7 +268,6 @@ public class TARDISDisplayItemUtils {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + tdi.getDisplayName());
 //        if (tdi.getCustomModel() != null) {
-//            im.setItemModel(tdi.getCustomModel());
 //        }
         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
         is.setItemMeta(im);

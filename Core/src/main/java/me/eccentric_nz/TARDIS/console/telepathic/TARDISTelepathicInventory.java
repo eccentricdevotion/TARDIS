@@ -55,7 +55,6 @@ public class TARDISTelepathicInventory {
         CustomModelDataComponent component = tim.getCustomModelDataComponent();
         component.setFloats(on ? SwitchVariant.TELEPATHIC_CIRCUIT_ON.getFloats() : SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getFloats());
         tim.setCustomModelDataComponent(component);
-//        tim.setItemModel(on ? SwitchVariant.TELEPATHIC_CIRCUIT_ON.getKey() : SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getKey());
         toggle.setItemMeta(tim);
         stack[0] = toggle;
         // cave finder

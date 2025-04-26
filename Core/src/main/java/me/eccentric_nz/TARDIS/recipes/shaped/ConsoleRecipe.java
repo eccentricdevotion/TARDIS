@@ -65,7 +65,6 @@ public class ConsoleRecipe {
             String dn = TARDISStringUtils.capitalise(name) + " Console";
             im.setDisplayName(ChatColor.WHITE + dn);
             im.setLore(List.of("Integration with interaction"));
-//            im.setItemModel(colour.getValue());
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, colour.getValue().getKey());
             is.setItemMeta(im);
             NamespacedKey key = new NamespacedKey(plugin, name.toLowerCase(Locale.ROOT) + "_console");

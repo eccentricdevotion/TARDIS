@@ -54,7 +54,6 @@ public class TARDISCommunicatorRecipe {
         ItemStack is = new ItemStack(Material.LEATHER_HELMET, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Communicator");
-//        im.setItemModel(RecipeItem.TARDIS_COMMUNICATOR.getModel());
         EquippableComponent equippable = im.getEquippable();
         equippable.setSlot(EquipmentSlot.HEAD);
         equippable.setDispensable(true);

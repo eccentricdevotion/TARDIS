@@ -79,7 +79,6 @@ public class TARDISConfigMenuInventory {
                 CustomModelDataComponent component = im.getCustomModelDataComponent();
                 component.setFloats(value.equals("false") ? gui.getOffFloats() : gui.getOnFloats());
                 im.setCustomModelDataComponent(component);
-//                im.setItemModel(value.equals("false") ? gui.getOffFloats() : gui.getOnFloats());
                 im.setLore(List.of(value));
                 is.setItemMeta(im);
                 options.add(is);
@@ -97,14 +96,12 @@ public class TARDISConfigMenuInventory {
         ItemStack next = new ItemStack(Material.BOWL, 1);
         ItemMeta page = next.getItemMeta();
         page.setDisplayName("Next page");
-//        page.setItemModel(GUIConfiguration.NEXT.getOnFloats());
         next.setItemMeta(page);
         stack[52] = next;
         // player prefs
         ItemStack play = new ItemStack(Material.NETHER_STAR, 1);
         ItemMeta prefs = play.getItemMeta();
         prefs.setDisplayName("Player Preferences");
-//        prefs.setItemModel(GUIConfiguration.PREFS.getOnFloats());
         play.setItemMeta(prefs);
         stack[53] = play;
         return stack;

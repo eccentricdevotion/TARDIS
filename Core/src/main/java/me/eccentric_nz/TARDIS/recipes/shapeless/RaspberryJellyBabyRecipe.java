@@ -42,7 +42,6 @@ public class RaspberryJellyBabyRecipe {
         ItemStack is = new ItemStack(Material.MELON_SLICE, 4);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Raspberry Jelly Baby");
-//        im.setItemModel(RecipeItem.RASPBERRY_JELLY_BABY.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "raspberry_jelly_baby");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

@@ -101,7 +101,6 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
 
 //    private void setModel(ItemStack is, NamespacedKey key) {
 //        ItemMeta im = is.getItemMeta();
-//        im.setItemModel(key);
 //        is.setItemMeta(im);
 //    }
 
@@ -187,7 +186,6 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         im.setCustomModelDataComponent(component);
 //        NamespacedKey key = im.getItemModel();
 //        boolean on = key == null || key.equals(SwitchVariant.BUTTON_TOGGLE_ON.getKey());
-//        im.setItemModel(on ? SwitchVariant.BUTTON_TOGGLE_OFF.getKey() : SwitchVariant.BUTTON_TOGGLE_ON.getKey());
         List<String> lore = im.getLore();
         lore.set(0, on ? "OFF" : "ON");
         im.setLore(lore);

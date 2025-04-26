@@ -125,7 +125,6 @@ public class TVSkinListener extends TARDISMenuListener {
             ItemMeta im = is.getItemMeta();
 //            NamespacedKey key = (im.hasItemModel() && SwitchVariant.DOWNLOAD_OFF.getKey().equals(im.getItemModel()))
 //                    ? SwitchVariant.DOWNLOAD_ON.getKey() : SwitchVariant.DOWNLOAD_OFF.getKey();
-//            im.setItemModel(key);
             CustomModelDataComponent component = im.getCustomModelDataComponent();
             boolean on = component.getFloats().getFirst() > 200;
             component.setFloats(on ? SwitchVariant.DOWNLOAD_OFF.getFloats() : SwitchVariant.DOWNLOAD_ON.getFloats());

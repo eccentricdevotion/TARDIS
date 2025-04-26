@@ -42,7 +42,6 @@ public class VodkaJellyBabyRecipe {
         ItemStack is = new ItemStack(Material.MELON_SLICE, 4);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Vodka Jelly Baby");
-//        im.setItemModel(RecipeItem.VODKA_JELLY_BABY.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "vodka_jelly_baby");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

@@ -49,7 +49,6 @@ public class TVInventory {
             ItemStack is = new ItemStack(tv.material(), 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(tv.name());
-//            im.setItemModel(tv.key());
             if (tv == GUITelevision.DOWNLOAD) {
                 CustomModelDataComponent component = im.getCustomModelDataComponent();
                 component.setFloats(SwitchVariant.DOWNLOAD_OFF.getFloats());

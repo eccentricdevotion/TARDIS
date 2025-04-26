@@ -262,30 +262,21 @@ public class TARDISStorageListener extends TARDISMenuListener {
                             if (is.getType().equals(Material.FILLED_MAP)) {
                                 GlowstoneCircuit glowstone = GlowstoneCircuit.getByName().get(im.getDisplayName());
                                 if (glowstone != null) {
-//                                    im.setItemModel(glowstone.getModel());
                                     is.setType(Material.GLOWSTONE_DUST);
                                     is.setItemMeta(im);
                                 }
                             } else {
 //                                if (TARDISStaticUtils.isMusicDisk(is)) {
 //                                    switch (is.getType()) {
-//                                        case MUSIC_DISC_BLOCKS -> im.setItemModel(DiskVariant.AREA_DISK.getKey());
-//                                        case MUSIC_DISC_CAT -> im.setItemModel(DiskVariant.BIOME_DISK.getKey());
-//                                        case MUSIC_DISC_CHIRP -> im.setItemModel(DiskVariant.SAVE_DISK.getKey());
-//                                        case MUSIC_DISC_MALL -> im.setItemModel(DiskVariant.PRESET_DISK.getKey());
-//                                        case MUSIC_DISC_WAIT -> im.setItemModel(DiskVariant.PLAYER_DISK.getKey());
 //                                    }
 //                                } else
                                 if (is.getType().equals(Material.LIME_WOOL)) {
-//                                    im.setItemModel(GuiVariant.NEXT.getKey());
                                     is.setType(Material.BOWL);
                                     is.setItemMeta(im);
                                 } else if (is.getType().equals(Material.RED_WOOL)) {
-//                                    im.setItemModel(GuiVariant.PREV.getKey());
                                     is.setType(Material.BOWL);
                                     is.setItemMeta(im);
                                 } else if (is.getType().equals(Material.GLOWSTONE_DUST) && !im.hasItemModel() && im.getDisplayName().endsWith("Circuits")) {
-//                                    im.setItemModel(CircuitVariant.GALLIFREY.getKey());
                                 }
                                 is.setItemMeta(im);
                             }

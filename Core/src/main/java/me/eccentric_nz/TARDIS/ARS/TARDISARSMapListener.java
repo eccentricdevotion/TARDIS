@@ -199,7 +199,6 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
                 is.setType(Material.ARROW);
                 ItemMeta im = is.getItemMeta();
                 im.setLore(List.of(plugin.getLanguage().getString("ARS_MAP_HERE")));
-//                im.setItemModel(ArrowVariant.YOU_ARE_HERE.getKey());
                 is.setItemMeta(im);
             }
         } else {

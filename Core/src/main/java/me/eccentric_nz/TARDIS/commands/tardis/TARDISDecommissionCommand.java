@@ -102,7 +102,6 @@ class TARDISDecommissionCommand {
                                 ItemStack monitor = new ItemStack(Material.MAP);
                                 ItemMeta im = monitor.getItemMeta();
                                 im.setDisplayName("TARDIS Monitor");
-//                                im.setItemModel(ModelledControl.MONITOR.getKey());
                                 monitor.setItemMeta(im);
                                 itemFrame.setItem(monitor);
                             }

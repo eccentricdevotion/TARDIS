@@ -71,7 +71,6 @@ class TARDISSonicActivatorInventory {
         ItemStack close = new ItemStack(GUISonicActivator.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-//        close_im.setItemModel(GUISonicActivator.CLOSE.key());
         close.setItemMeta(close_im);
 
         return new ItemStack[]{null, null, null, null, null, null, null, info, close};

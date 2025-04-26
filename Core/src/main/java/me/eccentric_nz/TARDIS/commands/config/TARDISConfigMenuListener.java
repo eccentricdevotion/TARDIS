@@ -122,7 +122,6 @@ public class TARDISConfigMenuListener implements Listener {
         CustomModelDataComponent component = im.getCustomModelDataComponent();
         component.setFloats("false".equals(str) ? gui.getOffFloats() : gui.getOnFloats());
         im.setCustomModelDataComponent(component);
-//        im.setItemModel("false".equals(str) ? gui.getOffFloats() : gui.getOnFloats());
         is.setItemMeta(im);
     }
 }

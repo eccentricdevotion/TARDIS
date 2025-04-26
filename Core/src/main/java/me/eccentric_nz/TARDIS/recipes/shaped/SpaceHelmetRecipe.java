@@ -54,7 +54,6 @@ public class SpaceHelmetRecipe {
         ItemStack is = new ItemStack(Material.GLASS, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Space Helmet");
-//        im.setItemModel(RecipeItem.TARDIS_SPACE_HELMET.getModel());
         im.setMaxStackSize(1);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "space_helmet");

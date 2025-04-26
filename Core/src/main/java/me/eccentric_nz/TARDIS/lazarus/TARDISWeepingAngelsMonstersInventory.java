@@ -79,7 +79,6 @@ public class TARDISWeepingAngelsMonstersInventory {
 //                case WEEPING_ANGEL -> model = WeepingAngelVariant.BUTTON_WEEPING_ANGEL.getKey();
 //                case ZYGON -> model = ZygonVariant.BUTTON_ZYGON.getKey();
 //            }
-//            ster.setItemModel(model);
             mon.setItemMeta(ster);
             stacks[i] = mon;
             i++;
@@ -88,21 +87,18 @@ public class TARDISWeepingAngelsMonstersInventory {
         ItemStack page1 = new ItemStack(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.material(), 1);
         ItemMeta one = page1.getItemMeta();
         one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
-//        one.setItemModel(GUIChameleonPoliceBoxes.GO_TO_PAGE_1.key());
         page1.setItemMeta(one);
         stacks[42] = page1;
         // page two
         ItemStack page2 = new ItemStack(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
         ItemMeta two = page2.getItemMeta();
         two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
-//        two.setItemModel(GUIChameleonPresets.GO_TO_PAGE_2.key());
         page2.setItemMeta(two);
         stacks[43] = page2;
         // add skins
         ItemStack down = new ItemStack(GUIGeneticManipulator.BUTTON_SKINS.material(), 1);
         ItemMeta load = down.getItemMeta();
         load.setDisplayName("TARDIS Television");
-//        load.setItemModel(GUIGeneticManipulator.BUTTON_SKINS.key());
         down.setItemMeta(load);
         stacks[44] = down;
         // master
@@ -113,28 +109,24 @@ public class TARDISWeepingAngelsMonstersInventory {
         CustomModelDataComponent component = master.getCustomModelDataComponent();
         component.setFloats(List.of(152f));
         master.setCustomModelDataComponent(component);
-//        master.setItemModel(GUIGeneticManipulator.BUTTON_MASTER.key());
         the.setItemMeta(master);
         stacks[GUIGeneticManipulator.BUTTON_MASTER.slot()] = the;
         // add buttons
         ItemStack rem = new ItemStack(GUIGeneticManipulator.BUTTON_RESTORE.material(), 1);
         ItemMeta ove = rem.getItemMeta();
         ove.setDisplayName(plugin.getLanguage().getString("BUTTON_RESTORE"));
-//        ove.setItemModel(GUIGeneticManipulator.BUTTON_RESTORE.key());
         rem.setItemMeta(ove);
         stacks[GUIGeneticManipulator.BUTTON_RESTORE.slot()] = rem;
         // set
         ItemStack s = new ItemStack(GUIGeneticManipulator.BUTTON_DNA.material(), 1);
         ItemMeta sim = s.getItemMeta();
         sim.setDisplayName(plugin.getLanguage().getString("BUTTON_DNA"));
-//        sim.setItemModel(GUIGeneticManipulator.BUTTON_DNA.key());
         s.setItemMeta(sim);
         stacks[GUIGeneticManipulator.BUTTON_DNA.slot()] = s;
         // cancel
         ItemStack can = new ItemStack(GUIGeneticManipulator.BUTTON_CANCEL.material(), 1);
         ItemMeta cel = can.getItemMeta();
         cel.setDisplayName(plugin.getLanguage().getString("BUTTON_CANCEL"));
-//        cel.setItemModel(GUIGeneticManipulator.BUTTON_CANCEL.key());
         can.setItemMeta(cel);
         stacks[GUIGeneticManipulator.BUTTON_CANCEL.slot()] = can;
 

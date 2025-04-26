@@ -58,7 +58,6 @@ public class TARDISRecipeInventory {
         ItemStack back = new ItemStack(Material.BOWL, 1);
         ItemMeta but = back.getItemMeta();
         but.setDisplayName("Back");
-//        but.setItemModel(GUIChameleonPresets.BACK.key());
         back.setItemMeta(but);
         stack[0] = back;
         // info
@@ -66,14 +65,12 @@ public class TARDISRecipeInventory {
         ItemMeta info_im = info.getItemMeta();
         info_im.setDisplayName("Info");
         info_im.setLore(List.of("Click a button below", "to see the recipe", "for that item"));
-//        info_im.setItemModel(GUIChemistry.INFO.key());
         info.setItemMeta(info_im);
         stack[4] = info;
         // close
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-//        close_im.setItemModel(GUIChemistry.CLOSE.key());
         close.setItemMeta(close_im);
         stack[8] = close;
         int i = 9;
@@ -103,7 +100,6 @@ public class TARDISRecipeInventory {
                     ItemMeta im = result.getItemMeta();
                     im.setDisplayName(ChatColor.WHITE + str);
                     im.setLore(List.of("/trecipe " + arg));
-//                    im.setItemModel(item.getModel());
                     im.addItemFlags(ItemFlag.values());
                     im.setAttributeModifiers(Multimaps.forMap(Map.of()));
                     result.setItemMeta(im);

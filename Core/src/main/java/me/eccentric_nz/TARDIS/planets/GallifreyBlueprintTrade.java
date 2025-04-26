@@ -94,7 +94,6 @@ public class GallifreyBlueprintTrade {
     private ItemStack buildResult(String perm, String name) {
         ItemStack is = new ItemStack(Material.MUSIC_DISC_MELLOHI, 1);
         ItemMeta im = is.getItemMeta();
-//        im.setItemModel(DiskVariant.BLUEPRINT_DISK.getKey());
         PersistentDataContainer pdc = im.getPersistentDataContainer();
         pdc.set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), UUID.randomUUID());
         pdc.set(plugin.getBlueprintKey(), PersistentDataType.STRING, perm);

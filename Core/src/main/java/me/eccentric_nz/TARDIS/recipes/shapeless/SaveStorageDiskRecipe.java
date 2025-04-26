@@ -45,7 +45,6 @@ public class SaveStorageDiskRecipe {
         ItemStack is = new ItemStack(Material.MUSIC_DISC_CHIRP, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Save Storage Disk");
-//        im.setItemModel(RecipeItem.SAVE_STORAGE_DISK.getModel());
         im.setLore(List.of("Blank"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "save_storage_disk");

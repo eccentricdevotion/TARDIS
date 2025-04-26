@@ -51,7 +51,6 @@ public class TARDISDisplayBlockCommand {
                 case CHERRY_DOOR -> ClassicDoorVariant.CLASSIC_DOOR_CLOSED.getKey();
                 default -> Door.getClosedModel(door.getMaterial());
             };
-//            im.setItemModel(key);
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, key.getKey());
             is.setItemMeta(im);
             return is;
@@ -61,7 +60,6 @@ public class TARDISDisplayBlockCommand {
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("Time Rotor " + rotor.getName());
             im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, rotor.getOffModel().getKey());
-//            im.setItemModel(rotor.getOffModel());
             is.setItemMeta(im);
             return is;
         } else {
@@ -71,7 +69,6 @@ public class TARDISDisplayBlockCommand {
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(tdi.getDisplayName());
                 im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
-//                im.setItemModel(tdi.getCustomModel());
                 is.setItemMeta(im);
                 return is;
             } catch (IllegalArgumentException e) {

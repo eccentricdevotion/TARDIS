@@ -65,7 +65,6 @@ public class TARDISItemRenamer {
             }
 //            try {
 //                RecipeItem recipeItem = RecipeItem.valueOf(TARDISStringUtils.toScoredUppercase(name));
-////                im.setItemModel(recipeItem.getModel());
 //            } catch (IllegalArgumentException e) {
 //                // do nothing
 //            }

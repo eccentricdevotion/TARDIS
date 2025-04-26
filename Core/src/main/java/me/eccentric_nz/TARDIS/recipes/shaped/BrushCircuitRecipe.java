@@ -50,7 +50,6 @@ public class BrushCircuitRecipe {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Brush Circuit");
-//        im.setItemModel(RecipeItem.BRUSH_CIRCUIT.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "brush_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

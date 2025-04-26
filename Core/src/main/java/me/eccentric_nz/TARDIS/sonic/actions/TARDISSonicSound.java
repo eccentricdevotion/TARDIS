@@ -53,7 +53,6 @@ public class TARDISSonicSound {
                 f = sonicModel.getFirst();
             }
             SonicScrewdriver screwdriver = SonicScrewdriver.getByFloat(f);
-//            im.setItemModel(screwdriver.getActive());
             component.setFloats(screwdriver.getActive());
             im.setCustomModelDataComponent(component);
             player.getInventory().getItemInMainHand().setItemMeta(im);
@@ -65,7 +64,6 @@ public class TARDISSonicSound {
                     ItemMeta meta = is.getItemMeta();
                     if (meta.hasDisplayName() && meta.getDisplayName().endsWith("Sonic Screwdriver")) {
                         player.getInventory().getItemInMainHand().getEnchantments().keySet().forEach((e) -> player.getInventory().getItemInMainHand().removeEnchantment(e));
-//                        meta.setItemModel(screwdriver.getModel());
                         meta.setEnchantmentGlintOverride(null);
                         CustomModelDataComponent scomponent = meta.getCustomModelDataComponent();
                         scomponent.setFloats(screwdriver.getModel());
@@ -97,7 +95,6 @@ public class TARDISSonicSound {
             CustomModelDataComponent component = meta.getCustomModelDataComponent();
             component.setFloats(model);
             meta.setCustomModelDataComponent(component);
-//            meta.setItemModel(model);
             meta.setEnchantmentGlintOverride(null);
             stack.setItemMeta(meta);
             if (stack.containsEnchantment(Enchantment.UNBREAKING)) {

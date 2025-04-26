@@ -169,7 +169,6 @@ public class TARDISSonicGeneratorListener implements Listener {
             CustomModelDataComponent component = screw.getCustomModelDataComponent();
             component.setFloats(s.getModel());
             screw.setCustomModelDataComponent(component);
-//            screw.setItemModel(s.getModel());
             sonic.setItemMeta(screw);
             if (cost < level) {
                 Location loc = location.clone().add(0.5d, 0.75d, 0.5d);

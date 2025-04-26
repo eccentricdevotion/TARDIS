@@ -141,11 +141,6 @@ public class TARDISConsoleListener implements Listener {
                                 }
 //                                else if (TARDISStaticUtils.isMusicDisk(circuit)) {
 //                                    switch (circuit.getType()) {
-//                                        case MUSIC_DISC_BLOCKS -> cm.setItemModel(DiskVariant.AREA_DISK.getKey());
-//                                        case MUSIC_DISC_CAT -> cm.setItemModel(DiskVariant.BIOME_DISK.getKey());
-//                                        case MUSIC_DISC_CHIRP -> cm.setItemModel(DiskVariant.SAVE_DISK.getKey());
-//                                        case MUSIC_DISC_MALL -> cm.setItemModel(DiskVariant.PRESET_DISK.getKey());
-//                                        case MUSIC_DISC_WAIT -> cm.setItemModel(DiskVariant.PLAYER_DISK.getKey());
 //                                    }
 //                                    circuit.setItemMeta(cm);
 //                                }

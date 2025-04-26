@@ -73,7 +73,6 @@ class TARDISKeyMenuInventory {
                 }
             }
 //            if (key.getModel() != null) {
-//                im.setItemModel(key.getModel());
 //            }
             is.setItemMeta(im);
             itemStacks[key.getSlot()] = is;

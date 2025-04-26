@@ -127,7 +127,6 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
                 ItemMeta choice_im = choice.getItemMeta();
                 sonic_im = sonic.getItemMeta();
                 sonic_im.setCustomModelDataComponent(choice_im.getCustomModelDataComponent());
-//                sonic_im.setItemModel(choice_im.getItemModel());
                 sonic.setItemMeta(sonic_im);
                 if (slotWasNull) {
                     view.setItem(49, sonic);
@@ -183,7 +182,6 @@ public class TARDISSonicGeneratorMenuListener extends TARDISMenuListener {
                 CustomModelDataComponent component = sonic_im.getCustomModelDataComponent();
                 component.setFloats(sonicModel);
                 sonic_im.setCustomModelDataComponent(component);
-//                sonic_im.setItemModel(sonicModel);
                 sonic.setItemMeta(sonic_im);
                 setCost(view, costs.get("Standard Sonic"));
             }

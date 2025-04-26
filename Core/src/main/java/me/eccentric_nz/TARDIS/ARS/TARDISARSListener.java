@@ -121,7 +121,6 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                         ItemStack stone = new ItemStack(Material.STONE, 1);
                         ItemMeta s1 = stone.getItemMeta();
                         s1.setDisplayName("Empty slot");
-//                        s1.setItemModel(RoomVariant.SLOT.getKey());
                         stone.setItemMeta(s1);
                         setSlot(view, selected_slot.get(playerUUID), stone, playerUUID, true);
                         setLore(view, slot, null);
@@ -172,7 +171,6 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                     ItemStack tnt = new ItemStack(Material.TNT, 1);
                     ItemMeta j = tnt.getItemMeta();
                     j.setDisplayName("Jettison");
-//                    j.setItemModel(RoomVariant.JETTISON.getKey());
                     tnt.setItemMeta(j);
                     setSlot(view, selected_slot.get(playerUUID), tnt, playerUUID, true);
                     setLore(view, slot, null);

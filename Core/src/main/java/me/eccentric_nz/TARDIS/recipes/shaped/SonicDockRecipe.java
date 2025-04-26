@@ -66,7 +66,6 @@ public class SonicDockRecipe {
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
             em.setDisplayName(ChatColor.WHITE + "Sonic Oscillator");
-//            em.setItemModel(RecipeItem.SONIC_OSCILLATOR.getModel());
             exact.setItemMeta(em);
             r.setIngredient('S', new RecipeChoice.ExactChoice(exact));
         } else {

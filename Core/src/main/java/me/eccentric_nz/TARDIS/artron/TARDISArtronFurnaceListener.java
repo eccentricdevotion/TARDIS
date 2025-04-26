@@ -191,7 +191,6 @@ public class TARDISArtronFurnaceListener implements Listener {
             ItemStack is = new ItemStack(Material.FURNACE, 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(ChatColor.WHITE + "TARDIS Artron Furnace");
-//            im.setItemModel(Whoniverse.ARTRON_FURNACE.getKey());
             is.setItemMeta(im);
             TARDISDisplayItemUtils.remove(block);
             block.setBlockData(TARDISConstants.AIR);
