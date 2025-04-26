@@ -995,7 +995,6 @@ public class TARDII implements TardisAPI {
         return null;
     }
 
-    // TODO
     @Override
     public void setFollowing(Entity husk, Player player) {
         ((TWAFollower) husk).setFollowing(true);
