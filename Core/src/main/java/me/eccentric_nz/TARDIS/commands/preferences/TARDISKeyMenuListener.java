@@ -30,6 +30,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.*;
 
@@ -102,7 +103,10 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                 ItemStack choice = view.getItem(slot);
                 ItemMeta choiceMeta = choice.getItemMeta();
                 ItemMeta keyMeta = key.getItemMeta();
-                keyMeta.setItemModel(choiceMeta.getItemModel());
+                CustomModelDataComponent component = choiceMeta.getCustomModelDataComponent();
+                CustomModelDataComponent transfer = keyMeta.getCustomModelDataComponent();
+                transfer.setFloats(component.getFloats());
+                keyMeta.setCustomModelDataComponent(transfer);
                 // personalise
                 keyMeta.getPersistentDataContainer().set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
                 // set lore
@@ -150,11 +154,7 @@ public class TARDISKeyMenuListener extends TARDISMenuListener {
                 choice.setType(wool);
                 ChatColor display = COLOUR_LOOKUP.get(wool);
                 ItemMeta key_im = key.getItemMeta();
-                if (display != ChatColor.WHITE) {
-                    key_im.setDisplayName(display + "TARDIS Key");
-                } else {
-                    key_im.setDisplayName("TARDIS Key");
-                }
+                key_im.setDisplayName(display + "TARDIS Key");
                 key.setItemMeta(key_im);
             }
             case 26 -> {

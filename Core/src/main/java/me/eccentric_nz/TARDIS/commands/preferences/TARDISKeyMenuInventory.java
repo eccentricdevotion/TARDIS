@@ -16,8 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.commands.preferences;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIKeyPreferences;
 import me.eccentric_nz.TARDIS.custommodels.keys.KeyVariant;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
@@ -46,14 +49,20 @@ class TARDISKeyMenuInventory {
     private ItemStack[] getItemStack() {
 
         ItemStack[] itemStacks = new ItemStack[27];
-
+        Material material;
+        try {
+            material = Material.valueOf(TARDIS.plugin.getConfig().getString("preferences.key"));
+        } catch (IllegalArgumentException e) {
+            material = Material.GOLD_NUGGET;
+        }
         for (GUIKeyPreferences key : GUIKeyPreferences.values()) {
             ItemStack is = new ItemStack(key.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
             if (key == GUIKeyPreferences.CLOSE || key == GUIKeyPreferences.INSTRUCTIONS || key == GUIKeyPreferences.NAME || key == GUIKeyPreferences.DISPLAY_NAME_COLOUR) {
                 im.setDisplayName(key.getName());
             } else {
-                im.setDisplayName("TARDIS Key");
+                is.setType(material);
+                im.setDisplayName(ChatColor.WHITE + "TARDIS Key");
             }
             if (!key.getLore().isEmpty()) {
                 if (key.getLore().contains("~")) {
@@ -65,15 +74,13 @@ class TARDISKeyMenuInventory {
             }
             if (key.getSlot() < 17) {
                 try {
-                    KeyVariant variant = KeyVariant.valueOf(key.getName());
+                    KeyVariant variant = KeyVariant.valueOf(key.toString());
                     CustomModelDataComponent component = im.getCustomModelDataComponent();
                     component.setFloats(variant.getFloats());
                     im.setCustomModelDataComponent(component);
                 } catch (IllegalArgumentException ignored) {
                 }
             }
-//            if (key.getModel() != null) {
-//            }
             is.setItemMeta(im);
             itemStacks[key.getSlot()] = is;
         }
