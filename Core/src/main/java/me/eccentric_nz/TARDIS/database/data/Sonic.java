@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.database.data;
 
-import org.bukkit.NamespacedKey;
-
 import java.util.List;
 import java.util.UUID;
 

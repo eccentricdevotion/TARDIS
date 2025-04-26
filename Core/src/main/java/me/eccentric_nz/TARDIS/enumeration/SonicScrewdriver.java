@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.enumeration;
 
 import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
-import org.bukkit.NamespacedKey;
 
 import java.util.List;
 import java.util.Locale;
@@ -52,18 +51,6 @@ public enum SonicScrewdriver {
         this.active = active;
     }
 
-    public List<Float> getModel() {
-        return model;
-    }
-
-    public List<Float> getActive() {
-        return active;
-    }
-
-    public String getName() {
-        return TARDISStringUtils.sentenceCase(toString());
-    }
-
     public static SonicScrewdriver getByKey(String key) {
         String[] split = key.split("/");
         if (split.length > 1) {
@@ -86,5 +73,17 @@ public enum SonicScrewdriver {
             }
         }
         return ELEVENTH;
+    }
+
+    public List<Float> getModel() {
+        return model;
+    }
+
+    public List<Float> getActive() {
+        return active;
+    }
+
+    public String getName() {
+        return TARDISStringUtils.sentenceCase(toString());
     }
 }

@@ -17,14 +17,13 @@
 package me.eccentric_nz.TARDIS.utility.protection;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.popcraft.chunky.platform.BukkitPlayer;
+import org.popcraft.chunky.platform.BukkitWorld;
 import org.popcraft.chunky.platform.Player;
 import org.popcraft.chunky.platform.World;
 import org.popcraft.chunky.platform.util.Location;
 import org.popcraft.chunkyborder.ChunkyBorder;
-import org.popcraft.chunkyborder.ChunkyBorderBukkit;
 import org.popcraft.chunkyborder.event.server.BlockPlaceEvent;
-import org.popcraft.chunky.platform.BukkitPlayer;
-import org.popcraft.chunky.platform.BukkitWorld;
 /**
  * The TARDIS grants its passengers the ability to understand and speak other languages. This is due to the TARDIS's
  * telepathic field.

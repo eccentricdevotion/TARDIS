@@ -18,8 +18,6 @@ package me.eccentric_nz.TARDIS.chameleon.gui;
 
 import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodels.GUIChameleon;
-import me.eccentric_nz.TARDIS.custommodels.keys.ArrowVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import org.bukkit.Color;
 import org.bukkit.Material;
