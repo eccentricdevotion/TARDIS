@@ -52,7 +52,7 @@ public enum SonicScrewdriver {
     }
 
     public static SonicScrewdriver getByKey(String key) {
-        String[] split = key.split("/");
+        String[] split = key.split("_");
         if (split.length > 1) {
             String model = split[1].toUpperCase(Locale.ROOT);
             if (model.endsWith("_ON")) {
