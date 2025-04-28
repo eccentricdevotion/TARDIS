@@ -68,21 +68,18 @@ public class TARDISPresetInventory {
         ItemStack back = new ItemStack(GUIChameleonPresets.BACK.material(), 1);
         ItemMeta but = back.getItemMeta();
         but.setDisplayName("Back");
-        but.setItemModel(GUIChameleonPresets.BACK.key());
         back.setItemMeta(but);
         stacks[GUIChameleonPresets.BACK.slot()] = back;
         // page two
         ItemStack page = new ItemStack(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
         ItemMeta two = page.getItemMeta();
         two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
-        two.setItemModel(GUIChameleonPresets.GO_TO_PAGE_2.key());
         page.setItemMeta(two);
         stacks[GUIChameleonPresets.GO_TO_PAGE_2.slot()] = page;
         // Cancel / close
         ItemStack close = new ItemStack(GUIChameleonPresets.CLOSE.material(), 1);
         ItemMeta can = close.getItemMeta();
         can.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        can.setItemModel(GUIChameleonPresets.CLOSE.key());
         close.setItemMeta(can);
         stacks[GUIChameleonPresets.CLOSE.slot()] = close;
         return stacks;

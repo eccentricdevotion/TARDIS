@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.TARDIS.builders.exterior;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -59,7 +59,7 @@ import java.util.*;
  *
  * @author eccentric_nz
  */
-class TARDISMaterialisePreset implements Runnable {
+public class TARDISMaterialisePreset implements Runnable {
 
     private final TARDIS plugin;
     private final BuildData bd;
@@ -94,7 +94,7 @@ class TARDISMaterialisePreset implements Runnable {
      * @param data   the chameleon block data for the police box
      * @param adapt  the chameleon circuit adaption setting
      */
-    TARDISMaterialisePreset(TARDIS plugin, BuildData bd, ChameleonPreset preset, BlockData data, Adaption adapt) {
+    public TARDISMaterialisePreset(TARDIS plugin, BuildData bd, ChameleonPreset preset, BlockData data, Adaption adapt) {
         this.plugin = plugin;
         this.bd = bd;
         loops = this.bd.getThrottle().getLoops();

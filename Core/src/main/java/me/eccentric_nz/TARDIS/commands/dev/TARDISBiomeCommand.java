@@ -22,8 +22,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import org.bukkit.Chunk;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_21_R3.CraftChunk;
-import org.bukkit.craftbukkit.v1_21_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_21_R4.CraftChunk;
+import org.bukkit.craftbukkit.v1_21_R4.CraftWorld;
 import org.bukkit.entity.Player;
 
 import java.util.List;

@@ -14,12 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.TARDIS.builders.interior;
 
 import com.google.gson.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.builders.utility.FractalFence;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
@@ -128,13 +129,7 @@ class TARDISBuildAbandoned implements Runnable {
     @Override
     public void run() {
         if (!running) {
-            if (schm.getPermission().equals("mechanical") || schm.getPermission().equals("cursed")) {
-                starty = 62;
-            } else if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
-                starty = 65;
-            } else {
-                starty = 64;
-            }
+            starty = schm.getStartY();
             // get JSON
             obj = TARDISSchematicGZip.getObject(plugin, "consoles", schm.getPermission(), schm.isCustom());
             if (obj != null) {

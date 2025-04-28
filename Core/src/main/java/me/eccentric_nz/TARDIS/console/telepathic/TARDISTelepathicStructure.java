@@ -20,10 +20,14 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import me.eccentric_nz.TARDIS.travel.TARDISStructureTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.generator.structure.Structure;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
+
+import java.util.List;
 
 public class TARDISTelepathicStructure {
 
@@ -62,6 +66,11 @@ public class TARDISTelepathicStructure {
     private ItemStack make(Structure structure, Material material) {
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
+        if (material == Material.GRASS_BLOCK) {
+            CustomModelDataComponent component = im.getCustomModelDataComponent();
+            component.setColors(List.of(Color.GREEN));
+            im.setCustomModelDataComponent(component);
+        }
         im.setDisplayName(TARDISStringUtils.capitalise(structure.getKey().getKey()));
         is.setItemMeta(im);
         return is;

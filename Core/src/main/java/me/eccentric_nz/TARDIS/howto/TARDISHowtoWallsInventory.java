@@ -68,28 +68,24 @@ class TARDISHowtoWallsInventory {
         ItemStack scroll_up = new ItemStack(GUIWallFloor.BUTTON_SCROLL_U.material(), 1);
         ItemMeta uim = scroll_up.getItemMeta();
         uim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_U"));
-        uim.setItemModel(GUIWallFloor.BUTTON_SCROLL_U.key());
         scroll_up.setItemMeta(uim);
         stack[GUIWallFloor.BUTTON_SCROLL_U.slot()] = scroll_up;
         // scroll down
         ItemStack scroll_down = new ItemStack(GUIWallFloor.BUTTON_SCROLL_D.material(), 1);
         ItemMeta dim = scroll_down.getItemMeta();
         dim.setDisplayName(plugin.getLanguage().getString("BUTTON_SCROLL_D"));
-        dim.setItemModel(GUIWallFloor.BUTTON_SCROLL_D.key());
         scroll_down.setItemMeta(dim);
         stack[26] = scroll_down;
         // back
         ItemStack back = new ItemStack(GUIChameleonPresets.BACK.material(), 1);
         ItemMeta back_im = back.getItemMeta();
         back_im.setDisplayName("Back");
-        back_im.setItemModel(GUIChameleonPresets.BACK.key());
         back.setItemMeta(back_im);
         stack[44] = back;
         // close
         ItemStack close = new ItemStack(GUIChameleonPresets.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setItemModel(GUIChameleonPresets.CLOSE.key());
         close.setItemMeta(close_im);
         stack[GUIChameleonPresets.CLOSE.slot()] = close;
 

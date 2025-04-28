@@ -31,7 +31,6 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- *
  * @author eccentric_nz
  */
 public class FlightPersister {
@@ -85,25 +84,32 @@ public class FlightPersister {
             ps = connection.prepareStatement("SELECT * FROM " + prefix + "flight");
             rs = ps.executeQuery();
             while (rs.next()) {
-                UUID uuid = UUID.fromString(rs.getString("uuid"));
-                int id = rs.getInt("tardis_id");
-                Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
-                String standTmp = rs.getString("stand");
-                String displayTmp = rs.getString("display");
-                UUID stand;
-                if (!standTmp.isEmpty()) {
-                    stand = UUID.fromString(standTmp);
-                } else {
-                    stand = TARDISConstants.UUID_ZERO;
+                String u = rs.getString("uuid");
+                String s = rs.getString("stand");
+                String d = rs.getString("display");
+                try {
+                    UUID uuid = UUID.fromString(u);
+                    int id = rs.getInt("tardis_id");
+                    Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getString("location"));
+                    UUID stand;
+                    if (!s.isEmpty()) {
+                        stand = UUID.fromString(s);
+                    } else {
+                        stand = TARDISConstants.UUID_ZERO;
+                    }
+                    UUID display;
+                    if (!s.isEmpty()) {
+                        display = UUID.fromString(d);
+                    } else {
+                        display = TARDISConstants.UUID_ZERO;
+                    }
+                    plugin.getTrackerKeeper().getFlyingReturnLocation().put(uuid, new FlightReturnData(id, location, -1, -1, stand, display));
+                    count++;
+                } catch (IllegalArgumentException e) {
+                    plugin.debug("Could not load flying TARDIS with player UUID '" + u
+                            + "', stand UUID '" + s + "'"
+                            + "' and display UUID '" + d + "'");
                 }
-                UUID display;
-                if (!standTmp.isEmpty()) {
-                    display = UUID.fromString(displayTmp);
-                } else {
-                    display = TARDISConstants.UUID_ZERO;
-                }
-                plugin.getTrackerKeeper().getFlyingReturnLocation().put(uuid, new FlightReturnData(id, location, -1, -1, stand, display));
-                count++;
             }
             if (count > 0) {
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Loaded " + count + " flying TARDISes.");

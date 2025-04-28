@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -51,7 +50,6 @@ public class FishFingerRecipe {
         ItemStack is = new ItemStack(Material.COOKED_COD, 3);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Fish Finger");
-        im.setItemModel(RecipeItem.FISH_FINGER.getModel());
         im.setLore(List.of("Best eaten with custard!"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "fish_finger");

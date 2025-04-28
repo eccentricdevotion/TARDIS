@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.howto;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Material;
@@ -69,7 +68,6 @@ public class TARDISSeedsInventory {
                 lore.add("Click to see recipe...");
                 im.setLore(lore);
                 NamespacedKey key = new NamespacedKey(plugin, "seed_" + a.getPermission());
-                im.setItemModel(key);
                 is.setItemMeta(im);
                 stack[i] = is;
                 i++;
@@ -79,7 +77,6 @@ public class TARDISSeedsInventory {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setItemModel(GuiVariant.CLOSE.getKey());
         close.setItemMeta(close_im);
         stack[44] = close;
         return stack;

@@ -18,9 +18,8 @@ package me.eccentric_nz.TARDIS.lights;
 
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.customblocks.VariableLight;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -65,13 +64,7 @@ public class TARDISLightConverter {
                 int h = dimensions.get("height").getAsInt();
                 int width = dimensions.get("width").getAsInt();
                 int d = dimensions.get("length").getAsInt() - 1;
-                if (schm.getPermission().equals("mechanical") || schm.getPermission().equals("cursed")) {
-                    starty = 62;
-                } else if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
-                    starty = 65;
-                } else {
-                    starty = 64;
-                }
+                starty = schm.getStartY();
                 endy = starty + h;
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
                 TARDISTIPSData pos = tintpos.getTIPSData(tardis.getTIPS());

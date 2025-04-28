@@ -22,6 +22,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.players.OldUsersConverter;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.OwnableEntity;
@@ -32,7 +33,7 @@ import net.minecraft.world.entity.monster.Husk;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_21_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_21_R4.entity.CraftPlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -41,7 +42,7 @@ import java.util.UUID;
 public class TWAFollower extends Husk implements OwnableEntity {
 
     protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(TWAFollower.class, EntityDataSerializers.BYTE);
-    protected static final EntityDataAccessor<Optional<UUID>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(TWAFollower.class, EntityDataSerializers.OPTIONAL_UUID);
+    protected static final EntityDataAccessor<Optional<EntityReference<LivingEntity>>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(TWAFollower.class, EntityDataSerializers.OPTIONAL_LIVING_ENTITY_REFERENCE);
     protected UUID uuid;
     protected boolean following = false;
 
@@ -69,30 +70,30 @@ public class TWAFollower extends Husk implements OwnableEntity {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         if (this.getOwnerUUID() != null) {
-            tag.putUUID("Owner", this.getOwnerUUID());
+            EntityReference<LivingEntity> entityreference = new EntityReference<>(this.getOwnerUUID());
+            entityreference.store(tag, "Owner");
         }
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        UUID uuid;
-        if (tag.hasUUID("Owner")) {
-            uuid = tag.getUUID("Owner");
+        EntityReference<LivingEntity> entityreference = EntityReference.readWithOldOwnerConversion(tag, "Owner", this.level());
+        if (entityreference != null) {
+            this.entityData.set(TWAFollower.DATA_OWNERUUID_ID, Optional.of(entityreference));
+            this.setOwnerUUID(entityreference.getUUID());
         } else {
-            String s = tag.getString("Owner");
-            uuid = OldUsersConverter.convertMobOwnerIfNecessary(this.getServer(), s);
-        }
-        if (uuid != null) {
-            try {
-                this.setOwnerUUID(uuid);
-            } catch (Throwable throwable) {
-            }
+            tag.getString("Owner").ifPresent((s -> {
+                uuid = OldUsersConverter.convertMobOwnerIfNecessary(this.getServer(), s);
+                if (uuid != null) {
+                    this.setOwnerUUID(uuid);
+                    this.entityData.set(TWAFollower.DATA_OWNERUUID_ID, Optional.of(new EntityReference<>(uuid)));
+                }
+            }));
         }
     }
 
     @Nullable
-    @Override
     @SuppressWarnings("unchecked")
     public UUID getOwnerUUID() {
         return this.getBukkitEntity().getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
@@ -101,6 +102,11 @@ public class TWAFollower extends Husk implements OwnableEntity {
     public void setOwnerUUID(UUID uuid) {
         this.uuid = uuid;
         this.getBukkitEntity().getPersistentDataContainer().set(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID, uuid);
+    }
+
+    @Override
+    public @Nullable EntityReference<LivingEntity> getOwnerReference() {
+        return null;
     }
 
     @Nullable

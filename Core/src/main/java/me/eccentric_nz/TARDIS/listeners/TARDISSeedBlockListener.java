@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.builders.TARDISBuildData;
-import me.eccentric_nz.TARDIS.builders.TARDISSeedBlockProcessor;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISBuildData;
+import me.eccentric_nz.TARDIS.builders.utility.TARDISSeedBlockProcessor;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
@@ -175,7 +175,6 @@ public class TARDISSeedBlockListener implements Listener {
                 }
                 im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
                 im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
-                im.setItemModel(model);
                 List<String> lore = new ArrayList<>();
                 lore.add(console);
                 lore.add("Walls: " + data.getWallType().toString());

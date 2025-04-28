@@ -16,7 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.destroyers;
 
-import me.eccentric_nz.TARDIS.builders.MaterialisationData;
+import me.eccentric_nz.TARDIS.builders.exterior.MaterialisationData;
 import org.bukkit.Location;
 
 /**

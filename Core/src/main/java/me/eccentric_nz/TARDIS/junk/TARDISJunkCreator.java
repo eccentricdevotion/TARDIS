@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.junk;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.builders.TARDISBuilderInner;
+import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;

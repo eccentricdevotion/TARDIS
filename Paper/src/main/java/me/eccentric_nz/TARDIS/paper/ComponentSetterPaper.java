@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.paper;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.Consumable;
+import io.papermc.paper.datacomponent.item.Weapon;
 import io.papermc.paper.datacomponent.item.consumable.ItemUseAnimation;
 import io.papermc.paper.registry.keys.SoundEventKeys;
 import me.eccentric_nz.tardisregeneration.ComponentSetter;
@@ -18,6 +19,15 @@ public class ComponentSetterPaper implements ComponentSetter {
                 .hasConsumeParticles(false)
                 .build();
         is.setData(DataComponentTypes.CONSUMABLE, consumable);
+        return is;
+    }
+
+    @Override
+    public ItemStack setWeapon(ItemStack is) {
+        Weapon weapon = Weapon.weapon()
+                .itemDamagePerAttack(8)
+                .build();
+        is.setData(DataComponentTypes.WEAPON, weapon);
         return is;
     }
 }

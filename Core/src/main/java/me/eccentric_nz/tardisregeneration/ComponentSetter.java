@@ -5,4 +5,6 @@ import org.bukkit.inventory.ItemStack;
 public interface ComponentSetter {
 
     ItemStack setConsumable(ItemStack is);
+
+    ItemStack setWeapon(ItemStack is);
 }

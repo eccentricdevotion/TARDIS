@@ -112,7 +112,6 @@ public class TARDISTravelBiome {
             String b = buf.substring(0, buf.length() - 2);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOMES", b);
         } else {
-
             World w;
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             if (!rsc.resultSet()) {

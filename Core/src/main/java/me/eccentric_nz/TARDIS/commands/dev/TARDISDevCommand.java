@@ -77,7 +77,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "dalek", "debug", "dismount", "displayitem",
             "effect",
             "frame", "furnace",
-            "gravity",
+            "gravity", "give",
             "head",
             "interaction",
             "label", "leather", "list",
@@ -150,6 +150,18 @@ public class TARDISDevCommand implements CommandExecutor {
                         case "gravity" -> {
                             if (sender instanceof Player player) {
                                 player.setGravity(!player.hasGravity());
+                            }
+                            return true;
+                        }
+                        case "give" -> {
+                            if (sender instanceof Player player) {
+//                                ItemStack ran = new ItemStack(GUIControlCentre.BUTTON_RANDOM.material(), 1);
+//                                ItemMeta dom = ran.getItemMeta();
+//                                dom.setDisplayName(ChatColor.MAGIC + "ran" + ChatColor.RESET + plugin.getLanguage().getString("BUTTON_RANDOM") + ChatColor.MAGIC + "dom");
+//                                ran.setItemMeta(dom);
+//                                player.getInventory().addItem(ran);
+//                                new ComponentCommand(plugin).writeARS();
+                                new StorageContents(plugin).give(player);
                             }
                             return true;
                         }

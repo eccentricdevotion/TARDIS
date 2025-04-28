@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.recipes.shapeless;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -43,7 +42,6 @@ public class BowlofCustardRecipe {
         ItemStack is = new ItemStack(Material.MUSHROOM_STEW, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Bowl of Custard");
-        im.setItemModel(RecipeItem.BOWL_OF_CUSTARD.getModel());
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "bowl_of_custard");
         ShapelessRecipe r = new ShapelessRecipe(key, is);

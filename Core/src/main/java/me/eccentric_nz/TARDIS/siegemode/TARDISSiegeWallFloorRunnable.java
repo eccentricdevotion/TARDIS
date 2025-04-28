@@ -18,9 +18,8 @@ package me.eccentric_nz.TARDIS.siegemode;
 
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -139,13 +138,7 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
                 startx = gsl[0];
                 startz = gsl[2];
             }
-            if (tud.getSchematic().getPermission().equals("mechanical") || tud.getSchematic().getPermission().equals("cursed")) {
-                starty = 62;
-            } else if (TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission())) {
-                starty = 65;
-            } else {
-                starty = 64;
-            }
+            starty = tud.getSchematic().getStartY();
             world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             // wall/floor block prefs
             wall_type = Material.valueOf(tud.getWall());

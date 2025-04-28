@@ -58,7 +58,7 @@ public class TARDISItemCommand {
             RecipeItem recipeItem = RecipeItem.getByName(stripped);
             if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
                 im.setDisplayName(ChatColor.WHITE + stripped);
-                im.setItemModel(recipeItem.getModel());
+                im.setItemModel(null);
                 inHand.setItemMeta(im);
                 player.updateInventory();
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ITEM_UPDATED");
@@ -75,7 +75,7 @@ public class TARDISItemCommand {
                         RecipeItem recipeItem = RecipeItem.getByName(stripped);
                         if (!recipeItem.equals(RecipeItem.NOT_FOUND)) {
                             im.setDisplayName(ChatColor.WHITE + stripped);
-                            im.setItemModel(recipeItem.getModel());
+                            im.setItemModel(null);
                             is.setItemMeta(im);
                             i++;
                         }

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -58,7 +57,6 @@ public class TARDISInvisibilityCircuitRecipe {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Invisibility Circuit");
-        im.setItemModel(RecipeItem.TARDIS_INVISIBILITY_CIRCUIT.getModel());
         String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? ChatColor.YELLOW + "unlimited"
                 : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
@@ -69,7 +67,6 @@ public class TARDISInvisibilityCircuitRecipe {
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "Perception Circuit");
-        em.setItemModel(RecipeItem.PERCEPTION_CIRCUIT.getModel());
         exact.setItemMeta(em);
         ItemStack potion = new ItemStack(Material.POTION, 1);
         PotionMeta pm = (PotionMeta) potion.getItemMeta();

@@ -20,7 +20,6 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.custommodels.keys.BlockBreak;
-import me.eccentric_nz.TARDIS.custommodels.keys.LightVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.TardisDoorVariant;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -521,12 +520,10 @@ public class TARDISDisplayBlockListener implements Listener {
                                     ItemStack vis = vd.getItemStack();
                                     if (vis != null) {
                                         Material variable = vis.getType();
-                                        ItemStack ret;
-                                        ret = new ItemStack(Material.GLASS, 1);
+                                        ItemStack ret = new ItemStack(Material.GLASS, 1);
                                         ItemMeta im = ret.getItemMeta();
                                         im.setDisplayName(ChatColor.WHITE + "Variable Light");
                                         im.setLore(List.of(variable.toString()));
-                                        im.setItemModel(LightVariant.VARIABLE.getKey());
                                         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.INTEGER, 1003);
                                         ret.setItemMeta(im);
                                         l.getWorld().dropItemNaturally(l, ret);

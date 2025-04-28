@@ -18,10 +18,9 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -204,14 +203,7 @@ class TARDISArchiveCommand {
                             sx = gsl[0];
                             sz = gsl[2];
                         }
-                        int sy;
-                        if (current.getPermission().equals("mechanical") || current.getPermission().equals("cursed")) {
-                            sy = 62;
-                        } else if (TARDISConstants.HIGHER.contains(current.getPermission())) {
-                            sy = 65;
-                        } else {
-                            sy = 64;
-                        }
+                        int sy = current.getStartY();
                         ArchiveData ad = new TARDISSchematicBuilder(plugin, id, player.getLocation().getWorld(), sx, sx + w, sy, sy + h, sz, sz + c).build();
                         if (sub.equals("scan")) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCHIVE_SCAN");

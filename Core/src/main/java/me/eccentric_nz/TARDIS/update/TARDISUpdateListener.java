@@ -33,6 +33,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -209,7 +210,7 @@ public class TARDISUpdateListener implements Listener {
                     front.setLine(1, plugin.getSigns().getStringList("chameleon").get(1));
                     front.setLine(2, "");
                     front.setLine(3, tardis.getPreset().toString());
-                    cs.setWaxed(true);
+//                    cs.setWaxed(true);
                     cs.update();
                 }
                 case KEYBOARD -> {
@@ -232,7 +233,7 @@ public class TARDISUpdateListener implements Listener {
                     front.setLine(1, plugin.getSigns().getStringList("saves").getFirst());
                     front.setLine(2, plugin.getSigns().getStringList("saves").get(1));
                     front.setLine(3, "");
-                    ss.setWaxed(true);
+//                    ss.setWaxed(true);
                     ss.update();
                 }
                 case TERMINAL -> {
@@ -244,7 +245,7 @@ public class TARDISUpdateListener implements Listener {
                     front.setLine(1, plugin.getSigns().getStringList("terminal").getFirst());
                     front.setLine(2, plugin.getSigns().getStringList("terminal").get(1));
                     front.setLine(3, "");
-                    ts.setWaxed(true);
+//                    ts.setWaxed(true);
                     ts.update();
                 }
                 case CONTROL -> {
@@ -256,7 +257,7 @@ public class TARDISUpdateListener implements Listener {
                     front.setLine(1, plugin.getSigns().getStringList("control").getFirst());
                     front.setLine(2, plugin.getSigns().getStringList("control").get(1));
                     front.setLine(3, "");
-                    os.setWaxed(true);
+//                    os.setWaxed(true);
                     os.update();
                 }
                 case ARS -> new UpdateARS(plugin).process(block, tardis.getSchematic(), id, uuid);
@@ -286,7 +287,7 @@ public class TARDISUpdateListener implements Listener {
                     front.setLine(1, plugin.getSigns().getStringList("temporal").getFirst());
                     front.setLine(2, plugin.getSigns().getStringList("temporal").get(1));
                     front.setLine(3, "");
-                    es.setWaxed(true);
+//                    es.setWaxed(true);
                     es.update();
                 }
                 case ADVANCED, STORAGE -> {
@@ -308,7 +309,7 @@ public class TARDISUpdateListener implements Listener {
                     front.setLine(1, "TARDIS");
                     front.setLine(2, plugin.getSigns().getStringList("info").getFirst());
                     front.setLine(3, plugin.getSigns().getStringList("info").get(1));
-                    s.setWaxed(true);
+//                    s.setWaxed(true);
                     s.update();
                 }
                 case THROTTLE -> {
@@ -324,8 +325,13 @@ public class TARDISUpdateListener implements Listener {
                 case SMELT, FUEL -> new TARDISSmelterCommand(plugin).addDropChest(player, updateable, id, block);
                 case VAULT -> new TARDISVaultCommand(plugin).addDropChest(player, id, block);
                 // GENERATOR, DISPENSER, HANDBRAKE, ZERO, RELATIVITY_DIFFERENTIATOR
-                default ->
-                        plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
+                default ->  plugin.getQueryFactory().insertControl(id, Control.getUPDATE_CONTROLS().get(updateable.getName()), blockLocStr, secondary ? 1 : 0);
+            }
+            // wax any signs
+            if (Tag.SIGNS.isTagged(blockType)) {
+                Sign s = (Sign) block.getState();
+                s.setWaxed(true);
+                s.update();
             }
             if (!updateable.equals(Updateable.FUEL) && !updateable.equals(Updateable.SMELT)) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_SET", updateable.getName());

@@ -21,11 +21,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MapItem;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_21_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_21_R3.map.CraftMapView;
+import org.bukkit.craftbukkit.v1_21_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_21_R4.map.CraftMapView;
 import org.bukkit.map.MapView;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
 import java.util.UUID;
@@ -37,6 +39,11 @@ public final class TARDISMapUpdater extends Player {
 
     public TARDISMapUpdater(World world, int x, int z) {
         super(((CraftWorld) world).getHandle(), new BlockPos(x, 64, z), 1.0f, new GameProfile(ID, NAME));
+    }
+
+    @Override
+    public @Nullable GameType gameMode() {
+        return GameType.DEFAULT_MODE;
     }
 
     @Override

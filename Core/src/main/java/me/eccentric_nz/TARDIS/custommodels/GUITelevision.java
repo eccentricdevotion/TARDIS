@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.custommodels;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.Button;
 import me.eccentric_nz.TARDIS.custommodels.keys.CybermanVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
@@ -33,9 +34,9 @@ public record GUITelevision() {
     public static GUIData MONSTERS = new GUIData(Button.MONSTER.getKey(), 6, Material.BROWN_STAINED_GLASS_PANE, "Monsters");
     public static GUIData CYBER = new GUIData(CybermanVariant.BUTTON_CYBERMAN.getKey(), 8, Material.BROWN_STAINED_GLASS_PANE, "Cybermen");
     public static GUIData DOWNLOAD = new GUIData(SwitchVariant.DOWNLOAD_OFF.getKey(), 29, Material.REPEATER);
-    public static GUIData REMOVE = new GUIData(Button.REMOVE.getKey(), 31, Material.BUCKET);
-    public static GUIData BACK = new GUIData(GuiVariant.BACK.getKey(), 33, Material.BOWL);
-    public static GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 35, Material.BOWL);
+    public static GUIData REMOVE = new GUIData(Button.REMOVE.getKey(), 31, Material.BUCKET, "Remove skin");
+    public static GUIData BACK = new GUIData(GuiVariant.BACK.getKey(), 33, Material.BOWL, "Back");
+    public static GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 35, Material.BOWL, TARDIS.plugin.getLanguage().getString("BUTTON_CLOSE"));
 
     public static List<GUIData> values() {
         return List.of(DOCTORS, COMPANIONS, CHARACTERS, MONSTERS, CYBER, REMOVE, CLOSE);

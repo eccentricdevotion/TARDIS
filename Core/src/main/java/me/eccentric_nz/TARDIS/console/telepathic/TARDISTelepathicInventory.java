@@ -26,6 +26,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -51,7 +52,9 @@ public class TARDISTelepathicInventory {
         ItemMeta tim = toggle.getItemMeta();
         tim.setDisplayName("Telepathic Circuit");
         tim.setLore(List.of(onOff));
-        tim.setItemModel(on ? SwitchVariant.TELEPATHIC_CIRCUIT_ON.getKey() : SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getKey());
+        CustomModelDataComponent component = tim.getCustomModelDataComponent();
+        component.setFloats(on ? SwitchVariant.TELEPATHIC_CIRCUIT_ON.getFloats() : SwitchVariant.TELEPATHIC_CIRCUIT_OFF.getFloats());
+        tim.setCustomModelDataComponent(component);
         toggle.setItemMeta(tim);
         stack[0] = toggle;
         // cave finder

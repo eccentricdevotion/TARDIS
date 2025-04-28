@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.custommodels.GUIConfiguration;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.*;
 
@@ -68,7 +69,9 @@ class TARDISConfigPageTwoInventory {
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(c);
                 GUIConfiguration gui = GUIConfiguration.valueOf(c.split("\\.")[0].toUpperCase(Locale.ROOT));
-                im.setItemModel(value.equals("false") ? gui.getOffModel() : gui.getOnModel());
+                CustomModelDataComponent component = im.getCustomModelDataComponent();
+                component.setFloats(value.equals("false") ? gui.getOffFloats() : gui.getOnFloats());
+                im.setCustomModelDataComponent(component);
                 im.setLore(List.of(value));
                 is.setItemMeta(im);
                 options.add(is);
@@ -86,14 +89,12 @@ class TARDISConfigPageTwoInventory {
         ItemStack next = new ItemStack(Material.BOWL, 1);
         ItemMeta page = next.getItemMeta();
         page.setDisplayName("Previous page");
-        page.setItemModel(GUIConfiguration.PREV.getOnModel());
         next.setItemMeta(page);
         stack[52] = next;
         // player prefs
         ItemStack play = new ItemStack(Material.NETHER_STAR, 1);
         ItemMeta prefs = play.getItemMeta();
         prefs.setDisplayName("Player Preferences");
-        prefs.setItemModel(GUIConfiguration.PREFS.getOnModel());
         play.setItemMeta(prefs);
         stack[53] = play;
         return stack;

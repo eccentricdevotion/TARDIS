@@ -17,12 +17,14 @@
 package me.eccentric_nz.TARDIS.recipes;
 
 import com.google.common.collect.Multimaps;
-import me.eccentric_nz.TARDIS.custommodels.GUIChemistry;
+import me.eccentric_nz.TARDIS.custommodels.keys.KeyVariant;
+import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 import java.util.Map;
@@ -42,7 +44,6 @@ public class TARDISRecipeCategoryInventory {
         ItemMeta info_im = info.getItemMeta();
         info_im.setDisplayName("Info");
         info_im.setLore(List.of("Click a button below", "to see the items", "in that recipe category"));
-        info_im.setItemModel(GUIChemistry.INFO.key());
         info.setItemMeta(info_im);
         stack[0] = info;
         for (RecipeCategory category : RecipeCategory.values()) {
@@ -50,7 +51,17 @@ public class TARDISRecipeCategoryInventory {
                 ItemStack cat = new ItemStack(category.getMaterial(), 1);
                 ItemMeta egory = cat.getItemMeta();
                 egory.setDisplayName(category.getName());
-                if (category.getModel() != null) {
+                if (category == RecipeCategory.ITEMS) {
+                    CustomModelDataComponent component = egory.getCustomModelDataComponent();
+                    component.setFloats(KeyVariant.BRASS_STRING.getFloats());
+                    egory.setCustomModelDataComponent(component);
+                }
+                if (category == RecipeCategory.SONIC_UPGRADES) {
+                    CustomModelDataComponent component = egory.getCustomModelDataComponent();
+                    component.setFloats(SonicVariant.NINTH.getFloats());
+                    egory.setCustomModelDataComponent(component);
+                }
+                if (category == RecipeCategory.ROTORS) {
                     egory.setItemModel(category.getModel());
                 }
                 egory.addItemFlags(ItemFlag.values());

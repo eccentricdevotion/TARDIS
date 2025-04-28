@@ -94,7 +94,7 @@ public class TARDISDisplayBlockRoomConverter implements Runnable {
                                 if (tdi != null) {
                                     plugin.debug(tdi.getName());
                                     // set the item stack's item model from TDI
-                                    im.setItemModel(tdi.getCustomModel());
+                                    im.setItemModel(null);
                                     is.setItemMeta(im);
                                     // set the display item's item stack
                                     display.setItemStack(is);

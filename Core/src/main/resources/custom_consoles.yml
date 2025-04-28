@@ -1,4 +1,5 @@
-# custom console names should be a single word, you can use underscores... Don't forget to add the upgrade cost to artron.yml
+# Custom console names should be a single word, you can use underscores...
+# Don't forget to add the upgrade cost to artron.yml
 CUSTOM:
   enabled: false
   schematic: custom
@@ -6,3 +7,6 @@ CUSTOM:
   has_beacon: true
   has_lanterns: false
   description: Super-duper Custom Console
+  # if your console builds to high or too low and the console doors don't line up with room doors
+  # change start_y to adjust the y coordinate start position
+  start_y: 64

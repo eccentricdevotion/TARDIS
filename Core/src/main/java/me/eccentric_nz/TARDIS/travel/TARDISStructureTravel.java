@@ -83,7 +83,7 @@ public class TARDISStructureTravel {
         this.plugin = plugin;
     }
 
-    public TARDISStructureLocation getRandomVillage(Player p, int id, String[] args) {
+    public TARDISStructureLocation getRandom(Player p, int id, String[] args) {
         // get world the Police Box is in
         ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, id);
         if (rs.resultSet()) {

@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -97,7 +98,6 @@ public class TARDISItemDisplaySetter {
                 }
             }
             Material material = Material.valueOf(stack.get("type").getAsString());
-
             TARDISDisplayItem tdi = model != null ? TARDISDisplayItem.getByModel(model): null;
             if (tdi != null) {
                 TARDISDisplayItemUtils.set(tdi, block, id);
@@ -121,7 +121,10 @@ public class TARDISItemDisplaySetter {
         ItemStack is = new ItemStack(material);
         if (model != null) {
             ItemMeta im = is.getItemMeta();
-            im.setItemModel(model);
+            im.setDisplayName(switch (model.getKey()) {
+                case "xray" -> "X-ray";
+                default -> TARDISStringUtils.capitalise(model.getKey());
+            });
             is.setItemMeta(im);
             display.setItemDisplayTransform(ItemDisplay.ItemDisplayTransform.GROUND);
             display.setBillboard(Display.Billboard.VERTICAL);

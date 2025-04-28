@@ -118,6 +118,8 @@ public class ConsoleDestroyer {
                                     case 1002, 2002 -> model = ConsolePart.CONSOLE_GRAY.getKey();
                                     default -> model = ConsolePart.CONSOLE_LIGHT_GRAY.getKey();
                                 }
+                            } else {
+                                plugin.debug("found model -> " + model.getKey());
                             }
                             colour = ColourType.COLOURS.getOrDefault(model, "LIGHT_GRAY");
                         }
@@ -130,7 +132,11 @@ public class ConsoleDestroyer {
             // remove database records
             new ClearInteractions(plugin).removeRecords(id);
             // build item stack
-            boolean isRustic = model == ConsolePart.CONSOLE_RUSTIC.getKey();
+            boolean isRustic = model != null && (
+                model.equals(ConsolePart.CONSOLE_RUSTIC.getKey())
+                || model.equals(ConsolePart.CONSOLE_CENTRE_RUSTIC.getKey())
+                || model.equals(ConsolePart.CONSOLE_DIVISION_RUSTIC.getKey())
+            );
             Material material = (isRustic) ? Material.WAXED_OXIDIZED_COPPER : Material.valueOf(colour + "_CONCRETE");
             NamespacedKey key;
             switch (material) {

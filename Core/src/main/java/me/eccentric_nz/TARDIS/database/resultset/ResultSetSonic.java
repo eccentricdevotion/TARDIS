@@ -96,25 +96,25 @@ public class ResultSetSonic {
                         UUID.fromString(rs.getString("uuid")),
                         rs.getBoolean("activated"),
                         switch (rs.getString("model")) {
-                            case "mark1", "10000001" -> SonicVariant.MARK1.getKey();
-                            case "mark2", "10000002" -> SonicVariant.MARK2.getKey();
-                            case "mark3", "10000003" -> SonicVariant.MARK3.getKey();
-                            case "mark4", "10000004" -> SonicVariant.MARK4.getKey();
-                            case "eighth", "10000008" -> SonicVariant.EIGHTH.getKey();
-                            case "ninth", "10000009" -> SonicVariant.NINTH.getKey();
-                            case "tenth", "10000010" -> SonicVariant.TENTH.getKey();
-                            case "eleventh", "10000011" -> SonicVariant.ELEVENTH.getKey();
-                            case "twelfth", "10000012" -> SonicVariant.TWELFTH.getKey();
-                            case "thirteenth", "10000013" -> SonicVariant.THIRTEENTH.getKey();
-                            case "fourteenth", "10000014" -> SonicVariant.FOURTEENTH.getKey();
-                            case "fifteenth", "10000015" -> SonicVariant.FIFTEENTH.getKey();
-                            case "river_song", "10000031" -> SonicVariant.RIVER_SONG.getKey();
-                            case "master", "10000032" -> SonicVariant.MASTER.getKey();
-                            case "sarah_jane", "10000033" -> SonicVariant.SARAH_JANE.getKey();
-                            case "sonic_probe", "10000034" -> SonicVariant.SONIC_PROBE.getKey();
-                            case "umbrella", "10000035" -> SonicVariant.UMBRELLA.getKey();
-                            case "war", "10000085" -> SonicVariant.WAR.getKey();
-                            default -> SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getKey());
+                            case "mark1", "10000001" -> SonicVariant.MARK1.getFloats();
+                            case "mark2", "10000002" -> SonicVariant.MARK2.getFloats();
+                            case "mark3", "10000003" -> SonicVariant.MARK3.getFloats();
+                            case "mark4", "10000004" -> SonicVariant.MARK4.getFloats();
+                            case "eighth", "10000008" -> SonicVariant.EIGHTH.getFloats();
+                            case "ninth", "10000009" -> SonicVariant.NINTH.getFloats();
+                            case "tenth", "10000010" -> SonicVariant.TENTH.getFloats();
+                            case "eleventh", "10000011" -> SonicVariant.ELEVENTH.getFloats();
+                            case "twelfth", "10000012" -> SonicVariant.TWELFTH.getFloats();
+                            case "thirteenth", "10000013" -> SonicVariant.THIRTEENTH.getFloats();
+                            case "fourteenth", "10000014" -> SonicVariant.FOURTEENTH.getFloats();
+                            case "fifteenth", "10000015" -> SonicVariant.FIFTEENTH.getFloats();
+                            case "river_song", "10000031" -> SonicVariant.RIVER_SONG.getFloats();
+                            case "master", "10000032" -> SonicVariant.MASTER.getFloats();
+                            case "sarah_jane", "10000033" -> SonicVariant.SARAH_JANE.getFloats();
+                            case "sonic_probe", "10000034" -> SonicVariant.SONIC_PROBE.getFloats();
+                            case "umbrella", "10000035" -> SonicVariant.UMBRELLA.getFloats();
+                            case "war", "10000085" -> SonicVariant.WAR.getFloats();
+                            default -> SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getFloats());
                         },
                         rs.getBoolean("bio"),
                         rs.getBoolean("diamond"),

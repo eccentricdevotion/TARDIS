@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
@@ -94,13 +93,7 @@ class TARDISLampsCommand {
                 // get dimensions
                 JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
                 int h = dimensions.get("height").getAsInt();
-                if (schm.getPermission().equals("mechanical") || schm.getPermission().equals("cursed")) {
-                    starty = 62;
-                } else if (TARDISConstants.HIGHER.contains(schm.getPermission())) {
-                    starty = 65;
-                } else {
-                    starty = 64;
-                }
+                starty = schm.getStartY();
                 endy = starty + h;
                 String w = world.getName();
                 // loop through the chunks

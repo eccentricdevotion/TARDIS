@@ -24,7 +24,7 @@ public record GUIGeneticManipulator() {
     // Genetic Manipulator
     public static GUIData BUTTON_SKINS = new GUIData(Button.SKINS.getKey(), 43, Material.BOWL);
     public static GUIData BUTTON_TWA = new GUIData(Button.TWA.getKey(), 44, Material.BOWL);
-    public static GUIData BUTTON_MASTER = new GUIData(Button.MASTER_OFF.getKey(), 45, Material.COMPARATOR);
+    public static GUIData BUTTON_MASTER = new GUIData(Button.MASTER_OFF.getKey(), 45, Material.REPEATER);
     public static GUIData BUTTON_AGE = new GUIData(Button.AGE.getKey(), 47, Material.HOPPER);
     public static GUIData BUTTON_TYPE = new GUIData(Button.TYPE.getKey(), 48, Material.CYAN_DYE);
     public static GUIData BUTTON_OPTS = new GUIData(Button.OPTIONS.getKey(), 49, Material.LEAD);

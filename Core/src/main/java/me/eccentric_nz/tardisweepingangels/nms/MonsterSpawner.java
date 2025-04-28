@@ -22,7 +22,7 @@ import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import net.minecraft.server.level.ServerLevel;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_21_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_21_R4.CraftWorld;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -36,13 +36,13 @@ public class MonsterSpawner {
 
     public TWAFollower createFollower(Location location, Follower follower) {
         ServerLevel world = ((CraftWorld) location.getWorld()).getHandle();
-        TWAFollower entity;
-        switch (follower.getSpecies()) {
-            case OOD -> entity = new TWAOod(world);
-            case JUDOON -> entity = new TWAJudoon(world);
-            default -> entity = new TWAK9(world);
-        }
-        entity.setOwnerUUID(follower.getOwner());
+        TWAFollower entity = switch (follower.getSpecies()) {
+            case OOD -> new TWAOod(world);
+            case JUDOON -> new TWAJudoon(world);
+            default -> new TWAK9(world);
+        };
+//        EntityReference<net.minecraft.world.entity.LivingEntity> reference = (follower.getOwner() != null) ? new EntityReference<>(follower.getOwner()) : null;
+//        entity.setOwnerReference(reference);
         entity.setPosRaw(location.getX(), location.getY(), location.getZ());
         entity.setPersistenceRequired();
         world.addFreshEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);

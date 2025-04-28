@@ -20,7 +20,7 @@ import io.papermc.lib.PaperLib;
 import me.eccentric_nz.TARDIS.api.TARDII;
 import me.eccentric_nz.TARDIS.artron.TARDISCondensables;
 import me.eccentric_nz.TARDIS.bStats.TARDISStats;
-import me.eccentric_nz.TARDIS.builders.TARDISPresetBuilderFactory;
+import me.eccentric_nz.TARDIS.builders.exterior.TARDISPresetBuilderFactory;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISChatGUI;
 import me.eccentric_nz.TARDIS.chatGUI.TARDISUpdateChatGUI;
@@ -112,7 +112,7 @@ public class TARDIS extends JavaPlugin {
     private final HashMap<String, String> versions = new HashMap<>();
     private final String versionRegex = "(\\d+[.])+\\d+";
     private final Pattern versionPattern = Pattern.compile(versionRegex);
-    private final String serverStr = "1.21.4";
+    private final String serverStr = "1.21.5";
     private TARDISMessage messenger;
     private TARDISChatGUI<?> jsonKeeper;
     private TARDISUpdateChatGUI updateChatGUI;

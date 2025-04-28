@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -56,15 +55,15 @@ public class RustPlagueSwordRecipe {
         ItemStack is = new ItemStack(Material.IRON_SWORD, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Rust Plague Sword");
-        im.setItemModel(RecipeItem.RUST_PLAGUE_SWORD.getModel());
         im.setLore(List.of("Dalek Virus Dispenser"));
         is.setItemMeta(im);
+        // set weapon component
+        TARDIS.plugin.getComponentSetter().setWeapon(is);
         NamespacedKey key = new NamespacedKey(plugin, "rust_plague_sword");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = new ItemStack(Material.LAVA_BUCKET, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "Rust Bucket");
-        em.setItemModel(RecipeItem.RUST_BUCKET.getModel());
         exact.setItemMeta(em);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape("RIR", "RIR", "DSD");

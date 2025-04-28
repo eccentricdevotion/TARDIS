@@ -16,8 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.database.data;
 
-import org.bukkit.NamespacedKey;
-
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -27,7 +26,7 @@ public class Sonic {
 
     private final UUID uuid;
     private final boolean activated;
-    private final NamespacedKey model;
+    private final List<Float> model;
     private final boolean bio;
     private final boolean diamond;
     private final boolean emerald;
@@ -39,7 +38,7 @@ public class Sonic {
     private final boolean brush;
     private final boolean conversion;
 
-    public Sonic(UUID uuid, boolean activated, NamespacedKey model, boolean bio, boolean diamond, boolean emerald, boolean redstone, boolean painter, boolean ignite, boolean arrow, boolean knockback, boolean brush, boolean conversion) {
+    public Sonic(UUID uuid, boolean activated, List<Float> model, boolean bio, boolean diamond, boolean emerald, boolean redstone, boolean painter, boolean ignite, boolean arrow, boolean knockback, boolean brush, boolean conversion) {
         this.uuid = uuid;
         this.activated = activated;
         this.model = model;
@@ -63,7 +62,7 @@ public class Sonic {
         return activated;
     }
 
-    public NamespacedKey getModel() {
+    public List<Float> getModel() {
         return model;
     }
 

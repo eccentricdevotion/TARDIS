@@ -17,7 +17,8 @@
 package me.eccentric_nz.TARDIS.recipes.shapeless;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
+import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
+import me.eccentric_nz.TARDIS.recipes.shaped.SonicScrewdriverRecipe;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -25,6 +26,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
+
+import java.util.List;
+import java.util.Locale;
 
 /*
 recipe:BLAZE_ROD,GLOWSTONE_DUST=Diamond Disruptor Circuit
@@ -44,7 +49,10 @@ public class DiamondUpgradeRecipe {
         ItemStack is = new ItemStack(Material.BLAZE_ROD, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Diamond Upgrade");
-        im.setItemModel(RecipeItem.DIAMOND_UPGRADE.getModel());
+        List<Float> sonicModel = SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getFloats());
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setFloats(sonicModel);
+        im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "diamond_upgrade");
         ShapelessRecipe r = new ShapelessRecipe(key, is);
@@ -52,7 +60,6 @@ public class DiamondUpgradeRecipe {
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "Diamond Disruptor Circuit");
-        em.setItemModel(RecipeItem.DIAMOND_DISRUPTOR_CIRCUIT.getModel());
         exact.setItemMeta(em);
         r.addIngredient(new RecipeChoice.ExactChoice(exact));
         plugin.getServer().addRecipe(r);

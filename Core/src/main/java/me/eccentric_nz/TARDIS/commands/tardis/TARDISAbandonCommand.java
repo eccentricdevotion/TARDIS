@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISAbandonEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.TARDISBuilderUtility;
+import me.eccentric_nz.TARDIS.builders.exterior.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISAbandonLister;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;

@@ -19,13 +19,13 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.keys.KeyVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,27 +46,27 @@ lore:Enter and exit your TARDIS
 public class TARDISKeyRecipe {
 
     private final TARDIS plugin;
-    private final HashMap<String, NamespacedKey> keyModelLookup = new HashMap<>();
+    private final HashMap<String, List<Float>> cmdLookup = new HashMap<>();
 
     public TARDISKeyRecipe(TARDIS plugin) {
         this.plugin = plugin;
-        keyModelLookup.put("first", KeyVariant.BRASS_YALE.getKey());
-        keyModelLookup.put("second", KeyVariant.BRASS_PLAIN.getKey());
-        keyModelLookup.put("third", KeyVariant.SPADE_SHAPED.getKey());
-        keyModelLookup.put("fifth", KeyVariant.SILVER_YALE.getKey());
-        keyModelLookup.put("seventh", KeyVariant.SEAL_OF_RASSILON.getKey());
-        keyModelLookup.put("ninth", KeyVariant.SILVER_VARIANT.getKey());
-        keyModelLookup.put("tenth", KeyVariant.SILVER_PLAIN.getKey());
-        keyModelLookup.put("eleventh", KeyVariant.SILVER_NEW.getKey());
-        keyModelLookup.put("rose", KeyVariant.SILVER_ERA.getKey());
-        keyModelLookup.put("sally", KeyVariant.SILVER_STRING.getKey());
-        keyModelLookup.put("perception", KeyVariant.FILTER.getKey());
-        keyModelLookup.put("susan", KeyVariant.BRASS_STRING.getKey());
-        keyModelLookup.put("gold", KeyVariant.BROMLEY_GOLD.getKey());
+        cmdLookup.put("first", KeyVariant.BRASS_YALE.getFloats());
+        cmdLookup.put("second", KeyVariant.BRASS_PLAIN.getFloats());
+        cmdLookup.put("third", KeyVariant.SPADE_SHAPED.getFloats());
+        cmdLookup.put("fifth", KeyVariant.SILVER_YALE.getFloats());
+        cmdLookup.put("seventh", KeyVariant.SEAL_OF_RASSILON.getFloats());
+        cmdLookup.put("ninth", KeyVariant.SILVER_VARIANT.getFloats());
+        cmdLookup.put("tenth", KeyVariant.SILVER_PLAIN.getFloats());
+        cmdLookup.put("eleventh", KeyVariant.SILVER_NEW.getFloats());
+        cmdLookup.put("rose", KeyVariant.SILVER_ERA.getFloats());
+        cmdLookup.put("sally", KeyVariant.SILVER_STRING.getFloats());
+        cmdLookup.put("perception", KeyVariant.FILTER.getFloats());
+        cmdLookup.put("susan", KeyVariant.BRASS_STRING.getFloats());
+        cmdLookup.put("gold", KeyVariant.BROMLEY_GOLD.getFloats());
     }
 
     public void addRecipe() {
-        NamespacedKey keyModel = keyModelLookup.getOrDefault(plugin.getConfig().getString("preferences.default_key", "eleventh").toLowerCase(Locale.ROOT), RecipeItem.TARDIS_KEY.getModel());
+        List<Float> floats = cmdLookup.getOrDefault(plugin.getConfig().getString("preferences.default_key", "eleventh").toLowerCase(Locale.ROOT), KeyVariant.BRASS_YALE.getFloats());
         Material material;
         try {
             material = Material.valueOf(plugin.getConfig().getString("preferences.key"));
@@ -76,8 +76,10 @@ public class TARDISKeyRecipe {
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Key");
-        im.setItemModel(keyModel);
         im.setLore(List.of("Enter and exit your TARDIS"));
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setFloats(floats);
+        im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_key");
         ShapedRecipe r = new ShapedRecipe(key, is);

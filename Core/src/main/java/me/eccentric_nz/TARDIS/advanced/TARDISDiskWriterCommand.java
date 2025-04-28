@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -59,7 +58,6 @@ public class TARDISDiskWriterCommand {
             ItemMeta im = is.getItemMeta();
             im.setDisplayName("Save Storage Disk");
             im.setLore(List.of("Blank"));
-            im.setItemModel(DiskVariant.SAVE_DISK.getKey());
             is.setItemMeta(im);
         } else {
             is = player.getInventory().getItemInMainHand();

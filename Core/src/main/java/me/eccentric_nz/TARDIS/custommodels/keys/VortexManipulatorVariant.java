@@ -19,20 +19,22 @@ package me.eccentric_nz.TARDIS.custommodels.keys;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.NamespacedKey;
 
+import java.util.List;
+
 public enum VortexManipulatorVariant {
 
     PREDICTIVE(new NamespacedKey(TARDIS.plugin, "button_predictive")),
-    PERCENT_ZERO(new NamespacedKey(TARDIS.plugin, "button_percent_zero")),
-    PERCENT_TEN(new NamespacedKey(TARDIS.plugin, "button_percent_ten")),
-    PERCENT_TWENTY(new NamespacedKey(TARDIS.plugin, "button_percent_twenty")),
-    PERCENT_THIRTY(new NamespacedKey(TARDIS.plugin, "button_percent_thirty")),
-    PERCENT_FORTY(new NamespacedKey(TARDIS.plugin, "button_percent_forty")),
-    PERCENT_FIFTY(new NamespacedKey(TARDIS.plugin, "button_percent_fifty")),
-    PERCENT_SIXTY(new NamespacedKey(TARDIS.plugin, "button_percent_sixty")),
-    PERCENT_SEVENTY(new NamespacedKey(TARDIS.plugin, "button_percent_seventy")),
-    PERCENT_EIGHTY(new NamespacedKey(TARDIS.plugin, "button_percent_eighty")),
-    PERCENT_NINETY(new NamespacedKey(TARDIS.plugin, "button_percent_ninety")),
-    PERCENT_HUNDRED(new NamespacedKey(TARDIS.plugin, "button_percent_hundred")),
+    PERCENT_ZERO(new NamespacedKey(TARDIS.plugin, "button_percent_zero"), List.of(1.0f)),
+    PERCENT_TEN(new NamespacedKey(TARDIS.plugin, "button_percent_ten"), List.of(10.0f)),
+    PERCENT_TWENTY(new NamespacedKey(TARDIS.plugin, "button_percent_twenty"), List.of(20.0f)),
+    PERCENT_THIRTY(new NamespacedKey(TARDIS.plugin, "button_percent_thirty"), List.of(30.0f)),
+    PERCENT_FORTY(new NamespacedKey(TARDIS.plugin, "button_percent_forty"), List.of(40.0f)),
+    PERCENT_FIFTY(new NamespacedKey(TARDIS.plugin, "button_percent_fifty"), List.of(50.0f)),
+    PERCENT_SIXTY(new NamespacedKey(TARDIS.plugin, "button_percent_sixty"), List.of(60.0f)),
+    PERCENT_SEVENTY(new NamespacedKey(TARDIS.plugin, "button_percent_seventy"), List.of(70.0f)),
+    PERCENT_EIGHTY(new NamespacedKey(TARDIS.plugin, "button_percent_eighty"), List.of(80.0f)),
+    PERCENT_NINETY(new NamespacedKey(TARDIS.plugin, "button_percent_ninety"), List.of(90.0f)),
+    PERCENT_HUNDRED(new NamespacedKey(TARDIS.plugin, "button_percent_hundred"), List.of(100.0f)),
     BEACON(new NamespacedKey(TARDIS.plugin, "button_beacon")),
     DELETE(new NamespacedKey(TARDIS.plugin, "button_vm_delete")),
     DISPLAY(new NamespacedKey(TARDIS.plugin, "button_display")),
@@ -62,12 +64,24 @@ public enum VortexManipulatorVariant {
     Z(new NamespacedKey(TARDIS.plugin, "button_z"));
 
     private final NamespacedKey key;
+    private final List<Float> floats;
+
+    VortexManipulatorVariant(NamespacedKey key, List<Float> floats) {
+        this.key = key;
+        this.floats = floats;
+    }
 
     VortexManipulatorVariant(NamespacedKey key) {
         this.key = key;
+        this.floats = null;
     }
+
 
     public NamespacedKey getKey() {
         return key;
+    }
+
+    public List<Float> getFloats() {
+        return floats;
     }
 }

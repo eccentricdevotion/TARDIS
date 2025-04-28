@@ -2,12 +2,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>TARDIS-Paper</artifactId>
-    <version>6.0.1</version>
+    <version>6.1.0</version>
     <packaging>jar</packaging>
     <parent>
         <groupId>me.eccentric_nz.TARDIS</groupId>
         <artifactId>TARDIS</artifactId>
-        <version>6.0.1</version>
+        <version>6.1.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <build>
@@ -27,20 +27,13 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.21.4-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.21.4-R0.1-SNAPSHOT</version>
-            <classifier>remapped-mojang</classifier>
+            <version>1.21.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>me.eccentric_nz.TARDIS</groupId>
             <artifactId>TARDIS-Core</artifactId>
-            <version>6.0.1</version>
+            <version>6.1.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

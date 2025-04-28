@@ -36,20 +36,4 @@ public class EntityRegistry {
         frozen.setAccessible(true);
         frozen.set(BuiltInRegistries.ENTITY_TYPE, false);
     }
-
-//    public void init() {
-//        try {
-//            unfreezeEntityRegistry();
-//            for (String ENTITY_ID : all) {
-//                ResourceLocation mcKey = ResourceLocation.parse(ENTITY_ID);
-//                if (BuiltInRegistries.ENTITY_TYPE.getOptional(mcKey).isEmpty()) {
-//                    @SuppressWarnings("unchecked") Map<String, Type<?>> types = (Map<String, Type<?>>) DataFixers.getDataFixer().getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion())).findChoiceType(References.ENTITY).types();
-//                    types.put(mcKey.toString(), types.get(BuiltInRegistries.ENTITY_TYPE.getKey(EntityType.HUSK).toString()));
-//                    Registry.register(BuiltInRegistries.ENTITY_TYPE, ENTITY_ID, EntityType.Builder.of(EntityType::create, MobCategory.MONSTER).noSummon().build(ENTITY_ID));
-//                }
-//            }
-//            BuiltInRegistries.ENTITY_TYPE.freeze();
-//        } catch (NoSuchFieldException | IllegalAccessException ignore) {
-//        }
-//    }
 }

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -50,7 +49,6 @@ public class JammyDodgerRecipe {
         ItemStack is = new ItemStack(Material.COOKIE, 8);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Jammy Dodger");
-        im.setItemModel(RecipeItem.JAMMY_DODGER.getModel());
         im.setLore(List.of("Best eaten with custard!"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "jammy_dodger");

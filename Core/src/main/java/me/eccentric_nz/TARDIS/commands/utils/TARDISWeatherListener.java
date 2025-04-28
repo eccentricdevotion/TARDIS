@@ -54,6 +54,7 @@ public class TARDISWeatherListener extends TARDISMenuListener {
         Player player = (Player) event.getWhoClicked();
         if (!plugin.getConfig().getBoolean("allow.weather_set")) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_DISABLED");
+            close(player);
             return;
         }
         if (slot < 0 || slot > 8) {
@@ -138,11 +139,9 @@ public class TARDISWeatherListener extends TARDISMenuListener {
                 plugin.getTrackerKeeper().getExcitation().add(player.getUniqueId());
                 close(player);
             }
-            case 8 ->
-                // close
-                    close(player);
-            default -> {
-            }
+            // close
+            case 8 -> close(player);
+            default -> { }
         }
     }
 }

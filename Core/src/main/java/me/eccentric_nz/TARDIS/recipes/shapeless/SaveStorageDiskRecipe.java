@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.recipes.shapeless;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -46,7 +45,6 @@ public class SaveStorageDiskRecipe {
         ItemStack is = new ItemStack(Material.MUSIC_DISC_CHIRP, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Save Storage Disk");
-        im.setItemModel(RecipeItem.SAVE_STORAGE_DISK.getModel());
         im.setLore(List.of("Blank"));
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "save_storage_disk");

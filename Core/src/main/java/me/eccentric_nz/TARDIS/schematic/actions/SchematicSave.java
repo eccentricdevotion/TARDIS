@@ -214,8 +214,10 @@ public class SchematicSave {
                                 JsonObject stack = new JsonObject();
                                 Material material = display.getItemStack().getType();
                                 NamespacedKey model = null;
-                                if (display.getItemStack().getItemMeta().hasItemModel()) {
-                                    model = display.getItemStack().getItemMeta().getItemModel();
+                                if (display.getItemStack().hasItemMeta()) {
+                                    ItemMeta im = display.getItemStack().getItemMeta();
+                                    String pdckey = im.getPersistentDataContainer().get(plugin.getCustomBlockKey(), PersistentDataType.STRING);
+                                    model = new NamespacedKey(plugin, pdckey);
                                     stack.addProperty("cmd", model.getKey());
                                 }
                                 stack.addProperty("type", material.toString());

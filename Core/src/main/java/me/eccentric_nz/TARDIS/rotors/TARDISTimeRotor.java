@@ -96,7 +96,7 @@ public class TARDISTimeRotor {
             } else {
                 CustomModelDataComponent component = im.getCustomModelDataComponent();
                 List<Float> floats = component.getFloats();
-                if (floats.size() > 0) {
+                if (!floats.isEmpty()) {
                     int cmd = floats.getFirst().intValue();
                     switch (cmd) {
                         case 10000002 -> { return RotorVariant.TIME_ROTOR_EARLY_OFF.getKey(); }

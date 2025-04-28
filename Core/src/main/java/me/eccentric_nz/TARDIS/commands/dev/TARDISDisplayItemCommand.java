@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISUpdateBlocksCommand;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -30,7 +31,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import me.eccentric_nz.tardisshop.ShopItem;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
@@ -81,7 +81,8 @@ public class TARDISDisplayItemCommand {
                         ItemMeta im = is.getItemMeta();
                         im.setItemModel(shopItem.getModel());
                         is.setItemMeta(im);
-                    } catch (IllegalArgumentException ignored) { }
+                    } catch (IllegalArgumentException ignored) {
+                    }
                 }
                 display.setItemStack(is);
                 display.setItemDisplayTransform(transform);
@@ -97,13 +98,19 @@ public class TARDISDisplayItemCommand {
             }
             case "animate" -> {
                 if (player.getPassengers().isEmpty()) {
-                    ItemStack box = new ItemStack(Material.BLUE_DYE, 1);
-                    ItemMeta im = box.getItemMeta();
-                    im.setItemModel(new NamespacedKey(plugin, "police_box/flying/blue"));
-                    box.setItemMeta(im);
-                    ItemDisplay display = VehicleUtility.getItemDisplay(player, box, 1.75f);
-                    int period = 40;
-                    plugin.getTrackerKeeper().setAnimateTask(plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new InterpolatedAnimation(display, period), 5, period));
+                    if (args.length == 2) {
+                        ItemStack box = new ItemStack(Material.BLUE_DYE, 1);
+                        ItemMeta im = box.getItemMeta();
+                        im.setItemModel(ChameleonVariant.BLUE_CLOSED.getKey());
+                        box.setItemMeta(im);
+                        ItemDisplay display = VehicleUtility.getItemDisplay(player, box, 1.75f);
+                        int period = 40;
+                        plugin.getTrackerKeeper().setAnimateTask(plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new InterpolatedAnimation(display, period), 5, period));
+                    } else {
+                        Bee bee = (Bee) player.getWorld().spawnEntity(player.getLocation(), EntityType.BEE);
+                        bee.setAI(false);
+                        player.addPassenger(bee);
+                    }
                 } else {
                     for (Entity e : player.getPassengers()) {
                         e.eject();

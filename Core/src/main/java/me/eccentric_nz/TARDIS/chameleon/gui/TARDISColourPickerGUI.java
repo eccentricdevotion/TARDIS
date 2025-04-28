@@ -18,8 +18,6 @@ package me.eccentric_nz.TARDIS.chameleon.gui;
 
 import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.custommodels.GUIChameleon;
-import me.eccentric_nz.TARDIS.custommodels.keys.ArrowVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -97,13 +95,11 @@ public class TARDISColourPickerGUI {
         // less
         ItemStack less = new ItemStack(Material.ARROW, 1);
         ItemMeta lll = less.getItemMeta();
-        bbbtint.setItemModel(ArrowVariant.LESS.getKey());
         lll.setDisplayName("Less");
         less.setItemMeta(lll);
         // more
         ItemStack more = new ItemStack(Material.ARROW, 1);
         ItemMeta mmm = more.getItemMeta();
-        bbbtint.setItemModel(ArrowVariant.MORE.getKey());
         mmm.setDisplayName("More");
         more.setItemMeta(mmm);
         // select
@@ -115,7 +111,6 @@ public class TARDISColourPickerGUI {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta win = close.getItemMeta();
         win.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        win.setItemModel(GUIChameleon.BUTTON_CLOSE.key());
         close.setItemMeta(win);
         return new ItemStack[]{
                 null, null, null, null, dis, null, null, null, null,

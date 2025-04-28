@@ -44,6 +44,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -165,7 +166,9 @@ public class TARDISSonicGeneratorListener implements Listener {
                 screw.setLore(finalUps);
             }
             // set custom model data
-            screw.setItemModel(s.getModel());
+            CustomModelDataComponent component = screw.getCustomModelDataComponent();
+            component.setFloats(s.getModel());
+            screw.setCustomModelDataComponent(component);
             sonic.setItemMeta(screw);
             if (cost < level) {
                 Location loc = location.clone().add(0.5d, 0.75d, 0.5d);

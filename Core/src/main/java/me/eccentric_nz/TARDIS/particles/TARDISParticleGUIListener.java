@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.particles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIParticle;
-import me.eccentric_nz.TARDIS.custommodels.keys.ParticleItem;
 import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
@@ -30,13 +29,13 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -80,7 +79,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
                 switch (slot) {
                     case 1, 2, 3, 4, 5, 6, 7 -> setShape(view, slot, display, uuid); // particle shape
                     case 10, 11, 12, 13, 14, 15, 16,
-                         19, 20, 21, 22, 23, 24, 25,
+                         19, 20, 21, 22, 23, 24, 25, 27,
                          28, 29, 30, 31, 32, 33, 34,
                          37, 38, 39, 40, 41, 42, 43 -> setEffect(view, slot, display, uuid); // particle effect
                     case 17 -> cycleColour(view, uuid); // colour
@@ -100,18 +99,17 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         }
     }
 
-    private void setModel(ItemStack is, NamespacedKey key) {
-        ItemMeta im = is.getItemMeta();
-        im.setItemModel(key);
-        is.setItemMeta(im);
-    }
+//    private void setModel(ItemStack is, NamespacedKey key) {
+//        ItemMeta im = is.getItemMeta();
+//        is.setItemMeta(im);
+//    }
 
     private void setShape(InventoryView view, int slot, String display, UUID uuid) {
         for (int s = 1; s < 8; s++) {
             ItemStack is = view.getItem(s);
             if (is != null) {
                 is.setType(s == slot ? Material.LAPIS_ORE : Material.LAPIS_LAZULI);
-                setModel(is, s == slot ? ParticleItem.SHAPE_SELECTED.getKey() : ParticleItem.SHAPE.getKey());
+//                setModel(is, s == slot ? ParticleItem.SHAPE_SELECTED.getKey() : ParticleItem.SHAPE.getKey());
                 view.setItem(s, is);
             }
         }
@@ -127,7 +125,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
             ItemStack is = view.getItem(s);
             if (is != null && s != GUIParticle.COLOUR.slot() && s != GUIParticle.BLOCK_INFO.slot() && s != GUIParticle.BLOCK.slot() && s != GUIParticle.TOGGLE.slot()) {
                 is.setType(s == slot ? Material.REDSTONE_ORE : Material.REDSTONE);
-                setModel(is, s == slot ? ParticleItem.EFFECT_SELECTED.getKey() : ParticleItem.EFFECT.getKey());
+//                setModel(is, s == slot ? ParticleItem.EFFECT_SELECTED.getKey() : ParticleItem.EFFECT.getKey());
                 view.setItem(s, is);
             }
         }
@@ -182,9 +180,12 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
 
     private void toggle(InventoryView view, ItemStack is, UUID uuid) {
         ItemMeta im = is.getItemMeta();
-        NamespacedKey key = im.getItemModel();
-        boolean on = key == null || key.equals(SwitchVariant.BUTTON_TOGGLE_ON.getKey());
-        im.setItemModel(on ? SwitchVariant.BUTTON_TOGGLE_OFF.getKey() : SwitchVariant.BUTTON_TOGGLE_ON.getKey());
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        boolean on = component.getFloats().getFirst() > 200;
+        component.setFloats(on ? SwitchVariant.BUTTON_TOGGLE_OFF.getFloats() : SwitchVariant.BUTTON_TOGGLE_ON.getFloats());
+        im.setCustomModelDataComponent(component);
+//        NamespacedKey key = im.getItemModel();
+//        boolean on = key == null || key.equals(SwitchVariant.BUTTON_TOGGLE_ON.getKey());
         List<String> lore = im.getLore();
         lore.set(0, on ? "OFF" : "ON");
         im.setLore(lore);

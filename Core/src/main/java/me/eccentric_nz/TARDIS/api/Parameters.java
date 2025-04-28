@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.api;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import org.bukkit.entity.Player;
@@ -51,7 +52,7 @@ public class Parameters {
         this.player = player;
         for (Flag f : flags) {
             switch (f) {
-                case MESSAGE_PLAYER -> messagePlayer = true;
+                case MESSAGE_PLAYER -> messagePlayer = !TARDIS.plugin.getConfig().getBoolean("travel.no_destination_malfunctions");
                 case PERMS_AREA -> permsArea = true;
                 case PERMS_NETHER -> permsNether = true;
                 case PERMS_THEEND -> permsTheEnd = true;

@@ -21,15 +21,11 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;
 import me.eccentric_nz.TARDIS.enumeration.Storage;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -84,29 +80,21 @@ public class DiskStorageAction {
                             if (is.getType().equals(Material.FILLED_MAP)) {
                                 GlowstoneCircuit glowstone = GlowstoneCircuit.getByName().get(im.getDisplayName());
                                 if (glowstone != null) {
-                                    im.setItemModel(glowstone.getModel());
                                     is.setType(Material.GLOWSTONE_DUST);
                                     is.setItemMeta(im);
                                 }
                             } else {
-                                if (TARDISStaticUtils.isMusicDisk(is)) {
-                                    switch (is.getType()) {
-                                        case MUSIC_DISC_BLOCKS -> im.setItemModel(DiskVariant.AREA_DISK.getKey());
-                                        case MUSIC_DISC_CAT -> im.setItemModel(DiskVariant.BIOME_DISK.getKey());
-                                        case MUSIC_DISC_CHIRP -> im.setItemModel(DiskVariant.SAVE_DISK.getKey());
-                                        case MUSIC_DISC_MALL -> im.setItemModel(DiskVariant.PRESET_DISK.getKey());
-                                        case MUSIC_DISC_WAIT -> im.setItemModel(DiskVariant.PLAYER_DISK.getKey());
-                                    }
-                                } else if (is.getType().equals(Material.LIME_WOOL)) { // next
-                                    im.setItemModel(GuiVariant.NEXT.getKey());
+//                                if (TARDISStaticUtils.isMusicDisk(is)) {
+//                                    switch (is.getType()) {
+//                                    }
+//                                } else
+                                    if (is.getType().equals(Material.LIME_WOOL)) { // next
                                     is.setType(Material.BOWL);
                                     is.setItemMeta(im);
                                 } else if (is.getType().equals(Material.RED_WOOL)) { // prev
-                                    im.setItemModel(GuiVariant.PREV.getKey());
                                     is.setType(Material.BOWL);
                                     is.setItemMeta(im);
                                 } else if (is.getType().equals(Material.GLOWSTONE_DUST) && !im.hasItemModel() && im.getDisplayName().equals("Circuits")) {
-                                    im.setItemModel(CircuitVariant.GALLIFREY.getKey());
                                 }
                                 is.setItemMeta(im);
                             }

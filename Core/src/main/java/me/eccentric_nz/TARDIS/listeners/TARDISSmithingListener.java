@@ -17,12 +17,11 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.sonic.SonicUpgradeData;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,6 +30,7 @@ import org.bukkit.event.inventory.PrepareSmithingEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.SmithingInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +59,7 @@ public class TARDISSmithingListener implements Listener {
                 ItemStack glowstone = inventory.getItem(2);
                 if (glowstone != null && glowstone.getType().equals(Material.GLOWSTONE_DUST) && glowstone.hasItemMeta()) {
                     ItemMeta rm = glowstone.getItemMeta();
-                    upgrade = SonicUpgradeData.customModelData.get(rm.getItemModel());
+                    upgrade = SonicUpgradeData.displayNames.get(ChatColor.stripColor(rm.getDisplayName()));
                     found = true;
                 }
                 // is it a valid upgrade?
@@ -79,10 +79,11 @@ public class TARDISSmithingListener implements Listener {
                     return;
                 }
                 ItemMeta sim = sonic.getItemMeta();
-                NamespacedKey model = SonicVariant.ELEVENTH.getKey();
-                if (sim.hasItemModel()) {
-                    model = sim.getItemModel();
-                }
+                CustomModelDataComponent component = sim.getCustomModelDataComponent();
+//                NamespacedKey model = SonicVariant.ELEVENTH.getKey();
+//                if (sim.hasItemModel()) {
+//                    model = sim.getItemModel();
+//                }
                 String dn = sim.getDisplayName();
                 List<String> lore;
                 if (sim.hasLore()) {
@@ -96,7 +97,7 @@ public class TARDISSmithingListener implements Listener {
                 // if they don't already have the upgrade
                 if (!lore.contains(upgrade)) {
                     im.setDisplayName(dn);
-                    im.setItemModel(model);
+                    im.setCustomModelDataComponent(component);
                     int index = -1;
                     String charge = null;
                     for (int i = lore.size() - 1; i >= 0; i--) {
@@ -123,7 +124,6 @@ public class TARDISSmithingListener implements Listener {
             } else if (isDamagedCapacitor(sonic)) {
                 ItemStack repaired = sonic.clone();
                 ItemMeta im = repaired.getItemMeta();
-                im.setItemModel(Whoniverse.ARTRON_CAPACITOR.getKey());
                 is.setItemMeta(im);
                 event.setResult(repaired);
             }

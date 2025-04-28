@@ -41,7 +41,7 @@ public class RandomPathGoal extends RandomStrollGoal {
         if (stay) {
             return this.mob.position();
         }
-        if (this.mob.isInWaterOrBubble()) {
+        if (this.mob.isInLiquid()) {
             Vec3 var0 = LandRandomPos.getPos(this.mob, 15, 7);
             return (var0 == null) ? super.getPosition() : var0;
         }

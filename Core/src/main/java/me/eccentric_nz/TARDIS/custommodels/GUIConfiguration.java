@@ -16,63 +16,62 @@
  */
 package me.eccentric_nz.TARDIS.custommodels;
 
-import me.eccentric_nz.TARDIS.custommodels.keys.Button;
-import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+
+import java.util.List;
 
 public enum GUIConfiguration {
 
     // Admin Menu
-    ALLOW(SwitchVariant.ALLOW_ON.getKey(), SwitchVariant.ALLOW_OFF.getKey(), 0),
-    ARCH(SwitchVariant.ARCH_ON.getKey(), SwitchVariant.ARCH_OFF.getKey(), 22),
-    ARCHIVE(SwitchVariant.ARCHIVE_ON.getKey(), SwitchVariant.ARCHIVE_OFF.getKey(), 25),
-    BLUEPRINTS(SwitchVariant.BLUEPRINTS_ON.getKey(), SwitchVariant.BLUEPRINTS_OFF.getKey(), 23),
-    CREATION(SwitchVariant.CREATION_ON.getKey(), SwitchVariant.CREATION_OFF.getKey(), 26),
-    DIFFICULTY(SwitchVariant.DIFFICULTY_ON.getKey(), SwitchVariant.DIFFICULTY_OFF.getKey(), 38),
-    EYE_OF_HARMONY(SwitchVariant.EYE_ON.getKey(), SwitchVariant.EYE_OFF.getKey(), 45),
-    GROWTH(SwitchVariant.GROWTH_ON.getKey(), SwitchVariant.GROWTH_OFF.getKey(), 36),
-    HANDLES(SwitchVariant.HANDLES_ON.getKey(), SwitchVariant.HANDLES_OFF.getKey(), 37),
-    POLICE_BOX(SwitchVariant.POLICE_BOX_ON.getKey(), SwitchVariant.POLICE_BOX_OFF.getKey(), 38),
-    PREFERENCES(SwitchVariant.PREFERENCES_ON.getKey(), SwitchVariant.PREFERENCES_OFF.getKey(), 41),
-    ABANDON(SwitchVariant.ABANDON_ON.getKey(), SwitchVariant.ABANDON_OFF.getKey(), 0),
-    CIRCUITS(SwitchVariant.CIRCUIT_ON.getKey(), SwitchVariant.CIRCUIT_OFF.getKey(), 0),
-    DEBUG(SwitchVariant.DEBUG_ON.getKey(), SwitchVariant.DEBUG_OFF.getKey(), 0),
-    DESKTOP(SwitchVariant.THEME_ON.getKey(), SwitchVariant.THEME_OFF.getKey(), 0),
-    JUNK(SwitchVariant.JUNK_ON.getKey(), SwitchVariant.JUNK_OFF.getKey(), 0),
-    SIEGE(SwitchVariant.SIEGE_ON.getKey(), SwitchVariant.SIEGE_OFF.getKey(), 0),
-    SONIC(SwitchVariant.SONIC_ON.getKey(), SwitchVariant.SONIC_OFF.getKey(), 0),
-    TRAVEL(SwitchVariant.TRAVEL_ON.getKey(), SwitchVariant.TRAVEL_OFF.getKey(), 0),
-    NEXT(GuiVariant.NEXT.getKey(), null, 0, Material.BOWL),
-    PREV(GuiVariant.PREV.getKey(), null, 0, Material.BOWL),
-    PREFS(Button.PREFERENCES.getKey(), null, 0, Material.NETHER_STAR);
-
-    private final NamespacedKey onModel;
-    private final NamespacedKey offModel;
+    ALLOW(SwitchVariant.ALLOW_ON.getFloats(), SwitchVariant.ALLOW_OFF.getFloats(), 0),
+    ARCH(SwitchVariant.ARCH_ON.getFloats(), SwitchVariant.ARCH_OFF.getFloats(), 22),
+    ARCHIVE(SwitchVariant.ARCHIVE_ON.getFloats(), SwitchVariant.ARCHIVE_OFF.getFloats(), 25),
+    BLUEPRINTS(SwitchVariant.BLUEPRINTS_ON.getFloats(), SwitchVariant.BLUEPRINTS_OFF.getFloats(), 23),
+    CREATION(SwitchVariant.CREATION_ON.getFloats(), SwitchVariant.CREATION_OFF.getFloats(), 26),
+    DIFFICULTY(SwitchVariant.DIFFICULTY_ON.getFloats(), SwitchVariant.DIFFICULTY_OFF.getFloats(), 38),
+    EYE_OF_HARMONY(SwitchVariant.EYE_ON.getFloats(), SwitchVariant.EYE_OFF.getFloats(), 45),
+    GROWTH(SwitchVariant.GROWTH_ON.getFloats(), SwitchVariant.GROWTH_OFF.getFloats(), 36),
+    HANDLES(SwitchVariant.HANDLES_ON.getFloats(), SwitchVariant.HANDLES_OFF.getFloats(), 37),
+    POLICE_BOX(SwitchVariant.POLICE_BOX_ON.getFloats(), SwitchVariant.POLICE_BOX_OFF.getFloats(), 38),
+    PREFERENCES(SwitchVariant.PREFERENCES_ON.getFloats(), SwitchVariant.PREFERENCES_OFF.getFloats(), 41),
+    ABANDON(SwitchVariant.ABANDON_ON.getFloats(), SwitchVariant.ABANDON_OFF.getFloats(), 0),
+    CIRCUITS(SwitchVariant.CIRCUIT_ON.getFloats(), SwitchVariant.CIRCUIT_OFF.getFloats(), 0),
+    DEBUG(SwitchVariant.DEBUG_ON.getFloats(), SwitchVariant.DEBUG_OFF.getFloats(), 0),
+    DESKTOP(SwitchVariant.THEME_ON.getFloats(), SwitchVariant.THEME_OFF.getFloats(), 0),
+    JUNK(SwitchVariant.JUNK_ON.getFloats(), SwitchVariant.JUNK_OFF.getFloats(), 0),
+    SIEGE(SwitchVariant.SIEGE_ON.getFloats(), SwitchVariant.SIEGE_OFF.getFloats(), 0),
+    SONIC(SwitchVariant.SONIC_ON.getFloats(), SwitchVariant.SONIC_OFF.getFloats(), 0),
+    TRAVEL(SwitchVariant.TRAVEL_ON.getFloats(), SwitchVariant.TRAVEL_OFF.getFloats(), 0),
+    NEXT(null, null, 0, Material.BOWL),
+    PREV(null, null, 0, Material.BOWL),
+    PREFS(null, null, 0, Material.NETHER_STAR);
+    
+    private final List<Float> onFloats;
+    private final List<Float> offFloats;
     private final int slot;
     private final Material material;
 
-    GUIConfiguration(NamespacedKey onModel, NamespacedKey offModel, int slot, Material material) {
-        this.onModel = onModel;
-        this.offModel = offModel;
+    GUIConfiguration(List<Float> onFloats, List<Float> offFloats, int slot, Material material) {
+        this.onFloats = onFloats;
+        this.offFloats = offFloats;
         this.slot = slot;
         this.material = material;
     }
 
-    GUIConfiguration(NamespacedKey onModel, NamespacedKey offModel, int slot) {
-        this.onModel = onModel;
-        this.offModel = offModel;
+    GUIConfiguration(List<Float> onFloats, List<Float> offFloats, int slot) {
+        this.onFloats = onFloats;
+        this.offFloats = offFloats;
         this.slot = slot;
         this.material = Material.REPEATER;
     }
 
-    public NamespacedKey getOnModel() {
-        return onModel;
+    public List<Float> getOnFloats() {
+        return onFloats;
     }
 
-    public NamespacedKey getOffModel() {
-        return offModel;
+    public List<Float> getOffFloats() {
+        return offFloats;
     }
 
     public int getSlot() {

@@ -31,6 +31,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 /**
  * Oh, yes. Harmless is just the word. That's why I like it! Doesn't kill, doesn't wound, doesn't maim. But I'll tell
@@ -70,7 +71,12 @@ public class TARDISSonicMenuListener extends TARDISMenuListener {
                 ItemStack choice = view.getItem(slot);
                 ItemMeta choice_im = choice.getItemMeta();
                 ItemMeta sonic_im = sonic.getItemMeta();
-                sonic_im.setItemModel(choice_im.getItemModel());
+                if (sonic_im.hasItemModel()) {
+                    sonic_im.setItemModel(null);
+                }
+                CustomModelDataComponent component = sonic_im.getCustomModelDataComponent();
+                component.setFloats(choice_im.getCustomModelDataComponent().getFloats());
+                sonic_im.setCustomModelDataComponent(component);
                 sonic.setItemMeta(sonic_im);
             }
             case 27 -> {

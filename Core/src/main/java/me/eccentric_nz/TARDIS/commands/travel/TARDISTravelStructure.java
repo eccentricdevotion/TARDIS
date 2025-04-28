@@ -75,12 +75,12 @@ public class TARDISTravelStructure {
             new TARDISCircuitDamager(plugin, DiskCircuit.TELEPATHIC, uses_left, id, player).damage();
         }
         // find a village / nether fortress / end city
-        TARDISStructureLocation randomVillage = new TARDISStructureTravel(plugin).getRandomVillage(player, id, args);
-        if (randomVillage == null) {
+        TARDISStructureLocation randomStructure = new TARDISStructureTravel(plugin).getRandom(player, id, args);
+        if (randomStructure == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "VILLAGE_NOT_FOUND");
             return true;
         }
-        Location village = randomVillage.getLocation();
+        Location village = randomStructure.getLocation();
         // check respect
         if (!plugin.getPluginRespect().getRespect(village, new Parameters(player, Flag.getDefaultFlags()))) {
             if (plugin.getConfig().getBoolean("travel.no_destination_malfunctions")) {
@@ -104,7 +104,7 @@ public class TARDISTravelStructure {
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
-        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_LOADED", randomVillage.getWhich(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
+        plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_LOADED", randomStructure.getWhich(), !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
         plugin.getTrackerKeeper().getHasDestination().put(id, new TravelCostAndType(plugin.getArtronConfig().getInt("travel"), travelType));
         plugin.getTrackerKeeper().getRescue().remove(id);
         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

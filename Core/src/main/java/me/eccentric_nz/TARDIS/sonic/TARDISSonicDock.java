@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.TARDISSculkShrieker;
+import me.eccentric_nz.TARDIS.builders.utility.TARDISSculkShrieker;
 import me.eccentric_nz.TARDIS.console.interaction.SonicConsoleRecharge;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.custommodels.keys.SonicItem;
@@ -139,8 +139,8 @@ public class TARDISSonicDock {
             ResultSetSonicLocation rssc = new ResultSetSonicLocation(plugin, uuid);
             if (rssc.resultset()) {
                 // check destination
-                Location dest = rssc.getLocation();
-                if (dest != null) {
+                Location destination = rssc.getLocation();
+                if (destination != null) {
                     if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                         return display;
@@ -153,26 +153,26 @@ public class TARDISSonicDock {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_MAT");
                         return display;
                     }
-                    if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && dest.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
+                    if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && destination.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
                         return display;
                     }
-                    if (!plugin.getPluginRespect().getRespect(dest, new Parameters(player, Flag.getDefaultFlags()))) {
+                    if (!plugin.getPluginRespect().getRespect(destination, new Parameters(player, Flag.getDefaultFlags()))) {
                         return display;
                     }
                     if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                         String areaPerm = plugin.getTardisArea().getExileArea(player);
-                        if (plugin.getTardisArea().areaCheckInExile(areaPerm, dest)) {
+                        if (plugin.getTardisArea().areaCheckInExile(areaPerm, destination)) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "EXILE_NO_TRAVEL");
                             return display;
                         }
                     }
-                    if (plugin.getTardisArea().isInExistingArea(dest)) {
+                    if (plugin.getTardisArea().isInExistingArea(destination)) {
                         plugin.getMessenger().sendColouredCommand(player, "AREA_NO_SONIC", "/tardistravel area [area name]", plugin);
                         return display;
                     }
                     // check the world is not excluded
-                    String world = dest.getWorld().getName();
+                    String world = destination.getWorld().getName();
                     if (!plugin.getPlanetsConfig().getBoolean("planets." + world + ".time_travel")) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PB_IN_WORLD");
                         return display;
@@ -199,13 +199,13 @@ public class TARDISSonicDock {
                             new TARDISCircuitDamager(plugin, DiskCircuit.MATERIALISATION, uses_left, id, player).damage();
                         }
                         COMPASS player_direction = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
-                        int[] start_loc = TARDISTimeTravel.getStartLocation(dest, player_direction);
-                        int count = TARDISTimeTravel.safeLocation(start_loc[0], dest.getBlockY(), start_loc[2], start_loc[1], start_loc[3], dest.getWorld(), player_direction);
-                        Block under = dest.getBlock().getRelative(BlockFace.DOWN);
-                        if (plugin.getPM().isPluginEnabled("BlockLocker") && (BlockLockerAPIv2.isProtected(dest.getBlock()) || BlockLockerAPIv2.isProtected(under))) {
+                        int[] start_loc = TARDISTimeTravel.getStartLocation(destination, player_direction);
+                        int count = TARDISTimeTravel.safeLocation(start_loc[0], destination.getBlockY(), start_loc[2], start_loc[1], start_loc[3], destination.getWorld(), player_direction);
+                        Block under = destination.getBlock().getRelative(BlockFace.DOWN);
+                        if (plugin.getPM().isPluginEnabled("BlockLocker") && (BlockLockerAPIv2.isProtected(destination.getBlock()) || BlockLockerAPIv2.isProtected(under))) {
                             count = 1;
                         }
-                        if (plugin.getPM().isPluginEnabled("LWC") && new TARDISLWCChecker().isBlockProtected(dest.getBlock(), under, player)) {
+                        if (plugin.getPM().isPluginEnabled("LWC") && new TARDISLWCChecker().isBlockProtected(destination.getBlock(), under, player)) {
                             count = 1;
                         }
                         if (count > 0) {
@@ -222,10 +222,10 @@ public class TARDISSonicDock {
                         HashMap<String, Object> tid = new HashMap<>();
                         tid.put("tardis_id", id);
                         HashMap<String, Object> set = new HashMap<>();
-                        set.put("world", dest.getWorld().getName());
-                        set.put("x", dest.getBlockX());
-                        set.put("y", dest.getBlockY());
-                        set.put("z", dest.getBlockZ());
+                        set.put("world", destination.getWorld().getName());
+                        set.put("x", destination.getBlockX());
+                        set.put("y", destination.getBlockY());
+                        set.put("z", destination.getBlockZ());
                         set.put("submarine", 0);
                         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
                         plugin.getMessenger().send(player, "LOC_SAVED", true);

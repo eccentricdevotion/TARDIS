@@ -24,27 +24,29 @@ import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 
+import java.util.List;
+
 public enum GUISonicGenerator {
 
     // Sonic Generator
-    MARK_I(SonicVariant.MARK1.getKey(), 0, Material.BLAZE_ROD, ""),
-    MARK_II(SonicVariant.MARK2.getKey(), 1, Material.BLAZE_ROD, ""),
-    MARK_III(SonicVariant.MARK3.getKey(), 2, Material.BLAZE_ROD, ""),
-    MARK_IV(SonicVariant.MARK4.getKey(), 3, Material.BLAZE_ROD, ""),
-    EIGHTH_DOCTOR(SonicVariant.EIGHTH.getKey(), 4, Material.BLAZE_ROD, ""),
-    TWELFTH_DOCTOR(SonicVariant.TWELFTH.getKey(), 5, Material.BLAZE_ROD, ""),
-    THIRTEENTH_DOCTOR(SonicVariant.THIRTEENTH.getKey(), 6, Material.BLAZE_ROD, ""),
-    NINTH_DOCTOR(SonicVariant.NINTH.getKey(), 7, Material.BLAZE_ROD, ""),
-    TENTH_DOCTOR(SonicVariant.TENTH.getKey(), 8, Material.BLAZE_ROD, ""),
-    ELEVENTH_DOCTOR(SonicVariant.ELEVENTH.getKey(), 9, Material.BLAZE_ROD, ""),
-    FOURTEENTH_DOCTOR(SonicVariant.FOURTEENTH.getKey(), 10, Material.BLAZE_ROD, ""),
-    FIFTEENTH_DOCTOR(SonicVariant.FIFTEENTH.getKey(), 11, Material.BLAZE_ROD, ""),
-    WAR_DOCTOR(SonicVariant.WAR.getKey(), 12, Material.BLAZE_ROD, ""),
-    MASTER(SonicVariant.MASTER.getKey(), 13, Material.BLAZE_ROD, ""),
-    SARAH_JANE(SonicVariant.SARAH_JANE.getKey(), 14, Material.BLAZE_ROD, ""),
-    AMY_POND(SonicVariant.SONIC_PROBE.getKey(), 15, Material.BLAZE_ROD, ""),
-    RIVER_SONG(SonicVariant.RIVER_SONG.getKey(), 16, Material.BLAZE_ROD, ""),
-    MISSY(SonicVariant.UMBRELLA.getKey(), 17, Material.BLAZE_ROD, ""),
+    MARK_I(SonicVariant.MARK1.getFloats(), 0, Material.BLAZE_ROD, ""),
+    MARK_II(SonicVariant.MARK2.getFloats(), 1, Material.BLAZE_ROD, ""),
+    MARK_III(SonicVariant.MARK3.getFloats(), 2, Material.BLAZE_ROD, ""),
+    MARK_IV(SonicVariant.MARK4.getFloats(), 3, Material.BLAZE_ROD, ""),
+    EIGHTH_DOCTOR(SonicVariant.EIGHTH.getFloats(), 4, Material.BLAZE_ROD, ""),
+    TWELFTH_DOCTOR(SonicVariant.TWELFTH.getFloats(), 5, Material.BLAZE_ROD, ""),
+    THIRTEENTH_DOCTOR(SonicVariant.THIRTEENTH.getFloats(), 6, Material.BLAZE_ROD, ""),
+    NINTH_DOCTOR(SonicVariant.NINTH.getFloats(), 7, Material.BLAZE_ROD, ""),
+    TENTH_DOCTOR(SonicVariant.TENTH.getFloats(), 8, Material.BLAZE_ROD, ""),
+    ELEVENTH_DOCTOR(SonicVariant.ELEVENTH.getFloats(), 9, Material.BLAZE_ROD, ""),
+    FOURTEENTH_DOCTOR(SonicVariant.FOURTEENTH.getFloats(), 10, Material.BLAZE_ROD, ""),
+    FIFTEENTH_DOCTOR(SonicVariant.FIFTEENTH.getFloats(), 11, Material.BLAZE_ROD, ""),
+    WAR_DOCTOR(SonicVariant.WAR.getFloats(), 12, Material.BLAZE_ROD, ""),
+    MASTER(SonicVariant.MASTER.getFloats(), 13, Material.BLAZE_ROD, ""),
+    SARAH_JANE(SonicVariant.SARAH_JANE.getFloats(), 14, Material.BLAZE_ROD, ""),
+    AMY_POND(SonicVariant.SONIC_PROBE.getFloats(), 15, Material.BLAZE_ROD, ""),
+    RIVER_SONG(SonicVariant.RIVER_SONG.getFloats(), 16, Material.BLAZE_ROD, ""),
+    MISSY(SonicVariant.UMBRELLA.getFloats(), 17, Material.BLAZE_ROD, ""),
     BRUSH_UPGRADE(CircuitVariant.BRUSH.getKey(), 26, Material.BOWL, ""),
     BIO_SCANNER_UPGRADE(CircuitVariant.BIO.getKey(), 27, Material.BOWL, ""),
     CONVERSION_UPGRADE(CircuitVariant.CONVERSION.getKey(), 28, Material.BOWL, ""),
@@ -62,19 +64,33 @@ public enum GUISonicGenerator {
     SAVE_SETTINGS(GuiVariant.SAVE.getKey(), 43, Material.BOWL, "Click to save the current sonic.~No item will be generated!"),
     GENERATE_SONIC_SCREWDRIVER(GuiVariant.GENERATE_SONIC_SCREWDRIVER.getKey(), 44, Material.BOWL, "Click to generate a sonic~with the current settings."),
     ARTRON_COST(Whoniverse.ARTRON_BATTERY.getKey(), 45, Material.BOWL, ""),
-    SONIC_SCREWDRIVER(SonicVariant.ELEVENTH.getKey(), 49, Material.BLAZE_ROD, ""),
+    SONIC_SCREWDRIVER(SonicVariant.ELEVENTH.getFloats(), 49, Material.BLAZE_ROD, ""),
     CLOSE(GuiVariant.CLOSE.getKey(), 53, Material.BOWL, "Close the menu without~saving or generating.");
 
+    private final List<Float> floats;
     private final NamespacedKey model;
     private final int slot;
     private final Material material;
     private final String lore;
 
     GUISonicGenerator(NamespacedKey model, int slot, Material material, String lore) {
+        this.floats = null;
         this.model = model;
         this.slot = slot;
         this.material = material;
         this.lore = lore;
+    }
+
+    GUISonicGenerator(List<Float> floats, int slot, Material material, String lore) {
+        this.floats = floats;
+        this.model = null;
+        this.slot = slot;
+        this.material = material;
+        this.lore = lore;
+    }
+
+    public List<Float> getFloats() {
+        return floats;
     }
 
     public NamespacedKey getModel() {

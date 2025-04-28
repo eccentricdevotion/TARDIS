@@ -22,16 +22,14 @@ import me.eccentric_nz.TARDIS.enumeration.SonicScrewdriver;
 import me.eccentric_nz.TARDIS.recipes.shaped.SonicScrewdriverRecipe;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 
 public class TARDISSonicSound {
 
@@ -41,12 +39,22 @@ public class TARDISSonicSound {
         if ((!timeout.containsKey(player.getUniqueId()) || timeout.get(player.getUniqueId()) < now)) {
             ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
             // change model to 'on/open', then after scheduled time change back to 'off/closed' model
-            NamespacedKey sonicModel = SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getKey());
-            if (im.hasItemModel()) {
-                sonicModel = im.getItemModel();
+//            List<Float> sonicModel = SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getFloats());
+//            CustomModelDataComponent component =
+//            if (im.hasC) {
+//                sonicModel = im.getItemModel();
+//            }
+            CustomModelDataComponent component = im.getCustomModelDataComponent();
+            float f;
+            try {
+                f = component.getFloats().getFirst();
+            } catch (NoSuchElementException e) {
+                List<Float> sonicModel = SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getFloats());
+                f = sonicModel.getFirst();
             }
-            SonicScrewdriver screwdriver = SonicScrewdriver.getByKey(sonicModel.getKey());
-            im.setItemModel(screwdriver.getActive());
+            SonicScrewdriver screwdriver = SonicScrewdriver.getByFloat(f);
+            component.setFloats(screwdriver.getActive());
+            im.setCustomModelDataComponent(component);
             player.getInventory().getItemInMainHand().setItemMeta(im);
             timeout.put(player.getUniqueId(), now + cooldown);
             TARDISSounds.playTARDISSound(player.getLocation(), sound);
@@ -56,8 +64,10 @@ public class TARDISSonicSound {
                     ItemMeta meta = is.getItemMeta();
                     if (meta.hasDisplayName() && meta.getDisplayName().endsWith("Sonic Screwdriver")) {
                         player.getInventory().getItemInMainHand().getEnchantments().keySet().forEach((e) -> player.getInventory().getItemInMainHand().removeEnchantment(e));
-                        meta.setItemModel(screwdriver.getModel());
                         meta.setEnchantmentGlintOverride(null);
+                        CustomModelDataComponent scomponent = meta.getCustomModelDataComponent();
+                        scomponent.setFloats(screwdriver.getModel());
+                        meta.setCustomModelDataComponent(scomponent);
                         is.setItemMeta(meta);
                     } else {
                         // find the screwdriver in the player's inventory
@@ -71,7 +81,7 @@ public class TARDISSonicSound {
         }
     }
 
-    private static void revertSonic(PlayerInventory inv, NamespacedKey model) {
+    private static void revertSonic(PlayerInventory inv, List<Float> model) {
         int first = inv.first(Material.BLAZE_ROD);
         if (first < 0) {
             return;
@@ -82,7 +92,9 @@ public class TARDISSonicSound {
         }
         ItemMeta meta = stack.getItemMeta();
         if (meta.hasDisplayName() && meta.getDisplayName().endsWith("Sonic Screwdriver")) {
-            meta.setItemModel(model);
+            CustomModelDataComponent component = meta.getCustomModelDataComponent();
+            component.setFloats(model);
+            meta.setCustomModelDataComponent(component);
             meta.setEnchantmentGlintOverride(null);
             stack.setItemMeta(meta);
             if (stack.containsEnchantment(Enchantment.UNBREAKING)) {

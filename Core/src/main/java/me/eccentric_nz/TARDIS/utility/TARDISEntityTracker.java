@@ -18,7 +18,10 @@ package me.eccentric_nz.TARDIS.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.control.TARDISScanner;
-import me.eccentric_nz.TARDIS.lazarus.disguise.*;
+import me.eccentric_nz.TARDIS.lazarus.disguise.AGE;
+import me.eccentric_nz.TARDIS.lazarus.disguise.FOX;
+import me.eccentric_nz.TARDIS.lazarus.disguise.GENE;
+import me.eccentric_nz.TARDIS.lazarus.disguise.MUSHROOM_COW;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
@@ -73,8 +76,8 @@ public class TARDISEntityTracker {
                     case OCELOT -> options = new Object[]{((Tameable) e).isTamed(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
                     case PARROT -> options = new Object[]{((Parrot) e).getVariant(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
                     case RABBIT -> options = new Object[]{((Rabbit) e).getRabbitType(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
-                    case VILLAGER -> options = new Object[]{PROFESSION.getFromVillagerProfession(((Villager) e).getProfession()), AGE.getFromBoolean(!((Ageable) e).isAdult())};
-                    case ZOMBIE_VILLAGER -> options = new Object[]{PROFESSION.getFromVillagerProfession(((ZombieVillager) e).getVillagerProfession()), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                    case VILLAGER -> options = new Object[]{((Villager) e).getProfession(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
+                    case ZOMBIE_VILLAGER -> options = new Object[]{((ZombieVillager) e).getVillagerProfession(), AGE.getFromBoolean(!((Ageable) e).isAdult())};
                     case SLIME, MAGMA_CUBE -> options = new Object[]{((Slime) e).getSize()};
                     case COW, TURTLE, ZOMBIE, BEE -> options = new Object[]{AGE.getFromBoolean(!((Ageable) e).isAdult())};
                     case SNOW_GOLEM -> options = new Object[]{((Snowman) e).isDerp()};

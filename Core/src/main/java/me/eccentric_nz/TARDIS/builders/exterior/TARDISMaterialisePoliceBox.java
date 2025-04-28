@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.TARDIS.builders;
+package me.eccentric_nz.TARDIS.builders.exterior;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -35,7 +35,7 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Levelled;
-import org.bukkit.craftbukkit.v1_21_R3.entity.CraftArmorStand;
+import org.bukkit.craftbukkit.v1_21_R4.entity.CraftArmorStand;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
@@ -62,7 +62,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
     private Color colour = null;
     private String pb;
 
-    TARDISMaterialisePoliceBox(TARDIS plugin, BuildData bd, ChameleonPreset preset) {
+    public TARDISMaterialisePoliceBox(TARDIS plugin, BuildData bd, ChameleonPreset preset) {
         this.plugin = plugin;
         this.bd = bd;
         loops = this.bd.getThrottle().getLoops();

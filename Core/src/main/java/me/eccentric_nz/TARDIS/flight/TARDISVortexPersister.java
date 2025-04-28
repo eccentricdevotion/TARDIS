@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.builders.TARDISInstantPoliceBox;
-import me.eccentric_nz.TARDIS.builders.TARDISInstantPreset;
+import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.builders.exterior.TARDISInstantPoliceBox;
+import me.eccentric_nz.TARDIS.builders.exterior.TARDISInstantPreset;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;

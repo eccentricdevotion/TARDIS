@@ -70,14 +70,12 @@ class TARDISArchiveInventory {
         ItemStack back = new ItemStack(GUIArchive.BACK.material(), 1);
         ItemMeta back_im = back.getItemMeta();
         back_im.setDisplayName("Back");
-        back_im.setItemModel(GUIArchive.BACK.key());
         back.setItemMeta(back_im);
         stack[17] = back;
         // size
         ItemStack size = new ItemStack(GUIArchive.SET_SIZE.material(), 1);
         ItemMeta size_im = size.getItemMeta();
         size_im.setDisplayName("Set size");
-        size_im.setItemModel(GUIArchive.SET_SIZE.key());
         String s = "SMALL";
         String b = "16 x 16 x 16 blocks";
 
@@ -94,7 +92,6 @@ class TARDISArchiveInventory {
         ItemStack scan = new ItemStack(GUIArchive.SCAN_CONSOLE.material(), 1);
         ItemMeta but_im = scan.getItemMeta();
         but_im.setDisplayName("Scan console");
-        but_im.setItemModel(GUIArchive.SCAN_CONSOLE.key());
         scan.setItemMeta(but_im);
         stack[19] = scan;
         // archive
@@ -102,7 +99,6 @@ class TARDISArchiveInventory {
         ItemMeta hive_im = arc.getItemMeta();
         hive_im.setDisplayName("Archive current console");
         hive_im.setLore(List.of("A random name will", "be generated - use the", "/tardis archive command", "to set your own."));
-        hive_im.setItemModel(GUIArchive.ARCHIVE_CURRENT_CONSOLE.key());
         arc.setItemMeta(hive_im);
         stack[20] = arc;
         // templates
@@ -113,7 +109,6 @@ class TARDISArchiveInventory {
                 ItemStack temp = new ItemStack(GUIArchive.SMALL.material(), 1);
                 ItemMeta late = temp.getItemMeta();
                 late.setDisplayName(c.toString());
-                late.setItemModel(data.key());
                 late.setLore(List.of("Cobblestone template", c.getBlocks()));
                 temp.setItemMeta(late);
                 stack[t] = temp;
@@ -124,7 +119,6 @@ class TARDISArchiveInventory {
         ItemStack close = new ItemStack(Material.BOWL, 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setItemModel(GUIArchive.CLOSE.key());
         close.setItemMeta(close_im);
         stack[26] = close;
 

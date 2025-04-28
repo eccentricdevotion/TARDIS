@@ -20,10 +20,7 @@ import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
-import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.KeyVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
-import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.messaging.TARDISRecipeLister;
 import me.eccentric_nz.TARDIS.recipes.TARDISRecipeCategoryInventory;
@@ -37,6 +34,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
@@ -231,7 +229,6 @@ public class TARDISRecipeCommands implements CommandExecutor {
                 if (item.getType().equals(Material.GLOWSTONE_DUST) && !str.endsWith("Tie")) {
                     String dn = getDisplayName(str, glowstoneCount);
                     im.setDisplayName(ChatColor.WHITE + dn);
-                    im.setItemModel(RecipeItem.getByName(dn).getModel());
                     glowstoneCount++;
                 }
                 if (str.endsWith("TARDIS Remote Key")) {
@@ -243,20 +240,16 @@ public class TARDISRecipeCommands implements CommandExecutor {
                     }
                     if (item.getType().equals(material)) {
                         im.setDisplayName(ChatColor.WHITE + "TARDIS Key");
-                        im.setItemModel(KeyVariant.REMOTE.getKey());
                     }
                 }
                 if (str.equals("Acid Battery") && item.getType().equals(Material.WATER_BUCKET)) {
                     im.setDisplayName(ChatColor.WHITE + "Acid Bucket");
-                    im.setItemModel(Whoniverse.ACID_BUCKET.getKey());
                 }
                 if (str.equals("Rift Manipulator") && item.getType().equals(Material.NETHER_BRICK)) {
                     im.setDisplayName(ChatColor.WHITE + "Acid Battery");
-                    im.setItemModel(Whoniverse.ACID_BATTERY.getKey());
                 }
                 if (str.equals("Rust Plague Sword") && item.getType().equals(Material.LAVA_BUCKET)) {
                     im.setDisplayName(ChatColor.WHITE + "Rust Bucket");
-                    im.setItemModel(Whoniverse.RUST_BUCKET.getKey());
                 }
                 item.setItemMeta(im);
                 inv.setItem(j * 9 + k, item);
@@ -265,10 +258,9 @@ public class TARDISRecipeCommands implements CommandExecutor {
         ItemStack result = recipe.getResult();
         ItemMeta im = result.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + str);
-        RecipeItem recipeItem = RecipeItem.getByName(str);
-        if (recipeItem != RecipeItem.NOT_FOUND) {
-            im.setItemModel(recipeItem.getModel());
-        }
+//        RecipeItem recipeItem = RecipeItem.getByName(str);
+//        if (recipeItem != RecipeItem.NOT_FOUND) {
+//        }
         if (str.equals("TARDIS Invisibility Circuit")) {
             // set the second line of lore
             List<String> lore = im.getLore();
@@ -298,18 +290,18 @@ public class TARDISRecipeCommands implements CommandExecutor {
             if (ingredients.get(i).getType().equals(Material.GLOWSTONE_DUST)) {
                 String dn = getDisplayName(str, glowstoneCount);
                 im.setDisplayName(dn);
-                im.setItemModel(RecipeItem.getByName(dn).getModel());
                 glowstoneCount++;
             }
             if (ingredients.get(i).getType().equals(Material.MUSIC_DISC_STRAD)) {
                 im.setDisplayName("Blank Storage Disk");
-                im.setItemModel(DiskVariant.BLANK_DISK.getKey());
                 im.addItemFlags(ItemFlag.values());
                 im.setAttributeModifiers(Multimaps.forMap(Map.of()));
             }
             if (ingredients.get(i).getType().equals(Material.BLAZE_ROD)) {
                 im.setDisplayName("Sonic Screwdriver");
-                im.setItemModel(SonicVariant.TENTH.getKey());
+                CustomModelDataComponent component = im.getCustomModelDataComponent();
+                component.setFloats(SonicVariant.TENTH.getFloats());
+                im.setCustomModelDataComponent(component);
             }
             ingredients.get(i).setItemMeta(im);
             inv.setItem(i * 9, ingredients.get(i));
@@ -323,7 +315,6 @@ public class TARDISRecipeCommands implements CommandExecutor {
         }
         RecipeItem recipeItem = RecipeItem.getByName(str);
         if (recipeItem != RecipeItem.NOT_FOUND) {
-            im.setItemModel(recipeItem.getModel());
             if (recipeItem.getCategory().equals(RecipeCategory.SONIC_UPGRADES)) {
                 im.setDisplayName(ChatColor.WHITE + "Sonic Screwdriver");
                 im.setLore(List.of("Upgrades:", str));
@@ -372,7 +363,6 @@ public class TARDISRecipeCommands implements CommandExecutor {
             }
         }
         ItemMeta seed = tardis.getItemMeta();
-        seed.setItemModel(model);
         seed.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
         // set display name
         seed.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
@@ -395,64 +385,64 @@ public class TARDISRecipeCommands implements CommandExecutor {
     private String getDisplayName(String recipe, int quartzCount) {
         switch (recipe) {
             case "TARDIS Locator" -> {
-                return "TARDIS Locator Circuit"; // 1965
+                return ChatColor.WHITE + "TARDIS Locator Circuit"; // 1965
             }
             case "Stattenheim Remote" -> {
-                return "TARDIS Stattenheim Circuit"; // 1963
+                return ChatColor.WHITE + "TARDIS Stattenheim Circuit"; // 1963
             }
             case "TARDIS Chameleon Circuit", "TARDIS Remote Key" -> {
-                return "TARDIS Materialisation Circuit"; // 1964
+                return ChatColor.WHITE + "TARDIS Materialisation Circuit"; // 1964
             }
             case "TARDIS Invisibility Circuit", "Perception Filter" -> {
-                return "Perception Circuit"; // 1978
+                return ChatColor.WHITE + "Perception Circuit"; // 1978
             }
             case "Sonic Screwdriver", "Server Admin Circuit", "Sonic Dock" -> {
-                return "Sonic Oscillator"; // 1967
+                return ChatColor.WHITE + "Sonic Oscillator"; // 1967
             }
             case "Fob Watch", "Preset Storage Disk", "TARDIS Television" -> {
-                return "TARDIS Chameleon Circuit"; // 1966
+                return ChatColor.WHITE + "TARDIS Chameleon Circuit"; // 1966
             }
             case "TARDIS Biome Reader", "Emerald Upgrade" -> {
-                return "Emerald Environment Circuit"; // 1972
+                return ChatColor.WHITE + "Emerald Environment Circuit"; // 1972
             }
             case "Rift Manipulator" -> {
-                return "Rift Circuit"; // 1983
+                return ChatColor.WHITE + "Rift Circuit"; // 1983
             }
             case "Admin Upgrade" -> {
-                return "Server Admin Circuit";
+                return ChatColor.WHITE + "Server Admin Circuit";
             }
             case "Bio-scanner Upgrade" -> {
-                return "Bio-scanner Circuit";
+                return ChatColor.WHITE + "Bio-scanner Circuit";
             }
             case "Redstone Upgrade" -> {
-                return "Redstone Activator Circuit";
+                return ChatColor.WHITE + "Redstone Activator Circuit";
             }
             case "Diamond Upgrade" -> {
-                return "Diamond Disruptor Circuit";
+                return ChatColor.WHITE + "Diamond Disruptor Circuit";
             }
             case "Painter Upgrade" -> {
-                return "Painter Circuit";
+                return ChatColor.WHITE + "Painter Circuit";
             }
             case "Ignite Upgrade" -> {
-                return "Ignite Circuit";
+                return ChatColor.WHITE + "Ignite Circuit";
             }
             case "Pickup Arrows Upgrade" -> {
-                return "Pickup Arrows Circuit";
+                return ChatColor.WHITE + "Pickup Arrows Circuit";
             }
             case "Knockback Upgrade" -> {
-                return "Knockback Circuit";
+                return ChatColor.WHITE + "Knockback Circuit";
             }
             case "Brush Upgrade" -> {
-                return "Brush Circuit";
+                return ChatColor.WHITE + "Brush Circuit";
             }
             case "Conversion Upgrade" -> {
-                return "Conversion Circuit";
+                return ChatColor.WHITE + "Conversion Circuit";
             }
             default -> {  // TARDIS Stattenheim Circuit"
                 if (quartzCount == 0) {
-                    return "TARDIS Locator Circuit"; // 1965
+                    return ChatColor.WHITE + "TARDIS Locator Circuit"; // 1965
                 } else {
-                    return "TARDIS Materialisation Circuit"; // 1964
+                    return ChatColor.WHITE + "TARDIS Materialisation Circuit"; // 1964
                 }
             }
         }

@@ -24,7 +24,8 @@ public class ComponentCommand {
     private final TARDIS plugin;
     private Gson gson;
     private String template = """
-            {
+         {
+            "model": {
               "type": "minecraft:select",
               "property": "component",
               "component": "minecraft:custom_name",
@@ -47,7 +48,8 @@ public class ComponentCommand {
                 }
               ]
             }
-            """;
+          }
+         """;
 
     public ComponentCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -66,7 +68,7 @@ public class ComponentCommand {
                 if (!ars.getMaterial().isEmpty()) {
                     String material = ars.getMaterial().toLowerCase(Locale.ROOT);
                     String json = String.format(template, material, ars.getDescriptiveName(), ars.toString().toLowerCase(Locale.ROOT));
-                    File file = new File(plugin.getDataFolder() + File.separator + "component_models" + File.separator + material + ".json");
+                    File file = new File(plugin.getDataFolder() + File.separator + "component" + File.separator + "processed" + File.separator + material + ".json");
                     BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
                     bw.write(json);
                     bw.close();

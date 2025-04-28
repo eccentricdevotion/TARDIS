@@ -24,7 +24,10 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusDisguise;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusLibs;
 import me.eccentric_nz.TARDIS.lazarus.TARDISLazarusRunnable;
-import me.eccentric_nz.TARDIS.lazarus.disguise.*;
+import me.eccentric_nz.TARDIS.lazarus.disguise.AGE;
+import me.eccentric_nz.TARDIS.lazarus.disguise.FOX;
+import me.eccentric_nz.TARDIS.lazarus.disguise.GENE;
+import me.eccentric_nz.TARDIS.lazarus.disguise.MUSHROOM_COW;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -206,7 +209,7 @@ public class FloodgateGeneticManipulatorForm {
                         if (plugin.isDisguisesOnServer()) {
                             new TARDISLazarusLibs(player, label, Villager.Profession.FARMER, false, false).createDisguise();
                         } else {
-                            options = new Object[]{PROFESSION.FARMER, AGE.ADULT};
+                            options = new Object[]{Villager.Profession.FARMER, AGE.ADULT};
                         }
                     }
                     case SLIME, MAGMA_CUBE, PUFFERFISH -> {

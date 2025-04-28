@@ -22,7 +22,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.builders.TARDISSculkShrieker;
+import me.eccentric_nz.TARDIS.builders.utility.TARDISSculkShrieker;
 import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
@@ -223,7 +223,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     // start time rotor?
                                     if (tardis.getRotor() != null) {
                                         if (tardis.getRotor() == TARDISConstants.UUID_ZERO) {
-                                            // get sculk shrieker and set shreiking
+                                            // get sculk shrieker and set shrieking
                                             TARDISSculkShrieker.setRotor(id);
                                         } else {
                                             ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());

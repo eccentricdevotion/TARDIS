@@ -20,10 +20,9 @@ import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISTrackerInstanceKeeper;
 import me.eccentric_nz.TARDIS.blueprints.*;
-import me.eccentric_nz.TARDIS.builders.BuildData;
-import me.eccentric_nz.TARDIS.builders.TARDISAbandoned;
+import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISAbandoned;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
-import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -499,7 +498,6 @@ public class TARDII implements TardisAPI {
                 }
             }
             ItemMeta im = is.getItemMeta();
-            im.setItemModel(model);
             im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
             // set display name
             im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
@@ -581,7 +579,6 @@ public class TARDII implements TardisAPI {
             if (perm != null) {
                 ItemStack is = new ItemStack(Material.MUSIC_DISC_MELLOHI, 1);
                 ItemMeta im = is.getItemMeta();
-                im.setItemModel(DiskVariant.BLUEPRINT_DISK.getKey());
                 PersistentDataContainer pdc = im.getPersistentDataContainer();
                 pdc.set(TARDIS.plugin.getTimeLordUuidKey(), TARDIS.plugin.getPersistentDataTypeUUID(), player.getUniqueId());
                 pdc.set(TARDIS.plugin.getBlueprintKey(), PersistentDataType.STRING, perm);
@@ -998,7 +995,6 @@ public class TARDII implements TardisAPI {
         return null;
     }
 
-    // TODO
     @Override
     public void setFollowing(Entity husk, Player player) {
         ((TWAFollower) husk).setFollowing(true);

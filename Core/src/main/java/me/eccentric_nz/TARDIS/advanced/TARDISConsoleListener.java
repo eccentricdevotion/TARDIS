@@ -20,13 +20,11 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.custommodels.keys.DiskVariant;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.GlowstoneCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
-import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -140,16 +138,12 @@ public class TARDISConsoleListener implements Listener {
                                             circuit.setType(Material.GLOWSTONE_DUST);
                                         }
                                     }
-                                } else if (TARDISStaticUtils.isMusicDisk(circuit)) {
-                                    switch (circuit.getType()) {
-                                        case MUSIC_DISC_BLOCKS -> cm.setItemModel(DiskVariant.AREA_DISK.getKey());
-                                        case MUSIC_DISC_CAT -> cm.setItemModel(DiskVariant.BIOME_DISK.getKey());
-                                        case MUSIC_DISC_CHIRP -> cm.setItemModel(DiskVariant.SAVE_DISK.getKey());
-                                        case MUSIC_DISC_MALL -> cm.setItemModel(DiskVariant.PRESET_DISK.getKey());
-                                        case MUSIC_DISC_WAIT -> cm.setItemModel(DiskVariant.PLAYER_DISK.getKey());
-                                    }
-                                    circuit.setItemMeta(cm);
                                 }
+//                                else if (TARDISStaticUtils.isMusicDisk(circuit)) {
+//                                    switch (circuit.getType()) {
+//                                    }
+//                                    circuit.setItemMeta(cm);
+//                                }
                             }
                         }
                         inv.setContents(stack);

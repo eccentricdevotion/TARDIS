@@ -73,7 +73,6 @@ public class TARDISSeedRecipe {
         ItemMeta im = is.getItemMeta();
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, model.getKey());
         im.setDisplayName(ChatColor.GOLD + "TARDIS Seed Block");
-        im.setItemModel(model);
         List<String> lore = new ArrayList<>();
         lore.add(s.getPermission().toUpperCase(Locale.ROOT));
         im.setLore(lore);

@@ -51,9 +51,9 @@ import org.apache.logging.log4j.core.Logger;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Directional;
-import org.bukkit.craftbukkit.v1_21_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_21_R3.block.CraftBlock;
-import org.bukkit.craftbukkit.v1_21_R3.entity.CraftVillager;
+import org.bukkit.craftbukkit.v1_21_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_21_R4.block.CraftBlock;
+import org.bukkit.craftbukkit.v1_21_R4.entity.CraftVillager;
 import org.bukkit.entity.*;
 import org.bukkit.map.MapView;
 import org.bukkit.util.Vector;
@@ -134,14 +134,16 @@ public class TARDISHelper {
                 CompoundTag data;
                 try (FileInputStream fileinputstream = new FileInputStream(file)) {
                     tagCompound = NbtIo.readCompressed(fileinputstream, NbtAccounter.unlimitedHeap());
-                    data = tagCompound.getCompound("Data");
-                    long random = TARDISConstants.RANDOM.nextLong();
-                    // set RandomSeed tag
-                    data.putLong("RandomSeed", random);
-                    tagCompound.put("Data", data);
-                    FileOutputStream fileoutputstream = new FileOutputStream(file);
-                    NbtIo.writeCompressed(tagCompound, fileoutputstream);
-                    fileoutputstream.close();
+                    if (tagCompound.getCompound("Data").isPresent()) {
+                        data = tagCompound.getCompound("Data").get();
+                        long random = TARDISConstants.RANDOM.nextLong();
+                        // set RandomSeed tag
+                        data.putLong("RandomSeed", random);
+                        tagCompound.put("Data", data);
+                        FileOutputStream fileoutputstream = new FileOutputStream(file);
+                        NbtIo.writeCompressed(tagCompound, fileoutputstream);
+                        fileoutputstream.close();
+                    }
                 }
             } catch (IOException ex) {
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER_SEVERE, ex.getMessage());
@@ -157,19 +159,21 @@ public class TARDISHelper {
                 CompoundTag data;
                 try (FileInputStream fileinputstream = new FileInputStream(file)) {
                     tagCompound = NbtIo.readCompressed(fileinputstream, NbtAccounter.unlimitedHeap());
-                    data = tagCompound.getCompound("Data");
-                    // set LevelName tag
-                    data.putString("LevelName", newName);
-                    tagCompound.put("Data", data);
-                    FileOutputStream fileoutputstream = new FileOutputStream(file);
-                    NbtIo.writeCompressed(tagCompound, fileoutputstream);
-                    fileoutputstream.close();
-                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Renamed level to " + newName);
-                    // rename the directory
-                    File directory = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + oldName);
-                    File folder = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + newName);
-                    if (directory.renameTo(folder)) {
-                        plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Renamed directory to " + newName);
+                    if (tagCompound.getCompound("Data").isPresent()) {
+                        data = tagCompound.getCompound("Data").get();
+                        // set LevelName tag
+                        data.putString("LevelName", newName);
+                        tagCompound.put("Data", data);
+                        FileOutputStream fileoutputstream = new FileOutputStream(file);
+                        NbtIo.writeCompressed(tagCompound, fileoutputstream);
+                        fileoutputstream.close();
+                        plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Renamed level to " + newName);
+                        // rename the directory
+                        File directory = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + oldName);
+                        File folder = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + newName);
+                        if (directory.renameTo(folder)) {
+                            plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER, "Renamed directory to " + newName);
+                        }
                     }
                 }
             } catch (IOException ex) {
@@ -186,19 +190,21 @@ public class TARDISHelper {
                 CompoundTag data;
                 try (FileInputStream fileinputstream = new FileInputStream(file)) {
                     tagCompound = NbtIo.readCompressed(fileinputstream, NbtAccounter.unlimitedHeap());
-                    data = tagCompound.getCompound("Data");
-                    int mode = switch (gm) {
-                        case CREATIVE -> 1;
-                        case ADVENTURE -> 2;
-                        case SPECTATOR -> 3;
-                        default -> 0; // SURVIVAL
-                    };
-                    // set GameType tag
-                    data.putInt("GameType", mode);
-                    tagCompound.put("Data", data);
-                    FileOutputStream fileoutputstream = new FileOutputStream(file);
-                    NbtIo.writeCompressed(tagCompound, fileoutputstream);
-                    fileoutputstream.close();
+                    if (tagCompound.getCompound("Data").isPresent()) {
+                        data = tagCompound.getCompound("Data").get();
+                        int mode = switch (gm) {
+                            case CREATIVE -> 1;
+                            case ADVENTURE -> 2;
+                            case SPECTATOR -> 3;
+                            default -> 0; // SURVIVAL
+                        };
+                        // set GameType tag
+                        data.putInt("GameType", mode);
+                        tagCompound.put("Data", data);
+                        FileOutputStream fileoutputstream = new FileOutputStream(file);
+                        NbtIo.writeCompressed(tagCompound, fileoutputstream);
+                        fileoutputstream.close();
+                    }
                 }
             } catch (IOException ex) {
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER_SEVERE, ex.getMessage());
@@ -213,42 +219,50 @@ public class TARDISHelper {
                 FileInputStream fileinputstream = new FileInputStream(file);
                 CompoundTag tagCompound = NbtIo.readCompressed(fileinputstream, NbtAccounter.unlimitedHeap());
                 fileinputstream.close();
-                CompoundTag data = tagCompound.getCompound("Data");
-                // get GameType tag
-                GameMode gameMode;
-                int gm = data.getInt("GameType");
-                gameMode = switch (gm) {
-                    case 1 -> GameMode.CREATIVE;
-                    case 2 -> GameMode.ADVENTURE;
-                    case 3 -> GameMode.SPECTATOR;
-                    default -> GameMode.SURVIVAL;
-                };
-                // get generatorName tag
-                WorldType worldType;
-                String wt = data.getString("generatorName");
-                worldType = switch (wt.toLowerCase(Locale.ROOT)) {
-                    case "flat" -> WorldType.FLAT;
-                    case "largebiomes" -> WorldType.LARGE_BIOMES;
-                    case "amplified" -> WorldType.AMPLIFIED;
-                    default -> WorldType.NORMAL; // default or unknown
-                };
+                GameMode gameMode = GameMode.SURVIVAL;
+                WorldType worldType = WorldType.NORMAL;
                 World.Environment environment = World.Environment.NORMAL;
-                File dimDashOne = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "DIM-1");
-                File dimOne = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "DIM1");
-                if (dimDashOne.exists() && !dimOne.exists()) {
-                    environment = World.Environment.NETHER;
-                }
-                if (dimOne.exists() && !dimDashOne.exists()) {
-                    environment = World.Environment.THE_END;
-                }
                 Difficulty difficulty = Difficulty.NORMAL;
-                // 0 is Peaceful, 1 is Easy, 2 is Normal, and 3 is Hard
-                int diff = data.getInt("Difficulty");
-                switch (diff) {
-                    case 0 -> difficulty = Difficulty.PEACEFUL;
-                    case 1 -> difficulty = Difficulty.EASY;
-                    case 3 -> difficulty = Difficulty.HARD;
-                    default -> {
+                if (tagCompound.getCompound("Data").isPresent()) {
+                    CompoundTag data = tagCompound.getCompound("Data").get();
+                    // get GameType tag
+                    if (data.getInt("GameType").isPresent()) {
+                        int gm = data.getInt("GameType").get();
+                        gameMode = switch (gm) {
+                            case 1 -> GameMode.CREATIVE;
+                            case 2 -> GameMode.ADVENTURE;
+                            case 3 -> GameMode.SPECTATOR;
+                            default -> GameMode.SURVIVAL;
+                        };
+                    }
+                    // get generatorName tag
+                    if (data.getString("generatorName").isPresent()) {
+                        String wt = data.getString("generatorName").get();
+                        worldType = switch (wt.toLowerCase(Locale.ROOT)) {
+                            case "flat" -> WorldType.FLAT;
+                            case "largebiomes" -> WorldType.LARGE_BIOMES;
+                            case "amplified" -> WorldType.AMPLIFIED;
+                            default -> WorldType.NORMAL; // default or unknown
+                        };
+                    }
+                    File dimDashOne = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "DIM-1");
+                    File dimOne = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "DIM1");
+                    if (dimDashOne.exists() && !dimOne.exists()) {
+                        environment = World.Environment.NETHER;
+                    }
+                    if (dimOne.exists() && !dimDashOne.exists()) {
+                        environment = World.Environment.THE_END;
+                    }
+                    // 0 is Peaceful, 1 is Easy, 2 is Normal, and 3 is Hard
+                    if (data.getInt("Difficulty").isPresent()) {
+                        int diff = data.getInt("Difficulty").get();
+                        switch (diff) {
+                            case 0 -> difficulty = Difficulty.PEACEFUL;
+                            case 1 -> difficulty = Difficulty.EASY;
+                            case 3 -> difficulty = Difficulty.HARD;
+                            default -> {
+                            }
+                        }
                     }
                 }
                 return new TARDISPlanetData(gameMode, environment, worldType, difficulty);

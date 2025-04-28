@@ -23,9 +23,9 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
-import me.eccentric_nz.TARDIS.builders.FractalFence;
-import me.eccentric_nz.TARDIS.builders.TARDISInteriorPostioning;
-import me.eccentric_nz.TARDIS.builders.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
+import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.builders.utility.FractalFence;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.console.ConsoleDestroyer;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -294,12 +294,8 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             }
             if (tud.getSchematic().getPermission().equals("archive")) {
                 starty = archive_next.getY();
-            } else if (tud.getSchematic().getPermission().equals("mechanical") || tud.getSchematic().getPermission().equals("cursed")) {
-                starty = 62;
-            } else if (TARDISConstants.HIGHER.contains(tud.getSchematic().getPermission())) {
-                starty = 65;
             } else {
-                starty = 64;
+                starty = tud.getSchematic().getStartY();
             }
             downgrade = (height < previousHeight || width < previousWidth);
             world = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());

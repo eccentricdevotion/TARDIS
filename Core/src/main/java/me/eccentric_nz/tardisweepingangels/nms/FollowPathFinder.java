@@ -25,7 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_21_R3.event.CraftEventFactory;
+import org.bukkit.craftbukkit.v1_21_R4.event.CraftEventFactory;
 import org.bukkit.event.entity.EntityTeleportEvent;
 
 import java.util.EnumSet;
@@ -129,7 +129,7 @@ public class FollowPathFinder extends Goal {
             return false;
         }
         Location to = event.getTo();
-        this.follower.moveTo(to.getX(), to.getY(), to.getZ(), to.getYaw(), to.getPitch());
+        this.follower.snapTo(to.getX(), to.getY(), to.getZ(), to.getYaw(), to.getPitch());
         this.navigation.stop();
         return true;
     }

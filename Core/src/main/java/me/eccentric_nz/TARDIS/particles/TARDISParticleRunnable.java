@@ -85,7 +85,7 @@ public class TARDISParticleRunnable implements Runnable {
             }
             case SHRIEK -> location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, 1, false);
             case SCULK_CHARGE -> location.getWorld().spawnParticle(particle, location, count, speed, speed, speed, speed, 1.0f, false);
-            case ENTITY_EFFECT -> {
+            case ENTITY_EFFECT, TINTED_LEAVES -> {
                 // get colour from prefs
                 Color colour = data.getColour();
                 location.getWorld().spawnParticle(particle, location, count, 0, 0, 0, 0, colour, false);

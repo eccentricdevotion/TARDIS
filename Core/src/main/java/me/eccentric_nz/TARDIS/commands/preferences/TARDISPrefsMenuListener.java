@@ -49,6 +49,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -433,7 +434,9 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
         lore.set(0, value);
         im.setLore(lore);
         GUIPlayerPreferences gui = GUIPlayerPreferences.fromString(which);
-        im.setItemModel((value.equals(plugin.getLanguage().getString("SET_ON"))) ? gui.getOnModel() : gui.getOffModel());
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setFloats(value.equals(plugin.getLanguage().getString("SET_ON")) ? gui.getOnFloats() : gui.getOffFloats());
+        im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
         if (im.getDisplayName().equals("Beacon")) {
             // get tardis id

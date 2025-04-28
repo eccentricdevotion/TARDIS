@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.transmat;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.custommodels.GUITransmat;
-import me.eccentric_nz.TARDIS.custommodels.keys.GuiVariant;
 import me.eccentric_nz.TARDIS.database.data.Transmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmatList;
 import org.bukkit.Material;
@@ -61,7 +60,6 @@ public class TARDISTransmatInventory {
                 }
                 ItemStack is = new ItemStack(Material.MAP, 1);
                 ItemMeta im = is.getItemMeta();
-                im.setItemModel(GuiVariant.TRANSMAT_LOCATION.getKey());
                 im.setDisplayName(t.getName());
                 List<String> lore = new ArrayList<>();
                 lore.add(String.format("X: %.2f", t.getX()));
@@ -81,7 +79,6 @@ public class TARDISTransmatInventory {
             ItemStack info = new ItemStack(GUITransmat.INFO.material(), 1);
             ItemMeta meta = info.getItemMeta();
             meta.setDisplayName(plugin.getChameleonGuis().getString("INFO"));
-            meta.setItemModel(GUITransmat.INFO.key());
             meta.setLore(plugin.getChameleonGuis().getStringList("INFO_TRANSMAT"));
             info.setItemMeta(meta);
             stack[GUITransmat.INFO.slot()] = info;
@@ -89,7 +86,6 @@ public class TARDISTransmatInventory {
             ItemStack delete = new ItemStack(GUITransmat.DELETE.material(), 1);
             ItemMeta dim = delete.getItemMeta();
             dim.setDisplayName(plugin.getLanguage().getString("BUTTON_DELETE"));
-            dim.setItemModel(GUITransmat.DELETE.key());
             delete.setItemMeta(dim);
             stack[GUITransmat.DELETE.slot()] = delete;
         }
@@ -97,7 +93,6 @@ public class TARDISTransmatInventory {
         ItemStack tele = new ItemStack(GUITransmat.TRANSMAT.material(), 1);
         ItemMeta port = tele.getItemMeta();
         port.setDisplayName(plugin.getLanguage().getString("BUTTON_TRANSMAT"));
-        port.setItemModel(GUITransmat.TRANSMAT.key());
         tele.setItemMeta(port);
         stack[GUITransmat.TRANSMAT.slot()] = tele;
         // rooms world
@@ -105,7 +100,6 @@ public class TARDISTransmatInventory {
             ItemStack rooms = new ItemStack(GUITransmat.ROOMS.material(), 1);
             ItemMeta world = rooms.getItemMeta();
             world.setDisplayName("Rooms World");
-            world.setItemModel(GUITransmat.ROOMS.key());
             rooms.setItemMeta(world);
             stack[GUITransmat.ROOMS.slot()] = rooms;
         }
@@ -113,7 +107,6 @@ public class TARDISTransmatInventory {
         ItemStack close = new ItemStack(GUITransmat.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
-        close_im.setItemModel(GUITransmat.CLOSE.key());
         close.setItemMeta(close_im);
         stack[GUITransmat.CLOSE.slot()] = close;
 

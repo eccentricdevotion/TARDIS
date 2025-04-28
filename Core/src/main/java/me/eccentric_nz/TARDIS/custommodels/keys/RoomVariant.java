@@ -68,7 +68,7 @@ public enum RoomVariant {
     VILLAGE(new NamespacedKey(TARDIS.plugin, "button_village")),
     WOOD(new NamespacedKey(TARDIS.plugin, "button_wood")),
     WORKSHOP(new NamespacedKey(TARDIS.plugin, "button_workshop")),
-    ZERO(new NamespacedKey(TARDIS.plugin, "button_zero"));
+    ZERO(new NamespacedKey(TARDIS.plugin, "button_zero_room"));
 
     private final NamespacedKey key;
 

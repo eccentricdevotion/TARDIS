@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
-import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -58,7 +57,6 @@ public class ConsoleRusticRecipe {
         String dn = "Rustic Console";
         im.setDisplayName(ChatColor.WHITE + dn);
         im.setLore(List.of("Integration with interaction"));
-        im.setItemModel(RecipeItem.RUSTIC_CONSOLE.getModel());
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, "console_rustic");
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "rustic_console");
