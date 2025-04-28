@@ -63,10 +63,6 @@ public class SpawnerListener implements Listener {
 
     @EventHandler
     public void onSpawnerClick(PlayerInteractEvent event) {
-        if (!event.getPlayer().isOp()) {
-            plugin.getMessenger().send(event.getPlayer(), TardisModule.MONSTERS, "NO_PERMS");
-            return;
-        }
         if (event.getHand() != EquipmentSlot.HAND || event.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
@@ -80,6 +76,10 @@ public class SpawnerListener implements Listener {
         }
         ItemMeta im = is.getItemMeta();
         if (im == null || !im.getPersistentDataContainer().has(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER)) {
+            return;
+        }
+        if (!event.getPlayer().isOp()) {
+            plugin.getMessenger().send(event.getPlayer(), TardisModule.MONSTERS, "NO_PERMS");
             return;
         }
         NamespacedKey key = im.getItemModel();
