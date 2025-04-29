@@ -44,63 +44,57 @@ class TARDISHandlesTakeoffCommand {
     }
 
     public boolean enterVortex(Player player, String[] args) {
-        // must be inside tardis
-        HashMap<String, Object> whereu = new HashMap<>();
-        whereu.put("uuid", args[1]);
-        ResultSetTravellers rsv = new ResultSetTravellers(plugin, whereu, false);
-        if (rsv.resultSet()) {
-            // get TARDIS
-            int id = TARDISNumberParsers.parseInt(args[2]);
-            HashMap<String, Object> wherei = new HashMap<>();
-            wherei.put("tardis_id", id);
-            ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-            if (rs.resultSet()) {
-                Tardis tardis = rs.getTardis();
-                if (tardis.getPreset().equals(ChameleonPreset.JUNK)) {
-                    return true;
-                }
-                if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
-                    plugin.getMessenger().handlesSend(player, "POWER_DOWN");
-                    return true;
-                }
-                if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getDidDematToVortex().contains(id) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
-                    plugin.getMessenger().handlesSend(player, "HANDBRAKE_IN_VORTEX");
-                    return true;
-                }
-                HashMap<String, Object> whereh = new HashMap<>();
-                whereh.put("type", 0);
-                whereh.put("tardis_id", id);
-                ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
-                if (rsc.resultSet()) {
-                    if (tardis.isHandbrakeOn()) {
-                        // check there is enough power for at last random travel
-                        if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtronLevel() < plugin.getArtronConfig().getInt("random")) {
-                            plugin.getMessenger().handlesSend(player, "ENERGY_NOT_ENOUGH");
-                            return true;
-                        }
-                        // check if door is open
-                        if (isDoorOpen(id)) {
-                            plugin.getMessenger().handlesSend(player, "DOOR_CLOSE");
-                            // track handbrake clicked for takeoff when door closed
-                            plugin.getTrackerKeeper().getHasClickedHandbrake().add(id);
-                            // give them 30 seconds to close the door
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id)), 600L);
-                            return true;
-                        }
-                        Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
-                        Block handbrake = location.getBlock();
-                        ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, args[1]);
-                        boolean beac_on = true;
-                        boolean bar = false;
-                        if (rsp.resultSet()) {
-                            beac_on = rsp.isBeaconOn();
-                            bar = rsp.isTravelbarOn();
-                        }
-                        Throticle throticle = new ResultSetThrottle(plugin).getSpeedAndParticles(args[1]);
-                        new TARDISTakeoff(plugin).run(id, handbrake, location, player, beac_on, tardis.getBeacon(), bar, throticle);
-                    } else {
-                        plugin.getMessenger().handlesSend(player, "HANDBRAKE_OFF_ERR");
+        // get TARDIS
+        int id = TARDISNumberParsers.parseInt(args[2]);
+        HashMap<String, Object> wherei = new HashMap<>();
+        wherei.put("tardis_id", id);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
+        if (rs.resultSet()) {
+            Tardis tardis = rs.getTardis();
+            if (tardis.getPreset().equals(ChameleonPreset.JUNK)) {
+                return true;
+            }
+            if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
+                plugin.getMessenger().handlesSend(player, "POWER_DOWN");
+                return true;
+            }
+            if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getDidDematToVortex().contains(id) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
+                plugin.getMessenger().handlesSend(player, "HANDBRAKE_IN_VORTEX");
+                return true;
+            }
+            HashMap<String, Object> whereh = new HashMap<>();
+            whereh.put("type", 0);
+            whereh.put("tardis_id", id);
+            ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
+            if (rsc.resultSet()) {
+                if (tardis.isHandbrakeOn()) {
+                    // check there is enough power for at last random travel
+                    if (!plugin.getTrackerKeeper().getHasDestination().containsKey(id) && tardis.getArtronLevel() < plugin.getArtronConfig().getInt("random")) {
+                        plugin.getMessenger().handlesSend(player, "ENERGY_NOT_ENOUGH");
+                        return true;
                     }
+                    // check if door is open
+                    if (isDoorOpen(id)) {
+                        plugin.getMessenger().handlesSend(player, "DOOR_CLOSE");
+                        // track handbrake clicked for takeoff when door closed
+                        plugin.getTrackerKeeper().getHasClickedHandbrake().add(id);
+                        // give them 30 seconds to close the door
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id)), 600L);
+                        return true;
+                    }
+                    Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
+                    Block handbrake = location.getBlock();
+                    ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, args[1]);
+                    boolean beac_on = true;
+                    boolean bar = false;
+                    if (rsp.resultSet()) {
+                        beac_on = rsp.isBeaconOn();
+                        bar = rsp.isTravelbarOn();
+                    }
+                    Throticle throticle = new ResultSetThrottle(plugin).getSpeedAndParticles(args[1]);
+                    new TARDISTakeoff(plugin).run(id, handbrake, location, player, beac_on, tardis.getBeacon(), bar, throticle);
+                } else {
+                    plugin.getMessenger().handlesSend(player, "HANDBRAKE_OFF_ERR");
                 }
             }
         }

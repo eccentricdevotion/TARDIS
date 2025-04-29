@@ -91,12 +91,14 @@ public class TARDISTravelCommands implements CommandExecutor {
                 HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("uuid", player.getUniqueId().toString());
                 ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
-                if (!rst.resultSet()) {
+                // check if this was a handles request from the TARDIS Communicator or Handles in external player's inventory
+                boolean isCommunicatorOrInventory = args[args.length - 1].equals("kzsbtr1h2");
+                if (!rst.resultSet() && !isCommunicatorOrInventory) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_IN_TARDIS");
                     return true;
                 }
                 int tardis_id = rst.getTardis_id();
-                if (tardis_id != id) {
+                if (tardis_id != id && !isCommunicatorOrInventory) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_ONLY_TL");
                     return true;
                 }
@@ -112,6 +114,32 @@ public class TARDISTravelCommands implements CommandExecutor {
                 if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
                     // get the exile area
                     return new TARDISTravelExile(plugin).action(player, id);
+                }
+                if (isCommunicatorOrInventory) {
+                    switch (args[0].toLowerCase(Locale.ROOT)) {
+                        case "home" -> {
+                            return new TARDISTravelHome(plugin).action(player, id);
+                        }
+                        case "area" -> {
+                            return new TARDISTravelArea(plugin).action(player, args, id, tardis.getPreset());
+                        }
+                        case "cave" -> {
+                            return new TARDISTravelCave(plugin).action(player, id);
+                        }
+                        case "village" -> {
+                            return new TARDISTravelGUI(plugin).open(player, id, args[0].toLowerCase(Locale.ROOT));
+                        }
+                        case "biome" -> {
+                            return new TARDISTravelBiome(plugin).action(player, args, id);
+                        }
+                        case "dest" -> {
+                            return new TARDISTravelSave(plugin).action(player, args, id, tardis.getPreset());
+                        }
+                        default -> {
+                            // player
+                            return new TARDISTravelPlayer(plugin).action(player, args[0], id);
+                        }
+                    }
                 }
                 if (args.length == 1) {
                     switch (args[0].toLowerCase(Locale.ROOT)) {
@@ -131,7 +159,7 @@ public class TARDISTravelCommands implements CommandExecutor {
                             return new TARDISTravelCave(plugin).action(player, id);
                         }
                         case "village", "structure", "biome" -> {
-                            return new TARDISTravelGUI(plugin).open(player,id, args[0].toLowerCase(Locale.ROOT));
+                            return new TARDISTravelGUI(plugin).open(player, id, args[0].toLowerCase(Locale.ROOT));
                         }
                         default -> {
                             return new TARDISTravelPlayer(plugin).action(player, args[0], id);

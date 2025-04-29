@@ -242,14 +242,14 @@ public class TARDISHandlesRequest {
                                 for (HashMap<String, String> map : rsd.getData()) {
                                     String dest = map.get("dest_name");
                                     if (groups.getFirst().equalsIgnoreCase(dest) && TARDISPermission.hasPermission(player, "tardis.timetravel")) {
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel dest " + dest), 1L);
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel dest " + dest + " kzsbtr1h2"), 1L);
                                         return;
                                     }
                                 }
                             }
                         }
                     }
-                    case "travel.home" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel home"), 1L);
+                    case "travel.home" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel home kzsbtr1h2"), 1L);
                     case "travel.random" -> {
                         // get tardis
                         HashMap<String, Object> wherel = new HashMap<>();
@@ -270,7 +270,7 @@ public class TARDISHandlesRequest {
                             for (Player p : plugin.getServer().getOnlinePlayers()) {
                                 String name = p.getName();
                                 if (groups.getFirst().equalsIgnoreCase(name)) {
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel " + name), 1L);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel " + name + " kzsbtr1h2"), 1L);
                                     return;
                                 }
                                 // don't understand
@@ -286,7 +286,7 @@ public class TARDISHandlesRequest {
                                 // cycle through areas
                                 for (String name : rsa.getNames()) {
                                     if (area.equalsIgnoreCase(name) && (TARDISPermission.hasPermission(player, "tardis.area." + name) || TARDISPermission.hasPermission(player, "tardis.area.*"))) {
-                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel area " + name), 1L);
+                                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel area " + name + " kzsbtr1h2"), 1L);
                                         return;
                                     }
                                 }
@@ -306,7 +306,7 @@ public class TARDISHandlesRequest {
                             for (Biome biome : Biome.values()) {
                                 String b = biome.toString();
                                 if (gb.equalsIgnoreCase(b)) {
-                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel biome " + b), 1L);
+                                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel biome " + b + " kzsbtr1h2"), 1L);
                                     return;
                                 }
                             }
@@ -319,14 +319,14 @@ public class TARDISHandlesRequest {
                             plugin.getMessenger().handlesSend(player, "TRAVEL_NO_PERM_CAVE");
                             return;
                         }
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel cave"), 1L);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel cave kzsbtr1h2"), 1L);
                     }
                     case "travel.village" -> {
                         if (!TARDISPermission.hasPermission(player, "tardis.timetravel.village")) {
                             plugin.getMessenger().handlesSend(player, "TRAVEL_NO_PERM_VILLAGE");
                             return;
                         }
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel village"), 1L);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel village kzsbtr1h2"), 1L);
                     }
                     case "door.open" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardis door OPEN"), 1L);
                     case "door.close" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardis door CLOSE"), 1L);
