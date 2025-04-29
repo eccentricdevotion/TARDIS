@@ -18,12 +18,16 @@ package me.eccentric_nz.tardischemistry.product;
 
 import com.google.common.collect.Multimaps;
 import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Map;
+import java.util.UUID;
 
 public class ProductBuilder {
 
@@ -31,6 +35,15 @@ public class ProductBuilder {
         ItemStack is = new ItemStack(product.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(product.getName());
+        im.addAttributeModifier(
+                Attribute.LUCK,
+                new AttributeModifier(
+                       product.getModel(),
+                        0.0d,
+                        AttributeModifier.Operation.ADD_NUMBER,
+                        EquipmentSlotGroup.ANY
+                )
+        );
         im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         im.setAttributeModifiers(Multimaps.forMap(Map.of()));
         im.setItemModel(product.getModel());
