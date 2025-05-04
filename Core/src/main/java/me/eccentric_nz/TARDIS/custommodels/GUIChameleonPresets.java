@@ -24,7 +24,7 @@ import org.bukkit.Material;
 public record GUIChameleonPresets() {
 
     // Chameleon Presets
-    public static GUIData GO_TO_PAGE_2 = new GUIData(ArrowVariant.PAGE_TWO.getKey(), 52, Material.ARROW);
+    public static GUIData GO_TO_PAGE_2 = new GUIData(ArrowVariant.PAGE_TWO.getKey(), 52, Material.ARROW, "Go to page 2");
     public static GUIData NEW = new GUIData(GuiVariant.NEW.getKey(), 49, Material.BOWL);
     public static GUIData SAVE = new GUIData(GuiVariant.SAVE.getKey(), 50, Material.BOWL);
     public static GUIData USE_SELECTED = new GUIData(GuiVariant.USE_SELECTED.getKey(), 45, Material.BOWL);
