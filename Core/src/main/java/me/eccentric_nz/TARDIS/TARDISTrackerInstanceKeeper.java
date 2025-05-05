@@ -107,6 +107,7 @@ public class TARDISTrackerInstanceKeeper {
     private final HashMap<UUID, String> flight = new HashMap<>();
     private final HashMap<UUID, String> jettison = new HashMap<>();
     private final HashMap<UUID, String> perm = new HashMap<>();
+    private final HashMap<UUID, String> plotters = new HashMap<>();
     private final HashMap<UUID, String> preset = new HashMap<>();
     private final HashMap<UUID, String> telepathicPlacements = new HashMap<>();
     private final HashMap<UUID, String> updatePlayers = new HashMap<>();
@@ -1177,5 +1178,14 @@ public class TARDISTrackerInstanceKeeper {
 
     public void setAnimateTask(int task) {
         this.task = task;
+    }
+
+    /**
+     * Tracks players renaming their plot
+     *
+     * @return a map of UUIDs and the new plot names
+     */
+    public HashMap<UUID, String> getPlotters() {
+        return plotters;
     }
 }

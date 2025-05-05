@@ -35,10 +35,10 @@ public class FlatGenerator extends ChunkGenerator {
     private final Material surface;
 
     public FlatGenerator(TARDIS plugin) {
-        this.bottom = Material.valueOf(plugin.getGeneratorConfig().getString("bottom"));
-        this.rock = Material.valueOf(plugin.getGeneratorConfig().getString("rock"));
-        this.middle = Material.valueOf(plugin.getGeneratorConfig().getString("middle"));
-        this.surface = Material.valueOf(plugin.getGeneratorConfig().getString("surface"));
+        this.bottom = Material.valueOf(plugin.getGeneratorConfig().getString("flat.bottom"));
+        this.rock = Material.valueOf(plugin.getGeneratorConfig().getString("flat.rock"));
+        this.middle = Material.valueOf(plugin.getGeneratorConfig().getString("flat.middle"));
+        this.surface = Material.valueOf(plugin.getGeneratorConfig().getString("flat.surface"));
     }
 
     @Override

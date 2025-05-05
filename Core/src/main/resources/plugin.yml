@@ -775,6 +775,10 @@ permissions:
   tardisshop.use:
     description: Allow players to buy items from a TARDIS Shop.
     default: op
+  # plot
+  tardis.plot:
+    description: Allow players to claim plots in the plot world.
+    default: op
 commands:
   tardis:
     aliases: tt
@@ -2098,4 +2102,16 @@ commands:
       description: Reloads shop prices from items.yml and update all shop blocks.
       usage: /<command> update
       permission: tardis.admin
+      permission-message: You don't have the permission <permission> to use this command
+  # plots
+  tardisplot:
+    aliases: tplot
+    description: Manipulate plots in the plot world generator.
+    usage: /<command> [name] [plot_name]
+    permission: tardis.plot
+    permission-message: You don't have the permission <permission> to use this command
+    name:
+      description: Change the name of a plot.
+      usage: /<command> name [name]
+      permission: tardis.plot
       permission-message: You don't have the permission <permission> to use this command

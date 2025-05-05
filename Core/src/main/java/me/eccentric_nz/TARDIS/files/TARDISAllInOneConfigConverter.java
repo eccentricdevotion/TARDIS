@@ -48,7 +48,7 @@ public class TARDISAllInOneConfigConverter {
                         for (String key : flat.getKeys(false)) {
                             flat.set(key, tcg.get(key));
                         }
-                        String flatPath = plugin.getDataFolder() + File.separator + "flat_world.yml";
+                        String flatPath = plugin.getDataFolder() + File.separator + "generator.yml";
                         File hf = new File(flatPath);
                         flat.save(hf);
                         plugin.getGeneratorConfig().load(hf);

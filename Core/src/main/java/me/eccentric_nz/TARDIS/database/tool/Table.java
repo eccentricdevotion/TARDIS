@@ -63,6 +63,7 @@ public enum Table {
     paper_bag,
     particle_prefs("pp_id"),
     player_prefs("pp_id"),
+    plots("plot_id"),
     portals(true),
     previewers("uuid"),
     programs,

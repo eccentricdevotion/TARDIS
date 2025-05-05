@@ -167,7 +167,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                         plugin.savePlanetsConfig();
                     }
                     // load world
-                    TARDISWorlds.loadWorld(arguments.getArguments().get(2));
+                    new WorldLoader(plugin).loadWorld(arguments.getArguments().get(2));
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_RENAME_SUCCESS", arguments.getArguments().get(2));
                     return true;
                 }
@@ -240,7 +240,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                             }
                         }
                     }
-                    TARDISWorlds.loadWorld(arguments.getArguments().get(1));
+                    new WorldLoader(plugin).loadWorld(arguments.getArguments().get(1));
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("rename")) {

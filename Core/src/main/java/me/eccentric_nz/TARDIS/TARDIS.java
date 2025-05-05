@@ -345,6 +345,8 @@ public class TARDIS extends JavaPlugin {
             loadCustomConfigs();
             // load Multiverse
             loadMultiverse();
+            // load worldguard
+            loadWorldGuard();
             loadLanguage();
             loadSigns();
             loadChameleonGUIs();
@@ -390,7 +392,6 @@ public class TARDIS extends JavaPlugin {
             new TARDISListenerRegisterer(this).registerListeners();
             // register commands
             new TARDISCommandSetter(this).loadCommands();
-            loadWorldGuard();
             loadPluginRespect();
             String mapper = getConfig().getString("mapping.provider", "dynmap");
             if (pm.isPluginEnabled(mapper) && getConfig().getBoolean("modules.mapping")) {
@@ -460,6 +461,9 @@ public class TARDIS extends JavaPlugin {
         if (id != null) {
             if (id.equalsIgnoreCase("flat")) {
                 return new FlatGenerator(this);
+            }
+            if (id.equalsIgnoreCase("plot")) {
+                return new PlotGenerator(this);
             }
             if (id.equalsIgnoreCase("water")) {
                 return new WaterGenerator();
@@ -1480,7 +1484,7 @@ public class TARDIS extends JavaPlugin {
                 "achievements.yml", "adaptive.yml", "artron.yml",
                 "blaster.yml", "blocks.yml",
                 "condensables.yml", "custom_consoles.yml", "custom_models.yml", "custom_doors.yml", "custom_time_rotors.yml",
-                "flat_world.yml",
+                "generator.yml",
                 "handles.yml",
                 "items.yml",
                 "kits.yml",
@@ -1513,7 +1517,7 @@ public class TARDIS extends JavaPlugin {
         handlesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "handles.yml"));
         new TARDISHandlesUpdater(this, handlesConfig).checkHandles();
         adaptiveConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "adaptive.yml"));
-        generatorConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "flat_world.yml"));
+        generatorConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "generator.yml"));
         if (getConfig().getBoolean("modules.weeping_angels")) {
             monstersConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "monsters.yml"));
         }

@@ -30,10 +30,12 @@ import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag.State;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.managers.storage.StorageException;
+import com.sk89q.worldguard.protection.regions.GlobalProtectedRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -139,9 +141,9 @@ public class TARDISWorldGuardUtils {
         // check floodgate
         String name = (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(p.getUniqueId())) ? TARDISFloodgate.sanitisePlayerName(p.getName()) : p.getName();
         ProtectedCuboidRegion region = new ProtectedCuboidRegion("TARDIS_" + name, b1, b2);
-        DefaultDomain dd = new DefaultDomain();
-        dd.addPlayer(p.getName());
-        region.setOwners(dd);
+        DefaultDomain owners = region.getOwners();
+        owners.addPlayer(p.getName());
+        region.setOwners(owners);
         HashMap<Flag<?>, Object> flags = new HashMap<>();
         //flags.put(Flags.TNT, State.DENY);
         flags.put(Flags.ENDER_BUILD, State.DENY);
@@ -183,9 +185,9 @@ public class TARDISWorldGuardUtils {
         }
         String region_id = "TARDIS_" + name;
         ProtectedCuboidRegion region = new ProtectedCuboidRegion(region_id, b1, b2);
-        DefaultDomain dd = new DefaultDomain();
-        dd.addPlayer(uuid);
-        region.setOwners(dd);
+        DefaultDomain owners = region.getOwners();
+        owners.addPlayer(uuid);
+        region.setOwners(owners);
         HashMap<Flag<?>, Object> flags = new HashMap<>();
         if (!junk && !plugin.getConfig().getBoolean("preferences.open_door_policy")) {
             flags.put(Flags.ENTRY, State.DENY);
@@ -224,9 +226,9 @@ public class TARDISWorldGuardUtils {
         BlockVector3 b2 = BlockVector3.at(data.getMaxX(), 256, data.getMaxZ());
         String region_id = "TARDIS_" + name;
         ProtectedCuboidRegion region = new ProtectedCuboidRegion(region_id, b1, b2);
-        DefaultDomain dd = new DefaultDomain();
-        dd.addPlayer(uuid);
-        region.setOwners(dd);
+        DefaultDomain owners = region.getOwners();
+        owners.addPlayer(uuid);
+        region.setOwners(owners);
         HashMap<Flag<?>, Object> flags = new HashMap<>();
         if (name.length() != 36 && !plugin.getConfig().getBoolean("preferences.open_door_policy")) {
             flags.put(Flags.ENTRY, State.DENY);
@@ -263,9 +265,9 @@ public class TARDISWorldGuardUtils {
         b1 = makeBlockVector(one);
         b2 = makeBlockVector(two);
         ProtectedCuboidRegion region = new ProtectedCuboidRegion("tardis_recharger_" + name, b1, b2);
-        DefaultDomain dd = new DefaultDomain();
-        dd.addPlayer(p.getUniqueId());
-        region.setOwners(dd);
+        DefaultDomain owners = region.getOwners();
+        owners.addPlayer(p.getUniqueId());
+        region.setOwners(owners);
         HashMap<Flag<?>, Object> flags = new HashMap<>();
         flags.put(Flags.TNT, State.DENY);
         flags.put(Flags.CREEPER_EXPLOSION, State.DENY);
@@ -313,6 +315,62 @@ public class TARDISWorldGuardUtils {
             rm.save();
         } catch (StorageException e) {
             plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not create WorldGuard Protection for exterior renderering room! " + e.getMessage());
+        }
+    }
+
+    /**
+     * Adds a WorldGuard global region to a plot world.
+     *
+     * @param world the plot world to set the __global__ region for
+     */
+    public void addPlotWorldProtection(World world) {
+        RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
+        if (rm != null && !rm.hasRegion("__global__")) {
+            GlobalProtectedRegion globalRegion = new GlobalProtectedRegion("__global__");
+            globalRegion.setFlag(Flags.PASSTHROUGH, StateFlag.State.DENY);
+            rm.addRegion(globalRegion);
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Adding WorldGuard passthrough:deny to plot world.");
+            try {
+                rm.save();
+            } catch (StorageException e) {
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not create WorldGuard Protection for plot world! " + e.getMessage());
+            }
+        }
+    }
+
+    /**
+     * Adds a WorldGuard protected region to exterior renderer room.
+     *
+     * @param uuid the name of the player growing the render room
+     * @param one  a start location of a cuboid region
+     * @param two  an end location of a cuboid region
+     */
+    public void addPlotProtection(UUID uuid, Location one, Location two) {
+        RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(one.getWorld()));
+        BlockVector3 b1;
+        BlockVector3 b2;
+        b1 = makeBlockVector(one);
+        b2 = makeBlockVector(two);
+        ProtectedCuboidRegion region = new ProtectedCuboidRegion("plot_" + uuid.toString(), b1, b2);
+        DefaultDomain owners = region.getOwners();
+        owners.addPlayer(uuid);
+        region.setOwners(owners);
+        // get the player's companions & add as members
+        DefaultDomain members = region.getMembers();
+        ResultSetTardisCompanions rst = new ResultSetTardisCompanions(plugin);
+        if (rst.fromUUID(uuid.toString())) {
+            if (!rst.getCompanions().isEmpty()) {
+                for (String u : rst.getCompanions().split(":")) {
+                    members.addPlayer(UUID.fromString(u));
+                }
+            }
+        }
+        region.setMembers(members);
+        rm.addRegion(region);
+        try {
+            rm.save();
+        } catch (StorageException e) {
+            plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not create WorldGuard region for plot! " + e.getMessage());
         }
     }
 
@@ -512,9 +570,9 @@ public class TARDISWorldGuardUtils {
         String region = which + "_" + owner;
         if (rm.hasRegion(region)) {
             ProtectedRegion pr = rm.getRegion(region);
-            DefaultDomain dd = pr.getOwners();
-            dd.addPlayer(uuid);
-            pr.setOwners(dd);
+            DefaultDomain owners = pr.getOwners();
+            owners.addPlayer(uuid);
+            pr.setOwners(owners);
             try {
                 rm.save();
             } catch (StorageException e) {
@@ -549,9 +607,9 @@ public class TARDISWorldGuardUtils {
             String region = regions.getFirst();
             ProtectedRegion pr = rm.getRegion(region);
             pr.setFlag(Flags.ENTRY, State.DENY);
-            DefaultDomain dd = pr.getOwners();
-            dd.addPlayer(uuid);
-            pr.setOwners(dd);
+            DefaultDomain owners = pr.getOwners();
+            owners.addPlayer(uuid);
+            pr.setOwners(owners);
             try {
                 rm.save();
             } catch (StorageException e) {

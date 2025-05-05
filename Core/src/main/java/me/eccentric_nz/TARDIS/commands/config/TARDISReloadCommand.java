@@ -60,7 +60,7 @@ class TARDISReloadCommand {
                 case blocks -> plugin.getBlocksConfig().load(file);
                 case chameleon_guis -> plugin.getChameleonGuis().load(new File(plugin.getDataFolder(), "language" + File.separator + "chameleon_guis.yml"));
                 case condensables -> plugin.getCondensablesConfig().load(file);
-                case flat_world -> plugin.getGeneratorConfig().load(file);
+                case generator -> plugin.getGeneratorConfig().load(file);
                 case handles -> plugin.getHandlesConfig().load(file);
                 case items -> plugin.getItemsConfig().load(file);
                 case kits -> plugin.getKitsConfig().load(file);
