@@ -389,6 +389,7 @@ public class TARDISSiegeListener implements Listener {
         }
         ItemMeta im = is.getItemMeta();
         if (im != null) {
+            // TODO fix model use
             return im.hasItemModel() && Whoniverse.SIEGE_CUBE.getKey().equals(im.getItemModel());
         }
         return false;

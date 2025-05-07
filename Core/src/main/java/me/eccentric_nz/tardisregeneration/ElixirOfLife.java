@@ -61,7 +61,7 @@ public class ElixirOfLife {
             return false;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName() || !im.hasItemModel()) {
+        if (!im.hasDisplayName()) {
             return false;
         }
         return im.getDisplayName().endsWith("Elixir of Life");

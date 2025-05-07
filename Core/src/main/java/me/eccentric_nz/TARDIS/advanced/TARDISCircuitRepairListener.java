@@ -85,7 +85,7 @@ public class TARDISCircuitRepairListener implements Listener {
         }
         // get the item meta
         ItemMeta fim = first.getItemMeta();
-        if (!fim.hasDisplayName() || !fim.hasItemModel()) {
+        if (!fim.hasDisplayName()) {
             return;
         }
         // get the display name
@@ -100,6 +100,7 @@ public class TARDISCircuitRepairListener implements Listener {
             // get the uses left
             int left = TARDISNumberParsers.parseInt(stripped);
             // get max uses for this circuit
+            // TODO fix model use
             NamespacedKey ctm = (fim.hasItemModel()) ? fim.getItemModel() : CircuitVariant.ARS.getKey();
             int uses = plugin.getConfig().getInt("circuits.uses." + circuits.get(ctm));
             // is it used?
