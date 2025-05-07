@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.ARS.TARDISARSListener;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMapListener;
 import me.eccentric_nz.TARDIS.advanced.*;
 import me.eccentric_nz.TARDIS.arch.*;
+import me.eccentric_nz.TARDIS.areas.TARDISAreaListener;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronCapacitorListener;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronFurnaceListener;
 import me.eccentric_nz.TARDIS.artron.TARDISCondenserListener;
@@ -30,7 +31,7 @@ import me.eccentric_nz.TARDIS.chameleon.construct.TARDISChameleonConstructorOpen
 import me.eccentric_nz.TARDIS.chameleon.gui.*;
 import me.eccentric_nz.TARDIS.chameleon.shell.TARDISPlayerShellListener;
 import me.eccentric_nz.TARDIS.chameleon.shell.TARDISShellLoaderListener;
-import me.eccentric_nz.TARDIS.commands.areas.TARDISEditAreasGUIListener;
+import me.eccentric_nz.TARDIS.areas.TARDISEditAreasGUIListener;
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigMenuListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISHumListener;
 import me.eccentric_nz.TARDIS.commands.preferences.TARDISKeyMenuListener;

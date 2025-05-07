@@ -2,6 +2,7 @@ package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.areas.PlotArea;
 import me.eccentric_nz.TARDIS.commands.TARDISPlotCommand;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardischunkgenerator.worldgen.PlotListener;
@@ -55,6 +56,10 @@ public class WorldLoader {
                     // add worldguard protection
                     if (plugin.isWorldGuardOnServer()) {
                         plugin.getWorldGuardUtils().addPlotWorldProtection(w);
+                    }
+                    // should we run a TARDIS area?
+                    if (plugin.getGeneratorConfig().getBoolean("plot.create_area")) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new PlotArea(plugin, w), 100L);
                     }
                 }
                 String gm = plugin.getPlanetsConfig().getString("planets." + world + ".gamemode");

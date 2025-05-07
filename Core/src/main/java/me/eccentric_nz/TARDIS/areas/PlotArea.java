@@ -1,0 +1,84 @@
+package me.eccentric_nz.TARDIS.areas;
+
+import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
+import org.bukkit.Material;
+import org.bukkit.Tag;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
+
+import java.util.HashMap;
+
+public class PlotArea implements Runnable {
+
+    private final TARDIS plugin;
+    private final World world;
+
+    public PlotArea(TARDIS plugin, World world) {
+        this.plugin = plugin;
+        this.world = world;
+    }
+
+    @Override
+    public void run() {
+        // check if an area exists
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("area_name", "Plots");
+        where.put("world", world.getName());
+        ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, true);
+        if (rsa.resultSet()) {
+            return;
+        }
+        int size = plugin.getGeneratorConfig().getInt("plot.size");
+        int max = (16 * size) - 2;
+        int y = world.getMinHeight() + 64;
+        HashMap<String, Object> set = new HashMap<>();
+        set.put("area_name", "Plots");
+        set.put("world", world.getName());
+        set.put("minx", 6);
+        set.put("minz", 6);
+        set.put("maxx", max);
+        set.put("maxz", max);
+        set.put("y", y + 1);
+        plugin.getQueryFactory().doInsert("areas", set);
+        // style the plot
+        for (int x = 6; x <= max; x++) {
+            for (int z = 6; z <= max; z++) {
+                if ((x - 2) % 5 == 0 && (z - 2) % 5 == 0) {
+                    world.getBlockAt(x, y, z).setType(Material.RESIN_BRICKS);
+                } else {
+                    world.getBlockAt(x, y, z).setType(Material.STRIPPED_BIRCH_WOOD);
+                }
+            }
+        }
+        // claim the plot
+        HashMap<String, Object> setp = new HashMap<>();
+        setp.put("uuid", TARDISConstants.UUID_ZERO.toString());
+        setp.put("world", world.getName());
+        setp.put("chunk_x", 0);
+        setp.put("chunk_z", 0);
+        setp.put("size", size);
+        setp.put("name", "TARDIS Landing");
+        plugin.getQueryFactory().doInsert("plots", setp);
+        // update the sign
+        Block block = world.getBlockAt(5, y + 2, 5);
+        if (Tag.SIGNS.isTagged(block.getType())) {
+            Sign sign = (Sign) block.getState();
+            SignSide front = sign.getSide(Side.FRONT);
+            // server name
+            front.setLine(0, "TARDIS");
+            front.setLine(1, "Landing Area");
+            front.setLine(3, "X:0, Z:0");
+            SignSide back = sign.getSide(Side.BACK);
+            back.setLine(0, "TARDIS");
+            back.setLine(1, "Landing Area");
+            back.setLine(3, "X:0, Z:0");
+            sign.setWaxed(true);
+            sign.update(true);
+        }
+    }
+}

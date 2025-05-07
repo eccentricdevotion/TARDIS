@@ -8,7 +8,7 @@ flat:
   middle: DIRT
   # surface has 1 layer
   surface: GRASS_BLOCK
-  # materials to use in the Plot Generator
+# materials to use in the Plot Generator
 plot:
   rock: STONE
   middle: DIRT
@@ -25,3 +25,5 @@ plot:
   size: 3
   # the maximum number of plots a player can claim
   claim_max: 3
+  # whether to create a TARDIS area when the world is first generated
+  create_area: true

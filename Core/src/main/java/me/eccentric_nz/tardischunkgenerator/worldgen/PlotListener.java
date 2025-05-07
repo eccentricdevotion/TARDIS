@@ -90,7 +90,7 @@ public class PlotListener implements Listener {
                     return;
                 }
                 SignSide front = sign.getSide(Side.FRONT);
-                // create command
+                // suggest command
                 front.setLine(0, "/tplot name [name]");
                 front.setLine(1, player.getName());
                 front.setLine(3, "X:" + x + ", Z:" + z);
