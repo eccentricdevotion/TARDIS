@@ -52,11 +52,12 @@ public class TARDISEyeStorage {
         ResultSetArtronStorage rs = new ResultSetArtronStorage(plugin);
         if (rs.fromID(id)) {
             int count = rs.getCapacitorCount();
+            int damaged = rs.getDamageCount();
             // capacitors
             for (int i = 2; i < 2 + count; i++) {
                 ItemStack is = new ItemStack(Material.BUCKET, 1);
                 ItemMeta im = is.getItemMeta();
-                im.setDisplayName("Artron Capacitor");
+                im.setDisplayName(ChatColor.WHITE + (i > (2 + count) - damaged ? "Damaged Artron Capacitor" : "Artron Capacitor"));
                 is.setItemMeta(im);
                 stacks[i] = is;
             }
@@ -64,7 +65,7 @@ public class TARDISEyeStorage {
         // left arrow
         ItemStack l_arrow = new ItemStack(GUIArtronStorage.ARROW_LEFT.material(), 1);
         ItemMeta l_arrow_im = l_arrow.getItemMeta();
-        l_arrow_im.setDisplayName(ChatColor.WHITE + "");
+        l_arrow_im.setDisplayName(ChatColor.WHITE + " ");
         l_arrow.setItemMeta(l_arrow_im);
         stacks[GUIArtronStorage.ARROW_LEFT.slot()] = l_arrow;
         // close

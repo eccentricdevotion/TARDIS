@@ -35,6 +35,7 @@ public enum TARDISDisplayItem {
     // seed blocks
     ANCIENT(SeedBlock.ANCIENT.getKey(), Material.SCULK),
     ARS(SeedBlock.ARS.getKey(), Material.QUARTZ_BLOCK),
+    ARTRON_CAPACITOR_STORAGE(Whoniverse.EYE_STORAGE.getKey(), Material.GRAY_SHULKER_BOX),
     BIGGER(SeedBlock.BIGGER.getKey(), Material.GOLD_BLOCK),
     BONE(SeedBlock.BONE.getKey(), Material.WAXED_OXIDIZED_CUT_COPPER),
     BUDGET(SeedBlock.BUDGET.getKey(), Material.IRON_BLOCK),
@@ -47,7 +48,6 @@ public enum TARDISDisplayItem {
     DIVISION(SeedBlock.DIVISION.getKey(), Material.PINK_GLAZED_TERRACOTTA),
     ELEVENTH(SeedBlock.ELEVENTH.getKey(), Material.EMERALD_BLOCK),
     ENDER(SeedBlock.ENDER.getKey(), Material.PURPUR_BLOCK),
-    EYE_STORAGE(Whoniverse.EYE_STORAGE.getKey(), Material.GRAY_SHULKER_BOX),
     FACTORY(SeedBlock.FACTORY.getKey(), Material.GRAY_CONCRETE),
     FIFTEENTH(SeedBlock.FIFTEENTH.getKey(), Material.OCHRE_FROGLIGHT),
     FUGITIVE(SeedBlock.FUGITIVE.getKey(), Material.POLISHED_DEEPSLATE),
@@ -224,6 +224,7 @@ public enum TARDISDisplayItem {
         this.craftMaterial = null;
     }
 
+    // TODO shouldn't be checking model in some instances...
     public static TARDISDisplayItem getByModel(NamespacedKey key) {
         for (TARDISDisplayItem tdi : values()) {
             if (tdi.getCustomModel() != null && key.equals(tdi.getCustomModel())) {

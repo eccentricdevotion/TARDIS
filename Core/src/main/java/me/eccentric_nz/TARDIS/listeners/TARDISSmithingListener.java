@@ -135,10 +135,13 @@ public class TARDISSmithingListener implements Listener {
             return false;
         }
         ItemMeta im = is.getItemMeta();
-        if (!im.hasDisplayName() || !im.hasItemModel()) {
+        if (!im.hasDisplayName()) {
             return false;
         }
-        if (!im.getDisplayName().endsWith("Artron Capacitor") || !im.getItemModel().equals(Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey())) {
+        if (!im.getDisplayName().endsWith("Artron Capacitor")) {
+            return false;
+        }
+        if (im.hasItemModel() && !im.getItemModel().equals(Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey())) {
             return false;
         }
         return true;

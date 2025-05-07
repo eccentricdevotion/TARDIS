@@ -66,17 +66,24 @@ public class ArtronCapacitorStorageListener extends TARDISMenuListener {
                     continue;
                 }
                 ItemMeta im = stack.getItemMeta();
-                if (!im.hasDisplayName() || !im.getDisplayName().endsWith("Artron Capacitor") || !im.hasItemModel()) {
+                if (!im.hasDisplayName() || !im.getDisplayName().endsWith("Artron Capacitor")) {
                     continue;
                 }
-                NamespacedKey model = im.getItemModel();
-                if (!Whoniverse.ARTRON_CAPACITOR.getKey().equals(model) && !Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey().equals(model)) {
-                    continue;
+                if (!im.hasItemModel()) {
+                    // check name
+                    if (im.getDisplayName().startsWith("Damaged")) {
+                        damaged++;
+                    }
+                } else {
+                    NamespacedKey model = im.getItemModel();
+                    if (!Whoniverse.ARTRON_CAPACITOR.getKey().equals(model) && !Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey().equals(model)) {
+                        continue;
+                    }
+                    if (Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey().equals(model)) {
+                        damaged++;
+                    }
                 }
                 capacitors++;
-                if (Whoniverse.ARTRON_CAPACITOR_DAMAGED.getKey().equals(model)) {
-                    damaged++;
-                }
             }
             // always stop the particles
             EyeOfHarmonyParticles.stop(plugin, id);
@@ -86,6 +93,7 @@ public class ArtronCapacitorStorageListener extends TARDISMenuListener {
                 int task = new EyeOfHarmonyParticles(plugin).start(id, capacitors, event.getPlayer().getUniqueId());
                 set.put("task", task);
             }
+            plugin.debug("capacitors = " + capacitors + ", damaged = " + damaged);
             // update eyes record
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);

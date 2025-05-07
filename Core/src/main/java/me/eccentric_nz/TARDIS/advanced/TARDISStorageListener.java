@@ -276,7 +276,7 @@ public class TARDISStorageListener extends TARDISMenuListener {
                                 } else if (is.getType().equals(Material.RED_WOOL)) {
                                     is.setType(Material.BOWL);
                                     is.setItemMeta(im);
-                                } else if (is.getType().equals(Material.GLOWSTONE_DUST) && !im.hasItemModel() && im.getDisplayName().endsWith("Circuits")) {
+                                } else if (is.getType().equals(Material.GLOWSTONE_DUST) && im.getDisplayName().endsWith("Circuits")) {
                                 }
                                 is.setItemMeta(im);
                             }

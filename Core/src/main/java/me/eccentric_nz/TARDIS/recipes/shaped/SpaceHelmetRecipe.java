@@ -22,11 +22,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.components.EquippableComponent;
 
 /*
 easy_shape:-H-,YYY,BGB
@@ -55,6 +58,11 @@ public class SpaceHelmetRecipe {
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Space Helmet");
         im.setMaxStackSize(1);
+        EquippableComponent equippable = im.getEquippable();
+        equippable.setAllowedEntities(EntityType.PLAYER);
+        equippable.setDispensable(true);
+        equippable.setSlot(EquipmentSlot.HEAD);
+        im.setEquippable(equippable);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "space_helmet");
         ShapedRecipe r = new ShapedRecipe(key, is);

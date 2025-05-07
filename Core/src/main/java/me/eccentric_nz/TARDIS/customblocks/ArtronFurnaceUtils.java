@@ -106,7 +106,7 @@ public class ArtronFurnaceUtils {
         ItemDisplay itemDisplay = TARDISDisplayItemUtils.get(block);
         if (itemDisplay != null) {
             TARDISDisplayItem display = TARDISDisplayItemUtils.get(itemDisplay);
-            if (display == TARDISDisplayItem.EYE_STORAGE) {
+            if (display == TARDISDisplayItem.ARTRON_CAPACITOR_STORAGE) {
                 //  is there an Artron Furnace in the surrounding blocks?
                 Block furnace = find(block, plugin);
                 if (furnace != null) {

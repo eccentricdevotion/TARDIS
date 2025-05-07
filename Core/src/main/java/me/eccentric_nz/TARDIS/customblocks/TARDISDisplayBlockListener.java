@@ -135,7 +135,7 @@ public class TARDISDisplayBlockListener implements Listener {
             // set display rotation
             display.setRotation(yaw, 0);
         }
-        if (which == TARDISDisplayItem.EYE_STORAGE) {
+        if (which == TARDISDisplayItem.ARTRON_CAPACITOR_STORAGE) {
             // is there an Artron Furnace in the surrounding blocks?
             Block furnace = ArtronFurnaceUtils.find(event.getBlock(), plugin);
             if (furnace != null) {
