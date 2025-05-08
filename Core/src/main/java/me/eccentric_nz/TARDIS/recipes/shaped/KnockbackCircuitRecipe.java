@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -27,6 +28,9 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
+
+import java.util.List;
 
 /*
 easy_shape:-K-,RSR,-R-
@@ -53,6 +57,9 @@ public class KnockbackCircuitRecipe {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Knockback Circuit");
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setFloats(CircuitVariant.KNOCKBACK.getFloats());
+        im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "knockback_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);

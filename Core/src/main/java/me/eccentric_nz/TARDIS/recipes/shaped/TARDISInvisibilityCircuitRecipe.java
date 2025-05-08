@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -25,6 +26,7 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.potion.PotionType;
 
 import java.util.List;
@@ -57,6 +59,9 @@ public class TARDISInvisibilityCircuitRecipe {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Invisibility Circuit");
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setFloats(CircuitVariant.INVISIBILITY.getFloats());
+        im.setCustomModelDataComponent(component);
         String uses = (plugin.getConfig().getString("circuits.uses.invisibility").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? ChatColor.YELLOW + "unlimited"
                 : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.invisibility");
@@ -67,6 +72,9 @@ public class TARDISInvisibilityCircuitRecipe {
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "Perception Circuit");
+        CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
+        ecomponent.setFloats(CircuitVariant.PERCEPTION.getFloats());
+        em.setCustomModelDataComponent(ecomponent);
         exact.setItemMeta(em);
         ItemStack potion = new ItemStack(Material.POTION, 1);
         PotionMeta pm = (PotionMeta) potion.getItemMeta();

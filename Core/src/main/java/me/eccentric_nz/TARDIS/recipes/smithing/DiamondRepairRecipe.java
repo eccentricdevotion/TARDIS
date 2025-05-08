@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes.smithing;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -25,6 +26,7 @@ import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.SmithingRecipe;
 import org.bukkit.inventory.SmithingTransformRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 /*
 base:BLAZE_ROD
@@ -52,6 +54,9 @@ public class DiamondRepairRecipe {
         ItemStack isa = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta ima = isa.getItemMeta();
         ima.setDisplayName(ChatColor.WHITE + "Diamond Disruptor Circuit");
+        CustomModelDataComponent ecomponent = ima.getCustomModelDataComponent();
+        ecomponent.setFloats(CircuitVariant.DIAMOND.getFloats());
+        ima.setCustomModelDataComponent(ecomponent);
         isa.setItemMeta(ima);
         RecipeChoice addition = new RecipeChoice.ExactChoice(isa);
         NamespacedKey key = new NamespacedKey(plugin, "diamond_repair");

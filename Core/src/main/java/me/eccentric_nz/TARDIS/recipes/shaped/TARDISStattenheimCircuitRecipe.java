@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -25,6 +26,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -55,12 +57,18 @@ public class TARDISStattenheimCircuitRecipe {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Stattenheim Circuit");
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setFloats(CircuitVariant.STATTENHEIM.getFloats());
+        im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "tardis_stattenheim_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "TARDIS Materialisation Circuit");
+        CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
+        ecomponent.setFloats(CircuitVariant.MATERIALISATION.getFloats());
+        em.setCustomModelDataComponent(ecomponent);
         // set the second line of lore
         List<String> circuit;
         String uses = (plugin.getConfig().getString("circuits.uses.materialisation").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
@@ -72,6 +80,9 @@ public class TARDISStattenheimCircuitRecipe {
         ItemStack locator = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta lim = locator.getItemMeta();
         lim.setDisplayName(ChatColor.WHITE + "TARDIS Locator Circuit");
+        CustomModelDataComponent lcomponent = lim.getCustomModelDataComponent();
+        lcomponent.setFloats(CircuitVariant.LOCATOR.getFloats());
+        lim.setCustomModelDataComponent(lcomponent);
         lim.setItemModel(RecipeItem.TARDIS_LOCATOR_CIRCUIT.getModel());
         locator.setItemMeta(lim);
         r.shape("LRM", "QQQ");

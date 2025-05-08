@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import me.eccentric_nz.TARDIS.enumeration.RecipeItem;
 import org.bukkit.ChatColor;
@@ -26,6 +27,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
@@ -71,6 +73,9 @@ public class TARDISTelevisionRecipe {
             ItemStack chameleon = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta circuit = chameleon.getItemMeta();
             circuit.setDisplayName(ChatColor.WHITE + "TARDIS Chameleon Circuit");
+            CustomModelDataComponent ecomponent = circuit.getCustomModelDataComponent();
+            ecomponent.setFloats(CircuitVariant.CHAMELEON.getFloats());
+            circuit.setCustomModelDataComponent(ecomponent);
             // set the second line of lore
             List<String> lore;
             String uses = (plugin.getConfig().getString("circuits.uses.chameleon").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))

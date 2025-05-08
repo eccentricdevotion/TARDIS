@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -25,6 +26,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
+
+import java.util.List;
 
 /*
 easy_shape:OIO,ICI,OIO
@@ -60,6 +64,9 @@ public class TARDISLocatorRecipe {
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
             em.setDisplayName(ChatColor.WHITE + "TARDIS Locator Circuit");
+            CustomModelDataComponent component = im.getCustomModelDataComponent();
+            component.setFloats(CircuitVariant.LOCATOR.getFloats());
+            im.setCustomModelDataComponent(component);
             exact.setItemMeta(em);
             r.setIngredient('C', new RecipeChoice.ExactChoice(exact));
         } else {

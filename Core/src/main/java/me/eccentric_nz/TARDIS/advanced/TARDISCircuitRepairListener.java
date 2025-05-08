@@ -29,6 +29,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,30 +41,30 @@ import java.util.List;
 public class TARDISCircuitRepairListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<NamespacedKey, String> circuits = new HashMap<>();
+    private final HashMap<List<Float>, String> circuits = new HashMap<>();
 
     public TARDISCircuitRepairListener(TARDIS plugin) {
         this.plugin = plugin;
-        circuits.put(CircuitVariant.ARS.getKey(), "ars");
-        circuits.put(CircuitVariant.CHAMELEON.getKey(), "chameleon");
-        circuits.put(CircuitVariant.INPUT.getKey(), "input");
-        circuits.put(CircuitVariant.INVISIBILITY.getKey(), "invisibility");
-        circuits.put(CircuitVariant.MATERIALISATION.getKey(), "materialisation");
-        circuits.put(CircuitVariant.MEMORY.getKey(), "memory");
-        circuits.put(CircuitVariant.RANDOM.getKey(), "randomiser");
-        circuits.put(CircuitVariant.SCANNER.getKey(), "scanner");
-        circuits.put(CircuitVariant.TEMPORAL.getKey(), "temporal");
-        circuits.put(CircuitVariant.TELEPATHIC.getKey(), "telepathic");
-        circuits.put(CircuitVariant.ARS_DAMAGED.getKey(), "ars");
-        circuits.put(CircuitVariant.CHAMELEON_DAMAGED.getKey(), "chameleon");
-        circuits.put(CircuitVariant.INPUT_DAMAGED.getKey(), "input");
-        circuits.put(CircuitVariant.INVISIBILITY_DAMAGED.getKey(), "invisibility");
-        circuits.put(CircuitVariant.MATERIALISATION_DAMAGED.getKey(), "materialisation");
-        circuits.put(CircuitVariant.MEMORY_DAMAGED.getKey(), "memory");
-        circuits.put(CircuitVariant.RANDOM_DAMAGED.getKey(), "randomiser");
-        circuits.put(CircuitVariant.SCANNER_DAMAGED.getKey(), "scanner");
-        circuits.put(CircuitVariant.TEMPORAL_DAMAGED.getKey(), "temporal");
-        circuits.put(CircuitVariant.TELEPATHIC_DAMAGED.getKey(), "telepathic");
+        circuits.put(CircuitVariant.ARS.getFloats(), "ars");
+        circuits.put(CircuitVariant.CHAMELEON.getFloats(), "chameleon");
+        circuits.put(CircuitVariant.INPUT.getFloats(), "input");
+        circuits.put(CircuitVariant.INVISIBILITY.getFloats(), "invisibility");
+        circuits.put(CircuitVariant.MATERIALISATION.getFloats(), "materialisation");
+        circuits.put(CircuitVariant.MEMORY.getFloats(), "memory");
+        circuits.put(CircuitVariant.RANDOM.getFloats(), "randomiser");
+        circuits.put(CircuitVariant.SCANNER.getFloats(), "scanner");
+        circuits.put(CircuitVariant.TEMPORAL.getFloats(), "temporal");
+        circuits.put(CircuitVariant.TELEPATHIC.getFloats(), "telepathic");
+        circuits.put(CircuitVariant.ARS_DAMAGED.getFloats(), "ars");
+        circuits.put(CircuitVariant.CHAMELEON_DAMAGED.getFloats(), "chameleon");
+        circuits.put(CircuitVariant.INPUT_DAMAGED.getFloats(), "input");
+        circuits.put(CircuitVariant.INVISIBILITY_DAMAGED.getFloats(), "invisibility");
+        circuits.put(CircuitVariant.MATERIALISATION_DAMAGED.getFloats(), "materialisation");
+        circuits.put(CircuitVariant.MEMORY_DAMAGED.getFloats(), "memory");
+        circuits.put(CircuitVariant.RANDOM_DAMAGED.getFloats(), "randomiser");
+        circuits.put(CircuitVariant.SCANNER_DAMAGED.getFloats(), "scanner");
+        circuits.put(CircuitVariant.TEMPORAL_DAMAGED.getFloats(), "temporal");
+        circuits.put(CircuitVariant.TELEPATHIC_DAMAGED.getFloats(), "telepathic");
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -100,9 +101,9 @@ public class TARDISCircuitRepairListener implements Listener {
             // get the uses left
             int left = TARDISNumberParsers.parseInt(stripped);
             // get max uses for this circuit
-            // TODO fix model use
-            NamespacedKey ctm = (fim.hasItemModel()) ? fim.getItemModel() : CircuitVariant.ARS.getKey();
-            int uses = plugin.getConfig().getInt("circuits.uses." + circuits.get(ctm));
+            CustomModelDataComponent component = fim.getCustomModelDataComponent();
+            List<Float> floats = (!component.getFloats().isEmpty()) ? component.getFloats() : CircuitVariant.ARS.getFloats();
+            int uses = plugin.getConfig().getInt("circuits.uses." + circuits.get(floats));
             // is it used?
             if (left >= uses) {
                 return;

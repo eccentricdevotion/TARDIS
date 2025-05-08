@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -24,6 +25,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
+
+import java.util.List;
 
 /*
 easy_shape:BBB,BOB,BBB
@@ -48,12 +52,18 @@ public class ServerAdminCircuitRecipe {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Server Admin Circuit");
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setFloats(CircuitVariant.ADMIN.getFloats());
+        im.setCustomModelDataComponent(component);
         is.setItemMeta(im);
         NamespacedKey key = new NamespacedKey(plugin, "server_admin_circuit");
         ShapedRecipe r = new ShapedRecipe(key, is);
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "Sonic Oscillator");
+        CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
+        ecomponent.setFloats(CircuitVariant.SONIC.getFloats());
+        em.setCustomModelDataComponent(ecomponent);
         exact.setItemMeta(em);
         r.shape("BBB", "BOB", "BBB");
         r.setIngredient('B', Material.BEDROCK);

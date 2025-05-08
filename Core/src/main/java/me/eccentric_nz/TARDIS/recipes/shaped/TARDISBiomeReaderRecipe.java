@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -25,6 +26,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
+
+import java.util.List;
 
 /*
 easy_shape:---,-C-,SDT
@@ -62,6 +66,9 @@ public class TARDISBiomeReaderRecipe {
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "Emerald Environment Circuit");
+        CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
+        ecomponent.setFloats(CircuitVariant.EMERALD.getFloats());
+        em.setCustomModelDataComponent(ecomponent);
         exact.setItemMeta(em);
         if (plugin.getCraftingDifficulty() == CraftingDifficulty.HARD) {
             r.shape(" C ", "SDT", "LWN");

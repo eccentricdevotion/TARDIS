@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.enumeration.CraftingDifficulty;
 import org.bukkit.ChatColor;
@@ -92,6 +93,9 @@ public class SonicScrewdriverRecipe {
             ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
             ItemMeta em = exact.getItemMeta();
             em.setDisplayName(ChatColor.WHITE + "Sonic Oscillator");
+            CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
+            ecomponent.setFloats(CircuitVariant.MATERIALISATION.getFloats());
+            em.setCustomModelDataComponent(ecomponent);
             exact.setItemMeta(em);
             r.setIngredient('O', new RecipeChoice.ExactChoice(exact));
         } else {

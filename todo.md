@@ -23,4 +23,5 @@
 * Make all images tabbed
 * Vanilla/TARDIS screenshots for TabbedImage views
 * Add Handles rotation command
+* Sensor blocks
 * ?

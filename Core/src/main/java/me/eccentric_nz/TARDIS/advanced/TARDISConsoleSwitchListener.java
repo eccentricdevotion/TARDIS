@@ -48,29 +48,22 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * A trip stitch circuit-breaker was a circuit that if was enabled in the psycho-kinetic threshold manipulator of the
- * Daleks had the effect of preventing them from controlling their movement.
+ * A trip stitch circuit-breaker is a circuit that if enabled in the psycho-kinetic threshold manipulator of the
+ * Daleks has the effect of preventing them from controlling their movement.
  *
  * @author eccentric_nz
  */
 public class TARDISConsoleSwitchListener implements Listener {
 
     private final TARDIS plugin;
-    private final List<NamespacedKey> gui_circuits = List.of(
-            CircuitVariant.TELEPATHIC.getKey(),
-            CircuitVariant.CHAMELEON.getKey(),
-            CircuitVariant.ARS.getKey(),
-            CircuitVariant.TEMPORAL.getKey(),
-            CircuitVariant.MEMORY.getKey(),
-            CircuitVariant.INPUT.getKey(),
-            CircuitVariant.SCANNER.getKey(),
-            CircuitVariant.ARS_DAMAGED.getKey(),
-            CircuitVariant.CHAMELEON_DAMAGED.getKey(),
-            CircuitVariant.INPUT_DAMAGED.getKey(),
-            CircuitVariant.MEMORY_DAMAGED.getKey(),
-            CircuitVariant.SCANNER_DAMAGED.getKey(),
-            CircuitVariant.TEMPORAL_DAMAGED.getKey(),
-            CircuitVariant.TELEPATHIC_DAMAGED.getKey()
+    private final List<String> gui_circuits = List.of(
+            ChatColor.WHITE + "TARDIS Telepathic Circuit",
+            ChatColor.WHITE + "TARDIS Chameleon Circuit",
+            ChatColor.WHITE + "TARDIS ARS Circuit",
+            ChatColor.WHITE + "TARDIS Temporal Circuit",
+            ChatColor.WHITE + "TARDIS Memory Circuit",
+            ChatColor.WHITE + "TARDIS Input Circuit",
+            ChatColor.WHITE + "TARDIS Scanner Circuit"
     );
 
     public TARDISConsoleSwitchListener(TARDIS plugin) {
@@ -106,8 +99,11 @@ public class TARDISConsoleSwitchListener implements Listener {
             return;
         }
         ItemMeta im = item.getItemMeta();
-        NamespacedKey cmd = im.getItemModel();
-        if (cmd == null || !gui_circuits.contains(cmd)) {
+        if (!im.hasDisplayName()) {
+            return;
+        }
+        String dn = im.getDisplayName();
+        if (!gui_circuits.contains(dn)) {
             return;
         }
         HashMap<String, Object> where = new HashMap<>();
@@ -122,27 +118,27 @@ public class TARDISConsoleSwitchListener implements Listener {
             ItemStack[] stack = null;
             Inventory new_inv = null;
             // Chameleon circuit
-            if (cmd == CircuitVariant.CHAMELEON.getKey() || cmd == CircuitVariant.CHAMELEON_DAMAGED.getKey()) {
+            if (dn.contains("Chameleon")) {
                 new_inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Chameleon Circuit");
                 stack = new TARDISChameleonInventory(plugin, tardis.getAdaption(), tardis.getPreset(), tardis.getItemPreset()).getMenu();
             }
             // ARS circuit
-            if (cmd == CircuitVariant.ARS.getKey() || cmd == CircuitVariant.ARS_DAMAGED.getKey()) {
+            if (dn.contains("ARS")) {
                 new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Architectural Reconfiguration");
                 stack = new TARDISARSInventory(plugin, player).getARS();
             }
             // Telepathic circuit
-            if (cmd == CircuitVariant.TELEPATHIC.getKey() || cmd == CircuitVariant.TELEPATHIC_DAMAGED.getKey()) {
+            if (dn.contains("Telepathic")) {
                 new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Telepathic Circuit");
                 stack = new TARDISTelepathicInventory(plugin, player).getButtons();
             }
             // Temporal circuit
-            if (cmd == CircuitVariant.TEMPORAL.getKey() || cmd == CircuitVariant.TEMPORAL_DAMAGED.getKey()) {
+            if (dn.contains("Temporal")) {
                 new_inv = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "Temporal Locator");
                 stack = new TARDISTemporalLocatorInventory(plugin).getTemporal();
             }
             // Memory circuit (saves/areas)
-            if (cmd == CircuitVariant.MEMORY.getKey() || cmd == CircuitVariant.MEMORY_DAMAGED.getKey()) {
+            if (dn.contains("Memory")) {
                 if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid, SystemTree.SAVES)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
                     return;
@@ -151,7 +147,7 @@ public class TARDISConsoleSwitchListener implements Listener {
                 stack = new TARDISSavesPlanetInventory(plugin, tardis.getTardisId(), player).getPlanets();
             }
             // Input circuit (terminal)
-            if (cmd == CircuitVariant.INPUT.getKey() || cmd == CircuitVariant.INPUT_DAMAGED.getKey()) {
+            if (dn.contains("Input")) {
                 new_inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Destination Terminal");
                 stack = new TARDISTerminalInventory(plugin).getTerminal();
             }

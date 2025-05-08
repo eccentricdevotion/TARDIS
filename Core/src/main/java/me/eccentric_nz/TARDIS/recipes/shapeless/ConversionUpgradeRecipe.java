@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes.shapeless;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.recipes.shaped.SonicScrewdriverRecipe;
 import org.bukkit.ChatColor;
@@ -60,6 +61,9 @@ public class ConversionUpgradeRecipe {
         ItemStack exact = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta em = exact.getItemMeta();
         em.setDisplayName(ChatColor.WHITE + "Conversion Circuit");
+        CustomModelDataComponent ecomponent = em.getCustomModelDataComponent();
+        ecomponent.setFloats(CircuitVariant.CONVERSION.getFloats());
+        em.setCustomModelDataComponent(ecomponent);
         exact.setItemMeta(em);
         r.addIngredient(new RecipeChoice.ExactChoice(exact));
         plugin.getServer().addRecipe(r);

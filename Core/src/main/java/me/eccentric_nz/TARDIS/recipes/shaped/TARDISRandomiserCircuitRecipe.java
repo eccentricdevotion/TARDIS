@@ -17,12 +17,14 @@
 package me.eccentric_nz.TARDIS.recipes.shaped;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
 import java.util.List;
 
@@ -56,6 +58,9 @@ public class TARDISRandomiserCircuitRecipe {
         ItemStack is = new ItemStack(Material.GLOWSTONE_DUST, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "TARDIS Randomiser Circuit");
+        CustomModelDataComponent component = im.getCustomModelDataComponent();
+        component.setFloats(CircuitVariant.RANDOM.getFloats());
+        im.setCustomModelDataComponent(component);
         String uses = (plugin.getConfig().getString("circuits.uses.randomiser").equals("0") || !plugin.getConfig().getBoolean("circuits.damage"))
                 ? ChatColor.YELLOW + "unlimited"
                 : ChatColor.YELLOW + plugin.getConfig().getString("circuits.uses.randomiser");

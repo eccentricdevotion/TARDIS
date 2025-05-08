@@ -21,6 +21,8 @@ import me.eccentric_nz.tardisweepingangels.utils.Monster;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 
+import java.util.List;
+
 public enum ShopItem {
 
     ACID_BATTERY("Acid Battery", Material.NETHER_BRICK, Whoniverse.ACID_BATTERY.getKey()),
@@ -33,7 +35,7 @@ public enum ShopItem {
     ARTRON_STORAGE_CELL("Artron Storage Cell", Material.BUCKET, Whoniverse.ARTRON_BATTERY.getKey()),
     AUTHORISED_CONTROL_DISK("Authorised Control Disk", Material.MUSIC_DISC_FAR, DiskVariant.CONTROL_DISK.getKey()),
     BIGGER_SEED("Bigger Seed", Material.GOLD_BLOCK, SeedBlock.BIGGER.getKey(), ShopItemRecipe.SEED),
-    BIO_SCANNER_CIRCUIT("Bio-scanner Circuit", Material.GLOWSTONE_DUST, CircuitVariant.BIO.getKey()),
+    BIO_SCANNER_CIRCUIT("Bio-scanner Circuit", Material.GLOWSTONE_DUST, CircuitVariant.BIO.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.BIO.getFloats()),
     BIOME_STORAGE_DISK("Biome Storage Disk", Material.MUSIC_DISC_CAT, DiskVariant.BIOME_DISK.getKey(), ShopItemRecipe.SHAPELESS),
     BLACK_BOW_TIE("Black Bow Tie", Material.LEATHER_HELMET, BowTieVariant.BOWTIE_BLACK.getKey()),
     BLANK_STORAGE_DISK("Blank Storage Disk", Material.MUSIC_DISC_STRAD, DiskVariant.BLANK_DISK.getKey()),
@@ -42,13 +44,13 @@ public enum ShopItem {
     BONE_SEED("Bone Seed", Material.WAXED_OXIDIZED_CUT_COPPER, SeedBlock.BONE.getKey(), ShopItemRecipe.SEED),
     BOWL_OF_CUSTARD("Bowl of Custard", Material.MUSHROOM_STEW, Food.BOWL_OF_CUSTARD.getKey(), ShopItemRecipe.SHAPELESS),
     BROWN_BOW_TIE("Brown Bow Tie", Material.LEATHER_HELMET, BowTieVariant.BOWTIE_BROWN.getKey()),
-    BRUSH_CIRCUIT("Brush Circuit", Material.GLOWSTONE_DUST, CircuitVariant.BRUSH.getKey()),
+    BRUSH_CIRCUIT("Brush Circuit", Material.GLOWSTONE_DUST, CircuitVariant.BRUSH.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.BRUSH.getFloats()),
     BUBBLEGUM_JELLY_BABY("Bubblegum Jelly Baby", Material.MELON_SLICE, JellyBabyVariant.JELLY_BABY_LIGHT_BLUE.getKey(), ShopItemRecipe.SHAPELESS),
     BUDGET_SEED("Budget Seed", Material.IRON_BLOCK, SeedBlock.BUDGET.getKey(), ShopItemRecipe.SEED),
     CAPPUCCINO_JELLY_BABY("Cappuccino Jelly Baby", Material.MELON_SLICE, JellyBabyVariant.JELLY_BABY_BROWN.getKey(), ShopItemRecipe.SHAPELESS),
     CAVE_SEED("Cave Seed", Material.DRIPSTONE_BLOCK, SeedBlock.CAVE.getKey(), ShopItemRecipe.SEED),
     CONSOLE_LAMP_SWITCH("Console Lamp Switch", Material.LEVER, ModelledControl.CONSOLE_LAMP_0.getKey(), ShopItemRecipe.SHAPED),
-    CONVERSION_CIRCUIT("Conversion Circuit", Material.GLOWSTONE_DUST, CircuitVariant.CONVERSION.getKey()),
+    CONVERSION_CIRCUIT("Conversion Circuit", Material.GLOWSTONE_DUST, CircuitVariant.CONVERSION.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.CONVERSION.getFloats()),
     COPPER_SEED("Copper Seed", Material.COPPER_BLOCK, SeedBlock.COPPER.getKey(), ShopItemRecipe.SEED),
     CORAL_SEED("Coral Seed", Material.FIRE_CORAL_BLOCK, SeedBlock.CORAL.getKey(), ShopItemRecipe.SEED),
     CURSED_SEED("Cursed Seed", Material.BLACK_CONCRETE, SeedBlock.CURSED.getKey(), ShopItemRecipe.SEED),
@@ -60,11 +62,11 @@ public enum ShopItem {
     DAVROS_HEAD("Davros Head", Material.CRIMSON_BUTTON, Monster.DAVROS.getModel(), ShopItemRecipe.TWA),
     DELTA_SEED("Delta Seed", Material.CRYING_OBSIDIAN, SeedBlock.DELTA.getKey(), ShopItemRecipe.SEED),
     DELUXE_SEED("Deluxe Seed", Material.DIAMOND_BLOCK, SeedBlock.DELUXE.getKey(), ShopItemRecipe.SEED),
-    DIAMOND_DISRUPTOR_CIRCUIT("Diamond Disruptor Circuit", Material.GLOWSTONE_DUST, CircuitVariant.DIAMOND.getKey()),
+    DIAMOND_DISRUPTOR_CIRCUIT("Diamond Disruptor Circuit", Material.GLOWSTONE_DUST, CircuitVariant.DIAMOND.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.DIAMOND.getFloats()),
     DIVISION_SEED("Division Seed", Material.PINK_GLAZED_TERRACOTTA, SeedBlock.DIVISION.getKey(), ShopItemRecipe.SEED),
     EARL_GREY_JELLY_BABY("Earl Grey Jelly Baby", Material.MELON_SLICE, JellyBabyVariant.JELLY_BABY_GRAY.getKey(), ShopItemRecipe.SHAPELESS),
     ELEVENTH_SEED("Eleventh Seed", Material.EMERALD_BLOCK, SeedBlock.ELEVENTH.getKey(), ShopItemRecipe.SEED),
-    EMERALD_ENVIRONMENT_CIRCUIT("Emerald Environment Circuit", Material.GLOWSTONE_DUST, CircuitVariant.EMERALD.getKey()),
+    EMERALD_ENVIRONMENT_CIRCUIT("Emerald Environment Circuit", Material.GLOWSTONE_DUST, CircuitVariant.EMERALD.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.EMERALD.getFloats()),
     EMPTY_CHILD_HEAD("Empty Child Head", Material.SUGAR, Monster.EMPTY_CHILD.getModel(), ShopItemRecipe.TWA),
     ENDER_SEED("Ender Seed", Material.PURPUR_BLOCK, SeedBlock.ENDER.getKey(), ShopItemRecipe.SEED),
     EXTERIOR_LAMP_LEVEL_SWITCH("Exterior Lamp Level Switch", Material.LEVER, ModelledControl.LAMP_0.getKey(), ShopItemRecipe.SHAPED),
@@ -81,13 +83,13 @@ public enum ShopItem {
     HEADLESS_MONK_HEAD("Headless Monk Head", Material.RED_CANDLE, Monster.HEADLESS_MONK.getModel(), ShopItemRecipe.TWA),
     HOSPITAL_SEED("Hospital Seed", Material.WHITE_CONCRETE, SeedBlock.HOSPITAL.getKey(), ShopItemRecipe.SEED),
     ICE_WARRIOR_HEAD("Ice Warrior Head", Material.SNOWBALL, Monster.ICE_WARRIOR.getModel(), ShopItemRecipe.TWA),
-    IGNITE_CIRCUIT("Ignite Circuit", Material.GLOWSTONE_DUST, CircuitVariant.IGNITE.getKey()),
+    IGNITE_CIRCUIT("Ignite Circuit", Material.GLOWSTONE_DUST, CircuitVariant.IGNITE.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.IGNITE.getFloats()),
     INTERIOR_LIGHT_LEVEL_SWITCH("Interior Light Level Switch", Material.LEVER, ModelledControl.LIGHT_0.getKey(), ShopItemRecipe.SHAPED),
     ISLAND_PUNCH_JELLY_BABY("Island Punch Jelly Baby", Material.MELON_SLICE, JellyBabyVariant.JELLY_BABY_CYAN.getKey(), ShopItemRecipe.SHAPELESS),
     JAMMY_DODGER("Jammy Dodger", Material.COOKIE, Food.JAMMY_DODGER.getKey()),
     JUDOON_HEAD("Judoon Head", Material.YELLOW_DYE, Monster.JUDOON.getModel(), ShopItemRecipe.TWA),
     K9("K9", Material.BONE, K9Variant.K9.getKey(), ShopItemRecipe.TWA),
-    KNOCKBACK_CIRCUIT("Knockback Circuit", Material.GLOWSTONE_DUST, CircuitVariant.KNOCKBACK.getKey()),
+    KNOCKBACK_CIRCUIT("Knockback Circuit", Material.GLOWSTONE_DUST, CircuitVariant.KNOCKBACK.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.KNOCKBACK.getFloats()),
     LEGACY_BIGGER_SEED("Legacy Bigger Seed", Material.ORANGE_GLAZED_TERRACOTTA, SeedBlock.LEGACY_BIGGER.getKey(), ShopItemRecipe.SEED),
     LEGACY_DELUXE_SEED("Legacy Deluxe Seed", Material.LIME_GLAZED_TERRACOTTA, SeedBlock.LEGACY_DELUXE.getKey(), ShopItemRecipe.SEED),
     LEGACY_ELEVENTH_SEED("Legacy Eleventh Seed", Material.CYAN_GLAZED_TERRACOTTA, SeedBlock.LEGACY_ELEVENTH.getKey(), ShopItemRecipe.SEED),
@@ -106,11 +108,11 @@ public enum ShopItem {
     ORANGE_BOW_TIE("Orange Bow Tie", Material.LEATHER_HELMET, BowTieVariant.BOWTIE_ORANGE.getKey()),
     ORANGE_JELLY_BABY("Orange Jelly Baby", Material.MELON_SLICE, JellyBabyVariant.JELLY_BABY_ORANGE.getKey(), ShopItemRecipe.SHAPELESS),
     ORIGINAL_SEED("Original Seed", Material.PACKED_MUD, SeedBlock.ORIGINAL.getKey(), ShopItemRecipe.SEED),
-    PAINTER_CIRCUIT("Painter Circuit", Material.GLOWSTONE_DUST, CircuitVariant.PAINTER.getKey()),
+    PAINTER_CIRCUIT("Painter Circuit", Material.GLOWSTONE_DUST, CircuitVariant.PAINTER.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.PAINTER.getFloats()),
     PAPER_BAG("Paper Bag", Material.PAPER, Food.PAPER_BAG.getKey()),
-    PERCEPTION_CIRCUIT("Perception Circuit", Material.GLOWSTONE_DUST, CircuitVariant.PERCEPTION.getKey()),
-    PERCEPTION_FILTER("Perception Filter", Material.GOLD_NUGGET, KeyVariant.PERCEPTION_FILTER.getKey()),
-    PICKUP_ARROWS_CIRCUIT("Pickup Arrows Circuit", Material.GLOWSTONE_DUST, CircuitVariant.PICKUP.getKey()),
+    PERCEPTION_CIRCUIT("Perception Circuit", Material.GLOWSTONE_DUST, CircuitVariant.PERCEPTION.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.PERCEPTION.getFloats()),
+    PERCEPTION_FILTER("Perception Filter", Material.GOLD_NUGGET, KeyVariant.PERCEPTION_FILTER.getKey(), ShopItemRecipe.SHAPED, KeyVariant.PERCEPTION_FILTER.getFloats()),
+    PICKUP_ARROWS_CIRCUIT("Pickup Arrows Circuit", Material.GLOWSTONE_DUST, CircuitVariant.PICKUP.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.PICKUP.getFloats()),
     PINK_BOW_TIE("Pink Bow Tie", Material.LEATHER_HELMET, BowTieVariant.BOWTIE_PINK.getKey()),
     PLANK_SEED("Plank Seed", Material.OAK_PLANKS, SeedBlock.PLANK.getKey(), ShopItemRecipe.SEED),
     PLAYER_STORAGE_DISK("Player Storage Disk", Material.MUSIC_DISC_WAIT, DiskVariant.PLAYER_DISK.getKey(), ShopItemRecipe.SHAPELESS),
@@ -120,57 +122,57 @@ public enum ShopItem {
     RACNOSS_HEAD("Racnoss Head", Material.SPIDER_EYE, Monster.RACNOSS.getModel(), ShopItemRecipe.TWA),
     RASPBERRY_JELLY_BABY("Raspberry Jelly Baby", Material.MELON_SLICE, JellyBabyVariant.JELLY_BABY_RED.getKey(), ShopItemRecipe.SHAPELESS),
     RED_BOW_TIE("Red Bow Tie", Material.LEATHER_HELMET, BowTieVariant.BOWTIE_RED.getKey()),
-    REDSTONE_ACTIVATOR_CIRCUIT("Redstone Activator Circuit", Material.GLOWSTONE_DUST, CircuitVariant.REDSTONE.getKey()),
+    REDSTONE_ACTIVATOR_CIRCUIT("Redstone Activator Circuit", Material.GLOWSTONE_DUST, CircuitVariant.REDSTONE.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.REDSTONE.getFloats()),
     REDSTONE_SEED("Redstone Seed", Material.REDSTONE_BLOCK, SeedBlock.REDSTONE.getKey(), ShopItemRecipe.SEED),
-    RIFT_CIRCUIT("Rift Circuit", Material.GLOWSTONE_DUST, CircuitVariant.RIFT.getKey()),
+    RIFT_CIRCUIT("Rift Circuit", Material.GLOWSTONE_DUST, CircuitVariant.RIFT.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.RIFT.getFloats()),
     RIFT_MANIPULATOR("Rift Manipulator", Material.BEACON, null),
     ROTOR_SEED("Rotor Seed", Material.HONEYCOMB_BLOCK, SeedBlock.ROTOR.getKey(), ShopItemRecipe.SEED),
     RUSTIC_SEED("Rustic Seed", Material.COPPER_BULB, SeedBlock.RUSTIC.getKey(), ShopItemRecipe.SEED),
     RUST_PLAGUE_SWORD("Rust Plague Sword", Material.IRON_SWORD, Whoniverse.RUST_PLAGUE_SWORD.getKey()),
     SAVE_STORAGE_DISK("Save Storage Disk", Material.MUSIC_DISC_CHIRP, DiskVariant.SAVE_DISK.getKey(), ShopItemRecipe.SHAPELESS),
-    SERVER_ADMIN_CIRCUIT("Server Admin Circuit", Material.GLOWSTONE_DUST, CircuitVariant.ADMIN.getKey()),
+    SERVER_ADMIN_CIRCUIT("Server Admin Circuit", Material.GLOWSTONE_DUST, CircuitVariant.ADMIN.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.ADMIN.getFloats()),
     SEA_DEVIL_HEAD("Sea Devil Head", Material.KELP, Monster.SEA_DEVIL.getModel(), ShopItemRecipe.TWA),
     SILENT_HEAD("Silent Head", Material.END_STONE, Monster.SILENT.getModel(), ShopItemRecipe.TWA),
     SILURIAN_HEAD("Silurian Head", Material.FEATHER, Monster.SILURIAN.getModel(), ShopItemRecipe.TWA),
     SLITHEEN_HEAD("Slitheen Head", Material.TURTLE_EGG, Monster.SLITHEEN.getModel(), ShopItemRecipe.TWA),
     SONIC_GENERATOR("Sonic Generator", Material.FLOWER_POT, SonicItem.SONIC_GENERATOR.getKey()),
-    SONIC_OSCILLATOR("Sonic Oscillator", Material.GLOWSTONE_DUST, CircuitVariant.SONIC.getKey()),
-    SONIC_SCREWDRIVER("Sonic Screwdriver", Material.BLAZE_ROD, SonicVariant.ELEVENTH.getKey()),
+    SONIC_OSCILLATOR("Sonic Oscillator", Material.GLOWSTONE_DUST, CircuitVariant.SONIC.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.SONIC.getFloats()),
+    SONIC_SCREWDRIVER("Sonic Screwdriver", Material.BLAZE_ROD, SonicVariant.ELEVENTH.getKey(), ShopItemRecipe.SHAPED, SonicVariant.ELEVENTH.getFloats()),
     SONTARAN_HEAD("Sontaran Head", Material.POTATO, Monster.SONTARAN.getModel(), ShopItemRecipe.TWA),
     STATTENHEIM_REMOTE("Stattenheim Remote", Material.FLINT, Whoniverse.STATTENHEIM_REMOTE.getKey()),
     STEAMPUNK_SEED("Steampunk Seed", Material.COAL_BLOCK, SeedBlock.STEAMPUNK.getKey(), ShopItemRecipe.SEED),
     STRAWBERRY_JELLY_BABY("Strawberry Jelly Baby", Material.MELON_SLICE, JellyBabyVariant.JELLY_BABY_PINK.getKey(), ShopItemRecipe.SHAPELESS),
     STRAX_HEAD("Strax Head", Material.POTATO, Monster.STRAX.getModel(), ShopItemRecipe.TWA),
-    TARDIS_ARS_CIRCUIT("TARDIS ARS Circuit", Material.GLOWSTONE_DUST, CircuitVariant.ARS.getKey()),
+    TARDIS_ARS_CIRCUIT("TARDIS ARS Circuit", Material.GLOWSTONE_DUST, CircuitVariant.ARS.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.ARS.getFloats()),
     TARDIS_ARTRON_FURNACE("TARDIS Artron Furnace", Material.FURNACE, Whoniverse.ARTRON_FURNACE.getKey()),
     TARDIS_BIOME_READER("TARDIS Biome Reader", Material.BRICK, Whoniverse.BIOME_READER.getKey()),
-    TARDIS_CHAMELEON_CIRCUIT("TARDIS Chameleon Circuit", Material.GLOWSTONE_DUST, CircuitVariant.CHAMELEON.getKey()),
+    TARDIS_CHAMELEON_CIRCUIT("TARDIS Chameleon Circuit", Material.GLOWSTONE_DUST, CircuitVariant.CHAMELEON.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.CHAMELEON.getFloats()),
     TARDIS_COMMUNICATOR("TARDIS Communicator", Material.BIRCH_BUTTON, Whoniverse.COMMUNICATOR.getKey()),
-    TARDIS_INPUT_CIRCUIT("TARDIS Input Circuit", Material.GLOWSTONE_DUST, CircuitVariant.INPUT.getKey()),
-    TARDIS_INVISIBILITY_CIRCUIT("TARDIS Invisibility Circuit", Material.GLOWSTONE_DUST, CircuitVariant.INVISIBILITY.getKey()),
-    TARDIS_KEY("TARDIS Key", Material.GOLD_NUGGET, KeyVariant.BRASS_YALE.getKey()),
+    TARDIS_INPUT_CIRCUIT("TARDIS Input Circuit", Material.GLOWSTONE_DUST, CircuitVariant.INPUT.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.INPUT.getFloats()),
+    TARDIS_INVISIBILITY_CIRCUIT("TARDIS Invisibility Circuit", Material.GLOWSTONE_DUST, CircuitVariant.INVISIBILITY.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.INVISIBILITY.getFloats()),
+    TARDIS_KEY("TARDIS Key", Material.GOLD_NUGGET, KeyVariant.BRASS_YALE.getKey(), ShopItemRecipe.SHAPED, KeyVariant.BRASS_YALE.getFloats()),
     TARDIS_KEYBOARD_EDITOR("TARDIS Keyboard Editor", Material.OAK_SIGN, null),
     TARDIS_LOCATOR("TARDIS Locator", Material.COMPASS, Whoniverse.LOCATOR.getKey()),
-    TARDIS_LOCATOR_CIRCUIT("TARDIS Locator Circuit", Material.GLOWSTONE_DUST, CircuitVariant.LOCATOR.getKey()),
-    TARDIS_MATERIALISATION_CIRCUIT("TARDIS Materialisation Circuit", Material.GLOWSTONE_DUST, CircuitVariant.MATERIALISATION.getKey()),
-    TARDIS_MEMORY_CIRCUIT("TARDIS Memory Circuit", Material.GLOWSTONE_DUST, CircuitVariant.MEMORY.getKey()),
-    TARDIS_RANDOMISER_CIRCUIT("TARDIS Randomiser Circuit", Material.GLOWSTONE_DUST, CircuitVariant.RANDOM.getKey()),
-    TARDIS_REMOTE_KEY("TARDIS Remote Key", Material.GOLD_NUGGET, KeyVariant.REMOTE.getKey()),
-    TARDIS_SCANNER_CIRCUIT("TARDIS Scanner Circuit", Material.GLOWSTONE_DUST, CircuitVariant.SCANNER.getKey()),
+    TARDIS_LOCATOR_CIRCUIT("TARDIS Locator Circuit", Material.GLOWSTONE_DUST, CircuitVariant.LOCATOR.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.LOCATOR.getFloats()),
+    TARDIS_MATERIALISATION_CIRCUIT("TARDIS Materialisation Circuit", Material.GLOWSTONE_DUST, CircuitVariant.MATERIALISATION.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.MATERIALISATION.getFloats()),
+    TARDIS_MEMORY_CIRCUIT("TARDIS Memory Circuit", Material.GLOWSTONE_DUST, CircuitVariant.MEMORY.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.MEMORY.getFloats()),
+    TARDIS_RANDOMISER_CIRCUIT("TARDIS Randomiser Circuit", Material.GLOWSTONE_DUST, CircuitVariant.RANDOM.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.RANDOM.getFloats()),
+    TARDIS_REMOTE_KEY("TARDIS Remote Key", Material.GOLD_NUGGET, KeyVariant.REMOTE.getKey(), ShopItemRecipe.SHAPED, KeyVariant.REMOTE.getFloats()),
+    TARDIS_SCANNER_CIRCUIT("TARDIS Scanner Circuit", Material.GLOWSTONE_DUST, CircuitVariant.SCANNER.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.SCANNER.getFloats()),
     TARDIS_SPACE_HELMET("TARDIS Space Helmet", Material.GLASS, Whoniverse.HELMET.getKey()),
-    TARDIS_STATTENHEIM_CIRCUIT("TARDIS Stattenheim Circuit", Material.GLOWSTONE_DUST, CircuitVariant.STATTENHEIM.getKey()),
-    TARDIS_TELEPATHIC_CIRCUIT("TARDIS Telepathic Circuit", Material.GLOWSTONE_DUST, CircuitVariant.TELEPATHIC.getKey()),
+    TARDIS_STATTENHEIM_CIRCUIT("TARDIS Stattenheim Circuit", Material.GLOWSTONE_DUST, CircuitVariant.STATTENHEIM.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.STATTENHEIM.getFloats()),
+    TARDIS_TELEPATHIC_CIRCUIT("TARDIS Telepathic Circuit", Material.GLOWSTONE_DUST, CircuitVariant.TELEPATHIC.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.TELEPATHIC.getFloats()),
     TARDIS_TELEVISION("TARDIS Television", Material.GLASS, Whoniverse.TV.getKey()),
-    TARDIS_TEMPORAL_CIRCUIT("TARDIS Temporal Circuit", Material.GLOWSTONE_DUST, CircuitVariant.TEMPORAL.getKey()),
+    TARDIS_TEMPORAL_CIRCUIT("TARDIS Temporal Circuit", Material.GLOWSTONE_DUST, CircuitVariant.TEMPORAL.getKey(), ShopItemRecipe.SHAPED, CircuitVariant.TEMPORAL.getFloats()),
     THIRTEENTH_SEED("Thirteenth Seed", Material.HORN_CORAL_BLOCK, SeedBlock.THIRTEENTH.getKey(), ShopItemRecipe.SEED),
     THREE_D_GLASSES("3-D Glasses", Material.LEATHER_HELMET, Whoniverse.THREE_D_GLASSES.getKey()),
-    TIME_ROTOR_DELTA("Time Rotor Delta", Material.LIGHT_GRAY_DYE, RotorVariant.TIME_ROTOR_DELTA_OFF.getKey()),
-    TIME_ROTOR_EARLY("Time Rotor Early", Material.LIGHT_GRAY_DYE, RotorVariant.TIME_ROTOR_EARLY_OFF.getKey()),
-    TIME_ROTOR_ELEVENTH("Time Rotor Eleventh", Material.LIGHT_GRAY_DYE, RotorVariant.TIME_ROTOR_ELEVENTH_OFF.getKey()),
-    TIME_ROTOR_ENGINE("Time Rotor Engine", Material.LIGHT_GRAY_DYE, RotorVariant.ENGINE_ROTOR_OFF.getKey()),
-    TIME_ROTOR_HOSPITAL("Time Rotor Hospital", Material.LIGHT_GRAY_DYE, RotorVariant.HOSPITAL_OFF.getKey()),
-    TIME_ROTOR_TENTH("Time Rotor Tenth", Material.LIGHT_GRAY_DYE, RotorVariant.TIME_ROTOR_TENNANT_OFF.getKey()),
-    TIME_ROTOR_TWELFTH("Time Rotor Twelfth", Material.LIGHT_GRAY_DYE, RotorVariant.TIME_ROTOR_TWELFTH_OFF.getKey()),
+    TIME_ROTOR_DELTA("Time Rotor Delta", Material.LIGHT_GRAY_DYE, RotorVariant.TIME_ROTOR_DELTA_OFF.getKey(), ShopItemRecipe.MODELLED),
+    TIME_ROTOR_EARLY("Time Rotor Early", Material.LIGHT_GRAY_DYE, RotorVariant.TIME_ROTOR_EARLY_OFF.getKey(), ShopItemRecipe.MODELLED),
+    TIME_ROTOR_ELEVENTH("Time Rotor Eleventh", Material.LIGHT_GRAY_DYE, RotorVariant.TIME_ROTOR_ELEVENTH_OFF.getKey(), ShopItemRecipe.MODELLED),
+    TIME_ROTOR_ENGINE("Time Rotor Engine", Material.LIGHT_GRAY_DYE, RotorVariant.ENGINE_ROTOR_OFF.getKey(), ShopItemRecipe.MODELLED),
+    TIME_ROTOR_HOSPITAL("Time Rotor Hospital", Material.LIGHT_GRAY_DYE, RotorVariant.HOSPITAL_OFF.getKey(), ShopItemRecipe.MODELLED),
+    TIME_ROTOR_TENTH("Time Rotor Tenth", Material.LIGHT_GRAY_DYE, RotorVariant.TIME_ROTOR_TENNANT_OFF.getKey(), ShopItemRecipe.MODELLED),
+    TIME_ROTOR_TWELFTH("Time Rotor Twelfth", Material.LIGHT_GRAY_DYE, RotorVariant.TIME_ROTOR_TWELFTH_OFF.getKey(), ShopItemRecipe.MODELLED),
     TOM_SEED("Tom Seed", Material.LAPIS_BLOCK, SeedBlock.TOM.getKey(), ShopItemRecipe.SEED),
     TWELFTH_SEED("Twelfth Seed", Material.PRISMARINE, SeedBlock.TWELFTH.getKey(), ShopItemRecipe.SEED),
     VANILLA_JELLY_BABY("Vanilla Jelly Baby", Material.MELON_SLICE, JellyBabyVariant.JELLY_BABY_WHITE.getKey(), ShopItemRecipe.SHAPELESS),
@@ -417,12 +419,22 @@ public enum ShopItem {
     private final Material material;
     private final NamespacedKey model;
     private final ShopItemRecipe recipeType;
+    private final List<Float> floats;
+
+    ShopItem(String displayName, Material material, NamespacedKey model, ShopItemRecipe recipeType, List<Float> floats) {
+        this.displayName = displayName;
+        this.material = material;
+        this.model = model;
+        this.recipeType = recipeType;
+        this.floats = floats;
+    }
 
     ShopItem(String displayName, Material material, NamespacedKey model) {
         this.displayName = displayName;
         this.material = material;
         this.model = model;
-        recipeType = ShopItemRecipe.SHAPED;
+        this.recipeType = ShopItemRecipe.SHAPED;
+        this.floats = null;
     }
 
     ShopItem(String displayName, Material material, NamespacedKey model, ShopItemRecipe recipeType) {
@@ -430,6 +442,7 @@ public enum ShopItem {
         this.material = material;
         this.model = model;
         this.recipeType = recipeType;
+        this.floats = null;
     }
 
     public String getDisplayName() {
@@ -446,5 +459,9 @@ public enum ShopItem {
 
     public ShopItemRecipe getRecipeType() {
         return recipeType;
+    }
+
+    public List<Float> getFloats() {
+        return floats;
     }
 }

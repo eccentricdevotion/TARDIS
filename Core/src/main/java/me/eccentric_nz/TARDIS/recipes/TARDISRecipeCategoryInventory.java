@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.recipes;
 
 import com.google.common.collect.Multimaps;
+import me.eccentric_nz.TARDIS.custommodels.keys.CircuitVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.KeyVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.SonicVariant;
 import me.eccentric_nz.TARDIS.enumeration.RecipeCategory;
@@ -59,6 +60,21 @@ public class TARDISRecipeCategoryInventory {
                 if (category == RecipeCategory.SONIC_UPGRADES) {
                     CustomModelDataComponent component = egory.getCustomModelDataComponent();
                     component.setFloats(SonicVariant.NINTH.getFloats());
+                    egory.setCustomModelDataComponent(component);
+                }
+                if (category == RecipeCategory.SONIC_CIRCUITS) {
+                    CustomModelDataComponent component = egory.getCustomModelDataComponent();
+                    component.setFloats(List.of(127.0f));
+                    egory.setCustomModelDataComponent(component);
+                }
+                if (category == RecipeCategory.ITEM_CIRCUITS) {
+                    CustomModelDataComponent component = egory.getCustomModelDataComponent();
+                    component.setFloats(List.of(128.0f));
+                    egory.setCustomModelDataComponent(component);
+                }
+                if (category == RecipeCategory.CONSOLE_CIRCUITS) {
+                    CustomModelDataComponent component = egory.getCustomModelDataComponent();
+                    component.setFloats(List.of(129.0f));
                     egory.setCustomModelDataComponent(component);
                 }
                 if (category == RecipeCategory.ROTORS) {
