@@ -54,7 +54,6 @@ public class Sounds implements Listener {
             PersistentDataContainer pdc = entity.getPersistentDataContainer();
             String which = "";
             long delay = 50L;
-            // TODO add new monster SFX
             if (pdc.has(TARDISWeepingAngels.CLOCKWORK_DROID, PersistentDataType.INTEGER)) {
                 delay = 80L;
                 which = "clockwork_droid";
@@ -117,7 +116,7 @@ public class Sounds implements Listener {
             }
             if (pdc.has(TARDISWeepingAngels.SUTEKH, PersistentDataType.INTEGER)) {
                 delay = 70L;
-                which = "sutech";
+                which = "sutekh";
             }
             if (pdc.has(TARDISWeepingAngels.OMEGA, PersistentDataType.INTEGER)) {
                 delay = 70L;
