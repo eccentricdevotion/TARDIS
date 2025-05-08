@@ -595,7 +595,7 @@ public class TARDISRoomRunnable implements Runnable {
                 if (type.equals(Material.ORANGE_WOOL)) {
                     if (wall_type.equals(Material.ORANGE_WOOL) || ((room.equals("GRAVITY") || room.equals("ANTIGRAVITY")) && (wall_type.equals(Material.LIME_WOOL) || wall_type.equals(Material.PINK_WOOL)))) {
                         if (ow.equals(Material.ORANGE_WOOL)) {
-                            if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                            if (!TARDISFloodgate.isFloodgateEnabled() || (player != null && !TARDISFloodgate.isBedrockPlayer(player.getUniqueId()))) {
                                 data = TARDISConstants.BARRIER;
                                 TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, startx, starty, startz);
                             }
@@ -739,11 +739,11 @@ public class TARDISRoomRunnable implements Runnable {
                 // set stable
                 if (type.equals(Material.SOUL_SAND)
                         && (room.equals("STABLE") || room.equals("VILLAGE") || room.equals("RENDERER")
-                                    || room.equals("LAVA") || room.equals("ALLAY") || room.equals("ZERO")
-                                    || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO")
-                                    || room.equals("IISTUBIL") || room.equals("MANGROVE") || room.equals("PEN")
-                                    || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE")
-                                    || room.equals("MAZE") || room.equals("GARDEN"))
+                        || room.equals("LAVA") || room.equals("ALLAY") || room.equals("ZERO")
+                        || room.equals("GEODE") || room.equals("HUTCH") || room.equals("IGLOO")
+                        || room.equals("IISTUBIL") || room.equals("MANGROVE") || room.equals("PEN")
+                        || room.equals("STALL") || room.equals("BAMBOO") || room.equals("BIRDCAGE")
+                        || room.equals("MAZE") || room.equals("GARDEN"))
                 ) {
                     HashMap<String, Object> sets = new HashMap<>();
                     sets.put(room.toLowerCase(Locale.ROOT), world.getName() + ":" + startx + ":" + starty + ":" + startz);
@@ -981,7 +981,7 @@ public class TARDISRoomRunnable implements Runnable {
                         data = TARDISConstants.AIR;
                     } else {
                         if (ow.equals(Material.ORANGE_WOOL) && wall_type.equals(Material.ORANGE_WOOL)) {
-                            if (!TARDISFloodgate.isFloodgateEnabled() || !TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
+                            if (!TARDISFloodgate.isFloodgateEnabled() || (player != null && !TARDISFloodgate.isBedrockPlayer(player.getUniqueId()))) {
                                 data = TARDISConstants.BARRIER;
                                 // set hexagon item display
                                 TARDISDisplayItemUtils.set(TARDISDisplayItem.HEXAGON, world, startx, starty, startz);
