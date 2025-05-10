@@ -6,6 +6,7 @@ CUSTOM:
   seed: OBSIDIAN
   has_beacon: true
   has_lanterns: false
+  light: LAMP
   description: Super-duper Custom Console
   # if your console builds to high or too low and the console doors don't line up with room doors
   # change start_y to adjust the y coordinate start position

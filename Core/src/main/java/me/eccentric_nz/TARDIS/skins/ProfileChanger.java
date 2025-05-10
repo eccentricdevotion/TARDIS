@@ -119,7 +119,6 @@ public class ProfileChanger {
         ServerLevel worldserver = sp.serverLevel();
         sp.connection.send(new ClientboundRespawnPacket(sp.createCommonSpawnInfo(worldserver), ClientboundRespawnPacket.KEEP_ALL_DATA));
         sp.onUpdateAbilities();
-        // TODO check this
         sp.connection.send(new ClientboundPlayerPositionPacket(0, new PositionMoveRotation(new Vec3(loc.getX(), loc.getY(), loc.getZ()),new Vec3(loc.getX(), loc.getY(), loc.getZ()), loc.getYaw(), loc.getPitch()), Collections.emptySet()));
         PlayerList playerList = sp.server.getPlayerList();
         playerList.sendPlayerPermissionLevel(sp);

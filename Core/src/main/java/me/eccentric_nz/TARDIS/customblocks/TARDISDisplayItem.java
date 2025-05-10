@@ -224,7 +224,7 @@ public enum TARDISDisplayItem {
         this.craftMaterial = null;
     }
 
-    // TODO shouldn't be checking model in some instances...
+    // shouldn't be checking model in some instances?
     public static TARDISDisplayItem getByModel(NamespacedKey key) {
         for (TARDISDisplayItem tdi : values()) {
             if (tdi.getCustomModel() != null && key.equals(tdi.getCustomModel())) {
