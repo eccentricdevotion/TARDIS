@@ -21,7 +21,6 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.datafixers.util.Pair;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISDisguiseTracker;
 import me.eccentric_nz.TARDIS.skins.ProfileChanger;
 import me.eccentric_nz.TARDIS.skins.SkinFetcher;
 import net.minecraft.network.protocol.PacketFlow;
@@ -54,14 +53,14 @@ public class EmergencyProgramOneSpawner {
 
     private final Player player;
     private final Location location;
-    private int id = -1;
+    private NPCPlayer npc = null;
 
     public EmergencyProgramOneSpawner(Player player, Location location) {
         this.player = player;
         this.location = location;
     }
 
-    public int create() {
+    public void create() {
         SkinFetcher getter = new SkinFetcher(TARDIS.plugin, player.getUniqueId());
         getter.fetchAsync((hasResult, fetched) -> {
             if (hasResult) {
@@ -76,13 +75,12 @@ public class EmergencyProgramOneSpawner {
                     MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
                     ServerLevel world = ((CraftWorld) location.getWorld()).getHandle();
                     ClientInformation info = ClientInformation.createDefault();
-                    NPCPlayer npc = new NPCPlayer(server, world, gameProfile, ClientInformation.createDefault(), location);
+                    npc = new NPCPlayer(server, world, gameProfile, ClientInformation.createDefault(), location);
                     npc.connection = new NPCPacketListener(server, new NPCConnection(PacketFlow.CLIENTBOUND), npc, new CommonListenerCookie(gameProfile, 0, info, false));
                     world.addNewPlayer(npc);
                     SynchedEntityData dataWatcher = npc.getEntityData();
                     dataWatcher.set(net.minecraft.world.entity.player.Player.DATA_HEALTH_ID, 20F); // set max life
                     dataWatcher.set(new EntityDataAccessor<>(17, EntityDataSerializers.BYTE), (byte) 0xFF); // set second skin layer
-                    id = npc.getId();
                     ProfileChanger.setPlayerProfile(npc.getBukkitEntity(), gameProfile);
                     // get Player equipment
                     ItemStack feet = CraftItemStack.asNMSCopy(player.getInventory().getBoots());
@@ -103,11 +101,9 @@ public class EmergencyProgramOneSpawner {
                 }
             }
         });
-        return id;
     }
 
     public void showAll(ServerPlayer npc, Location location) {
-        TARDISDisguiseTracker.DISGUISED_NPCS.put(npc.getId(), player.getUniqueId());
         ServerEntity serverEntity = new ServerEntity(npc.serverLevel(), npc, 0, false, packet -> {
         }, (packet, list) -> {}, Set.of());
         List<Pair<EquipmentSlot, ItemStack>> equipment = List.of(
@@ -141,5 +137,9 @@ public class EmergencyProgramOneSpawner {
                 }
             }
         }
+    }
+
+    public NPCPlayer getNpc() {
+        return npc;
     }
 }

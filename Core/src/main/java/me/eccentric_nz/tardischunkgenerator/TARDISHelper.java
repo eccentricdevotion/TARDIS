@@ -19,7 +19,10 @@ package me.eccentric_nz.tardischunkgenerator;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import me.eccentric_nz.TARDIS.lazarus.disguise.*;
+import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISArmourStandDisguiser;
+import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISDisguiseListener;
+import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISDisguiser;
+import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISPlayerDisguiser;
 import me.eccentric_nz.TARDIS.skins.TARDISChameleonArchDisguiser;
 import me.eccentric_nz.tardischunkgenerator.custombiome.CubicMaterial;
 import me.eccentric_nz.tardischunkgenerator.custombiome.CustomBiome;
@@ -297,14 +300,6 @@ public class TARDISHelper {
 
     public void reset(Player player) {
         new TARDISChameleonArchDisguiser(plugin, player).resetSkin();
-    }
-
-    public int spawnEmergencyProgrammeOne(Player player, Location location) {
-        return new TARDISEPSDisguiser(player, location).showToAll();
-    }
-
-    public void removeNPC(int id, World world) {
-        TARDISEPSDisguiser.removeNPC(id, world);
     }
 
     public void disguiseArmourStand(ArmorStand stand, EntityType entityType, Object[] options) {

@@ -24,7 +24,6 @@ import java.util.UUID;
 public class TARDISDisguiseTracker {
 
     public static final Set<UUID> DISGUISED_AS_PLAYER = new HashSet<>();
-    public static final HashMap<Integer, UUID> DISGUISED_NPCS = new HashMap<>();
     public static final HashMap<UUID, TARDISDisguise> DISGUISED_ARMOR_STANDS = new HashMap<>();
     public static final HashMap<UUID, TARDISDisguise> DISGUISED_AS_MOB = new HashMap<>();
     public static final HashMap<UUID, String> ARCHED = new HashMap<>();

@@ -16,11 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.lazarus.disguise;
 
-import net.minecraft.commands.arguments.EntityAnchorArgument;
-import net.minecraft.network.protocol.game.*;
+import me.eccentric_nz.TARDIS.lazarus.disguise.npc.NPCPlayer;
+import net.minecraft.network.protocol.game.ClientboundPlayerInfoRemovePacket;
+import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ClientInformation;
-import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
@@ -36,9 +36,7 @@ import org.bukkit.craftbukkit.v1_21_R4.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_21_R4.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.List;
 
 public class TARDISEPSDisguiser {
 
@@ -50,30 +48,6 @@ public class TARDISEPSDisguiser {
         this.player = player;
         this.location = location;
         disguiseNPC();
-    }
-
-    public static void disguiseToPlayer(Player player, World world) {
-        MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
-        ServerLevel nmsWorld = ((CraftWorld) world).getHandle();
-        for (Map.Entry<Integer, UUID> map : TARDISDisguiseTracker.DISGUISED_NPCS.entrySet()) {
-            Entity tracked = nmsWorld.getEntity(map.getKey());
-            if (tracked != null && tracked.level().getWorld() == world) {
-                ServerPlayer entityPlayer = ((CraftPlayer) Bukkit.getOfflinePlayer(map.getValue())).getHandle();
-                ServerPlayer npc = new ServerPlayer(server, nmsWorld, entityPlayer.getGameProfile(), ClientInformation.createDefault());
-                // set location
-                setEntityLocation(npc, new Location(world, tracked.getX(), tracked.getY(), tracked.getZ()));
-                // send packets
-                ClientboundPlayerInfoUpdatePacket packetPlayOutPlayerInfo = new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, npc);
-                ClientboundAddEntityPacket packetPlayOutNamedEntitySpawn = new ClientboundAddEntityPacket(npc, 0, npc.blockPosition());
-                ClientboundRotateHeadPacket packetPlayOutEntityHeadRotation = new ClientboundRotateHeadPacket(npc, (byte) npc.getYRot());
-                ClientboundPlayerLookAtPacket packetPlayOutEntityLook = new ClientboundPlayerLookAtPacket(EntityAnchorArgument.Anchor.FEET, npc.blockPosition().getX(), npc.blockPosition().getY(), npc.blockPosition().getZ());
-                ServerGamePacketListenerImpl connection = ((CraftPlayer) player).getHandle().connection;
-                connection.send(packetPlayOutPlayerInfo);
-                connection.send(packetPlayOutNamedEntitySpawn);
-                connection.send(packetPlayOutEntityHeadRotation);
-                connection.send(packetPlayOutEntityLook);
-            }
-        }
     }
 
     private static float fixYaw(float yaw) {
@@ -89,13 +63,14 @@ public class TARDISEPSDisguiser {
         entity.setXRot(location.getPitch());
     }
 
-    public static void removeNPC(int id, World world) {
-        TARDISDisguiseTracker.DISGUISED_NPCS.remove(id);
-        ClientboundRemoveEntitiesPacket packetPlayOutEntityDestroy = new ClientboundRemoveEntitiesPacket(id);
+    public static void removeNPC(NPCPlayer npc, World world) {
+        ClientboundRemoveEntitiesPacket removeEntitiesPacket = new ClientboundRemoveEntitiesPacket(npc.getId());
+        ClientboundPlayerInfoRemovePacket playerInfoRemovePacket = new ClientboundPlayerInfoRemovePacket(List.of(npc.getUUID()));
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (world == p.getWorld()) {
                 ServerGamePacketListenerImpl connection = ((CraftPlayer) p).getHandle().connection;
-                connection.send(packetPlayOutEntityDestroy);
+                connection.send(playerInfoRemovePacket);
+                connection.send(removeEntitiesPacket);
             }
         }
     }
@@ -122,25 +97,5 @@ public class TARDISEPSDisguiser {
         npc.setItemSlot(EquipmentSlot.HEAD, head);
         npc.setItemSlot(EquipmentSlot.MAINHAND, mainHand);
         npc.setItemSlot(EquipmentSlot.OFFHAND, offHand);
-    }
-
-    public int showToAll() {
-        TARDISDisguiseTracker.DISGUISED_NPCS.put(npc.getId(), player.getUniqueId());
-        ServerEntity npcServerEntity = new ServerEntity(npc.serverLevel(), npc, 0, false, packet -> {
-        }, (packet, list) -> {}, Set.of());
-        ClientboundAddEntityPacket packetPlayOutNamedEntitySpawn = new ClientboundAddEntityPacket(npc, npcServerEntity);
-        ClientboundRotateHeadPacket packetPlayOutEntityHeadRotation = new ClientboundRotateHeadPacket(npc, (byte) npc.getYRot());
-        ClientboundPlayerLookAtPacket packetPlayOutEntityLook = new ClientboundPlayerLookAtPacket(EntityAnchorArgument.Anchor.FEET, npc.blockPosition().getX(), npc.blockPosition().getY(), npc.blockPosition().getZ());
-        ClientboundPlayerInfoUpdatePacket packetPlayOutPlayerInfo = new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, npc);
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.getWorld() == location.getWorld()) {
-                ServerGamePacketListenerImpl connection = ((CraftPlayer) p).getHandle().connection;
-                connection.send(packetPlayOutNamedEntitySpawn);
-                connection.send(packetPlayOutEntityHeadRotation);
-                connection.send(packetPlayOutEntityLook);
-                connection.send(packetPlayOutPlayerInfo);
-            }
-        }
-        return npc.getId();
     }
 }
