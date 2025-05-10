@@ -224,10 +224,18 @@ public enum TARDISDisplayItem {
         this.craftMaterial = null;
     }
 
-    // shouldn't be checking model in some instances?
     public static TARDISDisplayItem getByModel(NamespacedKey key) {
         for (TARDISDisplayItem tdi : values()) {
             if (tdi.getCustomModel() != null && key.equals(tdi.getCustomModel())) {
+                return tdi;
+            }
+        }
+        return null;
+    }
+
+    public static TARDISDisplayItem getByDisplayName(String name) {
+        for (TARDISDisplayItem tdi : values()) {
+            if (tdi.getCustomModel() != null && name.equals(tdi.getDisplayName())) {
                 return tdi;
             }
         }
@@ -240,6 +248,9 @@ public enum TARDISDisplayItem {
             ItemMeta im = is.getItemMeta();
             if (im.hasItemModel()) {
                 return getByModel(im.getItemModel());
+            }
+            if (im.hasDisplayName()) {
+                return getByDisplayName(im.getDisplayName());
             }
         }
         return null;

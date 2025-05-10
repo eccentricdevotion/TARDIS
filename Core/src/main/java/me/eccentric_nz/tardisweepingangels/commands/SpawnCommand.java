@@ -180,14 +180,17 @@ public class SpawnCommand {
                 // SLITHEEN, SMILER, SONTARAN, SUTEKH, VAMPIRE_OF_VENICE, VASHTA_NERADA, ZYGON
                 default -> new Equipper(monster, a, false).setHelmetAndInvisibility();
             }
-            // TODO add new monster SFX
             String sound = switch (monster) {
+                case THE_BEAST -> "entity.ravager.roar";
+                case CYBERSHADE -> "entity.hoglin.converted_to_zombified";
                 case EMPTY_CHILD -> "empty";
                 case HEADLESS_MONK -> "headless_monk";
                 case ICE_WARRIOR -> "warrior";
                 case MIRE -> "item.trident.thunder";
                 case SEA_DEVIL -> "sea_devil";
                 case SILENT -> "silence";
+                case SMILER -> "entity.rabbit.attack";
+                case VAMPIRE_OF_VENICE -> "entity.fish.swim";
                 case WEEPING_ANGEL -> "blink";
                 default -> monster.getPermission();
             };

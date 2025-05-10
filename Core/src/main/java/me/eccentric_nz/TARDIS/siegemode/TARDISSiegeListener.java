@@ -34,6 +34,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -130,7 +131,7 @@ public class TARDISSiegeListener implements Listener {
         String tl = tardis.getOwner();
         ItemStack is = new ItemStack(TARDISDisplayItem.SIEGE_CUBE.getMaterial(), 1);
         ItemMeta im = is.getItemMeta();
-        im.setDisplayName("TARDIS Siege Cube");
+        im.setDisplayName(ChatColor.WHITE + "TARDIS Siege Cube");
         im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, TARDISDisplayItem.SIEGE_CUBE.getCustomModel().getKey());
         List<String> lore = new ArrayList<>();
         lore.add("Time Lord: " + tl);
@@ -389,8 +390,7 @@ public class TARDISSiegeListener implements Listener {
         }
         ItemMeta im = is.getItemMeta();
         if (im != null) {
-            // TODO fix model use
-            return im.hasItemModel() && Whoniverse.SIEGE_CUBE.getKey().equals(im.getItemModel());
+            return (im.hasDisplayName() && im.getDisplayName().endsWith("TARDIS Siege Cube")) || (im.hasItemModel() && Whoniverse.SIEGE_CUBE.getKey().equals(im.getItemModel()));
         }
         return false;
     }
