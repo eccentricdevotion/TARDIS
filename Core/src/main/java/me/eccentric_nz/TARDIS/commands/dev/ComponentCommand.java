@@ -22,8 +22,7 @@ import java.util.Locale;
 public class ComponentCommand {
 
     private final TARDIS plugin;
-    private Gson gson;
-    private String template = """
+    private final String template = """
          {
             "model": {
               "type": "minecraft:select",
@@ -50,6 +49,7 @@ public class ComponentCommand {
             }
           }
          """;
+    private Gson gson;
 
     public ComponentCommand(TARDIS plugin) {
         this.plugin = plugin;

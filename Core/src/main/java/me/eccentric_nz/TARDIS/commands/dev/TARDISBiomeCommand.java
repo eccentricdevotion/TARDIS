@@ -51,7 +51,7 @@ public class TARDISBiomeCommand {
 
     public boolean getName(CommandSender sender) {
         if (sender instanceof Player player) {
-            String biome = TARDISStringUtils.capitalise(player.getLocation().getBlock().getBiome().getKey().getKey());
+            String biome = TARDISStringUtils.capitalise(TARDIS.plugin.getFromRegistry().getKeysKey(player.getLocation().getBlock().getBiome()));
             TARDIS.plugin.getMessenger().message(player, "Biome: " + biome);
         }
         return true;

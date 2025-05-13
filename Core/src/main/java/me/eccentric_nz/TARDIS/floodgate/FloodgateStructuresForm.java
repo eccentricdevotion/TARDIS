@@ -49,12 +49,12 @@ public class FloodgateStructuresForm {
         SimpleForm.Builder builder = SimpleForm.builder();
         builder.title("Telepathic Structure Finder");
         for (Structure structure : TARDISStructureTravel.overworldStructures) {
-            builder.button(TARDISStringUtils.capitalise(structure.getKey().getKey()), FormImage.Type.PATH, "textures/blocks/grass_side_carried.png");
+            builder.button(TARDISStringUtils.capitalise(plugin.getFromRegistry().getKeysKey(structure)), FormImage.Type.PATH, "textures/blocks/grass_side_carried.png");
         }
         for (Structure structure : TARDISStructureTravel.netherStructures) {
-            builder.button(TARDISStringUtils.capitalise(structure.getKey().getKey()), FormImage.Type.PATH, "textures/blocks/crimson_nylium_side.png");
+            builder.button(TARDISStringUtils.capitalise(plugin.getFromRegistry().getKeysKey(structure)), FormImage.Type.PATH, "textures/blocks/crimson_nylium_side.png");
         }
-        builder.button(TARDISStringUtils.capitalise(Structure.END_CITY.getKey().getKey()), FormImage.Type.PATH, "textures/blocks/purpur_block.png");
+        builder.button(TARDISStringUtils.capitalise(plugin.getFromRegistry().getKeysKey(Structure.END_CITY)), FormImage.Type.PATH, "textures/blocks/purpur_block.png");
         builder.validResultHandler(this::handleResponse);
         SimpleForm form = builder.build();
         FloodgatePlayer player = FloodgateApi.getInstance().getPlayer(uuid);

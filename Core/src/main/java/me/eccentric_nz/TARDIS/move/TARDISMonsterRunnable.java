@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.lazarus.LazarusVariants;
 import me.eccentric_nz.TARDIS.utility.TARDISDalekDisguiser;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -215,7 +216,7 @@ public class TARDISMonsterRunnable implements Runnable {
                         rtm.setType(type);
                         String dn = TARDISStringUtils.uppercaseFirst(type.toString().toLowerCase(Locale.ROOT));
                         if (type.equals(EntityType.ZOMBIE_VILLAGER)) {
-                            Profession prof = Profession.values()[TARDISConstants.RANDOM.nextInt(7)];
+                            Profession prof = LazarusVariants.VILLAGER_PROFESSIONS.get(TARDISConstants.RANDOM.nextInt(LazarusVariants.VILLAGER_PROFESSIONS.size()));
                             rtm.setProfession(prof);
                             dn = "Zombie " + TARDISStringUtils.uppercaseFirst(prof.toString().toLowerCase(Locale.ROOT));
                         }

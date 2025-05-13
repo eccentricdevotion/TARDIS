@@ -30,6 +30,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISBiomeFinder;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
 import org.bukkit.Location;
+import org.bukkit.Registry;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
@@ -104,9 +105,9 @@ public class TARDISTravelBiome {
         }
         if (upper.equals("LIST")) {
             StringBuilder buf = new StringBuilder();
-            for (Biome bi : Biome.values()) {
+            for (Biome bi : Registry.BIOME) {
                 if (!bi.equals(Biome.THE_VOID)) {
-                    buf.append(bi.toString()).append(", ");
+                    buf.append(bi).append(", ");
                 }
             }
             String b = buf.substring(0, buf.length() - 2);

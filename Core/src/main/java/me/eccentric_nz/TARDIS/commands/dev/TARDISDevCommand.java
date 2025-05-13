@@ -35,7 +35,6 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardisregeneration.Regenerator;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterArmour;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
-import net.minecraft.world.entity.animal.CatVariant;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BrushableBlock;
@@ -43,7 +42,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.*;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Skeleton;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -216,23 +217,9 @@ public class TARDISDevCommand implements CommandExecutor {
                             return true;
                         }
                         case "registry" -> {
-                            for (Villager.Profession p : Registry.VILLAGER_PROFESSION) {
+                            for (Art a : Registry.ART) {
                                 try {
-                                    plugin.debug(p.toString() + " " + plugin.getFromRegistry().getKeysKey(p));
-                                } catch (NoSuchElementException | NoSuchMethodError e) {
-
-                                }
-                            }
-                            for (Cat.Type c : Registry.CAT_VARIANT) {
-                                try {
-                                    plugin.debug(c.toString() + " " + plugin.getFromRegistry().getKeysKey(c));
-                                } catch (NoSuchElementException | NoSuchMethodError e) {
-
-                                }
-                            }
-                            for (Frog.Variant f : Registry.FROG_VARIANT) {
-                                try {
-                                    plugin.debug(f.toString() + " " + plugin.getFromRegistry().getKeysKey(f));
+                                    plugin.debug(a.toString() + " " + plugin.getFromRegistry().getKeysKey(a));
                                 } catch (NoSuchElementException | NoSuchMethodError e) {
 
                                 }

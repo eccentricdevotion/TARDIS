@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.tardisvortexmanipulator.TVMUtils;
 import me.eccentric_nz.tardisvortexmanipulator.database.TVMQueryFactory;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -109,7 +110,7 @@ public class TVMCommandLifesigns {
             return true;
         }
         // getHealth() / getMaxHealth() * getHealthScale()
-        double health = scanned.getHealth() / scanned.getMaxHealth() * scanned.getHealthScale();
+        double health = scanned.getHealth() / scanned.getAttribute(Attribute.MAX_HEALTH).getValue() * scanned.getHealthScale();
         float hunger = (scanned.getFoodLevel() / 20F) * 100;
         int air = scanned.getRemainingAir();
         plugin.getMessenger().send(player, TardisModule.VORTEX_MANIPULATOR, "VM_LIFESIGNS", args[1]);

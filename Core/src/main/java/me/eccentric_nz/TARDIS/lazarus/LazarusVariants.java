@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
+import org.bukkit.Registry;
 import org.bukkit.entity.*;
 
 import java.util.HashMap;
@@ -98,4 +99,8 @@ public class LazarusVariants {
     }};
 
     public static final List<String> PROFESSION_NAMES = List.of("ARMORER", "BUTCHER", "CARTOGRAPHER", "CLERIC", "FARMER", "FISHERMAN", "FLETCHER", "LEATHERWORKER", "LIBRARIAN", "MASON", "NITWIT", "NONE", "SHEPHERD", "TOOLSMITH", "WEAPONSMITH");
+
+    public static final List<Villager.Profession> VILLAGER_PROFESSIONS = Registry.VILLAGER_PROFESSION.stream().toList();
+
+    public static final List<Villager.Type> VILLAGER_TYPES = Registry.VILLAGER_TYPE.stream().toList();
 }

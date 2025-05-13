@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.rooms;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Art;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
@@ -23,7 +24,7 @@ import org.bukkit.block.BlockFace;
 public class TARDISPainting {
 
     public static Location calculatePosition(Art art, BlockFace facing, Location loc) {
-        switch (art.getKey().getKey()) {
+        switch (TARDIS.plugin.getFromRegistry().getKeysKey(art)) {
             // 1x2
             case "graham", "wanderer" -> {
                 return loc.clone().add(0, -1, 0);

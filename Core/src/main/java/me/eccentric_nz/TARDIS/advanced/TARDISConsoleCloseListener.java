@@ -33,10 +33,7 @@ import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
 import me.eccentric_nz.TARDIS.travel.TravelCostAndType;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeUtilities;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -47,10 +44,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -190,11 +184,12 @@ public class TARDISConsoleCloseListener implements Listener {
                                 }
                                 Biome biome;
                                 try {
-                                    biome = Biome.valueOf(first);
+                                    biome = Registry.BIOME.match(first);
                                 } catch (IllegalArgumentException iae) {
+                                    String upper = first.toUpperCase(Locale.ROOT);
                                     // may have a pre-1.9 biome disk do old biome lookup...
-                                    if (TardisOldBiomeLookup.OLD_BIOME_LOOKUP.containsKey(first)) {
-                                        biome = TardisOldBiomeLookup.OLD_BIOME_LOOKUP.get(first);
+                                    if (TardisOldBiomeLookup.OLD_BIOME_LOOKUP.containsKey(upper)) {
+                                        biome = TardisOldBiomeLookup.OLD_BIOME_LOOKUP.get(upper);
                                     } else {
                                         plugin.getMessenger().send(p, TardisModule.TARDIS, "BIOME_NOT_VALID");
                                         continue;

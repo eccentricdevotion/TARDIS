@@ -21,6 +21,7 @@ import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISBannerData;
 import org.bukkit.DyeColor;
+import org.bukkit.Registry;
 import org.bukkit.block.Banner;
 import org.bukkit.block.Block;
 import org.bukkit.block.banner.Pattern;
@@ -45,10 +46,12 @@ public class TARDISBannerSetter {
                 JsonArray patterns = state.get("patterns").getAsJsonArray();
                 for (int j = 0; j < patterns.size(); j++) {
                     JsonObject jo = patterns.get(j).getAsJsonObject();
-                    PatternType pt = PatternType.valueOf(jo.get("pattern").getAsString());
-                    DyeColor dc = DyeColor.valueOf(jo.get("pattern_colour").getAsString());
-                    Pattern p = new Pattern(dc, pt);
-                    plist.add(p);
+                    PatternType pt = Registry.BANNER_PATTERN.match(jo.get("pattern").getAsString());
+                    if (pt != null) {
+                        DyeColor dc = DyeColor.valueOf(jo.get("pattern_colour").getAsString());
+                        Pattern p = new Pattern(dc, pt);
+                        plist.add(p);
+                    }
                 }
                 banner.setPatterns(plist);
                 banner.update();

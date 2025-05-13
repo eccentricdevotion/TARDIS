@@ -87,10 +87,12 @@ public class TARDISItemFrameSetter {
                     List<Pattern> plist = new ArrayList<>();
                     for (int j = 0; j < patterns.size(); j++) {
                         JsonObject jo = patterns.get(j).getAsJsonObject();
-                        PatternType pt = PatternType.valueOf(jo.get("pattern").getAsString());
-                        DyeColor dc = DyeColor.valueOf(jo.get("pattern_colour").getAsString());
-                        Pattern p = new Pattern(dc, pt);
-                        plist.add(p);
+                        PatternType pt = Registry.BANNER_PATTERN.match(jo.get("pattern").getAsString());
+                        if (pt != null) {
+                            DyeColor dc = DyeColor.valueOf(jo.get("pattern_colour").getAsString());
+                            Pattern p = new Pattern(dc, pt);
+                            plist.add(p);
+                        }
                     }
                     BlockStateMeta bsm = (BlockStateMeta) im;
                     Banner b = (Banner) bsm.getBlockState();

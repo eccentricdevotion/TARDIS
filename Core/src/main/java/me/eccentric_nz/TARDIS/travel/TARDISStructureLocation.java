@@ -16,16 +16,19 @@
  */
 package me.eccentric_nz.TARDIS.travel;
 
+import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
 import org.bukkit.generator.structure.Structure;
 
 public class TARDISStructureLocation {
 
+    private final TARDIS plugin;
     private Location location;
     private Structure which;
 
-    public TARDISStructureLocation(Location location, Structure which) {
+    public TARDISStructureLocation(TARDIS plugin, Location location, Structure which) {
+        this.plugin = plugin;
         this.location = location;
         this.which = which;
     }
@@ -35,7 +38,7 @@ public class TARDISStructureLocation {
     }
 
     public String getWhich() {
-        String s = which.getKey().getKey();
+        String s = plugin.getFromRegistry().getKeysKey(which);
         if (s.startsWith("ocean_ruin_") || s.startsWith("ruined_portal_") || s.startsWith("village_")) {
             return TARDISStringUtils.switchCapitalise(s);
         } else if (which.equals(Structure.FORTRESS)) {

@@ -9,6 +9,7 @@ import me.eccentric_nz.TARDIS.custommodels.keys.VortexManipulatorVariant;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
@@ -175,9 +176,9 @@ public class TVMGUI {
         yon.setLore(lore);
         yon.addItemFlags(ItemFlag.values());
         yon.setAttributeModifiers(Multimaps.forMap(Map.of()));
-        tach.setItemMeta(yon);
-        // deprecated, but if resource pack not installed gives a visial indication of tachyon levels
-        tach.setDurability(durability);
+        Damageable damageable = (Damageable) yon;
+        damageable.setDamage(durability);
+        tach.setItemMeta(damageable);
         // lifesigns
         ItemStack life = new ItemStack(Material.BOWL, 1);
         ItemMeta signs = life.getItemMeta();

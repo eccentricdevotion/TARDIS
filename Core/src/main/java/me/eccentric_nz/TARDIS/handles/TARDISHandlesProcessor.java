@@ -44,6 +44,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeUtilities;
 import org.bukkit.Location;
+import org.bukkit.Registry;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -53,6 +54,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -394,11 +396,12 @@ public class TARDISHandlesProcessor {
                                                 }
                                                 Biome biome;
                                                 try {
-                                                    biome = Biome.valueOf(first);
+                                                    biome = Registry.BIOME.match(first);
                                                 } catch (IllegalArgumentException iae) {
+                                                    String upper = first.toUpperCase(Locale.ROOT);
                                                     // may have a pre-1.9 biome disk do old biome lookup...
-                                                    if (TardisOldBiomeLookup.OLD_BIOME_LOOKUP.containsKey(first)) {
-                                                        biome = TardisOldBiomeLookup.OLD_BIOME_LOOKUP.get(first);
+                                                    if (TardisOldBiomeLookup.OLD_BIOME_LOOKUP.containsKey(upper)) {
+                                                        biome = TardisOldBiomeLookup.OLD_BIOME_LOOKUP.get(upper);
                                                     } else {
                                                         plugin.getMessenger().handlesSend(player, "BIOME_NOT_VALID");
                                                         continue;

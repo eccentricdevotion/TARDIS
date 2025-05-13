@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Registry;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 
@@ -100,11 +101,14 @@ class BindAdd {
                 // check valid biome
                 Biome biome;
                 try {
-                    biome = Biome.valueOf(which.toUpperCase(Locale.ROOT));
-                    if (!biome.equals(Biome.THE_VOID)) {
+                    biome = Registry.BIOME.match(which);
+                    if (biome != null && !biome.equals(Biome.THE_VOID)) {
                         set.put("type", 4);
                         set.put("name", biome.toString());
                         bind_id = plugin.getQueryFactory().doSyncInsert("bind", set);
+                    } else {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_VALID");
+                        return true;
                     }
                 } catch (IllegalArgumentException iae) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_VALID");

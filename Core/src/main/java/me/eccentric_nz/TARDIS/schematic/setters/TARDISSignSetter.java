@@ -73,7 +73,7 @@ public class TARDISSignSetter {
                 DyeColor bcolour = DyeColor.valueOf(side.get("colour").getAsString());
                 back.setColor(bcolour);
             }
-            signState.setEditable(json.get("editable").getAsBoolean());
+            signState.setWaxed(json.get("editable").getAsBoolean());
             signState.update();
         }
     }

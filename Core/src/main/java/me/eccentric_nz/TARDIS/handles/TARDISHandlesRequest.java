@@ -32,6 +32,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Registry;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -303,7 +304,7 @@ public class TARDISHandlesRequest {
                             }
                             String gb = (groups.getFirst() == null || groups.getFirst().isEmpty()) ? groups.get(1) : groups.getFirst();
                             // cycle through biomes
-                            for (Biome biome : Biome.values()) {
+                            for (Biome biome : Registry.BIOME) {
                                 String b = biome.toString();
                                 if (gb.equalsIgnoreCase(b)) {
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel biome " + b + " kzsbtr1h2"), 1L);

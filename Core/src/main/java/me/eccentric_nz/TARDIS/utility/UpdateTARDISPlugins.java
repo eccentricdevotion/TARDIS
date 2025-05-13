@@ -24,6 +24,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.io.File;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -58,7 +59,7 @@ public class UpdateTARDISPlugins {
                     }
                     File dest = new File("plugins/update/TARDIS.jar");
                     // connect to tardis jenkins
-                    URL url = new URL("http://tardisjenkins.duckdns.org:8080/job/TARDIS/lastSuccessfulBuild/artifact/target/TARDIS.jar");
+                    URL url = URI.create("http://tardisjenkins.duckdns.org:8080/job/TARDIS/lastSuccessfulBuild/artifact/target/TARDIS.jar").toURL();
                     // create a connection
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     con.setRequestProperty("User-Agent", "eccentric_nz/TARDIS");

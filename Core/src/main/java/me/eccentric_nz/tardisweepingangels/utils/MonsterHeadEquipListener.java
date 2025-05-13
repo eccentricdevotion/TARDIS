@@ -44,7 +44,7 @@ public class MonsterHeadEquipListener implements Listener {
                 ItemStack cursor = event.getCursor();
                 if (cursor != null && cursor.hasItemMeta() && cursor.getItemMeta().getPersistentDataContainer().has(TARDISWeepingAngels.MONSTER_HEAD, PersistentDataType.INTEGER) && isNullOrAir(event.getCurrentItem())) {
                     event.setCurrentItem(cursor);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> event.setCursor(new ItemStack(Material.AIR)), 1L);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> event.getWhoClicked().setItemOnCursor(new ItemStack(Material.AIR)), 1L);
                     event.setCancelled(true);
                 }
             }

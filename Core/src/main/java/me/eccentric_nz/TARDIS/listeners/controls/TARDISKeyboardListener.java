@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import org.bukkit.Registry;
 import org.bukkit.Tag;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
@@ -156,8 +157,8 @@ public class TARDISKeyboardListener implements Listener {
         // biome ?
         try {
             String upper = firstLine.toUpperCase(Locale.ROOT);
-            Biome.valueOf(upper);
-            if (!upper.equals("HELL") && !upper.equals("SKY") && !upper.equals("VOID")) {
+            Biome biome = Registry.BIOME.match(firstLine);
+            if (biome != null && !upper.equals("HELL") && !upper.equals("SKY") && !upper.equals("VOID")) {
                 p.performCommand("tardistravel biome " + upper);
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel biome " + upper);
                 return;

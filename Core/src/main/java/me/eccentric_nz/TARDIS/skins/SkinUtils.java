@@ -42,7 +42,7 @@ import org.bukkit.profile.PlayerProfile;
 import org.bukkit.profile.PlayerTextures;
 
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.HashMap;
@@ -61,7 +61,7 @@ public class SkinUtils {
         PlayerTextures textures = playerProfile.getTextures();
 //        PlayerTextures.SkinModel model = (skin.slim()) ? PlayerTextures.SkinModel.SLIM : PlayerTextures.SkinModel.CLASSIC;
         try {
-            textures.setSkin(new URL(skin.url()), PlayerTextures.SkinModel.CLASSIC);
+            textures.setSkin(URI.create(skin.url()).toURL(), PlayerTextures.SkinModel.CLASSIC);
         } catch (MalformedURLException e) {
             TARDIS.plugin.debug("Bad URL: " + skin.url());
         }

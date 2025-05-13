@@ -28,6 +28,7 @@ import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URL;
 import java.util.UUID;
 
@@ -56,7 +57,7 @@ public class SkinFetcher {
     public boolean fetch() {
         String id = uuid.toString().replace("-", "");
         try {
-            URL url = new URL(String.format("https://sessionserver.mojang.com/session/minecraft/profile/%s?unsigned=false", id));
+            URL url = URI.create(String.format("https://sessionserver.mojang.com/session/minecraft/profile/%s?unsigned=false", id)).toURL();
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.connect();
             if (connection.getResponseCode() == HttpsURLConnection.HTTP_OK) {

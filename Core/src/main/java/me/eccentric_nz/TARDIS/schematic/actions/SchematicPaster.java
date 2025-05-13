@@ -139,27 +139,31 @@ public class SchematicPaster implements Runnable {
                     int py = rel.get("y").getAsInt();
                     int pz = rel.get("z").getAsInt();
                     BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
-                    Location pl;
+                    Location pl = null;
                     String which = painting.get("art").getAsString();
                     Art art = null;
                     if (which.contains(":")) {
                         // custom datapack painting
                         pl = TARDISPainting.calculatePosition(which.split(":")[1], facing, new Location(world, x + px, y + py, z + pz));
                     } else {
-                        art = Art.valueOf(which);
-                        pl = TARDISPainting.calculatePosition(art, facing, new Location(world, x + px, y + py, z + pz));
-                    }
-                    try {
-                        Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
-                        ent.teleport(pl);
-                        ent.setFacingDirection(facing, true);
+                        art = Registry.ART.match(which);
                         if (art != null) {
-                            ent.setArt(art, true);
-                        } else {
-                            DataPackPainting.setCustomVariant(ent, which);
+                            pl = TARDISPainting.calculatePosition(art, facing, new Location(world, x + px, y + py, z + pz));
                         }
-                    } catch (IllegalArgumentException e) {
-                        plugin.debug("Invalid painting location!" + pl);
+                    }
+                    if (pl != null) {
+                        try {
+                            Painting ent = (Painting) world.spawnEntity(pl, EntityType.PAINTING);
+                            ent.teleport(pl);
+                            ent.setFacingDirection(facing, true);
+                            if (art != null) {
+                                ent.setArt(art, true);
+                            } else {
+                                DataPackPainting.setCustomVariant(ent, which);
+                            }
+                        } catch (IllegalArgumentException e) {
+                            plugin.debug("Invalid painting location!" + pl);
+                        }
                     }
                 }
             }

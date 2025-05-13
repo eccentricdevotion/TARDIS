@@ -336,7 +336,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                         // custom datapack painting
                         pl = TARDISPainting.calculatePosition(which.split(":")[1], facing, new Location(world, resetx + px, starty + py, resetz + pz));
                     } else {
-                        art = Art.valueOf(which);
+                        art = Registry.ART.match(which);
                         pl = TARDISPainting.calculatePosition(art, facing, new Location(world, resetx + px, starty + py, resetz + pz));
                     }
                     try {

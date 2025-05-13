@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.planets;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
+import me.eccentric_nz.TARDIS.lazarus.LazarusVariants;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Villager;
@@ -58,10 +59,10 @@ public final class TARDISGallifreySpawnListener implements Listener {
             // it's a Gallifreyan - give it a random profession and outfit!
             Villager villager = (Villager) le;
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                villager.setProfession(Villager.Profession.values()[TARDISConstants.RANDOM.nextInt(Villager.Profession.values().length)]);
+                villager.setProfession(LazarusVariants.VILLAGER_PROFESSIONS.get(TARDISConstants.RANDOM.nextInt(LazarusVariants.VILLAGER_PROFESSIONS.size())));
                 villager.setVillagerLevel(1); // minimum level is 1
                 villager.setVillagerExperience(1); // should be greater than 0 so villager doesn't lose its profession
-                villager.setVillagerType(Villager.Type.values()[TARDISConstants.RANDOM.nextInt(Villager.Type.values().length)]);
+                villager.setVillagerType(LazarusVariants.VILLAGER_TYPES.get(TARDISConstants.RANDOM.nextInt(LazarusVariants.VILLAGER_TYPES.size())));
                 // set trades
                 if (plugin.getPlanetsConfig().getBoolean("planets.gallifrey.villager_blueprints.enabled") && TARDISConstants.RANDOM.nextInt(100) < plugin.getPlanetsConfig().getInt("planets.gallifrey.villager_blueprints.chance")) {
                     // set a PDC value so we can identify it later and open a custom merchant inventory for the clicking player

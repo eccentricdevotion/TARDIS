@@ -29,7 +29,6 @@ public class FloodgateBiomes {
         put(Biome.BIRCH_FOREST, "blocks/planks_birch.png");
         put(Biome.CHERRY_GROVE, "blocks/cherry_planks.png");
         put(Biome.CRIMSON_FOREST, "blocks/crimson_planks.png");
-        put(Biome.CUSTOM, "blocks/barrier.png");
         put(Biome.COLD_OCEAN, "items/fish_salmon_raw.png");
         put(Biome.DARK_FOREST, "blocks/planks_big_oak.png");
         put(Biome.DEEP_COLD_OCEAN, "items/sea_pickle.png");
@@ -62,6 +61,7 @@ public class FloodgateBiomes {
         put(Biome.OLD_GROWTH_BIRCH_FOREST, "blocks/stripped_birch_log.png");
         put(Biome.OLD_GROWTH_PINE_TAIGA, "blocks/log_spruce.png");
         put(Biome.OLD_GROWTH_SPRUCE_TAIGA, "blocks/stripped_spruce_log.png");
+        put(Biome.PALE_GARDEN, "blocks/pale_oak_planks.png");
         put(Biome.PLAINS, "blocks/grass_side_carried.png");
         put(Biome.RIVER, "items/fishing_rod_uncast.png");
         put(Biome.SAVANNA, "blocks/planks_acacia.png");

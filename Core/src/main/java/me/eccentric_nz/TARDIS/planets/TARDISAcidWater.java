@@ -19,10 +19,7 @@ package me.eccentric_nz.TARDIS.planets;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.move.TARDISMoveSession;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.damage.DamageSource;
@@ -140,7 +137,7 @@ public class TARDISAcidWater implements Listener {
                         // apply additional potion effects
                         if (!plugin.getPlanetsConfig().getStringList("planets.skaro.acid_potions").isEmpty()) {
                             plugin.getPlanetsConfig().getStringList("planets.skaro.acid_potions").forEach((t) -> {
-                                PotionEffectType pet = PotionEffectType.getByName(t);
+                                PotionEffectType pet = Registry.EFFECT.match(t);
                                 if (pet != null) {
                                     if (pet.equals(PotionEffectType.BLINDNESS) || pet.equals(PotionEffectType.NAUSEA) || pet.equals(PotionEffectType.HUNGER) || pet.equals(PotionEffectType.SLOWNESS) || pet.equals(PotionEffectType.MINING_FATIGUE) || pet.equals(PotionEffectType.WEAKNESS)) {
                                         player.addPotionEffect(new PotionEffect(pet, 200, 1));

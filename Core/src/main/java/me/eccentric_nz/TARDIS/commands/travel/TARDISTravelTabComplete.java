@@ -20,6 +20,7 @@ import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
+import org.bukkit.Registry;
 import org.bukkit.block.Biome;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -38,7 +39,7 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
     private final List<String> STRUCTURE_SUBS;
 
     public TARDISTravelTabComplete(TARDIS plugin) {
-        for (Biome bi : org.bukkit.block.Biome.values()) {
+        for (Biome bi : Registry.BIOME) {
             if (!bi.equals(Biome.THE_VOID)) {
                 BIOME_SUBS.add(bi.toString());
             }

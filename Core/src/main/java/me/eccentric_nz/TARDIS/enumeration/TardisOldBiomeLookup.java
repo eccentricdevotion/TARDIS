@@ -28,7 +28,7 @@ public class TardisOldBiomeLookup {
     public final static Map<String, Biome> OLD_BIOME_LOOKUP;
 
     static {
-        OLD_BIOME_LOOKUP = Map.ofEntries(
+        OLD_BIOME_LOOKUP = Map.<String, Biome>ofEntries(
                 Map.entry("BADLANDS_PLATEAU", Biome.BADLANDS),
                 Map.entry("BEACHES", Biome.BEACH),
                 Map.entry("BIRCH_FOREST_HILLS", Biome.BIRCH_FOREST),

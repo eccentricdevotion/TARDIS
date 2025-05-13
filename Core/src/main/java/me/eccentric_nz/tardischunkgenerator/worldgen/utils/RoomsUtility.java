@@ -115,10 +115,12 @@ public class RoomsUtility {
                     List<Pattern> plist = new ArrayList<>();
                     for (int j = 0; j < patterns.size(); j++) {
                         JsonObject jo = patterns.get(j).getAsJsonObject();
-                        PatternType pt = PatternType.valueOf(jo.get("pattern").getAsString());
-                        DyeColor dc = DyeColor.valueOf(jo.get("pattern_colour").getAsString());
-                        Pattern p = new Pattern(dc, pt);
-                        plist.add(p);
+                        PatternType pt = Registry.BANNER_PATTERN.match(jo.get("pattern").getAsString());
+                        if (pt != null) {
+                            DyeColor dc = DyeColor.valueOf(jo.get("pattern_colour").getAsString());
+                            Pattern p = new Pattern(dc, pt);
+                            plist.add(p);
+                        }
                     }
                     BlockStateMeta bsm = (BlockStateMeta) im;
                     Banner b = (Banner) bsm.getBlockState();
@@ -145,26 +147,30 @@ public class RoomsUtility {
         int py = rel.get("y").getAsInt() + 64;
         int pz = rel.get("z").getAsInt() + sz;
         BlockFace facing = BlockFace.valueOf(painting.get("facing").getAsString());
-        Location pl;
+        Location pl = null;
         String which = painting.get("art").getAsString();
         Art art = null;
         if (which.contains(":")) {
             // custom datapack painting
             pl = TARDISPainting.calculatePosition(which.split(":")[1], facing, new Location(null, px, py, pz));
         } else {
-            art = Art.valueOf(which);
-            pl = TARDISPainting.calculatePosition(art, facing, new Location(null, px, py, pz));
-        }
-        try {
-            Painting ent = (Painting) region.spawnEntity(pl, EntityType.PAINTING);
-            ent.setFacingDirection(facing, true);
+            art = Registry.ART.match(which);
             if (art != null) {
-                ent.setArt(art, true);
-            } else {
-                DataPackPainting.setCustomVariant(ent, which);
+                pl = TARDISPainting.calculatePosition(art, facing, new Location(null, px, py, pz));
             }
-        } catch (IllegalArgumentException e) {
-            TARDIS.plugin.debug("Invalid painting location!" + pl);
+        }
+        if (pl != null) {
+            try {
+                Painting ent = (Painting) region.spawnEntity(pl, EntityType.PAINTING);
+                ent.setFacingDirection(facing, true);
+                if (art != null) {
+                    ent.setArt(art, true);
+                } else {
+                    DataPackPainting.setCustomVariant(ent, which);
+                }
+            } catch (IllegalArgumentException e) {
+                TARDIS.plugin.debug("Invalid painting location!" + pl);
+            }
         }
     }
 
@@ -173,10 +179,12 @@ public class RoomsUtility {
         JsonArray patterns = json.get("patterns").getAsJsonArray();
         for (int j = 0; j < patterns.size(); j++) {
             JsonObject jo = patterns.get(j).getAsJsonObject();
-            PatternType pt = PatternType.valueOf(jo.get("pattern").getAsString());
-            DyeColor dc = DyeColor.valueOf(jo.get("pattern_colour").getAsString());
-            Pattern p = new Pattern(dc, pt);
-            plist.add(p);
+            PatternType pt = Registry.BANNER_PATTERN.match(jo.get("pattern").getAsString());
+            if (pt != null) {
+                DyeColor dc = DyeColor.valueOf(jo.get("pattern_colour").getAsString());
+                Pattern p = new Pattern(dc, pt);
+                plist.add(p);
+            }
         }
         banner.setPatterns(plist);
         banner.update();

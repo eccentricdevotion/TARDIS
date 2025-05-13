@@ -148,7 +148,7 @@ public class TARDISStaticUtils {
      * @return true if it is ocean
      */
     public static boolean isOceanBiome(Biome b) {
-        return b.getKey().getKey().endsWith("ocean");
+        return TARDIS.plugin.getFromRegistry().getKeysKey(b).endsWith("ocean");
     }
 
     /**

@@ -28,6 +28,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.tardischunkgenerator.custombiome.BiomeUtilities;
 import me.eccentric_nz.tardischunkgenerator.custombiome.TerraBiomeLocator;
 import org.bukkit.Location;
+import org.bukkit.Registry;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
@@ -50,8 +51,8 @@ public class TARDISBiomeFinder {
             tb = new TerraBiomeLocator(w, current, search).execute();
         } else {
             try {
-                Biome biome = Biome.valueOf(search);
-                if (biome.equals(Biome.THE_VOID)) {
+                Biome biome = Registry.BIOME.match(search);
+                if (biome == null || biome.equals(Biome.THE_VOID)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_TRAVEL_NOT_VALID");
                     return;
                 }

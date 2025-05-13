@@ -98,7 +98,7 @@ public class TARDISStructureTravel {
                     return null;
                 }
                 // check structure travel permission
-                String perm = structure.getKey().getKey();
+                String perm = plugin.getFromRegistry().getKeysKey(structure);
                 if (!p.hasPermission("tardis.timetravel.structure." + perm)) {
                     plugin.getMessenger().send(p, TardisModule.TARDIS, "NO_PERM_STRUCTURE", TARDISStringUtils.capitalise(perm));
                     return null;
@@ -175,7 +175,7 @@ public class TARDISStructureTravel {
                 unsafe = !clear;
             }
             loc.setY(b.getY());
-            return new TARDISStructureLocation(loc, structure);
+            return new TARDISStructureLocation(plugin, loc, structure);
         } else {
             plugin.getMessenger().send(p, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             return null;

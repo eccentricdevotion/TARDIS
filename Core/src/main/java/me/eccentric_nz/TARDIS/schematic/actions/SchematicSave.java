@@ -264,7 +264,7 @@ public class SchematicSave {
                             text.addProperty("line3", front.getLine(3));
                             text.addProperty("glowing", front.isGlowingText());
                             text.addProperty("colour", front.getColor().toString());
-                            text.addProperty("editable", sign.isEditable());
+                            text.addProperty("editable", sign.isWaxed());
                             JsonObject side = new JsonObject();
                             SignSide back = sign.getSide(Side.BACK);
                             side.addProperty("line0", back.getLine(0));

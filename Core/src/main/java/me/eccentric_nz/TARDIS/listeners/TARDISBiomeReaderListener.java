@@ -33,10 +33,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author eccentric_nz
@@ -57,7 +54,7 @@ public class TARDISBiomeReaderListener implements Listener {
                 ItemMeta diskim = disk.getItemMeta();
                 if (diskim.hasLore()) {
                     List<String> lore = diskim.getLore();
-                    if (lore.contains(biome)) {
+                    if (lore.contains(biome.toUpperCase(Locale.ROOT))) {
                         found = true;
                         break;
                     }
@@ -98,19 +95,20 @@ public class TARDISBiomeReaderListener implements Listener {
                         } else {
                             disks1 = TARDISSerializeInventory.itemStacksFromString(Storage.BIOME_1.getEmpty());
                         }
-                        if (!hasBiomeDisk(disks1, biome.toString())) {
+                        String biomeKey = plugin.getFromRegistry().getKeysKey(biome);
+                        if (!hasBiomeDisk(disks1, biomeKey)) {
                             ItemStack[] disks2;
                             if (!rs.getBiomesOne().isEmpty()) {
                                 disks2 = TARDISSerializeInventory.itemStacksFromString(rs.getBiomesTwo());
                             } else {
                                 disks2 = TARDISSerializeInventory.itemStacksFromString(Storage.BIOME_2.getEmpty());
                             }
-                            if (!hasBiomeDisk(disks2, biome.name())) {
+                            if (!hasBiomeDisk(disks2, biomeKey)) {
                                 ItemStack bd = new ItemStack(Material.MUSIC_DISC_CAT, 1);
                                 ItemMeta dim = bd.getItemMeta();
                                 dim.setDisplayName("Biome Storage Disk");
                                 List<String> disk_lore = new ArrayList<>();
-                                disk_lore.add(biome.name());
+                                disk_lore.add(biomeKey);
                                 dim.setLore(disk_lore);
                                 bd.setItemMeta(dim);
                                 int slot = getNextFreeSlot(disks1);
@@ -122,7 +120,7 @@ public class TARDISBiomeReaderListener implements Listener {
                                     HashMap<String, Object> whereu = new HashMap<>();
                                     whereu.put("uuid", uuid.toString());
                                     plugin.getQueryFactory().doUpdate("storage", set, whereu);
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_ADDED", biome.name(), "1");
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_ADDED", biomeKey, "1");
                                 } else {
                                     slot = getNextFreeSlot(disks2);
                                     if (slot != -1) {
@@ -133,16 +131,16 @@ public class TARDISBiomeReaderListener implements Listener {
                                         HashMap<String, Object> whereu = new HashMap<>();
                                         whereu.put("uuid", uuid.toString());
                                         plugin.getQueryFactory().doUpdate("storage", set, whereu);
-                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_ADDED", biome.name(), "2");
+                                        plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_ADDED", biomeKey, "2");
                                     } else {
                                         plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_FULL");
                                     }
                                 }
                             } else {
-                                plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_FOUND", biome.name(), "2");
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_FOUND", biomeKey, "2");
                             }
                         } else {
-                            plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_FOUND", biome.name(), "1");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_READER_FOUND", biomeKey, "1");
                         }
                     } catch (IOException ex) {
                         plugin.debug("Could not get biome disks: " + ex);

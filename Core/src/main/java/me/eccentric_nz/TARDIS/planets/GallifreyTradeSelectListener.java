@@ -25,9 +25,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.TradeSelectEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.MenuType;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.MerchantRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.view.MerchantView;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -107,7 +109,14 @@ public class GallifreyTradeSelectListener implements Listener {
                 }
                 i++;
             }
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.openMerchant(villager, false), 1L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                MerchantView merchant = MenuType.MERCHANT.builder()
+                        .merchant(villager)
+                        .checkReachable(true)
+                        .title(villager.getCustomName())
+                        .build(player);
+                player.openInventory(merchant);
+            }, 1L);
         }
     }
 }

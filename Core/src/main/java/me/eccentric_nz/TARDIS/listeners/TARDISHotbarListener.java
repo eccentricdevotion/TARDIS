@@ -72,9 +72,9 @@ public class TARDISHotbarListener implements Listener {
                         player.setCompassTarget(pb);
                     }
                 } else {
-                    Location bedspawn = player.getBedSpawnLocation();
-                    // if player has bed spawn set
-                    player.setCompassTarget(Objects.requireNonNullElseGet(bedspawn, () -> player.getWorld().getSpawnLocation()));
+                    Location respawn = player.getRespawnLocation();
+                    // if player has respawn location set
+                    player.setCompassTarget(Objects.requireNonNullElseGet(respawn, () -> player.getWorld().getSpawnLocation()));
                 }
             }
             if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {

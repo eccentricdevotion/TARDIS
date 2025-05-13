@@ -57,7 +57,7 @@ public class TARDISTelepathicBiome {
                 if (i > 52) {
                     break;
                 }
-                Material material = EnvironmentBiomes.BIOME_BLOCKS.get(biome.getKey().getKey());
+                Material material = EnvironmentBiomes.BIOME_BLOCKS.get(plugin.getFromRegistry().getKeysKey(biome));
                 if (material != null) {
                     ItemStack is = new ItemStack(material, 1);
                     ItemMeta im = is.getItemMeta();

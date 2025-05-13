@@ -71,7 +71,7 @@ public class TARDISTelepathicStructure {
             component.setColors(List.of(Color.GREEN));
             im.setCustomModelDataComponent(component);
         }
-        im.setDisplayName(TARDISStringUtils.capitalise(structure.getKey().getKey()));
+        im.setDisplayName(TARDISStringUtils.capitalise(plugin.getFromRegistry().getKeysKey(structure)));
         is.setItemMeta(im);
         return is;
     }

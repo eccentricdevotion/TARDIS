@@ -43,7 +43,7 @@ public class TARDISEyeDamageListener implements Listener {
         Location l = event.getTo();
         Biome biome = l.getBlock().getBiome();
         UUID uuid = player.getUniqueId();
-        if (biome.getKey().getKey().equals("eye_of_harmony")) {
+        if (plugin.getFromRegistry().getKeysKey(biome).equals("eye_of_harmony")) {
             // start tracking player for damage
             plugin.getTrackerKeeper().getEyeDamage().add(uuid);
         } else {

@@ -35,8 +35,8 @@ public class TARDISPlayerDisguiser {
     }
 
     public static void disguiseToPlayer(Player disguised, Player to) {
-        to.hidePlayer(disguised);
-        to.showPlayer(disguised);
+        to.hidePlayer(TARDIS.plugin, disguised);
+        to.showPlayer(TARDIS.plugin, disguised);
     }
 
     public void disguisePlayer() {

@@ -44,11 +44,6 @@ public class TARDISChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public boolean shouldGenerateBedrock() {
-        return false;
-    }
-
-    @Override
     public boolean shouldGenerateCaves() {
         return false;
     }

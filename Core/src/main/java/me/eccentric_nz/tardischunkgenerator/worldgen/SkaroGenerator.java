@@ -54,11 +54,6 @@ public class SkaroGenerator extends ChunkGenerator {
     }
 
     @Override
-    public boolean shouldGenerateBedrock() {
-        return true;
-    }
-
-    @Override
     public boolean shouldGenerateCaves() {
         return true;
     }
