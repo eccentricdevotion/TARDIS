@@ -118,6 +118,7 @@ public class TARDIS extends JavaPlugin {
     private TARDISUpdateChatGUI updateChatGUI;
     private SkinChanger skinChanger;
     private ComponentSetter componentSetter;
+    private FromRegistry fromRegistry;
     private Calendar afterCal;
     private Calendar beforeCal;
     private ConsoleCommandSender console;
@@ -287,6 +288,7 @@ public class TARDIS extends JavaPlugin {
             Class<?> u;
             Class<?> s;
             Class<?> c;
+            Class<?> r;
             try {
                 if (PaperLib.isPaper()) {
                     m = Class.forName("me.eccentric_nz.TARDIS.paper.AdventureMessage");
@@ -294,12 +296,14 @@ public class TARDIS extends JavaPlugin {
                     u = Class.forName("me.eccentric_nz.TARDIS.paper.TARDISUpdateChatGUIAdventure");
                     s = Class.forName("me.eccentric_nz.TARDIS.paper.SkinChangerPaper");
                     c = Class.forName("me.eccentric_nz.TARDIS.paper.ComponentSetterPaper");
+                    r = Class.forName("me.eccentric_nz.TARDIS.paper.RegistryGetterPaper");
                 } else {
                     m = Class.forName("me.eccentric_nz.TARDIS.spigot.SpigotMessage");
                     j = Class.forName("me.eccentric_nz.TARDIS.spigot.TARDISChatGUISpigot");
                     u = Class.forName("me.eccentric_nz.TARDIS.spigot.TARDISUpdateChatGUISpigot");
                     s = Class.forName("me.eccentric_nz.TARDIS.spigot.SkinChangerSpigot");
                     c = Class.forName("me.eccentric_nz.TARDIS.spigot.ComponentSetterSpigot");
+                    r = Class.forName("me.eccentric_nz.TARDIS.spigot.RegistryGetterSpigot");
                 }
                 if (TARDISMessage.class.isAssignableFrom(m)) { // Make sure it actually implements TARDISMessage
                     messenger = (TARDISMessage) m.getConstructor().newInstance();
@@ -315,6 +319,9 @@ public class TARDIS extends JavaPlugin {
                 }
                 if (ComponentSetter.class.isAssignableFrom(c)) { // Make sure it actually implements ComponentSetter
                     componentSetter = (ComponentSetter) c.getConstructor().newInstance();
+                }
+                if (FromRegistry.class.isAssignableFrom(r)) { // Make sure it actually implements FromRegistry
+                    fromRegistry = (FromRegistry) r.getConstructor().newInstance();
                 }
             } catch (final Exception e) {
                 getLogger().severe("Could not find support for this server version.");
@@ -971,6 +978,15 @@ public class TARDIS extends JavaPlugin {
      */
     public ComponentSetter getComponentSetter() {
         return componentSetter;
+    }
+
+    /**
+     * Gets the TARDIS From Registry class
+     *
+     * @return the TARDIS From Registry class
+     */
+    public FromRegistry getFromRegistry() {
+        return fromRegistry;
     }
 
     /**

@@ -35,6 +35,7 @@ import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.tardisregeneration.Regenerator;
 import me.eccentric_nz.tardisweepingangels.equip.MonsterArmour;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
+import net.minecraft.world.entity.animal.CatVariant;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BrushableBlock;
@@ -42,9 +43,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -54,10 +53,7 @@ import org.bukkit.inventory.meta.components.EquippableComponent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Command /tardisadmin [arguments].
@@ -84,7 +80,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "monster",
             "nms",
             "plurals",
-            "recipe", "regen",
+            "recipe", "regen", "registry",
             "screen", "skin", "snapshot", "stats", "systree",
             "tis", "tree", "trim",
             "zero"
@@ -219,6 +215,30 @@ public class TARDISDevCommand implements CommandExecutor {
                             }
                             return true;
                         }
+                        case "registry" -> {
+                            for (Villager.Profession p : Registry.VILLAGER_PROFESSION) {
+                                try {
+                                    plugin.debug(p.toString() + " " + plugin.getFromRegistry().getKeysKey(p));
+                                } catch (NoSuchElementException | NoSuchMethodError e) {
+
+                                }
+                            }
+                            for (Cat.Type c : Registry.CAT_VARIANT) {
+                                try {
+                                    plugin.debug(c.toString() + " " + plugin.getFromRegistry().getKeysKey(c));
+                                } catch (NoSuchElementException | NoSuchMethodError e) {
+
+                                }
+                            }
+                            for (Frog.Variant f : Registry.FROG_VARIANT) {
+                                try {
+                                    plugin.debug(f.toString() + " " + plugin.getFromRegistry().getKeysKey(f));
+                                } catch (NoSuchElementException | NoSuchMethodError e) {
+
+                                }
+                            }
+                            return true;
+                        }
                         case "skin" -> {
                             if (sender instanceof Player player) {
                                 plugin.getSkinChanger().remove(player);
@@ -282,7 +302,8 @@ public class TARDISDevCommand implements CommandExecutor {
                             case "key" -> new ComponentCommand(plugin).writeKey();
                             case "pack" -> new ResourcePackConverterCommand(plugin).process(sender, args);
                             case "extra" -> new ComponentCommand(plugin).writeExtra(sender);
-                            default -> {}
+                            default -> {
+                            }
                         }
                         return true;
                     }
