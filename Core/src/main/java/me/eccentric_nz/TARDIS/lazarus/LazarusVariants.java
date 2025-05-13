@@ -16,10 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.lazarus;
 
-import org.bukkit.entity.Chicken;
-import org.bukkit.entity.Cow;
-import org.bukkit.entity.Pig;
-import org.bukkit.entity.Wolf;
+import org.bukkit.entity.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -58,5 +55,47 @@ public class LazarusVariants {
         put("WARM", Pig.Variant.WARM);
     }};
 
+    public static final HashMap<String, Frog.Variant> FROG_VARIANTS = new HashMap<>() {{
+        put("COLD", Frog.Variant.COLD);
+        put("TEMPERATE", Frog.Variant.TEMPERATE);
+        put("WARM", Frog.Variant.WARM);
+    }};
+
     public static final List<String> NAMES = List.of("COLD", "TEMPERATE", "WARM");
+
+    public static final HashMap<String, Cat.Type> CAT_VARIANTS = new HashMap<>() {{
+        put("ALL_BLACK", Cat.Type.ALL_BLACK);
+        put("BLACK", Cat.Type.BLACK);
+        put("BRITISH_SHORTHAIR", Cat.Type.BRITISH_SHORTHAIR);
+        put("CALICO", Cat.Type.CALICO);
+        put("JELLIE", Cat.Type.JELLIE);
+        put("PERSIAN", Cat.Type.PERSIAN);
+        put("RAGDOLL", Cat.Type.RAGDOLL);
+        put("RED", Cat.Type.RED);
+        put("SIAMESE", Cat.Type.SIAMESE);
+        put("TABBY", Cat.Type.TABBY);
+        put("WHITE", Cat.Type.WHITE);
+    }};
+
+    public static final List<String> CAT_NAMES = List.of("ALL_BLACK", "BLACK", "BRITISH_SHORTHAIR", "CALICO", "JELLIE", "PERSIAN", "RAGDOLL", "RED", "SIAMESE", "TABBY", "WHITE");
+
+    public static final HashMap<String, Villager.Profession> PROFESSIONS = new HashMap<>() {{
+        put("ARMORER", Villager.Profession.ARMORER);
+        put("BUTCHER", Villager.Profession.BUTCHER);
+        put("CARTOGRAPHER", Villager.Profession.CARTOGRAPHER);
+        put("CLERIC", Villager.Profession.CLERIC);
+        put("FARMER", Villager.Profession.FARMER);
+        put("FISHERMAN", Villager.Profession.FISHERMAN);
+        put("FLETCHER", Villager.Profession.FLETCHER);
+        put("LEATHERWORKER", Villager.Profession.LEATHERWORKER);
+        put("LIBRARIAN", Villager.Profession.LIBRARIAN);
+        put("MASON", Villager.Profession.MASON);
+        put("NITWIT", Villager.Profession.NITWIT);
+        put("NONE", Villager.Profession.NONE);
+        put("SHEPHERD", Villager.Profession.SHEPHERD);
+        put("TOOLSMITH", Villager.Profession.TOOLSMITH);
+        put("WEAPONSMITH", Villager.Profession.WEAPONSMITH);
+    }};
+
+    public static final List<String> PROFESSION_NAMES = List.of("ARMORER", "BUTCHER", "CARTOGRAPHER", "CLERIC", "FARMER", "FISHERMAN", "FLETCHER", "LEATHERWORKER", "LIBRARIAN", "MASON", "NITWIT", "NONE", "SHEPHERD", "TOOLSMITH", "WEAPONSMITH");
 }

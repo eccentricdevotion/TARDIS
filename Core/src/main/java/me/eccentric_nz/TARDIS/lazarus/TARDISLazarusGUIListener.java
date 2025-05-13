@@ -37,8 +37,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
-import org.bukkit.entity.Cat.Type;
-import org.bukkit.entity.Villager.Profession;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -540,7 +538,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                 } else {
                     o = 0;
                 }
-                t = Frog.Variant.values()[o].toString();
+                t = LazarusVariants.NAMES.get(o);
                 frogs.put(uuid, o);
             }
             case "AXOLOTL" -> {
@@ -613,7 +611,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                 } else {
                     o = 0;
                 }
-                t = Type.values()[o].toString();
+                t = LazarusVariants.CAT_NAMES.get(o);
                 cats.put(uuid, o);
             }
             case "FOX" -> {
@@ -649,7 +647,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                 } else {
                     o = 1;
                 }
-                t = Profession.values()[o].toString();
+                t = LazarusVariants.PROFESSION_NAMES.get(o);
                 professions.put(uuid, o);
             }
             case "SLIME", "MAGMA_CUBE" -> {
@@ -767,21 +765,13 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     private Frog.Variant getFrogVariant(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
-        try {
-            return Frog.Variant.valueOf(im.getLore().getFirst());
-        } catch (IllegalArgumentException e) {
-            return Frog.Variant.TEMPERATE;
-        }
+        return LazarusVariants.FROG_VARIANTS.getOrDefault(im.getLore().getFirst(), Frog.Variant.TEMPERATE);
     }
 
-    private Type getCatType(InventoryView i) {
+    private Cat.Type getCatType(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
-        try {
-            return Type.valueOf(im.getLore().getFirst());
-        } catch (IllegalArgumentException e) {
-            return Type.TABBY;
-        }
+        return LazarusVariants.CAT_VARIANTS.getOrDefault(im.getLore().getFirst(), Cat.Type.TABBY);
     }
 
     private Fox.Type getFoxType(InventoryView i) {
@@ -827,51 +817,31 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     private Wolf.Variant getWolfVariant(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
-        try {
-            return LazarusVariants.WOLF_VARIANTS.get(im.getLore().getFirst());
-        } catch (IllegalArgumentException e) {
-            return Wolf.Variant.PALE;
-        }
+        return LazarusVariants.WOLF_VARIANTS.getOrDefault(im.getLore().getFirst(), Wolf.Variant.PALE);
     }
 
     private Chicken.Variant getChickenVariant(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
-        try {
-            return LazarusVariants.CHICKEN_VARIANTS.get(im.getLore().getFirst());
-        } catch (IllegalArgumentException e) {
-            return Chicken.Variant.TEMPERATE;
-        }
+        return LazarusVariants.CHICKEN_VARIANTS.getOrDefault(im.getLore().getFirst(), Chicken.Variant.TEMPERATE);
     }
 
     private Cow.Variant getCowVariant(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
-        try {
-            return LazarusVariants.COW_VARIANTS.get(im.getLore().getFirst());
-        } catch (IllegalArgumentException e) {
-            return Cow.Variant.TEMPERATE;
-        }
+        return LazarusVariants.COW_VARIANTS.getOrDefault(im.getLore().getFirst(), Cow.Variant.TEMPERATE);
     }
 
     private Pig.Variant getPigVariant(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
-        try {
-            return LazarusVariants.PIG_VARIANTS.get(im.getLore().getFirst());
-        } catch (IllegalArgumentException e) {
-            return Pig.Variant.TEMPERATE;
-        }
+        return LazarusVariants.PIG_VARIANTS.getOrDefault(im.getLore().getFirst(), Pig.Variant.TEMPERATE);
     }
 
-    private Profession getProfession(InventoryView i) {
+    private Villager.Profession getProfession(InventoryView i) {
         ItemStack is = i.getItem(48);
         ItemMeta im = is.getItemMeta();
-        try {
-            return Profession.valueOf(im.getLore().getFirst());
-        } catch (IllegalArgumentException e) {
-            return Profession.FARMER;
-        }
+        return LazarusVariants.PROFESSIONS.getOrDefault(im.getLore().getFirst(), Villager.Profession.FARMER);
     }
 
     private int getSlimeSize(InventoryView i) {
