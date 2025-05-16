@@ -49,36 +49,6 @@ public class TARDISWeepingAngelsMonstersInventory {
             ItemStack mon = new ItemStack(monster.getMaterial(), 1);
             ItemMeta ster = mon.getItemMeta();
             ster.setDisplayName(monster.getName());
-//            NamespacedKey model = null;
-//            switch (monster) {
-//                case CLOCKWORK_DROID -> model = DroidVariant.BUTTON_CLOCKWORK_DROID.getKey();
-//                case CYBERMAN -> model = CybermanVariant.BUTTON_CYBERMAN.getKey();
-//                case DALEK -> model = DalekVariant.BUTTON_DALEK.getKey();
-//                case DALEK_SEC -> model = DalekSecVariant.BUTTON_DALEK_SEC.getKey();
-//                case DAVROS -> model = DavrosVariant.BUTTON_DAVROS.getKey();
-//                case EMPTY_CHILD -> model = EmptyChildVariant.BUTTON_EMPTY_CHILD.getKey();
-//                case HATH -> model = HathVariant.BUTTON_HATH.getKey();
-//                case HEADLESS_MONK -> model = MonkVariant.BUTTON_HEADLESS_MONK.getKey();
-//                case ICE_WARRIOR -> model = IceWarriorVariant.BUTTON_ICE_WARRIOR.getKey();
-//                case JUDOON -> model = JudoonVariant.BUTTON_JUDOON.getKey();
-//                case K9 -> model = K9Variant.BUTTON_K9.getKey();
-//                case MIRE -> model = MireVariant.BUTTON_THE_MIRE.getKey();
-//                case OOD -> model = OodVariant.BUTTON_OOD.getKey();
-//                case OSSIFIED -> model = OssifiedVariant.BUTTON_OSSIFIED.getKey();
-//                case RACNOSS -> model = RacnossVariant.BUTTON_RACNOSS.getKey();
-//                case SCARECROW -> model = ScarecrowVariant.BUTTON_SCARECROW.getKey();
-//                case SEA_DEVIL -> model = SeaDevilVariant.BUTTON_SEA_DEVIL.getKey();
-//                case SILENT -> model = SilentVariant.BUTTON_SILENT.getKey();
-//                case SILURIAN -> model = SilurianVariant.BUTTON_SILURIAN.getKey();
-//                case SLITHEEN -> model = SlitheenVariant.BUTTON_SLITHEEN.getKey();
-//                case SONTARAN -> model = SontaranVariant.BUTTON_SONTARAN.getKey();
-//                case STRAX -> model = StraxVariant.BUTTON_STRAX.getKey();
-//                case SYCORAX -> model = SycoraxVariant.BUTTON_SYCORAX.getKey();
-//                case TOCLAFANE -> model = ToclafaneVariant.BUTTON_TOCLAFANE.getKey();
-//                case VASHTA_NERADA -> model = VashtaNeradaVariant.BUTTON_VASHTA_NERADA.getKey();
-//                case WEEPING_ANGEL -> model = WeepingAngelVariant.BUTTON_WEEPING_ANGEL.getKey();
-//                case ZYGON -> model = ZygonVariant.BUTTON_ZYGON.getKey();
-//            }
             mon.setItemMeta(ster);
             stacks[i] = mon;
             i++;

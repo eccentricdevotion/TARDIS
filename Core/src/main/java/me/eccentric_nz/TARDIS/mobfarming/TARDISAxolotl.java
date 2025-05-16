@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.mobfarming;
 
 import org.bukkit.entity.Axolotl;
+import org.bukkit.entity.EntityType;
 
 /**
  * The smiling axolotl is hard to beat. This little salamander, which is perpetually in a larval state
@@ -29,6 +30,10 @@ import org.bukkit.entity.Axolotl;
  * @author eccentric_nz
  */
 class TARDISAxolotl extends TARDISMob {
+
+    public TARDISAxolotl() {
+        super.setType(EntityType.AXOLOTL);
+    }
 
     private Axolotl.Variant axolotlVariant;
 

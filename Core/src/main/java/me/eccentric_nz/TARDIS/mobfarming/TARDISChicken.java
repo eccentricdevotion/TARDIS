@@ -16,31 +16,31 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
-import org.bukkit.entity.Parrot.Variant;
-
-import java.util.UUID;
+import org.bukkit.entity.Chicken;
+import org.bukkit.entity.EntityType;
 
 /**
+ * Alien is a broad, subjective term. It can be applied as a noun or an adjective for any entity, object, place or
+ * practice which is not familiar. When referring to entities, it is used for sentient and non-sentient organic
+ * creatures, as well as robots.
+ * <p>
+ * Data storage class for TARDIS chicken.
+ *
  * @author eccentric_nz
  */
-public class TARDISPet extends TARDISMob {
+class TARDISChicken extends TARDISMob {
 
-    private UUID owner;
-    private boolean sitting; // used by parrots, cats and wolves
-
-    public UUID getOwner() {
-        return owner;
+    public TARDISChicken() {
+        super.setType(EntityType.CHICKEN);
     }
 
-    public void setOwner(UUID owner) {
-        this.owner = owner;
+    private Chicken.Variant chickenVariant;
+
+    public Chicken.Variant getChickenVariant() {
+        return chickenVariant;
     }
 
-    public boolean getSitting() {
-        return sitting;
-    }
-
-    void setSitting(boolean sitting) {
-        this.sitting = sitting;
+    public void setChickenVariant(Chicken.Variant chickenVariant) {
+        this.chickenVariant = chickenVariant;
     }
 }

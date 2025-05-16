@@ -25,10 +25,12 @@ import org.bukkit.inventory.ItemStack;
  * Alien is a broad, subjective term. It can be applied as a noun or an adjective for any entity, object, place or
  * practice which is not familiar. When referring to entities, it is used for sentient and non-sentient organic
  * creatures, as well as robots.
+ * <p>
+ * Data storage class for TARDIS horse.
  *
  * @author eccentric_nz
  */
-public class TARDISHorse extends TARDISMob {
+public class TARDISHorse extends TARDISPet {
 
     private Color horsecolor;
     private Style horsestyle;

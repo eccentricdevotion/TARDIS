@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Rabbit;
 
 /**
@@ -28,6 +29,10 @@ import org.bukkit.entity.Rabbit;
  * @author eccentric_nz
  */
 class TARDISRabbit extends TARDISMob {
+
+    public TARDISRabbit() {
+        super.setType(EntityType.RABBIT);
+    }
 
     private Rabbit.Type bunnyType;
 

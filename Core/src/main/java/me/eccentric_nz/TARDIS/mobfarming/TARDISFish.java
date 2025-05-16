@@ -17,11 +17,17 @@
 package me.eccentric_nz.TARDIS.mobfarming;
 
 import org.bukkit.DyeColor;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.TropicalFish;
 
 public class TARDISFish extends TARDISMob {
 
+    public TARDISFish() {
+        super.setType(EntityType.TROPICAL_FISH);
+    }
+
     private TropicalFish.Pattern pattern;
+    private DyeColor bodyColour;
     private DyeColor patternColour;
 
     public TropicalFish.Pattern getPattern() {
@@ -30,6 +36,14 @@ public class TARDISFish extends TARDISMob {
 
     public void setPattern(TropicalFish.Pattern pattern) {
         this.pattern = pattern;
+    }
+
+    public DyeColor getBodyColour() {
+        return bodyColour;
+    }
+
+    public void setBodyColour(DyeColor bodyColour) {
+        this.bodyColour = bodyColour;
     }
 
     DyeColor getPatternColour() {

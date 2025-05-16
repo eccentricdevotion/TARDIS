@@ -16,40 +16,41 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
+import org.bukkit.DyeColor;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Pig;
+import org.bukkit.entity.Wolf;
 
 /**
  * Alien is a broad, subjective term. It can be applied as a noun or an adjective for any entity, object, place or
  * practice which is not familiar. When referring to entities, it is used for sentient and non-sentient organic
  * creatures, as well as robots.
  * <p>
- * Data storage class for TARDIS pig.
+ * Data storage class for TARDIS wolf.
  *
  * @author eccentric_nz
  */
-class TARDISPig extends TARDISMob {
+public class TARDISWolf extends TARDISPet {
 
-    public TARDISPig() {
-        super.setType(EntityType.PIG);
+    public TARDISWolf() {
+        super.setType(EntityType.WOLF);
     }
 
-    private boolean saddled;
-    private Pig.Variant pigVariant;
+    private Wolf.Variant wolfVariant;
+    private DyeColor collarColour;
 
-    boolean isSaddled() {
-        return saddled;
+    public Wolf.Variant getWolfVariant() {
+        return wolfVariant;
     }
 
-    void setSaddled(boolean saddled) {
-        this.saddled = saddled;
+    public void setWolfVariant(Wolf.Variant wolfVariant) {
+        this.wolfVariant = wolfVariant;
     }
 
-    public Pig.Variant getPigVariant() {
-        return pigVariant;
+    public DyeColor getCollarColour() {
+        return collarColour;
     }
 
-    public void setPigVariant(Pig.Variant pigVariant) {
-        this.pigVariant = pigVariant;
+    public void setCollarColour(DyeColor collarColour) {
+        this.collarColour = collarColour;
     }
 }

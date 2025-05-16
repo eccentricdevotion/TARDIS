@@ -16,10 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
+import org.bukkit.entity.EntityType;
+
 /**
  * According to the Fourth Doctor, bees are "insects with stings on their tails", and a non-sentient species found on
  * Earth. They are domesticated by humans for the production of honey, and even an average human like Donna Noble knows
  * that they experienced a profound global downturn in their population during the early 21st century.
+ * <p>
+ * Data storage class for TARDIS bee.
  */
 public class TARDISBee extends TARDISMob {
 
@@ -31,6 +35,7 @@ public class TARDISBee extends TARDISMob {
      * Data storage class for TARDIS bee.
      */
     TARDISBee() {
+        super.setType(EntityType.BEE);
     }
 
     boolean hasNectar() {

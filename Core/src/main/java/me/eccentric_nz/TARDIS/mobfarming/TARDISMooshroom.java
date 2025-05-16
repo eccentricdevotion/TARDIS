@@ -16,17 +16,22 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
-import org.bukkit.entity.MushroomCow.Variant;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.MushroomCow;
 
 class TARDISMooshroom extends TARDISMob {
 
-    private Variant variant;
-
-    Variant getVariant() {
-        return variant;
+    public TARDISMooshroom() {
+        super.setType(EntityType.MOOSHROOM);
     }
 
-    void setVariant(Variant variant) {
-        this.variant = variant;
+    private MushroomCow.Variant mushroomVariant;
+
+    MushroomCow.Variant getMushroomVariant() {
+        return mushroomVariant;
+    }
+
+    void setMushroomVariant(MushroomCow.Variant mushroomVariant) {
+        this.mushroomVariant = mushroomVariant;
     }
 }

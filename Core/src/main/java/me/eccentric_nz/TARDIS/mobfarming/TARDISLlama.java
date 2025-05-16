@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Llama;
 import org.bukkit.inventory.ItemStack;
 
@@ -23,6 +24,8 @@ import org.bukkit.inventory.ItemStack;
  * Alien is a broad, subjective term. It can be applied as a noun or an adjective for any entity, object, place or
  * practice which is not familiar. When referring to entities, it is used for sentient and non-sentient organic
  * creatures, as well as robots.
+ * <p>
+ * Data storage class for TARDIS llama.
  *
  * @author eccentric_nz
  */
@@ -36,6 +39,7 @@ public class TARDISLlama extends TARDISHorse {
      * Data storage class for TARDIS Llama.
      */
     public TARDISLlama() {
+        super.setType(EntityType.LLAMA);
     }
 
     public Llama.Color getLlamacolor() {

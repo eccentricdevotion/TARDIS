@@ -17,39 +17,42 @@
 package me.eccentric_nz.TARDIS.mobfarming;
 
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Pig;
+import org.bukkit.entity.Parrot;
 
 /**
- * Alien is a broad, subjective term. It can be applied as a noun or an adjective for any entity, object, place or
- * practice which is not familiar. When referring to entities, it is used for sentient and non-sentient organic
- * creatures, as well as robots.
- * <p>
- * Data storage class for TARDIS pig.
- *
  * @author eccentric_nz
  */
-class TARDISPig extends TARDISMob {
+public class TARDISParrot extends TARDISPet {
 
-    public TARDISPig() {
-        super.setType(EntityType.PIG);
+    public TARDISParrot() {
+        super.setType(EntityType.PARROT);
     }
 
-    private boolean saddled;
-    private Pig.Variant pigVariant;
+    private Parrot.Variant parrotVariant;
+    private boolean onLeftShoulder;
+    private boolean onRightShoulder;
 
-    boolean isSaddled() {
-        return saddled;
+    public Parrot.Variant getParrotVariant() {
+        return parrotVariant;
     }
 
-    void setSaddled(boolean saddled) {
-        this.saddled = saddled;
+    void setParrotVariant(Parrot.Variant parrotVariant) {
+        this.parrotVariant = parrotVariant;
     }
 
-    public Pig.Variant getPigVariant() {
-        return pigVariant;
+    public boolean isOnLeftShoulder() {
+        return onLeftShoulder;
     }
 
-    public void setPigVariant(Pig.Variant pigVariant) {
-        this.pigVariant = pigVariant;
+    void setOnLeftShoulder(boolean onLeftShoulder) {
+        this.onLeftShoulder = onLeftShoulder;
+    }
+
+    public boolean isOnRightShoulder() {
+        return onRightShoulder;
+    }
+
+    void setOnRightShoulder(boolean onRightShoulder) {
+        this.onRightShoulder = onRightShoulder;
     }
 }

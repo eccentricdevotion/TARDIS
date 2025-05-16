@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
@@ -29,6 +30,10 @@ import java.util.UUID;
  * @author eccentric_nz
  */
 class TARDISAllay extends TARDISMob {
+
+    public TARDISAllay() {
+        super.setType(EntityType.ALLAY);
+    }
 
     private UUID likedPlayer;
     private boolean canDuplicate;

@@ -16,9 +16,14 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Panda;
 
 public class TARDISPanda extends TARDISMob {
+
+    public TARDISPanda() {
+        super.setType(EntityType.PANDA);
+    }
 
     private Panda.Gene mainGene;
     private Panda.Gene hiddenGene;

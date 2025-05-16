@@ -16,6 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Frog;
 
 /**
@@ -24,11 +25,15 @@ import org.bukkit.entity.Frog;
  * after being paralyzed. They can regrow their limbs, eyes, tails, and parts of the heart. You can induce a stroke in
  * an axolotl and part of its brain will grow back.
  * <p>
- * Data storage class for TARDIS axolotl.
+ * Data storage class for TARDIS frog.
  *
  * @author eccentric_nz
  */
 class TARDISFrog extends TARDISMob {
+
+    public TARDISFrog() {
+        super.setType(EntityType.FROG);
+    }
 
     private Frog.Variant frogVariant;
 
