@@ -267,8 +267,6 @@ public class TARDISDisplayItemUtils {
         ItemStack is = new ItemStack(material, 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + tdi.getDisplayName());
-//        if (tdi.getCustomModel() != null) {
-//        }
         im.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, tdi.getCustomModel().getKey());
         is.setItemMeta(im);
         double ay = (tdi == TARDISDisplayItem.DOOR || tdi == TARDISDisplayItem.CLASSIC_DOOR || tdi == TARDISDisplayItem.BONE_DOOR) ? 0.0d : 0.5d;

@@ -80,10 +80,6 @@ public class TARDISSmithingListener implements Listener {
                 }
                 ItemMeta sim = sonic.getItemMeta();
                 CustomModelDataComponent component = sim.getCustomModelDataComponent();
-//                NamespacedKey model = SonicVariant.ELEVENTH.getKey();
-//                if (sim.hasItemModel()) {
-//                    model = sim.getItemModel();
-//                }
                 String dn = sim.getDisplayName();
                 List<String> lore;
                 if (sim.hasLore()) {

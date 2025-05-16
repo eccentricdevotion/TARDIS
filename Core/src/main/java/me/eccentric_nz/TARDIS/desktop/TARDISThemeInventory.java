@@ -75,8 +75,6 @@ public class TARDISThemeInventory {
                 lore.add(ChatColor.GREEN + plugin.getLanguage().getString("REMEMBER"));
             }
             im.setLore(lore);
-//            switch (m) {
-//            }
             is.setItemMeta(im);
         }
         return is;

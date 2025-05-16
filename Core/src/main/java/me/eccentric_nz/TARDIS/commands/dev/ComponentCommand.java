@@ -361,15 +361,6 @@ public class ComponentCommand {
                 plugin.debug("null key for " + skin.name());
             }
         }
-//        for (Skin skin : DoctorSkins.DOCTORS) {
-//            switch (skin.name()) {
-//                default -> {
-//                    continue;
-//                }
-//            }
-//            // write file
-//            writeFile(plugin.getConsole(), material, key.getKey(), skin.name());
-//        }
         for (Skin skin : MonsterSkins.MONSTERS) {
             material = "leather";
             switch (skin.name()) {

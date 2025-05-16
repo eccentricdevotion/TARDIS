@@ -103,8 +103,6 @@ public class TARDISShellInventory {
                     lore.add(ChatColor.AQUA + "Active shell");
                 }
                 con.setLore(lore);
-//                if (material == Material.BOWL) {
-//                }
                 con.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.INTEGER, TARDISNumberParsers.parseInt(map.get("chameleon_id")));
                 saved.setItemMeta(con);
                 stacks[i] = saved;

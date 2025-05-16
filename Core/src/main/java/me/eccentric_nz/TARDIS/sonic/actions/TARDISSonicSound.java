@@ -39,11 +39,6 @@ public class TARDISSonicSound {
         if ((!timeout.containsKey(player.getUniqueId()) || timeout.get(player.getUniqueId()) < now)) {
             ItemMeta im = player.getInventory().getItemInMainHand().getItemMeta();
             // change model to 'on/open', then after scheduled time change back to 'off/closed' model
-//            List<Float> sonicModel = SonicScrewdriverRecipe.sonicModelLookup.getOrDefault(plugin.getConfig().getString("sonic.default_model").toLowerCase(Locale.ROOT), SonicVariant.ELEVENTH.getFloats());
-//            CustomModelDataComponent component =
-//            if (im.hasC) {
-//                sonicModel = im.getItemModel();
-//            }
             CustomModelDataComponent component = im.getCustomModelDataComponent();
             float f;
             try {

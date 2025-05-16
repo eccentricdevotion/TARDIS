@@ -139,11 +139,6 @@ public class TARDISConsoleListener implements Listener {
                                         }
                                     }
                                 }
-//                                else if (TARDISStaticUtils.isMusicDisk(circuit)) {
-//                                    switch (circuit.getType()) {
-//                                    }
-//                                    circuit.setItemMeta(cm);
-//                                }
                             }
                         }
                         inv.setContents(stack);

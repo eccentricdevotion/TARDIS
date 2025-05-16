@@ -63,11 +63,6 @@ public class TARDISItemRenamer {
                 im.setLore(lore);
                 im.getPersistentDataContainer().set(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID(), player.getUniqueId());
             }
-//            try {
-//                RecipeItem recipeItem = RecipeItem.valueOf(TARDISStringUtils.toScoredUppercase(name));
-//            } catch (IllegalArgumentException e) {
-//                // do nothing
-//            }
             itemStack.setItemMeta(im);
         }
     }

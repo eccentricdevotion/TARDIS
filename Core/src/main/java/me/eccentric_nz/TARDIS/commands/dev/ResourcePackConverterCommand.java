@@ -240,15 +240,6 @@ public class ResourcePackConverterCommand {
             for (Field field : GUIChameleon.class.getDeclaredFields()) {
                 writeFromField(sender, field);
             }
-//            for (GUIConfiguration field : GUIConfiguration.values()) {
-//                String material = field.getMaterial().toString().toLowerCase(Locale.ROOT);
-//                if (field.getOnFloats() != null) {
-//                    writeShortFile(sender, material, field.getOnFloats().getKey());
-//                }
-//                if (field.getOffFloats() != null) {
-//                    writeShortFile(sender, material, field.getOffFloats().getKey());
-//                }
-//            }
             for (Field field : GUIMap.class.getDeclaredFields()) {
                 writeFromField(sender, field);
             }
@@ -272,15 +263,6 @@ public class ResourcePackConverterCommand {
             for (Field field : GUIChameleonHelp.class.getDeclaredFields()) {
                 writeFromField(sender, field);
             }
-//            for (GUIPlayerPreferences field : GUIPlayerPreferences.values()) {
-//                String material = field.getMaterial().toString().toLowerCase(Locale.ROOT);
-//                if (field.getOnModel() != null) {
-//                    writeShortFile(sender, material, field.getOnModel().getKey());
-//                }
-//                if (field.getOffModel() != null) {
-//                    writeShortFile(sender, material, field.getOffModel().getKey());
-//                }
-//            }
             for (GUITemporalLocator field : GUITemporalLocator.values()) {
                 if (field.getModel() != null) {
                     writeShortFile(sender, field.getMaterial().toString().toLowerCase(Locale.ROOT), field.getModel().getKey());

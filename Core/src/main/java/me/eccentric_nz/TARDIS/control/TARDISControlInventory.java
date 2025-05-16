@@ -146,10 +146,6 @@ public class TARDISControlInventory {
         CustomModelDataComponent pdcomponent = dwn.getCustomModelDataComponent();
         pdcomponent.setFloats(!open ? SwitchVariant.BUTTON_POWER_OFF.getFloats() : SwitchVariant.BUTTON_POWER_ON.getFloats());
         dwn.setCustomModelDataComponent(pdcomponent);
-//        NamespacedKey pcmd = GUIControlCentre.BUTTON_POWER.key();
-//        if (power_onoff.equals(off)) {
-//            pcmd = SwitchVariant.BUTTON_POWER_OFF.getKey();
-//        }
         pow.setItemMeta(dwn);
         // light
         ItemStack lig = new ItemStack(GUIControlCentre.BUTTON_LIGHTS.material(), 1);
@@ -162,10 +158,6 @@ public class TARDISControlInventory {
         ItemMeta gle = tog.getItemMeta();
         gle.setDisplayName(plugin.getLanguage().getString("BUTTON_TOGGLE"));
         gle.setLore(List.of(toggle_openclosed));
-//        NamespacedKey tcmd = GUIControlCentre.BUTTON_TOGGLE.key();
-//        if (!open) {
-//            tcmd = SwitchVariant.BUTTON_TOGGLE_OFF.getKey();
-//        }
         CustomModelDataComponent twcomponent = gle.getCustomModelDataComponent();
         twcomponent.setFloats(!open ? SwitchVariant.BUTTON_TOGGLE_OFF.getFloats() : SwitchVariant.BUTTON_TOGGLE_ON.getFloats());
         gle.setCustomModelDataComponent(twcomponent);
@@ -188,10 +180,6 @@ public class TARDISControlInventory {
         ItemMeta mode = siege.getItemMeta();
         mode.setDisplayName(plugin.getLanguage().getString("BUTTON_SIEGE"));
         mode.setLore(List.of(siege_onoff));
-//        NamespacedKey scmd = GUIControlCentre.BUTTON_SIEGE.key();
-//        if (siege_onoff.equals(off)) {
-//            scmd = SwitchVariant.SIEGE_OFF.getKey();
-//        }
         CustomModelDataComponent smcomponent = mode.getCustomModelDataComponent();
         smcomponent.setFloats(siege_onoff.equals(off)? SwitchVariant.SIEGE_OFF.getFloats(): SwitchVariant.SIEGE_ON.getFloats());
         mode.setCustomModelDataComponent(smcomponent);

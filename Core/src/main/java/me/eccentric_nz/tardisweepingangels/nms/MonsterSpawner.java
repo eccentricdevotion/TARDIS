@@ -41,8 +41,6 @@ public class MonsterSpawner {
             case JUDOON -> new TWAJudoon(world);
             default -> new TWAK9(world);
         };
-//        EntityReference<net.minecraft.world.entity.LivingEntity> reference = (follower.getOwner() != null) ? new EntityReference<>(follower.getOwner()) : null;
-//        entity.setOwnerReference(reference);
         entity.setPosRaw(location.getX(), location.getY(), location.getZ());
         entity.setPersistenceRequired();
         world.addFreshEntity(entity, CreatureSpawnEvent.SpawnReason.CUSTOM);

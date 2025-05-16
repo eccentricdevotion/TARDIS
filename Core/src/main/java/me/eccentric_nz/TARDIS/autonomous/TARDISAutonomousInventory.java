@@ -70,8 +70,6 @@ public class TARDISAutonomousInventory {
             ItemStack is = new ItemStack(a.getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
             im.setDisplayName(a.getName().contains("Selected") ? ChatColor.GREEN + plugin.getLanguage().getString("SET_ON") : a.getName());
-//            if (a.getModel() != null) {
-//            }
             if (a == GUIAutonomous.AUTONOMOUS_TYPE) {
                 CustomModelDataComponent component = im.getCustomModelDataComponent();
                 component.setFloats(SwitchVariant.AUTO_TYPE.getFloats());

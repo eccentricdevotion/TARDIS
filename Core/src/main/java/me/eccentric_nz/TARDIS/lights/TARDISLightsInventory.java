@@ -179,10 +179,6 @@ public class TARDISLightsInventory {
         CustomModelDataComponent lscomponent = swi.getCustomModelDataComponent();
         lscomponent.setFloats(lights_onoff.equals(off) ? SwitchVariant.BUTTON_LIGHTS_OFF.getFloats() : SwitchVariant.BUTTON_LIGHTS_ON.getFloats());
         swi.setCustomModelDataComponent(lscomponent);
-//        NamespacedKey lcmd = GUILights.LIGHT_SWITCH.key();
-//        if (lights_onoff.equals(off)) {
-//            lcmd = SwitchVariant.BUTTON_LIGHTS_OFF.getKey();
-//        }
         CustomModelDataComponent lcomponent = swi.getCustomModelDataComponent();
         lcomponent.setFloats((lights_onoff.equals(off)) ? SwitchVariant.BUTTON_LIGHTS_OFF.getFloats(): SwitchVariant.BUTTON_LIGHTS_ON.getFloats());
         swi.setCustomModelDataComponent(lcomponent);

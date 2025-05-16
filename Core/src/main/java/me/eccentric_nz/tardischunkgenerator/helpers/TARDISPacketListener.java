@@ -73,14 +73,6 @@ public class TARDISPacketListener {
     public static void injectPlayer(Player player) {
         ChannelDuplexHandler channelDuplexHandler = new ChannelDuplexHandler() {
 
-//            @Override
-//            public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
-//                if (packet instanceof ServerboundPlayerInputPacket steerPacket) {
-//
-//                }
-//                super.channelRead(channelHandlerContext, packet);
-//            }
-
             @Override
             public void write(ChannelHandlerContext channelHandlerContext, Object packet, ChannelPromise channelPromise) throws Exception {
                 if (packet instanceof ClientboundAddEntityPacket namedEntitySpawn && !TARDIS.plugin.getServer().getPluginManager().isPluginEnabled("LibsDisguises")) {

@@ -99,17 +99,11 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         }
     }
 
-//    private void setModel(ItemStack is, NamespacedKey key) {
-//        ItemMeta im = is.getItemMeta();
-//        is.setItemMeta(im);
-//    }
-
     private void setShape(InventoryView view, int slot, String display, UUID uuid) {
         for (int s = 1; s < 8; s++) {
             ItemStack is = view.getItem(s);
             if (is != null) {
                 is.setType(s == slot ? Material.LAPIS_ORE : Material.LAPIS_LAZULI);
-//                setModel(is, s == slot ? ParticleItem.SHAPE_SELECTED.getKey() : ParticleItem.SHAPE.getKey());
                 view.setItem(s, is);
             }
         }

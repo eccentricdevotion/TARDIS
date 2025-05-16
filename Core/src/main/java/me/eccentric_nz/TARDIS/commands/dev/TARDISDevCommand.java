@@ -152,12 +152,6 @@ public class TARDISDevCommand implements CommandExecutor {
                         }
                         case "give" -> {
                             if (sender instanceof Player player) {
-//                                ItemStack ran = new ItemStack(GUIControlCentre.BUTTON_RANDOM.material(), 1);
-//                                ItemMeta dom = ran.getItemMeta();
-//                                dom.setDisplayName(ChatColor.MAGIC + "ran" + ChatColor.RESET + plugin.getLanguage().getString("BUTTON_RANDOM") + ChatColor.MAGIC + "dom");
-//                                ran.setItemMeta(dom);
-//                                player.getInventory().addItem(ran);
-//                                new ComponentCommand(plugin).writeARS();
                                 new StorageContents(plugin).give(player);
                             }
                             return true;
@@ -372,8 +366,6 @@ public class TARDISDevCommand implements CommandExecutor {
                                 }
                                 plugin.getSkinChanger().set(player, which);
                             } else {
-//                                SkinUtils.debug(player);
-//                                SkinUtils.setSkinModel(player, true);
                                 ItemStack[] items = new TVInventory().getMenu();
                                 Inventory tvinv = plugin.getServer().createInventory(player, 36, ChatColor.DARK_RED + "TARDIS Television");
                                 tvinv.setContents(items);

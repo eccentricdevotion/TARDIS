@@ -258,9 +258,6 @@ public class TARDISRecipeCommands implements CommandExecutor {
         ItemStack result = recipe.getResult();
         ItemMeta im = result.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + str);
-//        RecipeItem recipeItem = RecipeItem.getByName(str);
-//        if (recipeItem != RecipeItem.NOT_FOUND) {
-//        }
         if (str.equals("TARDIS Invisibility Circuit")) {
             // set the second line of lore
             List<String> lore = im.getLore();

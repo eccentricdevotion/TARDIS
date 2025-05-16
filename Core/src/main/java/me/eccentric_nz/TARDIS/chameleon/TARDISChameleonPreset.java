@@ -281,15 +281,6 @@ public class TARDISChameleonPreset {
         for (int col = 0; col < 10; col++) {
             for (int block = 0; block < 4; block++) {
                 data[col][block] = TARDISBlockDataRotator.rotate(data[col][block], d);
-//                if (data[col][block] instanceof Directional) {
-//                    data[col][block] = new TARDISDirectionalRecalculator().recalculate(data[col][block], d);
-//                } else if (data[col][block] instanceof Rail) {
-//                    data[col][block] = new TARDISRailRecalculator().recalculate(data[col][block], d);
-//                } else if (data[col][block] instanceof Rotatable) {
-//                    data[col][block] = new TARDISRotatableRecalculator().recalculate(data[col][block], d);
-//                } else if (data[col][block] instanceof MultipleFacing) {
-//                    data[col][block] = new TARDISMultipleFacingRecalculator().recalculate(data[col][block], d);
-//                }
             }
         }
         return data;

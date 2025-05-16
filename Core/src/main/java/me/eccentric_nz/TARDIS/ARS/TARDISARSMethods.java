@@ -58,8 +58,6 @@ public class TARDISARSMethods {
     final HashMap<UUID, Integer> ids = new HashMap<>();
     final List<UUID> hasLoadedMap = new ArrayList<>();
     private final String[] levels = new String[]{"Bottom level", "Main level", "Top level"};
-//    private final NamespacedKey[] activeLevelKeys = new NamespacedKey[]{Wool.LEVEL_BOTTOM_ACTIVE.getKey(), Wool.LEVEL_MAIN_ACTIVE.getKey(), Wool.LEVEL_TOP_ACTIVE.getKey()};
-//    private final NamespacedKey[] inactiveLevelKeys = new NamespacedKey[]{Wool.LEVEL_BOTTOM.getKey(), Wool.LEVEL_MAIN.getKey(), Wool.LEVEL_TOP.getKey()};
 
     TARDISARSMethods(TARDIS plugin) {
         this.plugin = plugin;

@@ -31,8 +31,6 @@ import org.bukkit.entity.*;
 public class TARDISMob {
 
     private EntityType type;
-    //    private Cat.Type catType; // should be moved to TARDISCat.java
-//    private Wolf.Variant wolfType;
     private int age;
     private double health;
     private boolean baby;
