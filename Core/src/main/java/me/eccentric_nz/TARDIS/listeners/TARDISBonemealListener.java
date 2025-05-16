@@ -43,6 +43,7 @@ public class TARDISBonemealListener implements Listener {
         smallFlowers = new ArrayList<>(Tag.SMALL_FLOWERS.getValues());
         smallFlowers.remove(Material.WITHER_ROSE);
         smallFlowers.remove(Material.TORCHFLOWER);
+        smallFlowers.remove(Material.WILDFLOWERS);
     }
 
     @EventHandler(ignoreCancelled = true)
