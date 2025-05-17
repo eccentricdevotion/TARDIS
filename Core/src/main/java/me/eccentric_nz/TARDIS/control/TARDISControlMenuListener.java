@@ -120,7 +120,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
         }
         if (!tardis.isHandbrakeOn()) {
             switch (slot) {
-                case 2, 4, 11, 13, 40 -> {
+                case 4, 11, 13, 40 -> {
                     if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_TRAVELLING");
                         return;
