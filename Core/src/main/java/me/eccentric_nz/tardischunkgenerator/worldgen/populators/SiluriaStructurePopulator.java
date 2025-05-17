@@ -21,7 +21,6 @@ import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.schematic.TARDISSchematicGZip;
 import me.eccentric_nz.tardischunkgenerator.worldgen.SiluriaProcessData;
-import me.eccentric_nz.tardischunkgenerator.worldgen.utils.GallifeyStructureUtility;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.SiluriaStructureUtility;
 import me.eccentric_nz.tardischunkgenerator.worldgen.utils.TARDISLootTables;
 import net.minecraft.world.level.ChunkPos;
@@ -42,10 +41,10 @@ import java.util.*;
 
 public class SiluriaStructurePopulator extends BlockPopulator {
 
+    final List<SiluriaProcessData> toProcess = new ArrayList<>();
+    final List<String> noStilts = List.of("east_west", "north_south", "cross");
+    final List<Material> buildable = List.of(Material.GRASS_BLOCK, Material.WATER, Material.PODZOL, Material.SAND);
     private final TARDIS plugin;
-    List<SiluriaProcessData> toProcess = new ArrayList<>();
-    List<String> noStilts = List.of("east_west", "north_south", "cross");
-    List<Material> buildable = List.of(Material.GRASS_BLOCK, Material.WATER, Material.PODZOL, Material.SAND);
 
     public SiluriaStructurePopulator(TARDIS plugin) {
         this.plugin = plugin;
@@ -78,17 +77,8 @@ public class SiluriaStructurePopulator extends BlockPopulator {
                 for (Map.Entry<BlockVector, HashMap<BlockVector, String>> centre : SiluriaStructureUtility.centres.entrySet()) {
                     toProcess.add(new SiluriaProcessData(x + centre.getKey().getBlockX(), startY, z + centre.getKey().getBlockZ(), centre.getValue()));
                 }
-                List<BlockVector> grid;
-                // choose a random direction
-                int dir = random.nextInt(4);
-                switch (dir) {
-                    case 0 -> grid = GallifeyStructureUtility.vectorLeft;
-                    case 1 -> grid = GallifeyStructureUtility.vectorUp;
-                    case 2 -> grid = GallifeyStructureUtility.vectorRight;
-                    default -> grid = GallifeyStructureUtility.vectorDown;
-                }
                 for (Map.Entry<BlockVector, String> vector : SiluriaStructureUtility.vectorZero.entrySet()) {
-                    // intial large + walkways
+                    // initial large + walkways
                     build(limitedRegion, startX + vector.getKey().getBlockX(), startY, startZ + vector.getKey().getBlockZ(), random, vector.getValue());
                 }
             }

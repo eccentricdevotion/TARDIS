@@ -41,8 +41,13 @@ public class TARDISDisplayBlockRoomConverter implements Runnable {
     private final TARDIS plugin;
     private final Player owner;
     private final int startx, starty, startz;
+    private final int c = 16;
+    private final int h = 16;
+    private final int w = 16;
     private boolean running;
-    private int c = 16, h = 16, w = 16, level = 0, row = 0, taskId;
+    private int level = 0;
+    private int row = 0;
+    private int taskId;
     private World world;
 
     public TARDISDisplayBlockRoomConverter(TARDIS plugin, Player owner, TARDISARSSlot slot) {

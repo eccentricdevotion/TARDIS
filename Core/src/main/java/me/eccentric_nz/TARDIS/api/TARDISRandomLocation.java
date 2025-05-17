@@ -37,10 +37,6 @@ class TARDISRandomLocation {
         this.plugin = plugin;
     }
 
-    public Location getlocation() {
-        return null;
-    }
-
     final List<World> getWorlds(List<String> list) {
         List<World> worlds = new ArrayList<>();
         list.forEach((s) -> {

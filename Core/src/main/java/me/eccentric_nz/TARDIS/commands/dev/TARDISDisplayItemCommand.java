@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.flight.vehicle.InterpolatedAnimation;
 import me.eccentric_nz.TARDIS.flight.vehicle.VehicleUtility;
@@ -230,10 +229,5 @@ public class TARDISDisplayItemCommand {
             }
         }
         return true;
-    }
-
-
-    private boolean isConsole(String str) {
-        return Consoles.getBY_MATERIALS().containsKey(str);
     }
 }

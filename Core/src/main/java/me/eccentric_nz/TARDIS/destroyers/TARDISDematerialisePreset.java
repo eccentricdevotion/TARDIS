@@ -114,11 +114,11 @@ class TARDISDematerialisePreset implements Runnable {
         if (i < loops) {
             // expand placed blocks to a police box
             if (i % 2 == 0) {
-                data = stained_column.getBlockData(); // stained
+                data = stained_column.blockData(); // stained
             } else if (i % 4 == 1) {
-                data = glass_column.getBlockData(); // glass
+                data = glass_column.blockData(); // glass
             } else {
-                data = column.getBlockData(); // preset
+                data = column.blockData(); // preset
             }
             i++;
             // first run - play sound

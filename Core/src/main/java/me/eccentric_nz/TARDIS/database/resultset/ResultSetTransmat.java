@@ -111,14 +111,6 @@ public class ResultSetTransmat {
         return transmat_id;
     }
 
-    public int getTardis_id() {
-        return tardis_id;
-    }
-
-    public String getTransmat_name() {
-        return transmat_name;
-    }
-
     public String getWorld() {
         return world;
     }

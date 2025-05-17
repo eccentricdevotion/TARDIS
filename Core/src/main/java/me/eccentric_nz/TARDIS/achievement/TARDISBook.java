@@ -60,7 +60,7 @@ public class TARDISBook {
         File file = new File(plugin.getDataFolder() + File.separator + "books" + File.separator + name + ".txt");
         StringBuilder fileContents = new StringBuilder((int) file.length());
         String book_str = "";
-        String ls = System.getProperty("line.separator");
+        String ls = System.lineSeparator();
         try {
             try (Scanner scanner = new Scanner(file)) {
                 while (scanner.hasNextLine()) {

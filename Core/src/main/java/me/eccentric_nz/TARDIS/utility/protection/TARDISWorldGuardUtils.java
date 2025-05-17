@@ -383,7 +383,7 @@ public class TARDISWorldGuardUtils {
     public void removeRegion(World world, String name) {
         RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
         Set<ProtectedRegion> regions = rm.removeRegion("TARDIS_" + name);
-        if (regions.size() == 0 && TARDISFloodgate.isFloodgateEnabled()) {
+        if (regions.isEmpty() && TARDISFloodgate.isFloodgateEnabled()) {
             // try sanitised name
             rm.removeRegion("TARDIS_" + TARDISFloodgate.sanitisePlayerName(name));
         }

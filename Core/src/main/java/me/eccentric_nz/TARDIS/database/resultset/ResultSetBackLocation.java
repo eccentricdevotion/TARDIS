@@ -127,14 +127,6 @@ public class ResultSetBackLocation {
         return world != null;
     }
 
-    public int getBack_id() {
-        return back_id;
-    }
-
-    public int getTardis_id() {
-        return tardis_id;
-    }
-
     public World getWorld() {
         return world;
     }

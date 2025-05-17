@@ -71,7 +71,7 @@ public class TARDISRoomPersister {
                 plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Saved " + count + " room building tasks to resume later.");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            plugin.debug("Error inserting room_progress records: " + e.getMessage());
         } finally {
             try {
                 if (ps != null) {
@@ -116,7 +116,7 @@ public class TARDISRoomPersister {
                         ResultSetTardisTimeLord rst = new ResultSetTardisTimeLord(plugin);
                         if (rst.fromID(id)) {
                             // resume the room growing
-                            TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, rd, rst.getUuid(), true);
+                            TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, rd, rst.getUuid());
                             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
                             runnable.setTask(taskID);
                             // resume tracking progress

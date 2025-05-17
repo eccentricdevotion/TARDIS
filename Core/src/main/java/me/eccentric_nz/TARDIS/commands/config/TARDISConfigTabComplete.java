@@ -83,65 +83,28 @@ public class TARDISConfigTabComplete extends TARDISCompleter implements TabCompl
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
             String sub = args[0];
-            if (sub.equals("include") || sub.equals("exclude")) {
-                return partial(lastArg, WORLD_SUBS);
-            }
-            if (sub.equals("options")) {
-                return partial(lastArg, CONFIG_SUBS);
-            }
-            if (sub.equals("crafting")) {
-                return partial(lastArg, CRAFTING_SUBS);
-            }
-            if (sub.equals("provider")) {
-                return partial(lastArg, MAPPING_SUBS);
-            }
-            if (sub.equals("respect_towny")) {
-                return partial(lastArg, TOWNY_SUBS);
-            }
-            if (sub.equals("respect_worldguard")) {
-                return partial(lastArg, FLAG_SUBS);
-            }
-            if (sub.equals("region_flag")) {
-                return partial(lastArg, REGION_SUBS);
-            }
-            if (sub.equals("reload")) {
-                return partial(lastArg, FILE_SUBS);
-            }
-            if (sub.equals("vortex_fall")) {
-                return partial(lastArg, VORTEX_SUBS);
-            }
-            if (sub.equals("tips_next")) {
-                return partial(lastArg, TIPS_NEXT_SUBS);
-            }
-            if (sub.equals("sign_colour")) {
-                return partial(lastArg, COLOURS);
-            }
-            if (sub.equals("siege")) {
-                return partial(lastArg, SIEGE_SUBS);
-            }
-            if (sub.equals("default_key")) {
-                return partial(lastArg, KEYS);
-            }
-            if (sub.equals("default_preset")) {
-                return partial(lastArg, PRESETS);
-            }
-            if (sub.equals("default_model")) {
-                return partial(lastArg, SONICS);
-            }
-            if (sub.equals("database")) {
-                return partial(lastArg, DB_SUBS);
-            }
-            if (sub.equals("language")) {
-                return partial(lastArg, LANG_SUBS);
-            }
-            if (sub.equals("tips_limit")) {
-                return partial(lastArg, TIPS_SUBS);
-            }
-            if (sub.equals("use_clay")) {
-                return partial(lastArg, USE_CLAY_SUBS);
-            } else {
-                return partial(lastArg, BOOL_SUBS);
-            }
+            return switch (sub) {
+                case "include", "exclude" -> partial(lastArg, WORLD_SUBS);
+                case "options" -> partial(lastArg, CONFIG_SUBS);
+                case "crafting" -> partial(lastArg, CRAFTING_SUBS);
+                case "provider" -> partial(lastArg, MAPPING_SUBS);
+                case "respect_towny" -> partial(lastArg, TOWNY_SUBS);
+                case "respect_worldguard" -> partial(lastArg, FLAG_SUBS);
+                case "region_flag" -> partial(lastArg, REGION_SUBS);
+                case "reload" -> partial(lastArg, FILE_SUBS);
+                case "vortex_fall" -> partial(lastArg, VORTEX_SUBS);
+                case "tips_next" -> partial(lastArg, TIPS_NEXT_SUBS);
+                case "sign_colour" -> partial(lastArg, COLOURS);
+                case "siege" -> partial(lastArg, SIEGE_SUBS);
+                case "default_key" -> partial(lastArg, KEYS);
+                case "default_preset" -> partial(lastArg, PRESETS);
+                case "default_model" -> partial(lastArg, SONICS);
+                case "database" -> partial(lastArg, DB_SUBS);
+                case "language" -> partial(lastArg, LANG_SUBS);
+                case "tips_limit" -> partial(lastArg, TIPS_SUBS);
+                case "use_clay" -> partial(lastArg, USE_CLAY_SUBS);
+                default -> partial(lastArg, BOOL_SUBS);
+            };
         }
         return ImmutableList.of();
     }

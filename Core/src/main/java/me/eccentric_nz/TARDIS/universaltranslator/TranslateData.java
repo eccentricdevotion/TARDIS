@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.universaltranslator;
 
 public class TranslateData {
 
-    String sender;
-    Language from;
-    Language to;
+    final String sender;
+    final Language from;
+    final Language to;
 
     public TranslateData(Language from, Language to, String sender) {
         this.from = from;

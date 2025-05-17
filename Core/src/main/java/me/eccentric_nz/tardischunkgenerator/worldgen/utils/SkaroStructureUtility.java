@@ -23,11 +23,11 @@ import java.util.List;
 
 public class SkaroStructureUtility {
 
-    public static List<BlockVector> vectorLeft = new ArrayList<>();
-    public static List<BlockVector> vectorUp = new ArrayList<>();
-    public static List<BlockVector> vectorRight = new ArrayList<>();
-    public static List<BlockVector> vectorDown = new ArrayList<>();
-    public static List<String> structures = List.of("small", "farm", "tower", "pen", "water", "small");
+    public static final List<BlockVector> vectorLeft = new ArrayList<>();
+    public static final List<BlockVector> vectorUp = new ArrayList<>();
+    public static final List<BlockVector> vectorRight = new ArrayList<>();
+    public static final List<BlockVector> vectorDown = new ArrayList<>();
+    public static final List<String> structures = List.of("small", "farm", "tower", "pen", "water", "small");
 
     static {
         // left

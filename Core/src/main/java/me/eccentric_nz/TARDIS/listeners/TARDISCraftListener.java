@@ -18,28 +18,25 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
-import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.CraftingInventory;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author eccentric_nz
@@ -47,74 +44,9 @@ import java.util.*;
 public class TARDISCraftListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<Material, String> t = new HashMap<>();
-    private final List<UUID> crafters = new ArrayList<>();
 
     public TARDISCraftListener(TARDIS plugin) {
         this.plugin = plugin;
-        // DELUXE, ELEVENTH, TWELFTH, ARS & REDSTONE schematics designed by Lord_Rahl and killeratnight at mcnovus.net
-        t.put(Material.BLACK_CONCRETE, "CURSED"); // cursed schematic designed by airomis (player at thatsnotacreeper.com)
-        t.put(Material.BOOKSHELF, "PLANK"); // plank
-        t.put(Material.COAL_BLOCK, "STEAMPUNK"); // steampunk
-        t.put(Material.COPPER_BULB, "RUSTIC"); // rustic
-        t.put(Material.CRYING_OBSIDIAN, "DELTA"); // delta
-        t.put(Material.DIAMOND_BLOCK, "DELUXE"); // deluxe
-        t.put(Material.DRIPSTONE_BLOCK, "CAVE"); // dripstone cave
-        t.put(Material.EMERALD_BLOCK, "ELEVENTH"); // eleventh
-        t.put(Material.GOLD_BLOCK, "BIGGER"); // bigger
-        t.put(Material.HONEYCOMB_BLOCK, "ROTOR"); // rotor
-        t.put(Material.IRON_BLOCK, "BUDGET"); // budget
-        t.put(Material.LAPIS_BLOCK, "TOM"); // tom baker
-        t.put(Material.NETHER_BRICKS, "MASTER"); // master schematic designed by ShadowAssociate
-        t.put(Material.NETHER_WART_BLOCK, "CORAL"); // coral schematic designed by vistaero
-        t.put(Material.OCHRE_FROGLIGHT, "FIFTEENTH"); // fifteenth schematic designed by airomis (player at thatsnotacreeper.com)
-        t.put(Material.ORANGE_CONCRETE, "THIRTEENTH"); // thirteenth designed by Razihel
-        t.put(Material.PACKED_MUD, "ORIGINAL"); // original
-        t.put(Material.POLISHED_ANDESITE, "MECHANICAL"); // mechanical adapted from design by Plastic Straw https://www.planetminecraft.com/data-pack/new-tardis-mod-mechanical-interior-datapack/
-        t.put(Material.POLISHED_DEEPSLATE, "FUGITIVE"); // fugitive schematic based on design by DT10 - https://www.youtube.com/watch?v=aykwXVemSs8
-        t.put(Material.PRISMARINE, "TWELFTH"); // twelfth
-        t.put(Material.PURPUR_BLOCK, "ENDER"); // ender schematic designed by ToppanaFIN (player at thatsnotacreeper.com)
-        t.put(Material.QUARTZ_BLOCK, "ARS"); // ARS
-        t.put(Material.REDSTONE_BLOCK, "REDSTONE"); // redstone
-        t.put(Material.SANDSTONE_STAIRS, "PYRAMID"); // pyramid schematic designed by airomis (player at thatsnotacreeper.com)
-        t.put(Material.SCULK, "ANCIENT"); // ancient city
-        t.put(Material.WAXED_OXIDIZED_CUT_COPPER, "BONE"); // bone loosely based on a console by DT10 - https://www.youtube.com/watch?v=Ux4qt0qYm80
-        t.put(Material.WARPED_PLANKS, "COPPER"); // copper schematic designed by vistaero
-        t.put(Material.WEATHERED_COPPER, "WEATHERED"); // weathered copper
-        t.put(Material.WHITE_CONCRETE, "HOSPITAL"); // hospital
-        t.put(Material.WHITE_TERRACOTTA, "WAR"); // war doctor
-        t.put(Material.YELLOW_CONCRETE_POWDER, "FACTORY"); // factory designed by Razihel
-        t.put(Material.CYAN_GLAZED_TERRACOTTA, "LEGACY_ELEVENTH"); // legacy_eleventh
-        t.put(Material.LIME_GLAZED_TERRACOTTA, "LEGACY_DELUXE"); // legacy_deluxe
-        t.put(Material.ORANGE_GLAZED_TERRACOTTA, "LEGACY_BIGGER"); // legacy_bigger
-        t.put(Material.RED_GLAZED_TERRACOTTA, "LEGACY_REDSTONE"); // legacy_redstone
-        // custom seeds
-        plugin.getCustomConsolesConfig().getKeys(false).forEach((console) -> {
-            if (plugin.getCustomConsolesConfig().getBoolean(console + ".enabled")) {
-                if (plugin.getArtronConfig().contains("upgrades." + console.toLowerCase(Locale.ROOT))) {
-                    Material cmat = Material.valueOf(plugin.getCustomConsolesConfig().getString(console + ".seed"));
-                    t.put(cmat, console.toUpperCase(Locale.ROOT));
-                } else {
-                    plugin.getMessenger().message(plugin.getConsole(), TardisModule.WARNING, "The custom console '" + console + "' does not have a corresponding upgrade value in artron.yml");
-                }
-            }
-        });
-    }
-
-    @EventHandler
-    public void onInventoryClose(InventoryCloseEvent event) {
-        Player p = (Player) event.getPlayer();
-        UUID uuid = p.getUniqueId();
-        Inventory inv = event.getInventory();
-        if (crafters.contains(uuid) && inv.getType().equals(InventoryType.WORKBENCH)) {
-            // remove dropped items around workbench
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.getNearbyEntities(6, 6, 6).forEach((e) -> {
-                if (e instanceof Item) {
-                    e.remove();
-                }
-            }), 1L);
-            crafters.remove(uuid);
-        }
     }
 
     @EventHandler(ignoreCancelled = true)

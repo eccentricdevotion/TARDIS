@@ -40,7 +40,7 @@ public class InnerMinecraftDoorOpener {
         this.plugin = plugin;
     }
 
-    public void open(Block block, int id, UUID uuid) {
+    public void open(Block block, int id) {
         // open door
         if (Tag.DOORS.isTagged(block.getType())) {
             Openable openable = (Openable) block.getBlockData();

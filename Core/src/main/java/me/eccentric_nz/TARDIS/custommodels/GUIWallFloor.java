@@ -23,9 +23,9 @@ import org.bukkit.Material;
 public record GUIWallFloor() {
 
     // TARDIS Wall & Floor Menu
-    public static GUIData BUTTON_SCROLL_U = new GUIData(ArrowVariant.SCROLL_UP.getKey(), 8, Material.ARROW);
-    public static GUIData BUTTON_SCROLL_D = new GUIData(ArrowVariant.SCROLL_DOWN.getKey(), 17, Material.ARROW);
-    public static GUIData WALL = new GUIData(GuiVariant.WALL.getKey(), 26, Material.BOWL);
-    public static GUIData FLOOR = new GUIData(GuiVariant.FLOOR.getKey(), 35, Material.BOWL);
-    public static GUIData BUTTON_ABORT = new GUIData(GuiVariant.ABORT.getKey(), 53, Material.BOWL);
+    public static final GUIData BUTTON_SCROLL_U = new GUIData(ArrowVariant.SCROLL_UP.getKey(), 8, Material.ARROW);
+    public static final GUIData BUTTON_SCROLL_D = new GUIData(ArrowVariant.SCROLL_DOWN.getKey(), 17, Material.ARROW);
+    public static final GUIData WALL = new GUIData(GuiVariant.WALL.getKey(), 26, Material.BOWL);
+    public static final GUIData FLOOR = new GUIData(GuiVariant.FLOOR.getKey(), 35, Material.BOWL);
+    public static final GUIData BUTTON_ABORT = new GUIData(GuiVariant.ABORT.getKey(), 53, Material.BOWL);
 }

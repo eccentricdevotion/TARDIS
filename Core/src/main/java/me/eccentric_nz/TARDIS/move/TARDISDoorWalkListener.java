@@ -215,16 +215,16 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                         if (outerDisplayDoor) {
                                                             new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
                                                         } else if (rs.getTardis().getPreset().hasDoor()) {
-                                                            new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rs.getTardis().getPreset()), id, playerUUID);
+                                                            new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
                                                         }
                                                     } else {
                                                         // open inner
-                                                        new InnerMinecraftDoorOpener(plugin).open(block, id, playerUUID);
+                                                        new InnerMinecraftDoorOpener(plugin).open(block, id);
                                                         // open outer
                                                         if (outerDisplayDoor) {
-                                                            new OuterDisplayDoorOpener(plugin).open(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                                                            new OuterDisplayDoorOpener(plugin).open(new OuterDoor(plugin, id).getDisplay(), id);
                                                         } else if (rs.getTardis().getPreset().hasDoor()) {
-                                                            new OuterMinecraftDoorOpener(plugin).open(new OuterDoor(plugin, id).getMinecraft(rs.getTardis().getPreset()), id, player);
+                                                            new OuterMinecraftDoorOpener(plugin).open(new OuterDoor(plugin, id).getMinecraft(), id, player);
                                                         }
                                                     }
                                                 } else {
@@ -244,9 +244,9 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                                         new OuterMinecraftDoorOpener(plugin).open(block, id, player);
                                                         // open inner
                                                         if (innerDisplayDoor.display()) {
-                                                            new InnerDisplayDoorOpener(plugin).open(innerDisplayDoor.block(), id, playerUUID, true);
+                                                            new InnerDisplayDoorOpener(plugin).open(innerDisplayDoor.block(), id, true);
                                                         } else {
-                                                            new InnerMinecraftDoorOpener(plugin).open(innerDisplayDoor.block(), id, playerUUID);
+                                                            new InnerMinecraftDoorOpener(plugin).open(innerDisplayDoor.block(), id);
                                                         }
                                                     }
                                                 }

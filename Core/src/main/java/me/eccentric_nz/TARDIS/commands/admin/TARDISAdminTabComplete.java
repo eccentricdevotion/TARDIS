@@ -83,18 +83,20 @@ public class TARDISAdminTabComplete extends TARDISCompleter implements TabComple
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
             String sub = args[0].toLowerCase(Locale.ROOT);
-            if (sub.equals("assemble") || sub.equals("dispersed")) {
-                return partial(lastArg, ASS_SUBS);
-            }
-            if (sub.equals("disguise")) {
-                return partial(lastArg, ENTITY_SUBS);
-            }
-            if (sub.equals("list")) {
-                return partial(lastArg, LIST_SUBS);
-            }
-            if (sub.equals("arch") || sub.equals("create") || sub.equals("delete") || sub.equals("enter") || sub.equals("purge") || sub.equals("repair") || sub.equals("revoke") || sub.equals("set_size") || sub.equals("undisguise")) {
-                // return null to default to online player name matching
-                return null;
+            switch (sub) {
+                case "assemble", "dispersed" -> {
+                    return partial(lastArg, ASS_SUBS);
+                }
+                case "disguise" -> {
+                    return partial(lastArg, ENTITY_SUBS);
+                }
+                case "list" -> {
+                    return partial(lastArg, LIST_SUBS);
+                }
+                default -> {
+                    // return null to default to online player name matching
+                    return null;
+                }
             }
         } else if (args.length == 3) {
             if (args[0].equalsIgnoreCase("spawn_abandoned")) {

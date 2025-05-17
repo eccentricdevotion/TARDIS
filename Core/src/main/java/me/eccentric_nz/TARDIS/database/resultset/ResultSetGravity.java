@@ -26,8 +26,8 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Anti-gravity was the process of creating objects free from or releasing objects from the force of gravity. The Time
- * Lords' Matrix held many advanced scientific techniques, including the secret of anti-gravity power.
+ * Antigravity was the process of creating objects free from or releasing objects from the force of gravity. The Time
+ * Lords' Matrix held many advanced scientific techniques, including the secret of antigravity power.
  *
  * @author eccentric_nz
  */
@@ -144,24 +144,8 @@ public class ResultSetGravity {
         return gravity_id;
     }
 
-    public int getTardis_id() {
-        return tardis_id;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
     public int getDirection() {
         return direction;
-    }
-
-    public double getDistance() {
-        return distance;
-    }
-
-    public double getVelocity() {
-        return velocity;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

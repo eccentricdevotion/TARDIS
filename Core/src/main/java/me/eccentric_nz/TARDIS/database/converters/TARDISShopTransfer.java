@@ -27,7 +27,6 @@ public class TARDISShopTransfer {
 
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
     private final Connection connection = service.getConnection();
-    ;
     private final TARDIS plugin;
     private final String prefix;
 
@@ -84,7 +83,6 @@ public class TARDISShopTransfer {
                     connection.setAutoCommit(true);
                 } catch (SQLException e) {
                     plugin.debug("Error closing items transfer! " + e.getMessage());
-                    return false;
                 }
             }
         }

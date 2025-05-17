@@ -22,10 +22,10 @@ import java.util.HashMap;
 
 public class SiluriaProcessData {
 
-    public int x;
-    public int y;
-    public int z;
-    public HashMap<BlockVector, String> grid;
+    public final int x;
+    public final int y;
+    public final int z;
+    public final HashMap<BlockVector, String> grid;
 
     public SiluriaProcessData(int x, int y, int z, HashMap<BlockVector, String> grid) {
         this.x = x;

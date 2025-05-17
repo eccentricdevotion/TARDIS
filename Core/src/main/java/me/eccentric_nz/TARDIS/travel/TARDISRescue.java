@@ -37,7 +37,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 /**
- * Rescue Operational Security Module G723 (ROSM) was an artificial intelligence built into a spacecraft working around
+ * Rescue Operational Security Module G723 (ROSM) is an artificial intelligence built into a spacecraft working around
  * the Cimmerian System. It was designed by Professor Astrov to protect company interests and property, including rescue
  * of company employees from danger.
  *
@@ -59,7 +59,7 @@ public class TARDISRescue {
      * @param id      The TARDIS unique ID
      * @param d       the direction the Police Box is facing
      * @param rescue  whether to rescue the player
-     * @param request whether this is a travel to player request
+     * @param request whether this is a request to travel to a player
      * @return true or false
      */
     public boolean rescue(Player player, UUID saved, int id, COMPASS d, boolean rescue, boolean request) {
@@ -117,8 +117,8 @@ public class TARDISRescue {
      *
      * @param player  The Time Lord
      * @param saved   The player to be rescued
-     * @param request whether this is a travel to player request
-     * @return true if rescue was successful
+     * @param request whether this is travel to player request
+     * @return rescue data determining if the rescue was successful and the TARDIS id
      */
     public RescueData tryRescue(Player player, UUID saved, boolean request) {
         if (TARDISPermission.hasPermission(player, "tardis.timetravel") && !(TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile"))) {

@@ -56,28 +56,30 @@ public class TARDISJunkCommands implements CommandExecutor {
             }
             String first = args[0].toLowerCase(Locale.ROOT);
             if (args.length == 1 && firstArgs.contains(first)) {
-                if (first.equals("create")) {
-                    Player p = null;
-                    if (sender instanceof Player) {
-                        p = (Player) sender;
+                switch (first) {
+                    case "create" -> {
+                        Player p = null;
+                        if (sender instanceof Player) {
+                            p = (Player) sender;
+                        }
+                        if (p == null) {
+                            plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
+                            return false;
+                        }
+                        return new TARDISJunkCreator(plugin, p).createJunkTARDIS();
                     }
-                    if (p == null) {
-                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_PLAYER");
-                        return false;
+                    case "find" -> {
+                        return new TARDISJunkFind(plugin).find(sender);
                     }
-                    return new TARDISJunkCreator(plugin, p).createJunkTARDIS();
-                }
-                if (first.equals("find")) {
-                    return new TARDISJunkFind(plugin).find(sender);
-                }
-                if (first.equals("time")) {
-                    return new TARDISJunkTime(plugin).elapsed(sender);
-                }
-                if (first.equals("return")) {
-                    return new TARDISJunkReturn(plugin).recall(sender);
-                }
-                if (first.equals("delete")) {
-                    return new TARDISJunkDelete(plugin).delete(sender);
+                    case "time" -> {
+                        return new TARDISJunkTime(plugin).elapsed(sender);
+                    }
+                    case "return" -> {
+                        return new TARDISJunkReturn(plugin).recall(sender);
+                    }
+                    case "delete" -> {
+                        return new TARDISJunkDelete(plugin).delete(sender);
+                    }
                 }
                 return true;
             }

@@ -71,20 +71,20 @@ public class TARDISDoorCommand {
                 if (outerDisplayDoor) {
                     new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
                 } else if (rsp.getPreset().hasDoor()) {
-                    new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rsp.getPreset()), id, playerUUID);
+                    new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
                 }
             } else {
                 // open inner
                 if (innerDisplayDoor.display()) {
-                    new InnerDisplayDoorOpener(plugin).open(innerDisplayDoor.block(), id, playerUUID, true);
+                    new InnerDisplayDoorOpener(plugin).open(innerDisplayDoor.block(), id, true);
                 } else {
-                    new InnerMinecraftDoorOpener(plugin).open(innerDisplayDoor.block(), id, playerUUID);
+                    new InnerMinecraftDoorOpener(plugin).open(innerDisplayDoor.block(), id);
                 }
                 // open outer
                 if (outerDisplayDoor) {
                     new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
                 } else if (rsp.getPreset().hasDoor()) {
-                    new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rsp.getPreset()), id, playerUUID);
+                    new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
                 }
             }
         }

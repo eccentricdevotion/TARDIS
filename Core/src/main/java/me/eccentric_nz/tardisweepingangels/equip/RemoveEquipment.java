@@ -27,7 +27,7 @@ public class RemoveEquipment {
         PlayerInventory inv = p.getInventory();
         if (p.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
             p.removePotionEffect(PotionEffectType.INVISIBILITY);
-            if (inv.getItemInOffHand() != null) {
+            if (!inv.getItemInOffHand().getType().isAir()) {
                 inv.setItemInOffHand(null);
             }
         }

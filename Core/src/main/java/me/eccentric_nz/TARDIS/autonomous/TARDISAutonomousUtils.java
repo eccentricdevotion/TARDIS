@@ -35,14 +35,14 @@ public class TARDISAutonomousUtils {
         wherea.put("world", world);
         ResultSetAreas rsa = new ResultSetAreas(TARDIS.plugin, wherea, false, false);
         if (rsa.resultSet()) {
-            String area = rsa.getArea().getAreaName();
+            String area = rsa.getArea().areaName();
             if (!TARDISPermission.hasPermission(player, "tardis.area." + area) || !player.isPermissionSet("tardis.area." + area)) {
                 return null;
             }
-            if (rsa.getArea().isGrid()) {
+            if (rsa.getArea().grid()) {
                 l = TARDIS.plugin.getTardisArea().getNextSpot(area);
             } else {
-                l = TARDIS.plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+                l = TARDIS.plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().areaId());
             }
         }
         return l;
@@ -61,10 +61,10 @@ public class TARDISAutonomousUtils {
                     return null;
                 }
                 Location l;
-                if (rsa.getArea().isGrid()) {
+                if (rsa.getArea().grid()) {
                     l = TARDIS.plugin.getTardisArea().getNextSpot(area);
                 } else {
-                    l = TARDIS.plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+                    l = TARDIS.plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().areaId());
                 }
                 if (l != null) {
                     return l;

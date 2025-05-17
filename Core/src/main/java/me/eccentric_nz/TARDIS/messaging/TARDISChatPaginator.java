@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * The TARDISChatPaginator takes a raw string of arbitrary length and breaks it down into an array of strings
- * appropriate for displaying on the Minecraft player console.
+ * suitable for displaying on the Minecraft player console.
  */
 public class TARDISChatPaginator {
 
@@ -61,16 +61,16 @@ public class TARDISChatPaginator {
                 continue;
             }
             if (c == ' ' || c == '\n') {
-                if (line.length() == 0 && word.length() - lineColorChars > GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) { // special case: extremely long word begins a line
+                if (line.isEmpty() && word.length() - lineColorChars > GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) { // special case: extremely long word begins a line
                     lines.addAll(List.of(word.toString().split("(?<=\\G.{" + GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH + "})")));
-                } else if (line.length() > 0 && line.length() + 1 + word.length() - lineColorChars > GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) { // Line too long...break the line
+                } else if (!line.isEmpty() && line.length() + 1 + word.length() - lineColorChars > GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH) { // Line too long...break the line
                     for (String partialWord : word.toString().split("(?<=\\G.{" + GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH + "})")) {
                         lines.add(line.toString());
                         line = new StringBuilder(partialWord);
                     }
                     lineColorChars = 0;
                 } else {
-                    if (line.length() > 0) {
+                    if (!line.isEmpty()) {
                         line.append(' ');
                     }
                     line.append(word);
@@ -85,11 +85,11 @@ public class TARDISChatPaginator {
                 word.append(c);
             }
         }
-        if (line.length() > 0) { // Only add the last line if there is anything to add
+        if (!line.isEmpty()) { // Only add the last line if there is anything to add
             lines.add(line.toString());
         }
         // Iterate over the wrapped lines, applying the last color from one line to the beginning of the next
-        if (lines.getFirst().length() == 0 || lines.getFirst().charAt(0) != ChatColor.COLOR_CHAR) {
+        if (lines.getFirst().isEmpty() || lines.getFirst().charAt(0) != ChatColor.COLOR_CHAR) {
             lines.set(0, ChatColor.WHITE + lines.getFirst());
         }
         for (int i = 1; i < lines.size(); i++) {
@@ -97,7 +97,7 @@ public class TARDISChatPaginator {
             String subLine = lines.get(i);
 
             char color = pLine.charAt(pLine.lastIndexOf(ChatColor.COLOR_CHAR) + 1);
-            if (subLine.length() == 0 || subLine.charAt(0) != ChatColor.COLOR_CHAR) {
+            if (subLine.isEmpty() || subLine.charAt(0) != ChatColor.COLOR_CHAR) {
                 lines.set(i, ChatColor.getByChar(color) + subLine);
             }
         }

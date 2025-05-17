@@ -90,7 +90,7 @@ public class TARDISSquareMap implements TARDISMapper {
         }
     }
 
-    private class SquaremapTask extends BukkitRunnable {
+    private static class SquaremapTask extends BukkitRunnable {
 
         private final MapWorld world;
         private final SimpleLayerProvider provider;
@@ -114,7 +114,7 @@ public class TARDISSquareMap implements TARDISMapper {
             TARDISGetter getter = new TARDISGetter(plugin, bukkitWorld);
             getter.resultSetAsync(results -> {
                 for (TARDISData data : results) {
-                    handle(data.getOwner(), data.getLocation());
+                    handle(data.owner(), data.location());
                 }
             });
         }

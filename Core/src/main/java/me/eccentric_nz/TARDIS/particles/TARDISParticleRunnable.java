@@ -20,7 +20,6 @@ import com.mojang.datafixers.util.Pair;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetParticlePrefs;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -36,20 +35,13 @@ import java.util.UUID;
 public class TARDISParticleRunnable implements Runnable {
 
     protected final TARDIS plugin;
-    protected final UUID uuid;
+    protected final boolean adaptive;
     protected double t = 0;
-    protected double speed = 0;
-    protected boolean adaptive;
     protected BlockData adaptiveData = null;
     protected int taskID;
 
     public TARDISParticleRunnable(TARDIS plugin, UUID uuid) {
         this.plugin = plugin;
-        this.uuid = uuid;
-        ResultSetParticlePrefs rs = new ResultSetParticlePrefs(plugin);
-        if (rs.fromUUID(uuid.toString())) {
-            this.speed = rs.getData().getSpeed();
-        }
         // adaptive preset
         Pair<Boolean, Integer> pair = ParticleAdaptive.isAdaptive(plugin, uuid);
         adaptive = pair.getFirst();

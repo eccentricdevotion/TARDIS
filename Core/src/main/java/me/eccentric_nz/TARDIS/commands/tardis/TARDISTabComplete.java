@@ -152,24 +152,28 @@ public class TARDISTabComplete extends TARDISCompleter implements TabCompleter {
             }
         } else if (args.length == 3) {
             String sub = args[1].toLowerCase(Locale.ROOT);
-            if (sub.equals("rechargers")) {
-                return partial(lastArg, RECHARGER_SUBS);
-            }
-            if (sub.equals("scan")) {
-                return partial(lastArg, CONSOLE_SIZE_SUBS);
-            }
-            if (sub.equals("set")) {
-                return partial(lastArg, PRESET_SUBS);
-            }
-            if (args[0].equals("update")) {
-                if (sub.equals("handles")) {
-                    return partial(lastArg, HANDLES_SUBS);
-                } else {
-                    return partial(lastArg, EXTRA_SUBS);
+            switch (sub) {
+                case "rechargers" -> {
+                    return partial(lastArg, RECHARGER_SUBS);
+                }
+                case "scan" -> {
+                    return partial(lastArg, CONSOLE_SIZE_SUBS);
+                }
+                case "set" -> {
+                    return partial(lastArg, PRESET_SUBS);
                 }
             }
-            if (args[0].equals("saveicon")) {
-                return partial(lastArg, MAT_SUBS);
+            switch (args[0]) {
+                case "update" -> {
+                    if (sub.equals("handles")) {
+                        return partial(lastArg, HANDLES_SUBS);
+                    } else {
+                        return partial(lastArg, EXTRA_SUBS);
+                    }
+                }
+                case "saveicon" -> {
+                    return partial(lastArg, MAT_SUBS);
+                }
             }
         } else if (args.length == 4) {
             String sub = args[1].toLowerCase(Locale.ROOT);

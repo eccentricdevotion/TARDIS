@@ -24,14 +24,14 @@ import org.bukkit.Material;
 public record GUISaves() {
 
     // TARDIS saves
-    public static GUIData HOME = new GUIData(GuiVariant.HOME.getKey(), 0, Material.BOWL);
-    public static GUIData DEATH = new GUIData(Button.DEATH.getKey(), 2, Material.BOWL);
-    public static GUIData REARRANGE_SAVES = new GUIData(ArrowVariant.REARRANGE.getKey(), 45, Material.ARROW);
+    public static final GUIData HOME = new GUIData(GuiVariant.HOME.getKey(), 0, Material.BOWL);
+    public static final GUIData DEATH = new GUIData(Button.DEATH.getKey(), 2, Material.BOWL);
+    public static final GUIData REARRANGE_SAVES = new GUIData(ArrowVariant.REARRANGE.getKey(), 45, Material.ARROW);
+    public static final GUIData DELETE_SAVE = new GUIData(Button.DELETE.getKey(), 47, Material.BUCKET);
+    public static final GUIData BACK_TO_PLANETS = new GUIData(GuiVariant.BACK.getKey(), 51, Material.ARROW);
     public static GUIData LOAD_TARDIS_AREAS = new GUIData(GuiVariant.LOAD_SELECTED_PROGRAM_IN_EDITOR.getKey(), 53, Material.MAP);
-    public static GUIData DELETE_SAVE = new GUIData(Button.DELETE.getKey(), 47, Material.BUCKET);
     public static GUIData LOAD_MY_SAVES = new GUIData(GuiVariant.OWN_SAVES.getKey(), 49, Material.BOWL);
     public static GUIData LOAD_SAVES_FROM_THIS_TARDIS = new GUIData(GuiVariant.TARDIS_SAVES.getKey(), 49, Material.BOWL);
-    public static GUIData BACK_TO_PLANETS = new GUIData(GuiVariant.BACK.getKey(), 51, Material.ARROW);
     public static GUIData GO_TO_PAGE_1 = new GUIData(ArrowVariant.PAGE_ONE.getKey(), 51, Material.ARROW);
     public static GUIData GO_TO_PAGE_2 = new GUIData(ArrowVariant.PAGE_TWO.getKey(), 51, Material.ARROW);
 }

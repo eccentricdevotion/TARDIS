@@ -177,51 +177,51 @@ public class TARDISUpdateableChecker {
             ResultSetFarming rsf = new ResultSetFarming(plugin, tardis.getTardisId());
             if (rsf.resultSet()) {
                 Farm farming = rsf.getFarming();
-                if (updateable.equals(Updateable.FARM) && farming.getFarm().isEmpty() && !hasFarm) {
+                if (updateable.equals(Updateable.FARM) && farming.farm().isEmpty() && !hasFarm) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
-                if (updateable.equals(Updateable.ALLAY) && farming.getAllay().isEmpty() && !hasAllay) {
+                if (updateable.equals(Updateable.ALLAY) && farming.allay().isEmpty() && !hasAllay) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
-                if (updateable.equals(Updateable.IGLOO) && farming.getIgloo().isEmpty() && !hasIgloo) {
+                if (updateable.equals(Updateable.IGLOO) && farming.igloo().isEmpty() && !hasIgloo) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
-                if (updateable.equals(Updateable.IISTUBIL) && farming.getIistubil().isEmpty() && !hasIistubil) {
+                if (updateable.equals(Updateable.IISTUBIL) && farming.iistubil().isEmpty() && !hasIistubil) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
-                if (updateable.equals(Updateable.LAVA) && farming.getLava().isEmpty() && !hasLava) {
+                if (updateable.equals(Updateable.LAVA) && farming.lava().isEmpty() && !hasLava) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
-                if (updateable.equals(Updateable.PEN) && farming.getPen().isEmpty() && !hasPen) {
+                if (updateable.equals(Updateable.PEN) && farming.pen().isEmpty() && !hasPen) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
-                if (updateable.equals(Updateable.HUTCH) && farming.getHutch().isEmpty() && !hasHutch) {
+                if (updateable.equals(Updateable.HUTCH) && farming.hutch().isEmpty() && !hasHutch) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
-                if (updateable.equals(Updateable.BAMBOO) && farming.getBamboo().isEmpty() && !hasBamboo) {
+                if (updateable.equals(Updateable.BAMBOO) && farming.bamboo().isEmpty() && !hasBamboo) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
-                if (updateable.equals(Updateable.BIRDCAGE) && farming.getBirdcage().isEmpty() && !hasBirdcage) {
+                if (updateable.equals(Updateable.BIRDCAGE) && farming.birdcage().isEmpty() && !hasBirdcage) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
-                if (updateable.equals(Updateable.STABLE) && farming.getStable().isEmpty() && !hasStable) {
+                if (updateable.equals(Updateable.STABLE) && farming.stable().isEmpty() && !hasStable) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
-                if (updateable.equals(Updateable.STALL) && farming.getStall().isEmpty() && !hasStall) {
+                if (updateable.equals(Updateable.STALL) && farming.stall().isEmpty() && !hasStall) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }
-                if (updateable.equals(Updateable.VILLAGE) && farming.getVillage().isEmpty() && !hasVillage) {
+                if (updateable.equals(Updateable.VILLAGE) && farming.village().isEmpty() && !hasVillage) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "UPDATE_ROOM", tardis_block);
                     return false;
                 }

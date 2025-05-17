@@ -352,7 +352,7 @@ public class TARDISDoorListener {
                 PlayerInventory inv = player.getInventory();
                 Material m = Material.valueOf(key);
                 ItemStack oh = inv.getItemInOffHand();
-                if (!inv.contains(m) && (oh != null && !oh.getType().equals(m))) {
+                if (!inv.contains(m) && !oh.getType().equals(m)) {
                     ItemStack is = new ItemStack(m, 1);
                     TARDISItemRenamer ir = new TARDISItemRenamer(plugin, player, is);
                     ir.setName("TARDIS Key", true);
@@ -450,6 +450,7 @@ public class TARDISDoorListener {
                 for (ItemStack is : player.getInventory().getArmorContents()) {
                     if (is != null && is.getType().equals(m)) {
                         remove = false;
+                        break;
                     }
                 }
                 if (remove && plugin.getTrackerKeeper().getTemporallyLocated().contains(player.getUniqueId())) {

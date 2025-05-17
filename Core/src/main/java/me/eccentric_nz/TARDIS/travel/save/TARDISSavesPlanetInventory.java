@@ -97,9 +97,9 @@ public class TARDISSavesPlanetInventory {
         if (rsd.resultSet()) {
             int i = 9;
             for (Planet planet : rsd.getData()) {
-                ItemStack is = new ItemStack(planet.getMaterial(), 1);
+                ItemStack is = new ItemStack(planet.material(), 1);
                 ItemMeta im = is.getItemMeta();
-                im.setDisplayName(planet.getName());
+                im.setDisplayName(planet.name());
                 is.setItemMeta(im);
                 stack[i] = is;
                 i += 2;

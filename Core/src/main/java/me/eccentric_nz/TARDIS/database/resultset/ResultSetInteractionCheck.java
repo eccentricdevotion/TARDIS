@@ -65,11 +65,7 @@ public class ResultSetInteractionCheck {
             statement = connection.prepareStatement(query);
             statement.setString(1, uuid.toString());
             rs = statement.executeQuery();
-            if (rs.isBeforeFirst()) {
-                return true;
-            } else {
-                return false;
-            }
+            return rs.isBeforeFirst();
         } catch (SQLException e) {
             plugin.debug("ResultSet error for interactions UUID check! " + e.getMessage());
             return false;
@@ -96,11 +92,7 @@ public class ResultSetInteractionCheck {
             statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             rs = statement.executeQuery();
-            if (rs.isBeforeFirst()) {
-                return true;
-            } else {
-                return false;
-            }
+            return rs.isBeforeFirst();
         } catch (SQLException e) {
             plugin.debug("ResultSet error for interactions id check! " + e.getMessage());
             return false;

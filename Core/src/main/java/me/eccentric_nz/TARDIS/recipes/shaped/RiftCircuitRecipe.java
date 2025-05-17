@@ -26,8 +26,6 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
-import java.util.List;
-
 /*
 easy_shape:-D-,DND,-D-
 easy_ingredients.D:DIAMOND

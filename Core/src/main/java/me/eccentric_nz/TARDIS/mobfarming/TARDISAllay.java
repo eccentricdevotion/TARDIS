@@ -22,7 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.UUID;
 
 /**
- * The allay is a flying passive mob that collects and delivers items for any
+ * The Allay is a flying passive mob that collects and delivers items for any
  * player that gives it something or any note block it hears recently playing.
  * <p>
  * Data storage class for TARDIS allay.
@@ -31,14 +31,13 @@ import java.util.UUID;
  */
 class TARDISAllay extends TARDISMob {
 
-    public TARDISAllay() {
-        super.setType(EntityType.ALLAY);
-    }
-
     private UUID likedPlayer;
     private boolean canDuplicate;
     private long duplicationCooldown;
     private ItemStack[] inventory;
+    public TARDISAllay() {
+        super.setType(EntityType.ALLAY);
+    }
 
     public UUID getLikedPlayer() {
         return likedPlayer;

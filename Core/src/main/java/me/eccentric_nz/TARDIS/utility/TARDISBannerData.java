@@ -22,21 +22,6 @@ import org.bukkit.block.data.BlockData;
 /**
  * @author eccentric_nz
  */
-public class TARDISBannerData {
+public record TARDISBannerData(BlockData data, JsonObject state) {
 
-    private final BlockData data;
-    private final JsonObject state;
-
-    public TARDISBannerData(BlockData data, JsonObject state) {
-        this.data = data;
-        this.state = state;
-    }
-
-    public BlockData getData() {
-        return data;
-    }
-
-    public JsonObject getState() {
-        return state;
-    }
 }

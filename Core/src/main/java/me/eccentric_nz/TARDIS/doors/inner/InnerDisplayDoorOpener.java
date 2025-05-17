@@ -48,7 +48,7 @@ public class InnerDisplayDoorOpener {
         this.plugin = plugin;
     }
 
-    public void open(Block block, int id, UUID uuid, boolean outside) {
+    public void open(Block block, int id, boolean outside) {
         // get and open display door
         ItemDisplay display = TARDISDisplayItemUtils.getFromBoundingBox(block);
         if (display != null) {

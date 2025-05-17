@@ -24,7 +24,7 @@ import java.util.HashMap;
 
 public class CyberType {
 
-    public static HashMap<NamespacedKey, NamespacedKey> CYBER_HEADS = new HashMap<>() {
+    public static final HashMap<NamespacedKey, NamespacedKey> CYBER_HEADS = new HashMap<>() {
         {
             put(ArmourVariant.CYBERMAN.getKey(), CybermanVariant.CYBERMAN_HEAD.getKey());
             put(ArmourVariant.BLACK_CYBERMAN.getKey(), CybermanVariant.BLACK_CYBERMAN_HEAD.getKey());

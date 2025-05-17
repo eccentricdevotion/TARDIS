@@ -32,11 +32,6 @@ public class TARDISFloodgate {
         return FloodgateApi.getInstance().isFloodgatePlayer(uuid);
     }
 
-    public static boolean isBedrockPlayer(String name) {
-        Player player = Bukkit.getPlayer(name);
-        return player != null && FloodgateApi.getInstance().isFloodgatePlayer(player.getUniqueId());
-    }
-
     public static boolean isFloodgateEnabled() {
         try {
             Class.forName("org.geysermc.floodgate.api.FloodgateApi");

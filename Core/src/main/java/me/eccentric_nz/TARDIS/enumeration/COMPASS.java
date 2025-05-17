@@ -16,32 +16,24 @@
  */
 package me.eccentric_nz.TARDIS.enumeration;
 
-import org.bukkit.Rotation;
-
 /**
  * @author eccentric_nz
  */
 public enum COMPASS {
 
-    EAST(Rotation.FLIPPED, 90.0f),
-    SOUTH_EAST(Rotation.FLIPPED_45, 135.0f),
-    SOUTH(Rotation.COUNTER_CLOCKWISE, 180.0f),
-    SOUTH_WEST(Rotation.COUNTER_CLOCKWISE_45, -135.0f),
-    WEST(Rotation.NONE, -90.0f),
-    NORTH_WEST(Rotation.CLOCKWISE_45, -45.0f),
-    NORTH(Rotation.CLOCKWISE, 0.0f),
-    NORTH_EAST(Rotation.COUNTER_CLOCKWISE_45, 45.0f);
+    EAST(90.0f),
+    SOUTH_EAST(135.0f),
+    SOUTH(180.0f),
+    SOUTH_WEST(-135.0f),
+    WEST(-90.0f),
+    NORTH_WEST(-45.0f),
+    NORTH(0.0f),
+    NORTH_EAST(45.0f);
 
-    private final Rotation rotation;
     private final float yaw;
 
-    COMPASS(Rotation rotation, float yaw) {
-        this.rotation = rotation;
+    COMPASS(float yaw) {
         this.yaw = yaw;
-    }
-
-    public Rotation getRotation() {
-        return rotation;
     }
 
     public float getYaw() {

@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.custommodels.keys.ModelledControl;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
-import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.monitor.MonitorSnapshot;
 import me.eccentric_nz.TARDIS.monitor.MonitorUtils;
@@ -80,7 +79,7 @@ public class TARDISMonitorFrameListener implements Listener {
                     // get the preset - only custom model presets
                     ResultSetTardisPreset rsp = new ResultSetTardisPreset(plugin);
                     if (rsp.fromID(rs.getTardis_id()) && rsp.getPreset().usesArmourStand()) {
-                        new TARDISCamera(plugin).viewExterior(player, rs.getTardis_id(), rsp.getPreset() == ChameleonPreset.PANDORICA);
+                        new TARDISCamera(plugin).viewExterior(player, rs.getTardis_id());
                     }
                 } else {
                     ItemStack is = frame.getItem();
@@ -110,10 +109,10 @@ public class TARDISMonitorFrameListener implements Listener {
                                     int id = rst.getTardis_id();
                                     // get door location
                                     Snapshot snapshot = MonitorUtils.getLocationAndDirection(id, false);
-                                    Location door = snapshot.getLocation();
+                                    Location door = snapshot.location();
                                     if (door != null) {
                                         // load chunks
-                                        MonitorSnapshot.loadChunks(plugin, door, false, snapshot.getDirection(), id, 128);
+                                        MonitorSnapshot.loadChunks(plugin, door, false, snapshot.direction(), id, 128);
                                         // update the map
                                         MonitorUtils.updateSnapshot(door, 128, map);
                                     }

@@ -26,8 +26,6 @@ import java.util.IdentityHashMap;
 
 public class EntityRegistry {
 
-    private final String[] all = new String[]{"judoon", "ood", "k9"};
-
     public static void unfreeze() throws NoSuchFieldException, IllegalAccessException {
         Field unregisteredIntrusiveHolders = MappedRegistry.class.getDeclaredField("m");
         unregisteredIntrusiveHolders.setAccessible(true);

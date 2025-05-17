@@ -19,52 +19,17 @@ package me.eccentric_nz.TARDIS.database.data;
 /**
  * @author eccentric_nz
  */
-public class Farm {
-
-    private final int tardis_id;
-    private final String allay;
-    private final String apiary;
-    private final String aquarium;
-    private final String bamboo;
-    private final String birdcage;
-    private final String farm;
-    private final String geode;
-    private final String hutch;
-    private final String igloo;
-    private final String iistubil;
-    private final String mangrove;
-    private final String lava;
-    private final String pen;
-    private final String stable;
-    private final String stall;
-    private final String village;
-
-    public Farm(int tardis_id, String allay, String apiary, String aquarium, String bamboo, String birdcage, String farm, String geode, String hutch, String igloo, String iistubil, String lava, String mangrove, String pen, String stable, String stall, String village) {
-        this.tardis_id = tardis_id;
-        this.apiary = apiary;
-        this.allay = allay;
-        this.aquarium = aquarium;
-        this.bamboo = bamboo;
-        this.birdcage = birdcage;
-        this.farm = farm;
-        this.geode = geode;
-        this.hutch = hutch;
-        this.igloo = igloo;
-        this.iistubil = iistubil;
-        this.lava = lava;
-        this.mangrove = mangrove;
-        this.pen = pen;
-        this.stable = stable;
-        this.stall = stall;
-        this.village = village;
-    }
+public record Farm(int tardis_id, String allay, String apiary, String aquarium, String bamboo, String birdcage,
+                   String farm, String geode, String hutch, String igloo, String iistubil, String lava, String mangrove,
+                   String pen, String stable, String stall, String village) {
 
     /**
      * Returns the numerical id of this TARDIS.
      *
      * @return the TARDIS id
      */
-    public int getTardis_id() {
+    @Override
+    public int tardis_id() {
         return tardis_id;
     }
 
@@ -74,7 +39,8 @@ public class Farm {
      *
      * @return the Allay room spawn location string, or an empty string if the room does not exist
      */
-    public String getAllay() {
+    @Override
+    public String allay() {
         return allay;
     }
 
@@ -84,7 +50,8 @@ public class Farm {
      *
      * @return the Apiary room bee spawn location string, or an empty string if the room does not exist
      */
-    public String getApiary() {
+    @Override
+    public String apiary() {
         return apiary;
     }
 
@@ -94,7 +61,8 @@ public class Farm {
      *
      * @return the Aquarium room fish spawn location string, or an empty string if the room does not exist
      */
-    public String getAquarium() {
+    @Override
+    public String aquarium() {
         return aquarium;
     }
 
@@ -104,7 +72,8 @@ public class Farm {
      *
      * @return the Bamboo room panda spawn location string, or an empty string if the room does not exist
      */
-    public String getBamboo() {
+    @Override
+    public String bamboo() {
         return bamboo;
     }
 
@@ -114,7 +83,8 @@ public class Farm {
      *
      * @return the Birdcage room parrot spawn location string, or an empty string if the room does not exist
      */
-    public String getBirdcage() {
+    @Override
+    public String birdcage() {
         return birdcage;
     }
 
@@ -124,7 +94,8 @@ public class Farm {
      *
      * @return the Farm room mob spawn location string, or an empty string if the room does not exist
      */
-    public String getFarm() {
+    @Override
+    public String farm() {
         return farm;
     }
 
@@ -134,7 +105,8 @@ public class Farm {
      *
      * @return the Geode room mob spawn location string, or an empty string if the room does not exist
      */
-    public String getGeode() {
+    @Override
+    public String geode() {
         return geode;
     }
 
@@ -144,7 +116,8 @@ public class Farm {
      *
      * @return the Hutch room rabbit spawn location string, or an empty string if the room does not exist
      */
-    public String getHutch() {
+    @Override
+    public String hutch() {
         return hutch;
     }
 
@@ -154,7 +127,8 @@ public class Farm {
      *
      * @return the Igloo room polar bear spawn location string, or an empty string if the room does not exist
      */
-    public String getIgloo() {
+    @Override
+    public String igloo() {
         return igloo;
     }
 
@@ -164,7 +138,8 @@ public class Farm {
      *
      * @return the Iistubil room camel spawn location string, or an empty string if the room does not exist
      */
-    public String getIistubil() {
+    @Override
+    public String iistubil() {
         return iistubil;
     }
 
@@ -174,7 +149,8 @@ public class Farm {
      *
      * @return the Lava room strider spawn location string, or an empty string if the room does not exist
      */
-    public String getLava() {
+    @Override
+    public String lava() {
         return lava;
     }
 
@@ -184,7 +160,8 @@ public class Farm {
      *
      * @return the Mangrove room frog spawn location string, or an empty string if the room does not exist
      */
-    public String getMangrove() {
+    @Override
+    public String mangrove() {
         return mangrove;
     }
 
@@ -194,7 +171,8 @@ public class Farm {
      *
      * @return the Pen room sniffer spawn location string, or an empty string if the room does not exist
      */
-    public String getPen() {
+    @Override
+    public String pen() {
         return pen;
     }
 
@@ -204,7 +182,8 @@ public class Farm {
      *
      * @return the Stable room horse spawn location string, or an empty string if the room does not exist
      */
-    public String getStable() {
+    @Override
+    public String stable() {
         return stable;
     }
 
@@ -214,7 +193,8 @@ public class Farm {
      *
      * @return the Stall room llama spawn location string, or an empty string if the room does not exist
      */
-    public String getStall() {
+    @Override
+    public String stall() {
         return stall;
     }
 
@@ -224,7 +204,8 @@ public class Farm {
      *
      * @return the Village room villager spawn location string, or an empty string if the room does not exist
      */
-    public String getVillage() {
+    @Override
+    public String village() {
         return village;
     }
 }

@@ -43,7 +43,7 @@ public class TARDISCamera {
         this.plugin = plugin;
     }
 
-    public void viewExterior(Player player, int id, boolean pandorica) {
+    public void viewExterior(Player player, int id) {
         Location playerLocation = player.getLocation();
         TARDISCameraTracker.SPECTATING.put(player.getUniqueId(), new CameraLocation(playerLocation, id, playerLocation.getChunk().isForceLoaded()));
         TARDISCameraTracker.CAMERA_IN_USE.add(id);
@@ -137,7 +137,7 @@ public class TARDISCamera {
             is.setItemMeta(im);
             ee.setHelmet(is);
             // teleport player to interior
-            Location interior = data.getLocation();
+            Location interior = data.location();
             while (!interior.getChunk().isLoaded()) {
                 interior.getChunk().load();
             }
@@ -148,12 +148,12 @@ public class TARDISCamera {
             }
             // add player to travellers
             HashMap<String, Object> sett = new HashMap<>();
-            sett.put("tardis_id", data.getId());
+            sett.put("tardis_id", data.id());
             sett.put("uuid", uuid.toString());
             plugin.getQueryFactory().doSyncInsert("travellers", sett);
             TARDISCameraTracker.SPECTATING.remove(uuid);
-            TARDISCameraTracker.CAMERA_IN_USE.remove(data.getId());
-            if (data.isForceLoaded()) {
+            TARDISCameraTracker.CAMERA_IN_USE.remove(data.id());
+            if (data.forceLoaded()) {
                 interior.getChunk().addPluginChunkTicket(plugin);
             } else {
                 interior.getChunk().removePluginChunkTicket(plugin);

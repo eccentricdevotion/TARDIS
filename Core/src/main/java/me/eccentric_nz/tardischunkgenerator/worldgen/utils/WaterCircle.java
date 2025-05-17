@@ -22,7 +22,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class WaterCircle {
 
-    public static boolean[][] MASK = new boolean[16][16];
+    public static final boolean[][] MASK = new boolean[16][16];
 
     static {
         for (int col = 0; col < 16; col++) {

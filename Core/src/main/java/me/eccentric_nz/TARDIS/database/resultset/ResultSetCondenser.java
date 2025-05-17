@@ -116,18 +116,6 @@ public class ResultSetCondenser {
         return true;
     }
 
-    public int getC_id() {
-        return c_id;
-    }
-
-    public int getTardis_id() {
-        return tardis_id;
-    }
-
-    public String getBlock_data() {
-        return block_data;
-    }
-
     public int getBlock_count() {
         return block_count;
     }

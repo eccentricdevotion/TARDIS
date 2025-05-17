@@ -173,18 +173,6 @@ public class ResultSetDiskStorage {
         return true;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public int getTardis_id() {
-        return tardis_id;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
     public String getSavesOne() {
         return savesOne;
     }

@@ -96,7 +96,7 @@ public class TARDISBlueMap implements TARDISMapper {
                     break;
                 } else {
                     // get next world
-                    curWorld = worldsToDo.remove(0);
+                    curWorld = worldsToDo.removeFirst();
                     BlueMapAPI.getInstance().ifPresent(api -> api.getWorld(curWorld).ifPresent(w -> {
                         // get TARDISes
                         TARDISGetter getter = new TARDISGetter(plugin, curWorld);
@@ -118,9 +118,9 @@ public class TARDISBlueMap implements TARDISMapper {
                                     TARDISData data = toDo.get(tardisIndex);
                                     tardisIndex++;
                                     // get marker id
-                                    String id = curWorld.getName() + "/" + data.getOwner();
-                                    Location loc = data.getLocation();
-                                    String label = String.format("%s (TARDIS)", data.getOwner());
+                                    String id = curWorld.getName() + "/" + data.owner();
+                                    Location loc = data.location();
+                                    String label = String.format("%s (TARDIS)", data.owner());
                                     String desc = formatInfoWindow(data);
                                     POIMarker marker = new POIMarker(label, new Vector3d(loc.getX(), loc.getY(), loc.getZ()));
                                     marker.setIcon("https://raw.githubusercontent.com/eccentricdevotion/TARDIS/master/Core/src/main/resources/tardis.png", 0, 0);

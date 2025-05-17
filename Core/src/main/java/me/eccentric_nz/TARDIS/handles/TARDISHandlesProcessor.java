@@ -140,7 +140,7 @@ public class TARDISHandlesProcessor {
                                             if (outerDisplayDoor) {
                                                 new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, uuid);
                                             } else if (rsp.getPreset().hasDoor()) {
-                                                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rsp.getPreset()), id, uuid);
+                                                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, uuid);
                                             }
                                         }
                                     }
@@ -150,16 +150,16 @@ public class TARDISHandlesProcessor {
                                             Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
                                             // open inner
                                             if (innerDisplayDoor.display()) {
-                                                new InnerDisplayDoorOpener(plugin).open(innerDisplayDoor.block(), id, uuid, true);
+                                                new InnerDisplayDoorOpener(plugin).open(innerDisplayDoor.block(), id, true);
                                             } else {
-                                                new InnerMinecraftDoorOpener(plugin).open(innerDisplayDoor.block(), id, uuid);
+                                                new InnerMinecraftDoorOpener(plugin).open(innerDisplayDoor.block(), id);
                                             }
                                             boolean outerDisplayDoor = rsp.getPreset().usesArmourStand();
                                             // open outer
                                             if (outerDisplayDoor) {
                                                 new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, uuid);
                                             } else if (rsp.getPreset().hasDoor()) {
-                                                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rsp.getPreset()), id, uuid);
+                                                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, uuid);
                                             }
                                         }
                                     }
@@ -372,10 +372,10 @@ public class TARDISHandlesProcessor {
                                                     continue;
                                                 }
                                                 Location l;
-                                                if (rsa.getArea().isGrid()) {
-                                                    l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
+                                                if (rsa.getArea().grid()) {
+                                                    l = plugin.getTardisArea().getNextSpot(rsa.getArea().areaName());
                                                 } else {
-                                                    l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+                                                    l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().areaId());
                                                 }
                                                 if (l == null) {
                                                     plugin.getMessenger().handlesSend(player, "NO_MORE_SPOTS");
@@ -674,14 +674,14 @@ public class TARDISHandlesProcessor {
         wherea.put("world", world.getName());
         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
         if (rsa.resultSet()) {
-            String area = rsa.getArea().getAreaName();
+            String area = rsa.getArea().areaName();
             if (!TARDISPermission.hasPermission(player, "tardis.area." + area) || !player.isPermissionSet("tardis.area." + area)) {
                 return null;
             }
-            if (rsa.getArea().isGrid()) {
+            if (rsa.getArea().grid()) {
                 l = plugin.getTardisArea().getNextSpot(area);
             } else {
-                l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+                l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().areaId());
             }
         }
         return l;

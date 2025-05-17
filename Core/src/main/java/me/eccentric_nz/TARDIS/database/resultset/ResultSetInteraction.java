@@ -100,16 +100,8 @@ public class ResultSetInteraction {
         return true;
     }
 
-    public int getInteraction_id() {
-        return interaction_id;
-    }
-
     public int getTardisId() {
         return tardis_id;
-    }
-
-    public UUID getUniqueId() {
-        return uuid;
     }
 
     public ConsoleInteraction getControl() {

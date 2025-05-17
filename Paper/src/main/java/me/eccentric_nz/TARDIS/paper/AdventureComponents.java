@@ -102,11 +102,11 @@ public class AdventureComponents {
     }
 
     public static TextComponent getTransmat(Transmat t) {
-        return Component.text(t.getName(), NamedTextColor.GREEN)
-                .append(Component.text(String.format(" X: %.2f, Y: %.2f, Z: %.2f, Yaw %.2f", t.getX(), t.getY(), t.getZ(), t.getYaw()), NamedTextColor.WHITE))
+        return Component.text(t.name(), NamedTextColor.GREEN)
+                .append(Component.text(String.format(" X: %.2f, Y: %.2f, Z: %.2f, Yaw %.2f", t.x(), t.y(), t.z(), t.yaw()), NamedTextColor.WHITE))
                 .append(Component.text(" <Transmat> ", NamedTextColor.AQUA)
                         .hoverEvent(HoverEvent.showText(Component.text("Transmat to this location")))
-                        .clickEvent(ClickEvent.runCommand("/tardis transmat tp " + t.getName()))
+                        .clickEvent(ClickEvent.runCommand("/tardis transmat tp " + t.name()))
                 );
     }
 
@@ -174,11 +174,11 @@ public class AdventureComponents {
     public static TextComponent getArea(Area a, int n, boolean hasPerm) {
         TextComponent textComponent;
         if (hasPerm) {
-            textComponent = Component.text(n + ". [" + a.getAreaName() + "] in world: " + a.getWorld())
+            textComponent = Component.text(n + ". [" + a.areaName() + "] in world: " + a.world())
                     .hoverEvent(HoverEvent.showText(Component.text("Click to /tardistravel here")))
-                    .clickEvent(ClickEvent.runCommand(String.format("/tardistravel area %s", a.getAreaName())));
+                    .clickEvent(ClickEvent.runCommand(String.format("/tardistravel area %s", a.areaName())));
         } else {
-            textComponent = Component.text(n + ". [" + a.getAreaName() + "] in world: " + a.getWorld());
+            textComponent = Component.text(n + ". [" + a.areaName() + "] in world: " + a.world());
         }
         return textComponent;
     }

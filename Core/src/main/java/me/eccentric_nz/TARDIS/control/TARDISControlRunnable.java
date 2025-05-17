@@ -63,7 +63,7 @@ public class TARDISControlRunnable implements Runnable {
                                     front.setLine(3, ChatColor.DARK_PURPLE + "vortex...");
                                 } else {
                                     String worldName = (resultSetConsole.getWorld() != null) ? TARDISAliasResolver.getWorldAlias(resultSetConsole.getWorld()) : "";
-                                    if (!plugin.getPlanetsConfig().getBoolean("planets." + resultSetConsole.getWorld() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE) && !worldName.equals("")) {
+                                    if (!plugin.getPlanetsConfig().getBoolean("planets." + resultSetConsole.getWorld() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE) && !worldName.isEmpty()) {
                                         worldName = plugin.getMVHelper().getAlias(worldName);
                                     }
                                     front.setLine(0, ChatColor.DARK_PURPLE + worldName);
@@ -87,7 +87,7 @@ public class TARDISControlRunnable implements Runnable {
                                 front.setLine(0, ChatColor.BLACK + plugin.getLanguage().getString("ARTRON_DISPLAY"));
                                 front.setLine(1, ChatColor.AQUA + resultSetConsole.getArtronLevel());
                                 front.setLine(2, ChatColor.BLACK + plugin.getLanguage().getString("CHAM_DISPLAY"));
-                                String preset = "";
+                                String preset;
                                 if (resultSetConsole.getPreset().startsWith("POLICE_BOX_")) {
                                     ChatColor colour = TARDISStaticUtils.policeBoxToChatColor(resultSetConsole.getPreset());
                                     preset = colour + "POLICE_BOX";

@@ -124,16 +124,8 @@ public class ResultSetTravellers {
         return true;
     }
 
-    public int getTraveller_id() {
-        return traveller_id;
-    }
-
     public int getTardis_id() {
         return tardis_id;
-    }
-
-    public UUID getUuid() {
-        return uuid;
     }
 
     public List<UUID> getData() {

@@ -83,14 +83,14 @@ public class TARDISMoveListener implements Listener {
         // are they casting?
         if (plugin.getConfig().getBoolean("police_box.view_interior") && plugin.getTrackerKeeper().getCasters().containsKey(uuid)) {
             CastData data = plugin.getTrackerKeeper().getCasters().get(uuid);
-            Location exterior = data.getExterior();
+            Location exterior = data.exterior();
             if (exterior.getWorld() == loc.getWorld()) {
-                Location interior = data.getInterior();
+                Location interior = data.interior();
                 // get distance from exterior
                 // only in the direction of the door!
                 double distance = l.distanceSquared(exterior);
                 double vx, vz;
-                switch (data.getDirection()) {
+                switch (data.direction()) {
                     case EAST -> {
                         vx = exterior.getX() - 3;
                         vz = exterior.getZ();
@@ -115,11 +115,11 @@ public class TARDISMoveListener implements Listener {
                 Cast cast = new Cast(plugin, exterior);
                 if (distance <= 9 && angle < 26 && angle > -26) {
                     Capture capture = new Capture();
-                    BlockData[][][] dataArr = capture.captureInterior(interior, (int) distance, data.getRotor(), data.getConsoleSize());
+                    BlockData[][][] dataArr = capture.captureInterior(interior, (int) distance, data.rotor(), data.consoleSize());
                     cast.castInterior(uuid, dataArr);
-                    if (capture.getRotorData().getFrame() != null) {
+                    if (capture.getRotorData().frame() != null) {
                         // get vector of rotor
-                        cast.castRotor(capture.getRotorData().getFrame(), player, capture.getRotorData().getOffset(), data.getDirection());
+                        cast.castRotor(capture.getRotorData().frame(), player, capture.getRotorData().offset(), data.direction());
                     }
                 } else if (plugin.getTrackerKeeper().getCastRestore().containsKey(uuid)) {
                     cast.restoreExterior(uuid);

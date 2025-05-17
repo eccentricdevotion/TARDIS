@@ -61,7 +61,7 @@ public class TARDISBuilderInstanceKeeper {
     /**
      * Gets a list of precious blocks to protect
      *
-     * @return a list of precious blocks
+     * @return a set of precious blocks
      */
     public static Set<Material> getPrecious() {
         return PRECIOUS;
@@ -70,7 +70,7 @@ public class TARDISBuilderInstanceKeeper {
     /**
      * Gets a list of used TIPS slots
      *
-     * @return a list of slots
+     * @return a set of slots
      */
     public static Set<Integer> getTipsSlots() {
         return TIPS_SLOTS;
@@ -202,7 +202,7 @@ public class TARDISBuilderInstanceKeeper {
      * Get a list of blocks that will be ignored by the rooms_require_blocks
      * option
      *
-     * @return a list of block names
+     * @return a set of block names
      */
     public Set<String> getIgnoreBlocks() {
         return IGNORE_BLOCKS;

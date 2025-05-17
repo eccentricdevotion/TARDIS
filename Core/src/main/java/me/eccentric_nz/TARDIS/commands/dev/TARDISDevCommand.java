@@ -142,7 +142,7 @@ public class TARDISDevCommand implements CommandExecutor {
                             }
                         }
                         case "furnace" -> {
-                            return new TARDISFurnaceCommand(plugin).list(sender);
+                            return new TARDISFurnaceCommand(plugin).list();
                         }
                         case "gravity" -> {
                             if (sender instanceof Player player) {
@@ -214,8 +214,7 @@ public class TARDISDevCommand implements CommandExecutor {
                             for (Art a : Registry.ART) {
                                 try {
                                     plugin.debug(a.toString() + " " + plugin.getFromRegistry().getKeysKey(a));
-                                } catch (NoSuchElementException | NoSuchMethodError e) {
-
+                                } catch (NoSuchElementException | NoSuchMethodError ignored) {
                                 }
                             }
                             return true;

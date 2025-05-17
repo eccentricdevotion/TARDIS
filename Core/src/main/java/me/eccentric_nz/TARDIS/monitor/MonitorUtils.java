@@ -105,7 +105,7 @@ public class MonitorUtils {
             // adjust x,z to be centred in front of the door
             int getx = door.getBlockX();
             int getz = door.getBlockZ();
-            float yaw = 0.05f;
+            float yaw;
             switch (d) {
                 case SOUTH -> {
                     // z -ve

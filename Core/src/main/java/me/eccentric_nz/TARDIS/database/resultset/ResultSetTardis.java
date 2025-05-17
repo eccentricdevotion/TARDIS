@@ -115,7 +115,7 @@ public class ResultSetTardis {
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
                     String uid = rs.getString("uuid");
-                    if (rs.wasNull() || uid.equals("")) {
+                    if (rs.wasNull() || uid.isEmpty()) {
                         uid = UUID.randomUUID().toString();
                     }
                     String companions = rs.getString("companions");

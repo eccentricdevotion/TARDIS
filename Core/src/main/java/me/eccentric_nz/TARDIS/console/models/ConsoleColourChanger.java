@@ -53,7 +53,7 @@ public class ConsoleColourChanger {
                         ItemStack is = display.getItemStack();
                         if (is != null) {
                             ItemMeta im = is.getItemMeta();
-                            NamespacedKey model = null;
+                            NamespacedKey model;
                             if (im.hasItemModel()) {
                                 String[] key = im.getItemModel().getKey().split("_");
                                 if (key[1].equals("centre")) {

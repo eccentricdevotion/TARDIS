@@ -178,8 +178,6 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         boolean on = component.getFloats().getFirst() > 200;
         component.setFloats(on ? SwitchVariant.BUTTON_TOGGLE_OFF.getFloats() : SwitchVariant.BUTTON_TOGGLE_ON.getFloats());
         im.setCustomModelDataComponent(component);
-//        NamespacedKey key = im.getItemModel();
-//        boolean on = key == null || key.equals(SwitchVariant.BUTTON_TOGGLE_ON.getKey());
         List<String> lore = im.getLore();
         lore.set(0, on ? "OFF" : "ON");
         im.setLore(lore);
@@ -210,7 +208,7 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
                 // read current settings
                 ParticleData data = getParticleData(view);
                 // display particles
-                Emitter emitter = new Emitter(plugin, uuid, current, data, throticle.getThrottle().getFlightTime());
+                Emitter emitter = new Emitter(plugin, uuid, current, data, throticle.throttle().getFlightTime());
                 int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, data.getShape().getPeriod());
                 emitter.setTaskID(task);
                 // close GUI
@@ -251,9 +249,9 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         return new ParticleData(effect, shape, density, speed, colour, block, b);
     }
 
-    private void less(InventoryView view, boolean b, UUID uuid) {
-        int min = b ? 8 : 0;
-        int slot = b ? GUIParticle.DENSITY.slot() : GUIParticle.SPEED.slot();
+    private void less(InventoryView view, boolean density, UUID uuid) {
+        int min = density ? 8 : 0;
+        int slot = density ? GUIParticle.DENSITY.slot() : GUIParticle.SPEED.slot();
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
         List<String> lore = im.getLore();
@@ -264,18 +262,18 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
             im.setLore(lore);
             is.setItemMeta(im);
             view.setItem(slot, is);
-            String f = b ? "density" : "speed";
+            String field = density ? "density" : "speed";
             HashMap<String, Object> set = new HashMap<>();
-            set.put(f, b ? (int) level : level);
+            set.put(field, level);
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             plugin.getQueryFactory().doSyncUpdate("particle_prefs", set, where);
         }
     }
 
-    private void more(InventoryView view, boolean b, UUID uuid) {
-        int max = b ? 32 : 10;
-        int slot = b ? GUIParticle.DENSITY.slot() : GUIParticle.SPEED.slot();
+    private void more(InventoryView view, boolean density, UUID uuid) {
+        int max = density ? 32 : 10;
+        int slot = density ? GUIParticle.DENSITY.slot() : GUIParticle.SPEED.slot();
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
         List<String> lore = im.getLore();
@@ -286,9 +284,9 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
             im.setLore(lore);
             is.setItemMeta(im);
             view.setItem(slot, is);
-            String f = b ? "density" : "speed";
+            String f = density ? "density" : "speed";
             HashMap<String, Object> set = new HashMap<>();
-            set.put(f, b ? (int) level : level);
+            set.put(f, level);
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             plugin.getQueryFactory().doSyncUpdate("particle_prefs", set, where);

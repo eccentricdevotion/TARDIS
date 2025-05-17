@@ -235,11 +235,10 @@ class TARDISArchiveCommand {
                             plugin.getQueryFactory().doUpdate("archive", set, whereu);
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCHIVE_UPDATE", name);
                         }
-                        return true;
                     } else {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "ARCHIVE_NO_JSON");
-                        return true;
                     }
+                    return true;
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CMD_ONLY_TL");
                     return true;

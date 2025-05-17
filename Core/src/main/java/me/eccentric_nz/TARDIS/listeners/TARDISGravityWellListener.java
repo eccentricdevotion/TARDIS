@@ -43,7 +43,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 /**
- * Air corridors projected by TARDISes had the option to use anti-gravity, allowing the occupant of the corridor to
+ * Air corridors projected by TARDISes had the option to use antigravity, allowing the occupant of the corridor to
  * float through the corridor instead of walk.
  *
  * @author eccentric_nz

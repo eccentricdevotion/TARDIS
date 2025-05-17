@@ -54,10 +54,10 @@ public class TARDISPlanetsUpdater {
                     planets_config.set("planets." + w + ".enabled", true);
                     planets_config.set("planets." + w + ".time_travel", plugin.getConfig().getBoolean("worlds." + w));
                     planets_config.set("planets." + w + ".resource_pack", "default");
-                    planets_config.set("planets." + w + ".gamemode", data.getGameMode().toString());
-                    planets_config.set("planets." + w + ".world_type", data.getWorldType().toString());
-                    planets_config.set("planets." + w + ".environment", data.getEnvironment().toString());
-                    planets_config.set("planets." + w + ".difficulty", data.getDifficulty().toString());
+                    planets_config.set("planets." + w + ".gamemode", data.gameMode().toString());
+                    planets_config.set("planets." + w + ".world_type", data.worldType().toString());
+                    planets_config.set("planets." + w + ".environment", data.environment().toString());
+                    planets_config.set("planets." + w + ".difficulty", data.difficulty().toString());
                     if (w.startsWith("TARDIS_") || w.equals(plugin.getConfig().getString("creation.default_world_name"))) {
                         planets_config.set("planets." + w + ".generator", "TARDIS:void");
                     } else {
@@ -123,7 +123,7 @@ public class TARDISPlanetsUpdater {
         for (String w : worlds) {
             if (!planets_config.contains("planets." + w + ".gamemode")) {
                 TARDISPlanetData data = plugin.getTardisHelper().getLevelData(w);
-                planets_config.set("planets." + w + ".gamemode", data.getGameMode().toString());
+                planets_config.set("planets." + w + ".gamemode", data.gameMode().toString());
                 save++;
             }
         }

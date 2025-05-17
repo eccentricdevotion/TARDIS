@@ -39,9 +39,9 @@ import java.util.UUID;
 
 public class Sphere extends TARDISParticleRunnable {
 
+    public final Set<Vector> coords = new HashSet<>();
     private final Location location;
     private final Capacitor capacitor;
-    public Set<Vector> coords = new HashSet<>();
 
     public Sphere(TARDIS plugin, UUID uuid, Location location, Capacitor capacitor) {
         super(plugin, uuid);

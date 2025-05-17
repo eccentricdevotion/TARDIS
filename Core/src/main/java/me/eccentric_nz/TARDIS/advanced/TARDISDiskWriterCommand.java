@@ -240,7 +240,7 @@ public class TARDISDiskWriterCommand {
 
     public boolean writeSaveToControlDisk(Player player, String[] args) {
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (is != null && is.hasItemMeta()) {
+        if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName() && im.getDisplayName().endsWith("Authorised Control Disk") && im.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
                 if (args.length < 2) {

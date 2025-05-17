@@ -52,7 +52,7 @@ public class Damage implements Listener {
         mat = Material.valueOf(plugin.getMonstersConfig().getString("angels.weapon"));
         plugin.getMonstersConfig().getStringList("angels.teleport_worlds").forEach((w) -> {
             World world = plugin.getServer().getWorld(w);
-            if (w != null) {
+            if (world != null) {
                 angel_tp_worlds.add(world);
             }
         });
@@ -90,16 +90,13 @@ public class Damage implements Listener {
                 if (e.getPersistentDataContainer().has(TARDISWeepingAngels.ANGEL, PersistentDataType.INTEGER)) {
                     Entity t = event.getEntity();
                     Player p = (Player) t;
-                    Location l = null;
+                    Location l;
                     if (plugin.getMonstersConfig().getBoolean("angels.teleport_to_location")) {
                         l = getSpecificLocation();
                     } else {
                         l = getRandomLocation(t.getWorld());
                     }
-                    if (l != null) {
-                        final Location tpLoc = l;
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.teleport(tpLoc), 1L);
-                    }
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.teleport(l), 1L);
                     p.addPotionEffect(new PotionEffect(PotionEffectType.NAUSEA, 300, 5, true, false));
                     if (TARDISWeepingAngels.angelsCanSteal()) {
                         stealKey(p);

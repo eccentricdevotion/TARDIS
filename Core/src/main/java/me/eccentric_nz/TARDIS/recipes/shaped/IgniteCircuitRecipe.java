@@ -27,8 +27,6 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
-import java.util.List;
-
 /*
 easy_shape:-N-,NFN,-N-
 easy_ingredients.N:NETHERRACK

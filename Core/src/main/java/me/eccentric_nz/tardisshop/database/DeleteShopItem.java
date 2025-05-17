@@ -40,7 +40,7 @@ public class DeleteShopItem {
 
     /**
      * Deletes rows from an SQLite database table. This method builds an SQL
-     * query string from the parameters supplied and then executes the delete.
+     * query string from the parameters supplied and then executes the delete action.
      *
      * @param table the database table name to insert the data into.
      * @param where a HashMap&lt;String, Object&gt; of table fields and values to
@@ -53,13 +53,13 @@ public class DeleteShopItem {
         where.forEach((key, value) -> {
             sbw.append(key).append(" = ");
             if (value instanceof String || value instanceof UUID) {
-                sbw.append("'").append(value.toString()).append("' AND ");
+                sbw.append("'").append(value).append("' AND ");
             } else {
                 sbw.append(value).append(" AND ");
             }
         });
         where.clear();
-        values = sbw.toString().substring(0, sbw.length() - 5);
+        values = sbw.substring(0, sbw.length() - 5);
         String query = "DELETE FROM " + prefix + "items WHERE " + values;
         try {
             statement = connection.createStatement();

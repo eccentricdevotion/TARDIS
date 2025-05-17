@@ -117,14 +117,14 @@ public class SpigotComponents {
     }
 
     public static TextComponent getTransmat(Transmat t) {
-        TextComponent textComponent = new TextComponent(t.getName());
+        TextComponent textComponent = new TextComponent(t.name());
         textComponent.setColor(ChatColor.GREEN);
-        TextComponent tcl = new TextComponent(String.format(" X: %.2f, Y: %.2f, Z: %.2f, Yaw %.2f", t.getX(), t.getY(), t.getZ(), t.getYaw()));
+        TextComponent tcl = new TextComponent(String.format(" X: %.2f, Y: %.2f, Z: %.2f, Yaw %.2f", t.x(), t.y(), t.z(), t.yaw()));
         tcl.setColor(ChatColor.WHITE);
         TextComponent tce = new TextComponent(" <Transmat>");
         tce.setColor(ChatColor.AQUA);
         tce.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Transmat to this location")));
-        tce.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis transmat tp " + t.getName()));
+        tce.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tardis transmat tp " + t.name()));
         textComponent.addExtra(tcl);
         textComponent.addExtra(tce);
         return textComponent;
@@ -204,10 +204,10 @@ public class SpigotComponents {
     }
 
     public static TextComponent getArea(Area a, int n, boolean hasPerm) {
-        TextComponent textComponent = new TextComponent(n + ". [" + a.getAreaName() + "] in world: " + a.getWorld());
+        TextComponent textComponent = new TextComponent(n + ". [" + a.areaName() + "] in world: " + a.world());
         if (hasPerm) {
             textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click to /tardistravel here")));
-            textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, String.format("/tardistravel area %s", a.getAreaName())));
+            textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, String.format("/tardistravel area %s", a.areaName())));
         }
         return textComponent;
     }

@@ -21,12 +21,11 @@ public class ComponentSetterSpigot implements ComponentSetter {
         return is;
     }
 
-    public ItemStack setWeapon(ItemStack is) {
+    public void setWeapon(ItemStack is) {
         ItemMeta im = is.getItemMeta();
         WeaponComponent component = im.getWeapon();
         component.setItemDamagePerAttack(8);
         im.setWeapon(component);
         is.setItemMeta(im);
-        return is;
     }
 }

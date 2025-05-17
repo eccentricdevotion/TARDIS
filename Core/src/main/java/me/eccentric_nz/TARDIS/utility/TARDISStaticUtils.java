@@ -294,13 +294,6 @@ public class TARDISStaticUtils {
         return ZERO_UUID;
     }
 
-    public static boolean isMusicDisk(ItemStack is) {
-        return switch (is.getType()) {
-            case MUSIC_DISC_BLOCKS, MUSIC_DISC_CAT, MUSIC_DISC_CHIRP, MUSIC_DISC_MALL, MUSIC_DISC_WAIT -> true;
-            default -> false;
-        };
-    }
-
     /**
      * Checks whether an ItemStack is a sonic screwdriver
      *

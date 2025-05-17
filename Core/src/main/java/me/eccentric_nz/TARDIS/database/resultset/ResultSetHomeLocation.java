@@ -129,14 +129,6 @@ public class ResultSetHomeLocation {
         return world != null;
     }
 
-    public int getHome_id() {
-        return home_id;
-    }
-
-    public int getTardis_id() {
-        return tardis_id;
-    }
-
     public World getWorld() {
         return world;
     }

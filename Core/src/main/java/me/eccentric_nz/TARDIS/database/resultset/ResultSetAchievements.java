@@ -19,8 +19,13 @@ package me.eccentric_nz.TARDIS.database.resultset;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Chronomium was a time-active element that displaced time around it. In its unprocessed form, chronomium slowed down
@@ -35,12 +40,8 @@ public class ResultSetAchievements {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
-    private final boolean multiple;
-    private final ArrayList<HashMap<String, String>> data = new ArrayList<>();
     private final String prefix;
     private int a_id;
-    private UUID uuid;
-    private String name;
     private String amount;
     private boolean completed;
 
@@ -49,13 +50,10 @@ public class ResultSetAchievements {
      *
      * @param plugin   an instance of the main class.
      * @param where    a String location to check.
-     * @param multiple a boolean setting whether to retrieve more than on record, it true returns an ArrayList that can
-     *                 be looped through later.
-     */
-    public ResultSetAchievements(TARDIS plugin, HashMap<String, Object> where, boolean multiple) {
+    */
+    public ResultSetAchievements(TARDIS plugin, HashMap<String, Object> where) {
         this.plugin = plugin;
         this.where = where;
-        this.multiple = multiple;
         prefix = this.plugin.getPrefix();
     }
 
@@ -91,18 +89,7 @@ public class ResultSetAchievements {
             }
             rs = statement.executeQuery();
             if (rs.next()) {
-                if (multiple) {
-                    HashMap<String, String> row = new HashMap<>();
-                    ResultSetMetaData rsmd = rs.getMetaData();
-                    int columns = rsmd.getColumnCount();
-                    for (int i = 1; i < columns + 1; i++) {
-                        row.put(rsmd.getColumnName(i).toLowerCase(Locale.ROOT), rs.getString(i));
-                    }
-                    data.add(row);
-                }
                 a_id = rs.getInt("a_id");
-                uuid = UUID.fromString(rs.getString("uuid"));
-                name = rs.getString("name");
                 amount = rs.getString("amount");
                 if (rs.wasNull()) {
                     amount = "";
@@ -133,23 +120,11 @@ public class ResultSetAchievements {
         return a_id;
     }
 
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public String getAmount() {
         return amount;
     }
 
     public boolean isCompleted() {
         return completed;
-    }
-
-    public ArrayList<HashMap<String, String>> getData() {
-        return data;
     }
 }

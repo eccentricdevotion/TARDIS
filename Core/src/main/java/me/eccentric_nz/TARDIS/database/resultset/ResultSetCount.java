@@ -101,14 +101,6 @@ public class ResultSetCount {
         return true;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
     public int getCount() {
         return count;
     }

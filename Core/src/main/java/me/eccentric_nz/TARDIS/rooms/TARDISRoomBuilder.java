@@ -35,7 +35,7 @@ import org.bukkit.entity.Player;
 import java.util.Locale;
 
 /**
- * There were at least fourteen bathrooms in the TARDIS, one of which had had a
+ * There were at least fourteen bathrooms in the TARDIS, one of which had a
  * leaky tap for three centuries. Because he had misplaced his washers, the
  * Doctor kept it from flooding the TARDIS by sealing it in a time loop that
  * made the same drop of water leak out over and over again.
@@ -45,17 +45,17 @@ import java.util.Locale;
 public class TARDISRoomBuilder {
 
     private final TARDIS plugin;
-    private final String r;
-    private final Location l;
-    private final COMPASS d;
-    private final Player p;
+    private final String room;
+    private final Location location;
+    private final COMPASS direction;
+    private final Player player;
 
-    public TARDISRoomBuilder(TARDIS plugin, String r, Location l, COMPASS d, Player p) {
+    public TARDISRoomBuilder(TARDIS plugin, String room, Location location, COMPASS direction, Player player) {
         this.plugin = plugin;
-        this.r = r;
-        this.l = l;
-        this.d = d;
-        this.p = p;
+        this.room = room;
+        this.location = location;
+        this.direction = direction;
+        this.player = player;
     }
 
     /**
@@ -69,8 +69,8 @@ public class TARDISRoomBuilder {
      */
     public boolean build() {
         ResultSetTardisID rs = new ResultSetTardisID(plugin);
-        if (rs.fromUUID(p.getUniqueId().toString())) {
-            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());
+        if (rs.fromUUID(player.getUniqueId().toString())) {
+            ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, player.getUniqueId().toString());
             TARDISRoomData roomData = new TARDISRoomData();
             roomData.setTardis_id(rs.getTardisId());
             // get wall data, default to orange wool if not set
@@ -85,42 +85,42 @@ public class TARDISRoomBuilder {
             roomData.setMiddleType(wall_type);
             roomData.setFloorType(floor_type);
             // get start locations
-            Block b = l.getBlock();
+            Block b = location.getBlock();
             roomData.setBlock(b);
-            roomData.setDirection(d);
+            roomData.setDirection(direction);
             // get JSON
-            JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", r.toLowerCase(Locale.ROOT), plugin.getRoomsConfig().getBoolean("rooms." + r + ".user"));
+            JsonObject obj = TARDISSchematicGZip.getObject(plugin, "rooms", room.toLowerCase(Locale.ROOT), plugin.getRoomsConfig().getBoolean("rooms." + room + ".user"));
             if (obj == null) {
                 return false;
             }
             JsonObject dimensions = obj.get("dimensions").getAsJsonObject();
             int xzoffset = (dimensions.get("width").getAsInt() / 2);
-            switch (d) {
+            switch (direction) {
                 case NORTH -> {
-                    l.setX(l.getX() - xzoffset);
-                    l.setZ(l.getZ() - dimensions.get("width").getAsInt());
+                    location.setX(location.getX() - xzoffset);
+                    location.setZ(location.getZ() - dimensions.get("width").getAsInt());
                 }
                 case WEST -> {
-                    l.setX(l.getX() - dimensions.get("width").getAsInt());
-                    l.setZ(l.getZ() - xzoffset);
+                    location.setX(location.getX() - dimensions.get("width").getAsInt());
+                    location.setZ(location.getZ() - xzoffset);
                 }
-                case SOUTH -> l.setX(l.getX() - xzoffset);
-                default -> l.setZ(l.getZ() - xzoffset);
+                case SOUTH -> location.setX(location.getX() - xzoffset);
+                default -> location.setZ(location.getZ() - xzoffset);
             }
             // set y offset
-            int offset = Math.abs(plugin.getRoomsConfig().getInt("rooms." + r + ".offset"));
-            l.setY(l.getY() - offset);
-            roomData.setLocation(l);
-            roomData.setRoom(r);
+            int offset = Math.abs(plugin.getRoomsConfig().getInt("rooms." + room + ".offset"));
+            location.setY(location.getY() - offset);
+            roomData.setLocation(location);
+            roomData.setRoom(room);
             roomData.setSchematic(obj);
             // determine how often to place a block (in ticks) - `room_speed` is the number of BLOCKS to place in a second (20 ticks)
             long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
-            plugin.getPM().callEvent(new TARDISRoomGrowEvent(p, null, null, roomData));
-            TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p.getUniqueId(), true);
+            plugin.getPM().callEvent(new TARDISRoomGrowEvent(player, null, null, roomData));
+            TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, player.getUniqueId());
             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
             runnable.setTask(taskID);
             plugin.getTrackerKeeper().getRoomTasks().put(taskID, roomData);
-            plugin.getMessenger().send(p, TardisModule.TARDIS, "ROOM_CANCEL", String.format("%d", taskID));
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_CANCEL", String.format("%d", taskID));
             // damage the ARS circuit if configured
             if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.ars") > 0) {
                 // get the id of the TARDIS this player is in
@@ -128,7 +128,7 @@ public class TARDISRoomBuilder {
                 tcc.getCircuits();
                 // decrement uses
                 int uses_left = tcc.getArsUses();
-                new TARDISCircuitDamager(plugin, DiskCircuit.ARS, uses_left, rs.getTardisId(), p).damage();
+                new TARDISCircuitDamager(plugin, DiskCircuit.ARS, uses_left, rs.getTardisId(), player).damage();
             }
         }
         return true;

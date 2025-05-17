@@ -177,10 +177,11 @@ public class TARDISLightsInventory {
         swi.setDisplayName(plugin.getLanguage().getString("BUTTON_LIGHTS"));
         swi.setLore(List.of(lights_onoff));
         CustomModelDataComponent lscomponent = swi.getCustomModelDataComponent();
-        lscomponent.setFloats(lights_onoff.equals(off) ? SwitchVariant.BUTTON_LIGHTS_OFF.getFloats() : SwitchVariant.BUTTON_LIGHTS_ON.getFloats());
+        List<Float> floats = lights_onoff.equals(off) ? SwitchVariant.BUTTON_LIGHTS_OFF.getFloats() : SwitchVariant.BUTTON_LIGHTS_ON.getFloats();
+        lscomponent.setFloats(floats);
         swi.setCustomModelDataComponent(lscomponent);
         CustomModelDataComponent lcomponent = swi.getCustomModelDataComponent();
-        lcomponent.setFloats((lights_onoff.equals(off)) ? SwitchVariant.BUTTON_LIGHTS_OFF.getFloats(): SwitchVariant.BUTTON_LIGHTS_ON.getFloats());
+        lcomponent.setFloats(floats);
         swi.setCustomModelDataComponent(lcomponent);
         lig.setItemMeta(swi);
         stacks[GUILights.LIGHT_SWITCH.slot()] = lig;

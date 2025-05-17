@@ -41,9 +41,9 @@ public class CustomBiome {
 
     public static void addCustomBiome(CustomBiomeData data) {
         // get the key for the biome this custom biome is based on - minecraft:xxxx
-        ResourceKey<Biome> minecraftKey = ResourceKey.create(Registries.BIOME, ResourceLocation.withDefaultNamespace(data.getMinecraftName()));
+        ResourceKey<Biome> minecraftKey = ResourceKey.create(Registries.BIOME, ResourceLocation.withDefaultNamespace(data.minecraftName()));
         // create a key for the custom biome - tardis:xxxx
-        ResourceKey<Biome> customKey = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("tardis", data.getCustomName()));
+        ResourceKey<Biome> customKey = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("tardis", data.customName()));
         // get the biome registry
         WritableRegistry<Biome> registrywritable = (WritableRegistry<Biome>) BiomeHelper.getRegistry();
         // get the minecraft biome
@@ -57,28 +57,28 @@ public class CustomBiome {
         BiomeGenerationSettings biomeSettingGen = minecraftbiome.getGenerationSettings();
         newBiome.generationSettings(biomeSettingGen);
         // set custom settings
-        newBiome.temperature(data.getTemperature());
-        newBiome.downfall(data.getDownfall());
-        newBiome.temperatureAdjustment(data.isFrozen() ? Biome.TemperatureModifier.NONE : Biome.TemperatureModifier.FROZEN);
+        newBiome.temperature(data.temperature());
+        newBiome.downfall(data.downfall());
+        newBiome.temperatureAdjustment(data.frozen() ? Biome.TemperatureModifier.NONE : Biome.TemperatureModifier.FROZEN);
         // set the custom biome colours
         BiomeSpecialEffects.Builder newFog = new BiomeSpecialEffects.Builder();
         newFog.grassColorModifier(BiomeSpecialEffects.GrassColorModifier.NONE);
-        newFog.fogColor(data.getFogColour());
-        newFog.waterColor(data.getWaterColour());
-        newFog.waterFogColor(data.getWaterFogColour());
-        newFog.skyColor(data.getSkyColour());
-        newFog.foliageColorOverride(data.getFoliageColour());
-        newFog.grassColorOverride(data.getGrassColour());
+        newFog.fogColor(data.fogColour());
+        newFog.waterColor(data.waterColour());
+        newFog.waterFogColor(data.waterFogColour());
+        newFog.skyColor(data.skyColour());
+        newFog.foliageColorOverride(data.foliageColour());
+        newFog.grassColorOverride(data.grassColour());
         // add ambient particles
-        if (data.getParticle() != null) {
-            newFog.ambientParticle(new AmbientParticleSettings(data.getParticle(), data.getAmbience()));
+        if (data.particle() != null) {
+            newFog.ambientParticle(new AmbientParticleSettings(data.particle(), data.ambience()));
         }
         newBiome.specialEffects(newFog.build());
         Biome biome = newBiome.build();
 
         try {
             // put the biome into the TARDIS biome map
-            TARDISHelper.biomeMap.put(data.getCustomName(), biome);
+            TARDISHelper.biomeMap.put(data.customName(), biome);
             // inject into the biome registry
             // unfreeze Biome Registry
             Field frozen = MappedRegistry.class.getDeclaredField("l");

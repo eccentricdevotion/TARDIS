@@ -128,7 +128,7 @@ public class FloodgateSavesForm {
                             plugin.getMessenger().sendColouredCommand(player, "TARDIS_IN_SPOT", "/tardistravel area [name]", plugin);
                             return;
                         }
-                        String invisibility = tac.getArea().getInvisibility();
+                        String invisibility = tac.getArea().invisibility();
                         HashMap<String, Object> wheret = new HashMap<>();
                         wheret.put("tardis_id", id);
                         ResultSetTardis resultSetTardis = new ResultSetTardis(plugin, wheret, "", false, 2);

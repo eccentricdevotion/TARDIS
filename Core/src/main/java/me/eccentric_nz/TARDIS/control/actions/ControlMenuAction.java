@@ -36,7 +36,6 @@ public class ControlMenuAction {
 
     public void openGUI(Player player, int id) {
         if (player.isSneaking()) {
-            return;
             // keyboard
         } else {
             UUID playerUUID = player.getUniqueId();

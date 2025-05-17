@@ -33,7 +33,7 @@ public class TVMRecipe {
         ItemStack is = new ItemStack(mat, amount);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(ChatColor.WHITE + "Vortex Manipulator");
-        if (!plugin.getVortexConfig().getString("recipe.lore").equals("")) {
+        if (!plugin.getVortexConfig().getString("recipe.lore").isEmpty()) {
             im.setLore(List.of(plugin.getVortexConfig().getString("recipe.lore").split("~")));
         }
         is.setItemMeta(im);

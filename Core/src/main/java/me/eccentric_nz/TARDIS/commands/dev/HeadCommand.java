@@ -21,10 +21,6 @@ public class HeadCommand {
         this.plugin = plugin;
     }
 
-    public void giveCommandHead(Player player) {
-
-    }
-
     public void giveAPIHead(Player player) {
         // -534922148,-1465496919,-2021441615,2044066305
         // thenosefairy 27974553,854216283,-1579200332,1832878819
@@ -48,16 +44,5 @@ public class HeadCommand {
         } catch (IllegalArgumentException | MalformedURLException e) {
             plugin.debug("Bad UUID or URL");
         }
-    }
-
-    public void makeUUID(long most1, long most2, long least1, long least2) {
-        long mostSignificantBits = 0x1234567890ABCDEFL; // Example most significant bits
-        long leastSignificantBits = 0xFEDCBA9876543210L;  // Example least significant bits
-
-        // Combine the two longs into a UUID
-        UUID uuid = new UUID(mostSignificantBits, leastSignificantBits);
-
-        // Print the UUID
-        System.out.println("UUID: " + uuid.toString());
     }
 }

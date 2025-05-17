@@ -77,15 +77,15 @@ public class TARDISShopCommand extends TARDISCompleter implements CommandExecuto
                     ResultSetUpdateShop rs = new ResultSetUpdateShop(plugin);
                     if (rs.getAll()) {
                         for (TARDISShopItem item : rs.getShopItems()) {
-                            String lookup = item.getItem().replace(" ", "_").toLowerCase(Locale.ROOT);
+                            String lookup = item.item().replace(" ", "_").toLowerCase(Locale.ROOT);
                             double cost = plugin.getItemsConfig().getDouble(lookup);
-                            if (cost != item.getCost()) {
+                            if (cost != item.cost()) {
                                 // update database
-                                new UpdateShopItem(plugin).updateCost(cost, item.getId());
+                                new UpdateShopItem(plugin).updateCost(cost, item.id());
                                 // find text display and update the etxt
-                                for (Entity e : item.getLocation().getWorld().getNearbyEntities(item.getLocation().add(0.5d, 1.0d, 0.5d), 0.5d, 1.0d, 0.5d)) {
+                                for (Entity e : item.location().getWorld().getNearbyEntities(item.location().add(0.5d, 1.0d, 0.5d), 0.5d, 1.0d, 0.5d)) {
                                     if (e instanceof TextDisplay text) {
-                                        text.setText(item.getItem() + "\n" + ChatColor.RED + "Cost:" + ChatColor.RESET + String.format(" %.2f", cost));
+                                        text.setText(item.item() + "\n" + ChatColor.RED + "Cost:" + ChatColor.RESET + String.format(" %.2f", cost));
                                     }
                                 }
                             }
@@ -122,7 +122,7 @@ public class TARDISShopCommand extends TARDISCompleter implements CommandExecuto
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         String lastArg = args[args.length - 1];
-        if (args.length <= 1) {
+        if (args.length == 1) {
             return partial(args[0], ROOT_SUBS);
         } else if (args.length == 2) {
             String sub = args[0];

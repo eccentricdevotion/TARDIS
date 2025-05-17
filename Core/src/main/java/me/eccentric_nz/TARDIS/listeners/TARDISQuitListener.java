@@ -57,7 +57,7 @@ public class TARDISQuitListener implements Listener {
         // remove camera viewers
         if (TARDISCameraTracker.SPECTATING.containsKey(uuid)) {
             // set their location back to the TARDIS interior
-            plugin.getTrackerKeeper().getJunkRelog().put(uuid, TARDISCameraTracker.SPECTATING.get(uuid).getLocation());
+            plugin.getTrackerKeeper().getJunkRelog().put(uuid, TARDISCameraTracker.SPECTATING.get(uuid).location());
             TARDISCameraTracker.SPECTATING.remove(uuid);
         }
         // remove if Junk TARDIS traveller
@@ -69,10 +69,8 @@ public class TARDISQuitListener implements Listener {
             }
             plugin.getGeneralKeeper().getJunkTravellers().remove(uuid);
         }
-        // if player if flying TARDIS exterior stop sound loop
-        Optional.ofNullable(plugin.getTrackerKeeper().getFlyingReturnLocation().get(uuid)).ifPresent(value -> {
-            plugin.getServer().getScheduler().cancelTask(value.getSound());
-        });
+        // if player is flying TARDIS exterior stop sound loop
+        Optional.ofNullable(plugin.getTrackerKeeper().getFlyingReturnLocation().get(uuid)).ifPresent(value -> plugin.getServer().getScheduler().cancelTask(value.sound()));
         // forget the players Police Box chunk
         HashMap<String, Object> wherep = new HashMap<>();
         wherep.put("uuid", uuid.toString());

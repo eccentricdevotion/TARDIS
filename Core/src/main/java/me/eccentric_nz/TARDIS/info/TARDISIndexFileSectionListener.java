@@ -64,9 +64,7 @@ public class TARDISIndexFileSectionListener extends TARDISMenuListener {
                     player.openInventory(gui);
                 }, 2L);
             }
-            case 53 -> {
-                close(p);
-            }
+            case 53 -> close(p);
             default -> {
                 ItemMeta im = is.getItemMeta();
                 String name = TARDISStringUtils.toEnumUppercase(im.getDisplayName());

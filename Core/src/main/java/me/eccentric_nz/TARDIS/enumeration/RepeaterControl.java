@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.enumeration;
 import java.util.List;
 
 /**
- *
  * @author eccentric_nz
  */
 public enum RepeaterControl {
@@ -29,10 +28,10 @@ public enum RepeaterControl {
     Z(4, List.of("1x Z-distance", "2x Z-distance", "3x Z-distance", "4x Z-distance")),
     MULTIPLIER(5, List.of("1x multiplier", "2x multiplier", "3x multiplier", "4x multiplier"));
 
-private int control;
-    private List<String> descriptions;
+    private final int control;
+    private final List<String> descriptions;
 
-    private RepeaterControl(int control, List<String> descriptions) {
+    RepeaterControl(int control, List<String> descriptions) {
         this.control = control;
         this.descriptions = descriptions;
     }

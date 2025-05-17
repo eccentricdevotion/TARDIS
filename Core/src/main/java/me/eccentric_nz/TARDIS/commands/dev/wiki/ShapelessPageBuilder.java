@@ -131,9 +131,7 @@ public class ShapelessPageBuilder extends PageBuilder {
             }
             tableBuilder.append("'").append(dashed).append("'").append(",");
         }
-        for (int j = shapeless.size(); j < 9; j++) {
-            tableBuilder.append("'air',");
-        }
+        tableBuilder.append("'air',".repeat(Math.max(0, 9 - shapeless.size())));
         // get result
         String result = TARDISStringUtils.toLowercaseDashed(item);
         tableBuilder.append("'").append(result).append("'").append("]");

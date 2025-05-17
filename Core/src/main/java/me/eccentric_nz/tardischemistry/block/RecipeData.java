@@ -21,39 +21,7 @@ import org.bukkit.Material;
 
 import java.util.List;
 
-public class RecipeData {
+public record RecipeData(String displayName, String nameSpacedKey, List<String> lore, Material craftMaterial,
+                         TARDISDisplayItem displayItem) {
 
-    private final String displayName;
-    private final String nameSpacedKey;
-    private final List<String> lore;
-    private final Material craftMaterial;
-    private final TARDISDisplayItem displayItem;
-
-    public RecipeData(String displayName, String nameSpacedKey, List<String> lore, Material craftMaterial, TARDISDisplayItem displayItem) {
-        this.displayName = displayName;
-        this.nameSpacedKey = nameSpacedKey;
-        this.lore = lore;
-        this.craftMaterial = craftMaterial;
-        this.displayItem = displayItem;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public String getNameSpacedKey() {
-        return nameSpacedKey;
-    }
-
-    public List<String> getLore() {
-        return lore;
-    }
-
-    public Material getCraftMaterial() {
-        return craftMaterial;
-    }
-
-    public TARDISDisplayItem getDisplayItem() {
-        return displayItem;
-    }
 }

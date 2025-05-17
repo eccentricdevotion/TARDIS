@@ -222,8 +222,8 @@ public class HandbrakeInteraction {
                         // if player is flying TARDIS exterior stop sound loop
                         Optional.ofNullable(plugin.getTrackerKeeper().getFlyingReturnLocation().get(uuid)).ifPresent(value -> {
                             player.stopAllSounds();
-                            if (value.getSound() != -1) {
-                                plugin.getServer().getScheduler().cancelTask(value.getSound());
+                            if (value.sound() != -1) {
+                                plugin.getServer().getScheduler().cancelTask(value.sound());
                             }
                             plugin.getTrackerKeeper().getFlyingReturnLocation().remove(uuid);
                         });
@@ -244,7 +244,7 @@ public class HandbrakeInteraction {
                         // remove energy from TARDIS and set database
                         plugin.getMessenger().sendStatus(player, "HANDBRAKE_ON");
                         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                            int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * throticle.getThrottle().getArtronMultiplier());
+                            int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id).cost() * throticle.throttle().getArtronMultiplier());
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);

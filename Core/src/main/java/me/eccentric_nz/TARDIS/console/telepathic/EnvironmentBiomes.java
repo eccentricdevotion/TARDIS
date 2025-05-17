@@ -30,8 +30,8 @@ public class EnvironmentBiomes {
 
     public static final List<Biome> END = List.of(Biome.THE_END, Biome.END_BARRENS, Biome.END_MIDLANDS, Biome.END_HIGHLANDS, Biome.SMALL_END_ISLANDS);
     public static final List<Biome> NETHER = List.of(Biome.NETHER_WASTES, Biome.BASALT_DELTAS, Biome.CRIMSON_FOREST, Biome.SOUL_SAND_VALLEY, Biome.WARPED_FOREST);
-    public static List<Biome> OVERWORLD = new ArrayList<>();
-    public static HashMap<String, Material> BIOME_BLOCKS = new HashMap<>() {{
+    public static final List<Biome> OVERWORLD = new ArrayList<>();
+    public static final HashMap<String, Material> BIOME_BLOCKS = new HashMap<>() {{
         put("eye_of_harmony", Material.MAGMA_BLOCK);
         put("gallifrey_badlands", Material.TERRACOTTA);
         put("skaro_desert", Material.CYAN_TERRACOTTA);

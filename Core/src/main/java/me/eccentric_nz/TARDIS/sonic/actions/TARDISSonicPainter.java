@@ -161,7 +161,7 @@ public class TARDISSonicPainter {
                     }
                 }
                 default -> {
-                    // tint block with stained glass item display
+                    // tint block with stained-glass item display
                     if (CubicMaterial.cubes.contains(material) && player.hasPermission("tardis.sonic.paint_block")) {
                         new TARDISTinter(plugin).paintBlock(player, b, dye.getType().toString(), inv);
                     }

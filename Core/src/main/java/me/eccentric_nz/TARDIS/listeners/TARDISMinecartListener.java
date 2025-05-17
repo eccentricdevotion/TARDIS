@@ -171,7 +171,7 @@ public class TARDISMinecartListener implements Listener {
         // keep the chunk loaded until the cart has finished unloading
         thisChunk.addPluginChunkTicket(plugin);
         // determine how long to keep it loaded (at a rate of approx 1 item per 8 ticks)
-        long delay = 200L; // add an initial 10 second buffer
+        long delay = 200L; // add an initial 10-second buffer
         for (ItemStack is : inv) {
             if (is != null) {
                 delay += is.getAmount() * 8L;

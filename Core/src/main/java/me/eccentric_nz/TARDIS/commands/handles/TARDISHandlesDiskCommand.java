@@ -46,12 +46,12 @@ class TARDISHandlesDiskCommand {
         }
         // check if item in hand is a Handles program disk
         ItemStack disk = player.getInventory().getItemInMainHand();
-        if (disk != null && disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
+        if (disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
             ItemMeta dim = disk.getItemMeta();
             if (dim.hasDisplayName() && ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
                 // get the program_id from the disk
                 int pid = TARDISNumberParsers.parseInt(dim.getLore().get(1));
-                // get the name - must be 32 chars or less
+                // get the name - must be 32 chars or fewer
                 String name = String.join(" ", Arrays.copyOfRange(args, 1, args.length));
                 if (name.length() < 3 || name.length() > 32) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NAME_NOT_VALID");

@@ -157,7 +157,6 @@ public class TARDISVortexManipulatorTransfer {
                     connection.setAutoCommit(true);
                 } catch (SQLException e) {
                     plugin.debug("Error closing vortex manipulator transfer! " + e.getMessage());
-                    return false;
                 }
             }
         }

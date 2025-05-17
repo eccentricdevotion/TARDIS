@@ -60,7 +60,7 @@ public class TARDISTravelArea {
             return true;
         }
         // check whether this is a no invisibility area
-        String invisibility = rsa.getArea().getInvisibility();
+        String invisibility = rsa.getArea().invisibility();
         if (invisibility.equals("DENY") && preset.equals(ChameleonPreset.INVISIBLE)) {
             // check preset
             plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_INVISIBLE");
@@ -77,10 +77,10 @@ public class TARDISTravelArea {
             plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
         }
         Location l;
-        if (rsa.getArea().isGrid()) {
-            l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
+        if (rsa.getArea().grid()) {
+            l = plugin.getTardisArea().getNextSpot(rsa.getArea().areaName());
         } else {
-            l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+            l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().areaId());
         }
         if (l == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MORE_SPOTS");
@@ -92,8 +92,8 @@ public class TARDISTravelArea {
         set.put("y", l.getBlockY());
         set.put("z", l.getBlockZ());
         // should be setting direction of TARDIS
-        if (!rsa.getArea().getDirection().isEmpty()) {
-            set.put("direction", rsa.getArea().getDirection());
+        if (!rsa.getArea().direction().isEmpty()) {
+            set.put("direction", rsa.getArea().direction());
         } else {
             // get current direction
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);

@@ -247,8 +247,6 @@ public class TARDISChameleonConstructorListener extends TARDISMenuListener {
                     plugin.getQueryFactory().doSyncUpdate("chameleon", seti, wherei);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         // save chameleon construct
-                        HashMap<String, Object> wherec = new HashMap<>();
-                        ResultSetChameleon rsc = new ResultSetChameleon(plugin, wherec);
                         HashMap<String, Object> setc = new HashMap<>();
                         setc.put("tardis_id", id);
                         setc.put("blueprintData", jsonBlue);

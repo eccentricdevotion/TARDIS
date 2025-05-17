@@ -70,10 +70,6 @@ public class TVMResultSetManipulator {
         return true;
     }
 
-    public UUID getUuid() {
-        return uuid;
-    }
-
     public int getTachyonLevel() {
         return tachyonLevel;
     }

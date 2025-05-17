@@ -213,7 +213,7 @@ public class TARDISSonicDock {
                             return display;
                         }
                         Throticle throticle = new ResultSetThrottle(plugin).getSpeedAndParticles(player.getUniqueId().toString());
-                        int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * throticle.getThrottle().getArtronMultiplier());
+                        int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * throticle.throttle().getArtronMultiplier());
                         if (tardis.getArtronLevel() < ch) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
                             return display;

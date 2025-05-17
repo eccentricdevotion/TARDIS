@@ -125,22 +125,22 @@ public class TARDISFarmer {
             ResultSetFarming rs = new ResultSetFarming(plugin, id);
             if (rs.resultSet()) {
                 Farm farming = rs.getFarming();
-                String allay = farming.getAllay();
-                String apiary = farming.getApiary();
-                String aquarium = farming.getAquarium();
-                String bamboo = farming.getBamboo();
-                String birdcage = farming.getBirdcage();
-                String farm = farming.getFarm();
-                String geode = farming.getGeode();
-                String hutch = farming.getHutch();
-                String igloo = farming.getIgloo();
-                String iistubil = farming.getIistubil();
-                String lava = farming.getLava();
-                String mangrove = farming.getMangrove();
-                String pen = farming.getPen();
-                String stable = farming.getStable();
-                String stall = farming.getStall();
-                String village = farming.getVillage();
+                String allay = farming.allay();
+                String apiary = farming.apiary();
+                String aquarium = farming.aquarium();
+                String bamboo = farming.bamboo();
+                String birdcage = farming.birdcage();
+                String farm = farming.farm();
+                String geode = farming.geode();
+                String hutch = farming.hutch();
+                String igloo = farming.igloo();
+                String iistubil = farming.iistubil();
+                String lava = farming.lava();
+                String mangrove = farming.mangrove();
+                String pen = farming.pen();
+                String stable = farming.stable();
+                String stall = farming.stall();
+                String village = farming.village();
                 // get farming prefs
                 ResultSetFarmingPrefs rsfp = new ResultSetFarmingPrefs(plugin, uuid.toString());
                 FarmPrefs farmPrefs;

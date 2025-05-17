@@ -34,20 +34,20 @@ public class ChemistryBlockRecipes {
 
     public void addRecipes() {
         for (RecipeData data : ChemistryBlock.RECIPES.values()) {
-            ItemStack is = new ItemStack(data.getDisplayItem().getMaterial(), 1);
+            ItemStack is = new ItemStack(data.displayItem().getMaterial(), 1);
             ItemMeta im = is.getItemMeta();
-            im.setDisplayName(data.getDisplayName());
-            im.setLore(data.getLore());
-            im.setItemModel(data.getDisplayItem().getCustomModel());
-            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, data.getDisplayItem().getCustomModel().getKey());
+            im.setDisplayName(data.displayName());
+            im.setLore(data.lore());
+            im.setItemModel(data.displayItem().getCustomModel());
+            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, data.displayItem().getCustomModel().getKey());
             is.setItemMeta(im);
-            NamespacedKey key = new NamespacedKey(plugin, data.getNameSpacedKey());
+            NamespacedKey key = new NamespacedKey(plugin, data.nameSpacedKey());
             ShapedRecipe recipe = new ShapedRecipe(key, is);
             recipe.shape("AAA", "ACA", "AAA");
-            recipe.setIngredient('A', data.getCraftMaterial());
+            recipe.setIngredient('A', data.craftMaterial());
             recipe.setIngredient('C', Material.CRAFTING_TABLE);
             plugin.getServer().addRecipe(recipe);
-            plugin.getFigura().getShapedRecipes().put(data.getDisplayName(), recipe);
+            plugin.getFigura().getShapedRecipes().put(data.displayName(), recipe);
         }
     }
 }

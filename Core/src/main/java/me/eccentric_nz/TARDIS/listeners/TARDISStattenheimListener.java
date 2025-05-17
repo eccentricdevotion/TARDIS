@@ -239,7 +239,7 @@ public class TARDISStattenheimListener implements Listener {
                             return;
                         }
                         Throticle throticle = new ResultSetThrottle(plugin).getSpeedAndParticles(uuid.toString());
-                        int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * throticle.getThrottle().getArtronMultiplier());
+                        int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * throticle.throttle().getArtronMultiplier());
                         if (level < ch) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
                             return;
@@ -299,8 +299,8 @@ public class TARDISStattenheimListener implements Listener {
                             dd.setOutside(true);
                             dd.setSubmarine(rsc.isSubmarine());
                             dd.setTardisID(id);
-                            dd.setThrottle(throticle.getThrottle());
-                            dd.setParticles(throticle.getParticles());
+                            dd.setThrottle(throticle.throttle());
+                            dd.setParticles(throticle.particles());
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 if (!hid) {
                                     plugin.getTrackerKeeper().getDematerialising().add(id);
@@ -319,8 +319,8 @@ public class TARDISStattenheimListener implements Listener {
                         bd.setRebuild(false);
                         bd.setSubmarine(sub);
                         bd.setTardisID(id);
-                        bd.setThrottle(throticle.getThrottle());
-                        bd.setParticles(throticle.getParticles());
+                        bd.setThrottle(throticle.throttle());
+                        bd.setParticles(throticle.particles());
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
                         // remove energy from TARDIS
                         HashMap<String, Object> wheret = new HashMap<>();

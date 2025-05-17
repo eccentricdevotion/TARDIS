@@ -1117,17 +1117,6 @@ public enum MaterialColour {
         this.color = color;
     }
 
-    public static MaterialColour fromDataString(String data) {
-        // "minecraft:cobblestone_stairs[facing=east,half=top,shape=straight,waterlogged=false]"
-        String[] colon = data.split(":");
-        String[] leftSquare = colon[1].split("\\[");
-        try {
-            return MaterialColour.valueOf(leftSquare[0]);
-        } catch (IllegalArgumentException e) {
-            return MaterialColour.AIR;
-        }
-    }
-
     public static Color colourFromType(Block block, double[] adjust) {
         try {
             MaterialColour mc = MaterialColour.valueOf(block.getType().toString());

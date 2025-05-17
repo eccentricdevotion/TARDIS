@@ -228,7 +228,7 @@ public class TARDISControlListener implements Listener {
                                 case 47 -> new DifferentiatorAction(plugin).bleep(block, id, player);
                                 case 54 -> {
                                     event.setCancelled(true);
-                                    new EyeOfHarmonyAction(plugin, id).openGUI(id, player);
+                                    new EyeOfHarmonyAction(plugin).openGUI(id, player);
                                 }
                                 case 55 -> new TelevisionAction(plugin).openGUI(player);
                                 default -> {

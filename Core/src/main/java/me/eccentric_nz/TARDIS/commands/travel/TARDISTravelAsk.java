@@ -65,12 +65,11 @@ public class TARDISTravelAsk {
         // message asking player too
         plugin.getMessenger().send(player, TardisModule.TARDIS, "REQUEST_SENT", requested.getName());
         plugin.getTrackerKeeper().getChatRescue().put(requestedUUID, player.getUniqueId());
-        Player p = player;
         String to = args[0];
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             if (plugin.getTrackerKeeper().getChatRescue().containsKey(requestedUUID)) {
                 plugin.getTrackerKeeper().getChatRescue().remove(requestedUUID);
-                plugin.getMessenger().send(p, TardisModule.TARDIS, "REQUEST_NO_RESPONSE", to);
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "REQUEST_NO_RESPONSE", to);
             }
         }, 1200L);
         return true;

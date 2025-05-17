@@ -28,15 +28,15 @@ import java.util.List;
 public record GUITelevision() {
 
     // TARDIS Areas
-    public static GUIData DOCTORS = new GUIData(Button.DOCTOR.getKey(), 0, Material.BROWN_STAINED_GLASS_PANE, "Doctors");
-    public static GUIData COMPANIONS = new GUIData(Button.COMPANION.getKey(), 2, Material.BROWN_STAINED_GLASS_PANE, "Companions");
-    public static GUIData CHARACTERS = new GUIData(Button.CHARACTER.getKey(), 4, Material.BROWN_STAINED_GLASS_PANE, "Characters");
-    public static GUIData MONSTERS = new GUIData(Button.MONSTER.getKey(), 6, Material.BROWN_STAINED_GLASS_PANE, "Monsters");
-    public static GUIData CYBER = new GUIData(CybermanVariant.BUTTON_CYBERMAN.getKey(), 8, Material.BROWN_STAINED_GLASS_PANE, "Cybermen");
-    public static GUIData DOWNLOAD = new GUIData(SwitchVariant.DOWNLOAD_OFF.getKey(), 29, Material.REPEATER);
-    public static GUIData REMOVE = new GUIData(Button.REMOVE.getKey(), 31, Material.BUCKET, "Remove skin");
-    public static GUIData BACK = new GUIData(GuiVariant.BACK.getKey(), 33, Material.BOWL, "Back");
-    public static GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 35, Material.BOWL, TARDIS.plugin.getLanguage().getString("BUTTON_CLOSE"));
+    public static final GUIData DOCTORS = new GUIData(Button.DOCTOR.getKey(), 0, Material.BROWN_STAINED_GLASS_PANE, "Doctors");
+    public static final GUIData COMPANIONS = new GUIData(Button.COMPANION.getKey(), 2, Material.BROWN_STAINED_GLASS_PANE, "Companions");
+    public static final GUIData CHARACTERS = new GUIData(Button.CHARACTER.getKey(), 4, Material.BROWN_STAINED_GLASS_PANE, "Characters");
+    public static final GUIData MONSTERS = new GUIData(Button.MONSTER.getKey(), 6, Material.BROWN_STAINED_GLASS_PANE, "Monsters");
+    public static final GUIData CYBER = new GUIData(CybermanVariant.BUTTON_CYBERMAN.getKey(), 8, Material.BROWN_STAINED_GLASS_PANE, "Cybermen");
+    public static final GUIData DOWNLOAD = new GUIData(SwitchVariant.DOWNLOAD_OFF.getKey(), 29, Material.REPEATER);
+    public static final GUIData REMOVE = new GUIData(Button.REMOVE.getKey(), 31, Material.BUCKET, "Remove skin");
+    public static final GUIData BACK = new GUIData(GuiVariant.BACK.getKey(), 33, Material.BOWL, "Back");
+    public static final GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 35, Material.BOWL, TARDIS.plugin.getLanguage().getString("BUTTON_CLOSE"));
 
     public static List<GUIData> values() {
         return List.of(DOCTORS, COMPANIONS, CHARACTERS, MONSTERS, CYBER, REMOVE, CLOSE);

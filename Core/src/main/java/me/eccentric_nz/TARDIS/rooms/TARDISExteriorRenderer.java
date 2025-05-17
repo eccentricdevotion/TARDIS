@@ -83,7 +83,7 @@ public class TARDISExteriorRenderer {
             for (int y = esy; y < (esy + 8); y++) {
                 for (int x = esx; x < (esx + 13); x++) {
                     for (int z = esz; z < (esz + 13); z++) {
-                        // don't do preset blocks - they'l be set to glass later
+                        // don't do preset blocks - they'll be set to glass later
                         if (!(y >= epby && y <= buy && x >= bwx && x <= bex && z >= bnz && z <= bsz)) {
                             Block eb = ew.getBlockAt(x, y, z);
                             Block ib = iw.getBlockAt(isx + xx, isy + yy, isz + zz);
@@ -112,7 +112,7 @@ public class TARDISExteriorRenderer {
             int minusz = (location.getBlockZ() - 1);
             TARDISChameleonColumn column = plugin.getPresets().getGlass(ChameleonPreset.RENDER, d);
             int px, pz;
-            BlockData[][] data = column.getBlockData();
+            BlockData[][] data = column.blockData();
             for (int i = 0; i < 9; i++) {
                 BlockData[] coldatas = data[i];
                 switch (i) {
@@ -255,7 +255,7 @@ public class TARDISExteriorRenderer {
         float pitch = player.getLocation().getPitch();
         loc.setPitch(pitch);
         loc.setYaw(yaw);
-        // make location safe ie. outside of the bluebox
+        // make location safe i.e. outside of the bluebox
         double ex = loc.getX();
         double ez = loc.getZ();
         switch (d) {

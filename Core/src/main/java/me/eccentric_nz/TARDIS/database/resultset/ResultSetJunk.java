@@ -131,32 +131,8 @@ public class ResultSetJunk {
         return true;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
     public int getTardis_id() {
         return tardis_id;
-    }
-
-    public String getSave_sign() {
-        return save_sign;
-    }
-
-    public String getHandbrake() {
-        return handbrake;
-    }
-
-    public String getWall() {
-        return wall;
-    }
-
-    public String getFloor() {
-        return floor;
     }
 
     public ChameleonPreset getPreset() {

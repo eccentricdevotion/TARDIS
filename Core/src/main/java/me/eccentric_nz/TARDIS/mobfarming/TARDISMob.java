@@ -16,8 +16,7 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
-import org.bukkit.DyeColor;
-import org.bukkit.entity.*;
+import org.bukkit.entity.EntityType;
 
 /**
  * Alien is a broad, subjective term. It can be applied as a noun or an adjective for any entity, object, place or
@@ -35,7 +34,6 @@ public class TARDISMob {
     private double health;
     private boolean baby;
     private boolean tamed;
-    private DyeColor colour; // used by sheep, cat and wolf collars
     private String name;
 
     public EntityType getType() {

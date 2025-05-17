@@ -28,7 +28,6 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -40,7 +39,6 @@ public class TARDISRandomButton {
     private final Player player;
     private final int id;
     private final int level;
-    private final HashMap<String, Object> set = new HashMap<>();
     private final int secondary;
     private final String comps;
     private final UUID ownerUUID;

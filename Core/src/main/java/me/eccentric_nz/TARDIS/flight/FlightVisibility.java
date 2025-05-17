@@ -44,7 +44,7 @@ public class FlightVisibility {
         plugin.getTrackerKeeper().getHiddenFlight().put(player.getUniqueId(), head);
         // stop animation
         FlightReturnData frd = plugin.getTrackerKeeper().getFlyingReturnLocation().get(player.getUniqueId());
-        plugin.getServer().getScheduler().cancelTask(frd.getAnimation());
+        plugin.getServer().getScheduler().cancelTask(frd.animation());
         // set item display to invisible to hide police box
         player.eject();
         display.remove();
@@ -57,7 +57,7 @@ public class FlightVisibility {
 
     public void show(Player player) {
         FlightReturnData frd = plugin.getTrackerKeeper().getFlyingReturnLocation().get(player.getUniqueId());
-        UUID uuid = frd.getStand();
+        UUID uuid = frd.stand();
         Entity as = plugin.getServer().getEntity(uuid);
         if (as instanceof ArmorStand stand) {
             if (stand.getCustomName() != null) {
@@ -74,7 +74,7 @@ public class FlightVisibility {
             // restart animation
             int animation = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new InterpolatedAnimation(display, 40), 5L, 40L);
             // save flight data
-            plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(frd.getId(), frd.getLocation(), frd.getSound(), animation, stand.getUniqueId(), display.getUniqueId()));
+            plugin.getTrackerKeeper().getFlyingReturnLocation().put(player.getUniqueId(), new FlightReturnData(frd.id(), frd.location(), frd.sound(), animation, stand.getUniqueId(), display.getUniqueId()));
             // remove tracker
             plugin.getTrackerKeeper().getHiddenFlight().remove(player.getUniqueId());
         }

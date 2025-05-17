@@ -23,8 +23,8 @@ import org.bukkit.Material;
 public record GUIArtronStorage() {
 
     // Artron Storage
-    public static GUIData INFO = new GUIData(GuiVariant.INFO.getKey(), 0, Material.BOWL);
-    public static GUIData ARROW_RIGHT = new GUIData(ArrowVariant.MORE.getKey(), 1, Material.ARROW);
-    public static GUIData ARROW_LEFT = new GUIData(ArrowVariant.LESS.getKey(), 7, Material.ARROW);
-    public static GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 8, Material.BOWL);
+    public static final GUIData INFO = new GUIData(GuiVariant.INFO.getKey(), 0, Material.BOWL);
+    public static final GUIData ARROW_RIGHT = new GUIData(ArrowVariant.MORE.getKey(), 1, Material.ARROW);
+    public static final GUIData ARROW_LEFT = new GUIData(ArrowVariant.LESS.getKey(), 7, Material.ARROW);
+    public static final GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 8, Material.BOWL);
 }

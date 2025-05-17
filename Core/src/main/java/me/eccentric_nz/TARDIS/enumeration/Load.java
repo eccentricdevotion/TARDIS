@@ -30,12 +30,12 @@ public enum Load {
     private final boolean fromJar;
     private final String path;
 
-    private Load(boolean fromJar, String path) {
+    Load(boolean fromJar, String path) {
         this.fromJar = fromJar;
         this.path = path;
     }
 
-    private Load(String path) {
+    Load(String path) {
         this.fromJar = true;
         this.path = path;
     }

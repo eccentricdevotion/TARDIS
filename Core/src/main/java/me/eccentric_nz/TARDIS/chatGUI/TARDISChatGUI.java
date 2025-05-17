@@ -24,14 +24,14 @@ import java.util.List;
  */
 public interface TARDISChatGUI<T> {
 
-    public List<T> getSections();
+    List<T> getSections();
 
-    public List<T> getControls();
+    List<T> getControls();
 
-    public List<T> getInterfaces();
+    List<T> getInterfaces();
 
-    public List<T> getLocations();
-    public List<T> getSensors();
+    List<T> getLocations();
+    List<T> getSensors();
 
-    public List<T> getOthers();
+    List<T> getOthers();
 }

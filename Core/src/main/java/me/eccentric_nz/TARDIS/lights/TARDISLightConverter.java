@@ -39,11 +39,9 @@ import java.util.HashMap;
 public class TARDISLightConverter {
 
     private final TARDIS plugin;
-    private final int id;
 
-    public TARDISLightConverter(TARDIS plugin, int id) {
+    public TARDISLightConverter(TARDIS plugin) {
         this.plugin = plugin;
-        this.id = id;
     }
 
     public void apply(TardisLight light, Material emitting, Player player, Material variable) {

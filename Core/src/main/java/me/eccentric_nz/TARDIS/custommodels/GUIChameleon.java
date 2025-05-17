@@ -23,12 +23,12 @@ import org.bukkit.Material;
 public record GUIChameleon() {
 
     // Chameleon Circuit
-    public static GUIData BUTTON_APPLY = new GUIData(GuiVariant.APPLY.getKey(), 0, Material.COMPARATOR);
-    public static GUIData BUTTON_CHAMELEON = new GUIData(Button.CHAMELEON.getKey(), 11, Material.BOWL);
-    public static GUIData BUTTON_ADAPT = new GUIData(Button.ADAPT.getKey(), 12, Material.BOWL);
-    public static GUIData BUTTON_INVISIBLE = new GUIData(Button.INVISIBLE.getKey(), 13, Material.BOWL);
-    public static GUIData BUTTON_SHORT = new GUIData(Button.SHORT.getKey(), 14, Material.BOWL);
-    public static GUIData BUTTON_CONSTRUCT = new GUIData(Button.CONSTRUCT.getKey(), 15, Material.BOWL);
-    public static GUIData BUTTON_LOCK = new GUIData(Button.LOCK.getKey(), 16, Material.BOWL);
-    public static GUIData BUTTON_CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 26, Material.BOWL);
+    public static final GUIData BUTTON_APPLY = new GUIData(GuiVariant.APPLY.getKey(), 0, Material.COMPARATOR);
+    public static final GUIData BUTTON_CHAMELEON = new GUIData(Button.CHAMELEON.getKey(), 11, Material.BOWL);
+    public static final GUIData BUTTON_ADAPT = new GUIData(Button.ADAPT.getKey(), 12, Material.BOWL);
+    public static final GUIData BUTTON_INVISIBLE = new GUIData(Button.INVISIBLE.getKey(), 13, Material.BOWL);
+    public static final GUIData BUTTON_SHORT = new GUIData(Button.SHORT.getKey(), 14, Material.BOWL);
+    public static final GUIData BUTTON_CONSTRUCT = new GUIData(Button.CONSTRUCT.getKey(), 15, Material.BOWL);
+    public static final GUIData BUTTON_LOCK = new GUIData(Button.LOCK.getKey(), 16, Material.BOWL);
+    public static final GUIData BUTTON_CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 26, Material.BOWL);
 }

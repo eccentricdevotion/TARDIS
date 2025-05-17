@@ -109,7 +109,7 @@ public class TARDISEjectListener implements Listener {
                 plugin.getQueryFactory().doDelete("travellers", where);
             }
             case ALLAY -> {
-                // cancel the event so the allay doesn't lose its held item
+                // cancel the event so the Allay doesn't lose its held item
                 event.setCancelled(true);
                 Allay a = (Allay) ent;
                 Allay allay = (Allay) l.getWorld().spawnEntity(l, EntityType.ALLAY);

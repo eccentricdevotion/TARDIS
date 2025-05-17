@@ -58,8 +58,8 @@ public class TARDISDisplayBlockCommand {
             Rotor rotor = Rotor.byName.get(display);
             ItemStack is = new ItemStack(Material.LIGHT_GRAY_DYE, 1);
             ItemMeta im = is.getItemMeta();
-            im.setDisplayName("Time Rotor " + rotor.getName());
-            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, rotor.getOffModel().getKey());
+            im.setDisplayName("Time Rotor " + rotor.name());
+            im.getPersistentDataContainer().set(plugin.getCustomBlockKey(), PersistentDataType.STRING, rotor.offModel().getKey());
             is.setItemMeta(im);
             return is;
         } else {

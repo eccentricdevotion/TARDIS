@@ -161,7 +161,7 @@ public class TARDISInstantPreset {
             }
         }
         int xx, zz;
-        BlockData[][] data = column.getBlockData();
+        BlockData[][] data = column.blockData();
         for (int i = 0; i < 10; i++) {
             BlockData[] colData = data[i];
             switch (i) {

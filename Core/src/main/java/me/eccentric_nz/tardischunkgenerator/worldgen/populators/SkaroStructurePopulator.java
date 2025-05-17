@@ -159,7 +159,7 @@ public class SkaroStructurePopulator extends BlockPopulator {
             int row = 0;
             if (startY == -99) {
                 startY = 129;
-                // set startY to highest block Y at x, z
+                // set startY to the highest block Y at x, z
                 for (int i = 128; i > 60; i--) {
                     if (!limitedRegion.getType(startX, startY, startZ).equals(Material.SAND) && !limitedRegion.getType(startX, startY, startZ).equals(Material.WATER)) {
                         startY--;

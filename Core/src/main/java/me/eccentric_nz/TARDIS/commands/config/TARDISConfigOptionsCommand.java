@@ -57,38 +57,40 @@ class TARDISConfigOptionsCommand {
             });
             return true;
         }
-        if (section.equals("worlds")) {
-            plugin.getMessenger().messageWithColour(sender, section + ":", "#55FFFF");
-            Set<String> worldNames = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
-            worldNames.forEach((wname) -> {
-                String enabled = plugin.getPlanetsConfig().getString("planets." + wname + ".time_travel");
-                plugin.getMessenger().sendWithColours(sender, "    " + wname + ": ", "#55FF55", enabled, "#FFFFFF");
-            });
-            return true;
-        }
-        if (section.equals("rechargers")) {
-            plugin.getMessenger().messageWithColour(sender, section + ":", "#55FFFF");
-            Set<String> chargerNames = plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
-            chargerNames.forEach((charname) -> {
-                plugin.getMessenger().messageWithColour(sender, "    " + charname + ":", "#55FF55");
-                sender.sendMessage("        world: " + plugin.getConfig().getString("rechargers." + charname + ".world"));
-                sender.sendMessage("        x: " + plugin.getConfig().getString("rechargers." + charname + ".x"));
-                sender.sendMessage("        y: " + plugin.getConfig().getString("rechargers." + charname + ".y"));
-                sender.sendMessage("        z: " + plugin.getConfig().getString("rechargers." + charname + ".z"));
-            });
-            return true;
-        }
-        if (section.equals("rooms")) {
-            plugin.getMessenger().messageWithColour(sender, section + ":", "#55FFFF");
-            Set<String> roomNames = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
-            roomNames.forEach((r) -> {
-                plugin.getMessenger().messageWithColour(sender, "    " + r + ":", "#55FF55");
-                sender.sendMessage("        enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled"));
-                sender.sendMessage("        cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost"));
-                sender.sendMessage("        offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));
-                sender.sendMessage("        seed: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
-            });
-            return true;
+        switch (section) {
+            case "worlds" -> {
+                plugin.getMessenger().messageWithColour(sender, section + ":", "#55FFFF");
+                Set<String> worldNames = plugin.getPlanetsConfig().getConfigurationSection("planets").getKeys(false);
+                worldNames.forEach((wname) -> {
+                    String enabled = plugin.getPlanetsConfig().getString("planets." + wname + ".time_travel");
+                    plugin.getMessenger().sendWithColours(sender, "    " + wname + ": ", "#55FF55", enabled, "#FFFFFF");
+                });
+                return true;
+            }
+            case "rechargers" -> {
+                plugin.getMessenger().messageWithColour(sender, section + ":", "#55FFFF");
+                Set<String> chargerNames = plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
+                chargerNames.forEach((charname) -> {
+                    plugin.getMessenger().messageWithColour(sender, "    " + charname + ":", "#55FF55");
+                    sender.sendMessage("        world: " + plugin.getConfig().getString("rechargers." + charname + ".world"));
+                    sender.sendMessage("        x: " + plugin.getConfig().getString("rechargers." + charname + ".x"));
+                    sender.sendMessage("        y: " + plugin.getConfig().getString("rechargers." + charname + ".y"));
+                    sender.sendMessage("        z: " + plugin.getConfig().getString("rechargers." + charname + ".z"));
+                });
+                return true;
+            }
+            case "rooms" -> {
+                plugin.getMessenger().messageWithColour(sender, section + ":", "#55FFFF");
+                Set<String> roomNames = plugin.getRoomsConfig().getConfigurationSection("rooms").getKeys(false);
+                roomNames.forEach((r) -> {
+                    plugin.getMessenger().messageWithColour(sender, "    " + r + ":", "#55FF55");
+                    sender.sendMessage("        enabled: " + plugin.getRoomsConfig().getString("rooms." + r + ".enabled"));
+                    sender.sendMessage("        cost: " + plugin.getRoomsConfig().getString("rooms." + r + ".cost"));
+                    sender.sendMessage("        offset: " + plugin.getRoomsConfig().getString("rooms." + r + ".offset"));
+                    sender.sendMessage("        seed: " + plugin.getRoomsConfig().getString("rooms." + r + ".seed"));
+                });
+                return true;
+            }
         }
         return false;
     }

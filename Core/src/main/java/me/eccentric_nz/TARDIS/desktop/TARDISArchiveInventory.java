@@ -18,12 +18,10 @@ package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.custommodels.GUIArchive;
-import me.eccentric_nz.TARDIS.custommodels.GUIData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisSize;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.schematic.ResultSetArchiveButtons;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -105,7 +103,6 @@ class TARDISArchiveInventory {
         int t = 22;
         for (ConsoleSize c : ConsoleSize.values()) {
             if (!c.equals(ConsoleSize.MASSIVE)) {
-                GUIData data = GUIArchive.getByName(c.toString());
                 ItemStack temp = new ItemStack(GUIArchive.SMALL.material(), 1);
                 ItemMeta late = temp.getItemMeta();
                 late.setDisplayName(c.toString());
@@ -116,11 +113,11 @@ class TARDISArchiveInventory {
             }
         }
         // close
-        ItemStack close = new ItemStack(Material.BOWL, 1);
+        ItemStack close = new ItemStack(GUIArchive.CLOSE.material(), 1);
         ItemMeta close_im = close.getItemMeta();
         close_im.setDisplayName(plugin.getLanguage().getString("BUTTON_CLOSE"));
         close.setItemMeta(close_im);
-        stack[26] = close;
+        stack[GUIArchive.CLOSE.slot()] = close;
 
         return stack;
     }

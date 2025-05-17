@@ -21,45 +21,7 @@ import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 
 import java.util.UUID;
 
-public class StandbyData {
+public record StandbyData(int level, UUID uuid, boolean hidden, boolean lights, ChameleonPreset preset,
+                          TardisLight lightType) {
 
-    private final int level;
-    private final UUID uuid;
-    private final boolean hidden;
-    private final boolean lights;
-    private final ChameleonPreset preset;
-    private final TardisLight lightType;
-
-    public StandbyData(int level, UUID uuid, boolean hidden, boolean lights, ChameleonPreset preset, TardisLight lightType) {
-        this.level = level;
-        this.uuid = uuid;
-        this.hidden = hidden;
-        this.lights = lights;
-        this.preset = preset;
-        this.lightType = lightType;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public boolean isHidden() {
-        return hidden;
-    }
-
-    public boolean isLights() {
-        return lights;
-    }
-
-    public ChameleonPreset getPreset() {
-        return preset;
-    }
-
-    public TardisLight getLightType() {
-        return lightType;
-    }
 }

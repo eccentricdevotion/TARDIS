@@ -161,7 +161,7 @@ public class TARDISTravelCoords {
                     }
                     return true;
                 } else {
-                    // automatically get highest block Y coord
+                    // automatically get the highest block Y coord
                     Location determiney = getCoordinateLocation(args, player, id);
                     if (determiney != null) {
                         int count = checkLocation(determiney, player, id);

@@ -70,17 +70,19 @@ public class TARDISTravelTabComplete extends TARDISCompleter implements TabCompl
             return (!part.isEmpty()) ? part : null;
         } else if (args.length == 2) {
             String sub = args[0].toLowerCase(Locale.ROOT);
-            if (sub.equals("area")) {
-                return partial(lastArg, AREA_SUBS);
-            }
-            if (sub.equals("biome")) {
-                return partial(lastArg, BIOME_SUBS);
-            }
-            if (sub.equals("village") || sub.equals("structure")) {
-                return partial(lastArg, STRUCTURE_SUBS);
-            }
-            if (sub.equals("player")) {
-                return null;
+            switch (sub) {
+                case "area" -> {
+                    return partial(lastArg, AREA_SUBS);
+                }
+                case "biome" -> {
+                    return partial(lastArg, BIOME_SUBS);
+                }
+                case "village", "structure" -> {
+                    return partial(lastArg, STRUCTURE_SUBS);
+                }
+                case "player" -> {
+                    return null;
+                }
             }
         }
         return ImmutableList.of();

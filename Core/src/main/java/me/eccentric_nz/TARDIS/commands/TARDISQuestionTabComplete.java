@@ -58,7 +58,7 @@ public class TARDISQuestionTabComplete extends TARDISCompleter implements TabCom
     }
 
     private ImmutableList<String> removeUnwanted(Set<String> set) {
-        set.removeAll(notThese);
+        notThese.forEach(set::remove);
         return ImmutableList.copyOf(set);
     }
 }

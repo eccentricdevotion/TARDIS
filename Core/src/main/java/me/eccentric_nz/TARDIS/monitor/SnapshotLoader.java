@@ -39,14 +39,13 @@ import java.util.regex.Pattern;
 
 public class SnapshotLoader {
 
+    final List<Integer> mapIDsNotToRender = new ArrayList<>();
     private final TARDIS plugin;
-    private final GsonBuilder builder;
     private final Gson gson;
-    List<Integer> mapIDsNotToRender = new ArrayList<>();
 
     public SnapshotLoader(TARDIS plugin) {
         this.plugin = plugin;
-        builder = new GsonBuilder();
+        GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Color.class, new ColorTypeAdapter());
         gson = builder.create();
     }

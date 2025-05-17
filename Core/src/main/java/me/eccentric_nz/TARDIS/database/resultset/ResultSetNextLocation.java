@@ -106,10 +106,6 @@ public class ResultSetNextLocation {
         return world != null;
     }
 
-    public int getTardis_id() {
-        return tardis_id;
-    }
-
     public World getWorld() {
         return world;
     }

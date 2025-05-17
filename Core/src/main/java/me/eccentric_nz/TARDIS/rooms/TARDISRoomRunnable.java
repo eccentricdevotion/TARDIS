@@ -108,7 +108,6 @@ public class TARDISRoomRunnable implements Runnable {
     private final HashMap<Integer, Integer> repeaterOrder = new HashMap<>();
     private final boolean wasResumed;
     private final List<String> postBlocks;
-    private final boolean isLastTask;
     private Location library;
     private int maze_count = 0;
     private int task, level, row, col, h, w, c, startx, starty, startz, resetx, resety, resetz;
@@ -117,10 +116,9 @@ public class TARDISRoomRunnable implements Runnable {
     private JsonArray arr;
     private Location aqua_spawn;
 
-    public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, UUID uuid, boolean isLastTask) {
+    public TARDISRoomRunnable(TARDIS plugin, TARDISRoomData roomData, UUID uuid) {
         this.plugin = plugin;
         this.uuid = uuid;
-        this.isLastTask = isLastTask;
         player = plugin.getServer().getPlayer(uuid);
         l = roomData.getLocation();
         obj = roomData.getSchematic();
@@ -300,7 +298,7 @@ public class TARDISRoomRunnable implements Runnable {
                         ResultSetFarming rsf = new ResultSetFarming(plugin, tardis_id);
                         if (rsf.resultSet()) {
                             // resuming room growing...
-                            aqua_spawn = TARDISStaticLocationGetters.getSpawnLocationFromDB(rsf.getFarming().getAquarium());
+                            aqua_spawn = TARDISStaticLocationGetters.getSpawnLocationFromDB(rsf.getFarming().aquarium());
                         }
                     }
                     // add some underwater flora

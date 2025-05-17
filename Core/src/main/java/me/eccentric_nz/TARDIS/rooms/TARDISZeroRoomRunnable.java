@@ -39,7 +39,7 @@ public class TARDISZeroRoomRunnable implements Runnable {
             return;
         }
         List<Player> inZeroRoom = zero_world.getPlayers();
-        if (inZeroRoom.size() < 1) {
+        if (inZeroRoom.isEmpty()) {
             return;
         }
         inZeroRoom.forEach((p) -> {

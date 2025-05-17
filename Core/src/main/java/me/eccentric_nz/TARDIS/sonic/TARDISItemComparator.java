@@ -44,7 +44,7 @@ class TARDISItemComparator implements Comparator<ItemStack> {
             return -1;
         } else if (item1 == null && item2 == null) {
             return 0;
-        } else if (item1 != null && item2 != null) {
+        } else {
             if (item1.getType().toString().compareTo(item2.getType().toString()) > 0) {
                 return 1;
             } else if (item1.getType().toString().compareTo(item2.getType().toString()) < 0) {

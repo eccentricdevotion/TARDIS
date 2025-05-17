@@ -61,14 +61,14 @@ class TARDISAreaDisks {
         if (rsa.resultSet()) {
             // cycle through areas
             rsa.getData().forEach((a) -> {
-                String name = a.getAreaName();
+                String name = a.areaName();
                 if (TARDISPermission.hasPermission(p, "tardis.area." + name) || TARDISPermission.hasPermission(p, "tardis.area.*")) {
                     ItemStack is = new ItemStack(Material.MUSIC_DISC_BLOCKS, 1);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName("Area Storage Disk");
                     List<String> lore = new ArrayList<>();
                     lore.add(name);
-                    lore.add(a.getWorld());
+                    lore.add(a.world());
                     im.setLore(lore);
                     is.setItemMeta(im);
                     areas.add(is);
@@ -144,7 +144,7 @@ class TARDISAreaDisks {
                 if (rsa.resultSet()) {
                     // cycle through areas
                     for (Area map : rsa.getData()) {
-                        String name = map.getAreaName();
+                        String name = map.areaName();
                         if ((!player_has.contains(name) && TARDISPermission.hasPermission(p, "tardis.area." + name)) || (!player_has.contains(name) && TARDISPermission.hasPermission(p, "tardis.area.*"))) {
                             // add new area if there is room
                             int empty = getNextEmptySlot(inv);
@@ -154,7 +154,7 @@ class TARDISAreaDisks {
                                 im.setDisplayName("Area Storage Disk");
                                 List<String> lore = new ArrayList<>();
                                 lore.add(name);
-                                lore.add(map.getWorld());
+                                lore.add(map.world());
                                 im.setLore(lore);
                                 is.setItemMeta(im);
                                 inv.setItem(empty, is);

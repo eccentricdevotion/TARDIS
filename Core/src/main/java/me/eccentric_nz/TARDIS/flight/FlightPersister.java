@@ -54,9 +54,9 @@ public class FlightPersister {
             ps = connection.prepareStatement("INSERT INTO " + prefix + "flight (uuid, tardis_id, location, stand) VALUES (?, ?, ?, ?)");
             for (Map.Entry<UUID, FlightReturnData> map : plugin.getTrackerKeeper().getFlyingReturnLocation().entrySet()) {
                 ps.setString(1, map.getKey().toString());
-                ps.setInt(2, map.getValue().getId());
-                ps.setString(3, map.getValue().getLocation().toString());
-                ps.setString(4, map.getValue().getStand().toString());
+                ps.setInt(2, map.getValue().id());
+                ps.setString(3, map.getValue().location().toString());
+                ps.setString(4, map.getValue().stand().toString());
                 count += ps.executeUpdate();
             }
             if (count > 0) {

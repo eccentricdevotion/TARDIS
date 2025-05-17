@@ -55,8 +55,8 @@ public class HeadlessTarget implements Listener {
         if (reason == EntityTargetEvent.TargetReason.CLOSEST_PLAYER || reason == EntityTargetEvent.TargetReason.TARGET_ATTACKED_ENTITY) {
             if (taskID == -1) {
                 // start projectile runnable
-                HeadlessShootRunnable shooter = new HeadlessShootRunnable(attacker, target, false);
-                taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new HeadlessShootRunnable(attacker, target, plugin.getMonstersConfig().getString("headless_monks.projectile").equals("SMALL_FIREBALL")), 1, 40);
+                HeadlessShootRunnable shooter = new HeadlessShootRunnable(attacker, target, plugin.getMonstersConfig().getString("headless_monks.projectile", "SMALL_FIREBALL").equals("SMALL_FIREBALL"));
+                taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, shooter, 1, 40);
                 shooter.setTaskID(taskID);
                 skeleton.getPersistentDataContainer().set(TARDISWeepingAngels.HEADLESS_TASK, PersistentDataType.INTEGER, taskID);
             }

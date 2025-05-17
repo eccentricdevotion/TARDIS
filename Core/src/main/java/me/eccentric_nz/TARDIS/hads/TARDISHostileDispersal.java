@@ -103,7 +103,7 @@ class TARDISHostileDispersal {
             if (outerDisplayDoor) {
                 new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, uuid);
             } else if (rs.getPreset().hasDoor()) {
-                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rs.getPreset()), id, uuid);
+                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, uuid);
             }
         }
         World w = l.getWorld();

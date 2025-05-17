@@ -63,7 +63,7 @@ public class LibraryCatalogue {
     }
 
     private String roman(int i) {
-        String numeral = "";
+        String numeral;
         switch (i) {
             case 5 -> numeral = " V";
             case 4 -> numeral = " IV";

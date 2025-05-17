@@ -160,10 +160,6 @@ public class ResultSetPaperBag {
         return paperBagID;
     }
 
-    public UUID getUuid() {
-        return uuid;
-    }
-
     public String getFlavour1() {
         return flavour1;
     }

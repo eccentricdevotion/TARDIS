@@ -46,7 +46,7 @@ public class VashtaNeradaListener implements Listener {
     @EventHandler
     public void onBookshelfBreak(BlockBreakEvent event) {
         Block b = event.getBlock();
-        if (b != null && b.getType().equals(Material.BOOKSHELF)) {
+        if (b.getType().equals(Material.BOOKSHELF)) {
             String name = WorldProcessor.sanitiseName(b.getWorld().getName());
             if (plugin.getMonstersConfig().getInt("vashta_nerada.worlds." + name) > 0 && TARDISConstants.RANDOM.nextInt(100) < plugin.getMonstersConfig().getInt("vashta_nerada.worlds." + name)) {
                 Location l = getClearLocation(event.getPlayer());

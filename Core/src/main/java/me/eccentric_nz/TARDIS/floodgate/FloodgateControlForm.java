@@ -306,9 +306,8 @@ public class FloodgateControlForm {
                         }
                         new FloodgateChameleonCircuitForm(plugin, uuid, id, tardis.getPreset()).send();
                     }
-                    case 12 -> { // siege mode
-                        new SiegeAction(plugin).clickButton(tcc, player, tardis.isPoweredOn(), id);
-                    }
+                    case 12 -> // siege mode
+                            new SiegeAction(plugin).clickButton(tcc, player, tardis.isPoweredOn(), id);
                     case 13 -> { // hide
                         if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");

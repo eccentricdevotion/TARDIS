@@ -45,24 +45,24 @@ public class DoorAnimator {
         ItemStack is = display.getItemStack();
         Material material = is.getType();
         DoorAnimationData data = close ? Door.getCloseData(material) : Door.getOpenData(material);
-        TARDISSounds.playTARDISSound(location, data.getSound());
+        TARDISSounds.playTARDISSound(location, data.sound());
         taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            if (frame > data.getAnimation().length - 1) {
+            if (frame > data.animation().length - 1) {
                 plugin.getServer().getScheduler().cancelTask(taskID);
                 taskID = 0;
                 return;
             }
             if (material == Material.IRON_DOOR && !plugin.getConfig().getBoolean("police_box.animated_door")) {
                 model = close ? TardisDoorVariant.TARDIS_DOOR_CLOSED.getKey() : TardisDoorVariant.TARDIS_DOOR_OPEN.getKey();
-                frame = data.getAnimation().length - 1;
+                frame = data.animation().length - 1;
             } else {
-                model = data.getAnimation()[frame];
+                model = data.animation()[frame];
             }
             ItemMeta im = is.getItemMeta();
             im.setItemModel(model);
             is.setItemMeta(im);
             display.setItemStack(is);
             frame++;
-        }, 2L, data.getTicks());
+        }, 2L, data.ticks());
     }
 }

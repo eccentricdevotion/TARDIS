@@ -99,8 +99,8 @@ public class TARDISDematerialiseToVortex implements Runnable {
             dd.setOutside(false);
             dd.setSubmarine(sub);
             dd.setTardisID(id);
-            dd.setThrottle(throticle.getThrottle());
-            dd.setParticles(throticle.getParticles());
+            dd.setThrottle(throticle.throttle());
+            dd.setParticles(throticle.particles());
             ChameleonPreset preset = tardis.getPreset();
             if (preset.equals(ChameleonPreset.JUNK_MODE)) {
                 ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, id);
@@ -121,7 +121,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
                         if (plugin.getTrackerKeeper().getMalfunction().get(id) && plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
                             sound = "tardis_malfunction_takeoff";
                         } else {
-                            sound = switch (throticle.getThrottle()) {
+                            sound = switch (throticle.throttle()) {
                                 case WARP -> "tardis_takeoff_warp";
                                 case RAPID -> "tardis_takeoff_rapid";
                                 case FASTER -> "tardis_takeoff_faster";

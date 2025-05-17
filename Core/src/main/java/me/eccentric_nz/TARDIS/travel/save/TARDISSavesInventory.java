@@ -74,14 +74,14 @@ public class TARDISSavesInventory {
             int count = 0;
             // cycle through saves
             for (Destination map : data) {
-                if (map.getType() == 0) {
+                if (map.type() == 0) {
                     count++;
                     if (count > 45) {
                         break;
                     }
                     int slot;
-                    if (map.getSlot() != -1) {
-                        slot = map.getSlot();
+                    if (map.slot() != -1) {
+                        slot = map.slot();
                         if (slot > highest) {
                             highest = slot;
                         }
@@ -91,28 +91,28 @@ public class TARDISSavesInventory {
                     slots.remove(Integer.valueOf(slot));
                     if (slot < 45) {
                         Material material;
-                        if (map.getIcon().isEmpty()) {
+                        if (map.icon().isEmpty()) {
                             material = TARDISConstants.GUI_IDS.get(i);
                         } else {
                             try {
-                                material = Material.valueOf(map.getIcon());
+                                material = Material.valueOf(map.icon());
                             } catch (IllegalArgumentException e) {
                                 material = TARDISConstants.GUI_IDS.get(i);
                             }
                         }
                         ItemStack is = new ItemStack(material, 1);
                         ItemMeta im = is.getItemMeta();
-                        im.setDisplayName(map.getDest_name());
+                        im.setDisplayName(map.dest_name());
                         List<String> lore = new ArrayList<>();
-                        String world = (!plugin.getPlanetsConfig().getBoolean("planets." + map.getWorld() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.getWorld()) : TARDISAliasResolver.getWorldAlias(map.getWorld());
+                        String world = (!plugin.getPlanetsConfig().getBoolean("planets." + map.world() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(map.world()) : TARDISAliasResolver.getWorldAlias(map.world());
                         lore.add(world);
-                        lore.add("" + map.getX());
-                        lore.add("" + map.getY());
-                        lore.add("" + map.getZ());
-                        lore.add(map.getDirection());
-                        lore.add("" + map.isSubmarine());
-                        if (!map.getPreset().isEmpty()) {
-                            lore.add(map.getPreset());
+                        lore.add("" + map.x());
+                        lore.add("" + map.y());
+                        lore.add("" + map.z());
+                        lore.add(map.direction());
+                        lore.add("" + map.submarine());
+                        if (!map.preset().isEmpty()) {
+                            lore.add(map.preset());
                         }
                         im.setLore(lore);
                         is.setItemMeta(im);

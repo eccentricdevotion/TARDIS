@@ -61,7 +61,7 @@ public class TARDISLister {
     public void list(Player player, String list) {
         if (list.equals("rechargers")) {
             Set<String> therechargers = TARDIS.plugin.getConfig().getConfigurationSection("rechargers").getKeys(false);
-            if (therechargers.size() < 1) {
+            if (therechargers.isEmpty()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CHARGER_NONE");
             }
             plugin.getMessenger().messageWithColour(player, "TARDIS Rechargers", "#FFAA00");
@@ -100,7 +100,7 @@ public class TARDISLister {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "AREAS");
                     plugin.getMessenger().message(player, "");
                 }
-                plugin.getMessenger().sendArea(player, a, n, (TARDISPermission.hasPermission(player, "tardis.area." + a.getAreaName()) || TARDISPermission.hasPermission(player, "tardis.area.*")));
+                plugin.getMessenger().sendArea(player, a, n, (TARDISPermission.hasPermission(player, "tardis.area." + a.areaName()) || TARDISPermission.hasPermission(player, "tardis.area.*")));
                 n++;
             }
         } else {

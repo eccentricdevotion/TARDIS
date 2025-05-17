@@ -40,10 +40,6 @@ public class ReplacedBlock {
         this.police_box = police_box;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public int getTardis_id() {
         return tardis_id;
     }

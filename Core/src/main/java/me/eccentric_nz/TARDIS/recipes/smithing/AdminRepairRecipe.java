@@ -28,8 +28,6 @@ import org.bukkit.inventory.SmithingTransformRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
-import java.util.List;
-
 /*
 base:BLAZE_ROD
 addition:GLOWSTONE_DUST=Server Admin Circuit

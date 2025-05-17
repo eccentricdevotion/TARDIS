@@ -83,7 +83,6 @@ public class TARDISBuilderPreview implements Runnable {
     private JsonArray arr;
     private JsonObject obj;
     private Location location;
-    private TARDISTIPSData pos;
     private boolean running = false;
     private Location ender = null;
     private int counter = 0;
@@ -122,6 +121,7 @@ public class TARDISBuilderPreview implements Runnable {
                 div = (h + 1.0d) * w * (d + 1.0d);
                 // calculate startx, starty, startz
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
+                TARDISTIPSData pos;
                 if (tips == -999) {
                     pos = tintpos.getTIPSJunkData();
                 } else {
@@ -413,7 +413,6 @@ public class TARDISBuilderPreview implements Runnable {
             } else {
                 TARDISBlockSetters.setBlock(world, x, y, z, data);
             }
-            double progress = counter / div;
             if (col == d && row < w) {
                 row++;
             }

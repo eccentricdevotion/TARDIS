@@ -385,16 +385,14 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             wherec.put("tardis_id", id);
             plugin.getQueryFactory().doDelete("chunks", wherec);
             // update chunks list in DB
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                chunks.forEach((hunk) -> {
-                    HashMap<String, Object> setc = new HashMap<>();
-                    setc.put("tardis_id", id);
-                    setc.put("world", world.getName());
-                    setc.put("x", hunk.getX());
-                    setc.put("z", hunk.getZ());
-                    plugin.getQueryFactory().doInsert("chunks", setc);
-                });
-            }, 20L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> chunks.forEach((hunk) -> {
+                HashMap<String, Object> setc = new HashMap<>();
+                setc.put("tardis_id", id);
+                setc.put("world", world.getName());
+                setc.put("x", hunk.getX());
+                setc.put("z", hunk.getZ());
+                plugin.getQueryFactory().doInsert("chunks", setc);
+            }), 20L);
             // remove blocks from condenser table if necessary
             if (!clean && plugin.getGeneralKeeper().getRoomCondenserData().containsKey(uuid)) {
                 TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);

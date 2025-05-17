@@ -177,7 +177,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                         close(player);
                                         return;
                                     }
-                                    String invisibility = tac.getArea().getInvisibility();
+                                    String invisibility = tac.getArea().invisibility();
                                     HashMap<String, Object> wheret = new HashMap<>();
                                     wheret.put("tardis_id", occupiedTardisId);
                                     ResultSetTardis resultSetTardis = new ResultSetTardis(plugin, wheret, "", false, 2);

@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 public class FloodgateBiomes {
 
-    public static HashMap<Biome, String> BIOME_BLOCKS = new HashMap<>() {{
+    public static final HashMap<Biome, String> BIOME_BLOCKS = new HashMap<>() {{
         put(Biome.BADLANDS, "blocks/red_sand.png");
         put(Biome.BAMBOO_JUNGLE, "blocks/bamboo_block.png");
         put(Biome.BEACH, "blocks/sand.png");

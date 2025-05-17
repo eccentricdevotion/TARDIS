@@ -116,7 +116,7 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
                                     Material variable = getMaterialFromSlot(view, 29);
                                     // get selected block
                                     Material emitting = getMaterialFromSlot(view, 43);
-                                    new TARDISLightConverter(plugin, data.getTardisId()).apply(rslp.getLight(), emitting, player, variable);
+                                    new TARDISLightConverter(plugin).apply(rslp.getLight(), emitting, player, variable);
                                 }
                             } else {
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "LIGHT_CHANGE");

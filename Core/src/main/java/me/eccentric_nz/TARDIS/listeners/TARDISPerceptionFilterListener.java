@@ -62,7 +62,7 @@ public class TARDISPerceptionFilterListener implements Listener {
         }
         Player player = event.getPlayer();
         ItemStack is = player.getInventory().getItemInMainHand();
-        if (is != null && is.getType().equals(material) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+        if (is.getType().equals(material) && event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
             if (is.hasItemMeta()) {
                 ItemMeta im = is.getItemMeta();
                 if (im.hasDisplayName() && im.getDisplayName().endsWith("Perception Filter")) {

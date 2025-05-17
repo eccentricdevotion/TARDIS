@@ -143,7 +143,7 @@ public class TARDISCondenserListener implements Listener {
                 if (item.equals("BLAZE_ROD") && TARDISStaticUtils.isSonic(is)) {
                     // add artron for base screwdriver
                     double full = plugin.getArtronConfig().getDouble("full_charge") / 75.0d;
-                    amount += plugin.getArtronConfig().getDouble("sonic_generator.standard") * full;
+                    amount += (int) (plugin.getArtronConfig().getDouble("sonic_generator.standard") * full);
                     // add extra artron for any sonic upgrades
                     if (is.getItemMeta().hasLore()) {
                         List<String> lore = is.getItemMeta().getLore();

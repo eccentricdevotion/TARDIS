@@ -73,22 +73,22 @@ public class TARDISExteriorFlight {
         String direction = player.getFacing().getOppositeFace().toString();
         FlightReturnData data = plugin.getTrackerKeeper().getFlyingReturnLocation().get(uuid);
         if (data != null) {
-            Location interior = data.getLocation();
+            Location interior = data.location();
             // check block protection
             if (!plugin.getPluginRespect().getRespect(location, new Parameters(player, Flag.getDefaultFlags())) || plugin.getTardisArea().isInExistingArea(location)) {
                 // remove police box
                 stand.remove();
                 // set drifting in the time vortex
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, interior, data.getId()), 20L);
-                plugin.getTrackerKeeper().getInVortex().add(data.getId());
-                plugin.getTrackerKeeper().getDidDematToVortex().add(data.getId());
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, interior, data.id()), 20L);
+                plugin.getTrackerKeeper().getInVortex().add(data.id());
+                plugin.getTrackerKeeper().getDidDematToVortex().add(data.id());
                 drifting = true;
                 // message player
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_PROTECTED");
             }
             // stop animation and sound runnables
-            plugin.getServer().getScheduler().cancelTask(data.getAnimation());
-            plugin.getServer().getScheduler().cancelTask(data.getSound());
+            plugin.getServer().getScheduler().cancelTask(data.animation());
+            plugin.getServer().getScheduler().cancelTask(data.sound());
             // get item display
             ItemDisplay display = (ItemDisplay) player.getPassengers().getFirst();
             ItemStack is = display.getItemStack();
@@ -107,43 +107,43 @@ public class TARDISExteriorFlight {
                 set.put("direction", direction);
                 set.put("submarine", (player.isInWater()) ? 1 : 0);
                 HashMap<String, Object> where = new HashMap<>();
-                where.put("tardis_id", data.getId());
+                where.put("tardis_id", data.id());
                 plugin.getQueryFactory().doUpdate("current", set, where);
                 // update door location
-                TARDISBuilderUtility.saveDoorLocation(location, data.getId(), direction);
+                TARDISBuilderUtility.saveDoorLocation(location, data.id(), direction);
                 Block under = location.getBlock().getRelative(BlockFace.DOWN);
                 if (under.getType().isAir()) {
                     // if location is in the air, set under door block
-                    TARDISBlockSetters.setUnderDoorBlock(location.getWorld(), under.getX(), under.getY(), under.getZ(), data.getId(), false);
+                    TARDISBlockSetters.setUnderDoorBlock(location.getWorld(), under.getX(), under.getY(), under.getZ(), data.id(), false);
                 }
                 // set the light
                 Levelled light = TARDISConstants.LIGHT;
                 light.setLevel(7);
                 location.getBlock().getRelative(BlockFace.UP, 2).setBlockData(light);
                 // add an interaction entity
-                TARDISDisplayItemUtils.setInteraction(stand, data.getId());
+                TARDISDisplayItemUtils.setInteraction(stand, data.id());
             }
             // teleport player to interior
             player.teleport(interior);
             // add player to travellers
             HashMap<String, Object> sett = new HashMap<>();
-            sett.put("tardis_id", data.getId());
+            sett.put("tardis_id", data.id());
             sett.put("uuid", uuid.toString());
             plugin.getQueryFactory().doSyncInsert("travellers", sett);
             // remove trackers
-            plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(data.getId()));
-            plugin.getTrackerKeeper().getMalfunction().remove(data.getId());
+            plugin.getTrackerKeeper().getMaterialising().removeAll(Collections.singleton(data.id()));
+            plugin.getTrackerKeeper().getMalfunction().remove(data.id());
             if (!drifting) {
-                plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(data.getId()));
-                if (plugin.getTrackerKeeper().getDidDematToVortex().contains(data.getId())) {
-                    plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(data.getId()));
+                plugin.getTrackerKeeper().getInVortex().removeAll(Collections.singleton(data.id()));
+                if (plugin.getTrackerKeeper().getDidDematToVortex().contains(data.id())) {
+                    plugin.getTrackerKeeper().getDidDematToVortex().removeAll(Collections.singleton(data.id()));
                 }
-                if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(data.getId())) {
-                    int taskID = plugin.getTrackerKeeper().getDestinationVortex().get(data.getId());
+                if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(data.id())) {
+                    int taskID = plugin.getTrackerKeeper().getDestinationVortex().get(data.id());
                     plugin.getServer().getScheduler().cancelTask(taskID);
-                    plugin.getTrackerKeeper().getDestinationVortex().remove(data.getId());
+                    plugin.getTrackerKeeper().getDestinationVortex().remove(data.id());
                 }
-                new FlightEnd(plugin).process(data.getId(), player, false, true);
+                new FlightEnd(plugin).process(data.id(), player, false, true);
             }
         }
         Bukkit.getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {

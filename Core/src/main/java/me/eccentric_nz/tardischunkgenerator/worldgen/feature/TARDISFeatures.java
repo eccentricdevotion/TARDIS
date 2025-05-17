@@ -27,11 +27,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class TARDISFeatures {
 
-    public static TARDISGrassData GRASS;
-    public static TARDISTreeData SKARO_TREE;
-    public static TARDISTreeData GALLIFREY_TREE_RED_SAND;
-    public static TARDISTreeData GALLIFREY_TREE_TERRACOTTA;
-    public static TARDISTreeData RANDOM_TREE;
+    public static final TARDISGrassData GRASS;
+    public static final TARDISTreeData SKARO_TREE;
+    public static final TARDISTreeData GALLIFREY_TREE_RED_SAND;
+    public static final TARDISTreeData GALLIFREY_TREE_TERRACOTTA;
+    public static final TARDISTreeData RANDOM_TREE;
 
     static {
         GRASS = new TARDISGrassData(RuleBasedBlockStateProvider.simple(Blocks.GRASS_BLOCK), BlockPredicate.matchesBlocks(Blocks.TERRACOTTA, Blocks.RED_SAND), UniformInt.of(2, 8), 2);

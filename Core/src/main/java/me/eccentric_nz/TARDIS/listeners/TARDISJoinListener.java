@@ -81,7 +81,7 @@ public class TARDISJoinListener implements Listener {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid);
                 where.put("name", "joinkit");
-                ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
+                ResultSetAchievements rsa = new ResultSetAchievements(plugin, where);
                 if (!rsa.resultSet()) {
                     //add a record
                     HashMap<String, Object> set = new HashMap<>();
@@ -100,7 +100,7 @@ public class TARDISJoinListener implements Listener {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", uuid);
                 where.put("name", "tardis");
-                ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
+                ResultSetAchievements rsa = new ResultSetAchievements(plugin, where);
                 if (!rsa.resultSet()) {
                     //add a record
                     HashMap<String, Object> set = new HashMap<>();
@@ -255,7 +255,7 @@ public class TARDISJoinListener implements Listener {
                 plugin.getQueryFactory().doInsert("travellers", wherei);
                 CameraLocation cl = TARDISCameraTracker.SPECTATING.get(player.getUniqueId());
                 if (cl != null) {
-                    TARDISCameraTracker.CAMERA_IN_USE.remove(cl.getId());
+                    TARDISCameraTracker.CAMERA_IN_USE.remove(cl.id());
                     TARDISCameraTracker.SPECTATING.remove(player.getUniqueId());
                 }
             }, 2L);

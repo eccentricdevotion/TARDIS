@@ -17,7 +17,6 @@
 package me.eccentric_nz.tardischunkgenerator;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISArmourStandDisguiser;
 import me.eccentric_nz.TARDIS.lazarus.disguise.TARDISDisguiseListener;
@@ -127,31 +126,6 @@ public class TARDISHelper {
             }
         }
         return false;
-    }
-
-    public void setRandomSeed(String world) {
-        File file = new File(Bukkit.getWorldContainer().getAbsolutePath() + File.separator + world + File.separator + "level.dat");
-        if (file.exists()) {
-            try {
-                CompoundTag tagCompound;
-                CompoundTag data;
-                try (FileInputStream fileinputstream = new FileInputStream(file)) {
-                    tagCompound = NbtIo.readCompressed(fileinputstream, NbtAccounter.unlimitedHeap());
-                    if (tagCompound.getCompound("Data").isPresent()) {
-                        data = tagCompound.getCompound("Data").get();
-                        long random = TARDISConstants.RANDOM.nextLong();
-                        // set RandomSeed tag
-                        data.putLong("RandomSeed", random);
-                        tagCompound.put("Data", data);
-                        FileOutputStream fileoutputstream = new FileOutputStream(file);
-                        NbtIo.writeCompressed(tagCompound, fileoutputstream);
-                        fileoutputstream.close();
-                    }
-                }
-            } catch (IOException ex) {
-                plugin.getMessenger().message(plugin.getConsole(), TardisModule.HELPER_SEVERE, ex.getMessage());
-            }
-        }
     }
 
     public void setLevelName(String oldName, String newName) {
@@ -296,10 +270,6 @@ public class TARDISHelper {
 
     public void undisguise(Player player) {
         new TARDISDisguiser(player).removeDisguise();
-    }
-
-    public void reset(Player player) {
-        new TARDISChameleonArchDisguiser(plugin, player).resetSkin();
     }
 
     public void disguiseArmourStand(ArmorStand stand, EntityType entityType, Object[] options) {

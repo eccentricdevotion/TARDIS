@@ -74,7 +74,7 @@ public class UpdateTARDISPlugins {
                         }
                     }.runTask(plugin);
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+//                    ex.printStackTrace();
                     new BukkitRunnable() {
                         @Override
                         public void run() {

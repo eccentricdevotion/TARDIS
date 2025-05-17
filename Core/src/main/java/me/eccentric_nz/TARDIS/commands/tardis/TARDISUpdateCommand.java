@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
 import me.eccentric_nz.TARDIS.messaging.TARDISUpdateLister;
@@ -188,9 +187,5 @@ class TARDISUpdateCommand {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
             return false;
         }
-    }
-
-    private boolean isConsole(String str) {
-        return Consoles.getBY_MATERIALS().containsKey(str);
     }
 }

@@ -88,7 +88,7 @@ public class RoomsUtility {
         Location l = new Location(null, x, y, z);
         ItemFrame frame = (ItemFrame) region.spawnEntity(l, (json.get("glowing").getAsBoolean()) ? EntityType.GLOW_ITEM_FRAME : EntityType.ITEM_FRAME);
         frame.setFacingDirection(facing, true);
-        String cmd = "";
+        String cmd;
         if (json.has("item")) {
             try {
                 ItemStack is = new ItemStack(Material.valueOf(json.get("item").getAsString()));

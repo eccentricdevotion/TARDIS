@@ -90,7 +90,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                 int level = tardis.getArtronLevel();
                 if (sender instanceof Player player && !sender.hasPermission("tardis.admin")) {
                     HashMap<String, Object> wheret = new HashMap<>();
-                    wheret.put("uuid", ((Player) sender).getUniqueId().toString());
+                    wheret.put("uuid", player.getUniqueId().toString());
                     ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
                     if (!rst.resultSet()) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "NOT_A_TIMELORD");
@@ -243,7 +243,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                         }
                                     }
                                     // check whether this is a no invisibility area
-                                    String invisibility = rsa.getArea().getInvisibility();
+                                    String invisibility = rsa.getArea().invisibility();
                                     if (invisibility.equals("DENY") && tardis.getPreset().equals(ChameleonPreset.INVISIBLE)) {
                                         // check preset
                                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "AREA_NO_INVISIBLE");
@@ -261,10 +261,10 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                     }
                                     // get a landing spot
                                     Location l;
-                                    if (rsa.getArea().isGrid()) {
-                                        l = plugin.getTardisArea().getNextSpot(rsa.getArea().getAreaName());
+                                    if (rsa.getArea().grid()) {
+                                        l = plugin.getTardisArea().getNextSpot(rsa.getArea().areaName());
                                     } else {
-                                        l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+                                        l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().areaId());
                                     }
                                     // returns null if full!
                                     if (l == null) {
@@ -276,8 +276,8 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                     set.put("y", l.getBlockY());
                                     set.put("z", l.getBlockZ());
                                     // set the direction of the TARDIS
-                                    if (!rsa.getArea().getDirection().isEmpty()) {
-                                        set.put("direction", rsa.getArea().getDirection());
+                                    if (!rsa.getArea().direction().isEmpty()) {
+                                        set.put("direction", rsa.getArea().direction());
                                     } else {
                                         // get current direction
                                         ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);

@@ -127,10 +127,6 @@ public class ResultSetCurrentLocation {
         return world != null;
     }
 
-    public int getCurrent_id() {
-        return current_id;
-    }
-
     public int getTardis_id() {
         return tardis_id;
     }

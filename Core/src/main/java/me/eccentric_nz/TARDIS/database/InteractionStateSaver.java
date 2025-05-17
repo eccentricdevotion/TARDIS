@@ -36,7 +36,7 @@ public class InteractionStateSaver {
 
     public void write(String which, int state, int id) {
         PreparedStatement statement = null;
-        String query = "UPDATE interactions SET state = ? WHERE tardis_id = ? AND control = ?";
+        String query = "UPDATE " + prefix + "interactions SET state = ? WHERE tardis_id = ? AND control = ?";
         try {
             service.testConnection(connection);
             statement = connection.prepareStatement(query);
@@ -44,7 +44,7 @@ public class InteractionStateSaver {
             statement.setInt(2, id);
             statement.setString(3, which);
             statement.executeUpdate();
-        }  catch (SQLException e) {
+        } catch (SQLException e) {
             plugin.debug("Update error for interactions state! " + e.getMessage());
         } finally {
             try {

@@ -39,14 +39,14 @@ public class TARDISHandlesRunnable implements Runnable {
         ResultSetReminders rsr = new ResultSetReminders(plugin);
         if (rsr.resultSet()) {
             for (Reminder r : rsr.getReminders()) {
-                if (currentTime > r.getTime()) {
-                    Player player = plugin.getServer().getPlayer(r.getUuid());
+                if (currentTime > r.time()) {
+                    Player player = plugin.getServer().getPlayer(r.uuid());
                     if (player != null && player.isOnline()) {
                         TARDISSounds.playTARDISSound(player, "handles_reminder");
-                        plugin.getMessenger().handlesSend(player, "HANDLES_REMINDER", r.getReminder());
+                        plugin.getMessenger().handlesSend(player, "HANDLES_REMINDER", r.reminder());
                         // remove the reminder...
                         HashMap<String, Object> where = new HashMap<>();
-                        where.put("reminder_id", r.getReminder_id());
+                        where.put("reminder_id", r.reminder_id());
                         plugin.getQueryFactory().doDelete("reminders", where);
                     }
                 }

@@ -79,7 +79,7 @@ public class ConsoleInteractionListener implements Listener {
                         case ARTRON -> new ArtronInteraction(plugin).show(id, player, interaction);
                         case REBUILD -> new RebuildInteraction(plugin).process(id, player, interaction);
                         // manual flight
-                        case ASTROSEXTANT_RECTIFIER, ABSOLUTE_TESSERACTULATOR, GRAVITIC_ANOMALISER -> new ManualFlightInteraction(plugin).receiveInput(id, player.getUniqueId(), interaction);
+                        case ASTROSEXTANT_RECTIFIER, ABSOLUTE_TESSERACTULATOR, GRAVITIC_ANOMALISER -> new ManualFlightInteraction(plugin).receiveInput(player.getUniqueId(), interaction);
                         // unknown
                         default -> plugin.getMessenger().announceRepeater(player, rsi.getControl().getAlternateName());
                     }

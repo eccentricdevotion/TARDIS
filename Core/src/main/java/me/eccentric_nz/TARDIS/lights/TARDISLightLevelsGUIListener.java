@@ -156,7 +156,7 @@ public class TARDISLightLevelsGUIListener extends TARDISMenuListener {
     private Pair<Boolean, Integer> getNewState(InventoryView view, int slot, boolean next) {
         ItemStack is = view.getItem(slot);
         ItemMeta im = is.getItemMeta();
-        String lore = im.getLore().get(0);
+        String lore = im.getLore().getFirst();
         int state = TARDISNumberParsers.parseInt(lore);
         int index;
         if (slot == 16) {

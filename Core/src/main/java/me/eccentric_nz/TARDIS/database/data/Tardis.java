@@ -173,7 +173,7 @@ public class Tardis {
     }
 
     /**
-     * Returns a colon (:) separated list of companion UUID strings for this TARDIS.
+     * Returns a colon separated list of companion UUID strings for this TARDIS.
      *
      * @return the companion UUIDs, or an empty string if there are none
      */

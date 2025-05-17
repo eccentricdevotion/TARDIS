@@ -112,19 +112,13 @@ public class TARDISGiveTabComplete extends TARDISCompleter implements TabComplet
             return partial(lastArg, GIVE_SUBS);
         } else if (args.length == 3) {
             String sub = args[1];
-            if (sub.equals("kit")) {
-                return partial(lastArg, KIT_SUBS);
-            }
-            if (sub.equals("blueprint")) {
-                return partial(lastArg, BLUEPRINT_SUBS);
-            }
-            if (sub.equals("seed")) {
-                return partial(lastArg, SEED_SUBS);
-            }
-            if (sub.equals("system-upgrade")) {
-                return partial(lastArg, SYSUPS_SUBS);
-            }
-            return partial(lastArg, GIVE_KNOWLEDGE);
+            return switch (sub) {
+                case "kit" -> partial(lastArg, KIT_SUBS);
+                case "blueprint" -> partial(lastArg, BLUEPRINT_SUBS);
+                case "seed" -> partial(lastArg, SEED_SUBS);
+                case "system-upgrade" -> partial(lastArg, SYSUPS_SUBS);
+                default -> partial(lastArg, GIVE_KNOWLEDGE);
+            };
         } else if (args[1].equalsIgnoreCase("seed")) {
             return partial(lastArg, MAT_SUBS);
         }

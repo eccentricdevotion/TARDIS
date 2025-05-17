@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.custommodels.GUISonicGenerator;
 import me.eccentric_nz.TARDIS.database.data.Sonic;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
@@ -36,13 +35,11 @@ class TARDISSonicGeneratorInventory {
 
     private final TARDIS plugin;
     private final Sonic data;
-    private final Player player;
     private final ItemStack[] generator;
 
-    public TARDISSonicGeneratorInventory(TARDIS plugin, Sonic data, Player player) {
+    public TARDISSonicGeneratorInventory(TARDIS plugin, Sonic data) {
         this.plugin = plugin;
         this.data = data;
-        this.player = player;
         generator = getItemStack();
     }
 

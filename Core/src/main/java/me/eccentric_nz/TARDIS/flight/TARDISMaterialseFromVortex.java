@@ -100,7 +100,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         setsave.put("submarine", 0);
                         plugin.getQueryFactory().doSyncUpdate("next", setsave, wheress);
                         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                            int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * throticle.getThrottle().getArtronMultiplier());
+                            int amount = Math.round(plugin.getTrackerKeeper().getHasDestination().get(id).cost() * throticle.throttle().getArtronMultiplier());
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
@@ -161,7 +161,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     bd.setSubmarine(is_next_sub);
                     bd.setTardisID(id);
                     bd.setThrottle(spaceTimeThrottle);
-                    bd.setParticles(throticle.getParticles());
+                    bd.setParticles(throticle.particles());
                     // get sound effects
                     String landSFX = (spaceTimeThrottle != SpaceTimeThrottle.NORMAL) ? "tardis_land_" + spaceTimeThrottle.toString().toLowerCase(Locale.ROOT) : "tardis_land";
                     // determine delay values

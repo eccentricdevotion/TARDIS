@@ -270,7 +270,6 @@ public class Death implements Listener {
                         stack = new ItemStack(hath_drops.get(TARDISConstants.RANDOM.nextInt(hath_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                     }
                     event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
-                    return;
                 }
             }
             case ZOMBIE -> {
@@ -413,7 +412,6 @@ public class Death implements Listener {
                         stack = new ItemStack(zygon_drops.get(TARDISConstants.RANDOM.nextInt(zygon_drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
                     }
                     event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), stack);
-                    return;
                 }
             }
             case VILLAGER, PLAYER -> {

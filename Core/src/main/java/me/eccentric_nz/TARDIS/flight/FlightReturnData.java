@@ -23,45 +23,6 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class FlightReturnData {
+public record FlightReturnData(int id, Location location, int sound, int animation, UUID stand, UUID display) {
 
-    private final int id;
-    private final Location location;
-    private final int sound;
-    private final int animation;
-    private final UUID stand;
-    private final UUID display;
-
-    public FlightReturnData(int id, Location location, int sound, int animation, UUID stand, UUID display) {
-        this.id = id;
-        this.location = location;
-        this.sound = sound;
-        this.animation = animation;
-        this.stand = stand;
-        this.display = display;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public int getSound() {
-        return sound;
-    }
-
-    public int getAnimation() {
-        return animation;
-    }
-
-    public UUID getStand() {
-        return stand;
-    }
-
-    public UUID getDisplay() {
-        return display;
-    }
 }

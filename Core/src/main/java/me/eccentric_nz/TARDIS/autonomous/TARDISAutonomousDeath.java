@@ -95,7 +95,7 @@ public class TARDISAutonomousDeath {
                             if (outerDisplayDoor) {
                                 new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
                             } else if (rstp.getPreset().hasDoor()) {
-                                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rstp.getPreset()), id, playerUUID);
+                                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
                             }
                         }
                         Location death_loc = player.getLocation();

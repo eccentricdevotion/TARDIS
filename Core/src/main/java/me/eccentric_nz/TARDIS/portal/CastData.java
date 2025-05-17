@@ -22,40 +22,6 @@ import org.bukkit.Location;
 
 import java.util.UUID;
 
-public class CastData {
+public record CastData(Location interior, Location exterior, COMPASS direction, UUID rotor, ConsoleSize consoleSize) {
 
-    final Location interior;
-    final Location exterior;
-    final COMPASS direction;
-    final UUID rotor;
-
-    final ConsoleSize consoleSize;
-
-    public CastData(Location interior, Location exterior, COMPASS direction, UUID rotor, ConsoleSize consoleSize) {
-        this.interior = interior;
-        this.exterior = exterior;
-        this.direction = direction;
-        this.rotor = rotor;
-        this.consoleSize = consoleSize;
-    }
-
-    public Location getInterior() {
-        return interior;
-    }
-
-    public Location getExterior() {
-        return exterior;
-    }
-
-    public COMPASS getDirection() {
-        return direction;
-    }
-
-    public UUID getRotor() {
-        return rotor;
-    }
-
-    public ConsoleSize getConsoleSize() {
-        return consoleSize;
-    }
 }

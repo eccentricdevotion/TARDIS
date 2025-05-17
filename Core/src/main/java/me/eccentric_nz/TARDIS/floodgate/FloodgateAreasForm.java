@@ -57,7 +57,7 @@ public class FloodgateAreasForm {
             builder.title("TARDIS Areas");
             int i = 0;
             for (Area a : rsa.getData()) {
-                String name = a.getAreaName();
+                String name = a.areaName();
                 if (TARDISPermission.hasPermission(player, "tardis.area." + name) || TARDISPermission.hasPermission(player, "tardis.area.*")) {
                     builder.button(name, FormImage.Type.PATH, String.format(path, FloodgateColouredBlocks.IMAGES.get(i)));
                     i++;
@@ -79,10 +79,10 @@ public class FloodgateAreasForm {
         wherea.put("area_name", label);
         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
         rsa.resultSet();
-        if (rsa.getArea().isGrid()) {
+        if (rsa.getArea().grid()) {
             l = plugin.getTardisArea().getNextSpot(label);
         } else {
-            l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+            l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().areaId());
         }
         if (l == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MORE_SPOTS");
@@ -101,7 +101,7 @@ public class FloodgateAreasForm {
                 return;
             }
             // check the player is not already in the area!
-            if (plugin.getTardisArea().isInExistingArea(rsc, rsa.getArea().getAreaId())) {
+            if (plugin.getTardisArea().isInExistingArea(rsc, rsa.getArea().areaId())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_AREA");
                 return;
             }
@@ -112,8 +112,8 @@ public class FloodgateAreasForm {
             set_next.put("z", l.getBlockZ());
             set_next.put("submarine", 0);
             // should be setting direction of TARDIS
-            if (!rsa.getArea().getDirection().isEmpty()) {
-                set_next.put("direction", rsa.getArea().getDirection());
+            if (!rsa.getArea().direction().isEmpty()) {
+                set_next.put("direction", rsa.getArea().direction());
             } else {
                 set_next.put("direction", rsc.getDirection().toString());
             }

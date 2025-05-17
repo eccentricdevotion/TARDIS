@@ -70,8 +70,6 @@ public class TARDISParticlePrefsCommand {
         HashMap<String, Object> set = new HashMap<>();
         set.put(which, value);
         // do they have a particle_prefs record?
-        HashMap<String, Object> wheres = new HashMap<>();
-        wheres.put("uuid", uuid);
         ResultSetParticlePrefs rss = new ResultSetParticlePrefs(plugin);
         if (rss.fromUUID(uuid)) {
             HashMap<String, Object> wherea = new HashMap<>();

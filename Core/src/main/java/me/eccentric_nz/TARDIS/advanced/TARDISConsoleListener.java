@@ -108,7 +108,7 @@ public class TARDISConsoleListener implements Listener {
         }
         onlythese.add(Material.valueOf(key));
         ItemStack disk = event.getPlayer().getInventory().getItemInMainHand();
-        if ((disk != null && onlythese.contains(disk.getType()) && disk.hasItemMeta()) || key.equals("AIR")) {
+        if (onlythese.contains(disk.getType()) && disk.hasItemMeta() || key.equals("AIR")) {
             // only the time lord of this tardis
             ResultSetTardisPowered rs = new ResultSetTardisPowered(plugin);
             if (!rs.fromBoth(id, uuid.toString())) {

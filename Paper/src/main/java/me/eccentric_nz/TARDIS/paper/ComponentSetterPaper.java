@@ -23,11 +23,10 @@ public class ComponentSetterPaper implements ComponentSetter {
     }
 
     @Override
-    public ItemStack setWeapon(ItemStack is) {
+    public void setWeapon(ItemStack is) {
         Weapon weapon = Weapon.weapon()
                 .itemDamagePerAttack(8)
                 .build();
         is.setData(DataComponentTypes.WEAPON, weapon);
-        return is;
     }
 }

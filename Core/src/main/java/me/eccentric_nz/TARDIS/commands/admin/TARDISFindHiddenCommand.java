@@ -48,11 +48,11 @@ public class TARDISFindHiddenCommand {
                 int i = 1;
                 for (Hidden h : data) {
                     plugin.getMessenger().message(player, i
-                            + ". X=" + h.getX()
-                            + ", Y=" + h.getY()
-                            + ", Z=" + h.getZ()
-                            + ", owned by " + h.getOwner()
-                            + ", " + h.getStatus());
+                            + ". X=" + h.x()
+                            + ", Y=" + h.y()
+                            + ", Z=" + h.z()
+                            + ", owned by " + h.owner()
+                            + ", " + h.status());
                     i++;
                 }
             } else {
@@ -63,10 +63,10 @@ public class TARDISFindHiddenCommand {
                     int i = 1;
                     for (ProtectedBlock h : blocks) {
                         plugin.getMessenger().sendProtected(player, i
-                                + ". X=" + h.getX()
-                                + ", Y=" + h.getY()
-                                + ", Z=" + h.getZ()
-                                + ", PROTECTED ", h.getLocation(), h.getId());
+                                + ". X=" + h.x()
+                                + ", Y=" + h.y()
+                                + ", Z=" + h.z()
+                                + ", PROTECTED ", h.location(), h.id());
                         i++;
                     }
                 } else {

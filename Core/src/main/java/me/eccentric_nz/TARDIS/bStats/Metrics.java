@@ -155,7 +155,7 @@ public class Metrics {
          * @param platform                    The platform of the service.
          * @param serviceId                   The id of the service.
          * @param serverUuid                  The server uuid.
-         * @param enabled                     Whether or not data sending is enabled.
+         * @param enabled                     Whether data sending is enabled.
          * @param appendPlatformDataConsumer  A consumer that receives a {@code JsonObjectBuilder} and
          *                                    appends all platform-specific data.
          * @param appendServiceDataConsumer   A consumer that receives a {@code JsonObjectBuilder} and
@@ -166,9 +166,9 @@ public class Metrics {
          * @param checkServiceEnabledSupplier A supplier to check if the service is still enabled.
          * @param errorLogger                 A consumer that accepts log message and an error.
          * @param infoLogger                  A consumer that accepts info log messages.
-         * @param logErrors                   Whether or not errors should be logged.
-         * @param logSentData                 Whether or not the sent data should be logged.
-         * @param logResponseStatusText       Whether or not the response status text should be logged.
+         * @param logErrors                   Whether errors should be logged.
+         * @param logSentData                 Whether the data should be logged.
+         * @param logResponseStatusText       Whether the response status text should be logged.
          */
         MetricsBase(String platform,
                     String serverUuid,
@@ -312,13 +312,10 @@ public class Metrics {
          */
         private void checkRelocation() {
             // You can use the property to disable the check in your test environment
-            if (System.getProperty("bstats.relocatecheck") == null
-                    || !System.getProperty("bstats.relocatecheck").equals("false")) {
+            if (System.getProperty("bstats.relocatecheck") == null || !System.getProperty("bstats.relocatecheck").equals("false")) {
                 // Maven's Relocate is clever and changes strings, too. So we have to use this little "trick" ... :D
-                String defaultPackage =
-                        new String(new byte[]{'o', 'r', 'g', '.', 'b', 's', 't', 'a', 't', 's'});
-                String examplePackage =
-                        new String(new byte[]{'y', 'o', 'u', 'r', '.', 'p', 'a', 'c', 'k', 'a', 'g', 'e'});
+                String defaultPackage = new String(new byte[]{'o', 'r', 'g', '.', 'b', 's', 't', 'a', 't', 's'});
+                String examplePackage = new String(new byte[]{'y', 'o', 'u', 'r', '.', 'p', 'a', 'c', 'k', 'a', 'g', 'e'});
                 // We want to make sure no one just copy & pastes the example and uses the wrong package names
                 if (MetricsBase.class.getPackage().getName().startsWith(defaultPackage) || MetricsBase.class.getPackage().getName().startsWith(examplePackage)) {
                     throw new IllegalStateException("bStats Metrics class has not been relocated correctly!");
@@ -609,7 +606,7 @@ public class Metrics {
     /**
      * An extremely simple JSON builder.
      *
-     * <p>While this class is neither feature-rich nor the most performant one, it's sufficient enough
+     * <p>While this class is neither feature-rich nor the most performant one, it's sufficient
      * for its use-case.
      */
     public static class JsonObjectBuilder {

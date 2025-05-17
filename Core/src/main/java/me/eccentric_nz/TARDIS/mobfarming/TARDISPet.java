@@ -16,8 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.mobfarming;
 
-import org.bukkit.entity.Parrot.Variant;
-
 import java.util.UUID;
 
 /**

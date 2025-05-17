@@ -23,7 +23,7 @@ import org.bukkit.Material;
 public record GUIChameleonPoliceBoxes() {
 
     // Chameleon Police Boxes
-    public static GUIData GO_TO_PAGE_1 = new GUIData(ArrowVariant.PAGE_ONE.getKey(), 51, Material.ARROW);
-    public static GUIData BACK = new GUIData(GuiVariant.BACK.getKey(), 52, Material.BOWL);
-    public static GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 53, Material.BOWL);
+    public static final GUIData GO_TO_PAGE_1 = new GUIData(ArrowVariant.PAGE_ONE.getKey(), 51, Material.ARROW);
+    public static final GUIData BACK = new GUIData(GuiVariant.BACK.getKey(), 52, Material.BOWL);
+    public static final GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 53, Material.BOWL);
 }

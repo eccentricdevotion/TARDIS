@@ -79,9 +79,9 @@ public class TARDISArea {
             ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
             if (rsa.resultSet()) {
                 Area a = rsa.getArea();
-                if (!a.isGrid()) {
+                if (!a.grid()) {
                     // get the locations
-                    ResultSetAreaLocations rsal = new ResultSetAreaLocations(plugin, a.getAreaId());
+                    ResultSetAreaLocations rsal = new ResultSetAreaLocations(plugin, a.areaId());
                     if (rsal.resultSet()) {
                         for (Location s : rsal.getLocations()) {
                             if (s.getBlockX() == rsc.getX() && s.getBlockY() == rsc.getY() && s.getBlockZ() == rsc.getZ()) {
@@ -91,9 +91,7 @@ public class TARDISArea {
                     }
                 } else {
                     // is clicked block within a defined TARDIS area?
-                    if (rsc.getX() <= a.getMaxX() && rsc.getZ() <= a.getMaxZ() && rsc.getX() >= a.getMinX() && rsc.getZ() >= a.getMinZ()) {
-                        return true;
-                    }
+                    return rsc.getX() <= a.maxX() && rsc.getZ() <= a.maxZ() && rsc.getX() >= a.minX() && rsc.getZ() >= a.minZ();
                 }
             }
         return false;
@@ -113,9 +111,9 @@ public class TARDISArea {
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);
         if (rsa.resultSet()) {
             for (Area a : rsa.getData()) {
-                if (!a.isGrid()) {
+                if (!a.grid()) {
                     // get the locations
-                    ResultSetAreaLocations rsal = new ResultSetAreaLocations(plugin, a.getAreaId());
+                    ResultSetAreaLocations rsal = new ResultSetAreaLocations(plugin, a.areaId());
                     if (rsal.resultSet()) {
                         for (Location s : rsal.getLocations()) {
                             if (s.getBlockX() == l.getBlockX() && s.getBlockY() == l.getBlockY() && s.getBlockZ() == l.getBlockZ()) {
@@ -125,7 +123,7 @@ public class TARDISArea {
                     }
                 } else {
                     // is clicked block within a defined TARDIS area?
-                    if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
+                    if (l.getX() <= a.maxX() && l.getZ() <= a.maxZ() && l.getX() >= a.minX() && l.getZ() >= a.minZ()) {
                         return true;
                     }
                 }
@@ -148,9 +146,9 @@ public class TARDISArea {
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);
         if (rsa.resultSet()) {
             for (Area a : rsa.getData()) {
-                if (!a.isGrid()) {
+                if (!a.grid()) {
                     // get the locations
-                    ResultSetAreaLocations rsal = new ResultSetAreaLocations(plugin, a.getAreaId());
+                    ResultSetAreaLocations rsal = new ResultSetAreaLocations(plugin, a.areaId());
                     if (rsal.resultSet()) {
                         for (Location s : rsal.getLocations()) {
                             if (s.getBlockX() == l.getBlockX() && s.getBlockY() == l.getBlockY() && s.getBlockZ() == l.getBlockZ()) {
@@ -160,7 +158,7 @@ public class TARDISArea {
                     }
                 } else {
                     // is clicked block within a defined TARDIS area?
-                    if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
+                    if (l.getX() <= a.maxX() && l.getZ() <= a.maxZ() && l.getX() >= a.minX() && l.getZ() >= a.minZ()) {
                         return new TARDISAreaCheck(a, true);
                     }
                 }
@@ -186,7 +184,7 @@ public class TARDISArea {
             Area a = rsa.getArea();
             String lw = l.getWorld().getName();
             // is clicked block within a defined TARDIS area?
-            if (a.getWorld().equals(lw) && (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ())) {
+            if (a.world().equals(lw) && (l.getX() <= a.maxX() && l.getZ() <= a.maxZ() && l.getX() >= a.minX() && l.getZ() >= a.minZ())) {
                 chk = false;
             }
         }
@@ -208,9 +206,9 @@ public class TARDISArea {
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, true, false);
         if (rsa.resultSet()) {
             for (Area a : rsa.getData()) {
-                String n = a.getAreaName();
+                String n = a.areaName();
                 // is time travel destination within a defined TARDIS area?
-                if (l.getX() <= a.getMaxX() && l.getZ() <= a.getMaxZ() && l.getX() >= a.getMinX() && l.getZ() >= a.getMinZ()) {
+                if (l.getX() <= a.maxX() && l.getZ() <= a.maxZ() && l.getX() >= a.minX() && l.getZ() >= a.minZ()) {
                     // does the player have permission to travel here
                     if (!TARDISPermission.hasPermission(p, "tardis.area." + n) || !p.isPermissionSet("tardis.area." + n)) {
                         plugin.getTrackerKeeper().getPerm().put(p.getUniqueId(), "tardis.area." + n);
@@ -237,15 +235,15 @@ public class TARDISArea {
         ResultSetAreas rsa = new ResultSetAreas(plugin, where, false, false);
         if (rsa.resultSet()) {
             Area a = rsa.getArea();
-            int park = a.getParkingDistance() + 3;
+            int park = a.parkingDistance() + 3;
             int xx, zz = 0;
-            int minx = a.getMinX();
+            int minx = a.minX();
             int x = minx + 2;
-            int minz = a.getMinZ();
+            int minz = a.minZ();
             int z = minz + 2;
-            int maxx = a.getMaxX();
-            int maxz = a.getMaxZ();
-            String wStr = a.getWorld();
+            int maxx = a.maxX();
+            int maxz = a.maxZ();
+            String wStr = a.world();
             boolean chk = false;
             // only loop for the size of the TARDIS area
             outerloop:
@@ -265,7 +263,7 @@ public class TARDISArea {
             if (chk) {
                 World w = TARDISAliasResolver.getWorldFromAlias(wStr);
                 if (w != null) {
-                    int y = a.getY();
+                    int y = a.y();
                     if (y == 0) {
                         y = w.getHighestBlockYAt(xx, zz) + 1;
                     }

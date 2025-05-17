@@ -66,7 +66,7 @@ public class TARDISChunkGenerator extends ChunkGenerator {
     /**
      * Sets the entire world to the VOID biome
      *
-     * @param worldInfo
+     * @param worldInfo a world info object
      * @return the Void biome provider
      */
     @Override

@@ -35,7 +35,6 @@ public class ResultSetFlightControls {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final int id;
-    private final int[] diodes = new int[4];
     private final List<Location> locations = new ArrayList<>();
     private final String prefix;
 

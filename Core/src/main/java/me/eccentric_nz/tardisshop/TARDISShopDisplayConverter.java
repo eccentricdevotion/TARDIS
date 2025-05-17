@@ -51,18 +51,18 @@ public class TARDISShopDisplayConverter implements Runnable {
         ResultSetUpdateShop rs = new ResultSetUpdateShop(plugin);
         if (rs.getAll()) {
             for (TARDISShopItem si : rs.getShopItems()) {
-                Chunk chunk = si.getLocation().getChunk();
+                Chunk chunk = si.location().getChunk();
                 while (!chunk.isLoaded()) {
                     chunk.load();
                 }
                 // remove the current dropped item and armour stand
-                for (Entity e : si.getLocation().getWorld().getNearbyEntities(si.getLocation(), 1.0d, 2.0d, 1.0d)) {
+                for (Entity e : si.location().getWorld().getNearbyEntities(si.location(), 1.0d, 2.0d, 1.0d)) {
                     if (e instanceof Item || e instanceof ArmorStand) {
                         e.remove();
                     }
                 }
                 // add new display item
-                new TARDISShopItemSpawner(plugin).setItem(si.getLocation(), si);
+                new TARDISShopItemSpawner(plugin).setItem(si.location(), si);
                 count++;
             }
             return true;

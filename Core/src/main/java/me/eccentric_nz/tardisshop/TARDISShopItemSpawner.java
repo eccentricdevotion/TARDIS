@@ -21,13 +21,15 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Display;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ItemDisplay;
+import org.bukkit.entity.TextDisplay;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Transformation;
-import org.bukkit.util.Vector;
 
 public class TARDISShopItemSpawner {
 
@@ -38,7 +40,7 @@ public class TARDISShopItemSpawner {
     }
 
     public void setItem(Location location, TARDISShopItem what) {
-        String toEnum = TARDISStringUtils.toEnumUppercase(what.getItem());
+        String toEnum = TARDISStringUtils.toEnumUppercase(what.item());
         try {
             ShopItem si = ShopItem.valueOf(toEnum);
             ItemStack is = new ItemStack(si.getMaterial(), 1);
@@ -51,7 +53,7 @@ public class TARDISShopItemSpawner {
                 component.setFloats(si.getFloats());
                 im.setCustomModelDataComponent(component);
             }
-            im.setDisplayName(what.getItem());
+            im.setDisplayName(what.item());
             im.getPersistentDataContainer().set(plugin.getShopSettings().getItemKey(), PersistentDataType.INTEGER, 10001);
             is.setItemMeta(im);
             ItemDisplay display = (ItemDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.25d, 0.5d), EntityType.ITEM_DISPLAY);
@@ -61,7 +63,7 @@ public class TARDISShopItemSpawner {
             display.setInvulnerable(true);
             TextDisplay text = (TextDisplay) location.getWorld().spawnEntity(location.clone().add(0.5d, 1.65d, 0.5d), EntityType.TEXT_DISPLAY);
             text.setAlignment(TextDisplay.TextAlignment.CENTER);
-            text.setText(what.getItem() + "\n" + ChatColor.RED + "Cost:" + ChatColor.RESET + String.format(" %.2f", what.getCost()));
+            text.setText(what.item() + "\n" + ChatColor.RED + "Cost:" + ChatColor.RESET + String.format(" %.2f", what.cost()));
             text.setTransformation(new Transformation(TARDISConstants.VECTOR_ZERO, TARDISConstants.AXIS_ANGLE_ZERO, TARDISConstants.VECTOR_QUARTER, TARDISConstants.AXIS_ANGLE_ZERO));
             text.setBillboard(Display.Billboard.VERTICAL);
         } catch (IllegalArgumentException e) {

@@ -24,7 +24,7 @@ import java.util.Arrays;
 /**
  * The Doctor Who Experience was one of the largest and most ambitious Doctor
  * Who exhibitions ever staged. Featuring props and costumes from throughout the
- * franchise's forty-seven year history, it also featured one new and different
+ * franchise's forty-seven-year history, it also featured one new and different
  * element; an interactive story in which people could take part and become part
  * of the adventure.
  *

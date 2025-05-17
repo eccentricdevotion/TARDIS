@@ -60,12 +60,12 @@ public class TARDISTransmatInventory {
                 }
                 ItemStack is = new ItemStack(Material.MAP, 1);
                 ItemMeta im = is.getItemMeta();
-                im.setDisplayName(t.getName());
+                im.setDisplayName(t.name());
                 List<String> lore = new ArrayList<>();
-                lore.add(String.format("X: %.2f", t.getX()));
-                lore.add(String.format("Y: %.2f", t.getY()));
-                lore.add(String.format("Z: %.2f", t.getZ()));
-                lore.add(String.format("Yaw: %.2f", t.getYaw()));
+                lore.add(String.format("X: %.2f", t.x()));
+                lore.add(String.format("Y: %.2f", t.y()));
+                lore.add(String.format("Z: %.2f", t.z()));
+                lore.add(String.format("Yaw: %.2f", t.yaw()));
                 im.setLore(lore);
                 is.setItemMeta(im);
                 stack[i] = is;

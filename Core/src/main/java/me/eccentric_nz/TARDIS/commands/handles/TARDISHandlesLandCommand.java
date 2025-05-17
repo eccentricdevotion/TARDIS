@@ -119,7 +119,7 @@ class TARDISHandlesLandCommand {
                             }
                             // Remove energy from TARDIS and sets database
                             plugin.getMessenger().sendStatus(player, "HANDBRAKE_ON");
-                            int amount = plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * -1;
+                            int amount = plugin.getTrackerKeeper().getHasDestination().get(id).cost() * -1;
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
@@ -130,7 +130,7 @@ class TARDISHandlesLandCommand {
                             }
                             // damage the circuit if configured
                             if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
-                                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);;
+                                TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);
                                 tcc.getCircuits();
                                 // decrement uses
                                 int uses_left = tcc.getMaterialisationUses();

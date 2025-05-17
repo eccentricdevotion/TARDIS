@@ -124,7 +124,7 @@ public class TARDISBlockPlaceListener implements Listener {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "RIFT_OUTSIDE");
                 return;
             }
-            // add recharger to to config
+            // add recharger to config
             Location l = block.getLocation();
             String name = "rift_" + player.getName() + "_" + TARDISConstants.RANDOM.nextInt(Integer.MAX_VALUE);
             while (plugin.getConfig().contains("rechargers." + name)) {

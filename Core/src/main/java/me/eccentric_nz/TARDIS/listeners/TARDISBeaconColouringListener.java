@@ -62,7 +62,7 @@ public class TARDISBeaconColouringListener implements Listener {
             return;
         }
         ItemStack dye = player.getInventory().getItemInMainHand();
-        if (dye == null || !TARDISMaterials.dyes.contains(player.getInventory().getItemInMainHand().getType())) {
+        if (!TARDISMaterials.dyes.contains(dye.getType())) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "COLOUR_DYE");
             return;
         }

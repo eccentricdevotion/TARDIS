@@ -27,9 +27,9 @@ import java.util.UUID;
 
 public class Falling extends TARDISParticleRunnable {
 
+    public final Set<Vector> coords = new HashSet<>();
     private final ParticleData data;
     private final Location location;
-    public Set<Vector> coords = new HashSet<>();
 
     public Falling(TARDIS plugin, UUID uuid, ParticleData data, Location location) {
         super(plugin, uuid);

@@ -117,24 +117,29 @@ public class TARDISExplosionAndDamageListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onEntityDamage(EntityDamageByEntityEvent event) {
-        if (event.getEntity() instanceof Player player && plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId())) {
-            event.setCancelled(true);
-        } else if (event.getEntity() instanceof ItemFrame frame && event.getDamager() instanceof Player) {
-            // check if it is a TARDIS Chameleon item frame
-            String l = frame.getLocation().toString();
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("location", l);
-            where.put("type", 27);
-            ResultSetControls rs = new ResultSetControls(plugin, where, false);
-            if (rs.resultSet()) {
-                event.setCancelled(true);
+        switch (event.getEntity()) {
+            case Player player when plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(player.getUniqueId()) ->
+                    event.setCancelled(true);
+            case ItemFrame frame when event.getDamager() instanceof Player -> {
+                // check if it is a TARDIS Chameleon item frame
+                String l = frame.getLocation().toString();
+                HashMap<String, Object> where = new HashMap<>();
+                where.put("location", l);
+                where.put("type", 27);
+                ResultSetControls rs = new ResultSetControls(plugin, where, false);
+                if (rs.resultSet()) {
+                    event.setCancelled(true);
+                }
             }
-        } else if (event.getEntity() instanceof ArmorStand stand) {
-            // check if it is a TARDIS exterior
-            plugin.debug(stand.getLocation());
-            if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(stand.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toString())) {
-                // increment HADS count
-                plugin.debug("Armour Stand HADS");
+            case ArmorStand stand -> {
+                // check if it is a TARDIS exterior
+                plugin.debug(stand.getLocation());
+                if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(stand.getLocation().getBlock().getRelative(BlockFace.DOWN).getLocation().toString())) {
+                    // increment HADS count
+                    plugin.debug("Armour Stand HADS");
+                }
+            }
+            default -> {
             }
         }
         if (event.getCause() != DamageCause.ENTITY_EXPLOSION) {

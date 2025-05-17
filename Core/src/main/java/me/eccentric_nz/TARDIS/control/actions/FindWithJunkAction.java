@@ -33,7 +33,6 @@ import org.bukkit.util.Vector;
 public class FindWithJunkAction {
 
     private final TARDIS plugin;
-    BlockFace face;
 
     public FindWithJunkAction(TARDIS plugin) {
         this.plugin = plugin;

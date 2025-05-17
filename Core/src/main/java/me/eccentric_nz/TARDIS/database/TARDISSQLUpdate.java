@@ -84,16 +84,12 @@ class TARDISSQLUpdate implements Runnable {
                 if (entry.getValue() instanceof String || entry.getValue() instanceof UUID) {
                     ps.setString(s, entry.getValue().toString());
                 }
-                if (entry.getValue() instanceof Integer) {
-                    ps.setInt(s, (Integer) entry.getValue());
-                } else if (entry.getValue() instanceof Double) {
-                    ps.setDouble(s, (Double) entry.getValue());
-                } else if (entry.getValue() instanceof Float) {
-                    ps.setFloat(s, (Float) entry.getValue());
-                } else if (entry.getValue() instanceof Long) {
-                    ps.setLong(s, (Long) entry.getValue());
-                } else {
-                    ps.setObject(s, entry.getValue());
+                switch (entry.getValue()) {
+                    case Integer i -> ps.setInt(s, i);
+                    case Double v -> ps.setDouble(s, v);
+                    case Float v -> ps.setFloat(s, v);
+                    case Long l -> ps.setLong(s, l);
+                    case null, default -> ps.setObject(s, entry.getValue());
                 }
                 s++;
             }

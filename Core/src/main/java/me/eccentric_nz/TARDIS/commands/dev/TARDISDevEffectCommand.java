@@ -56,7 +56,7 @@ public class TARDISDevEffectCommand {
                     Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ()).add(0.5, 0, 0.5);
                     // get throttle setting
                     ResultSetThrottle rs = new ResultSetThrottle(plugin);
-                    SpaceTimeThrottle throttle = rs.getSpeedAndParticles(uuid.toString()).getThrottle();
+                    SpaceTimeThrottle throttle = rs.getSpeedAndParticles(uuid.toString()).throttle();
                     // get current settings
                     ResultSetParticlePrefs rspp = new ResultSetParticlePrefs(plugin);
                     if (rspp.fromUUID(uuid.toString())) {

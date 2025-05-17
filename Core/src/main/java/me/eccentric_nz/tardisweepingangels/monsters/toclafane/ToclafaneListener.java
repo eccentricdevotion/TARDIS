@@ -49,92 +49,96 @@ public class ToclafaneListener implements Listener {
 
     public ToclafaneListener(TARDIS plugin) {
         this.plugin = plugin;
-        plugin.getMonstersConfig().getStringList("toclafane.drops").forEach((d) -> {
-            drops.add(Material.valueOf(d));
-        });
+        plugin.getMonstersConfig().getStringList("toclafane.drops").forEach((d) -> drops.add(Material.valueOf(d)));
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onDamageToclafane(EntityDamageByEntityEvent event) {
         Entity entity = event.getEntity();
         Entity damager = event.getDamager();
-        if (entity instanceof ArmorStand stand && damager instanceof Player player) {
-            if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER)) {
-                event.setCancelled(true);
-                int maxHealth = (stand.getLocation().getWorld().getDifficulty().ordinal() * 6) + 1;
-                int health = stand.getPersistentDataContainer().get(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER);
-                if (health == maxHealth) {
-                    // get the bee and make it angry
-                    Bee bee = (Bee) stand.getVehicle();
-                    if (bee == null) {
-                        bee = (Bee) stand.getLocation().getWorld().spawnEntity(stand.getLocation(), EntityType.BEE);
-                        PotionEffect p = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
-                        bee.addPotionEffect(p);
-                        bee.addPassenger(stand);
+        switch (entity) {
+            case ArmorStand stand when damager instanceof Player player -> {
+                if (stand.getPersistentDataContainer().has(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER)) {
+                    event.setCancelled(true);
+                    int maxHealth = (stand.getLocation().getWorld().getDifficulty().ordinal() * 6) + 1;
+                    int health = stand.getPersistentDataContainer().get(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER);
+                    if (health == maxHealth) {
+                        // get the bee and make it angry
+                        Bee bee = (Bee) stand.getVehicle();
+                        if (bee == null) {
+                            bee = (Bee) stand.getLocation().getWorld().spawnEntity(stand.getLocation(), EntityType.BEE);
+                            PotionEffect p = new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, true, false);
+                            bee.addPotionEffect(p);
+                            bee.addPassenger(stand);
+                        }
+                        EntityEquipment ee = stand.getEquipment();
+                        if (ee != null) {
+                            ItemStack head = ee.getHelmet();
+                            ItemMeta im = head.getItemMeta();
+                            player.playSound(stand.getLocation(), "toclafane", 1.0f, 1.0f);
+                            im.setItemModel(ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
+                            head.setItemMeta(im);
+                            ee.setHelmet(head);
+                            bee.setHasStung(false);
+                            bee.setHealth(bee.getAttribute(Attribute.MAX_HEALTH).getValue());
+                            bee.setAnger(500);
+                            bee.setTarget(player);
+                            bee.setSilent(true);
+                            stand.getPersistentDataContainer().set(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER, maxHealth - 1);
+                        }
+                    } else {
+                        player.playSound(stand.getLocation(), "dalek_hit", 1.0f, 1.0f);
+                        health--;
+                        if (health == 0) {
+                            Location location = stand.getLocation();
+                            // kill the toclafane
+                            if (stand.getVehicle() != null) {
+                                Entity bee = stand.getVehicle();
+                                if (bee instanceof Bee) {
+                                    stand.remove();
+                                    bee.remove();
+                                }
+                            } else {
+                                stand.remove();
+                            }
+                            boolean destroy;
+                            if (plugin.getServer().getPluginManager().isPluginEnabled("WorldGuard")) {
+                                destroy = (plugin.getMonstersConfig().getBoolean("toclafane.destroy_blocks")) && WorldGuardChecker.canExplode(location);
+                            } else {
+                                destroy = (plugin.getMonstersConfig().getBoolean("toclafane.destroy_blocks"));
+                            }
+                            // explode
+                            location.getWorld().createExplosion(location, 2.0f, false, destroy);
+                            // give drops
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                ItemStack stack = new ItemStack(drops.get(TARDISConstants.RANDOM.nextInt(drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
+                                location.getWorld().dropItemNaturally(location, stack);
+                            }, 3L);
+                        } else {
+                            stand.getPersistentDataContainer().set(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER, health);
+                        }
                     }
-                    EntityEquipment ee = stand.getEquipment();
-                    if (ee != null) {
-                        ItemStack head = ee.getHelmet();
-                        ItemMeta im = head.getItemMeta();
-                        player.playSound(stand.getLocation(), "toclafane", 1.0f, 1.0f);
-                        im.setItemModel(ToclafaneVariant.TOCLAFANE_ATTACK.getKey());
-                        head.setItemMeta(im);
-                        ee.setHelmet(head);
+                }
+            }
+            case Bee bee -> {
+                if (!entity.getPassengers().isEmpty()) {
+                    Entity passenger = entity.getPassengers().getFirst();
+                    if (passenger instanceof ArmorStand && passenger.getPersistentDataContainer().has(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER)) {
+                        bee.setHasStung(false);
+                    }
+                }
+            }
+            case Player player when damager instanceof Bee bee -> {
+                if (!damager.getPassengers().isEmpty()) {
+                    Entity passenger = damager.getPassengers().getFirst();
+                    if (passenger instanceof ArmorStand && passenger.getPersistentDataContainer().has(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER)) {
                         bee.setHasStung(false);
                         bee.setHealth(bee.getAttribute(Attribute.MAX_HEALTH).getValue());
-                        bee.setAnger(500);
                         bee.setTarget(player);
-                        bee.setSilent(true);
-                        stand.getPersistentDataContainer().set(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER, maxHealth - 1);
-                    }
-                } else {
-                    player.playSound(stand.getLocation(), "dalek_hit", 1.0f, 1.0f);
-                    health--;
-                    if (health == 0) {
-                        Location location = stand.getLocation();
-                        // kill the toclafane
-                        if (stand.getVehicle() != null) {
-                            Entity bee = stand.getVehicle();
-                            if (bee instanceof Bee) {
-                                stand.remove();
-                                bee.remove();
-                            }
-                        } else {
-                            stand.remove();
-                        }
-                        boolean destroy;
-                        if (plugin.getServer().getPluginManager().isPluginEnabled("WorldGuard")) {
-                            destroy = (plugin.getMonstersConfig().getBoolean("toclafane.destroy_blocks")) && WorldGuardChecker.canExplode(location);
-                        } else {
-                            destroy = (plugin.getMonstersConfig().getBoolean("toclafane.destroy_blocks"));
-                        }
-                        // explode
-                        location.getWorld().createExplosion(location, 2.0f, false, destroy);
-                        // give drops
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                            ItemStack stack = new ItemStack(drops.get(TARDISConstants.RANDOM.nextInt(drops.size())), TARDISConstants.RANDOM.nextInt(1) + 1);
-                            location.getWorld().dropItemNaturally(location, stack);
-                        }, 3L);
-                    } else {
-                        stand.getPersistentDataContainer().set(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER, health);
                     }
                 }
             }
-        } else if (entity instanceof Bee bee) {
-            if (!entity.getPassengers().isEmpty()) {
-                Entity passenger = entity.getPassengers().getFirst();
-                if (passenger instanceof ArmorStand && passenger.getPersistentDataContainer().has(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER)) {
-                    bee.setHasStung(false);
-                }
-            }
-        } else if (entity instanceof Player player && damager instanceof Bee bee) {
-            if (!damager.getPassengers().isEmpty()) {
-                Entity passenger = damager.getPassengers().getFirst();
-                if (passenger instanceof ArmorStand && passenger.getPersistentDataContainer().has(TARDISWeepingAngels.TOCLAFANE, PersistentDataType.INTEGER)) {
-                    bee.setHasStung(false);
-                    bee.setHealth(bee.getAttribute(Attribute.MAX_HEALTH).getValue());
-                    bee.setTarget(player);
-                }
+            default -> {
             }
         }
     }

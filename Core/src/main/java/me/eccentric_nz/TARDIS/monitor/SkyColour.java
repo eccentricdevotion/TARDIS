@@ -40,10 +40,10 @@ public class SkyColour {
         if (t > 8000 && t <= 13000) {
             return new Color(75, 85, 140);
         }
-        if (t > 13000 && t <= 15000 || t > 22000 && t <= 23500) {
+        if ((t > 13000 && t <= 15000) || t > 22000) {
             return new Color(25, 30, 55);
         }
-        if (t > 15000 && t <= 22000) {
+        if (t > 15000) {
             return new Color(10, 20, 30);
         }
         return Color.blue;

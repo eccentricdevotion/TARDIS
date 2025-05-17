@@ -49,15 +49,13 @@ class TARDISARSRunnable implements Runnable {
     private final ARS room;
     private final Player p;
     private final int tardis_id;
-    private final boolean isLastTask;
 
-    TARDISARSRunnable(TARDIS plugin, TARDISARSSlot slot, ARS room, Player p, int tardis_id, boolean isLastTask) {
+    TARDISARSRunnable(TARDIS plugin, TARDISARSSlot slot, ARS room, Player p, int tardis_id) {
         this.plugin = plugin;
         this.slot = slot;
         this.room = room;
         this.p = p;
         this.tardis_id = tardis_id;
-        this.isLastTask = isLastTask;
     }
 
     @Override
@@ -103,7 +101,7 @@ class TARDISARSRunnable implements Runnable {
                 // determine how often to place a block (in ticks) - `room_speed` is the number of BLOCKS to place in a second (20 ticks)
                 long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));
                 plugin.getPM().callEvent(new TARDISRoomGrowEvent(p, tardis, slot, roomData));
-                TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p.getUniqueId(), isLastTask);
+                TARDISRoomRunnable runnable = new TARDISRoomRunnable(plugin, roomData, p.getUniqueId());
                 int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, delay, delay);
                 runnable.setTask(taskID);
                 plugin.getTrackerKeeper().getRoomTasks().put(taskID, roomData);

@@ -25,7 +25,7 @@ import java.util.HashMap;
 
 public class TARDISSonicBlockConverter {
 
-    static HashMap<Material, Material> convertable = new HashMap<>();
+    static final HashMap<Material, Material> convertable = new HashMap<>();
 
     static {
         convertable.put(Material.WHITE_CONCRETE_POWDER, Material.WHITE_CONCRETE);

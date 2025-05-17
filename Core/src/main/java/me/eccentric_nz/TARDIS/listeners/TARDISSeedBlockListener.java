@@ -104,9 +104,7 @@ public class TARDISSeedBlockListener implements Listener {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "SEED_PLACE");
             // send fake block change for bedrock players
             if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    player.sendBlockChange(l, is.getType().createBlockData());
-                }, 3L);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.sendBlockChange(l, is.getType().createBlockData()), 3L);
             }
             // now the player has to click the block with the TARDIS key
         } else if (dn.endsWith(" Console") && (is.getType().toString().endsWith("_CONCRETE") || is.getType() == Material.WAXED_OXIDIZED_COPPER)) {
@@ -235,9 +233,7 @@ public class TARDISSeedBlockListener implements Listener {
                         TARDISDisplayItemUtils.set(TARDISDisplayItem.GROW, block, -1);
                         // send fake block change for bedrock players
                         if (TARDISFloodgate.isFloodgateEnabled() && TARDISFloodgate.isBedrockPlayer(player.getUniqueId())) {
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                player.sendBlockChange(l, Material.LIGHT_GRAY_TERRACOTTA.createBlockData());
-                            }, 3L);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.sendBlockChange(l, Material.LIGHT_GRAY_TERRACOTTA.createBlockData()), 3L);
                         }
                     }
                 }

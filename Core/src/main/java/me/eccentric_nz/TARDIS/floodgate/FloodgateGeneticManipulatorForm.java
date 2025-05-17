@@ -112,18 +112,16 @@ public class FloodgateGeneticManipulatorForm {
                     }, 3600L);
                 }
             }
-            case "Restore original" -> {
-                // undisguise the player
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    if (plugin.isDisguisesOnServer()) {
-                        TARDISLazarusLibs.removeDisguise(player);
-                    } else {
-                        TARDISLazarusDisguise.removeDisguise(player);
-                    }
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "GENETICS_RESTORED");
-                    plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
-                }, 80L);
-            }
+            case "Restore original" -> // undisguise the player
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                        if (plugin.isDisguisesOnServer()) {
+                            TARDISLazarusLibs.removeDisguise(player);
+                        } else {
+                            TARDISLazarusDisguise.removeDisguise(player);
+                        }
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "GENETICS_RESTORED");
+                        plugin.getPM().callEvent(new TARDISGeneticManipulatorUndisguiseEvent(player));
+                    }, 80L);
             default -> {
                 EntityType dt = EntityType.valueOf(label);
                 Object[] options = null;

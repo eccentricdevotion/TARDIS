@@ -28,26 +28,12 @@ import java.util.HashMap;
  *
  * @author eccentric_nz
  */
-public class Rotor {
+public record Rotor(String name, NamespacedKey offModel, Material material, int[] frames, long frameTick,
+                    boolean custom) {
 
     public static final HashMap<Material, Rotor> byMaterial = new HashMap<>();
     public static final HashMap<NamespacedKey, Rotor> byCustomModel = new HashMap<>();
     public static final HashMap<String, Rotor> byName = new HashMap<>();
-    private final String name;
-    private final NamespacedKey offModel;
-    private final Material material;
-    private final int[] frames;
-    private final long frameTick;
-    private final boolean custom;
-
-    public Rotor(String name, NamespacedKey offModel, Material material, int[] frames, long frameTick, boolean custom) {
-        this.name = name;
-        this.offModel = offModel;
-        this.material = material;
-        this.frames = frames;
-        this.frameTick = frameTick;
-        this.custom = custom;
-    }
 
     public static Rotor getByModel(NamespacedKey key) {
         return byCustomModel.get(key);
@@ -55,29 +41,5 @@ public class Rotor {
 
     public static Rotor getByMaterial(Material material) {
         return byMaterial.get(material);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public NamespacedKey getOffModel() {
-        return offModel;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public int[] getFrames() {
-        return frames;
-    }
-
-    public long getFrameTick() {
-        return frameTick;
-    }
-
-    public boolean isCustom() {
-        return custom;
     }
 }

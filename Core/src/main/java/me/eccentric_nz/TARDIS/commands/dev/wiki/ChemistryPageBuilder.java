@@ -36,8 +36,8 @@ import java.util.regex.Pattern;
 
 public class ChemistryPageBuilder extends PageBuilder {
 
+    final Pattern regex = Pattern.compile("([A-Z_])+");
     private final TARDIS plugin;
-    Pattern regex = Pattern.compile("([A-Z_])+");
 
     public ChemistryPageBuilder(TARDIS plugin) {
         super(plugin);
@@ -55,19 +55,19 @@ public class ChemistryPageBuilder extends PageBuilder {
             }
         }
         for (RecipeData block : ChemistryBlock.RECIPES.values()) {
-            plugin.debug(block.getNameSpacedKey());
+            plugin.debug(block.nameSpacedKey());
             data = formatChemistryBlock(block);
             if (!data.isEmpty()) {
-                save(TARDISStringUtils.toDashedLowercase(block.getDisplayName()), data);
+                save(TARDISStringUtils.toDashedLowercase(block.displayName()), data);
             }
         }
         return true;
     }
 
     private String formatChemistryBlock(RecipeData item) {
-        String crafting = TARDISStringUtils.toLowercaseDashed(item.getDisplayName());
+        String crafting = TARDISStringUtils.toLowercaseDashed(item.displayName());
         // get ingredients
-        String mat = TARDISStringUtils.capitalise(item.getCraftMaterial().toString());
+        String mat = TARDISStringUtils.capitalise(item.craftMaterial().toString());
         String ingredients = "[" + mat + "](https://minecraft.wiki/w/" + mat.replaceAll(" ", "_") + ")<br/>[Crafting Table](https://minecraft.wiki/w/Crafting_Table)";
         // get recipe array
         String icon = TARDISStringUtils.toLowercaseDashed(mat);
@@ -93,7 +93,7 @@ public class ChemistryPageBuilder extends PageBuilder {
                 | ----------- | --------------- |
                 | %s | <Recipe icons={%s} /> |
                 """;
-        return String.format(SHAPELESS, item.getDisplayName(), item.getDisplayName(), StringUtils.join(item.getLore(), " "), crafting, ingredients, table);
+        return String.format(SHAPELESS, item.displayName(), item.displayName(), StringUtils.join(item.lore(), " "), crafting, ingredients, table);
     }
 
     private String formatProduct(Product product) {

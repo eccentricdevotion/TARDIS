@@ -21,33 +21,6 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-public class Reminder {
+public record Reminder(int reminder_id, UUID uuid, String reminder, long time) {
 
-    private final int reminder_id;
-    private final UUID uuid;
-    private final String reminder;
-    private final long time;
-
-    public Reminder(int reminder_id, UUID uuid, String reminder, long time) {
-        this.reminder_id = reminder_id;
-        this.uuid = uuid;
-        this.reminder = reminder;
-        this.time = time;
-    }
-
-    public int getReminder_id() {
-        return reminder_id;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public String getReminder() {
-        return reminder;
-    }
-
-    public long getTime() {
-        return time;
-    }
 }

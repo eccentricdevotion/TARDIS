@@ -598,7 +598,7 @@ public interface TardisAPI {
     void setDavrosEquipment(LivingEntity le, boolean disguise);
 
     /**
-     * Sets an entity as a Empty Child.
+     * Sets an entity as an Empty Child.
      *
      * @param le The LivingEntity to disguise
      * @param disguise A boolean to determine if this is a player disguise
@@ -768,16 +768,6 @@ public interface TardisAPI {
      * return WEEPING_ANGEL - and an integer from its persistent data container
      */
     FollowerChecker isClaimedMonster(Entity entity, UUID uuid);
-
-    /**
-     * Set the entity equipment and ammunition count for a claimed Judoon
-     *
-     * @param player the player that will own this Judoon
-     * @param entity the armour stand to apply the equipment to
-     * @param ammunition the persistent data container value with the amount of
-     * ammunition
-    void setJudoonEquipment(Player player, Entity entity, int ammunition);
-     */
 
     /**
      * Start a following task for a claimed monster

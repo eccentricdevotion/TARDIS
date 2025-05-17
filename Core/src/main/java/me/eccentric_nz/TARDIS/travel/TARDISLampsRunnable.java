@@ -39,6 +39,7 @@ import java.util.List;
  */
 class TARDISLampsRunnable implements Runnable {
 
+    final Levelled levelled = TARDISConstants.LIGHT;
     private final TARDIS plugin;
     private final List<Block> lamps;
     private final long end;
@@ -46,7 +47,6 @@ class TARDISLampsRunnable implements Runnable {
     private final boolean lights_on;
     private final int level;
     int i = 0;
-    Levelled levelled = TARDISConstants.LIGHT;
     private int task;
     private Location handbrake_loc;
 

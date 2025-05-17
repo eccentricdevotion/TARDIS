@@ -19,36 +19,17 @@ package me.eccentric_nz.TARDIS.lazarus.disguise;
 import me.eccentric_nz.TARDIS.lazarus.disguise.npc.NPCPlayer;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoRemovePacket;
 import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ClientInformation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_21_R4.CraftServer;
-import org.bukkit.craftbukkit.v1_21_R4.CraftWorld;
 import org.bukkit.craftbukkit.v1_21_R4.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_21_R4.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
 public class TARDISEPSDisguiser {
-
-    private final Player player;
-    private final Location location;
-    private ServerPlayer npc;
-
-    public TARDISEPSDisguiser(Player player, Location location) {
-        this.player = player;
-        this.location = location;
-        disguiseNPC();
-    }
 
     private static float fixYaw(float yaw) {
         return yaw * 256.0f / 360.0f;
@@ -73,29 +54,5 @@ public class TARDISEPSDisguiser {
                 connection.send(removeEntitiesPacket);
             }
         }
-    }
-
-    public void disguiseNPC() {
-        ServerPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-        // set skin
-        MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
-        ServerLevel world = ((CraftWorld) location.getWorld()).getHandle();
-        npc = new ServerPlayer(server, world, entityPlayer.getGameProfile(), ClientInformation.createDefault());
-        // set location
-        setEntityLocation(npc, location);
-        // get Player equipment
-        ItemStack feet = CraftItemStack.asNMSCopy(player.getInventory().getBoots());
-        ItemStack legs = CraftItemStack.asNMSCopy(player.getInventory().getLeggings());
-        ItemStack chest = CraftItemStack.asNMSCopy(player.getInventory().getChestplate());
-        ItemStack head = CraftItemStack.asNMSCopy(player.getInventory().getHelmet());
-        ItemStack mainHand = CraftItemStack.asNMSCopy(player.getInventory().getItemInMainHand());
-        ItemStack offHand = CraftItemStack.asNMSCopy(player.getInventory().getItemInOffHand());
-        // set NPC equipment
-        npc.setItemSlot(EquipmentSlot.FEET, feet);
-        npc.setItemSlot(EquipmentSlot.LEGS, legs);
-        npc.setItemSlot(EquipmentSlot.CHEST, chest);
-        npc.setItemSlot(EquipmentSlot.HEAD, head);
-        npc.setItemSlot(EquipmentSlot.MAINHAND, mainHand);
-        npc.setItemSlot(EquipmentSlot.OFFHAND, offHand);
     }
 }

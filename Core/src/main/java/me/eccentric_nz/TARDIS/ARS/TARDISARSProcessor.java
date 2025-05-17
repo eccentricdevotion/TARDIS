@@ -80,7 +80,7 @@ class TARDISARSProcessor {
                             switch (end[l][x][z]) {
                                 case "SANDSTONE" -> {
                                     if (l == 0 || (l == 1 && !end[l - 1][x][z].equals("SANDSTONE")) || (l == 2 && !end[l - 1][x][z].equals("SANDSTONE")) || (l == 2 && end[l - 1][x][z].equals("SANDSTONE") && end[l - 2][x][z].equals("SANDSTONE"))) {
-                                        // only remember the bottom slot of an anti-gravity well
+                                        // only remember the bottom slot of an antigravity well
                                         TARDISARSSlot slot = new TARDISARSSlot();
                                         slot.setChunk(c);
                                         slot.setY(l);

@@ -92,7 +92,7 @@ public class JudoonListener implements Listener {
                             }
                         } else {
                             // toggle guard mode
-                            String message = "";
+                            String message;
                             if (!judoon.isGuard()) {
                                 if (!TARDISWeepingAngels.getPlayersWithGuards().contains(player.getUniqueId())) {
                                     // point weapon

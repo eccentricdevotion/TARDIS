@@ -21,33 +21,7 @@ import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.WorldType;
 
-public class TARDISPlanetData {
+public record TARDISPlanetData(GameMode gameMode, World.Environment environment, WorldType worldType,
+                               Difficulty difficulty) {
 
-    private final GameMode gameMode;
-    private final World.Environment environment;
-    private final WorldType worldType;
-    private final Difficulty difficulty;
-
-    public TARDISPlanetData(GameMode gameMode, World.Environment environment, WorldType worldType, Difficulty difficulty) {
-        this.gameMode = gameMode;
-        this.environment = environment;
-        this.worldType = worldType;
-        this.difficulty = difficulty;
-    }
-
-    public GameMode getGameMode() {
-        return gameMode;
-    }
-
-    public World.Environment getEnvironment() {
-        return environment;
-    }
-
-    public WorldType getWorldType() {
-        return worldType;
-    }
-
-    public Difficulty getDifficulty() {
-        return difficulty;
-    }
 }

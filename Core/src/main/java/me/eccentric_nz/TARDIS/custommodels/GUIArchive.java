@@ -22,14 +22,14 @@ import org.bukkit.Material;
 public record GUIArchive() {
 
     // TARDIS Archive
-    public static GUIData BACK = new GUIData(GuiVariant.BACK.getKey(), 18, Material.BOWL);
-    public static GUIData SET_SIZE = new GUIData(GuiVariant.SET_SIZE.getKey(), 19, Material.BOWL);
-    public static GUIData SCAN_CONSOLE = new GUIData(GuiVariant.SCAN_CONSOLE.getKey(), 20, Material.BOWL);
-    public static GUIData ARCHIVE_CURRENT_CONSOLE = new GUIData(GuiVariant.ARCHIVE_CURRENT_CONSOLE.getKey(), 0, Material.BOWL);
-    public static GUIData SMALL = new GUIData(GuiVariant.SMALL.getKey(), 22, Material.BOWL);
-    public static GUIData MEDIUM = new GUIData(GuiVariant.MEDIUM.getKey(), 23, Material.BOWL);
-    public static GUIData TALL = new GUIData(GuiVariant.TALL.getKey(), 24, Material.BOWL);
-    public static GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 26, Material.BOWL);
+    public static final GUIData BACK = new GUIData(GuiVariant.BACK.getKey(), 18, Material.BOWL);
+    public static final GUIData SET_SIZE = new GUIData(GuiVariant.SET_SIZE.getKey(), 19, Material.BOWL);
+    public static final GUIData SCAN_CONSOLE = new GUIData(GuiVariant.SCAN_CONSOLE.getKey(), 20, Material.BOWL);
+    public static final GUIData ARCHIVE_CURRENT_CONSOLE = new GUIData(GuiVariant.ARCHIVE_CURRENT_CONSOLE.getKey(), 0, Material.BOWL);
+    public static final GUIData SMALL = new GUIData(GuiVariant.SMALL.getKey(), 22, Material.BOWL);
+    public static final GUIData MEDIUM = new GUIData(GuiVariant.MEDIUM.getKey(), 23, Material.BOWL);
+    public static final GUIData TALL = new GUIData(GuiVariant.TALL.getKey(), 24, Material.BOWL);
+    public static final GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 26, Material.BOWL);
 
     public static GUIData getByName(String name) {
         switch (name) {

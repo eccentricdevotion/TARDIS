@@ -64,7 +64,7 @@ public class TVMCommandLifesigns {
                 for (Entity k : ents) {
                     EntityType et = k.getType();
                     if (TARDISConstants.ENTITY_TYPES.contains(et)) {
-                        Integer entity_count = (scannedEntities.containsKey(et)) ? scannedEntities.get(et) : 0;
+                        int entity_count = scannedEntities.getOrDefault(et, 0);
                         boolean visible = true;
                         if (et.equals(EntityType.PLAYER)) {
                             Player entPlayer = (Player) k;
@@ -83,10 +83,8 @@ public class TVMCommandLifesigns {
                     String message = "";
                     StringBuilder buf = new StringBuilder();
                     if (entry.getKey().equals(EntityType.PLAYER) && !playernames.isEmpty()) {
-                        playernames.forEach((pn) -> {
-                            buf.append(", ").append(pn);
-                        });
-                        message = " (" + buf.toString().substring(2) + ")";
+                        playernames.forEach((pn) -> buf.append(", ").append(pn));
+                        message = " (" + buf.substring(2) + ")";
                     }
                     player.sendMessage("    " + entry.getKey() + ": " + entry.getValue() + message);
                 }

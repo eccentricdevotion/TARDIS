@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.commands.dev;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.command.CommandSender;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
@@ -34,7 +33,7 @@ public class TARDISFurnaceCommand {
         this.plugin = plugin;
     }
 
-    public boolean list(CommandSender sender) {
+    public boolean list() {
         Iterator<Recipe> recipes = Bukkit.recipeIterator();
         while (recipes.hasNext()) {
             Recipe r = recipes.next();

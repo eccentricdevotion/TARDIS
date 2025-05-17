@@ -122,16 +122,8 @@ public class ResultSetBind {
         return bind_id;
     }
 
-    public int getTardis_id() {
-        return tardis_id;
-    }
-
     public int getType() {
         return type;
-    }
-
-    public String getLocation() {
-        return location;
     }
 
     public String getName() {

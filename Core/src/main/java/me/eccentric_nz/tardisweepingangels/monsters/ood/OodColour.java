@@ -20,5 +20,5 @@ public enum OodColour {
 
     BLACK,
     BLUE,
-    BROWN;
+    BROWN
 }

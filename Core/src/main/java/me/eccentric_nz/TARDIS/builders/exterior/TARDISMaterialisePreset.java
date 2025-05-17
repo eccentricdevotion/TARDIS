@@ -160,15 +160,15 @@ public class TARDISMaterialisePreset implements Runnable {
             boolean isJunkOrToilet = preset.equals(ChameleonPreset.JUNK_MODE) || preset.equals(ChameleonPreset.TOILET);
             if (i < loops) {
                 if (preset.equals(ChameleonPreset.JUNK_MODE)) {
-                    datas = column.getBlockData();
+                    datas = column.blockData();
                 } else {
                     // determine preset to use
                     if (i % 2 == 0) {
-                        datas = stained_column.getBlockData(); // stained
+                        datas = stained_column.blockData(); // stained
                     } else if (i % 4 == 1) {
-                        datas = glass_column.getBlockData(); // glass
+                        datas = glass_column.blockData(); // glass
                     } else {
-                        datas = column.getBlockData(); // preset
+                        datas = column.blockData(); // preset
                     }
                 }
                 i++;
@@ -304,7 +304,7 @@ public class TARDISMaterialisePreset implements Runnable {
                                     }
                                 } else if (preset.equals(ChameleonPreset.SWAMP)) {
                                     swampSlab = rail;
-                                    slab_data = column.getBlockData()[n][yy];
+                                    slab_data = column.blockData()[n][yy];
                                     change = false;
                                 } else if (preset.equals(ChameleonPreset.SUBMERGED)) {
                                     change = false;
@@ -717,7 +717,7 @@ public class TARDISMaterialisePreset implements Runnable {
                 }
             } else {
                 if (preset.equals(ChameleonPreset.DUCK) && swampDoorBottom != null) {
-                    swampDoorBottom.setBlockData(column.getBlockData()[9][2]);
+                    swampDoorBottom.setBlockData(column.blockData()[9][2]);
                 }
                 if ((hasDodgyDoor) && swampDoorBottom != null) {
                     TARDISBlockSetters.setBlockAndRemember(world, swampDoorBottom.getX(), swampDoorBottom.getY(), swampDoorBottom.getZ(), sdb_data, bd.getTardisID());
@@ -798,7 +798,7 @@ public class TARDISMaterialisePreset implements Runnable {
         String doorloc = world.getName() + ":" + xx + ":" + (y + yy) + ":" + zz;
         String doorStr = world.getBlockAt(xx, y + yy, zz).getLocation().toString();
         plugin.getGeneralKeeper().getProtectBlockMap().put(doorStr, bd.getTardisID());
-        // should insert the door when tardis is first made, and then update location there after!
+        // should insert the door when tardis is first made, and then update location thereafter!
         HashMap<String, Object> whered = new HashMap<>();
         whered.put("door_type", 0);
         whered.put("tardis_id", bd.getTardisID());

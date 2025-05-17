@@ -30,8 +30,6 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
-import java.util.List;
-
 /*
 easy_shape:-K-,RSR,-R-
 easy_ingredients.K:GOLDEN_SWORD

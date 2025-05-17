@@ -25,11 +25,9 @@ import org.bukkit.inventory.ItemStack;
 public class EyeOfHarmonyAction {
 
     private final TARDIS plugin;
-    private final int id;
 
-    public EyeOfHarmonyAction(TARDIS plugin, int id) {
+    public EyeOfHarmonyAction(TARDIS plugin) {
         this.plugin = plugin;
-        this.id = id;
     }
 
     public void openGUI(int id, Player player) {

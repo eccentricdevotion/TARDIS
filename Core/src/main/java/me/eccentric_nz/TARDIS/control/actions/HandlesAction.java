@@ -60,7 +60,7 @@ public class HandlesAction {
         } else {
             // check if item in hand is a Handles program disk
             ItemStack disk = player.getInventory().getItemInMainHand();
-            if (disk != null && disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
+            if (disk.getType().equals(Material.MUSIC_DISC_WARD) && disk.hasItemMeta()) {
                 ItemMeta dim = disk.getItemMeta();
                 if (dim.hasDisplayName() && ChatColor.stripColor(dim.getDisplayName()).equals("Handles Program Disk")) {
                     // get the program_id from the disk

@@ -23,16 +23,16 @@ import org.bukkit.Material;
 public record GUIChameleonTemplate() {
 
     // Chameleon Template
-    public static GUIData BACK_HELP = new GUIData(GuiVariant.BACK.getKey(), 0, Material.ARROW);
-    public static GUIData INFO_TEMPLATE = new GUIData(GuiVariant.INFO.getKey(), 4, Material.BOWL);
-    public static GUIData GO_CONSTRUCT = new GUIData(ArrowVariant.GO.getKey(), 8, Material.ARROW);
-    public static GUIData COL_L_FRONT = new GUIData(GuiVariant.ONE.getKey(), 45, Material.BOWL);
-    public static GUIData COL_L_MIDDLE = new GUIData(GuiVariant.TWO.getKey(), 36, Material.BOWL);
-    public static GUIData COL_L_BACK = new GUIData(GuiVariant.THREE.getKey(), 27, Material.BOWL);
-    public static GUIData COL_B_MIDDLE = new GUIData(GuiVariant.FOUR.getKey(), 28, Material.BOWL);
-    public static GUIData COL_R_BACK = new GUIData(GuiVariant.FIVE.getKey(), 29, Material.BOWL);
-    public static GUIData COL_R_MIDDLE = new GUIData(GuiVariant.SIX.getKey(), 38, Material.BOWL);
-    public static GUIData COL_R_FRONT = new GUIData(GuiVariant.SEVEN.getKey(), 47, Material.BOWL);
-    public static GUIData COL_F_MIDDLE = new GUIData(GuiVariant.EIGHT.getKey(), 46, Material.BOWL);
-    public static GUIData COL_C_LAMP = new GUIData(GuiVariant.NINE.getKey(), 37, Material.BOWL);
+    public static final GUIData BACK_HELP = new GUIData(GuiVariant.BACK.getKey(), 0, Material.ARROW);
+    public static final GUIData INFO_TEMPLATE = new GUIData(GuiVariant.INFO.getKey(), 4, Material.BOWL);
+    public static final GUIData GO_CONSTRUCT = new GUIData(ArrowVariant.GO.getKey(), 8, Material.ARROW);
+    public static final GUIData COL_L_FRONT = new GUIData(GuiVariant.ONE.getKey(), 45, Material.BOWL);
+    public static final GUIData COL_L_MIDDLE = new GUIData(GuiVariant.TWO.getKey(), 36, Material.BOWL);
+    public static final GUIData COL_L_BACK = new GUIData(GuiVariant.THREE.getKey(), 27, Material.BOWL);
+    public static final GUIData COL_B_MIDDLE = new GUIData(GuiVariant.FOUR.getKey(), 28, Material.BOWL);
+    public static final GUIData COL_R_BACK = new GUIData(GuiVariant.FIVE.getKey(), 29, Material.BOWL);
+    public static final GUIData COL_R_MIDDLE = new GUIData(GuiVariant.SIX.getKey(), 38, Material.BOWL);
+    public static final GUIData COL_R_FRONT = new GUIData(GuiVariant.SEVEN.getKey(), 47, Material.BOWL);
+    public static final GUIData COL_F_MIDDLE = new GUIData(GuiVariant.EIGHT.getKey(), 46, Material.BOWL);
+    public static final GUIData COL_C_LAMP = new GUIData(GuiVariant.NINE.getKey(), 37, Material.BOWL);
 }

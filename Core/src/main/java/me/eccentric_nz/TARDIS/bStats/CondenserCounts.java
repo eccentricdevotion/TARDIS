@@ -45,7 +45,7 @@ public class CondenserCounts {
     /**
      * Retrieves an SQL ResultSet from the TARDIS table and counts the number of records.
      *
-     * @return the number of records
+     * @return a map of blocks and counts
      */
     public HashMap<String, Integer> getCounts() {
         HashMap<String, Integer> data = new HashMap<>();

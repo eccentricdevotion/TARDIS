@@ -23,36 +23,16 @@ import java.util.List;
 /**
  * @author eccentric_nz
  */
-public class TARDISData {
-
-    private final String owner;
-    private final Location location;
-    private final String console;
-    private final String chameleon;
-    private final String door;
-    private final String powered;
-    private final String siege;
-    private final String abandoned;
-    private final List<String> occupants;
-
-    public TARDISData(String owner, Location location, String console, String chameleon, String door, String powered, String siege, String abandoned, List<String> occupants) {
-        this.owner = owner;
-        this.location = location;
-        this.console = console;
-        this.chameleon = chameleon;
-        this.door = door;
-        this.powered = powered;
-        this.siege = siege;
-        this.abandoned = abandoned;
-        this.occupants = occupants;
-    }
+public record TARDISData(String owner, Location location, String console, String chameleon, String door, String powered,
+                         String siege, String abandoned, List<String> occupants) {
 
     /**
      * Gets the TARDIS' Owner
      *
      * @return the owner's name
      */
-    public String getOwner() {
+    @Override
+    public String owner() {
         return owner;
     }
 
@@ -61,7 +41,8 @@ public class TARDISData {
      *
      * @return the location
      */
-    public Location getLocation() {
+    @Override
+    public Location location() {
         return location;
     }
 
@@ -70,7 +51,8 @@ public class TARDISData {
      *
      * @return the name of the console
      */
-    public String getConsole() {
+    @Override
+    public String console() {
         return console;
     }
 
@@ -79,7 +61,8 @@ public class TARDISData {
      *
      * @return the name of the Chameleon preset
      */
-    public String getChameleon() {
+    @Override
+    public String chameleon() {
         return chameleon;
     }
 
@@ -88,7 +71,8 @@ public class TARDISData {
      *
      * @return "Open" or "Closed"
      */
-    public String getDoor() {
+    @Override
+    public String door() {
         return door;
     }
 
@@ -97,7 +81,8 @@ public class TARDISData {
      *
      * @return "Yes" or "No"
      */
-    public String getPowered() {
+    @Override
+    public String powered() {
         return powered;
     }
 
@@ -106,7 +91,8 @@ public class TARDISData {
      *
      * @return "Yes" or "No"
      */
-    public String getSiege() {
+    @Override
+    public String siege() {
         return siege;
     }
 
@@ -115,7 +101,8 @@ public class TARDISData {
      *
      * @return "Yes" or "No"
      */
-    public String getAbandoned() {
+    @Override
+    public String abandoned() {
         return abandoned;
     }
 
@@ -124,7 +111,8 @@ public class TARDISData {
      *
      * @return a list of playuer names
      */
-    public List<String> getOccupants() {
+    @Override
+    public List<String> occupants() {
         return occupants;
     }
 }

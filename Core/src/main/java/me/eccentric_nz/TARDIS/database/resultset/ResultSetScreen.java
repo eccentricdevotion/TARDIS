@@ -163,20 +163,12 @@ public class ResultSetScreen {
         return true;
     }
 
-    public int getTardis_id() {
-        return tardis_id;
-    }
-
     public String getPreset() {
         return preset;
     }
 
     public String getWorld() {
         return world;
-    }
-
-    public String getLocation() {
-        return location;
     }
 
     public String getX() {

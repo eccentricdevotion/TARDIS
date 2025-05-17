@@ -73,17 +73,17 @@ public class TARDISTakeoff {
         // dematerialise
         new TARDISDematerialiseToVortex(plugin, id, player, handbrake, throticle).run();
         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-            plugin.getPM().callEvent(new TARDISTravelEvent(player, null, plugin.getTrackerKeeper().getHasDestination().get(id).getTravelType(), id));
+            plugin.getPM().callEvent(new TARDISTravelEvent(player, null, plugin.getTrackerKeeper().getHasDestination().get(id).travelType(), id));
             // materialise
             new TARDISMaterialseFromVortex(plugin, id, player, handbrake, throticle).run();
         } else {
             if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), throticle.getThrottle().getFlightTime());
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), throticle.throttle().getFlightTime());
             }
             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.VORTEX, id));
         }
         if (bar) {
-            new TARDISTravelBar(plugin, id).showTravelRemaining(player, throticle.getThrottle().getFlightTime(), true);
+            new TARDISTravelBar(plugin, id).showTravelRemaining(player, throticle.throttle().getFlightTime(), true);
         }
     }
 
@@ -132,11 +132,11 @@ public class TARDISTakeoff {
                 new TARDISMaterialseFromVortex(plugin, id, player, handbrake, throticle).run();
             } else {
                 if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), throticle.getThrottle().getFlightTime());
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new TARDISLoopingFlightSound(plugin, handbrake, id), throticle.throttle().getFlightTime());
                 }
             }
             if (bar) {
-                new TARDISTravelBar(plugin, id).showTravelRemaining(player, throticle.getThrottle().getFlightTime(), true);
+                new TARDISTravelBar(plugin, id).showTravelRemaining(player, throticle.throttle().getFlightTime(), true);
             }
         }
     }

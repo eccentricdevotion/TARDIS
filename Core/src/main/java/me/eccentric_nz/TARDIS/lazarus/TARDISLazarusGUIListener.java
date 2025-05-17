@@ -175,7 +175,7 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
                     ItemStack masterButton = view.getItem(slot);
                     ItemMeta masterMeta = masterButton.getItemMeta();
                     if (TARDISPermission.hasPermission(player, "tardis.themaster")) {
-                        if (plugin.getTrackerKeeper().getImmortalityGate().equals("")) {
+                        if (plugin.getTrackerKeeper().getImmortalityGate().isEmpty()) {
                             boolean isOff = masterMeta.getLore().getFirst().equals(plugin.getLanguage().getString("SET_OFF"));
                             String onoff = isOff ? plugin.getLanguage().getString("SET_ON", "ON") : plugin.getLanguage().getString("SET_OFF", "OFF");
                             masterMeta.setLore(List.of(onoff));

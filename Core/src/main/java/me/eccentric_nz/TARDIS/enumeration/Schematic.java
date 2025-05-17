@@ -114,7 +114,7 @@ public class Schematic {
     /**
      * Gets which type of light this Schematic uses.
      *
-     * @return true if this Schematic has a sea lanterns.
+     * @return a TARDIS light type.
      */
     public TardisLight getLights() {
         return light;

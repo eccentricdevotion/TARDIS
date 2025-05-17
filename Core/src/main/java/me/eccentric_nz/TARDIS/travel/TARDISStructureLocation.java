@@ -24,8 +24,8 @@ import org.bukkit.generator.structure.Structure;
 public class TARDISStructureLocation {
 
     private final TARDIS plugin;
-    private Location location;
-    private Structure which;
+    private final Location location;
+    private final Structure which;
 
     public TARDISStructureLocation(TARDIS plugin, Location location, Structure which) {
         this.plugin = plugin;

@@ -61,18 +61,18 @@ public class TARDISTimeRotor {
     }
 
     public static void setRotor(Rotor which, ItemFrame itemFrame) {
-        ItemStack is = new ItemStack(which.getMaterial(), 1);
+        ItemStack is = new ItemStack(which.material(), 1);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName("Time Rotor");
-        im.setItemModel(which.getOffModel());
+        im.setItemModel(which.offModel());
         is.setItemMeta(im);
         itemFrame.setItem(is, false);
         itemFrame.setFixed(true);
         itemFrame.setVisible(false);
-        itemFrame.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, which.getOffModel().getKey());
-        if (!which.getName().equals("twelfth")) {
+        itemFrame.getPersistentDataContainer().set(TARDIS.plugin.getCustomBlockKey(), PersistentDataType.STRING, which.offModel().getKey());
+        if (!which.name().equals("twelfth")) {
             // start repeating animation task
-            int task = Bukkit.getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, new TimeRotorAnimation(itemFrame, which.getFrames(), which.getName()), which.getFrameTick(), which.getFrameTick());
+            int task = Bukkit.getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, new TimeRotorAnimation(itemFrame, which.frames(), which.name()), which.frameTick(), which.frameTick());
             // add item frame uuid and task id to map for tracking
             ANIMATED_ROTORS.put(itemFrame.getUniqueId(), task);
         }
@@ -120,6 +120,6 @@ public class TARDISTimeRotor {
         ItemStack is = itemFrame.getItem();
         Material material = is.getType();
         Rotor rotor = Rotor.getByMaterial(material);
-        return rotor.getOffModel();
+        return rotor.offModel();
     }
 }

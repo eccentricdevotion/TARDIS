@@ -74,7 +74,7 @@ public class ArtronAbandoned {
                         if (outerDisplayDoor) {
                             new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
                         } else if (rsp.getPreset().hasDoor()) {
-                            new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rsp.getPreset()), id, playerUUID);
+                            new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
                         }
                     }
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDON_CLAIMED");

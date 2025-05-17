@@ -131,14 +131,6 @@ public class ResultSetVault {
         return vault_id;
     }
 
-    public int getTardis_id() {
-        return tardis_id;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
     public int getX() {
         return x;
     }

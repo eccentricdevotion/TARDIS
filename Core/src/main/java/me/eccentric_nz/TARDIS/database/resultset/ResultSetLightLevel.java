@@ -170,10 +170,6 @@ public class ResultSetLightLevel {
         return type;
     }
 
-    public Location getLocation() {
-        return location;
-    }
-
     public int getLevel() {
         return level;
     }

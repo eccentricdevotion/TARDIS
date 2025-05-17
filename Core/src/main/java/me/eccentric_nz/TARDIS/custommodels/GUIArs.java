@@ -25,19 +25,19 @@ import org.bukkit.Material;
 public record GUIArs() {
 
     // Architectural Reconfiguration
-    public static GUIData BUTTON_UP = new GUIData(Wool.UP.getKey(), 1, Material.CYAN_WOOL);
-    public static GUIData BUTTON_DOWN = new GUIData(Wool.DOWN.getKey(), 19, Material.CYAN_WOOL);
-    public static GUIData BUTTON_LEFT = new GUIData(Wool.LEFT.getKey(), 9, Material.CYAN_WOOL);
-    public static GUIData BUTTON_RIGHT = new GUIData(Wool.RIGHT.getKey(), 11, Material.CYAN_WOOL);
-    public static GUIData BUTTON_MAP = new GUIData(GuiVariant.LOAD_MAP.getKey(), 10, Material.MAP);
-    public static GUIData BUTTON_RECON = new GUIData(Wool.RECONFIGURE.getKey(), 12, Material.PINK_WOOL);
-    public static GUIData BUTTON_LEVEL_B = new GUIData(Wool.LEVEL_BOTTOM.getKey(), 27, Material.WHITE_WOOL);
-    public static GUIData BUTTON_LEVEL = new GUIData(Wool.LEVEL_MAIN.getKey(), 28, Material.YELLOW_WOOL);
-    public static GUIData BUTTON_LEVEL_T = new GUIData(Wool.LEVEL_TOP.getKey(), 29, Material.WHITE_WOOL);
-    public static GUIData BUTTON_RESET = new GUIData(SonicVariant.STANDARD_SONIC.getKey(), 30, Material.COBBLESTONE);
-    public static GUIData BUTTON_SCROLL_L = new GUIData(Wool.SCROLL_LEFT.getKey(), 36, Material.RED_WOOL);
-    public static GUIData BUTTON_SCROLL_R = new GUIData(Wool.SCROLL_RIGHT.getKey(), 38, Material.LIME_WOOL);
-    public static GUIData BUTTON_JETT = new GUIData(RoomVariant.JETTISON.getKey(), 39, Material.TNT);
-    public static GUIData BUTTON_MAP_ON = new GUIData(Wool.BLANK.getKey(), -1, Material.BLACK_WOOL);
+    public static final GUIData BUTTON_UP = new GUIData(Wool.UP.getKey(), 1, Material.CYAN_WOOL);
+    public static final GUIData BUTTON_DOWN = new GUIData(Wool.DOWN.getKey(), 19, Material.CYAN_WOOL);
+    public static final GUIData BUTTON_LEFT = new GUIData(Wool.LEFT.getKey(), 9, Material.CYAN_WOOL);
+    public static final GUIData BUTTON_RIGHT = new GUIData(Wool.RIGHT.getKey(), 11, Material.CYAN_WOOL);
+    public static final GUIData BUTTON_MAP = new GUIData(GuiVariant.LOAD_MAP.getKey(), 10, Material.MAP);
+    public static final GUIData BUTTON_RECON = new GUIData(Wool.RECONFIGURE.getKey(), 12, Material.PINK_WOOL);
+    public static final GUIData BUTTON_LEVEL_B = new GUIData(Wool.LEVEL_BOTTOM.getKey(), 27, Material.WHITE_WOOL);
+    public static final GUIData BUTTON_LEVEL = new GUIData(Wool.LEVEL_MAIN.getKey(), 28, Material.YELLOW_WOOL);
+    public static final GUIData BUTTON_LEVEL_T = new GUIData(Wool.LEVEL_TOP.getKey(), 29, Material.WHITE_WOOL);
+    public static final GUIData BUTTON_RESET = new GUIData(SonicVariant.STANDARD_SONIC.getKey(), 30, Material.COBBLESTONE);
+    public static final GUIData BUTTON_SCROLL_L = new GUIData(Wool.SCROLL_LEFT.getKey(), 36, Material.RED_WOOL);
+    public static final GUIData BUTTON_SCROLL_R = new GUIData(Wool.SCROLL_RIGHT.getKey(), 38, Material.LIME_WOOL);
+    public static final GUIData BUTTON_JETT = new GUIData(RoomVariant.JETTISON.getKey(), 39, Material.TNT);
+    public static final GUIData BUTTON_MAP_ON = new GUIData(Wool.BLANK.getKey(), -1, Material.BLACK_WOOL);
     public static GUIData EMPTY_SLOT = new GUIData(RoomVariant.SLOT.getKey(), -1, Material.STONE);
 }

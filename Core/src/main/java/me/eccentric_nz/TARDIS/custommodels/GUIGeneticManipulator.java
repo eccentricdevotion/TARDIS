@@ -22,13 +22,13 @@ import org.bukkit.Material;
 public record GUIGeneticManipulator() {
 
     // Genetic Manipulator
-    public static GUIData BUTTON_SKINS = new GUIData(Button.SKINS.getKey(), 43, Material.BOWL);
-    public static GUIData BUTTON_TWA = new GUIData(Button.TWA.getKey(), 44, Material.BOWL);
-    public static GUIData BUTTON_MASTER = new GUIData(Button.MASTER_OFF.getKey(), 45, Material.REPEATER);
-    public static GUIData BUTTON_AGE = new GUIData(Button.AGE.getKey(), 47, Material.HOPPER);
-    public static GUIData BUTTON_TYPE = new GUIData(Button.TYPE.getKey(), 48, Material.CYAN_DYE);
-    public static GUIData BUTTON_OPTS = new GUIData(Button.OPTIONS.getKey(), 49, Material.LEAD);
-    public static GUIData BUTTON_RESTORE = new GUIData(Button.RESTORE.getKey(), 51, Material.APPLE);
-    public static GUIData BUTTON_DNA = new GUIData(Button.DNA.getKey(), 52, Material.WRITABLE_BOOK);
-    public static GUIData BUTTON_CANCEL = new GUIData(Button.CANCEL.getKey(), 53, Material.BOWL);
+    public static final GUIData BUTTON_SKINS = new GUIData(Button.SKINS.getKey(), 43, Material.BOWL);
+    public static final GUIData BUTTON_TWA = new GUIData(Button.TWA.getKey(), 44, Material.BOWL);
+    public static final GUIData BUTTON_MASTER = new GUIData(Button.MASTER_OFF.getKey(), 45, Material.REPEATER);
+    public static final GUIData BUTTON_AGE = new GUIData(Button.AGE.getKey(), 47, Material.HOPPER);
+    public static final GUIData BUTTON_TYPE = new GUIData(Button.TYPE.getKey(), 48, Material.CYAN_DYE);
+    public static final GUIData BUTTON_OPTS = new GUIData(Button.OPTIONS.getKey(), 49, Material.LEAD);
+    public static final GUIData BUTTON_RESTORE = new GUIData(Button.RESTORE.getKey(), 51, Material.APPLE);
+    public static final GUIData BUTTON_DNA = new GUIData(Button.DNA.getKey(), 52, Material.WRITABLE_BOOK);
+    public static final GUIData BUTTON_CANCEL = new GUIData(Button.CANCEL.getKey(), 53, Material.BOWL);
 }

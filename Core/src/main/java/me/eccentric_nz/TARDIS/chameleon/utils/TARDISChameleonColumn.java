@@ -24,15 +24,6 @@ import org.bukkit.block.data.BlockData;
  *
  * @author eccentric_nz
  */
-public class TARDISChameleonColumn {
+public record TARDISChameleonColumn(BlockData[][] blockData) {
 
-    private final BlockData[][] blockData;
-
-    public TARDISChameleonColumn(BlockData[][] blockData) {
-        this.blockData = blockData;
-    }
-
-    public BlockData[][] getBlockData() {
-        return blockData;
-    }
 }

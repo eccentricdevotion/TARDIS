@@ -84,17 +84,12 @@ public class DiskStorageAction {
                                     is.setItemMeta(im);
                                 }
                             } else {
-//                                if (TARDISStaticUtils.isMusicDisk(is)) {
-//                                    switch (is.getType()) {
-//                                    }
-//                                } else
-                                    if (is.getType().equals(Material.LIME_WOOL)) { // next
+                                if (is.getType().equals(Material.LIME_WOOL)) { // next
                                     is.setType(Material.BOWL);
                                     is.setItemMeta(im);
                                 } else if (is.getType().equals(Material.RED_WOOL)) { // prev
                                     is.setType(Material.BOWL);
                                     is.setItemMeta(im);
-                                } else if (is.getType().equals(Material.GLOWSTONE_DUST) && !im.hasItemModel() && im.getDisplayName().equals("Circuits")) {
                                 }
                                 is.setItemMeta(im);
                             }

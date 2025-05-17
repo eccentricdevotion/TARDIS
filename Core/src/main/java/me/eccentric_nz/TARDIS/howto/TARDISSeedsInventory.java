@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -67,7 +66,6 @@ public class TARDISSeedsInventory {
                 List<String> lore = new ArrayList<>();
                 lore.add("Click to see recipe...");
                 im.setLore(lore);
-                NamespacedKey key = new NamespacedKey(plugin, "seed_" + a.getPermission());
                 is.setItemMeta(im);
                 stack[i] = is;
                 i++;

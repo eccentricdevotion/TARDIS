@@ -45,23 +45,25 @@ public class TARDISHandlesCommand implements CommandExecutor {
             return false;
         }
         if (sender instanceof Player player) {
-            if (args[0].equals("wiki")) {
-                if (args.length < 2) {
-                    plugin.getMessenger().send(player, TardisModule.HANDLES, "HANDLES_NO_COMMAND");
+            switch (args[0]) {
+                case "wiki" -> {
+                    if (args.length < 2) {
+                        plugin.getMessenger().send(player, TardisModule.HANDLES, "HANDLES_NO_COMMAND");
+                        return true;
+                    }
+                    new HandlesWiki(plugin).getLinks(args[1], player);
                     return true;
                 }
-                new HandlesWiki(plugin).getLinks(args[1], player);
-                return true;
-            }
-            if (args[0].equals("disk")) {
-                return new TARDISHandlesDiskCommand(plugin).renameDisk(player, args);
-            }
-            if (args[0].equals("remove")) {
-                return new TARDISHandlesRemoveCommand(plugin).purge(player);
-            }
-            if (args[0].equals("weird")) {
-                TARDISHandlesWeirdness.say(player);
-                return true;
+                case "disk" -> {
+                    return new TARDISHandlesDiskCommand(plugin).renameDisk(player, args);
+                }
+                case "remove" -> {
+                    return new TARDISHandlesRemoveCommand(plugin).purge(player);
+                }
+                case "weird" -> {
+                    TARDISHandlesWeirdness.say(player);
+                    return true;
+                }
             }
         } else {
             if (args[0].equals("wiki")) {

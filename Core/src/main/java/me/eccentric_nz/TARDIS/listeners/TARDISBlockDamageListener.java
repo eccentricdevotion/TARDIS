@@ -72,7 +72,7 @@ public class TARDISBlockDamageListener implements Listener {
                 int id = rb.getTardis_id();
                 if (TARDISPermission.hasPermission(p, "tardis.sonic.admin")) {
                     ItemStack is = event.getItemInHand();
-                    if (is != null && is.getType().equals(Material.BLAZE_ROD)) {
+                    if (is.getType().equals(Material.BLAZE_ROD)) {
                         // unhide TARDIS
                         unhide(id, p);
                     }

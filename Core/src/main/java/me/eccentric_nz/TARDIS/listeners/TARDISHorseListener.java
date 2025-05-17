@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISHorse;
+import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -70,7 +71,7 @@ public class TARDISHorseListener implements Listener {
                             return;
                         }
                         // get spawn location
-                        TARDISDoorLocation dl = plugin.getGeneralKeeper().getDoorListener().getDoor(0, id);
+                        TARDISDoorLocation dl = TARDISDoorListener.getDoor(0, id);
                         Location l = dl.getL();
                         // set the horse's direction as you would for a player when exiting
                         switch (dl.getD()) {

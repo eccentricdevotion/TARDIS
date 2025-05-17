@@ -186,7 +186,7 @@ public class TARDISWorldCommand extends TARDISCompleter implements CommandExecut
                         }
                     } else {
                         TARDISPlanetData data = plugin.getTardisHelper().getLevelData(arguments.getArguments().get(1));
-                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_GM", data.getGameMode().toString());
+                        plugin.getMessenger().send(sender, TardisModule.TARDIS, "WORLD_GM", data.gameMode().toString());
                         return true;
                     }
                 }

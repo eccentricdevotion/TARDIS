@@ -6,5 +6,5 @@ public interface ComponentSetter {
 
     ItemStack setConsumable(ItemStack is);
 
-    ItemStack setWeapon(ItemStack is);
+    void setWeapon(ItemStack is);
 }

@@ -345,7 +345,7 @@ public class TARDISBuilderInner implements Runnable {
                     HashMap<String, Object> wherek = new HashMap<>();
                     wherek.put("uuid", playerUUID);
                     wherek.put("name", "createkit");
-                    ResultSetAchievements rsa = new ResultSetAchievements(plugin, wherek, false);
+                    ResultSetAchievements rsa = new ResultSetAchievements(plugin, wherek);
                     if (!rsa.resultSet()) {
                         //add a record
                         HashMap<String, Object> setk = new HashMap<>();

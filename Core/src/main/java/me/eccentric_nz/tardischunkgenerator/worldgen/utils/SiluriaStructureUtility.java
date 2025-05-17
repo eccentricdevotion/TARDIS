@@ -23,14 +23,14 @@ import java.util.List;
 
 public class SiluriaStructureUtility {
 
-    public static HashMap<BlockVector, String> vectorZero = new HashMap<>();
-    public static HashMap<BlockVector, String> vectorOne = new HashMap<>();
-    public static HashMap<BlockVector, String> vectorTwo = new HashMap<>();
-    public static HashMap<BlockVector, String> vectorThree = new HashMap<>();
-    public static HashMap<BlockVector, String> vectorFour = new HashMap<>();
-    public static HashMap<BlockVector, String> vectorFive = new HashMap<>();
-    public static HashMap<BlockVector, HashMap<BlockVector, String>> centres = new HashMap<>();
-    public static List<String> structures = List.of("cross", "east_west", "farm", "large", "lift", "north_south", "small", "temple");
+    public static final HashMap<BlockVector, String> vectorZero = new HashMap<>();
+    public static final HashMap<BlockVector, String> vectorOne = new HashMap<>();
+    public static final HashMap<BlockVector, String> vectorTwo = new HashMap<>();
+    public static final HashMap<BlockVector, String> vectorThree = new HashMap<>();
+    public static final HashMap<BlockVector, String> vectorFour = new HashMap<>();
+    public static final HashMap<BlockVector, String> vectorFive = new HashMap<>();
+    public static final HashMap<BlockVector, HashMap<BlockVector, String>> centres = new HashMap<>();
+    public static final List<String> structures = List.of("cross", "east_west", "farm", "large", "lift", "north_south", "small", "temple");
 
     static {
         // zero

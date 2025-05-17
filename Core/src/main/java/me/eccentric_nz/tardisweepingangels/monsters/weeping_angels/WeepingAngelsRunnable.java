@@ -54,7 +54,7 @@ public class WeepingAngelsRunnable implements Runnable {
             String name = WorldProcessor.sanitiseName(w.getName());
             if (plugin.getMonstersConfig().getInt("angels.worlds." + name) > 0) {
                 long time = w.getTime();
-                // only spawn at night - times according to http://minecraft.gamepedia.com/Day-night_cycle
+                // only spawn at night times according to http://minecraft.gamepedia.com/Day-night_cycle
                 if (time > 13187 && time < 22812) {
                     // get the current weeping angel count
                     int angels = 0;

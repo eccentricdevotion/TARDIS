@@ -156,7 +156,7 @@ public class TARDISMaterialisePoliceBox implements Runnable {
                 TARDISBuilderUtility.saveDoorLocation(bd, slab);
                 Location spawn = slab ? bd.getLocation().subtract(0, 0.5d, 0) : bd.getLocation();
                 // add under block to Protected Block Map
-                TARDISBlockSetters.rememberBlock(world, under, bd.getTardisID());
+                TARDISBlockSetters.rememberBlock(under, bd.getTardisID());
                 boolean found = false;
                 for (Entity e : world.getNearbyEntities(bd.getLocation(), 1.0d, 1.0d, 1.0d)) {
                     if (e instanceof ArmorStand a) {

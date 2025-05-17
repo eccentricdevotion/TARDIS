@@ -85,7 +85,7 @@ public class FloodgateMapForm {
         if (label.equals("Console")) {
             mat = getConsoleMaterial(id);
         } else {
-            mat = TARDISARS.valueOf(label).getMaterial().toString();
+            mat = TARDISARS.valueOf(label).getMaterial();
         }
         Location location = getTransmatLocation(mat);
         if (location != null) {

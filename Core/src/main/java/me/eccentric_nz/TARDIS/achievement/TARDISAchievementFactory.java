@@ -85,7 +85,7 @@ public class TARDISAchievementFactory {
             wherea.put("uuid", player.getUniqueId().toString());
             wherea.put("name", advancement.getConfigName());
             wherea.put("completed", 0);
-            ResultSetAchievements rsa = new ResultSetAchievements(plugin, wherea, false);
+            ResultSetAchievements rsa = new ResultSetAchievements(plugin, wherea);
             HashMap<String, Object> seta = new HashMap<>();
             if (rsa.resultSet()) {
                 HashMap<String, Object> wherem = new HashMap<>();

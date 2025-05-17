@@ -114,9 +114,9 @@ public class OuterMinecraftDoorOpener {
                         BlockData[][][] data = capture.captureInterior(resultSetPortal.getDoorLocation(), (int) distance, tardis.getRotor(), consoleSize);
                         Cast cast = new Cast(plugin, portal);
                         cast.castInterior(uuid, data);
-                        if (capture.getRotorData().getFrame() != null) {
+                        if (capture.getRotorData().frame() != null) {
                             // get vector of rotor
-                            cast.castRotor(capture.getRotorData().getFrame(), player, capture.getRotorData().getOffset(), rsc.getDirection());
+                            cast.castRotor(capture.getRotorData().frame(), player, capture.getRotorData().offset(), rsc.getDirection());
                         }
                     }
                 }

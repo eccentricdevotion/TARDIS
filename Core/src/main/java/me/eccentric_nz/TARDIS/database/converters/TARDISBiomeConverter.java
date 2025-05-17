@@ -125,7 +125,7 @@ public class TARDISBiomeConverter {
                                 chunks.add(tmp_chunk);
                             }
                         } catch (NullPointerException e) {
-                            e.printStackTrace();
+                            plugin.debug("Error converting biomes "+ e.getMessage());
                         }
                     }
                 }

@@ -22,6 +22,6 @@ import org.bukkit.Material;
 public record GUISonicActivator() {
 
     // Sonic Activator
-    public static GUIData INSTRUCTIONS = new GUIData(GuiVariant.INFO.getKey(), 7, Material.BOOK);
-    public static GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 8, Material.BOWL);
+    public static final GUIData INSTRUCTIONS = new GUIData(GuiVariant.INFO.getKey(), 7, Material.BOOK);
+    public static final GUIData CLOSE = new GUIData(GuiVariant.CLOSE.getKey(), 8, Material.BOWL);
 }

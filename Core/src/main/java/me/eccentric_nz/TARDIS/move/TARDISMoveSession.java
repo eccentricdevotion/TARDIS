@@ -25,7 +25,6 @@
 package me.eccentric_nz.TARDIS.move;
 
 import org.bukkit.Location;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 /**
@@ -38,10 +37,6 @@ public class TARDISMoveSession {
 
     public TARDISMoveSession(Player p) {
         setLocation(p.getLocation());
-    }
-
-    public TARDISMoveSession(Entity e) {
-        setLocation(e.getLocation());
     }
 
     public boolean isStaleLocation() {

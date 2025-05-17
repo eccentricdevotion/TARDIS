@@ -230,7 +230,7 @@ public class TARDISTimeTravel {
     }
 
     public Location getDestination(World randworld, int rx, int rz, int ry, COMPASS d, String e, Location current, Player p) {
-        int startx, starty, startz, resetx, resetz, listlen;
+        int startx, starty, startz, resetx, resetz;
         int count;
         // get max_radius from config
         int max = plugin.getConfig().getInt("travel.tp_radius");

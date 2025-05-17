@@ -41,8 +41,8 @@ import java.util.Random;
 
 public class GallifreyStructurePopulator extends BlockPopulator {
 
+    final List<Material> buildable = List.of(Material.RED_SAND, Material.WATER, Material.TERRACOTTA, Material.BROWN_TERRACOTTA, Material.LIGHT_GRAY_TERRACOTTA, Material.ORANGE_TERRACOTTA, Material.RED_TERRACOTTA, Material.WHITE_TERRACOTTA);
     private final TARDIS plugin;
-    List<Material> buildable = List.of(Material.RED_SAND, Material.WATER, Material.TERRACOTTA, Material.BROWN_TERRACOTTA, Material.LIGHT_GRAY_TERRACOTTA, Material.ORANGE_TERRACOTTA, Material.RED_TERRACOTTA, Material.WHITE_TERRACOTTA);
 
     public GallifreyStructurePopulator(TARDIS plugin) {
         this.plugin = plugin;
@@ -103,7 +103,7 @@ public class GallifreyStructurePopulator extends BlockPopulator {
             int row = 0;
             if (startY == -99) {
                 startY = 129;
-                // set startY to highest block Y at x, z
+                // set startY to the highest block Y at x, z
                 for (int i = 128; i > 60; i--) {
                     if (!buildable.contains(limitedRegion.getType(startX, startY, startZ))) {
                         startY--;

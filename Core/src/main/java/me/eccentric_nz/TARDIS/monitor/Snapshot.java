@@ -20,24 +20,8 @@ import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Location;
 
 /**
- *
  * @author eccentric_nz
  */
-public class Snapshot {
+public record Snapshot(Location location, COMPASS direction) {
 
-    private final Location location;
-    private final COMPASS direction;
-
-    public Snapshot(Location location, COMPASS direction) {
-        this.location = location;
-        this.direction = direction;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public COMPASS getDirection() {
-        return direction;
-    }
 }

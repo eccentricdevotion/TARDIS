@@ -20,7 +20,7 @@ import me.eccentric_nz.TARDIS.api.TARDISData;
 
 public interface TARDISMapper {
 
-    public static final String INFO = """
+    String INFO = """
             <div class="regioninfo">
                 <div class="infowindow">
                     <span style="font-weight:bold;">Time Lord:</span> %owner%<br/>
@@ -58,17 +58,17 @@ public interface TARDISMapper {
 
     default String formatInfoWindow(TARDISData data) {
         String window = INFO;
-        window = window.replace("%owner%", data.getOwner());
-        window = window.replace("%console%", data.getConsole());
-        window = window.replace("%chameleon%", data.getChameleon());
-        String l = "x: " + data.getLocation().getBlockX() + ", y: " + data.getLocation().getBlockY() + ", z: " + data.getLocation().getBlockZ();
+        window = window.replace("%owner%", data.owner());
+        window = window.replace("%console%", data.console());
+        window = window.replace("%chameleon%", data.chameleon());
+        String l = "x: " + data.location().getBlockX() + ", y: " + data.location().getBlockY() + ", z: " + data.location().getBlockZ();
         window = window.replace("%location%", l);
-        window = window.replace("%powered%", data.getPowered());
-        window = window.replace("%door%", data.getDoor());
-        window = window.replace("%siege%", data.getSiege());
+        window = window.replace("%powered%", data.powered());
+        window = window.replace("%door%", data.door());
+        window = window.replace("%siege%", data.siege());
         StringBuilder travellers = new StringBuilder();
-        if (!data.getOccupants().isEmpty()) {
-            for (String o : data.getOccupants()) {
+        if (!data.occupants().isEmpty()) {
+            for (String o : data.occupants()) {
                 travellers.append(o).append("<br />");
             }
         } else {

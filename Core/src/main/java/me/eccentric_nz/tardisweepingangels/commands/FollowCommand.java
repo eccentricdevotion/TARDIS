@@ -26,7 +26,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_21_R4.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Husk;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 
@@ -55,11 +54,11 @@ public class FollowCommand {
             // set following status
             PersistentDataContainer pdc = husk.getPersistentDataContainer();
             if (pdc.has(TARDISWeepingAngels.OOD, TARDISWeepingAngels.PersistentDataTypeUUID)) {
-                Follow.toggle(plugin, player, (Husk) husk, "Ood", true);
+                Follow.toggle(plugin, player, husk, "Ood", true);
             } else if (pdc.has(TARDISWeepingAngels.JUDOON, TARDISWeepingAngels.PersistentDataTypeUUID)) {
-                Follow.toggle(plugin, player, (Husk) husk, "Judoon", true);
+                Follow.toggle(plugin, player, husk, "Judoon", true);
             } else if (pdc.has(TARDISWeepingAngels.K9, TARDISWeepingAngels.PersistentDataTypeUUID)) {
-                Follow.toggle(plugin, player, (Husk) husk, "K9", true);
+                Follow.toggle(plugin, player, husk, "K9", true);
             }
         } else {
             plugin.getMessenger().send(sender, TardisModule.MONSTERS, "CMD_PLAYER");

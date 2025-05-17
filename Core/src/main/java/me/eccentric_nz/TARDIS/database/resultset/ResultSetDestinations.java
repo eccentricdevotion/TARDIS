@@ -146,10 +146,6 @@ public class ResultSetDestinations {
         return dest_id;
     }
 
-    public int getTardis_id() {
-        return tardis_id;
-    }
-
     public String getDest_name() {
         return dest_name;
     }
@@ -180,10 +176,6 @@ public class ResultSetDestinations {
 
     public boolean isSubmarine() {
         return submarine;
-    }
-
-    public int getSlot() {
-        return slot;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

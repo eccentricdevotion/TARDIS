@@ -72,7 +72,7 @@ public class TARDISSonicEntityListener implements Listener {
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                             PlayerInventory pinv = scanned.getInventory();
                             ItemStack[] items = pinv.getStorageContents();
-                            Inventory menu = plugin.getServer().createInventory(player, items.length, ChatColor.DARK_RED + "" + scanned.getName() + "'s Inventory");
+                            Inventory menu = plugin.getServer().createInventory(player, items.length, ChatColor.DARK_RED + scanned.getName() + "'s Inventory");
                             menu.setContents(items);
                             player.openInventory(menu);
                         }, 40L);

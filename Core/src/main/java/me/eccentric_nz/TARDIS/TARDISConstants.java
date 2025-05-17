@@ -429,9 +429,7 @@ public class TARDISConstants {
             case "CACTUS" -> changed = "SANDSTONE";
             case "CAVE", "TWISTING", "WEEPING" -> changed = "MOSS_BLOCK";
             case "END" -> changed = "END_STONE";
-            case "FARMLAND" -> changed = "DIRT";
-            case "GRASS" -> changed = "DIRT";
-            case "SHORT_GRASS" -> changed = "DIRT";
+            case "FARMLAND", "GRASS", "SHORT_GRASS" -> changed = "DIRT";
             case "GRAVEL" -> changed = "COARSE_DIRT";
             case "IRON" -> changed = "STONE";
             case "LADDER" -> changed = "BIRCH_PLANKS";
@@ -439,9 +437,7 @@ public class TARDISConstants {
             case "SCAFFOLDING" -> changed = "BAMBOO_BLOCK";
             case "SNOW" -> changed = "SNOW_BLOCK";
             case "VINE" -> changed = "OAK_LEAVES";
-            case "INFESTED" -> {
-                changed = original.replace("INFESTED_", "");
-            }
+            case "INFESTED" -> changed = original.replace("INFESTED_", "");
             default -> {
                 String end = split[split.length - 1];
                 switch (end) {
@@ -477,13 +473,7 @@ public class TARDISConstants {
                             changed = tmp + "_BLOCK";
                         }
                     }
-                    case "TRAPDOOR" -> {
-                        if (split[0].equals("IRON")) {
-                            changed = "STONE";
-                        } else {
-                            changed = original.replace("TRAPDOOR", "PLANKS");
-                        }
-                    }
+                    case "TRAPDOOR" -> changed = original.replace("TRAPDOOR", "PLANKS");
                     case "POWDER" -> changed = original.replace("_POWDER", "");
                     case "SAND" -> changed = original + "STONE";
                     case "STEM" -> changed = (split[0].equals("ATTACHED")) ? split[1] : split[0];

@@ -104,7 +104,4 @@ public class ResultSetDoorBlocks {
         return innerBlock;
     }
 
-    public Block getOuterBlock() {
-        return outerBlock;
-    }
 }

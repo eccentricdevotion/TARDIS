@@ -44,8 +44,8 @@ public class FloodgateSystemUpgradesForm {
     private final TARDIS plugin;
     private final UUID uuid;
     private final int id;
+    private final List<SystemTree> notThese = List.of(SystemTree.UPGRADE_TREE, SystemTree.EXTERIOR_FLIGHT, SystemTree.MONITOR);
     private SystemUpgrade sysData;
-    private List<SystemTree> notThese = List.of(SystemTree.UPGRADE_TREE, SystemTree.EXTERIOR_FLIGHT, SystemTree.MONITOR);
 
     public FloodgateSystemUpgradesForm(TARDIS plugin, UUID uuid, int id) {
         this.plugin = plugin;

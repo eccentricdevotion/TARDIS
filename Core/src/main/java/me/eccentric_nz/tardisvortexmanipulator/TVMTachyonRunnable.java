@@ -32,15 +32,15 @@ public class TVMTachyonRunnable implements Runnable {
         if (rs.resultSet()) {
             rs.getMaipulators().forEach((t) -> {
                 // player must be online to recharge
-                Player p = plugin.getServer().getPlayer(t.getUuid());
+                Player p = plugin.getServer().getPlayer(t.uuid());
                 if (p != null && p.isOnline()) {
                     // check their tachyon level
-                    if (t.getLevel() + recharge <= max) {
+                    if (t.level() + recharge <= max) {
                         // recharge them if they are not full
-                        qf.alterTachyons(t.getUuid().toString(), recharge);
+                        qf.alterTachyons(t.uuid().toString(), recharge);
                     } else {
                         // catch slightly off levels ie 98%
-                        qf.alterTachyons(t.getUuid().toString(), max - t.getLevel());
+                        qf.alterTachyons(t.uuid().toString(), max - t.level());
                     }
                 }
             });

@@ -28,11 +28,10 @@ import java.io.IOException;
 
 public class SnapshotStorage {
 
-    private final GsonBuilder builder;
     private final Gson gson;
 
     public SnapshotStorage() {
-        builder = new GsonBuilder();
+        GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Color.class, new ColorTypeAdapter());
         gson = builder.create();
     }

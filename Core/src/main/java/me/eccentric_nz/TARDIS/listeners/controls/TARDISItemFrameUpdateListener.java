@@ -135,10 +135,10 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                 }
                                 // get door location
                                 Snapshot snapshot = MonitorUtils.getLocationAndDirection(id, false);
-                                Location door = snapshot.getLocation();
+                                Location door = snapshot.location();
                                 if (door != null) {
                                     // load chunks
-                                    MonitorSnapshot.loadChunks(plugin, door, false, snapshot.getDirection(), id, 128);
+                                    MonitorSnapshot.loadChunks(plugin, door, false, snapshot.direction(), id, 128);
                                     // update the map
                                     ItemStack filled = MonitorUtils.createMap(door, 128);
                                     frame.setItem(filled);
@@ -166,10 +166,10 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                         if (map.getType() == Material.FILLED_MAP) {
                                             // get door location
                                             Snapshot snapshot = MonitorUtils.getLocationAndDirection(id, false);
-                                            Location door = snapshot.getLocation();
+                                            Location door = snapshot.location();
                                             if (door != null) {
                                                 // load chunks
-                                                MonitorSnapshot.loadChunks(plugin, door, false, snapshot.getDirection(), id, 128);
+                                                MonitorSnapshot.loadChunks(plugin, door, false, snapshot.direction(), id, 128);
                                                 // update the map
                                                 MonitorUtils.updateSnapshot(door, 128, map);
                                                 frame.setItem(glass);
@@ -226,15 +226,15 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                 frame.setFixed(true);
                                 frame.setVisible(false);
                                 // set display to shorter version
-                                ItemMeta im = sp.getLamp().getItemMeta();
+                                ItemMeta im = sp.lamp().getItemMeta();
                                 String dn = switch (control) {
                                     case Control.EXTERIOR_LAMP -> "Lamp";
                                     case Control.LIGHT_LEVEL -> "Light";
                                     default -> "Console";
                                 };
                                 im.setDisplayName(dn);
-                                sp.getLamp().setItemMeta(im);
-                                frame.setItem(sp.getLamp());
+                                sp.lamp().setItemMeta(im);
+                                frame.setItem(sp.lamp());
                                 plugin.getTrackerKeeper().getUpdatePlayers().remove(uuid);
                                 which = switch (control) {
                                     case Control.EXTERIOR_LAMP -> "Exterior Lamp Level Switch";
@@ -288,22 +288,10 @@ public class TARDISItemFrameUpdateListener implements Listener {
         return new SwitchPair(im.hasItemModel() && im.getDisplayName().endsWith("Switch"), lampSwitch);
     }
 
-    private class SwitchPair {
-
-        final boolean b;
-        final ItemStack lamp;
-
-        public SwitchPair(boolean b, ItemStack lamp) {
-            this.b = b;
-            this.lamp = lamp;
-        }
+    private record SwitchPair(boolean b, ItemStack lamp) {
 
         public boolean isSwitch() {
-            return b;
+                return b;
+            }
         }
-
-        public ItemStack getLamp() {
-            return lamp;
-        }
-    }
 }

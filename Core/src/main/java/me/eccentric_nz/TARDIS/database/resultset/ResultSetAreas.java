@@ -152,6 +152,4 @@ public class ResultSetAreas {
     public List<String> getNames() {
         return names;
     }
-
-
 }

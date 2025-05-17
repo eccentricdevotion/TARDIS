@@ -48,10 +48,10 @@ public class TARDISTravelExile {
         wherea.put("area_name", permArea);
         ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
         rsa.resultSet();
-        if (rsa.getArea().isGrid()) {
+        if (rsa.getArea().grid()) {
             l = plugin.getTardisArea().getNextSpot(permArea);
         } else {
-            l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+            l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().areaId());
         }
         if (l == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MORE_SPOTS");

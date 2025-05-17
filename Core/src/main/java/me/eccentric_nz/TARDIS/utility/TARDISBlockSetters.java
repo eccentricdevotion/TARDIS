@@ -169,11 +169,10 @@ public class TARDISBlockSetters {
     /**
      * Remembers a block's location and block data.
      *
-     * @param w  the world the block is in.
      * @param b  the block.
      * @param id the TARDIS this block belongs to.
      */
-    public static void rememberBlock(World w, Block b, int id) {
+    public static void rememberBlock(Block b, int id) {
         // save the block location so that we can protect it from damage and restore it (if it wasn't air)!
         String l = b.getLocation().toString();
         HashMap<String, Object> set = new HashMap<>();

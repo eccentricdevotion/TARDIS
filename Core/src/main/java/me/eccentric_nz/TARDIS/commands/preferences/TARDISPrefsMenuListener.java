@@ -199,7 +199,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                         // Remove energy from TARDIS and sets database
                         plugin.getMessenger().sendStatus(p, "HANDBRAKE_ON");
                         if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                            int amount = plugin.getTrackerKeeper().getHasDestination().get(id).getCost() * -1;
+                            int amount = plugin.getTrackerKeeper().getHasDestination().get(id).cost() * -1;
                             HashMap<String, Object> wheref = new HashMap<>();
                             wheref.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheref, p);

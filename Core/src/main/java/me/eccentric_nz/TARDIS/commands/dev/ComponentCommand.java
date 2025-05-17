@@ -239,7 +239,7 @@ public class ComponentCommand {
 
     public void writeExtra(CommandSender sender) {
         NamespacedKey key;
-        String material = "leather";
+        String material;
         for (Skin skin : CharacterSkins.CHARACTERS) {
             material = "leather";
             switch (skin.name()) {

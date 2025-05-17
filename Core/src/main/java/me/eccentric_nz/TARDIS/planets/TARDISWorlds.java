@@ -45,10 +45,10 @@ public class TARDISWorlds {
                 plugin.getPlanetsConfig().set("planets." + worldName + ".enabled", false);
                 plugin.getPlanetsConfig().set("planets." + worldName + ".time_travel", !TARDISConstants.isTARDISPlanet(worldName));
                 plugin.getPlanetsConfig().set("planets." + worldName + ".resource_pack", "default");
-                plugin.getPlanetsConfig().set("planets." + worldName + ".gamemode", data.getGameMode().toString());
-                plugin.getPlanetsConfig().set("planets." + worldName + ".world_type", data.getWorldType().toString());
-                plugin.getPlanetsConfig().set("planets." + worldName + ".environment", data.getEnvironment().toString());
-                plugin.getPlanetsConfig().set("planets." + worldName + ".difficulty", data.getDifficulty().toString());
+                plugin.getPlanetsConfig().set("planets." + worldName + ".gamemode", data.gameMode().toString());
+                plugin.getPlanetsConfig().set("planets." + worldName + ".world_type", data.worldType().toString());
+                plugin.getPlanetsConfig().set("planets." + worldName + ".environment", data.environment().toString());
+                plugin.getPlanetsConfig().set("planets." + worldName + ".difficulty", data.difficulty().toString());
                 plugin.getPlanetsConfig().set("planets." + worldName + ".generator", (worldName.startsWith("TARDIS_") || worldName.equals(plugin.getConfig().getString("creation.default_world_name"))) ? "TARDISChunkGenerator" : "DEFAULT");
                 plugin.getPlanetsConfig().set("planets." + worldName + ".spawn_chunk_radius", 0);
                 plugin.getPlanetsConfig().set("planets." + worldName + ".alias", TARDISStringUtils.uppercaseFirst(worldName));
@@ -57,7 +57,7 @@ public class TARDISWorlds {
                 plugin.getPlanetsConfig().set("planets." + worldName + ".allow_portals", true);
                 plugin.getPlanetsConfig().set("planets." + worldName + ".helmic_regulator_order", -1);
                 String icon;
-                switch (data.getEnvironment()) {
+                switch (data.environment()) {
                     case NETHER -> icon = "NETHERRACK";
                     case THE_END -> icon = "END_STONE";
                     default -> icon = "STONE";

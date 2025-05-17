@@ -84,7 +84,7 @@ public class TARDISARSListener extends TARDISARSMethods implements Listener {
                 // up, left, right, down
                     moveMap(playerUUID, view, slot);
             case 4, 5, 6, 7, 8, 13, 14, 15, 16, 17, 22, 23, 24, 25, 26, 31, 32, 33, 34, 35, 40, 41, 42, 43, 44 -> {
-                if (!checkSlotForConsole(view, slot, uuid.toString())) {
+                if (!checkSlotForConsole(view, slot)) {
                     // select slot
                     selected_slot.put(playerUUID, slot);
                 }

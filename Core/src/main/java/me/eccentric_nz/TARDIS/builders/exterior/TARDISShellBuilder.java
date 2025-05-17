@@ -83,7 +83,7 @@ public class TARDISShellBuilder {
         int signx = (minusx - 1);
         int signz = z;
         int xx, zz;
-        BlockData[][] data = column.getBlockData();
+        BlockData[][] data = column.blockData();
         for (int i = 0; i < 10; i++) {
             BlockData[] colData = data[i];
             switch (i) {

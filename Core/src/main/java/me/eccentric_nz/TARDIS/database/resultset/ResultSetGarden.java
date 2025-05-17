@@ -31,6 +31,7 @@ public class ResultSetGarden {
     private final Connection connection = service.getConnection();
     private final TARDIS plugin;
     private final String prefix;
+    private final Location location;
     private int garden_id;
     private int tardis_id;
     private int minX;
@@ -39,7 +40,6 @@ public class ResultSetGarden {
     private int minZ;
     private int maxZ;
     private String world;
-    private final Location location;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the transmats table.
@@ -102,35 +102,8 @@ public class ResultSetGarden {
         return true;
     }
 
-    public int getGarden_id() {
-        return garden_id;
-    }
-
     public int getTardis_id() {
         return tardis_id;
     }
 
-    public String getWorld() {
-        return world;
-    }
-
-    public float getMinX() {
-        return minX;
-    }
-
-    public float getMaxX() {
-        return maxX;
-    }
-
-    public float getY() {
-        return minY;
-    }
-
-    public float getMinZ() {
-        return minZ;
-    }
-
-    public float getMaxZ() {
-        return maxZ;
-    }
 }

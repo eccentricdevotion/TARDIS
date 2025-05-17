@@ -66,7 +66,7 @@ public class TARDISShopItemInteract implements Listener {
                     TARDISShopItem item = plugin.getShopSettings().getSettingItem().get(uuid);
                     new TARDISShopItemSpawner(plugin).setItem(location, item);
                     // update location in database
-                    new UpdateShopItem(plugin).addLocation(location.toString(), item.getId());
+                    new UpdateShopItem(plugin).addLocation(location.toString(), item.id());
                     plugin.getMessenger().send(player, TardisModule.SHOP, "SHOP_LOCATION_ADDED");
                     plugin.getShopSettings().getSettingItem().remove(uuid);
                 } else if (plugin.getShopSettings().getRemovingItem().contains(uuid)) {
@@ -95,12 +95,12 @@ public class TARDISShopItemInteract implements Listener {
                         // do they have sufficient credit?
                         if (TARDISPermission.hasPermission(player, "tardis.admin") && plugin.getShopConfig().getBoolean("tardis_admin_free")) {
                             // give item
-                            giveItem(item.getItem(), player);
+                            giveItem(item.item(), player);
                             message = "SHOP_FREE";
-                        } else if (plugin.getShopSettings().getEconomy().getBalance(player) > item.getCost()) {
+                        } else if (plugin.getShopSettings().getEconomy().getBalance(player) > item.cost()) {
                             // give item
-                            giveItem(item.getItem(), player);
-                            plugin.getShopSettings().getEconomy().withdrawPlayer(player, item.getCost());
+                            giveItem(item.item(), player);
+                            plugin.getShopSettings().getEconomy().withdrawPlayer(player, item.cost());
                             message = "SHOP_PURCHASED";
                         } else {
                             // no credit

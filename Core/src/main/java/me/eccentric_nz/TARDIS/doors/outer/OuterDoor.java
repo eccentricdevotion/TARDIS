@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.doors.outer;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetOuterPortal;
-import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.flight.vehicle.TARDISArmourStand;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -37,7 +36,7 @@ public class OuterDoor {
         this.id = id;
     }
 
-    public Block getMinecraft(ChameleonPreset preset) {
+    public Block getMinecraft() {
         // get from door record
         ResultSetOuterPortal resultSetPortal = new ResultSetOuterPortal(plugin, id);
         if (resultSetPortal.resultSet()) {

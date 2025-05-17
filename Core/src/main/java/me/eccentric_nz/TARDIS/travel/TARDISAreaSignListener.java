@@ -83,10 +83,10 @@ public class TARDISAreaSignListener extends TARDISMenuListener {
             ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
             rsa.resultSet();
             Location l;
-            if (rsa.getArea().isGrid()) {
+            if (rsa.getArea().grid()) {
                 l = plugin.getTardisArea().getNextSpot(area);
             } else {
-                l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+                l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().areaId());
             }
             if (l == null) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_MORE_SPOTS");
@@ -94,7 +94,7 @@ public class TARDISAreaSignListener extends TARDISMenuListener {
                 return;
             }
             // check the player is not already in the area!
-            if (plugin.getTardisArea().isInExistingArea(rst.getTardis_id(), rsa.getArea().getAreaId())) {
+            if (plugin.getTardisArea().isInExistingArea(rst.getTardis_id(), rsa.getArea().areaId())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_AREA");
                 close(player);
                 return;

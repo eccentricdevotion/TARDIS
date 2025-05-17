@@ -34,10 +34,6 @@ public class Sensor {
         this.power = power;
     }
 
-    public int getTardis_id() {
-        return tardis_id;
-    }
-
     public String getCharging() {
         return charging;
     }

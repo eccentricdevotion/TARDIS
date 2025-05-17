@@ -127,8 +127,6 @@ public class TARDISAutonomousGUIListener extends TARDISMenuListener {
                 ResultSetTardisID rst = new ResultSetTardisID(plugin);
                 if (rst.fromUUID(player.getUniqueId().toString())) {
                     // get next save and set it as autonomous
-                    HashMap<String, Object> whered = new HashMap<>();
-                    whered.put("tardis_id", rst.getTardisId());
                     ResultSetAutonomousSave rsa = new ResultSetAutonomousSave(plugin);
                     if (rsa.fromID(rst.getTardisId())) {
                         String autonomous = rsa.getAutonomous();

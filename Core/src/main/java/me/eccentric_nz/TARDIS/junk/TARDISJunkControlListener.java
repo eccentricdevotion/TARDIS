@@ -288,10 +288,12 @@ public class TARDISJunkControlListener implements Listener {
     private void setSignCoords(int id, int line) {
         // get the destination sign
         Sign s = getDestinationSign(id);
+        Block rb = getControlBlock(id, 2);
         // get repeater data
-        Repeater r = (Repeater) getControlBlock(id, 2).getBlockData();
+        Repeater r = (rb != null) ? (Repeater) rb.getBlockData() : null;
         // get comparator data
-        Comparator c = (Comparator) getControlBlock(id, 3).getBlockData();
+        Block cb = getControlBlock(id, 3);
+        Comparator c = (cb != null) ? (Comparator) cb.getBlockData() : null;
         if (s != null && r != null && c != null) {
             String txt = s.getSide(Side.FRONT).getLine(line);
             if (txt.isEmpty()) {

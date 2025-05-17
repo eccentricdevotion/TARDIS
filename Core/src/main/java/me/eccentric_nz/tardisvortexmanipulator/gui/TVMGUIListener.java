@@ -37,21 +37,22 @@ import java.util.*;
  */
 public class TVMGUIListener extends TARDISMenuListener {
 
+    final List<Integer> letters = List.of(0, 4, 5);
+    final char[] two = new char[]{'2', 'a', 'b', 'c'};
+    final char[] three = new char[]{'3', 'd', 'e', 'f'};
+    final char[] four = new char[]{'4', 'g', 'h', 'i'};
+    final char[] five = new char[]{'5', 'j', 'k', 'l'};
+    final char[] six = new char[]{'6', 'm', 'n', 'o'};
+    final char[] seven = new char[]{'7', 'p', 'q', 'r', 's'};
+    final char[] eight = new char[]{'8', 't', 'u', 'v'};
+    final char[] nine = new char[]{'9', 'w', 'x', 'y', 'z'};
+    final char[] star = new char[]{'*', ' '};
+    final char[] hash = new char[]{'#', '~', '_', '-'};
+    final int[] pos;
+    final TVMQueryFactory qf;
     private final TARDIS plugin;
     List<String> components = List.of("", "", "", "", "", "");
-    List<Integer> letters = List.of(0, 4, 5);
-    char[] two = new char[]{'2', 'a', 'b', 'c'};
-    char[] three = new char[]{'3', 'd', 'e', 'f'};
-    char[] four = new char[]{'4', 'g', 'h', 'i'};
-    char[] five = new char[]{'5', 'j', 'k', 'l'};
-    char[] six = new char[]{'6', 'm', 'n', 'o'};
-    char[] seven = new char[]{'7', 'p', 'q', 'r', 's'};
-    char[] eight = new char[]{'8', 't', 'u', 'v'};
-    char[] nine = new char[]{'9', 'w', 'x', 'y', 'z'};
-    char[] star = new char[]{'*', ' '};
-    char[] hash = new char[]{'#', '~', '_', '-'};
     int which = 0;
-    int[] pos;
     int t2 = 0;
     int t3 = 0;
     int t4 = 0;
@@ -62,7 +63,6 @@ public class TVMGUIListener extends TARDISMenuListener {
     int t9 = 0;
     int ts = 0;
     int th = 0;
-    TVMQueryFactory qf;
 
     public TVMGUIListener(TARDIS plugin) {
         super(plugin);
@@ -308,7 +308,7 @@ public class TVMGUIListener extends TARDISMenuListener {
             char[] tmp = chars.clone();
             chars = new char[pos[which] + 1];
             int i = 0;
-            for (char c : tmp) {
+            for (char ignored : tmp) {
                 chars[i] = tmp[i];
                 i++;
             }

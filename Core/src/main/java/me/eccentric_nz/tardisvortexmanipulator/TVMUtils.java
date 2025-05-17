@@ -50,9 +50,7 @@ public class TVMUtils {
                 }
             }, 15L);
         }).forEachOrdered((thePlayer) -> {
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> {
-                TARDIS.plugin.getTvmSettings().getTravellers().remove(thePlayer.getUniqueId());
-            }, 100L);
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(TARDIS.plugin, () -> TARDIS.plugin.getTvmSettings().getTravellers().remove(thePlayer.getUniqueId()), 100L);
         });
     }
 
@@ -80,9 +78,7 @@ public class TVMUtils {
      */
     public static void sendSaveList(Player p, TVMResultSetSaves rss, int page) {
         TARDIS.plugin.getMessenger().sendWithColour(p, TardisModule.VORTEX_MANIPULATOR, "Saves (page " + page + ":", "#55FFFF");
-        rss.getSaves().forEach((s) -> {
-            p.sendMessage(s.getName() + " - " + s.getWorld() + ":" + s.getX() + ":" + s.getY() + ":" + s.getZ());
-        });
+        rss.getSaves().forEach((s) -> p.sendMessage(s.getName() + " - " + s.getWorld() + ":" + s.getX() + ":" + s.getY() + ":" + s.getZ()));
     }
 
     /**

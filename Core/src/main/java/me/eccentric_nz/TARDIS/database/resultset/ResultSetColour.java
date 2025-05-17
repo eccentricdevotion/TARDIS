@@ -99,14 +99,6 @@ public class ResultSetColour {
         return true;
     }
 
-    public int getColour_id() {
-        return colour_id;
-    }
-
-    public int getTardis_id() {
-        return tardis_id;
-    }
-
     public int getRed() {
         return red;
     }

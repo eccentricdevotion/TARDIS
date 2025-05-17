@@ -33,10 +33,7 @@ public class TARDISSculkShrieker {
             Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getLocation());
             Block block = location.getBlock();
             if (block.getType() == Material.SCULK_SHRIEKER) {
-                SculkShrieker shrieker = (SculkShrieker) block.getBlockData();
-                int task = TARDIS.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, () -> {
-                    Shrieker.shriek(block);
-                }, 2L, 90L);
+                int task = TARDIS.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(TARDIS.plugin, () -> Shrieker.shriek(block), 2L, 90L);
                 TARDIS.plugin.getTrackerKeeper().getShriekers().put(id, task);
             }
         }

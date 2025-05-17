@@ -113,18 +113,6 @@ public class ResultSetSmelter {
         return true;
     }
 
-    public int getSmelter_id() {
-        return smelter_id;
-    }
-
-    public int getTardis_id() {
-        return tardis_id;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
     public SmelterChest getType() {
         return type;
     }

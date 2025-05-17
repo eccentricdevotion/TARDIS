@@ -170,12 +170,12 @@ public class OuterDisplayDoorAction extends TARDISDoorListener {
                                                 plugin.getQueryFactory().doSyncInsert("travellers", set);
                                             } else {
                                                 // open outer
-                                                new OuterDisplayDoorOpener(plugin).open(stand, id, uuid);
+                                                new OuterDisplayDoorOpener(plugin).open(stand, id);
                                                 // open inner
                                                 if (innerDisplayDoor.display()) {
-                                                    new InnerDisplayDoorOpener(plugin).open(innerDisplayDoor.block(), id, uuid, true);
+                                                    new InnerDisplayDoorOpener(plugin).open(innerDisplayDoor.block(), id, true);
                                                 } else {
-                                                    new InnerMinecraftDoorOpener(plugin).open(innerDisplayDoor.block(), id, uuid);
+                                                    new InnerMinecraftDoorOpener(plugin).open(innerDisplayDoor.block(), id);
                                                 }
                                             }
                                             TARDISSounds.playDoorSound(true, location);

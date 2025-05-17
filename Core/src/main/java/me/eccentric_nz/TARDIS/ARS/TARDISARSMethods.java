@@ -339,7 +339,7 @@ public class TARDISARSMethods {
                         int tasksRemaining = tap.getChanged().size();
                         for (Map.Entry<TARDISARSSlot, ARS> map : tap.getChanged().entrySet()) {
                             tasksRemaining--;
-                            TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), player, ids.get(playerUUID), tasksRemaining == 0);
+                            TARDISARSRunnable ar = new TARDISARSRunnable(plugin, map.getKey(), map.getValue(), player, ids.get(playerUUID));
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ar, delay);
                             delay += period;
                         }
@@ -545,7 +545,7 @@ public class TARDISARSMethods {
         return false;
     }
 
-    boolean checkSlotForConsole(InventoryView view, int slot, String uuid) {
+    boolean checkSlotForConsole(InventoryView view, int slot) {
         Material m = view.getItem(slot).getType();
         return (consoleBlocks.contains(m.toString()));
     }

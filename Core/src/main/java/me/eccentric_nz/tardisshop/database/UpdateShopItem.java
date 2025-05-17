@@ -56,14 +56,14 @@ public class UpdateShopItem {
         where.forEach((key, value) -> {
             sbw.append(key).append(" = ");
             if (value instanceof String || value instanceof UUID) {
-                sbw.append("'").append(value.toString()).append("' AND ");
+                sbw.append("'").append(value).append("' AND ");
             } else {
                 sbw.append(value).append(" AND ");
             }
         });
         where.clear();
-        updates = sbu.toString().substring(0, sbu.length() - 1);
-        wheres = sbw.toString().substring(0, sbw.length() - 5);
+        updates = sbu.substring(0, sbu.length() - 1);
+        wheres = sbw.substring(0, sbw.length() - 5);
         String query = "UPDATE " + prefix + "items SET " + updates + " WHERE " + wheres;
         try {
             ps = connection.prepareStatement(query);

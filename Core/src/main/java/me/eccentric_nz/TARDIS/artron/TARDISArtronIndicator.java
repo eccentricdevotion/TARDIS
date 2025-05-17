@@ -52,7 +52,7 @@ public class TARDISArtronIndicator {
             if (used > 0) {
                 data.setUsed(used);
             } else if (plugin.getTrackerKeeper().getHasDestination().containsKey(id)) {
-                data.setCost(plugin.getTrackerKeeper().getHasDestination().get(id).getCost());
+                data.setCost(plugin.getTrackerKeeper().getHasDestination().get(id).cost());
             }
         }
         return data;

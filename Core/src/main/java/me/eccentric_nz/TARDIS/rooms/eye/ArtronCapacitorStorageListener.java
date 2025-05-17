@@ -99,9 +99,7 @@ public class ArtronCapacitorStorageListener extends TARDISMenuListener {
             where.put("tardis_id", id);
             set.put("capacitors", capacitors);
             set.put("damaged", damaged);
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                plugin.getQueryFactory().doSyncUpdate("eyes", set, where);
-            }, 2L);
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getQueryFactory().doSyncUpdate("eyes", set, where), 2L);
             // not a real inventory, so any random items left in there will be vapourised
         }
     }

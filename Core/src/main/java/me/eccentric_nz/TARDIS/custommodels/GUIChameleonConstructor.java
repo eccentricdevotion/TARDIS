@@ -23,11 +23,11 @@ import org.bukkit.Material;
 public record GUIChameleonConstructor() {
 
     // Chameleon Constructor
-    public static GUIData BACK_TO_CHAMELEON_CIRCUIT = new GUIData(ArrowVariant.SCROLL_UP.getKey(), 0, Material.ARROW);
-    public static GUIData HELP = new GUIData(GuiVariant.HELP.getKey(), 2, Material.BOWL);
-    public static GUIData INFO = new GUIData(GuiVariant.INFO.getKey(), 3, Material.BOWL);
-    public static GUIData ABORT = new GUIData(GuiVariant.ABORT.getKey(), 5, Material.BOWL);
-    public static GUIData USE_LAST_SAVED_CONSTRUCT = new GUIData(GuiVariant.USE_LAST_SAVED_CONSTRUCT.getKey(), 7, Material.BOWL);
-    public static GUIData SAVE_CONSTRUCT = new GUIData(GuiVariant.SAVE.getKey(), 8, Material.BOWL);
+    public static final GUIData BACK_TO_CHAMELEON_CIRCUIT = new GUIData(ArrowVariant.SCROLL_UP.getKey(), 0, Material.ARROW);
+    public static final GUIData HELP = new GUIData(GuiVariant.HELP.getKey(), 2, Material.BOWL);
+    public static final GUIData INFO = new GUIData(GuiVariant.INFO.getKey(), 3, Material.BOWL);
+    public static final GUIData ABORT = new GUIData(GuiVariant.ABORT.getKey(), 5, Material.BOWL);
+    public static final GUIData USE_LAST_SAVED_CONSTRUCT = new GUIData(GuiVariant.USE_LAST_SAVED_CONSTRUCT.getKey(), 7, Material.BOWL);
+    public static final GUIData SAVE_CONSTRUCT = new GUIData(GuiVariant.SAVE.getKey(), 8, Material.BOWL);
 
 }

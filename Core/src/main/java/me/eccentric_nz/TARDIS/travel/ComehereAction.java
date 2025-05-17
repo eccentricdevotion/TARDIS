@@ -41,7 +41,7 @@ public class ComehereAction {
         boolean hidden = request.isHidden();
         // get space-time throttle
         Throticle throticle = new ResultSetThrottle(plugin).getSpeedAndParticles(request.getAccepter().toString());
-        int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * throticle.getThrottle().getArtronMultiplier());
+        int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * throticle.throttle().getArtronMultiplier());
         if (request.getLevel() < ch) {
             plugin.getMessenger().send(acceptor, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
             plugin.getMessenger().send(requester, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");

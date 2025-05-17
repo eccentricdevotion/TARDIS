@@ -110,7 +110,7 @@ public class TARDISBookCommands extends TARDISCompleter implements CommandExecut
                     HashMap<String, Object> where = new HashMap<>();
                     where.put("uuid", player.getUniqueId().toString());
                     where.put("name", first);
-                    ResultSetAchievements rsa = new ResultSetAchievements(plugin, where, false);
+                    ResultSetAchievements rsa = new ResultSetAchievements(plugin, where);
                     if (rsa.resultSet()) {
                         if (rsa.isCompleted()) {
                             if (!plugin.getAchievementConfig().getBoolean(first + ".repeatable")) {

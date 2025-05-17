@@ -65,7 +65,6 @@ public class TARDISJettisonSeeder implements Listener {
             return;
         }
         Player player = event.getPlayer();
-        String playerNameStr = player.getName();
         UUID uuid = player.getUniqueId();
         // check that player is in TARDIS
         if (!plugin.getTrackerKeeper().getJettison().containsKey(uuid)) {

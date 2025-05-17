@@ -26,7 +26,7 @@ import java.io.*;
  * Shortened version of the stacktrace will contain concise information focusing on specific package or subpackage while
  * removing long parts of irrelevant stacktrace. This could be very useful for logging in web-based architecture where
  * stacktrace may contain long parts of server provided classes trace that could be eliminated with the methods of this
- * class while retaining important parts of the stacktrace relating to user's packages. Also the same utility (starting
+ * class while retaining important parts of the stacktrace relating to user's packages. Also, the same utility (starting
  * from version 1.5.0.3) allows to filter and shorten stacktrace as a string the same way as the stacktrace extracted
  * from exception. So, essentially stack traces could be filtered "on the fly" at run time or later on from any text
  * source such as log.
@@ -115,7 +115,7 @@ public class TextUtils {
      * + one following line that does not start with the prefix are printed in. And so on. Here is an example: Assume
      * that exception above was passed as a parameter to this method and parameter <b>relevantPackage</b> is set to
      * {@code "com.plain.analytics.v2.utils.test."} which means that the lines starting with that prefix are the
-     * important or "relevant" lines. (Also the parameter <b>cutTBS</b> set to true which means that stacktrace should
+     * important or "relevant" lines. Also, the parameter <b>cutTBS</b> set to true which means that stacktrace should
      * be shortened at all. In this case the result of this method should be as follows:<br>
      * <br>
      * </p>
@@ -218,7 +218,7 @@ public class TextUtils {
          * If the relevant package prefix was not set neither locally nor globally revert to retrieving full stacktrace even if shortening was
          * requested
          */
-        if (relPack == null || "".equals(relPack)) {
+        if (relPack == null || relPack.isEmpty()) {
             if (cutTBS) {
                 cutTBS = false;
                 logger.warn("Relevant package was not set for the method. Stacktrace can not be shortened. Returning full stacktrace");
@@ -244,14 +244,14 @@ public class TextUtils {
                      * In the very unlikely event of any error just fall back on printing the full stacktrace
                      */
                     error(ioe);
-                    result.delete(0, result.length()).append(new String(stacktraceContent.toByteArray()));
+                    result.delete(0, result.length()).append(stacktraceContent);
                 }
             }
         } else {
             /*
              * This is the branch that prints full stacktrace
              */
-            result.append(new String(stacktraceContent.toByteArray()));
+            result.append(stacktraceContent.toString());
         }
         return result.toString();
     }
@@ -277,11 +277,11 @@ public class TextUtils {
      */
     private static String traverseSingularStacktrace(StringBuilder result, String relPack, BufferedReader reader, String line) throws IOException {
         result.append(line).append("\n");
-        // Flag that holds the status for the current line if it should be printed or not
+        // Flag that holds the status for the current line if it should be printed
         boolean toBePrinted = true;
-        // Flag that holds information on previous line whether or not it starts with relevant prefix package
+        // Flag that holds information on previous line whether it starts with relevant prefix package
         boolean relevantPackageReached = false;
-        // Flag that specifies if the current line starts with relevant prefix or not
+        // Flag that specifies if the current line starts with relevant prefix
         boolean isCurLineRelevantPack;
         // Flag that specifies that skipping line should be printed as next line
         boolean skipLineToBePrinted = false;
@@ -300,7 +300,7 @@ public class TextUtils {
                      * first found line with the prefix and in this case it actually "changes" the flag "toBePrinted" from "true" to "true", but also
                      * it deals with the line with the prefix found after the first section of lines with the prefix was treated and was followed by
                      * some lines without prefix and then again the line with the prefix was found. That is why this "if" branch has to be before the
-                     * actual printing. In this case flag "toBePrinted" is changed from "false" to "true". Also if previous line was the first line
+                     * actual printing. In this case flag "toBePrinted" is changed from "false" to "true". Also, if previous line was the first line
                      * without prefix and we were supposed to print a skip line here we cancel that by setting flag "skipLineToBePrinted" back to
                      * false
                      */
@@ -332,7 +332,7 @@ public class TextUtils {
             } else {
                 /*
                  * This "else" branch deals with lines in the stacktrace that either start next singular stacktrace or are the last line in current
-                 * singular stacktrace and it is of the form "... X more" where X is a number.
+                 * singular stacktrace, and it is of the form "... X more" where X is a number.
                  */
                 if (trimmedLine.startsWith(CAUSE_STACKTRACE_PREFIX) || trimmedLine.startsWith(SUPPRESSED_STACKTRACE_PREFIX)) {
                     /*
@@ -368,7 +368,7 @@ public class TextUtils {
 
     private static void error(Throwable t) {
         if (RELEVANT_PACKAGE != null && !RELEVANT_PACKAGE.isEmpty()) {
-            logger.error("Error occurred while reading and shortening stacktrace of an exception. Printing the original stacktrace" + getStacktrace(t));
+            logger.error("Error occurred while reading and shortening stacktrace of an exception. Printing the original stacktrace {}", getStacktrace(t));
         } else {
             logger.error("Error occurred while reading and shortening stacktrace of an exception. Printing the original stacktrace", t);
         }

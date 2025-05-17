@@ -130,24 +130,8 @@ public class ResultSetChunks {
         return true;
     }
 
-    public int getChunk_id() {
-        return chunk_id;
-    }
-
-    public int getTardis_id() {
-        return tardis_id;
-    }
-
     public String getWorld() {
         return world;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getZ() {
-        return z;
     }
 
     public ArrayList<HashMap<String, String>> getData() {

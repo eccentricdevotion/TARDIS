@@ -408,7 +408,7 @@ public class DebugPopulator {
             // set item
             ItemStack is = new ItemStack(Material.LIGHT_GRAY_DYE);
             ItemMeta im = is.getItemMeta();
-            im.setItemModel(rotor.getOffModel());
+            im.setItemModel(rotor.offModel());
             is.setItemMeta(im);
             frame.setItem(is);
             // lock

@@ -28,7 +28,7 @@ import java.util.Set;
 
 public class SensorTracker {
 
-    public static Set<Integer> isCharging = new HashSet<>();
+    public static final Set<Integer> isCharging = new HashSet<>();
 
     public static void resetChargingSensors() {
         for (int id : isCharging) {

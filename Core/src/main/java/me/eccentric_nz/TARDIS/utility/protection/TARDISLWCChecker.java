@@ -28,9 +28,7 @@ public class TARDISLWCChecker {
         ProtectionCache protectionCache = LWC.getInstance().getProtectionCache();
         if (protectionCache != null) {
             Protection protection = protectionCache.getProtection(block);
-            if (protection != null && !protection.isOwner(player)) {
-                return true;
-            }
+            return protection != null && !protection.isOwner(player);
         }
         return false;
     }
@@ -40,9 +38,7 @@ public class TARDISLWCChecker {
         if (protectionCache != null) {
             Protection protection = protectionCache.getProtection(eyeBlock);
             Protection underProtection = protectionCache.getProtection(under);
-            if (protection != null && !protection.isOwner(player) || underProtection != null && !underProtection.isOwner(player)) {
-                return true;
-            }
+            return protection != null && !protection.isOwner(player) || underProtection != null && !underProtection.isOwner(player);
         }
         return false;
     }

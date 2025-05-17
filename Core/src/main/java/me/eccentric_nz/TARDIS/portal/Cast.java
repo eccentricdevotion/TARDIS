@@ -58,7 +58,7 @@ public class Cast {
         }
         int layers = capture.length;
         // get exterior direction
-        COMPASS facing = castData.getDirection();
+        COMPASS facing = castData.direction();
         // get sizes from direction
         int sizeX = (facing == COMPASS.NORTH || facing == COMPASS.SOUTH) ? capture[0].length : capture[0][0].length;
         int sizeZ = (facing == COMPASS.NORTH || facing == COMPASS.SOUTH) ? capture[0][0].length : capture[0].length;

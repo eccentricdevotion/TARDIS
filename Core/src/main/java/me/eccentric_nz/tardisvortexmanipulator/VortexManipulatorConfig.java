@@ -18,16 +18,15 @@ import java.util.Map;
  */
 public class VortexManipulatorConfig {
 
+    final HashMap<String, String> strOptions = new HashMap<>();
+    final HashMap<String, Integer> intOptions = new HashMap<>();
+    final HashMap<String, Boolean> boolOptions = new HashMap<>();
     private final TARDIS plugin;
     private final FileConfiguration config;
-    private final File configFile;
-    HashMap<String, String> strOptions = new HashMap<>();
-    HashMap<String, Integer> intOptions = new HashMap<>();
-    HashMap<String, Boolean> boolOptions = new HashMap<>();
 
     public VortexManipulatorConfig(TARDIS plugin) {
         this.plugin = plugin;
-        configFile = new File(plugin.getDataFolder(), "vortex_manipulator.yml");
+        File configFile = new File(plugin.getDataFolder(), "vortex_manipulator.yml");
         config = YamlConfiguration.loadConfiguration(configFile);
         // boolean
         boolOptions.put("allow.beacon", true);

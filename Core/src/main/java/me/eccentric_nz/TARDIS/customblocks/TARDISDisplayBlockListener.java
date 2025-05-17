@@ -383,16 +383,16 @@ public class TARDISDisplayBlockListener implements Listener {
                                         if (outerDisplayDoor) {
                                             new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
                                         } else if (tardis.getPreset().hasDoor()) {
-                                            new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(tardis.getPreset()), id, playerUUID);
+                                            new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
                                         }
                                     } else {
                                         // open inner
-                                        new InnerDisplayDoorOpener(plugin).open(block, id, playerUUID, false);
+                                        new InnerDisplayDoorOpener(plugin).open(block, id, false);
                                         // open outer
                                         if (outerDisplayDoor) {
-                                            new OuterDisplayDoorOpener(plugin).open(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                                            new OuterDisplayDoorOpener(plugin).open(new OuterDoor(plugin, id).getDisplay(), id);
                                         } else if (tardis.getPreset().hasDoor()) {
-                                            new OuterMinecraftDoorOpener(plugin).open(new OuterDoor(plugin, id).getMinecraft(tardis.getPreset()), id, player);
+                                            new OuterMinecraftDoorOpener(plugin).open(new OuterDoor(plugin, id).getMinecraft(), id, player);
                                         }
                                     }
                                 }
@@ -563,7 +563,7 @@ public class TARDISDisplayBlockListener implements Listener {
                     is.setItemMeta(im);
                     breaking.setItemStack(is);
                     // set a delayed task to reset the breaking animation
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> breaking.remove(), 60);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, breaking::remove, 60);
                 }
             }
         } else if (breaking == null) {

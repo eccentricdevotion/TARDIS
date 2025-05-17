@@ -185,8 +185,8 @@ public class TARDISSchematicBuilder {
                                 frame.add("rel_location", loc);
                                 frame.addProperty("facing", fr.getFacing().toString());
                                 ItemStack item = fr.getItem();
-                                if (item != null) {
-                                    Material type = item.getType();
+                                Material type = item.getType();
+                                if (!type.isAir()) {
                                     frame.addProperty("item", type.toString());
                                     if (item.hasItemMeta()) {
                                         ItemMeta im = item.getItemMeta();

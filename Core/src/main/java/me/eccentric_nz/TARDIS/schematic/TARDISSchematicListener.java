@@ -49,7 +49,7 @@ public class TARDISSchematicListener implements Listener {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
         ItemStack itemStack = player.getInventory().getItemInMainHand();
-        if (itemStack == null || !itemStack.getType().equals(Material.BONE) || !player.hasPermission("tardis.admin") || !isWand(itemStack)) {
+        if (!itemStack.getType().equals(Material.BONE) || !player.hasPermission("tardis.admin") || !isWand(itemStack)) {
             return;
         }
         Block b = event.getClickedBlock();

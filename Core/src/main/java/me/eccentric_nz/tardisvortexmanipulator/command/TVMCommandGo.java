@@ -80,11 +80,10 @@ public class TVMCommandGo {
             TVMUtils.movePlayers(players, l, player.getLocation().getWorld());
             // remove tachyons
             new TVMQueryFactory(plugin).alterTachyons(uuid, -required);
-            return true;
         } else {
             // coords
 
-            return true;
         }
+        return true;
     }
 }

@@ -39,7 +39,7 @@ public class ManualFlightInteraction {
         this.plugin = plugin;
     }
 
-    public void receiveInput(int id, UUID uuid, Interaction interaction) {
+    public void receiveInput(UUID uuid, Interaction interaction) {
         if (plugin.getTrackerKeeper().getFlight().containsKey(uuid)) {
             if (interaction.getLocation().toString().equals(plugin.getTrackerKeeper().getFlight().get(uuid))) {
                 plugin.getTrackerKeeper().getCount().put(uuid, plugin.getTrackerKeeper().getCount().getOrDefault(uuid, 0) + 1);

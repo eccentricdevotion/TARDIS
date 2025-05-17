@@ -82,7 +82,7 @@ public class TARDISSonicSorterListener implements Listener {
                 int needed = maxStackSize - item1.getAmount();
                 for (int j = i + 1; j < endIndex; j++) {
                     ItemStack item2 = items[j];
-                    if (item2 == null || item2.getAmount() <= 0 || maxStackSize == 1) {
+                    if (item2 == null || item2.getAmount() <= 0) {
                         continue;
                     }
                     if (item2.getType() == item1.getType()) {

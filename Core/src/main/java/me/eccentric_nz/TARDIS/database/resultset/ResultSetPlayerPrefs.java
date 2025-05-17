@@ -187,10 +187,6 @@ public class ResultSetPlayerPrefs {
         return pp_id;
     }
 
-    public UUID getUuid() {
-        return uuid;
-    }
-
     public String getKey() {
         return key;
     }
@@ -339,11 +335,4 @@ public class ResultSetPlayerPrefs {
         return hum;
     }
 
-    public int getRegenerations() {
-        return regenerations;
-    }
-
-    public boolean isRegenBlockOn() {
-        return regenBlockOn;
-    }
 }

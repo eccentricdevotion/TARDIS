@@ -71,7 +71,7 @@ public class TARDISTravelStop {
             plugin.getTrackerKeeper().getStillFlyingNotReturning().remove(uuid);
             // land TARDIS
             FlightReturnData frd = plugin.getTrackerKeeper().getFlyingReturnLocation().get(uuid);
-            Entity stand = plugin.getServer().getEntity(frd.getStand());
+            Entity stand = plugin.getServer().getEntity(frd.stand());
             if (stand != null) {
                 stand.setVelocity(new Vector(0, 0, 0));
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -163,16 +163,5 @@ public class TARDISTravelStop {
             }
         }
         return true;
-    }
-
-    private Entity findStand(Entity other) {
-        Entity stand = null;
-        for (Entity e : other.getNearbyEntities(3, 3, 3)) {
-            if (e instanceof ArmorStand as) {
-                stand = as;
-                break;
-            }
-        }
-        return stand;
     }
 }

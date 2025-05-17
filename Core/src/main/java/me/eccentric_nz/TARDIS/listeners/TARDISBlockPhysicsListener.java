@@ -48,10 +48,8 @@ public class TARDISBlockPhysicsListener implements Listener {
             BlockData state = block.getBlockData();
             if (state instanceof TrapDoor trapDoor) {
                 Block blockBehind = getBlockBehindAttachable(block, trapDoor.getFacing());
-                if (blockBehind != null) {
-                    if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || Tag.IMPERMEABLE.isTagged(blockBehind.getType())) {
-                        event.setCancelled(true);
-                    }
+                if (blockBehind.getType().equals(Material.GLASS) || blockBehind.getType().equals(Material.ICE) || Tag.IMPERMEABLE.isTagged(blockBehind.getType())) {
+                    event.setCancelled(true);
                 }
             }
             if (state instanceof Door) {

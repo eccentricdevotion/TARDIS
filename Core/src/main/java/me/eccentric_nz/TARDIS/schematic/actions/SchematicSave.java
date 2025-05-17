@@ -180,7 +180,7 @@ public class SchematicSave {
                                         }
                                         if (im.hasLore()) {
                                             JsonArray lore = new JsonArray();
-                                            im.getLore().forEach(s -> lore.add(s));
+                                            im.getLore().forEach(lore::add);
                                             frame.add("lore", lore);
                                         }
                                         if ((Tag.ITEMS_BANNERS.isTagged(type) || type == Material.SHIELD) && im instanceof BlockStateMeta bsm) {

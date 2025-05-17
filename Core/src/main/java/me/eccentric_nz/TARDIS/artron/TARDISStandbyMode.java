@@ -47,12 +47,12 @@ public class TARDISStandbyMode implements Runnable {
         HashMap<Integer, StandbyData> ids = new ResultSetStandby(plugin).onStandby();
         ids.forEach((key, standbyData) -> {
             int id = key;
-            int level = standbyData.getLevel();
+            int level = standbyData.level();
             // not while travelling or recharging and only until they hit zero
             if (!isTravelling(id) && !isNearCharger(id) && level > amount) {
                 int remove = amount;
                 // if TARDIS force field is on drain more power
-                if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(standbyData.getUuid())) {
+                if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(standbyData.uuid())) {
                     remove *= 3;
                 }
                 // remove some energy
@@ -66,14 +66,14 @@ public class TARDISStandbyMode implements Runnable {
                     wherep.put("tardis_id", id);
                     HashMap<String, Object> setp = new HashMap<>();
                     setp.put("powered_on", 0);
-                    OfflinePlayer player = plugin.getServer().getOfflinePlayer(standbyData.getUuid());
+                    OfflinePlayer player = plugin.getServer().getOfflinePlayer(standbyData.uuid());
                     if (player.isOnline()) {
                         TARDISSounds.playTARDISSound(player.getPlayer().getLocation(), "power_down");
                         plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "POWER_OFF_AUTO");
                     }
                     long delay = 0;
                     // if hidden, rebuild
-                    if (standbyData.isHidden()) {
+                    if (standbyData.hidden()) {
                         plugin.getServer().dispatchCommand(plugin.getConsole(), "tardisremote " + player.getName() + " rebuild");
                         if (player.isOnline()) {
                             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "POWER_FAIL");
@@ -81,19 +81,19 @@ public class TARDISStandbyMode implements Runnable {
                         delay = 20L;
                     }
                     // police box lamp, delay it in case the TARDIS needs rebuilding
-                    if (standbyData.getPreset().equals(ChameleonPreset.ADAPTIVE) || standbyData.getPreset().usesArmourStand()) {
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, standbyData.getPreset()), delay);
+                    if (standbyData.preset().equals(ChameleonPreset.ADAPTIVE) || standbyData.preset().usesArmourStand()) {
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, false, standbyData.preset()), delay);
                     }
                     // if lights are on, turn them off
-                    if (standbyData.isLights()) {
-                        new TARDISLampToggler(plugin).flickSwitch(id, standbyData.getUuid(), true, standbyData.getLightType());
+                    if (standbyData.lights()) {
+                        new TARDISLampToggler(plugin).flickSwitch(id, standbyData.uuid(), true, standbyData.lightType());
                     }
                     // if beacon is on turn it off
-                    new TARDISBeaconToggler(plugin).flickSwitch(standbyData.getUuid(), id, false);
+                    new TARDISBeaconToggler(plugin).flickSwitch(standbyData.uuid(), id, false);
                     // update database
                     plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
                     // if force field is on, disable it
-                    plugin.getTrackerKeeper().getActiveForceFields().remove(standbyData.getUuid());
+                    plugin.getTrackerKeeper().getActiveForceFields().remove(standbyData.uuid());
                 }, 1L);
             }
         });

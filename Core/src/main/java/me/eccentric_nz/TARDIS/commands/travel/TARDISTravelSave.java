@@ -105,7 +105,7 @@ public class TARDISTravelSave {
                         plugin.getMessenger().sendColouredCommand(player, "TARDIS_IN_SPOT", "/tardistravel area [name]", plugin);
                         return true;
                     }
-                    String invisibility = tac.getArea().getInvisibility();
+                    String invisibility = tac.getArea().invisibility();
                     if (invisibility.equals("DENY") && preset.equals(ChameleonPreset.INVISIBLE)) {
                         // check preset
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_INVISIBLE");

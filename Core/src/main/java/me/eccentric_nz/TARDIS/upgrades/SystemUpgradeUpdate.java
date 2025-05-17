@@ -41,7 +41,6 @@ public class SystemUpgradeUpdate {
         try {
             service.testConnection(connection);
             ps = connection.prepareStatement(query);
-            int s = 1;
             ps.setString(1, uuid);
             ps.setInt(2, id);
             ps.executeUpdate();

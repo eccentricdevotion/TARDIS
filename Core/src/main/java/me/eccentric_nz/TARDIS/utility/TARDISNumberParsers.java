@@ -42,7 +42,7 @@ public class TARDISNumberParsers {
     /**
      * Parses a string for a float.
      *
-     * @param i the string to convert to an float.
+     * @param i the string to convert to a float.
      * @return a floating point number
      */
     public static float parseFloat(String i) {
@@ -58,7 +58,7 @@ public class TARDISNumberParsers {
     /**
      * Parses a string for a double.
      *
-     * @param i the string to convert to an double.
+     * @param i the string to convert to a double.
      * @return a floating point number
      */
     public static double parseDouble(String i) {
@@ -74,7 +74,7 @@ public class TARDISNumberParsers {
     /**
      * Parses a string for a double.
      *
-     * @param i the string to convert to an double.
+     * @param i the string to convert to a double.
      * @return a floating point number
      */
     public static long parseLong(String i) {

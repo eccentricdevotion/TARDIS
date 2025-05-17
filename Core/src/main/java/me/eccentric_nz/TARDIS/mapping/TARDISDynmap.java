@@ -155,13 +155,13 @@ public class TARDISDynmap implements TARDISMapper {
             // build new map
             TARDISGetter getter = new TARDISGetter(plugin, null);
             getter.resultSetAsync(results -> results.forEach(value -> {
-                Location loc = value.getLocation();
+                Location loc = value.location();
                 World w = loc.getWorld();
                 if (w != null) {
                     String world = w.getName();
                     // get location
-                    String id = world + "/" + value.getOwner();
-                    String label = labelFormat.replace("%name%", value.getOwner());
+                    String id = world + "/" + value.owner();
+                    String label = labelFormat.replace("%name%", value.owner());
                     // see if we already have marker
                     Marker marker = markers.remove(id);
                     if (marker == null) {
@@ -191,7 +191,7 @@ public class TARDISDynmap implements TARDISMapper {
 
     private class DynmapMarkerUpdate implements Runnable {
         // build new map
-        Map<String, Marker> newmap = new HashMap<>();
+        final Map<String, Marker> newmap = new HashMap<>();
         ArrayList<World> worldsToDo = null;
         List<TARDISData> toDo = null;
         int tardisIndex = 0;
@@ -229,7 +229,7 @@ public class TARDISDynmap implements TARDISMapper {
                     break;
                 } else {
                     // get next world
-                    curWorld = worldsToDo.remove(0);
+                    curWorld = worldsToDo.removeFirst();
                     // get TARDISes
                     TARDISGetter getter = new TARDISGetter(plugin, curWorld);
                     getter.resultSetAsync(results -> {
@@ -248,11 +248,11 @@ public class TARDISDynmap implements TARDISMapper {
                                 // get next TARDIS
                                 TARDISData data = toDo.get(tardisIndex);
                                 tardisIndex++;
-                                Location loc = data.getLocation();
+                                Location loc = data.location();
                                 String world = loc.getWorld().getName();
                                 // get marker id
-                                String id = world + "/" + data.getOwner();
-                                String label = String.format("%s (TARDIS)", data.getOwner());
+                                String id = world + "/" + data.owner();
+                                String label = String.format("%s (TARDIS)", data.owner());
                                 MarkerIcon markerIcon = markerapi.getMarkerIcon("tardis");
                                 // see if we already have a marker
                                 Marker marker = markers.remove(id);

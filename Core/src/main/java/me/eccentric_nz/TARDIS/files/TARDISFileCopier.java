@@ -82,7 +82,7 @@ public class TARDISFileCopier {
      * Copies files for use by the TARDIS builder classes.
      */
     public void copyRoomTemplateFile() {
-        // make user_schematics directory if they doesn't exist
+        // make user_schematics directory if it doesn't exist
         File userDir = new File(plugin.getDataFolder() + File.separator + "user_schematics");
         if (!userDir.exists()) {
             boolean useResult = userDir.mkdir();

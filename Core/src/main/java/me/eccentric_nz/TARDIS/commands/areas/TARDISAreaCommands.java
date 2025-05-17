@@ -162,16 +162,16 @@ public class TARDISAreaCommands implements CommandExecutor {
                         plugin.getMessenger().sendColouredCommand(player, "AREA_NOT_FOUND", "/tardis list areas", plugin);
                         return false;
                     }
-                    if (!rsaShow.getArea().isGrid()) {
+                    if (!rsaShow.getArea().grid()) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_SHOW_NONGRID");
                         return true;
                     }
                     Area a = rsaShow.getArea();
-                    int mix = a.getMinX();
-                    int miz = a.getMinZ();
-                    int max = a.getMaxX();
-                    int maz = a.getMaxZ();
-                    World w = TARDISAliasResolver.getWorldFromAlias(a.getWorld());
+                    int mix = a.minX();
+                    int miz = a.minZ();
+                    int max = a.maxX();
+                    int maz = a.maxZ();
+                    World w = TARDISAliasResolver.getWorldFromAlias(a.world());
                     Set<Block> markers = new HashSet<>();
                     markers.add(w.getHighestBlockAt(mix, miz).getRelative(BlockFace.UP));
                     markers.add(w.getHighestBlockAt(mix, maz).getRelative(BlockFace.UP));
@@ -218,11 +218,11 @@ public class TARDISAreaCommands implements CommandExecutor {
                         return false;
                     }
                     Area yardArea = rsaYard.getArea();
-                    int yardMinX = yardArea.getMinX();
-                    int yardMinZ = yardArea.getMinZ();
-                    int yardMaxX = yardArea.getMaxX();
-                    int yardMaxZ = yardArea.getMaxZ();
-                    World yardWorld = TARDISAliasResolver.getWorldFromAlias(yardArea.getWorld());
+                    int yardMinX = yardArea.minX();
+                    int yardMinZ = yardArea.minZ();
+                    int yardMaxX = yardArea.maxX();
+                    int yardMaxZ = yardArea.maxZ();
+                    World yardWorld = TARDISAliasResolver.getWorldFromAlias(yardArea.world());
                     for (int x = yardMinX; x <= yardMaxX; x++) {
                         for (int z = yardMinZ; z <= yardMaxZ; z++) {
                             int y = yardWorld.getHighestBlockYAt(x, z);
@@ -341,13 +341,13 @@ public class TARDISAreaCommands implements CommandExecutor {
                         plugin.getMessenger().sendColouredCommand(player, "AREA_NOT_FOUND", "/tardis list areas", plugin);
                         return false;
                     }
-                    if (rsaId.getArea().isGrid()) {
+                    if (rsaId.getArea().grid()) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NOT_GRID");
                         return true;
                     }
                     if (first.equals("edit")) {
                         // open edit gui to allow removal of added locations
-                        ItemStack[] locations = new TARDISEditAreasInventory(plugin, rsaId.getArea().getAreaId()).getLocations();
+                        ItemStack[] locations = new TARDISEditAreasInventory(plugin, rsaId.getArea().areaId()).getLocations();
                         Inventory inventory = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Area Locations");
                         inventory.setContents(locations);
                         player.openInventory(inventory);
@@ -355,7 +355,7 @@ public class TARDISAreaCommands implements CommandExecutor {
                         // get player's location
                         Location location = player.getLocation();
                         HashMap<String, Object> add = new HashMap<>();
-                        add.put("area_id", rsaId.getArea().getAreaId());
+                        add.put("area_id", rsaId.getArea().areaId());
                         add.put("world", location.getWorld().getName());
                         add.put("x", location.getBlockX());
                         add.put("y", location.getBlockY());

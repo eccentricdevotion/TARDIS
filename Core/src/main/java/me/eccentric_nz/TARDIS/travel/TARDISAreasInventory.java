@@ -60,13 +60,13 @@ public class TARDISAreasInventory {
         if (rsa.resultSet()) {
             // cycle through areas
             for (Area a : rsa.getData()) {
-                String name = a.getAreaName();
+                String name = a.areaName();
                 if (TARDISPermission.hasPermission(p, "tardis.area." + name) || TARDISPermission.hasPermission(p, "tardis.area.*")) {
                     ItemStack is = new ItemStack(TARDISConstants.GUI_IDS.get(i), 1);
                     ItemMeta im = is.getItemMeta();
                     im.setDisplayName(name);
                     List<String> lore = new ArrayList<>();
-                    lore.add(a.getWorld());
+                    lore.add(a.world());
                     im.setLore(lore);
                     is.setItemMeta(im);
                     areas.add(is);

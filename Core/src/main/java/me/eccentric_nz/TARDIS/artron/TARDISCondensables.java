@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 /**
- * A TARDIS has fifteen Power Rooms that contain all of the machinery that powers and operates the ship. They are
+ * A TARDIS has fifteen Power Rooms that contain all the machinery that powers and operates the ship. They are
  * located deep in a TARDIS's interior and serve as the "nerve centre" of the capsule.
  *
  * @author eccentric_nz

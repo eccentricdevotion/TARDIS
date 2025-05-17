@@ -94,7 +94,6 @@ public class TWAFollower extends Husk implements OwnableEntity {
     }
 
     @Nullable
-    @SuppressWarnings("unchecked")
     public UUID getOwnerUUID() {
         return this.getBukkitEntity().getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
     }

@@ -24,7 +24,6 @@ import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetInnerDoorLocations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.move.TARDISTeleportLocation;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
 import org.bukkit.Bukkit;
@@ -48,7 +47,7 @@ public class OuterDisplayDoorOpener {
         this.plugin = plugin;
     }
 
-    public void open(ArmorStand stand, int id, UUID uuid) {
+    public void open(ArmorStand stand, int id) {
         if (stand == null) {
             return;
         }
@@ -106,7 +105,6 @@ public class OuterDisplayDoorOpener {
             ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
             if (rs.resultSet()) {
                 Tardis tardis = rs.getTardis();
-                ChameleonPreset preset = tardis.getPreset();
                 // get interior teleport location
                 ResultSetInnerDoorLocations resultSetPortal = new ResultSetInnerDoorLocations(plugin, id);
                 if (resultSetPortal.resultSet()) {

@@ -149,10 +149,10 @@ public class TARDISConsoleCloseListener implements Listener {
                                     continue;
                                 }
                                 Location l;
-                                if (rsa.getArea().isGrid()) {
+                                if (rsa.getArea().grid()) {
                                     l = plugin.getTardisArea().getNextSpot(first);
                                 } else {
-                                    l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().getAreaId());
+                                    l = plugin.getTardisArea().getSemiRandomLocation(rsa.getArea().areaId());
                                 }
                                 if (l == null) {
                                     plugin.getMessenger().send(p, TardisModule.TARDIS, "NO_MORE_SPOTS");
@@ -164,8 +164,8 @@ public class TARDISConsoleCloseListener implements Listener {
                                 set_next.put("z", l.getBlockZ());
                                 set_next.put("submarine", 0);
                                 // should be setting direction of TARDIS
-                                if (!rsa.getArea().getDirection().isEmpty()) {
-                                    set_next.put("direction", rsa.getArea().getDirection());
+                                if (!rsa.getArea().direction().isEmpty()) {
+                                    set_next.put("direction", rsa.getArea().direction());
                                 } else {
                                     set_next.put("direction", rsc.getDirection().toString());
                                 }

@@ -50,7 +50,7 @@ public class FloodgateTransmatForm {
             SimpleForm.Builder builder = SimpleForm.builder();
             builder.title("TARDIS transmats");
             for (Transmat t : rslist.getData()) {
-                builder.button(t.getName());
+                builder.button(t.name());
             }
             builder.validResultHandler(this::handleResponse);
             SimpleForm form = builder.build();

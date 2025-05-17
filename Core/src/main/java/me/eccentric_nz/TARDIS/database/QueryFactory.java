@@ -470,26 +470,6 @@ public class QueryFactory {
             }
         }
     }
-    public void doMonsterDecrement(int id) {
-        PreparedStatement ps = null;
-        String query = "UPDATE " + prefix + "tardis SET monsters = monsters - 1 WHERE tardis_id = ?";
-        try {
-            service.testConnection(connection);
-            ps = connection.prepareStatement(query);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            plugin.debug("Update error for tardis monsters -1! " + e.getMessage());
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } catch (SQLException e) {
-                plugin.debug("Error closing tardis monsters -1! " + e.getMessage());
-            }
-        }
-    }
 
     public void doAutonomousSaveUpdate(int old, int auto) {
         PreparedStatement ps = null;

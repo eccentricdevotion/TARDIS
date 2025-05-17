@@ -43,12 +43,12 @@ import java.util.UUID;
 
 public class TARDISLightChanger implements Runnable {
 
+    final List<Chunk> chunks = new ArrayList<>();
     private final TARDIS plugin;
     private final TardisLight light;
     private final boolean lightsOn;
     private final Material material;
     private final UUID uuid;
-    List<Chunk> chunks = new ArrayList<>();
     int index = 0;
     int taskID;
     private BossBar bb;

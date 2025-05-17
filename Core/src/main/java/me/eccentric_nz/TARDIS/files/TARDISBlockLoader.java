@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * An anti-gravity spiral is a projectable beam used for removing gravity from an object. The Seventh Doctor used his
+ * An antigravity spiral is a projectable beam used for removing gravity from an object. The Seventh Doctor used his
  * TARDIS to project a beam around a bus in space after it crashed. He manoeuvred it down to Earth and dropped it
  * outside Shangri-La camp in southern Wales.
  *

@@ -103,10 +103,6 @@ public class ResultSetLightPrefs {
         }
     }
 
-    public int getTardisId() {
-        return tardisId;
-    }
-
     public TardisLight getLight() {
         return light;
     }

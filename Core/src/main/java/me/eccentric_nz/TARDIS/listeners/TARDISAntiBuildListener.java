@@ -214,12 +214,7 @@ public class TARDISAntiBuildListener implements Listener {
             return;
         }
         ItemStack t = (hand.equals(EquipmentSlot.HAND)) ? p.getInventory().getItemInMainHand() : p.getInventory().getItemInOffHand();
-        Material m;
-        if (t != null) {
-            m = t.getType();
-        } else {
-            m = Material.AIR;
-        }
+        Material m = t.getType();
         if ((hand.equals(EquipmentSlot.HAND) && no_place.contains(m)) || (hand.equals(EquipmentSlot.OFF_HAND) && no_place.contains(m)) && !allow_interact.contains(event.getClickedBlock().getType())) {
             event.setUseItemInHand(Result.DENY);
             event.setCancelled(true);

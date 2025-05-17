@@ -50,13 +50,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Locale;
-import java.util.Set;
 import java.util.UUID;
 
 public class SpawnCommand {
 
     private final TARDIS plugin;
-    private final Set<Material> trans = null;
 
     public SpawnCommand(TARDIS plugin) {
         this.plugin = plugin;
@@ -81,7 +79,7 @@ public class SpawnCommand {
                 plugin.getMessenger().send(sender, TardisModule.MONSTERS, "WA_PERM_SPAWN", monster.toString());
                 return true;
             }
-            Location eyeLocation = player.getTargetBlock(trans, 50).getLocation();
+            Location eyeLocation = player.getTargetBlock(null, 50).getLocation();
             eyeLocation.add(0.5d, 1.25d, 0.5d);
             eyeLocation.setYaw(player.getLocation().getYaw() - 180.0f);
             LivingEntity a;
@@ -132,9 +130,7 @@ public class SpawnCommand {
                                 headMeta.setItemModel(head);
                                 helmet.setItemMeta(headMeta);
                                 EntityEquipment ee = a.getEquipment();
-                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                                    ee.setHelmet(helmet);
-                                }, 2L);
+                                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> ee.setHelmet(helmet), 2L);
                             } catch (IllegalArgumentException ignored) {
                             }
                         }

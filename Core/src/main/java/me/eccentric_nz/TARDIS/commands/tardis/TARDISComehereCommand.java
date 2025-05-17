@@ -164,7 +164,7 @@ class TARDISComehereCommand {
                 }
                 // get space-time throttle
                 Throticle throticle = new ResultSetThrottle(plugin).getSpeedAndParticles(uuid.toString());
-                SpaceTimeThrottle spaceTimeThrottle = throticle.getThrottle();
+                SpaceTimeThrottle spaceTimeThrottle = throticle.throttle();
                 int ch = Math.round(plugin.getArtronConfig().getInt("comehere") * spaceTimeThrottle.getArtronMultiplier());
                 if (level < ch) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
@@ -225,7 +225,7 @@ class TARDISComehereCommand {
                     dd.setSubmarine(rsc.isSubmarine());
                     dd.setTardisID(id);
                     dd.setThrottle(spaceTimeThrottle);
-                    dd.setParticles(throticle.getParticles());
+                    dd.setParticles(throticle.particles());
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         if (!hid) {
                             plugin.getTrackerKeeper().getDematerialising().add(id);
@@ -245,7 +245,7 @@ class TARDISComehereCommand {
                 bd.setSubmarine(sub);
                 bd.setTardisID(id);
                 bd.setThrottle(spaceTimeThrottle);
-                bd.setParticles(throticle.getParticles());
+                bd.setParticles(throticle.particles());
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);
                 // remove energy from TARDIS
                 HashMap<String, Object> wheret = new HashMap<>();

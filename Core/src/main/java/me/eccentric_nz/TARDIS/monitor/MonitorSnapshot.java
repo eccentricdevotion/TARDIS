@@ -137,7 +137,7 @@ public class MonitorSnapshot {
                 // adjust x,z to be centred in front of the door
                 int getx = doorBottom.getBlockX();
                 int getz = doorBottom.getBlockZ();
-                float yaw = 0.05f;
+                float yaw;
                 switch (d) {
                     case NORTH -> {
                         // z -ve

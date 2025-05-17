@@ -83,7 +83,7 @@ public class TARDISHotbarListener implements Listener {
                     case GLASS_BOTTLE -> {
                         // hide the armour stand entity from the player
                         Entity as = player.getVehicle();
-                        if (as != null && as instanceof ArmorStand stand) {
+                        if (as instanceof ArmorStand stand) {
                             new FlightVisibility(plugin).hide(stand, player);
                         }
                     }

@@ -141,11 +141,11 @@ public class TARDISChemistryCommand implements CommandExecutor {
         inv.setItem(19, ingredient);
         inv.setItem(20, ingredient);
         RecipeData data = ChemistryBlock.RECIPES.get(which);
-        ItemStack result = new ItemStack(data.getDisplayItem().getMaterial(), 1);
+        ItemStack result = new ItemStack(data.displayItem().getMaterial(), 1);
         ItemMeta im = result.getItemMeta();
-        im.setDisplayName(data.getDisplayName());
-        im.setLore(data.getLore());
-        im.setItemModel(data.getDisplayItem().getCustomModel());
+        im.setDisplayName(data.displayName());
+        im.setLore(data.lore());
+        im.setItemModel(data.displayItem().getCustomModel());
         result.setItemMeta(im);
         inv.setItem(17, result);
         player.openInventory(inv);

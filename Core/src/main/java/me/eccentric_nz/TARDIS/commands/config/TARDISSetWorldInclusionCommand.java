@@ -44,7 +44,7 @@ class TARDISSetWorldInclusionCommand {
         }
         String first = arguments.getArguments().getFirst();
         // get world name with no periods(.)
-        String name = arguments.getArguments().get(1).replace(".", "_");;
+        String name = arguments.getArguments().get(1).replace(".", "_");
         // check the world actually exists!
         if (TARDISAliasResolver.getWorldFromAlias(name) == null) {
             plugin.getMessenger().sendColouredCommand(sender, "WORLD_NOT_FOUND", "/tardisworld load", plugin);

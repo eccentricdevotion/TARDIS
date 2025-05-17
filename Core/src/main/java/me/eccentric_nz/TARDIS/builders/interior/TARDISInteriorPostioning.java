@@ -23,7 +23,6 @@ import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTIPS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
@@ -61,22 +60,6 @@ public class TARDISInteriorPostioning {
         int col = px / 1024;
         int row = pz / 1024;
         return (col * 20) + row;
-    }
-
-    /**
-     * Get the TARDIS id from a player location
-     *
-     * @param location the player's current location in the TARDIS world
-     * @return the TARDIS id
-     */
-    public static int getTARDISIdFromLocation(Location location) {
-        int tips = getTIPSSlot(location);
-        ResultSetTardisID rs = new ResultSetTardisID(TARDIS.plugin);
-        if (rs.fromTIPSSlot(tips)) {
-            return rs.getTardisId();
-        } else {
-            return -1;
-        }
     }
 
     /**

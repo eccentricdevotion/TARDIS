@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS;
 
 import me.eccentric_nz.TARDIS.commands.config.TARDISConfigCommand;
-import me.eccentric_nz.TARDIS.commands.travel.TARDISTravelCommands;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.listeners.TARDISRenderRoomListener;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
@@ -85,7 +84,6 @@ public class TARDISGeneralInstanceKeeper {
     private long junkTime;
     private TARDISConfigCommand tardisConfigCommand;
     private TARDISRenderRoomListener rendererListener;
-    private TARDISTravelCommands tardisTravelCommand;
 
     TARDISGeneralInstanceKeeper(TARDIS plugin) {
         this.plugin = plugin;
@@ -196,14 +194,6 @@ public class TARDISGeneralInstanceKeeper {
 
     void setRendererListener(TARDISRenderRoomListener rendererListener) {
         this.rendererListener = rendererListener;
-    }
-
-    public TARDISTravelCommands getTardisTravelCommand() {
-        return tardisTravelCommand;
-    }
-
-    void setTardisTravelCommand(TARDISTravelCommands tardisTravelCommand) {
-        this.tardisTravelCommand = tardisTravelCommand;
     }
 
     public List<String> getRoomArgs() {

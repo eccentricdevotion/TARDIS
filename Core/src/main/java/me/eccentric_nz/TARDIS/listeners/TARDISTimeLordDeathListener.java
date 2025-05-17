@@ -96,7 +96,7 @@ public class TARDISTimeLordDeathListener implements Listener {
         // stop looping sounds
         if (plugin.getTrackerKeeper().getFlyingReturnLocation().containsKey(uuid)) {
             FlightReturnData frd = plugin.getTrackerKeeper().getFlyingReturnLocation().get(player.getUniqueId());
-            plugin.getServer().getScheduler().cancelTask(frd.getSound());
+            plugin.getServer().getScheduler().cancelTask(frd.sound());
         } else if (player.getPersistentDataContainer().has(plugin.getLoopKey(), PersistentDataType.INTEGER)) {
             int task = player.getPersistentDataContainer().get(plugin.getLoopKey(), PersistentDataType.INTEGER);
             plugin.getServer().getScheduler().cancelTask(task);

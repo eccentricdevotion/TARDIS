@@ -43,8 +43,6 @@ public class VoidListener implements Listener {
         }
         player.teleport(location);
         // regenerate
-        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ()->{
-            new Regenerator().processPlayer(plugin, player);
-        }, 10L);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, ()-> new Regenerator().processPlayer(plugin, player), 10L);
     }
 }

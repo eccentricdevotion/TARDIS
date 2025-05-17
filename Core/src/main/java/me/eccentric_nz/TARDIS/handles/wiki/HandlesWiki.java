@@ -42,9 +42,8 @@ public class HandlesWiki {
         Pattern pattern = Pattern.compile(query, Pattern.CASE_INSENSITIVE);
         Set<WikiLink> results = new HashSet<>();
         // <a title="Dev commands" href="/commands/dev">Dev commands</a>
-        Document doc = null;
         try {
-            doc = Jsoup.connect("https://tardis.pages.dev/site-map").get();
+            Document doc = Jsoup.connect("https://tardis.pages.dev/site-map").get();
             Elements links = doc.select("a");
             for (Element e : links) {
                 String linkHref = e.attr("href"); // "/commands/dev"
@@ -54,7 +53,7 @@ public class HandlesWiki {
                     results.add(new WikiLink(linkText, linkHref));
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
         plugin.getMessenger().send(player, TardisModule.HANDLES, "HANDLES_WIKI");
         if (!results.isEmpty()) {

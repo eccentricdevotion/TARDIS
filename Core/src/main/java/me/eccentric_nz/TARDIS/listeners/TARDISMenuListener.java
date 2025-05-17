@@ -84,8 +84,7 @@ public class TARDISMenuListener implements Listener {
         ItemStack is = view.getItem(45);
         ItemMeta im = is.getItemMeta();
         String[] split = im.getDisplayName().split(" ");
-        int page = TARDISNumberParsers.parseInt(split[1]);
-        return page;
+        return TARDISNumberParsers.parseInt(split[1]);
     }
 
     private HashMap<String, Integer> getTitleMap() {

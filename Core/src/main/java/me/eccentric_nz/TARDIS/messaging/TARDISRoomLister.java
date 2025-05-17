@@ -48,9 +48,7 @@ public class TARDISRoomLister {
         options.forEach((key, value) -> {
             player.sendMessage(key);
             if (!value.isEmpty()) {
-                value.forEach((s) -> {
-                    plugin.getMessenger().sendRoom(player, s, (TARDISPermission.hasPermission(player, "tardis.room." + s.toLowerCase(Locale.ROOT))));
-                });
+                value.forEach((s) -> plugin.getMessenger().sendRoom(player, s, (TARDISPermission.hasPermission(player, "tardis.room." + s.toLowerCase(Locale.ROOT)))));
             } else {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ROOM_NONE");
             }

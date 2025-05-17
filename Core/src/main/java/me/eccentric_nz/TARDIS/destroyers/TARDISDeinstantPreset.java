@@ -95,7 +95,7 @@ public class TARDISDeinstantPreset {
             if (outerDisplayDoor) {
                 new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
             } else if (rs.getPreset().hasDoor()) {
-                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(rs.getPreset()), id, playerUUID);
+                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
             }
         }
         // remove interaction entity

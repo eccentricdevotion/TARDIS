@@ -33,7 +33,7 @@ public class ResourcePackConverterCommand {
         return s.substring(0, 1).toUpperCase(Locale.ROOT) + s.substring(1).toLowerCase(Locale.ROOT).replace("tardis", "TARDIS");
     }
 
-    public boolean process(CommandSender sender, String[] args) {
+    public void process(CommandSender sender, String[] args) {
         gson = new GsonBuilder().setPrettyPrinting().create();
         if (args.length > 2) {
             // get folder
@@ -172,9 +172,6 @@ public class ResourcePackConverterCommand {
             for (Field field : GUITransmat.class.getDeclaredFields()) {
                 writeFromField(sender, field);
             }
-            for (Field field : GUIArea.class.getDeclaredFields()) {
-                writeFromField(sender, field);
-            }
             for (Field field : GUIChameleonPresets.class.getDeclaredFields()) {
                 writeFromField(sender, field);
             }
@@ -270,7 +267,6 @@ public class ResourcePackConverterCommand {
             }
         }
         sender.sendMessage("Pack conversion complete!");
-        return true;
     }
 
     private void writeFromField(CommandSender sender, Field field) {

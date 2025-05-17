@@ -63,7 +63,7 @@ public class GallifreyBlueprintTrade {
         // get the room material for the ingredient from the blueprint
         Material roomMaterial = Material.valueOf(TARDISARS.valueOf(bpr.toString()).getMaterial());
         // determine the stack size of the ingredient
-        int roomAmount = plugin.getRoomsConfig().getInt("rooms." + bpr.toString() + ".cost") / 20;
+        int roomAmount = plugin.getRoomsConfig().getInt("rooms." + bpr + ".cost") / 20;
         roomRecipe.addIngredient(new ItemStack(roomMaterial, roomAmount));
         return roomRecipe;
     }

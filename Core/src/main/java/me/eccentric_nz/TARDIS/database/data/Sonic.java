@@ -54,10 +54,6 @@ public class Sonic {
         this.conversion = conversion;
     }
 
-    public UUID getUuid() {
-        return uuid;
-    }
-
     public boolean isActivated() {
         return activated;
     }

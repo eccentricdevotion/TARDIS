@@ -76,6 +76,7 @@ import java.util.UUID;
 public class TARDISWeepingAngels {
 
     public static final HashMap<Monster, NamespacedKey> PDC_KEYS = new HashMap<>();
+    public static final UUID UNCLAIMED = UUID.fromString("00000000-aaaa-bbbb-cccc-000000000000");
     private static final List<UUID> empty = new ArrayList<>();
     private static final List<UUID> timesUp = new ArrayList<>();
     private static final List<UUID> guards = new ArrayList<>();
@@ -92,7 +93,6 @@ public class TARDISWeepingAngels {
     public static NamespacedKey DEVIL;
     public static NamespacedKey EMPTY;
     public static NamespacedKey FLAME_TASK;
-    public static NamespacedKey FOLLOW;
     public static NamespacedKey HATH;
     public static NamespacedKey HEADLESS_TASK;
     public static NamespacedKey JUDOON;
@@ -120,7 +120,6 @@ public class TARDISWeepingAngels {
     public static NamespacedKey ZYGON;
     public static NamespacedKey MONSTER_HEAD;
     public static PersistentDataType<byte[], UUID> PersistentDataTypeUUID;
-    public static UUID UNCLAIMED = UUID.fromString("00000000-aaaa-bbbb-cccc-000000000000");
     private static boolean steal;
     private static boolean citizensEnabled = false;
     private final TARDIS plugin;
@@ -306,7 +305,6 @@ public class TARDISWeepingAngels {
         OSSIFIED = new NamespacedKey(plugin, "ossified");
         PDC_KEYS.put(Monster.OSSIFIED, OSSIFIED);
         OWNER_UUID = new NamespacedKey(plugin, "owner_uuid");
-        FOLLOW = new NamespacedKey(plugin, "follow");
         RACNOSS = new NamespacedKey(plugin, "racnoss");
         PDC_KEYS.put(Monster.RACNOSS, RACNOSS);
         SCARECROW = new NamespacedKey(plugin, "scarecrow");
