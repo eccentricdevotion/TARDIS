@@ -48,6 +48,10 @@ public class TARDISBuilderInstanceKeeper {
         PRECIOUS.add(Material.EMERALD_BLOCK);
         PRECIOUS.add(Material.GOLD_BLOCK);
         PRECIOUS.add(Material.IRON_BLOCK);
+//        PRECIOUS.add(Material.COPPER_BLOCK);
+        PRECIOUS.add(Material.RAW_GOLD_BLOCK);
+        PRECIOUS.add(Material.RAW_IRON_BLOCK);
+//        PRECIOUS.add(Material.RAW_COPPER_BLOCK);
         PRECIOUS.add(Material.LIGHT);
         PRECIOUS.add(Material.NETHERITE_BLOCK);
         PRECIOUS.add(Material.REDSTONE_BLOCK);

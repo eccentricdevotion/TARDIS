@@ -71,17 +71,20 @@ public class TARDISMaterials {
             add(Material.IRON_BLOCK);
             add(Material.LAPIS_BLOCK);
             add(Material.LIGHT);
+            add(Material.NETHERITE_BLOCK);
             add(Material.NETHER_QUARTZ_ORE);
             add(Material.OBSIDIAN);
+            add(Material.RAW_GOLD_BLOCK);
+            add(Material.RAW_IRON_BLOCK);
             add(Material.REDSTONE_BLOCK);
             addAll(Tag.COAL_ORES.getValues());
             addAll(Tag.COPPER_ORES.getValues());
             addAll(Tag.DIAMOND_ORES.getValues());
-            addAll(Tag.GOLD_ORES.getValues());
             addAll(Tag.EMERALD_ORES.getValues());
+            addAll(Tag.GOLD_ORES.getValues());
+            addAll(Tag.IRON_ORES.getValues());
             addAll(Tag.LAPIS_ORES.getValues());
             addAll(Tag.REDSTONE_ORES.getValues());
-            addAll(Tag.IRON_ORES.getValues());
         }
     };
 

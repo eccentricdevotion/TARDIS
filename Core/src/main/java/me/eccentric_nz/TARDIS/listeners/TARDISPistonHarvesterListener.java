@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPistonExtendEvent;
@@ -43,9 +42,12 @@ public class TARDISPistonHarvesterListener implements Listener {
         if (plugin.getConfig().getBoolean("preferences.nerf_pistons.only_tardis_worlds") && !event.getBlock().getWorld().getName().contains("TARDIS")) {
             return;
         }
-        String block = event.getBlock().getRelative(getOppositeDirection(event.getDirection()), 2).getLocation().toString();
-        if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(block)) {
-            event.setCancelled(true);
+        for (Block b : event.getBlocks()) {
+            String block = b.getLocation().toString();
+            if (plugin.getGeneralKeeper().getProtectBlockMap().containsKey(block)) {
+                event.setCancelled(true);
+                return;
+            }
         }
     }
 
@@ -61,14 +63,5 @@ public class TARDISPistonHarvesterListener implements Listener {
                 return;
             }
         }
-    }
-
-    private BlockFace getOppositeDirection(BlockFace bf) {
-        return switch (bf) {
-            case NORTH -> BlockFace.SOUTH;
-            case EAST -> BlockFace.WEST;
-            case SOUTH -> BlockFace.NORTH;
-            default -> BlockFace.EAST;
-        };
     }
 }
