@@ -36,6 +36,10 @@ public class TARDISParticlePrefsCommand {
     }
 
     public boolean setPartclePref(Player player, String[] args) {
+        if (args.length < 2) {
+            plugin.getMessenger().send(player, TardisModule.TARDIS, "TOO_FEW_ARGS");
+            return true;
+        }
         String which = args[0].toLowerCase(Locale.ROOT);
         Object value;
         switch (which) {
