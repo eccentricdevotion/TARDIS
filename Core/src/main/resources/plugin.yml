@@ -901,13 +901,11 @@ commands:
       permission: tardis.rebuild
       permission-message: You don't have the permission <permission> to use this command
       usage: /<command> hide
-    home:
-      aliases:
-        - sethome
+    sethome:
       description: Save a time travel location as home.
       permission: tardis.home
       permission-message: You don't have the permission <permission> to use this command
-      usage: /<command> home
+      usage: /<command> sethome <preset> [preset]
     inside:
       description: List players inside your TARDIS.
       permission: tardis.use

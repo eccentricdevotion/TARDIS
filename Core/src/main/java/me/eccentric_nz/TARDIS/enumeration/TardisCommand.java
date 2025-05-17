@@ -48,7 +48,6 @@ public enum TardisCommand {
     handbrake,
     help,
     hide,
-    home,
     inside,
     item,
     jettison,
@@ -82,7 +81,7 @@ public enum TardisCommand {
 
     public boolean noSiege() {
         return switch (this) {
-            case abandon, archive, colourise, colorize, comehere, desktop, direction, door, eject, excite, exterminate, hide, home, sethome, lamps, make_her_blue, rebuild, rescue, room, setdest, theme, upgrade -> true;
+            case abandon, archive, colourise, colorize, comehere, desktop, direction, door, eject, excite, exterminate, hide, sethome, lamps, make_her_blue, rebuild, rescue, room, setdest, theme, upgrade -> true;
             default -> false;
         };
     }

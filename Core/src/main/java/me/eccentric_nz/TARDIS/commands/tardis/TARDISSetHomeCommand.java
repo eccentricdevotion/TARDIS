@@ -38,11 +38,11 @@ import java.util.Locale;
 /**
  * @author eccentric_nz
  */
-class TARDISHomeCommand {
+class TARDISSetHomeCommand {
 
     private final TARDIS plugin;
 
-    TARDISHomeCommand(TARDIS plugin) {
+    TARDISSetHomeCommand(TARDIS plugin) {
         this.plugin = plugin;
     }
 
@@ -54,7 +54,7 @@ class TARDISHomeCommand {
                 return false;
             }
             int id = rs.getTardisId();
-            if (args.length == 3 && args[1].equalsIgnoreCase("set")) {
+            if (args.length == 3 && args[1].equalsIgnoreCase("preset")) {
                 // set the PRESET for the home location
                 String which;
                 if (plugin.getCustomModelConfig().getConfigurationSection("models").getKeys(false).contains(args[2])) {
