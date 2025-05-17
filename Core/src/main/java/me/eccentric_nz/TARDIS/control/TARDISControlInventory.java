@@ -68,12 +68,14 @@ public class TARDISControlInventory {
         String on = plugin.getLanguage().getString("SET_ON");
         int delay = 1;
         boolean open = false;
+        boolean powered = true;
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             siege_onoff = (tardis.isSiegeOn()) ? on : off;
             open = new TARDISBlackWoolToggler(plugin).isOpen(tardis.getTardisId());
             toggle_openclosed = (open) ? plugin.getLanguage().getString("SET_OPEN") : plugin.getLanguage().getString("SET_CLOSED");
             power_onoff = (tardis.isPoweredOn()) ? on : off;
+            powered = tardis.isPoweredOn();
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardisId());
             if (rsc.resultSet()) {
                 direction = rsc.getDirection().toString();
@@ -144,7 +146,7 @@ public class TARDISControlInventory {
         dwn.setDisplayName(plugin.getLanguage().getString("BUTTON_POWER"));
         dwn.setLore(List.of(power_onoff));
         CustomModelDataComponent pdcomponent = dwn.getCustomModelDataComponent();
-        pdcomponent.setFloats(!open ? SwitchVariant.BUTTON_POWER_OFF.getFloats() : SwitchVariant.BUTTON_POWER_ON.getFloats());
+        pdcomponent.setFloats(!powered ? SwitchVariant.BUTTON_POWER_OFF.getFloats() : SwitchVariant.BUTTON_POWER_ON.getFloats());
         dwn.setCustomModelDataComponent(pdcomponent);
         pow.setItemMeta(dwn);
         // light

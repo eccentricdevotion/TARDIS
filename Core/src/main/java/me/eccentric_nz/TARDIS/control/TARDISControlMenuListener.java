@@ -506,9 +506,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                 plugin.getQueryFactory().doUpdate("player_prefs", setr, wherer);
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "THROTTLE", throttle);
             }
-            case 53 ->
-                // close
-                    close(player, false);
+            case 53 -> close(player, false); // close
             default -> {
             }
         }
