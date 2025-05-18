@@ -1107,6 +1107,9 @@ commands:
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
     usage: /<command> [sub command] [options...]
+    add_regions:
+      description: Add missing WorldGuard regions for TIPS.
+      usage: /<command> add_regions
     arch:
       description: View an ‘arched’ player’s real name, or with the 'force' argument, toggle arch status.
       usage: /<command> arch [player] <force>
@@ -1221,7 +1224,7 @@ commands:
     permission: tardis.admin
     permission-message: You don't have the permission <permission> to use this command
     add_regions:
-      description: Add missing WorldGuard regions for Bedrock players.
+      description: Add missing WorldGuard regions for TIPS.
       usage: /<command> add_regions
     advancements:
       description: Checks whether a TARDIS advancement is valid.

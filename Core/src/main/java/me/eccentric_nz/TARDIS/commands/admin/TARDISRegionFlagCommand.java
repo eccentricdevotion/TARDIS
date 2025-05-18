@@ -28,7 +28,6 @@ import java.util.Locale;
  */
 class TARDISRegionFlagCommand {
 
-    // TODO this should be a config command?
     private final TARDIS plugin;
     private final List<String> which = List.of("entry", "exit");
 

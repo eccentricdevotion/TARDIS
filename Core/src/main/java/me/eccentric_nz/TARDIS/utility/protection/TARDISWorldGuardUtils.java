@@ -799,4 +799,24 @@ public class TARDISWorldGuardUtils {
             }
         }
     }
+
+    public void checkEntryFlags() {
+        String world_name = plugin.getConfig().getString("creation.default_world_name");
+        World world = plugin.getServer().getWorld(world_name);
+        if (world != null) {
+            State flag = plugin.getConfig().getBoolean("preferences.open_door_policy") ? State.ALLOW : State.DENY;
+            RegionManager rm = wg.getRegionContainer().get(new BukkitWorld(world));
+            for (ProtectedRegion region : rm.getRegions().values()) {
+                Map<Flag<?>, Object> flags = region.getFlags();
+                flags.put(Flags.ENTRY, flag);
+                flags.put(Flags.EXIT, flag);
+                region.setFlags(flags);
+            }
+            try {
+                rm.save();
+            } catch (StorageException e) {
+                plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, "Could not update WorldGuard flags for everyone entry & exit! " + e.getMessage());
+            }
+        }
+    }
 }

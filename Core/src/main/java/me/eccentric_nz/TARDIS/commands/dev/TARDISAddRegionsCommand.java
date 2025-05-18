@@ -38,7 +38,7 @@ import java.util.UUID;
 /**
  * @author eccentric_nz
  */
-class TARDISAddRegionsCommand {
+public class TARDISAddRegionsCommand {
 
     private final TARDIS plugin;
     private final TARDISDatabaseConnection service = TARDISDatabaseConnection.getINSTANCE();
@@ -46,7 +46,7 @@ class TARDISAddRegionsCommand {
     private final String prefix;
     private WorldGuardPlugin wg;
 
-    TARDISAddRegionsCommand(TARDIS plugin) {
+    public TARDISAddRegionsCommand(TARDIS plugin) {
         this.plugin = plugin;
         prefix = this.plugin.getPrefix();
         if (plugin.isWorldGuardOnServer()) {
@@ -54,7 +54,7 @@ class TARDISAddRegionsCommand {
         }
     }
 
-    boolean doCheck(CommandSender sender) {
+    public boolean doCheck(CommandSender sender) {
         if (!plugin.isWorldGuardOnServer()) {
             plugin.getMessenger().message(sender, TardisModule.TARDIS, "WorldGuard is not enabled on this server!");
             return true;

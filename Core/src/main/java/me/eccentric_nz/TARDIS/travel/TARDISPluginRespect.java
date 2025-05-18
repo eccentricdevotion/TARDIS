@@ -203,6 +203,16 @@ public class TARDISPluginRespect {
         }
     }
 
+    /**
+     * If `preferences.open_door_policy` is true in the config, this makes sure that
+     * entry and exit flags are set to allow on TARDIS protected regions
+     */
+    public void checkWorldGuardEntry() {
+        if (plugin.isWorldGuardOnServer()) {
+            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getWorldGuardUtils().checkEntryFlags(), 100L);
+        }
+    }
+
     TARDISTownyChecker getTownyChecker() {
         return townyChecker;
     }

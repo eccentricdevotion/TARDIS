@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.admin;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.arch.TARDISArchCommand;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
+import me.eccentric_nz.TARDIS.commands.dev.TARDISAddRegionsCommand;
 import me.eccentric_nz.TARDIS.database.tool.Converter;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.maze.TARDISMazeBuilder;
@@ -54,6 +55,7 @@ public class TARDISAdminCommands implements CommandExecutor {
     public TARDISAdminCommands(TARDIS plugin) {
         this.plugin = plugin;
         // add first arguments
+        firstsStr.add("add_regions");
         firstsStr.add("arch");
         firstsStr.add("assemble");
         firstsStr.add("clean");
@@ -103,6 +105,9 @@ public class TARDISAdminCommands implements CommandExecutor {
                 }
                 if (args.length == 1) {
                     switch (first) {
+                        case "add_regions" -> {
+                            return new TARDISAddRegionsCommand(plugin).doCheck(sender);
+                        }
                         case "clean" -> {
                             return new TARDISCleanEntitiesCommand(plugin).checkAndRemove(sender);
                         }
