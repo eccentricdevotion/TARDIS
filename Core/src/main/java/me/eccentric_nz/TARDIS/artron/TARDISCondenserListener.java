@@ -273,15 +273,21 @@ public class TARDISCondenserListener implements Listener {
                     wheret.put("tardis_id", id);
                     plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
                 } else {
+                    int toMax = max - current;
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_CONDENSE", max);
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_ADD");
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_TRY", toMax);
+                    if (rsas.getCapacitorCount() > 1) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_ADD");
+                    } else {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_ADD_ROOM");
+                    }
                     // give artron cells back
                     giveBack(player, amount, full, contents);
                     return;
                 }
             } else {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_NOT_FOUND");
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_ADD");
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_ADD_ROOM");
                 // give artron cells back
                 giveBack(player, amount, full, contents);
                 return;

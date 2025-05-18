@@ -1258,6 +1258,16 @@ public class TARDISCondensables {
             condensables.put("RESIN_CLUMP", 2);
             condensables.put("STRIPPED_PALE_OAK_LOG", 2);
             condensables.put("STRIPPED_PALE_OAK_WOOD", 2);
+            // 1.21.5
+            condensables.put("BLUE_EGG", 1);
+            condensables.put("BROWN_EGG", 1);
+            condensables.put("BUSH", 2);
+            condensables.put("CACTUS_FLOWER", 2);
+            condensables.put("FIREFLY_BUSH", 2);
+            condensables.put("LEAF_LITTER", 2);
+            condensables.put("SHORT_DRY_GRASS", 2);
+            condensables.put("TALL_DRY_GRASS", 2);
+            condensables.put("WILDFLOWERS", 2);
         } else {
             Set<String> items = plugin.getCondensablesConfig().getKeys(false);
             items.forEach((item) -> condensables.put(item, plugin.getCondensablesConfig().getInt(item)));
