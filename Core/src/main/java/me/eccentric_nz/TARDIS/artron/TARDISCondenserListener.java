@@ -133,7 +133,8 @@ public class TARDISCondenserListener implements Listener {
             // get the stacks in the inventory
             HashMap<String, Integer> item_counts = new HashMap<>();
             Inventory inv = event.getInventory();
-            for (ItemStack is : inv.getContents()) {
+            ItemStack[] contents = inv.getContents();
+            for (ItemStack is : contents) {
                 // skip empty slots
                 if (is == null) {
                     continue;
@@ -275,14 +276,14 @@ public class TARDISCondenserListener implements Listener {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_CONDENSE", max);
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_ADD");
                     // give artron cells back
-                    giveBack(player, amount, full);
+                    giveBack(player, amount, full, contents);
                     return;
                 }
             } else {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_NOT_FOUND");
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_ADD");
                 // give artron cells back
-                giveBack(player, amount, full);
+                giveBack(player, amount, full, contents);
                 return;
             }
             if (amount > 0) {
@@ -306,7 +307,7 @@ public class TARDISCondenserListener implements Listener {
         }
     }
 
-    private void giveBack(Player player, int amount, int full) {
+    private void giveBack(Player player, int amount, int full, ItemStack[] items) {
         // create an artron storage cell
         ShapedRecipe recipe = plugin.getFigura().getShapedRecipes().get("Artron Storage Cell");
         ItemStack result = recipe.getResult();
@@ -323,6 +324,15 @@ public class TARDISCondenserListener implements Listener {
             // recalculate number of cells to give
             finalFullCellCount = amount / full;
             remainder = amount % full;
+        }
+        if (finalFullCellCount == 0 && remainder == 0) {
+            // return items
+            for (ItemStack item : items) {
+                if (item != null) {
+                    player.getInventory().addItem(item);
+                }
+            }
+            return;
         }
         if (remainder > 0) {
             // give one partially filled cell
