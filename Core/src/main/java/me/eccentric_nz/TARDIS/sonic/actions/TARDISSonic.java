@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.sonic.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import org.bukkit.Material;
 import org.bukkit.Tag;
@@ -82,7 +83,20 @@ public class TARDISSonic {
                     }
                 }
                 if (Tag.BUTTONS.isTagged(blockType) || blockType == Material.LEVER) {
-                    powerSurroundingBlock(targetBlock);
+                    if (blockType == Material.LEVER) {
+                        // check if it's a handbrake
+                        HashMap<String, Object> whereh = new HashMap<>();
+                        whereh.put("type", 0);
+                        whereh.put("location", targetBlock.getLocation().toString());
+                        ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
+                        if (rsc.resultSet()) {
+                            new SonicHandbrake(plugin).process(rsc.getTardis_id(), player, targetBlock);
+                        } else {
+                            powerSurroundingBlock(targetBlock);
+                        }
+                    } else {
+                        powerSurroundingBlock(targetBlock);
+                    }
                 }
                 if (Tag.FENCE_GATES.isTagged(blockType)) {
                     Gate gate = (Gate) targetBlock.getBlockData();
