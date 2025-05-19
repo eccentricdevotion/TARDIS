@@ -96,7 +96,10 @@ public class TARDISJunkDestroyer implements Runnable {
                         if (e instanceof Player p) {
                             Location relativeLoc = getRelativeLocation(p);
                             p.teleport(relativeLoc);
-                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.teleport(relativeLoc), 2L);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                                p.teleport(relativeLoc);
+                                p.setPlayerTime(18000, false);
+                            }, 2L);
                         }
                     });
                     TARDISJunkVortexRunnable runnable = new TARDISJunkVortexRunnable(plugin, vortexJunkLoc, pdd.getPlayer(), pdd.getTardisID());

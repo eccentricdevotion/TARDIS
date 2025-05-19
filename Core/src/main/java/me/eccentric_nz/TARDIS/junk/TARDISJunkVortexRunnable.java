@@ -93,7 +93,10 @@ class TARDISJunkVortexRunnable implements Runnable {
                     if (e instanceof Player p) {
                         Location relativeLoc = getRelativeLocation(p);
                         p.teleport(relativeLoc);
-                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> p.teleport(relativeLoc), 2L);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                            p.teleport(relativeLoc);
+                            p.resetPlayerTime();
+                        }, 2L);
                     }
                 });
                 plugin.getServer().getScheduler().cancelTask(fryTask);
