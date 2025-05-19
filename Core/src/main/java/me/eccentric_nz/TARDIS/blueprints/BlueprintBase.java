@@ -21,11 +21,9 @@ public enum BlueprintBase {
     ADD("tardis.add"),
     BOOK("tardis.book"),
     CREATE("tardis.create"),
-    DELETE("tardis.delete"), // don't really need this - just use "tardis.exterminate"?
     ENTER("tardis.enter"),
-    EXTERMINATE("tardis.exterminate"), // don't really need this - just use "tardis.delete"?
+    EXTERMINATE("tardis.exterminate"),
     FIND("tardis.find"),
-    HOME("tardis.home"),
     LIST("tardis.list"),
     REBUILD("tardis.rebuild"),
     SAVE("tardis.save"),

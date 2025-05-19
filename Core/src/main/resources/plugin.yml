@@ -17,9 +17,6 @@ permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.
     default: op
-  tardis.delete:
-    description: Allow players to delete any TARDIS.
-    default: false
   tardis.abandon:
     description: Allow players to abandon their TARDIS.
     default: op
@@ -150,7 +147,7 @@ permissions:
     description: Allow players to delete their own TARDIS.
     default: op
   tardis.timetravel:
-    description: Allow players to travel to random locations and saved destinations.
+    description: Allow players to travel to random locations and saved destinations, plus the ability to set their TARDIS home location.
     default: op
   tardis.timetravel.player:
     description: Allow players to travel to player locations.
@@ -245,9 +242,6 @@ permissions:
     default: op
   tardis.save.death:
     description: Allow players to travel their last known death location.
-    default: op
-  tardis.home:
-    description: Allow players to save a time travel destination as their home.
     default: op
   tardis.enter:
     description: Allow players to enter a TARDIS.
@@ -694,8 +688,8 @@ permissions:
     default: op
   # weeping angels
   tardisweepingangels.judoon:
-      description: Allow players to have a Judoon guard.
-      default: op
+    description: Allow players to have a Judoon guard.
+    default: op
   tardisweepingangels.k9:
     description: Allow players to have a K9 companion.
     default: op
@@ -903,7 +897,7 @@ commands:
       usage: /<command> hide
     sethome:
       description: Save a time travel location as home.
-      permission: tardis.home
+      permission: tardis.timetravel
       permission-message: You don't have the permission <permission> to use this command
       usage: /<command> sethome <preset> [preset]
     inside:
