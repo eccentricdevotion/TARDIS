@@ -132,13 +132,18 @@ public class TARDISExterminator {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             int id = tardis.getTardisId();
-            // check that the player is not currently in their TARDIS
+            // check that there are no players in their TARDIS
             HashMap<String, Object> travid = new HashMap<>();
             travid.put("tardis_id", id);
-            ResultSetTravellers rst = new ResultSetTravellers(plugin, travid, false);
+            ResultSetTravellers rst = new ResultSetTravellers(plugin, travid, true);
             if (rst.resultSet()) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_NO_DELETE");
-                return false;
+                for (UUID uuid : rst.getData()) {
+                    Player p = plugin.getServer().getPlayer(uuid);
+                    if (p != null && p.isOnline()) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_NO_DELETE");
+                        return false;
+                    }
+                }
             }
             String owner = tardis.getOwner();
             String chunkLoc = tardis.getChunk();

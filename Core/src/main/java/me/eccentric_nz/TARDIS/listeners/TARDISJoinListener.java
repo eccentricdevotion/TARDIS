@@ -123,12 +123,18 @@ public class TARDISJoinListener implements Listener {
                 plugin.getQueryFactory().doInsert("t_count", setc);
             }
         }
-        if (plugin.getConfig().getBoolean("creation.keep_night")) {
-            // are they in the TARDIS?
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", uuid);
-            ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
-            if (rst.resultSet()) {
+        // are they in a TARDIS?
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("uuid", uuid);
+        ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
+        if (rst.resultSet()) {
+            // does the TARDIS they occupy still exist?
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rst.getTardis_id());
+            if (!rsc.resultSet()) {
+                // teleport player
+                Location teleport = player.getRespawnLocation() != null ? player.getRespawnLocation() : plugin.getServer().getWorlds().getFirst().getSpawnLocation();
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.teleport(teleport), 1L);
+            } else if (plugin.getConfig().getBoolean("creation.keep_night")) {
                 // set the player's time to midnight
                 player.setPlayerTime(18000, false);
             }

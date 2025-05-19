@@ -38,6 +38,11 @@ class TARDISExterminateCommand {
     boolean doExterminate(Player player, boolean messagePlayer) {
         if (TARDISPermission.hasPermission(player, "tardis.exterminate")) {
             if (messagePlayer) {
+                // must be outside TARDIS to run this command
+                if (plugin.getUtils().inTARDISWorld(player)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_OUTSIDE");
+                    return true;
+                }
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "EXTERMINATE_CHECK");
                 plugin.getMessenger().sendExterminate(player, plugin);
                 // open floodgate gui
