@@ -82,7 +82,7 @@ public enum Table {
     transmats(true),
     travel_stats("travel_stats_id"),
     traveled_to("uuid"),
-    travellers(true),
+    travellers,
     vaults("v_id", true),
     thevoid("tardis_id", true),
     vortex("tardis_id", true),

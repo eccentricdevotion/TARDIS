@@ -134,6 +134,10 @@ public class TARDISJoinListener implements Listener {
                 // teleport player
                 Location teleport = player.getRespawnLocation() != null ? player.getRespawnLocation() : plugin.getServer().getWorlds().getFirst().getSpawnLocation();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.teleport(teleport), 1L);
+                // remove the travellers record
+                HashMap<String, Object> delete = new HashMap<>();
+                delete.put("traveller_id", rst.getTraveller_id());
+                plugin.getQueryFactory().doDelete("travellers", delete);
             } else if (plugin.getConfig().getBoolean("creation.keep_night")) {
                 // set the player's time to midnight
                 player.setPlayerTime(18000, false);

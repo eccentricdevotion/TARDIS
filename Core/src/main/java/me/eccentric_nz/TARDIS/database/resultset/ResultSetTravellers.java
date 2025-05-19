@@ -45,7 +45,6 @@ public class ResultSetTravellers {
     private final String prefix;
     private int traveller_id;
     private int tardis_id;
-    private UUID uuid;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the travellers table.
@@ -101,7 +100,6 @@ public class ResultSetTravellers {
                     }
                     traveller_id = rs.getInt("traveller_id");
                     tardis_id = rs.getInt("tardis_id");
-                    uuid = UUID.fromString(rs.getString("uuid"));
                 }
             } else {
                 return false;
@@ -122,6 +120,10 @@ public class ResultSetTravellers {
             }
         }
         return true;
+    }
+
+    public int getTraveller_id() {
+        return traveller_id;
     }
 
     public int getTardis_id() {
