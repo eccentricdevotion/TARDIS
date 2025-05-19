@@ -72,7 +72,7 @@ class TARDISJunkCreator {
         set.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
         set.put("owner", "junk");
         set.put("size", "JUNK");
-        set.put("tips", -999);
+        set.put("tips", -99);
         set.put("artron_level", Integer.MAX_VALUE);
         set.put("tardis_init", 1);
         set.put("powered_on", 1);
@@ -119,7 +119,7 @@ class TARDISJunkCreator {
         bd.setTardisID(lastInsertId);
         bd.setThrottle(SpaceTimeThrottle.JUNK);
         // build the TARDIS in the Vortex
-        TARDISBuilderInner builder = new TARDISBuilderInner(plugin, Consoles.schematicFor("junk"), chunkworld, lastInsertId, p, wall_type, floor_type, -999);
+        TARDISBuilderInner builder = new TARDISBuilderInner(plugin, Consoles.schematicFor("junk"), chunkworld, lastInsertId, p, wall_type, floor_type, -99);
         int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, builder, 1L, 3L);
         builder.setTask(task);
         // build the TARDIS in the world

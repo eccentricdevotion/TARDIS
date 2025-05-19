@@ -83,7 +83,7 @@ public class TARDISDevCommand implements CommandExecutor {
             "plurals",
             "recipe", "regen", "registry",
             "screen", "skin", "snapshot", "stats", "systree",
-            "tis", "tree", "trim",
+            "tis", "tips", "tree", "trim",
             "zero"
     );
     private final TARDIS plugin;
@@ -238,6 +238,9 @@ public class TARDISDevCommand implements CommandExecutor {
                                 return new SystemTreeCommand(plugin).open(player);
                             }
                             return false;
+                        }
+                        case "tips" -> {
+                            return new TIPSPreviewSlotInfo(plugin).display();
                         }
                         case "zero" -> {
                             if (sender instanceof Player player) {

@@ -61,7 +61,7 @@ public class TARDISDestroyerInner {
         if (plugin.isWorldGuardOnServer()) {
             TARDISTIPSData coords;
             if (schematic.getPermission().equals("junk")) {
-                coords = tips.getTIPSJunkData();
+                coords = tips.getTIPSJunkData(slot);
             } else {
                 coords = tips.getTIPSData(slot);
             }

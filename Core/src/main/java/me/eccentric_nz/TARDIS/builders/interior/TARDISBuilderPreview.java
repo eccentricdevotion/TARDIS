@@ -121,12 +121,7 @@ public class TARDISBuilderPreview implements Runnable {
                 div = (h + 1.0d) * w * (d + 1.0d);
                 // calculate startx, starty, startz
                 TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                TARDISTIPSData pos;
-                if (tips == -999) {
-                    pos = tintpos.getTIPSJunkData();
-                } else {
-                    pos = tintpos.getTIPSData(tips);
-                }
+                TARDISTIPSData pos = tintpos.getTIPSData(tips);
                 startx = pos.getCentreX();
                 resetx = pos.getCentreX();
                 startz = pos.getCentreZ();

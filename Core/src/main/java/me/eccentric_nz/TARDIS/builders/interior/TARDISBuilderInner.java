@@ -164,11 +164,7 @@ public class TARDISBuilderInner implements Runnable {
                 if (tips > -1000001) {
                     // default world - use TIPS
                     TARDISInteriorPostioning tintpos = new TARDISInteriorPostioning(plugin);
-                    if (tips == -999) {
-                        pos = tintpos.getTIPSJunkData();
-                    } else {
-                        pos = tintpos.getTIPSData(tips);
-                    }
+                    pos = tintpos.getTIPSData(tips);
                     startx = pos.getCentreX();
                     resetx = pos.getCentreX();
                     startz = pos.getCentreZ();

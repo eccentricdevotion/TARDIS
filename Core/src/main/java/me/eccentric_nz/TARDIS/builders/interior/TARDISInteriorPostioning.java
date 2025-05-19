@@ -87,8 +87,7 @@ public class TARDISInteriorPostioning {
     /**
      * Calculate the position data for a TIPS slot.
      *
-     * @param slot the slot position in the grid (a number between 0, 399
-     * inclusive)
+     * @param slot the slot position in the grid (a number between 0, 399 inclusive)
      * @return a TIPS Data container
      */
     public TARDISTIPSData getTIPSData(int slot) {
@@ -126,18 +125,16 @@ public class TARDISInteriorPostioning {
      *
      * @return a TIPS Data container
      */
-    public TARDISTIPSData getTIPSJunkData() {
-        TARDISTIPSData data = new TARDISTIPSData();
-        int row = -1;
-        int col = -1;
-        data.setMinX((row * 1024));
-        data.setCentreX((row * 1024 + 496));
-        data.setMaxX((row * 1024 + 1023));
-        data.setMinZ((col * 1024));
-        data.setCentreZ((col * 1024 + 496));
-        data.setMaxZ((col * 1024 + 1023));
-        data.setSlot(-999);
-        return data;
+    public TARDISTIPSData getTIPSJunkData(int slot) {
+        if (slot == -999) {
+            // remove division preview record
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("tardis_id", -21);
+            plugin.getQueryFactory().doDelete("transmats", where);
+            return getTIPSData(-21);
+        } else {
+            return getTIPSData(-99);
+        }
     }
 
     // won't remove manually grown rooms...

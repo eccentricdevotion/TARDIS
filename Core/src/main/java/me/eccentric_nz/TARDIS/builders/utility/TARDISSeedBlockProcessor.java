@@ -161,9 +161,7 @@ public class TARDISSeedBlockProcessor {
                 String d = TARDISStaticUtils.getPlayersDirection(player, false);
                 // get TIPs slot
                 int slot = -1000001;
-                if (schm.getPermission().equals("junk")) {
-                    slot = -999;
-                } else if (tips) {
+                if (tips) {
                     slot = new TARDISInteriorPostioning(plugin).getFreeSlot();
                     if (plugin.getConfig().getString("creation.tips_next", "HIGHEST").equalsIgnoreCase("FREE")) {
                         TARDISBuilderInstanceKeeper.getTipsSlots().add(slot);
