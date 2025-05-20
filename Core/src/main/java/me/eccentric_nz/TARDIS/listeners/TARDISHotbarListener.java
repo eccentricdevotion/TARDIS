@@ -73,7 +73,7 @@ public class TARDISHotbarListener implements Listener {
                     }
                 } else {
                     Location respawn = player.getRespawnLocation();
-                    // if player has respawn location set
+                    // if player has respawn location set else get world spawn
                     player.setCompassTarget(Objects.requireNonNullElseGet(respawn, () -> player.getWorld().getSpawnLocation()));
                 }
             }

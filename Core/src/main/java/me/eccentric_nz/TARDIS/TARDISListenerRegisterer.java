@@ -315,6 +315,7 @@ class TARDISListenerRegisterer {
         plugin.getPM().registerEvents(new TVListener(plugin), plugin);
         plugin.getPM().registerEvents(new TVSkinListener(plugin), plugin);
         plugin.getPM().registerEvents(new SkinListener(), plugin);
+        plugin.getPM().registerEvents(new ElytraListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTemporalListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISTemporalLocatorListener(plugin), plugin);
         plugin.getPM().registerEvents(new TARDISThemeMenuListener(plugin), plugin);
