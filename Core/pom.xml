@@ -456,6 +456,12 @@
             </exclusions>
         </dependency>
         <dependency>
+            <groupId>net.luckperms</groupId>
+            <artifactId>api</artifactId>
+            <version>5.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.terraform</groupId>
             <artifactId>TerraformGenerator</artifactId>
             <version>18.1.2</version>

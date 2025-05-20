@@ -42,6 +42,7 @@ import me.eccentric_nz.TARDIS.mapping.TARDISMapper;
 import me.eccentric_nz.TARDIS.mapping.TARDISSquareMap;
 import me.eccentric_nz.TARDIS.messaging.TARDISMessage;
 import me.eccentric_nz.TARDIS.monitor.SnapshotLoader;
+import me.eccentric_nz.TARDIS.perms.TARDISContexts;
 import me.eccentric_nz.TARDIS.placeholders.TARDISPlaceholderExpansion;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.recipes.*;
@@ -354,6 +355,8 @@ public class TARDIS extends JavaPlugin {
             loadMultiverse();
             // load worldguard
             loadWorldGuard();
+            // add luckperms context
+            loadLuckPerms();
             loadLanguage();
             loadSigns();
             loadChameleonGUIs();
@@ -1589,6 +1592,15 @@ public class TARDIS extends JavaPlugin {
             debug("Hooking into WorldGuard!");
             worldGuardOnServer = true;
             worldGuardUtils = new TARDISWorldGuardUtils(this);
+        }
+    }
+    /**
+     * If the LuckPerms plugin is available, load a custom permissions context.
+     */
+    private void loadLuckPerms() {
+        if (pm.getPlugin("LuckPerms") != null) {
+            debug("Loading LuckPerms `is-flying-tardis` context");
+            new TARDISContexts().register();
         }
     }
 
