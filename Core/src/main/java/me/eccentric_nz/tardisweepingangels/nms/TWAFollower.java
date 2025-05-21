@@ -18,9 +18,6 @@ package me.eccentric_nz.tardisweepingangels.nms;
 
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
@@ -36,13 +33,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_21_R4.entity.CraftPlayer;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
 import java.util.UUID;
 
 public class TWAFollower extends Husk implements OwnableEntity {
 
-    protected static final EntityDataAccessor<Byte> DATA_FLAGS_ID = SynchedEntityData.defineId(TWAFollower.class, EntityDataSerializers.BYTE);
-    protected static final EntityDataAccessor<Optional<EntityReference<LivingEntity>>> DATA_OWNERUUID_ID = SynchedEntityData.defineId(TWAFollower.class, EntityDataSerializers.OPTIONAL_LIVING_ENTITY_REFERENCE);
     protected UUID uuid;
     protected boolean following = false;
 
@@ -60,13 +54,6 @@ public class TWAFollower extends Husk implements OwnableEntity {
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder datawatcher) {
-        super.defineSynchedData(datawatcher);
-        datawatcher.define(TWAFollower.DATA_FLAGS_ID, (byte) 0);
-        datawatcher.define(TWAFollower.DATA_OWNERUUID_ID, Optional.empty());
-    }
-
-    @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         if (this.getOwnerUUID() != null) {
@@ -80,14 +67,12 @@ public class TWAFollower extends Husk implements OwnableEntity {
         super.readAdditionalSaveData(tag);
         EntityReference<LivingEntity> entityreference = EntityReference.readWithOldOwnerConversion(tag, "Owner", this.level());
         if (entityreference != null) {
-            this.entityData.set(TWAFollower.DATA_OWNERUUID_ID, Optional.of(entityreference));
             this.setOwnerUUID(entityreference.getUUID());
         } else {
             tag.getString("Owner").ifPresent((s -> {
                 uuid = OldUsersConverter.convertMobOwnerIfNecessary(this.getServer(), s);
                 if (uuid != null) {
                     this.setOwnerUUID(uuid);
-                    this.entityData.set(TWAFollower.DATA_OWNERUUID_ID, Optional.of(new EntityReference<>(uuid)));
                 }
             }));
         }
