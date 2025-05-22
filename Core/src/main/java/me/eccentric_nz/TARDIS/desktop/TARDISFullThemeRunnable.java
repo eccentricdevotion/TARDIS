@@ -213,7 +213,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 wherea.put("uuid", uuid.toString());
                 int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
                 plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wherea, player);
-                TARDISCache.invalidateUUID(uuid);
+                TARDISCache.invalidate(uuid, tardis.getTardisId());
             }
 //            Tardis tardis = rs.getTardis();
             slot = tardis.getTIPS();

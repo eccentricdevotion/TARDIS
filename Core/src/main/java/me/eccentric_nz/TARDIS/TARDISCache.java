@@ -46,4 +46,8 @@ public class TARDISCache {
     public static void invalidateUUID(Integer key) {
         BY_ID.invalidate(key);
     }
-}
+
+    public static void invalidate(UUID uuid, Integer id) {
+        BY_UUID.invalidate(uuid);
+        BY_ID.invalidate(id);
+    }}
