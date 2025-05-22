@@ -172,6 +172,7 @@ public class TARDISUpdateListener implements Listener {
                 case BEACON -> {
                     set.put("beacon", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
+                    TARDISCache.invalidate(id);
                 }
                 case ALLAY, BAMBOO, BIRDCAGE, FARM, IGLOO, IISTUBIL, HUTCH, LAVA, PEN, STABLE, STALL, VILLAGE -> {
                     set.put(updateable.getName(), blockLocStr);
@@ -192,15 +193,18 @@ public class TARDISUpdateListener implements Listener {
                     blockLocStr = bw.getName() + ":" + bx + ".5:" + by + ":" + bz + ".5";
                     set.put("creeper", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
+                    TARDISCache.invalidate(id);
                 }
                 case EPS -> {
                     blockLocStr = bw.getName() + ":" + bx + ".5:" + (by + 1) + ":" + bz + ".5";
                     set.put("eps", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
+                    TARDISCache.invalidate(id);
                 }
                 case RAIL -> {
                     set.put("rail", blockLocStr);
                     plugin.getQueryFactory().doUpdate("tardis", set, tid);
+                    TARDISCache.invalidate(id);
                 }
                 case CHAMELEON -> {
                     plugin.getQueryFactory().insertControl(id, 31, blockLocStr, secondary ? 1 : 0);

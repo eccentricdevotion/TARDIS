@@ -218,6 +218,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                         // set chameleon adaption to OFF
                                         setp.put("adapti_on", 0);
                                         plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
+                                        TARDISCache.invalidate(id);
                                     }
                                 }
                                 case "area" -> {
@@ -262,6 +263,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                         // set chameleon adaption to OFF
                                         seti.put("adapti_on", 0);
                                         plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
+                                        TARDISCache.invalidate(id);
                                     }
                                     // get a landing spot
                                     Location l;

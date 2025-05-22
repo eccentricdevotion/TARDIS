@@ -250,6 +250,7 @@ public class HandbrakeInteraction {
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
+                            TARDISCache.invalidate(id);
                             if (!uuid.equals(ownerUUID)) {
                                 Player ptl = plugin.getServer().getPlayer(ownerUUID);
                                 if (ptl != null) {
@@ -272,6 +273,7 @@ public class HandbrakeInteraction {
                         HashMap<String, Object> whereh = new HashMap<>();
                         whereh.put("tardis_id", id);
                         plugin.getQueryFactory().doUpdate("tardis", set, whereh);
+                        TARDISCache.invalidate(id);
                         HashMap<String, Object> seti = new HashMap<>();
                         seti.put("state", 1);
                         HashMap<String, Object> whereinteraction = new HashMap<>();

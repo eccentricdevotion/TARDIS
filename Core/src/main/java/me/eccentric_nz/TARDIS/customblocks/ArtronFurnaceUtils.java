@@ -52,6 +52,7 @@ public class ArtronFurnaceUtils {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         plugin.getQueryFactory().alterEnergyLevel("tardis", -drain, where, null);
+        TARDISCache.invalidate(id);
     }
 
     public static void register(String location, Player player, TARDIS plugin) {

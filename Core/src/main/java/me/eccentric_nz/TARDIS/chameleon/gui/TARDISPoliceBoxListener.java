@@ -167,6 +167,7 @@ public class TARDISPoliceBoxListener extends TARDISMenuListener {
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", set, wheret);
+            TARDISCache.invalidate(id);
             // damage the circuit if configured
             if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.chameleon") > 0) {
                 TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, id);

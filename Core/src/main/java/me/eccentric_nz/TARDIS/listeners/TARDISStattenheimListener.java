@@ -291,6 +291,7 @@ public class TARDISStattenheimListener implements Listener {
                             set.put("hidden", 0);
                             tid.put("tardis_id", id);
                             plugin.getQueryFactory().doUpdate("tardis", set, tid);
+                            TARDISCache.invalidate(id);
                         }
                         plugin.getMessenger().sendStatus(player, "TARDIS_COMING");
                         long delay = 10L;
@@ -332,6 +333,7 @@ public class TARDISStattenheimListener implements Listener {
                         HashMap<String, Object> wheret = new HashMap<>();
                         wheret.put("tardis_id", id);
                         plugin.getQueryFactory().alterEnergyLevel("tardis", -ch, wheret, player);
+                        TARDISCache.invalidate(id);
                         plugin.getTrackerKeeper().getHasDestination().remove(id);
                         plugin.getTrackerKeeper().getRescue().remove(id);
                     } else {
@@ -365,6 +367,7 @@ public class TARDISStattenheimListener implements Listener {
                             new TARDISAdaptiveBoxLampToggler(plugin).toggleLamp(id, true, preset);
                         }
                         plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
+                        TARDISCache.invalidate(id);
                         // toggle power sensor
                         new PowerSensor(plugin, id).toggle();
                     }

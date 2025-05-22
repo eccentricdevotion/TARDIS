@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
@@ -141,6 +142,7 @@ public class TARDISPowerButton {
         // toggle the power sensor
         new PowerSensor(plugin, id).toggle();
         plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
+        TARDISCache.invalidate(id);
         // get light level switches
         // interior
         ResultSetLightLevelLocation rslls = new ResultSetLightLevelLocation(plugin, id, 50); // interior light level

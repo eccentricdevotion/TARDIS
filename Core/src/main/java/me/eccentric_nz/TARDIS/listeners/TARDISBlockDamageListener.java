@@ -147,6 +147,7 @@ public class TARDISBlockDamageListener implements Listener {
             HashMap<String, Object> seth = new HashMap<>();
             seth.put("hidden", 0);
             plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
+            TARDISCache.invalidate(id);
         }
     }
 }

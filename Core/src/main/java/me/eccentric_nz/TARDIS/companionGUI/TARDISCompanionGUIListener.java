@@ -76,6 +76,7 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener {
             }
             tid.put("tardis_id", id);
             TARDIS.plugin.getQueryFactory().doUpdate("tardis", set, tid);
+            TARDISCache.invalidate(id);
         }
     }
 

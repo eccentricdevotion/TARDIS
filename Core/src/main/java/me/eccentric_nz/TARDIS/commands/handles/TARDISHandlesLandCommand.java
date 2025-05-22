@@ -125,6 +125,7 @@ class TARDISHandlesLandCommand {
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
+                            TARDISCache.invalidate(id);
                             plugin.getMessenger().sendArtron(player, id, Math.abs(amount));
                             plugin.getTrackerKeeper().getHasDestination().remove(id);
                             if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
@@ -143,6 +144,7 @@ class TARDISHandlesLandCommand {
                             HashMap<String, Object> whereb = new HashMap<>();
                             whereb.put("tardis_id", id);
                             plugin.getQueryFactory().doUpdate("tardis", set, whereb);
+                            TARDISCache.invalidate(id);
                         }
                     }, 400L);
                 } else {

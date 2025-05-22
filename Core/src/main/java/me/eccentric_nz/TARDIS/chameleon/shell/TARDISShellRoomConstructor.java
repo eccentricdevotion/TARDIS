@@ -195,6 +195,7 @@ public class TARDISShellRoomConstructor {
         HashMap<String, Object> wheree = new HashMap<>();
         wheree.put("tardis_id", id);
         plugin.getQueryFactory().alterEnergyLevel("tardis", plugin.getArtronConfig().getInt("shell") * -1, wheree, player);
+        TARDISCache.invalidate(id);
         plugin.getMessenger().send(player, TardisModule.TARDIS, "PRESET_CONSTRUCTED");
         // update tardis table
         HashMap<String, Object> sett = new HashMap<>();
@@ -204,6 +205,7 @@ public class TARDISShellRoomConstructor {
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("tardis", sett, wheret);
+        TARDISCache.invalidate(id);
         // update chameleon sign
         HashMap<String, Object> whereh = new HashMap<>();
         whereh.put("tardis_id", id);

@@ -61,6 +61,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener {
             set.put("companions", puid);
         }
         TARDIS.plugin.getQueryFactory().doUpdate("tardis", set, tid);
+        TARDISCache.invalidate(id);
     }
 
     public static void addToRegion(String world, String owner, String companion) {

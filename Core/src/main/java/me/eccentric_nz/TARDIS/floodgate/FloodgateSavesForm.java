@@ -151,6 +151,7 @@ public class FloodgateSavesForm {
                                 // set chameleon adaption to OFF
                                 seti.put("adapti_on", 0);
                                 plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
+                                TARDISCache.invalidate(id);
                             }
                         }
                     }
@@ -178,6 +179,7 @@ public class FloodgateSavesForm {
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
                             plugin.getQueryFactory().doSyncUpdate("tardis", sett, wheret);
+                            TARDISCache.invalidate(id);
                         }
                         HashMap<String, Object> whereid = new HashMap<>();
                         whereid.put("tardis_id", id);
@@ -218,6 +220,7 @@ public class FloodgateSavesForm {
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", id);
                     plugin.getQueryFactory().doSyncUpdate("tardis", sett, wheret);
+                    TARDISCache.invalidate(id);
                     HashMap<String, Object> whereid = new HashMap<>();
                     wheret.put("tardis_id", id);
                     plugin.getQueryFactory().doSyncUpdate("next", set, whereid);

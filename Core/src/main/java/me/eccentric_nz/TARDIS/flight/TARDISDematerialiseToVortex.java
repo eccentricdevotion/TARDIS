@@ -148,6 +148,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
                 HashMap<String, Object> whereh = new HashMap<>();
                 whereh.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("tardis", set, whereh);
+                TARDISCache.invalidate(id);
                 plugin.getPresetDestroyer().removeBlockProtection(id);
             }
         }

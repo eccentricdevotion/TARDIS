@@ -371,6 +371,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             if (!set.isEmpty()) {
                 where.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("tardis", set, where);
+                TARDISCache.invalidate(id);
             }
             if (!tud.getSchematic().getPermission().equals("archive")) {
                 // reset archive use back to 0
@@ -411,6 +412,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", id);
                     plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
+                    TARDISCache.invalidate(id);
                 }
             }
             // cancel the task

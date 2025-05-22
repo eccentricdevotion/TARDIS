@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.travel.save;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
@@ -147,6 +148,7 @@ public class TARDISSavesPlanetListener extends TARDISMenuListener {
                         HashMap<String, Object> wheret = new HashMap<>();
                         wheret.put("tardis_id", id);
                         plugin.getQueryFactory().doSyncUpdate("tardis", sett, wheret);
+                        TARDISCache.invalidate(id);
                     }
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", id);

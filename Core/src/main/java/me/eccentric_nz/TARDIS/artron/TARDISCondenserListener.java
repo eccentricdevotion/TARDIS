@@ -275,6 +275,7 @@ public class TARDISCondenserListener implements Listener {
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", id);
                     plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
+                    TARDISCache.invalidate(id);
                 } else {
                     int toMax = max - current;
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CAPACITOR_CONDENSE", max);

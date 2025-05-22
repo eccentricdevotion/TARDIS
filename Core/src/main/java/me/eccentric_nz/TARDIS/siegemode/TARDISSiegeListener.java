@@ -352,6 +352,7 @@ public class TARDISSiegeListener implements Listener {
             wherea.put("tardis_id", id);
             plugin.getQueryFactory().alterEnergyLevel("player_prefs", -min, wheretl, p);
             plugin.getQueryFactory().alterEnergyLevel("tardis", min, wherea, p);
+            TARDISCache.invalidate(id);
             plugin.getMessenger().send(p, TardisModule.TARDIS, "SIEGE_TRANSFER", String.format("%s", min));
         } else {
             // attempt to unsiege the TARDIS
@@ -379,6 +380,7 @@ public class TARDISSiegeListener implements Listener {
             wheres.put("tardis_id", id);
             // update the database
             plugin.getQueryFactory().doUpdate("tardis", set, wheres);
+            TARDISCache.invalidate(id);
             plugin.getTrackerKeeper().getInSiegeMode().remove(id);
             if (plugin.getConfig().getBoolean("siege.texture")) {
                 new TARDISSiegeMode(plugin).changeTextures(tardis.getUuid().toString(), tardis.getSchematic(), p, false);

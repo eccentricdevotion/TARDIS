@@ -154,6 +154,7 @@ public class TARDISPlayerShellListener extends TARDISMenuListener {
                         HashMap<String, Object> wheref = new HashMap<>();
                         wheref.put("tardis_id", id);
                         plugin.getQueryFactory().doSyncUpdate("tardis", setf, wheref);
+                        TARDISCache.invalidate(id);
                         // rebuild
                         new TARDISRebuildCommand(plugin).rebuildPreset(player);
                     }

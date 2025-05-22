@@ -200,6 +200,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                             // set chameleon adaption to OFF
                                             seti.put("adapti_on", 0);
                                             plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
+                                            TARDISCache.invalidate(occupiedTardisId);
                                         }
                                     }
                                 }
@@ -236,6 +237,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                         HashMap<String, Object> wheret = new HashMap<>();
                                         wheret.put("tardis_id", occupiedTardisId);
                                         plugin.getQueryFactory().doSyncUpdate("tardis", sett, wheret);
+                                        TARDISCache.invalidate(occupiedTardisId);
                                     }
                                     HashMap<String, Object> wheret = new HashMap<>();
                                     wheret.put("tardis_id", occupiedTardisId);

@@ -343,6 +343,7 @@ public class TARDISHandlesProcessor {
                                                     // set chameleon adaption to OFF
                                                     setp.put("adapti_on", 0);
                                                     plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
+                                                    TARDISCache.invalidate(id);
                                                 }
                                                 travelType = TravelType.HOME;
                                             }
@@ -543,6 +544,7 @@ public class TARDISHandlesProcessor {
                                                     set.put("hidden", 0);
                                                 }
                                                 plugin.getQueryFactory().doUpdate("tardis", set, tid);
+                                                TARDISCache.invalidate(id);
                                             }
                                             BuildData bd = new BuildData(uuid.toString());
                                             bd.setDirection(nextDirection);
@@ -566,6 +568,7 @@ public class TARDISHandlesProcessor {
                                                 HashMap<String, Object> wheret = new HashMap<>();
                                                 wheret.put("tardis_id", id);
                                                 plugin.getQueryFactory().doUpdate("tardis", seth, wheret);
+                                                TARDISCache.invalidate(id);
                                             }, 500L);
                                             // set current
                                             HashMap<String, Object> setc = new HashMap<>();
@@ -593,6 +596,7 @@ public class TARDISHandlesProcessor {
                                             HashMap<String, Object> wherea = new HashMap<>();
                                             wherea.put("tardis_id", id);
                                             plugin.getQueryFactory().alterEnergyLevel("tardis", -travel, wherea, player);
+                                            TARDISCache.invalidate(id);
                                         }
                                     }
                                 }

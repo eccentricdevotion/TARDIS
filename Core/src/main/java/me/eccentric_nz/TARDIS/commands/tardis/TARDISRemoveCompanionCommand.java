@@ -127,6 +127,7 @@ class TARDISRemoveCompanionCommand {
                 tid.put("tardis_id", id);
                 set.put("companions", newList);
                 plugin.getQueryFactory().doUpdate("tardis", set, tid);
+                TARDISCache.invalidate(id);
             }
             return true;
         } else {

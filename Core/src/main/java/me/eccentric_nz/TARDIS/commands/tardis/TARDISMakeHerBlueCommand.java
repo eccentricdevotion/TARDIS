@@ -132,6 +132,7 @@ class TARDISMakeHerBlueCommand {
         HashMap<String, Object> set = new HashMap<>();
         set.put("chameleon_preset", "POLICE_BOX_BLUE");
         plugin.getQueryFactory().doUpdate("tardis", set, wherep);
+        TARDISCache.invalidate(id);
         BuildData bd = new BuildData(uuid.toString());
         bd.setDirection(rsc.getDirection());
         bd.setLocation(l);
@@ -148,6 +149,7 @@ class TARDISMakeHerBlueCommand {
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", id);
         plugin.getQueryFactory().alterEnergyLevel("tardis", -rebuild, wheret, player.getPlayer());
+        TARDISCache.invalidate(id);
         return true;
     }
 }

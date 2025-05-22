@@ -137,6 +137,7 @@ class TARDISAddCompanionCommand {
                     }
                 }
                 plugin.getQueryFactory().doUpdate("tardis", set, tid);
+                TARDISCache.invalidate(id);
                 if (addAll) {
                     plugin.getMessenger().sendInsertedColour(player, "COMPANIONS_ADD", "everyone", plugin);
                     plugin.getMessenger().sendColouredCommand(player, "COMPANIONS_EVERYONE", "/tardis remove all", plugin);

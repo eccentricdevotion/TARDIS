@@ -94,6 +94,7 @@ public class TARDISBeaconToggler {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             plugin.getQueryFactory().doUpdate("tardis", set, where);
+            TARDISCache.invalidate(uuid);
         }
     }
 }

@@ -192,6 +192,7 @@ public class TARDISPresetBuilderFactory {
                 set.put("chameleon_demat", preset.toString());
             }
             plugin.getQueryFactory().doUpdate("tardis", set, whered);
+            TARDISCache.invalidate(bd.getTardisID());
         }
     }
 

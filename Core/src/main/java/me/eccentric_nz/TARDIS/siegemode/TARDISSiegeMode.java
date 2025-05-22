@@ -211,6 +211,7 @@ public class TARDISSiegeMode {
         }
         // update the database
         plugin.getQueryFactory().doUpdate("tardis", set, wheres);
+        TARDISCache.invalidate(id);
     }
 
     void changeTextures(String uuid, Schematic schm, Player p, boolean toSiege) {

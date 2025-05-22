@@ -172,6 +172,7 @@ public class TARDISRemoteComehereCommand {
             HashMap<String, Object> ttid = new HashMap<>();
             ttid.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
+            TARDISCache.invalidate(id);
         }
         plugin.getQueryFactory().doUpdate("current", set, tid);
         plugin.getMessenger().sendStatus(player, "TARDIS_COMING");

@@ -122,6 +122,7 @@ class TARDISJunkPreference {
             HashMap<String, Object> whereu = new HashMap<>();
             whereu.put("uuid", ustr);
             plugin.getQueryFactory().doSyncUpdate("tardis", sett, whereu);
+            TARDISCache.invalidate(id);
             // set the Chameleon Circuit sign
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);

@@ -203,6 +203,7 @@ public class TARDISBindListener implements Listener {
                                         }
                                         wherec.put("tardis_id", id);
                                         plugin.getQueryFactory().doUpdate("tardis", set, wherec);
+                                        TARDISCache.invalidate(id);
                                         player.performCommand("tardis rebuild");
                                         plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, player.getName() + " issued server command: /tardis rebuild" + name);
                                         break;

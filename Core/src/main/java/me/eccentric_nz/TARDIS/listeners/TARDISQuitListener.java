@@ -126,6 +126,7 @@ public class TARDISQuitListener implements Listener {
                     HashMap<String, Object> sett = new HashMap<>();
                     sett.put("powered_on", 0);
                     plugin.getQueryFactory().doUpdate("tardis", sett, wheret);
+                    TARDISCache.invalidate(id);
                 }
             }
             // save arched status

@@ -156,6 +156,7 @@ class TARDISRemoteTravelCommand {
             whereh.put("tardis_id", id);
             if (!set.isEmpty()) {
                 plugin.getQueryFactory().doUpdate("tardis", set, whereh);
+                TARDISCache.invalidate(id);
             }
             plugin.getQueryFactory().doUpdate("current", setcurrent, wherecurrent);
             plugin.getQueryFactory().doUpdate("back", setback, whereback);

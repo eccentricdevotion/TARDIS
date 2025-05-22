@@ -232,6 +232,7 @@ public class TARDISControlMenuListener extends TARDISMenuListener {
                     HashMap<String, Object> wherez = new HashMap<>();
                     wherez.put("tardis_id", id);
                     plugin.getQueryFactory().alterEnergyLevel("tardis", -zero_amount, wherez, player);
+                    TARDISCache.invalidate(id);
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_ZERO");
                 }

@@ -79,6 +79,7 @@ public class Artron {
                 set.put("artron_level", set_level);
                 wheret.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("tardis", set, wheret);
+                TARDISCache.invalidate(id);
             }
         }
         plugin.getMessenger().message(sender, TardisModule.TARDIS, player + "'s Artron Energy Level was set to " + set_level);

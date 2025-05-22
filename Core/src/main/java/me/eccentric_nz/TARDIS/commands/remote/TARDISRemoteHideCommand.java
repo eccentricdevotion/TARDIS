@@ -92,6 +92,7 @@ public class TARDISRemoteHideCommand {
         HashMap<String, Object> seth = new HashMap<>();
         seth.put("hidden", 1);
         plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
+        TARDISCache.invalidate(id);
         // turn force field off
         if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)) {
             plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);

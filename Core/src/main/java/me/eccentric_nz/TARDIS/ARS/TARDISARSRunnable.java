@@ -121,6 +121,7 @@ class TARDISARSRunnable implements Runnable {
                 HashMap<String, Object> set = new HashMap<>();
                 set.put("uuid", p.getUniqueId().toString());
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, set, p);
+                TARDISCache.invalidate(p.getUniqueId());
                 if (p.isOnline()) {
                     plugin.getMessenger().send(p, TardisModule.TARDIS, "ARS_CANCEL", whichroom, String.format("%d", taskID));
                 }

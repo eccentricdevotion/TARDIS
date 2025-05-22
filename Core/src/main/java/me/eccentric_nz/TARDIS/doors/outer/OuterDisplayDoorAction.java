@@ -218,6 +218,7 @@ public class OuterDisplayDoorAction extends TARDISDoorListener {
                                                 HashMap<String, Object> wheret = new HashMap<>();
                                                 wheret.put("tardis_id", tardis.getTardisId());
                                                 plugin.getQueryFactory().doUpdate("tardis", set, wheret);
+                                                TARDISCache.invalidate(tardis.getTardisId());
                                             }
                                         }
                                     } else {

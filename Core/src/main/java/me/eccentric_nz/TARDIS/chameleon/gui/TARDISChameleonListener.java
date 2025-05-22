@@ -285,6 +285,7 @@ public class TARDISChameleonListener extends TARDISMenuListener {
         }
         if (!set.isEmpty()) {
             plugin.getQueryFactory().doUpdate("tardis", set, wherec);
+            TARDISCache.invalidate(id);
         }
     }
 

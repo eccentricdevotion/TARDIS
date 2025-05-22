@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -318,6 +319,7 @@ public class TARDISConsoleCloseListener implements Listener {
                             // update tardis
                             where_tardis.put("tardis_id", id);
                             plugin.getQueryFactory().doUpdate("tardis", set_tardis, where_tardis);
+                            TARDISCache.invalidate(id);
                         }
                         plugin.getTrackerKeeper().getRescue().remove(id);
                         if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {

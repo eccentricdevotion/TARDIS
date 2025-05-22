@@ -58,6 +58,7 @@ public class TARDISIsomorphicCommand {
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", seti, wheret);
+            TARDISCache.invalidate(id);
             plugin.getMessenger().send(sender, TardisModule.TARDIS, onoff);
         } else {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "NO_TARDIS");

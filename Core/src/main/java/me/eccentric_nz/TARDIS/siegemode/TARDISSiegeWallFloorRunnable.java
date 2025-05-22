@@ -126,6 +126,7 @@ class TARDISSiegeWallFloorRunnable implements Runnable {
                 wherea.put("uuid", uuid.toString());
                 int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
                 plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wherea, player);
+                TARDISCache.invalidate(uuid);
             }
 //            Tardis tardis = rs.getTardis();
             int slot = tardis.getTIPS();

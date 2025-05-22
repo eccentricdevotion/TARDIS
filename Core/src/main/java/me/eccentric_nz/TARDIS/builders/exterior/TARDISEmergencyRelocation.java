@@ -92,6 +92,7 @@ public class TARDISEmergencyRelocation {
                 HashMap<String, Object> wherea = new HashMap<>();
                 wherea.put("tardis_id", id);
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -plugin.getArtronConfig().getInt("travel"), wherea, p);
+                TARDISCache.invalidate(id);
             }
         }
     }

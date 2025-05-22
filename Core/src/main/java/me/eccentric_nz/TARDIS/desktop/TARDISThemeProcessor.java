@@ -182,6 +182,7 @@ public class TARDISThemeProcessor {
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("uuid", uuid.toString());
         plugin.getQueryFactory().doUpdate("tardis", sett, wheret);
+        TARDISCache.invalidate(uuid);
         // take the Artron Energy
         HashMap<String, Object> wherea = new HashMap<>();
         wherea.put("uuid", uuid.toString());
@@ -202,6 +203,7 @@ public class TARDISThemeProcessor {
             ttr = new TARDISFullThemeRunnable(plugin, uuid, tud);
         }
         plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wherea, plugin.getServer().getPlayer(uuid));
+        TARDISCache.invalidate(uuid);
         // start the rebuild
         long initial_delay = (hasLava) ? 45L : 5L;
         long delay = Math.round(20 / plugin.getConfig().getDouble("growth.room_speed"));

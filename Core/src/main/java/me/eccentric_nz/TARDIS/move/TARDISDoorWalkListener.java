@@ -526,6 +526,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         wheree.put("tardis_id", id);
                                         int cost = (-plugin.getArtronConfig().getInt("backdoor"));
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", cost, wheree, player);
+                                        TARDISCache.invalidate(id);
                                     }
                                     case 3 -> {
                                         if (artron < required) {
@@ -594,6 +595,7 @@ public class TARDISDoorWalkListener extends TARDISDoorListener implements Listen
                                         wherea.put("tardis_id", id);
                                         int costa = (-plugin.getArtronConfig().getInt("backdoor"));
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", costa, wherea, player);
+                                        TARDISCache.invalidate(id);
                                     }
                                     default -> {
                                         // do nothing

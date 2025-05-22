@@ -191,6 +191,7 @@ public class TARDISDirectionCommand {
             HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("tardis_id", id);
             plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wherea, player);
+            TARDISCache.invalidate(id);
             // if they have a Direction Frame, update the rotation
             HashMap<String, Object> wheredf = new HashMap<>();
             wheredf.put("tardis_id", id);

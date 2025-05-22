@@ -138,12 +138,14 @@ public class TARDISHideCommand {
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
             plugin.getQueryFactory().alterEnergyLevel("tardis", -hide, wheret, player.getPlayer());
+            TARDISCache.invalidate(id);
             // set hidden to true
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
             HashMap<String, Object> seth = new HashMap<>();
             seth.put("hidden", 1);
             plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
+            TARDISCache.invalidate(id);
             // turn force field off
             if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)) {
                 plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);

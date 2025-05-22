@@ -60,6 +60,7 @@ public class TARDISSiegeRunnable implements Runnable {
                     HashMap<String, Object> whered = new HashMap<>();
                     whered.put("tardis_id", id);
                     plugin.getQueryFactory().alterEnergyLevel("tardis", deplete, whered, null);
+                    TARDISCache.invalidate(id);
                 } else if (plugin.getConfig().getBoolean("siege.creeper")) {
                     Location l = TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
                     // spawn an entity so we can check for the creeper
@@ -78,6 +79,7 @@ public class TARDISSiegeRunnable implements Runnable {
                         HashMap<String, Object> wherec = new HashMap<>();
                         wherec.put("tardis_id", id);
                         plugin.getQueryFactory().alterEnergyLevel("tardis", plugin.getArtronConfig().getInt("siege_creeper"), wherec, null);
+                        TARDISCache.invalidate(id);
                     }
                 }
             }

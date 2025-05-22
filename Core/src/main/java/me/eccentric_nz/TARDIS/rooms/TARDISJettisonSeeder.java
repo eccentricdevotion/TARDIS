@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
@@ -109,6 +110,7 @@ public class TARDISJettisonSeeder implements Listener {
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("uuid", player.getUniqueId().toString());
                         plugin.getQueryFactory().alterEnergyLevel("tardis", amount, set, player);
+                        TARDISCache.invalidate(player.getUniqueId());
                         new RoomCleaner(plugin).removeRecords(room, id, block.getWorld(), player);
                         if (plugin.getConfig().getBoolean("growth.return_room_seed")) {
                             // give the player back the room seed block

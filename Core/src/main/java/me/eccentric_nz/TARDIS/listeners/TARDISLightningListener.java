@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -82,6 +83,7 @@ public class TARDISLightningListener implements Listener {
                                 HashMap<String, Object> wheret = new HashMap<>();
                                 wheret.put("tardis_id", id);
                                 plugin.getQueryFactory().doUpdate("tardis", set, wheret);
+                                TARDISCache.invalidate(id);
                             }
                         }
                     }

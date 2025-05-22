@@ -39,11 +39,21 @@ public class TARDISCache {
         return rs.getTardis();
     }
 
-    public static void invalidateUUID(UUID key) {
+    public static void invalidate(UUID key) {
+        Tardis tardis = BY_UUID.get(key);
+        if (tardis != null) {
+            BY_ID.invalidate(tardis.getTardisId());
+        }
         BY_UUID.invalidate(key);
     }
 
-    public static void invalidateUUID(Integer key) {
+    public static void invalidate(Integer key) {
+        Tardis tardis = BY_ID.get(key);
+        if (tardis != null) {
+            try {
+                BY_UUID.invalidate(UUID.fromString(tardis.getOwner()));
+            } catch (IllegalArgumentException ignored) { }
+        }
         BY_ID.invalidate(key);
     }
 

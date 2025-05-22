@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.flight.TARDISHandbrake;
@@ -59,6 +60,7 @@ public class TARDISHandbrakeCommand {
             HashMap<String, Object> set = new HashMap<>();
             set.put("handbrake_on", onoff);
             plugin.getQueryFactory().doUpdate("tardis", set, where);
+            TARDISCache.invalidate(id);
             Location location = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation());
             TARDISSounds.playTARDISSound(location, "tardis_handbrake_engage");
             // Changes the lever to on

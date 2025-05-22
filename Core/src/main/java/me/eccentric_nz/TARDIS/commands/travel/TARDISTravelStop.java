@@ -129,6 +129,7 @@ public class TARDISTravelStop {
                 // set chameleon adaption to OFF
                 setp.put("adapti_on", 0);
                 plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
+                TARDISCache.invalidate(id);
             }
             plugin.getPresetBuilder().buildPreset(bd);
             // engage the handbrake!
@@ -137,6 +138,7 @@ public class TARDISTravelStop {
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
             plugin.getQueryFactory().doSyncUpdate("tardis", seth, whereh);
+            TARDISCache.invalidate(id);
             // also set the console handbrake state if there is one
             HashMap<String, Object> setc = new HashMap<>();
             setc.put("state", 1);

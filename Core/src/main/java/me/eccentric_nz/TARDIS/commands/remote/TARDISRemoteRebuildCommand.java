@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.remote;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
@@ -70,6 +71,7 @@ public class TARDISRemoteRebuildCommand {
             HashMap<String, Object> seth = new HashMap<>();
             seth.put("hidden", 0);
             plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
+            TARDISCache.invalidate(id);
         }
         return true;
     }

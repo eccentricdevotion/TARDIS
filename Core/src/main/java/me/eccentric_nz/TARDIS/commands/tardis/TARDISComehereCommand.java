@@ -211,6 +211,7 @@ class TARDISComehereCommand {
                     HashMap<String, Object> ttid = new HashMap<>();
                     ttid.put("tardis_id", id);
                     plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
+                    TARDISCache.invalidate(id);
                 }
                 plugin.getQueryFactory().doUpdate("current", set, tid);
                 plugin.getMessenger().sendStatus(player, "TARDIS_COMING");
@@ -253,6 +254,7 @@ class TARDISComehereCommand {
                 HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("tardis_id", id);
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -ch, wheret, player);
+                TARDISCache.invalidate(id);
                 plugin.getTrackerKeeper().getHasDestination().remove(id);
                 plugin.getTrackerKeeper().getRescue().remove(id);
             } else {

@@ -691,6 +691,7 @@ public class TARDII implements TardisAPI {
         HashMap<String, Object> set = new HashMap<>();
         set.put("chameleon_preset", preset.toString());
         TARDIS.plugin.getQueryFactory().doSyncUpdate("tardis", set, where);
+        TARDISCache.invalidate(id);
         if (rebuild) {
             // rebuild exterior
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(TARDIS.plugin, id);
@@ -718,6 +719,7 @@ public class TARDII implements TardisAPI {
                 HashMap<String, Object> seth = new HashMap<>();
                 seth.put("hidden", 0);
                 TARDIS.plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
+                TARDISCache.invalidate(id);
             } else {
                 return false;
             }

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronStorage;
@@ -130,6 +131,7 @@ class TARDISARSJettisonRunnable implements Runnable {
             HashMap<String, Object> set = new HashMap<>();
             set.put("tardis_id", id);
             plugin.getQueryFactory().alterEnergyLevel("tardis", amount, set, null);
+            TARDISCache.invalidate(id);
             if (player.isOnline()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_RECOVERED", String.format("%d", amount));
             }

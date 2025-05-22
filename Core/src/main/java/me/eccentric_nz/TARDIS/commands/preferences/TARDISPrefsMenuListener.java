@@ -192,6 +192,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                         HashMap<String, Object> set = new HashMap<>();
                         set.put("handbrake_on", 1);
                         plugin.getQueryFactory().doUpdate("tardis", set, wheret);
+                        TARDISCache.invalidate(id);
                         im.setLore(List.of(plugin.getLanguage().getString("SET_ON")));
                         is.setItemMeta(im);
                         // Check if it's at a recharge point
@@ -204,6 +205,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                             HashMap<String, Object> wheref = new HashMap<>();
                             wheref.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheref, p);
+                            TARDISCache.invalidate(id);
                         }
                         plugin.getTrackerKeeper().getHasDestination().remove(id);
                         if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
@@ -393,6 +395,7 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                         plugin.getTrackerKeeper().getJunkPlayers().put(uuid, id);
                     }
                     plugin.getQueryFactory().doSyncUpdate("tardis", sett, whereu);
+                    TARDISCache.invalidate(id);
                     // set the Chameleon Circuit sign(s)
                     HashMap<String, Object> wherec = new HashMap<>();
                     wherec.put("tardis_id", id);

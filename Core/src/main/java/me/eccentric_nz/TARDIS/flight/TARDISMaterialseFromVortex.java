@@ -110,6 +110,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
+                            TARDISCache.invalidate(id);
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "Q_FLY");
                             plugin.getTrackerKeeper().getHasDestination().remove(id);
                         }
@@ -293,6 +294,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     HashMap<String, Object> whereh = new HashMap<>();
                     whereh.put("tardis_id", id);
                     plugin.getQueryFactory().doUpdate("tardis", set, whereh);
+                    TARDISCache.invalidate(id);
                 }
             }
         }

@@ -213,7 +213,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 wherea.put("uuid", uuid.toString());
                 int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
                 plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wherea, player);
-                TARDISCache.invalidate(uuid, tardis.getTardisId());
+                TARDISCache.invalidate(uuid);
             }
 //            Tardis tardis = rs.getTardis();
             slot = tardis.getTIPS();
@@ -472,6 +472,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             if (!set.isEmpty()) {
                 where.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("tardis", set, where);
+                TARDISCache.invalidate(id);
             }
             if (!tud.getSchematic().getPermission().equals("archive")) {
                 // reset archive use back to 0
@@ -517,6 +518,7 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
                 HashMap<String, Object> setr = new HashMap<>();
                 setr.put("tardis_id", id);
                 plugin.getQueryFactory().alterEnergyLevel("tardis", refund, setr, null);
+                TARDISCache.invalidate(id);
                 if (player.isOnline()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_RECOVERED", String.format("%d", refund));
                 }

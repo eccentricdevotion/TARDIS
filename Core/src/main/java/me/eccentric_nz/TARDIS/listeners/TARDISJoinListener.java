@@ -191,6 +191,7 @@ public class TARDISJoinListener implements Listener {
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", set, wherel);
+            TARDISCache.invalidate(id);
         }
         // re-arch the player
         if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled")) {

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import org.bukkit.entity.Player;
@@ -49,5 +50,6 @@ public class LightSwitchAction {
         new TARDISLampToggler(plugin).flickSwitch(id, player.getUniqueId(), on, light);
         setl.put("lights_on", (on) ? 0 : 1);
         plugin.getQueryFactory().doUpdate("tardis", setl, wherel);
+        TARDISCache.invalidate(id);
     }
 }

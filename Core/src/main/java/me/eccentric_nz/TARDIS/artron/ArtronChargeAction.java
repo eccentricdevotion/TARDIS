@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronStorage;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
@@ -142,5 +143,6 @@ public class ArtronChargeAction {
         HashMap<String, Object> whereid = new HashMap<>();
         whereid.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("tardis", set, whereid);
+        TARDISCache.invalidate(id);
     }
 }
