@@ -17,9 +17,10 @@
 package me.eccentric_nz.TARDIS.database;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.tool.Table;
 import org.bukkit.entity.Player;
 
@@ -375,11 +376,13 @@ public class QueryFactory {
     public boolean claimTARDIS(Player player, int id) {
         PreparedStatement ps = null;
         // check if they have a non-abandoned TARDIS
-        HashMap<String, Object> where = new HashMap<>();
-        String uuid = player.getUniqueId().toString();
-        where.put("uuid", uuid);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        if (!rs.resultSet()) {
+//        HashMap<String, Object> where = new HashMap<>();
+        UUID uuid = player.getUniqueId();
+//        where.put("uuid", uuid);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//        if (!rs.resultSet()) {
+        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+        if (tardis != null) {
             String query = "UPDATE " + prefix + "tardis SET uuid = ?, owner = ?, last_known_name = ?, abandoned = 0 , tardis_init = 1, powered_on = 1, lastuse = ? WHERE tardis_id = ?";
             try {
                 service.testConnection(connection);
@@ -390,7 +393,7 @@ public class QueryFactory {
                     now = System.currentTimeMillis();
                 }
                 ps = connection.prepareStatement(query);
-                ps.setString(1, uuid);
+                ps.setString(1, uuid.toString());
                 ps.setString(2, player.getName());
                 ps.setString(3, player.getName());
                 ps.setLong(4, now);
@@ -399,7 +402,7 @@ public class QueryFactory {
                 if (bool) {
                     query = "UPDATE " + prefix + "ars SET uuid = ? WHERE tardis_id = ?";
                     ps = connection.prepareStatement(query);
-                    ps.setString(1, uuid);
+                    ps.setString(1, uuid.toString());
                     ps.setInt(2, id);
                     ps.executeUpdate();
                 }

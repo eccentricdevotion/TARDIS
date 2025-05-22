@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.companionGUI;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.ChatColor;
@@ -116,11 +116,13 @@ public class TARDISCompanionGUIListener extends TARDISMenuListener {
             case 51 -> {
                 // delete
                 if (selected_head.containsKey(uuid)) {
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("uuid", uuid.toString());
-                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-                    if (rs.resultSet()) {
-                        Tardis tardis = rs.getTardis();
+//                    HashMap<String, Object> where = new HashMap<>();
+//                    where.put("uuid", uuid.toString());
+//                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//                    if (rs.resultSet()) {
+//                        Tardis tardis = rs.getTardis();
+                    Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+                    if (tardis != null) {
                         int id = tardis.getTardisId();
                         String comps = tardis.getCompanions();
                         ItemStack h = view.getItem(selected_head.get(uuid));

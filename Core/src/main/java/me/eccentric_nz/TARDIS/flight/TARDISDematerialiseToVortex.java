@@ -17,13 +17,13 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISDematerialisationEvent;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -61,11 +61,13 @@ public class TARDISDematerialiseToVortex implements Runnable {
         UUID uuid = player.getUniqueId();
         plugin.getTrackerKeeper().getInVortex().add(id);
         plugin.getTrackerKeeper().getDidDematToVortex().add(id);
-        HashMap<String, Object> wherei = new HashMap<>();
-        wherei.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+//        HashMap<String, Object> wherei = new HashMap<>();
+//        wherei.put("tardis_id", id);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
+//        if (rs.resultSet()) {
+//            Tardis tardis = rs.getTardis();
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        if (tardis != null) {
             boolean hidden = tardis.isHidden();
             ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
             String resetw = "";

@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionGUIListener;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -30,7 +30,6 @@ import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class FloodgateCompanionsForm {
@@ -78,11 +77,13 @@ public class FloodgateCompanionsForm {
             new FloodgateAddCompanionsForm(plugin, uuid).send();
         } else {
             // remove player from companions
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", uuid.toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-            if (rs.resultSet()) {
-                Tardis tardis = rs.getTardis();
+//            HashMap<String, Object> where = new HashMap<>();
+//            where.put("uuid", uuid.toString());
+//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//            if (rs.resultSet()) {
+//                Tardis tardis = rs.getTardis();
+            Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+            if (tardis != null) {
                 int id = tardis.getTardisId();
                 String comps = tardis.getCompanions();
                 // get UUID for offline player

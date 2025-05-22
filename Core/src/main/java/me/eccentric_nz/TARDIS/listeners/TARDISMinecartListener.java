@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -84,11 +85,12 @@ public class TARDISMinecartListener implements Listener {
                         }
                         // get RAIL room location
                         id = rsd.getTardis_id();
-                        HashMap<String, Object> whereid = new HashMap<>();
-                        whereid.put("tardis_id", id);
-                        ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
-                        if (rs.resultSet() && !plugin.getTrackerKeeper().getMinecart().contains(id)) {
-                            Tardis tardis = rs.getTardis();
+//                        HashMap<String, Object> whereid = new HashMap<>();
+//                        whereid.put("tardis_id", id);
+//                        ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
+                        Tardis tardis = TARDISCache.BY_ID.get(id);
+                        if (tardis != null && !plugin.getTrackerKeeper().getMinecart().contains(id)) {
+//                            Tardis tardis = rs.getTardis();
                             data = tardis.getRail().split(":");
                             playerUUID = tardis.getUuid();
                             plugin.getTrackerKeeper().getMinecart().add(id);
@@ -100,7 +102,7 @@ public class TARDISMinecartListener implements Listener {
                     // get police box location
                     HashMap<String, Object> wherep = new HashMap<>();
                     wherep.put("rail", db_loc);
-                    ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false, 0);
+                    ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false);
                     if (rsp.resultSet()) {
                         Tardis tardis = rsp.getTardis();
                         playerUUID = tardis.getUuid();

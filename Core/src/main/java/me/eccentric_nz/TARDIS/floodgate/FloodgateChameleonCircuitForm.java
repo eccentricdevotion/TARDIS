@@ -17,12 +17,13 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.Location;
@@ -185,10 +186,11 @@ public class FloodgateChameleonCircuitForm {
     }
 
     private boolean isBiomeAdaptive(int id) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        return rs.resultSet() && rs.getTardis().getAdaption() == Adaption.BIOME;
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("tardis_id", id);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        return tardis != null && tardis.getAdaption() == Adaption.BIOME;
     }
 
     private ChameleonPreset getAdaption(Biome biome) {

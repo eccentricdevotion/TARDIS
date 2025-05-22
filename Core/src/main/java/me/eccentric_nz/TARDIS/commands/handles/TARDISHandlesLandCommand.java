@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
@@ -25,7 +26,6 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
@@ -54,11 +54,13 @@ class TARDISHandlesLandCommand {
     }
 
     public boolean exitVortex(Player player, int id, String uuid) {
-        HashMap<String, Object> wherei = new HashMap<>();
-        wherei.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+//        HashMap<String, Object> wherei = new HashMap<>();
+//        wherei.put("tardis_id", id);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
+//        if (rs.resultSet()) {
+//            Tardis tardis = rs.getTardis();
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        if (tardis != null) {
             if (tardis.getPreset().equals(ChameleonPreset.JUNK)) {
                 plugin.getMessenger().handlesSend(player, "HANDLES_JUNK");
                 return true;

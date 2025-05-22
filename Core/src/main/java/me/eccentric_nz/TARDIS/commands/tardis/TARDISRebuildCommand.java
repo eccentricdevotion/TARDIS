@@ -17,13 +17,13 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
@@ -58,14 +58,16 @@ public class TARDISRebuildCommand {
                     return true;
                 }
             }
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", uuid.toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-            if (!rs.resultSet()) {
+//            HashMap<String, Object> where = new HashMap<>();
+//            where.put("uuid", uuid.toString());
+//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//            if (!rs.resultSet()) {
+            Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+            if (tardis == null) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NO_TARDIS");
                 return true;
             }
-            Tardis tardis = rs.getTardis();
+//            Tardis tardis = rs.getTardis();
             if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "POWER_DOWN");
                 return true;

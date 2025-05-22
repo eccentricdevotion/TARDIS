@@ -17,17 +17,16 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -47,11 +46,13 @@ class TARDISDelavafier {
 
     void swap() {
         // calculate startx, starty, startz
-        HashMap<String, Object> wheret = new HashMap<>();
-        wheret.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+//        HashMap<String, Object> wheret = new HashMap<>();
+//        wheret.put("uuid", uuid.toString());
+//        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
+//        if (rs.resultSet()) {
+//            Tardis tardis = rs.getTardis();
+        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+        if (tardis != null) {
             int slot = tardis.getTIPS();
             int startx;
             int startz;

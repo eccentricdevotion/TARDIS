@@ -17,12 +17,12 @@
 package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.control.actions.*;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetJunk;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -118,11 +118,11 @@ public class TARDISControlListener implements Listener {
                         return;
                     }
                     Control control = Control.getById().get(type);
-                    HashMap<String, Object> whereid = new HashMap<>();
-                    whereid.put("tardis_id", id);
-                    ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
-                    if (rs.resultSet()) {
-                        Tardis tardis = rs.getTardis();
+//                    HashMap<String, Object> whereid = new HashMap<>();
+//                    whereid.put("tardis_id", id);
+//                    ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
+                    Tardis tardis = TARDISCache.BY_ID.get(id);
+                    if (tardis != null) {
                         if (tardis.getPreset().equals(ChameleonPreset.JUNK)) {
                             return;
                         }

@@ -17,13 +17,13 @@
 package me.eccentric_nz.TARDIS.doors.inner;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -69,11 +69,13 @@ public class InnerDisplayDoorMover {
                 plugin.getMessenger().sendStatus(player, "SIEGE_NO_EXIT");
                 return;
             }
-            HashMap<String, Object> tid = new HashMap<>();
-            tid.put("tardis_id", id);
-            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
-            if (rs.resultSet()) {
-                Tardis tardis = rs.getTardis();
+//            HashMap<String, Object> tid = new HashMap<>();
+//            tid.put("tardis_id", id);
+//            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
+//            if (rs.resultSet()) {
+//                Tardis tardis = rs.getTardis();
+            Tardis tardis = TARDISCache.BY_ID.get(id);
+            if (tardis != null) {
                 if (!tardis.isHandbrakeOn()) {
                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                     return;

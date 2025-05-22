@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.event.TARDISMalfunctionEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISMaterialisationEvent;
@@ -24,7 +25,10 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
-import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetInteractionCheck;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
@@ -75,11 +79,13 @@ public class TARDISMaterialseFromVortex implements Runnable {
         Location exit = new Location(rsn.getWorld(), rsn.getX(), rsn.getY(), rsn.getZ());
         boolean is_next_sub = rsn.isSubmarine();
         boolean malfunction = (plugin.getTrackerKeeper().getMalfunction().containsKey(id) && plugin.getTrackerKeeper().getMalfunction().get(id));
-        HashMap<String, Object> wherei = new HashMap<>();
-        wherei.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+//        HashMap<String, Object> wherei = new HashMap<>();
+//        wherei.put("tardis_id", id);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
+//        if (rs.resultSet()) {
+//            Tardis tardis = rs.getTardis();
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        if (tardis != null) {
             // get current location for back
             ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
             if (rscl.resultSet()) {

@@ -86,7 +86,8 @@ public class TARDISDeleteCommand {
         } else {
             where.put("tardis_id", tmp);
         }
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, abandoned);
+        where.put("abandoned", abandoned);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             int id = tardis.getTardisId();

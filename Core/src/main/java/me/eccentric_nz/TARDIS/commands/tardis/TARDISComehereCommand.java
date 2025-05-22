@@ -17,13 +17,13 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
@@ -66,15 +66,17 @@ class TARDISComehereCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Stattenheim Remote");
                 return true;
             }
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", uuid.toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-            if (!rs.resultSet()) {
+//            HashMap<String, Object> where = new HashMap<>();
+//            where.put("uuid", uuid.toString());
+//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//            if (!rs.resultSet()) {
+            Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+            if (tardis == null) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                 return true;
             }
             if (!plugin.getConfig().getBoolean("difficulty.stattenheim_remote") || plugin.getUtils().inGracePeriod(player, true)) {
-                Tardis tardis = rs.getTardis();
+//                Tardis tardis = rs.getTardis();
                 int id = tardis.getTardisId();
                 if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");

@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.siegemode;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -47,11 +47,13 @@ public class TARDISSiegeRunnable implements Runnable {
     public void run() {
         plugin.getTrackerKeeper().getInSiegeMode().forEach((id) -> {
             // get current Artron level
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("tardis_id", id);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-            if (rs.resultSet()) {
-                Tardis tardis = rs.getTardis();
+//            HashMap<String, Object> where = new HashMap<>();
+//            where.put("tardis_id", id);
+//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+//            if (rs.resultSet()) {
+//                Tardis tardis = rs.getTardis();
+            Tardis tardis = TARDISCache.BY_ID.get(id);
+            if (tardis != null) {
                 int level = tardis.getArtronLevel();
                 if (level > deplete) {
                     // remove some energy

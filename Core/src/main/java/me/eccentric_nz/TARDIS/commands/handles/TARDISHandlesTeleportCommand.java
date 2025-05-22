@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.commands.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
@@ -52,14 +52,16 @@ public class TARDISHandlesTeleportCommand {
             return;
         }
         // get tardis data
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", player.getUniqueId().toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        if (!rs.resultSet()) {
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("uuid", player.getUniqueId().toString());
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//        if (!rs.resultSet()) {
+        Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
+        if (tardis == null) {
             plugin.getMessenger().handlesSend(player, "NO_TARDIS");
             return;
         }
-        Tardis tardis = rs.getTardis();
+//        Tardis tardis = rs.getTardis();
         int id = tardis.getTardisId();
         if (!tardis.isHandbrakeOn() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             plugin.getMessenger().handlesSend(player, "NOT_WHILE_TRAVELLING");

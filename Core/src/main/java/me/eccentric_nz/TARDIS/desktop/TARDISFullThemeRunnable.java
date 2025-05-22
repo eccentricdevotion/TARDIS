@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.ARS.TARDISARSJettison;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
@@ -34,7 +35,6 @@ import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetScreenInteraction;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -203,17 +203,19 @@ public class TARDISFullThemeRunnable extends TARDISThemeRunnable {
             width = dimensions.get("width").getAsInt();
             c = dimensions.get("length").getAsInt();
             // calculate startx, starty, startz
-            HashMap<String, Object> wheret = new HashMap<>();
-            wheret.put("uuid", uuid.toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
-            if (!rs.resultSet()) {
-                // abort and return energy
+//            HashMap<String, Object> wheret = new HashMap<>();
+//            wheret.put("uuid", uuid.toString());
+//            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
+//            if (!rs.resultSet()) {
+            Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+            if (tardis != null) {                // abort and return energy
                 HashMap<String, Object> wherea = new HashMap<>();
                 wherea.put("uuid", uuid.toString());
                 int amount = plugin.getArtronConfig().getInt("upgrades." + tud.getSchematic().getPermission());
                 plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wherea, player);
+                TARDISCache.invalidateUUID(uuid);
             }
-            Tardis tardis = rs.getTardis();
+//            Tardis tardis = rs.getTardis();
             slot = tardis.getTIPS();
             id = tardis.getTardisId();
             chunk = TARDISStaticLocationGetters.getChunk(tardis.getChunk());

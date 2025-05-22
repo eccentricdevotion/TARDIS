@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.commands.remote;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
@@ -46,11 +46,13 @@ class TARDISRemoteTravelCommand {
     }
 
     boolean doTravel(int id, OfflinePlayer player, CommandSender sender) {
-        HashMap<String, Object> wherei = new HashMap<>();
-        wherei.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+//        HashMap<String, Object> wherei = new HashMap<>();
+//        wherei.put("tardis_id", id);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
+//        if (rs.resultSet()) {
+//            Tardis tardis = rs.getTardis();
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        if (tardis != null) {
             boolean hidden = tardis.isHidden();
             ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
             String resetw = "";

@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISAntiBuild;
 import org.bukkit.entity.Player;
@@ -45,14 +45,16 @@ class TARDISBuildCommand {
         }
         String playerNameStr = player.getName();
         // get the player's TARDIS world
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", player.getUniqueId().toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        if (!rs.resultSet()) {
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("uuid", player.getUniqueId().toString());
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//        if (!rs.resultSet()) {
+        Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
+        if (tardis == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
             return true;
         }
-        Tardis tardis = rs.getTardis();
+//        Tardis tardis = rs.getTardis();
         Integer id = tardis.getTardisId();
         HashMap<String, Object> setp = new HashMap<>();
         HashMap<String, Object> wherep = new HashMap<>();

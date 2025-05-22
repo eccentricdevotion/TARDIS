@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.sonic.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
@@ -57,11 +57,13 @@ public class TARDISSonicAdmin {
             if (rsd.resultSet()) {
                 int id = rsd.getTardis_id();
                 // get the TARDIS owner's name
-                HashMap<String, Object> wheren = new HashMap<>();
-                wheren.put("tardis_id", id);
-                ResultSetTardis rsn = new ResultSetTardis(plugin, wheren, "", false, 0);
-                if (rsn.resultSet()) {
-                    Tardis tardis = rsn.getTardis();
+//                HashMap<String, Object> wheren = new HashMap<>();
+//                wheren.put("tardis_id", id);
+//                ResultSetTardis rsn = new ResultSetTardis(plugin, wheren, "", false, 0);
+//                if (rsn.resultSet()) {
+//                    Tardis tardis = rsn.getTardis();
+                Tardis tardis = TARDISCache.BY_ID.get(id);
+                if (tardis != null) {
                     String name = plugin.getServer().getOfflinePlayer(tardis.getUuid()).getName();
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_WHOSE", name);
                     int percent = Math.round((tardis.getArtronLevel() * 100F) / plugin.getArtronConfig().getInt("full_charge"));

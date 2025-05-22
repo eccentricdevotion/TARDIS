@@ -19,9 +19,10 @@ package me.eccentric_nz.TARDIS.schematic;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.schematic.actions.SchematicSave;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -97,12 +98,14 @@ public class TARDISSchematicBuilder {
             }
         }
         // also find the beacon location...
-        HashMap<String, Object> whereb = new HashMap<>();
-        whereb.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false, 2);
+//        HashMap<String, Object> whereb = new HashMap<>();
+//        whereb.put("tardis_id", id);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false, 2);
         int bx = 0, by = 0, bz = 0, cx = 0, cy = 0, cz = 0;
-        if (rs.resultSet()) {
-            String beacon = rs.getTardis().getBeacon();
+//        if (rs.resultSet()) {
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        if (tardis != null) {
+            String beacon = tardis.getBeacon();
             if (!beacon.isEmpty()) {
                 String[] split = beacon.split(":");
                 bx = TARDISNumberParsers.parseInt(split[1]);
@@ -110,7 +113,7 @@ public class TARDISSchematicBuilder {
                 bz = TARDISNumberParsers.parseInt(split[3]);
             }
             // and the creeper location...
-            String creeper = rs.getTardis().getCreeper();
+            String creeper = tardis.getCreeper();
             if (!creeper.isEmpty()) {
                 String[] csplit = creeper.split(":");
                 cx = TARDISNumberParsers.parseInt(csplit[1].substring(0, csplit[1].length() - 2));

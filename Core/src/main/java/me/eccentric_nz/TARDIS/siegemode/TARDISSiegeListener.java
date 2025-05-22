@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.siegemode;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -26,7 +27,6 @@ import me.eccentric_nz.TARDIS.custommodels.keys.Whoniverse;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
@@ -102,13 +102,15 @@ public class TARDISSiegeListener implements Listener {
         }
         event.setCancelled(true);
         int id = rsc.getTardis_id();
-        HashMap<String, Object> wheret = new HashMap<>();
-        wheret.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
-        if (!rs.resultSet()) {
+//        HashMap<String, Object> wheret = new HashMap<>();
+//        wheret.put("tardis_id", id);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
+//        if (!rs.resultSet()) {
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        if (tardis == null) {
             return;
         }
-        Tardis tardis = rs.getTardis();
+//        Tardis tardis = rs.getTardis();
         // only break if player is owner or companion
         UUID puuid = event.getPlayer().getUniqueId();
         UUID tluuid = tardis.getUuid();
@@ -304,13 +306,15 @@ public class TARDISSiegeListener implements Listener {
             return;
         }
         // must be the Time Lord or companion of this TARDIS
-        HashMap<String, Object> wheret = new HashMap<>();
-        wheret.put("tardis_id", rsc.getTardis_id());
-        ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
-        if (!rst.resultSet()) {
+//        HashMap<String, Object> wheret = new HashMap<>();
+//        wheret.put("tardis_id", rsc.getTardis_id());
+//        ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
+//        if (!rst.resultSet()) {
+        Tardis tardis = TARDISCache.BY_ID.get(rsc.getTardis_id());
+        if (tardis != null) {
             return;
         }
-        Tardis tardis = rst.getTardis();
+//        Tardis tardis = rst.getTardis();
         int id = tardis.getTardisId();
         if (!uuid.equals(tardis.getUuid())) {
             boolean isCompanion = false;

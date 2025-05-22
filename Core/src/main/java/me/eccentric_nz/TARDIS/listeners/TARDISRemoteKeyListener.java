@@ -17,13 +17,13 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.doors.inner.*;
 import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
@@ -85,15 +85,17 @@ public class TARDISRemoteKeyListener implements Listener {
             return;
         }
         if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().endsWith("TARDIS Remote Key")) {
-            String uuid = player.getUniqueId().toString();
+//            String uuid = player.getUniqueId().toString();
             // has TARDIS?
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", uuid);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-            if (!rs.resultSet()) {
+//            HashMap<String, Object> where = new HashMap<>();
+//            where.put("uuid", uuid);
+//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//            if (!rs.resultSet()) {
+            Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
+            if (tardis == null) {
                 return;
             }
-            Tardis tardis = rs.getTardis();
+//            Tardis tardis = rs.getTardis();
             int id = tardis.getTardisId();
             boolean powered = tardis.isPoweredOn();
             ChameleonPreset preset = tardis.getPreset();

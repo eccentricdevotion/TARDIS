@@ -17,8 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.remote;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -58,11 +59,13 @@ public class TARDISRemoteHideCommand {
             olp = (OfflinePlayer) sender;
         } else {
             // get tardis owner
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("tardis_id", id);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-            if (rs.resultSet()) {
-                olp = plugin.getServer().getOfflinePlayer(rs.getTardis().getUuid());
+//            HashMap<String, Object> where = new HashMap<>();
+//            where.put("tardis_id", id);
+//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+//            if (rs.resultSet()) {
+            Tardis tardis = TARDISCache.BY_ID.get(id);
+            if (tardis != null) {
+                olp = plugin.getServer().getOfflinePlayer(tardis.getUuid());
             }
         }
         Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());

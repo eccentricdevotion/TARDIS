@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.commands.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
@@ -147,11 +147,13 @@ public class TARDISTravelStop {
             plugin.getPM().callEvent(new TARDISTravelEvent(player, null, TravelType.STOP, id));
         }
         // stop time rotor?
-        HashMap<String, Object> wherei = new HashMap<>();
-        wherei.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+//        HashMap<String, Object> wherei = new HashMap<>();
+//        wherei.put("tardis_id", id);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
+//        if (rs.resultSet()) {
+//            Tardis tardis = rs.getTardis();
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        if (tardis != null) {
             if (tardis.getRotor() != null) {
                 ItemFrame itemFrame = TARDISTimeRotor.getItemFrame(tardis.getRotor());
                 if (itemFrame != null) {

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -116,11 +117,13 @@ public class TARDISHandlesProcessor {
                 if (next != null) {
                     UUID uuid = player.getUniqueId();
                     // get TARDIS
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("uuid", uuid.toString());
-                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-                    if (rs.resultSet()) {
-                        Tardis tardis = rs.getTardis();
+//                    HashMap<String, Object> where = new HashMap<>();
+//                    where.put("uuid", uuid.toString());
+//                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+//                    if (rs.resultSet()) {
+//                        Tardis tardis = rs.getTardis();
+                    Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+                    if (tardis != null) {
                         int id = tardis.getTardisId();
                         switch (thb) {
                             case DOOR -> {

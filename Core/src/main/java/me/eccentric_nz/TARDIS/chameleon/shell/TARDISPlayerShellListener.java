@@ -19,13 +19,18 @@ package me.eccentric_nz.TARDIS.chameleon.shell;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISShellBuilder;
 import me.eccentric_nz.TARDIS.chameleon.TARDISChameleonPreset;
 import me.eccentric_nz.TARDIS.chameleon.construct.ConstructBuilder;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
-import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetShells;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -94,10 +99,14 @@ public class TARDISPlayerShellListener extends TARDISMenuListener {
             return;
         }
         int id = rst.getTardis_id();
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        if (!rs.resultSet()) {
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("tardis_id", id);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//        if (!rs.resultSet()) {
+//            return;
+//        }
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        if (tardis == null) {
             return;
         }
         TARDISChameleonColumn chameleonColumn = null;
@@ -184,7 +193,7 @@ public class TARDISPlayerShellListener extends TARDISMenuListener {
                     }, 5L);
                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                         // set chameleon circuit to selected shell
-                        new ConstructBuilder(plugin).build(rs.getTardis().getPreset().toString(), id, player);
+                        new ConstructBuilder(plugin).build(tardis.getPreset().toString(), id, player);
                     }, 10L);
                     // close
                     close(player);

@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Bukkit;
@@ -45,18 +45,20 @@ class TARDISRemoveCompanionCommand {
 
     boolean doRemoveCompanion(Player player, String[] args) {
         if (TARDISPermission.hasPermission(player, "tardis.add")) {
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", player.getUniqueId().toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//            HashMap<String, Object> where = new HashMap<>();
+//            where.put("uuid", player.getUniqueId().toString());
+//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             String comps;
             int id;
             String data;
             String owner;
-            if (!rs.resultSet()) {
+            Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
+            if (tardis == null) {
+//            if (!rs.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 return false;
             } else {
-                Tardis tardis = rs.getTardis();
+//                Tardis tardis = rs.getTardis();
                 comps = tardis.getCompanions();
                 if (comps == null || comps.isEmpty()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_NONE");

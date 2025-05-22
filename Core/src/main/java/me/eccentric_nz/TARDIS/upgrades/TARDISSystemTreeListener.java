@@ -78,7 +78,7 @@ public class TARDISSystemTreeListener extends TARDISMenuListener {
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", id);
         wheret.put("uuid", uuid);
-        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
+        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false);
         if (!rs.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_OWNER");
             close(player);

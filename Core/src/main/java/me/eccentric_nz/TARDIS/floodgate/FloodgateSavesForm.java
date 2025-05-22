@@ -17,10 +17,12 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
@@ -129,11 +131,13 @@ public class FloodgateSavesForm {
                             return;
                         }
                         String invisibility = tac.getArea().invisibility();
-                        HashMap<String, Object> wheret = new HashMap<>();
-                        wheret.put("tardis_id", id);
-                        ResultSetTardis resultSetTardis = new ResultSetTardis(plugin, wheret, "", false, 2);
-                        if (resultSetTardis.resultSet()) {
-                            if (invisibility.equals("DENY") && resultSetTardis.getTardis().getPreset().equals(ChameleonPreset.INVISIBLE)) {
+//                        HashMap<String, Object> wheret = new HashMap<>();
+//                        wheret.put("tardis_id", id);
+//                        ResultSetTardis resultSetTardis = new ResultSetTardis(plugin, wheret, "", false, 2);
+//                        if (resultSetTardis.resultSet()) {
+                        Tardis tardis = TARDISCache.BY_ID.get(id);
+                        if (tardis != null) {
+                            if (invisibility.equals("DENY") && tardis.getPreset().equals(ChameleonPreset.INVISIBLE)) {
                                 // check preset
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_INVISIBLE");
                                 return;

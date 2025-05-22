@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBind;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTransmat;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.Bind;
@@ -112,11 +112,13 @@ public class TARDISBindListener implements Listener {
                     ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
                     if (rst.resultSet()) {
                         int id = rst.getTardis_id();
-                        HashMap<String, Object> wheret = new HashMap<>();
-                        wheret.put("tardis_id", id);
-                        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
-                        if (rs.resultSet()) {
-                            Tardis tardis = rs.getTardis();
+//                        HashMap<String, Object> wheret = new HashMap<>();
+//                        wheret.put("tardis_id", id);
+//                        ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
+//                        if (rs.resultSet()) {
+//                            Tardis tardis = rs.getTardis();
+                        Tardis tardis = TARDISCache.BY_ID.get(id);
+                        if (tardis != null) {
                             UUID ownerUUID = tardis.getUuid();
                             HashMap<String, Object> whereb = new HashMap<>();
                             whereb.put("tardis_id", id);

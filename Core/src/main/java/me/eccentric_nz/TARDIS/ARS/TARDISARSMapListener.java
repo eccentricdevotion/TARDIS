@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.ARS;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.move.TARDISDoorListener;
 import me.eccentric_nz.TARDIS.travel.TARDISDoorLocation;
@@ -149,11 +149,11 @@ public class TARDISARSMapListener extends TARDISARSMethods implements Listener {
             UUID playerUUID = player.getUniqueId();
             int id = ids.get(playerUUID);
             // need to get the console location - will be different for non-TIPS TARDISes
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("tardis_id", id);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-            if (rs.resultSet()) {
-                Tardis tardis = rs.getTardis();
+//            HashMap<String, Object> where = new HashMap<>();
+//            where.put("tardis_id", id);
+//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+            Tardis tardis = TARDISCache.BY_ID.get(id);
+            if (tardis != null) {
                 int pos = tardis.getTIPS();
                 int tx = 0, tz = 0;
                 if (pos != -1) {

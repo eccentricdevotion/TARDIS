@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -131,11 +132,13 @@ public class TARDISHandbrakeListener implements Listener {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
                         return;
                     }
-                    HashMap<String, Object> wherei = new HashMap<>();
-                    wherei.put("tardis_id", id);
-                    ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-                    if (rs.resultSet()) {
-                        Tardis tardis = rs.getTardis();
+//                    HashMap<String, Object> wherei = new HashMap<>();
+//                    wherei.put("tardis_id", id);
+//                    ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
+//                    if (rs.resultSet()) {
+//                        Tardis tardis = rs.getTardis();
+                    Tardis tardis = TARDISCache.BY_ID.get(id);
+                    if (tardis != null) {
                         ChameleonPreset preset = tardis.getPreset();
                         if (preset.equals(ChameleonPreset.JUNK)) {
                             return;

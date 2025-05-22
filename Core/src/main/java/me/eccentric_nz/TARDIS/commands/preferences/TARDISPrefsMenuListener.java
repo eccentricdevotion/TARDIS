@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.preferences;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMap;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
@@ -337,11 +338,13 @@ public class TARDISPrefsMenuListener extends TARDISMenuListener {
                 ResultSetJunk rsj = new ResultSetJunk(plugin, where);
                 boolean has = rsj.resultSet();
                 // get preset
-                HashMap<String, Object> wherep = new HashMap<>();
-                wherep.put("uuid", uuid.toString());
-                ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false, 0);
-                if (rsp.resultSet()) {
-                    Tardis tardis = rsp.getTardis();
+//                HashMap<String, Object> wherep = new HashMap<>();
+//                wherep.put("uuid", uuid.toString());
+//                ResultSetTardis rsp = new ResultSetTardis(plugin, wherep, "", false, 0);
+//                if (rsp.resultSet()) {
+//                    Tardis tardis = rsp.getTardis();
+                Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+                if (tardis != null) {
                     String current = tardis.getPreset().toString();
                     // make sure is opposite
                     if (current.equals("JUNK_MODE") && !bool) {

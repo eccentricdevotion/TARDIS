@@ -17,9 +17,11 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -112,15 +114,16 @@ public class TARDISBlockDamageListener implements Listener {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("uuid", uuid);
-        ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 0);
+        ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
         return rst.resultSet();
     }
 
     private void unhide(int id, Player player) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 2);
-        if (rst.resultSet() && rst.getTardis().isHidden()) {
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("tardis_id", id);
+//        ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 2);
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        if (tardis != null && tardis.isHidden()) {
             // un-hide this tardis
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             if (!rsc.resultSet()) {

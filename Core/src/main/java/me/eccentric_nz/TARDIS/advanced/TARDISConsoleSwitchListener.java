@@ -18,11 +18,11 @@ package me.eccentric_nz.TARDIS.advanced;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.chameleon.gui.TARDISChameleonInventory;
 import me.eccentric_nz.TARDIS.console.telepathic.TARDISTelepathicInventory;
 import me.eccentric_nz.TARDIS.control.TARDISScanner;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISTemporalLocatorInventory;
@@ -44,6 +44,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * A trip stitch circuit-breaker is a circuit that if enabled in the psycho-kinetic threshold manipulator of the
@@ -75,10 +76,10 @@ public class TARDISConsoleSwitchListener implements Listener {
             return;
         }
         Player player = (Player) event.getWhoClicked();
-        String uuid = player.getUniqueId().toString();
+        UUID uuid = player.getUniqueId();
         // check they're in the TARDIS
         HashMap<String, Object> wheret = new HashMap<>();
-        wheret.put("uuid", uuid);
+        wheret.put("uuid", uuid.toString());
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheret, false);
         if (!rst.resultSet()) {
             event.setCancelled(true);
@@ -104,14 +105,15 @@ public class TARDISConsoleSwitchListener implements Listener {
         if (!gui_circuits.contains(dn)) {
             return;
         }
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", uuid);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        if (rs.resultSet()) {
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("uuid", uuid);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//        if (rs.resultSet()) {
+        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+        if (tardis == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
             return;
         }
-        Tardis tardis = rs.getTardis();
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             ItemStack[] stack = null;
             Inventory new_inv = null;
@@ -137,7 +139,7 @@ public class TARDISConsoleSwitchListener implements Listener {
             }
             // Memory circuit (saves/areas)
             if (dn.contains("Memory")) {
-                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid, SystemTree.SAVES)) {
+                if (plugin.getConfig().getBoolean("difficulty.system_upgrades") && !new SystemUpgradeChecker(plugin).has(uuid.toString(), SystemTree.SAVES)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Saves");
                     return;
                 }

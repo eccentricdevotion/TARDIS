@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.autonomous;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
@@ -63,12 +64,13 @@ public class TARDISAutonomousDeath {
 
     public void automate(Player player) {
         UUID uuid = player.getUniqueId();
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("uuid", uuid.toString());
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         // are they a time lord?
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+//        if (rs.resultSet()) {
+        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+        if (tardis != null) {
             if (tardis.isPoweredOn()) {
                 int id = tardis.getTardisId();
                 String eps = tardis.getEps();

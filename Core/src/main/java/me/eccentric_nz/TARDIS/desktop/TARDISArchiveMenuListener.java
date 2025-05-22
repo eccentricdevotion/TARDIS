@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.desktop;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.control.TARDISThemeButton;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -36,7 +36,6 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -75,14 +74,17 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener {
         switch (slot) {
             case 17 -> {
                 // back
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("uuid", p.getUniqueId().toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-                rs.resultSet();
-                Tardis tardis = rs.getTardis();
-                // return to Desktop Theme GUI
-                close(p);
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISThemeButton(plugin, p, tardis.getSchematic(), tardis.getArtronLevel(), tardis.getTardisId()).clickButton(), 2L);
+//                HashMap<String, Object> where = new HashMap<>();
+//                where.put("uuid", p.getUniqueId().toString());
+//                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+//                rs.resultSet();
+//                Tardis tardis = rs.getTardis();
+                Tardis tardis = TARDISCache.BY_UUID.get(p.getUniqueId());
+                if (tardis != null) {
+                    // return to Desktop Theme GUI
+                    close(p);
+                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISThemeButton(plugin, p, tardis.getSchematic(), tardis.getArtronLevel(), tardis.getTardisId()).clickButton(), 2L);
+                }
             }
             case 18 -> {
                 // size

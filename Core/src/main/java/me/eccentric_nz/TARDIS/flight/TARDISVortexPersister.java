@@ -17,14 +17,15 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISInstantPoliceBox;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISInstantPreset;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstantPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
@@ -100,11 +101,13 @@ public class TARDISVortexPersister {
                 int task = rs.getInt("task");
                 if (task < 0) {
                     // get Time Lord UUID
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("tardis_id", id);
-                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-                    if (rs.resultSet()) {
-                        UUID uuid = rs.getTardis().getUuid();
+//                    HashMap<String, Object> where = new HashMap<>();
+//                    where.put("tardis_id", id);
+//                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+//                    if (rs.resultSet()) {
+                    Tardis tardis = TARDISCache.BY_ID.get(id);
+                    if (tardis != null) {
+                        UUID uuid = tardis.getUuid();
                         if (task == -1) {
                             // interrupted dematerialisation
                             // get previous location and destroy tardis
@@ -125,7 +128,7 @@ public class TARDISVortexPersister {
                                 while (!location.getChunk().isLoaded()) {
                                     location.getChunk().load();
                                 }
-                                new TARDISDeinstantPreset(plugin).instaDestroyPreset(dd, false, rs.getTardis().getDemat());
+                                new TARDISDeinstantPreset(plugin).instaDestroyPreset(dd, false, tardis.getDemat());
                             }
                         }
                         // interrupted materialisation
@@ -148,10 +151,10 @@ public class TARDISVortexPersister {
                                 location.getChunk().load();
                             }
                             plugin.getTrackerKeeper().getMaterialising().add(id);
-                            if (rs.getTardis().getPreset().usesArmourStand()) {
-                                new TARDISInstantPoliceBox(plugin, bd, rs.getTardis().getPreset()).buildPreset();
+                            if (tardis.getPreset().usesArmourStand()) {
+                                new TARDISInstantPoliceBox(plugin, bd, tardis.getPreset()).buildPreset();
                             } else {
-                                new TARDISInstantPreset(plugin, bd, rs.getTardis().getPreset(), Material.LIGHT_GRAY_TERRACOTTA.createBlockData(), false).buildPreset();
+                                new TARDISInstantPreset(plugin, bd, tardis.getPreset(), Material.LIGHT_GRAY_TERRACOTTA.createBlockData(), false).buildPreset();
                             }
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                 plugin.getTrackerKeeper().getInVortex().remove(id);

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.update;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -25,7 +26,6 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
@@ -119,7 +119,8 @@ public class TARDISUpdateListener implements Listener {
             plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
             return;
         }
-        String uuid = (TARDISSudoTracker.SUDOERS.containsKey(playerUUID)) ? TARDISSudoTracker.SUDOERS.get(playerUUID).toString() : playerUUID.toString();
+        String uuid = TARDISSudoTracker.SUDOERS.containsKey(playerUUID) ? TARDISSudoTracker.SUDOERS.get(playerUUID).toString() : playerUUID.toString();
+        UUID tuuid = TARDISSudoTracker.SUDOERS.containsKey(playerUUID) ? TARDISSudoTracker.SUDOERS.get(playerUUID) : playerUUID;
         Block block = event.getClickedBlock();
         if (block != null) {
             Material blockType = block.getType();
@@ -136,15 +137,15 @@ public class TARDISUpdateListener implements Listener {
                     block = block.getRelative(BlockFace.DOWN);
                 }
             }
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", uuid);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-            if (!rs.resultSet()) {
+//            HashMap<String, Object> where = new HashMap<>();
+//            where.put("uuid", uuid);
+//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+            Tardis tardis = TARDISCache.BY_UUID.get(tuuid);
+            if (tardis == null) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 plugin.getTrackerKeeper().getUpdatePlayers().remove(playerUUID);
                 return;
             }
-            Tardis tardis = rs.getTardis();
             int id = tardis.getTardisId();
             HashMap<String, Object> tid = new HashMap<>();
             HashMap<String, Object> set = new HashMap<>();

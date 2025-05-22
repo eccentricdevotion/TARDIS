@@ -18,10 +18,10 @@ package me.eccentric_nz.TARDIS.ARS;
 
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISRoomGrowEvent;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISRoomData;
@@ -61,11 +61,12 @@ class TARDISARSRunnable implements Runnable {
     @Override
     public void run() {
         String whichroom = room.getConfigPath();
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", p.getUniqueId().toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("uuid", p.getUniqueId().toString());
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//        if (rs.resultSet()) {
+        Tardis tardis = TARDISCache.BY_UUID.get(p.getUniqueId());
+        if (tardis != null) {
             plugin.getTrackerKeeper().getIsGrowingRooms().add(tardis.getTardisId());
             World w = TARDISStaticLocationGetters.getWorldFromSplitString(tardis.getChunk());
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, p.getUniqueId().toString());

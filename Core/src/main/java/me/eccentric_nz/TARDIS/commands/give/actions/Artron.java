@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.give.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
@@ -39,8 +39,8 @@ public class Artron {
     public void give(CommandSender sender, String player, int amount, boolean timelord) {
         // Look up this player's UUID
         UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", uuid.toString());
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("uuid", uuid.toString());
         HashMap<String, Object> set = new HashMap<>();
         HashMap<String, Object> wheret = new HashMap<>();
         int set_level = amount;
@@ -55,9 +55,11 @@ public class Artron {
                 plugin.getQueryFactory().doUpdate("player_prefs", set, wheret);
             }
         } else {
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-            if (rs.resultSet()) {
-                Tardis tardis = rs.getTardis();
+//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//            if (rs.resultSet()) {
+//                Tardis tardis = rs.getTardis();
+            Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+            if (tardis != null) {
                 int id = tardis.getTardisId();
                 int level = tardis.getArtronLevel();
                 if (amount == 0) {

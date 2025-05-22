@@ -19,12 +19,12 @@ package me.eccentric_nz.TARDIS.desktop;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetARS;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.schematic.ArchiveReset;
@@ -55,19 +55,22 @@ public class TARDISThemeProcessor {
         TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
         Player player = plugin.getServer().getPlayer(uuid);
         if (plugin.getHandlesConfig().getBoolean("enabled") && TARDISPermission.hasPermission(player, "tardis.handles")) {
-            HashMap<String, Object> wheret = new HashMap<>();
-            wheret.put("uuid", uuid.toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
-            rs.resultSet();
-            Tardis tardis = rs.getTardis();
-            // check if the player has a Handles placed
-            HashMap<String, Object> whereh = new HashMap<>();
-            whereh.put("type", 26);
-            whereh.put("tardis_id", tardis.getTardisId());
-            ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
-            if (rsc.resultSet()) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "UPGRADE_REMOVE_HANDLES");
-                return;
+//            HashMap<String, Object> wheret = new HashMap<>();
+//            wheret.put("uuid", uuid.toString());
+//            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
+//            rs.resultSet();
+//            Tardis tardis = rs.getTardis();
+            Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+            if (tardis != null) {
+                // check if the player has a Handles placed
+                HashMap<String, Object> whereh = new HashMap<>();
+                whereh.put("type", 26);
+                whereh.put("tardis_id", tardis.getTardisId());
+                ResultSetControls rsc = new ResultSetControls(plugin, whereh, false);
+                if (rsc.resultSet()) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "UPGRADE_REMOVE_HANDLES");
+                    return;
+                }
             }
         }
         // get Archive if necessary

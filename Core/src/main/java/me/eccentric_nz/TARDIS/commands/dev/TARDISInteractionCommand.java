@@ -17,12 +17,12 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import org.bukkit.Location;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class TARDISInteractionCommand {
@@ -34,11 +34,13 @@ public class TARDISInteractionCommand {
     }
 
     public boolean process(UUID uuid) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-        if (rs.resultSet()) {
-            int id = rs.getTardis().getTardisId();
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("uuid", uuid.toString());
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+//        if (rs.resultSet()) {
+        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+        if (tardis != null) {
+            int id = tardis.getTardisId();
             ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
             if (rsc.resultSet()) {
                 Location location = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
