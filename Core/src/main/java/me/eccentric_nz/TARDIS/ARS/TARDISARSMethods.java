@@ -558,7 +558,7 @@ public class TARDISARSMethods {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("uuid", TARDISSudoTracker.SUDOERS.getOrDefault(uuid, uuid).toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         return rs.resultSet();
     }
 }

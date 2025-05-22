@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.listeners.controls;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.Rotation;
@@ -57,18 +57,20 @@ public class TARDISDirectionFrameListener implements Listener {
                 int id = rs.getTardis_id();
                 Player player = event.getPlayer();
                 // prevent other players from stealing the tripwire hook
-                HashMap<String, Object> wherep = new HashMap<>();
-                wherep.put("tardis_id", id);
-                ResultSetTardis rso = new ResultSetTardis(plugin, wherep, "", false, 2);
-                if (rso.resultSet()) {
-                    Tardis tardis = rso.getTardis();
+//                HashMap<String, Object> wherep = new HashMap<>();
+//                wherep.put("tardis_id", id);
+//                ResultSetTardis rso = new ResultSetTardis(plugin, wherep, "", false, 2);
+//                if (rso.resultSet()) {
+//                    Tardis tardis = rso.getTardis();
+                Tardis tardis = TARDISCache.BY_ID.get(id);
+                if (tardis != null) {
                     if (!tardis.getUuid().equals(player.getUniqueId())) {
                         event.setCancelled(true);
                         return;
                     }
                     // if the item frame has a tripwire hook in it
                     if (frame.getItem().getType().equals(Material.TRIPWIRE_HOOK)) {
-                        if (plugin.getConfig().getBoolean("allow.power_down") && !rso.getTardis().isPoweredOn()) {
+                        if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                             return;
                         }

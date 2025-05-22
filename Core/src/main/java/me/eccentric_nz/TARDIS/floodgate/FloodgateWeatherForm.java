@@ -17,12 +17,12 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISWeather;
 import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Weather;
@@ -72,11 +72,13 @@ public class FloodgateWeatherForm {
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
         if (rst.resultSet()) {
             int id = rst.getTardis_id();
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("tardis_id", id);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-            if (rs.resultSet()) {
-                Tardis tardis = rs.getTardis();
+//            HashMap<String, Object> where = new HashMap<>();
+//            where.put("tardis_id", id);
+//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//            if (rs.resultSet()) {
+//                Tardis tardis = rs.getTardis();
+            Tardis tardis = TARDISCache.BY_ID.get(id);
+            if (tardis != null) {
                 // check they initialised
                 if (!tardis.isTardisInit()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_INIT");

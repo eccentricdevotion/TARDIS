@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon.shell;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -24,7 +25,6 @@ import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
@@ -64,10 +64,12 @@ public class TARDISShellRoomConstructor {
     }
 
     public void createShell(Player player, int id, Block block, int cid) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        if (rs.resultSet()) {
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("tardis_id", id);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//        if (rs.resultSet()) {
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        if (tardis != null) {
             Location block_loc = block.getLocation();
             World w = block_loc.getWorld();
             int fx = block_loc.getBlockX() + 2;
@@ -102,7 +104,7 @@ public class TARDISShellRoomConstructor {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CHAM_NOT_CUSTOM");
                 return;
             }
-            Tardis tardis = rs.getTardis();
+//            Tardis tardis = rs.getTardis();
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PRESET_SCAN");
             StringBuilder sb_blue_data = new StringBuilder("[");
             StringBuilder sb_stain_data = new StringBuilder("[");

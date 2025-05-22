@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.builders.exterior;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISConstructColumn;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
@@ -356,11 +357,13 @@ public class TARDISMaterialisePreset implements Runnable {
                                         SignSide front = s.getSide(Side.FRONT);
                                         plugin.getGeneralKeeper().getProtectBlockMap().put(sign.getLocation().toString(), bd.getTardisID());
                                         if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
-                                            HashMap<String, Object> wheret = new HashMap<>();
-                                            wheret.put("tardis_id", bd.getTardisID());
-                                            ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
-                                            if (rst.resultSet()) {
-                                                Tardis tardis = rst.getTardis();
+//                                            HashMap<String, Object> wheret = new HashMap<>();
+//                                            wheret.put("tardis_id", bd.getTardisID());
+//                                            ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
+//                                            if (rst.resultSet()) {
+//                                                Tardis tardis = rst.getTardis();
+                                            Tardis tardis = TARDISCache.BY_ID.get(bd.getTardisID());
+                                            if (tardis != null) {
                                                 String player_name = TARDISStaticUtils.getNick(tardis.getUuid());
                                                 if (player_name == null) {
                                                     player_name = tardis.getOwner();

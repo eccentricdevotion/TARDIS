@@ -58,7 +58,9 @@ public class TARDISLightningListener implements Listener {
         if (!strike.isEffect()) {
             Location l = strike.getLocation();
             World strikeworld = l.getWorld();
-            ResultSetTardis rs = new ResultSetTardis(plugin, new HashMap<>(), "", true, 0);
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("abandoned", 0);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", true);
             if (rs.resultSet()) {
                 for (Tardis t : rs.getData()) {
                     boolean charging = !t.isRecharging();
@@ -77,9 +79,9 @@ public class TARDISLightningListener implements Listener {
                                 int amount = plugin.getArtronConfig().getInt("lightning_recharge") + t.getArtronLevel();
                                 HashMap<String, Object> set = new HashMap<>();
                                 set.put("artron_level", amount);
-                                HashMap<String, Object> where = new HashMap<>();
-                                where.put("tardis_id", id);
-                                plugin.getQueryFactory().doUpdate("tardis", set, where);
+                                HashMap<String, Object> wheret = new HashMap<>();
+                                wheret.put("tardis_id", id);
+                                plugin.getQueryFactory().doUpdate("tardis", set, wheret);
                             }
                         }
                     }

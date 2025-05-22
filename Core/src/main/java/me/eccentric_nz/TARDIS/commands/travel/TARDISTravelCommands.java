@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.commands.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.Command;
@@ -60,14 +60,16 @@ public class TARDISTravelCommands implements CommandExecutor {
                     return true;
                 }
                 // get tardis data
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("uuid", player.getUniqueId().toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-                if (!rs.resultSet()) {
+//                HashMap<String, Object> where = new HashMap<>();
+//                where.put("uuid", player.getUniqueId().toString());
+//                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//                if (!rs.resultSet()) {
+                Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
+                if (tardis == null) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                     return true;
                 }
-                Tardis tardis = rs.getTardis();
+//                Tardis tardis = rs.getTardis();
                 int id = tardis.getTardisId();
                 if (args[0].equalsIgnoreCase("cancel")) {
                     return new TARDISTravelCancel(plugin).action(player, id);

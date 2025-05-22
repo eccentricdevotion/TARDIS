@@ -39,7 +39,9 @@ public class TARDISAbandonLister {
     }
 
     public void list(CommandSender sender) {
-        ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, new HashMap<>(), "", true, 1);
+        HashMap<String, Object> where = new HashMap<>();
+        where.put("abandoned", 1);
+        ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, where, "", true);
         plugin.getMessenger().messageWithColour(sender, plugin.getLanguage().getString("ABANDONED_LIST"), "#AAAAAA");
         if (rst.resultSet()) {
             boolean click = (sender instanceof Player);

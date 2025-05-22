@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -27,7 +28,10 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
-import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.sensor.PowerSensor;
@@ -114,14 +118,16 @@ public class TARDISStattenheimListener implements Listener {
                 }
                 Action action = event.getAction();
                 // check they are a Time Lord
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("uuid", uuid.toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-                if (!rs.resultSet()) {
+//                HashMap<String, Object> where = new HashMap<>();
+//                where.put("uuid", uuid.toString());
+//                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//                if (!rs.resultSet()) {
+                Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+                if (tardis == null) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                     return;
                 }
-                Tardis tardis = rs.getTardis();
+//                Tardis tardis = rs.getTardis();
                 int id = tardis.getTardisId();
                 if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");

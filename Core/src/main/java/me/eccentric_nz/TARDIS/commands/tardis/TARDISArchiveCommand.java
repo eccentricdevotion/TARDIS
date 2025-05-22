@@ -125,7 +125,7 @@ class TARDISArchiveCommand {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", id);
                 where.put("uuid", uuid);
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
                     Tardis tardis = rs.getTardis();
                     Schematic current = tardis.getSchematic();

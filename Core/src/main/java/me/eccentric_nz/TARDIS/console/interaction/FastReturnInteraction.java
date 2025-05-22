@@ -17,18 +17,17 @@
 package me.eccentric_nz.TARDIS.console.interaction;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.console.ConsoleInteraction;
 import me.eccentric_nz.TARDIS.console.models.ButtonModel;
 import me.eccentric_nz.TARDIS.control.actions.FastReturnAction;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class FastReturnInteraction {
@@ -56,13 +55,15 @@ public class FastReturnInteraction {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "INPUT_MISSING");
             return;
         }
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        if (!rs.resultSet()) {
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("tardis_id", id);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//        if (!rs.resultSet()) {
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        if (tardis == null) {
             return;
         }
-        Tardis tardis = rs.getTardis();
+//        Tardis tardis = rs.getTardis();
         // set custom model data for random button item display
         UUID uuid = interaction.getPersistentDataContainer().get(plugin.getModelUuidKey(), plugin.getPersistentDataTypeUUID());
         if (uuid != null) {

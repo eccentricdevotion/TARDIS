@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -41,6 +42,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * Tylos was a member of Varsh's group of Outlers on Alzarius. When Adric asked to join them, Tylos challenged him to
@@ -74,7 +76,7 @@ public class TARDISJoinListener implements Listener {
             player.setGameMode(GameMode.ADVENTURE);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PREVIEW_DONE");
         }
-        String uuid = player.getUniqueId().toString();
+        UUID uuid = player.getUniqueId();
         if (plugin.getKitsConfig().getBoolean("give.join.enabled")) {
             if (TARDISPermission.hasPermission(player, "tardis.kit.join")) {
                 // check if they have the tardis kit
@@ -115,7 +117,7 @@ public class TARDISJoinListener implements Listener {
         }
         if (plugin.getConfig().getInt("travel.grace_period") > 0 && TARDISPermission.hasPermission(player, "tardis.create")) {
             // check if they have t_count record - create one if not
-            ResultSetCount rsc = new ResultSetCount(plugin, uuid);
+            ResultSetCount rsc = new ResultSetCount(plugin, uuid.toString());
             if (!rsc.resultSet()) {
                 HashMap<String, Object> setc = new HashMap<>();
                 setc.put("uuid", uuid);
@@ -144,11 +146,13 @@ public class TARDISJoinListener implements Listener {
             }
         }
         // load and remember the players Police Box chunk
-        HashMap<String, Object> wherep = new HashMap<>();
-        wherep.put("uuid", uuid);
-        ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false, 0);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+//        HashMap<String, Object> wherep = new HashMap<>();
+//        wherep.put("uuid", uuid);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false, 0);
+//        if (rs.resultSet()) {
+//            Tardis tardis = rs.getTardis();
+        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+        if (tardis != null) {
             int id = tardis.getTardisId();
             String owner = tardis.getOwner();
             String last_known_name = tardis.getLastKnownName();

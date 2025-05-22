@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
@@ -163,11 +164,13 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                 return;
                             }
                             // handbrake must be on
-                            HashMap<String, Object> tid = new HashMap<>();
-                            tid.put("tardis_id", id);
-                            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
-                            if (rs.resultSet()) {
-                                if (!rs.getTardis().isHandbrakeOn()) {
+//                            HashMap<String, Object> tid = new HashMap<>();
+//                            tid.put("tardis_id", id);
+//                            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
+//                            if (rs.resultSet()) {
+                            Tardis tardis = TARDISCache.BY_ID.get(id);
+                            if (tardis != null) {
+                                if (!tardis.isHandbrakeOn()) {
                                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                                     return;
                                 }
@@ -193,21 +196,21 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                                     }
                                                 }
                                             }
-                                            if (open && rs.getTardis().isAbandoned()) {
+                                            if (open && tardis.isAbandoned()) {
                                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDONED_DOOR");
                                                 return;
                                             }
                                             if (plugin.getTrackerKeeper().getHasClickedHandbrake().contains(id) && doortype == 1) {
                                                 plugin.getTrackerKeeper().getHasClickedHandbrake().removeAll(Collections.singleton(id));
                                                 // toggle handbrake && dematerialise
-                                                new TARDISTakeoff(plugin).run(id, player, rs.getTardis().getBeacon());
+                                                new TARDISTakeoff(plugin).run(id, player, tardis.getBeacon());
                                             }
                                             // toggle the door
                                             DoorUtility.playDoorSound(player, open, block.getLocation(), minecart);
-                                            if (toggle || rs.getTardis().isAbandoned()) {
+                                            if (toggle || tardis.isAbandoned()) {
                                                 // toggle the door
                                                 if (doortype == 1) {
-                                                    boolean outerDisplayDoor = rs.getTardis().getPreset().usesArmourStand();
+                                                    boolean outerDisplayDoor = tardis.getPreset().usesArmourStand();
                                                     // inner door
                                                     if (open) {
                                                         // close door
@@ -215,7 +218,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                                         // close doors / deactivate portal
                                                         if (outerDisplayDoor) {
                                                             new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
-                                                        } else if (rs.getTardis().getPreset().hasDoor()) {
+                                                        } else if (tardis.getPreset().hasDoor()) {
                                                             new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
                                                         }
                                                     } else {
@@ -224,7 +227,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                                         // open outer
                                                         if (outerDisplayDoor) {
                                                             new OuterDisplayDoorOpener(plugin).open(new OuterDoor(plugin, id).getDisplay(), id);
-                                                        } else if (rs.getTardis().getPreset().hasDoor()) {
+                                                        } else if (tardis.getPreset().hasDoor()) {
                                                             new OuterMinecraftDoorOpener(plugin).open(new OuterDoor(plugin, id).getMinecraft(), id, player);
                                                         }
                                                     }
@@ -259,7 +262,7 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         TrapDoor door_data = (TrapDoor) block.getBlockData();
                                         door_data.setOpen(!door_data.isOpen());
                                     }
-                                } else if (!rs.getTardis().getUuid().equals(playerUUID)) {
+                                } else if (!tardis.getUuid().equals(playerUUID)) {
                                     plugin.getMessenger().sendStatus(player, "DOOR_DEADLOCKED");
                                 } else {
                                     plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_NEED_UNLOCK");
@@ -279,11 +282,13 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                 plugin.getMessenger().sendStatus(player, "SIEGE_NO_EXIT");
                                 return;
                             }
-                            HashMap<String, Object> tid = new HashMap<>();
-                            tid.put("tardis_id", id);
-                            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
-                            if (rs.resultSet()) {
-                                Tardis tardis = rs.getTardis();
+//                            HashMap<String, Object> tid = new HashMap<>();
+//                            tid.put("tardis_id", id);
+//                            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
+//                            if (rs.resultSet()) {
+//                                Tardis tardis = rs.getTardis();
+                            Tardis tardis = TARDISCache.BY_ID.get(id);
+                            if (tardis != null) {
                                 if (!tardis.isHandbrakeOn()) {
                                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                                     return;

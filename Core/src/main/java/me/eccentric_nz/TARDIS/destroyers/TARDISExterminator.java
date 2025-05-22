@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
@@ -63,12 +64,14 @@ public class TARDISExterminator {
     }
 
     boolean pruneExterminate(int id) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("tardis_id", id);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         try {
-            if (rs.resultSet()) {
-                Tardis tardis = rs.getTardis();
+//            if (rs.resultSet()) {
+//                Tardis tardis = rs.getTardis();
+            Tardis tardis = TARDISCache.BY_ID.get(id);
+            if (tardis != null) {
                 boolean hid = tardis.isHidden();
                 String chunkLoc = tardis.getChunk();
                 String owner = tardis.getOwner();
@@ -126,11 +129,13 @@ public class TARDISExterminator {
      * @return true or false depending on whether the TARDIS could be deleted
      */
     public boolean playerExterminate(Player player) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", player.getUniqueId().toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("uuid", player.getUniqueId().toString());
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//        if (rs.resultSet()) {
+//            Tardis tardis = rs.getTardis();
+        Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
+        if (tardis != null) {
             int id = tardis.getTardisId();
             // check that there are no players in their TARDIS
             HashMap<String, Object> travid = new HashMap<>();

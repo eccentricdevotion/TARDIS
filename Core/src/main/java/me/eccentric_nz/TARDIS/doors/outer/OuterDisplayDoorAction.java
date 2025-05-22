@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.doors.outer;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
@@ -24,7 +25,6 @@ import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCompanions;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.doors.inner.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -85,11 +85,13 @@ public class OuterDisplayDoorAction extends TARDISDoorListener {
                             return;
                         }
                         // handbrake must be on
-                        HashMap<String, Object> tid = new HashMap<>();
-                        tid.put("tardis_id", id);
-                        ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
-                        if (rs.resultSet()) {
-                            Tardis tardis = rs.getTardis();
+//                        HashMap<String, Object> tid = new HashMap<>();
+//                        tid.put("tardis_id", id);
+//                        ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
+//                        if (rs.resultSet()) {
+//                            Tardis tardis = rs.getTardis();
+                        Tardis tardis = TARDISCache.BY_ID.get(id);
+                        if (tardis != null) {
                             if (!tardis.isHandbrakeOn()) {
                                 plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                                 return;
