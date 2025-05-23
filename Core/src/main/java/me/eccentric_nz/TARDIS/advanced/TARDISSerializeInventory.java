@@ -16,7 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
+import me.eccentric_nz.TARDIS.TARDIS;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
@@ -24,6 +28,7 @@ import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author original code by comphenix -
@@ -57,7 +62,19 @@ public class TARDISSerializeInventory {
                 stack = new ItemStack[dataInput.readInt()];
                 // Read the serialized ItemStacks
                 for (int i = 0; i < stack.length; i++) {
-                    stack[i] = (ItemStack) dataInput.readObject();
+                    ItemStack is = (ItemStack) dataInput.readObject();
+                    if (is != null && is.getType() == Material.GLOWSTONE_DUST) {
+                        ItemMeta im = is.getItemMeta();
+                        if (im.hasDisplayName() && im.getDisplayName().equals("Circuits")) {
+                            CustomModelDataComponent component = im.getCustomModelDataComponent();
+                            if (component.getFloats().size() > 0 && component.getFloats().getFirst() != 130.0f) {
+                                component.setFloats(List.of(130.0f));
+                                im.setCustomModelDataComponent(component);
+                                is.setItemMeta(im);
+                            }
+                        }
+                    }
+                    stack[i] = is;
                 }
             }
             return stack;
