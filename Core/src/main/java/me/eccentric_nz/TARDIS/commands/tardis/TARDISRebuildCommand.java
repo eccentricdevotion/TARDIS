@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -108,13 +109,12 @@ public class TARDISRebuildCommand {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
                 return true;
             }
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-            if (!rsc.resultSet()) {
+            Current current = TARDISCache.CURRENT.get(id);
+            if (current == null) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 plugin.getMessenger().sendColouredCommand(player.getPlayer(), "REBUILD_FAIL", "/tardis comehere", plugin);
                 return true;
             }
-            Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             int level = tardis.getArtronLevel();
             int rebuild = plugin.getArtronConfig().getInt("random");
             if (level < rebuild) {
@@ -123,13 +123,13 @@ public class TARDISRebuildCommand {
             }
             plugin.getTrackerKeeper().getRebuildCooldown().put(uuid, System.currentTimeMillis());
             BuildData bd = new BuildData(uuid.toString());
-            bd.setDirection(rsc.getDirection());
-            bd.setLocation(l);
+            bd.setDirection(current.direction());
+            bd.setLocation(current.location());
             bd.setMalfunction(false);
             bd.setOutside(false);
             bd.setPlayer(player);
             bd.setRebuild(true);
-            bd.setSubmarine(rsc.isSubmarine());
+            bd.setSubmarine(current.submarine());
             bd.setTardisID(id);
             bd.setThrottle(SpaceTimeThrottle.REBUILD);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

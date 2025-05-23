@@ -164,7 +164,7 @@ public class TARDISDevCommand implements CommandExecutor {
                         }
                         case "interaction" -> {
                             if (sender instanceof Player player) {
-                                return new TARDISInteractionCommand(plugin).process(player.getUniqueId());
+                                return new TARDISInteractionCommand().process(player.getUniqueId());
                             }
                             return false;
                         }

@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.custommodels.GUIControlCentre;
 import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -77,9 +78,9 @@ public class TARDISControlInventory {
             toggle_openclosed = (open) ? plugin.getLanguage().getString("SET_OPEN") : plugin.getLanguage().getString("SET_CLOSED");
             power_onoff = (tardis.isPoweredOn()) ? on : off;
             powered = tardis.isPoweredOn();
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardisId());
-            if (rsc.resultSet()) {
-                direction = rsc.getDirection().toString();
+            Current current = TARDISCache.CURRENT.get(id);
+            if (current != null) {
+                direction = current.direction().toString();
             }
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin,tardis.getUuid().toString());
             if (rsp.resultSet()) {

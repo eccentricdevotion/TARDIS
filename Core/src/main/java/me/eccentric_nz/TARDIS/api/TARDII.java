@@ -25,6 +25,7 @@ import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISAbandoned;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
@@ -115,9 +116,9 @@ public class TARDII implements TardisAPI {
 
     @Override
     public Location getTARDISCurrentLocation(int id) {
-        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(TARDIS.plugin, id);
-        if (rs.resultSet()) {
-            return new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current != null) {
+            return current.location();
         }
         return null;
     }
@@ -694,17 +695,18 @@ public class TARDII implements TardisAPI {
         TARDISCache.invalidate(id);
         if (rebuild) {
             // rebuild exterior
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(TARDIS.plugin, id);
-            if (!rsc.resultSet()) {
+//            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(TARDIS.plugin, id);
+//            if (!rsc.resultSet()) {
+            Current current = TARDISCache.CURRENT.get(id);
+            if (current == null) {
                 return false;
             }
             Tardis tardis = TARDISCache.BY_ID.get(id);
             if (tardis != null) {
                 OfflinePlayer player = Bukkit.getOfflinePlayer(tardis.getUuid());
-                Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                 BuildData bd = new BuildData(player.getUniqueId().toString());
-                bd.setDirection(rsc.getDirection());
-                bd.setLocation(l);
+                bd.setDirection(current.direction());
+                bd.setLocation(current.location());
                 bd.setMalfunction(false);
                 bd.setOutside(false);
                 bd.setPlayer(player);

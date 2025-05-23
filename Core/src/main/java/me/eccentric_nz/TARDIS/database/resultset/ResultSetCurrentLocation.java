@@ -42,7 +42,6 @@ public class ResultSetCurrentLocation {
     private final TARDIS plugin;
     private final HashMap<String, Object> where;
     private final String prefix;
-    private int current_id;
     private int tardis_id;
     private World world;
     private int x;
@@ -97,7 +96,6 @@ public class ResultSetCurrentLocation {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 while (rs.next()) {
-                    current_id = rs.getInt("current_id");
                     tardis_id = rs.getInt("tardis_id");
                     world = TARDISAliasResolver.getWorldFromAlias(rs.getString("world"));
                     x = rs.getInt("x");

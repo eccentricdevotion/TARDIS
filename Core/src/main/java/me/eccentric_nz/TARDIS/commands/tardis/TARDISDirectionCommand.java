@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
@@ -123,12 +124,12 @@ public class TARDISDirectionCommand {
             }
             boolean hid = tardis.isHidden();
             ChameleonPreset demat = tardis.getDemat();
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-            if (!rsc.resultSet()) {
+            Current current = TARDISCache.CURRENT.get(id);
+            if (current == null) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return true;
             }
-            COMPASS old_d = rsc.getDirection();
+            COMPASS old_d = current.direction();
             HashMap<String, Object> tid = new HashMap<>();
             HashMap<String, Object> set = new HashMap<>();
             tid.put("tardis_id", id);
@@ -158,31 +159,30 @@ public class TARDISDirectionCommand {
                     new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, uuid);
                 }
             }
-            Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             // destroy sign
             if (!hid) {
                 if (demat.equals(ChameleonPreset.DUCK)) {
-                    plugin.getPresetDestroyer().destroyDuckEyes(l, old_d);
+                    plugin.getPresetDestroyer().destroyDuckEyes(current.location(), old_d);
                 }
                 if (demat.equals(ChameleonPreset.MINESHAFT)) {
-                    plugin.getPresetDestroyer().destroyMineshaftTorches(l, old_d);
+                    plugin.getPresetDestroyer().destroyMineshaftTorches(current.location(), old_d);
                 }
                 if (demat.equals(ChameleonPreset.LAMP)) {
-                    plugin.getPresetDestroyer().destroyLampTrapdoors(l, old_d);
+                    plugin.getPresetDestroyer().destroyLampTrapdoors(current.location(), old_d);
                 }
                 if (demat.equals(ChameleonPreset.JUNK_MODE)) {
-                    plugin.getPresetDestroyer().destroyHandbrake(l, old_d);
+                    plugin.getPresetDestroyer().destroyHandbrake(current.location(), old_d);
                 }
                 plugin.getPresetDestroyer().destroyDoor(id);
-                plugin.getPresetDestroyer().destroySign(l, old_d, demat);
+                plugin.getPresetDestroyer().destroySign(current.location(), old_d, demat);
                 BuildData bd = new BuildData(uuid.toString());
                 bd.setDirection(compass);
-                bd.setLocation(l);
+                bd.setLocation(current.location());
                 bd.setMalfunction(false);
                 bd.setOutside(false);
                 bd.setPlayer(player);
                 bd.setRebuild(true);
-                bd.setSubmarine(rsc.isSubmarine());
+                bd.setSubmarine(current.submarine());
                 bd.setTardisID(id);
                 bd.setThrottle(SpaceTimeThrottle.REBUILD);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);

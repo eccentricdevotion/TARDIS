@@ -192,10 +192,8 @@ public class TARDISJunkBuilder implements Runnable {
                                             }
                                             TARDISBlockSetters.setBlockAndRemember(world, x, y, z, wall, bd.getTardisID());
                                         }
-                                        case LIGHT_GRAY_WOOL ->
-                                                TARDISBlockSetters.setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisID());
-                                        default ->
-                                                TARDISBlockSetters.setBlockAndRemember(world, x, y, z, data, bd.getTardisID());
+                                        case LIGHT_GRAY_WOOL -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, floor_type, bd.getTardisID());
+                                        default -> TARDISBlockSetters.setBlockAndRemember(world, x, y, z, data, bd.getTardisID());
                                     }
                                 }
                             }

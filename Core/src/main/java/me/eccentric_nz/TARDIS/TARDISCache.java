@@ -2,7 +2,9 @@ package me.eccentric_nz.TARDIS;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.LoadingCache;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 
 import java.time.Duration;
@@ -13,6 +15,7 @@ public class TARDISCache {
 
     public static LoadingCache<UUID, Tardis> BY_UUID;
     public static LoadingCache<Integer, Tardis> BY_ID;
+    public static LoadingCache<Integer, Current> CURRENT;
 
     public void init() {
         BY_UUID = Caffeine.newBuilder()
@@ -21,6 +24,9 @@ public class TARDISCache {
         BY_ID = Caffeine.newBuilder()
                 .expireAfterAccess(Duration.ofMinutes(15))
                 .build(TARDISCache::fromID);
+        CURRENT = Caffeine.newBuilder()
+                .expireAfterAccess(Duration.ofMinutes(15))
+                .build(TARDISCache::currentFromID);
     }
 
     public static Tardis fromUUID(UUID key) throws Exception {
@@ -37,6 +43,12 @@ public class TARDISCache {
         ResultSetTardis rs = new ResultSetTardis(TARDIS.plugin, where, "", false);
         rs.resultSet();
         return rs.getTardis();
+    }
+
+    public static Current currentFromID(int key) throws Exception {
+        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(TARDIS.plugin, key);
+        rs.resultSet();
+        return rs.getCurrent();
     }
 
     public static void invalidate(UUID key) {
@@ -57,7 +69,7 @@ public class TARDISCache {
         BY_ID.invalidate(key);
     }
 
-    public static void invalidate(UUID uuid, Integer id) {
-        BY_UUID.invalidate(uuid);
-        BY_ID.invalidate(id);
-    }}
+    public static void invalidateCurrent(Integer id) {
+        CURRENT.invalidate(id);
+    }
+}

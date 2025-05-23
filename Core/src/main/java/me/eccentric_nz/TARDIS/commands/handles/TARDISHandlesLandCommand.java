@@ -22,6 +22,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
@@ -75,9 +76,9 @@ class TARDISHandlesLandCommand {
             }
             // must have a destination, but setting one will make the TARDIS automatically exit the time vortex
             // so generate a random overworld location
-            ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
-            if (rscl.resultSet()) {
-                Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(player, rscl.getDirection());
+            Current current = TARDISCache.CURRENT.get(id);
+            if (current != null) {
+                Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(player, current.direction());
                 if (l != null) {
                     HashMap<String, Object> set_next = new HashMap<>();
                     HashMap<String, Object> where_next = new HashMap<>();
@@ -85,7 +86,7 @@ class TARDISHandlesLandCommand {
                     set_next.put("x", l.getBlockX());
                     set_next.put("y", l.getBlockY());
                     set_next.put("z", l.getBlockZ());
-                    set_next.put("direction", rscl.getDirection().toString());
+                    set_next.put("direction", current.direction().toString());
                     boolean sub = plugin.getTrackerKeeper().getSubmarine().contains(id);
                     set_next.put("submarine", (sub) ? 1 : 0);
                     plugin.getTrackerKeeper().getSubmarine().remove(id);

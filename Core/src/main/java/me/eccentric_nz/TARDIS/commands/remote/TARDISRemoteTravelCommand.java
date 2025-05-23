@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.remote;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
@@ -54,17 +55,13 @@ class TARDISRemoteTravelCommand {
         Tardis tardis = TARDISCache.BY_ID.get(id);
         if (tardis != null) {
             boolean hidden = tardis.isHidden();
-            ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
+            Current current = TARDISCache.CURRENT.get(id);
             String resetw = "";
-            Location l = null;
-            if (!rscl.resultSet()) {
+            if (current == null) {
                 hidden = true;
             } else {
-                resetw = rscl.getWorld().getName();
-                l = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
+                resetw = current.location().getWorld().getName();
             }
-            COMPASS cd = rscl.getDirection();
-            boolean sub = rscl.isSubmarine();
             ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, id);
             if (!rsn.resultSet() && !(sender instanceof BlockCommandSender)) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "DEST_NO_LOAD");
@@ -81,12 +78,12 @@ class TARDISRemoteTravelCommand {
             if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                 plugin.getTrackerKeeper().getInVortex().add(id);
                 DestroyData dd = new DestroyData();
-                dd.setDirection(cd);
-                dd.setLocation(l);
+                dd.setDirection(current.direction());
+                dd.setLocation(current.location());
                 dd.setPlayer(player);
                 dd.setHide(false);
                 dd.setOutside(false);
-                dd.setSubmarine(sub);
+                dd.setSubmarine(current.submarine());
                 dd.setTardisID(id);
                 dd.setThrottle(SpaceTimeThrottle.NORMAL);
                 if (!hidden && !plugin.getTrackerKeeper().getResetWorlds().contains(resetw)) {
@@ -124,10 +121,8 @@ class TARDISRemoteTravelCommand {
             setcurrent.put("submarine", (is_next_sub) ? 1 : 0);
             HashMap<String, Object> wherecurrent = new HashMap<>();
             wherecurrent.put("tardis_id", id);
-            // get current location for back
-            ResultSetCurrentFromId rscu = new ResultSetCurrentFromId(plugin, id);
             HashMap<String, Object> setback = new HashMap<>();
-            if (!rscu.resultSet()) {
+            if (current == null) {
                 // back
                 setback.put("world", exit.getWorld().getName());
                 setback.put("x", exit.getX());
@@ -137,12 +132,12 @@ class TARDISRemoteTravelCommand {
                 setback.put("submarine", (is_next_sub) ? 1 : 0);
             } else {
                 // back
-                setback.put("world", rscu.getWorld().getName());
-                setback.put("x", rscu.getX());
-                setback.put("y", rscu.getY());
-                setback.put("z", rscu.getZ());
-                setback.put("direction", rscu.getDirection().toString());
-                setback.put("submarine", (rscu.isSubmarine()) ? 1 : 0);
+                setback.put("world", current.location().getWorld().getName());
+                setback.put("x", current.location().getX());
+                setback.put("y", current.location().getY());
+                setback.put("z", current.location().getZ());
+                setback.put("direction", current.direction().toString());
+                setback.put("submarine", (current.submarine()) ? 1 : 0);
             }
             HashMap<String, Object> whereback = new HashMap<>();
             whereback.put("tardis_id", id);

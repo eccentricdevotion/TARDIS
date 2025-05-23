@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.doors.outer;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.doors.DoorUtility;
@@ -63,17 +64,11 @@ public class OuterMinecraftDoorCloser {
                 }
             }
         }
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-//        if (rs.resultSet()) {
-//            Tardis tardis = rs.getTardis();
         Tardis tardis = TARDISCache.BY_ID.get(id);
         if (tardis != null) {
             // get exterior portal (from current location)
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-            rsc.resultSet();
-            Location portal = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+            Current current = TARDISCache.CURRENT.get(id);
+            Location portal = current.location();
             if (tardis.getPreset().equals(ChameleonPreset.SWAMP)) {
                 portal.add(0.0d, 1.0d, 0.0d);
             }

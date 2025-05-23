@@ -23,6 +23,7 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
@@ -133,12 +134,12 @@ public class TARDISTravelSave {
                     set.put("direction", rsd.getDirection());
                 } else {
                     // get current direction
-                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                    if (!rsc.resultSet()) {
+                    Current current = TARDISCache.CURRENT.get(id);
+                    if (current == null) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                         return true;
                     }
-                    set.put("direction", rsc.getDirection().toString());
+                    set.put("direction", current.direction().toString());
                 }
                 set.put("submarine", (rsd.isSubmarine()) ? 1 : 0);
                 if (!rsd.getPreset().isEmpty()) {

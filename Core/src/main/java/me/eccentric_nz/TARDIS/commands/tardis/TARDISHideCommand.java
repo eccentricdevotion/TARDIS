@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -111,12 +112,11 @@ public class TARDISHideCommand {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
                 return true;
             }
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-            if (!rsc.resultSet()) {
+            Current current = TARDISCache.CURRENT.get(id);
+            if (current == null) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return true;
             }
-            Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             int level = tardis.getArtronLevel();
             int hide = plugin.getArtronConfig().getInt("hide");
             if (level < hide) {
@@ -124,12 +124,12 @@ public class TARDISHideCommand {
                 return false;
             }
             DestroyData dd = new DestroyData();
-            dd.setDirection(rsc.getDirection());
-            dd.setLocation(l);
+            dd.setDirection(current.direction());
+            dd.setLocation(current.location());
             dd.setPlayer(player.getPlayer());
             dd.setHide(true);
             dd.setOutside(false);
-            dd.setSubmarine(rsc.isSubmarine());
+            dd.setSubmarine(current.submarine());
             dd.setTardisID(id);
             dd.setThrottle(SpaceTimeThrottle.REBUILD);
             plugin.getPresetDestroyer().destroyPreset(dd);

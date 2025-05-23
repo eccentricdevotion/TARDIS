@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -94,16 +95,17 @@ public class TARDISWeatherListener extends TARDISMenuListener {
             return;
         }
         // get current location
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardisId());
-        if (!rsc.resultSet()) {
+        Current current = TARDISCache.CURRENT.get(tardis.getTardisId());
+        if (current == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             close(player);
+            return;
         }
         switch (slot) {
             case 0 -> {
                 // clear / sun
                 if (TARDISPermission.hasPermission(player, "tardis.weather.clear")) {
-                    TARDISWeather.setClear(rsc.getWorld());
+                    TARDISWeather.setClear(current.location().getWorld());
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_SET", "clear");
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
@@ -113,7 +115,7 @@ public class TARDISWeatherListener extends TARDISMenuListener {
             case 1 -> {
                 // rain
                 if (TARDISPermission.hasPermission(player, "tardis.weather.rain")) {
-                    TARDISWeather.setRain(rsc.getWorld());
+                    TARDISWeather.setRain(current.location().getWorld());
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_SET", "rain");
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
@@ -123,7 +125,7 @@ public class TARDISWeatherListener extends TARDISMenuListener {
             case 2 -> {
                 // thunderstorm
                 if (TARDISPermission.hasPermission(player, "tardis.weather.thunder")) {
-                    TARDISWeather.setThunder(rsc.getWorld());
+                    TARDISWeather.setThunder(current.location().getWorld());
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_SET", "thunder");
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
