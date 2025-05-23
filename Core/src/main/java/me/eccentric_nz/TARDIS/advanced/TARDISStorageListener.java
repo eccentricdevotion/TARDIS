@@ -127,7 +127,7 @@ public class TARDISStorageListener extends TARDISMenuListener {
             tmp = tmp + "_" + split[2];
         }
         Storage store = Storage.valueOf(tmp);
-        if (slot < 6 || slot == 18 || slot == 26) {
+        if ((slot >= 0 && slot < 6) || slot == 18 || slot == 26) {
             saveCurrentStorage(event.getClickedInventory(), store.getTable(), player);
         }
         switch (slot) {
