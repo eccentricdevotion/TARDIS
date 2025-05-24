@@ -22,8 +22,8 @@ import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -106,12 +106,11 @@ public class TARDISConsoleCloseListener implements Listener {
             }
         }
         // get TARDIS's current location
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-        if (!rsc.resultSet()) {
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current == null) {
             new TARDISEmergencyRelocation(plugin).relocate(id, p);
             return;
         }
-        Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
         // loop through remaining inventory items and process the disks
         for (int i = 0; i < 18; i++) {
             ItemStack is = view.getItem(i);
@@ -134,7 +133,7 @@ public class TARDISConsoleCloseListener implements Listener {
                         switch (mat) {
                             case MUSIC_DISC_BLOCKS -> { // area
                                 // check the current location is not in this area already
-                                if (!plugin.getTardisArea().areaCheckInExile(first, current)) {
+                                if (!plugin.getTardisArea().areaCheckInExile(first, current.location())) {
                                     continue;
                                 }
                                 // get a parking spot in this area
@@ -168,7 +167,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                 if (!rsa.getArea().direction().isEmpty()) {
                                     set_next.put("direction", rsa.getArea().direction());
                                 } else {
-                                    set_next.put("direction", rsc.getDirection().toString());
+                                    set_next.put("direction", current.direction().toString());
                                 }
                                 plugin.getMessenger().send(p, TardisModule.TARDIS, "TRAVEL_APPROVED", first);
                                 travelType = TravelType.AREA;
@@ -180,7 +179,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                     plugin.getMessenger().send(p, TardisModule.TARDIS, "TRAVEL_NO_PERM_BIOME");
                                     continue;
                                 }
-                                if (current.getBlock().getBiome().toString().equals(first)) {
+                                if (current.location().getBlock().getBiome().toString().equals(first)) {
                                     continue;
                                 }
                                 Biome biome;
@@ -197,7 +196,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                     }
                                 }
                                 plugin.getMessenger().sendStatus(p, "BIOME_SEARCH");
-                                Location nsob = BiomeUtilities.searchBiome(rsc.getWorld(), biome, current);
+                                Location nsob = BiomeUtilities.searchBiome(current.location().getWorld(), biome, current.location());
                                 if (nsob == null) {
                                     plugin.getMessenger().send(p, TardisModule.TARDIS, "BIOME_NOT_FOUND");
                                     continue;
@@ -210,10 +209,10 @@ public class TARDISConsoleCloseListener implements Listener {
                                     while (!bw.getChunkAt(nsob).isLoaded()) {
                                         bw.getChunkAt(nsob).load();
                                     }
-                                    int[] start_loc = TARDISTimeTravel.getStartLocation(nsob, rsc.getDirection());
+                                    int[] start_loc = TARDISTimeTravel.getStartLocation(nsob, current.direction());
                                     int tmp_y = nsob.getBlockY();
                                     for (int up = 0; up < 10; up++) {
-                                        int count = TARDISTimeTravel.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], nsob.getWorld(), rsc.getDirection());
+                                        int count = TARDISTimeTravel.safeLocation(start_loc[0], tmp_y + up, start_loc[2], start_loc[1], start_loc[3], nsob.getWorld(), current.direction());
                                         if (count == 0) {
                                             nsob.setY(tmp_y + up);
                                             break;
@@ -223,7 +222,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                     set_next.put("x", nsob.getBlockX());
                                     set_next.put("y", nsob.getBlockY());
                                     set_next.put("z", nsob.getBlockZ());
-                                    set_next.put("direction", rsc.getDirection().toString());
+                                    set_next.put("direction", current.direction().toString());
                                     set_next.put("submarine", 0);
                                     plugin.getMessenger().send(p, "BIOME_SET", !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id));
                                     travelType = TravelType.BIOME;
@@ -250,7 +249,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                         continue;
                                     }
                                     TARDISRescue to_player = new TARDISRescue(plugin);
-                                    to_player.rescue(p, toUUID, id, rsc.getDirection(), false, false);
+                                    to_player.rescue(p, toUUID, id, current.direction(), false, false);
                                     travelType = TravelType.PLAYER;
                                 } else {
                                     plugin.getMessenger().send(p, TardisModule.TARDIS, "NO_PERM_PLAYER");
@@ -269,7 +268,7 @@ public class TARDISConsoleCloseListener implements Listener {
                                     int x = TARDISNumberParsers.parseInt(lore.get(2));
                                     int y = TARDISNumberParsers.parseInt(lore.get(3));
                                     int z = TARDISNumberParsers.parseInt(lore.get(4));
-                                    if (current.getWorld().getName().equals(world) && current.getBlockX() == x && current.getBlockZ() == z) {
+                                    if (current.location().getWorld().getName().equals(world) && current.location().getBlockX() == x && current.location().getBlockZ() == z) {
                                         continue;
                                     }
                                     // read the lore from the disk
@@ -339,7 +338,7 @@ public class TARDISConsoleCloseListener implements Listener {
                     }
                 } else if (mat.equals(Material.MUSIC_DISC_STRAD) && is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().endsWith("Blank Storage Disk")) {
                     // Blank Disk - get a random location
-                    Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(p, rsc.getDirection());
+                    Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(p, current.direction());
                     if (l == null) {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "PROTECTED");
                         return;
@@ -350,7 +349,7 @@ public class TARDISConsoleCloseListener implements Listener {
                     set_next.put("x", l.getBlockX());
                     set_next.put("y", l.getBlockY());
                     set_next.put("z", l.getBlockZ());
-                    set_next.put("direction", rsc.getDirection().toString());
+                    set_next.put("direction", current.direction().toString());
                     boolean sub = plugin.getTrackerKeeper().getSubmarine().contains(id);
                     set_next.put("submarine", (sub) ? 1 : 0);
                     plugin.getTrackerKeeper().getSubmarine().remove(id);

@@ -22,15 +22,14 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.chameleon.construct.TARDISChameleonConstructorGUI;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
@@ -252,10 +251,9 @@ public class TARDISChameleonListener extends TARDISMenuListener {
                 if (isBiomeAdaptive(view)) {
                     toggleOthers(ChameleonOption.PRESET, view);
                     // get current location's biome
-                    ResultSetCurrentFromId rsl = new ResultSetCurrentFromId(plugin, id);
-                    if (rsl.resultSet()) {
-                        Location current = new Location(rsl.getWorld(), rsl.getX(), rsl.getY(), rsl.getZ());
-                        Biome biome = current.getBlock().getBiome();
+                    Current current = TARDISCache.CURRENT.get(id);
+                    if (current != null) {
+                        Biome biome = current.location().getBlock().getBiome();
                         // get which preset
                         ChameleonPreset which = getAdaption(biome);
                         if (which != null) {

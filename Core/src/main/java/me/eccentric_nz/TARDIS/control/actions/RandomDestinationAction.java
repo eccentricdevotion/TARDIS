@@ -19,7 +19,7 @@ package me.eccentric_nz.TARDIS.control.actions;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravelledTo;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -110,7 +110,7 @@ public class RandomDestinationAction {
         }
     }
 
-    public void getRandomDestination(Player player, int id, int[] repeaters, ResultSetCurrentFromId rscl, COMPASS direction, int level, int cost, String comps, UUID ownerUUID) {
+    public void getRandomDestination(Player player, int id, int[] repeaters, Current current, COMPASS direction, int level, int cost, String comps, UUID ownerUUID) {
         String environment = "THIS";
         int nether_min = plugin.getArtronConfig().getInt("nether_min");
         int the_end_min = plugin.getArtronConfig().getInt("the_end_min");
@@ -121,7 +121,7 @@ public class RandomDestinationAction {
         if (repeaters[0] == 1) { // first position
             environment = "THIS";
             // check TARDIS travel is allowed in this world
-            if (!plugin.getPlanetsConfig().getBoolean("planets." + rscl.getWorld().getName() + ".time_travel")) {
+            if (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getName() + ".time_travel")) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
                 return;
             }
@@ -157,10 +157,9 @@ public class RandomDestinationAction {
                 environment = "THE_END";
             }
         }
-        Location current = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
         // create a random destination
         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-        Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], direction, environment, rscl.getWorld(), false, current);
+        Location rand = tt.randomDestination(player, repeaters[1], repeaters[2], repeaters[3], direction, environment, current.location().getWorld(), false, current.location());
         setDestination(plugin, player, id, direction, cost, comps, ownerUUID, rand);
     }
 }

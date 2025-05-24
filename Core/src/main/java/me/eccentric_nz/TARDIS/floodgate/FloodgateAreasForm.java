@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Area;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
@@ -95,13 +96,13 @@ public class FloodgateAreasForm {
         if (rst.resultSet()) {
             int id = rst.getTardis_id();
             // get current location
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-            if (!rsc.resultSet()) {
+            Current current = TARDISCache.CURRENT.get(id);
+            if (current == null) {
                 new TARDISEmergencyRelocation(plugin).relocate(id, player);
                 return;
             }
             // check the player is not already in the area!
-            if (plugin.getTardisArea().isInExistingArea(rsc, rsa.getArea().areaId())) {
+            if (plugin.getTardisArea().isInExistingArea(current.location(), rsa.getArea().areaId())) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_AREA");
                 return;
             }
@@ -115,7 +116,7 @@ public class FloodgateAreasForm {
             if (!rsa.getArea().direction().isEmpty()) {
                 set_next.put("direction", rsa.getArea().direction());
             } else {
-                set_next.put("direction", rsc.getDirection().toString());
+                set_next.put("direction", current.direction().toString());
             }
             HashMap<String, Object> wheren = new HashMap<>();
             wheren.put("tardis_id", id);

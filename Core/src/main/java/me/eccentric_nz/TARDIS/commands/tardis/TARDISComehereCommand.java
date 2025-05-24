@@ -21,9 +21,9 @@ import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
@@ -133,11 +133,11 @@ class TARDISComehereCommand {
                     return true;
                 }
                 // get current police box location
-                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                if (!rsc.resultSet()) {
+                Current current = TARDISCache.CURRENT.get(id);
+                if (current == null) {
                     hidden = true;
                 }
-                COMPASS d = rsc.getDirection();
+                COMPASS d = current.direction();
                 COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                 TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                 int count;
@@ -172,20 +172,18 @@ class TARDISComehereCommand {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
                     return true;
                 }
-                World w = rsc.getWorld();
-                Location oldSave = null;
+                World w = current.location().getWorld();
                 HashMap<String, Object> bid = new HashMap<>();
                 bid.put("tardis_id", id);
                 HashMap<String, Object> bset = new HashMap<>();
                 if (w != null) {
-                    oldSave = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());
                     // set fast return location
-                    bset.put("world", rsc.getWorld().getName());
-                    bset.put("x", rsc.getX());
-                    bset.put("y", rsc.getY());
-                    bset.put("z", rsc.getZ());
+                    bset.put("world", current.location().getWorld().getName());
+                    bset.put("x", current.location().getBlockX());
+                    bset.put("y", current.location().getBlockY());
+                    bset.put("z", current.location().getBlockZ());
                     bset.put("direction", d.toString());
-                    bset.put("submarine", rsc.isSubmarine());
+                    bset.put("submarine", current.submarine());
                 } else {
                     hidden = true;
                     // set fast return location
@@ -221,11 +219,11 @@ class TARDISComehereCommand {
                 if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                     DestroyData dd = new DestroyData();
                     dd.setDirection(d);
-                    dd.setLocation(oldSave);
+                    dd.setLocation(current.location());
                     dd.setPlayer(player);
                     dd.setHide(false);
                     dd.setOutside(true);
-                    dd.setSubmarine(rsc.isSubmarine());
+                    dd.setSubmarine(current.submarine());
                     dd.setTardisID(id);
                     dd.setThrottle(spaceTimeThrottle);
                     dd.setParticles(throticle.particles());

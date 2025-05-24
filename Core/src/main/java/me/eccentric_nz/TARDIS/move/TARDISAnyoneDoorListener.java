@@ -20,8 +20,12 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCompanions;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravelledTo;
 import me.eccentric_nz.TARDIS.doors.DoorLockAction;
 import me.eccentric_nz.TARDIS.doors.DoorUtility;
 import me.eccentric_nz.TARDIS.doors.inner.*;
@@ -301,13 +305,13 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                 float pitch = player.getLocation().getPitch();
                                 String companions = tardis.getCompanions();
                                 boolean hb = tardis.isHandbrakeOn();
-                                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardisId());
-                                if (!rsc.resultSet()) {
+                                Current current = TARDISCache.CURRENT.get(tardis.getTardisId());
+                                if (current == null) {
                                     // emergency TARDIS relocation
                                     new TARDISEmergencyRelocation(plugin).relocate(id, player);
                                     return;
                                 }
-                                COMPASS d_backup = rsc.getDirection();
+                                COMPASS d_backup = current.direction();
                                 // get quotes player prefs
                                 boolean userQuotes = (hasPrefs && rsp.isQuotesOn());
                                 // get players direction
@@ -344,7 +348,9 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                         if (opened && preset.hasDoor()) {
                                             exitLoc = TARDISStaticLocationGetters.getLocationFromDB(rse.getDoor_location());
                                         } else {
-                                            exitLoc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), yaw, pitch);
+                                            exitLoc = current.location();
+                                            exitLoc.setYaw(yaw);
+                                            exitLoc.setPitch(pitch);
                                         }
                                         if (hb && exitLoc != null) {
                                             // change the yaw if the door directions are different

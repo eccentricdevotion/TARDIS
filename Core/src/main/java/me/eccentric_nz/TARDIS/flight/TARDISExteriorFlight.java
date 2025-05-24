@@ -22,8 +22,8 @@ import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -155,8 +155,8 @@ public class TARDISExteriorFlight {
 
     public void startFlying(Player player, int id, Block block, Location current, boolean beac_on, String beacon) {
         // get the TARDIS's current location
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-        if (!rsc.resultSet()) {
+        Current c = TARDISCache.CURRENT.get(id);
+        if (c == null) {
             plugin.debug("No current location");
             return;
         }

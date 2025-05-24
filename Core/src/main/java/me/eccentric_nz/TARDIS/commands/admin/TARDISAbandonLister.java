@@ -17,8 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -49,15 +50,15 @@ public class TARDISAbandonLister {
                 sender.sendMessage(plugin.getLanguage().getString("ABANDONED_CLICK"));
             }
             int i = 1;
-            for (Tardis t : rst.getData()) {
-                String owner = (t.getOwner().isEmpty()) ? "TARDIS Admin" : t.getOwner();
+            for (Tardis tardis : rst.getData()) {
+                String owner = (tardis.getOwner().isEmpty()) ? "TARDIS Admin" : tardis.getOwner();
                 // get current location
-                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, t.getTardisId());
-                if (rsc.resultSet()) {
-                    String w = (!plugin.getPlanetsConfig().getBoolean("planets." + rsc.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(rsc.getWorld()) : TARDISAliasResolver.getWorldAlias(rsc.getWorld());
-                    String l = w + " " + rsc.getX() + ", " + rsc.getY() + ", " + rsc.getZ();
+                Current current = TARDISCache.CURRENT.get(tardis.getTardisId());
+                if (current != null) {
+                    String w = (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) ? plugin.getMVHelper().getAlias(current.location().getWorld()) : TARDISAliasResolver.getWorldAlias(current.location().getWorld());
+                    String l = w + " " + current.location().getBlockX() + ", " + current.location().getBlockY() + ", " + current.location().getBlockZ();
                     if (click) {
-                        plugin.getMessenger().sendAbandoned(sender, i, owner, l, t.getTardisId());
+                        plugin.getMessenger().sendAbandoned(sender, i, owner, l, tardis.getTardisId());
                     } else {
                         sender.sendMessage(i + ". Abandoned by: " + owner + ", location: " + l);
                     }

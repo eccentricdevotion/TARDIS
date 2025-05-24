@@ -17,8 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
@@ -50,16 +51,16 @@ class TARDISFindCommand {
                 return true;
             }
             if (!plugin.getConfig().getBoolean("difficulty.tardis_locator") || plugin.getUtils().inGracePeriod(player, true)) {
-                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getTardisId());
-                if (rsc.resultSet()) {
-                    String world = TARDISAliasResolver.getWorldAlias(rsc.getWorld());
-                    if (!plugin.getPlanetsConfig().getBoolean("planets." + rsc.getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
-                        world = plugin.getMVHelper().getAlias(rsc.getWorld());
+                Current current = TARDISCache.CURRENT.get(rs.getTardisId());
+                if (current != null) {
+                    String world = TARDISAliasResolver.getWorldAlias(current.location().getWorld());
+                    if (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
+                        world = plugin.getMVHelper().getAlias(current.location().getWorld());
                     }
                     if (player.isOp()) {
-                        plugin.getMessenger().sendFind(player, world, rsc.getX(), rsc.getY(), rsc.getZ());
+                        plugin.getMessenger().sendFind(player, world, current.location().getBlockX(), current.location().getBlockY(), current.location().getBlockZ());
                     } else {
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_FIND", world + " at x: " + rsc.getX() + " y: " + rsc.getY() + " z: " + rsc.getZ());
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_FIND", world + " at x: " + current.location().getBlockX() + " y: " + current.location().getBlockY() + " z: " + current.location().getBlockZ());
                     }
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");

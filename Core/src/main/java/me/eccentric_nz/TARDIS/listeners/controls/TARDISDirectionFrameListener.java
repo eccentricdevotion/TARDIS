@@ -18,9 +18,9 @@ package me.eccentric_nz.TARDIS.listeners.controls;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Material;
 import org.bukkit.Rotation;
@@ -138,11 +138,11 @@ public class TARDISDirectionFrameListener implements Listener {
                         // are they placing a tripwire hook?
                         if (frame.getItem().getType().isAir() && player.getInventory().getItemInMainHand().getType().equals(Material.TRIPWIRE_HOOK)) {
                             // get current tardis direction
-                            ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
-                            if (rscl.resultSet()) {
+                            Current current = TARDISCache.CURRENT.get(id);
+                               if (current != null) {
                                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                                     // update the TRIPWIRE_HOOK rotation
-                                    Rotation r = switch (rscl.getDirection()) {
+                                    Rotation r = switch (current.direction()) {
                                         case EAST -> Rotation.COUNTER_CLOCKWISE;
                                         case SOUTH_EAST -> Rotation.COUNTER_CLOCKWISE_45;
                                         case SOUTH -> Rotation.NONE;
@@ -153,7 +153,7 @@ public class TARDISDirectionFrameListener implements Listener {
                                         default -> Rotation.FLIPPED_45;
                                     };
                                     frame.setRotation(r);
-                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_CURRENT", rscl.getDirection().toString());
+                                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_CURRENT", current.direction().toString());
                                 }, 4L);
                             }
                         }

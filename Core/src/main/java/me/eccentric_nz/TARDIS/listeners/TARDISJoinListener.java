@@ -24,8 +24,12 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.camera.CameraLocation;
 import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetAchievements;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.skins.SkinUtils;
@@ -131,8 +135,8 @@ public class TARDISJoinListener implements Listener {
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (rst.resultSet()) {
             // does the TARDIS they occupy still exist?
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rst.getTardis_id());
-            if (!rsc.resultSet()) {
+            Current current = TARDISCache.CURRENT.get(rst.getTardis_id());
+            if (current == null) {
                 // teleport player
                 Location teleport = player.getRespawnLocation() != null ? player.getRespawnLocation() : plugin.getServer().getWorlds().getFirst().getSpawnLocation();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.teleport(teleport), 1L);
@@ -157,11 +161,11 @@ public class TARDISJoinListener implements Listener {
             String owner = tardis.getOwner();
             String last_known_name = tardis.getLastKnownName();
             if (plugin.getConfig().getBoolean("police_box.keep_chunk_force_loaded")) {
-                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                if (rsc.resultSet()) {
-                    World w = rsc.getWorld();
+                Current current = TARDISCache.CURRENT.get(id);
+                if (current != null) {
+                    World w = current.location().getWorld();
                     if (w != null) {
-                        Chunk chunk = w.getChunkAt(new Location(w, rsc.getX(), rsc.getY(), rsc.getZ()));
+                        Chunk chunk = w.getChunkAt(current.location());
                         while (!chunk.isLoaded()) {
                             chunk.load();
                         }

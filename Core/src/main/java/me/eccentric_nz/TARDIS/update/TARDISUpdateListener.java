@@ -23,9 +23,9 @@ import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.QueryFactory;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Updateable;
@@ -137,9 +137,6 @@ public class TARDISUpdateListener implements Listener {
                     block = block.getRelative(BlockFace.DOWN);
                 }
             }
-//            HashMap<String, Object> where = new HashMap<>();
-//            where.put("uuid", uuid);
-//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             Tardis tardis = TARDISCache.BY_UUID.get(tuuid);
             if (tardis == null) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
@@ -215,7 +212,6 @@ public class TARDISUpdateListener implements Listener {
                     front.setLine(1, plugin.getSigns().getStringList("chameleon").get(1));
                     front.setLine(2, "");
                     front.setLine(3, tardis.getPreset().toString());
-//                    cs.setWaxed(true);
                     cs.update();
                 }
                 case KEYBOARD -> {
@@ -238,7 +234,6 @@ public class TARDISUpdateListener implements Listener {
                     front.setLine(1, plugin.getSigns().getStringList("saves").getFirst());
                     front.setLine(2, plugin.getSigns().getStringList("saves").get(1));
                     front.setLine(3, "");
-//                    ss.setWaxed(true);
                     ss.update();
                 }
                 case TERMINAL -> {
@@ -250,7 +245,6 @@ public class TARDISUpdateListener implements Listener {
                     front.setLine(1, plugin.getSigns().getStringList("terminal").getFirst());
                     front.setLine(2, plugin.getSigns().getStringList("terminal").get(1));
                     front.setLine(3, "");
-//                    ts.setWaxed(true);
                     ts.update();
                 }
                 case CONTROL -> {
@@ -262,22 +256,21 @@ public class TARDISUpdateListener implements Listener {
                     front.setLine(1, plugin.getSigns().getStringList("control").getFirst());
                     front.setLine(2, plugin.getSigns().getStringList("control").get(1));
                     front.setLine(3, "");
-//                    os.setWaxed(true);
                     os.update();
                 }
                 case ARS -> new UpdateARS(plugin).process(block, tardis.getSchematic(), id, uuid);
                 case BACK -> {
                     plugin.getQueryFactory().insertControl(id, 8, blockLocStr, secondary ? 1 : 0);
                     // insert current into back
-                    ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
-                    if (rscl.resultSet()) {
+                    Current current = TARDISCache.CURRENT.get(id);
+                    if (current != null) {
                         HashMap<String, Object> setb = new HashMap<>();
-                        setb.put("world", rscl.getWorld().getName());
-                        setb.put("x", rscl.getX());
-                        setb.put("y", rscl.getY());
-                        setb.put("z", rscl.getZ());
-                        setb.put("direction", rscl.getDirection().toString());
-                        setb.put("submarine", (rscl.isSubmarine()) ? 1 : 0);
+                        setb.put("world", current.location().getWorld().getName());
+                        setb.put("x", current.location().getBlockX());
+                        setb.put("y", current.location().getBlockY());
+                        setb.put("z", current.location().getBlockZ());
+                        setb.put("direction", current.direction().toString());
+                        setb.put("submarine", (current.submarine()) ? 1 : 0);
                         HashMap<String, Object> whereb = new HashMap<>();
                         whereb.put("tardis_id", id);
                         plugin.getQueryFactory().doUpdate("back", setb, whereb);
@@ -292,7 +285,6 @@ public class TARDISUpdateListener implements Listener {
                     front.setLine(1, plugin.getSigns().getStringList("temporal").getFirst());
                     front.setLine(2, plugin.getSigns().getStringList("temporal").get(1));
                     front.setLine(3, "");
-//                    es.setWaxed(true);
                     es.update();
                 }
                 case ADVANCED, STORAGE -> {
@@ -314,7 +306,6 @@ public class TARDISUpdateListener implements Listener {
                     front.setLine(1, "TARDIS");
                     front.setLine(2, plugin.getSigns().getStringList("info").getFirst());
                     front.setLine(3, plugin.getSigns().getStringList("info").get(1));
-//                    s.setWaxed(true);
                     s.update();
                 }
                 case THROTTLE -> {

@@ -22,8 +22,12 @@ import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -131,10 +135,10 @@ public class TARDISSavesListener extends TARDISMenuListener {
                 } else {
                     event.setCancelled(true);
                     if (slot >= 0 && slot < 45) {
-                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, occupiedTardisId);
-                        Location current = null;
-                        if (rsc.resultSet()) {
-                            current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                        Location exterior = null;
+                        Current current = TARDISCache.CURRENT.get(occupiedTardisId);
+                        if (current != null) {
+                            exterior = current.location();
                         }
                         ItemStack is = view.getItem(slot);
                         if (is != null) {
@@ -180,10 +184,6 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                         return;
                                     }
                                     String invisibility = tac.getArea().invisibility();
-//                                    HashMap<String, Object> wheret = new HashMap<>();
-//                                    wheret.put("tardis_id", occupiedTardisId);
-//                                    ResultSetTardis resultSetTardis = new ResultSetTardis(plugin, wheret, "", false, 2);
-//                                    if (resultSetTardis.resultSet()) {
                                     Tardis tardis = TARDISCache.BY_ID.get(occupiedTardisId);
                                     if (tardis != null) {
                                         if (invisibility.equals("DENY") && tardis.getPreset().equals(ChameleonPreset.INVISIBLE)) {
@@ -204,7 +204,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                         }
                                     }
                                 }
-                                if (!save_dest.equals(current) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(occupiedTardisId)) {
+                                if (!save_dest.equals(exterior) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(occupiedTardisId)) {
                                     // damage circuit if configured
                                     if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
                                         TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, occupiedTardisId);

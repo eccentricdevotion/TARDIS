@@ -18,14 +18,13 @@ package me.eccentric_nz.TARDIS.commands.remote;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -49,8 +48,8 @@ public class TARDISRemoteHideCommand {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "NOT_IN_VORTEX");
             return true;
         }
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-        if (!rsc.resultSet()) {
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current == null) {
             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             return true;
         }
@@ -59,16 +58,11 @@ public class TARDISRemoteHideCommand {
             olp = (OfflinePlayer) sender;
         } else {
             // get tardis owner
-//            HashMap<String, Object> where = new HashMap<>();
-//            where.put("tardis_id", id);
-//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-//            if (rs.resultSet()) {
             Tardis tardis = TARDISCache.BY_ID.get(id);
             if (tardis != null) {
                 olp = plugin.getServer().getOfflinePlayer(tardis.getUuid());
             }
         }
-        Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
         ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
         if (rs.fromID(id) && rs.getPreset().equals(ChameleonPreset.INVISIBLE) && olp != null) {
             plugin.getMessenger().send(olp.getPlayer(), TardisModule.TARDIS, "INVISIBILITY_ENGAGED");
@@ -76,12 +70,12 @@ public class TARDISRemoteHideCommand {
         }
         UUID uuid = olp.getUniqueId();
         DestroyData dd = new DestroyData();
-        dd.setDirection(rsc.getDirection());
-        dd.setLocation(l);
+        dd.setDirection(current.direction());
+        dd.setLocation(current.location());
         dd.setPlayer(olp);
         dd.setHide(false);
         dd.setOutside(false);
-        dd.setSubmarine(rsc.isSubmarine());
+        dd.setSubmarine(current.submarine());
         dd.setTardisID(id);
         dd.setThrottle(SpaceTimeThrottle.REBUILD);
         plugin.getPresetDestroyer().destroyPreset(dd);

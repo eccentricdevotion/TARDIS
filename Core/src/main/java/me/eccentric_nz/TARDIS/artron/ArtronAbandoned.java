@@ -17,10 +17,11 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISClaimEvent;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISAbandonCommand;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.doors.inner.Inner;
 import me.eccentric_nz.TARDIS.doors.inner.InnerDisplayDoorCloser;
@@ -49,58 +50,57 @@ public class ArtronAbandoned {
     }
 
     public boolean claim(Player player, int id, Location location, Tardis tardis) {
-            // transfer ownership to the player who clicked
-            boolean pu = plugin.getQueryFactory().claimTARDIS(player, id);
-            // make sure player is added as owner of interior WorldGuard region
-            if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
-                plugin.getWorldGuardUtils().updateRegionForClaim(location, player.getUniqueId());
-            }
-            ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
-            if (rscl.resultSet()) {
-                Location current = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
-                if (pu) {
-                    ResultSetTardisPreset rsp = new ResultSetTardisPreset(plugin);
-                    if (rsp.fromID(id)) {
-                        boolean outerDisplayDoor = rsp.getPreset().usesArmourStand();
-                        Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
-                        UUID playerUUID = player.getUniqueId();
-                        // close inner
-                        if (innerDisplayDoor.display()) {
-                            new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID, true);
-                        } else {
-                            new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID);
-                        }
-                        // close outer
-                        if (outerDisplayDoor) {
-                            new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
-                        } else if (rsp.getPreset().hasDoor()) {
-                            new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
-                        }
+        // transfer ownership to the player who clicked
+        boolean pu = plugin.getQueryFactory().claimTARDIS(player, id);
+        // make sure player is added as owner of interior WorldGuard region
+        if (plugin.isWorldGuardOnServer() && plugin.getConfig().getBoolean("preferences.use_worldguard")) {
+            plugin.getWorldGuardUtils().updateRegionForClaim(location, player.getUniqueId());
+        }
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current != null) {
+            if (pu) {
+                ResultSetTardisPreset rsp = new ResultSetTardisPreset(plugin);
+                if (rsp.fromID(id)) {
+                    boolean outerDisplayDoor = rsp.getPreset().usesArmourStand();
+                    Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
+                    UUID playerUUID = player.getUniqueId();
+                    // close inner
+                    if (innerDisplayDoor.display()) {
+                        new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID, true);
+                    } else {
+                        new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID);
                     }
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDON_CLAIMED");
-                    plugin.getPM().callEvent(new TARDISClaimEvent(player, tardis, current));
-                }
-                if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
-                    ChameleonPreset preset = tardis.getPreset();
-                    Sign sign = TARDISAbandonCommand.getSign(current, rscl.getDirection(), preset);
-                    if (sign != null) {
-                        SignSide front = sign.getSide(Side.FRONT);
-                        String player_name = TARDISStaticUtils.getNick(player);
-                        String owner;
-                        if (preset.equals(ChameleonPreset.GRAVESTONE) || preset.equals(ChameleonPreset.PUNKED) || preset.equals(ChameleonPreset.ROBOT)) {
-                            owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;
-                        } else {
-                            owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
-                        }
-                        switch (preset) {
-                            case GRAVESTONE -> front.setLine(3, owner);
-                            case ANGEL, JAIL -> front.setLine(2, owner);
-                            default -> front.setLine(0, owner);
-                        }
-                        sign.update();
+                    // close outer
+                    if (outerDisplayDoor) {
+                        new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                    } else if (rsp.getPreset().hasDoor()) {
+                        new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
                     }
                 }
+                plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDON_CLAIMED");
+                plugin.getPM().callEvent(new TARDISClaimEvent(player, tardis, current.location()));
             }
-            return pu;
+            if (plugin.getConfig().getBoolean("police_box.name_tardis")) {
+                ChameleonPreset preset = tardis.getPreset();
+                Sign sign = TARDISAbandonCommand.getSign(current.location(), current.direction(), preset);
+                if (sign != null) {
+                    SignSide front = sign.getSide(Side.FRONT);
+                    String player_name = TARDISStaticUtils.getNick(player);
+                    String owner;
+                    if (preset.equals(ChameleonPreset.GRAVESTONE) || preset.equals(ChameleonPreset.PUNKED) || preset.equals(ChameleonPreset.ROBOT)) {
+                        owner = (player_name.length() > 14) ? player_name.substring(0, 14) : player_name;
+                    } else {
+                        owner = (player_name.length() > 14) ? player_name.substring(0, 12) + "'s" : player_name + "'s";
+                    }
+                    switch (preset) {
+                        case GRAVESTONE -> front.setLine(3, owner);
+                        case ANGEL, JAIL -> front.setLine(2, owner);
+                        default -> front.setLine(0, owner);
+                    }
+                    sign.update();
+                }
+            }
+        }
+        return pu;
     }
 }

@@ -21,7 +21,6 @@ import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -47,11 +46,6 @@ class TARDISRemoteTravelCommand {
     }
 
     boolean doTravel(int id, OfflinePlayer player, CommandSender sender) {
-//        HashMap<String, Object> wherei = new HashMap<>();
-//        wherei.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-//        if (rs.resultSet()) {
-//            Tardis tardis = rs.getTardis();
         Tardis tardis = TARDISCache.BY_ID.get(id);
         if (tardis != null) {
             boolean hidden = tardis.isHidden();
@@ -133,9 +127,9 @@ class TARDISRemoteTravelCommand {
             } else {
                 // back
                 setback.put("world", current.location().getWorld().getName());
-                setback.put("x", current.location().getX());
-                setback.put("y", current.location().getY());
-                setback.put("z", current.location().getZ());
+                setback.put("x", current.location().getBlockX());
+                setback.put("y", current.location().getBlockY());
+                setback.put("z", current.location().getBlockZ());
                 setback.put("direction", current.direction().toString());
                 setback.put("submarine", (current.submarine()) ? 1 : 0);
             }

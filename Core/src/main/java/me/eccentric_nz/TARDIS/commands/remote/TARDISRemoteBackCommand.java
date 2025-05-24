@@ -19,8 +19,8 @@ package me.eccentric_nz.TARDIS.commands.remote;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -62,8 +62,8 @@ public class TARDISRemoteBackCommand {
         set.put("direction", rsb.getDirection().toString());
         set.put("submarine", (rsb.isSubmarine()) ? 1 : 0);
         // get current police box location
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-        if (!rsc.resultSet()) {
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current == null) {
             if (sender instanceof Player) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             }
@@ -83,12 +83,12 @@ public class TARDISRemoteBackCommand {
         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             // destroy the police box
             DestroyData dd = new DestroyData();
-            dd.setDirection(rsc.getDirection());
-            dd.setLocation(new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ()));
+            dd.setDirection(current.direction());
+            dd.setLocation(current.location());
             dd.setPlayer(player);
             dd.setHide(false);
             dd.setOutside(true);
-            dd.setSubmarine(rsc.isSubmarine());
+            dd.setSubmarine(current.submarine());
             dd.setTardisID(id);
             dd.setThrottle(SpaceTimeThrottle.NORMAL);
             plugin.getTrackerKeeper().getDematerialising().add(id);

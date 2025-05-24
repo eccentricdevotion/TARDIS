@@ -17,12 +17,13 @@
 package me.eccentric_nz.TARDIS.junk;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.control.actions.FindWithJunkAction;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -122,12 +123,8 @@ public class TARDISJunkControlListener implements Listener {
                         getDestination(id, player);
                         if (plugin.getGeneralKeeper().getJunkDestination() != null) {
                             // get the current location
-                            Location junkloc = null;
-                            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                            if (rsc.resultSet()) {
-                                junkloc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                            }
-                            if (junkloc == null) {
+                            Current current = TARDISCache.CURRENT.get(id);
+                            if (current == null) {
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "JUNK_NOT_FOUND");
                                 return;
                             }
@@ -138,10 +135,10 @@ public class TARDISJunkControlListener implements Listener {
                             DestroyData dd = new DestroyData();
                             dd.setPlayer(player);
                             dd.setDirection(COMPASS.SOUTH);
-                            dd.setLocation(junkloc);
+                            dd.setLocation(current.location());
                             dd.setHide(false);
                             dd.setOutside(false);
-                            dd.setSubmarine(rsc.isSubmarine());
+                            dd.setSubmarine(current.submarine());
                             dd.setTardisID(id);
                             dd.setThrottle(SpaceTimeThrottle.JUNK);
                             plugin.getPresetDestroyer().destroyPreset(dd);

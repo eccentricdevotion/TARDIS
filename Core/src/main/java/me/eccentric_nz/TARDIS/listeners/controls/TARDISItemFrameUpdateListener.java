@@ -17,10 +17,11 @@
 package me.eccentric_nz.TARDIS.listeners.controls;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.control.TARDISScannerMap;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -117,10 +118,9 @@ public class TARDISItemFrameUpdateListener implements Listener {
                                 }
                                 which = "Scanner Map";
                                 // place a map
-                                ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
-                                if (rscl.resultSet()) {
-                                    Location scan_loc = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
-                                    new TARDISScannerMap(TARDIS.plugin, scan_loc, frame).setMap();
+                                Current current = TARDISCache.CURRENT.get(id);
+                               if (current != null) {
+                                    new TARDISScannerMap(TARDIS.plugin, current.location(), frame).setMap();
                                 }
                             }
                             case MONITOR -> {

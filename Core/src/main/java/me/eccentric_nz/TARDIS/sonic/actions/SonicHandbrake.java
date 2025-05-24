@@ -9,9 +9,9 @@ import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.utility.TARDISSculkShrieker;
 import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -118,14 +118,14 @@ public class SonicHandbrake {
                     }
                     // check the state of the Relativity Differentiator
                     if (check.isRelativityDifferentiated(id) && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand() && !player.isSneaking()) {
-                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                        if (!rsc.resultSet()) {
+                        Current current = TARDISCache.CURRENT.get(id);
+                        if (current == null) {
                             plugin.debug("No current location");
                             return;
                         }
                         // check if TARDIS is underground
-                        for (int y = rsc.getY() + 4; y < rsc.getY() + 8; y++) {
-                            if (!rsc.getWorld().getBlockAt(rsc.getX(), y, rsc.getZ()).getType().isAir()) {
+                        for (int y = current.location().getBlockY() + 4; y < current.location().getBlockY() + 8; y++) {
+                            if (!current.location().getWorld().getBlockAt(current.location().getBlockX(), y, current.location().getBlockZ()).getType().isAir()) {
                                 plugin.getMessenger().sendStatus(player, "FLIGHT_AIR");
                                 return;
                             }
@@ -140,13 +140,15 @@ public class SonicHandbrake {
                             return;
                         }
                         // fly the TARDIS exterior
-                        Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), player.getLocation().getYaw(), player.getLocation().getPitch());
+                        Location exterior = current.location().clone();
+                        exterior.setYaw(player.getLocation().getYaw());
+                        exterior.setPitch(player.getLocation().getPitch());
                         // check the armour stand is a custom one
-                        if (VehicleUtility.isNotFlightReady(current)) {
+                        if (VehicleUtility.isNotFlightReady(exterior)) {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_REBUILD");
                             return;
                         } else {
-                            new TARDISExteriorFlight(plugin).startFlying(player, id, block, current, beac_on, beacon);
+                            new TARDISExteriorFlight(plugin).startFlying(player, id, block, exterior, beac_on, beacon);
                         }
                     } else {
                         new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, throticle);

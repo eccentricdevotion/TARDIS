@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTeleportCommand;
 import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Program;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -254,15 +255,14 @@ public class TARDISHandlesProcessor {
                                 if (lore != null) {
                                     String first = lore.getFirst();
                                     // get current location
-                                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                                    if (rsc.resultSet()) {
+                                    Current current = TARDISCache.CURRENT.get(id);
+                                    if (current != null) {
                                         Location goto_loc = null;
-                                        Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                                        COMPASS direction = rsc.getDirection();
-                                        COMPASS nextDirection = rsc.getDirection();
-                                        int x = rsc.getX();
-                                        int y = rsc.getY();
-                                        int z = rsc.getZ();
+                                        COMPASS direction = current.direction();
+                                        COMPASS nextDirection = current.direction();
+                                        int x = current.location().getBlockX();
+                                        int y = current.location().getBlockY();
+                                        int z = current.location().getBlockZ();
                                         boolean sub = false;
                                         TravelType travelType = TravelType.SAVE;
                                         switch (next) {
@@ -295,7 +295,7 @@ public class TARDISHandlesProcessor {
                                                     TARDISHandlesBlock coordBlockZ = TARDISHandlesBlock.valueOf(coordZ.getItemMeta().getDisplayName());
                                                     z = getNumber(coordBlockZ, fz);
                                                 }
-                                                goto_loc = new Location(rsc.getWorld(), x, y, z);
+                                                goto_loc = new Location(current.location().getWorld(), x, y, z);
                                                 travelType = TravelType.COORDINATES;
                                             }
                                             case Y -> {
@@ -310,7 +310,7 @@ public class TARDISHandlesProcessor {
                                                     TARDISHandlesBlock coordBlockZ = TARDISHandlesBlock.valueOf(coordZ.getItemMeta().getDisplayName());
                                                     z = getNumber(coordBlockZ, fyz);
                                                 }
-                                                goto_loc = new Location(rsc.getWorld(), x, y, z);
+                                                goto_loc = new Location(current.location().getWorld(), x, y, z);
                                                 travelType = TravelType.RELATIVE_COORDINATES;
                                             }
                                             case Z -> {
@@ -318,7 +318,7 @@ public class TARDISHandlesProcessor {
                                                 ItemStack coordZ = program.getInventory()[i + 2];
                                                 TARDISHandlesBlock coordBlockZ = TARDISHandlesBlock.valueOf(coordZ.getItemMeta().getDisplayName());
                                                 z = getNumber(coordBlockZ, i + 2);
-                                                goto_loc = new Location(rsc.getWorld(), x, y, z);
+                                                goto_loc = new Location(current.location().getWorld(), x, y, z);
                                                 travelType = TravelType.RELATIVE_COORDINATES;
                                             }
                                             case HOME -> {
@@ -348,7 +348,7 @@ public class TARDISHandlesProcessor {
                                                 travelType = TravelType.HOME;
                                             }
                                             case RECHARGER -> {
-                                                Location recharger = getRecharger(rsc.getWorld(), player);
+                                                Location recharger = getRecharger(current.location().getWorld(), player);
                                                 if (recharger != null) {
                                                     plugin.getMessenger().handlesSend(player, "RECHARGER_FOUND");
                                                     goto_loc = recharger;
@@ -360,7 +360,7 @@ public class TARDISHandlesProcessor {
                                             }
                                             case AREA_DISK -> {
                                                 // check the current location is not in this area already
-                                                if (!plugin.getTardisArea().areaCheckInExile(first, current)) {
+                                                if (!plugin.getTardisArea().areaCheckInExile(first, current.location())) {
                                                     continue;
                                                 }
                                                 // get a parking spot in this area
@@ -395,7 +395,7 @@ public class TARDISHandlesProcessor {
                                                     plugin.getMessenger().handlesSend(player, "TRAVEL_NO_PERM_BIOME");
                                                     continue;
                                                 }
-                                                if (current.getBlock().getBiome().toString().equals(first)) {
+                                                if (current.location().getBlock().getBiome().toString().equals(first)) {
                                                     continue;
                                                 }
                                                 Biome biome;
@@ -412,8 +412,7 @@ public class TARDISHandlesProcessor {
                                                     }
                                                 }
                                                 plugin.getMessenger().handlesSend(player, "BIOME_SEARCH");
-//                                                Location nsob = plugin.getGeneralKeeper().getTardisTravelCommand().searchBiome(player, id, biome, rsc.getWorld(), rsc.getX(), rsc.getZ());
-                                                Location nsob = BiomeUtilities.searchBiome(rsc.getWorld(), biome, current);
+                                                Location nsob = BiomeUtilities.searchBiome(current.location().getWorld(), biome, current.location());
                                                 if (nsob == null) {
                                                     plugin.getMessenger().handlesSend(player, "BIOME_NOT_FOUND");
                                                     continue;
@@ -491,7 +490,7 @@ public class TARDISHandlesProcessor {
                                                     int sx = TARDISNumberParsers.parseInt(lore.get(2));
                                                     int sy = TARDISNumberParsers.parseInt(lore.get(3));
                                                     int sz = TARDISNumberParsers.parseInt(lore.get(4));
-                                                    if (current.getWorld().getName().equals(lore.get(1)) && current.getBlockX() == sx && current.getBlockZ() == sz) {
+                                                    if (current.location().getWorld().getName().equals(lore.get(1)) && current.location().getBlockX() == sx && current.location().getBlockZ() == sz) {
                                                         continue;
                                                     }
                                                     plugin.getMessenger().handlesSend(player, "LOC_SET");
@@ -521,11 +520,11 @@ public class TARDISHandlesProcessor {
                                                 // destroy police box
                                                 DestroyData dd = new DestroyData();
                                                 dd.setDirection(direction);
-                                                dd.setLocation(current);
+                                                dd.setLocation(current.location());
                                                 dd.setPlayer(player);
                                                 dd.setHide(false);
                                                 dd.setOutside(false);
-                                                dd.setSubmarine(rsc.isSubmarine());
+                                                dd.setSubmarine(current.submarine());
                                                 dd.setTardisID(id);
                                                 dd.setThrottle(SpaceTimeThrottle.NORMAL);
                                                 // set handbrake off
@@ -538,7 +537,7 @@ public class TARDISHandlesProcessor {
                                                     plugin.getTrackerKeeper().getDematerialising().add(dd.getTardisID());
                                                     plugin.getTrackerKeeper().getInVortex().add(id);
                                                     // play tardis_takeoff sfx
-                                                    TARDISSounds.playTARDISSound(current, "tardis_takeoff");
+                                                    TARDISSounds.playTARDISSound(current.location(), "tardis_takeoff");
                                                 } else {
                                                     plugin.getPresetDestroyer().removeBlockProtection(id);
                                                     set.put("hidden", 0);
@@ -583,12 +582,12 @@ public class TARDISHandlesProcessor {
                                             plugin.getQueryFactory().doUpdate("current", setc, wherec);
                                             // set back
                                             HashMap<String, Object> setb = new HashMap<>();
-                                            setb.put("world", rsc.getWorld().getName());
-                                            setb.put("x", rsc.getX());
-                                            setb.put("y", rsc.getY());
-                                            setb.put("z", rsc.getZ());
+                                            setb.put("world", current.location().getWorld().getName());
+                                            setb.put("x", current.location().getBlockX());
+                                            setb.put("y", current.location().getBlockY());
+                                            setb.put("z", current.location().getBlockZ());
                                             setb.put("direction", direction.toString());
-                                            setb.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
+                                            setb.put("submarine", (current.submarine()) ? 1 : 0);
                                             HashMap<String, Object> whereb = new HashMap<>();
                                             whereb.put("tardis_id", id);
                                             plugin.getQueryFactory().doUpdate("back", setb, whereb);

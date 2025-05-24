@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.hads;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -162,9 +162,9 @@ public class TARDISCloisterBell implements Runnable {
 
     private Location getCurrent(int id) {
         // get the location of the TARDIS Police Box
-        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, id);
-        if (rs.resultSet()) {
-            return new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current != null) {
+            return current.location();
         }
         return null;
     }

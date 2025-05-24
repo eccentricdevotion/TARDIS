@@ -28,8 +28,8 @@ import me.eccentric_nz.TARDIS.control.*;
 import me.eccentric_nz.TARDIS.control.actions.FastReturnAction;
 import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
 import me.eccentric_nz.TARDIS.control.actions.SiegeAction;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -329,13 +329,13 @@ public class FloodgateControlForm {
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                             return;
                         }
-                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
                         String direction = "EAST";
-                        if (rsc.resultSet()) {
-                            direction = rsc.getDirection().toString();
+                        Current current = TARDISCache.CURRENT.get(id);
+                        if (current != null) {
+                            direction = current.direction().toString();
                             if (!tardis.getPreset().usesArmourStand()) {
                                 // skip the angled rotations
-                                switch (rsc.getDirection()) {
+                                switch (current.direction()) {
                                     case SOUTH -> direction = "SOUTH_WEST";
                                     case EAST -> direction = "SOUTH_EAST";
                                     case NORTH -> direction = "NORTH_EAST";

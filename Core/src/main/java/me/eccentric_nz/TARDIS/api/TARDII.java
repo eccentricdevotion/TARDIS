@@ -612,8 +612,8 @@ public class TARDII implements TardisAPI {
     @Override
     public boolean setDestination(int id, Location location, boolean travel) {
         // get current direction
-        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(TARDIS.plugin, id);
-        if (rs.resultSet()) {
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current != null) {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             HashMap<String, Object> set = new HashMap<>();
@@ -621,15 +621,11 @@ public class TARDII implements TardisAPI {
             set.put("x", location.getBlockX());
             set.put("y", location.getBlockY());
             set.put("z", location.getBlockZ());
-            set.put("direction", rs.getDirection().toString());
+            set.put("direction", current.direction().toString());
             set.put("submarine", 0);
             TARDIS.plugin.getQueryFactory().doUpdate("next", set, where);
             if (travel) {
                 // get TARDIS data
-//                HashMap<String, Object> wheret = new HashMap<>();
-//                wheret.put("tardis_id", id);
-//                ResultSetTardis rst = new ResultSetTardis(TARDIS.plugin, wheret, "", false, 2);
-//                if (rst.resultSet()) {
                 Tardis tardis = TARDISCache.BY_ID.get(id);
                 if (tardis != null) {
                     Player player = Bukkit.getServer().getPlayer(tardis.getUuid());

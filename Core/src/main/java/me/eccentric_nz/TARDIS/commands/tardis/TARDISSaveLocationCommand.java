@@ -20,8 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
@@ -85,12 +85,12 @@ class TARDISSaveLocationCommand {
                     return true;
                 }
                 // get current destination
-                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                if (!rsc.resultSet()) {
+                Current current = TARDISCache.CURRENT.get(id);
+                if (current == null) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                     return true;
                 }
-                String w = rsc.getWorld().getName();
+                String w = current.location().getWorld().getName();
                 if (w.startsWith("TARDIS_")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NO_TARDIS");
                     return true;
@@ -99,11 +99,11 @@ class TARDISSaveLocationCommand {
                 set.put("tardis_id", id);
                 set.put("dest_name", args[1]);
                 set.put("world", w);
-                set.put("x", rsc.getX());
-                set.put("y", rsc.getY());
-                set.put("z", rsc.getZ());
-                set.put("direction", rsc.getDirection().toString());
-                set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
+                set.put("x", current.location().getBlockX());
+                set.put("y", current.location().getBlockY());
+                set.put("z", current.location().getBlockZ());
+                set.put("direction", current.direction().toString());
+                set.put("submarine", (current.submarine()) ? 1 : 0);
                 if (args.length > 2 && args[2].equalsIgnoreCase("true")) {
                     set.put("preset", tardis.getPreset().toString());
                 }

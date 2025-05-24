@@ -23,8 +23,8 @@ import me.eccentric_nz.TARDIS.api.event.TARDISSiegeEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeOffEvent;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
@@ -72,12 +72,11 @@ public class TARDISSiegeMode {
         }
 //        Tardis tardis = rs.getTardis();
         // get current location
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-        if (!rsc.resultSet()) {
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current == null) {
             return;
         }
-        Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-        Block siege = current.getBlock();
+        Block siege = current.location().getBlock();
         HashMap<String, Object> wheres = new HashMap<>();
         wheres.put("tardis_id", id);
         HashMap<String, Object> set = new HashMap<>();
@@ -94,13 +93,13 @@ public class TARDISSiegeMode {
             TARDISDisplayItemUtils.remove(siege);
             // rebuild preset
             BuildData bd = new BuildData(p.getUniqueId().toString());
-            bd.setDirection(rsc.getDirection());
-            bd.setLocation(current);
+            bd.setDirection(current.direction());
+            bd.setLocation(current.location());
             bd.setMalfunction(false);
             bd.setOutside(false);
             bd.setPlayer(p);
             bd.setRebuild(true);
-            bd.setSubmarine(rsc.isSubmarine());
+            bd.setSubmarine(current.submarine());
             bd.setTardisID(id);
             bd.setThrottle(SpaceTimeThrottle.REBUILD);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
@@ -151,13 +150,13 @@ public class TARDISSiegeMode {
             }
             // destroy tardis
             DestroyData dd = new DestroyData();
-            dd.setDirection(rsc.getDirection());
-            dd.setLocation(current);
+            dd.setDirection(current.direction());
+            dd.setLocation(current.location());
             dd.setPlayer(p.getPlayer());
             dd.setHide(false);
             dd.setOutside(false);
             dd.setSiege(true);
-            dd.setSubmarine(rsc.isSubmarine());
+            dd.setSubmarine(current.submarine());
             dd.setTardisID(id);
             dd.setThrottle(SpaceTimeThrottle.REBUILD);
             plugin.getPresetDestroyer().destroyPreset(dd);

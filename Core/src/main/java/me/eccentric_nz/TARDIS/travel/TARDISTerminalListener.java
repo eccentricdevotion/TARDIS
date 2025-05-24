@@ -17,13 +17,14 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -59,7 +60,7 @@ import java.util.*;
 public class TARDISTerminalListener implements Listener {
 
     private final TARDIS plugin;
-    private final HashMap<UUID, ResultSetCurrentFromId> terminalUsers = new HashMap<>();
+    private final HashMap<UUID, Current> terminalUsers = new HashMap<>();
     private final HashMap<UUID, String> terminalDestination = new HashMap<>();
     private final HashMap<UUID, Integer> terminalStep = new HashMap<>();
     private final HashMap<UUID, Integer> terminalIDs = new HashMap<>();
@@ -143,7 +144,7 @@ public class TARDISTerminalListener implements Listener {
                     set.put("x", data[1]);
                     set.put("y", data[2]);
                     set.put("z", data[3]);
-                    set.put("direction", terminalUsers.get(uuid).getDirection().toString());
+                    set.put("direction", terminalUsers.get(uuid).direction().toString());
                     set.put("submarine", (terminalSub.containsKey(uuid)) ? 1 : 0);
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", terminalIDs.get(uuid));
@@ -191,9 +192,9 @@ public class TARDISTerminalListener implements Listener {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();
-                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                if (rsc.resultSet()) {
-                    terminalUsers.put(uuid, rsc);
+                Current current = TARDISCache.CURRENT.get(id);
+                if (current != null) {
+                    terminalUsers.put(uuid, current);
                     terminalIDs.put(uuid, id);
                 } else {
                     // emergency TARDIS relocation
@@ -277,7 +278,7 @@ public class TARDISTerminalListener implements Listener {
     }
 
     private void setCurrent(InventoryView view, Player p, int slot) {
-        String current = terminalUsers.get(p.getUniqueId()).getWorld().getName();
+        String current = terminalUsers.get(p.getUniqueId()).location().getWorld().getName();
         if (!plugin.getPlanetsConfig().getBoolean("planets." + current + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
             current = plugin.getMVHelper().getAlias(current);
         } else {
@@ -385,7 +386,7 @@ public class TARDISTerminalListener implements Listener {
         int slotx = getValue(16, getSlot(view, 10, 16), true, uuid) * slotm;
         int slotz = getValue(25, getSlot(view, 19, 25), true, uuid) * slotm;
         List<String> lore = new ArrayList<>();
-        COMPASS d = terminalUsers.get(uuid).getDirection();
+        COMPASS d = terminalUsers.get(uuid).direction();
         // what kind of world is it?
         Environment e;
         int[] slots = new int[]{36, 38, 40, 42};
@@ -401,10 +402,10 @@ public class TARDISTerminalListener implements Listener {
                         e = Environment.NETHER;
                     }
                     TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
-                    if (world.equals(terminalUsers.get(uuid).getWorld().getName())) {
+                    if (world.equals(terminalUsers.get(uuid).location().getWorld().getName())) {
                         // add current co-ords
-                        slotx += terminalUsers.get(uuid).getX();
-                        slotz += terminalUsers.get(uuid).getZ();
+                        slotx += terminalUsers.get(uuid).location().getBlockX();
+                        slotz += terminalUsers.get(uuid).location().getBlockZ();
                     }
                     String loc_str = world + ":" + slotx + ":" + slotz;
                     switch (e) {

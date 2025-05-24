@@ -27,9 +27,9 @@ import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -286,12 +286,12 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                         set.put("direction", rsa.getArea().direction());
                                     } else {
                                         // get current direction
-                                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                                        if (!rsc.resultSet()) {
+                                        Current current = TARDISCache.CURRENT.get(id);
+                                        if (current == null) {
                                             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                                             return true;
                                         }
-                                        set.put("direction", rsc.getDirection().toString());
+                                        set.put("direction", current.direction().toString());
                                     }
                                     set.put("submarine", 0);
                                 }
@@ -340,14 +340,14 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                             return true;
                                         }
                                     }
-                                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                                    if (!rsc.resultSet()) {
+                                    Current current = TARDISCache.CURRENT.get(id);
+                                    if (current == null) {
                                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                                         return true;
                                     }
                                     // check location
-                                    int[] start_loc = TARDISTimeTravel.getStartLocation(location, rsc.getDirection());
-                                    int count = TARDISTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), rsc.getDirection());
+                                    int[] start_loc = TARDISTimeTravel.getStartLocation(location, current.direction());
+                                    int count = TARDISTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), current.direction());
                                     if (count > 0) {
                                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "NOT_SAFE");
                                         return true;

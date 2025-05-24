@@ -17,10 +17,11 @@
 package me.eccentric_nz.TARDIS.hads;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISHADSEvent;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -55,15 +56,14 @@ class TARDISHostileDisplacement {
 
         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
         int r = plugin.getConfig().getInt("preferences.hads_distance");
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-        if (!rsc.resultSet()) {
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current == null) {
             plugin.debug("Could not get current TARDIS location for HADS!");
+            return;
         }
-        boolean underwater = rsc.isSubmarine();
-        Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+        boolean underwater = current.submarine();
         // displace
-        COMPASS d = rsc.getDirection();
-        Location l = current.clone();
+        Location l = current.location().clone();
         // randomise the direction
         Collections.shuffle(angles);
         for (Integer a : angles) {
@@ -80,25 +80,25 @@ class TARDISHostileDisplacement {
                 y = TARDISStaticLocationGetters.getHighestYin3x3(l.getWorld(), wx, wz);
             }
             l.setY(y);
-            if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !rsc.isSubmarine()) {
+            if (l.getBlock().getRelative(BlockFace.DOWN).isLiquid() && !plugin.getConfig().getBoolean("travel.land_on_water") && !current.submarine()) {
                 bool = false;
             }
             Player player = plugin.getServer().getPlayer(uuid);
             if (bool) {
                 Location sub = null;
                 boolean safe;
-                if (rsc.isSubmarine()) {
-                    sub = tt.submarine(l.getBlock(), d);
+                if (current.submarine()) {
+                    sub = tt.submarine(l.getBlock(), current.direction());
                     safe = (sub != null);
                 } else {
-                    int[] start = TARDISTimeTravel.getStartLocation(l, d);
-                    safe = (TARDISTimeTravel.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), d) < 1);
+                    int[] start = TARDISTimeTravel.getStartLocation(l, current.direction());
+                    safe = (TARDISTimeTravel.safeLocation(start[0], y, start[2], start[1], start[3], l.getWorld(), current.direction()) < 1);
                 }
                 if (safe) {
-                    Location fl = (rsc.isSubmarine()) ? sub : l;
+                    Location fl = (current.submarine()) ? sub : l;
                     if (plugin.getPluginRespect().getRespect(fl, new Parameters(player, Flag.getNoMessageFlags()))) {
                         // sound the cloister bell at current location for dematerialisation
-                        TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 5, id, current, plugin.getServer().getPlayer(uuid), true, "HADS displacement", false);
+                        TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 5, id, current.location(), plugin.getServer().getPlayer(uuid), true, "HADS displacement", false);
                         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
                         bell.setTask(taskID);
                         plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
@@ -117,18 +117,18 @@ class TARDISHostileDisplacement {
                         set.put("x", fl.getBlockX());
                         set.put("y", fl.getBlockY());
                         set.put("z", fl.getBlockZ());
-                        set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
+                        set.put("submarine", (current.submarine()) ? 1 : 0);
                         plugin.getQueryFactory().doUpdate("current", set, tid);
                         long delay = 1L;
                         // move TARDIS
                         plugin.getTrackerKeeper().getInVortex().add(id);
                         DestroyData dd = new DestroyData();
-                        dd.setDirection(d);
-                        dd.setLocation(current);
+                        dd.setDirection(current.direction());
+                        dd.setLocation(current.location());
                         dd.setPlayer(player);
                         dd.setHide(false);
                         dd.setOutside(true);
-                        dd.setSubmarine(rsc.isSubmarine());
+                        dd.setSubmarine(current.submarine());
                         dd.setTardisID(id);
                         dd.setThrottle(SpaceTimeThrottle.NORMAL);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -136,13 +136,13 @@ class TARDISHostileDisplacement {
                             plugin.getPresetDestroyer().destroyPreset(dd);
                         }, delay);
                         BuildData bd = new BuildData(uuid.toString());
-                        bd.setDirection(d);
+                        bd.setDirection(current.direction());
                         bd.setLocation(fl);
                         bd.setMalfunction(false);
                         bd.setOutside(true);
                         bd.setPlayer(player);
                         bd.setRebuild(false);
-                        bd.setSubmarine(rsc.isSubmarine());
+                        bd.setSubmarine(current.submarine());
                         bd.setTardisID(id);
                         bd.setThrottle(SpaceTimeThrottle.NORMAL);
                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);

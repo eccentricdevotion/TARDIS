@@ -17,8 +17,9 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
@@ -85,9 +86,9 @@ public class TARDISStructureTravel {
 
     public TARDISStructureLocation getRandom(Player p, int id, String[] args) {
         // get world the Police Box is in
-        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, id);
-        if (rs.resultSet()) {
-            World world = rs.getWorld();
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current != null) {
+            World world = current.location().getWorld();
             Environment env = world.getEnvironment();
             Structure structure = null;
             if (args.length > 1) {
@@ -117,7 +118,6 @@ public class TARDISStructureTravel {
                     return null;
                 }
             }
-            Location location = new Location(world, rs.getX(), rs.getY(), rs.getZ());
             Location loc = null;
             switch (env) {
                 case NETHER -> {
@@ -125,14 +125,14 @@ public class TARDISStructureTravel {
                         // choose a random Nether structure - FORTRESS, BASTION_REMNANT
                         structure = netherStructures.get(ThreadLocalRandom.current().nextInt(netherStructures.size()));
                     }
-                    StructureSearchResult netherResult = world.locateNearestStructure(location, structure, 64, false);
+                    StructureSearchResult netherResult = world.locateNearestStructure(current.location(), structure, 64, false);
                     loc = (netherResult != null) ? netherResult.getLocation() : null;
                 }
                 case THE_END -> {
-                    StructureSearchResult endResult = world.locateNearestStructure(location, Structure.END_CITY, 64, false);
+                    StructureSearchResult endResult = world.locateNearestStructure(current.location(), Structure.END_CITY, 64, false);
                     if (endResult != null) {
                         loc = endResult.getLocation();
-                        int highesty = TARDISStaticLocationGetters.getHighestYin3x3(world, rs.getX(), rs.getZ());
+                        int highesty = TARDISStaticLocationGetters.getHighestYin3x3(world, current.location().getBlockX(), current.location().getBlockZ());
                         loc.setY(highesty);
                     }
                 }
@@ -142,7 +142,7 @@ public class TARDISStructureTravel {
                         // choose a random village structure - ANCIENT_CITY, VILLAGE_DESERT, VILLAGE_PLAINS, VILLAGE_SAVANNA, VILLAGE_SNOWY, VILLAGE_TAIGA, MANSION, JUNGLE_PYRAMID, DESERT_PYRAMID, IGLOO, SWAMP_HUT
                         structure = overworldStructures.get(ThreadLocalRandom.current().nextInt(overworldStructures.size()));
                     }
-                    StructureSearchResult normalResult = world.locateNearestStructure(location, structure, 64, false);
+                    StructureSearchResult normalResult = world.locateNearestStructure(current.location(), structure, 64, false);
                     loc = (normalResult != null) ? normalResult.getLocation() : null;
                     // if ANCIENT_CITY, get underground location
                     if (loc != null) {

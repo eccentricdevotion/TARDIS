@@ -17,13 +17,14 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
@@ -104,8 +105,8 @@ public class FloodgateDestinationTerminalForm {
             ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
             if (rst.resultSet()) {
                 int id = rst.getTardis_id();
-                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                if (rsc.resultSet()) {
+                Current current = TARDISCache.CURRENT.get(id);
+                if (current != null) {
                     Location location = null;
                     // check location
                     switch (e) {
@@ -113,8 +114,8 @@ public class FloodgateDestinationTerminalForm {
                             int endy = TARDISStaticLocationGetters.getHighestYin3x3(w, x, z);
                             if (endy > 40 && Math.abs(x) > 9 && Math.abs(z) > 9) {
                                 Location loc = new Location(w, x, 0, z);
-                                int[] estart = TARDISTimeTravel.getStartLocation(loc, rsc.getDirection());
-                                int esafe = TARDISTimeTravel.safeLocation(estart[0], endy, estart[2], estart[1], estart[3], w, rsc.getDirection());
+                                int[] estart = TARDISTimeTravel.getStartLocation(loc, current.direction());
+                                int esafe = TARDISTimeTravel.safeLocation(estart[0], endy, estart[2], estart[1], estart[3], w, current.direction());
                                 if (esafe == 0) {
 //                                    String save = world + ":" + x + ":" + endy + ":" + z;
                                     loc.setY(endy);
@@ -132,7 +133,7 @@ public class FloodgateDestinationTerminalForm {
                             }
                         }
                         case NETHER -> {
-                            if (tt.safeNether(w, x, z, rsc.getDirection(), player)) {
+                            if (tt.safeNether(w, x, z, current.direction(), player)) {
                                 location = new Location(w, x, plugin.getUtils().getHighestNetherBlock(w, x, z), z);
                                 plugin.getMessenger().sendStatus(player, "LOC_SET");
                             } else {
@@ -141,7 +142,7 @@ public class FloodgateDestinationTerminalForm {
                         }
                         default -> {
                             Location loc = new Location(w, x, 0, z);
-                            int[] start = TARDISTimeTravel.getStartLocation(loc, rsc.getDirection());
+                            int[] start = TARDISTimeTravel.getStartLocation(loc, current.direction());
                             int starty = TARDISStaticLocationGetters.getHighestYin3x3(w, x, z);
                             // allow room for under door block
                             if (starty <= 0) {
@@ -151,7 +152,7 @@ public class FloodgateDestinationTerminalForm {
                             // check submarine
                             loc.setY(starty);
                             if (response.asToggle(4) && TARDISStaticUtils.isOceanBiome(loc.getBlock().getBiome())) {
-                                Location subloc = tt.submarine(loc.getBlock(), rsc.getDirection());
+                                Location subloc = tt.submarine(loc.getBlock(), current.direction());
                                 if (subloc != null) {
                                     safe = 0;
                                     starty = subloc.getBlockY();
@@ -159,7 +160,7 @@ public class FloodgateDestinationTerminalForm {
                                     safe = 1;
                                 }
                             } else {
-                                safe = TARDISTimeTravel.safeLocation(start[0], starty, start[2], start[1], start[3], w, rsc.getDirection());
+                                safe = TARDISTimeTravel.safeLocation(start[0], starty, start[2], start[1], start[3], w, current.direction());
                             }
                             if (safe == 0) {
                                 Location over = new Location(w, x, starty, z);
@@ -182,7 +183,7 @@ public class FloodgateDestinationTerminalForm {
                         set.put("x", location.getBlockX());
                         set.put("y", location.getBlockY());
                         set.put("z", location.getBlockZ());
-                        set.put("direction", rsc.getDirection());
+                        set.put("direction", current.direction());
                         set.put("submarine", (response.asToggle(4)) ? 1 : 0);
                         HashMap<String, Object> wheretid = new HashMap<>();
                         wheretid.put("tardis_id", id);

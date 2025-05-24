@@ -18,8 +18,8 @@ package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronStorage;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.sensor.ChargingSensor;
 import me.eccentric_nz.TARDIS.sensor.SensorTracker;
@@ -92,22 +92,22 @@ class TARDISArtronRunnable implements Runnable {
      * Checks whether the TARDIS is near a recharge location.
      */
     private boolean isNearCharger(int id) {
-        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, id);
-        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || !rs.resultSet()) {
+        Current current = TARDISCache.CURRENT.get(id);
+        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || current == null) {
             return false;
         }
-        if (rs.getWorld() == null) {
+        if (current.location().getWorld() == null) {
             return false;
         }
         // get Police Box location
-        Location pb_loc = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
+        Location pb_loc = current.location().clone();
         // check location is within configured blocks of a recharger
         for (Location l : plugin.getGeneralKeeper().getRechargers()) {
             if (plugin.getUtils().compareLocations(pb_loc, l)) {
                 // strike lightning to the Police Box torch location
                 if (plugin.getConfig().getBoolean("preferences.strike_lightning")) {
                     pb_loc.setY(pb_loc.getY() + 3);
-                    rs.getWorld().strikeLightningEffect(pb_loc);
+                    current.location().getWorld().strikeLightningEffect(pb_loc);
                 }
                 return true;
             }

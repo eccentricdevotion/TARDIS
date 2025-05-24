@@ -22,10 +22,10 @@ import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISInstantPoliceBox;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISInstantPreset;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstantPreset;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
@@ -101,10 +101,6 @@ public class TARDISVortexPersister {
                 int task = rs.getInt("task");
                 if (task < 0) {
                     // get Time Lord UUID
-//                    HashMap<String, Object> where = new HashMap<>();
-//                    where.put("tardis_id", id);
-//                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-//                    if (rs.resultSet()) {
                     Tardis tardis = TARDISCache.BY_ID.get(id);
                     if (tardis != null) {
                         UUID uuid = tardis.getUuid();
@@ -134,21 +130,20 @@ public class TARDISVortexPersister {
                         // interrupted materialisation
                         // get next destination and land
                         // next location = 'current' table
-                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                        if (rsc.resultSet()) {
+                        Current current = TARDISCache.CURRENT.get(id);
+                        if (current != null) {
                             BuildData bd = new BuildData(uuid.toString());
                             bd.setTardisID(id);
-                            Location location = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                            bd.setLocation(location);
+                            bd.setLocation(current.location());
                             OfflinePlayer olp = plugin.getServer().getOfflinePlayer(uuid);
                             bd.setPlayer(olp);
                             bd.setRebuild(false);
-                            bd.setDirection(rsc.getDirection());
-                            bd.setSubmarine(rsc.isSubmarine());
+                            bd.setDirection(current.direction());
+                            bd.setSubmarine(current.submarine());
                             bd.setMalfunction(false);
                             bd.setThrottle(SpaceTimeThrottle.REBUILD);
-                            while (!location.getChunk().isLoaded()) {
-                                location.getChunk().load();
+                            while (!current.location().getChunk().isLoaded()) {
+                                current.location().getChunk().load();
                             }
                             plugin.getTrackerKeeper().getMaterialising().add(id);
                             if (tardis.getPreset().usesArmourStand()) {

@@ -20,8 +20,8 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
@@ -127,11 +127,12 @@ public class TARDISCallRequestCommand {
             return true;
         }
         // get current police box location
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-        if (!rsc.resultSet()) {
+        Current current = TARDISCache.CURRENT.get(id);
+        // TODO return here if current not found
+        if (current == null) {
             hidden = true;
         }
-        COMPASS d = rsc.getDirection();
+        COMPASS d = current.direction();
         COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
         int count;
@@ -164,7 +165,7 @@ public class TARDISCallRequestCommand {
         request.setAccepter(uuid);
         request.setId(id);
         request.setLevel(level);
-        request.setCurrent(new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ()));
+        request.setCurrent(current.location());
         request.setCurrentDirection(d);
         request.setDestination(eyeLocation);
         request.setDestinationDirection(player_d);

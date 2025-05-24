@@ -17,12 +17,14 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
@@ -67,9 +69,8 @@ public class TARDISMalfunction {
     public Location getMalfunction(int id, Player p, COMPASS dir, Location handbrake_loc, String eps, String creeper) {
         Location l;
         // get current TARDIS preset location
-        ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
-        if (rscl.resultSet()) {
-            Location cl = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current != null) {
             int end = 100 - plugin.getConfig().getInt("preferences.malfunction_end");
             int nether = end - plugin.getConfig().getInt("preferences.malfunction_nether");
             int r = TARDISConstants.RANDOM.nextInt(100);
@@ -79,13 +80,13 @@ public class TARDISMalfunction {
             int y = TARDISConstants.RANDOM.nextInt(4) + 1;
             if (r > end) {
                 // get random the_end location
-                l = tt.randomDestination(p, x, z, y, dir, "THE_END", null, true, cl);
+                l = tt.randomDestination(p, x, z, y, dir, "THE_END", null, true, current.location());
             } else if (r > nether) {
                 // get random nether location
-                l = tt.randomDestination(p, x, z, y, dir, "NETHER", null, true, cl);
+                l = tt.randomDestination(p, x, z, y, dir, "NETHER", null, true, current.location());
             } else {
                 // get random normal location
-                l = tt.randomDestination(p, x, z, y, dir, "NORMAL", null, false, cl);
+                l = tt.randomDestination(p, x, z, y, dir, "NORMAL", null, false, current.location());
             }
         } else {
             l = null;

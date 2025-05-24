@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
@@ -64,11 +65,7 @@ public class TARDISAutonomousDeath {
 
     public void automate(Player player) {
         UUID uuid = player.getUniqueId();
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("uuid", uuid.toString());
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         // are they a time lord?
-//        if (rs.resultSet()) {
         Tardis tardis = TARDISCache.BY_UUID.get(uuid);
         if (tardis != null) {
             if (tardis.isPoweredOn()) {
@@ -119,13 +116,12 @@ public class TARDISAutonomousDeath {
                             }
                             String death_world = death_loc.getWorld().getName();
                             // where is the TARDIS Police Box?
-                            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                            if (!rsc.resultSet()) {
+                            Current current = TARDISCache.CURRENT.get(id);
+                            if (current == null) {
                                 plugin.debug("Current record not found!");
                                 return;
                             }
-                            COMPASS cd = rsc.getDirection();
-                            Location sl = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                            COMPASS cd = current.direction();
                             // where is home?
                             HashMap<String, Object> wherehl = new HashMap<>();
                             wherehl.put("tardis_id", id);
@@ -216,7 +212,7 @@ public class TARDISAutonomousDeath {
                                 }
                             }
                             // if the TARDIS is already at the home location, do nothing
-                            if (goto_loc != null && !TARDISAutonomousUtils.compareCurrentToHome(rsc, rsh)) {
+                            if (goto_loc != null && !TARDISAutonomousUtils.compareCurrentToHome(current.location(), rsh)) {
                                 // check for creation area
                                 if (!plugin.getConfig().getString("creation.area", "none").equals("none") && plugin.getTardisArea().areaCheckLocPlayer(player, goto_loc)) {
                                     plugin.getTrackerKeeper().getPerm().remove(player.getUniqueId());
@@ -227,11 +223,11 @@ public class TARDISAutonomousDeath {
                                     // destroy police box
                                     DestroyData dd = new DestroyData();
                                     dd.setDirection(cd);
-                                    dd.setLocation(sl);
+                                    dd.setLocation(current.location());
                                     dd.setPlayer(player);
                                     dd.setHide(false);
                                     dd.setOutside(false);
-                                    dd.setSubmarine(rsc.isSubmarine());
+                                    dd.setSubmarine(current.submarine());
                                     dd.setTardisID(id);
                                     dd.setThrottle(spaceTimeThrottle);
                                     // set handbrake off
@@ -244,9 +240,9 @@ public class TARDISAutonomousDeath {
                                         plugin.getTrackerKeeper().getDematerialising().add(dd.getTardisID());
                                         plugin.getTrackerKeeper().getInVortex().add(id);
                                         // play tardis_takeoff sfx
-                                        TARDISSounds.playTARDISSound(sl, "tardis_takeoff");
+                                        TARDISSounds.playTARDISSound(current.location(), "tardis_takeoff");
                                         // sound the cloister bell at current location for dematerialisation
-                                        TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 5, id, sl, plugin.getServer().getPlayer(uuid), true, "Time Lord death", false);
+                                        TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 5, id, current.location(), plugin.getServer().getPlayer(uuid), true, "Time Lord death", false);
                                         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
                                         bell.setTask(taskID);
                                         plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
@@ -274,7 +270,7 @@ public class TARDISAutonomousDeath {
                                     // play tardis_land sfx
                                     TARDISSounds.playTARDISSound(bd.getLocation(), "tardis_land");
                                     // sound the cloister bell at current location for dematerialisation
-                                    TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 6, id, sl, plugin.getServer().getPlayer(uuid), false, "", true);
+                                    TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 6, id, current.location(), plugin.getServer().getPlayer(uuid), false, "", true);
                                     int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
                                     bell.setTask(taskID);
                                     plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
@@ -300,12 +296,12 @@ public class TARDISAutonomousDeath {
                                 plugin.getQueryFactory().doUpdate("current", setc, wherec);
                                 // set back
                                 HashMap<String, Object> setb = new HashMap<>();
-                                setb.put("world", rsc.getWorld().getName());
-                                setb.put("x", rsc.getX());
-                                setb.put("y", rsc.getY());
-                                setb.put("z", rsc.getZ());
-                                setb.put("direction", rsc.getDirection().toString());
-                                setb.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
+                                setb.put("world", current.location().getWorld().getName());
+                                setb.put("x", current.location().getBlockX());
+                                setb.put("y", current.location().getBlockY());
+                                setb.put("z", current.location().getBlockZ());
+                                setb.put("direction", current.direction().toString());
+                                setb.put("submarine", (current.submarine()) ? 1 : 0);
                                 HashMap<String, Object> whereb = new HashMap<>();
                                 whereb.put("tardis_id", id);
                                 plugin.getQueryFactory().doUpdate("back", setb, whereb);
@@ -336,29 +332,28 @@ public class TARDISAutonomousDeath {
                         } else if (plugin.getConfig().getBoolean("siege.enabled") && rsp.isAutoSiegeOn()) {
                             // enter siege mode
                             // where is the TARDIS Police Box?
-                            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                            if (!rsc.resultSet()) {
+                            Current current = TARDISCache.CURRENT.get(id);
+                            if (current == null) {
                                 plugin.debug("Current record not found!");
                                 return;
                             }
-                            Location sl = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                            Block siege = sl.getBlock();
+                            Block siege = current.location().getBlock();
                             HashMap<String, Object> wheres = new HashMap<>();
                             wheres.put("tardis_id", id);
                             HashMap<String, Object> set = new HashMap<>();
                             // destroy tardis
                             DestroyData dd = new DestroyData();
-                            dd.setDirection(rsc.getDirection());
-                            dd.setLocation(sl);
+                            dd.setDirection(current.direction());
+                            dd.setLocation(current.location());
                             dd.setPlayer(player);
                             dd.setHide(false);
                             dd.setOutside(false);
-                            dd.setSubmarine(rsc.isSubmarine());
+                            dd.setSubmarine(current.submarine());
                             dd.setTardisID(id);
                             dd.setThrottle(spaceTimeThrottle);
                             plugin.getPresetDestroyer().destroyPreset(dd);
                             // sound the cloister bell at current location for siege mode
-                            TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 7, id, sl, plugin.getServer().getPlayer(uuid), true, "Siege mode engaged", false);
+                            TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 7, id, current.location(), plugin.getServer().getPlayer(uuid), true, "Siege mode engaged", false);
                             int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
                             bell.setTask(taskID);
                             plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);

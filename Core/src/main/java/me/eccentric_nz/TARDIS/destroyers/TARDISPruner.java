@@ -17,8 +17,9 @@
 package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
 
@@ -64,12 +65,12 @@ public class TARDISPruner {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "PRUNE_NONE");
                     }
                     while (rs.next()) {
-                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getInt("tardis_id"));
-                        if (rsc.resultSet()) {
+                        Current current = TARDISCache.CURRENT.get(rs.getInt("tardis_id"));
+                        if (current != null) {
                             // double check that this is an unused TARDIS
                             Timestamp lastuse = new Timestamp(rs.getLong("lastuse"));
                             if (lastuse.before(prune)) {
-                                String line = "Time Lord: " + rs.getString("owner") + ", Location: " + rsc.getWorld().getName() + ":" + rsc.getX() + ":" + rsc.getY() + ":" + rsc.getZ();
+                                String line = "Time Lord: " + rs.getString("owner") + ", Location: " + current.location().getWorld().getName() + ":" + current.location().getBlockX() + ":" + current.location().getBlockY() + ":" + current.location().getBlockZ();
                                 // write line to file
                                 bw.write(line);
                                 bw.newLine();

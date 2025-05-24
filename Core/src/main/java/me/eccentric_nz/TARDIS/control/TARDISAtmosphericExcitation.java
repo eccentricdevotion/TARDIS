@@ -17,7 +17,8 @@
 package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.TARDISCache;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
@@ -45,16 +46,15 @@ public class TARDISAtmosphericExcitation {
     }
 
     public void excite(int tid, Player p) {
-        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, tid);
-        if (rs.resultSet()) {
+        Current current = TARDISCache.CURRENT.get(tid);
+        if (current != null) {
             // not if underwater
-            if (rs.isSubmarine()) {
+            if (current.submarine()) {
                 return;
             }
             // get TARDIS location
-            Location l = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
             // get lamp block location
-            l.add(0, 18, 0);
+            Location l = current.location().clone().add(0, 18, 0);
             // construct a firework effect and shoot it from lamp block location
             Firework firework = (Firework) l.getWorld().spawnEntity(l, EntityType.FIREWORK_ROCKET);
             FireworkMeta fireworkMeta = firework.getFireworkMeta();

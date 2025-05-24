@@ -23,9 +23,9 @@ import me.eccentric_nz.TARDIS.api.event.TARDISMalfunctionEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISMaterialisationEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetInteractionCheck;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
@@ -87,13 +87,13 @@ public class TARDISMaterialseFromVortex implements Runnable {
         Tardis tardis = TARDISCache.BY_ID.get(id);
         if (tardis != null) {
             // get current location for back
-            ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
-            if (rscl.resultSet()) {
+            Current current = TARDISCache.CURRENT.get(id);
+            if (current != null) {
                 BukkitScheduler scheduler = plugin.getServer().getScheduler();
                 if (malfunction) {
                     // check for a malfunction
                     TARDISMalfunction m = new TARDISMalfunction(plugin);
-                    exit = m.getMalfunction(id, player, rscl.getDirection(), handbrake, tardis.getEps(), tardis.getCreeper());
+                    exit = m.getMalfunction(id, player, current.direction(), handbrake, tardis.getEps(), tardis.getCreeper());
                     if (exit != null) {
                         plugin.getTrackerKeeper().getRescue().remove(id);
                         HashMap<String, Object> wheress = new HashMap<>();
@@ -212,7 +212,6 @@ public class TARDISMaterialseFromVortex implements Runnable {
                     boolean malchk = malfunction;
                     scheduler.scheduleSyncDelayedTask(plugin, () -> {
                         Location final_location = bd.getLocation();
-                        Location l = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
                         plugin.getPM().callEvent(new TARDISMaterialisationEvent(player, tardis, final_location));
                         plugin.getPresetBuilder().buildPreset(bd);
                         if (!mine_sound) {
@@ -251,12 +250,12 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         setcurrent.put("submarine", (bd.isSubmarine()) ? 1 : 0);
                         wherecurrent.put("tardis_id", id);
                         // back
-                        setback.put("world", rscl.getWorld().getName());
-                        setback.put("x", rscl.getX());
-                        setback.put("y", rscl.getY());
-                        setback.put("z", rscl.getZ());
-                        setback.put("direction", rscl.getDirection().toString());
-                        setback.put("submarine", (rscl.isSubmarine()) ? 1 : 0);
+                        setback.put("world", current.location().getWorld().getName());
+                        setback.put("x", current.location().getBlockX());
+                        setback.put("y", current.location().getBlockY());
+                        setback.put("z", current.location().getBlockZ());
+                        setback.put("direction", current.direction().toString());
+                        setback.put("submarine", (current.submarine()) ? 1 : 0);
                         whereback.put("tardis_id", id);
                         // update Police Box door direction
                         setdoor.put("door_direction", bd.getDirection().forPreset().toString());
@@ -267,9 +266,9 @@ public class TARDISMaterialseFromVortex implements Runnable {
                             plugin.getQueryFactory().doUpdate("back", setback, whereback);
                             plugin.getQueryFactory().doUpdate("doors", setdoor, wheredoor);
                         }
-                        if (plugin.getAchievementConfig().getBoolean("travel.enabled") && !plugin.getTrackerKeeper().getResetWorlds().contains(rscl.getWorld().getName())) {
-                            if (l.getWorld().equals(final_location.getWorld())) {
-                                int distance = (int) l.distance(final_location);
+                        if (plugin.getAchievementConfig().getBoolean("travel.enabled") && !plugin.getTrackerKeeper().getResetWorlds().contains(current.location().getWorld().getName())) {
+                            if (current.location().getWorld().equals(final_location.getWorld())) {
+                                int distance = (int) current.location().distance(final_location);
                                 if (distance > 0 && plugin.getAchievementConfig().getBoolean("travel.enabled")) {
                                     TARDISAchievementFactory taf = new TARDISAchievementFactory(plugin, player, Advancement.TRAVEL, 1);
                                     taf.doAchievement(distance);
