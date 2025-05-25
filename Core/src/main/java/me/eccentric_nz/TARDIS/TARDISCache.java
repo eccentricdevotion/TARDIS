@@ -17,18 +17,6 @@ public class TARDISCache {
     public static LoadingCache<Integer, Tardis> BY_ID;
     public static LoadingCache<Integer, Current> CURRENT;
 
-    public void init() {
-        BY_UUID = Caffeine.newBuilder()
-                .expireAfterAccess(Duration.ofMinutes(15))
-                .build(TARDISCache::fromUUID);
-        BY_ID = Caffeine.newBuilder()
-                .expireAfterAccess(Duration.ofMinutes(15))
-                .build(TARDISCache::fromID);
-        CURRENT = Caffeine.newBuilder()
-                .expireAfterAccess(Duration.ofMinutes(15))
-                .build(TARDISCache::currentFromID);
-    }
-
     public static Tardis fromUUID(UUID key) throws Exception {
         HashMap<String, Object> where = new HashMap<>();
         where.put("uuid", key.toString());
@@ -69,7 +57,15 @@ public class TARDISCache {
         BY_ID.invalidate(key);
     }
 
-    public static void invalidateCurrent(Integer id) {
-        CURRENT.invalidate(id);
+    public void init() {
+        BY_UUID = Caffeine.newBuilder()
+                .expireAfterAccess(Duration.ofMinutes(15))
+                .build(TARDISCache::fromUUID);
+        BY_ID = Caffeine.newBuilder()
+                .expireAfterAccess(Duration.ofMinutes(15))
+                .build(TARDISCache::fromID);
+        CURRENT = Caffeine.newBuilder()
+                .expireAfterAccess(Duration.ofMinutes(15))
+                .build(TARDISCache::currentFromID);
     }
 }

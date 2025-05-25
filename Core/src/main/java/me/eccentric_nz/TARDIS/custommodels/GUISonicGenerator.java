@@ -47,6 +47,7 @@ public enum GUISonicGenerator {
     AMY_POND(SonicVariant.SONIC_PROBE.getFloats(), 15, Material.BLAZE_ROD, ""),
     RIVER_SONG(SonicVariant.RIVER_SONG.getFloats(), 16, Material.BLAZE_ROD, ""),
     MISSY(SonicVariant.UMBRELLA.getFloats(), 17, Material.BLAZE_ROD, ""),
+    RANI(SonicVariant.RANI.getFloats(), 18, Material.BLAZE_ROD, ""),
     BRUSH_UPGRADE(CircuitVariant.BRUSH.getKey(), 26, Material.BOWL, ""),
     BIO_SCANNER_UPGRADE(CircuitVariant.BIO.getKey(), 27, Material.BOWL, ""),
     CONVERSION_UPGRADE(CircuitVariant.CONVERSION.getKey(), 28, Material.BOWL, ""),
