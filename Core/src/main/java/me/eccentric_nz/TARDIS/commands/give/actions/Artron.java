@@ -39,8 +39,6 @@ public class Artron {
     public void give(CommandSender sender, String player, int amount, boolean timelord) {
         // Look up this player's UUID
         UUID uuid = plugin.getServer().getOfflinePlayer(player).getUniqueId();
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("uuid", uuid.toString());
         HashMap<String, Object> set = new HashMap<>();
         HashMap<String, Object> wheret = new HashMap<>();
         int set_level = amount;

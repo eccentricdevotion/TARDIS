@@ -118,9 +118,6 @@ public class TARDISControlListener implements Listener {
                         return;
                     }
                     Control control = Control.getById().get(type);
-//                    HashMap<String, Object> whereid = new HashMap<>();
-//                    whereid.put("tardis_id", id);
-//                    ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
                     Tardis tardis = TARDISCache.BY_ID.get(id);
                     if (tardis != null) {
                         if (tardis.getPreset().equals(ChameleonPreset.JUNK)) {

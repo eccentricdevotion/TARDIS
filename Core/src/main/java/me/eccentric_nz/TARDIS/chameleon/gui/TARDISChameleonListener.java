@@ -85,13 +85,6 @@ public class TARDISChameleonListener extends TARDISMenuListener {
             return;
         }
         int id = rst.getTardis_id();
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//        if (!rs.resultSet()) {
-//            return;
-//        }
-//        Tardis tardis = rs.getTardis();
         Tardis tardis = TARDISCache.BY_ID.get(id);
         if (tardis == null) {
             return;

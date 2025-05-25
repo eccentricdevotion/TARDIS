@@ -74,11 +74,6 @@ public class TARDISArchiveMenuListener extends TARDISMenuListener {
         switch (slot) {
             case 17 -> {
                 // back
-//                HashMap<String, Object> where = new HashMap<>();
-//                where.put("uuid", p.getUniqueId().toString());
-//                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-//                rs.resultSet();
-//                Tardis tardis = rs.getTardis();
                 Tardis tardis = TARDISCache.BY_UUID.get(p.getUniqueId());
                 if (tardis != null) {
                     // return to Desktop Theme GUI

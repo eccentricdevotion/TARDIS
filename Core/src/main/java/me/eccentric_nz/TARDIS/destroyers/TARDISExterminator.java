@@ -71,12 +71,7 @@ public class TARDISExterminator {
     }
 
     boolean pruneExterminate(int id) {
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         try {
-//            if (rs.resultSet()) {
-//                Tardis tardis = rs.getTardis();
             Tardis tardis = TARDISCache.BY_ID.get(id);
             if (tardis != null) {
                 boolean hid = tardis.isHidden();

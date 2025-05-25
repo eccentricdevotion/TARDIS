@@ -91,15 +91,8 @@ public class TARDISPrefsMenuInventory {
         values.add(rsp.isFarmOn()); // 17
         values.add(rsp.isTelepathyOn()); // 18
         // get TARDIS preset
-//        Tardis tardis = null;
-//        HashMap<String, Object> wherep = new HashMap<>();
-//        wherep.put("uuid", uuid.toString());
-//        ResultSetTardis rst = new ResultSetTardis(plugin, wherep, "", false, 0);
         Tardis tardis = TARDISCache.BY_UUID.get(uuid);
         if (tardis != null) {
-//        boolean hasTARDIS = rst.resultSet();
-//        if (hasTARDIS) {
-//            tardis = rst.getTardis();
             values.add(tardis.getPreset().equals(ChameleonPreset.JUNK_MODE)); // junk mode - 19
         } else {
             values.add(false); // 19

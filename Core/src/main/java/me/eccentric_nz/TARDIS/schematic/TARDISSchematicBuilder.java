@@ -92,17 +92,12 @@ public class TARDISSchematicBuilder {
                     // x repeater
                     // z repeater
                     case 2, 3, 4, 5 -> map.put(c, location); // distance multiplier
-                    default ->
-                            h = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation()); // handbrake
+                    default -> h = TARDISStaticLocationGetters.getLocationFromBukkitString(rsc.getLocation()); // handbrake
                 }
             }
         }
         // also find the beacon location...
-//        HashMap<String, Object> whereb = new HashMap<>();
-//        whereb.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false, 2);
         int bx = 0, by = 0, bz = 0, cx = 0, cy = 0, cz = 0;
-//        if (rs.resultSet()) {
         Tardis tardis = TARDISCache.BY_ID.get(id);
         if (tardis != null) {
             String beacon = tardis.getBeacon();

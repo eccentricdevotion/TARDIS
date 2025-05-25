@@ -64,20 +64,14 @@ class TARDISEnterCommand {
             // do nothing
         }
         Tardis tardis;
-//        HashMap<String, Object> where = new HashMap<>();
         if (tmp == -1) {
             // Look up this player's UUID
             UUID uuid = plugin.getServer().getOfflinePlayer(args[1]).getUniqueId();
-//            where.put("uuid", uuid.toString());
-//            where.put("abandoned", 0);
             tardis = TARDISCache.BY_UUID.get(uuid);
         } else {
-//            where.put("tardis_id", tmp);
             tardis = TARDISCache.BY_ID.get(tmp);
         }
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         if (tardis != null) {
-//            Tardis tardis = rs.getTardis();
             int id = tardis.getTardisId();
             String owner = tardis.getOwner();
             HashMap<String, Object> wherei = new HashMap<>();

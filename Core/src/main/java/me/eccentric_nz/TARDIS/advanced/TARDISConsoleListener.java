@@ -167,9 +167,6 @@ public class TARDISConsoleListener implements Listener {
                 if (im.getPersistentDataContainer().has(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID())) {
                     UUID diskUuid = im.getPersistentDataContainer().get(plugin.getTimeLordUuidKey(), plugin.getPersistentDataTypeUUID());
                     // is the disk uuid the same as the tardis uuid?
-//                    HashMap<String, Object> where = new HashMap<>();
-//                    where.put("tardis_id", id);
-//                    ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 2);
                     Tardis tardis = TARDISCache.BY_ID.get(id);
                     if (tardis != null && tardis.getUuid().equals(diskUuid)) {
                         if (uuid == tardis.getUuid()) {

@@ -111,17 +111,12 @@ public class TARDISCondenserListener implements Listener {
                 where.put("location", chest_loc);
                 ResultSetControls rsc = new ResultSetControls(plugin, where, false);
                 if (rsc.resultSet()) {
-//                    HashMap<String, Object> wheret = new HashMap<>();
-//                    wheret.put("tardis_id", rsc.getTardis_id());
-//                    rs = new ResultSetTardis(plugin, wheret, "", false, 0);
                     tardis = TARDISCache.BY_ID.get(rsc.getTardis_id());
                     isCondenser = tardis != null;
                 } else {
                     return;
                 }
             } else {
-//                where.put("uuid", player.getUniqueId().toString());
-//                rs = new ResultSetTardis(plugin, where, "", false, 0);
                 tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
                 isCondenser = (plugin.getArtronConfig().contains("condenser") && plugin.getArtronConfig().getString("condenser").equals(chest_loc) && tardis != null);
             }
@@ -233,9 +228,6 @@ public class TARDISCondenserListener implements Listener {
             for (ItemStack is : didntFit.values()) {
                 player.getWorld().dropItem(player.getLocation(), is);
             }
-//            if (tardis == null) {
-//                plugin.debug("TARDIS data was null!");
-//                return;
 //            }
             int id = tardis.getTardisId();
             // process item_counts

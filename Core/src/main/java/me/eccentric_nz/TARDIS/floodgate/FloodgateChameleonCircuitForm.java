@@ -185,9 +185,6 @@ public class FloodgateChameleonCircuitForm {
     }
 
     private boolean isBiomeAdaptive(int id) {
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         Tardis tardis = TARDISCache.BY_ID.get(id);
         return tardis != null && tardis.getAdaption() == Adaption.BIOME;
     }

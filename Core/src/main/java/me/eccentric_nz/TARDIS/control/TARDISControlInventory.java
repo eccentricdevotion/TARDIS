@@ -56,9 +56,6 @@ public class TARDISControlInventory {
     private ItemStack[] getItemStack() {
 
         // get tardis options
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         String siege_onoff = "" ;
         String toggle_openclosed = "" ;
         String power_onoff = "" ;
@@ -68,8 +65,6 @@ public class TARDISControlInventory {
         int delay = 1;
         boolean open = false;
         boolean powered = true;
-//        if (rs.resultSet()) {
-//            Tardis tardis = rs.getTardis();
         Tardis tardis = TARDISCache.BY_ID.get(id);
         if (tardis != null) {
             siege_onoff = (tardis.isSiegeOn()) ? on : off;

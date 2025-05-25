@@ -45,20 +45,15 @@ class TARDISRemoveCompanionCommand {
 
     boolean doRemoveCompanion(Player player, String[] args) {
         if (TARDISPermission.hasPermission(player, "tardis.add")) {
-//            HashMap<String, Object> where = new HashMap<>();
-//            where.put("uuid", player.getUniqueId().toString());
-//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
             String comps;
             int id;
             String data;
             String owner;
             Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
             if (tardis == null) {
-//            if (!rs.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 return false;
             } else {
-//                Tardis tardis = rs.getTardis();
                 comps = tardis.getCompanions();
                 if (comps == null || comps.isEmpty()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "COMPANIONS_NONE");

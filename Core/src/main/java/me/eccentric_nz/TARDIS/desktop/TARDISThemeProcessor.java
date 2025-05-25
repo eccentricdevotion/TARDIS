@@ -55,11 +55,6 @@ public class TARDISThemeProcessor {
         TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
         Player player = plugin.getServer().getPlayer(uuid);
         if (plugin.getHandlesConfig().getBoolean("enabled") && TARDISPermission.hasPermission(player, "tardis.handles")) {
-//            HashMap<String, Object> wheret = new HashMap<>();
-//            wheret.put("uuid", uuid.toString());
-//            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
-//            rs.resultSet();
-//            Tardis tardis = rs.getTardis();
             Tardis tardis = TARDISCache.BY_UUID.get(uuid);
             if (tardis != null) {
                 // check if the player has a Handles placed

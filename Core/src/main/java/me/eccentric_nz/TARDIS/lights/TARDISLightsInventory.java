@@ -61,14 +61,9 @@ public class TARDISLightsInventory {
      */
     private ItemStack[] getItemStack() {
         // get tardis options
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
         String off = plugin.getLanguage().getString("SET_OFF", "OFF");
         String on = plugin.getLanguage().getString("SET_ON", "ON");
         String lights_onoff = on;
-//        if (rs.resultSet()) {
-//            Tardis tardis = rs.getTardis();
         Tardis tardis = TARDISCache.BY_ID.get(id);
         if (tardis != null) {
             lights_onoff = (tardis.isLightsOn()) ? on : off;

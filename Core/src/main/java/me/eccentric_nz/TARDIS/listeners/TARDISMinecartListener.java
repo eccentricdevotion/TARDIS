@@ -85,9 +85,6 @@ public class TARDISMinecartListener implements Listener {
                         }
                         // get RAIL room location
                         id = rsd.getTardis_id();
-//                        HashMap<String, Object> whereid = new HashMap<>();
-//                        whereid.put("tardis_id", id);
-//                        ResultSetTardis rs = new ResultSetTardis(plugin, whereid, "", false, 0);
                         Tardis tardis = TARDISCache.BY_ID.get(id);
                         if (tardis != null && !plugin.getTrackerKeeper().getMinecart().contains(id)) {
 //                            Tardis tardis = rs.getTardis();
