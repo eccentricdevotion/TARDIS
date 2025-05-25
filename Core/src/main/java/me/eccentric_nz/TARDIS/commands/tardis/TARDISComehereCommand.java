@@ -21,6 +21,7 @@ import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
@@ -135,7 +136,9 @@ class TARDISComehereCommand {
                 // get current police box location
                 Current current = TARDISCache.CURRENT.get(id);
                 if (current == null) {
-                    hidden = true;
+                    // emergency TARDIS relocation
+                    new TARDISEmergencyRelocation(plugin).relocate(id, player);
+                    return true;
                 }
                 COMPASS d = current.direction();
                 COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));

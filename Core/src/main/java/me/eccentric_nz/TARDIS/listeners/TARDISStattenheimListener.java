@@ -26,6 +26,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
@@ -216,7 +217,9 @@ public class TARDISStattenheimListener implements Listener {
                         // get TARDIS's current location
                         Current current = TARDISCache.CURRENT.get(id);
                         if (current == null) {
-                            hidden = true;
+                            // emergency TARDIS relocation
+                            new TARDISEmergencyRelocation(plugin).relocate(id, player);
+                            return;
                         }
                         COMPASS d = current.direction();
                         COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));

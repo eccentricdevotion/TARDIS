@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.commands.remote;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
@@ -48,11 +49,12 @@ class TARDISRemoteTravelCommand {
     boolean doTravel(int id, OfflinePlayer player, CommandSender sender) {
         Tardis tardis = TARDISCache.BY_ID.get(id);
         if (tardis != null) {
-            boolean hidden = tardis.isHidden();
             Current current = TARDISCache.CURRENT.get(id);
             String resetw = "";
             if (current == null) {
-                hidden = true;
+                // emergency TARDIS relocation
+                new TARDISEmergencyRelocation(plugin).relocate(id, player.getPlayer());
+                return true;
             } else {
                 resetw = current.location().getWorld().getName();
             }
@@ -80,7 +82,7 @@ class TARDISRemoteTravelCommand {
                 dd.setSubmarine(current.submarine());
                 dd.setTardisID(id);
                 dd.setThrottle(SpaceTimeThrottle.NORMAL);
-                if (!hidden && !plugin.getTrackerKeeper().getResetWorlds().contains(resetw)) {
+                if (!tardis.isHidden() && !plugin.getTrackerKeeper().getResetWorlds().contains(resetw)) {
                     plugin.getTrackerKeeper().getDematerialising().add(id);
                     plugin.getPresetDestroyer().destroyPreset(dd);
                 } else {

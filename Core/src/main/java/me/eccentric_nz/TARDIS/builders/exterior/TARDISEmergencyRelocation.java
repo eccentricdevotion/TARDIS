@@ -44,10 +44,6 @@ public class TARDISEmergencyRelocation {
     public void relocate(int id, Player p) {
         plugin.getMessenger().send(p, TardisModule.TARDIS, "EMERGENCY");
         // get the TARDIS
-//        HashMap<String, Object> where = new HashMap<>();
-//        where.put("tardis_id", id);
-//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//        if (rs.resultSet()) {
         Tardis tardis = TARDISCache.BY_ID.get(id);
         if (tardis != null) {
             // get the servers main world
@@ -62,7 +58,6 @@ public class TARDISEmergencyRelocation {
                 bd.setMalfunction(false);
                 bd.setSubmarine(false);
                 bd.setThrottle(SpaceTimeThrottle.REBUILD);
-//                Tardis tardis = rs.getTardis();
                 if (tardis.getPreset().usesArmourStand()) {
                     new TARDISInstantPoliceBox(plugin, bd, tardis.getPreset()).buildPreset();
                 } else {

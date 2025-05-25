@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.flight;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISDematerialisationEvent;
+import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
@@ -62,11 +63,12 @@ public class TARDISDematerialiseToVortex implements Runnable {
         plugin.getTrackerKeeper().getDidDematToVortex().add(id);
         Tardis tardis = TARDISCache.BY_ID.get(id);
         if (tardis != null) {
-            boolean hidden = tardis.isHidden();
             Current current = TARDISCache.CURRENT.get(id);
             String resetw = "";
             if (current == null) {
-                hidden = true;
+                // emergency TARDIS relocation
+                new TARDISEmergencyRelocation(plugin).relocate(id, player);
+                return;
             } else {
                 resetw = current.location().getWorld().getName();
                 // set back to current location
@@ -105,7 +107,7 @@ public class TARDISDematerialiseToVortex implements Runnable {
                 dd.setThrottle(SpaceTimeThrottle.JUNK);
             }
             plugin.getPM().callEvent(new TARDISDematerialisationEvent(player, tardis, current.location()));
-            if (!hidden && !plugin.getTrackerKeeper().getResetWorlds().contains(resetw)) {
+            if (!tardis.isHidden() && !plugin.getTrackerKeeper().getResetWorlds().contains(resetw)) {
                 // play demat sfx
                 if (!minecart) {
                     if (!preset.equals(ChameleonPreset.JUNK_MODE)) {

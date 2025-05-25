@@ -20,6 +20,7 @@ import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -69,7 +70,6 @@ public class TARDISCallRequestCommand {
             return true;
         }
         int level = tardis.getArtronLevel();
-        boolean hidden = tardis.isHidden();
         // get location
         Location eyeLocation = player.getTargetBlock(plugin.getGeneralKeeper().getTransparent(), 50).getLocation();
         if (!plugin.getConfig().getBoolean("travel.include_default_world") && plugin.getConfig().getBoolean("creation.default_world") && eyeLocation.getWorld().getName().equals(plugin.getConfig().getString("creation.default_world_name"))) {
@@ -128,9 +128,10 @@ public class TARDISCallRequestCommand {
         }
         // get current police box location
         Current current = TARDISCache.CURRENT.get(id);
-        // TODO return here if current not found
         if (current == null) {
-            hidden = true;
+            // emergency TARDIS relocation
+            new TARDISEmergencyRelocation(plugin).relocate(id, player);
+            return true;
         }
         COMPASS d = current.direction();
         COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
@@ -170,7 +171,7 @@ public class TARDISCallRequestCommand {
         request.setDestination(eyeLocation);
         request.setDestinationDirection(player_d);
         request.setSubmarine(sub);
-        request.setHidden(hidden);
+        request.setHidden(tardis.isHidden());
         plugin.getTrackerKeeper().getComehereRequests().put(uuid, request);
         // send message with click event
         plugin.getMessenger().send(requested, TardisModule.TARDIS, "REQUEST_COMEHERE", player.getName());
