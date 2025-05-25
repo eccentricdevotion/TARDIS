@@ -110,6 +110,7 @@ public class TARDISExteriorFlight {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", data.id());
                 plugin.getQueryFactory().doUpdate("current", set, where);
+                TARDISCache.CURRENT.invalidate(data.id());
                 // update door location
                 TARDISBuilderUtility.saveDoorLocation(location, data.id(), direction);
                 Block under = location.getBlock().getRelative(BlockFace.DOWN);

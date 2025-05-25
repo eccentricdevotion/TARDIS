@@ -150,6 +150,7 @@ class TARDISRemoteTravelCommand {
                 TARDISCache.invalidate(id);
             }
             plugin.getQueryFactory().doUpdate("current", setcurrent, wherecurrent);
+            TARDISCache.CURRENT.invalidate(id);
             plugin.getQueryFactory().doUpdate("back", setback, whereback);
             plugin.getQueryFactory().doUpdate("doors", setdoor, wheredoor);
             return true;

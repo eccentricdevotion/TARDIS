@@ -67,6 +67,7 @@ class SudoDesiege {
             setc.put("direction", rsh.getDirection().toString());
             setc.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
             plugin.getQueryFactory().doUpdate("current", setc, wherec);
+            TARDISCache.CURRENT.invalidate(id);
             // rebuild the TARDIS
             BuildData bd = new BuildData(uuid.toString());
             bd.setDirection(rsh.getDirection());

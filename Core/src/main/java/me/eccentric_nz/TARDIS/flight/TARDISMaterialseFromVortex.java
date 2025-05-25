@@ -263,6 +263,7 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         wheredoor.put("door_type", 0);
                         if (!setcurrent.isEmpty()) {
                             plugin.getQueryFactory().doUpdate("current", setcurrent, wherecurrent);
+                            TARDISCache.CURRENT.invalidate(id);
                             plugin.getQueryFactory().doUpdate("back", setback, whereback);
                             plugin.getQueryFactory().doUpdate("doors", setdoor, wheredoor);
                         }

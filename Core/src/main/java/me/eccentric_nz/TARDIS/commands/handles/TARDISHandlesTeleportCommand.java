@@ -92,6 +92,7 @@ public class TARDISHandlesTeleportCommand {
             set.put("z", location.getBlockZ());
             set.put("submarine", (current.submarine()) ? 1 : 0);
             plugin.getQueryFactory().doUpdate("current", set, tid);
+            TARDISCache.CURRENT.invalidate(id);
             plugin.getTrackerKeeper().getHadsDamage().remove(id);
             long delay = 1L;
             plugin.getTrackerKeeper().getInVortex().add(id);

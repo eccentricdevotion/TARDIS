@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.junk;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -237,6 +238,7 @@ public class TARDISJunkBuilder implements Runnable {
                 set.put("y", sy);
                 set.put("z", loc.getBlockZ());
                 plugin.getQueryFactory().doUpdate("current", set, where);
+                TARDISCache.CURRENT.invalidate(bd.getTardisID());
                 plugin.getGeneralKeeper().setJunkTime(System.currentTimeMillis());
             }
         }

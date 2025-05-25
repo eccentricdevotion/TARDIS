@@ -134,6 +134,7 @@ public class TARDISDirectionCommand {
             tid.put("tardis_id", id);
             set.put("direction", compass.toString());
             plugin.getQueryFactory().doUpdate("current", set, tid);
+            TARDISCache.CURRENT.invalidate(id);
             HashMap<String, Object> did = new HashMap<>();
             HashMap<String, Object> setd = new HashMap<>();
             did.put("door_type", 0);

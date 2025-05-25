@@ -215,6 +215,7 @@ class TARDISComehereCommand {
                     TARDISCache.invalidate(id);
                 }
                 plugin.getQueryFactory().doUpdate("current", set, tid);
+                TARDISCache.CURRENT.invalidate(id);
                 plugin.getMessenger().sendStatus(player, "TARDIS_COMING");
                 long delay = 1L;
                 plugin.getTrackerKeeper().getInVortex().add(id);

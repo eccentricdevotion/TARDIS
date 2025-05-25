@@ -119,6 +119,7 @@ class TARDISHostileDisplacement {
                         set.put("z", fl.getBlockZ());
                         set.put("submarine", (current.submarine()) ? 1 : 0);
                         plugin.getQueryFactory().doUpdate("current", set, tid);
+                        TARDISCache.CURRENT.invalidate(id);
                         long delay = 1L;
                         // move TARDIS
                         plugin.getTrackerKeeper().getInVortex().add(id);

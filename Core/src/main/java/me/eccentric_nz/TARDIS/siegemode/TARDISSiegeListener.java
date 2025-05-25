@@ -224,6 +224,7 @@ public class TARDISSiegeListener implements Listener {
             set.put("z", loc.getBlockZ());
             set.put("direction", d.toString());
             plugin.getQueryFactory().doUpdate("current", set, where);
+            TARDISCache.CURRENT.invalidate(id);
         }, 10L);
     }
 
@@ -271,6 +272,7 @@ public class TARDISSiegeListener implements Listener {
         set.put("z", loc.getBlockZ());
         set.put("direction", d.toString());
         plugin.getQueryFactory().doUpdate("current", set, where);
+        TARDISCache.CURRENT.invalidate(id);
         // remove trackers
         plugin.getTrackerKeeper().getIsSiegeCube().remove(id);
         plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);

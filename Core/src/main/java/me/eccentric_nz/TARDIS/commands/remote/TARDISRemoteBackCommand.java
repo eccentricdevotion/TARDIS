@@ -79,6 +79,7 @@ public class TARDISRemoteBackCommand {
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("current", set, tid);
+        TARDISCache.CURRENT.invalidate(id);
         plugin.getTrackerKeeper().getInVortex().add(id);
         if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             // destroy the police box

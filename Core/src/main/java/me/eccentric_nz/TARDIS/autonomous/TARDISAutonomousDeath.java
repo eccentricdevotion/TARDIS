@@ -294,6 +294,7 @@ public class TARDISAutonomousDeath {
                                 HashMap<String, Object> wherec = new HashMap<>();
                                 wherec.put("tardis_id", id);
                                 plugin.getQueryFactory().doUpdate("current", setc, wherec);
+                                TARDISCache.CURRENT.invalidate(id);
                                 // set back
                                 HashMap<String, Object> setb = new HashMap<>();
                                 setb.put("world", current.location().getWorld().getName());

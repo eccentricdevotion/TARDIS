@@ -287,6 +287,7 @@ public class TARDISStattenheimListener implements Listener {
                         cset.put("direction", player_d.toString());
                         cset.put("submarine", (sub) ? 1 : 0);
                         plugin.getQueryFactory().doUpdate("current", cset, cid);
+                        TARDISCache.CURRENT.invalidate(id);
                         // update tardis
                         if (hidden) {
                             HashMap<String, Object> tid = new HashMap<>();
