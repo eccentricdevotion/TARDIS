@@ -44,6 +44,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -57,9 +58,17 @@ import java.util.UUID;
 public class TARDISRemoteKeyListener implements Listener {
 
     private final TARDIS plugin;
+    private final Material material;
 
     public TARDISRemoteKeyListener(TARDIS plugin) {
         this.plugin = plugin;
+        Material material;
+        try {
+            material = Material.valueOf(plugin.getConfig().getString("preferences.key"));
+        } catch (IllegalArgumentException e) {
+            material = Material.GOLD_NUGGET;
+        }
+        this.material = material;
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -74,27 +83,17 @@ public class TARDISRemoteKeyListener implements Listener {
         }
         // check item in hand
         ItemStack is = player.getInventory().getItemInMainHand();
-        Material material;
-        try {
-            material = Material.valueOf(plugin.getConfig().getString("preferences.key"));
-        } catch (IllegalArgumentException e) {
-            material = Material.GOLD_NUGGET;
-        }
-        if (!is.getType().equals(material)) {
+        if (!is.getType().equals(Material.OMINOUS_TRIAL_KEY) && !is.getType().equals(material)) {
             return;
         }
-        if (is.hasItemMeta() && is.getItemMeta().hasDisplayName() && is.getItemMeta().getDisplayName().endsWith("TARDIS Remote Key")) {
-//            String uuid = player.getUniqueId().toString();
+        if (is.hasItemMeta()) {
+            ItemMeta im = is.getItemMeta();
+            if (im.hasDisplayName() && im.getDisplayName().endsWith("TARDIS Remote Key")) {
             // has TARDIS?
-//            HashMap<String, Object> where = new HashMap<>();
-//            where.put("uuid", uuid);
-//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-//            if (!rs.resultSet()) {
             Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
             if (tardis == null) {
                 return;
             }
-//            Tardis tardis = rs.getTardis();
             int id = tardis.getTardisId();
             boolean powered = tardis.isPoweredOn();
             ChameleonPreset preset = tardis.getPreset();
@@ -203,5 +202,6 @@ public class TARDISRemoteKeyListener implements Listener {
                 }
             }
         }
+    }
     }
 }
