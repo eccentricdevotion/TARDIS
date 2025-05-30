@@ -237,6 +237,10 @@ public class SkinUtils {
                 material = Material.PUFFERFISH;
                 key = Features.HATH_FEATURES.getKey();
             }
+            case "Heavenly Host" -> {
+                material = Material.GOLD_INGOT;
+                key = Features.HEAVENLY_HOST_FEATURES.getKey();
+            }
             case "Ice Warrior" -> {
                 material = Material.SNOWBALL;
                 key = Features.ICE_WARRIOR_CREST.getKey();
@@ -261,6 +265,21 @@ public class SkinUtils {
                 key = Features.JUDOON_SNOUT.getKey();
             }
             case "Martha Jones" -> key = Features.MARTHA_JONES_HAIR.getKey();
+            case "Melanie Bush" -> {
+                key = Features.MELANIE_BUSH_HAIR.getKey();
+                ItemStack leftArm = new ItemStack(material, 1);
+                ItemMeta laim = leftArm.getItemMeta();
+                laim.setDisplayName(skin.name());
+                laim.setItemModel(Features.MELANIE_BUSH_ARM_LEFT.getKey());
+                leftArm.setItemMeta(laim);
+                ItemStack rightArm = new ItemStack(material, 1);
+                ItemMeta raim = rightArm.getItemMeta();
+                raim.setDisplayName(skin.name());
+                raim.setItemModel(Features.MELANIE_BUSH_ARM_RIGHT.getKey());
+                rightArm.setItemMeta(raim);
+                setOrSwapItem(leftArm, player, EquipmentSlot.OFF_HAND);
+                setOrSwapItem(rightArm, player, EquipmentSlot.HAND);
+            }
             case "Mire" -> {
                 material = Material.NETHERITE_SCRAP;
                 key = Features.MIRE_HELMET.getKey();
@@ -273,10 +292,14 @@ public class SkinUtils {
                 ItemStack rightArm = new ItemStack(material, 1);
                 ItemMeta raim = rightArm.getItemMeta();
                 raim.setDisplayName(skin.name());
-                laim.setItemModel(MireVariant.MIRE_RIGHT_ARM.getKey());
+                raim.setItemModel(MireVariant.MIRE_RIGHT_ARM.getKey());
                 rightArm.setItemMeta(raim);
                 setOrSwapItem(leftArm, player, EquipmentSlot.OFF_HAND);
                 setOrSwapItem(rightArm, player, EquipmentSlot.HAND);
+            }
+            case "Nimon" -> {
+                material = Material.GOAT_HORN;
+                key = Features.NIMON_HORNS.getKey();
             }
             case "Omega" -> key = Features.OMEGA_FRILL.getKey();
             case "Ood" -> {
@@ -284,6 +307,10 @@ public class SkinUtils {
                 key = Features.OOD_FEATURES.getKey();
             }
             case "Racnoss" -> key = Features.RACNOSS_FEATURES.getKey();
+            case "Saturnynian" -> {
+                material = Material.COD;
+                key = Features.SATURNYNIAN_ARMS.getKey();
+            }
             case "Scarecrow" -> {
                 material = Material.WHEAT;
                 key = Features.SCARECROW_EARS.getKey();
@@ -327,6 +354,7 @@ public class SkinUtils {
             }
             case "Sutekh" -> key = Features.SUTEKH_FEATURES.getKey();
             case "Sycorax" -> key = Features.SYCORAX_CAPE.getKey();
+            case "Roman Rory" -> key = Features.ROMAN_RORY_CAPE.getKey();
             case "Tegan" -> key = Features.TEGAN_HAT.getKey();
             case "The Beast" -> key = Features.THE_BEAST_HORNS.getKey();
             case "Vampire of Venice" -> {
@@ -398,7 +426,7 @@ public class SkinUtils {
                 player.getInventory().setItem(EquipmentSlot.HEAD, null);
                 player.getAttribute(Attribute.SCALE).setBaseValue(1.0d);
             }
-            case "Mire", "Slitheen", "Rise of the Cyberman", "Cyber Lord", "Moonbase Cyberman", "Invasion Cyberman" -> {
+            case "Mire", "Slitheen", "Rise of the Cyberman", "Cyber Lord", "Moonbase Cyberman", "Invasion Cyberman", "Melanie Bush" -> {
                 // head & both hands
                 player.getInventory().setItem(EquipmentSlot.HEAD, null);
                 player.getInventory().setItem(EquipmentSlot.HAND, null);
@@ -406,8 +434,8 @@ public class SkinUtils {
             }
             case "Ace", "Bannakaffalatta", "Brigadier Lethbridge-Stewart", "Black Cyberman", "Tenth Planet Cyberman", "Earthshock Cyberman", "Cybershade", "Dalek Sec", "Hath", "Ice Warrior",
                  "Impossible Astronaut", "Jo Grant", "Judoon", "Martha Jones", "Omega", "Ood", "Racnoss", "Scarecrow",
-                 "Sea Devil", "Silence", "Silurian", "Sontaran", "Strax", "Sutekh", "Sycorax", "Tegan",
-                 "The Beast", "Vampire of Venice", "Weeping Angel", "Zygon" -> {
+                 "Saturnynian", "Sea Devil", "Silence", "Silurian", "Sontaran", "Strax", "Sutekh", "Sycorax", "Tegan",
+                 "The Beast", "Vampire of Venice", "Weeping Angel", "Zygon", "Nimon", "Roamn Rory", "Heavenly Host" -> {
                 // just head
                 player.getInventory().setItem(EquipmentSlot.HEAD, null);
             }
