@@ -19,21 +19,16 @@ package me.eccentric_nz.TARDIS.custommodels.keys;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.NamespacedKey;
 
-public enum VampireOfVeniceVariant {
+public enum NimonVariant {
 
-    BUTTON_SATURNYNIAN(new NamespacedKey(TARDIS.plugin, "button_saturnynian")),
-    BUTTON_VAMPIRE(new NamespacedKey(TARDIS.plugin, "button_vampire_of_venice")),
-    SATURNYNIAN_HEAD(new NamespacedKey(TARDIS.plugin, "saturnynian_head")),
-    SATURNYNIAN_FRILL(new NamespacedKey(TARDIS.plugin, "saturnynian_frill")),
-    SATURNYNIAN_MONSTER_HEAD(new NamespacedKey(TARDIS.plugin, "saturnynian_monster_head")),
-    SATURNYNIAN_STATIC(new NamespacedKey(TARDIS.plugin, "saturnynian_static")),
-    VAMPIRE_HEAD(new NamespacedKey(TARDIS.plugin, "vampire_of_venice_head")),
-    VAMPIRE_FEATURES(new NamespacedKey(TARDIS.plugin, "vampire_of_venice_features")),
-    VAMPIRE_STATIC(new NamespacedKey(TARDIS.plugin, "vampire_of_venice_static"));
+    BUTTON_NIMON(new NamespacedKey(TARDIS.plugin, "button_nimon")),
+    NIMON_HEAD(new NamespacedKey(TARDIS.plugin, "nimon_head")),
+    NIMON_FEATURES(new NamespacedKey(TARDIS.plugin, "nimon_features")),
+    NIMON_STATIC(new NamespacedKey(TARDIS.plugin, "nimon_static"));
 
     private final NamespacedKey key;
 
-    VampireOfVeniceVariant(NamespacedKey key) {
+    NimonVariant(NamespacedKey key) {
         this.key = key;
     }
 

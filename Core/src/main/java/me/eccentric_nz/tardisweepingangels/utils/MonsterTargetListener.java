@@ -110,9 +110,17 @@ public class MonsterTargetListener implements Listener {
                 if (pdc.has(TARDISWeepingAngels.MONK, PersistentDataType.INTEGER)) {
                     ignore = isWearingMonsterHead(player, Monster.HEADLESS_MONK.getMaterial());
                 }
+                // heavenly host
+                if (pdc.has(TARDISWeepingAngels.HEAVENLY_HOST, PersistentDataType.INTEGER)) {
+                    ignore = isWearingMonsterHead(player, Monster.HEAVENLY_HOST.getMaterial());
+                }
                 // mire
                 if (pdc.has(TARDISWeepingAngels.MIRE, PersistentDataType.INTEGER)) {
                     ignore = isWearingMonsterHead(player, Monster.MIRE.getMaterial());
+                }
+                // nimon
+                if (pdc.has(TARDISWeepingAngels.NIMON, PersistentDataType.INTEGER)) {
+                    ignore = isWearingMonsterHead(player, Monster.NIMON.getMaterial());
                 }
                 // omega
                 if (pdc.has(TARDISWeepingAngels.OMEGA, PersistentDataType.INTEGER)) {
@@ -121,6 +129,10 @@ public class MonsterTargetListener implements Listener {
                 // ossified
                 if (pdc.has(TARDISWeepingAngels.OSSIFIED, PersistentDataType.INTEGER)) {
                     ignore = isWearingMonsterHead(player, Monster.OSSIFIED.getMaterial());
+                }
+                // saturnynian
+                if (pdc.has(TARDISWeepingAngels.SATURNYNIAN, PersistentDataType.INTEGER)) {
+                    ignore = isWearingMonsterHead(player, Monster.SATURNYNIAN.getMaterial());
                 }
                 // silent
                 if (pdc.has(TARDISWeepingAngels.SILENT, PersistentDataType.INTEGER)) {

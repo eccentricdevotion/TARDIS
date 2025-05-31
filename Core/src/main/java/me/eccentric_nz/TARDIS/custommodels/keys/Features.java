@@ -55,7 +55,7 @@ public enum Features {
     OOD_FEATURES(new NamespacedKey(TARDIS.plugin, "ood_features")),
     RACNOSS_FEATURES(new NamespacedKey(TARDIS.plugin, "racnoss_features")),
     ROMAN_RORY_CAPE(new NamespacedKey(TARDIS.plugin, "roman_rory_cape")),
-    SATURNYNIAN_ARMS(new NamespacedKey(TARDIS.plugin, "saturnynian_arms")),
+    SATURNYNIAN_ARMS(new NamespacedKey(TARDIS.plugin, "saturnynian_frill")),
     SCARECROW_EARS(new NamespacedKey(TARDIS.plugin, "scarecrow_ears")),
     SEA_DEVIL_EARS(new NamespacedKey(TARDIS.plugin, "sea_devil_ears")),
     SILENCE_SIDE_HEAD(new NamespacedKey(TARDIS.plugin, "silence_side_head")),

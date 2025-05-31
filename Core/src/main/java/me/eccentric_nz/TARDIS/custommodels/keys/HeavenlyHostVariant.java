@@ -19,21 +19,16 @@ package me.eccentric_nz.TARDIS.custommodels.keys;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.NamespacedKey;
 
-public enum VampireOfVeniceVariant {
+public enum HeavenlyHostVariant {
 
-    BUTTON_SATURNYNIAN(new NamespacedKey(TARDIS.plugin, "button_saturnynian")),
-    BUTTON_VAMPIRE(new NamespacedKey(TARDIS.plugin, "button_vampire_of_venice")),
-    SATURNYNIAN_HEAD(new NamespacedKey(TARDIS.plugin, "saturnynian_head")),
-    SATURNYNIAN_FRILL(new NamespacedKey(TARDIS.plugin, "saturnynian_frill")),
-    SATURNYNIAN_MONSTER_HEAD(new NamespacedKey(TARDIS.plugin, "saturnynian_monster_head")),
-    SATURNYNIAN_STATIC(new NamespacedKey(TARDIS.plugin, "saturnynian_static")),
-    VAMPIRE_HEAD(new NamespacedKey(TARDIS.plugin, "vampire_of_venice_head")),
-    VAMPIRE_FEATURES(new NamespacedKey(TARDIS.plugin, "vampire_of_venice_features")),
-    VAMPIRE_STATIC(new NamespacedKey(TARDIS.plugin, "vampire_of_venice_static"));
+    BUTTON_HEAVENLY_HOST(new NamespacedKey(TARDIS.plugin, "button_heavenly_host")),
+    HEAVENLY_HOST_HEAD(new NamespacedKey(TARDIS.plugin, "heavenly_host_head")),
+    HEAVENLY_HOST_FEATURES(new NamespacedKey(TARDIS.plugin, "heavenly_host_features")),
+    HEAVENLY_HOST_STATIC(new NamespacedKey(TARDIS.plugin, "heavenly_host_static"));
 
     private final NamespacedKey key;
 
-    VampireOfVeniceVariant(NamespacedKey key) {
+    HeavenlyHostVariant(NamespacedKey key) {
         this.key = key;
     }
 

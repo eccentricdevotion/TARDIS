@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package me.eccentric_nz.tardisweepingangels.monsters.vampires;
+package me.eccentric_nz.tardisweepingangels.monsters.nimon;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISConstants;
@@ -23,34 +23,26 @@ import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import me.eccentric_nz.tardisweepingangels.equip.Equipper;
 import me.eccentric_nz.tardisweepingangels.nms.MonsterSpawner;
 import me.eccentric_nz.tardisweepingangels.utils.Monster;
+import me.eccentric_nz.tardisweepingangels.utils.WaterChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldGuardChecker;
 import me.eccentric_nz.tardisweepingangels.utils.WorldProcessor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Drowned;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Zombie;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Collection;
 
-/**
- * Rosanna Calvierri was the alias used by the matriarch of a group of Saturnyns fleeing from a crack in time.
- * <p>
- * Rosanna and her children fled to Venice where she and her eldest son, Francesco, used perception filters to
- * appear human. Here, Rosanna set up a school for girls in order to transform them into Saturnyns, as none of
- * the other females had survived the trip.
- *
- * @author eccentric_nz
- */
-public class VampireRunnable implements Runnable {
+public class NimonRunnable implements Runnable {
 
     private final TARDIS plugin;
     private final int spawn_rate;
 
-    public VampireRunnable(TARDIS plugin) {
+    public NimonRunnable(TARDIS plugin) {
         this.plugin = plugin;
         spawn_rate = plugin.getMonstersConfig().getInt("spawn_rate.how_many");
     }
@@ -60,27 +52,27 @@ public class VampireRunnable implements Runnable {
         plugin.getServer().getWorlds().forEach((w) -> {
             // only configured worlds
             String name = WorldProcessor.sanitiseName(w.getName());
-            if (plugin.getMonstersConfig().getInt("vampires.worlds." + name) > 0) {
-                // get the current vampire count
-                int vampires = 0;
-                Collection<Drowned> drowned = w.getEntitiesByClass(Drowned.class);
-                for (Drowned d : drowned) {
-                    PersistentDataContainer pdc = d.getPersistentDataContainer();
-                    if (pdc.has(TARDISWeepingAngels.VAMPIRE, PersistentDataType.INTEGER)) {
-                        vampires++;
+            if (plugin.getMonstersConfig().getInt("nimons.worlds." + name) > 0) {
+                // get the current nimon count
+                int nimons = 0;
+                Collection<Zombie> zombies = w.getEntitiesByClass(Zombie.class);
+                for (Zombie z : zombies) {
+                    PersistentDataContainer pdc = z.getPersistentDataContainer();
+                    if (pdc.has(TARDISWeepingAngels.NIMON, PersistentDataType.INTEGER)) {
+                        nimons++;
                     }
                 }
-                if (vampires < plugin.getMonstersConfig().getInt("vampires.worlds." + name)) {
+                if (nimons < plugin.getMonstersConfig().getInt("nimons.worlds." + name)) {
                     // if less than maximum, spawn some more
                     for (int i = 0; i < spawn_rate; i++) {
-                        spawnVampire(w);
+                        spawnNimon(w);
                     }
                 }
             }
         });
     }
 
-    private void spawnVampire(World world) {
+    private void spawnNimon(World world) {
         int players = world.getPlayers().size();
         // don't bother spawning if there are no players in the world
         if (players == 0) {
@@ -93,15 +85,16 @@ public class VampireRunnable implements Runnable {
             int z = chunk.getZ() * 16 + TARDISConstants.RANDOM.nextInt(16);
             int y = world.getHighestBlockYAt(x, z);
             Location l = new Location(world, x, y + 1, z);
-            if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
-                return;
+            if (WaterChecker.isNotWater(l)) {
+                if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
+                    return;
+                }
+                LivingEntity nimon = new MonsterSpawner().create(l, Monster.NIMON);
+                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    new Equipper(Monster.NIMON, nimon, false).setHelmetAndInvisibility();
+                    plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(nimon, EntityType.ZOMBIE, Monster.NIMON, l));
+                }, 5L);
             }
-            Monster which = TARDISConstants.RANDOM.nextInt(100) < 15 ? Monster.SATURNYNIAN : Monster.VAMPIRE_OF_VENICE;
-            LivingEntity vampire = new MonsterSpawner().create(l, which);
-            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                new Equipper(which, vampire, false).setHelmetAndInvisibility();
-                plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(vampire, EntityType.DROWNED, Monster.VAMPIRE_OF_VENICE, l));
-            }, 5L);
         }
     }
 }

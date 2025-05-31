@@ -33,12 +33,14 @@ import me.eccentric_nz.tardisweepingangels.monsters.hath.HathRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessMonkRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessProjectileListener;
 import me.eccentric_nz.tardisweepingangels.monsters.headless_monks.HeadlessTarget;
+import me.eccentric_nz.tardisweepingangels.monsters.heavenly_host.HeavenlyHostRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.ice_warriors.IceWarriorRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.judoon.*;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Builder;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Listener;
 import me.eccentric_nz.tardisweepingangels.monsters.k9.K9Recipe;
 import me.eccentric_nz.tardisweepingangels.monsters.mire.MireRunnable;
+import me.eccentric_nz.tardisweepingangels.monsters.nimon.NimonRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.omega.OmegaRunnable;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.OodListener;
 import me.eccentric_nz.tardisweepingangels.monsters.ood.VillagerCuredListener;
@@ -95,15 +97,18 @@ public class TARDISWeepingAngels {
     public static NamespacedKey FLAME_TASK;
     public static NamespacedKey HATH;
     public static NamespacedKey HEADLESS_TASK;
+    public static NamespacedKey HEAVENLY_HOST;
     public static NamespacedKey JUDOON;
     public static NamespacedKey K9;
     public static NamespacedKey MIRE;
     public static NamespacedKey MONK;
+    public static NamespacedKey NIMON;
     public static NamespacedKey OMEGA;
     public static NamespacedKey OOD;
     public static NamespacedKey OSSIFIED;
     public static NamespacedKey OWNER_UUID;
     public static NamespacedKey RACNOSS;
+    public static NamespacedKey SATURNYNIAN;
     public static NamespacedKey SCARECROW;
     public static NamespacedKey SILENT;
     public static NamespacedKey SILURIAN;
@@ -222,9 +227,11 @@ public class TARDISWeepingAngels {
                 new EmptyChildRunnable(plugin),
                 new HathRunnable(plugin),
                 new HeadlessMonkRunnable(plugin),
+                new HeavenlyHostRunnable(plugin),
                 new IceWarriorRunnable(plugin),
                 new JudoonRunnable(plugin),
                 new MireRunnable(plugin),
+                new NimonRunnable(plugin),
                 new OmegaRunnable(plugin),
                 new RacnossRunnable(plugin),
                 new ScarecrowRunnable(plugin),
@@ -298,6 +305,10 @@ public class TARDISWeepingAngels {
         PDC_KEYS.put(Monster.HEADLESS_MONK, MONK);
         FLAME_TASK = new NamespacedKey(plugin, "flame_task");
         HEADLESS_TASK = new NamespacedKey(plugin, "headless_task");
+        HEAVENLY_HOST = new NamespacedKey(plugin, "heavenly_host");
+        PDC_KEYS.put(Monster.HEAVENLY_HOST, HEAVENLY_HOST);
+        NIMON = new NamespacedKey(plugin, "nimon");
+        PDC_KEYS.put(Monster.NIMON, NIMON);
         OMEGA = new NamespacedKey(plugin, "omega");
         PDC_KEYS.put(Monster.OMEGA, OMEGA);
         OOD = new NamespacedKey(plugin, "ood");
@@ -307,6 +318,8 @@ public class TARDISWeepingAngels {
         OWNER_UUID = new NamespacedKey(plugin, "owner_uuid");
         RACNOSS = new NamespacedKey(plugin, "racnoss");
         PDC_KEYS.put(Monster.RACNOSS, RACNOSS);
+        SATURNYNIAN = new NamespacedKey(plugin, "saturnynian");
+        PDC_KEYS.put(Monster.SATURNYNIAN, SATURNYNIAN);
         SCARECROW = new NamespacedKey(plugin, "scarecrow");
         PDC_KEYS.put(Monster.SCARECROW, SCARECROW);
         SILENT = new NamespacedKey(plugin, "silent");

@@ -891,6 +891,11 @@ public class TARDII implements TardisAPI {
     }
 
     @Override
+    public void setHeavenlyHostEquipment(LivingEntity le, boolean disguise) {
+        new Equipper(Monster.HEAVENLY_HOST, le, disguise).setHelmetAndInvisibility();
+    }
+
+    @Override
     public void setMireEquipment(LivingEntity le, boolean disguise) {
         new Equipper(Monster.MIRE, le, disguise).setHelmetAndInvisibility();
     }

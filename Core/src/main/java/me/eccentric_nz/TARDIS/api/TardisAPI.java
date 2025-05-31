@@ -622,6 +622,14 @@ public interface TardisAPI {
     void setHeadlessMonkEquipment(LivingEntity le, boolean disguise);
 
     /**
+     * Sets an entity as a Heavenly Host.
+     *
+     * @param le The LivingEntity to disguise
+     * @param disguise A boolean to determine if this is a player disguise
+     */
+    void setHeavenlyHostEquipment(LivingEntity le, boolean disguise);
+
+    /**
      * Sets an entity as a Mire.
      *
      * @param le The LivingEntity to disguise

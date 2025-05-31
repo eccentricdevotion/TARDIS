@@ -69,13 +69,14 @@ public class KillCommand {
             return true;
         }
         switch (monster) {
-            case ANGEL_OF_LIBERTY, CLOCKWORK_DROID, CYBERMAN, CYBERSHADE, EMPTY_CHILD, OSSIFIED, SCARECROW,
+            case ANGEL_OF_LIBERTY, CLOCKWORK_DROID, CYBERMAN, CYBERSHADE, EMPTY_CHILD, HEAVENLY_HOST, NIMON, OSSIFIED, SCARECROW,
                  SLITHEEN, SMILER, SONTARAN, SYCORAX, THE_BEAST, VASHTA_NERADA, ZYGON -> {
                 switch (monster) {
                     case ANGEL_OF_LIBERTY -> what = "Angels of Liberty";
                     case THE_BEAST -> what = "The Beast";
                     case CYBERMAN -> what = "Cybermen";
                     case EMPTY_CHILD -> what = "Empty Children";
+                    case NIMON -> what = "Nimon";
                     case VASHTA_NERADA -> what = "Vashta Nerada";
                     default -> what = monster.getName() + "s";
                 }
@@ -97,8 +98,12 @@ public class KillCommand {
                     }
                 }
             }
-            case SEA_DEVIL, VAMPIRE_OF_VENICE -> {
-                what = (monster == Monster.VAMPIRE_OF_VENICE) ? "Vampires of Venice" : "Sea Devils";
+            case SATURNYNIAN, SEA_DEVIL, VAMPIRE_OF_VENICE -> {
+                if (monster == Monster.VAMPIRE_OF_VENICE) {
+                    what = "Vampires of Venice";
+                } else {
+                    what = monster.getName() + "s";
+                }
                 Collection<Drowned> drowned = w.getEntitiesByClass(Drowned.class);
                 for (Drowned d : drowned) {
                     if (d.getPersistentDataContainer().has(TARDISWeepingAngels.PDC_KEYS.get(monster), PersistentDataType.INTEGER)) {
