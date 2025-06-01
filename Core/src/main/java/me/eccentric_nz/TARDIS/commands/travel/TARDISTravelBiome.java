@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS.commands.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISSerializeInventory;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDiskStorage;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.listeners.TARDISBiomeReaderListener;
@@ -29,7 +30,6 @@ import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISBiomeFinder;
 import me.eccentric_nz.TARDIS.upgrades.SystemTree;
 import me.eccentric_nz.TARDIS.upgrades.SystemUpgradeChecker;
-import org.bukkit.Location;
 import org.bukkit.Registry;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -114,8 +114,8 @@ public class TARDISTravelBiome {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOMES", b);
         } else {
             World w;
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-            if (!rsc.resultSet()) {
+            Current current = TARDISCache.CURRENT.get(id);
+            if (current == null) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return true;
             }
@@ -138,15 +138,14 @@ public class TARDISTravelBiome {
                     return true;
                 }
             } else {
-                String planet = rsc.getWorld().getName();
+                String planet = current.location().getWorld().getName();
                 if (TARDISConstants.isTARDISPlanet(planet)) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_PLANET", rsc.getWorld().getName());
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "BIOME_NOT_PLANET", current.location().getWorld().getName());
                     return true;
                 }
-                w = rsc.getWorld();
+                w = current.location().getWorld();
             }
-            Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            new TARDISBiomeFinder(plugin).run(w, upper, player, id, rsc.getDirection(), current);
+            new TARDISBiomeFinder(plugin).run(w, upper, player, id, current.direction(), current.location());
         }
         return true;
     }

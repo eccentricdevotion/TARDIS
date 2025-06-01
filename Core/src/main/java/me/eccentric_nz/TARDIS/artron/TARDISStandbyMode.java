@@ -17,8 +17,9 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.StandbyData;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetStandby;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -59,6 +60,7 @@ public class TARDISStandbyMode implements Runnable {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", id);
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -remove, where, null);
+                TARDISCache.invalidate(id);
             } else if (level <= amount) {
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     // power down!
@@ -92,6 +94,7 @@ public class TARDISStandbyMode implements Runnable {
                     new TARDISBeaconToggler(plugin).flickSwitch(standbyData.uuid(), id, false);
                     // update database
                     plugin.getQueryFactory().doUpdate("tardis", setp, wherep);
+                    TARDISCache.invalidate(id);
                     // if force field is on, disable it
                     plugin.getTrackerKeeper().getActiveForceFields().remove(standbyData.uuid());
                 }, 1L);
@@ -107,18 +110,17 @@ public class TARDISStandbyMode implements Runnable {
      * Checks whether the TARDIS is near a recharge location.
      */
     private boolean isNearCharger(int id) {
-        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, id);
-        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || !rs.resultSet()) {
+        Current current = TARDISCache.CURRENT.get(id);
+        if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id) || current == null) {
             return false;
         }
-        if (rs.getWorld() == null) {
+        if (current.location().getWorld() == null) {
             return false;
         }
         // get Police Box location
-        Location pb_loc = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
         // check location is within configured blocks of a recharger
         for (Location l : plugin.getGeneralKeeper().getRechargers()) {
-            if (plugin.getUtils().compareLocations(pb_loc, l)) {
+            if (plugin.getUtils().compareLocations(current.location(), l)) {
                 return true;
             }
         }

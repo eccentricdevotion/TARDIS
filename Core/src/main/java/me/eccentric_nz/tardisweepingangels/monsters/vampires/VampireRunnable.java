@@ -96,9 +96,10 @@ public class VampireRunnable implements Runnable {
             if (plugin.isWorldGuardOnServer() && !WorldGuardChecker.canSpawn(l)) {
                 return;
             }
-            LivingEntity vampire = new MonsterSpawner().create(l, Monster.VAMPIRE_OF_VENICE);
+            Monster which = TARDISConstants.RANDOM.nextInt(100) < 15 ? Monster.SATURNYNIAN : Monster.VAMPIRE_OF_VENICE;
+            LivingEntity vampire = new MonsterSpawner().create(l, which);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                new Equipper(Monster.VAMPIRE_OF_VENICE, vampire, false).setHelmetAndInvisibility();
+                new Equipper(which, vampire, false).setHelmetAndInvisibility();
                 plugin.getServer().getPluginManager().callEvent(new TARDISWeepingAngelSpawnEvent(vampire, EntityType.DROWNED, Monster.VAMPIRE_OF_VENICE, l));
             }, 5L);
         }

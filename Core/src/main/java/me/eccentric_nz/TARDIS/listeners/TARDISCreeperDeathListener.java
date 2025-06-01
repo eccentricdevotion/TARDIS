@@ -17,9 +17,10 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Advancement;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Creeper;
@@ -61,10 +62,12 @@ public class TARDISCreeperDeathListener implements Listener {
                 if (p != null) {
                     String killerUUID = p.getUniqueId().toString();
                     // is the killer a Time Lord?
-                    HashMap<String, Object> where = new HashMap<>();
-                    where.put("uuid", killerUUID);
-                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-                    if (rs.resultSet()) {
+//                    HashMap<String, Object> where = new HashMap<>();
+//                    where.put("uuid", killerUUID);
+//                    ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//                    if (rs.resultSet()) {
+                    Tardis tardis = TARDISCache.BY_UUID.get(p.getUniqueId());
+                    if (tardis != null) {
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, killerUUID);
                         HashMap<String, Object> set = new HashMap<>();
                         int amount = plugin.getArtronConfig().getInt("creeper_recharge");

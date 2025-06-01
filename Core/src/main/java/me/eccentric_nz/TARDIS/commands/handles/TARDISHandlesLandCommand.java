@@ -17,15 +17,15 @@
 package me.eccentric_nz.TARDIS.commands.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
@@ -54,11 +54,13 @@ class TARDISHandlesLandCommand {
     }
 
     public boolean exitVortex(Player player, int id, String uuid) {
-        HashMap<String, Object> wherei = new HashMap<>();
-        wherei.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+//        HashMap<String, Object> wherei = new HashMap<>();
+//        wherei.put("tardis_id", id);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
+//        if (rs.resultSet()) {
+//            Tardis tardis = rs.getTardis();
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        if (tardis != null) {
             if (tardis.getPreset().equals(ChameleonPreset.JUNK)) {
                 plugin.getMessenger().handlesSend(player, "HANDLES_JUNK");
                 return true;
@@ -73,9 +75,9 @@ class TARDISHandlesLandCommand {
             }
             // must have a destination, but setting one will make the TARDIS automatically exit the time vortex
             // so generate a random overworld location
-            ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
-            if (rscl.resultSet()) {
-                Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(player, rscl.getDirection());
+            Current current = TARDISCache.CURRENT.get(id);
+            if (current != null) {
+                Location l = new TARDISRandomiserCircuit(plugin).getRandomlocation(player, current.direction());
                 if (l != null) {
                     HashMap<String, Object> set_next = new HashMap<>();
                     HashMap<String, Object> where_next = new HashMap<>();
@@ -83,7 +85,7 @@ class TARDISHandlesLandCommand {
                     set_next.put("x", l.getBlockX());
                     set_next.put("y", l.getBlockY());
                     set_next.put("z", l.getBlockZ());
-                    set_next.put("direction", rscl.getDirection().toString());
+                    set_next.put("direction", current.direction().toString());
                     boolean sub = plugin.getTrackerKeeper().getSubmarine().contains(id);
                     set_next.put("submarine", (sub) ? 1 : 0);
                     plugin.getTrackerKeeper().getSubmarine().remove(id);
@@ -123,6 +125,7 @@ class TARDISHandlesLandCommand {
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
                             plugin.getQueryFactory().alterEnergyLevel("tardis", amount, wheret, player);
+                            TARDISCache.invalidate(id);
                             plugin.getMessenger().sendArtron(player, id, Math.abs(amount));
                             plugin.getTrackerKeeper().getHasDestination().remove(id);
                             if (plugin.getTrackerKeeper().getHasRandomised().contains(id)) {
@@ -141,6 +144,7 @@ class TARDISHandlesLandCommand {
                             HashMap<String, Object> whereb = new HashMap<>();
                             whereb.put("tardis_id", id);
                             plugin.getQueryFactory().doUpdate("tardis", set, whereb);
+                            TARDISCache.invalidate(id);
                         }
                     }, 400L);
                 } else {

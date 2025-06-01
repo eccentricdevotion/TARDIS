@@ -17,12 +17,12 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.utils.TARDISWeather;
 import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Weather;
@@ -72,11 +72,8 @@ public class FloodgateWeatherForm {
         ResultSetTravellers rst = new ResultSetTravellers(plugin, wheres, false);
         if (rst.resultSet()) {
             int id = rst.getTardis_id();
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("tardis_id", id);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-            if (rs.resultSet()) {
-                Tardis tardis = rs.getTardis();
+            Tardis tardis = TARDISCache.BY_ID.get(id);
+            if (tardis != null) {
                 // check they initialised
                 if (!tardis.isTardisInit()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ENERGY_NO_INIT");
@@ -91,9 +88,10 @@ public class FloodgateWeatherForm {
                     return;
                 }
                 // get current location
-                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardisId());
-                if (!rsc.resultSet()) {
+                Current current = TARDISCache.CURRENT.get(tardis.getTardisId());
+                if (current == null) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
+                    return;
                 }
                 if (label.equals("excite")) {
                     // atmospheric excitation
@@ -110,7 +108,7 @@ public class FloodgateWeatherForm {
                     if (!TARDISPermission.hasPermission(player, "tardis.weather." + perm)) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERMS");
                     }
-                    TARDISWeather.setWeather(rsc.getWorld(), weather);
+                    TARDISWeather.setWeather(current.location().getWorld(), weather);
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "WEATHER_SET", perm);
                 }
             }

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
@@ -66,6 +67,7 @@ public class CustardCreamAction {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             plugin.getQueryFactory().alterEnergyLevel("tardis", plugin.getArtronConfig().getInt("custard_cream") * -1, where, player);
+            TARDISCache.invalidate(id);
         }
     }
 }

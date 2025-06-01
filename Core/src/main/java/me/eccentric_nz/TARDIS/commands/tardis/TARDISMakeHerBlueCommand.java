@@ -17,17 +17,16 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -60,14 +59,16 @@ class TARDISMakeHerBlueCommand {
                 return true;
             }
         }
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        if (!rs.resultSet()) {
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("uuid", uuid.toString());
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//        if (!rs.resultSet()) {
+        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+        if (tardis == null) {
             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NO_TARDIS");
             return true;
         }
-        Tardis tardis = rs.getTardis();
+//        Tardis tardis = rs.getTardis();
         if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "POWER_DOWN");
             return true;
@@ -110,13 +111,12 @@ class TARDISMakeHerBlueCommand {
             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_WHILE_MAT");
             return true;
         }
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-        if (!rsc.resultSet()) {
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current == null) {
             plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             plugin.getMessenger().sendColouredCommand(player.getPlayer(), "REBUILD_FAIL", "/tardis comehere", plugin);
             return true;
         }
-        Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
         int level = tardis.getArtronLevel();
         int rebuild = plugin.getArtronConfig().getInt("random");
         if (level < rebuild) {
@@ -130,14 +130,15 @@ class TARDISMakeHerBlueCommand {
         HashMap<String, Object> set = new HashMap<>();
         set.put("chameleon_preset", "POLICE_BOX_BLUE");
         plugin.getQueryFactory().doUpdate("tardis", set, wherep);
+        TARDISCache.invalidate(id);
         BuildData bd = new BuildData(uuid.toString());
-        bd.setDirection(rsc.getDirection());
-        bd.setLocation(l);
+        bd.setDirection(current.direction());
+        bd.setLocation(current.location());
         bd.setMalfunction(false);
         bd.setOutside(false);
         bd.setPlayer(player);
         bd.setRebuild(true);
-        bd.setSubmarine(rsc.isSubmarine());
+        bd.setSubmarine(current.submarine());
         bd.setTardisID(id);
         bd.setThrottle(SpaceTimeThrottle.REBUILD);
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 20L);
@@ -146,6 +147,7 @@ class TARDISMakeHerBlueCommand {
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", id);
         plugin.getQueryFactory().alterEnergyLevel("tardis", -rebuild, wheret, player.getPlayer());
+        TARDISCache.invalidate(id);
         return true;
     }
 }

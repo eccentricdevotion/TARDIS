@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS.commands.remote;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
@@ -46,23 +47,17 @@ class TARDISRemoteTravelCommand {
     }
 
     boolean doTravel(int id, OfflinePlayer player, CommandSender sender) {
-        HashMap<String, Object> wherei = new HashMap<>();
-        wherei.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
-            boolean hidden = tardis.isHidden();
-            ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        if (tardis != null) {
+            Current current = TARDISCache.CURRENT.get(id);
             String resetw = "";
-            Location l = null;
-            if (!rscl.resultSet()) {
-                hidden = true;
+            if (current == null) {
+                // emergency TARDIS relocation
+                new TARDISEmergencyRelocation(plugin).relocate(id, player.getPlayer());
+                return true;
             } else {
-                resetw = rscl.getWorld().getName();
-                l = new Location(rscl.getWorld(), rscl.getX(), rscl.getY(), rscl.getZ());
+                resetw = current.location().getWorld().getName();
             }
-            COMPASS cd = rscl.getDirection();
-            boolean sub = rscl.isSubmarine();
             ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, id);
             if (!rsn.resultSet() && !(sender instanceof BlockCommandSender)) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "DEST_NO_LOAD");
@@ -79,15 +74,15 @@ class TARDISRemoteTravelCommand {
             if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                 plugin.getTrackerKeeper().getInVortex().add(id);
                 DestroyData dd = new DestroyData();
-                dd.setDirection(cd);
-                dd.setLocation(l);
+                dd.setDirection(current.direction());
+                dd.setLocation(current.location());
                 dd.setPlayer(player);
                 dd.setHide(false);
                 dd.setOutside(false);
-                dd.setSubmarine(sub);
+                dd.setSubmarine(current.submarine());
                 dd.setTardisID(id);
                 dd.setThrottle(SpaceTimeThrottle.NORMAL);
-                if (!hidden && !plugin.getTrackerKeeper().getResetWorlds().contains(resetw)) {
+                if (!tardis.isHidden() && !plugin.getTrackerKeeper().getResetWorlds().contains(resetw)) {
                     plugin.getTrackerKeeper().getDematerialising().add(id);
                     plugin.getPresetDestroyer().destroyPreset(dd);
                 } else {
@@ -122,10 +117,8 @@ class TARDISRemoteTravelCommand {
             setcurrent.put("submarine", (is_next_sub) ? 1 : 0);
             HashMap<String, Object> wherecurrent = new HashMap<>();
             wherecurrent.put("tardis_id", id);
-            // get current location for back
-            ResultSetCurrentFromId rscu = new ResultSetCurrentFromId(plugin, id);
             HashMap<String, Object> setback = new HashMap<>();
-            if (!rscu.resultSet()) {
+            if (current == null) {
                 // back
                 setback.put("world", exit.getWorld().getName());
                 setback.put("x", exit.getX());
@@ -135,12 +128,12 @@ class TARDISRemoteTravelCommand {
                 setback.put("submarine", (is_next_sub) ? 1 : 0);
             } else {
                 // back
-                setback.put("world", rscu.getWorld().getName());
-                setback.put("x", rscu.getX());
-                setback.put("y", rscu.getY());
-                setback.put("z", rscu.getZ());
-                setback.put("direction", rscu.getDirection().toString());
-                setback.put("submarine", (rscu.isSubmarine()) ? 1 : 0);
+                setback.put("world", current.location().getWorld().getName());
+                setback.put("x", current.location().getBlockX());
+                setback.put("y", current.location().getBlockY());
+                setback.put("z", current.location().getBlockZ());
+                setback.put("direction", current.direction().toString());
+                setback.put("submarine", (current.submarine()) ? 1 : 0);
             }
             HashMap<String, Object> whereback = new HashMap<>();
             whereback.put("tardis_id", id);
@@ -154,8 +147,10 @@ class TARDISRemoteTravelCommand {
             whereh.put("tardis_id", id);
             if (!set.isEmpty()) {
                 plugin.getQueryFactory().doUpdate("tardis", set, whereh);
+                TARDISCache.invalidate(id);
             }
             plugin.getQueryFactory().doUpdate("current", setcurrent, wherecurrent);
+            TARDISCache.CURRENT.invalidate(id);
             plugin.getQueryFactory().doUpdate("back", setback, whereback);
             plugin.getQueryFactory().doUpdate("doors", setdoor, wheredoor);
             return true;

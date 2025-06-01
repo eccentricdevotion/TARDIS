@@ -18,8 +18,9 @@ package me.eccentric_nz.TARDIS.commands.utils;
 
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.Time;
 import org.bukkit.Location;
@@ -60,9 +61,9 @@ public class TARDISTimeCommand extends TARDISCompleter implements CommandExecuto
                     // get TARDIS player is in
                     int id = plugin.getTardisAPI().getIdOfTARDISPlayerIsIn(player);
                     // get current TARDIS location
-                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                    if (rsc.resultSet()) {
-                        world = rsc.getWorld();
+                    Current current = TARDISCache.CURRENT.get(id);
+                    if (current != null) {
+                        world = current.location().getWorld();
                     } else {
                         // can't change weather in TARDIS world
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "TIME_TARDIS");

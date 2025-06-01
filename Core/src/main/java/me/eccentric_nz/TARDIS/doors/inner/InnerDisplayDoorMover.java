@@ -17,13 +17,13 @@
 package me.eccentric_nz.TARDIS.doors.inner;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -69,11 +69,8 @@ public class InnerDisplayDoorMover {
                 plugin.getMessenger().sendStatus(player, "SIEGE_NO_EXIT");
                 return;
             }
-            HashMap<String, Object> tid = new HashMap<>();
-            tid.put("tardis_id", id);
-            ResultSetTardis rs = new ResultSetTardis(plugin, tid, "", false, 2);
-            if (rs.resultSet()) {
-                Tardis tardis = rs.getTardis();
+            Tardis tardis = TARDISCache.BY_ID.get(id);
+            if (tardis != null) {
                 if (!tardis.isHandbrakeOn()) {
                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ENGAGE");
                     return;
@@ -82,8 +79,8 @@ public class InnerDisplayDoorMover {
                 float yaw = player.getLocation().getYaw();
                 float pitch = player.getLocation().getPitch();
                 boolean hb = tardis.isHandbrakeOn();
-                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardisId());
-                if (!rsc.resultSet()) {
+                Current current = TARDISCache.CURRENT.get(tardis.getTardisId());
+                if (current == null) {
                     // emergency TARDIS relocation
                     new TARDISEmergencyRelocation(plugin).relocate(id, player);
                     return;
@@ -105,7 +102,7 @@ public class InnerDisplayDoorMover {
                 if (rsexit.resultSet()) {
                     exitDirection = rsexit.getDoor_direction();
                 } else {
-                    exitDirection = rsc.getDirection(); // current direction
+                    exitDirection = current.direction(); // current direction
                 }
                 // is the TARDIS materialising?
                 if (plugin.getTrackerKeeper().getInVortex().contains(id) || plugin.getTrackerKeeper().getMaterialising().contains(id) || plugin.getTrackerKeeper().getDematerialising().contains(id)) {
@@ -123,7 +120,7 @@ public class InnerDisplayDoorMover {
                 if (opened && preset.hasDoor()) {
                     exitLoc = TARDISStaticLocationGetters.getLocationFromDB(rsexit.getDoor_location());
                 } else {
-                    exitLoc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), yaw, pitch);
+                    exitLoc = current.location();
                 }
                 if (hb && exitLoc != null) {
                     COMPASS interiorDirection = rsd.getDoor_direction();

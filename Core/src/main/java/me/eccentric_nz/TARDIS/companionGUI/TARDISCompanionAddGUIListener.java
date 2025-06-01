@@ -17,8 +17,8 @@
 package me.eccentric_nz.TARDIS.companionGUI;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -61,6 +61,7 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener {
             set.put("companions", puid);
         }
         TARDIS.plugin.getQueryFactory().doUpdate("tardis", set, tid);
+        TARDISCache.invalidate(id);
     }
 
     public static void addToRegion(String world, String owner, String companion) {
@@ -96,11 +97,13 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener {
             case 47 -> list(player); // list
             case 49 -> {
                 // add everyone
-                HashMap<String, Object> wherea = new HashMap<>();
-                wherea.put("uuid", player.getUniqueId().toString());
-                ResultSetTardis rsa = new ResultSetTardis(plugin, wherea, "", false, 0);
-                if (rsa.resultSet()) {
-                    Tardis tardis = rsa.getTardis();
+//                HashMap<String, Object> wherea = new HashMap<>();
+//                wherea.put("uuid", player.getUniqueId().toString());
+//                ResultSetTardis rsa = new ResultSetTardis(plugin, wherea, "", false, 0);
+//                if (rsa.resultSet()) {
+//                    Tardis tardis = rsa.getTardis();
+                Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
+                if (tardis != null) {
                     int id = tardis.getTardisId();
                     String comps = tardis.getCompanions();
                     addCompanion(id, comps, "everyone");
@@ -116,11 +119,13 @@ public class TARDISCompanionAddGUIListener extends TARDISMenuListener {
             }
             case 53 -> close(player); // close
             default -> {
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("uuid", player.getUniqueId().toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-                if (rs.resultSet()) {
-                    Tardis tardis = rs.getTardis();
+//                HashMap<String, Object> where = new HashMap<>();
+//                where.put("uuid", player.getUniqueId().toString());
+//                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//                if (rs.resultSet()) {
+//                    Tardis tardis = rs.getTardis();
+                Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
+                if (tardis != null) {
                     int id = tardis.getTardisId();
                     String comps = tardis.getCompanions();
 //                    ItemStack h = view.getItem(slot);

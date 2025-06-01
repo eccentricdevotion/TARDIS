@@ -19,12 +19,12 @@ package me.eccentric_nz.TARDIS.desktop;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCondenser;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.rooms.TARDISCondenserData;
@@ -57,11 +57,13 @@ public class TARDISRepair {
     public void restore(boolean clean) {
         UUID uuid = player.getUniqueId();
         TARDISUpgradeData tud = plugin.getTrackerKeeper().getUpgrades().get(uuid);
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("uuid", uuid.toString());
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+//        if (rs.resultSet()) {
+//            Tardis tardis = rs.getTardis();
+        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+        if (tardis != null) {
             String perm = tardis.getSchematic().getPermission();
             boolean hasLava = tud.getPrevious().getPermission().equals("master") || tud.getPrevious().getPermission().equals("delta");
             if (hasLava) {
@@ -94,7 +96,7 @@ public class TARDISRepair {
     }
 
     boolean hasCondensedMissingBlocks() {
-        String uuid = player.getUniqueId().toString();
+        UUID uuid = player.getUniqueId();
         HashMap<String, Integer> blockIDs = new HashMap<>();
         JsonObject obj = getConsole();
         if (obj.has("dimensions")) {
@@ -105,11 +107,13 @@ public class TARDISRepair {
             int l = dimensions.get("length").getAsInt();
             // get input array
             JsonArray arr = obj.get("input").getAsJsonArray();
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", uuid);
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-            if (rs.resultSet()) {
-                Tardis tardis = rs.getTardis();
+//            HashMap<String, Object> where = new HashMap<>();
+//            where.put("uuid", uuid);
+//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+//            if (rs.resultSet()) {
+//                Tardis tardis = rs.getTardis();
+            Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+            if (tardis != null) {
                 int slot = tardis.getTIPS();
                 int id = tardis.getTardisId();
                 int startx, startz;
@@ -130,7 +134,7 @@ public class TARDISRepair {
                 Material wall_type = Material.ORANGE_WOOL;
                 Material floor_type = Material.LIGHT_GRAY_WOOL;
                 boolean hasPrefs = false;
-                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid);
+                ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, uuid.toString());
                 if (rsp.resultSet()) {
                     hasPrefs = true;
                     wall_type = Material.getMaterial(rsp.getWall());
@@ -246,12 +250,14 @@ public class TARDISRepair {
 
     private JsonObject getConsole() {
         JsonObject obj = new JsonObject();
-        String uuid = player.getUniqueId().toString();
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", uuid);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+        UUID uuid = player.getUniqueId();
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("uuid", uuid);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+//        if (rs.resultSet()) {
+//            Tardis tardis = rs.getTardis();
+        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+        if (tardis != null) {
             String perm = tardis.getSchematic().getPermission();
             if (perm.equals("archive")) {
                 // try 1
@@ -270,7 +276,7 @@ public class TARDISRepair {
                     if (rsa2.resultSet()) {
                         obj = rsa2.getArchive().getJSON();
                         // set as active
-                        new ArchiveUpdate(plugin, uuid, rsa2.getArchive().getName()).setInUse();
+                        new ArchiveUpdate(plugin, uuid.toString(), rsa2.getArchive().getName()).setInUse();
                     } else {
                         // try 3
                         HashMap<String, Object> wherea3 = new HashMap<>();
@@ -280,7 +286,7 @@ public class TARDISRepair {
                         if (rsa3.resultSet()) {
                             obj = rsa2.getArchive().getJSON();
                             // set as active
-                            new ArchiveUpdate(plugin, uuid, rsa3.getArchive().getName()).setInUse();
+                            new ArchiveUpdate(plugin, uuid.toString(), rsa3.getArchive().getName()).setInUse();
                         }
                     }
                 }

@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS.control;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.control.actions.ExileAction;
 import me.eccentric_nz.TARDIS.control.actions.RandomDestinationAction;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetRandomInteractions;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetRepeaters;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -59,13 +60,13 @@ public class TARDISRandomButton {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
             return;
         }
-        ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
-        if (!rscl.resultSet()) {
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current == null) {
             // emergency TARDIS relocation
             new TARDISEmergencyRelocation(plugin).relocate(id, player);
             return;
         }
-        COMPASS direction = rscl.getDirection();
+        COMPASS direction = current.direction();
         if (TARDISPermission.hasPermission(player, "tardis.exile") && plugin.getConfig().getBoolean("travel.exile")) {
             new ExileAction(plugin).getExile(player, id, direction);
         } else {
@@ -80,7 +81,7 @@ public class TARDISRandomButton {
                         repeaters = rsri.getStates();
                     }
                 }
-                new RandomDestinationAction(plugin).getRandomDestination(player, id, repeaters, rscl, direction, level, cost, comps, ownerUUID);
+                new RandomDestinationAction(plugin).getRandomDestination(player, id, repeaters, current, direction, level, cost, comps, ownerUUID);
             }
         }
     }

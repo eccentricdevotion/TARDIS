@@ -17,17 +17,17 @@
 package me.eccentric_nz.TARDIS.particles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.custommodels.GUIParticle;
 import me.eccentric_nz.TARDIS.custommodels.keys.SwitchVariant;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.ParticleData;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -199,16 +199,15 @@ public class TARDISParticleGUIListener extends TARDISMenuListener {
         ResultSetTardisID rst = new ResultSetTardisID(plugin);
         if (rst.fromUUID(uuid.toString())) {
             // get TARDIS location
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rst.getTardisId());
-            if (rsc.resultSet()) {
-                Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+            Current current = TARDISCache.CURRENT.get(rst.getTardisId());
+            if (current != null) {
                 // get throttle setting
                 ResultSetThrottle rs = new ResultSetThrottle(plugin);
                 Throticle throticle = rs.getSpeedAndParticles(uuid.toString());
                 // read current settings
                 ParticleData data = getParticleData(view);
                 // display particles
-                Emitter emitter = new Emitter(plugin, uuid, current, data, throticle.throttle().getFlightTime());
+                Emitter emitter = new Emitter(plugin, uuid, current.location(), data, throticle.throttle().getFlightTime());
                 int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, emitter, 0, data.getShape().getPeriod());
                 emitter.setTaskID(task);
                 // close GUI

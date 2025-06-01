@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS.commands.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.commands.utils.ArgumentParser;
 import me.eccentric_nz.TARDIS.commands.utils.Arguments;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
@@ -76,10 +77,10 @@ public class TARDISTravelCoords {
                     // only world specified
                     List<String> worlds = List.of(world.getName());
                     // get current location
-                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                    if (rsc.resultSet()) {
+                    Current current = TARDISCache.CURRENT.get(id);
+                    if (current != null) {
                         Parameters parameters = new Parameters(player, Flag.getNoMessageFlags());
-                        parameters.setCompass(rsc.getDirection());
+                        parameters.setCompass(current.direction());
                         Location l = plugin.getTardisAPI().getRandomLocation(worlds, world.getEnvironment(), parameters);
                         if (l != null) {
                             set.put("world", l.getWorld().getName());
@@ -108,16 +109,16 @@ public class TARDISTravelCoords {
             }
             case 3 -> {
                 if (args[0].startsWith("~")) {
-                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                    if (!rsc.resultSet()) {
+                    Current current = TARDISCache.CURRENT.get(id);
+                    if (current == null) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                         return true;
                     }
-                    if (!plugin.getPlanetsConfig().getBoolean("planets." + rsc.getWorld().getName() + ".time_travel")) {
+                    if (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getName() + ".time_travel")) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
                         return true;
                     }
-                    if (rsc.isSubmarine()) {
+                    if (current.submarine()) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "SUB_NO_CMD");
                         return true;
                     }
@@ -130,16 +131,16 @@ public class TARDISTravelCoords {
                         return true;
                     }
                     // add relative coordinates
-                    int x = rsc.getX() + rx;
-                    int y = rsc.getY() + ry;
-                    int z = rsc.getZ() + rz;
+                    int x = current.location().getBlockX() + rx;
+                    int y = current.location().getBlockY() + ry;
+                    int z = current.location().getBlockZ() + rz;
                     World.Environment environment = player.getWorld().getEnvironment();
                     if (y < -64 || ((environment.equals(World.Environment.NORMAL) && y > 310) || (!environment.equals(World.Environment.NORMAL) && y > 240))) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "Y_NOT_VALID");
                         return true;
                     }
                     // make location
-                    Location location = new Location(rsc.getWorld(), x, y, z);
+                    Location location = new Location(current.location().getWorld(), x, y, z);
                     // check location
                     int count = checkLocation(location, player, id);
                     if (count > 0) {
@@ -244,14 +245,14 @@ public class TARDISTravelCoords {
         if (!plugin.getPluginRespect().getRespect(location, new Parameters(player, Flag.getDefaultFlags()))) {
             return 1;
         }
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-        if (!rsc.resultSet()) {
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             return 1;
         }
         // check location
-        int[] start_loc = TARDISTimeTravel.getStartLocation(location, rsc.getDirection());
-        return TARDISTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), rsc.getDirection());
+        int[] start_loc = TARDISTimeTravel.getStartLocation(location, current.direction());
+        return TARDISTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), current.direction());
     }
 
     private Location getCoordinateLocation(String[] args, Player player, int id) {
@@ -278,12 +279,12 @@ public class TARDISTravelCoords {
         int x, y, z;
         World w;
         if (arguments.getArguments().getFirst().equals("~")) {
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-            if (!rsc.resultSet()) {
+            Current current = TARDISCache.CURRENT.get(id);
+            if (current == null) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return null;
             }
-            w = rsc.getWorld();
+            w = current.location().getWorld();
         } else {
             if (!plugin.getPlanetsConfig().getBoolean("planets." + w_str + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                 w = plugin.getMVHelper().getWorld(w_str);

@@ -17,14 +17,13 @@
 package me.eccentric_nz.TARDIS.hads;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.TARDISCache;
+import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-
-import java.util.HashMap;
 
 /**
  * The Cloister Bell is a signal to the crew that a catastrophe that could threaten even a TARDIS is occurring or will
@@ -146,14 +145,16 @@ public class TARDISCloisterBell implements Runnable {
 
     private Location getCentre(int id) {
         // get the location of the centre of the TARDIS
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-        if (rs.resultSet()) {
-            if (!rs.getTardis().getCreeper().isEmpty()) {
-                return TARDISStaticLocationGetters.getLocationFromDB(rs.getTardis().getCreeper());
-            } else if (!rs.getTardis().getBeacon().isEmpty()) {
-                return TARDISStaticLocationGetters.getLocationFromDB(rs.getTardis().getBeacon());
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("tardis_id", id);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+//        if (rs.resultSet()) {
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        if (tardis != null) {
+            if (!tardis.getCreeper().isEmpty()) {
+                return TARDISStaticLocationGetters.getLocationFromDB(tardis.getCreeper());
+            } else if (!tardis.getBeacon().isEmpty()) {
+                return TARDISStaticLocationGetters.getLocationFromDB(tardis.getBeacon());
             }
         }
         return null;
@@ -161,20 +162,22 @@ public class TARDISCloisterBell implements Runnable {
 
     private Location getCurrent(int id) {
         // get the location of the TARDIS Police Box
-        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, id);
-        if (rs.resultSet()) {
-            return new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current != null) {
+            return current.location();
         }
         return null;
     }
 
     private Player getPlayer(int id) {
         // get Time Lord of this TARDIS
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-        if (rs.resultSet()) {
-            return plugin.getServer().getPlayer(rs.getTardis().getUuid());
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("tardis_id", id);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+//        if (rs.resultSet()) {
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        if (tardis != null) {
+            return plugin.getServer().getPlayer(tardis.getUuid());
         }
         return null;
     }

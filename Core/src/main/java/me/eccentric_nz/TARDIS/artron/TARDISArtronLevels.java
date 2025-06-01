@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.entity.Player;
@@ -50,6 +51,7 @@ public class TARDISArtronLevels {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("tardis", set, where);
+        TARDISCache.invalidate(id);
         long interval = plugin.getArtronConfig().getLong("recharge_interval", 24) * 20;
         TARDISArtronRunnable runnable = new TARDISArtronRunnable(plugin, id);
         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, runnable, interval, interval);

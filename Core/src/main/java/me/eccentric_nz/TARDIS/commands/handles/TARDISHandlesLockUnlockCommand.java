@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.commands.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.TARDISCache;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoors;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -38,9 +38,8 @@ class TARDISHandlesLockUnlockCommand {
 
     boolean toggleLock(Player player, int id, boolean lock) {
         // get the TARDIS current location
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-        if (rsc.resultSet()) {
-            Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current != null) {
             HashMap<String, Object> whered = new HashMap<>();
             whered.put("tardis_id", id);
             ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
@@ -55,7 +54,7 @@ class TARDISHandlesLockUnlockCommand {
                 plugin.getQueryFactory().doUpdate("doors", setl, wherel);
                 String message = (!lock) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
                 plugin.getMessenger().handlesSend(player, "DOOR_LOCK", message);
-                TARDISSounds.playTARDISSound(l, "tardis_lock");
+                TARDISSounds.playTARDISSound(current.location(), "tardis_lock");
             }
         }
         return true;

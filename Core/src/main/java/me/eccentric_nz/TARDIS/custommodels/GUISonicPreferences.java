@@ -46,6 +46,7 @@ public enum GUISonicPreferences {
     AMY_POND(SonicVariant.SONIC_PROBE.getKey(), 15, SonicVariant.SONIC_PROBE.getFloats()),
     RIVER_SONG(SonicVariant.RIVER_SONG.getKey(), 16, SonicVariant.RIVER_SONG.getFloats()),
     MISSY(SonicVariant.UMBRELLA.getKey(), 17, SonicVariant.UMBRELLA.getFloats()),
+    RANI(SonicVariant.RANI.getKey(), 18, SonicVariant.RANI.getFloats()),
     COLOUR(null, 28, List.of()),
     INSTRUCTIONS(GuiVariant.INFO.getKey(), 31, Material.BOOK),
     CLOSE(GuiVariant.CLOSE.getKey(), 35, Material.BOWL);

@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
@@ -63,6 +64,7 @@ public class TARDISTravelHome {
             // set chameleon adaption to OFF
             setp.put("adapti_on", 0);
             plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
+            TARDISCache.invalidate(id);
         }
         HashMap<String, Object> tid = new HashMap<>();
         tid.put("tardis_id", id);

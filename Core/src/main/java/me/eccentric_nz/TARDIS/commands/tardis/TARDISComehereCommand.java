@@ -17,13 +17,14 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
@@ -66,15 +67,17 @@ class TARDISComehereCommand {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SYS_NEED", "Stattenheim Remote");
                 return true;
             }
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", uuid.toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-            if (!rs.resultSet()) {
+//            HashMap<String, Object> where = new HashMap<>();
+//            where.put("uuid", uuid.toString());
+//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//            if (!rs.resultSet()) {
+            Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+            if (tardis == null) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_A_TIMELORD");
                 return true;
             }
             if (!plugin.getConfig().getBoolean("difficulty.stattenheim_remote") || plugin.getUtils().inGracePeriod(player, true)) {
-                Tardis tardis = rs.getTardis();
+//                Tardis tardis = rs.getTardis();
                 int id = tardis.getTardisId();
                 if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
@@ -131,11 +134,13 @@ class TARDISComehereCommand {
                     return true;
                 }
                 // get current police box location
-                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                if (!rsc.resultSet()) {
-                    hidden = true;
+                Current current = TARDISCache.CURRENT.get(id);
+                if (current == null) {
+                    // emergency TARDIS relocation
+                    new TARDISEmergencyRelocation(plugin).relocate(id, player);
+                    return true;
                 }
-                COMPASS d = rsc.getDirection();
+                COMPASS d = current.direction();
                 COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                 TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
                 int count;
@@ -170,20 +175,18 @@ class TARDISComehereCommand {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_ENOUGH_ENERGY");
                     return true;
                 }
-                World w = rsc.getWorld();
-                Location oldSave = null;
+                World w = current.location().getWorld();
                 HashMap<String, Object> bid = new HashMap<>();
                 bid.put("tardis_id", id);
                 HashMap<String, Object> bset = new HashMap<>();
                 if (w != null) {
-                    oldSave = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());
                     // set fast return location
-                    bset.put("world", rsc.getWorld().getName());
-                    bset.put("x", rsc.getX());
-                    bset.put("y", rsc.getY());
-                    bset.put("z", rsc.getZ());
+                    bset.put("world", current.location().getWorld().getName());
+                    bset.put("x", current.location().getBlockX());
+                    bset.put("y", current.location().getBlockY());
+                    bset.put("z", current.location().getBlockZ());
                     bset.put("direction", d.toString());
-                    bset.put("submarine", rsc.isSubmarine());
+                    bset.put("submarine", current.submarine());
                 } else {
                     hidden = true;
                     // set fast return location
@@ -209,8 +212,10 @@ class TARDISComehereCommand {
                     HashMap<String, Object> ttid = new HashMap<>();
                     ttid.put("tardis_id", id);
                     plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
+                    TARDISCache.invalidate(id);
                 }
                 plugin.getQueryFactory().doUpdate("current", set, tid);
+                TARDISCache.CURRENT.invalidate(id);
                 plugin.getMessenger().sendStatus(player, "TARDIS_COMING");
                 long delay = 1L;
                 plugin.getTrackerKeeper().getInVortex().add(id);
@@ -218,11 +223,11 @@ class TARDISComehereCommand {
                 if (!plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                     DestroyData dd = new DestroyData();
                     dd.setDirection(d);
-                    dd.setLocation(oldSave);
+                    dd.setLocation(current.location());
                     dd.setPlayer(player);
                     dd.setHide(false);
                     dd.setOutside(true);
-                    dd.setSubmarine(rsc.isSubmarine());
+                    dd.setSubmarine(current.submarine());
                     dd.setTardisID(id);
                     dd.setThrottle(spaceTimeThrottle);
                     dd.setParticles(throticle.particles());
@@ -251,6 +256,7 @@ class TARDISComehereCommand {
                 HashMap<String, Object> wheret = new HashMap<>();
                 wheret.put("tardis_id", id);
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -ch, wheret, player);
+                TARDISCache.invalidate(id);
                 plugin.getTrackerKeeper().getHasDestination().remove(id);
                 plugin.getTrackerKeeper().getRescue().remove(id);
             } else {

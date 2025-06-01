@@ -73,6 +73,12 @@ headless_monks:
     - RED_CANDLE
   projectile: SMALL_FIREBALL
   particles: true
+heavenly_hosts:
+  worlds:
+    world: 10
+  drops:
+    - GOLD_NUGGET
+    - PAPER
 ice_warriors:
   worlds:
     world: 10
@@ -92,6 +98,12 @@ k9:
   can_build: true
   worlds:
     world: true
+nimon:
+  worlds:
+    world: 10
+  drops:
+    - BEEF
+    - POLISHED_BLACKSTONE
 ood:
   worlds:
     world: true

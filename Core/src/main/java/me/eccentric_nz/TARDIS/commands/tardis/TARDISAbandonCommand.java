@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISAbandonEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISBuilderUtility;
@@ -25,7 +26,7 @@ import me.eccentric_nz.TARDIS.control.TARDISPowerButton;
 import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import me.eccentric_nz.TARDIS.database.converters.TARDISAbandonUpdate;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisAbandoned;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -273,15 +274,14 @@ public class TARDISAbandonCommand {
                         }
                     }
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDONED_SUCCESS");
-                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                    if (rsc.resultSet()) {
-                        Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-                        plugin.getPM().callEvent(new TARDISAbandonEvent(player, id, current));
+                    Current current = TARDISCache.CURRENT.get(id);
+                    if (current != null) {
+                        plugin.getPM().callEvent(new TARDISAbandonEvent(player, id, current.location()));
                         // always clear sign
                         if (preset.usesArmourStand()) {
-                            World world = rsc.getWorld();
+                            World world = current.location().getWorld();
                             // remove name from the item frame item
-                            for (Entity e : world.getNearbyEntities(current, 1.0d, 1.0d, 1.0d)) {
+                            for (Entity e : world.getNearbyEntities(current.location(), 1.0d, 1.0d, 1.0d)) {
                                 if (e instanceof ItemFrame frame) {
                                     Material dye = TARDISBuilderUtility.getMaterialForArmourStand(preset, id, true);
                                     ItemStack is = new ItemStack(dye, 1);
@@ -317,7 +317,7 @@ public class TARDISAbandonCommand {
                                 }
                             }
                         } else {
-                            Sign sign = getSign(current, rsc.getDirection(), preset);
+                            Sign sign = getSign(current.location(), current.direction(), preset);
                             if (sign != null) {
                                 SignSide front = sign.getSide(Side.FRONT);
                                 switch (preset) {

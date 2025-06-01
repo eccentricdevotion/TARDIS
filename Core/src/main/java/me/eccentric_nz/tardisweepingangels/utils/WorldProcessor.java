@@ -65,6 +65,10 @@ public class WorldProcessor implements Runnable {
             String n = sanitiseName(w.getName());
             // set TARDIS worlds, nether and end worlds to zero by default
             int m = (config.contains("spawn_rate.default_max", true)) ? config.getInt("spawn_rate.default_max") : 0;
+            if (!config.contains("angel_of_liberty.worlds." + n, true)) {
+                plugin.getMonstersConfig().set("angel_of_liberty.worlds." + n, 1);
+                i++;
+            }
             if (!config.contains("angels.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("angels.worlds." + n, m);
                 i++;
@@ -89,6 +93,10 @@ public class WorldProcessor implements Runnable {
                 plugin.getMonstersConfig().set("headless_monks.worlds." + n, m);
                 i++;
             }
+            if (!config.contains("heavenly_hosts.worlds." + n, true)) {
+                plugin.getMonstersConfig().set("heavenly_hosts.worlds." + n, m);
+                i++;
+            }
             if (!config.contains("ice_warriors.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("ice_warriors.worlds." + n, m);
                 i++;
@@ -99,6 +107,14 @@ public class WorldProcessor implements Runnable {
             }
             if (!config.contains("k9.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("k9.worlds." + n, true);
+                i++;
+            }
+            if (!config.contains("nimon.worlds." + n, true)) {
+                plugin.getMonstersConfig().set("nimon.worlds." + n, true);
+                i++;
+            }
+            if (!config.contains("omega.worlds." + n, true)) {
+                plugin.getMonstersConfig().set("omega.worlds." + n, m);
                 i++;
             }
             if (!config.contains("ood.worlds." + n, true) || (config.contains("ood.worlds." + n, true) && config.getInt("ood.worlds." + n) == 20)) {
@@ -125,8 +141,20 @@ public class WorldProcessor implements Runnable {
                 plugin.getMonstersConfig().set("slitheen.worlds." + n, m);
                 i++;
             }
+            if (!config.contains("smilers.worlds." + n, true)) {
+                plugin.getMonstersConfig().set("smilers.worlds." + n, m);
+                i++;
+            }
             if (!config.contains("sontarans.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("sontarans.worlds." + n, m);
+                i++;
+            }
+            if (!config.contains("sutekh.worlds." + n, true)) {
+                plugin.getMonstersConfig().set("sutekh.worlds." + n, m);
+                i++;
+            }
+            if (!config.contains("the_beast.worlds." + n, true)) {
+                plugin.getMonstersConfig().set("the_beast.worlds." + n, 1);
                 i++;
             }
             if (!config.contains("the_mire.worlds." + n, true)) {
@@ -137,36 +165,16 @@ public class WorldProcessor implements Runnable {
                 plugin.getMonstersConfig().set("toclafane.worlds." + n, m);
                 i++;
             }
+            if (!config.contains("vampires.worlds." + n, true)) {
+                plugin.getMonstersConfig().set("vampires.worlds." + n, m);
+                i++;
+            }
             if (!config.contains("vashta_nerada.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("vashta_nerada.worlds." + n, m);
                 i++;
             }
             if (!config.contains("zygons.worlds." + n, true)) {
                 plugin.getMonstersConfig().set("zygons.worlds." + n, m);
-                i++;
-            }
-            if (!config.contains("vampires.worlds." + n, true)) {
-                plugin.getMonstersConfig().set("vampires.worlds." + n, m);
-                i++;
-            }
-            if (!config.contains("omega.worlds." + n, true)) {
-                plugin.getMonstersConfig().set("omega.worlds." + n, m);
-                i++;
-            }
-            if (!config.contains("the_beast.worlds." + n, true)) {
-                plugin.getMonstersConfig().set("the_beast.worlds." + n, 1);
-                i++;
-            }
-            if (!config.contains("angel_of_liberty.worlds." + n, true)) {
-                plugin.getMonstersConfig().set("angel_of_liberty.worlds." + n, 1);
-                i++;
-            }
-            if (!config.contains("sutekh.worlds." + n, true)) {
-                plugin.getMonstersConfig().set("sutekh.worlds." + n, m);
-                i++;
-            }
-            if (!config.contains("smilers.worlds." + n, true)) {
-                plugin.getMonstersConfig().set("smilers.worlds." + n, m);
                 i++;
             }
         }

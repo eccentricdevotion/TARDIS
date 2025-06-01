@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.lights;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLightPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISWallsInventory;
 import me.eccentric_nz.TARDIS.enumeration.TardisLight;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -68,11 +68,13 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
             ItemStack is = view.getItem(slot);
             if (is != null) {
                 // get TARDIS data
-                HashMap<String, Object> where = new HashMap<>();
-                where.put("uuid", player.getUniqueId().toString());
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-                if (rs.resultSet()) {
-                    Tardis data = rs.getTardis();
+//                HashMap<String, Object> where = new HashMap<>();
+//                where.put("uuid", player.getUniqueId().toString());
+//                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//                if (rs.resultSet()) {
+//                    Tardis data = rs.getTardis();
+                Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
+                if (tardis != null) {
                     switch (slot) {
                         case 0, 27, 29, 34, 41, 43 -> {
                         }
@@ -88,9 +90,9 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
                             if (!plugin.getTrackerKeeper().getLightChangers().contains(player.getUniqueId())) {
                                 // get light prefs
                                 ResultSetLightPrefs rslp = new ResultSetLightPrefs(plugin);
-                                if (rslp.fromID(data.getTardisId())) {
+                                if (rslp.fromID(tardis.getTardisId())) {
                                     // update lights in the ARS grid
-                                    TARDISLightChanger changer = new TARDISLightChanger(plugin, rslp.getLight(), data.getChunk(), data.isLightsOn(), getMaterialFromSlot(view, 29), player);
+                                    TARDISLightChanger changer = new TARDISLightChanger(plugin, rslp.getLight(), tardis.getChunk(), tardis.isLightsOn(), getMaterialFromSlot(view, 29), player);
                                     int task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, changer, 2L, 100L);
                                     changer.setTaskID(task);
                                 }
@@ -111,7 +113,7 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
                             if (!plugin.getTrackerKeeper().getLightChangers().contains(player.getUniqueId())) {
                                 // get light prefs
                                 ResultSetLightPrefs rslp = new ResultSetLightPrefs(plugin);
-                                if (rslp.fromID(data.getTardisId())) {
+                                if (rslp.fromID(tardis.getTardisId())) {
                                     // get variable block
                                     Material variable = getMaterialFromSlot(view, 29);
                                     // get selected block
@@ -124,20 +126,20 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
                         }
                         // light switch
                         case 45 -> {
-                            if (plugin.getTrackerKeeper().getInSiegeMode().contains(data.getTardisId())) {
+                            if (plugin.getTrackerKeeper().getInSiegeMode().contains(tardis.getTardisId())) {
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
                                 return;
                             }
-                            if (!data.isLightsOn() && plugin.getConfig().getBoolean("allow.power_down") && !data.isPoweredOn()) {
+                            if (!tardis.isLightsOn() && plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
                                 return;
                             }
                             close(player);
-                            new LightSwitchAction(plugin, data.getTardisId(), data.isLightsOn(), player, data.getSchematic().getLights()).flickSwitch();
+                            new LightSwitchAction(plugin, tardis.getTardisId(), tardis.isLightsOn(), player, tardis.getSchematic().getLights()).flickSwitch();
                         }
                         // light levels
                         case 47 -> {
-                            ItemStack[] levels = new TARDISLightLevelsInventory(plugin, data.getTardisId()).getGUI();
+                            ItemStack[] levels = new TARDISLightLevelsInventory(plugin, tardis.getTardisId()).getGUI();
                             Inventory levelsGUI = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "TARDIS Light Levels");
                             levelsGUI.setContents(levels);
                             player.openInventory(levelsGUI);
@@ -145,7 +147,7 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
                         // play animated light sequence
                         case 49 -> {
                             if (!plugin.getTrackerKeeper().getLightChangers().contains(player.getUniqueId())) {
-                                new TARDISLightSequence(plugin, data.getTardisId(), player.getUniqueId()).play();
+                                new TARDISLightSequence(plugin, tardis.getTardisId(), player.getUniqueId()).play();
                             } else {
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "LIGHT_CHANGE");
                             }
@@ -153,7 +155,7 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
                         }
                         // edit sequence
                         case 51 -> {
-                            ItemStack[] edits = new TARDISLightSequenceInventory(plugin, data.getTardisId()).getGUI();
+                            ItemStack[] edits = new TARDISLightSequenceInventory(plugin, tardis.getTardisId()).getGUI();
                             Inventory sequence = plugin.getServer().createInventory(player, 45, ChatColor.DARK_RED + "TARDIS Light Sequence");
                             sequence.setContents(edits);
                             player.openInventory(sequence);
@@ -168,7 +170,7 @@ public class TARDISLightsGUIListener extends TARDISMenuListener {
                             HashMap<String, Object> set = new HashMap<>();
                             set.put("light", light);
                             HashMap<String, Object> wheret = new HashMap<>();
-                            wheret.put("tardis_id", data.getTardisId());
+                            wheret.put("tardis_id", tardis.getTardisId());
                             plugin.getQueryFactory().doUpdate("light_prefs", set, wheret);
                             // also update the player prefs lights option
                             HashMap<String, Object> setpp = new HashMap<>();

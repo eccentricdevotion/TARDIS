@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.commands.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
@@ -52,14 +52,11 @@ public class TARDISHandlesTeleportCommand {
             return;
         }
         // get tardis data
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", player.getUniqueId().toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        if (!rs.resultSet()) {
+        Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
+        if (tardis == null) {
             plugin.getMessenger().handlesSend(player, "NO_TARDIS");
             return;
         }
-        Tardis tardis = rs.getTardis();
         int id = tardis.getTardisId();
         if (!tardis.isHandbrakeOn() && !plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
             plugin.getMessenger().handlesSend(player, "NOT_WHILE_TRAVELLING");
@@ -74,19 +71,17 @@ public class TARDISHandlesTeleportCommand {
         // plugin respect
         if (plugin.getPluginRespect().getRespect(location, new Parameters(player, Flag.getAPIFlags()))) {
             // get direction
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-            if (!rsc.resultSet()) {
+            Current current = TARDISCache.CURRENT.get(id);
+            if (current == null) {
                 plugin.getMessenger().handlesSend(player, "CURRENT_NOT_FOUND");
             }
-            int[] start_loc = TARDISTimeTravel.getStartLocation(location, rsc.getDirection());
+            int[] start_loc = TARDISTimeTravel.getStartLocation(location, current.direction());
             // check destination has room for TARDIS
-            int count = TARDISTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), rsc.getDirection());
+            int count = TARDISTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), current.direction());
             if (count > 0) {
                 plugin.getMessenger().handlesSend(player, "RESCUE_NOT_SAFE");
                 return;
             }
-            // build current location
-            Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             // set new current
             HashMap<String, Object> tid = new HashMap<>();
             tid.put("tardis_id", id);
@@ -95,8 +90,9 @@ public class TARDISHandlesTeleportCommand {
             set.put("x", location.getBlockX());
             set.put("y", location.getBlockY());
             set.put("z", location.getBlockZ());
-            set.put("submarine", (rsc.isSubmarine()) ? 1 : 0);
+            set.put("submarine", (current.submarine()) ? 1 : 0);
             plugin.getQueryFactory().doUpdate("current", set, tid);
+            TARDISCache.CURRENT.invalidate(id);
             plugin.getTrackerKeeper().getHadsDamage().remove(id);
             long delay = 1L;
             plugin.getTrackerKeeper().getInVortex().add(id);
@@ -105,12 +101,12 @@ public class TARDISHandlesTeleportCommand {
             plugin.getTrackerKeeper().getRescue().put(id, uuid);
             // destroy TARDIS
             DestroyData dd = new DestroyData();
-            dd.setDirection(rsc.getDirection());
-            dd.setLocation(current);
+            dd.setDirection(current.direction());
+            dd.setLocation(current.location());
             dd.setPlayer(player);
             dd.setHide(false);
             dd.setOutside(true);
-            dd.setSubmarine(rsc.isSubmarine());
+            dd.setSubmarine(current.submarine());
             dd.setTardisID(id);
             dd.setThrottle(SpaceTimeThrottle.NORMAL);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
@@ -119,13 +115,13 @@ public class TARDISHandlesTeleportCommand {
             }, delay);
             // move TARDIS
             BuildData bd = new BuildData(uuid.toString());
-            bd.setDirection(rsc.getDirection());
+            bd.setDirection(current.direction());
             bd.setLocation(location);
             bd.setMalfunction(false);
             bd.setOutside(true);
             bd.setPlayer(player);
             bd.setRebuild(false);
-            bd.setSubmarine(rsc.isSubmarine());
+            bd.setSubmarine(current.submarine());
             bd.setTardisID(id);
             bd.setThrottle(SpaceTimeThrottle.NORMAL);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), delay * 2);

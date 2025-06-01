@@ -17,11 +17,17 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
-import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -77,10 +83,10 @@ public class FloodgateSavesForm {
 
     private void handleResponse(SimpleFormResponse response) {
         Player player = Bukkit.getPlayer(uuid);
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
         Location current = null;
-        if (rsc.resultSet()) {
-            current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+        Current c = TARDISCache.CURRENT.get(id);
+        if (c != null) {
+            current = c.location();
         }
         // get tardis artron level
         ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);
@@ -129,11 +135,9 @@ public class FloodgateSavesForm {
                             return;
                         }
                         String invisibility = tac.getArea().invisibility();
-                        HashMap<String, Object> wheret = new HashMap<>();
-                        wheret.put("tardis_id", id);
-                        ResultSetTardis resultSetTardis = new ResultSetTardis(plugin, wheret, "", false, 2);
-                        if (resultSetTardis.resultSet()) {
-                            if (invisibility.equals("DENY") && resultSetTardis.getTardis().getPreset().equals(ChameleonPreset.INVISIBLE)) {
+                        Tardis tardis = TARDISCache.BY_ID.get(id);
+                        if (tardis != null) {
+                            if (invisibility.equals("DENY") && tardis.getPreset().equals(ChameleonPreset.INVISIBLE)) {
                                 // check preset
                                 plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_INVISIBLE");
                                 return;
@@ -147,6 +151,7 @@ public class FloodgateSavesForm {
                                 // set chameleon adaption to OFF
                                 seti.put("adapti_on", 0);
                                 plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
+                                TARDISCache.invalidate(id);
                             }
                         }
                     }
@@ -174,6 +179,7 @@ public class FloodgateSavesForm {
                             HashMap<String, Object> wheret = new HashMap<>();
                             wheret.put("tardis_id", id);
                             plugin.getQueryFactory().doSyncUpdate("tardis", sett, wheret);
+                            TARDISCache.invalidate(id);
                         }
                         HashMap<String, Object> whereid = new HashMap<>();
                         whereid.put("tardis_id", id);
@@ -214,6 +220,7 @@ public class FloodgateSavesForm {
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", id);
                     plugin.getQueryFactory().doSyncUpdate("tardis", sett, wheret);
+                    TARDISCache.invalidate(id);
                     HashMap<String, Object> whereid = new HashMap<>();
                     wheret.put("tardis_id", id);
                     plugin.getQueryFactory().doSyncUpdate("next", set, whereid);

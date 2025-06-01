@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.companionGUI.TARDISCompanionAddGUIListener;
 import me.eccentric_nz.TARDIS.companionGUI.VanishChecker;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisCompanions;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Bukkit;
@@ -32,7 +32,6 @@ import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -76,11 +75,13 @@ public class FloodgateAddCompanionsForm {
     private void handleResponse(SimpleFormResponse response) {
         Player player = Bukkit.getPlayer(uuid);
         String label = response.clickedButton().text();
-        HashMap<String, Object> wherea = new HashMap<>();
-        wherea.put("uuid", player.getUniqueId().toString());
-        ResultSetTardis rsa = new ResultSetTardis(plugin, wherea, "", false, 0);
-        if (rsa.resultSet()) {
-            Tardis tardis = rsa.getTardis();
+//        HashMap<String, Object> wherea = new HashMap<>();
+//        wherea.put("uuid", player.getUniqueId().toString());
+//        ResultSetTardis rsa = new ResultSetTardis(plugin, wherea, "", false, 0);
+//        if (rsa.resultSet()) {
+//            Tardis tardis = rsa.getTardis();
+        Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
+        if (tardis != null) {
             int id = tardis.getTardisId();
             String comps = tardis.getCompanions();
             if (label.equals("Everyone")) {

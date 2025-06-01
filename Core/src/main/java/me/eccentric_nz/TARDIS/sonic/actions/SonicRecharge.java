@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.sonic.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetArtronLeveID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.utility.TARDISSounds;
@@ -72,6 +73,7 @@ public class SonicRecharge implements Runnable {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", id);
                 plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, where, null);
+                TARDISCache.invalidate(id);
             }
             ItemMeta im = is.getItemMeta();
             PersistentDataContainer pdc = im.getPersistentDataContainer();

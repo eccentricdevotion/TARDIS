@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -24,6 +25,7 @@ import me.eccentric_nz.TARDIS.artron.TARDISArtronLevels;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.utility.TARDISSculkShrieker;
 import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.*;
@@ -131,11 +133,13 @@ public class TARDISHandbrakeListener implements Listener {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
                         return;
                     }
-                    HashMap<String, Object> wherei = new HashMap<>();
-                    wherei.put("tardis_id", id);
-                    ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
-                    if (rs.resultSet()) {
-                        Tardis tardis = rs.getTardis();
+//                    HashMap<String, Object> wherei = new HashMap<>();
+//                    wherei.put("tardis_id", id);
+//                    ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false, 2);
+//                    if (rs.resultSet()) {
+//                        Tardis tardis = rs.getTardis();
+                    Tardis tardis = TARDISCache.BY_ID.get(id);
+                    if (tardis != null) {
                         ChameleonPreset preset = tardis.getPreset();
                         if (preset.equals(ChameleonPreset.JUNK)) {
                             return;
@@ -187,14 +191,14 @@ public class TARDISHandbrakeListener implements Listener {
                                     }
                                     // check the state of the Relativity Differentiator
                                     if (check.isRelativityDifferentiated(id) && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand() && !player.isSneaking()) {
-                                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                                        if (!rsc.resultSet()) {
+                                        Current current = TARDISCache.CURRENT.get(id);
+                                        if (current == null) {
                                             plugin.debug("No current location");
                                             return;
                                         }
                                         // check if TARDIS is underground
-                                        for (int y = rsc.getY() + 4; y < rsc.getY() + 8; y++) {
-                                            if (!rsc.getWorld().getBlockAt(rsc.getX(), y, rsc.getZ()).getType().isAir()) {
+                                        for (int y = current.location().getBlockY() + 4; y < current.location().getBlockY() + 8; y++) {
+                                            if (!current.location().getWorld().getBlockAt(current.location().getBlockX(), y, current.location().getBlockZ()).getType().isAir()) {
                                                 plugin.getMessenger().sendStatus(player, "FLIGHT_AIR");
                                                 return;
                                             }
@@ -209,13 +213,15 @@ public class TARDISHandbrakeListener implements Listener {
                                             return;
                                         }
                                         // fly the TARDIS exterior
-                                        Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ(), player.getLocation().getYaw(), player.getLocation().getPitch());
+                                        Location exterior = current.location().clone();
+                                        exterior.setYaw(player.getLocation().getYaw());
+                                        exterior.setPitch(player.getLocation().getPitch());
                                         // check the armour stand is a custom one
-                                        if (VehicleUtility.isNotFlightReady(current)) {
+                                        if (VehicleUtility.isNotFlightReady(exterior)) {
                                             plugin.getMessenger().send(player, TardisModule.TARDIS, "FLIGHT_REBUILD");
                                             return;
                                         } else {
-                                            new TARDISExteriorFlight(plugin).startFlying(player, id, block, current, beac_on, beacon);
+                                            new TARDISExteriorFlight(plugin).startFlying(player, id, block, exterior, beac_on, beacon);
                                         }
                                     } else {
                                         new TARDISTakeoff(plugin).run(id, block, handbrake_loc, player, beac_on, beacon, bar, throticle);
@@ -278,6 +284,7 @@ public class TARDISHandbrakeListener implements Listener {
                                         HashMap<String, Object> wheret = new HashMap<>();
                                         wheret.put("tardis_id", id);
                                         plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
+                                        TARDISCache.invalidate(id);
                                         if (!uuid.equals(ownerUUID)) {
                                             Player ptl = plugin.getServer().getPlayer(ownerUUID);
                                             if (ptl != null) {
@@ -300,6 +307,7 @@ public class TARDISHandbrakeListener implements Listener {
                                     HashMap<String, Object> whereh = new HashMap<>();
                                     whereh.put("tardis_id", id);
                                     plugin.getQueryFactory().doUpdate("tardis", set, whereh);
+                                    TARDISCache.invalidate(id);
                                 } else {
                                     plugin.getMessenger().sendStatus(player, "HANDBRAKE_ON_ERR");
                                 }

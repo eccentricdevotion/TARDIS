@@ -17,19 +17,18 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.DiskCircuit;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
-import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 
 import java.util.HashMap;
@@ -60,14 +59,16 @@ public class TARDISHideCommand {
             }
             plugin.getTrackerKeeper().getHideCooldown().put(uuid, System.currentTimeMillis());
             int id;
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", uuid.toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-            if (!rs.resultSet()) {
+//            HashMap<String, Object> where = new HashMap<>();
+//            where.put("uuid", uuid.toString());
+//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//            if (!rs.resultSet()) {
+            Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+            if (tardis == null) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NO_TARDIS");
                 return false;
             }
-            Tardis tardis = rs.getTardis();
+//            Tardis tardis = rs.getTardis();
             if (plugin.getConfig().getBoolean("allow.power_down") && !tardis.isPoweredOn()) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "POWER_DOWN");
                 return true;
@@ -109,12 +110,11 @@ public class TARDISHideCommand {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
                 return true;
             }
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-            if (!rsc.resultSet()) {
+            Current current = TARDISCache.CURRENT.get(id);
+            if (current == null) {
                 plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return true;
             }
-            Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             int level = tardis.getArtronLevel();
             int hide = plugin.getArtronConfig().getInt("hide");
             if (level < hide) {
@@ -122,12 +122,12 @@ public class TARDISHideCommand {
                 return false;
             }
             DestroyData dd = new DestroyData();
-            dd.setDirection(rsc.getDirection());
-            dd.setLocation(l);
+            dd.setDirection(current.direction());
+            dd.setLocation(current.location());
             dd.setPlayer(player.getPlayer());
             dd.setHide(true);
             dd.setOutside(false);
-            dd.setSubmarine(rsc.isSubmarine());
+            dd.setSubmarine(current.submarine());
             dd.setTardisID(id);
             dd.setThrottle(SpaceTimeThrottle.REBUILD);
             plugin.getPresetDestroyer().destroyPreset(dd);
@@ -136,12 +136,14 @@ public class TARDISHideCommand {
             HashMap<String, Object> wheret = new HashMap<>();
             wheret.put("tardis_id", id);
             plugin.getQueryFactory().alterEnergyLevel("tardis", -hide, wheret, player.getPlayer());
+            TARDISCache.invalidate(id);
             // set hidden to true
             HashMap<String, Object> whereh = new HashMap<>();
             whereh.put("tardis_id", id);
             HashMap<String, Object> seth = new HashMap<>();
             seth.put("hidden", 1);
             plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
+            TARDISCache.invalidate(id);
             // turn force field off
             if (plugin.getTrackerKeeper().getActiveForceFields().containsKey(uuid)) {
                 plugin.getTrackerKeeper().getActiveForceFields().remove(uuid);

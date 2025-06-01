@@ -18,10 +18,10 @@ package me.eccentric_nz.TARDIS.commands.tardis;
 
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetLamps;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISChunkUtils;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -63,11 +63,12 @@ class TARDISLampsCommand {
             plugin.getMessenger().send(owner, TardisModule.TARDIS, "NO_PERMS");
             return false;
         }
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", owner.getUniqueId().toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("uuid", owner.getUniqueId().toString());
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//        if (rs.resultSet()) {
+        Tardis tardis = TARDISCache.BY_UUID.get(owner.getUniqueId());
+        if (tardis != null) {
             int id = tardis.getTardisId();
             // check if they have already got lamp records
             HashMap<String, Object> wherel = new HashMap<>();

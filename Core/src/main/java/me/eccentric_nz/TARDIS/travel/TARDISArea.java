@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Area;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreaLocations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Location;
@@ -59,9 +60,9 @@ public class TARDISArea {
      */
     public boolean isInExistingArea(int id, int area) {
         // get TARDIS current location
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-        if (rsc.resultSet()) {
-            return isInExistingArea(rsc, area);
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current != null) {
+            return isInExistingArea(current.location(), area);
         }
         return false;
     }
@@ -73,7 +74,7 @@ public class TARDISArea {
      * @param area the area id to check against
      * @return true if the TARDIS is already in the area
      */
-    public boolean isInExistingArea(ResultSetCurrentFromId rsc, int area) {
+    public boolean isInExistingArea(Location rsc, int area) {
             HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("area_id", area);
             ResultSetAreas rsa = new ResultSetAreas(plugin, wherea, false, false);
@@ -84,7 +85,7 @@ public class TARDISArea {
                     ResultSetAreaLocations rsal = new ResultSetAreaLocations(plugin, a.areaId());
                     if (rsal.resultSet()) {
                         for (Location s : rsal.getLocations()) {
-                            if (s.getBlockX() == rsc.getX() && s.getBlockY() == rsc.getY() && s.getBlockZ() == rsc.getZ()) {
+                            if (s.getBlockX() == rsc.getBlockX() && s.getBlockY() == rsc.getBlockY() && s.getBlockZ() == rsc.getBlockZ()) {
                                 return true;
                             }
                         }
@@ -184,7 +185,7 @@ public class TARDISArea {
             Area a = rsa.getArea();
             String lw = l.getWorld().getName();
             // is clicked block within a defined TARDIS area?
-            if (a.world().equals(lw) && (l.getX() <= a.maxX() && l.getZ() <= a.maxZ() && l.getX() >= a.minX() && l.getZ() >= a.minZ())) {
+            if (a.world().equals(lw) && (l.getBlockX() <= a.maxX() && l.getZ() <= a.maxZ() && l.getX() >= a.minX() && l.getZ() >= a.minZ())) {
                 chk = false;
             }
         }

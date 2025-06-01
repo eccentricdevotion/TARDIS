@@ -41,14 +41,17 @@ public enum Monster {
     EMPTY_CHILD("Empty Child", EntityType.ZOMBIE, "empty", EmptyChildVariant.EMPTY_CHILD_STATIC.getKey(), Material.SUGAR, EmptyChildVariant.EMPTY_CHILD_HEAD.getKey(), MonsterSkins.EMPTY_CHILD),
     HATH("Hath", EntityType.ZOMBIFIED_PIGLIN, "hath", HathVariant.HATH_STATIC.getKey(), Material.PUFFERFISH, HathVariant.HATH_HEAD.getKey(), null),
     HEADLESS_MONK("Headless Monk", EntityType.SKELETON, "monk", MonkVariant.HEADLESS_MONK_STATIC.getKey(), Material.RED_CANDLE, MonkVariant.HEADLESS_MONK_HEAD.getKey(), MonsterSkins.HEADLESS_MONK),
+    HEAVENLY_HOST("Heavenly Host", EntityType.ZOMBIE, "heavenly_host", HeavenlyHostVariant.HEAVENLY_HOST_STATIC.getKey(), Material.GOLD_INGOT, HeavenlyHostVariant.HEAVENLY_HOST_HEAD.getKey(), MonsterSkins.HEAVENLY_HOST),
     ICE_WARRIOR("Ice Warrior", EntityType.ZOMBIFIED_PIGLIN, "ice", IceWarriorVariant.ICE_WARRIOR_STATIC.getKey(), Material.SNOWBALL, IceWarriorVariant.ICE_WARRIOR_HEAD.getKey(), MonsterSkins.ICE_WARRIOR),
     JUDOON("Judoon", EntityType.HUSK, "judoon", JudoonVariant.JUDOON_STATIC.getKey(), Material.YELLOW_DYE, JudoonVariant.JUDOON_HEAD.getKey(), CharacterSkins.JUDOON),
     K9("K9", EntityType.HUSK, "k9", K9Variant.K9.getKey(), Material.BONE, null, null),
     MIRE("Mire", EntityType.SKELETON, "mire", MireVariant.THE_MIRE_STATIC.getKey(), Material.NETHERITE_SCRAP, MireVariant.THE_MIRE_HEAD.getKey(), null),
+    NIMON("Nimon", EntityType.ZOMBIE, "nimon", NimonVariant.NIMON_STATIC.getKey(), Material.BEEF, NimonVariant.NIMON_HEAD.getKey(), MonsterSkins.NIMON),
     OMEGA("Omega", EntityType.SKELETON, "omega", OmegaVariant.OMEGA_STATIC.getKey(), Material.GOLD_INGOT, OmegaVariant.OMEGA_HEAD.getKey(), MonsterSkins.OMEGA),
     OOD("Ood", EntityType.HUSK, "ood", OodVariant.OOD_BLACK_STATIC.getKey(), Material.ROTTEN_FLESH, OodVariant.OOD_HEAD.getKey(), CharacterSkins.OOD),
     OSSIFIED("Ossified Time Zombie", EntityType.ZOMBIE, "ossified", OssifiedVariant.OSSIFIED_STATIC.getKey(), Material.CHARCOAL, OssifiedVariant.OSSIFIED_HEAD.getKey(), null),
     RACNOSS("Racnoss", EntityType.PIGLIN_BRUTE, "racnoss", RacnossVariant.RACNOSS_STATIC.getKey(), Material.SPIDER_EYE, RacnossVariant.RACNOSS_HEAD.getKey(), MonsterSkins.RACNOSS),
+    SATURNYNIAN("Saturnynian", EntityType.DROWNED, "saturnynian", VampireOfVeniceVariant.SATURNYNIAN_STATIC.getKey(), Material.COD, VampireOfVeniceVariant.SATURNYNIAN_MONSTER_HEAD.getKey(), MonsterSkins.SATURNYNIAN),
     SCARECROW("Scarecrow", EntityType.ZOMBIE, "scarecrow", ScarecrowVariant.SCARECROW_STATIC.getKey(), Material.WHEAT, ScarecrowVariant.SCARECROW_HEAD.getKey(), MonsterSkins.SCARECROW),
     SEA_DEVIL("Sea Devil", EntityType.DROWNED, "devil", SeaDevilVariant.SEA_DEVIL_STATIC.getKey(), Material.KELP, SeaDevilVariant.SEA_DEVIL_HEAD.getKey(), MonsterSkins.SEA_DEVIL),
     SILENT("Silent", EntityType.SKELETON, "silent", SilentVariant.SILENT_STATIC.getKey(), Material.END_STONE, SilentVariant.SILENT_HEAD.getKey(), MonsterSkins.SILENCE),
@@ -175,9 +178,11 @@ public enum Monster {
             case EMPTY_CHILD -> key = ArmourVariant.EMPTY_CHILD.getKey();
             case HATH -> key = ArmourVariant.HATH.getKey();
             case HEADLESS_MONK -> key = ArmourVariant.HEADLESS_MONK.getKey();
+            case HEAVENLY_HOST -> key = ArmourVariant.HEAVENLY_HOST.getKey();
             case ICE_WARRIOR -> key = ArmourVariant.ICE_WARRIOR.getKey();
             case JUDOON -> key = ArmourVariant.JUDOON.getKey();
             case MIRE -> key = ArmourVariant.MIRE.getKey();
+            case NIMON -> key = ArmourVariant.NIMON.getKey();
             case OOD -> {
                 int r = TARDISConstants.RANDOM.nextInt(100);
                 if (r < 15) {
@@ -191,6 +196,7 @@ public enum Monster {
             case OMEGA -> key = ArmourVariant.OMEGA.getKey();
             case OSSIFIED -> key = ArmourVariant.OSSIFIED.getKey();
             case RACNOSS -> key = ArmourVariant.RACNOSS.getKey();
+            case SATURNYNIAN -> key = ArmourVariant.SATURNYNIAN.getKey();
             case SCARECROW -> key = ArmourVariant.SCARECROW.getKey();
             case SEA_DEVIL -> key = ArmourVariant.SEA_DEVIL.getKey();
             case SILENT -> key = ArmourVariant.SILENCE.getKey();

@@ -17,11 +17,14 @@
 package me.eccentric_nz.TARDIS.listeners.controls;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import org.bukkit.Location;
 import org.bukkit.Registry;
 import org.bukkit.Tag;
 import org.bukkit.block.Biome;
@@ -128,9 +131,9 @@ public class TARDISKeyboardListener implements Listener {
             whereh.put("tardis_id", id);
             ResultSetHomeLocation rsh = new ResultSetHomeLocation(plugin, whereh);
             if (rsh.resultSet()) {
-                ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, id);
-                if (rscl.resultSet()) {
-                    if (currentIsNotHome(rsh, rscl)) {
+                Current current = TARDISCache.CURRENT.get(id);
+                if (current != null) {
+                    if (currentIsNotHome(rsh, current.location())) {
                         p.performCommand("tardistravel home");
                         plugin.getMessenger().message(plugin.getConsole(), TardisModule.TARDIS, p.getName() + " issued server command: /tardistravel home");
                     } else {
@@ -187,16 +190,16 @@ public class TARDISKeyboardListener implements Listener {
         plugin.getMessenger().send(p, TardisModule.TARDIS, "KEYBOARD_ERROR");
     }
 
-    private boolean currentIsNotHome(ResultSetHomeLocation rsh, ResultSetCurrentFromId rsc) {
+    private boolean currentIsNotHome(ResultSetHomeLocation rsh, Location rsc) {
         if (rsh.getWorld() != rsc.getWorld()) {
             return true;
         }
-        if (rsh.getY() != rsc.getY()) {
+        if (rsh.getY() != rsc.getBlockY()) {
             return true;
         }
-        if (rsh.getX() != rsc.getX()) {
+        if (rsh.getX() != rsc.getBlockX()) {
             return true;
         }
-        return rsh.getZ() != rsc.getZ();
+        return rsh.getZ() != rsc.getBlockZ();
     }
 }

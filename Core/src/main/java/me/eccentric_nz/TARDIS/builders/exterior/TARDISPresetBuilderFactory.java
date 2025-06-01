@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.builders.exterior;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonCircuit;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstantPreset;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.junk.TARDISJunkBuilder;
@@ -76,11 +76,13 @@ public class TARDISPresetBuilderFactory {
      * @param bd the TARDIS build data
      */
     public void buildPreset(BuildData bd) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", bd.getTardisID());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("tardis_id", bd.getTardisID());
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//        if (rs.resultSet()) {
+//            Tardis tardis = rs.getTardis();
+        Tardis tardis = TARDISCache.BY_ID.get(bd.getTardisID());
+        if (tardis != null) {
             ChameleonPreset preset = tardis.getPreset();
             Biome biome;
             // keep the chunk this Police box is in loaded
@@ -190,6 +192,7 @@ public class TARDISPresetBuilderFactory {
                 set.put("chameleon_demat", preset.toString());
             }
             plugin.getQueryFactory().doUpdate("tardis", set, whered);
+            TARDISCache.invalidate(bd.getTardisID());
         }
     }
 

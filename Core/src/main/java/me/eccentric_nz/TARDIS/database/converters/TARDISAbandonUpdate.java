@@ -17,8 +17,9 @@
 package me.eccentric_nz.TARDIS.database.converters;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.data.Current;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -54,28 +55,28 @@ public class TARDISAbandonUpdate {
             ps.setInt(1, id);
             ps.executeUpdate();
             // get current location
-            ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, id);
-            if (rs.resultSet()) {
+            Current current = TARDISCache.CURRENT.get(id);
+            if (current != null) {
                 // back
                 query = "UPDATE " + prefix + "back SET world = ?, x = ?, y = ?, z = ?, direction = ?, submarine = ? WHERE tardis_id = ?";
                 ps = connection.prepareStatement(query);
-                ps.setString(1, rs.getWorld().getName());
-                ps.setInt(2, rs.getX());
-                ps.setInt(3, rs.getY());
-                ps.setInt(4, rs.getZ());
-                ps.setString(5, rs.getDirection().toString());
-                ps.setInt(6, (rs.isSubmarine() ? 1 : 0));
+                ps.setString(1, current.location().getWorld().getName());
+                ps.setInt(2, current.location().getBlockX());
+                ps.setInt(3, current.location().getBlockY());
+                ps.setInt(4, current.location().getBlockZ());
+                ps.setString(5, current.direction().toString());
+                ps.setInt(6, (current.submarine() ? 1 : 0));
                 ps.setInt(7, id);
                 ps.executeUpdate();
                 // home
                 query = "UPDATE " + prefix + "homes SET world = ?, x = ?, y = ?, z = ?, direction = ?, submarine = ? WHERE tardis_id = ?";
                 ps = connection.prepareStatement(query);
-                ps.setString(1, rs.getWorld().getName());
-                ps.setInt(2, rs.getX());
-                ps.setInt(3, rs.getY());
-                ps.setInt(4, rs.getZ());
-                ps.setString(5, rs.getDirection().toString());
-                ps.setInt(6, (rs.isSubmarine() ? 1 : 0));
+                ps.setString(1, current.location().getWorld().getName());
+                ps.setInt(2, current.location().getBlockX());
+                ps.setInt(3, current.location().getBlockY());
+                ps.setInt(4, current.location().getBlockZ());
+                ps.setString(5, current.direction().toString());
+                ps.setInt(6, (current.submarine() ? 1 : 0));
                 ps.setInt(7, id);
                 ps.executeUpdate();
             }

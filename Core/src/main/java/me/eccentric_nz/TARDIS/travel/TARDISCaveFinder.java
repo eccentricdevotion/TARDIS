@@ -17,7 +17,8 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.TARDISCache;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.Location;
@@ -77,12 +78,12 @@ public class TARDISCaveFinder {
 
     public Location searchCave(Player p, int id) {
         // get the current TARDIS location
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-        if (rsc.resultSet()) {
-            World w = rsc.getWorld();
-            int startx = rsc.getX();
-            int startz = rsc.getZ();
-            COMPASS d = rsc.getDirection();
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current != null) {
+            World w = current.location().getWorld();
+            int startx = current.location().getBlockX();
+            int startz = current.location().getBlockZ();
+            COMPASS d = current.direction();
             // assume all non-nether/non-end world environments are NORMAL
             boolean hoth = (w.getGenerator() != null && w.getGenerator().getClass().getName().contains("hothgenerator"));
             if (!w.getEnvironment().equals(World.Environment.NETHER) && !w.getEnvironment().equals(World.Environment.THE_END) && !hoth) {

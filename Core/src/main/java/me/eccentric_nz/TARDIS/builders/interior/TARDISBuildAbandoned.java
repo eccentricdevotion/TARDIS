@@ -19,6 +19,7 @@ package me.eccentric_nz.TARDIS.builders.interior;
 import com.google.gson.*;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.utility.FractalFence;
 import me.eccentric_nz.TARDIS.console.ConsoleBuilder;
@@ -278,6 +279,7 @@ class TARDISBuildAbandoned implements Runnable {
             }
             // finished processing - update tardis table!
             plugin.getQueryFactory().doUpdate("tardis", set, where);
+            TARDISCache.invalidate(dbID);
             plugin.getServer().getScheduler().cancelTask(task);
             task = -1;
             if (player != null) {

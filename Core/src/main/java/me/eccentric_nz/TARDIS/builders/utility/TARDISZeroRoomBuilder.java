@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.builders.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
@@ -58,6 +59,7 @@ public class TARDISZeroRoomBuilder {
             HashMap<String, Object> where = new HashMap<>();
             where.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", set, where);
+            TARDISCache.invalidate(id);
         }
         TARDISTIPSData pos = tintpos.getTIPSData(slot);
         int x = pos.getCentreX();
@@ -77,6 +79,7 @@ public class TARDISZeroRoomBuilder {
             HashMap<String, Object> set = new HashMap<>();
             set.put("uuid", p.getUniqueId().toString());
             plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, set, p);
+            TARDISCache.invalidate(id);
             // remove blocks from condenser table if rooms_require_blocks is true
             if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                 TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);

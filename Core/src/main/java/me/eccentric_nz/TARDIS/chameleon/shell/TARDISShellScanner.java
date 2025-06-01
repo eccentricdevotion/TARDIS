@@ -17,8 +17,9 @@
 package me.eccentric_nz.TARDIS.chameleon.shell;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.World;
@@ -36,19 +37,19 @@ public class TARDISShellScanner {
 
     public static TARDISChameleonColumn scan(TARDIS plugin, int id, ChameleonPreset preset) {
         // get tardis current location
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-        if (!rsc.resultSet()) {
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current == null) {
             return plugin.getPresets().getColumn(preset, COMPASS.EAST);
         }
-        World w = rsc.getWorld();
-        int fx = rsc.getX();
-        int fy = rsc.getY();
-        int fz = rsc.getZ();
+        World w = current.location().getWorld();
+        int fx = current.location().getBlockX();
+        int fy = current.location().getBlockY();
+        int fz = current.location().getBlockZ();
         BlockData[][] shell = new BlockData[10][4];
         for (int c = 0; c < 10; c++) {
             for (int y = 0; y < 4; y++) {
                 Block block;
-                switch (rsc.getDirection()) {
+                switch (current.direction()) {
                     case WEST -> block = w.getBlockAt(fx + westXnorthZ[c], fy + y, fz + southXwestZ[c]);
                     case NORTH -> block = w.getBlockAt(fx + northXeastZ[c], fy + y, fz + westXnorthZ[c]);
                     case SOUTH -> block = w.getBlockAt(fx + southXwestZ[c], fy + y, fz + eastXsouthZ[c]);
@@ -57,7 +58,7 @@ public class TARDISShellScanner {
                 }
                 BlockData data = block.getBlockData();
                 if (data instanceof Directional directional) {
-                    switch (rsc.getDirection()) {
+                    switch (current.direction()) {
                         case WEST -> directional.setFacing(directional.getFacing().getOppositeFace()); // rotate 180
                         case NORTH -> {
                             // clockwise

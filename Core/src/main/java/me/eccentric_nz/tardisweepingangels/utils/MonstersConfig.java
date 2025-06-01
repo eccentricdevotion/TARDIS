@@ -70,7 +70,9 @@ public class MonstersConfig {
         listOptions.put("empty_child.drops", List.of("COOKED_BEEF", "SUGAR"));
         listOptions.put("hath.drops", List.of("SALMON", "STONE_PICKAXE"));
         listOptions.put("headless_monks.drops", List.of("BOOK", "RED_CANDLE"));
+        listOptions.put("heavenly_hosts.drops", List.of("GOLD_NUGGET", "PAPER"));
         listOptions.put("ice_warriors.drops", List.of("ICE", "PACKED_ICE", "SNOW_BLOCK"));
+        listOptions.put("nimon.drops", List.of("BEEF", "POLISHED_BLACKSTONE"));
         listOptions.put("omega.drops", List.of("GOLD_INGOT", "CLOCK"));
         listOptions.put("ood.drops", List.of("NAME_TAG"));
         listOptions.put("ossified.drops", List.of("CHARCOAL", "FIREWORK_STAR", "DEAD_BRAIN_CORAL"));

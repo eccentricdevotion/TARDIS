@@ -17,13 +17,21 @@
 package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetDoorBlocks;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetGravity;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.database.tool.Table;
-import me.eccentric_nz.TARDIS.enumeration.*;
+import me.eccentric_nz.TARDIS.enumeration.Schematic;
+import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
+import me.eccentric_nz.TARDIS.enumeration.TardisModule;
+import me.eccentric_nz.TARDIS.enumeration.WorldManager;
 import me.eccentric_nz.TARDIS.utility.TARDISNumberParsers;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
 import org.bukkit.Location;
@@ -63,12 +71,9 @@ public class TARDISExterminator {
     }
 
     boolean pruneExterminate(int id) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
         try {
-            if (rs.resultSet()) {
-                Tardis tardis = rs.getTardis();
+            Tardis tardis = TARDISCache.BY_ID.get(id);
+            if (tardis != null) {
                 boolean hid = tardis.isHidden();
                 String chunkLoc = tardis.getChunk();
                 String owner = tardis.getOwner();
@@ -76,18 +81,17 @@ public class TARDISExterminator {
                 int tips = tardis.getTIPS();
                 boolean hasZero = (!tardis.getZero().isEmpty());
                 Schematic schm = tardis.getSchematic();
-                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                if (!rsc.resultSet()) {
+                Current current = TARDISCache.CURRENT.get(id);
+                if (current == null) {
                     return false;
                 }
-                Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
                 DestroyData dd = new DestroyData();
-                dd.setDirection(rsc.getDirection());
-                dd.setLocation(bb_loc);
+                dd.setDirection(current.direction());
+                dd.setLocation(current.location());
                 dd.setPlayer(plugin.getServer().getOfflinePlayer(uuid));
                 dd.setHide(false);
                 dd.setOutside(false);
-                dd.setSubmarine(rsc.isSubmarine());
+                dd.setSubmarine(current.submarine());
                 dd.setTardisID(id);
                 dd.setThrottle(SpaceTimeThrottle.REBUILD);
                 if (!hid) {
@@ -126,11 +130,8 @@ public class TARDISExterminator {
      * @return true or false depending on whether the TARDIS could be deleted
      */
     public boolean playerExterminate(Player player) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", player.getUniqueId().toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+        Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
+        if (tardis != null) {
             int id = tardis.getTardisId();
             // check that there are no players in their TARDIS
             HashMap<String, Object> travid = new HashMap<>();
@@ -151,25 +152,22 @@ public class TARDISExterminator {
             boolean hasZero = (!tardis.getZero().isEmpty());
             Schematic schm = tardis.getSchematic();
             // check the sign location
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-            if (!rsc.resultSet()) {
+            Current current = TARDISCache.CURRENT.get(id);
+            if (current == null) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return false;
             }
-            Location bb_loc = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-            // get TARDIS direction
-            COMPASS d = rsc.getDirection();
             // Destroy the TARDIS!
             DestroyData dd = new DestroyData();
-            dd.setDirection(d);
-            dd.setLocation(bb_loc);
+            dd.setDirection(current.direction());
+            dd.setLocation(current.location());
             dd.setPlayer(player);
             dd.setHide(false);
             dd.setOutside(false);
-            dd.setSubmarine(rsc.isSubmarine());
+            dd.setSubmarine(current.submarine());
             dd.setTardisID(id);
             dd.setThrottle(SpaceTimeThrottle.REBUILD);
-            plugin.getPM().callEvent(new TARDISDestructionEvent(player, bb_loc, owner));
+            plugin.getPM().callEvent(new TARDISDestructionEvent(player, current.location(), owner));
             if (!tardis.isHidden()) {
                 // remove Police Box
                 plugin.getPresetDestroyer().destroyPreset(dd);

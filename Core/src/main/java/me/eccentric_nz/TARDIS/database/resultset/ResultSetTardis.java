@@ -46,7 +46,6 @@ public class ResultSetTardis {
     private final boolean multiple;
     private final List<Tardis> data = new ArrayList<>();
     private final String prefix;
-    private final int abandoned;
     private Tardis tardis;
 
     /**
@@ -59,16 +58,13 @@ public class ResultSetTardis {
      * @param limit     an SQL LIMIT statement
      * @param multiple  a boolean indicating whether multiple rows should be
      *                  fetched
-     * @param abandoned whether to select TARDISes that are abandoned (1) or not
-     *                  (0)
      */
-    public ResultSetTardis(TARDIS plugin, HashMap<String, Object> where, String limit, boolean multiple, int abandoned) {
+    public ResultSetTardis(TARDIS plugin, HashMap<String, Object> where, String limit, boolean multiple) {
         this.plugin = plugin;
         this.where = where;
         this.limit = limit;
         this.multiple = multiple;
         prefix = this.plugin.getPrefix();
-        this.abandoned = abandoned;
     }
 
     /**
@@ -86,11 +82,7 @@ public class ResultSetTardis {
         if (where != null) {
             StringBuilder sbw = new StringBuilder();
             where.forEach((key, value) -> sbw.append(key).append(" = ? AND "));
-            if (abandoned < 2) {
-                wheres = " WHERE " + sbw + "abandoned = " + abandoned;
-            } else {
-                wheres = " WHERE " + sbw.substring(0, sbw.length() - 5);
-            }
+            wheres = " WHERE " + sbw.substring(0, sbw.length() - 5);
         }
         if (!limit.isEmpty()) {
             thelimit = " LIMIT " + limit;

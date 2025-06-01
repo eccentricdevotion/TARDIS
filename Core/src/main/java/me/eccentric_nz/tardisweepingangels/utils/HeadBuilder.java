@@ -19,6 +19,7 @@ package me.eccentric_nz.tardisweepingangels.utils;
 import me.eccentric_nz.TARDIS.custommodels.keys.DalekVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.EmptyChildVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.K9Variant;
+import me.eccentric_nz.TARDIS.custommodels.keys.VampireOfVeniceVariant;
 import me.eccentric_nz.tardisweepingangels.TARDISWeepingAngels;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -37,6 +38,10 @@ public class HeadBuilder {
         }
         Material material = monster.getMaterial();
         NamespacedKey model = monster.getHeadModel();
+        // special case for Saturnynian
+        if (monster == Monster.SATURNYNIAN) {
+            model = VampireOfVeniceVariant.SATURNYNIAN_HEAD.getKey();
+        }
         if (material == null || model == null) {
             return null;
         }

@@ -17,12 +17,12 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.utility.LightLevel;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetExteriorLightLevel;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -40,10 +40,9 @@ public class TARDISAdaptiveBoxLampToggler {
     }
 
     public void toggleLamp(int id, boolean on, ChameleonPreset preset) {
-        ResultSetCurrentFromId rs = new ResultSetCurrentFromId(plugin, id);
-        if (rs.resultSet()) {
-            Location location = new Location(rs.getWorld(), rs.getX(), rs.getY(), rs.getZ());
-            Block light = location.getBlock().getRelative(BlockFace.UP, 2);
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current != null) {
+            Block light = current.location().getBlock().getRelative(BlockFace.UP, 2);
             if (preset.usesArmourStand()) {
                 if (on) {
                     Levelled levelled = TARDISConstants.LIGHT;
@@ -56,7 +55,7 @@ public class TARDISAdaptiveBoxLampToggler {
                     light.setBlockData(TARDISConstants.AIR);
                 }
             } else {
-                Block lamp = location.getBlock().getRelative(BlockFace.UP, 3);
+                Block lamp = current.location().getBlock().getRelative(BlockFace.UP, 3);
                 while (!lamp.getChunk().isLoaded()) {
                     lamp.getChunk().load();
                 }

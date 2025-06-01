@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.commands.remote;
 
 import com.google.common.collect.ImmutableList;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -26,11 +27,10 @@ import me.eccentric_nz.TARDIS.commands.TARDISCommandHelper;
 import me.eccentric_nz.TARDIS.commands.TARDISCompleter;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISHideCommand;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISRebuildCommand;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -73,11 +73,13 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
             }
             UUID uuid = plugin.getServer().getOfflinePlayer(args[0]).getUniqueId();
             // check the player has a TARDIS
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", uuid.toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-            if (rs.resultSet()) {
-                Tardis tardis = rs.getTardis();
+//            HashMap<String, Object> where = new HashMap<>();
+//            where.put("uuid", uuid.toString());
+//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//            if (rs.resultSet()) {
+//                Tardis tardis = rs.getTardis();
+            Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+            if (tardis != null) {
                 // not in siege mode
                 if (plugin.getTrackerKeeper().getInSiegeMode().contains(tardis.getTardisId())) {
                     plugin.getMessenger().send(sender, TardisModule.TARDIS, "SIEGE_NO_CMD");
@@ -89,14 +91,16 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                 boolean handbrake = tardis.isHandbrakeOn();
                 int level = tardis.getArtronLevel();
                 if (sender instanceof Player player && !sender.hasPermission("tardis.admin")) {
-                    HashMap<String, Object> wheret = new HashMap<>();
-                    wheret.put("uuid", player.getUniqueId().toString());
-                    ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
-                    if (!rst.resultSet()) {
+//                    HashMap<String, Object> wheret = new HashMap<>();
+//                    wheret.put("uuid", player.getUniqueId().toString());
+//                    ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 0);
+//                    if (!rst.resultSet()) {
+                    Tardis t = TARDISCache.BY_UUID.get(player.getUniqueId());
+                    if (t == null) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "NOT_A_TIMELORD");
                         return true;
                     }
-                    Tardis t = rst.getTardis();
+//                    Tardis t = rst.getTardis();
                     int tardis_id = t.getTardisId();
                     if (tardis_id != id) {
                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CMD_ONLY_TL_REMOTE");
@@ -214,6 +218,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                         // set chameleon adaption to OFF
                                         setp.put("adapti_on", 0);
                                         plugin.getQueryFactory().doSyncUpdate("tardis", setp, wherep);
+                                        TARDISCache.invalidate(id);
                                     }
                                 }
                                 case "area" -> {
@@ -258,6 +263,7 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                         // set chameleon adaption to OFF
                                         seti.put("adapti_on", 0);
                                         plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
+                                        TARDISCache.invalidate(id);
                                     }
                                     // get a landing spot
                                     Location l;
@@ -280,12 +286,12 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                         set.put("direction", rsa.getArea().direction());
                                     } else {
                                         // get current direction
-                                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                                        if (!rsc.resultSet()) {
+                                        Current current = TARDISCache.CURRENT.get(id);
+                                        if (current == null) {
                                             plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                                             return true;
                                         }
-                                        set.put("direction", rsc.getDirection().toString());
+                                        set.put("direction", current.direction().toString());
                                     }
                                     set.put("submarine", 0);
                                 }
@@ -334,14 +340,14 @@ public class TARDISRemoteCommands extends TARDISCompleter implements CommandExec
                                             return true;
                                         }
                                     }
-                                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                                    if (!rsc.resultSet()) {
+                                    Current current = TARDISCache.CURRENT.get(id);
+                                    if (current == null) {
                                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                                         return true;
                                     }
                                     // check location
-                                    int[] start_loc = TARDISTimeTravel.getStartLocation(location, rsc.getDirection());
-                                    int count = TARDISTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), rsc.getDirection());
+                                    int[] start_loc = TARDISTimeTravel.getStartLocation(location, current.direction());
+                                    int count = TARDISTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), current.direction());
                                     if (count > 0) {
                                         plugin.getMessenger().send(sender, TardisModule.TARDIS, "NOT_SAFE");
                                         return true;

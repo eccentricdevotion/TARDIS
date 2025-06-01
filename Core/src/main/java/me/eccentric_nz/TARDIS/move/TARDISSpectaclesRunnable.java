@@ -17,7 +17,8 @@
 package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.TARDISCache;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import org.bukkit.Material;
@@ -60,9 +61,9 @@ public class TARDISSpectaclesRunnable implements Runnable {
                 if (b.equals(value.toString())) {
                     ResultSetTardisID rs = new ResultSetTardisID(plugin);
                     if (rs.fromUUID(key.toString())) {
-                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getTardisId());
-                        if (rsc.resultSet()) {
-                            p.sendBlockChange(value.getLocation(), lower.get(rsc.getDirection()));
+                        Current current = TARDISCache.CURRENT.get(rs.getTardisId());
+                        if (current != null) {
+                            p.sendBlockChange(value.getLocation(), lower.get(current.direction()));
                             p.sendBlockChange(value.getRelative(BlockFace.UP).getLocation(), upper);
                         }
                     }

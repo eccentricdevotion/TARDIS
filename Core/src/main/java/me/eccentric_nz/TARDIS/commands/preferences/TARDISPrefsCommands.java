@@ -111,7 +111,7 @@ public class TARDISPrefsCommands implements CommandExecutor {
                     return true;
                 }
                 if (pref.equals("key_menu")) {
-                    // open sonic prefs menu
+                    // open key prefs menu
                     ItemStack[] keys = new TARDISKeyMenuInventory().getMenu();
                     Inventory sim = plugin.getServer().createInventory(player, 27, ChatColor.DARK_RED + "TARDIS Key Prefs Menu");
                     sim.setContents(keys);

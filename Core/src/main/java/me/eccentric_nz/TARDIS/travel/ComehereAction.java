@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -84,6 +85,7 @@ public class ComehereAction {
             HashMap<String, Object> ttid = new HashMap<>();
             ttid.put("tardis_id", request.getId());
             plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
+            TARDISCache.invalidate(request.getId());
         }
         plugin.getQueryFactory().doSyncUpdate("next", set, tid);
         plugin.getTrackerKeeper().getHasDestination().put(request.getId(), new TravelCostAndType(plugin.getArtronConfig().getInt("comehere"), TravelType.COMEHERE));

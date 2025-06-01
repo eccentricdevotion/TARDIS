@@ -18,6 +18,7 @@ package me.eccentric_nz.TARDIS.builders.utility;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.event.TARDISCreationEvent;
@@ -27,7 +28,11 @@ import me.eccentric_nz.TARDIS.builders.interior.TARDISBuildData;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISBuilderInner;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
@@ -288,9 +293,9 @@ public class TARDISSeedBlockProcessor {
                     return false;
                 }
             } else {
-                ResultSetCurrentFromId rscl = new ResultSetCurrentFromId(plugin, rs.getTardisId());
-                if (rscl.resultSet()) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_HAVE", rscl.getWorld().getName() + " at x:" + rscl.getX() + " y:" + rscl.getY() + " z:" + rscl.getZ());
+                Current current = TARDISCache.CURRENT.get(rs.getTardisId());
+                if (current != null) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "TARDIS_HAVE", current.location().getWorld().getName() + " at x:" + current.location().getBlockX() + " y:" + current.location().getBlockY() + " z:" + current.location().getBlockZ());
                 } else {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "HAVE_TARDIS");
                 }

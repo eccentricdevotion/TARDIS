@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.TARDISRecipeTabComplete;
 import me.eccentric_nz.TARDIS.commands.handles.TARDISHandlesTeleportCommand;
@@ -206,11 +207,13 @@ public class TARDISHandlesRequest {
                         if (groups != null) {
                             boolean onoff = groups.getFirst().equalsIgnoreCase("on");
                             // get tardis
-                            HashMap<String, Object> wherel = new HashMap<>();
-                            wherel.put("tardis_id", id);
-                            ResultSetTardis rst = new ResultSetTardis(plugin, wherel, "", false, 2);
-                            if (rst.resultSet()) {
-                                Tardis tardis = rst.getTardis();
+//                            HashMap<String, Object> wherel = new HashMap<>();
+//                            wherel.put("tardis_id", id);
+//                            ResultSetTardis rst = new ResultSetTardis(plugin, wherel, "", false, 2);
+//                            if (rst.resultSet()) {
+//                                Tardis tardis = rst.getTardis();
+                            Tardis tardis = TARDISCache.BY_ID.get(id);
+                            if (tardis != null) {
                                 if ((onoff && !tardis.isLightsOn()) || (!onoff && tardis.isLightsOn())) {
                                     plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new LightSwitchAction(plugin, id, tardis.isLightsOn(), player, tardis.getSchematic().getLights()).flickSwitch(), 1L);
                                 }
@@ -221,11 +224,13 @@ public class TARDISHandlesRequest {
                         if (groups != null) {
                             boolean onoff = groups.getFirst().equalsIgnoreCase("off");
                             // get tardis
-                            HashMap<String, Object> wherel = new HashMap<>();
-                            wherel.put("tardis_id", id);
-                            ResultSetTardis rst = new ResultSetTardis(plugin, wherel, "", false, 2);
-                            if (rst.resultSet()) {
-                                Tardis tardis = rst.getTardis();
+//                            HashMap<String, Object> wherel = new HashMap<>();
+//                            wherel.put("tardis_id", id);
+//                            ResultSetTardis rst = new ResultSetTardis(plugin, wherel, "", false, 2);
+//                            if (rst.resultSet()) {
+//                                Tardis tardis = rst.getTardis();
+                            Tardis tardis = TARDISCache.BY_ID.get(id);
+                            if (tardis != null) {
                                 if ((onoff && tardis.isPoweredOn()) || (!onoff && !tardis.isPoweredOn())) {
                                     if (plugin.getConfig().getBoolean("allow.power_down")) {
                                         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISPowerButton(plugin, id, player, tardis.getPreset(), tardis.isPoweredOn(), tardis.isHidden(), tardis.isLightsOn(), player.getLocation(), tardis.getArtronLevel(), tardis.getSchematic().getLights()).clickButton(), 1L);
@@ -253,11 +258,13 @@ public class TARDISHandlesRequest {
                     case "travel.home" -> plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.performCommand("tardistravel home kzsbtr1h2"), 1L);
                     case "travel.random" -> {
                         // get tardis
-                        HashMap<String, Object> wherel = new HashMap<>();
-                        wherel.put("tardis_id", id);
-                        ResultSetTardis rsr = new ResultSetTardis(plugin, wherel, "", false, 2);
-                        if (rsr.resultSet()) {
-                            Tardis tardis = rsr.getTardis();
+//                        HashMap<String, Object> wherel = new HashMap<>();
+//                        wherel.put("tardis_id", id);
+//                        ResultSetTardis rsr = new ResultSetTardis(plugin, wherel, "", false, 2);
+//                        if (rsr.resultSet()) {
+//                            Tardis tardis = rsr.getTardis();
+                        Tardis tardis = TARDISCache.BY_ID.get(id);
+                        if (tardis != null) {
                             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> new TARDISRandomButton(plugin, player, id, tardis.getArtronLevel(), 0, tardis.getCompanions(), tardis.getUuid()).clickButton(), 1L);
                             return;
                         }

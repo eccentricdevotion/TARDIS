@@ -17,8 +17,9 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -58,7 +59,9 @@ public class TARDISLightningListener implements Listener {
         if (!strike.isEffect()) {
             Location l = strike.getLocation();
             World strikeworld = l.getWorld();
-            ResultSetTardis rs = new ResultSetTardis(plugin, new HashMap<>(), "", true, 0);
+            HashMap<String, Object> where = new HashMap<>();
+            where.put("abandoned", 0);
+            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", true);
             if (rs.resultSet()) {
                 for (Tardis t : rs.getData()) {
                     boolean charging = !t.isRecharging();
@@ -66,20 +69,20 @@ public class TARDISLightningListener implements Listener {
                     if (plugin.getTrackerKeeper().getDestinationVortex().containsKey(id)) {
                         return;
                     }
-                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                    if (rsc.resultSet()) {
-                        World w = rsc.getWorld();
+                    Current current = TARDISCache.CURRENT.get(id);
+                    if (current != null) {
+                        World w = current.location().getWorld();
                         // only if the tardis is in the same world as the lightning strike and is not at a beacon recharger!
                         if (strikeworld.equals(w) && !charging) {
-                            Location loc = new Location(w, rsc.getX(), rsc.getY(), rsc.getZ());
                             // only recharge if the TARDIS is within range
-                            if (plugin.getUtils().compareLocations(loc, loc)) {
+                            if (plugin.getUtils().compareLocations(e.getLightning().getLocation(), current.location())) {
                                 int amount = plugin.getArtronConfig().getInt("lightning_recharge") + t.getArtronLevel();
                                 HashMap<String, Object> set = new HashMap<>();
                                 set.put("artron_level", amount);
-                                HashMap<String, Object> where = new HashMap<>();
-                                where.put("tardis_id", id);
-                                plugin.getQueryFactory().doUpdate("tardis", set, where);
+                                HashMap<String, Object> wheret = new HashMap<>();
+                                wheret.put("tardis_id", id);
+                                plugin.getQueryFactory().doUpdate("tardis", set, wheret);
+                                TARDISCache.invalidate(id);
                             }
                         }
                     }

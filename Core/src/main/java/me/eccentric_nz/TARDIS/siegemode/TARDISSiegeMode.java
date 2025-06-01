@@ -17,15 +17,15 @@
 package me.eccentric_nz.TARDIS.siegemode;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeOffEvent;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.Schematic;
@@ -62,20 +62,21 @@ public class TARDISSiegeMode {
 
     public void toggleViaSwitch(int id, Player p) {
         // get the current siege status
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
-        if (!rs.resultSet()) {
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("tardis_id", id);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+//        if (!rs.resultSet()) {
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        if (tardis == null) {
             return;
         }
-        Tardis tardis = rs.getTardis();
+//        Tardis tardis = rs.getTardis();
         // get current location
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-        if (!rsc.resultSet()) {
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current == null) {
             return;
         }
-        Location current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
-        Block siege = current.getBlock();
+        Block siege = current.location().getBlock();
         HashMap<String, Object> wheres = new HashMap<>();
         wheres.put("tardis_id", id);
         HashMap<String, Object> set = new HashMap<>();
@@ -92,13 +93,13 @@ public class TARDISSiegeMode {
             TARDISDisplayItemUtils.remove(siege);
             // rebuild preset
             BuildData bd = new BuildData(p.getUniqueId().toString());
-            bd.setDirection(rsc.getDirection());
-            bd.setLocation(current);
+            bd.setDirection(current.direction());
+            bd.setLocation(current.location());
             bd.setMalfunction(false);
             bd.setOutside(false);
             bd.setPlayer(p);
             bd.setRebuild(true);
-            bd.setSubmarine(rsc.isSubmarine());
+            bd.setSubmarine(current.submarine());
             bd.setTardisID(id);
             bd.setThrottle(SpaceTimeThrottle.REBUILD);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
@@ -149,13 +150,13 @@ public class TARDISSiegeMode {
             }
             // destroy tardis
             DestroyData dd = new DestroyData();
-            dd.setDirection(rsc.getDirection());
-            dd.setLocation(current);
+            dd.setDirection(current.direction());
+            dd.setLocation(current.location());
             dd.setPlayer(p.getPlayer());
             dd.setHide(false);
             dd.setOutside(false);
             dd.setSiege(true);
-            dd.setSubmarine(rsc.isSubmarine());
+            dd.setSubmarine(current.submarine());
             dd.setTardisID(id);
             dd.setThrottle(SpaceTimeThrottle.REBUILD);
             plugin.getPresetDestroyer().destroyPreset(dd);
@@ -209,6 +210,7 @@ public class TARDISSiegeMode {
         }
         // update the database
         plugin.getQueryFactory().doUpdate("tardis", set, wheres);
+        TARDISCache.invalidate(id);
     }
 
     void changeTextures(String uuid, Schematic schm, Player p, boolean toSiege) {

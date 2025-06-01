@@ -17,14 +17,19 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.camera.CameraLocation;
 import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetAchievements;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCount;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
 import me.eccentric_nz.TARDIS.skins.SkinUtils;
@@ -41,6 +46,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * Tylos was a member of Varsh's group of Outlers on Alzarius. When Adric asked to join them, Tylos challenged him to
@@ -74,7 +80,7 @@ public class TARDISJoinListener implements Listener {
             player.setGameMode(GameMode.ADVENTURE);
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PREVIEW_DONE");
         }
-        String uuid = player.getUniqueId().toString();
+        UUID uuid = player.getUniqueId();
         if (plugin.getKitsConfig().getBoolean("give.join.enabled")) {
             if (TARDISPermission.hasPermission(player, "tardis.kit.join")) {
                 // check if they have the tardis kit
@@ -115,7 +121,7 @@ public class TARDISJoinListener implements Listener {
         }
         if (plugin.getConfig().getInt("travel.grace_period") > 0 && TARDISPermission.hasPermission(player, "tardis.create")) {
             // check if they have t_count record - create one if not
-            ResultSetCount rsc = new ResultSetCount(plugin, uuid);
+            ResultSetCount rsc = new ResultSetCount(plugin, uuid.toString());
             if (!rsc.resultSet()) {
                 HashMap<String, Object> setc = new HashMap<>();
                 setc.put("uuid", uuid);
@@ -129,8 +135,8 @@ public class TARDISJoinListener implements Listener {
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (rst.resultSet()) {
             // does the TARDIS they occupy still exist?
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rst.getTardis_id());
-            if (!rsc.resultSet()) {
+            Current current = TARDISCache.CURRENT.get(rst.getTardis_id());
+            if (current == null) {
                 // teleport player
                 Location teleport = player.getRespawnLocation() != null ? player.getRespawnLocation() : plugin.getServer().getWorlds().getFirst().getSpawnLocation();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.teleport(teleport), 1L);
@@ -144,20 +150,22 @@ public class TARDISJoinListener implements Listener {
             }
         }
         // load and remember the players Police Box chunk
-        HashMap<String, Object> wherep = new HashMap<>();
-        wherep.put("uuid", uuid);
-        ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false, 0);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+//        HashMap<String, Object> wherep = new HashMap<>();
+//        wherep.put("uuid", uuid);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, wherep, "", false, 0);
+//        if (rs.resultSet()) {
+//            Tardis tardis = rs.getTardis();
+        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+        if (tardis != null) {
             int id = tardis.getTardisId();
             String owner = tardis.getOwner();
             String last_known_name = tardis.getLastKnownName();
             if (plugin.getConfig().getBoolean("police_box.keep_chunk_force_loaded")) {
-                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-                if (rsc.resultSet()) {
-                    World w = rsc.getWorld();
+                Current current = TARDISCache.CURRENT.get(id);
+                if (current != null) {
+                    World w = current.location().getWorld();
                     if (w != null) {
-                        Chunk chunk = w.getChunkAt(new Location(w, rsc.getX(), rsc.getY(), rsc.getZ()));
+                        Chunk chunk = w.getChunkAt(current.location());
                         while (!chunk.isLoaded()) {
                             chunk.load();
                         }
@@ -187,6 +195,7 @@ public class TARDISJoinListener implements Listener {
             HashMap<String, Object> wherel = new HashMap<>();
             wherel.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", set, wherel);
+            TARDISCache.invalidate(id);
         }
         // re-arch the player
         if (plugin.isDisguisesOnServer() && plugin.getConfig().getBoolean("arch.enabled")) {

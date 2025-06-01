@@ -16,7 +16,6 @@
  */
 package me.eccentric_nz.TARDIS.advanced;
 
-import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

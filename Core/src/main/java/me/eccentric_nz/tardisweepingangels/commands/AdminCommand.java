@@ -39,12 +39,15 @@ public class AdminCommand {
         types.put(Monster.EMPTY_CHILD, "empty_child");
         types.put(Monster.HATH, "hath");
         types.put(Monster.HEADLESS_MONK, "headless_monks");
+        types.put(Monster.HEAVENLY_HOST, "heaveanly_hosts");
         types.put(Monster.ICE_WARRIOR, "ice_warriors");
         types.put(Monster.JUDOON, "judoon");
         types.put(Monster.K9, "k9");
         types.put(Monster.MIRE, "the_mire");
+        types.put(Monster.NIMON, "nimon");
         types.put(Monster.OMEGA, "omega");
         types.put(Monster.OOD, "ood");
+        types.put(Monster.SATURNYNIAN, "saturnynians");
         types.put(Monster.SEA_DEVIL, "sea_devils");
         types.put(Monster.SILENT, "silence");
         types.put(Monster.SILURIAN, "silurians");
@@ -91,9 +94,11 @@ public class AdminCommand {
                 plugin.getMonstersConfig().set("empty_child.worlds." + args[2], m);
                 plugin.getMonstersConfig().set("hath.worlds." + args[2], m);
                 plugin.getMonstersConfig().set("headless_monks.worlds." + args[2], m);
+                plugin.getMonstersConfig().set("heavenly_hosts.worlds." + args[2], m);
                 plugin.getMonstersConfig().set("ice_warriors.worlds." + args[2], m);
                 plugin.getMonstersConfig().set("judoon.worlds." + args[2], m);
                 plugin.getMonstersConfig().set("k9.worlds." + args[2], true);
+                plugin.getMonstersConfig().set("nimon.worlds." + args[2], m);
                 plugin.getMonstersConfig().set("omega.worlds." + args[2], m);
                 plugin.getMonstersConfig().set("ood.worlds." + args[2], true);
                 plugin.getMonstersConfig().set("sea_devils.worlds." + args[2], m);

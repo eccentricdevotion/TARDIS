@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS.commands.remote;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -77,14 +78,16 @@ public class TARDISRemoteComehereCommand {
             return true;
         }
         // check the remote player is a Time Lord
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", uuid.toString());
-        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-        if (!rs.resultSet()) {
+//        HashMap<String, Object> where = new HashMap<>();
+//        where.put("uuid", uuid.toString());
+//        ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//        if (!rs.resultSet()) {
+        Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+        if (tardis == null) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "PLAYER_NO_TARDIS");
             return true;
         }
-        Tardis tardis = rs.getTardis();
+//        Tardis tardis = rs.getTardis();
         int id = tardis.getTardisId();
         // check they are not in the tardis
         HashMap<String, Object> wherettrav = new HashMap<>();
@@ -101,11 +104,13 @@ public class TARDISRemoteComehereCommand {
         }
         boolean hidden = tardis.isHidden();
         // get current police box location
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-        if (!rsc.resultSet()) {
-            hidden = true;
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current == null) {
+            // emergency TARDIS relocation
+            new TARDISEmergencyRelocation(plugin).relocate(id, player);
+            return true;
         }
-        COMPASS d = rsc.getDirection();
+        COMPASS d = current.direction();
         COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
         int count;
@@ -136,15 +141,15 @@ public class TARDISRemoteComehereCommand {
         HashMap<String, Object> bid = new HashMap<>();
         bid.put("tardis_id", id);
         HashMap<String, Object> bset = new HashMap<>();
-        if (rsc.getWorld() != null) {
-            oldSave = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+        if (current.location().getWorld() != null) {
+            oldSave = current.location();
             // set fast return location
-            bset.put("world", rsc.getWorld().getName());
-            bset.put("x", rsc.getX());
-            bset.put("y", rsc.getY());
-            bset.put("z", rsc.getZ());
+            bset.put("world", current.location().getWorld().getName());
+            bset.put("x", current.location().getBlockX());
+            bset.put("y", current.location().getBlockY());
+            bset.put("z", current.location().getBlockZ());
             bset.put("direction", d.toString());
-            bset.put("submarine", rsc.isSubmarine());
+            bset.put("submarine", current.submarine());
         } else {
             hidden = true;
             // set fast return location
@@ -170,8 +175,10 @@ public class TARDISRemoteComehereCommand {
             HashMap<String, Object> ttid = new HashMap<>();
             ttid.put("tardis_id", id);
             plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
+            TARDISCache.invalidate(id);
         }
         plugin.getQueryFactory().doUpdate("current", set, tid);
+        TARDISCache.CURRENT.invalidate(id);
         plugin.getMessenger().sendStatus(player, "TARDIS_COMING");
         long delay = 1L;
         plugin.getTrackerKeeper().getInVortex().add(id);
@@ -183,7 +190,7 @@ public class TARDISRemoteComehereCommand {
             dd.setPlayer(player);
             dd.setHide(false);
             dd.setOutside(true);
-            dd.setSubmarine(rsc.isSubmarine());
+            dd.setSubmarine(current.submarine());
             dd.setTardisID(id);
             dd.setThrottle(SpaceTimeThrottle.NORMAL);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {

@@ -12,7 +12,8 @@ version: ${project.version}-b${project.build.number}
 build-number: ${project.build.number}
 api-version: '1.21'
 libraries:
-  - org.jsoup:jsoup:1.16.1
+  - org.jsoup:jsoup:1.17.2
+  - com.github.ben-manes.caffeine:caffeine:3.2.0
 permissions:
   tardis.admin:
     description: Allow players access to the TARDIS admin commands.

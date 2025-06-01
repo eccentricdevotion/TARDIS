@@ -20,6 +20,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.TARDISBuilderInstanceKeeper;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISDesktopThemeEvent;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
@@ -32,7 +33,6 @@ import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Archive;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetScreenInteraction;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ConsoleSize;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.mobfarming.TARDISFollowerSpawner;
@@ -154,14 +154,16 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             w = dimensions.get("width").getAsInt();
             c = dimensions.get("length").getAsInt();
             // calculate startx, starty, startz
-            HashMap<String, Object> wheret = new HashMap<>();
-            wheret.put("uuid", uuid.toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
-            if (!rs.resultSet()) {
+//            HashMap<String, Object> wheret = new HashMap<>();
+//            wheret.put("uuid", uuid.toString());
+//            ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
+//            if (!rs.resultSet()) {
+            Tardis tardis = TARDISCache.BY_ID.get(id);
+            if (tardis == null) {
                 // ?
                 return;
             }
-            Tardis tardis = rs.getTardis();
+//            Tardis tardis = rs.getTardis();
             slot = tardis.getTIPS();
             id = tardis.getTardisId();
             Chunk chunk = TARDISStaticLocationGetters.getChunk(tardis.getChunk());
@@ -369,6 +371,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
             if (!set.isEmpty()) {
                 where.put("tardis_id", id);
                 plugin.getQueryFactory().doUpdate("tardis", set, where);
+                TARDISCache.invalidate(id);
             }
             if (!tud.getSchematic().getPermission().equals("archive")) {
                 // reset archive use back to 0
@@ -409,6 +412,7 @@ public class TARDISThemeRepairRunnable extends TARDISThemeRunnable {
                     HashMap<String, Object> wheret = new HashMap<>();
                     wheret.put("tardis_id", id);
                     plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wheret, player);
+                    TARDISCache.invalidate(id);
                 }
             }
             // cancel the task

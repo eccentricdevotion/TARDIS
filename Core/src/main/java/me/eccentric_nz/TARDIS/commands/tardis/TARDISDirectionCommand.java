@@ -17,14 +17,14 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.doors.inner.Inner;
 import me.eccentric_nz.TARDIS.doors.inner.InnerDisplayDoorCloser;
@@ -71,14 +71,16 @@ public class TARDISDirectionCommand {
                 return true;
             }
             UUID uuid = player.getUniqueId();
-            HashMap<String, Object> where = new HashMap<>();
-            where.put("uuid", uuid.toString());
-            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
-            if (!rs.resultSet()) {
+//            HashMap<String, Object> where = new HashMap<>();
+//            where.put("uuid", uuid.toString());
+//            ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 0);
+//            if (!rs.resultSet()) {
+            Tardis tardis = TARDISCache.BY_UUID.get(uuid);
+            if (tardis == null) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_TARDIS");
                 return true;
             }
-            Tardis tardis = rs.getTardis();
+//            Tardis tardis = rs.getTardis();
             if (!tardis.getPreset().usesArmourStand()
                     && (args[1].equalsIgnoreCase("north_east") || args[1].equalsIgnoreCase("north_west") || args[1].equalsIgnoreCase("south_west") || args[1].equalsIgnoreCase("south_east"))) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DIRECTION_PRESET");
@@ -121,17 +123,18 @@ public class TARDISDirectionCommand {
             }
             boolean hid = tardis.isHidden();
             ChameleonPreset demat = tardis.getDemat();
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-            if (!rsc.resultSet()) {
+            Current current = TARDISCache.CURRENT.get(id);
+            if (current == null) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return true;
             }
-            COMPASS old_d = rsc.getDirection();
+            COMPASS old_d = current.direction();
             HashMap<String, Object> tid = new HashMap<>();
             HashMap<String, Object> set = new HashMap<>();
             tid.put("tardis_id", id);
             set.put("direction", compass.toString());
             plugin.getQueryFactory().doUpdate("current", set, tid);
+            TARDISCache.CURRENT.invalidate(id);
             HashMap<String, Object> did = new HashMap<>();
             HashMap<String, Object> setd = new HashMap<>();
             did.put("door_type", 0);
@@ -156,31 +159,30 @@ public class TARDISDirectionCommand {
                     new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, uuid);
                 }
             }
-            Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             // destroy sign
             if (!hid) {
                 if (demat.equals(ChameleonPreset.DUCK)) {
-                    plugin.getPresetDestroyer().destroyDuckEyes(l, old_d);
+                    plugin.getPresetDestroyer().destroyDuckEyes(current.location(), old_d);
                 }
                 if (demat.equals(ChameleonPreset.MINESHAFT)) {
-                    plugin.getPresetDestroyer().destroyMineshaftTorches(l, old_d);
+                    plugin.getPresetDestroyer().destroyMineshaftTorches(current.location(), old_d);
                 }
                 if (demat.equals(ChameleonPreset.LAMP)) {
-                    plugin.getPresetDestroyer().destroyLampTrapdoors(l, old_d);
+                    plugin.getPresetDestroyer().destroyLampTrapdoors(current.location(), old_d);
                 }
                 if (demat.equals(ChameleonPreset.JUNK_MODE)) {
-                    plugin.getPresetDestroyer().destroyHandbrake(l, old_d);
+                    plugin.getPresetDestroyer().destroyHandbrake(current.location(), old_d);
                 }
                 plugin.getPresetDestroyer().destroyDoor(id);
-                plugin.getPresetDestroyer().destroySign(l, old_d, demat);
+                plugin.getPresetDestroyer().destroySign(current.location(), old_d, demat);
                 BuildData bd = new BuildData(uuid.toString());
                 bd.setDirection(compass);
-                bd.setLocation(l);
+                bd.setLocation(current.location());
                 bd.setMalfunction(false);
                 bd.setOutside(false);
                 bd.setPlayer(player);
                 bd.setRebuild(true);
-                bd.setSubmarine(rsc.isSubmarine());
+                bd.setSubmarine(current.submarine());
                 bd.setTardisID(id);
                 bd.setThrottle(SpaceTimeThrottle.REBUILD);
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 10L);
@@ -189,6 +191,7 @@ public class TARDISDirectionCommand {
             HashMap<String, Object> wherea = new HashMap<>();
             wherea.put("tardis_id", id);
             plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, wherea, player);
+            TARDISCache.invalidate(id);
             // if they have a Direction Frame, update the rotation
             HashMap<String, Object> wheredf = new HashMap<>();
             wheredf.put("tardis_id", id);

@@ -18,9 +18,11 @@ package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARSMethods;
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.lazarus.LazarusVariants;
@@ -206,10 +208,8 @@ public class TARDISMonsterRunnable implements Runnable {
                 // spawn a random mob inside TARDIS?
                 // 25% chance + must not be peaceful, a Mooshroom biome or WG mob-spawning: deny
                 if (TARDISConstants.RANDOM.nextInt(4) == 0 && canSpawn(map.getKey(), TARDISConstants.RANDOM.nextInt(4))) {
-                    HashMap<String, Object> wheret = new HashMap<>();
-                    wheret.put("tardis_id", map.getValue().getTardisId());
-                    ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
-                    if (rs.resultSet() && rs.getTardis().getMonsters() < plugin.getConfig().getInt("preferences.spawn_limit")) {
+                    Tardis tardis = TARDISCache.BY_ID.get(map.getValue().getTardisId());
+                    if (tardis != null && tardis.getMonsters() < plugin.getConfig().getInt("preferences.spawn_limit")) {
                         TARDISMonster rtm = new TARDISMonster();
                         // choose a random monster
                         EntityType type = monsters.get(TARDISConstants.RANDOM.nextInt(monsters.size()));
@@ -258,11 +258,13 @@ public class TARDISMonsterRunnable implements Runnable {
                         for (String col : row) {
                             if (col.equals("SNOW_BLOCK")) {
                                 // need to get the console location - will be different for non-TIPS TARDISes
-                                HashMap<String, Object> wheret = new HashMap<>();
-                                wheret.put("tardis_id", tpl.getTardisId());
-                                ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
-                                if (rs.resultSet()) {
-                                    int pos = rs.getTardis().getTIPS();
+//                                HashMap<String, Object> wheret = new HashMap<>();
+//                                wheret.put("tardis_id", tpl.getTardisId());
+//                                ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 2);
+//                                if (rs.resultSet()) {
+                                Tardis tardis = TARDISCache.BY_ID.get(tpl.getTardisId());
+                                if (tardis != null) {
+                                    int pos = tardis.getTIPS();
                                     int tx = 0, tz = 0;
                                     if (pos != -1) {
                                         // tips slot
@@ -303,17 +305,19 @@ public class TARDISMonsterRunnable implements Runnable {
                 TARDISSounds.playTARDISSound(loc, "tardis_cloister_bell", 10.0f);
             } else {
                 // else message the Time Lord
-                HashMap<String, Object> wheret = new HashMap<>();
-                wheret.put("tardis_id", tpl.getTardisId());
-                ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 2);
-                if (rst.resultSet()) {
-                    Player p = plugin.getServer().getPlayer(rst.getTardis().getUuid());
+//                HashMap<String, Object> wheret = new HashMap<>();
+//                wheret.put("tardis_id", tpl.getTardisId());
+//                ResultSetTardis rst = new ResultSetTardis(plugin, wheret, "", false, 2);
+//                if (rst.resultSet()) {
+                Tardis tardis = TARDISCache.BY_ID.get(tpl.getTardisId());
+                if (tardis != null) {
+                    Player p = plugin.getServer().getPlayer(tardis.getUuid());
                     if (p != null) {
                         plugin.getMessenger().send(p, TardisModule.TARDIS, "MONSTER", m.getDisplayName());
                     }
                 }
                 HashMap<String, Object> wherer = new HashMap<>();
-                wherer.put("tardis_id", rst.getTardis().getTardisId());
+                wherer.put("tardis_id", tardis.getTardisId());
                 wherer.put("type", 5);
                 wherer.put("secondary", 0);
                 ResultSetControls rsc = new ResultSetControls(plugin, wherer, false);

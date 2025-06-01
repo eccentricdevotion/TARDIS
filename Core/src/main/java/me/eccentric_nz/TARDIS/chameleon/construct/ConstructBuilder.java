@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.chameleon.construct;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonFrame;
@@ -46,6 +47,7 @@ public class ConstructBuilder {
         HashMap<String, Object> wheret = new HashMap<>();
         wheret.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("tardis", sett, wheret);
+        TARDISCache.invalidate(id);
         // update the Chameleon Circuit sign(s)
         HashMap<String, Object> wherec = new HashMap<>();
         wherec.put("tardis_id", id);

@@ -17,11 +17,12 @@
 package me.eccentric_nz.TARDIS.listeners.controls;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.console.telepathic.TARDISTelepathicInventory;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.floodgate.FloodgateTelepathicForm;
 import me.eccentric_nz.TARDIS.floodgate.TARDISFloodgate;
@@ -75,11 +76,13 @@ public class TARDISTelepathicListener implements Listener {
                 int id = rsc.getTardis_id();
                 if (player.isSneaking()) {
                     // get the Time Lord of this TARDIS
-                    HashMap<String, Object> wheret = new HashMap<>();
-                    wheret.put("tardis_id", id);
-                    ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
-                    if (rs.resultSet()) {
-                        UUID o_uuid = rs.getTardis().getUuid();
+//                    HashMap<String, Object> wheret = new HashMap<>();
+//                    wheret.put("tardis_id", id);
+//                    ResultSetTardis rs = new ResultSetTardis(plugin, wheret, "", false, 0);
+//                    if (rs.resultSet()) {
+                    Tardis tardis = TARDISCache.BY_ID.get(id);
+                    if (tardis != null) {
+                        UUID o_uuid = tardis.getUuid();
                         String owner = o_uuid.toString();
                         // get Time Lord player prefs
                         ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, owner);

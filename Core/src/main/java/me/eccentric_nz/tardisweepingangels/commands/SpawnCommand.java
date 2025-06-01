@@ -172,8 +172,8 @@ public class SpawnCommand {
                     a.setCustomName("Strax");
                 }
                 case TOCLAFANE -> ToclafaneEquipment.set(a, false);
-                // WEEPING_ANGEL, CYBERMAN, CYBERSHADE, HATH, MIRE, OMEGA, SEA_DEVIL, SILURIAN,
-                // SLITHEEN, SMILER, SONTARAN, SUTEKH, VAMPIRE_OF_VENICE, VASHTA_NERADA, ZYGON
+                // WEEPING_ANGEL, CYBERMAN, CYBERSHADE, HATH, HEAVENLY_HOST, MIRE, NIMON, OMEGA, SEA_DEVIL,
+                // SILURIAN, SLITHEEN, SMILER, SONTARAN, SUTEKH, VAMPIRE_OF_VENICE, VASHTA_NERADA, ZYGON
                 default -> new Equipper(monster, a, false).setHelmetAndInvisibility();
             }
             String sound = switch (monster) {

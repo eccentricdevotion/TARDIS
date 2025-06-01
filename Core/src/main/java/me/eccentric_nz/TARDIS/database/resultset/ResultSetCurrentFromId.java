@@ -18,8 +18,10 @@ package me.eccentric_nz.TARDIS.database.resultset;
 
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.database.TARDISDatabaseConnection;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
+import org.bukkit.Location;
 import org.bukkit.World;
 
 import java.sql.Connection;
@@ -40,13 +42,13 @@ public class ResultSetCurrentFromId {
     private final TARDIS plugin;
     private final int id;
     private final String prefix;
-    private int tardis_id;
     private World world;
     private int x;
     private int y;
     private int z;
     private COMPASS direction;
     private boolean submarine;
+    private Current current = null;
 
     /**
      * Creates a class instance that can be used to retrieve an SQL ResultSet from the current locations table.
@@ -77,13 +79,13 @@ public class ResultSetCurrentFromId {
             rs = statement.executeQuery();
             if (rs.isBeforeFirst()) {
                 rs.next();
-                tardis_id = rs.getInt("tardis_id");
                 world = TARDISAliasResolver.getWorldFromAlias(rs.getString("world"));
                 x = rs.getInt("x");
                 y = rs.getInt("y");
                 z = rs.getInt("z");
                 direction = COMPASS.valueOf(rs.getString("direction"));
                 submarine = rs.getBoolean("submarine");
+                current = new Current(new Location(world, x, y, z), direction, submarine);
             } else {
                 return false;
             }
@@ -127,5 +129,9 @@ public class ResultSetCurrentFromId {
 
     public boolean isSubmarine() {
         return submarine;
+    }
+
+    public Current getCurrent() {
+        return current;
     }
 }

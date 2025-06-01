@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.enumeration.Consoles;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import org.bukkit.command.CommandSender;
@@ -24,6 +25,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.UUID;
 
 /**
  * @author eccentric_nz
@@ -50,12 +52,13 @@ class TARDISSetSizeCommand {
             plugin.getMessenger().message(sender, "Not a valid console size! Try using tab completion.");
             return true;
         }
-        String uuid = p.getUniqueId().toString();
+        UUID uuid = p.getUniqueId();
         HashMap<String, Object> where = new HashMap<>();
-        where.put("uuid", uuid);
+        where.put("uuid", uuid.toString());
         HashMap<String, Object> set = new HashMap<>();
         set.put("size", type);
         plugin.getQueryFactory().doUpdate("tardis", set, where);
+        TARDISCache.invalidate(uuid);
         plugin.getMessenger().message(sender, "Successfully set " + args[1] + "'s console size to " + type);
         return true;
     }

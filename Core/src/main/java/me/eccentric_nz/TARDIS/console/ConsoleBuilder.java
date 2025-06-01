@@ -17,10 +17,11 @@
 package me.eccentric_nz.TARDIS.console;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.custommodels.keys.ConsolePart;
 import me.eccentric_nz.TARDIS.custommodels.keys.DirectionVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.ModelledControl;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticLocationGetters;
@@ -190,8 +191,8 @@ public class ConsoleBuilder {
         Material material = interaction.getMaterial();
         NamespacedKey key = interaction.getCustomModel();
         if (interaction == ConsoleInteraction.DIRECTION && id > 0) {
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-            key = (rsc.resultSet()) ? getKey(rsc.getDirection()): DirectionVariant.DIRECTION_NORTH.getKey();
+            Current current = TARDISCache.CURRENT.get(id);
+            key = (current != null) ? getKey(current.direction()): DirectionVariant.DIRECTION_NORTH.getKey();
         }
         if (interaction == ConsoleInteraction.THROTTLE || interaction == ConsoleInteraction.RELATIVITY_DIFFERENTIATOR) {
             ResultSetPlayerPrefs rsp = new ResultSetPlayerPrefs(plugin, playerUuid);

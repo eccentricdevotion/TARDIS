@@ -19,7 +19,6 @@ package me.eccentric_nz.TARDIS.autonomous;
 import me.eccentric_nz.TARDIS.TARDIS;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -74,7 +73,7 @@ public class TARDISAutonomousUtils {
         return null;
     }
 
-    public static boolean compareCurrentToHome(ResultSetCurrentFromId c, ResultSetHomeLocation h) {
-        return (c.getWorld().equals(h.getWorld()) && c.getX() == h.getX() && c.getY() == h.getY() && c.getZ() == h.getZ());
+    public static boolean compareCurrentToHome(Location c, ResultSetHomeLocation h) {
+        return (c.getWorld() == (h.getWorld()) && c.getBlockX() == h.getX() && c.getBlockY() == h.getY() && c.getBlockZ() == h.getZ());
     }
 }

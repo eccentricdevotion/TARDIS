@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.artron;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISBlockScannerData;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeBlockScanner;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
@@ -44,11 +44,13 @@ public class TARDISBeaconToggler {
     }
 
     public void flickSwitch(UUID uuid, int id, boolean on) {
-        HashMap<String, Object> whereb = new HashMap<>();
-        whereb.put("tardis_id", id);
-        ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false, 2);
-        if (rs.resultSet()) {
-            Tardis tardis = rs.getTardis();
+//        HashMap<String, Object> whereb = new HashMap<>();
+//        whereb.put("tardis_id", id);
+//        ResultSetTardis rs = new ResultSetTardis(plugin, whereb, "", false, 2);
+//        if (rs.resultSet()) {
+//            Tardis tardis = rs.getTardis();
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        if (tardis != null) {
             Schematic schm = tardis.getSchematic();
             if (Consoles.getNO_BEACON().contains(schm)) {
                 // doesn't have a beacon!
@@ -92,6 +94,7 @@ public class TARDISBeaconToggler {
             HashMap<String, Object> where = new HashMap<>();
             where.put("uuid", uuid.toString());
             plugin.getQueryFactory().doUpdate("tardis", set, where);
+            TARDISCache.invalidate(uuid);
         }
     }
 }

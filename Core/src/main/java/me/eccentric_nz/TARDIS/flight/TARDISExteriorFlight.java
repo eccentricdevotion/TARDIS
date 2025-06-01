@@ -17,12 +17,13 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -109,6 +110,7 @@ public class TARDISExteriorFlight {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", data.id());
                 plugin.getQueryFactory().doUpdate("current", set, where);
+                TARDISCache.CURRENT.invalidate(data.id());
                 // update door location
                 TARDISBuilderUtility.saveDoorLocation(location, data.id(), direction);
                 Block under = location.getBlock().getRelative(BlockFace.DOWN);
@@ -154,8 +156,8 @@ public class TARDISExteriorFlight {
 
     public void startFlying(Player player, int id, Block block, Location current, boolean beac_on, String beacon) {
         // get the TARDIS's current location
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-        if (!rsc.resultSet()) {
+        Current c = TARDISCache.CURRENT.get(id);
+        if (c == null) {
             plugin.debug("No current location");
             return;
         }
@@ -177,6 +179,7 @@ public class TARDISExteriorFlight {
         HashMap<String, Object> whereh = new HashMap<>();
         whereh.put("tardis_id", id);
         plugin.getQueryFactory().doUpdate("tardis", set, whereh);
+        TARDISCache.invalidate(id);
         plugin.getMessenger().sendStatus(player, "HANDBRAKE_OFF");
         plugin.getTrackerKeeper().getInVortex().add(id);
         UUID uuid = player.getUniqueId();

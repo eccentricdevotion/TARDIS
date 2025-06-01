@@ -17,18 +17,19 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.ReplacedBlock;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBlocks;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.hads.TARDISHostileAction;
 import me.eccentric_nz.TARDIS.utility.TARDISMaterials;
 import me.eccentric_nz.TARDIS.utility.TARDISStaticUtils;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -112,29 +113,26 @@ public class TARDISBlockDamageListener implements Listener {
         HashMap<String, Object> where = new HashMap<>();
         where.put("tardis_id", id);
         where.put("uuid", uuid);
-        ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 0);
+        ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false);
         return rst.resultSet();
     }
 
     private void unhide(int id, Player player) {
-        HashMap<String, Object> where = new HashMap<>();
-        where.put("tardis_id", id);
-        ResultSetTardis rst = new ResultSetTardis(plugin, where, "", false, 2);
-        if (rst.resultSet() && rst.getTardis().isHidden()) {
+        Tardis tardis = TARDISCache.BY_ID.get(id);
+        if (tardis != null && tardis.isHidden()) {
             // un-hide this tardis
-            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-            if (!rsc.resultSet()) {
+            Current current = TARDISCache.CURRENT.get(id);
+            if (current == null) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             }
-            Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
             BuildData bd = new BuildData(player.getUniqueId().toString());
-            bd.setDirection(rsc.getDirection());
-            bd.setLocation(l);
+            bd.setDirection(current.direction());
+            bd.setLocation(current.location());
             bd.setMalfunction(false);
             bd.setOutside(false);
             bd.setPlayer(player);
             bd.setRebuild(true);
-            bd.setSubmarine(rsc.isSubmarine());
+            bd.setSubmarine(current.submarine());
             bd.setTardisID(id);
             bd.setThrottle(SpaceTimeThrottle.REBUILD);
             plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> plugin.getPresetBuilder().buildPreset(bd), 5L);
@@ -144,6 +142,7 @@ public class TARDISBlockDamageListener implements Listener {
             HashMap<String, Object> seth = new HashMap<>();
             seth.put("hidden", 0);
             plugin.getQueryFactory().doUpdate("tardis", seth, whereh);
+            TARDISCache.invalidate(id);
         }
     }
 }

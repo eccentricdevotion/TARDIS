@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.rooms;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetChunks;
@@ -154,6 +155,7 @@ public class TARDISRoomSeeder implements Listener {
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("uuid", player.getUniqueId().toString());
                     plugin.getQueryFactory().alterEnergyLevel("tardis", -amount, set, player);
+                    TARDISCache.invalidate(player.getUniqueId());
                     // remove blocks from condenser table if rooms_require_blocks is true
                     if (plugin.getConfig().getBoolean("growth.rooms_require_blocks")) {
                         TARDISCondenserData c_data = plugin.getGeneralKeeper().getRoomCondenserData().get(uuid);

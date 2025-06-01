@@ -88,7 +88,7 @@ public class TARDISJunkDestroyer implements Runnable {
                 // get junk vortex location
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("uuid", "00000000-aaaa-bbbb-cccc-000000000000");
-                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false, 2);
+                ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
                 if (rs.resultSet()) {
                     // teleport players to vortex
                     vortexJunkLoc = TARDISStaticLocationGetters.getLocationFromBukkitString(rs.getTardis().getCreeper()).add(3.0d, 0.0d, 2.0d);

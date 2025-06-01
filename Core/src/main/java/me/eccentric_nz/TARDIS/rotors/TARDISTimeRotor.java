@@ -17,6 +17,7 @@
 package me.eccentric_nz.TARDIS.rotors;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.custommodels.keys.RotorVariant;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -46,6 +47,7 @@ public class TARDISTimeRotor {
         HashMap<String, Object> set = new HashMap<>();
         set.put("rotor", uuid);
         TARDIS.plugin.getQueryFactory().doUpdate("tardis", set, where);
+        TARDISCache.invalidate(id);
     }
 
     public static void setRotor(NamespacedKey key, ItemFrame itemFrame) {

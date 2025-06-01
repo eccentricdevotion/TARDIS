@@ -17,11 +17,17 @@
 package me.eccentric_nz.TARDIS.travel.save;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
-import me.eccentric_nz.TARDIS.database.resultset.*;
+import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -129,10 +135,10 @@ public class TARDISSavesListener extends TARDISMenuListener {
                 } else {
                     event.setCancelled(true);
                     if (slot >= 0 && slot < 45) {
-                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, occupiedTardisId);
-                        Location current = null;
-                        if (rsc.resultSet()) {
-                            current = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                        Location exterior = null;
+                        Current current = TARDISCache.CURRENT.get(occupiedTardisId);
+                        if (current != null) {
+                            exterior = current.location();
                         }
                         ItemStack is = view.getItem(slot);
                         if (is != null) {
@@ -178,11 +184,9 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                         return;
                                     }
                                     String invisibility = tac.getArea().invisibility();
-                                    HashMap<String, Object> wheret = new HashMap<>();
-                                    wheret.put("tardis_id", occupiedTardisId);
-                                    ResultSetTardis resultSetTardis = new ResultSetTardis(plugin, wheret, "", false, 2);
-                                    if (resultSetTardis.resultSet()) {
-                                        if (invisibility.equals("DENY") && resultSetTardis.getTardis().getPreset().equals(ChameleonPreset.INVISIBLE)) {
+                                    Tardis tardis = TARDISCache.BY_ID.get(occupiedTardisId);
+                                    if (tardis != null) {
+                                        if (invisibility.equals("DENY") && tardis.getPreset().equals(ChameleonPreset.INVISIBLE)) {
                                             // check preset
                                             plugin.getMessenger().send(player, TardisModule.TARDIS, "AREA_NO_INVISIBLE");
                                             return;
@@ -196,10 +200,11 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                             // set chameleon adaption to OFF
                                             seti.put("adapti_on", 0);
                                             plugin.getQueryFactory().doSyncUpdate("tardis", seti, wherei);
+                                            TARDISCache.invalidate(occupiedTardisId);
                                         }
                                     }
                                 }
-                                if (!save_dest.equals(current) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(occupiedTardisId)) {
+                                if (!save_dest.equals(exterior) || plugin.getTrackerKeeper().getDestinationVortex().containsKey(occupiedTardisId)) {
                                     // damage circuit if configured
                                     if (plugin.getConfig().getBoolean("circuits.damage") && plugin.getConfig().getInt("circuits.uses.materialisation") > 0) {
                                         TARDISCircuitChecker tcc = new TARDISCircuitChecker(plugin, occupiedTardisId);
@@ -232,6 +237,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                                         HashMap<String, Object> wheret = new HashMap<>();
                                         wheret.put("tardis_id", occupiedTardisId);
                                         plugin.getQueryFactory().doSyncUpdate("tardis", sett, wheret);
+                                        TARDISCache.invalidate(occupiedTardisId);
                                     }
                                     HashMap<String, Object> wheret = new HashMap<>();
                                     wheret.put("tardis_id", occupiedTardisId);
@@ -261,7 +267,7 @@ public class TARDISSavesListener extends TARDISMenuListener {
                         HashMap<String, Object> wherez = new HashMap<>();
                         wherez.put("tardis_id", occupiedTardisId);
                         wherez.put("uuid", uuid.toString());
-                        ResultSetTardis rs = new ResultSetTardis(plugin, wherez, "", false, 0);
+                        ResultSetTardis rs = new ResultSetTardis(plugin, wherez, "", false);
                         if (rs.resultSet()) {
                             plugin.getTrackerKeeper().getArrangers().add(uuid);
                             plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_ARRANGE");

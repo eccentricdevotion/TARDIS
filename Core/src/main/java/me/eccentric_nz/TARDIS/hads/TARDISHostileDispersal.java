@@ -17,10 +17,11 @@
 package me.eccentric_nz.TARDIS.hads;
 
 import me.eccentric_nz.TARDIS.TARDIS;
+import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISHADSEvent;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
+import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.doors.inner.Inner;
 import me.eccentric_nz.TARDIS.doors.inner.InnerDisplayDoorCloser;
@@ -29,12 +30,10 @@ import me.eccentric_nz.TARDIS.doors.inner.InnerMinecraftDoorCloser;
 import me.eccentric_nz.TARDIS.doors.outer.OuterDisplayDoorCloser;
 import me.eccentric_nz.TARDIS.doors.outer.OuterDoor;
 import me.eccentric_nz.TARDIS.doors.outer.OuterMinecraftDoorCloser;
-import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import me.eccentric_nz.TARDIS.enumeration.HADS;
 import me.eccentric_nz.TARDIS.utility.TARDISBlockSetters;
 import org.bukkit.Chunk;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -67,25 +66,24 @@ class TARDISHostileDispersal {
     }
 
     void disperseTARDIS(int id, UUID uuid, Player hostile, ChameleonPreset preset) {
-        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
-        if (!rsc.resultSet()) {
+        Current current = TARDISCache.CURRENT.get(id);
+        if (current == null) {
             plugin.debug("Could not get current TARDIS location for HADS!");
+            return;
         }
-        if (rsc.isSubmarine() || preset.usesArmourStand()) {
+        if (current.submarine() || preset.usesArmourStand()) {
             // underwater use displacement
             new TARDISHostileDisplacement(plugin).moveTARDIS(id, uuid, hostile, preset);
             return;
         }
-        Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
         // sound the cloister bell
-        TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 3, id, l, plugin.getServer().getPlayer(uuid), "HADS dispersal");
+        TARDISCloisterBell bell = new TARDISCloisterBell(plugin, 3, id, current.location(), plugin.getServer().getPlayer(uuid), "HADS dispersal");
         int taskID = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, bell, 2L, 70L);
         bell.setTask(taskID);
         plugin.getTrackerKeeper().getCloisterBells().put(id, taskID);
         // disperse
-        COMPASS d = rsc.getDirection();
         // always remove the portal
-        plugin.getTrackerKeeper().getPortals().remove(l);
+        plugin.getTrackerKeeper().getPortals().remove(current.location());
         // toggle the doors if necessary
         // get preset
         ResultSetTardisPreset rs = new ResultSetTardisPreset(plugin);
@@ -106,63 +104,63 @@ class TARDISHostileDispersal {
                 new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, uuid);
             }
         }
-        World w = l.getWorld();
+        World w = current.location().getWorld();
         // make sure chunk is loaded
-        Chunk chunk = w.getChunkAt(l);
+        Chunk chunk = w.getChunkAt(current.location());
         while (!chunk.isLoaded()) {
             chunk.load();
         }
-        int sbx = l.getBlockX() - 1;
+        int sbx = current.location().getBlockX() - 1;
         int sby;
         if (preset.equals(ChameleonPreset.SUBMERGED)) {
-            sby = l.getBlockY() - 1;
+            sby = current.location().getBlockY() - 1;
         } else {
-            sby = l.getBlockY();
+            sby = current.location().getBlockY();
         }
-        int sbz = l.getBlockZ() - 1;
+        int sbz = current.location().getBlockZ() - 1;
         // remove problem blocks first
         switch (preset) {
             case GRAVESTONE -> {
                 // remove flower
                 int flowerx;
-                int flowery = (l.getBlockY() + 1);
+                int flowery = (current.location().getBlockY() + 1);
                 int flowerz;
-                switch (d) {
+                switch (current.direction()) {
                     case NORTH -> {
-                        flowerx = l.getBlockX();
-                        flowerz = l.getBlockZ() + 1;
+                        flowerx = current.location().getBlockX();
+                        flowerz = current.location().getBlockZ() + 1;
                     }
                     case WEST -> {
-                        flowerx = l.getBlockX() + 1;
-                        flowerz = l.getBlockZ();
+                        flowerx = current.location().getBlockX() + 1;
+                        flowerz = current.location().getBlockZ();
                     }
                     case SOUTH -> {
-                        flowerx = l.getBlockX();
-                        flowerz = l.getBlockZ() - 1;
+                        flowerx = current.location().getBlockX();
+                        flowerz = current.location().getBlockZ() - 1;
                     }
                     default -> {
-                        flowerx = l.getBlockX() - 1;
-                        flowerz = l.getBlockZ();
+                        flowerx = current.location().getBlockX() - 1;
+                        flowerz = current.location().getBlockZ();
                     }
                 }
                 TARDISBlockSetters.setBlock(w, flowerx, flowery, flowerz, Material.AIR);
             }
-            case DUCK -> plugin.getPresetDestroyer().destroyDuckEyes(l, d);
-            case MINESHAFT -> plugin.getPresetDestroyer().destroyMineshaftTorches(l, d);
-            case LAMP -> plugin.getPresetDestroyer().destroyLampTrapdoors(l, d);
+            case DUCK -> plugin.getPresetDestroyer().destroyDuckEyes(current.location(), current.direction());
+            case MINESHAFT -> plugin.getPresetDestroyer().destroyMineshaftTorches(current.location(), current.direction());
+            case LAMP -> plugin.getPresetDestroyer().destroyLampTrapdoors(current.location(), current.direction());
             default -> {
             }
         }
         plugin.getTrackerKeeper().getDematerialising().remove(id);
-        l.getChunk().removePluginChunkTicket(plugin);
+        current.location().getChunk().removePluginChunkTicket(plugin);
         // remove door
         plugin.getPresetDestroyer().destroyDoor(id);
         // remove torch
-        plugin.getPresetDestroyer().destroyLamp(l, preset);
+        plugin.getPresetDestroyer().destroyLamp(current.location(), preset);
         // remove sign
-        plugin.getPresetDestroyer().destroySign(l, d, preset);
+        plugin.getPresetDestroyer().destroySign(current.location(), current.direction(), preset);
         if (preset.equals(ChameleonPreset.JUNK_MODE)) {
-            plugin.getPresetDestroyer().destroyHandbrake(l, d);
+            plugin.getPresetDestroyer().destroyHandbrake(current.location(), current.direction());
         }
         // remove blue wool
         List<FallingBlock> falls = new ArrayList<>();
@@ -210,9 +208,9 @@ class TARDISHostileDispersal {
                 }
             }
         }, 15L);
-        plugin.getTrackerKeeper().getDispersed().put(uuid, l);
+        plugin.getTrackerKeeper().getDispersed().put(uuid, current.location());
         plugin.getTrackerKeeper().getDispersedTARDII().add(id);
-        plugin.getPM().callEvent(new TARDISHADSEvent(hostile, id, l, HADS.DISPERSAL));
+        plugin.getPM().callEvent(new TARDISHADSEvent(hostile, id, current.location(), HADS.DISPERSAL));
     }
 
     private List<Material> buildList() {

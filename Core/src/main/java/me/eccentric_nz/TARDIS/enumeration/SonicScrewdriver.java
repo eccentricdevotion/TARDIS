@@ -36,6 +36,7 @@ public enum SonicScrewdriver {
     THIRTEENTH(SonicVariant.THIRTEENTH.getFloats(), SonicVariant.THIRTEENTH_ON.getFloats()),
     FOURTEENTH(SonicVariant.FOURTEENTH.getFloats(), SonicVariant.FOURTEENTH_OPEN.getFloats()),
     FIFTEENTH(SonicVariant.FIFTEENTH.getFloats(), SonicVariant.FIFTEENTH_ON.getFloats()),
+    RANI(SonicVariant.RANI.getFloats(), SonicVariant.RANI_ON.getFloats()),
     RIVER_SONG(SonicVariant.RIVER_SONG.getFloats(), SonicVariant.RIVER_SONG_ON.getFloats()),
     MASTER(SonicVariant.MASTER.getFloats(), SonicVariant.MASTER_ON.getFloats()),
     SARAH_JANE(SonicVariant.SARAH_JANE.getFloats(), SonicVariant.SARAH_JANE_ON.getFloats()),
