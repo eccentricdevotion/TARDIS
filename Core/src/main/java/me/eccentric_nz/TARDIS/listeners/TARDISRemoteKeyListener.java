@@ -89,119 +89,151 @@ public class TARDISRemoteKeyListener implements Listener {
         if (is.hasItemMeta()) {
             ItemMeta im = is.getItemMeta();
             if (im.hasDisplayName() && im.getDisplayName().endsWith("TARDIS Remote Key")) {
-            // has TARDIS?
-            Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
-            if (tardis == null) {
-                return;
-            }
-            int id = tardis.getTardisId();
-            boolean powered = tardis.isPoweredOn();
-            ChameleonPreset preset = tardis.getPreset();
-            if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
-                return;
-            }
-            if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
-                plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
-                return;
-            }
-            boolean hidden = tardis.isHidden();
-            if (action.equals(Action.LEFT_CLICK_AIR)) {
-                // get the TARDIS current location
-                Current current = TARDISCache.CURRENT.get(id);
-                if (current == null) {
+                // has TARDIS?
+                Tardis tardis = TARDISCache.BY_UUID.get(player.getUniqueId());
+                if (tardis == null) {
                     return;
                 }
-                HashMap<String, Object> whered = new HashMap<>();
-                whered.put("tardis_id", id);
-                ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
-                if (rsd.resultSet()) {
-                    // toggle door lock
-                    int locked = (rsd.isLocked()) ? 0 : 1;
-                    HashMap<String, Object> setl = new HashMap<>();
-                    setl.put("locked", locked);
-                    HashMap<String, Object> wherel = new HashMap<>();
-                    wherel.put("tardis_id", id);
-                    // always lock / unlock both doors
-                    plugin.getQueryFactory().doUpdate("doors", setl, wherel);
-                    String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_LOCK", message);
-                    TARDISAdaptiveBoxLampToggler tpblt = new TARDISAdaptiveBoxLampToggler(plugin);
-                    TARDISSounds.playTARDISSound(current.location(), "tardis_lock");
-                    tpblt.toggleLamp(id, !powered, preset);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> tpblt.toggleLamp(id, powered, preset), 6L);
+                int id = tardis.getTardisId();
+                boolean powered = tardis.isPoweredOn();
+                ChameleonPreset preset = tardis.getPreset();
+                if (plugin.getTrackerKeeper().getInSiegeMode().contains(id)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "SIEGE_NO_CONTROL");
+                    return;
                 }
-            } else if (preset.equals(ChameleonPreset.INVISIBLE)) {
-                HashMap<String, Object> whered = new HashMap<>();
-                whered.put("tardis_id", id);
-                whered.put("door_type", 1);
-                ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
-                if (rsd.resultSet()) {
-                    // get inner door block
-                    Block block = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoor_location()).getBlock();
-                    boolean open = TARDISStaticUtils.isDoorOpen(block);
-                    ResultSetTardisPreset rsp = new ResultSetTardisPreset(plugin);
-                    if (rsp.fromID(id)) {
-                        boolean outerDisplayDoor = rsp.getPreset().usesArmourStand();
-                        UUID playerUUID = player.getUniqueId();
-                        // toggle door / portals
-                        if (open) {
-                            Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
-                            // close inner
-                            if (innerDisplayDoor.display()) {
-                                new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID, true);
-                            } else {
-                                new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID);
-                            }
-                            // close outer
-                            if (outerDisplayDoor) {
-                                new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
-                            } else if (rsp.getPreset().hasDoor()) {
-                                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
-                            }
-                        } else {
-                            // open inner
-                            Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
-                            // open inner
-                            if (innerDisplayDoor.display()) {
-                                new InnerDisplayDoorOpener(plugin).open(innerDisplayDoor.block(), id, true);
-                            } else {
-                                new InnerMinecraftDoorOpener(plugin).open(innerDisplayDoor.block(), id);
-                            }
-                            // open outer
-                            if (outerDisplayDoor) {
-                                new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
-                            } else if (rsp.getPreset().hasDoor()) {
-                                new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
-                            }
-                        }
-                        String message = (open) ? "DOOR_CLOSED" : "DOOR_OPENED";
-                        plugin.getMessenger().send(player, TardisModule.TARDIS, message);
-                    }
+                if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                    plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
+                    return;
                 }
-            } else {
-                if (plugin.getTrackerKeeper().getRebuildCooldown().containsKey(player.getUniqueId())) {
-                    long now = System.currentTimeMillis();
-                    long cooldown = plugin.getConfig().getLong("police_box.rebuild_cooldown");
-                    long then = plugin.getTrackerKeeper().getRebuildCooldown().get(player.getUniqueId()) + cooldown;
-                    if (now < then) {
-                        plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "COOLDOWN", String.format("%d", cooldown / 1000));
+                boolean hidden = tardis.isHidden();
+                if (action.equals(Action.LEFT_CLICK_AIR)) {
+                    // get the TARDIS current location
+                    Current current = TARDISCache.CURRENT.get(id);
+                    if (current == null) {
                         return;
                     }
-                }
-                if (!powered) {
-                    plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
-                    return;
-                }
-                if (hidden) {
-                    // rebuild
-                    new TARDISRebuildCommand(plugin).rebuildPreset(player);
-                } else {
-                    // hide
-                    new TARDISHideCommand(plugin).hide(player);
+                    HashMap<String, Object> whered = new HashMap<>();
+                    whered.put("tardis_id", id);
+                    ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
+                    if (rsd.resultSet()) {
+                        // toggle door lock
+                        int locked = (rsd.isLocked()) ? 0 : 1;
+                        HashMap<String, Object> setl = new HashMap<>();
+                        setl.put("locked", locked);
+                        HashMap<String, Object> wherel = new HashMap<>();
+                        wherel.put("tardis_id", id);
+                        // always lock / unlock both doors
+                        plugin.getQueryFactory().doUpdate("doors", setl, wherel);
+                        String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_LOCK", message);
+                        TARDISAdaptiveBoxLampToggler tpblt = new TARDISAdaptiveBoxLampToggler(plugin);
+                        TARDISSounds.playTARDISSound(current.location(), "tardis_lock");
+                        tpblt.toggleLamp(id, !powered, preset);
+                        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> tpblt.toggleLamp(id, powered, preset), 6L);
+                    }
+                    if (plugin.getTrackerKeeper().getDispersedTARDII().contains(id)) {
+                        plugin.getMessenger().send(player, TardisModule.TARDIS, "NOT_WHILE_DISPERSED");
+                        return;
+                    }
+                    boolean hidden = tardis.isHidden();
+                    if (action.equals(Action.LEFT_CLICK_AIR)) {
+                        // get the TARDIS current location
+                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                        if (!rsc.resultSet()) {
+                            return;
+                        }
+                        Location l = new Location(rsc.getWorld(), rsc.getX(), rsc.getY(), rsc.getZ());
+                        HashMap<String, Object> whered = new HashMap<>();
+                        whered.put("tardis_id", id);
+                        ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
+                        if (rsd.resultSet()) {
+                            // toggle door lock
+                            int locked = (rsd.isLocked()) ? 0 : 1;
+                            HashMap<String, Object> setl = new HashMap<>();
+                            setl.put("locked", locked);
+                            HashMap<String, Object> wherel = new HashMap<>();
+                            wherel.put("tardis_id", id);
+                            // always lock / unlock both doors
+                            plugin.getQueryFactory().doUpdate("doors", setl, wherel);
+                            String message = (rsd.isLocked()) ? plugin.getLanguage().getString("DOOR_UNLOCK") : plugin.getLanguage().getString("DOOR_DEADLOCK");
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "DOOR_LOCK", message);
+                            TARDISAdaptiveBoxLampToggler tpblt = new TARDISAdaptiveBoxLampToggler(plugin);
+                            TARDISSounds.playTARDISSound(l, "tardis_lock");
+                            tpblt.toggleLamp(id, !powered, preset);
+                            plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> tpblt.toggleLamp(id, powered, preset), 6L);
+                        }
+                    } else if (preset.equals(ChameleonPreset.INVISIBLE)) {
+                        HashMap<String, Object> whered = new HashMap<>();
+                        whered.put("tardis_id", id);
+                        whered.put("door_type", 1);
+                        ResultSetDoors rsd = new ResultSetDoors(plugin, whered, false);
+                        if (rsd.resultSet()) {
+                            // get inner door block
+                            Block block = TARDISStaticLocationGetters.getLocationFromDB(rsd.getDoor_location()).getBlock();
+                            boolean open = TARDISStaticUtils.isDoorOpen(block);
+                            ResultSetTardisPreset rsp = new ResultSetTardisPreset(plugin);
+                            if (rsp.fromID(id)) {
+                                boolean outerDisplayDoor = rsp.getPreset().usesArmourStand();
+                                UUID playerUUID = player.getUniqueId();
+                                // toggle door / portals
+                                if (open) {
+                                    Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
+                                    // close inner
+                                    if (innerDisplayDoor.display()) {
+                                        new InnerDisplayDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID, true);
+                                    } else {
+                                        new InnerMinecraftDoorCloser(plugin).close(innerDisplayDoor.block(), id, playerUUID);
+                                    }
+                                    // close outer
+                                    if (outerDisplayDoor) {
+                                        new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                                    } else if (rsp.getPreset().hasDoor()) {
+                                        new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
+                                    }
+                                } else {
+                                    // open inner
+                                    Inner innerDisplayDoor = new InnerDoor(plugin, id).get();
+                                    // open inner
+                                    if (innerDisplayDoor.display()) {
+                                        new InnerDisplayDoorOpener(plugin).open(innerDisplayDoor.block(), id, true);
+                                    } else {
+                                        new InnerMinecraftDoorOpener(plugin).open(innerDisplayDoor.block(), id);
+                                    }
+                                    // open outer
+                                    if (outerDisplayDoor) {
+                                        new OuterDisplayDoorCloser(plugin).close(new OuterDoor(plugin, id).getDisplay(), id, playerUUID);
+                                    } else if (rsp.getPreset().hasDoor()) {
+                                        new OuterMinecraftDoorCloser(plugin).close(new OuterDoor(plugin, id).getMinecraft(), id, playerUUID);
+                                    }
+                                }
+                                String message = (open) ? "DOOR_CLOSED" : "DOOR_OPENED";
+                                plugin.getMessenger().send(player, TardisModule.TARDIS, message);
+                            }
+                        }
+                    } else {
+                        if (plugin.getTrackerKeeper().getRebuildCooldown().containsKey(player.getUniqueId())) {
+                            long now = System.currentTimeMillis();
+                            long cooldown = plugin.getConfig().getLong("police_box.rebuild_cooldown");
+                            long then = plugin.getTrackerKeeper().getRebuildCooldown().get(player.getUniqueId()) + cooldown;
+                            if (now < then) {
+                                plugin.getMessenger().send(player.getPlayer(), TardisModule.TARDIS, "COOLDOWN", String.format("%d", cooldown / 1000));
+                                return;
+                            }
+                        }
+                        if (!powered) {
+                            plugin.getMessenger().send(player, TardisModule.TARDIS, "POWER_DOWN");
+                            return;
+                        }
+                        if (hidden) {
+                            // rebuild
+                            new TARDISRebuildCommand(plugin).rebuildPreset(player);
+                        } else {
+                            // hide
+                            new TARDISHideCommand(plugin).hide(player);
+                        }
+                    }
                 }
             }
         }
-    }
     }
 }
