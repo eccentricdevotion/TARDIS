@@ -65,7 +65,7 @@ public class TARDISTelevisionInventory {
                 i++;
             }
         }
-        // 15 companions
+        // 17 companions
         if (PlayerHeadCache.COMPANIONS.isEmpty()) {
             for (Skin companion : CompanionSkins.COMPANIONS) {
                 ItemStack is = new ItemStack(Material.PLAYER_HEAD, 1);
@@ -110,19 +110,19 @@ public class TARDISTelevisionInventory {
         ItemMeta one = page1.getItemMeta();
         one.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_1"));
         page1.setItemMeta(one);
-        stacks[45] = page1;
+        stacks[48] = page1;
         // page two
         ItemStack page2 = new ItemStack(GUIChameleonPresets.GO_TO_PAGE_2.material(), 1);
         ItemMeta two = page2.getItemMeta();
         two.setDisplayName(plugin.getLanguage().getString("BUTTON_PAGE_2"));
         page2.setItemMeta(two);
-        stacks[46] = page2;
+        stacks[49] = page2;
         // TARDISWeepingAngels monsters
         ItemStack weep = new ItemStack(GUIGeneticManipulator.BUTTON_TWA.material(), 1);
         ItemMeta ing = weep.getItemMeta();
         ing.setDisplayName("TARDIS Monsters");
         weep.setItemMeta(ing);
-        stacks[47] = weep;
+        stacks[50] = weep;
         // add buttons
         ItemStack rem = new ItemStack(GUIGeneticManipulator.BUTTON_RESTORE.material(), 1);
         ItemMeta ove = rem.getItemMeta();

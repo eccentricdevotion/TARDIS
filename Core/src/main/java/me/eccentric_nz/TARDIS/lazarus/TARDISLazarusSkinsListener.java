@@ -58,7 +58,7 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
             return;
         }
         int slot = event.getRawSlot();
-        int max_slot = 43;
+        int max_slot = 47;
         if (slot >= 0 && slot <= max_slot) {
             // get selection
             ItemStack is = view.getItem(slot);
@@ -68,21 +68,21 @@ public class TARDISLazarusSkinsListener extends TARDISMenuListener {
             }
         } else {
             switch (slot) {
-                case 45 -> {
+                case 48 -> {
                     LazarusUtils.pagers.add(uuid);
                     // go to page one
                     Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
                     inv.setContents(new TARDISLazarusInventory(plugin).getPageOne());
                     player.openInventory(inv);
                 }
-                case 46 -> {
+                case 49 -> {
                     LazarusUtils.pagers.add(uuid);
                     // go to page two
                     Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");
                     inv.setContents(new TARDISLazarusPageTwoInventory(plugin).getPageTwo());
                     player.openInventory(inv);
                 }
-                case 47 -> {
+                case 50 -> {
                     LazarusUtils.pagers.add(uuid);
                     // go to monsters
                     Inventory inv = plugin.getServer().createInventory(player, 54, ChatColor.DARK_RED + "Genetic Manipulator");

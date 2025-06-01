@@ -46,6 +46,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.components.CustomModelDataComponent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -77,12 +78,15 @@ public class TARDISLazarusGUIListener extends TARDISMenuListener {
     private final HashMap<UUID, String> disguises = new HashMap<>();
     private final List<Integer> slimeSizes = List.of(1, 2, 4);
     private final List<Integer> pufferStates = List.of(0, 1, 2);
-    private final List<String> twaMonsters = List.of("CLOCKWORK_DROID", "CYBERMAN", "DALEK", "DALEK_SEC", "DAVROS", "EMPTY_CHILD", "HATH", "HEADLESS_MONK", "ICE WARRIOR", "JUDOON", "K9", "OOD", "RACNOSS", "SCARECROW", "SEA_DEVIL", "SILENT", "SILURIAN", "SLITHEEN", "SONTARAN", "STRAX", "SYCORAX", "TOCLAFANE", "VASHTA_NERADA", "WEEPING_ANGEL", "ZYGON");
-    private final List<String> twaOnly = List.of("DALEK", "DAVROS", "K9", "TOCLAFANE");
+    private final List<String> twaMonsters = new ArrayList<>();
+    private final List<String> twaOnly = List.of("DALEK", "DAVROS", "K9", "SATURNYNIAN", "TOCLAFANE");
 
     public TARDISLazarusGUIListener(TARDIS plugin) {
         super(plugin);
         this.plugin = plugin;
+        for (Monster m : Monster.values()) {
+            twaMonsters.add(m.toString());
+        }
     }
 
     /**
