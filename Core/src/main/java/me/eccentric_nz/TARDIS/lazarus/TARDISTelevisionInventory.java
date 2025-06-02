@@ -65,7 +65,7 @@ public class TARDISTelevisionInventory {
                 i++;
             }
         }
-        // 17 companions
+        // 19 companions
         if (PlayerHeadCache.COMPANIONS.isEmpty()) {
             for (Skin companion : CompanionSkins.COMPANIONS) {
                 ItemStack is = new ItemStack(Material.PLAYER_HEAD, 1);

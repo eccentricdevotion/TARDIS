@@ -2,7 +2,7 @@
 
 | Priority | Feature | Link |
 |----------|---------|------|
-| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Update to 1.21.5**<br>- Add new blocks to appropriate rooms e.g. firefly bush to mangrove, dry grass to Iistabul?<br>- Add Melanie Bush, Roman Rory Williams, Liz Shaw, The Nimon & Saturnynian skins. | - |
+| ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Update to 1.21.6**<br>- Add new blocks to appropriate rooms e.g. firefly bush to mangrove, dry grass to Iistabul?<br>- Utilise new dialog screens. | - |
 | ![Static Badge](https://img.shields.io/badge/WIP-f90?style=flat-square) | **Fix bugs**<br>! | - |
 | ![Static Badge](https://img.shields.io/badge/1-f00?style=flat-square) | **Modelled controls**<br>- Console lamp done | [#836](https://github.com/eccentricdevotion/TARDIS/issues/836) |
 | ![Static Badge](https://img.shields.io/badge/2-0c6?style=flat-square) | **Microscope** as an addition to Chemistry<br>- Add x-ray? | - |
@@ -19,7 +19,6 @@
 
 ## Wiki Documentation
 
-* Update `/tardis sethome <preset> [preset]` command
 * Version 6.0.x and 6.1.0 changes
 * Make all images tabbed
 * Vanilla/TARDIS screenshots for TabbedImage views

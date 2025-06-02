@@ -62,10 +62,10 @@ public class LazarusUtils {
         Skin skin;
         if (slot >= 0 && slot < 16) {
             skin = DoctorSkins.DOCTORS.get(slot);
-        } else if (slot >= 16 && slot < 33) {
+        } else if (slot >= 16 && slot < 35) {
             skin = CompanionSkins.COMPANIONS.get(slot - 16);
         } else {
-            skin = CharacterSkins.LAZARUS_CHARACTERS.get(slot - 33);
+            skin = CharacterSkins.LAZARUS_CHARACTERS.get(slot - 35);
         }
         return skin;
     }
