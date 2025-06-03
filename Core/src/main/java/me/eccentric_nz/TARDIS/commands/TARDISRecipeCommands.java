@@ -52,6 +52,7 @@ public class TARDISRecipeCommands implements CommandExecutor {
     private final HashMap<String, String> recipeItems = new HashMap<>();
     private final HashMap<String, Material> t = new HashMap<>();
     private final Set<String> CHEM_SUBS = new HashSet<>();
+    private final List<String> CHEM_BLOCKS = List.of("atomic-elements", "chemical-compounds", "lab-table", "product-crafting", "material-reducer", "element-constructor");
 
     public TARDISRecipeCommands(TARDIS plugin) {
         this.plugin = plugin;
@@ -167,8 +168,14 @@ public class TARDISRecipeCommands implements CommandExecutor {
             String which = args[0].toLowerCase(Locale.ROOT);
             if (CHEM_SUBS.contains(which)) {
                 // use `/tchemistry formula command`
-                String command = TARDISStringUtils.chemistryCase(which);
-                plugin.getMessenger().sendColouredCommand(player, "USE_FORMULA", "/tchemistry formula " + command, plugin);
+                String command;
+                if (CHEM_BLOCKS.contains(which)) {
+                    command = which.split("-")[0];
+                    plugin.getMessenger().sendColouredCommand(player, "USE_FORMULA", "/tchemistry recipe " + command, plugin);
+                } else {
+                    command = TARDISStringUtils.chemistryCase(which);
+                    plugin.getMessenger().sendColouredCommand(player, "USE_FORMULA", "/tchemistry formula " + command, plugin);
+                }
                 return true;
             }
             if (!recipeItems.containsKey(which)) {

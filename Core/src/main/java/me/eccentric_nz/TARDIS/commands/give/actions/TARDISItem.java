@@ -43,6 +43,7 @@ import java.util.Map;
 public class TARDISItem {
 
     private final TARDIS plugin;
+    private final List<String> CHEM_BLOCKS = List.of("Atomic Elements", "Chemical Compounds", "Lab Table", "Product Crafting", "Material Reducer", "Element Constructor");
 
     public TARDISItem(TARDIS plugin) {
         this.plugin = plugin;
@@ -77,14 +78,18 @@ public class TARDISItem {
             } else {
                 enumName = item_to_give.replaceAll(" ", "_");
             }
-            try {
-                Product product = Product.valueOf(enumName);
-                result = ProductBuilder.getProduct(product);
-            } catch (IllegalArgumentException e) {
+            if (CHEM_BLOCKS.contains(item_to_give)) {
+                result = plugin.getFigura().getShapedRecipes().get(item_to_give).getResult();
+            } else {
                 try {
-                    Lab lab = Lab.valueOf(enumName);
-                    result = LabBuilder.getLabProduct(lab);
-                } catch (IllegalArgumentException ignored) {
+                    Product product = Product.valueOf(enumName);
+                    result = ProductBuilder.getProduct(product);
+                } catch (IllegalArgumentException e) {
+                    try {
+                        Lab lab = Lab.valueOf(enumName);
+                        result = LabBuilder.getLabProduct(lab);
+                    } catch (IllegalArgumentException ignored) {
+                    }
                 }
             }
         } else {

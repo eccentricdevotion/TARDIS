@@ -26,12 +26,12 @@ public class ChemistryBlock {
 
     public static final HashMap<String, RecipeData> RECIPES = new HashMap<>() {
         {
-            put("creative", new RecipeData("Atomic elements", "creative_block", List.of("A creative inventory", "of atomic elements."), Material.DIAMOND, TARDISDisplayItem.CREATIVE));
-            put("compound", new RecipeData("Chemical compounds", "compound_block", List.of("Create over thirty compounds", "by combining elements."), Material.REDSTONE, TARDISDisplayItem.COMPOUND));
-            put("reduce", new RecipeData("Material reducer", "reducer_block", List.of("Learn about the natural world", "by reducing Minecraft blocks", "to their component elements."), Material.GOLD_NUGGET, TARDISDisplayItem.REDUCER));
-            put("construct", new RecipeData("Element constructor", "constructor_block", List.of("Build elements by choosing the number", "of protons, electrons, and neutrons."), Material.LAPIS_LAZULI, TARDISDisplayItem.CONSTRUCTOR));
-            put("lab", new RecipeData("Lab table", "lab_block", List.of("Combine substances to", "get new results."), Material.COAL, TARDISDisplayItem.LAB));
-            put("product", new RecipeData("Product crafting", "crafting_block", List.of("Combine substances to", "make fun products."), Material.IRON_NUGGET, TARDISDisplayItem.PRODUCT));
+            put("creative", new RecipeData("Atomic Elements", "creative_block", List.of("A creative inventory", "of atomic elements."), Material.DIAMOND, TARDISDisplayItem.CREATIVE));
+            put("compound", new RecipeData("Chemical Compounds", "compound_block", List.of("Create over thirty compounds", "by combining elements."), Material.REDSTONE, TARDISDisplayItem.COMPOUND));
+            put("reduce", new RecipeData("Material Reducer", "reducer_block", List.of("Learn about the natural world", "by reducing Minecraft blocks", "to their component elements."), Material.GOLD_NUGGET, TARDISDisplayItem.REDUCER));
+            put("construct", new RecipeData("Element Constructor", "constructor_block", List.of("Build elements by choosing the number", "of protons, electrons, and neutrons."), Material.LAPIS_LAZULI, TARDISDisplayItem.CONSTRUCTOR));
+            put("lab", new RecipeData("Lab Table", "lab_block", List.of("Combine substances to", "get new results."), Material.COAL, TARDISDisplayItem.LAB));
+            put("product", new RecipeData("Product Crafting", "crafting_block", List.of("Combine substances to", "make fun products."), Material.IRON_NUGGET, TARDISDisplayItem.PRODUCT));
         }
     };
 }
