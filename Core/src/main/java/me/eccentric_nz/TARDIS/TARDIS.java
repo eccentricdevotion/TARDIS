@@ -203,12 +203,12 @@ public class TARDIS extends JavaPlugin {
     public TARDIS() {
         worldGuardOnServer = false;
         invManager = InventoryManager.NONE;
-        versions.put("GriefPrevention", "16.18.3");
-        versions.put("LibsDisguises", "10.0.44");
-        versions.put("Multiverse-Core", "4.3");
-        versions.put("Multiverse-Inventories", "4.2");
-        versions.put("Towny", "0.100");
-        versions.put("WorldGuard", "7.0.11");
+        versions.put("GriefPrevention", "17.0");
+        versions.put("LibsDisguises", "11.0.6");
+        versions.put("Multiverse-Core", "5.0");
+        versions.put("Multiverse-Inventories", "5.0");
+        versions.put("Towny", "0.101");
+        versions.put("WorldGuard", "7.0.14");
     }
 
     public TARDISMessage getMessenger() {
