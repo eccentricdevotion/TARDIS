@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.sudo;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetHomeLocation;
 import me.eccentric_nz.TARDIS.enumeration.SpaceTimeThrottle;
@@ -66,7 +65,6 @@ class SudoDesiege {
             setc.put("direction", rsh.getDirection().toString());
             setc.put("submarine", (rsh.isSubmarine()) ? 1 : 0);
             plugin.getQueryFactory().doUpdate("current", setc, wherec);
-            TARDISCache.CURRENT.invalidate(id);
             // rebuild the TARDIS
             BuildData bd = new BuildData(uuid.toString());
             bd.setDirection(rsh.getDirection());

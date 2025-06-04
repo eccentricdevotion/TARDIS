@@ -17,8 +17,7 @@
 package me.eccentric_nz.TARDIS.doors.outer;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
-import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetOuterPortal;
 import me.eccentric_nz.TARDIS.flight.vehicle.TARDISArmourStand;
 import org.bukkit.Location;
@@ -49,9 +48,9 @@ public class OuterDoor {
 
     public ArmorStand getDisplay() {
         // get from current location
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current != null) {
-            for (Entity e : current.location().getWorld().getNearbyEntities(current.location(), 1.0d, 1.0d, 1.0d)) {
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (rsc.resultSet()) {
+            for (Entity e : rsc.getCurrent().location().getWorld().getNearbyEntities(rsc.getCurrent().location(), 1.0d, 1.0d, 1.0d)) {
                 if (e instanceof ArmorStand a && ((CraftArmorStand) a).getHandle() instanceof TARDISArmourStand) {
                     return a;
                 }

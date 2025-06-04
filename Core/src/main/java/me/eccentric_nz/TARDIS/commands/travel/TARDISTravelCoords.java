@@ -17,12 +17,12 @@
 package me.eccentric_nz.TARDIS.commands.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.commands.utils.ArgumentParser;
 import me.eccentric_nz.TARDIS.commands.utils.Arguments;
 import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
@@ -77,10 +77,10 @@ public class TARDISTravelCoords {
                     // only world specified
                     List<String> worlds = List.of(world.getName());
                     // get current location
-                    Current current = TARDISCache.CURRENT.get(id);
-                    if (current != null) {
+                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                    if (rsc.resultSet()) {
                         Parameters parameters = new Parameters(player, Flag.getNoMessageFlags());
-                        parameters.setCompass(current.direction());
+                        parameters.setCompass(rsc.getCurrent().direction());
                         Location l = plugin.getTardisAPI().getRandomLocation(worlds, world.getEnvironment(), parameters);
                         if (l != null) {
                             set.put("world", l.getWorld().getName());
@@ -109,11 +109,12 @@ public class TARDISTravelCoords {
             }
             case 3 -> {
                 if (args[0].startsWith("~")) {
-                    Current current = TARDISCache.CURRENT.get(id);
-                    if (current == null) {
+                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                    if (!rsc.resultSet()) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                         return true;
                     }
+                    Current current = rsc.getCurrent();
                     if (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getName() + ".time_travel")) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_WORLD_TRAVEL");
                         return true;
@@ -245,14 +246,14 @@ public class TARDISTravelCoords {
         if (!plugin.getPluginRespect().getRespect(location, new Parameters(player, Flag.getDefaultFlags()))) {
             return 1;
         }
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current == null) {
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (!rsc.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             return 1;
         }
         // check location
-        int[] start_loc = TARDISTimeTravel.getStartLocation(location, current.direction());
-        return TARDISTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), current.direction());
+        int[] start_loc = TARDISTimeTravel.getStartLocation(location, rsc.getCurrent().direction());
+        return TARDISTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), rsc.getCurrent().direction());
     }
 
     private Location getCoordinateLocation(String[] args, Player player, int id) {
@@ -279,12 +280,12 @@ public class TARDISTravelCoords {
         int x, y, z;
         World w;
         if (arguments.getArguments().getFirst().equals("~")) {
-            Current current = TARDISCache.CURRENT.get(id);
-            if (current == null) {
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            if (!rsc.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return null;
             }
-            w = current.location().getWorld();
+            w = rsc.getCurrent().location().getWorld();
         } else {
             if (!plugin.getPlanetsConfig().getBoolean("planets." + w_str + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                 w = plugin.getMVHelper().getWorld(w_str);

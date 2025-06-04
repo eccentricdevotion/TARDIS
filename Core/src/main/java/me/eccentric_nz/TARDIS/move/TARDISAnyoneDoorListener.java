@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.move;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
@@ -299,12 +298,13 @@ public class TARDISAnyoneDoorListener extends TARDISDoorListener implements List
                                 float pitch = player.getLocation().getPitch();
                                 String companions = tardis.getCompanions();
                                 boolean hb = tardis.isHandbrakeOn();
-                                Current current = TARDISCache.CURRENT.get(tardis.getTardisId());
-                                if (current == null) {
+                                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                                if (!rsc.resultSet()) {
                                     // emergency TARDIS relocation
                                     new TARDISEmergencyRelocation(plugin).relocate(id, player);
                                     return;
                                 }
+                                Current current = rsc.getCurrent();
                                 COMPASS d_backup = current.direction();
                                 // get quotes player prefs
                                 boolean userQuotes = (hasPrefs && rsp.isQuotesOn());

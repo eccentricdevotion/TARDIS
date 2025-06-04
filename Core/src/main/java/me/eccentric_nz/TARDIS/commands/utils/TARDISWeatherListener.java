@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.commands.utils;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.control.TARDISAtmosphericExcitation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -94,12 +94,13 @@ public class TARDISWeatherListener extends TARDISMenuListener {
             return;
         }
         // get current location
-        Current current = TARDISCache.CURRENT.get(tardis.getTardisId());
-        if (current == null) {
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (!rsc.resultSet()) {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
             close(player);
             return;
         }
+        Current current = rsc.getCurrent();
         switch (slot) {
             case 0 -> {
                 // clear / sun

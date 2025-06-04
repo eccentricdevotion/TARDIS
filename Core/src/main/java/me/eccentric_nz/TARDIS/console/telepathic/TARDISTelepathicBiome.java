@@ -17,10 +17,9 @@
 package me.eccentric_nz.TARDIS.console.telepathic;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.custommodels.GUIMap;
 import me.eccentric_nz.TARDIS.custommodels.GUIWallFloor;
-import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.utility.TARDISStringUtils;
 import org.bukkit.Material;
 import org.bukkit.World.Environment;
@@ -43,9 +42,9 @@ public class TARDISTelepathicBiome {
     public ItemStack[] getButtons() {
         ItemStack[] stack = new ItemStack[54];
         // only show biomes for the environment the TARDIS is currently in
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current != null) {
-            Environment environment = current.location().getWorld().getEnvironment();
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (rsc.resultSet()) {
+            Environment environment = rsc.getCurrent().location().getWorld().getEnvironment();
             // biome finder
             List<Biome> biomes;
             switch (environment) {

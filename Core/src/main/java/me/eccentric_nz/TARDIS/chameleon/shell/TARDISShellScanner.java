@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.chameleon.shell;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonColumn;
 import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.World;
@@ -37,10 +37,11 @@ public class TARDISShellScanner {
 
     public static TARDISChameleonColumn scan(TARDIS plugin, int id, ChameleonPreset preset) {
         // get tardis current location
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current == null) {
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (!rsc.resultSet()) {
             return plugin.getPresets().getColumn(preset, COMPASS.EAST);
         }
+        Current current = rsc.getCurrent();
         World w = current.location().getWorld();
         int fx = current.location().getBlockX();
         int fy = current.location().getBlockY();

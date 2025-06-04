@@ -17,10 +17,10 @@
 package me.eccentric_nz.TARDIS.commands.admin;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -111,10 +111,13 @@ public class TARDISDeleteCommand {
             // get the current location
             Location bb_loc = null;
             COMPASS d = COMPASS.EAST;
-            Current current = TARDISCache.CURRENT.get(id);
-            if (current != null) {
+            boolean sub = false;
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            if (rsc.resultSet()) {
+                Current current = rsc.getCurrent();
                 bb_loc = current.location();
                 d = current.direction();
+                sub = current.submarine();
             }
             if (bb_loc == null) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
@@ -130,7 +133,7 @@ public class TARDISDeleteCommand {
                 dd.setPlayer(plugin.getServer().getOfflinePlayer(u));
                 dd.setHide(true);
                 dd.setOutside(false);
-                dd.setSubmarine(current.submarine());
+                dd.setSubmarine(sub);
                 dd.setTardisID(id);
                 dd.setThrottle(SpaceTimeThrottle.REBUILD);
                 plugin.getPresetDestroyer().destroyPreset(dd);

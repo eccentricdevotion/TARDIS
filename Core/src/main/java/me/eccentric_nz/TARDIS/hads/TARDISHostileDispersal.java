@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.hads;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISHADSEvent;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISStainedGlassLookup;
 import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.doors.inner.Inner;
 import me.eccentric_nz.TARDIS.doors.inner.InnerDisplayDoorCloser;
@@ -66,11 +66,12 @@ class TARDISHostileDispersal {
     }
 
     void disperseTARDIS(int id, UUID uuid, Player hostile, ChameleonPreset preset) {
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current == null) {
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (!rsc.resultSet()) {
             plugin.debug("Could not get current TARDIS location for HADS!");
             return;
         }
+        Current current = rsc.getCurrent();
         if (current.submarine() || preset.usesArmourStand()) {
             // underwater use displacement
             new TARDISHostileDisplacement(plugin).moveTARDIS(id, uuid, hostile, preset);

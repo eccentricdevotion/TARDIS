@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -85,11 +85,12 @@ class TARDISSaveLocationCommand {
                     return true;
                 }
                 // get current destination
-                Current current = TARDISCache.CURRENT.get(id);
-                if (current == null) {
+                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                if (!rsc.resultSet()) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                     return true;
                 }
+                Current current = rsc.getCurrent();
                 String w = current.location().getWorld().getName();
                 if (w.startsWith("TARDIS_")) {
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "SAVE_NO_TARDIS");

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISBuilderUtility;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
@@ -165,7 +164,6 @@ public class TARDISTeleportListener implements Listener {
                 HashMap<String, Object> where = new HashMap<>();
                 where.put("tardis_id", data.id());
                 plugin.getQueryFactory().doUpdate("current", set, where);
-                TARDISCache.CURRENT.invalidate(data.id());
                 // update door location
                 TARDISBuilderUtility.saveDoorLocation(location, data.id(), direction);
                 Block under = location.getBlock().getRelative(BlockFace.DOWN);

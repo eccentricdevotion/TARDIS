@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.console.interaction;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -29,6 +28,7 @@ import me.eccentric_nz.TARDIS.console.models.HandbrakeModel;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
@@ -138,11 +138,12 @@ public class HandbrakeInteraction {
                         }
                         // check the state of the Relativity Differentiator
                         if (check.isFlightModeExterior(uuid.toString()) && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand()) {
-                            Current current = TARDISCache.CURRENT.get(id);
-                            if (current == null) {
+                            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                            if (!rsc.resultSet()) {
                                 plugin.debug("No current location");
                                 return;
                             }
+                            Current current = rsc.getCurrent();
                             // check if TARDIS is underground
                             for (int y = current.location().getBlockY() + 4; y < current.location().getBlockY() + 8; y++) {
                                 if (!current.location().getWorld().getBlockAt(current.location().getBlockX(), y, current.location().getBlockZ()).getType().isAir()) {

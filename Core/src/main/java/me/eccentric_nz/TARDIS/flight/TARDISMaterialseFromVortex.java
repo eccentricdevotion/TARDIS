@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.achievement.TARDISAchievementFactory;
 import me.eccentric_nz.TARDIS.api.event.TARDISMalfunctionEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISMaterialisationEvent;
@@ -26,10 +25,7 @@ import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetInteractionCheck;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.hads.TARDISCloisterBell;
 import me.eccentric_nz.TARDIS.travel.TARDISMalfunction;
@@ -86,8 +82,9 @@ public class TARDISMaterialseFromVortex implements Runnable {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             // get current location for back
-            Current current = TARDISCache.CURRENT.get(id);
-            if (current != null) {
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            if (rsc.resultSet()) {
+                Current current = rsc.getCurrent();
                 BukkitScheduler scheduler = plugin.getServer().getScheduler();
                 if (malfunction) {
                     // check for a malfunction
@@ -261,7 +258,6 @@ public class TARDISMaterialseFromVortex implements Runnable {
                         wheredoor.put("door_type", 0);
                         if (!setcurrent.isEmpty()) {
                             plugin.getQueryFactory().doUpdate("current", setcurrent, wherecurrent);
-                            TARDISCache.CURRENT.invalidate(id);
                             plugin.getQueryFactory().doUpdate("back", setback, whereback);
                             plugin.getQueryFactory().doUpdate("doors", setdoor, wheredoor);
                         }

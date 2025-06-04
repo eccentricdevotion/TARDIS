@@ -18,10 +18,9 @@ package me.eccentric_nz.TARDIS.particles;
 
 import com.mojang.datafixers.util.Pair;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.chameleon.utils.TARDISChameleonCircuit;
-import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAdaptive;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -47,9 +46,9 @@ public class ParticleAdaptive {
 
     public static BlockData getAdaptiveData(TARDIS plugin, int id) {
         // get current location
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current != null) {
-            Block block = current.location().getBlock().getRelative(BlockFace.DOWN);
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (rsc.resultSet()) {
+            Block block = rsc.getCurrent().location().getBlock().getRelative(BlockFace.DOWN);
             TARDISChameleonCircuit tcc = new TARDISChameleonCircuit(plugin);
             Material material = tcc.getChameleonBlock(block, null);
             return material.createBlockData();

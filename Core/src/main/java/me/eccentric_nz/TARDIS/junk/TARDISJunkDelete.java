@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.junk;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.commands.admin.TARDISDeleteCommand;
 import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.COMPASS;
@@ -49,11 +49,12 @@ class TARDISJunkDelete {
         if (rs.fromUUID("00000000-aaaa-bbbb-cccc-000000000000")) {
             int id = rs.getTardisId();
             // get the current location
-            Current current = TARDISCache.CURRENT.get(id);
-            if (current == null) {
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            if (!rsc.resultSet()) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return true;
             }
+            Current current = rsc.getCurrent();
             // destroy junk TARDIS
             DestroyData dd = new DestroyData();
             dd.setDirection(COMPASS.SOUTH);

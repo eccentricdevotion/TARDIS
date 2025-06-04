@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.destroyers;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISDestructionEvent;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISTIPSData;
@@ -81,10 +80,11 @@ public class TARDISExterminator {
                 int tips = tardis.getTIPS();
                 boolean hasZero = (!tardis.getZero().isEmpty());
                 Schematic schm = tardis.getSchematic();
-                Current current = TARDISCache.CURRENT.get(id);
-                if (current == null) {
+                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                if (!rsc.resultSet()) {
                     return false;
                 }
+                Current current = rsc.getCurrent();
                 DestroyData dd = new DestroyData();
                 dd.setDirection(current.direction());
                 dd.setLocation(current.location());
@@ -155,11 +155,12 @@ public class TARDISExterminator {
             boolean hasZero = (!tardis.getZero().isEmpty());
             Schematic schm = tardis.getSchematic();
             // check the sign location
-            Current current = TARDISCache.CURRENT.get(id);
-            if (current == null) {
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            if (!rsc.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return false;
             }
+            Current current = rsc.getCurrent();
             // Destroy the TARDIS!
             DestroyData dd = new DestroyData();
             dd.setDirection(current.direction());

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -253,8 +252,9 @@ public class TARDISHandlesProcessor {
                                 if (lore != null) {
                                     String first = lore.getFirst();
                                     // get current location
-                                    Current current = TARDISCache.CURRENT.get(id);
-                                    if (current != null) {
+                                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                                    if (rsc.resultSet()) {
+                                        Current current = rsc.getCurrent();
                                         Location goto_loc = null;
                                         COMPASS direction = current.direction();
                                         COMPASS nextDirection = current.direction();
@@ -575,7 +575,6 @@ public class TARDISHandlesProcessor {
                                             HashMap<String, Object> wherec = new HashMap<>();
                                             wherec.put("tardis_id", id);
                                             plugin.getQueryFactory().doUpdate("current", setc, wherec);
-                                            TARDISCache.CURRENT.invalidate(id);
                                             // set back
                                             HashMap<String, Object> setb = new HashMap<>();
                                             setb.put("world", current.location().getWorld().getName());

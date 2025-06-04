@@ -17,16 +17,11 @@
 package me.eccentric_nz.TARDIS.travel.save;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
-import me.eccentric_nz.TARDIS.database.data.Current;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisArtron;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
 import me.eccentric_nz.TARDIS.listeners.TARDISMenuListener;
@@ -135,9 +130,9 @@ public class TARDISSavesListener extends TARDISMenuListener {
                     event.setCancelled(true);
                     if (slot >= 0 && slot < 45) {
                         Location exterior = null;
-                        Current current = TARDISCache.CURRENT.get(occupiedTardisId);
-                        if (current != null) {
-                            exterior = current.location();
+                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, occupiedTardisId);
+                        if (rsc.resultSet()) {
+                            exterior = rsc.getCurrent().location();
                         }
                         ItemStack is = view.getItem(slot);
                         if (is != null) {

@@ -17,11 +17,10 @@
 package me.eccentric_nz.TARDIS.control.actions;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
-import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.TravelType;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
@@ -59,9 +58,9 @@ public class FastReturnAction {
         wherebl.put("tardis_id", id);
         ResultSetBackLocation rsb = new ResultSetBackLocation(plugin, wherebl);
         if (rsb.resultSet()) {
-            Current current = TARDISCache.CURRENT.get(id);
-            if (current != null) {
-                if (!compareCurrentToBack(current.location(), rsb)) {
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            if (rsc.resultSet()) {
+                if (!compareCurrentToBack(rsc.getCurrent().location(), rsb)) {
                     HashMap<String, Object> set = new HashMap<>();
                     set.put("world", rsb.getWorld().getName());
                     set.put("x", rsb.getX());

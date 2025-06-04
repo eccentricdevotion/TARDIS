@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISAbandonEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISBuilderUtility;
@@ -27,6 +26,7 @@ import me.eccentric_nz.TARDIS.custommodels.keys.ChameleonVariant;
 import me.eccentric_nz.TARDIS.custommodels.keys.ColouredVariant;
 import me.eccentric_nz.TARDIS.database.converters.TARDISAbandonUpdate;
 import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisAbandoned;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
@@ -274,8 +274,9 @@ public class TARDISAbandonCommand {
                         }
                     }
                     plugin.getMessenger().send(player, TardisModule.TARDIS, "ABANDONED_SUCCESS");
-                    Current current = TARDISCache.CURRENT.get(id);
-                    if (current != null) {
+                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                    if (rsc.resultSet()) {
+                        Current current = rsc.getCurrent();
                         plugin.getPM().callEvent(new TARDISAbandonEvent(player, id, current.location()));
                         // always clear sign
                         if (preset.usesArmourStand()) {

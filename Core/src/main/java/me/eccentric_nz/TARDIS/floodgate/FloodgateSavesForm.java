@@ -17,12 +17,10 @@
 package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
-import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.flight.TARDISLand;
@@ -80,9 +78,9 @@ public class FloodgateSavesForm {
     private void handleResponse(SimpleFormResponse response) {
         Player player = Bukkit.getPlayer(uuid);
         Location current = null;
-        Current c = TARDISCache.CURRENT.get(id);
-        if (c != null) {
-            current = c.location();
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (rsc.resultSet()) {
+            current = rsc.getCurrent().location();
         }
         // get tardis artron level
         ResultSetTardisArtron rs = new ResultSetTardisArtron(plugin);

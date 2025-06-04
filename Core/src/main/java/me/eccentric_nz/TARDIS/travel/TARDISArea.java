@@ -17,12 +17,11 @@
 package me.eccentric_nz.TARDIS.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Area;
-import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreaLocations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetAreas;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.planets.TARDISAliasResolver;
 import org.bukkit.Location;
@@ -60,9 +59,9 @@ public class TARDISArea {
      */
     public boolean isInExistingArea(int id, int area) {
         // get TARDIS current location
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current != null) {
-            return isInExistingArea(current.location(), area);
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (rsc.resultSet()) {
+            return isInExistingArea(rsc.getCurrent().location(), area);
         }
         return false;
     }

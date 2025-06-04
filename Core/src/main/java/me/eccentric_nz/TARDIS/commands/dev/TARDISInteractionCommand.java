@@ -17,9 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.dev;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
-import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 
 import java.util.HashMap;
@@ -39,9 +38,9 @@ public class TARDISInteractionCommand {
         ResultSetTardis rs = new ResultSetTardis(plugin, where, "", false);
         if (rs.resultSet()) {
             int id = rs.getTardis().getTardisId();
-            Current current = TARDISCache.CURRENT.get(id);
-            if (current != null) {
-                TARDISDisplayItemUtils.setInteraction(current.location().getBlock(), id);
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            if (rsc.resultSet()) {
+                TARDISDisplayItemUtils.setInteraction(rsc.getCurrent().location().getBlock(), id);
             }
         }
         return true;

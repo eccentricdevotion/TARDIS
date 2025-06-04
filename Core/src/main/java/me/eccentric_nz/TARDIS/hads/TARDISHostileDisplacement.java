@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.hads;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISHADSEvent;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.travel.TARDISTimeTravel;
@@ -56,11 +56,12 @@ class TARDISHostileDisplacement {
 
         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
         int r = plugin.getConfig().getInt("preferences.hads_distance");
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current == null) {
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (!rsc.resultSet()) {
             plugin.debug("Could not get current TARDIS location for HADS!");
             return;
         }
+        Current current = rsc.getCurrent();
         boolean underwater = current.submarine();
         // displace
         Location l = current.location().clone();
@@ -119,7 +120,6 @@ class TARDISHostileDisplacement {
                         set.put("z", fl.getBlockZ());
                         set.put("submarine", (current.submarine()) ? 1 : 0);
                         plugin.getQueryFactory().doUpdate("current", set, tid);
-                        TARDISCache.CURRENT.invalidate(id);
                         long delay = 1L;
                         // move TARDIS
                         plugin.getTrackerKeeper().getInVortex().add(id);

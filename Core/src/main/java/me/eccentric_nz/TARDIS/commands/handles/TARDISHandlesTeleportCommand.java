@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.commands.handles;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.Flag;
@@ -75,10 +75,12 @@ public class TARDISHandlesTeleportCommand {
         // plugin respect
         if (plugin.getPluginRespect().getRespect(location, new Parameters(player, Flag.getAPIFlags()))) {
             // get direction
-            Current current = TARDISCache.CURRENT.get(id);
-            if (current == null) {
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            if (!rsc.resultSet()) {
                 plugin.getMessenger().handlesSend(player, "CURRENT_NOT_FOUND");
+                return;
             }
+            Current current = rsc.getCurrent();
             int[] start_loc = TARDISTimeTravel.getStartLocation(location, current.direction());
             // check destination has room for TARDIS
             int count = TARDISTimeTravel.safeLocation(start_loc[0], location.getBlockY(), start_loc[2], start_loc[1], start_loc[3], location.getWorld(), current.direction());
@@ -96,7 +98,6 @@ public class TARDISHandlesTeleportCommand {
             set.put("z", location.getBlockZ());
             set.put("submarine", (current.submarine()) ? 1 : 0);
             plugin.getQueryFactory().doUpdate("current", set, tid);
-            TARDISCache.CURRENT.invalidate(id);
             plugin.getTrackerKeeper().getHadsDamage().remove(id);
             long delay = 1L;
             plugin.getTrackerKeeper().getInVortex().add(id);

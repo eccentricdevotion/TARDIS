@@ -17,12 +17,12 @@
 package me.eccentric_nz.TARDIS.commands.remote;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
@@ -103,12 +103,13 @@ public class TARDISRemoteComehereCommand {
         }
         boolean hidden = tardis.isHidden();
         // get current police box location
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current == null) {
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (!rsc.resultSet()) {
             // emergency TARDIS relocation
             new TARDISEmergencyRelocation(plugin).relocate(id, player);
             return true;
         }
+        Current current = rsc.getCurrent();
         COMPASS d = current.direction();
         COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
@@ -176,7 +177,6 @@ public class TARDISRemoteComehereCommand {
             plugin.getQueryFactory().doUpdate("tardis", sett, ttid);
         }
         plugin.getQueryFactory().doUpdate("current", set, tid);
-        TARDISCache.CURRENT.invalidate(id);
         plugin.getMessenger().sendStatus(player, "TARDIS_COMING");
         long delay = 1L;
         plugin.getTrackerKeeper().getInVortex().add(id);

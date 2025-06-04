@@ -17,12 +17,12 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.api.event.TARDISDematerialisationEvent;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
@@ -67,13 +67,15 @@ public class TARDISDematerialiseToVortex implements Runnable {
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            Current current = TARDISCache.CURRENT.get(id);
+            Current current;
             String resetw = "";
-            if (current == null) {
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            if (!rsc.resultSet()) {
                 // emergency TARDIS relocation
                 new TARDISEmergencyRelocation(plugin).relocate(id, player);
                 return;
             } else {
+                current = rsc.getCurrent();
                 resetw = current.location().getWorld().getName();
                 // set back to current location
                 HashMap<String, Object> bid = new HashMap<>();

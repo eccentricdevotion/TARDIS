@@ -17,14 +17,13 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.artron.TARDISAdaptiveBoxLampToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISBeaconToggler;
 import me.eccentric_nz.TARDIS.artron.TARDISLampToggler;
 import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
-import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
 import org.bukkit.Chunk;
@@ -78,11 +77,11 @@ public class TARDISQuitListener implements Listener {
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
             if (plugin.getConfig().getBoolean("police_box.keep_chunk_force_loaded")) {
-                Current current = TARDISCache.CURRENT.get(tardis.getTardisId());
-                if (current != null) {
-                    World w = current.location().getWorld();
+                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, tardis.getTardisId());
+                if (rsc.resultSet()) {
+                    World w = rsc.getCurrent().location().getWorld();
                     if (w != null) {
-                        Chunk chunk = w.getChunkAt(current.location());
+                        Chunk chunk = w.getChunkAt(rsc.getCurrent().location());
                         chunk.removePluginChunkTicket(plugin);
                     }
                 }

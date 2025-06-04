@@ -17,9 +17,8 @@
 package me.eccentric_nz.TARDIS.doors.inner;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
-import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -64,10 +63,10 @@ public class InnerDisplayDoorExtra {
         // interior portal
         Location inportal = block.getLocation();
         // exterior portal (from current location)
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current != null) {
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (rsc.resultSet()) {
             // locations
-            plugin.getTrackerKeeper().getPortals().remove(current.location());
+            plugin.getTrackerKeeper().getPortals().remove(rsc.getCurrent().location());
         }
         plugin.getTrackerKeeper().getPortals().remove(inportal);
     }

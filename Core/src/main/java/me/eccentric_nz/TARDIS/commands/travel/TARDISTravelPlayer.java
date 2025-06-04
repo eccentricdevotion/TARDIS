@@ -17,9 +17,8 @@
 package me.eccentric_nz.TARDIS.commands.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.travel.TARDISRescue;
@@ -47,8 +46,8 @@ public class TARDISTravelPlayer {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "TRAVEL_NO_SELF");
                 return true;
             }
-            Current current = TARDISCache.CURRENT.get(id);
-            if (current == null) {
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            if (!rsc.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return true;
             }
@@ -64,7 +63,7 @@ public class TARDISTravelPlayer {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "DND", p);
                 return true;
             }
-            new TARDISRescue(plugin).rescue(player, saved.getUniqueId(), id, current.direction(), false, false);
+            new TARDISRescue(plugin).rescue(player, saved.getUniqueId(), id, rsc.getCurrent().direction(), false, false);
         } else {
             plugin.getMessenger().send(player, TardisModule.TARDIS, "NO_PERM_PLAYER");
         }

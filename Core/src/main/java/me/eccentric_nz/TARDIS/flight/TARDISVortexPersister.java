@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISInstantPoliceBox;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISInstantPreset;
@@ -26,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetBackLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.destroyers.TARDISDeinstantPreset;
@@ -134,8 +134,9 @@ public class TARDISVortexPersister {
                         // interrupted materialisation
                         // get next destination and land
                         // next location = 'current' table
-                        Current current = TARDISCache.CURRENT.get(id);
-                        if (current != null) {
+                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                        if (rsc.resultSet()) {
+                            Current current = rsc.getCurrent();
                             BuildData bd = new BuildData(uuid.toString());
                             bd.setTardisID(id);
                             bd.setLocation(current.location());

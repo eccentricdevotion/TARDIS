@@ -17,13 +17,12 @@
 package me.eccentric_nz.TARDIS.commands.travel;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
 import me.eccentric_nz.TARDIS.api.event.TARDISTravelEvent;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
-import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetDestinations;
 import me.eccentric_nz.TARDIS.enumeration.*;
@@ -132,12 +131,12 @@ public class TARDISTravelSave {
                     set.put("direction", rsd.getDirection());
                 } else {
                     // get current direction
-                    Current current = TARDISCache.CURRENT.get(id);
-                    if (current == null) {
+                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                    if (!rsc.resultSet()) {
                         plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                         return true;
                     }
-                    set.put("direction", current.direction().toString());
+                    set.put("direction", rsc.getCurrent().direction().toString());
                 }
                 set.put("submarine", (rsd.isSubmarine()) ? 1 : 0);
                 if (!rsd.getPreset().isEmpty()) {

@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.update;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.commands.sudo.TARDISSudoTracker;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -26,6 +25,7 @@ import me.eccentric_nz.TARDIS.database.QueryFactory;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.Control;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -262,8 +262,9 @@ public class TARDISUpdateListener implements Listener {
                 case BACK -> {
                     plugin.getQueryFactory().insertControl(id, 8, blockLocStr, secondary ? 1 : 0);
                     // insert current into back
-                    Current current = TARDISCache.CURRENT.get(id);
-                    if (current != null) {
+                    ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                    if (rsc.resultSet()) {
+                        Current current = rsc.getCurrent();
                         HashMap<String, Object> setb = new HashMap<>();
                         setb.put("world", current.location().getWorld().getName());
                         setb.put("x", current.location().getBlockX());

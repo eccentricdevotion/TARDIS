@@ -17,11 +17,11 @@
 package me.eccentric_nz.TARDIS.commands.remote;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetNextLocation;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
@@ -53,15 +53,14 @@ class TARDISRemoteTravelCommand {
         ResultSetTardis rs = new ResultSetTardis(plugin, wherei, "", false);
         if (rs.resultSet()) {
             Tardis tardis = rs.getTardis();
-            Current current = TARDISCache.CURRENT.get(id);
-            String resetw = "";
-            if (current == null) {
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            if (!rsc.resultSet()) {
                 // emergency TARDIS relocation
                 new TARDISEmergencyRelocation(plugin).relocate(id, player.getPlayer());
                 return true;
-            } else {
-                resetw = current.location().getWorld().getName();
             }
+            Current current = rsc.getCurrent();
+            String resetw = current.location().getWorld().getName();
             ResultSetNextLocation rsn = new ResultSetNextLocation(plugin, id);
             if (!rsn.resultSet() && !(sender instanceof BlockCommandSender)) {
                 plugin.getMessenger().send(sender, TardisModule.TARDIS, "DEST_NO_LOAD");
@@ -153,7 +152,6 @@ class TARDISRemoteTravelCommand {
                 plugin.getQueryFactory().doUpdate("tardis", set, whereh);
             }
             plugin.getQueryFactory().doUpdate("current", setcurrent, wherecurrent);
-            TARDISCache.CURRENT.invalidate(id);
             plugin.getQueryFactory().doUpdate("back", setback, whereback);
             plugin.getQueryFactory().doUpdate("doors", setdoor, wheredoor);
             return true;

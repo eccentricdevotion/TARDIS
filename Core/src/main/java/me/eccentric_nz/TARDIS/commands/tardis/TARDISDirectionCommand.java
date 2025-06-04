@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
@@ -25,6 +24,7 @@ import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetControls;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisPreset;
 import me.eccentric_nz.TARDIS.doors.inner.Inner;
@@ -122,18 +122,18 @@ public class TARDISDirectionCommand {
             }
             boolean hid = tardis.isHidden();
             ChameleonPreset demat = tardis.getDemat();
-            Current current = TARDISCache.CURRENT.get(id);
-            if (current == null) {
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            if (!rsc.resultSet()) {
                 plugin.getMessenger().send(player, TardisModule.TARDIS, "CURRENT_NOT_FOUND");
                 return true;
             }
+            Current current = rsc.getCurrent();
             COMPASS old_d = current.direction();
             HashMap<String, Object> tid = new HashMap<>();
             HashMap<String, Object> set = new HashMap<>();
             tid.put("tardis_id", id);
             set.put("direction", compass.toString());
             plugin.getQueryFactory().doUpdate("current", set, tid);
-            TARDISCache.CURRENT.invalidate(id);
             HashMap<String, Object> did = new HashMap<>();
             HashMap<String, Object> setd = new HashMap<>();
             did.put("door_type", 0);

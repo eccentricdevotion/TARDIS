@@ -18,7 +18,6 @@ package me.eccentric_nz.TARDIS.floodgate;
 
 import me.eccentric_nz.TARDIS.ARS.TARDISARSInventory;
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.commands.tardis.TARDISDirectionCommand;
@@ -30,6 +29,7 @@ import me.eccentric_nz.TARDIS.control.actions.LightSwitchAction;
 import me.eccentric_nz.TARDIS.control.actions.SiegeAction;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
@@ -329,8 +329,9 @@ public class FloodgateControlForm {
                             return;
                         }
                         String direction = "EAST";
-                        Current current = TARDISCache.CURRENT.get(id);
-                        if (current != null) {
+                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                        if (rsc.resultSet()) {
+                            Current current = rsc.getCurrent();
                             direction = current.direction().toString();
                             if (!tardis.getPreset().usesArmourStand()) {
                                 // skip the angled rotations

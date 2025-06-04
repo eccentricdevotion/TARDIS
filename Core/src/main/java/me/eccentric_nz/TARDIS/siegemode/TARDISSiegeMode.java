@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.siegemode;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeEvent;
 import me.eccentric_nz.TARDIS.api.event.TARDISSiegeOffEvent;
@@ -25,6 +24,7 @@ import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItemUtils;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.desktop.TARDISUpgradeData;
@@ -71,10 +71,11 @@ public class TARDISSiegeMode {
         }
         Tardis tardis = rs.getTardis();
         // get current location
-        Current current = TARDISCache.CURRENT.get(id);
-        if (current == null) {
+        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+        if (!rsc.resultSet()) {
             return;
         }
+        Current current = rsc.getCurrent();
         Block siege = current.location().getBlock();
         HashMap<String, Object> wheres = new HashMap<>();
         wheres.put("tardis_id", id);

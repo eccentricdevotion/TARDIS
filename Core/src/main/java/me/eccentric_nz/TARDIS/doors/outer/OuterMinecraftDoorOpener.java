@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.doors.outer;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetInnerDoorLocations;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
 import me.eccentric_nz.TARDIS.enumeration.ChameleonPreset;
@@ -61,7 +61,9 @@ public class OuterMinecraftDoorOpener {
             ChameleonPreset preset = tardis.getPreset();
             // get locations
             // exterior portal (from current location)
-            Current current = TARDISCache.CURRENT.get(id);
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+            rsc.resultSet();
+            Current current = rsc.getCurrent();
             Location portal = current.location();
             if (preset != null && preset.equals(ChameleonPreset.SWAMP)) {
                 portal.add(0.0d, 1.0d, 0.0d);

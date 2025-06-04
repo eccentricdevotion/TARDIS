@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
 import me.eccentric_nz.TARDIS.api.Parameters;
@@ -30,10 +29,7 @@ import me.eccentric_nz.TARDIS.builders.exterior.TARDISEmergencyRelocation;
 import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.data.Throticle;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetPlayerPrefs;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardis;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetThrottle;
-import me.eccentric_nz.TARDIS.database.resultset.ResultSetTravellers;
+import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.destroyers.DestroyData;
 import me.eccentric_nz.TARDIS.enumeration.*;
 import me.eccentric_nz.TARDIS.sensor.PowerSensor;
@@ -214,12 +210,13 @@ public class TARDISStattenheimListener implements Listener {
                             return;
                         }
                         // get TARDIS's current location
-                        Current current = TARDISCache.CURRENT.get(id);
-                        if (current == null) {
+                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                        if (!rsc.resultSet()) {
                             // emergency TARDIS relocation
                             new TARDISEmergencyRelocation(plugin).relocate(id, player);
                             return;
                         }
+                        Current current = rsc.getCurrent();
                         COMPASS d = current.direction();
                         COMPASS player_d = COMPASS.valueOf(TARDISStaticUtils.getPlayersDirection(player, false));
                         TARDISTimeTravel tt = new TARDISTimeTravel(plugin);
@@ -286,7 +283,6 @@ public class TARDISStattenheimListener implements Listener {
                         cset.put("direction", player_d.toString());
                         cset.put("submarine", (sub) ? 1 : 0);
                         plugin.getQueryFactory().doUpdate("current", cset, cid);
-                        TARDISCache.CURRENT.invalidate(id);
                         // update tardis
                         if (hidden) {
                             HashMap<String, Object> tid = new HashMap<>();

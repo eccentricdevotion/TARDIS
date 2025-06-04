@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.flight;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitChecker;
 import me.eccentric_nz.TARDIS.advanced.TARDISCircuitDamager;
@@ -189,11 +188,12 @@ public class TARDISHandbrakeListener implements Listener {
                                     }
                                     // check the state of the Relativity Differentiator
                                     if (check.isRelativityDifferentiated(id) && TARDISPermission.hasPermission(player, "tardis.fly") && preset.usesArmourStand() && !player.isSneaking()) {
-                                        Current current = TARDISCache.CURRENT.get(id);
-                                        if (current == null) {
+                                        ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                                        if (!rsc.resultSet()) {
                                             plugin.debug("No current location");
                                             return;
                                         }
+                                        Current current = rsc.getCurrent();
                                         // check if TARDIS is underground
                                         for (int y = current.location().getBlockY() + 4; y < current.location().getBlockY() + 8; y++) {
                                             if (!current.location().getWorld().getBlockAt(current.location().getBlockX(), y, current.location().getBlockZ()).getType().isAir()) {

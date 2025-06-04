@@ -17,7 +17,6 @@
 package me.eccentric_nz.TARDIS.siegemode;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.TARDISConstants;
 import me.eccentric_nz.TARDIS.builders.exterior.BuildData;
 import me.eccentric_nz.TARDIS.customblocks.TARDISDisplayItem;
@@ -223,7 +222,6 @@ public class TARDISSiegeListener implements Listener {
             set.put("z", loc.getBlockZ());
             set.put("direction", d.toString());
             plugin.getQueryFactory().doUpdate("current", set, where);
-            TARDISCache.CURRENT.invalidate(id);
         }, 10L);
     }
 
@@ -271,7 +269,6 @@ public class TARDISSiegeListener implements Listener {
         set.put("z", loc.getBlockZ());
         set.put("direction", d.toString());
         plugin.getQueryFactory().doUpdate("current", set, where);
-        TARDISCache.CURRENT.invalidate(id);
         // remove trackers
         plugin.getTrackerKeeper().getIsSiegeCube().remove(id);
         plugin.getTrackerKeeper().getSiegeCarrying().remove(uuid);

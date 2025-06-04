@@ -17,9 +17,9 @@
 package me.eccentric_nz.TARDIS.commands.tardis;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.database.data.Current;
+import me.eccentric_nz.TARDIS.database.resultset.ResultSetCurrentFromId;
 import me.eccentric_nz.TARDIS.database.resultset.ResultSetTardisID;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
 import me.eccentric_nz.TARDIS.enumeration.WorldManager;
@@ -51,8 +51,9 @@ class TARDISFindCommand {
                 return true;
             }
             if (!plugin.getConfig().getBoolean("difficulty.tardis_locator") || plugin.getUtils().inGracePeriod(player, true)) {
-                Current current = TARDISCache.CURRENT.get(rs.getTardisId());
-                if (current != null) {
+                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rs.getTardisId());
+                if (rsc.resultSet()) {
+                    Current current = rsc.getCurrent();
                     String world = TARDISAliasResolver.getWorldAlias(current.location().getWorld());
                     if (!plugin.getPlanetsConfig().getBoolean("planets." + current.location().getWorld().getName() + ".enabled") && plugin.getWorldManager().equals(WorldManager.MULTIVERSE)) {
                         world = plugin.getMVHelper().getAlias(current.location().getWorld());

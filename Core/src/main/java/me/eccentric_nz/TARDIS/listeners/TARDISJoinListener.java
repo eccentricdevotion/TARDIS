@@ -17,14 +17,12 @@
 package me.eccentric_nz.TARDIS.listeners;
 
 import me.eccentric_nz.TARDIS.TARDIS;
-import me.eccentric_nz.TARDIS.TARDISCache;
 import me.eccentric_nz.TARDIS.achievement.TARDISBook;
 import me.eccentric_nz.TARDIS.arch.TARDISArchPersister;
 import me.eccentric_nz.TARDIS.blueprints.TARDISPermission;
 import me.eccentric_nz.TARDIS.builders.interior.TARDISInteriorPostioning;
 import me.eccentric_nz.TARDIS.camera.CameraLocation;
 import me.eccentric_nz.TARDIS.camera.TARDISCameraTracker;
-import me.eccentric_nz.TARDIS.database.data.Current;
 import me.eccentric_nz.TARDIS.database.data.Tardis;
 import me.eccentric_nz.TARDIS.database.resultset.*;
 import me.eccentric_nz.TARDIS.enumeration.TardisModule;
@@ -132,8 +130,8 @@ public class TARDISJoinListener implements Listener {
         ResultSetTravellers rst = new ResultSetTravellers(plugin, where, false);
         if (rst.resultSet()) {
             // does the TARDIS they occupy still exist?
-            Current current = TARDISCache.CURRENT.get(rst.getTardis_id());
-            if (current == null) {
+            ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, rst.getTardis_id());
+            if (!rsc.resultSet()) {
                 // teleport player
                 Location teleport = player.getRespawnLocation() != null ? player.getRespawnLocation() : plugin.getServer().getWorlds().getFirst().getSpawnLocation();
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> player.teleport(teleport), 1L);
@@ -156,11 +154,11 @@ public class TARDISJoinListener implements Listener {
             String owner = tardis.getOwner();
             String last_known_name = tardis.getLastKnownName();
             if (plugin.getConfig().getBoolean("police_box.keep_chunk_force_loaded")) {
-                Current current = TARDISCache.CURRENT.get(id);
-                if (current != null) {
-                    World w = current.location().getWorld();
+                ResultSetCurrentFromId rsc = new ResultSetCurrentFromId(plugin, id);
+                if (rsc.resultSet()) {
+                    World w = rsc.getCurrent().location().getWorld();
                     if (w != null) {
-                        Chunk chunk = w.getChunkAt(current.location());
+                        Chunk chunk = w.getChunkAt(rsc.getCurrent().location());
                         while (!chunk.isLoaded()) {
                             chunk.load();
                         }
