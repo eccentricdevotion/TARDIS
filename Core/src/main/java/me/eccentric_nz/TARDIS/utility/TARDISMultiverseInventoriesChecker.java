@@ -16,12 +16,11 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import com.onarandombox.multiverseinventories.MultiverseInventories;
-import com.onarandombox.multiverseinventories.WorldGroup;
-import com.onarandombox.multiverseinventories.profile.WorldGroupManager;
-import com.onarandombox.multiverseinventories.share.Sharables;
-import com.onarandombox.multiverseinventories.share.Shares;
-import org.bukkit.Bukkit;
+import org.mvplugins.multiverse.inventories.MultiverseInventoriesApi;
+import org.mvplugins.multiverse.inventories.profile.group.WorldGroup;
+import org.mvplugins.multiverse.inventories.profile.group.WorldGroupManager;
+import org.mvplugins.multiverse.inventories.share.Sharables;
+import org.mvplugins.multiverse.inventories.share.Shares;
 
 import java.util.List;
 
@@ -31,9 +30,9 @@ import java.util.List;
 public class TARDISMultiverseInventoriesChecker {
 
     public static boolean checkWorldsCanShare(String from, String to) {
-        MultiverseInventories mvi = (MultiverseInventories) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Inventories");
-        WorldGroupManager gm = mvi.getGroupManager();
-        if (gm.hasGroup(from)) {
+        MultiverseInventoriesApi mvi = MultiverseInventoriesApi.get();
+        WorldGroupManager gm = mvi.getWorldGroupManager();
+        if (gm.hasConfiguredGroup(from)) {
             List<WorldGroup> profiles = gm.getGroupsForWorld(from);
             for (WorldGroup wgp : profiles) {
                 if (wgp.containsWorld(to)) {

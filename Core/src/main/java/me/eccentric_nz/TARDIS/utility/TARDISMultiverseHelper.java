@@ -16,34 +16,30 @@
  */
 package me.eccentric_nz.TARDIS.utility;
 
-import com.onarandombox.MultiverseCore.MultiverseCore;
-import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import me.eccentric_nz.TARDIS.TARDIS;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.Plugin;
+import org.mvplugins.multiverse.core.MultiverseCoreApi;
+import org.mvplugins.multiverse.core.world.LoadedMultiverseWorld;
+import org.mvplugins.multiverse.core.world.MultiverseWorld;
 
 /**
  * @author eccentric_nz
  */
 public class TARDISMultiverseHelper {
 
-    private final MultiverseCore mvc;
-
-    public TARDISMultiverseHelper(Plugin mvplugin) {
-        mvc = (MultiverseCore) mvplugin;
-    }
+    MultiverseCoreApi coreApi = MultiverseCoreApi.get();
 
     public String getAlias(World world) {
-        MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world);
+        MultiverseWorld mvw = coreApi.getWorldManager().getWorld(world).get();
         return (mvw != null) ? mvw.getAlias() : world.getName();
     }
 
     public String getAlias(String world) {
         if (Bukkit.getWorld(world) != null) {
-            MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world);
+            MultiverseWorld mvw = coreApi.getWorldManager().getWorld(world).get();
             return (mvw != null) ? mvw.getAlias() : world;
         } else {
             return world;
@@ -51,17 +47,17 @@ public class TARDISMultiverseHelper {
     }
 
     public boolean isWorldSurvival(World world) {
-        MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(world);
+        MultiverseWorld mvw = coreApi.getWorldManager().getWorld(world).get();
         GameMode gm = (mvw != null) ? mvw.getGameMode() : GameMode.SURVIVAL;
         return (gm.equals(GameMode.SURVIVAL));
     }
 
     public World getWorld(String w) {
-        MultiverseWorld mvw = mvc.getMVWorldManager().getMVWorld(w);
-        return (mvw != null) ? mvw.getCBWorld() : Bukkit.getServer().getWorld(w);
+        LoadedMultiverseWorld mvw = coreApi.getWorldManager().getLoadedWorld(w).get();
+        return (mvw != null) ? mvw.getBukkitWorld().get() : Bukkit.getServer().getWorld(w);
     }
 
     public void importWorlds(CommandSender sender) {
-        new TARDISMultiverseImporter(TARDIS.plugin, mvc, sender).transfer();
+        new TARDISMultiverseImporter(TARDIS.plugin, sender).transfer();
     }
 }

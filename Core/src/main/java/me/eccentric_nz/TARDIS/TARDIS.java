@@ -1621,7 +1621,7 @@ public class TARDIS extends JavaPlugin {
         if (worldManager.equals(WorldManager.MULTIVERSE)) {
             Plugin mvplugin = pm.getPlugin("Multiverse-Core");
             debug("Hooking into Multiverse-Core!");
-            mvHelper = new TARDISMultiverseHelper(mvplugin);
+            mvHelper = new TARDISMultiverseHelper();
         }
     }
 
