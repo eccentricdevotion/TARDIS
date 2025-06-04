@@ -31,7 +31,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_21_R4.entity.CraftPlayer;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
@@ -78,7 +77,6 @@ public class TWAFollower extends Husk implements OwnableEntity {
         }
     }
 
-    @Nullable
     public UUID getOwnerUUID() {
         return this.getBukkitEntity().getPersistentDataContainer().get(TARDISWeepingAngels.OWNER_UUID, TARDISWeepingAngels.PersistentDataTypeUUID);
     }
@@ -89,11 +87,10 @@ public class TWAFollower extends Husk implements OwnableEntity {
     }
 
     @Override
-    public @Nullable EntityReference<LivingEntity> getOwnerReference() {
+    public EntityReference<LivingEntity> getOwnerReference() {
         return null;
     }
 
-    @Nullable
     @Override
     public LivingEntity getOwner() {
         if (uuid == null) {

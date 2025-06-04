@@ -27,7 +27,6 @@ import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_21_R4.CraftWorld;
 import org.bukkit.craftbukkit.v1_21_R4.map.CraftMapView;
 import org.bukkit.map.MapView;
-import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
 import java.util.UUID;
@@ -42,7 +41,7 @@ public final class TARDISMapUpdater extends Player {
     }
 
     @Override
-    public @Nullable GameType gameMode() {
+    public GameType gameMode() {
         return GameType.DEFAULT_MODE;
     }
 
